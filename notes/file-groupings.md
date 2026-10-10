@@ -10383,7 +10383,11 @@ Members (link order):
   duplicate of `ovl_15_func_80130C2C`: same text-draw prologue, then
   `ovl_15_func_80137544((s32)D_80140EC0, D_8013758E)` and `D_80137584 = 12`
   (void; `$v0`=12 is the store value, not a returned one)
-- ovl_15_func_80131C2C (s) — shared prologue (text base `D_80053350`)
+- ovl_15_func_80131C2C (m, matched this session, byte-exact) — shared prologue
+  (text base `D_80053350`) with its own 6-entry rodata jump table (splat
+  `.rodata` split at 0x1FC); exact body duplicate of `ovl_15_func_80130C8C`
+  except the case-4 immediate `0x10`→`0x1E`: `ovl_15_func_801367F8(D_8013758C,
+  D_8013758E, D_80137830)` switched onto `D_80137584` (0x1E/0xF/0xD)
 - ovl_15_func_80131CDC (m) — shared text-draw prologue with the `D_80053350` updater array; variant body using `ovl_15_func_80135B68` guard and `D_801376E0[D_8013758E].field_34` check (struct array, stride 0x3C) instead of the `ovl_15_func_80137228` pattern; calls `ovl_15_func_80135A78` in the else branch; sets `D_80137584` to 0xE or 0x10 (void; `$v0` holds the store value at return)
 - ovl_15_func_80131D88 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_8005341E` updater array (shared with
