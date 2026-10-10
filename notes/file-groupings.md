@@ -9709,8 +9709,8 @@ Members (link order):
   `D_800C024C` via `func_80015840(&D_800C024C, 0)`, then reads its
   `ObjectState` fields +4/+5 and the `HWD0`/`VWD0` halfwords and passes them to
   `func_80015EE8`
-- ovl_25_func_800BA5BC (s) — far-buffer/record setup; shares the `D_800C0334`
-  base reference with `ovl_25_func_800BA40C`
+- ovl_25_func_800BA5BC (m, byte-exact) — far-buffer/record setup; shares the
+  `D_800C0334` base reference with `ovl_25_func_800BA40C`
 
 ## `ovl_25` GTE-transform record pair — 0x800BA5BC–0x800BA7F0 (confidence: medium)
 
@@ -9737,8 +9737,9 @@ Fingerprints:
   region and the code idiom, not a single symbol.
 
 Members (link order):
-- ovl_25_func_800BA5BC (s) — record setup; pre-biases the copied halves by
-  -0x96/-0x64 before the transform
+- ovl_25_func_800BA5BC (m, byte-exact) — record setup; pre-biases the copied
+  halves by -0x96/-0x64 before the transform, then gates `func_800248E8` on the
+  `D_800BFE44`-record and `D_800C0334`-object bases
 - ovl_25_func_800BA758 (m, matched this session, byte-exact) — same transform
   with no bias; copies the four halves raw and adds 0x400 to the transformed
   result before the 4-byte round
