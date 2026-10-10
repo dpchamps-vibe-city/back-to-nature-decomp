@@ -10165,7 +10165,7 @@ seven members use `D_80053350`, `ovl_15_func_8012EE84` uses `D_80052FFA`,
 `D_80051E02`, `ovl_15_func_80132934` uses `D_80051E88`,
 `ovl_15_func_80130A94` uses `D_800532FE`, `ovl_15_func_80130BBC` and
 `ovl_15_func_80131B5C` use `D_800523AC`, `ovl_15_func_80130DDC` uses `D_8005341E`,
-`ovl_15_func_8012F8DC` uses `D_8005346A`,
+`ovl_15_func_8012F8DC` and `ovl_15_func_8012FF28` use `D_8005346A`,
 `ovl_15_func_8013010C` uses `D_800534DC`,
 `ovl_15_func_8012EEEC` uses `D_80053530` (shared with the in-run
 `ovl_15_func_8013063C` and `ovl_15_func_80131618`), and
@@ -10250,6 +10250,12 @@ Members (link order):
   returned), and `D_80137584 = 0` when `D_8013759A >= 0x5B` — same body as
   `ovl_15_func_8012FA00` with only the updater array and the immediate
   `0x11`→`0x12` changed, and contiguous in link order after it (both 0x70 bytes)
+- ovl_15_func_8012FF28 (m, verified byte-exact this session) — shared text-draw
+  prologue with the `D_8005346A` updater array (shared with `ovl_15_func_8012F8DC`);
+  then `ovl_15_func_80136660(D_8013758C, D_8013758E, D_80137830)` and maps the
+  returned code onto the private `D_80137584` = 0x10 (2/5) / 0x15 (4) / 0x18 (0),
+  leaving it unchanged for 1/3 (variant body; gapless link predecessor of
+  `ovl_15_func_8012FFD8`, 0xB0 bytes)
 - ovl_15_func_8012FFD8 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_80052F4E` updater array; then `ret =
   ovl_15_func_80137228(0x15, 0)`, `D_80137584 = ret` (s8; the value is
