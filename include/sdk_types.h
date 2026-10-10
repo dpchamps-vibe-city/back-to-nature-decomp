@@ -18,6 +18,10 @@ struct M2C_6fc629d778b7_Unk800D3D2C;
 
 typedef struct M2C_6fc629d778b7_Unk800D3D2C M2C_6fc629d778b7_Unk800D3D2C;
 
+struct Ovl25ObjectRecord;
+
+typedef struct Ovl25ObjectRecord Ovl25ObjectRecord;
+
 typedef unsigned long u_long;
 
 typedef struct {
@@ -2533,7 +2537,7 @@ typedef struct {
                s16 unk8;
 } Ovl23Func800BB0C8Arg;
 
-typedef struct {
+struct Ovl25ObjectRecord {
                s16 unk0;
                s16 unk2;
                u16 unk4;
@@ -2541,7 +2545,7 @@ typedef struct {
                u16 source[4];
                SpriteSourceData record0;
                SpriteSourceData record1;
-} Ovl25ObjectRecord;
+};
 
 typedef unsigned short u_short;
 

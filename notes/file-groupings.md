@@ -9664,6 +9664,41 @@ Members (link order):
   path selects `D_800BFE46` = 4/0 by `func_800225B8() == 1`, otherwise clamps
   the halfword down by 0x21
 
+## `ovl_25` D_800BFE54/D_800C0124 record-array driver run — 0x800B93BC–0x800B941C (confidence: medium)
+
+Candidate same-TU run of `ovl_25` that drives the record-reset
+`D_800BFE54`/`D_800C0124` object-array block. Evidence is gapless link
+adjacency plus a shared call graph onto all five members of the record-reset
+transform-caller run below and a shared object-record array cluster; the array
+bases are `extern`/absolute, so this ties the callers and the record block, not
+a TU-owned gp-rel symbol.
+
+Fingerprints:
+- address adjacency: `ovl_25_func_800B93BC` (0x28, ends exactly 0x800B93E4),
+  `ovl_25_func_800B93E4` (0x38, ends exactly 0x800B941C) and
+  `ovl_25_func_800B941C` (0x64, ends exactly 0x800B9480) form one gapless run;
+- shared dispatch: `ovl_25_func_800B93E4` calls `ovl_25_func_800B941C` and then
+  the run's `ovl_25_func_800B9D4C`/`800B9E20`/`800B9E84`, while
+  `ovl_25_func_800B941C` calls the run's remaining `ovl_25_func_800B9B28`/
+  `800B9C90` — all five record-reset members are dispatched from this cluster;
+- shared record-array block: `D_800BFE54` is six 0x78-byte
+  `Ovl25ObjectRecord` entries and `D_800C0124` is two more, at
+  `D_800BFE54 + 0x2D0`, so the target's two loops walk one contiguous 8-record
+  block with the same stride it feeds to those handlers; the reset run's
+  `ovl_25_func_800B9D4C` also reads `D_800BFE60` (= `D_800BFE54` + 0xC) inside
+  that block's first entry;
+- shared callee: `ovl_25_func_800B93BC` calls `ovl_25_func_800BA530` of the
+  `D_800C024C` object-state base run, coupling this run to that one.
+
+Members (link order):
+- ovl_25_func_800B93BC (m, byte-exact) — calls `ovl_25_func_800BA530`, then
+  `ovl_25_func_800B93E4`
+- ovl_25_func_800B93E4 (m, byte-exact) — aggregate driver; calls
+  `ovl_25_func_800B941C` then `ovl_25_func_800B9D4C`/`800B9E20`/`800B9E84`
+- ovl_25_func_800B941C (m, matched this session, byte-exact) — record-array
+  walker; six calls of `ovl_25_func_800B9B28` over `D_800BFE54`, then two of
+  `ovl_25_func_800B9C90` over `D_800C0124`
+
 ## `ovl_25` record-reset transform-caller run — 0x800B9B28–0x800B9E84 (confidence: medium)
 
 Candidate same-TU run of `ovl_25` handlers that reset an object record with

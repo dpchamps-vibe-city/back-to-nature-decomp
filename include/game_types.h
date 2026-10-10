@@ -209,7 +209,7 @@ typedef SpriteSourceData Struct_S;
  * ovl_25_func_800BA5BC/ovl_25_func_800BA758 with the SpriteSourceData record
  * at 0x18 (and, for 800B9B28, 0x48). The +0x04 byte of each record is read
  * unsigned and drives func_80015840. */
-typedef struct {
+typedef struct Ovl25ObjectRecord {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ s16 unk2;             /* state selector */
     /* 0x04 */ u16 unk4;             /* timer / counter */

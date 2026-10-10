@@ -2238,6 +2238,18 @@ extern u8 D_800C027C[];
  * only an extern declaration belongs here. */
 extern u8 D_800C02DC[];
 
+/* D_800BFE54 - ovl_25 base of a six-entry run of 0x78-byte Ovl25ObjectRecord
+ * records. ovl_25_func_800B941C walks it (lui/addiu %hi/%lo) and hands each
+ * entry to ovl_25_func_800B9B28. Absolute-addressed from -G0 overlay code;
+ * the record type is defined in game_types.h, forward-declared here. */
+extern struct Ovl25ObjectRecord D_800BFE54;
+
+/* D_800C0124 - ovl_25 base of a two-entry run of the same 0x78-byte
+ * Ovl25ObjectRecord records, walked by ovl_25_func_800B941C after the
+ * D_800BFE54 run and handed to ovl_25_func_800B9C90. Same absolute-addressed
+ * incomplete-type declaration class as D_800BFE54 above. */
+extern struct Ovl25ObjectRecord D_800C0124;
+
 /* D_800BFE60 - ovl_25 signed level/threshold word. ovl_25_func_800B9D4C
  * loads it once (lw) and selects one of five reset levels by comparing it
  * against 0x28000, 0x1E000, 0x14000 and 0xA000. Absolute-addressed
