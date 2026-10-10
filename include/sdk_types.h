@@ -2533,6 +2533,16 @@ typedef struct {
                s16 unk8;
 } Ovl23Func800BB0C8Arg;
 
+typedef struct {
+               s16 unk0;
+               s16 unk2;
+               u16 unk4;
+               char pad_06[0x0A];
+               u16 source[4];
+               SpriteSourceData record0;
+               SpriteSourceData record1;
+} Ovl25ObjectRecord;
+
 typedef unsigned short u_short;
 
 typedef struct {

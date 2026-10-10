@@ -9694,8 +9694,10 @@ Members (link order):
 - ovl_25_func_800B9B28 (s) — per-object two-record handler; state-guarded
   reset of `arg0+0x18` then `ovl_25_func_800BA5BC`, and of `arg0+0x48` then
   `ovl_25_func_800BA758`, both sourced from `arg0+0x10`
-- ovl_25_func_800B9C90 (s) — one-record variant; state at `arg0+0x1C` picks the
-  reset argument for `arg0+0x18`, then `ovl_25_func_800BA5BC(..., arg0+0x10)`
+- ovl_25_func_800B9C90 (m, byte-exact) — one-record variant; state selector at
+  `arg0+0x02` picks the reset argument, `record0.field_4` at `arg0+0x1C` gates
+  the `func_80015840` call on `arg0+0x18`, then `ovl_25_func_800BA5BC(...)` on the
+  `arg0+0x10` source buffer
 - ovl_25_func_800B9D4C (s) — picks a level from `D_800BFE60`, resets the
   `D_800C02DC` record with it, then `ovl_25_func_800BA5BC` on a stack buffer
 - ovl_25_func_800B9E20 (m, matched this session, byte-exact) — resets

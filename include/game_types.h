@@ -202,6 +202,23 @@ typedef struct SpriteSourceData {
 /* Backward-compatibility alias for func_800158E4. */
 typedef SpriteSourceData Struct_S;
 
+/* One 0x78-byte entry of the per-object runs iterated by ovl_25_func_800B941C
+ * (bases D_800BFE54 and D_800C0124, stride 0x78). ovl_25_func_800B9B28 reads
+ * the s16 at 0x00 and 0x04, ovl_25_func_800B9C90 the s16 at 0x02 and the u16
+ * at 0x04, and both pass the raw u16 buffer at 0x10 as the second argument to
+ * ovl_25_func_800BA5BC/ovl_25_func_800BA758 with the SpriteSourceData record
+ * at 0x18 (and, for 800B9B28, 0x48). The +0x04 byte of each record is read
+ * unsigned and drives func_80015840. */
+typedef struct {
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ s16 unk2;             /* state selector */
+    /* 0x04 */ u16 unk4;             /* timer / counter */
+    /* 0x06 */ char pad_06[0x0A];
+    /* 0x10 */ u16 source[4];        /* raw buffer fed to the transform pair */
+    /* 0x18 */ SpriteSourceData record0;
+    /* 0x48 */ SpriteSourceData record1;
+} Ovl25ObjectRecord;
+
 /* Polygon-list query consumed by func_8001EAE4. */
 typedef struct {
     s32 field_0;
