@@ -11406,7 +11406,7 @@ Members (link order):
 - ovl_15_func_80136288 (s) — `MemCardReadFile` + `MemCardSync`; `D_80140EC0`.
 - ovl_15_func_80136470 (s) — `MemCardFormat` + `MemCardSync`; `D_80137598`.
 - ovl_15_func_80136558 (m, matched this session, byte-exact) — `MemCardCreateFile(chan, D_80140EC0, 4)` retry loop guarded by `D_80137598 < 7`; returns 0/2/4/0xB; `ovl_15_func_80137544` builds the name.
-- ovl_15_func_80136660 (s) — `MemCardWriteFile` + `MemCardSync`; `D_80140EC0`.
+- ovl_15_func_80136660 (m, byte-exact) — `MemCardWriteFile` + `MemCardSync`; shares with `80136558` the `ovl_15_func_80137544(&D_80140EC0, …)` setup and the u16 `D_80137598 < 7` retry counter (`lhu` increment, signed `lh` compare).
 - ovl_15_func_801367F8 (s) — `MemCardReadFile` + `MemCardSync`; `D_80140EC0`.
 
 ---
