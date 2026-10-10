@@ -7658,13 +7658,15 @@ Fingerprints:
   (800E686C) recorded as the same by `globals_override.h` — positive adjacency
   evidence among family members, which the scattered 0x800E5A1C/800EB79C/
   800EC490/800ED760 sites do not supply;
-- **head-of-band zero-gap run:** the four lowest-address members confirmed
+- **head-of-band zero-gap run:** the five lowest-address members confirmed
   from this family are link-order contiguous with no unrelated code between
   them: `ovl_11_func_800E5A1C` (0xC0) ends exactly at `ovl_11_func_800E5ADC`
   (0xA8), which ends exactly at `ovl_11_func_800E5B84` (0xDC), which ends
-  exactly at `ovl_11_func_800E5C60` (0xA0). All four are now matched, so the
-  adjacency is fully positive across the run rather than interposed by a stub;
-  a real link-order cluster rather than a scattered data-only tie;
+  exactly at `ovl_11_func_800E5C60` (0xA0), which ends exactly at
+  `ovl_11_func_800E5D00` (0x198, splat `configs/splat/ovl_11.yaml` 0x2DEE0).
+  All five are now matched, so the adjacency is fully positive across the run
+  rather than interposed by a stub; a real link-order cluster rather than a
+  scattered data-only tie;
 - **what the tie is not:** beyond the head run the members are scattered over
   ~0x6E4C of text; member-to-member call edges were a single stub edge
   (800E8DC8 calls 800E5C60) until 800E5ADC was matched (800E5ADC calls
@@ -7818,8 +7820,16 @@ Members:
   `800E5C60((s16)arg0, 0, 0)` and then store three s32s at the
   0x22 record's +0/+4/+8 (800E5ADC's values from its own args, record base
   `D_80077600 + arg0*0xF8` for `arg0 < 0x32`; 800E8DC8's read through the
-  table). It sits at the far end of the head-of-band zero-gap run
-  (800E5A1C → 800E5ADC → 800E5B84 → 800E5C60).
+  table). It sits in the head-of-band zero-gap run and is the zero-gap
+  link-order predecessor of `ovl_11_func_800E5D00` (800E5A1C → 800E5ADC →
+  800E5B84 → 800E5C60 → 800E5D00).
+- ovl_11_func_800E5D00 (m, matched this session, 0x198, byte-exact) —
+  conditional record-gate / table-slot writer: guards on the `D_8006C838`+0x52C6
+  (alias `D_80071AFE`) value and writes the selected 0x1D4-stride record's +0xE
+  s16 into `D_80129560[arg2]`; steps through the record-family dispatcher
+  `ovl_11_func_800E7504` and family members 800E5C60/800E5B84. Same absolute
+  `D_80129560` base and s16-scaled slot as the sibling accessors; zero-gap
+  link-order successor of 800E5C60.
 - ovl_11_func_800E648C (m, matched this session, 0x120, byte-exact) —
   conditional-slot writer: stores the `D_8006C838`+0x51EA status slot (map
   alias `D_80071A22`) into `D_80129560[arg0]` under the family's `arg0 != -1`
@@ -7905,8 +7915,9 @@ Members:
   then all four are forwarded to the `D_80076220` record reset dispatcher
   `ovl_11_func_800E7504`; returns 1. Same absolute base, `s16`-fused index and
   `!= -1` guard-resolve shape as the sibling readers (cf. 800EC490/800E78E4),
-  inside the accessor band; the sole external caller of `ovl_11_func_800E7504`
-  in the container — a new call-graph edge from the `D_80129560` accessor
+  inside the accessor band; one of the two external callers of
+  `ovl_11_func_800E7504` in the container (with the newer
+  `ovl_11_func_800E5D00`) — a call-graph edge from the `D_80129560` accessor
   family into the `D_80076220` record family. Link-order neighbours 800E93CC
   (stub) and 800E953C do not reach the table, so adjacency adds nothing here.
 - ovl_11_func_800EE944 (m, 0x174, byte-exact) — prior-value table writer:
