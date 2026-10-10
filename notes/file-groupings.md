@@ -7814,6 +7814,13 @@ Members:
   `D_80077600 + arg0*0xF8` for `arg0 < 0x32`; 800E8DC8's read through the
   table). It sits at the far end of the head-of-band zero-gap run
   (800E5A1C → 800E5ADC → 800E5B84 → 800E5C60).
+- ovl_11_func_800E648C (m, matched this session, 0x120, byte-exact) —
+  conditional-slot writer: stores the `D_8006C838`+0x51EA status slot (map
+  alias `D_80071A22`) into `D_80129560[arg0]` under the family's `arg0 != -1`
+  guard, then dispatches to 800E65AC/800E698C and calls the flags-cluster
+  member 800E63C8; zero-gap link-order successor of 800E63C8 (0x800E63C8 +
+  0xC4) and predecessor of 800E65AC (0x800E648C + 0x120), with the 800E65AC
+  call edge agreeing with that adjacency.
 - ovl_11_func_800E65AC (m, matched this session, 0x198, byte-exact) —
   conditional-slot record resolver: `arg1 << 16 != 0` resolves
   `D_80129560[(s16)arg0]` (raw `arg0` otherwise), then forwards the
