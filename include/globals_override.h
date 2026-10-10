@@ -2222,6 +2222,14 @@ extern u8 D_800C0454[];
  * the overlay data segment, so only an extern declaration belongs here. */
 extern s16 D_800C030C;
 
+/* D_800C027C - ovl_25 object-state base (0x800C027C). ovl_25_func_800B9E20
+ * resets it with func_80015840(&base, 0), resets the record 0x30 bytes on as
+ * +1, and derives the raw u16 buffer 104 bytes below (0x800C0214) for the
+ * ovl_25_func_800BA5BC/ovl_25_func_800BA758 pair. Absolute-addressed
+ * (lui + %lo) from -G0 overlay code, so only an extern declaration belongs
+ * here; the caller views the base as ObjectState. */
+extern u8 D_800C027C[];
+
 /* D_801227F8 - ovl_11 pair table indexed by an s32 argument in
  * ovl_11_func_800BD1BC; entries are {start, end} s32 pairs. Defined in the
  * overlay data segment, so only an extern declaration belongs here. */

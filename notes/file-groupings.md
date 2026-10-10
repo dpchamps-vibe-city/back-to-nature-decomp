@@ -9664,6 +9664,46 @@ Members (link order):
   path selects `D_800BFE46` = 4/0 by `func_800225B8() == 1`, otherwise clamps
   the halfword down by 0x21
 
+## `ovl_25` record-reset transform-caller run — 0x800B9B28–0x800B9E84 (confidence: medium)
+
+Candidate same-TU run of `ovl_25` handlers that reset an object record with
+`func_80015840` and immediately hand the record plus a source buffer to the
+`ovl_25_func_800BA5BC`/`ovl_25_func_800BA758` GTE-transform pair. Evidence is
+gapless link adjacency plus that shared helper sequence; the transform pair
+has its own section below, so this is the caller side of it.
+
+Fingerprints:
+- address adjacency: `ovl_25_func_800B9B28` (0x168, ends exactly 0x800B9C90),
+  `ovl_25_func_800B9C90` (0xBC, ends exactly 0x800B9D4C),
+  `ovl_25_func_800B9D4C` (0xD4, ends exactly 0x800B9E20),
+  the matched `ovl_25_func_800B9E20` (0x64, ends exactly 0x800B9E84) and
+  `ovl_25_func_800B9E84` (0x464, ends exactly 0x800BA2E8) form one gapless run;
+- shared helper sequence: every member calls `func_80015840(record, state)`
+  and then `ovl_25_func_800BA5BC(record, source)`; `ovl_25_func_800B9B28` and
+  `ovl_25_func_800B9E20` also call `ovl_25_func_800BA758` for a second record;
+- shared record/source offset pair (per-object members):
+  `ovl_25_func_800B9B28`/`ovl_25_func_800B9C90` use record `arg0 + 0x18` and
+  source `arg0 + 0x10` (record = source + 8), with the record's state byte at
+  `+0x1C` selecting the `func_80015840` argument;
+- shared object-state cluster: `ovl_25_func_800B9D4C` resets `D_800C02DC`
+  (= `D_800C024C` + 0x90) and `ovl_25_func_800B9E20` resets `D_800C027C`
+  (= `D_800C024C` + 0x30) and `D_800C02AC` (= +0x60) — three of the four
+  records the `D_800C024C` run clears.
+
+Members (link order):
+- ovl_25_func_800B9B28 (s) — per-object two-record handler; state-guarded
+  reset of `arg0+0x18` then `ovl_25_func_800BA5BC`, and of `arg0+0x48` then
+  `ovl_25_func_800BA758`, both sourced from `arg0+0x10`
+- ovl_25_func_800B9C90 (s) — one-record variant; state at `arg0+0x1C` picks the
+  reset argument for `arg0+0x18`, then `ovl_25_func_800BA5BC(..., arg0+0x10)`
+- ovl_25_func_800B9D4C (s) — picks a level from `D_800BFE60`, resets the
+  `D_800C02DC` record with it, then `ovl_25_func_800BA5BC` on a stack buffer
+- ovl_25_func_800B9E20 (m, matched this session, byte-exact) — resets
+  `D_800C027C` and `D_800C02AC` via `func_80015840`, then drives both transforms
+  from the raw buffer `D_800C0214` (104 bytes below `D_800C027C`)
+- ovl_25_func_800B9E84 (s) — larger state machine that repeatedly resets
+  `D_800C0334`/`D_800C0424` records and calls `ovl_25_func_800BA5BC` on them
+
 ## `ovl_25` D_800C024C object-state base run — 0x800BA2E8–0x800BA5BC (confidence: medium)
 
 Candidate same-TU run of `ovl_25` around the extern object-state base
