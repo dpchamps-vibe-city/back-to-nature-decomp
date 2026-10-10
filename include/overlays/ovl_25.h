@@ -20,6 +20,7 @@ s32 ovl_25_func_800B9A10(s32 arg0);
 s32 ovl_25_func_800B9A84(s32 arg0);
 s32 ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 void ovl_25_func_800B9C90(Ovl25ObjectRecord *arg0);
+void ovl_25_func_800B9D4C(void);
 void ovl_25_func_800B9E20(void);
 void ovl_25_func_800BA2E8(void);
 void ovl_25_func_800BA40C(void);

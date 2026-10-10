@@ -2230,6 +2230,21 @@ extern s16 D_800C030C;
  * here; the caller views the base as ObjectState. */
 extern u8 D_800C027C[];
 
+/* D_800C02DC - ovl_25 object-state base (0x800C02DC), the record 0x90 bytes
+ * above D_800C024C. ovl_25_func_800B9D4C resets it with func_80015840 and
+ * also hands it to the ovl_25_func_800BA5BC transform, while deriving a
+ * 0x78-byte record 0x498 bytes below (0x800BFE44) for the three stacked u16
+ * vertex values. Absolute-addressed (lui + %lo) from -G0 overlay code, so
+ * only an extern declaration belongs here. */
+extern u8 D_800C02DC[];
+
+/* D_800BFE60 - ovl_25 signed level/threshold word. ovl_25_func_800B9D4C
+ * loads it once (lw) and selects one of five reset levels by comparing it
+ * against 0x28000, 0x1E000, 0x14000 and 0xA000. Absolute-addressed
+ * (lui + lw %lo) from -G0 overlay code; the overlay only declares it, so a
+ * scalar extern keeps the base name. */
+extern s32 D_800BFE60;
+
 /* D_801227F8 - ovl_11 pair table indexed by an s32 argument in
  * ovl_11_func_800BD1BC; entries are {start, end} s32 pairs. Defined in the
  * overlay data segment, so only an extern declaration belongs here. */
