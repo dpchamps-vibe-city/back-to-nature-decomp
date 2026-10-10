@@ -2227,7 +2227,10 @@ Fingerprints:
   and clears `D_80128CEC`;
 - zero-gap link-order contiguity (map): 0x800CE210 (0xDC) → 0x800CE2EC
   (0x90) → 0x800CE37C, each starting exactly where the previous ends; the
-  successor `ovl_11_func_800CE37C` likewise touches `D_80128CEC`.
+  successor `ovl_11_func_800CE37C` likewise touches `D_80128CEC` and, in the
+  byte-exact match, hands both `&D_80128CE0` and `&D_80128CD0` to
+  `func_8001F278` as its two s32* outputs — i.e. it consumes the whole run
+  cluster, not just the counter.
 
 Members (address order):
 - ovl_11_func_800CE210 (s) — init/update of the D_80128CD0/D_80128CE0 state
@@ -2237,8 +2240,11 @@ Members (address order):
   the state u16 behind the `D_8007AFF0+0x25388` pointer (+4 field, cases
   0x50–0x5B) picks row 0/1/2 of table `D_801232BC`, writes `{row.f0, 0,
   row.f1}` to `D_80128CD0` +0/+4/+8 and returns `row.f1`
-- ovl_11_func_800CE37C (s) — larger setup body over `D_80128CEC` and
-  `D_8006C838`; link successor of the run
+- ovl_11_func_800CE37C (m, matched this session) — setup/advance body over
+  the `D_80128CEC` counter and `D_8006C838` bits; passes the `D_80128CE0` and
+  `D_80128CD0` triples to `func_8001F278`, writes the resulting samples to the
+  `D_8007AFF0+0x253B4` view, and returns 1 on the final step; link successor
+  of the run
 
 Widening (2026-10-06, byte-exact match of `ovl_11_func_800C79F8`): that
 function references the main-RAM global `D_80128CF0` (0x80128CF0, the s32

@@ -1007,3 +1007,19 @@ typedef struct {
     /* 0x20 */ char pad_20[0x14];
     /* 0x34 */ s32 unk34;
 } Ovl11Func80116F4CArg;
+
+/* ovl_11_func_800CE37C parameter view: the coordinate words written at
+ * +0x100, +0x104 and +0x108. */
+typedef struct {
+    /* 0x00 */ char pad_00[0x100];
+    /* 0x100 */ s32 unk100;
+    /* 0x104 */ s32 unk104;
+    /* 0x108 */ s32 unk108;
+} Ovl11CE37CArg0;
+
+/* ovl_11_func_800CE37C stack result of func_8001F278: three s32 words. */
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+} Ovl11CE37CSample;

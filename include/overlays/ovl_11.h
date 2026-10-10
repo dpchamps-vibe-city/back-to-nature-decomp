@@ -135,6 +135,7 @@ u32 ovl_11_func_800CDFAC(u8 *arg0);
 void ovl_11_func_800CE034(M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 void ovl_11_func_800CE0F0(Ovl11SpritePositionView *position, u8 *object, s32 mode, u32 index);
 s32 ovl_11_func_800CE2EC(s32 *arg0);
+s32 ovl_11_func_800CE37C(Ovl11CE37CArg0 *arg0);
 s32 ovl_11_func_800CE514(s16 arg0);
 s16 ovl_11_func_800CE528(s16 arg0);
 s32 ovl_11_func_800CE53C(s16 arg0);

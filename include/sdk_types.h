@@ -2359,6 +2359,13 @@ typedef struct {
 } ObjectState;
 
 typedef struct {
+               char pad_00[0x100];
+                s32 unk100;
+                s32 unk104;
+                s32 unk108;
+} Ovl11CE37CArg0;
+
+typedef struct {
                s16 unk0;
                s16 unk2;
                u8 unk4;

@@ -2615,5 +2615,19 @@ extern Ovl11StateEntry D_80127E40[2];
 extern u16 D_80070D08;
 extern u16 D_80070D0A;
 
+/* D_80128CD0 / D_80128CE0 / D_80128CEC - main-RAM coordinate pair and its
+ * count. ovl_11_func_800CE2EC fills D_80128CD0 +0/+4/+8 from a 3-entry table;
+ * ovl_11_func_800CE37C hands both triples to func_8001F278 as the two s32*
+ * outputs and reads D_80128CE0 +0x4, while D_80128CEC gates its state steps.
+ * Absolute-addressed from the -G0 overlay. */
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+} Ovl11CoordTriple;
+extern Ovl11CoordTriple D_80128CD0;
+extern Ovl11CoordTriple D_80128CE0;
+extern s32 D_80128CEC;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
