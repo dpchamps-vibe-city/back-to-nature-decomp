@@ -318,6 +318,27 @@ struct struct_8006C838_800E8F78 {
     s32 field_5234;         /* 0x5234 */
 };
 
+/* View of D_8006C838 for ovl_11_func_800E65AC: the u8 at +0x9A6C. Reached as
+ * a struct member with the base D_80071B00 - 0x52C8 kept live, so cc1 emits
+ * addiu -0x52C8, ori 0x8000, addu followed by lbu 0x1A6C. */
+struct struct_8006C838_800E65AC_a {
+    char pad_000[0x9A6C];   /* 0x0000-0x9A6B */
+    u8 field_9A6C;          /* 0x9A6C */
+};
+
+/* View of D_8006C838 for ovl_11_func_800E65AC: the s16 at +0xDE22. Same
+ * base/split form as the +0x9A6C view, ending in sh 0x5E22. */
+struct struct_8006C838_800E65AC_b {
+    char pad_000[0xDE22];   /* 0x0000-0xDE21 */
+    s16 field_DE22;         /* 0xDE22 */
+};
+
+/* D_8007A670 - u8 base of the 0xF8-stride records reached by
+ * ovl_11_func_800E65AC for arg3 == 1: the target passes (char *)D_8007A670 +
+ * idx*0xF8 to ovl_11_func_800F06D8 (lui + addiu %lo(D_8007A670)).
+ * Absolute-addressed. */
+extern u8 D_8007A670[];
+
 /* D_80071B00 - s32 triple at 0x80071B00 (absolute, lui+%lo). Fields +0/+8 are
  * the two trackers written by ovl_11_func_800E8F78; p[0..2] are the three
  * values ovl_11_func_800E9778 and ovl_11_func_800EDEB8 copy to D_80129560.

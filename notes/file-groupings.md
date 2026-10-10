@@ -7814,6 +7814,12 @@ Members:
   `D_80077600 + arg0*0xF8` for `arg0 < 0x32`; 800E8DC8's read through the
   table). It sits at the far end of the head-of-band zero-gap run
   (800E5A1C → 800E5ADC → 800E5B84 → 800E5C60).
+- ovl_11_func_800E65AC (m, matched this session, 0x198, byte-exact) —
+  conditional-slot record resolver: `arg1 << 16 != 0` resolves
+  `D_80129560[(s16)arg0]` (raw `arg0` otherwise), then forwards the
+  `arg3`-selected 0xF8/0x1D4-stride record through the matched family members
+  800E5B84 and 800E5C60; zero-gap link-order successor of 800E648C
+  (0x800E648C + 0x120), whose direct call edge agrees with that adjacency.
 - ovl_11_func_800E5ADC (m, matched this session, 0xA8, byte-exact) —
   conditional 0x22-record field writer: when `arg0 < 0x32` calls
   `ovl_11_func_800E5C60((s16)arg0, 0, 0)` and resolves the record base through
