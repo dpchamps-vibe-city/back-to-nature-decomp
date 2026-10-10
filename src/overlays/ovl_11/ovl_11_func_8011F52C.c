@@ -6,15 +6,8 @@ typedef struct {
     /* 0x08 */ s32 unk8;
 } Ovl11F52C44;
 
-typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-} Ovl11F52C50;
-
 extern s16 D_80128540;
 extern Ovl11F52C44 D_80128544;
-extern Ovl11F52C50 D_80128550;
 extern s16 D_80128556;
 extern s16 D_8012855A;
 

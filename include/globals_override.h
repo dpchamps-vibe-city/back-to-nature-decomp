@@ -2385,6 +2385,26 @@ extern Ovl11D1285F4Entry D_801285F4[4];
  * passed to ovl_11_func_80120358 (lhu load, s16-scale). Absolute-addressed. */
 extern u16 D_8012862C[6];
 
+/* D_80128550 / D_8012855C / D_80128580 - ovl_11 s16 triplets with a 6-byte
+ * stride. D_80128550 (unk0=max_i, unk2=sec_i, unk4=sel) is the selector state
+ * written by ovl_11_func_8011F9EC and cleared to -1 by ovl_11_func_8011F52C;
+ * D_8012855C is the 6-entry offset table ovl_11_func_8011F9EC indexes by the
+ * two winning scan indices and D_80128580 the table it indexes by the
+ * func_80012A34(0x13) result (both read with lh, only unk0 used).
+ * Absolute-addressed (overlay build is -G0), only ever declared extern. */
+typedef struct {
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+} Ovl11D1285Entry;
+extern Ovl11D1285Entry D_80128550;
+extern Ovl11D1285Entry D_8012855C[6];
+extern Ovl11D1285Entry D_80128580[];
+
+/* D_80071A70 - ovl_11 s16[6] scan table read by ovl_11_func_8011F9EC with lh
+ * over six stride-2 entries (-1 sentinel). Absolute-addressed. */
+extern s16 D_80071A70[6];
+
 /* D_80070D02 - ovl_11 s16 selector compared against the min/max bounds by
  * ovl_11_func_80120358 (lh load). Absolute-addressed. */
 extern s16 D_80070D02;
