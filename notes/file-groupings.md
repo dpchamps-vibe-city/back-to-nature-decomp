@@ -7909,7 +7909,7 @@ Members:
   accessor band to 0x800EE944 and shares the `D_801249EC`/`D_801249F8`
   adjacent private-table region with family member 800EEAB8.
 
-## `ovl_11` 0x22-record clamp and its caller/twin pair — 0x800E5704 / 0x800E5870 / 0x800EADB8 (confidence: medium)
+## `ovl_11` 0x22-record clamp and its caller/twin pair — 0x800E5704 / 0x800E5870 / 0x800EADB8 / 0x800EAE24 (confidence: medium)
 
 Candidate same-TU pair in `ovl_11` (`Obj\GF_FARM.bin`): the target is a
 two-call-body caller's zero-gap callee, and the caller has a duplicate-body
@@ -7928,6 +7928,11 @@ Fingerprints:
   0)` followed by `800E5704(arg0, arg1, arg2, K)` — differing only in `K`
   (12 vs 0x14). They are the only known callers of `800E5704`, and both also
   call the `D_80129560` accessor-family member `ovl_11_func_800E5B84`;
+- **zero-gap far-cluster successor:** `ovl_11_func_800EADB8` (0x6C) ends
+  exactly at `ovl_11_func_800EAE24`, which shares its `800E5B84` call, and
+  `800EAE24` clears the same `0x23` record via
+  `ovl_11_func_800D0408(4, record, 0)` that `800E5704` clears, extending the
+  adjacency forward through a function with the pair's record-view idiom;
 - **shared private-record view:** `800E5704` resolves the `0x22` record through
   `ovl_11_func_800EFF04` and clamps `arg2` into its +0/+4/+8 s32 fields — the
   same 12-byte record and the same `0x22` index that family members `800E5ADC`
@@ -7947,6 +7952,11 @@ Members (address order):
   to `800E5B84` then `800E5704` with trailing constant 12
 - ovl_11_func_800EADB8 (m) — duplicate-body twin caller at 0x800EADB8, same
   two calls with trailing constant 0x14
+- ovl_11_func_800EAE24 (m, matched this session, 0x138, byte-exact) —
+  zero-gap successor of twin 800EADB8: dispatches cases 0/1 to `800E5B84`,
+  case 3 to `800E65AC` (the overlay's only other caller besides `800E648C`),
+  and in case 2 clears the shared `0x23` record via `800D0408(4, record, 0)`,
+  the same clear `800E5704` performs; returns 1
 
 ## `ovl_11` D_80076280/D_80076300 record-selector run — 0x800E9778 / 0x800EDEB8 / 0x800E7C2C / 0x800E4428 (confidence: low)
 
