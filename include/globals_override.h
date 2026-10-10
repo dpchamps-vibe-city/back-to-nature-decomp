@@ -2274,6 +2274,19 @@ extern s8 D_80137584;
  * Absolute-addressed (lui + %lo) from -G0 overlay code. */
 extern s16 D_8013758C;
 
+/* D_8013758E - ovl_15 private state s16 in the overlay data segment, read by
+ * ovl_15_func_80130C8C and passed to ovl_15_func_801367F8 and by the
+ * ovl_15_func_80130C2C/80130D3C family. Absolute-addressed (lui + %lo) from
+ * -G0 overlay code; only extern declarations belong here. */
+extern s16 D_8013758E;
+
+/* D_80053350 - text-updater array base in the PS-X EXE used by the shared
+ * ovl_15 text-draw prologue (ovl_15_func_8012ED18 family add D_80054BBC[0]
+ * to its address with the split lui/addiu form; also ovl_15_func_80130C8C).
+ * Never defined in the overlay, so an incomplete array extern keeps the base
+ * name. */
+extern u8 D_80053350[];
+
 /* D_80053530 - ovl_15 updater-array base in the PS-X EXE used by the shared
  * text-draw prologue (ovl_15_func_8012EEEC/8013063C/80131618 add
  * D_80054BBC[0] to its address with the split lui/addiu form). Never defined

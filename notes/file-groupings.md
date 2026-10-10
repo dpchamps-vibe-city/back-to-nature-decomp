@@ -10308,8 +10308,10 @@ Members (link order):
 - ovl_15_func_80130C2C (m, matched this session, byte-exact) — shared text-draw
   prologue; then `ovl_15_func_80137544((s32)D_80140EC0, D_8013758E)` and
   `D_80137584 = 12` (void; the `$v0`=12 is the store value, not a returned one)
-- ovl_15_func_80130C8C (s) — shared prologue; then `lh` of `D_8013758C`/
-  `D_8013758E` passed to `ovl_15_func_801367F8`, switch on `jtbl_8012DF44`
+- ovl_15_func_80130C8C (m, matched this session, byte-exact) — shared
+  text-draw prologue with the `D_80053350` updater array; then `lh` of
+  `D_8013758C`/`D_8013758E` passed to `ovl_15_func_801367F8`, switch on the
+  `jtbl_8012DF44` rodata table
 - ovl_15_func_80130D3C (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_80053350` updater array; variant body: calls
   `ovl_15_func_80135B68`, sets `D_80137584 = 0xE` on `-1` return, otherwise
