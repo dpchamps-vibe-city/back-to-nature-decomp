@@ -1793,6 +1793,13 @@ extern u8 D_80051C36[];
  * ovl_11 D_8012D548 record (ovl_11_func_8011B210). Address taken only. */
 extern u8 D_80051AA8[];
 
+/* D_80051E26 - base of a table in the D_80051xxx region; the s32 read from
+ * D_80054BC0[0] is added to its address (plus offsets 0/0x1A/0x32/0x4C and
+ * -0x60C) to form the four pointers stored into the ovl_11 D_8012D548 record
+ * and the two pointers stored into D_8012D538 by ovl_11_func_80113FF0.
+ * Address taken only (split lui/addiu). Never defined in the overlays. */
+extern u8 D_80051E26[];
+
 /* D_8012D52C - container-wide s32 busy/finished state flag of ovl_11, reset
  * by the 0x80114184 reset-stub family (see notes/file-groupings.md). */
 extern s32 D_8012D52C;

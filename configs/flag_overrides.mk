@@ -585,3 +585,26 @@ CC1FLAGS_ovl_11_func_800E7660 := -fno-cse-skip-blocks
 # This src file is its own TU (one function per file), so the override cannot
 # disturb the matched ovl_11 neighbours.
 CC1FLAGS_ovl_11_func_800EF8BC := -fno-cse-skip-blocks
+
+# ovl_11_func_80113FF0: -fno-cse-follow-jumps -fno-cse-skip-blocks.
+#
+# Target fingerprint (decoded from the original bytes, no source needed): block 0
+# of the original is a straight-line fill of the ovl_11 D_8012D548 record that
+# carries live strength-reduced pointer walks — six `addiu <reg>,<reg>,2`, three
+# `addiu <reg>,<reg>,1` and three `addiu <reg>,<reg>,4`, interleaved with the
+# `sh/sw/sb <reg>,0(<reg>)` stores they address. Under baseline flags cse.c
+# folds every one of those walks back to `base+offset` (`sh $r,0x2a($s4)` etc.)
+# and the function shrinks to 88 instructions; the target's 101 words carry the
+# walks, so the baseline form is unreachable from any C spelling (measured:
+# draft2-draft12, pointer/`*p++`/integer-base/cast/volatile and duplicated-tail
+# spellings all compile to the identical 88-instruction object).
+#
+# Flag column (psx_flag_probe --with-source): baseline 18/101 masked, 88 instrs;
+# -fno-cse-follow-jumps alone 88; -fno-cse-skip-blocks alone 88;
+# -fno-cse-follow-jumps -fno-cse-skip-blocks 100 instrs (target 101) and it is
+# the only measured column that retains the pointer walks. Same two-flag pair is
+# the mechanism-precedent family of the matched ovl_11_func_800EF8BC /
+# ovl_11_func_800F1678 / ovl_11_func_80103B24 (cse.c branch following), and this
+# src file is its own TU (one function per file), so the override cannot disturb
+# the matched ovl_11 neighbours.
+CC1FLAGS_ovl_11_func_80113FF0 := -fno-cse-follow-jumps -fno-cse-skip-blocks
