@@ -37,6 +37,29 @@ typedef struct {
     SpuExtAttrO ext;
 } SpuCommonAttrO;
 
+/* ovl_31 rodata: NUL-terminated "bu%d%d:%s" used by sprintf. */
+extern char D_800B7F20[10];
+/* ovl_31 rodata: NUL-terminated old FARM0 memory-card filename. */
+extern char D_800B7F2C[18];
+/* ovl_31 rodata: NUL-terminated new FARM0 memory-card filename. */
+extern char D_800B7F40[18];
+/* ovl_31 rodata: old FARM1 filename; ovl_11 has a different object at this address. */
+extern char Ovl31_D_800B7F54[18] __asm__("D_800B7F54");
+/* ovl_31 rodata: NUL-terminated new FARM1 memory-card filename. */
+extern char D_800B7F68[18];
+/* ovl_31 rodata: NUL-terminated old FARM2 memory-card filename. */
+extern char D_800B7F7C[18];
+/* ovl_31 rodata: NUL-terminated new FARM2 memory-card filename. */
+extern char D_800B7F90[18];
+/* ovl_31 rodata: NUL-terminated old FARMP memory-card filename. */
+extern char D_800B7FA4[18];
+/* ovl_31 rodata: NUL-terminated new FARMP memory-card filename. */
+extern char D_800B7FB8[18];
+/* ovl_31 data allocates 32 bytes for the first sprintf/rename path buffer. */
+extern char D_800B8870[32];
+/* ovl_31 data allocates 32 bytes for the second sprintf/rename path buffer. */
+extern char D_800B8890[32];
+
 /* Forward declaration - defined in game_types.h */
 struct GfxObj;
 
