@@ -2350,6 +2350,27 @@ extern u8 D_80053530[];
 extern u8 D_80137830[];
 extern u8 D_80137A30[];
 
+/* D_8013A5A4 - end of the ovl_15 sprite-data blob. ovl_15_func_801373A0
+ * passes it to func_8001719C and copies the preceding 0x2D74 bytes
+ * (D_8013A5A4 - 0x2D74 .. D_8013A5A4) into D_801428F0. Absolute-addressed
+ * (lui + %lo) from ovl_15 code, so only an extern declaration belongs here. */
+extern u8 D_8013A5A4[];
+
+/* D_801428F0 - ovl_15 sprite-data blob destination. ovl_15_func_801373A0
+ * fills it from the D_80137830 region and then parses five sprite-data
+ * headers out of it. Absolute-addressed (lui + %lo) from ovl_15 code. */
+extern u8 D_801428F0[];
+
+/* D_8013766C - five absolute offsets into the D_801428F0 blob, read by
+ * ovl_15_func_801373A0 to locate each sprite-data header. Absolute-addressed
+ * (lui + %lo) from ovl_15 code. */
+extern s32 D_8013766C[];
+
+/* D_80145670 - five 0x30-byte SpriteSourceData records initialized by
+ * ovl_15_func_801373A0 from the D_801428F0 blob. Absolute-addressed
+ * (lui + %lo) from ovl_15 code. */
+extern struct SpriteSourceData D_80145670[];
+
 /* D_80126F7C / D_80126F80 / D_80126F88 - ovl_11 state words. Written by
  * ovl_11_func_800F9D3C / 800F9D5C and the 800F9F58 state handler, and read
  * back by the same run. Absolute-addressed (lui + %lo) in ovl_11 code; they

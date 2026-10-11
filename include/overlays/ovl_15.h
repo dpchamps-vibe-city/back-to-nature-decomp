@@ -90,4 +90,5 @@ void ovl_15_func_801372F0(void);
 void ovl_15_func_801372F8(void);
 s32 ovl_15_func_80137300(void);
 void ovl_15_func_80137398(void);
+void ovl_15_func_801373A0(void);
 void ovl_15_func_80137544(char *arg0, s32 arg1);

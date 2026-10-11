@@ -12296,6 +12296,32 @@ Members (address order):
   `func_80014CBC(0x10, 0, 0x900, D_80137828, 1, 0)` until non-zero and returns
   it — a CD/streamed-load completion loop.
 
+## `ovl_15` streamed sprite-data load pair — 0x80137300 / 0x801373A0 (confidence: medium)
+
+Evidence: a shared streamed-load idiom plus link-order adjacency. Both functions
+emit the same `DrawSync(0)` → `ClearOTagR(D_8005E3C0->field_120, 0x800)` →
+`func_80014CBC(..., 1, 1)` issue → zero-return poll `func_80014CBC(..., 1, 0)`
+prefix and differ only in channel/length and destination buffer. The
+destinations are the adjacent absolute globals `D_80137828` (buffer pointer) and
+`D_80137830` (raw byte buffer), and the pair is near-adjacent in
+`configs/splat/ovl_15.yaml`: `[0x9518] ovl_15_func_80137300` (0x98, ends 0x95B0)
+is followed by the 8-byte empty stub `ovl_15_func_80137398` and then
+`[0x95B8] ovl_15_func_801373A0` (0x1A4). They are the issue/poll and the
+issue/poll-then-parse halves of one loader; the other ovl_15 `func_80014CBC`
+users (the `D_80137830`/`D_80137A30` checksum pair, `ovl_15_func_801359FC`) do
+not share this two-call poll shape.
+
+Members (link order):
+- ovl_15_func_80137300 (m, byte-exact) — streamed-load leaf:
+  DrawSync/ClearOTagR + `func_80014CBC(0x10, 0, 0x900, D_80137828, 1, 1)` then
+the zero-return poll, returning the completion code; also in the D_80137828
+buffer-pointer cluster above.
+- ovl_15_func_801373A0 (m, verified byte-exact this session) — streamed-load
+driver: same idiom with `func_80014CBC(0xE, 0, 0x8E90, D_80137830, 1, 1)`,
+then `func_8001719C(D_8013A5A4)`, a 0x2D74-byte memcpy into `D_801428F0`, and
+the five `func_80015704` SpriteSourceData inits at `D_80145670` driven by the
+private `D_8013766C` offset table.
+
 ## `ovl_11` D_8007AF80 interpolation-state pair — 0x800BFF74–0x800C0010 (confidence: medium)
 
 Evidence: one shared absolute-addressed global `D_8007AF80`, declared
