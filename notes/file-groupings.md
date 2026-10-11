@@ -10215,8 +10215,11 @@ Members (link order):
   (0x109/0x10A/0x160–0x166) to a slot index and draws through the shared
   `D_801456A0` buffer (`func_80015EE8`/`func_80017B3C`); direct callee of
   `ovl_15_func_801342A0`
-- ovl_15_func_801342A0 (s) — `lh` of `D_8013759E`; calls `ovl_15_func_80134134`,
-  `func_8001A970`, `ovl_15_func_80134444`
+- ovl_15_func_801342A0 (m, matched this session, byte-exact) — `lh` of
+  `D_8013759E`; walks the dual-base 0xB4/0xB8 record table (same layout
+  `ovl_15_func_80133538` counts: `u16@0x0`, `u32@0x34` flags, `0x708` mode-1
+  base) selected by caller `ovl_15_func_80133B28`; calls
+  `ovl_15_func_80134134`, `func_8001A970`, `ovl_15_func_80134444`
 - ovl_15_func_801344E8 (s) — `lh` of `D_8013759E`, called from `ovl_15_func_80133B28`
 - ovl_15_func_8013468C (m, matched this session, byte-exact) — gapless link
   predecessor of `ovl_15_func_80134724` and calls it; fills the 2x5 record table
