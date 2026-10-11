@@ -12296,9 +12296,13 @@ Members (address order):
   `func_80014CBC(0x10, 0, 0x900, D_80137828, 1, 0)` until non-zero and returns
   it — a CD/streamed-load completion loop.
 
-## `ovl_15` streamed sprite-data load pair — 0x80137300 / 0x801373A0 (confidence: medium)
+## `ovl_15` streamed sprite-data load cluster — 0x801372A0 / 0x80137300 / 0x801373A0 (confidence: medium)
 
-Evidence: a shared streamed-load idiom plus link-order adjacency. Both functions
+Evidence: a shared streamed-load idiom, a shared caller, and link-order adjacency.
+The orchestrator `ovl_15_func_801372A0` calls both loader halves in sequence and
+sits immediately before them in link order; the three 8-byte empty stubs
+`ovl_15_func_801372F0`, `ovl_15_func_801372F8` and `ovl_15_func_80137398` fill the
+gaps of the same contiguous run. Both loader functions
 emit the same `DrawSync(0)` → `ClearOTagR(D_8005E3C0->field_120, 0x800)` →
 `func_80014CBC(..., 1, 1)` issue → zero-return poll `func_80014CBC(..., 1, 0)`
 prefix and differ only in channel/length and destination buffer. The
@@ -12312,6 +12316,10 @@ users (the `D_80137830`/`D_80137A30` checksum pair, `ovl_15_func_801359FC`) do
 not share this two-call poll shape.
 
 Members (link order):
+- ovl_15_func_801372A0 (m, verified byte-exact this session) — dispatcher of the
+  run: calls `ovl_15_func_80137300` and `ovl_15_func_801373A0` (the latter only
+  when arg0 != 0) with the empty stubs `ovl_15_func_801372F0`/
+  `ovl_15_func_801372F8`/`ovl_15_func_80137398`.
 - ovl_15_func_80137300 (m, byte-exact) — streamed-load leaf:
   DrawSync/ClearOTagR + `func_80014CBC(0x10, 0, 0x900, D_80137828, 1, 1)` then
 the zero-return poll, returning the completion code; also in the D_80137828
