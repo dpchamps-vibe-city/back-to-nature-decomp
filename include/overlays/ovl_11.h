@@ -778,6 +778,7 @@ void ovl_11_func_80104418(s16 arg0, s16 *arg1);
 void ovl_11_func_8010476C(void);
 void ovl_11_func_801047FC(void);
 void ovl_11_func_80104898(void);
+void ovl_11_func_801048A0(void);
 void ovl_11_func_80104A58(void);
 void ovl_11_func_80104A80(void);
 void ovl_11_func_80104A88(void);

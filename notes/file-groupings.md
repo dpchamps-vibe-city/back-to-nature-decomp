@@ -14060,3 +14060,12 @@ Members (address order):
 - ovl_11_func_800BCB5C (s) — called by 0x800BC868; reads the +0x44C0/+0x44BA
   s16s and the +0x25388 record and calls `ovl_11_func_800C0834`.
 - ovl_11_func_800BCD28 (s) — reads `D_801287F4` and `D_801217A0`.
+
+Widening (byte-exact match of `ovl_11_func_801048A0`): the cluster's mode-entry
+initializer is now matched (0x1B8, void). It stores the cluster's counter state
+(`D_801287F4 = 10`) and reuses the run's data sites — zeroes the
+`D_8007AFF0`+0x2548C far word, writes +0x25498/+0x2549C = -1, and touches the
+`D_8006C838`+0x4488 counter and +0x4450 flag word that 0x800BC3AC/0x800BC868
+use — and it is entry 4 of the same `D_80121780` dispatch table whose entries
+0/1 are the cluster leaves 0x800BC3AC/0x800BC3E0. It is address-apart
+(0x801048A0), so same-TU membership with the run is plausible but unproven.
