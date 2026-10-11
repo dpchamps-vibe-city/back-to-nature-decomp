@@ -652,3 +652,31 @@ CC1FLAGS_ovl_25_func_800B95B0 := -fno-cse-follow-jumps
 # pointer-register allocation; single-flag columns do not. Precedent:
 # ovl_11_func_80113FF0 (same overlay, same function family, same two-flag pair).
 CC1FLAGS_ovl_11_func_8011ADF4 := -fno-cse-follow-jumps -fno-cse-skip-blocks
+
+# ovl_11_func_8011AC30: -fno-cse-follow-jumps -fno-cse-skip-blocks.
+#
+# Target fingerprint (decoded from the original bytes, no source needed): block 0
+# of the original is the same straight-line fill of the ovl_11 D_8012D548 record
+# as its zero-gap siblings ovl_11_func_80113FF0 and ovl_11_func_8011ADF4,
+# carrying live strength-reduced pointer walks — eight `addiu <reg>,<reg>,2`,
+# four `addiu <reg>,<reg>,1` and four `addiu <reg>,<reg>,4`, interleaved with the
+# `sh/sw/sb <reg>,0(<reg>)` stores they address. psx_reverse_pipeline on the
+# clean source reports exactly those target-only words (`target-only: 8× addiu
+# <reg>,<reg>,2; 4× addiu <reg>,<reg>,1; 4× addiu <reg>,<reg>,4; 3× sb
+# <reg>,0(<reg>)` …) with candidate-only `sh <reg>,42(<reg>)`/`sh
+# <reg>,72(<reg>)` constant-displacement equivalents; baseline cse.c folds every
+# walk back to base+offset and the function shrinks (candidate 95 instructions vs
+# the target's 113). The baseline form is unreachable from the same clean source
+# shape that is exact for the sibling under the override (draft, an inline-mask
+# form and the natural `*p++` family all compile to the folded object). This is
+# the identical mechanism, the identical container record and the identical walk
+# counts as ovl_11_func_8011ADF4.
+#
+# Flag column (psx_flag_probe --with-source on the clean source): the two-flag
+# pair is the only column that retains the pointer walks and reaches the target
+# instruction count (110 instrs vs target 113; every single-flag column collapses
+# to 93-95 and `-mno-split-addresses` to 93). Precedent: ovl_11_func_8011ADF4
+# and ovl_11_func_80113FF0 (same overlay, same function family, same two-flag
+# pair). This src file is its own TU (one function per file), so the override
+# cannot disturb the matched ovl_11 neighbours; no contrary regional witness.
+CC1FLAGS_ovl_11_func_8011AC30 := -fno-cse-follow-jumps -fno-cse-skip-blocks

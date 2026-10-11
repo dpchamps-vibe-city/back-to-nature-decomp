@@ -1884,6 +1884,14 @@ extern u8 D_80051E26[];
  * the pre-existing local view in ovl_11_func_8011DD48. */
 extern s32 D_8005181A;
 
+/* D_80051A90 - base of the shared D_80051xxx table region (== D_8005181A +
+ * 0x276); the s32 read from D_80054BBC[1] is added to its address (plus
+ * offsets 0/-0x1C2/-0x1A8/-0x192/-0x17A) to form the five pointers stored
+ * into the ovl_11 D_8012D548 record by ovl_11_func_8011AC30, and plus
+ * offsets 0/-0x252/-0x238/-0x21E by ovl_11_func_8011AA64. Address taken
+ * only; typed s32 to match the sibling view of D_8005181A. */
+extern s32 D_80051A90;
+
 /* D_8012D52C - container-wide s32 busy/finished state flag of ovl_11, reset
  * by the 0x80114184 reset-stub family (see notes/file-groupings.md). */
 extern s32 D_8012D52C;
