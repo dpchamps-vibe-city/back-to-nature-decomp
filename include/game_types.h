@@ -1087,3 +1087,28 @@ typedef struct {
     /* 0x04 */ s32 unk4;
     /* 0x08 */ s32 unk8;
 } Ovl11CE37CSample;
+
+/* ovl_11_func_80109188 argument: signed state fields and flags at +0x34. */
+typedef struct {
+    char pad_00[0x24];
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[6];
+    s32 unk34;
+} Ovl11PrimaryStageHandlerObj;
+
+/* ovl_11_func_800DF010/800E0C24: state fields, flags, and reset halfword. */
+typedef struct {
+    char pad_00[0x26];
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[0x34 - 0x2E];
+    s32 unk34;
+    char pad_38[0xB6 - 0x38];
+    s16 unkB6;
+} Ovl11StageHandlerObj;

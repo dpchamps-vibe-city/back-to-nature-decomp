@@ -14165,3 +14165,14 @@ This supports a candidate pair, not proven original TU boundaries.
 
 - ovl_11_func_800BE94C (m) — item bounding-box probe that records a hit and updates collision flags for the adjacent dispatcher.
 - ovl_11_func_800BEB28 (s) — collision dispatcher that scans item records through the preceding probe.
+
+## `ovl_11` pending-mode dispatcher caller/callee pair — 0x800D2710 / 0x800D2764 (confidence: low)
+
+Evidence: gapless original link order (0x800D2710 + 0x54 = 0x800D2764;
+`configs/splat/ovl_11.yaml`, offsets 0x1A8F0 → 0x1A944) agrees with the
+predecessor's direct `jal` at 0x800D2744
+(`build/ovl_11/asm/nonmatchings/ovl_11_func_800D2710/ovl_11_func_800D2710.s`).
+Candidate same-TU pair; original translation-unit boundaries remain unproven.
+
+- ovl_11_func_800D2710 (s) — readiness-gated caller that dispatches the pending mode in `D_80128D68`, then resets it to -1.
+- ovl_11_func_800D2764 (m) — stage-gated object-handler dispatcher that clears the selected result flag on a zero handler result.

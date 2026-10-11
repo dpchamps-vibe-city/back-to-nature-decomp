@@ -2976,5 +2976,21 @@ extern u16 Ovl15CardRetries __asm__("D_80137598");
 /* ovl_15 filename builder writes this 0x20-byte data object via strcpy. */
 extern char Ovl15CardFilename[0x20] __asm__("D_80140EC0");
 
+/* ovl_11_func_800D2764: lh compares these far fields using each global base. */
+struct Ovl11D2764StateView {
+    char pad_0[0x25476];
+    s16 field_25476;
+};
+struct Ovl11D2764StageView {
+    char pad_0[0x91DC];
+    s16 field_91DC;
+    char pad_91DE[0x92CC - 0x91DE];
+    s16 field_92CC;
+};
+/* ovl_11_func_800D2764 clears three absolute-addressed halfword result flags. */
+extern s16 D_80128D60;
+extern s16 D_80128D62;
+extern s16 D_80128D64;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
