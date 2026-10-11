@@ -1547,6 +1547,11 @@ Members (address order):
   shifts the id table down one slot and re-terminates entry 49 with `-1`;
   byte-exact clean C, baseline flags
 
+Candidate helper extension (confidence: low; corroborated call/link adjacency;
+see [evidence and limits](research/ovl_11_func_800C0FC0-grouping.md)):
+- ovl_11_func_800C0FC0 (m) — refreshes selected-value/day flags and date-pair equality flags.
+- ovl_11_func_800C11C4 (m) — clears flags 0x17–0x1A, then selects the flag indexed by its argument.
+
 ---
 
 ## `ovl_11` D_80122F0C 3×s16 lookup-table run — 0x800C1224–0x800C141C (confidence: medium)

@@ -268,6 +268,30 @@ struct Ovl11CurrentObjectView {
     s16 *current;
 };
 
+/* ovl_11_func_800C0FC0 compares signed halfwords at these D_8006C838 offsets. */
+struct Ovl11FlagDateView {
+    u8 pad_0[0x44BA];
+    s16 field_44BA;
+    s16 field_44BC;
+    u8 pad_44BE[0x5246 - 0x44BE];
+    s16 field_5246;
+    s16 field_5248;
+    u8 pad_524A[0xE778 - 0x524A];
+    s16 field_E778;
+    u8 pad_E77A[0xE798 - 0xE77A];
+    s16 field_E798;
+    s16 field_E79A;
+};
+
+/* ovl_11_func_800C0FC0 reads s16 at +0/+2, with a 0x1D4-byte indexed stride. */
+extern s16 D_80076244[];
+/* ovl_11_func_800C0FC0 reads this absolute-addressed signed-halfword pair. */
+struct Ovl11FlagDatePair {
+    s16 field_0;
+    s16 field_2;
+};
+extern struct Ovl11FlagDatePair D_8007A414;
+
 /* View of D_8006C838 for bit-flag access: a flat array of u32 flag words
  * starts at offset 0x38 (used by func_8001AF44 and its set/clear siblings).
  * Index range comes from a 16-bit flag id: (0xFFFF >> 5) + 1 words. */
