@@ -3362,6 +3362,38 @@ Members (address order):
 
 ---
 
+## `ovl_11` 0x8011A708–0x8011A998 record-handler run (confidence: medium)
+
+Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`). Zero-gap link order
+0x8011A708 (0x5C) → 0x8011A764 (0x20) → 0x8011A784 (0x20) → 0x8011A7A4
+(0x34) → 0x8011A7D8 (0xF8) → 0x8011A8D0 (0xC8) → 0x8011A998 (0x34),
+ending exactly where the documented D_8012D52C reset-stub family run begins
+at 0x8011A9CC — with no unrelated code between, the two runs form one
+unbroken text span. Every member opens with the common
+`ovl_11_func_8011CBC8()` (or sibling `ovl_11_func_8011CBE8()`) prologue —
+each a one-line `ovl_11_func_8011CC08(0|1)` forwarder — then calls a
+`D_8012D538`/`D_8012D548`/`D_8012D5A8` record helper with the shared `0x10`
+leading argument pair and returns 0. Shared-callee + zero-gap link-order
+fingerprint; the run reads the `D_8012D538` record that reset-stub-family
+member 0x8011A9DC initialises. Data TU ownership unconfirmed.
+
+Members (address order):
+- ovl_11_func_8011A708 (m, run head, byte-exact) — prologue then
+  `ovl_11_func_8011CD2C(D_8012D538, unk8, unk8*unkA, 0x10, 0x10)`
+- ovl_11_func_8011A764 (m) — prologue-only stub, returns 0
+- ovl_11_func_8011A784 (m) — prologue-only stub, returns 0
+- ovl_11_func_8011A7A4 (m) — prologue then
+  `ovl_11_func_8011D474(&D_8012D548, 0x10, 0x10)`
+- ovl_11_func_8011A7D8 (s) — copies five 0x10-byte blocks
+  (`D_8012D548+0x10..+0x60`) to a stack slice, then prologue and
+  `8011D474`/`8011CD2C` draws
+- ovl_11_func_8011A8D0 (s) — same `D_8012D548` slice walk, then prologue
+  and two `8011D474` draws (`D_8012D5A8`, `D_8012D548`)
+- ovl_11_func_8011A998 (m) — prologue (`8011CBE8`) then
+  `ovl_11_func_8011D474(&D_8012D548, 0x10, 0x30)`
+
+---
+
 ## `ovl_11` D_8012D52C reset-stub family — 0x80114184 / 0x8011A9CC–0x8011B6C0 (confidence: medium)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing one
