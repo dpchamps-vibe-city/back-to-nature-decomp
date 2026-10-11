@@ -45,5 +45,6 @@ s32 ovl_27_func_800BA7B0(void);
 void ovl_27_func_800BA80C(void);
 s32 ovl_27_func_800BA814(void);
 void ovl_27_func_800BA914(s32 arg0);
+void ovl_27_func_800BAA34(void);
 void ovl_27_func_800BABD4(void);
 void ovl_27_func_800BAC14(void);

@@ -9134,7 +9134,8 @@ add), and unmatched `ovl_27_func_800BAA34` carries the same count-up
 `sltiu`/`bnez` stride-6 loop form (original asm, including a bound-0x5 loop).
 
 Members (link order):
-- ovl_27_func_800BAA34 (s) — leaf: multi-loop 6-byte-stride field initialiser over `D_80071A00`
+- ovl_27_func_800BAA34 (m, byte-exact) — leaf: `D_80071A00` field initialiser; its four
+  loops share one count-up `u32` counter in the same `sltiu`/`bnez` form as 800BAC14
 - ovl_27_func_800BABD4 (m) — `D_8006C838 + 0xE4CC` s16 field writer, calls `func_80020A40`
 - ovl_27_func_800BAC14 (m, matched this session) — leaf: 5×6-byte record copy `D_800BCFF0` → `D_8006C838 + 0x468A`
 
@@ -13604,8 +13605,8 @@ Members (address order):
   records of 0x168-byte entries at `D_80071DFC` from the selected
   D_800BAC60/BB52C/BBDF8/BC6C4 sprite table, resolving each through the
   D_8006C838 palette pools.
-- ovl_27_func_800BAA34 (s) — undecoded neighbour between 800BA914 and
-  800BABD4.
+- ovl_27_func_800BAA34 (m) — `D_80071A00` field initialiser between 800BA914
+  and 800BABD4.
 - ovl_27_func_800BABD4 (m) — writes the 0x64CC..0x64D2 s16 quarter at
   `D_8006C838+0x8000`.
 - ovl_27_func_800BAC14 (m) — copies `D_800BCFF0` into `D_8006C838+0x468A`.
