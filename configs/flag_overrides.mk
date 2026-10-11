@@ -609,3 +609,27 @@ CC1FLAGS_ovl_11_func_800EF8BC := -fno-cse-skip-blocks
 # the matched ovl_11 neighbours.
 CC1FLAGS_ovl_11_func_80113FF0 := -fno-cse-follow-jumps -fno-cse-skip-blocks
 
+
+# ovl_25_func_800B95B0: -fno-cse-follow-jumps.
+#
+# Target fingerprint (decoded from the original bytes, no source needed): the
+# threshold cascade at 0x800B95E0-0x800B9648 keeps a REDUNDANT `sel = 0` set in
+# the val > 0x1DFFF arm (`j .L9644` with `addu s0,zero,zero` in its delay slot)
+# and branches with `beqz` to the next test. Baseline cse follows the single-use
+# conditional-branch target across the block-ending BARRIER (cse.c
+# cse_end_of_basic_block, follow_jumps path), carries the dominating `sel = 0`
+# from the prologue into the arm, deletes the set and inverts the branch to
+# `bne` (measured on the candidate .cse dump). The target's retained set and
+# `beqz` sense are unreachable under -fcse-follow-jumps from the natural
+# if/else-if cascade.
+#
+# Flag column: psx_flag_probe --with-source on the reconstructed source:
+# baseline 23/106 masked, -fno-cse-follow-jumps 76/106 and the only row that
+# restores the target's cascade (every other row <= 23). Instruction count
+# 105 vs target 106; the residual is source shape, not the flag.
+#
+# No contrary regional witness: this src file is its own TU (one function per
+# file); the flag is already a project precedent (ovl_11_func_80113FF0 uses
+# -fno-cse-follow-jumps -fno-cse-skip-blocks for the same cse.c branch-following
+# mechanism).
+CC1FLAGS_ovl_25_func_800B95B0 := -fno-cse-follow-jumps
