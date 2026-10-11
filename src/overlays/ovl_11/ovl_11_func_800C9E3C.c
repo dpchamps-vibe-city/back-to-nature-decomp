@@ -1,3 +1,13 @@
 #include "common.h"
+#include "game_types.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800C9E3C", ovl_11_func_800C9E3C);
+s32 ovl_11_func_800CAE64(Ovl11Func800CADBCArg0 *arg0, s32 arg1, Ovl11Func800CADBCArg0 *arg2, s32 arg3);
+
+s32 ovl_11_func_800C9E3C(s32 arg0) {
+    if (arg0 == 0) {
+        ovl_11_func_800CAE64((Ovl11Func800CADBCArg0 *) &D_80071A90, 8, (Ovl11Func800CADBCArg0 *) ((&D_80071A90 - 3)), 0);
+    } else {
+        ovl_11_func_800CAE64((Ovl11Func800CADBCArg0 *) &D_80071A90, 8, (Ovl11Func800CADBCArg0 *) ((&D_80071A90 - 3)), 1);
+    }
+    return 1;
+}

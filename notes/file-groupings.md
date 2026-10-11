@@ -8218,6 +8218,10 @@ Members:
   `ovl_11_func_800CAE64` on `D_80071AC0` (count 8) with a 0/1 mode and the
   record immediately before `D_80071A90` (`&D_80071AC0 - 9` records) as the
   second operand pair.
+- ovl_11_func_800C9E3C (m, matched 2026 — this session) — `D_80071A90` twin of
+  800C9DE8: calls `ovl_11_func_800CAE64` on `D_80071A90` (count 8) with a 0/1
+  mode and `&D_80071A90 - 3` records as the second operand pair; immediate
+  link-order successor of 800C9DE8 (0x11FC8 → 0x1201C).
 
 Same object, outside the suspected TU:
 - ovl_11_func_80102844 (m) — accessor: `(arg1*6)+&D_80071AC0`, or into
