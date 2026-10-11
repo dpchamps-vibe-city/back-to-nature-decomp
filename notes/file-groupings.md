@@ -79,6 +79,25 @@ translation units.
 
 ---
 
+## `ovl_11` `func_8001AF44(2)`/`D_8006C844 & 0x18000` guard pair — 0x800E3C4C–0x800E3CDC (confidence: medium)
+
+Evidence: zero-gap link-order contiguity (`configs/splat/ovl_11.yaml`: 0x2BDE4
+[800E3C04] → 0x2BE2C [800E3C4C] → 0x2BEBC [800E3CDC]); both members test the
+identical two-part guard `func_8001AF44(2U) != 1` together with
+`D_8006C844 & 0x18000`, a combination found nowhere else in `src/`; and the
+call edge 800E3C4C → 800E3CDC. Both reach the sprite-bank upload path
+`ovl_11_func_800E351C`, which carries only the weaker `func_8001AF44(2) == 1`
+half of the guard and is not adjacent, so it is cited as callee, not member.
+
+- ovl_11_func_800E3C4C (m) — guard-gated upload teardown: `DrawSync(0)` then
+  `ClearOTagR(D_8005E3C0->field_120, 0x800)`, then forwards `D_8005E70C`
+  through `func_800145F0` and `ovl_11_func_800E3CDC`.
+- ovl_11_func_800E3CDC (m) — guard-gated sibling that derives an s16 selector
+  from a sprite-bank state word and forwards its buffer to
+  `ovl_11_func_800E351C`.
+
+---
+
 ## `ovl_11` s16 range-map helper pair — 0x800CB020–0x800CB110 (confidence: medium)
 
 Evidence: link-order adjacency (0x800CB020 ends at 0x800CB0B0 where the next

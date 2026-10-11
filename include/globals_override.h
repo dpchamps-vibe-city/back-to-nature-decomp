@@ -613,6 +613,13 @@ extern u16 D_8005E438;
 extern s32 D_8005E5B4;
 extern s32 D_8005E5CC;
 
+/* D_8005E70C - absolute s32 scalar (ovl_11_func_800E3C4C). Loaded 4 bytes
+ * at +0 with an unsplit lui/lw pair, then passed both as the two arguments
+ * of func_800145F0 and as the pointer argument of ovl_11_func_800E3CDC, so
+ * it holds a pointer value; kept scalar so it stays within the -G8
+ * threshold and the address stays unsplit. */
+extern s32 D_8005E70C;
+
 /* D_80010098, D_8001009C, D_8005E328 - absolute s32 scalars (func_80011370 / func_8001205C)
  *
  * Scalars, not arrays. Addressing mode does not follow from the declared size:
