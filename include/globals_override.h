@@ -2548,6 +2548,11 @@ extern Ovl11B96BCFunc _D_800B96BC[19] __asm__("D_800B96BC");
 extern s32 _D_800B970C[20] __asm__("D_800B970C");
 #define D_800B970C _D_800B970C
 
+/* D_800C4A28 - ovl_27 saved D_8006C838+0xC flag word. ovl_27_func_800B7FE8
+ * writes the pre-mask value here and ovl_27_func_800B7F2C zeroes it;
+ * absolute-addressed (overlay build is -G0). */
+extern s32 D_800C4A28;
+
 /* D_800C4A2C - ovl_27 halfword state counter at 0x800C4A2C. Read
  * unsigned to increment and signed to threshold-test; absolute-addressed
  * (overlay build is -G0). */
