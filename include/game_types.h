@@ -521,6 +521,19 @@ typedef struct {
     s16 unk12;
 } Recon_ovl_19_func_800BA054_A0View;
 
+/* ovl_19_func_800BA0A0 arg0: state record whose +0x2 halfword selects the
+ * rate table entry, +0x4 selects the direction, and +0x10/+0x14 are the
+ * quantities the function advances. */
+typedef struct {
+    char pad_0[0x2];
+    u16 unk2;
+    s16 unk4;
+    char pad_6[0xA];
+    s16 unk10;
+    char pad_12[0x2];
+    s16 unk14;
+} Recon_ovl_19_func_800BA0A0_A0View;
+
 /* ovl_11_func_800CADBC arg0: array of three-s16 records; the function moves
  * each later non-empty record into the first empty slot and zeroes its source. */
 typedef struct {

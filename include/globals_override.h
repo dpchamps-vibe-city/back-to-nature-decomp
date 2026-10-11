@@ -2484,6 +2484,10 @@ extern s16 D_800BF4E0[];
  * negative displacements from it. The s16 timer at +0x4 is read signed and
  * unsigned and written back. Absolute-addressed (overlay build is -G0). */
 extern s16 D_800BF5A0[];
+/* D_800BF630 - ovl_19 s16 state halfword. ovl_19_func_800BA0A0 reads it
+ * directly (lui + %lo, then lh) as one of the switch-1 rate sources; the
+ * object lives in overlay RAM, so only an extern declaration belongs here. */
+extern s16 D_800BF630;
 extern u16 D_800BCEF0[];
 extern s16 D_800BCF0C[];
 extern u16 D_800BCF28[];

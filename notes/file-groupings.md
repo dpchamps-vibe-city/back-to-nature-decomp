@@ -11887,6 +11887,16 @@ Members (link order):
   `800B9AB0`/`800B9DC8`/`800B9DD0`/`800B9E14`/… writer chain.
 - ovl_19_func_800B9AB0 (s, 0x318) — second base reader; calls
   `800BA0A0`/`800BA564`/`800BA5B4`/`800BA65C`/`800BAC40`.
+- ovl_19_func_800BA0A0 (m, matched, byte-exact) — leaf rate-table consumer
+  on the same overlay-local `D_800BF4C0` array: switches on the caller
+  record's `unk2 - 3` and reads `D_800BF4C0[0xB8]` with the `0xCB`–`0xCF`
+  fixed-point multipliers — the exact block cluster member `800B82B8` seeds
+  at `+0xB8`–`+0xCF` — then advances `u16@+0x10`/`u16@+0x14` by the
+  `+0x4`-selected rate. The case-0/8 arm materialises the neighbouring
+  `D_800BF630` label (`D_800BF4C0` + 0x170 = `D_800BF4C0[0xB8]`) instead of
+  the array base, the same materialise-a-neighbouring-label fingerprint as
+  the `D_800BF4E0`/`D_800BF560` members. Called by cluster member `800B9AB0`;
+  sits between it and `800BA25C` in link order.
 - ovl_19_func_800BA25C (m, matched this session, byte-exact) — predicate
   dispatcher on the `D_800BF4C0` base: reads the record `s16@+0x12` of the
   `+0x10` and `+0x58` records and, on the two arms, fills the shared

@@ -2773,6 +2773,16 @@ typedef struct {
 } Recon_ovl_19_func_800BA054_A0View;
 
 typedef struct {
+    char pad_0[0x2];
+    u16 unk2;
+    s16 unk4;
+    char pad_6[0xA];
+    s16 unk10;
+    char pad_12[0x2];
+    s16 unk14;
+} Recon_ovl_19_func_800BA0A0_A0View;
+
+typedef struct {
  u_long tag;
  u_char r0, g0, b0, code;
  short x0, y0;
