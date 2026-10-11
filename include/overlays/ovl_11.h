@@ -795,6 +795,7 @@ void ovl_11_func_80107DE0(M2C_729a6ccf4038_UnkStruct80107DE0 *arg0, s16 arg1, s1
 s32 ovl_11_func_80107DEC(M2C_42071334137b_Ov11Timer *arg0);
 void ovl_11_func_80107F18(void);
 void ovl_11_func_80107F38(void);
+void ovl_11_func_80107F58(void);
 void ovl_11_func_80108104(void);
 void ovl_11_func_80108118(void);
 s32 ovl_11_func_801081A0(s16 arg0, u16 arg1);

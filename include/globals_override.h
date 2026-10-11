@@ -114,6 +114,10 @@ typedef struct {
     /* 0x02 */ s16 field_2;
 } Ovl11D050Entry;
 extern Ovl11D050Entry D_8012D050[3];
+
+/* D_8012D044 - farm-state dispatcher word (ovl_11, -G0 absolute).
+ * ovl_11_func_80107F58 switches on it and ovl_11_func_80108104 clears it. */
+extern s32 D_8012D044;
 /* The halfword view used by ovl_11_func_801082B0 has no witnessed full extent. */
 extern s16 D_8012D050_halfwords[] __asm__("D_8012D050");
 

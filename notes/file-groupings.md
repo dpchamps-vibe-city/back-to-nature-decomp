@@ -1099,8 +1099,10 @@ one or two touched globals per tiny function.
 Fingerprints:
 - cluster members and users: `D_8012D040`/`D_8012D044` (s32, cleared by
   ovl_11_func_80108104); `D_8012D044` set-once (1-if-0) by
-  ovl_11_func_80107F38 at 0x80107F38, immediately before the head run;
-  same state-flag role as the head writer, absolute-`lui`+`%lo` only; `D_8012D050` (buffer/array base, address-taken by
+  ovl_11_func_80107F38 at 0x80107F38, then switched on and written by
+  ovl_11_func_80107F58 at 0x80107F58, the two gapless predecessors of the
+  head run; same state-flag role as the head writer, absolute-`lui`+`%lo`
+  only; `D_8012D050` (buffer/array base, address-taken by
   ovl_11_func_801081A0 and ovl_11_func_801084E0); `D_8012D052` (u16 field at
   +2 of that base, read by ovl_11_func_80108214); `D_8012D060`/`D_8012D068`/
   `D_8012D06C` (ovl_11_func_80108930), `D_8012D070` (ovl_11_func_8010A47C),
@@ -1114,6 +1116,13 @@ Members (address order, matched so far):
 - ovl_11_func_80107F38 (m, matched this session) — set-once flag on
   D_8012D044 (1 if 0); shares the cluster global with the head writer
   ovl_11_func_80108104, which clears it to 0 across the boundary
+- ovl_11_func_80107F58 (m, this session) — cluster dispatcher/state-machine
+  head: switches on and writes D_8012D044, and is the run's shared caller
+  (ovl_11_func_80108104/80108118/80108214/8010860C/801086CC/80108738/80108828/
+  80108864/801088E4/80108930/801089DC/80108B8C); byte-exact clean C, baseline
+  flags; gapless link-order predecessor of the head writer ovl_11_func_80108104
+  (0x80107F58 + 0x1AC = 0x80108104) and successor of the D_8012D044 set-once
+  leaf ovl_11_func_80107F38
 - ovl_11_func_80108104 (m) — clears D_8012D040 and D_8012D044 to 0; cluster's
   confirmed writer at the run head
 - ovl_11_func_80108118 (m, matched this session) — head-run dispatcher/gate:
