@@ -633,3 +633,22 @@ CC1FLAGS_ovl_11_func_80113FF0 := -fno-cse-follow-jumps -fno-cse-skip-blocks
 # -fno-cse-follow-jumps -fno-cse-skip-blocks for the same cse.c branch-following
 # mechanism).
 CC1FLAGS_ovl_25_func_800B95B0 := -fno-cse-follow-jumps
+
+# ovl_11_func_8011ADF4: -fno-cse-follow-jumps -fno-cse-skip-blocks.
+#
+# Target fingerprint (decoded from the original bytes, no source needed): block 0
+# of the original is the same straight-line fill of the ovl_11 D_8012D548 record
+# as its sibling ovl_11_func_80113FF0, carrying live strength-reduced pointer
+# walks — eight `addiu <reg>,<reg>,2`, four `addiu <reg>,<reg>,1` and four
+# `addiu <reg>,<reg>,4`, interleaved with the `sh/sw/sb <reg>,0(<reg>)` stores
+# they address. Under baseline flags cse.c folds every walk back to base+offset
+# and the function shrinks (candidate 95 instructions vs the target's 112); the
+# baseline form is unreachable from any C spelling here too (draft, a no-base-
+# local form, a natural `*p++` form and an early-temp form all compile to the
+# same folded object). This is the identical mechanism and the identical
+# container record as ovl_11_func_80113FF0, which already carries this override.
+#
+# Flag column: on the clean source, the two-flag pair retains the walks and the
+# pointer-register allocation; single-flag columns do not. Precedent:
+# ovl_11_func_80113FF0 (same overlay, same function family, same two-flag pair).
+CC1FLAGS_ovl_11_func_8011ADF4 := -fno-cse-follow-jumps -fno-cse-skip-blocks

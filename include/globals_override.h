@@ -1876,6 +1876,14 @@ extern u8 D_80051AA8[];
  * Address taken only (split lui/addiu). Never defined in the overlays. */
 extern u8 D_80051E26[];
 
+/* D_8005181A - base of the shared D_80051xxx table region (== D_80051E26 -
+ * 0x60C); the s32 read from D_80054BBC[1] is added to its address (plus
+ * offsets 0x276/0x138/0x156/0x170/0x196) to form the five pointers stored
+ * into the ovl_11 D_8012D548 record by ovl_11_func_8011ADF4, and its address
+ * is taken by ovl_11_func_8011DD48. Address taken only; typed s32 to match
+ * the pre-existing local view in ovl_11_func_8011DD48. */
+extern s32 D_8005181A;
+
 /* D_8012D52C - container-wide s32 busy/finished state flag of ovl_11, reset
  * by the 0x80114184 reset-stub family (see notes/file-groupings.md). */
 extern s32 D_8012D52C;
