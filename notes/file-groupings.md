@@ -11908,6 +11908,16 @@ Members (link order):
   and calls the same cluster `800BA0A0`/`800BAC40`; gapless link-order
   successor of `800B9EDC` (0x800B9EDC + 0x64) and predecessor of `800B9FB0`
   (0x800B9F40 + 0x70).
+- ovl_19_func_800B9FB0 (m, matched this session, byte-exact) — fifth body of
+  the same overlay-local `D_800BF4C0` s16 state array, addressed directly as
+  `D_800BF4C0[0xC9]`: double-gates the record `s16@+0x6` against
+  `D_800BF4C0[0xC9] - 0x1E` and `- 0x2D` and calls the shared cluster
+  `800BA0A0`/`800BAC40`; on the `== 0x1E` arm writes
+  `D_800BF4C0[0x101] = func_8001FABC(0x3C)`, the exact `D_800BF4C0[0x101]` /
+  `func_8001FABC` display-time writer idiom shared with cluster members
+  `800B8F38` (0x3A/0x3B/0x3C/0x44) and `800B8E88`; gapless link-order
+  successor of `800B9F40` (0x800B9F40 + 0x70, 0xA4 bytes) and predecessor of
+  `800BA054` (0x800B9FB0 + 0xA4).
 - ovl_19_func_800BA0A0 (m, matched, byte-exact) — leaf rate-table consumer
   on the same overlay-local `D_800BF4C0` array: switches on the caller
   record's `unk2 - 3` and reads `D_800BF4C0[0xB8]` with the `0xCB`–`0xCF`
