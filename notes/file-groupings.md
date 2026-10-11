@@ -9861,7 +9861,7 @@ Members (link order):
   path selects `D_800BFE46` = 4/0 by `func_800225B8() == 1`, otherwise clamps
   the halfword down by 0x21
 
-## `ovl_25` D_800BFE54/D_800C0124 record-array driver run — 0x800B93BC–0x800B941C (confidence: medium)
+## `ovl_25` D_800BFE54/D_800C0124 record-array driver run — 0x800B9208–0x800B941C (confidence: medium)
 
 Candidate same-TU run of `ovl_25` that drives the record-reset
 `D_800BFE54`/`D_800C0124` object-array block. Evidence is gapless link
@@ -9874,6 +9874,10 @@ Fingerprints:
 - address adjacency: `ovl_25_func_800B93BC` (0x28, ends exactly 0x800B93E4),
   `ovl_25_func_800B93E4` (0x38, ends exactly 0x800B941C) and
   `ovl_25_func_800B941C` (0x64, ends exactly 0x800B9480) form one gapless run;
+- run-entry adjacency and shared record block: `ovl_25_func_800B9208` (0x1B4,
+  ends exactly 0x800B93BC) sits immediately before the run's first member and
+  walks the same six 0x78-byte records (stride base `D_800BFE44 + 0x10` =
+  `D_800BFE54`), so it is a consumer of the block the run drives;
 - shared dispatch: `ovl_25_func_800B93E4` calls `ovl_25_func_800B941C` and then
   the run's `ovl_25_func_800B9D4C`/`800B9E20`/`800B9E84`, while
   `ovl_25_func_800B941C` calls the run's remaining `ovl_25_func_800B9B28`/
@@ -9888,6 +9892,9 @@ Fingerprints:
   `D_800C024C` object-state base run, coupling this run to that one.
 
 Members (link order):
+- ovl_25_func_800B9208 (m, byte-exact) — six-record scan; walks the six
+  0x78-byte records, calls `ovl_25_func_800B9B00` on each `D_800BFE54` record,
+  and increments the `D_8006C838`+0x448C dispatch counter after a clean scan
 - ovl_25_func_800B93BC (m, byte-exact) — calls `ovl_25_func_800BA530`, then
   `ovl_25_func_800B93E4`
 - ovl_25_func_800B93E4 (m, byte-exact) — aggregate driver; calls
