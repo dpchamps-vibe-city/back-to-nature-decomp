@@ -2323,6 +2323,13 @@ extern s16 D_8013758C;
  * -G0 overlay code; only extern declarations belong here. */
 extern s16 D_8013758E;
 
+/* D_8013759E - ovl_15 private mode/state s16 in the overlay data segment,
+ * read by the D_8013759E/A0/A2/A4 state run (ovl_15_func_801344E8 selects its
+ * scan table with `lh D_8013759E`; ovl_15_func_80133F4C/801342A0 also read it).
+ * Absolute-addressed (lui + %lo) from -G0 overlay code; the TU family only
+ * declares it, so a scalar extern keeps the base name. */
+extern s16 D_8013759E;
+
 /* D_80053350 - text-updater array base in the PS-X EXE used by the shared
  * ovl_15 text-draw prologue (ovl_15_func_8012ED18 family add D_80054BBC[0]
  * to its address with the split lui/addiu form; also ovl_15_func_80130C8C).

@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern u16 D_8013759E;
+extern s16 D_8013759E;
 extern u16 D_801375A0;
 extern u16 D_801375A2;
 extern u16 D_801375A4;

@@ -10220,7 +10220,11 @@ Members (link order):
   `ovl_15_func_80133538` counts: `u16@0x0`, `u32@0x34` flags, `0x708` mode-1
   base) selected by caller `ovl_15_func_80133B28`; calls
   `ovl_15_func_80134134`, `func_8001A970`, `ovl_15_func_80134444`
-- ovl_15_func_801344E8 (s) — `lh` of `D_8013759E`, called from `ovl_15_func_80133B28`
+- ovl_15_func_801344E8 (m, matched, byte-exact) — `lh` of `D_8013759E`,
+  called from `ovl_15_func_80133B28`; slot lookup over the same dual-base
+  0xB4/0xB8 record table as `ovl_15_func_801342A0`/`80133538` (`case` on
+  `D_8013759E`; mode 0 `u16@0x0`/`u32@0x34 & 0x02020000`, modes 1/2
+  `u16@0x708`/`u16@0x7BA`), corroborating the shared-global tie
 - ovl_15_func_8013468C (m, matched this session, byte-exact) — gapless link
   predecessor of `ovl_15_func_80134724` and calls it; fills the 2x5 record table
   `D_80140F90` (0x50 bytes) that `ovl_15_func_801340B8` reads, then memsets the
