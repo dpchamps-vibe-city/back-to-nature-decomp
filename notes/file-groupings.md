@@ -11896,8 +11896,11 @@ Members (link order):
   twin of `800B9E14` on the same absolute-addressed `D_800BF64E` state (same
   `D_800BF64E - 0x1E` gate on `s16@+0x6`, same `800BA0A0`/`800BAC40` callee
   set); gapless link-order successor of `800B9E14` (0x800B9E14 + 0x64) and
-  predecessor of `800B9EDC` (0x800B9E78 + 0x64), whose NON_MATCHING body is
-  the same shape a third time — a triple duplicate run.
+  predecessor of `800B9EDC` (0x800B9E78 + 0x64).
+- ovl_19_func_800B9EDC (m, matched this session, byte-exact) — third identical
+  body of the same absolute-addressed `D_800BF64E` state / `800BA0A0` +
+  `800BAC40` shape; gapless link-order successor of `800B9E78` (0x800B9E78 +
+  0x64), closing the three-in-a-row duplicate run.
 - ovl_19_func_800BA0A0 (m, matched, byte-exact) — leaf rate-table consumer
   on the same overlay-local `D_800BF4C0` array: switches on the caller
   record's `unk2 - 3` and reads `D_800BF4C0[0xB8]` with the `0xCB`–`0xCF`
