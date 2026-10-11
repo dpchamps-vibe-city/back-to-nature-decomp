@@ -8835,7 +8835,7 @@ Members (link order):
   ends exactly at `ovl_11_func_8011CD2C` (0x1B4 at 0x8011CD2C), which ends
   exactly at `ovl_11_func_8011CEE0` (0x30 bytes at 0x0650C0), which ends
   exactly at `ovl_11_func_8011CF10` (0x30 bytes at 0x0650F0) — one unbroken
-  link run, consecutive functions.csv rows, all matched except 8011CD2C;
+  link run, consecutive functions.csv rows, now all matched;
 - **identical bodies modulo one symbol:** the two originals carry the same
   binary hash; every word agrees except the second `%hi/%lo` pair, which
   names `D_80051808` in one and `D_8005180C` in the other — adjacent
@@ -8852,6 +8852,11 @@ Members (link order):
   text base `D_8005175C + (D_80054BC0[0] + 0x76/0x6A)` and one of the two
   wrappers as the renderer, drawing via `func_8001A970`/`func_80017B3C` and a
   `func_800136D4` box.
+- ovl_11_func_8011CD2C (m, matched this session, byte-exact) — mid-run
+  recorder: takes the `D_8012D538` record by value, fills `D_8012D608`
+  through `func_8001A970`/`func_80017E34`, then draws text via the same
+  `D_8005E3C0->field_D8+0x30/+0x34`, `func_80017B3C`/`func_800136D4` idiom
+  as the head and calls 8011CEE0 for its embedded string.
 - ovl_11_func_8011CEE0 (m) — void leaf wrapper: copies the u16 string at
   `D_80054BC0[0] + &D_80051808` via func_8001ABF0
 - ovl_11_func_8011CF10 (m) — twin wrapper over `D_80054BC0[0] +
