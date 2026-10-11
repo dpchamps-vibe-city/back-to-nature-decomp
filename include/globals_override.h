@@ -238,6 +238,13 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* ovl_11_func_800C090C fills 0xC8 bytes here; matched queue users access s32 slots from this base. */
+extern s32 D_80128A88;
+/* ovl_11_func_800C090C clears these three absolute-addressed 32-bit state words. */
+extern s32 D_80128B50;
+extern s32 D_80128B54;
+extern s32 D_80128B58;
+
 /* ovl_11_func_80117178 scans ten 0xB4-byte records at +0x7AB4, reading u16 at +0 and flag bit 18 at +0x34. */
 struct Ovl11Scan109Record {
     u16 type;
@@ -266,6 +273,24 @@ struct Ovl11ItemCollisionGlobals {
 struct Ovl11CurrentObjectView {
     u8 pad_0[0x30];
     s16 *current;
+};
+
+/* ovl_11_func_800C090C resets these halfword/word fields through one D_8006C838 base. */
+struct Ovl11StateInitView {
+    u8 pad_0[0xD0];
+    s16 field_D0;
+    u8 pad_D2[2];
+    s32 field_D4;
+    u8 pad_D8[0x44B8 - 0xD8];
+    s16 field_44B8;
+    s16 field_44BA;
+    s16 field_44BC;
+    s16 field_44BE;
+    s16 field_44C0;
+    s16 field_44C2;
+    u8 pad_44C4[4];
+    s16 field_44C8;
+    s16 field_44CA;
 };
 
 /* ovl_11_func_800C0FC0 compares signed halfwords at these D_8006C838 offsets. */

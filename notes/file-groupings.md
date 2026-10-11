@@ -1522,7 +1522,7 @@ Members (address order):
   offsets an index by the `D_8006C838` s16 fields 0x44C0/0x44C2 (`*0x3C`
   stride) and calls `ovl_11_func_800C0D9C`; byte-exact clean C, baseline flags
 - ovl_11_func_800C08E8 (s) — leaf clear: `D_80128B5C = 0`
-- ovl_11_func_800C090C (s) — leaf clear: `D_80128B50 = 0`
+- ovl_11_func_800C090C (m) — input-state initializer: resets queue/state words and refreshes selection flags ([shared-reset evidence](research/ovl_11_func_800C090C-grouping.md)).
 - ovl_11_func_800C09D0 (m, matched this session) — input-state reset:
   `memset(&D_80128A88, -1, 0xC8)`, then clears `D_80128B50/B54/B58` and
   `D_8006C838` fields 0xD0/0xD4; the run's `D_80128A88`↔B5x bridge; byte-exact
