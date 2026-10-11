@@ -337,6 +337,17 @@ struct struct_8006C838_800D4030 {
     u16 field_99D8;         /* 0x99D8 */
 };
 
+/* ovl_11_func_800FC358: lh at +0x4A84, text address at +0x51C8,
+ * and signed lw at +0x5224, all through the same D_8006C838 base. */
+struct struct_8006C838_800FC358 {
+    char pad_0[0x4A84];
+    s16 field_4A84;
+    char pad_4A86[0x51C8 - 0x4A86];
+    s16 field_51C8;
+    char pad_51CA[0x5224 - 0x51CA];
+    s32 field_5224;
+};
+
 /* View of D_8006C838 for ovl_11_func_800CBF70: the s32 at +0x52CC. Reached
  * as a struct member so cc1 keeps lui %hi(D_8006C838) as the base and uses
  * 0x52CC as the load displacement (the target keeps lui %hi(D_8006C838),
@@ -1803,6 +1814,13 @@ extern Ovl11D80127274Entry D_80127274[];
 /* D_8012A028 - s16 scratch passed by address to func_8001A970 and
  * ovl_11_func_800FC544 by the ovl_11 countdown-table routines. */
 extern s16 D_8012A028;
+
+/* ovl_11_func_800FC358 reads each display counter with lh. */
+extern s16 D_8012CDE4;
+extern s16 D_8012CDE6;
+extern s16 D_8012CDE8;
+/* ovl_11_func_800FC358 passes this buffer to func_80015EE8; 800FC544 uses 0x30-byte rows. */
+extern u8 D_8012CDF8[];
 
 extern u8 D_8012737C[];
 

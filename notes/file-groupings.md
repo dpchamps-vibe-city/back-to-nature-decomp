@@ -3556,9 +3556,9 @@ non-members 0x800FC320, 0x800FC544, 0x800FD33C, 0x800FE54C), so the tie is the
 shared-global/idiom cluster, not adjacency.
 
 Members (address order):
-- ovl_11_func_800FC358 (s) — multi-row display builder; calls
-  `func_80015EE8` / `ovl_11_func_800FE7FC` / `func_80017B3C`, formats
-  `D_8012CDE6` into `D_8012A028` via `func_8001A970`
+- ovl_11_func_800FC358 (m) — multi-row formatted-number display builder;
+  candidate same-TU pair with its direct callee `ovl_11_func_800FC544`:
+  shared `D_8012CDF8` and zero-gap link order (0x800FC358 + 0x1EC = 0x800FC544)
 - ovl_11_func_800FC5F4 (s) — formats `D_80127264+2` into `D_8012A028`
   (`func_8001A970`, 3 digits + `0xFFFF` terminator), draws via
   `ovl_11_func_800FC544`
