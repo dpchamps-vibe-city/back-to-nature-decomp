@@ -7130,6 +7130,28 @@ Members:
 - ovl_11_func_800CB114 (stub) — second reader of `D_801230B0`, same absolute
   `lui`+`addiu %lo` base and `lh` pair-load idiom, 0x3CC.
 
+## `ovl_11` D_80128CF8 / D_801231F4-D_801231F8 shared-flag pair — 0x800C401C / 0x800C47F0 (confidence: medium)
+
+Evidence: `ovl_11_func_800C401C` is the sole caller of `ovl_11_func_800C47F0`
+(jal 0x800C41D4) and ends exactly at 0x800C47F0 (head + 0x7D4), so the call
+edge and strict link-order adjacency agree. The two share two absolute-
+addressed main-RAM cells: D_80128CF8, touched nowhere else in ovl_11 (written
+by 800C401C at 0x800C4328/0x800C4344, read by 800C47F0 at 0x800C4848), and the
+adjacent s32 flag pair D_801231F4/D_801231F8 (seeded by 800C401C from
+D_8006C838+4/+8 and D_8007522C/+4, nibble-rotated by 800C47F0). The pair alone
+does not fix ownership — it has farther readers/writers across 0x800C6AFC–
+8011FFA8 (incl. 800C99C8, 800CB114) and the clear/seed leaf
+ovl_11_func_800CD6F4 — but the pair-private D_80128CF8 cell plus the
+call/adjacency edge supports the C401C/C47F0 pairing; same-TU for the wider
+pair users stays unproven.
+
+Members:
+- ovl_11_func_800C401C (s) — head: seeds D_801231F4/F8 and writes D_80128CF8,
+  calls ovl_11_func_800CD6F4 then ovl_11_func_800C47F0.
+- ovl_11_func_800C47F0 (m, byte-exact) — nibble-rotation writer of
+  D_801231F4/D_801231F8, gated on D_80128CF8 and the D_8006C838+0xE4CC state
+  word.
+
 ## `ovl_11` D_80128DE8 bounds-struct init/copy/clamp run — 0x800DAFD4–0x800DB054 (confidence: medium)
 
 Evidence: three contiguous link-order functions (0x800DAFD4 ends 0x800DB00C,

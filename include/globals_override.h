@@ -333,6 +333,14 @@ struct struct_8006C838_800E65AC_b {
     s16 field_DE22;         /* 0xDE22 */
 };
 
+/* View of D_8006C838 for ovl_11_func_800C47F0: the s16 state word at
+ * +0xE4CC. Reached as a struct member so cc1 keeps lui %hi(D_8006C838),
+ * addiu %lo, ori 0x8000, addu followed by lh 0x64CC. */
+struct struct_8006C838_800C47F0 {
+    char pad_000[0xE4CC];   /* 0x0000-0xE4CB */
+    s16 field_E4CC;         /* 0xE4CC */
+};
+
 /* D_8007A670 - u8 base of the 0xF8-stride records reached by
  * ovl_11_func_800E65AC for arg3 == 1: the target passes (char *)D_8007A670 +
  * idx*0xF8 to ovl_11_func_800F06D8 (lui + addiu %lo(D_8007A670)).
@@ -2663,6 +2671,18 @@ typedef struct {
 extern Ovl11CoordTriple D_80128CD0;
 extern Ovl11CoordTriple D_80128CE0;
 extern s32 D_80128CEC;
+
+/* D_801231F4 / D_801231F8 - ovl_11 parallel 16-bit flag words read,
+ * masked with 0xFFFF0FFF and nibble-rotated by ovl_11_func_800C47F0;
+ * ovl_11_func_800CD6F4 clears D_801231F8 and stores a table value into
+ * D_801231F4. Absolute-addressed from the -G0 overlay; s32 keeps the word
+ * load/store width. */
+extern s32 D_801231F4;
+extern s32 D_801231F8;
+
+/* D_80128CF8 - ovl_11 word tested non-zero by ovl_11_func_800C47F0 to make
+ * the flag-word rotation run. Absolute-addressed from the -G0 overlay. */
+extern s32 D_80128CF8;
 
 #endif /* GLOBALS_OVERRIDE_H */
 
