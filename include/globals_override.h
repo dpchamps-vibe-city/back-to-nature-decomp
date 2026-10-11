@@ -2488,6 +2488,10 @@ extern s16 D_800BF5A0[];
  * directly (lui + %lo, then lh) as one of the switch-1 rate sources; the
  * object lives in overlay RAM, so only an extern declaration belongs here. */
 extern s16 D_800BF630;
+/* D_800BF64E - ovl_19 s16 state halfword. ovl_19_func_800B9E14 loads it
+ * directly (lui + %lo, then lh) and compares it against the +0x6 state field
+ * of its record argument. Absolute-addressed (overlay build is -G0). */
+extern s16 D_800BF64E;
 extern u16 D_800BCEF0[];
 extern s16 D_800BCF0C[];
 extern u16 D_800BCF28[];
