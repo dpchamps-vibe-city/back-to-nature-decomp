@@ -40,6 +40,9 @@ typedef struct {
 /* Forward declaration - defined in game_types.h */
 struct GfxObj;
 
+/* ovl_11_func_800D2710 reads the pending mode with lh and resets it with sh to -1. */
+extern s16 D_80128D68;
+
 /* ovl_11_func_800CC4E0 initializes this sprite via func_80015704. */
 extern struct SpriteSourceData D_80128C80;
 /* ovl_11_func_800CC4E0 stores a word flag when object id is 0x186. */
