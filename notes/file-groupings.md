@@ -10144,7 +10144,7 @@ Members (link order):
   seeds `D_800BFE44` fields at +0x3D0/+0x4C8, then calls
   `ovl_25_func_800B83A0`
 
-## `ovl_25` D_800BCBEC/D_800BCBF8 two-level state-dispatch tables — 0x800B853C–0x800B8728 (confidence: medium)
+## `ovl_25` D_800BCBEC/D_800BCBF8 two-level state-dispatch tables — 0x800B853C–0x800B8848 (confidence: medium)
 
 Two overlay-local function-pointer tables indexed by the two low halfwords of
 `D_800BFE44`; `ovl_25_func_800B853C` is the head of the `D_800BCBEC` run and
@@ -10169,7 +10169,11 @@ Fingerprints:
   `D_8007AFF0`+0x253B4/0x253B6/0x253B8 halfword block and the
   `D_800BCD21`/`D_800BCD48` pair, exactly the cluster `ovl_25_func_800BA858`
   (a `D_800BCBF8` entry dispatched from this same table) writes — the outer
-  `D_800BCBEC` handler and the inner `D_800BCBF8` writer run share the state.
+  `D_800BCBEC` handler and the inner `D_800BCBF8` writer run share the state;
+- candidate member extension: `800B8728` ends at and directly calls
+  `800B8848` (`build/ovl_25/functions/ovl_25_func_800B8728.s`); the verified
+  `src/overlays/ovl_25/ovl_25_func_800B8848.c` also shares `800B860C`'s
+  `D_800BFE44`+0x4CC and `D_800BCD21`/`D_800BCD48` write cluster.
 
 Members (link order):
 - ovl_25_func_800B853C (m, matched this session, byte-exact) — `D_800BCBEC[0]`;
@@ -10183,6 +10187,7 @@ Members (link order):
   `D_800BCD21`/`D_800BCD48`
 - ovl_25_func_800B8728 (s) — `D_800BCBEC[2]`; same divide-by-10000 timer-modulo
   on `D_800BFE44`+0xC
+- ovl_25_func_800B8848 (m, byte-exact) — input-driven object-state update and signed-selector text display.
 
 ## `ovl_25` display-setup state-handler run — 0x800BAC9C–0x800BAFCC (confidence: medium)
 

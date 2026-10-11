@@ -226,6 +226,12 @@ typedef struct Ovl25ObjectRecord {
     /* 0x48 */ SpriteSourceData record1;
 } Ovl25ObjectRecord;
 
+/* ovl_25_func_800B9758 reads only the signed state selector at +2. */
+typedef struct {
+    char pad_0[2];
+    s16 unk2;
+} Ovl25StateSelectorView;
+
 /* Polygon-list query consumed by func_8001EAE4. */
 typedef struct {
     s32 field_0;

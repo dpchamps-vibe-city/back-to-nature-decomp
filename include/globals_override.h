@@ -2359,6 +2359,20 @@ extern u8 D_800C02DC[];
  * the record type is defined in game_types.h, forward-declared here. */
 extern struct Ovl25ObjectRecord D_800BFE54;
 
+/* ovl_25_func_800B8848 reads/writes the signed halfword at +0x4CC; this named storage view preserves legacy scalar/array declarations of the base. */
+typedef struct {
+    u8 pad_0[0x4CC];
+    s16 unk4CC;
+} Ovl25StateView;
+extern Ovl25StateView D_800BFE44_view __asm__("D_800BFE44");
+/* ovl_25_func_800B8848 passes these halfword text streams to func_8001AC10; original data terminates with 0xFFFF. */
+extern u16 D_800BCB34[];
+extern u16 D_800BCB8E[];
+/* ovl_25_func_800B8848 stores a byte flag; matched neighbours declare it unsigned. */
+extern u8 D_800BCD21;
+/* ovl_25_func_800B8848 writes the first three halfwords; original data allocates four. */
+extern s16 D_800BCD48[4];
+
 /* D_800C0124 - ovl_25 base of a two-entry run of the same 0x78-byte
  * Ovl25ObjectRecord records, walked by ovl_25_func_800B941C after the
  * D_800BFE54 run and handed to ovl_25_func_800B9C90. Same absolute-addressed
