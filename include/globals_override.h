@@ -112,6 +112,9 @@ extern Ovl11Rec80124E00 D_80124E3C[];
  * fields at +0/+4/+8; the target materializes lui + addiu %lo(D_80076280). */
 extern s32 D_80076280[];
 
+/* ovl_11_func_800E5078 copies 0x30-byte sprites at stride 0x1D4 from base-0x30. */
+extern u8 D_800762D0[];
+
 /* D_8012D050 - 3-entry {s16,s16} farm-state array (ovl_11, -G0 absolute).
  * ovl_11_func_80108B8C reads field_0 @0x8 / field_2 @0xA of entry [2]. */
 typedef struct {
@@ -205,6 +208,12 @@ struct struct_8006C838 {
     char data[0x3C];  /* 60 bytes per struct */
 };
 extern struct struct_8006C838 D_8006C838[];
+
+/* ovl_11_func_800E5078 reads a pointer at +0x30, then its signed halfword at +2. */
+struct Ovl11CurrentObjectView {
+    u8 pad_0[0x30];
+    s16 *current;
+};
 
 /* View of D_8006C838 for bit-flag access: a flat array of u32 flag words
  * starts at offset 0x38 (used by func_8001AF44 and its set/clear siblings).

@@ -2540,12 +2540,12 @@ Members (address order, all matched, baseline flags):
 
 ---
 
-## `ovl_11` 0x800E48CC–0x800E5078 pointer-getter run (confidence: medium)
+## `ovl_11` 0x800E48CC–0x800E516C pointer-getter run (confidence: medium)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) in the lower-middle of
 the overlay. Evidence is strict link-order adjacency plus an internal call graph
-centred on a single shared leaf getter; no shared global — the grouping is the
-code, not data.
+centred on a single shared leaf getter. The tail extension is supported by
+[shared sprite-record evidence](research/ovl_11_func_800E5078-grouping.md).
 
 Fingerprints:
 - zero-gap link-order contiguity (map): 0x800E48CC (0xD0) → 0x800E499C
@@ -2593,7 +2593,8 @@ Members (address order, matched in bold):
   the `D_801291C0` s32 array, guarded by a 0x3C00 bit in an s16 word; shares
   that global cluster with its tail neighbour `ovl_11_func_800E4DAC`, which
   also reads `&D_801291C0`
-- ovl_11_func_800E4DAC (s) — run tail (0x2CC)
+- ovl_11_func_800E4DAC (s) — initialises selected sprites and dispatches auxiliary records
+- **ovl_11_func_800E5078 (m)** — restores 37 sprite records with conditional per-slot reinitialisation
 
 ---
 
