@@ -2691,6 +2691,28 @@ typedef struct {
 
 extern Ovl11Rect80128D80 D_80128D80;
 
+/* D_801248B4 - 8-byte RECT (x=320, y=0, w=128, h=255) copied into a local by
+ * ovl_11_func_800E351C and offset before LoadImage; w/h are also read from the
+ * global to advance the source pointer by the texture byte size. This is the
+ * gapless successor of the D_801247E8 delta table (51 s32 entries).
+ * Absolute-addressed (lui/%lo). Layout mirrors the PSY-Q RECT. */
+typedef struct {
+    /* 0x00 */ s16 x;
+    /* 0x02 */ s16 y;
+    /* 0x04 */ s16 w;
+    /* 0x06 */ s16 h;
+} Ovl11Rect801248B4;
+
+extern Ovl11Rect801248B4 D_801248B4;
+
+/* D_80129420 - 50-entry s32 array filled by ovl_11_func_800E351C with the
+ * per-segment word sums produced by ovl_11_func_800E39B8. Absolute-addressed. */
+extern s32 D_80129420[50];
+
+/* D_801294E8 - s32 destination base stored by ovl_11_func_800E351C (aligned
+ * down to a 4-byte boundary) and handed to memcpy. Absolute-addressed. */
+extern s32 D_801294E8;
+
 /* D_8006F5F0 - 0xE10-byte main-RAM buffer. ovl_11_func_800F0E00 clears and
  * block-copies 0xE10 bytes into it, then scans it as a 0x24-stride array of
  * u16-terminated records. Absolute-addressed (lui + %lo) from the -G0
