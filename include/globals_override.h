@@ -109,6 +109,9 @@ typedef struct {
 extern struct_80076220 _D_80076220[1] __asm__("D_80076220");
 #define D_80076220 (*((struct_80076220*)_D_80076220))
 
+/* ovl_11_func_800F1F48 indexes this 40-word table and passes each entry to the u16 stream walker. */
+extern u16 *D_80126BF0[40];
+
 /* D_80124DE4 - seven 4-byte {u16,u16} pairs walked by ovl_11_func_800F0C70,
  * which reads both halfwords with lhu and writes unk0 / unk2-1 into a parallel
  * 0xF8-stride record. Absolute-addressed (outside $gp). */

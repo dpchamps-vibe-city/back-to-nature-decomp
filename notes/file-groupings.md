@@ -7526,13 +7526,15 @@ ends exactly at 0x800F2354 (0xAC) — and the call graph agrees on the edge:
 to it in the container). The now-matched 0x800F213C is the stream walker the
 run's head invokes; the run's already-matched tail 0x800F227C is the
 documented non-adjacent consumer of the `D_80076220` 30-entry +0xE4 table, so
-this run supplies the link adjacency that data tie lacked. 0x800F1F48 and
-0x800F2354 remain stubs; adjacency + call edge only, TU boundary unproven.
+this run supplies the link adjacency that data tie lacked. The verified
+0x800F1F48 source now establishes the producer/consumer tie: it loads the
+same `D_80076220` 30-entry +0xE4 tables that 0x800F227C consumes. This
+shared-data evidence reinforces the 0x800F1F48/0x800F213C/0x800F227C core;
+it does not establish a TU boundary or merge the distant 800C1Bxx family.
+Confidence remains low.
 
 Members:
-- ovl_11_func_800F1F48 (s) — run head and sole caller of 0x800F213C; also
-  calls `ovl_11_func_80107DD0`, the same callee used by the `D_80076220`
-  record-initializer family.
+- ovl_11_func_800F1F48 (m, finalized) — 37-record initializer and table loader from `D_80126BF0` via 0x800F213C.
 - ovl_11_func_800F213C (m, matched this session, 0x140, byte-exact) — u16
   stream walker: `func_8001AF44` flag test with the 0x8000 invert bit, 0xFFFC
   pointer escape, 0xFFFE/0xFFFB sentinels; returns `arg1 + (marker & 0xFFFC)`
