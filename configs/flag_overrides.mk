@@ -680,3 +680,13 @@ CC1FLAGS_ovl_11_func_8011ADF4 := -fno-cse-follow-jumps -fno-cse-skip-blocks
 # pair). This src file is its own TU (one function per file), so the override
 # cannot disturb the matched ovl_11 neighbours; no contrary regional witness.
 CC1FLAGS_ovl_11_func_8011AC30 := -fno-cse-follow-jumps -fno-cse-skip-blocks
+
+# ovl_11_func_8011AA64: same pointer-walk fingerprint as its zero-gap
+# matched neighbours 8011AC30/8011ADF4: eight +2, four +1 and four +4
+# increments address interleaved zero-displacement stores. Baseline CSE
+# folds these walks into fixed displacements (97 instructions vs target 115).
+# The measured clean-source flag matrix has one dominant column: the pair
+# below retains all walks and emits 115 instructions (99/115 masked), while
+# either single flag emits 97/98. Both adjacent matched members require the
+# same pair and supply no contrary regional witness.
+CC1FLAGS_ovl_11_func_8011AA64 := -fno-cse-follow-jumps -fno-cse-skip-blocks
