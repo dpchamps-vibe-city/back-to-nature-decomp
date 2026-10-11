@@ -6098,6 +6098,10 @@ ties it to the vector-setter run ending at 0x800D7348 (see that entry).
 `Recon_ovl_11_func_800C8334_A0View` gate and the run call edge place it in the
 0x38/0x3C state-switch run above.
 
+Local placement of 800BE2C4 (confidence: low; distinct from membership in
+this accessor TU; [evidence](research/ovl_11-item-collision-family.md)):
+- ovl_11_func_800BE2C4 (m) — item X/Z bounds probe and hit recorder; candidate same-TU sibling of the ovl_11_func_800BE94C / ovl_11_func_800BEB28 collision pair.
+
 ---
 ## `ovl_11` D_8006C838 +0x8000 split-base gapless run — 0x800CF748 / 0x800CF848 / 0x800CF95C / 0x800CFA48 (confidence: medium)
 
