@@ -3343,13 +3343,17 @@ Fingerprints:
 - the run-head writer `ovl_11_func_800EE604` and the sandwiched members
   `ovl_11_func_800EE7BC`/`800EE944`/`800EEAB8`/`800EEBC8` also touch the
   s32 table `D_80129560` (main RAM 0x80129560, 0x50 bytes, ends 0x16
-  bytes below `D_801295C6`) — one file-scope data region, two globals —
-  which strengthens the same-TU read of the run.
+  bytes below `D_801295C6`). The matched run head additionally seeds the
+  six-word interpolation-state block `D_80129540`/`44`/`4C`/`50` (s32) and
+  `D_80129548`/`54` (s16), which occupies the contiguous bytes immediately
+  below `D_80129560` (0x80129540–0x80129558) — so the single file-scope
+  region is `D_80129540`–`D_801295C6`, one state block plus one table plus
+  the flag, which strengthens the same-TU read of the run.
 
 Members (address order):
 - ovl_11_func_800E60A0 (s) — writes D_801295C6 (`sh v0`), earlier site
 - ovl_11_func_800E880C (s) — reads and writes D_801295C6, earlier site
-- ovl_11_func_800EE604 (s) — run-head writer of D_801295C6 (`sh v0`)
+- ovl_11_func_800EE604 (m, matched this session) — run-head state machine: seeds/reads the `D_80129540`..`D_80129554` block and clears `D_801295C6` from the `D_8007AFF0`+0x25394 work area, then steps the `D_80129560[arg0]`/`[arg1]` slot pair through states 0/1/2 via `func_8001F2EC`
 - ovl_11_func_800EE7BC (s) — sandwiched, does not touch the global
 - ovl_11_func_800EE944 (m) — sandwiched `D_80129560` table-writer (calls 800EE7BC(1, arg0, 0, 0)); does not touch `D_801295C6`
 - ovl_11_func_800EEAB8 (m, matched this session) — sandwiched call-graph child of run member `ovl_11_func_800EE7BC`: calls `ovl_11_func_800EE7BC(1, arg0, 0, 0)` (its table-write branch), then loads the three s16 fields of the 5-entry 6-byte table `D_801249F8[slot]` (its only known user, newly declared in `globals_override.h`) into `D_80129560[arg0]`/`[arg1]`/`[arg2]`; does not touch `D_801295C6`

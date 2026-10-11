@@ -1215,6 +1215,20 @@ extern u8 D_801249EC[];
 extern s32 _D_80129560[] __asm__("D_80129560");
 #define D_80129560 ((s32 *)_D_80129560)
 
+/* D_80129540/D_80129544/D_8012954C/D_80129550 - ovl_11 s32 interpolation
+ * state words written by ovl_11_func_800EE604 (sw %lo) from the
+ * D_8007AFF0 + 0x25394/0x25398 work area. D_80129548/D_80129554 are the
+ * matching signed halfwords (sh %lo from a lhu read of the far field), and
+ * D_801295C6 is a signed halfword cleared to -1 by the same function.
+ * Absolute-addressed from the overlays (only ever declared extern, never GP). */
+extern s32 D_80129540;
+extern s32 D_80129544;
+extern s16 D_80129548;
+extern s32 D_8012954C;
+extern s32 D_80129550;
+extern s16 D_80129554;
+extern s16 D_801295C6;
+
 /* D_80128422 - s16 slot index into the D_801284AC position table, read by
  * ovl_11_func_8011ECC4 (lh) and cleared by ovl_11_func_8011E574. Only ever
  * declared extern in the overlays, so it stays absolute-addressed. */
