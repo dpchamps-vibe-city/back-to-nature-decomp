@@ -7692,6 +7692,7 @@ Fingerprints:
   these accessors container-wide — readers 800E6914 (bit-gated
   `arg0`-selects which of `arg2`/`arg3` resolve through the table),
   800E69B8 (passes `D_80129560[arg2]` as `ovl_11_func_800EFABC`'s third arg),
+  800EB760 (mirror pass of `D_80129560[(s16)arg1]` as that leaf's second arg),
   800E5A1C (loads `D_80129560[(s16)arg1]` as the limit, compares
   `D_80129560[(s16)arg0]`/2 — or `(s16)arg0`/2 when `arg2 == 0` — against it),
   800ED760 (`arg2 != 0` resolves the scan target through the table),
@@ -7764,6 +7765,11 @@ Members:
   successor of 800E69B8 (0x40), extending the contiguous run above.
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
+- ovl_11_func_800EB760 (m, matched this session, 0x3C, byte-exact) —
+  guarded-slot forwarder: `ovl_11_func_800EFABC(arg0, D_80129560[(s16)arg1],
+  arg2, arg3); return 1;`, the argument-position mirror of family member
+  800E69B8. Zero-gap link-order predecessor of 800EB79C (0x800EB760 + 0x3C),
+  so a shared private table, a shared three-arg leaf and adjacency agree.
 - ovl_11_func_800EB79C (m, matched 2026-09 — this session, 0xC0, byte-exact) —
   record flag-field setter: index = `D_80129560[(s16)arg0]` when `arg2 != 0`,
   the raw `(s16)arg0` otherwise; then in the 0x1D4-stride record space off
