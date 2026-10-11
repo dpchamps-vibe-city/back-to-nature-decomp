@@ -76,6 +76,7 @@ void ovl_11_func_800C1C5C(s32 arg0);
 void ovl_11_func_800C1C90(void);
 void ovl_11_func_800C1CBC(s32 arg0);
 s32 ovl_11_func_800C2884(s16 key, u32 *table);
+s32 ovl_11_func_800C28CC(s16 arg0, SpriteSourceData *arg1);
 void ovl_11_func_800C2A98(M2C_ed53708abf36_Struct800C2A98 *arg0);
 s32 ovl_11_func_800C3548(s32 arg0);
 s32 ovl_11_func_800C3828(void);

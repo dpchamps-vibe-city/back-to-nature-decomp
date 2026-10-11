@@ -2873,5 +2873,33 @@ extern s32 D_801217A4;
  * scalar extern keeps the base name. */
 extern s16 D_80129418;
 
+/* D_8009CBF8: ovl_11_func_800C2884 reads counted words; other users copy bytes. */
+extern s32 D_8009CBF8;
+/* D_8008F7F8 word view: the helper reads u32 counts/items; existing users
+ * also address this bank through signed and unsigned scalar views. */
+extern u32 D_8008F7F8_words[] __asm__("D_8008F7F8");
+/* ovl_11 data contains 50 pointers to counted word-offset lists. */
+extern s32 *D_80125DC0[50];
+/* ovl_11_func_800C28CC publishes the group and one-based item index (sw). */
+extern s32 D_80128B74;
+extern s32 D_80128B78;
+
+/* ovl_11_func_800C28CC: halfword selectors at the witnessed displacements. */
+struct Ovl11SpriteSelectors {
+    char pad0[0x44BE];
+    u16 day;
+    char pad44C0[4];
+    u16 hour;
+    char pad44C6[0xE776 - 0x44C6];
+    s16 season;
+    char padE778[4];
+    s16 variant;
+};
+/* ovl_11_func_800C28CC: lw at D_8007AFF0+0x25388 points to a halfword header. */
+struct Ovl11SpriteWork {
+    char pad0[0x25388];
+    s16 *header;
+};
+
 #endif /* GLOBALS_OVERRIDE_H */
 
