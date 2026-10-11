@@ -238,6 +238,19 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* ovl_11_func_80117178 scans ten 0xB4-byte records at +0x7AB4, reading u16 at +0 and flag bit 18 at +0x34. */
+struct Ovl11Scan109Record {
+    u16 type;
+    u8 pad_2[0x32];
+    u32 flags;
+    u8 pad_38[0x7C];
+};
+
+struct Ovl11Scan109Globals {
+    u8 pad_0[0x7AB4];
+    struct Ovl11Scan109Record records[10];
+};
+
 /* ovl_11_func_800BE94C indexes four original-data halfwords by the +0x44BA selector. */
 extern u16 D_80122E6C[4];
 
