@@ -8305,6 +8305,13 @@ Members:
   walker over pool slot `+0xDDB4`: 13 records, toggling the +0x4 bit-0 flag
   from the +0x51C0/+0x44BA/+0x44D4 gate state; zero-gap predecessor of the
   `ovl_11_func_800F53BC` leaf.
+- ovl_11_func_800F3FF4 (m) — dispatcher feeding the pair: calls both
+  `ovl_11_func_800F5210(arg0)` and `ovl_11_func_800F508C(arg0)`, gates on the
+  shared `D_8006C838`+0x44BA word, then reads pool pointer-array entry 18
+  (`D_8006C838`+0xDDD4 = 0x8007A60C, the last slot of the 19-pointer array the
+  pair walks) to select `ovl_11_func_800F4CEC` / `ovl_11_func_8010941C`;
+  gapless link predecessor of the walk head `ovl_11_func_800F40A4`
+  (0x800F3FF4+0xB0 = 0x800F40A4).
 
 ## `ovl_11` D_80075AD4 0xF0-byte record access cluster — 0x800CF314 / 0x800C580C / 0x8010C1FC / 0x8010B1C4 (confidence: medium)
 
