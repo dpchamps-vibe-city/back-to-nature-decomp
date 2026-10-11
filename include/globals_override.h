@@ -2764,5 +2764,12 @@ extern s32 D_80128CF8;
  * Absolute-addressed from the -G0 overlay. */
 extern u16 D_80071318[11];
 
+/* D_801217A4 - main-RAM s32 state/flag word. ovl_11_func_800BC9AC loads it
+ * with lw at 0x800BC9B0 and again at 0x800BCB04 to select its
+ * func_8001FBBC vs func_8001FB30/func_8002029C paths; the neighbouring
+ * ovl_11_func_800BC868 (m2c baseline) stores zero into the same word.
+ * Absolute-addressed (lui + lw %lo), so a scalar extern keeps the base name. */
+extern s32 D_801217A4;
+
 #endif /* GLOBALS_OVERRIDE_H */
 

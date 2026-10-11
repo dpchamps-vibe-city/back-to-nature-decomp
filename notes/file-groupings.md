@@ -13906,3 +13906,45 @@ Members (address order):
   (or `arg2 & 0xFFFF`).
 - ovl_11_func_800E8BA0 (m) — entity-record reader: copies `u16@+2` of the
   record into `D_80129560[arg1]`.
+
+---
+
+## `ovl_11` D_801287F4 counter-state run — 0x800BC3AC–0x800BCD28 (confidence: medium)
+
+Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): the unbroken
+link-order run around the recorded `D_801287F4` counter-state cluster, now
+extended by the matched `ovl_11_func_800BC9AC`. Shared-global + gapless-
+adjacency fingerprint, with the container's usual absolute-addressed main-RAM
+globals (`-G0`, never gp-rel).
+
+Fingerprints:
+- **gapless link-order run** (`configs/splat/ovl_11.yaml`): 0x800BC3AC (0x34)
+  → 0x800BC3E0 (0x488) → 0x800BC868 (0x144) → 0x800BC9AC (0x1B0) →
+  0x800BCB5C (0x1CC) → 0x800BCD28, each starting exactly where the previous
+  ends;
+- **shared globals across the 0x800BC868/0x800BC9AC neighbour pair**: both
+  read the `D_8007AFF0`+0x25388 far-buffer pointer slot and the +0x2549C
+  state word; 0x800BC868 writes the flag word `D_801217A4` (`sw $zero` /
+  `sw 1`) that 0x800BC9AC reads on both call paths (`include/globals_override.h`
+  declares it extern by this session's evidence); 0x800BCD28 reads the adjacent
+  `D_801217A0`;
+- **shared callee/idiom**: 0x800BC9AC and its gapless successor 0x800BCB5C both
+  read the `D_8006C838`+0x44C0/+0x44BA s16s and call `ovl_11_func_800C0834`;
+  0x800BC868 calls the run's 0x800BCB5C;
+- **counter global**: 0x800BC3AC stores 0 to `D_801287F4` and increments the
+  `D_8006C838`+0x4488 counter, 0x800BC3E0 switch-dispatches on `D_801287F4`,
+  and 0x800BCD28 reads it.
+
+Members (address order):
+- ovl_11_func_800BC3AC (m) — zeroes `D_801287F4` and `D_8007AFF0`+0x2548C,
+  increments the `D_8006C838`+0x4488 counter.
+- ovl_11_func_800BC3E0 (s) — reads `D_801287F4` and switch-dispatches on it.
+- ovl_11_func_800BC868 (s) — state reset: calls 0x800BCB5C, gates on the
+  `D_8006C838`+0x4450 flags, and writes `D_801217A4` plus
+  `D_8007AFF0`+0x25498/+0x2549C.
+- ovl_11_func_800BC9AC (m, verified byte-exact this session) — volume/ducking
+  selector reading `D_801217A4` and the +0x25388 record's u16s, routing to
+  `func_8001FB30` / `func_8002029C`.
+- ovl_11_func_800BCB5C (s) — called by 0x800BC868; reads the +0x44C0/+0x44BA
+  s16s and the +0x25388 record and calls `ovl_11_func_800C0834`.
+- ovl_11_func_800BCD28 (s) — reads `D_801287F4` and `D_801217A0`.
