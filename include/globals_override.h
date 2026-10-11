@@ -2684,5 +2684,10 @@ extern s32 D_801231F8;
  * the flag-word rotation run. Absolute-addressed from the -G0 overlay. */
 extern s32 D_80128CF8;
 
+/* D_80071318 - ovl_11 u16 record table read with lhu at 0x16-byte stride by
+ * ovl_11_func_80100898, ovl_11_func_80100A8C and ovl_11_func_80100F9C.
+ * Absolute-addressed from the -G0 overlay. */
+extern u16 D_80071318[11];
+
 #endif /* GLOBALS_OVERRIDE_H */
 

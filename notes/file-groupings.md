@@ -2881,9 +2881,20 @@ absolute `lui`+`lbu %lo` base and test bits of that byte (`and`/`andi` +
 `D_80070D04`. Inside the run, `ovl_11_func_80100A8C` and link follower
 `ovl_11_func_80100F9C` both index the same 0x16-stride `D_80071318` record
 (mask `u16@+4`, eight-value `u16@+6` array), a shared file-scope global
-reader cluster independent of the `D_80070D04` probe.
+reader cluster independent of the `D_80070D04` probe. A third matched reader,
+`ovl_11_func_80100898`, indexes the same `D_80071318` 0x16-stride record
+table, and a gapless link chain plus a sole-caller edge tie it to the run
+head: 0x80100898 (0x19C) ends exactly at 0x80100A34 (0x58), which ends
+exactly at 0x80100A8C, and 80100898 is the only caller of 80100A34.
 
 Members (address order):
+- ovl_11_func_80100898 (m, matched this session, 0x19C, byte-exact) — 2×10
+  `D_80071318` record scan (same 0x16-stride u16 record table as 80100A8C/
+  80100F9C), calling 80100A34 for the record-to-offset map; gapless link
+  predecessor of 80100A34
+- ovl_11_func_80100A34 (m, matched, 0x58, byte-exact) — `D_80050B5C`
+  0x20-stride item-table lookup, the sole callee of 80100898 and gapless link
+  predecessor of the run head 0x80100A8C
 - ovl_11_func_80100A8C (m, matched this session, byte-exact) — direct caller of
   both 0x80100E68 and 0x80100EB8; 0x16-stride `D_80071318` record reader
 - ovl_11_func_80100B50 (s) — direct caller of 0x80100E68
