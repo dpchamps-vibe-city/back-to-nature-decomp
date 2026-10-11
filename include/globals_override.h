@@ -243,6 +243,13 @@ struct struct_8006C838_time {
     s16 field_44C2;         /* 0x44C2 */
 };
 
+/* ovl_11_func_800F9FF4 reads u16 at +0x44BC and s16 at +0x44BE from this base. */
+struct Ovl11MenuDateView {
+    u8 pad_0[0x44BC];
+    u16 field_44BC;
+    s16 field_44BE;
+};
+
 /* View of D_8006C838 for ovl_11_func_80111A60: the s16 at +0x44BA plus the
  * two time-like fields at +0x44C0/+0x44C2. Reached as a struct member so cc1
  * keeps lui %hi(D_8006C838) followed by lh 0x44BA/0x44C0/0x44C2 rather than
@@ -2463,6 +2470,8 @@ extern struct SpriteSourceData D_80145670[];
  * live in the overlay data segment, so only extern declarations belong here. */
 extern s32 D_80126F7C;
 extern s32 D_80126F80;
+/* ovl_11_func_800F9FF4 loads/stores this menu selection as a signed word. */
+extern s32 D_80126F84;
 extern s32 D_80126F88;
 
 /* D_801287F8 - ovl_11 pointer slot written by ovl_11_func_800BD938, which
