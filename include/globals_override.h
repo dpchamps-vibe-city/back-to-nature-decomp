@@ -1535,6 +1535,9 @@ extern u8 D_800B9DC0[];
  * ovl_28_func_800B8D48 and passed as a SpriteDataHeader to func_80015704. */
 extern u8 D_800B9DF0[];
 
+/* D_800B936C: 66-byte command stream, indexed with lbu by ovl_28_func_800B8478. */
+extern u8 D_800B936C[66];
+
 /* D_800B93B4 - s32 frame-time delta set to 0x800 by ovl_28_func_800B8414 and
  * subtracted from a record's unk8 by ovl_28_func_800B8AA8. */
 extern s32 D_800B93B4;

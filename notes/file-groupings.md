@@ -10354,7 +10354,7 @@ Members (slot order):
   calls `ovl_28_func_800B895C`, resets the `D_800B93AE`/`B0`/`B2`/`B4`/`B8`/`BC`
   state cluster (`D_800B93B4 = 0x800`), and installs `ovl_28_func_800B8478`
   into slot `D_800B9614`
-- ovl_28_func_800B8478 (s) — slot 7 successor installed by 800B8414
+- ovl_28_func_800B8478 (m, byte-exact) — [slot 7 command-stream handler](research/ovl_28_func_800B8478-grouping.md): updates record state and signals completion
 - ovl_28_func_800B865C (m, matched this session, byte-exact) — slot 8
   setup: installs `ovl_28_func_800B86D8` into `D_800B9618`, resets the
   `D_800B93C0`/`C4`/`C6`/`C8`/`CA`/`CE` halfword/word cluster, and gates on
