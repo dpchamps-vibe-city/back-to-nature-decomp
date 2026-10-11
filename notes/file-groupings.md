@@ -3449,15 +3449,18 @@ Fingerprints:
   (0x10) → 0x8011AA64 (0x1CC) → 0x8011AC30 (0x1C4) → 0x8011ADF4 (0x1C0) →
   0x8011AFB4 (0x25C) → 0x8011B210 (0xA0) → 0x8011B2B0 (0x404) → 0x8011B6B4
   (0x10), each function starting exactly where the previous one ends;
-- our member 0x80114184 sits earlier (0x80114184) amid other D_8012D52C
-  writers — `ovl_11_func_80113FF0` clears the flag via `$a0` at 0x80114178 and
-  `ovl_11_func_80114194` clears it at 0x8011438C — same family, earlier text
-  span; same-TU tie to the contiguous run is plausible but not proven.
+- earlier zero-gap neighbourhood `80113FF0 → 80114184 → 80114194 →
+  80114398`: the verified `ovl_11_func_80114194` shares `D_8012D548` and
+  the `ovl_11_func_80111F10`/`ovl_11_func_8011D400` helper pair with the
+  flanking initialisers, corroborating candidate membership beyond the busy
+  flag alone. Same-TU linkage to the later run and data ownership remain
+  unproven; evidence: `notes/research/ovl_11_func_80114194-grouping.md`.
 
 Members (address order):
 - ovl_11_func_80114184 (m, matched this session) — leaf reset stub:
   `D_8012D52C = 0; return 1;` (`lui`/`sw`/`jr`/`addiu`); byte-exact clean C,
   baseline flags; the 0x80114184 member of the reset-stub family
+- ovl_11_func_80114194 (m, candidate same TU) — flag-gated initialiser of the `D_8012D548`/`D_8012D5A8` record pair; clears the busy flag and reports handled.
 - ovl_11_func_8011A9CC (m, matched this session) — identical leaf reset stub, run head at 0x8011A9CC; byte-exact clean C `D_8012D52C = 0; return 1;` (`lui`/`sw`/`jr`/`addiu`), baseline flags, confirming the family's identical-body fingerprint against the matched `ovl_11_func_80114184`
 - ovl_11_func_8011A9DC (m, matched this session) — non-leaf flag-writer member of the zero-gap run between 8011A9CC and 8011AA44 (its measured 0x68 size corrects the run list above): initialises the s32/s32/s16/s16 record at `D_8012D538` (pointer fields from `D_80054BC0[0] + (s32)&D_8005182A`, the second at -0x10) via a helper call, then clears the family flag `D_8012D52C = 0; return 1;` — same shared-data-symbol idiom as the recorded `D_8005181A` leaf `ovl_11_func_8011DD48`
 - ovl_11_func_8011B210 (m, matched this session) — non-leaf initialiser at 0x8011B210, a zero-gap run member between 8011AFB4 and 8011B2B0: calls the run helper `ovl_11_func_8011D400`, writes the 0x60-byte `D_8012D548` record (s8 at 0x3C/0x3D/0x5A/0x5B, s16 at 0x28/0x2A/0x46/0x48/0x5C) and its two pointer fields from `D_80054BC0[0] + (s32)&D_80051AA8` (second +0xA), then clears the family flag `D_8012D52C = 0; return 1;` — same `D_80054BC0[0] + (s32)&global` pointer idiom as the A9DC member, tying the `D_8012D548` record to this run

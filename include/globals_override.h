@@ -2040,6 +2040,10 @@ extern u8 D_80051AA8[];
  * Address taken only (split lui/addiu). Never defined in the overlays. */
 extern u8 D_80051E26[];
 
+/* ovl_11_func_80114194 takes these table addresses and adds D_80054BBC[1]. */
+extern u8 D_80051DD6[];
+extern u8 D_80051CB0[];
+
 /* D_8005181A - base of the shared D_80051xxx table region (== D_80051E26 -
  * 0x60C); the s32 read from D_80054BBC[1] is added to its address (plus
  * offsets 0x276/0x138/0x156/0x170/0x196) to form the five pointers stored
