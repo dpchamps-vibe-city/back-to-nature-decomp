@@ -8286,7 +8286,13 @@ Fingerprints:
   16-bit `addiu` range) — the same absolute-addressed D_8006C838 view the
   0x800F4994 pool run and 0x8010780C state guard use;
 - what the tie is not: link adjacency is absent (0x800F4E84 sits between the
-  two), so membership rests on the shared private array cluster + idiom alone.
+  two), so membership rests on the shared private array cluster + idiom alone;
+- widening (2026-10-10): pool slot `+0xDDB4` (= `+0xDD8C + 10*4`) is read
+  directly by `ovl_11_func_800F5210`, which walks 13 of the same 0x18-byte
+  records (operative fields at +0x2/+0x4, the layout shared by
+  `Ovl11Func5700Entry` and `Entry_800F53BC`); `0x800F508C` (0x7C) →
+  `0x800F5108` (0x58) → `0x800F5160` (0xB0) → `0x800F5210` (0x1AC) →
+  `0x800F53BC` is a zero-gap link run over one record family.
 
 Members:
 - ovl_11_func_800F40A4 (m) — walk head: walks the 19 cells and calls
@@ -8294,7 +8300,11 @@ Members:
 - ovl_11_func_800F508C (m, matched this session, 0x7C, byte-exact) — same walk
   threading its s16 arg0: calls `ovl_11_func_800F5160(arg0, *p2, *p1)` and
   returns (no tail call). The two differ only in the per-entry leaf and the
-  arg0 pass-through.
+  arg0 pass-through;
+- ovl_11_func_800F5210 (m, matched this session, 0x1AC, byte-exact) — record
+  walker over pool slot `+0xDDB4`: 13 records, toggling the +0x4 bit-0 flag
+  from the +0x51C0/+0x44BA/+0x44D4 gate state; zero-gap predecessor of the
+  `ovl_11_func_800F53BC` leaf.
 
 ## `ovl_11` D_80075AD4 0xF0-byte record access cluster — 0x800CF314 / 0x800C580C / 0x8010C1FC / 0x8010B1C4 (confidence: medium)
 
