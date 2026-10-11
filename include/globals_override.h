@@ -40,6 +40,11 @@ typedef struct {
 /* Forward declaration - defined in game_types.h */
 struct GfxObj;
 
+/* ovl_11_func_800CC4E0 initializes this sprite via func_80015704. */
+extern struct SpriteSourceData D_80128C80;
+/* ovl_11_func_800CC4E0 stores a word flag when object id is 0x186. */
+extern s32 D_8012DB80;
+
 /* Per-entry 8-byte table stored at offset 0xE4 of each D_80076220 record.
  * ovl_11_func_800F227C scans .unk0 (s16 threshold) and reads .unk2/.unk4/.unk6
  * of the first entry whose threshold is >= the requested value. */

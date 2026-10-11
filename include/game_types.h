@@ -604,6 +604,22 @@ typedef struct {
     u16 data[41];
 } TextCopyBlock;
 
+/* ovl_11_func_800CC4E0 object view: sh at +0x6 and sw at +0xC.
+ * The object identifier at +0x2 is also read as signed/unsigned halfwords. */
+typedef struct {
+    /* 0x00 */ char pad_0[4];
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ char pad_8[4];
+    /* 0x0C */ s32 unkC;
+} Ovl11CC4E0Object;
+
+/* Object reached through D_8007AFF0+0x25388: lh at +0x2. */
+typedef struct {
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ s16 unk2;
+} Ovl11CC4E0Head;
+
 #endif /* GAME_TYPES_H */
 
 /* Gradient-draw command shared by func_8001FA0C and func_8001F8A4 (0xC..0x14
