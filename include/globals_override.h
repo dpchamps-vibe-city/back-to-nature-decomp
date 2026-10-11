@@ -2492,6 +2492,11 @@ extern s16 D_800BF630;
  * directly (lui + %lo, then lh) and compares it against the +0x6 state field
  * of its record argument. Absolute-addressed (overlay build is -G0). */
 extern s16 D_800BF64E;
+/* D_800BF650 - ovl_19 s16 state halfword. ovl_19_func_800B9F40 loads it
+ * directly (lui 0x800c + %lo, then lh) and compares it, less 0x1E and 0x3C,
+ * against the +0x6 state field of its record argument. Absolute-addressed
+ * (overlay build is -G0). */
+extern s16 D_800BF650;
 extern u16 D_800BCEF0[];
 extern s16 D_800BCF0C[];
 extern u16 D_800BCF28[];

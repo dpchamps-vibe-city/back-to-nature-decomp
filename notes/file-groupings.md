@@ -11901,6 +11901,13 @@ Members (link order):
   body of the same absolute-addressed `D_800BF64E` state / `800BA0A0` +
   `800BAC40` shape; gapless link-order successor of `800B9E78` (0x800B9E78 +
   0x64), closing the three-in-a-row duplicate run.
+- ovl_19_func_800B9F40 (m, matched this session, byte-exact) — fourth body of
+  the same overlay-local s16 state array, addressed through the neighbouring
+  absolute-addressed `D_800BF650` label (= `D_800BF4C0` + 0x190): double-gates
+  the record's `s16@+0x6` against `D_800BF650 - 0x1E` and `D_800BF650 - 0x3C`
+  and calls the same cluster `800BA0A0`/`800BAC40`; gapless link-order
+  successor of `800B9EDC` (0x800B9EDC + 0x64) and predecessor of `800B9FB0`
+  (0x800B9F40 + 0x70).
 - ovl_19_func_800BA0A0 (m, matched, byte-exact) — leaf rate-table consumer
   on the same overlay-local `D_800BF4C0` array: switches on the caller
   record's `unk2 - 3` and reads `D_800BF4C0[0xB8]` with the `0xCB`–`0xCF`

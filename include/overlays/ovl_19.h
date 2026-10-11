@@ -21,6 +21,7 @@ s32 ovl_19_func_800B9DD0(Recon_ovl_19_func_800B9DD0_A0View *arg0, s32 arg1, s32 
 void ovl_19_func_800B9E14(Recon_ovl_19_func_800BA0A0_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800B9E78(Recon_ovl_19_func_800BA0A0_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800B9EDC(Recon_ovl_19_func_800BA0A0_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
+void ovl_19_func_800B9F40(Recon_ovl_19_func_800BA0A0_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800BA054(Recon_ovl_19_func_800BA054_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800BA0A0(Recon_ovl_19_func_800BA0A0_A0View *arg0);
 s32 ovl_19_func_800BA25C(void);
