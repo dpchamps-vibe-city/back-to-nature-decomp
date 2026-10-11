@@ -10313,9 +10313,7 @@ Members (link order):
   `ovl_28_func_800B7F80`. New evidence: not a new member (already listed on the
   original-asm read), but the matched body confirms the shared local-base idiom
   and the shared `D_800B961C` state global
-- ovl_28_func_800B8124 (s) — multi-branch dispatcher over `func_800132B8`/
-  `func_800132F0`/`func_80013394`/`func_80015114`/`func_80015EE8`; increments
-  the counter on one path
+- ovl_28_func_800B8124 (m, byte-exact) — [phase dispatcher](research/ovl_28_func_800B8124-grouping.md): invokes both handler slots and advances the shared counter on completion
 - ovl_28_func_800B8304 (m, matched this session, byte-exact) — calls
   `func_800132F0(10, 0, 2)` and `func_8001FE34(10)`, then increments the
   counter and returns the new value
@@ -10326,7 +10324,7 @@ Members (link order):
   a u16 at `D_8006C838+0x8000+0x67A0` against 10, calling
   `func_80011EF0(0xD)` on `>= 10` and `func_80011EF0(0x14)` otherwise
 
-Five members are matched; the rest are read off original asm, hence medium
+Six members are matched; the rest are read off original asm, hence medium
 confidence.
 
 ## `ovl_28` D_800B95F8 handler-pointer table run — 0x800B7F30 … 0x800B83C0 / 0x800B8414 / 0x800B8478 / 0x800B865C (confidence: medium)
