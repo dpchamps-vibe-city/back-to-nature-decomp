@@ -12219,12 +12219,16 @@ code between members: `ovl_11_func_800EFABC` (0x1AC) ends exactly at
 0x800EFC68, which (0xEC) ends exactly at 0x800EFD54, and the chain continues
 through 0x800EFDA0 (0x94), 0x800EFE34 (0xD0), 0x800EFF04 (0x98) and
 0x800EFF9C (0x90). Call graph agrees: `ovl_11_func_800EFABC` calls both
-0x800EFF04 and 0x800EFD54; `ovl_11_func_800EFC68` calls 0x800EFF04.
+0x800EFF04 and 0x800EFD54; `ovl_11_func_800EFC68` calls 0x800EFF04; and
+0x800EFABC is the direct callee of the `D_80129560` accessor-family heads
+0x800E698C/0x800E69B8 (cross-family inbound edge).
 
 Members (address order):
-- ovl_11_func_800EFABC (s) — resolves a record via 0x800EFF04, then combines
-  its value with `s32@+0x10` (OR when arg1 set, clear otherwise), or falls
-  back to 0x800EFE34 then clamps with 0x800EFD54.
+- ovl_11_func_800EFABC (m, matched this session, byte-exact) — reads/writes a
+  record resolved via 0x800EFF04 at the width the returned tag selects
+  (u8/u16/s16/s32), then combines the value with `s32@+0x10` (OR when arg2 set,
+  clear otherwise), or falls back to 0x800EFE34 then clamps with
+  0x800EFD54; confirms this band's shared `D_80124A18` membership.
 - ovl_11_func_800EFC68 (s) — resolves a record via 0x800EFF04 and switches on
   the returned tag (0..5, `jtbl_800B9EE8`), gated by `s32@+0x10`.
 - ovl_11_func_800EFD54 (m) — clamps an s32 into `[s16@+0x08, s32@+0x0C]` of
