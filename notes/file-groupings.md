@@ -6015,7 +6015,7 @@ Members (address order):
   +0xE4C8 cell.
 
 ---
-## `ovl_11` D_8006C838 flags/state-buffer cluster — 0x800BCF28 / 0x800BFD04 / 0x800CBE14 / 0x800CD3C4 / 0x800D12A0 / 0x8010C4B0 / 0x800F00AC / 0x800F2354 / 0x8010C1C0 / 0x800E953C / 0x800E63C8 / 0x800E7798 / 0x800E7954 / 0x800E8F78 / 0x800E9104 / 0x800DE76C / 0x800DE46C / 0x800EF8BC / 0x800EFA1C (confidence: low)
+## `ovl_11` D_8006C838 flags/state-buffer cluster — 0x800BCF28 / 0x800BFD04 / 0x800CBE14 / 0x800CD3C4 / 0x800D12A0 / 0x8010C4B0 / 0x800F00AC / 0x800F2354 / 0x8010C1C0 / 0x800E953C / 0x800E63C8 / 0x800E7798 / 0x800E7954 / 0x800E8F78 / 0x800E9104 / 0x800DE2EC / 0x800DE76C / 0x800DE46C / 0x800EF8BC / 0x800EFA1C (confidence: low)
 
 Scattered ovl_11 functions (gap of ~0xE00 to ~0x40000 between addresses —
 a data tie, not link-order adjacency) touching the main-binary flags/state
@@ -6255,6 +6255,14 @@ the overlay, never GP-relative), and the large-offset writers use the same
   +0x44CA → +0x51F4 copy pair as ovl_11_func_800CD624's sub-base form
   (`&D_80071A00` - 0x51C8), tying `D_80070D02` to +0x44CA and `D_80071A2C`
   (map name `D_80071A22`+0xA) to +0x51F4
+- ovl_11_func_800DE2EC (m, matched this session, 0x48, byte-exact) — button
+  dispatch head: reads the s16 at +0x44BA (the `D_80070CF2` alias proved by
+  member 0x800DE76C) through a `struct_8006C838_button` member and feeds it to
+  the CD-load wrapper `ovl_11_func_800BD488` and the pool-walk dispatcher
+  `ovl_11_func_800F3FF4`, then clears `D_80070D0E` via `ovl_11_func_800F4CA0`
+  and returns 1; shares the cluster's base-kept-live idiom (the `&D_8006C838`
+  base stays in a callee-saved register across both calls) and sits in one
+  gapless link run with members 0x800DE46C/0x800DE76C
 - ovl_11_func_800CFA48 (m, matched this session) — gated bit-set leaf: after
   two `ovl_11_func_800D3230` probes, reads the s16 at +0xE4C8 via the
   cluster's +0x8000 two-stage split (base+0x8000, disp +0x64C8; same cell as
