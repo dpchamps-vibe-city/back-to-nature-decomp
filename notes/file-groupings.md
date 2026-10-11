@@ -3168,16 +3168,30 @@ Members (address order):
 
 ---
 
-## `ovl_11` s16 dispatch-map run — 0x80111750–0x80111944 (confidence: medium)
+## `ovl_11` s16 dispatch-map run — 0x80111258–0x80111944 (confidence: medium)
 
 Candidate same-TU family of `ovl_11`: address-adjacent leaf `s16`->`s32`
 selectors — each a `switch` with no callees and no file-scope data. The
-membership fingerprint is a shared case-key set: 80111750 and 80111944
-dispatch on exactly {0x8B, 0x8C, 0x8D, 0x91, 0x92, 0x93, 0xE3, 0xE7, 0xE8}
-plus the 0x122–0x124 range, differing only in the constants returned and the
-case order; 8011184C sits between them with the same leaf-switch shape.
+membership fingerprint is a shared case-key set: every member dispatches on at
+least {0x8B, 0x8C, 0x8D, 0x91, 0x92, 0x93, 0xE3, 0xE7, 0xE8} plus the
+0x122–0x124 range, differing in the constants returned and the case order;
+the run head 80111258 (matched this session, 0x1A8-byte link slot) extends that
+common set with low keys {0x41–0x45, 0x51, 0x55}, its two same-size, same-shape
+link successors 80111400 and 801115A8 carry disjoint low-key partitions
+{0x46,0x47,0x49,0x4A,0x52,0x56} and {0x4B,0x4C,0x4E,0x4F,0x53,0x54} over the
+same set, and 80111750/80111944 dispatch on the shared set alone; the
+`D_800BAC04` handler run named by the 0x582F8 band is
+80111258/80111400/801115A8/80111750, and 8011184C sits between
+80111750/80111944 with the same leaf-switch shape.
 
 Members (address order):
+- ovl_11_func_80111258 (m, matched this session) — shared-key-set `s16` switch
+  map with the low-key extension; `D_800BAC04` handler and run head; byte-exact
+  clean C, baseline flags
+- ovl_11_func_80111400 (s, 0x1A8 bytes) — same fingerprint; disjoint low-key
+  partition; `D_800BAC04` handler; target disassembly key set
+- ovl_11_func_801115A8 (s, 0x1A8 bytes) — same fingerprint; disjoint low-key
+  partition; `D_800BAC04` handler; target disassembly key set
 - ovl_11_func_80111750 (m, matched) — shared-key-set `s16` switch map
 - ovl_11_func_8011184C (m, matched) — biased-channel `s16` switch map
 - ovl_11_func_80111944 (m, matched this session, 0x11C bytes) — shared-key-set
