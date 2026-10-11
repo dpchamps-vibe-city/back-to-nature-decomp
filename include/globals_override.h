@@ -2910,5 +2910,19 @@ struct Ovl11SpriteWork {
     s16 *header;
 };
 
+/* ovl_11_func_800BCB5C: lw flags at +0xC/+0x4450, lh +0x44BA/+0x44C0, and lh/lhu +0xE4C8. */
+struct Ovl11BCB5CState {
+    char pad0[0xC];
+    s32 flags0C;
+    char pad10[0x4450 - 0x10];
+    s32 flags4450;
+    char pad4454[0x44BA - 0x4454];
+    s16 field44BA;
+    char pad44BC[4];
+    s16 field44C0;
+    char pad44C2[0xE4C8 - 0x44C2];
+    s16 fieldE4C8;
+};
+
 #endif /* GLOBALS_OVERRIDE_H */
 
