@@ -3178,7 +3178,7 @@ least {0x8B, 0x8C, 0x8D, 0x91, 0x92, 0x93, 0xE3, 0xE7, 0xE8} plus the
 the run head 80111258 (matched this session, 0x1A8-byte link slot) extends that
 common set with low keys {0x41–0x45, 0x51, 0x55}, its two same-size, same-shape
 link successors 80111400 and 801115A8 carry disjoint low-key partitions
-{0x46,0x47,0x48,0x49,0x4A,0x52,0x56} and {0x4B,0x4C,0x4E,0x4F,0x53,0x54} over the
+{0x46,0x47,0x48,0x49,0x4A,0x52,0x56} and {0x4B,0x4C,0x4D,0x4E,0x4F,0x53,0x54} over the
 same set, and 80111750/80111944 dispatch on the shared set alone; the
 `D_800BAC04` handler run named by the 0x582F8 band is
 80111258/80111400/801115A8/80111750, and 8011184C sits between
@@ -3191,8 +3191,9 @@ Members (address order):
 - ovl_11_func_80111400 (m, matched this session, 0x1A8 bytes) — same
   fingerprint; disjoint low-key partition {0x46,0x47,0x48,0x49,0x4A,0x52,0x56};
   `D_800BAC04` handler; byte-exact clean C, baseline flags
-- ovl_11_func_801115A8 (s, 0x1A8 bytes) — same fingerprint; disjoint low-key
-  partition; `D_800BAC04` handler; target disassembly key set
+- ovl_11_func_801115A8 (m, matched this session, 0x1A8 bytes) — same
+  fingerprint; disjoint low-key partition {0x4B,0x4C,0x4D,0x4E,0x4F,0x53,0x54};
+  `D_800BAC04` handler; byte-exact clean C, baseline flags
 - ovl_11_func_80111750 (m, matched) — shared-key-set `s16` switch map
 - ovl_11_func_8011184C (m, matched) — biased-channel `s16` switch map
 - ovl_11_func_80111944 (m, matched this session, 0x11C bytes) — shared-key-set
