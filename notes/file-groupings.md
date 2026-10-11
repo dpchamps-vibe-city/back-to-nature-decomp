@@ -1603,8 +1603,11 @@ Members:
   value and its 0x1000/0xEFFF +0x28 bits by the entry's low nibble, stores up
   to two selected entry pointers into `D_80129188[0]/[1]`, clears
   `D_80129190`, then on `func_8001AF44(0xA) == 1` sets `D_80129190 = 3`.
-- ovl_11_func_800DD6F0 (s) — state machine reading `D_80129188` and
-  `D_80129190`; role per the shared pair.
+- ovl_11_func_800DD6F0 (m, matched this session, byte-exact) — four-state
+  machine over the same pair: on `D_80129190` 0/1/2/3 it gates on
+  `func_8001AF44(9)`/`(0xA)`, advances or clamps the two entries' +0x2E
+  counters, flips their +0x28 0x1000/0xEFFF bits, and re-drives
+  `func_8001AF70(9, 0)`.
 
 ---
 
