@@ -4253,6 +4253,38 @@ D_80061EA8 plane coefficients); func_8001C37C (s) — projected primitive
 renderer/caller; HasTriangleVertexXInBounds (m) — three-vertex X bounds
 helper; func_8001D2D8 (?) — four-vertex X bounds helper. func_8001D348 is
 the first following function and may mark the next TU; membership unverified.
+func_8001D6B8's verified read of D_800491C8 now also ties it to the following
+D_800491C8 rotation-scale cluster (see that section).
+
+## D_800491C8 rotation-scale cluster — 0x8001D648–0x8001D6B8 (confidence: low–medium)
+
+GTE rotation-matrix scaling built on the absolute .data global D_800491C8
+(six s32 words: the x/y/z scale numerator/denominator triples). New evidence
+from the func_8001D6B8 verification (2026): func_8001D6B8 is the only reader
+of D_800491C8 and func_8001D648 the only writer, and the two are link-adjacent
+with no unrelated code between (D648 ends 0x8001D678, func_8001D678 at
+0x8001D678, ClearVal8005E2D4 at 0x8001D6AC, D6B8 begins 0x8001D6B8). Both
+reach D_800491C8 absolutely (`lui`/`addiu %hi/%lo`), so it yields no
+gp-relative TU fingerprint; grouping rests on the exclusively shared global
+plus adjacency. TU membership unproven.
+
+Fingerprints:
+- D_800491C8 is touched only by these two functions: D648 writes the three
+  pairs, D6B8 reads them to scale the GTE rotation matrix columns;
+- the same D648 sets the gp-relative flag D_8005E2D4, which
+  ClearVal8005E2D4 clears and which func_8001BFEC tests before calling
+  func_8001D6B8 — the enable/disable/apply triple of one subsystem;
+- consecutive link order D648 → D678 → ClearVal8005E2D4 → D6B8.
+
+Members (address order):
+- func_8001D648 (m) — enable: loads the three axis scale pairs into
+  D_800491C8 and sets D_8005E2D4=1
+- func_8001D678 (s) — unclassified, address-adjacent
+- ClearVal8005E2D4 (m) — disable: clears D_8005E2D4 (standalone src TU)
+- func_8001D6B8 (m) — apply: scales each GTE rotation-matrix column by the
+  D_800491C8 numerator/denominator when the numerator has bits above bit 0
+  and the denominator is >= 2; also called by the projected-clipping driver
+  func_8001BFEC
 
 ## u16 string library — 0x80017D9C–0x80017F88 (confidence: medium)
 
