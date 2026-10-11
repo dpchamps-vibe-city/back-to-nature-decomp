@@ -2910,6 +2910,15 @@ struct Ovl11SpriteWork {
     s16 *header;
 };
 
+/* ovl_11_func_800BC868: lw pointer at +0x25388, sw words at +0x25498/+0x2549C. */
+struct Ovl11SoundWork {
+    char pad0[0x25388];
+    s16 *header;
+    char pad2538C[0x25498 - 0x2538C];
+    s32 previous;
+    s32 selected;
+};
+
 /* ovl_11_func_800BCB5C: lw flags at +0xC/+0x4450, lh +0x44BA/+0x44C0, and lh/lhu +0xE4C8. */
 struct Ovl11BCB5CState {
     char pad0[0xC];
