@@ -2956,5 +2956,11 @@ struct Ovl11BCB5CState {
     s16 fieldE4C8;
 };
 
+/* ovl_15_func_80136288: lh/lhu/sh retry counter at D_80137598;
+ * named view avoids the signed/unsigned legacy declarations in sibling TUs. */
+extern u16 Ovl15CardRetries __asm__("D_80137598");
+/* ovl_15 filename builder writes this 0x20-byte data object via strcpy. */
+extern char Ovl15CardFilename[0x20] __asm__("D_80140EC0");
+
 #endif /* GLOBALS_OVERRIDE_H */
 

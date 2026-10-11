@@ -2518,6 +2518,10 @@ typedef struct {
 } Ovl15Func80134444Arg;
 
 typedef struct {
+    u32 words[15];
+} Ovl15SaveSummary;
+
+typedef struct {
                char pad_0[0x2];
                u16 unk2;
 } Ovl19Func800BA73CArg;

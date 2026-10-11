@@ -627,6 +627,11 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } Ovl11CC4E0Head;
 
+/* ovl_15_func_80136288 copies the first 0x3C bytes of a card block. */
+typedef struct {
+    u32 words[15];
+} Ovl15SaveSummary;
+
 #endif /* GAME_TYPES_H */
 
 /* Gradient-draw command shared by func_8001FA0C and func_8001F8A4 (0xC..0x14
