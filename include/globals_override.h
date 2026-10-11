@@ -2237,6 +2237,15 @@ extern s32 D_800BCB74[];
  * the overlay data segment, so only an extern declaration belongs here. */
 extern s32 D_800BC894[];
 
+/* D_800BBED0 - ovl_25 s32 {start,end} CD-position table. ovl_25
+ * func_800BB2B8 reads [0], [1] and [2] and passes [1]-[0] and [2]-[1] as the
+ * sector counts of two func_80014BCC transfers, exactly as its
+ * sibling ovl_19_func_800BBB48 does with D_800BCB74; then it additionally
+ * publishes the D_8009F78C copy and a 0x39 value to the D_8007AFF0 far
+ * buffer. Defined in the overlay data segment, so only an extern declaration
+ * belongs here. */
+extern s32 D_800BBED0[];
+
 /* D_8009F78C - main-RAM copy destination. ovl_19_func_800BBB48 memcpys
  * 0xBDC bytes here from the D_8007AFF0 work area (absolute lui/addiu). The
  * TU only declares it, so an opaque byte object is enough. */

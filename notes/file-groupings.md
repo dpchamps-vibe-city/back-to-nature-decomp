@@ -10155,7 +10155,12 @@ cluster; each streams a different sector count into the same buffer. The run
 continues gapless one more dispatched function, `ovl_25_func_800BB2B8`,
 which shares the `D_8005E3B0 + 0x4290` buffer and `func_8001719C` but not
 `ClearOTagR`, and the same dispatcher also calls the later
-`ovl_25_func_800BB46C`/`800BB4B4`/`800BB510` handlers.
+`ovl_25_func_800BB46C`/`800BB4B4`/`800BB510` handlers. The run is additionally
+bracketed by the overlay-local `D_800C0454` `FuncC0D4Args` descriptor: its only
+two referents are the run's gapless predecessor `ovl_25_func_800BAC28`
+(0x74, ends exactly 0x800BAC9C) and its gapless successor
+`ovl_25_func_800BB2B8` (begins exactly 0x800BB2B8), which tie the shared data
+object to the run at both ends.
 
 Members (link order):
 - ovl_25_func_800BAC9C (s) — display-setup: `DrawSync`/`ClearOTagR` +
@@ -10169,6 +10174,13 @@ Members (link order):
 - ovl_25_func_800BAFCC (s) — display-setup:
   `func_80014CBC(0x1A, 0, 0x124D0, D_8005E3B0+0x4290, 1, 1)` poll and
   `func_8001719C(D_8005E3B0 + 0x5F18)`, then copies into `D_800BE1B4`
+- ovl_25_func_800BB2B8 (m, matched this session, byte-exact) — run tail via the
+  shared `D_800C0454` descriptor: reads the private `D_800BBED0` CD-position
+  table for two `func_80014BCC` sector transfers into `D_8005E3B0+0x4290`,
+  `func_8001719C`-syncs that buffer, memcpys the `D_8007AFF0` work area to
+  `D_8009F78C`, then publishes the copy/0x39 to `D_8007AFF0`+0x25388/+0x2547C
+  and drives the shared `D_800C0454` object through `func_8001BFA8`/
+  `func_8001E340`/`func_8001E334`
 
 ## `ovl_25` s16-struct predicate run — 0x800B9758–0x800B97E4 (confidence: low)
 
