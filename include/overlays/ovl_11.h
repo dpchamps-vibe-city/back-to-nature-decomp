@@ -105,6 +105,7 @@ void ovl_11_func_800C9D38(void);
 s32 ovl_11_func_800C9D64(void);
 void ovl_11_func_800C9D98(void);
 void ovl_11_func_800C9DC0(void);
+s32 ovl_11_func_800C9DE8(s32 arg0);
 void ovl_11_func_800C9E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800CA580(M2C_6201b6a06ca1_ReconA0View *arg0);
 void ovl_11_func_800CA6C4(void *arg0);

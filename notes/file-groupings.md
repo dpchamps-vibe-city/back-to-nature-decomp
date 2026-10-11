@@ -8214,6 +8214,10 @@ Members:
   zeroes it, compacts via `800CADBC`, and moves the tail record into the hole.
 - ovl_11_func_800C9D98 (m) — compacts `D_80071AC0` (count 8).
 - ovl_11_func_800C9DC0 (m) — compacts `D_80071A90` (count 8).
+- ovl_11_func_800C9DE8 (m, matched 2026 — this session) — calls
+  `ovl_11_func_800CAE64` on `D_80071AC0` (count 8) with a 0/1 mode and the
+  record immediately before `D_80071A90` (`&D_80071AC0 - 9` records) as the
+  second operand pair.
 
 Same object, outside the suspected TU:
 - ovl_11_func_80102844 (m) — accessor: `(arg1*6)+&D_80071AC0`, or into
