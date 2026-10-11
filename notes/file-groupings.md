@@ -195,16 +195,21 @@ Members:
 - ovl_11_func_800D2A88 (m) — D_800742EC-path setter: `+0x30 = 4`, seeds
   +0x38/+0x3C/+0x40 from D_80123A8C.
 
-## `ovl_11` two-table field-lookup siblings — 0x800D5ABC–0x800D5BBC (confidence: medium)
+## `ovl_11` two-table field-lookup siblings — 0x800D5960–0x800D5BBC (confidence: medium)
 
 Evidence: three adjacent 0x80-byte functions access the pointer members at
 `D_8006C838 + 0x20` and `+0x24`, use the same 0x28/0xB0 record strides,
 16-bit narrowing steps and -1 sentinel, and differ in the final halfword
 field offset (0xAA, 0xAC, 0xAE). Their original instruction streams agree
-under local-label relocation and that field substitution. This is strong
+under local-label relocation and that field substitution. A fourth function,
+`ovl_11_func_800D5960` (0x15C bytes), is the zero-gap link-order predecessor
+of 800D5ABC and opens with the same +0x20 `0x28`-stride/+0x0E/-1 lookup and
++0x24 `0xB0`-stride table as the trio, differing by an extra `arg5*0x28`
+index term and a direct record pass to `ovl_11_func_800D6488`. This is strong
 source-family evidence; original translation-unit membership remains a prior.
 
 Members:
+- ovl_11_func_800D5960 (m, byte-exact) — two-level field_0E lookup variant; indexes the +0x24 0xB0-stride table by the raw value and hands it to 800D6488 for a 13x13 tile scan; returns whether `arg1+1` was found.
 - ovl_11_func_800D5ABC (m) — reads field 0xAA; sibling-derived C integrated and verified across all containers.
 - ovl_11_func_800D5B3C (m) — reads field 0xAC.
 - ovl_11_func_800D5BBC (m) — reads field 0xAE.

@@ -224,6 +224,7 @@ s8 ovl_11_func_800D583C(s16 arg0);
 s32 ovl_11_func_800D5868(s16 arg0);
 s32 ovl_11_func_800D589C(s16 arg0);
 s32 ovl_11_func_800D58D0(void *arg0);
+s32 ovl_11_func_800D5960(s16 *arg0, u32 arg1, s16 arg2, s16 *arg3, s16 *arg4, s16 arg5);
 s32 ovl_11_func_800D5ABC(void *arg0);
 s32 ovl_11_func_800D5B3C(void *arg0);
 s32 ovl_11_func_800D5BBC(void *arg0);
