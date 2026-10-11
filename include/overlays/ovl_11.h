@@ -31,6 +31,7 @@ void *ovl_11_func_800BDCE8(u8 *arg0, M2C_cec44150eede_Ovl11Func800BDCE8Arg1 *arg
 void *ovl_11_func_800BDE84(u8 *arg0, s16 *arg1);
 void ovl_11_func_800BE2B8(void);
 s32 ovl_11_func_800BE5A0(M2C_f90dacf3c1c7_Ovl11CheckArg *arg0, s32 arg1, s32 arg2, void *arg3);
+s32 ovl_11_func_800BE94C(s32 **arg0, Ovl11ItemCollisionObject *arg1);
 struct_80076220 *ovl_11_func_800BF1D0(s16 *arg0, void *arg1, void *arg2);
 u16 ovl_11_func_800BF2F4(s16 *arg0, s16 *arg1);
 s32 ovl_11_func_800BF3D0(void);

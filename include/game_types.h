@@ -29,6 +29,13 @@ typedef struct {
     /* 0x30 */ s32 field_30;
 } GfxObj;
 
+/* ovl_11_func_800BE94C and 800F4240 read the id at +2 and mask at +4. */
+typedef struct {
+    u8 pad_0[2];
+    s16 unk2;
+    u16 unk4;
+} Ovl11ItemCollisionObject;
+
 /* Simple 3-element vector (used for position, rotation, etc.) */
 typedef struct {
     s32 x;

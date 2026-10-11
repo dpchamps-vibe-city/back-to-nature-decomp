@@ -14146,3 +14146,15 @@ initializer is now matched (0x1B8, void). It stores the cluster's counter state
 use — and it is entry 4 of the same `D_80121780` dispatch table whose entries
 0/1 are the cluster leaves 0x800BC3AC/0x800BC3E0. It is address-apart
 (0x801048A0), so same-TU membership with the run is plausible but unproven.
+
+## `ovl_11` item-collision probe/dispatcher pair — 0x800BE94C / 0x800BEB28 (confidence: low)
+
+Evidence: call graph and link order agree. The probe's original length is
+0x1DC, ending exactly at its caller 0x800BEB28 (`configs/splat/ovl_11.yaml`:
+0x6B2C → 0x6D08). The successor's original `jal` at 0x800BEBFC calls the
+probe with its stack-built collision context and a scanned item record
+(`build/ovl_11/asm/nonmatchings/ovl_11_func_800BEB28/ovl_11_func_800BEB28.s`).
+This supports a candidate pair, not proven original TU boundaries.
+
+- ovl_11_func_800BE94C (m) — item bounding-box probe that records a hit and updates collision flags for the adjacent dispatcher.
+- ovl_11_func_800BEB28 (s) — collision dispatcher that scans item records through the preceding probe.

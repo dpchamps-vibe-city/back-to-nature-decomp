@@ -209,6 +209,17 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* ovl_11_func_800BE94C indexes four original-data halfwords by the +0x44BA selector. */
+extern u16 D_80122E6C[4];
+
+/* ovl_11_func_800BE94C shares this base for the +0x20 pool and +0x44BA selector. */
+struct Ovl11ItemCollisionGlobals {
+    u8 pad_0[0x20];
+    void *items;
+    u8 pad_24[0x44BA - 0x24];
+    s16 selector;
+};
+
 /* ovl_11_func_800E5078 reads a pointer at +0x30, then its signed halfword at +2. */
 struct Ovl11CurrentObjectView {
     u8 pad_0[0x30];

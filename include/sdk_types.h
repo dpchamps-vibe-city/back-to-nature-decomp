@@ -2477,6 +2477,12 @@ typedef struct {
 } Ovl11Func8011D890Arg;
 
 typedef struct {
+    u8 pad_0[2];
+    s16 unk2;
+    u16 unk4;
+} Ovl11ItemCollisionObject;
+
+typedef struct {
     s32 field_0;
     s32 field_4;
     s32 field_8;
