@@ -7365,6 +7365,14 @@ Members (address order):
   the 0xE4 table; returns 1. Non-adjacent member of the same record family
   (not in the 0x800C1Bxx run) — data tie plus the run-head
   initializer→80107DD0(`&record + 0xE0`) callee pair.
+- ovl_11_func_800ED4A8 (m, matched this session, 0x118, byte-exact) —
+  flagged-record emitter: scans indices 1..0x24 of the same 0x1D4-stride
+  array and reads `D_80076220[i].unk1E` (spelled `D_8006C838 + i*0x1D4 +
+  0x9A06`), gating on the `ovl_11_func_800C3548(index)` predicate of
+  800EFF9C/800F1744 and calling `ovl_11_func_800EFABC` for each entry whose
+  unk1E bit 0x800 is set. Non-adjacent data + idiom tie (the unk1E field the
+  clear members 800C1C90/800E9620 touch); its zero-gap link predecessor is
+  the D_80129560-touching stub 800EC52C, which calls it.
 - ovl_11_func_800F227C (m, 0xD8, finalized) — non-adjacent consumer of
   the same 30-entry +0xE4 table: scans all 37 records (stride 0x1D4),
   selects the first signed threshold >= arg0, writes its index to +0x22,
