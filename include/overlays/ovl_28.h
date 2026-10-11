@@ -21,6 +21,7 @@ s32 ovl_28_func_800B8B70(void);
 void ovl_28_func_800B8C94(void);
 void ovl_28_func_800B8CE4(void);
 s32 ovl_28_func_800B8D48(void);
+void ovl_28_func_800B8E9C(u_long *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s16 arg9, u8 arg10);
 void ovl_28_func_800B92F0(s16 arg0, s16 arg1);
 void ovl_28_func_800B9328(s16 arg0, s16 arg1);
 s32 ovl_28_func_800B935C(void);
