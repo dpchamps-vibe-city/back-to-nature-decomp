@@ -14037,8 +14037,12 @@ Members (address order):
   - Its tail is the non-inverted branch form; see
     `notes/retros/2026-10-09-ovl_11_func_8011E090-retro.md`.
   - Corrected 2026-10-09: there is no `+0x45476` read.
-- ovl_11_func_80120F30 (s) — grid reader that tests a bit selected from the
-  `D_801287C4` flag bytes against `grid[arg1*0x2D + arg0]`.
+
+Local texture-update candidate TU subgroup (confidence: medium;
+[evidence](research/ovl_11_func_80120F30-grouping.md)):
+- ovl_11_func_80120CC4 (s) — produces a tile's UV coordinates and CLUT.
+- ovl_11_func_80120F30 (m, byte-exact) — updates a grid cell's UVs/CLUT with column-selected orientation.
+- ovl_11_func_80121134 (s) — scans the 25×45 grid and applies generated tile textures.
 
 ---
 

@@ -2514,6 +2514,14 @@ typedef struct {
 } Ovl11StateArg0;
 
 typedef struct {
+    u8 u0, v0;
+    u8 u1, v1;
+    u8 u2, v2;
+    u8 u3, v3;
+    u16 clut;
+} Ovl11TextureCoordinates;
+
+typedef struct {
                s16 unk0;
 } Ovl15Func80134444Arg;
 

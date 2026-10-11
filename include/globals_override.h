@@ -37,6 +37,26 @@ typedef struct {
     SpuExtAttrO ext;
 } SpuCommonAttrO;
 
+/* ovl_11_func_80120F30 indexes flag bytes; the original data span is 8 bytes. */
+extern u8 D_801287C4[8];
+
+/* ovl_11 grid at D_8007AFF0+0x23608: word header, UV bytes and u16 fields. */
+typedef struct {
+    u32 header;
+    u8 u0, v0;
+    u16 clut;
+    u8 u1, v1;
+    u16 tpage;
+    u8 u2, v2;
+    u16 pad_E;
+    u8 u3, v3;
+} Ovl11GridTextureEntry;
+
+typedef struct {
+    u8 pad_0[0x23608];
+    Ovl11GridTextureEntry *entries[1];
+} Ovl11GridTextureTableView;
+
 /* ovl_31 rodata: NUL-terminated "bu%d%d:%s" used by sprintf. */
 extern char D_800B7F20[10];
 /* ovl_31 rodata: NUL-terminated old FARM0 memory-card filename. */

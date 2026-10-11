@@ -36,6 +36,15 @@ typedef struct {
     u16 unk4;
 } Ovl11ItemCollisionObject;
 
+/* ovl_11_func_80120F30 reads eight UV bytes and a u16 at +8. */
+typedef struct {
+    u8 u0, v0;
+    u8 u1, v1;
+    u8 u2, v2;
+    u8 u3, v3;
+    u16 clut;
+} Ovl11TextureCoordinates;
+
 /* Simple 3-element vector (used for position, rotation, etc.) */
 typedef struct {
     s32 x;
