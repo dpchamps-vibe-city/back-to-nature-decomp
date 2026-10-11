@@ -731,6 +731,15 @@ typedef struct {
 } struct_8005E3C0;
 extern struct_8005E3C0 *D_8005E3C0;
 
+/* ovl_11_func_800CA044 loads this word as the sprite-submission total. */
+extern s32 D_8005E3BC;
+/* ovl_11_func_800CA044 indexes this storage in 0x78-byte texture banks. */
+extern u8 D_80122F9C[];
+/* ovl_11_func_800CA044 uses signed halfword lookups with stride two. */
+extern s16 D_8012308C[];
+extern s16 D_80123098[];
+extern s16 D_801230A4[];
+
 /* D_800BF660 - ovl_19 bss object state base (0x800BF660). Referenced with
  * absolute addressing (lui + %lo) from ovl_19_func_800BAD50, which passes
  * its address as an ObjectState and reads the ObjectState fields at +4/+5

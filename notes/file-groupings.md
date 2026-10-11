@@ -14190,3 +14190,12 @@ Candidate same-TU pair; original translation-unit boundaries remain unproven.
 
 - ovl_11_func_800D2710 (s) — readiness-gated caller that dispatches the pending mode in `D_80128D68`, then resets it to -1.
 - ovl_11_func_800D2764 (m) — stage-gated object-handler dispatcher that clears the selected result flag on a zero handler result.
+
+## `ovl_11` object-draw helper/dispatcher run — 0x800C9F20 / 0x800CA044 / 0x800CA24C (confidence: low)
+
+Candidate same-TU membership; original boundaries remain unproven
+([evidence](research/ovl_11_func_800CA044-grouping.md)).
+
+- ovl_11_func_800C9F20 (s) — flag/type-selected companion sprite draw with table-selected coordinate offsets.
+- ovl_11_func_800CA044 (m) — object sprite submission with optional signed-halfword substitutions.
+- ovl_11_func_800CA24C (s) — object drawing dispatcher that selects the order of the two preceding draw helpers.
