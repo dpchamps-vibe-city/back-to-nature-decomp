@@ -184,6 +184,15 @@ struct struct_80061DE8 {
 extern struct GfxObj *D_8005E3A8;
 extern struct GfxObj *D_8005E3AC;
 
+/* D_801349B0 - s32 selection index driven by ovl_30_func_80131F14.
+ * Clamped to 0..0x24 and used as a modulo-0x25 record selector.
+ * Absolute-addressed (overlay -G0), so a plain extern gives lui+lo. */
+extern s32 D_801349B0;
+
+/* D_8012ECD8 - "P %d ADR %x\n" rodata format string whose address is
+ * passed to FntPrint by ovl_30_func_80131F14 (absolute overlay rodata). */
+extern char D_8012ECD8[];
+
 /* D_8006C838 - array of 0x3C-byte structs used for flags
  * Accessed with 0x3C stride but accessed in 4-byte s32 words
  * Struct size must be 4 bytes to get correct indexing (index * 0x3C as byte offset) */ 
