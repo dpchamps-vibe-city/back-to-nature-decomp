@@ -2793,5 +2793,12 @@ extern u16 D_80071318[11];
  * Absolute-addressed (lui + lw %lo), so a scalar extern keeps the base name. */
 extern s32 D_801217A4;
 
+/* D_80129418 - ovl_11 private s16 state word in the overlay data segment.
+ * ovl_11_func_800E3CDC stores the computed frame index here (sh %lo) and
+ * ovl_11_func_800E54F8 loads it (lh) to pass to ovl_11_func_800E36CC.
+ * Absolute-addressed from -G0 overlay code; the TU only declares it, so a
+ * scalar extern keeps the base name. */
+extern s16 D_80129418;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
