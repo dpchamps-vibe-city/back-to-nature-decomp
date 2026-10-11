@@ -12431,7 +12431,10 @@ pre-run initialiser `ovl_11_func_8011F52C` (0x8011F52C, resets `D_80128550` to
 a same-TU data cluster rather than a cross-group object. Link order is
 contiguous from 0x8011F9EC through unmatched 0x8011FD2C–0x8011FFA8
 (0x8011FFA8 also calls `func_80012A34`) to the new match at 0x80120358, so
-adjacency and call graph agree on the run.
+adjacency and call graph agree on the run. The newly matched 0x8011FB80
+adds a direct call edge into that contiguous band: its switch calls
+`ovl_11_func_8011FD2C`/`ovl_11_func_8011FD7C`/`ovl_11_func_8011FDCC`,
+corroborating the link-order tie with the 0x8011FD2C run below.
 
 Members (address order):
 - ovl_11_func_8011F52C (m, adjacent pre-run initialiser, 0x8011F52C) —
@@ -12442,9 +12445,11 @@ Members (address order):
   6-entry s16 tables at `D_80071A70` (stride 2, -1 sentinel), reads
   `D_8012855C`/`D_80128580` and writes the `D_80128550` selector state;
   calls `func_80012A34(2)`.
-- ovl_11_func_8011FB80 (s) — maps an s16 argument through the `D_80128580`
-  table indexed via `D_80128554`/`D_8012855C`, special-casing values 3/4;
-  calls `func_80012A34(2)`.
+- ovl_11_func_8011FB80 (m, verified byte-exact this session) — maps an s16
+  argument through the `D_80128580` table indexed via
+  `D_80128554`/`D_8012855C`, special-casing values 3/4; calls
+  `func_80012A34(2)` and, in its switch arms, the `ovl_11_func_8011FD2C`
+  run.
 - ovl_11_func_80120358 (m, verified byte-exact this session) — 4-entry
   0xE-stride min/max range scan at `D_801285F4`: on a hit stores
   `func_80012A34(D_8012862C[obj->+8]) + 5` and returns the entry's s16 value,

@@ -2523,6 +2523,19 @@ extern Ovl11D1285Entry D_80128550;
 extern Ovl11D1285Entry D_8012855C[6];
 extern Ovl11D1285Entry D_80128580[];
 
+/* ovl_11_func_8011FB80 reads the same triplet region through s16 arrays: it
+ * indexes D_80128550 by arg0-1 (arg0 1..2 selects max_i/sec_i) and D_80128580
+ * by D_80128554*3 + func_80012A34(2) + 1. Declaring the array view is
+ * load-bearing: cc1's mips_check_split/address folding keeps the `arg0 - 1`
+ * in a register for an array (target: addiu a1,a1,-1; sll v0,a1,1; addu),
+ * but folds it into the symbol/displacement for the Ovl11D1285Entry object.
+ * The asm labels give the shared addresses a real array type without
+ * changing the entry views the other ovl_11 readers use. D_80128554 is the
+ * entry's sel field carrying its own splat symbol (target lh at 0x80128554). */
+extern s16 D_80128554;
+extern s16 D_80128550_ary[] __asm__("D_80128550");
+extern s16 D_80128580_ary[] __asm__("D_80128580");
+
 /* D_80071A70 - ovl_11 s16[6] scan table read by ovl_11_func_8011F9EC with lh
  * over six stride-2 entries (-1 sentinel). Absolute-addressed. */
 extern s16 D_80071A70[6];
