@@ -10843,6 +10843,7 @@ Members (link order):
   `ovl_15_func_80134724()` when it is not `0x19` — body-identical duplicate with
   only the updater array and the immediate `0x18`→`0x19` changed, gapless in
   link order after `ovl_15_func_80132520` (0x8C bytes)
+- ovl_15_func_80132638 (m, byte-exact) — slot-list refresh, text draw and selection-state transition handler ([grouping evidence](research/ovl_15_func_80132638-grouping.md)).
 - ovl_15_func_801328C4 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_80053506` updater array (shared with
   `ovl_15_func_8012F990`); then `ret = ovl_15_func_80137228(0x1C, 0)`,
