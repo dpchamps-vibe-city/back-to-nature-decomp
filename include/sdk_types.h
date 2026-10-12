@@ -2483,6 +2483,32 @@ typedef struct {
 } Ovl11ItemCollisionObject;
 
 typedef struct {
+    char pad[0x16];
+    s16 unk16;
+    char pad18[0x22 - 0x18];
+    u16 unk22;
+    char pad24[0x2C - 0x24];
+    u16 unk2C;
+    char pad2E[2];
+    u16 unk30;
+    char pad32[2];
+    u32 unk34;
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
+    char pad44[0xAC - 0x44];
+    u16 unkAC;
+    u16 unkAE;
+    u16 unkB0;
+    u16 unkB2;
+    u16 unkB4;
+    char padB6[2];
+    u16 unkB8;
+    char padBA[4];
+    u16 unkBE;
+} Ovl11ObjectCB6C;
+
+typedef struct {
     s32 field_0;
     s32 field_4;
     s32 field_8;

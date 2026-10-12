@@ -478,6 +478,48 @@ typedef struct {
     u16 unkB8;                /* 0xB8 - flags, bit 11 cleared on select */
 } Recon_ovl_11_func_8010CE80_A0View;
 
+/* ovl_11_func_8010CB6C: witnessed signed meter, counters, flags and
+ * movement words; offsets follow the target's lh/lhu/lw/sh/sw accesses. */
+typedef struct {
+    char pad[0x16];
+    s16 unk16;
+    char pad18[0x22 - 0x18];
+    u16 unk22;
+    char pad24[0x2C - 0x24];
+    u16 unk2C;
+    char pad2E[2];
+    u16 unk30;
+    char pad32[2];
+    u32 unk34;
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
+    char pad44[0xAC - 0x44];
+    u16 unkAC;
+    u16 unkAE;
+    u16 unkB0;
+    u16 unkB2;
+    u16 unkB4;
+    char padB6[2];
+    u16 unkB8;
+    char padBA[4];
+    u16 unkBE;
+} Ovl11ObjectCB6C;
+
+/* The matched ovl_11_func_80110E34 definition supplies this movement view. */
+typedef struct {
+    char pad[0x22];
+    u16 unk22;
+    char pad2[0x30 - 0x24];
+    u16 unk30;
+    char pad3[0x38 - 0x32];
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
+    char pad4[0xAC - 0x44];
+    u16 unkAC;
+} Ovl11MotionState;
+
 /* ovl_11_func_8010D250 argument view: reads the handler id at 0x26, a mode
  * at 0x30, and the staged s16 triple at 0xBE/0xC0/0xC2. */
 typedef struct {
