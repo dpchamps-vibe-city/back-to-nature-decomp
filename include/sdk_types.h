@@ -18,6 +18,10 @@ struct M2C_6fc629d778b7_Unk800D3D2C;
 
 typedef struct M2C_6fc629d778b7_Unk800D3D2C M2C_6fc629d778b7_Unk800D3D2C;
 
+struct Ovl11RotationState;
+
+typedef struct Ovl11RotationState Ovl11RotationState;
+
 struct Ovl25ObjectRecord;
 
 typedef struct Ovl25ObjectRecord Ovl25ObjectRecord;
@@ -2526,7 +2530,7 @@ typedef struct {
     s16 z;
 } Ovl11RotationVector;
 
-typedef struct {
+struct Ovl11RotationState {
     u16 unk0;
     u16 unk2;
     s16 unk4;
@@ -2535,7 +2539,7 @@ typedef struct {
     Ovl11RotationVector rotation;
     s16 unk12;
     Ovl11RotationSource *unk14;
-} Ovl11RotationState;
+};
 
 typedef struct {
     char pad_00[0x34];

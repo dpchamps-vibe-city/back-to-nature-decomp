@@ -1184,7 +1184,7 @@ typedef struct {
 } Ovl11RotationVector;
 
 /* 0x18-byte state: 80106DC0 resets it; 80107044 updates the rotation. */
-typedef struct {
+typedef struct Ovl11RotationState {
     u16 unk0;
     u16 unk2;
     s16 unk4;
