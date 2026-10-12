@@ -37,6 +37,9 @@ typedef struct {
     SpuExtAttrO ext;
 } SpuCommonAttrO;
 
+/* ovl_11 data spans 0x230 bytes; 800C02B0 scans 40 records of stride 0xE. Named view preserves legacy scalar/array declarations in other TUs. */
+extern u8 Ovl11_D_80128820[0x230] __asm__("D_80128820");
+
 /* ovl_11_func_80120F30 indexes flag bytes; the original data span is 8 bytes. */
 extern u8 D_801287C4[8];
 
