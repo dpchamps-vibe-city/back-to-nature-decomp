@@ -4,6 +4,12 @@
 
 #include "common.h"
 
+/* ovl_11_func_800BFADC advances signed halfwords at +0/+2 of this by-reference pair. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} Ovl11CounterPair;
+
 /* Shared struct for functions that access void* with offset 0x14 and 0x18 */
 typedef struct {
     /* 0x00 */ s32 field_0x0;
