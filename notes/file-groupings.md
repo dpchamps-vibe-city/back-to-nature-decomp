@@ -7482,7 +7482,7 @@ Members (address order):
   80107DD0(&record+0xE0), then branches on 800C3548(index) to store 0 or
   0x32 into unk2; confirms the run's shared record type and the 800C1C5C →
   80107DD0 callee pair (same s16 call-cast idiom as the run members)
-- ovl_11_func_800C1D68 (s) — calls 800C3548, func_80012A34, func_8001AF70
+- ovl_11_func_800C1D68 (m, byte-exact, finalized) — updates/clamps value/count fields of all 37 D_80076220 records, clears transient flags and sets engine flags.
 - ovl_11_func_800E9620 (m, matched this session, 0x104, byte-exact) —
   record-flag driver: when `arg0 == 0x2A` recurses once per index 1..0x24,
   otherwise for `arg0 > 0` and `arg1 < 0x25` indexes `&D_80076220 + arg0`
