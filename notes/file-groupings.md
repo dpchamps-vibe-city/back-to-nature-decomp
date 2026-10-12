@@ -8631,27 +8631,21 @@ Members:
   D_8006C838+0x44B8 pair and D_8007AFF0+0x25476 halfword and dispatches tag
   0x157/0x15B through 800D3104.
 
-## `ovl_11` D_8007AFF0 +0x253B4/+0x253B8 pair-consumer pair — 0x800D92FC–0x800D93C8 (confidence: low)
+## `ovl_11` bounds / cell-sprite dispatch run — 0x800D92FC–0x800D9E10 (confidence: low)
 
-Evidence: gapless link adjacency (0x800D92FC is 0xCC and ends exactly at
-0x800D93C8) with an agreeing call edge — 0x800D93C8 direct-calls
-0x800D92FC (`jal` at 0x800D940C) — plus a shared far-buffer global cluster:
-0x800D92FC reads `s16`@+0x253B4/+0x253B8 of `D_8007AFF0` with the same
-single-`lui`+`addu` far-base build as the recorded +0x253AC halfword-block
-pair member `ovl_11_func_800DB978` (matched), which zeroes exactly those two
-fields. So the +0x253AC halfword family gains a matched consumer of two of
-its six cleared halfwords. Address-apart from that family, so same-TU
-membership between the two runs is unproven; the pair's own membership rests
-on adjacency + call edge only (low).
+Suspected same TU: gapless bounds-helper → renderer → four selected handlers,
+with agreeing call/link adjacency and a common handler output ABI. Evidence:
+[800D93C8 grouping note](research/ovl_11_func_800D93C8-grouping.md).
+The existing connection to the distant +0x253AC halfword-state run does not
+establish same-TU membership between the runs.
 
-Members:
-- ovl_11_func_800D92FC (m, matched this session, byte-exact) — two-pass
-  leaf: per pass reads the shared halfword pair, computes
-  `(v ± 0xE10 + 0x1130) / 400` clamped to [0,0x2D] and
-  `(v ± 0xE10 - 0x640) / -400` clamped to [0,0x19], and stores the two
-  results as the s32 pair at `arg0[2*i]`/`arg0[2*i+1]`.
-- ovl_11_func_800D93C8 (s) — link successor and sole caller; consumes the
-  written pair.
+Members (link order):
+- ovl_11_func_800D92FC (m) — computes clamped cell bounds from D_8007AFF0's +0x253B4/+0x253B8 pair.
+- ovl_11_func_800D93C8 (m, byte-exact) — projects bounded cells and draws sprites through a mode-selected resolver.
+- ovl_11_func_800D95EC (s) — mode-0 cell-to-sprite resolver, selected by 800D93C8.
+- ovl_11_func_800D981C (s) — mode-1 cell-to-sprite resolver, selected by 800D93C8.
+- ovl_11_func_800D9B14 (s) — mode-2 cell-to-sprite resolver, selected by 800D93C8.
+- ovl_11_func_800D9E10 (s) — fallback cell-to-sprite resolver, selected by 800D93C8.
 
 ## `ovl_11` D_8007AFF0 +0x253AC halfword-state consumer/writer run — 0x800DB674 / 0x800DB78C / 0x800DB7F0 / 0x800DB904 / 0x800DB978 (confidence: medium)
 
