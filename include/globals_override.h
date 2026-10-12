@@ -2682,6 +2682,10 @@ extern s16 D_800BFC90;
  * groups of four halfwords, indexed by (category << 3) + (flag << 2) in
  * halfwords (category = ovl_19_func_800BA33C's threshold class, flag = whether
  * arg->+0xC is non-zero). */
+/* D_8007AE58 - ovl_19_func_800BB108 loads a word for its first text argument. */
+extern s32 D_8007AE58;
+/* D_800BCD68 - ovl_19 text data: 0x12C bytes of halfwords, indexed by byte offsets. */
+extern u16 D_800BCD68[0x96];
 extern s16 D_800BF4C0[];
 /* D_800BF4E0 - the s16 field at D_800BF4C0 + 0x20, addressed by ovl_19_func_800B8DE8
  * through its own symbol (the compiler materialises D_800BF4E0 and expresses the
