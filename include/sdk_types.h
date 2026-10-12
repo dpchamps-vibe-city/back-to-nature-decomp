@@ -2516,6 +2516,28 @@ typedef struct {
 } Ovl11PaddedVec3;
 
 typedef struct {
+    char pad0[0xC];
+    s16 sprite;
+} Ovl11RotationSource;
+
+typedef struct {
+    s16 x;
+    s16 y;
+    s16 z;
+} Ovl11RotationVector;
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s32 unk8;
+    Ovl11RotationVector rotation;
+    s16 unk12;
+    Ovl11RotationSource *unk14;
+} Ovl11RotationState;
+
+typedef struct {
     char pad_00[0x34];
     s32 field_34;
     char pad_38[0x58 - 0x38];

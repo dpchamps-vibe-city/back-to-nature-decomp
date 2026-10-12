@@ -496,35 +496,24 @@ Members (address order):
 
 ---
 
-## `ovl_11` 0x80106DC0 struct-reset leaf run — 0x80106DC0–0x80107043 (confidence: medium)
+## `ovl_11` `D_8012CF48` rotation-state reset/update run — 0x80106DC0–0x8010738F (confidence: medium)
 
-A 0x28-byte struct-reset leaf at the head of a contiguous five-function run
-(0x80106DC0, size 40, ends 0x80106DE8; 0x80106DE8, size 80, ends 0x80106E38;
-0x80106E38, size 120, ends 0x80106EB0; 0x80106EB0, size 0x70, ends 0x80106F20;
-0x80106F20, size 0x124, ends 0x80107044 — zero gaps). Call graph and link order
-agree: both immediate successors call the leaf. Same leaf-reset fingerprint as
-the farm-object clear/update run (leaf 0x801214F8 called by both its
-neighbours).
-Members:
-- ovl_11_func_80106DC0 (m, matched this session) — resets an 0x18-byte struct:
-  zeroes f0/f4/fC/fE/f10 (s16) and f8/f14 (s32), sets f2 to 4; called by both
-  successors
-- ovl_11_func_80106DE8 (m, matched this session) — first of the two immediate
-  successors: walks the 0x18-stride `D_8012CF48` table (10 entries, same table
-  indexed by ovl_11_func_8010734C) calling the reset leaf on each, then calls
-  ovl_11_func_800E54C8; confirms the documented caller edge
-- ovl_11_func_80106E38 (m, matched this session) — second immediate successor:
-  scans the same 0x18-stride `D_8012CF48` table for the first entry with
-  `f0 == 0`, resets it via the leaf, then sets f0=1, f14=arg0, f2=arg0->unk8;
-  the third zero-gap member of the run
-- ovl_11_func_80106EB0 (m) — fourth zero-gap member: 0x2C-stride walk of 50
-  entries calling ovl_11_func_80106E38 on each whose s16@+0x1A != 0x63; its
-  call edge plus gapless link adjacency place it in this run
-- ovl_11_func_80106F20 (m, matched this session) — fifth zero-gap member: scans
-  the same 0x18-stride `D_8012CF48` table for the entry whose f14->fA == arg0,
-  then switches on entry f0 (1/2/3/4) to set f0=1 or f0=2 with f2=arg1, or add 5
-  to f4; shares the `D_8012CF48` table with 80106DE8/80106E38/8010734C, and its
-  gapless adjacency extends the run to 0x80107044
+Candidate same-TU run supported by the shared ten-entry `D_8012CF48` table,
+complementary state operations and gapless call/link adjacency. Both immediate
+successors call the reset leaf; the newly verified `80107044` is called on
+that table by its immediate successor `8010726C`, followed by the shared-table
+accessor `8010734C`. Original TU boundaries remain unproven.
+Evidence paths and limits: [grouping research](research/ovl_11_func_80107044-grouping.md).
+
+Members (address order):
+- ovl_11_func_80106DC0 (m) — resets a 0x18-byte rotation-state entry; called by both immediate successors.
+- ovl_11_func_80106DE8 (m) — resets all ten `D_8012CF48` entries, then calls `800E54C8`.
+- ovl_11_func_80106E38 (m) — claims a free table entry through the reset leaf and installs its source object/direction.
+- ovl_11_func_80106EB0 (m) — scans the sprite pool and calls `80106E38` for eligible entries.
+- ovl_11_func_80106F20 (m) — finds an entry by linked-object ID and starts or extends its rotation-state transition.
+- ovl_11_func_80107044 (m) — advances entry rotation in states 2/4, mirrors a linked sprite and updates transition state.
+- ovl_11_func_8010726C (s) — drives the shared table, calling `80107044` and counting down the intervening hold state.
+- ovl_11_func_8010734C — returns a shared-table entry's state by linked-object ID.
 
 ---
 

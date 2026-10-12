@@ -1169,3 +1169,28 @@ typedef struct {
     char pad_38[0xB6 - 0x38];
     s16 unkB6;
 } Ovl11StageHandlerObj;
+
+/* ovl_11_func_80107044: source sprite index loaded by lh at +0xC. */
+typedef struct {
+    char pad0[0xC];
+    s16 sprite;
+} Ovl11RotationSource;
+
+/* Three halfwords at +0xC/+0xE/+0x10 in the rotation state. */
+typedef struct {
+    s16 x;
+    s16 y;
+    s16 z;
+} Ovl11RotationVector;
+
+/* 0x18-byte state: 80106DC0 resets it; 80107044 updates the rotation. */
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s32 unk8;
+    Ovl11RotationVector rotation;
+    s16 unk12;
+    Ovl11RotationSource *unk14;
+} Ovl11RotationState;
