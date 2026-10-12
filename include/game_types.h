@@ -10,6 +10,25 @@ typedef struct {
     s16 unk2;
 } Ovl11CounterPair;
 
+/* 8010B264 updates the u16 counters at +16/+AC, compares lh at +1A/+1C/+1E
+ * and +30, and passes the leading tag/flags view to 8010B830. */
+typedef struct {
+    u16 field_0;
+    u8 pad_2[0x16 - 2];
+    u16 field_16;
+    u8 pad_18[2];
+    s16 field_1A;
+    s16 field_1C;
+    s16 field_1E;
+    u8 pad_20[0x30 - 0x20];
+    s16 field_30;
+    u8 pad_32[2];
+    s32 field_34;
+    u8 pad_38[0xA8 - 0x38];
+    s16 field_A8[2];
+    u16 field_AC;
+} Ovl11B264Object;
+
 /* Shared struct for functions that access void* with offset 0x14 and 0x18 */
 typedef struct {
     /* 0x00 */ s32 field_0x0;

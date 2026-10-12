@@ -2373,6 +2373,23 @@ typedef struct {
 } ObjectState;
 
 typedef struct {
+    u16 field_0;
+    u8 pad_2[0x16 - 2];
+    u16 field_16;
+    u8 pad_18[2];
+    s16 field_1A;
+    s16 field_1C;
+    s16 field_1E;
+    u8 pad_20[0x30 - 0x20];
+    s16 field_30;
+    u8 pad_32[2];
+    s32 field_34;
+    u8 pad_38[0xA8 - 0x38];
+    s16 field_A8[2];
+    u16 field_AC;
+} Ovl11B264Object;
+
+typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;
