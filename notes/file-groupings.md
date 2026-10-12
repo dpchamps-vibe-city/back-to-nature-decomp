@@ -6364,6 +6364,7 @@ the overlay, never GP-relative), and the large-offset writers use the same
   of `ovl_11_func_800C0010(1, &D_80128A80[idx * 3])`; third matched
   `D_80128A80` reference and the zero-gap link-order predecessor (0x68) of
   matched 0x800BFEA4
+- ovl_11_func_800BFD1C (m, byte-exact) — gated per-tick interpolation controller in the local 800BFE3C/800BFF00 state family.
 - ovl_11_func_800D63C4 (m, matched this session) — dual-gauge clamp leaf:
   adds a sign-extended s8 arg to the u16 gauge at `D_80071A00`+0x14 (clamp
   0..0xFF, mirrored to +0x12) and a second s8 arg to the u16 gauge at +0x16
