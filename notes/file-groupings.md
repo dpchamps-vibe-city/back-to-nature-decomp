@@ -6883,7 +6883,7 @@ Members (link order):
 - ovl_23_func_800B8354 (s) — `D_800BF87C` record/field initialiser; calls
   `func_80012A34`.
 
-## `ovl_23` display-setup state-handler run — 0x800BB214–0x800BB758 (confidence: medium)
+## `ovl_23` sprite-state/display-setup run — 0x800BB0E8–0x800BB758 (confidence: medium)
 
 Evidence: the dispatcher `ovl_23_func_800B7F00` (s) selects on the state byte
 `D_800BBA3C` via `jtbl_800B7E24` and, from consecutive jump-table branches,
@@ -6896,8 +6896,14 @@ handlers share the display-setup idiom `DrawSync` → `ClearOTagR` →
 `func_80014CBC` → `func_8001719C` (800BB214 additionally `func_80015704`) and
 the run closes with the per-overlay audio-setup leaf, mirroring the ovl_17
 run's 800BA504.
+Shared sprite-state storage additionally links this candidate TU to the
+adjacent array walkers and reset/handoff leaf; see
+[800BB534 grouping evidence](research/ovl_23_func_800BB534-grouping.md).
 
 Members (link order):
+- ovl_23_func_800BB0E8 (m) — sets sprite-state bits across the shared array pair.
+- ovl_23_func_800BB150 (m) — clears sprite-state bits across the shared array pair.
+- ovl_23_func_800BB1B8 (m) — resets and dispatches the shared sprite object.
 - ovl_23_func_800BB214 (s) — display-setup state: DrawSync/ClearOTagR plus
   func_80014CBC/1719C/15704
 - ovl_23_func_800BB488 (m, byte-exact this session) — same display-setup
@@ -6905,7 +6911,7 @@ Members (link order):
   ClearOTagR(D_8005E3C0->field_120, 0x800), then `func_80014CBC(0, 0, 0x2000,
   D_8005E3B0 + 0x4290, 1, 1)` followed by the zero-return poll
   `func_80014CBC(..., 1, 0) == 0`, then `func_8001719C(D_8005E3B0 + 0x4290)`
-- ovl_23_func_800BB534 (s) — same display-setup idiom
+- ovl_23_func_800BB534 (m, byte-exact) — loads a sprite bank and initialises the shared sprite-state cluster.
 - ovl_23_func_800BB758 (m, matched via automatic reconstruction, byte-exact) —
   audio-setup leaf: `func_80020B80(2,0)`, `func_80020B80(1,0)`,
   `func_8001FBF0(0x3E7,0)`, `func_8001FBF0(0x12,1)`
