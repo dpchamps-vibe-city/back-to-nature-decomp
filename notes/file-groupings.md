@@ -9549,6 +9549,7 @@ other `ovl_21` functions in the 0x800B80xx–0x800BBxxx run, so this trio is a
 contiguous sub-cluster of a larger `ovl_21` TU.
 
 Members (link order):
+- ovl_21_func_800B8228 (m, byte-exact, finalized) — `D_800C0448` initializer: clears state, invokes the reset chain, and seeds halfword defaults ([grouping evidence](research/ovl_21_func_800B8228-grouping.md)).
 - ovl_21_func_800B8320 (m, byte-exact) — resets shared `D_800C0448` state and calls its gapless link successor `ovl_21_func_800B836C`.
 - ovl_21_func_800B836C (m, byte-exact) — initializes six `D_800C0448` records and three substates per record; joins through the shared storage consumed by `ovl_21_func_800BA510` / `ovl_21_func_800BA5D0`.
 - ovl_21_func_800B859C (m, byte-exact, finalized) — reset/start handler selecting state 1/2; joins through shared `D_800C0448`, calls to `ovl_21_func_800B8320` / `ovl_21_func_800BA4C0`, and gapless placement between `ovl_21_func_800B836C` (0x800B836C + 0x230) and `ovl_21_func_800B8654` (0x800B859C + 0xB8).
