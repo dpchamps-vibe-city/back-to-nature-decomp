@@ -792,12 +792,15 @@ Fingerprints:
   (0x118), each starting exactly where the previous ends, one unbroken span
   with no unrelated code between;
 - shared loader idiom: 800BD538/800BD668/800BD938/800BDA20 all call
-  `func_80014BCC(0, <ROM addr>, <size>, 0, D_8005E3B0+0x4290)`; 800BD5A8
-  (matched this session) calls it too, with the range taken from the
-  `D_801227CC[arg0]` word pair instead of an inline ROM address;
-- adjacent destination globals: the run writes/reads the consecutive
-  main-RAM slots D_8007BFF8 (800BD8DC/800BD9D4), D_801287F8 (800BD938) and
-  D_80128800 (800BD8DC).
+  `func_80014BCC(0, <ROM addr>, <size>, 0, D_8005E3B0+0x4290)`;
+  800BD5A8/800BD6A8 share its indexed-boundary load/copy/process variant
+  and are paired by caller 800DDDFC;
+- destination cluster: D_8007BFF8 (800BD8DC/800BD9D4), D_801287F8
+  (800BD938) and D_80128800 (800BD8DC), plus shared D_8009CBF8
+  (800BD6A8/800BDA70).
+
+New BD6A8 grouping evidence and limits:
+[research note](research/ovl_11_func_800BD6A8-grouping.md).
 
 Members (address order):
 - ovl_11_func_800BD538 (s) — reloads 0x0380B000/0x5000 into +0x4290, copies
@@ -806,7 +809,7 @@ Members (address order):
 - ovl_11_func_800BD5A8 (m, matched this session, byte-exact) — per-index
   loader (see its own entry)
 - ovl_11_func_800BD668 (m) — bare load 0x74800/0xA800 into +0x4290
-- ovl_11_func_800BD6A8 (s) — role unknown
+- ovl_11_func_800BD6A8 (m) — selector-driven sprite asset loader
 - ovl_11_func_800BD8DC (m) — stores arg0 to D_80128800 and loads the
   arg0-derived ROM region 0x3800 into D_8007BFF8
 - ovl_11_func_800BD938 (m, matched this session) — loads 0x03D57800/0x800
@@ -822,8 +825,8 @@ Members (address order):
   `D_8005E5E8[0/1].+0x124` on the `D_8005E3C0 == D_8005E5E8` test, loads
   0x7F000/9 sectors into that base, `memcpy`s 0x770 bytes to `D_8009CBF8`,
   then `func_8001719C(base+0x770)`. Shares the wrapper pair and zero-gap
-  adjacency; the differing source/destination cluster keeps run confidence
-  at medium.
+  adjacency; its source buffer differs, but D_8009CBF8 is shared with
+  800BD6A8. Run confidence remains medium.
 
 ---
 
