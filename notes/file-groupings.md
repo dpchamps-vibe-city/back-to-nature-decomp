@@ -9549,6 +9549,7 @@ other `ovl_21` functions in the 0x800B80xx–0x800BBxxx run, so this trio is a
 contiguous sub-cluster of a larger `ovl_21` TU.
 
 Members (link order):
+- ovl_21_func_800B836C (m, byte-exact) — initializes six `D_800C0448` records and three substates per record; joins through the shared storage consumed by `ovl_21_func_800BA510` / `ovl_21_func_800BA5D0`.
 - ovl_21_func_800B9538 (m, matched) — guarded `D_800C0448[0] = 5` / `= 0xF`
   writer; calls `func_800226A4`, `func_800225B8`, `ovl_21_func_800BA4C0`.
 - ovl_21_func_800B9590 (s) — same guard writes `D_800C0448[0] = 5` after

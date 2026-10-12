@@ -746,16 +746,68 @@ typedef struct {
 typedef struct {
     /* 0x00 */ u16 unk0;
     /* 0x02 */ u16 unk2;
-    /* 0x04 */ char pad_04[0x10];
+    /* 0x04 */ char pad_04[0xC];
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
     /* 0x14 */ s32 unk14;
     /* 0x18 */ s16 unk18;
     /* 0x1A */ u16 unk1A;
     /* 0x1C */ u16 unk1C;
     /* 0x1E */ u16 unk1E;
-    /* 0x20 */ char pad_20[0x30 - 0x20];
+    /* 0x20 */ char pad_20[2];
+    /* 0x22 */ s16 unk22;
+    /* 0x24 */ s16 unk24;
+    /* 0x26 */ char pad_26[2];
+    /* 0x28 */ s32 unk28;
+    /* 0x2C */ s16 unk2C;
+    /* 0x2E */ s16 unk2E;
     /* 0x30 */ void *unk30;
-    /* 0x34 */ char pad_34[0x108 - 0x34];
+    /* 0x34 */ s32 unk34;
+    /* 0x38 */ s16 unk38;
+    /* 0x3A */ s16 unk3A;
+    /* 0x3C */ s16 unk3C;
+    /* 0x3E */ char pad_3E[2];
+    /* 0x40 */ u16 unk40;
+    /* 0x42 */ u16 unk42;
+    /* 0x44 */ u16 unk44;
+    /* 0x46 */ char pad_46[2];
+    /* 0x48 */ s16 unk48;
+    /* 0x4A */ s16 unk4A;
+    /* 0x4C */ s16 unk4C;
+    /* 0x4E */ char pad_4E[0x108 - 0x4E];
 } UnkStruct800C0448;
+
+/* 800B836C's three 0x4C-byte states start at record +0x24. */
+typedef struct {
+    char pad_00[0x10];
+    s32 unk10;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    char pad_1A[2];
+    u16 unk1C;
+    u16 unk1E;
+    u16 unk20;
+    char pad_22[2];
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    char pad_2A[0x4C - 0x2A];
+} Ovl21InitSubstate;
+
+/* 800B836C initializes six 0x108 records, then selects the two trailing tables. */
+struct Ovl21InitState {
+    UnkStruct800C0448 records[6];
+    char pad_630[0x10];
+    s16 tableIndex;
+    u16 variantIndex;
+};
+
+/* 800B836C reads the signed entity selector at D_8006C838 + 0xE628. */
+typedef struct {
+    char pad_0[0xE628];
+    s16 selector;
+} Ovl21InitSelectorView;
 
 /* One of the six 0x108-byte records of the D_800C0448 state block, at
  * 0x14 + i * 0x108. It is the storage UnkStruct800C0448 indexes from the block
