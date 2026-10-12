@@ -50,6 +50,8 @@ segments:
       - [0x1B28, rodata]
       - [0x1B40, .rodata, ovl_11_func_800E7954]
       - [0x1B58, rodata]
+      - [0x1FA0, .rodata, ovl_11_func_800EE000]
+      - [0x2018, rodata]
       - [0x2080, .rodata, ovl_11_func_800EF6E4]
       - [0x2094, rodata]
       - [0x2098, .rodata, ovl_11_func_800EFABC]
