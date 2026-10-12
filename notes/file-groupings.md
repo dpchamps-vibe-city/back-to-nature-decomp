@@ -9551,6 +9551,7 @@ contiguous sub-cluster of a larger `ovl_21` TU.
 Members (link order):
 - ovl_21_func_800B8320 (m, byte-exact) — resets shared `D_800C0448` state and calls its gapless link successor `ovl_21_func_800B836C`.
 - ovl_21_func_800B836C (m, byte-exact) — initializes six `D_800C0448` records and three substates per record; joins through the shared storage consumed by `ovl_21_func_800BA510` / `ovl_21_func_800BA5D0`.
+- ovl_21_func_800B859C (m, byte-exact, finalized) — reset/start handler selecting state 1/2; joins through shared `D_800C0448`, calls to `ovl_21_func_800B8320` / `ovl_21_func_800BA4C0`, and gapless placement between `ovl_21_func_800B836C` (0x800B836C + 0x230) and `ovl_21_func_800B8654` (0x800B859C + 0xB8).
 - ovl_21_func_800B94D4 (m, byte-exact, finalized) — guarded reset/start handler selecting state 0xE; joins through shared `D_800C0448`, calls to `ovl_21_func_800BA4C0` / `ovl_21_func_800B8320`, and gapless link adjacency between `ovl_21_func_800B93F0` (+0xE4) and `ovl_21_func_800B9538` (0x800B94D4 + 0x64).
 - ovl_21_func_800B9538 (m, matched) — guarded `D_800C0448[0] = 5` / `= 0xF`
   writer; calls `func_800226A4`, `func_800225B8`, `ovl_21_func_800BA4C0`.
