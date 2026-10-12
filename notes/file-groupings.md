@@ -960,7 +960,7 @@ Members (link order):
   `D_80127CB4[i]` into +0xC4.
 - ovl_11_func_8010C7F0 (s) — reads `D_8007A638` (with a `D_8006C838` arm).
 - ovl_11_func_8010C95C (s) — reads `D_8007A638`.
-- ovl_11_func_8010C9B4 (s) — reads `D_8007A638`.
+- ovl_11_func_8010C9B4 (m) — seven-record update sweep calling nearby 8010CB6C ([grouping evidence](research/ovl_11_func_8010C9B4-grouping.md)).
 
 ---
 
