@@ -14211,3 +14211,11 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800C9F20 (s) — flag/type-selected companion sprite draw with table-selected coordinate offsets.
 - ovl_11_func_800CA044 (m) — object sprite submission with optional signed-halfword substitutions.
 - ovl_11_func_800CA24C (s) — object drawing dispatcher that selects the order of the two preceding draw helpers.
+
+## `ovl_11` D_80129648 texture-draw helper pair — 0x800F8CF8 / 0x800F8F3C (confidence: medium)
+
+Candidate same-TU membership; original boundaries remain unproven
+([evidence](research/ovl_11_func_800F8F3C-grouping.md)).
+
+- ovl_11_func_800F8CF8 (s) — 32×32-cell texture sprite drawing with a draw-mode packet.
+- ovl_11_func_800F8F3C (m) — centered, size-scaled textured-quad drawing.
