@@ -3562,8 +3562,8 @@ sh $v1,0($v0)`), then draws the buffer with `func_80017B3C` at
 `D_8005E3C0->field_D8 + 0x54`; some members also seed `0xFFD`/`0x90`/`0x71`
 marker halfwords directly;
 - link-order spread 0x800FC358–0x800FE558, non-gapless (interleaved
-non-members 0x800FC320, 0x800FC544, 0x800FD33C, 0x800FE54C), so the tie is the
-shared-global/idiom cluster, not adjacency.
+non-buffer users 0x800FC320, 0x800FC544, 0x800FD33C, 0x800FE54C), so the
+buffer-user tie is the shared-global/idiom cluster, not adjacency.
 
 Members (address order):
 - ovl_11_func_800FC358 (m) — multi-row formatted-number display builder;
@@ -3609,6 +3609,7 @@ Members (address order):
 - ovl_11_func_800FD21C (s) — seeds `D_8012A028` halfwords (0x90@0, 0xFFD@2,
   0x71@8, 0@0x10, 0x26@0x12, 0x24@0x14, `0xFFD` fill at +0x1C) and runs two
   `func_8001A970` transports
+- ovl_11_func_800FD33C (m) — heading and seven-row renderer; candidate same-TU pair with its gapless direct callee `ovl_11_func_800FD3CC` (low confidence).
 - ovl_11_func_800FD3CC (s) — row builder: formats object field `+0xB4` into
   `D_8012A028` via `func_8001A970`, calls `ovl_11_func_800FC7F0` /
   `ovl_11_func_800FE558`
