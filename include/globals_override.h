@@ -1766,6 +1766,14 @@ typedef struct {
 extern struct_80070C92 _D_80070C92[1] __asm__("D_80070C92");
 #define D_80070C92 (*((struct_80070C92 *)_D_80070C92))
 
+/* D_800A0384 - ovl_11_func_800C009C reads unsigned halfwords at +0x14/+0x16. */
+typedef struct {
+    u8 pad_0[0x14];
+    u16 unk14;
+    u16 unk16;
+} Ovl11CameraOffsetView;
+extern Ovl11CameraOffsetView D_800A0384;
+
 /* Partial global-object views and external storage used by the integrated
  * reconstruction batch. Field offsets are witnessed; unknown extents remain
  * unsized. Parameter views live in game_types.h. */
