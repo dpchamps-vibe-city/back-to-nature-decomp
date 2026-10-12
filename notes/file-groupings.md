@@ -8781,6 +8781,15 @@ Members (link order):
 - ovl_30_func_8012F3D4 (m) — call-sequence leaf, constant 0x3E7
 - ovl_30_func_8012F410 (m) — call-sequence leaf, constant 0x3E8
 
+## `ovl_30` adjacent debug editors and shared value helper — 0x80132EE0–0x80133218 (confidence: medium)
+
+Evidence classes: corroborated call/link adjacency, shared editor/SDK idiom
+and rodata, adjacent selector-state cluster. [Evidence and limits](research/ovl_30_func_80133218-grouping.md).
+
+- ovl_30_func_80132EE0 (m) — shared input-driven decrement/increment helper for the two adjacent editors.
+- ovl_30_func_80132F18 (s) — item-record editor displaying and updating the selected BUY/SELL/LIFE/TIRED field.
+- ovl_30_func_80133218 (m) — tool-parameter editor selecting a row/column, updating its signed-halfword value and printing the row.
+
 ## `ovl_30` size-selected field writer with its caller and neighbour — 0x80133454 / 0x80133974 / 0x80133A8C (confidence: medium)
 
 A record-field update cluster in `ovl_30` (`Obj\GF_swind.bin`):
