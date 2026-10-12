@@ -10481,8 +10481,11 @@ Members (link order):
   mode 0 walks 10 records at stride 0xB4 (`u16@0x0`, `u32@0x34 & 0x02000000`),
   mode 1 walks 20 records at stride 0xB8 (`u16@0x708`, `u16@0x7BA`), returning
   the match count
-- ovl_15_func_801335F8 (s) — gapless successor (ends exactly at 0x80133808, the
-  D_8013759E run head); same two-base selection, walks `D_80140F90`
+- ovl_15_func_801335F8 (m, matched this session, byte-exact) — gapless successor
+  (ends exactly at 0x80133808, the D_8013759E run head); same two-base selection,
+  walks `D_80140F90`; matched under `-fno-gcse` (PRE-fatal nested-loop shape;
+  flag matrix 132/132 masked vs baseline 84/132; neighbour `ovl_15_func_8013345C`
+  shares the override; per-TU override in `configs/flag_overrides.mk`)
 
 ## `ovl_15` number-text formatter pair — 0x80136C70 / 0x8013703C (confidence: medium)
 

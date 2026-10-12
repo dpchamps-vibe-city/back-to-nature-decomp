@@ -1,10 +1,10 @@
 {
  "ladder": [
   {
-   "provider": "runinfra",
-   "model": "deepseek-v4-1-flash",
+   "provider": "openai-codex",
+   "model": "gpt-6.1-sol",
    "thinking": "xhigh",
-   "label": "deepseek-v4-1-flash",
+   "label": "gpt-6.1-sol",
    "checkpointAtTokens": 300000
   }
  ],
@@ -114,6 +114,9 @@
    "ovl_11_func_8011ac30": [
     "flag-override"
    ],
+   "ovl_11_func_8011aa64": [
+    "flag-override"
+   ],
    "func_800231E8": [
     "flag-override"
    ],
@@ -219,6 +222,9 @@
     "embedded-asm"
    ],
    "ovl_21_func_800ba698": [
+    "flag-override"
+   ],
+   "ovl_15_func_801335f8": [
     "flag-override"
    ],
    "ovl_11_func_800ef8bc": [

@@ -3138,5 +3138,18 @@ extern s16 D_80128D60;
 extern s16 D_80128D62;
 extern s16 D_80128D64;
 
+/* ovl_15_func_801335F8: byte-addressed text at base and base+0xE. */
+extern u8 D_80051CAE[];
+/* ovl_15_func_801359FC stores the alternate record-pool byte pointer. */
+extern u8 *D_801376D0;
+/* ovl_15 slot writers use s16 at +0/+2 and s32 at +4, stride 8. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s32 unk4;
+} Ovl15Slot;
+/* Alternate view preserves the existing local views in other ovl_15 TUs. */
+extern Ovl15Slot Ovl15Slots[2][5] __asm__("D_80140F90");
+
 #endif /* GLOBALS_OVERRIDE_H */
 

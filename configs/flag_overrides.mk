@@ -484,6 +484,15 @@ CC1FLAGS_ovl_11_func_800F8224 := -fno-strength-reduce
 # allocation ordering.
 CC1FLAGS_ovl_15_func_8013345C := -fno-gcse
 
+# ovl_15_func_801335F8: target retains the bottom signed-coordinate
+# conversion inside a nested loop; baseline GCSE PRE hoists its left shift
+# into the inner preheader. The flag matrix on the compiling C reports
+# -fno-gcse 132/132 masked versus baseline 84/132; the relocated-byte oracle
+# confirms 132/132 exact. Nearby ovl_15_func_8013345C has the same override;
+# this per-function TU leaves its matched neighbours' flags unchanged.
+# User authorized the evidence-backed exception in the matching session.
+CC1FLAGS_ovl_15_func_801335F8 := -fno-gcse
+
 # ovl_11_func_800FE068: -fno-strength-reduce.
 #
 # Target fingerprint (decoded from the original bytes, no source needed): the
