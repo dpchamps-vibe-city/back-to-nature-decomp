@@ -9580,6 +9580,7 @@ Members (link order):
   `func_8002261C(4, 0x18)` and sharing the 0x18 `$s0/$ra` frame; membership
   rests on the shared global + identical guard idiom, not on adjacency (it
   sits at 0x800B8654, well before the trio).
+- ovl_21_func_800B86B8 (m, byte-exact, finalized) — guarded reset/start handler selecting state 3; joins through shared `D_800C0448` (+0/+0x988), calls to `ovl_21_func_800B8320` / `ovl_21_func_800BA4C0`, and gapless adjacency to `ovl_21_func_800B871C` (0x800B86B8 + 0x64).
 - ovl_21_func_800B871C (m, matched this session, byte-exact) — SpuGetKeyStatus
   state-handler over the same `D_800C0448 + 0x986` / `+ 0x988` state pair and
   `D_800BCC60` voice-bit table as the 0x800B9178/0x800B92C8/0x800B93F0 run,
