@@ -8862,7 +8862,7 @@ Members (link order):
 - ovl_11_func_800FFA40 (m) — void reset: calls 800FFA28, then
   `D_801273DA = 0`
 
-## `ovl_11` D_80128420/D_80128422 init/set cluster — 0x8011E574 / 0x8011E588 / 0x8011EC54 / 0x8011EC84 / 0x8011ECC4 (confidence: medium for the pair, low for 0x8011EC54, 0x8011EC84 and 0x8011ECC4)
+## `ovl_11` D_80128420/D_80128422 init/set cluster — 0x8011E574 / 0x8011E588 / 0x8011EC54 / 0x8011EC84 / 0x8011ECC4 / 0x8011EE98 (confidence: medium for the pair, low for 0x8011EC54, 0x8011EC84, 0x8011ECC4 and 0x8011EE98)
 
 Same fingerprint class as the D_801273D8/D_801273DA entry above: an
 overlay-local {s16,s16} flag pair with an init leaf and callers that reset
@@ -8907,6 +8907,7 @@ Members (link order):
 - ovl_11_func_8011ECC4 (m) — reads `D_80128422` to index the
   `D_801284AC` position table while blitting sprite records; no
   `D_80128420` access
+- ovl_11_func_8011EE98 (m; [grouping evidence](research/ovl_11_func_8011EE98-grouping.md)) — loads a selected sprite resource and initializes `D_8012DA80[0..2]` for 8011ECC4.
 
 ## `ovl_11` func_8001ABF0 text-copy wrapper twin pair — 0x8011CEE0 / 0x8011CF10 (confidence: medium)
 
