@@ -681,6 +681,9 @@ link successor of 800D6628 (0x44 bytes, ending exactly at 0x800D666C).
 Correction (2026-10-09): "no others" counted symbol references only. A sixth
 reader, 800F9BE4, reaches rows 0–1 through a second far base,
 `D_8009AFF0`+0x54A4 (= 0x800A0494), so a symbol scan misses it.
+800F0A58 additionally shares the row/slot-to-D_800A04B8 record mapping with
+800D666C, corroborating this data cluster without proving a TU boundary;
+see [grouping evidence](research/ovl_11_func_800F0A58-grouping.md).
 Members:
 - ovl_11_func_800D6628 (m, matched this session) — table initializer:
   `memset(&D_800A0494, 0, 0x24); memset((char *)D_800A0494 + 0x24, 0xFF,
@@ -693,8 +696,7 @@ Members:
   0x24 above the row base; row index comes from ovl_11_func_800D5750
 - ovl_11_func_800D6F78 (s) — dual-row scan: walks `i < 9` comparing
   `base + 2i` against `base + 0x12 + 2i` (adjacent rows), returns 0/1/-1
-- ovl_11_func_800F0A58 (s) — scans the 9-`s16` row at `base` (second cursor
-  `base + 0x12`) for a matching `s16`, returns the found index or -1
+- ovl_11_func_800F0A58 (m, byte-exact) — activates a paired record from rows 0–1 and relocates its texture and CLUT.
 - ovl_11_func_800F9BE4 (m, matched 2026-10-09, byte-exact) — slot
   reconciler: mirrors the 18 six-byte slot records at D_8006C838+0x524C as
   two 9-`s16` rows (row r = slots 2+8r..9+8r, then slot r), then passes each
