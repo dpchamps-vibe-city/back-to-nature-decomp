@@ -9594,6 +9594,7 @@ Members (link order):
   resets to `D_800C0448[0] = 5`, and indexes its own selector table
   `D_800BCCCC` at record `+0x642`. Membership rests on the shared globals, the
   `ovl_21_func_800BA4C0` call, and the gapless-link twin relation.
+- ovl_21_func_800B8A24 (m, byte-exact, finalized) — reset/start handler selecting state 6; joins through shared `D_800C0448`, calls to `ovl_21_func_800B8320` / `ovl_21_func_800BA4C0`, and gapless adjacency to `ovl_21_func_800B8A80` (0x800B8A24 + 0x5C).
 - ovl_21_func_800BA7F0 (m, matched this session, byte-exact) — leaf that
   reads the 32-bit word at record offset 0x14 of three consecutive
   `D_800C0448` records starting at index `arg0*3` and returns how many equal
