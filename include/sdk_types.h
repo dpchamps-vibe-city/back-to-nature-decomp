@@ -2634,6 +2634,17 @@ typedef struct {
 } Ovl11SetFieldsView;
 
 typedef struct {
+    u8 pad0[2];
+    s16 unk2;
+    u16 unk4;
+    u16 pad6;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+} Ovl11SpawnEffectRecord;
+
+typedef struct {
     s16 unk0;
     u16 unk2;
     s32 unk4;

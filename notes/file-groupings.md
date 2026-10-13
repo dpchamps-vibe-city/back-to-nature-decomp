@@ -2670,6 +2670,18 @@ Members (address order):
 
 ---
 
+## `ovl_11` spawn-effect record consumer trio — 0x800F46A4–0x800F4994 (confidence: medium)
+
+Candidate same-TU trio of `ovl_11` (`Obj\GF_FARM.bin`); original boundaries
+remain unproven. Evidence and limits: [grouping research](research/ovl_11_func_800F46A4-grouping.md).
+
+Members (address order):
+- ovl_11_func_800F46A4 (m) — consumes an eligible record and spawns its effect unless far-state mode is 0x13.
+- ovl_11_func_800F474C (s) — consumes and spawns after eligibility and two threshold checks.
+- ovl_11_func_800F482C (s) — consume/spawn variant with two thresholds and item-specific state/counter updates.
+
+---
+
 ## `ovl_11` D_80129230 0x30-byte record cluster — 0x800E4568 / 0x800E516C / 0x800E5230 (confidence: medium)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing the

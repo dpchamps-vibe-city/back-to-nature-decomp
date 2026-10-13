@@ -298,6 +298,18 @@ typedef struct {
     u8 bytes[4];
 } Ovl11EffectCoordinate;
 
+/* 800F46A4 reads s16 at 2, clears bit 0 at 4, and forwards words at 8/C/10/14. */
+typedef struct {
+    u8 pad0[2];
+    s16 unk2;
+    u16 unk4;
+    u16 pad6;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+} Ovl11SpawnEffectRecord;
+
 /* ovl_11_func_800C32C8: signed identifiers, halfword state stores and
  * SpriteSourceData passed to the animation helpers at +0x80. */
 typedef struct {
