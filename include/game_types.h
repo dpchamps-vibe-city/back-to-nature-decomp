@@ -329,19 +329,39 @@ typedef struct {
 /* 0x60-byte record copied out of the zero-init global D_8012D548 and passed
  * by value to ovl_11_func_8011D98C. That callee returns data[index]: the
  * s16 table sits at 0x28 and the s16 selector at 0x5C. The first 16 bytes
- * ride in $a0-$a3 and the rest are placed in the outgoing stack area. */
+ * ride in $a0-$a3 and the rest are placed in the outgoing stack area.
+ * The word-copy loops in ovl_11_func_8011BAFC establish 4-byte alignment. */
 typedef struct {
-    /* 0x00 */ char pad_00[0x28];
+    /* 0x00 */ s32 pad_00[0x28 / 4];
     /* 0x28 */ s16 data[26];
     /* 0x5C */ s16 index;
     /* 0x5E */ char pad_5E[0x60 - 0x5E];
 } StructD548;
 
+/* 0x14-byte argument passed by value starting in $a3 to 8011BAFC.
+ * Its record pointer is spilled at incoming +0xC; the two halfwords are
+ * read at incoming +0x18/+0x1A. Callers forward five contiguous words. */
+typedef struct {
+    /* 0x00 */ StructD548 *record;
+    /* 0x04 */ s32 field_4;
+    /* 0x08 */ s32 field_8;
+    /* 0x0C */ s16 field_C;
+    /* 0x0E */ s16 field_E;
+    /* 0x10 */ s32 field_10;
+} Ovl11BAFCParams;
+
+/* State written by 8011DD48 and passed to it by 8011BAFC; the selector
+ * at +8 is also used through the unsigned-halfword interface of 8011CF40. */
+typedef struct {
+    /* 0x00 */ s32 field_0;
+    /* 0x04 */ s32 field_4;
+    /* 0x08 */ s16 field_8;
+    /* 0x0A */ s16 field_A;
+} ovl_11_DD48_arg0;
+
 /* 0x60-byte record view passed by value from ovl_11_func_8011D734, which
- * supplies the selector word at 0x60 as a separate argument. Same layout as
- * StructD548 but its leading member is word-sized, so the record is 4-byte
- * aligned and the original by-value copy is a plain lw move (StructD548's
- * char leading member forces the unaligned ulw path). */
+ * supplies the selector word at 0x60 as a separate argument. Same layout
+ * and word alignment as StructD548. */
 typedef struct {
     /* 0x00 */ s32 field_00[23];
     /* 0x5C */ s16 index;

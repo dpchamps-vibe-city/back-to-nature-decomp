@@ -2390,6 +2390,22 @@ typedef struct {
 } Ovl11B264Object;
 
 typedef struct {
+               s32 pad_00[0x28 / 4];
+               s16 data[26];
+               s16 index;
+               char pad_5E[0x60 - 0x5E];
+} StructD548;
+
+typedef struct {
+               StructD548 *record;
+               s32 field_4;
+               s32 field_8;
+               s16 field_C;
+               s16 field_E;
+               s32 field_10;
+} Ovl11BAFCParams;
+
+typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;
@@ -2949,13 +2965,6 @@ typedef struct {
 } Struct80013F90;
 
 typedef struct {
-               char pad_00[0x28];
-               s16 data[26];
-               s16 index;
-               char pad_5E[0x60 - 0x5E];
-} StructD548;
-
-typedef struct {
                s8 field_0;
                s8 field_1;
                s8 field_2;
@@ -2994,6 +3003,13 @@ typedef struct {
     s32 y;
     s32 z;
 } Vec3;
+
+typedef struct {
+               s32 field_0;
+               s32 field_4;
+               s16 field_8;
+               s16 field_A;
+} ovl_11_DD48_arg0;
 
 struct M2C_3586522a33fd_ovl_11_800D2A88_data {
     s16 pad0[17];
