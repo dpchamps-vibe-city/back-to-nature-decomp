@@ -9677,6 +9677,7 @@ Members (link order):
   and the shared tail fields. It matches only at baseline flags: both
   `-fno-schedule-insns` (800B98CC's override) and `-fno-gcse` (800BA698's)
   change its code, so neither can be a TU-wide flag of a TU that contains it.
+- ovl_21_func_800B9A20 (m, byte-exact, finalized) — assigns randomized selectors to `D_800C0448` records 1–5; joins through the shared record table, calls to cluster members `ovl_21_func_800BA7F0` / `ovl_21_func_800BA868` / `ovl_21_func_800BA944`, and gapless placement after `ovl_21_func_800B990C` ([verified source](../src/overlays/ovl_21/ovl_21_func_800B9A20.c)).
 - ovl_21_func_800BA868 (s) / ovl_21_func_800BA944 (m) — gapless
   link neighbours (0x800BA868 ends at 0x800BA944) that are near-twins of
   `ovl_21_func_800BA7F0`: both fill a 3-entry `s16 buf[4]` with the indices
@@ -9793,8 +9794,8 @@ Fingerprints:
   `record + 0x1C`) and a 32-bit word at
   0x34 stepped by 0x4C within a record (read by `ovl_21_func_800B9844` and
   walked by `ovl_21_func_800BA5D0`),
-  three records per 0x318-byte group (`func_800B9A20` walks the table at a
-  0x318 stride). Beyond the record table, `D_800C0448 + 0x986` (s16 index)
+  three records per 0x318-byte group. Beyond the record table,
+  `D_800C0448 + 0x986` (s16 index)
   and `+ 0x988` (s16/u16 counter) form a state pair used by
   `ovl_21_func_800B93F0` and its SpuGetKeyStatus near-twins
   `ovl_21_func_800B9178` / `ovl_21_func_800B92C8` (both matched); those
