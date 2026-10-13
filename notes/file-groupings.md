@@ -11845,27 +11845,16 @@ Members (link order):
 
 ---
 
-## `ovl_11` 0x800F5700 entry-lookup callers — 0x800F5698 / 0x800F5700 / 0x800F45A4 (confidence: medium)
+## `ovl_11` 0x800F5700 entry-lookup callers — 0x800F45A4 / 0x800F5404 / 0x800F5698 / 0x800F5700 (confidence: medium)
 
-The `Ovl11Func5700Entry` lookup `ovl_11_func_800F5700` (segment `[0x3D8E0]`)
-finds the first 0x18-byte entry whose `u16@+0x2` matches an s16 key and returns
-the entry pointer or 0.
-Its immediate link-order predecessor `ovl_11_func_800F5698` (`[0x3D878]`, 0x68
-bytes, ends exactly at 0x800F5700) is a same-TU caller: it forwards the s16 key
-and passes its own `arg1`/`arg2` straight through as the table and count, then
-sets/clears bit 0 of the returned entry's `u16@+0x4`. A third overlay function,
-`ovl_11_func_800F45A4` (`[0x3C784]`, separate segment), uses the same
-call-lookup-then-bit idiom on its own table `D_8006C838`, so the bit-toggle
-pattern is the shared fingerprint rather than the segment adjacency alone.
+Suspected same-TU family; original boundaries remain unproven. Evidence and
+limits: [grouping research](research/ovl_11_func_800F5404-grouping.md).
 
 Members (link order):
-- ovl_11_func_800F45A4 (m, matched this session, byte-exact) — sibling caller: looks up entry 0xD of
-  `D_8006C838`, then sets/clears bit 0 of `u16@+0x4` under `arg1 == 1`.
-- ovl_11_func_800F5698 (m, matched this session, byte-exact) — lookup caller:
-  `800F5700((s16)arg0, arg1, arg2)`, then `arg3 & arg4` sets bit 0 of
-  `u16@+0x4`, else clears it.
-- ovl_11_func_800F5700 (m) — shared lookup: scans `arg2` entries of the 0x18-byte
-  table for `u16@+0x2 == (s16)arg0`, returns `&entry` or 0.
+- ovl_11_func_800F45A4 (m) — sibling lookup caller that conditionally enables a selected record.
+- ovl_11_func_800F5404 (m) — refreshes record-list enable flags from status masks and per-entry bytes.
+- ovl_11_func_800F5698 (m) — looks up a record and sets or clears its enable bit under a mask test.
+- ovl_11_func_800F5700 (m) — finds the first record matching a halfword key, or returns null.
 
 ---
 
