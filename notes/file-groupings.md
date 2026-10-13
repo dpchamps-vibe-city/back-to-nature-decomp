@@ -1850,6 +1850,8 @@ cluster member 800EF8BC reads, through the sibling record `D_80071CC0` =
 Role: record setter alongside resetter 800EF870 and initializer 801047FC; TU
 co-membership remains unproven from the shared record region alone.
 
+- ovl_11_func_800EF488 (m) — record snapshot and paired-flag updater; candidate member of the 800EF6E4/800EF870 setter/resetter family ([evidence](research/ovl_11_func_800EF488-grouping.md)), not proven part of the D_80127428 TU.
+
 Widening (byte-exact match of `ovl_11_func_80104418`): the run's accumulator
 mutator is now matched. `ovl_11_func_80104418` (m, 0x80104418, 0xCC, void leaf)
 is called only by `ovl_11_func_80103C00` — the same link-contiguous cluster
