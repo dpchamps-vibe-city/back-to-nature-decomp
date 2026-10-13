@@ -1721,7 +1721,7 @@ Fingerprints:
   `ovl_11_func_80103964` (the run's heavy mutator);
 - adjacent sibling global `D_8012742C` (main RAM 0x8012742C, next `.word`
   after `D_80127428`) also cleared by `ovl_11_func_801037EC`; read by
-  trailer `ovl_11_func_801040A8` and, as a third confirmed site, by
+  trailer `ovl_11_func_801040A8` and by
   `ovl_11_func_80103C00`, where it indexes the shared `D_8012CF10` buffer —
   the two globals are adjacent file-scope vars of one TU, same pattern as
   D_80128B50/5C;
@@ -1751,8 +1751,7 @@ Members (address order):
   `D_8012CF10` (the inverse of 80103B24's copy), and loads `D_8012CF20` from
   +0x5224; the run's setter
 - ovl_11_func_801038E4 (s) — leaf reader of D_80127428
-- ovl_11_func_80103964 (s) — reads/writes D_80127428 at 8 sites; the run's
-  mutator
+- ovl_11_func_80103964 (m) — state-machine dispatcher and saved-row/accumulator restorer ([grouping evidence](research/ovl_11_func_80103964-grouping.md)); candidate TU membership corroborated, boundary unproven.
 - ovl_11_func_80103B24 (m) — leaf reader of D_80127428; updates the
   D_8006C838 work area and copies six D_8012CF10 halfwords. Its byte-exact
   source requires `-fno-cse-skip-blocks` to preserve distinct sign-guarded
@@ -1770,8 +1769,8 @@ Members (address order):
   halfword to `D_8012CF1C` and `D_8012CF20` to `D_8012CF24` (the only
   non-reset writer of that output pair), and calls matched consumer
   `ovl_11_func_80104394` on two paths
-- ovl_11_func_801040A8 (m) — trailer reader of D_80127428 and D_8012742C
-  (the sibling global's only other site); selects a 0xD6/0x22/0xC4 value from
+- ovl_11_func_801040A8 (m) — trailer reader of D_80127428 and D_8012742C;
+  selects a 0xD6/0x22/0xC4 value from
   D_80127428 and passes `D_8005E3C0->field_D8 + 0x54` plus a D_8012742C-derived
   s16 offset to func_800248B0; the run's state-indexed dispatch
 - ovl_11_func_80104148 (m) — row-text emitter; candidate member via shared
