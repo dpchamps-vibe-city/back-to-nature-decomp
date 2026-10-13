@@ -13999,12 +13999,11 @@ Candidate same-TU run; original boundaries remain unproven
 - ovl_11_func_800BF1D0 (m) — actor-pool bounds scan that returns the first matching record.
 - ovl_11_func_800BF2F4 (m) — item-pool bounding-box probe that returns the matching record's identifier.
 
-## `ovl_11` D_8007AFF0+0x23608 45-column pointer-grid readers — 0x800D7EF8 / 0x800D806C / 0x80113208 / 0x801136D0 / 0x8011E090 / 0x80120F30 (confidence: medium-low)
+## `ovl_11` D_8007AFF0+0x23608 45-column pointer-grid readers — 0x800D7EF8 / 0x800D806C / 0x80113208 / 0x801136D0 / 0x8011E090 / 0x8011E1E8 / 0x80120F30 (confidence: medium-low)
 
-Candidate same-TU data family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence: all six
-container-wide referrers of the private constant 0x23608 reach it through the
-`D_8007AFF0` far-work-area base (`lui %hi(D_8007AFF0)` + `addiu %lo`, two
-references each; no other function in the container contains 0x23608), and all
+Candidate same-TU data family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence for the
+six previously recorded grid readers: they reach the grid through the
+`D_8007AFF0` far-work-area base (`lui %hi(D_8007AFF0)` + `addiu %lo`) and
 index the pointer grid at `D_8007AFF0 + 0x23608` with the same 45-column stride:
 `(row * 0x2D + col) * 4`. The stride is materialised two ways — the
 `row*3 / <<4 / -row*3` (×45) chain at 800D7EF8/800D806C/8011E090/80120F30/
@@ -14014,10 +14013,10 @@ base offset is either loaded whole (`lui 2` + `ori 0x3608`) or split
 801136D0 and the parked 800D806C are instruction-for-instruction identical in
 their address block (same `lui 0x23608` / `lui %hi(D_8007AFF0)` /
 `row*45+col` / `<<2` / `addu base,offset` / `addu base,index` / `lw`
-sequence, including the base-first final `addu`). What the tie is not: the six
-members span ~0x72CAC of text (0x800D7EF8 → 0x80120F30) with no call edge
-among them, so this is a data-family tie, not proven TU membership; four of the
-six are still stubs.
+sequence, including the base-first final `addu`). What the tie is not: the
+grid readers span ~0x72CAC of text (0x800D7EF8 → 0x80120F30) with no
+established call edge among those readers, so this is a data-family tie, not
+proven TU membership.
 Handler pair (call-graph + shared-shape evidence, still address-apart):
 - **Three call sites.** `ovl_11_func_801103E8` reaches 800D7EF8 and 8011E090
   through one function pointer, selected by its arg1, and declares one
@@ -14072,6 +14071,11 @@ Members (address order):
   - Its tail is the non-inverted branch form; see
     `notes/retros/2026-10-09-ovl_11_func_8011E090-retro.md`.
   - Corrected 2026-10-09: there is no `+0x45476` read.
+
+Local mode-6 texture-update candidate TU pair (confidence: medium;
+[call/link-order evidence](research/ovl_11_func_8011E1E8-grouping.md)):
+- ovl_11_func_8011E1E8 (m, byte-exact) — updates a mode-6 grid cell's UVs/tpage/CLUT from a texture-index table.
+- ovl_11_func_8011E45C (s) — scans the 7×7 records and applies selected textures through 8011E1E8.
 
 Local texture-update candidate TU subgroup (confidence: medium;
 [evidence](research/ovl_11_func_80120F30-grouping.md)):
