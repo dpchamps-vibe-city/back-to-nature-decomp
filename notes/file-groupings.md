@@ -14231,12 +14231,14 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800F8CF8 (s) — 32×32-cell texture sprite drawing with a draw-mode packet.
 - ovl_11_func_800F8F3C (m) — centered, size-scaled textured-quad drawing.
 
-## `ovl_11` D_80129648 texture-ID load/lookup caller run — 0x800F6A24 / 0x800F6C78 / 0x800F6D14 (confidence: medium)
+## `ovl_11` D_80129648 texture-ID load/lookup caller run — 0x800F6A24 / 0x800F6C78 / 0x800F6D14 / 0x800F6E38 (confidence: medium)
 
 Candidate same-TU membership; original boundaries remain unproven
 ([lookup-pair evidence](research/ovl_11_func_800F6C78-grouping.md),
-[loader-extension evidence](research/ovl_11_func_800F6A24-grouping.md)).
+[loader-extension evidence](research/ovl_11_func_800F6A24-grouping.md),
+[quad-caller extension evidence](research/ovl_11_func_800F6E38-grouping.md)).
 
 - ovl_11_func_800F6A24 (m) — first-free-slot texture asset loading, record initialization, and upload.
 - ovl_11_func_800F6C78 (m) — texture-ID lookup that marks a hit active and dispatches sprite drawing, with an ID-zero reset path.
 - ovl_11_func_800F6D14 (s) — companion lookup/draw caller that reclaims an inactive record and retries through the preceding helper on a miss.
+- ovl_11_func_800F6E38 (m) — texture-ID lookup and quad-draw caller with inactive-record reclamation, loading, and recursive retry.
