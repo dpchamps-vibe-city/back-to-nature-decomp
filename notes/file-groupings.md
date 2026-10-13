@@ -9474,6 +9474,11 @@ display-setup runs. The leading handlers share the display-setup idiom
 800BB648 additionally `func_80015704`) and the run closes with the per-overlay
 audio-setup leaf, mirroring the ovl_17 run's 800BA504.
 
+The matched `ovl_21_func_800BB648` adds a shared-cluster tie: it initializes
+`D_800C0B2C` and the `D_800C0458` record pool used by matched
+`ovl_21_func_800BA510`, supporting a common TU with the `D_800C0448` group
+below. This does not establish the TU's boundaries.
+
 Members (link order):
 - ovl_21_func_800BB328 (s) — display-setup state: DrawSync/ClearOTagR plus
   func_80014CBC/1719C/15704
@@ -9482,8 +9487,7 @@ Members (link order):
   ClearOTagR(D_8005E3C0->field_120, 0x800), then `func_80014CBC(0, 0, 0x2000,
   D_8005E3B0 + 0x4290, 1, 1)` followed by the zero-return poll
   `func_80014CBC(..., 1, 0) == 0`, then `func_8001719C(D_8005E3B0 + 0x4290)`.
-- ovl_21_func_800BB648 (s) — same display-setup idiom with the repeated
-  `func_80015704` tail
+- ovl_21_func_800BB648 (m, byte-exact) — display-setup and sprite-record initializer.
 - ovl_21_func_800BB8B8 (m, matched this session, byte-exact) — same run's
   non-display handler: reads the `D_8007AFF0` far base, block-copies 0xBD0
   bytes to `D_8009F78C`, hands the shared `D_800C0DD8` descriptor to
