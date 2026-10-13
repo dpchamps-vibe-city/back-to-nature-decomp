@@ -1750,7 +1750,7 @@ Members (address order):
   +0xE514 select, copies six halfwords from the +0xE522 rows table into
   `D_8012CF10` (the inverse of 80103B24's copy), and loads `D_8012CF20` from
   +0x5224; the run's setter
-- ovl_11_func_801038E4 (s) — leaf reader of D_80127428
+- ovl_11_func_801038E4 (m) — state-gated wrapper for adjacent dispatcher `80103964` ([grouping corroboration](research/ovl_11_func_801038E4-grouping.md)).
 - ovl_11_func_80103964 (m) — state-machine dispatcher and saved-row/accumulator restorer ([grouping evidence](research/ovl_11_func_80103964-grouping.md)); candidate TU membership corroborated, boundary unproven.
 - ovl_11_func_80103B24 (m) — leaf reader of D_80127428; updates the
   D_8006C838 work area and copies six D_8012CF10 halfwords. Its byte-exact
