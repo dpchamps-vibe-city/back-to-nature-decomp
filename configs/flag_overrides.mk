@@ -272,6 +272,17 @@ CC1FLAGS_ovl_11_func_800F00E4 := -fno-gcse
 # under this flag, so there is no contrary witness in the suspected TU group.
 CC1FLAGS_ovl_11_func_80103B24 := -fno-cse-skip-blocks
 
+# 80104148 retains signed-short column updates across the text-choice join
+# while sharing the scratch-address high half across calls. CSE branch
+# following exposes column constants to gcse.c:cprop_insn, folding the
+# target's +0x51/+0x24/+0x1B/+0x12 updates under baseline flags.
+# Exact-source matrix: baseline 133 insns, -fno-gcse 149, no-follow 147/147
+# byte-exact (target 147); disabling skip-blocks too is a contrary witness.
+# Regional witnesses 80103770/801037EC/80103D44/80103EB8/80104394 remain
+# byte-exact with no-follow (build/manual/ovl_11_func_80104148/regional).
+# Evidence: build/flagProbe/ovl_11_func_80104148/report.json.
+CC1FLAGS_ovl_11_func_80104148 := -fno-cse-follow-jumps
+
 # ovl_21_func_800B98CC: -fno-schedule-insns.
 #
 # Target fingerprint (assembly-level, stronger than the flag probe's structural

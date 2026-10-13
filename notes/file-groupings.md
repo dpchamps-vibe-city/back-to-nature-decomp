@@ -1774,6 +1774,9 @@ Members (address order):
   (the sibling global's only other site); selects a 0xD6/0x22/0xC4 value from
   D_80127428 and passes `D_8005E3C0->field_D8 + 0x54` plus a D_8012742C-derived
   s16 offset to func_800248B0; the run's state-indexed dispatch
+- ovl_11_func_80104148 (m) — row-text emitter; candidate member via shared
+  scratch/state data and local call/link adjacency
+  ([evidence](research/ovl_11_func_80104148-grouping.md)); original TU unproven.
 
 Widening (2026-09-14, byte-exact match of `ovl_11_func_80104394`): the run's
 buffer consumer is now matched. `ovl_11_func_80104394` (m, 0x80104394, 0x84,
