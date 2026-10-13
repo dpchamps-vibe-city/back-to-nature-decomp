@@ -38,3 +38,41 @@ prove original TU boundaries or require every intervening helper to share
 one TU. No shared static, declaration-order effect or register-variable
 quirk was established. The broad item-table accessor TU remains a separate,
 unproven relationship for this function.
+
+## `ovl_11_func_800BE6E4`: tile-probe extension
+
+Documentation handoff identity:
+`747ebcc265a15019c948e08387f885b663081ea69525b47dd1453ff5025d4643`.
+The handoff reports byte-exact source and a passed full finalize gate;
+this review changes notes only.
+
+The verified `src/overlays/ovl_11/ovl_11_func_800BE6E4.c` adds a concrete
+source-level tie to the adjacent `800BE94C` / `800BEB28` candidate pair,
+beyond the earlier observation that it is an intervening collision helper:
+
+- `800BE6E4` and `src/overlays/ovl_11/ovl_11_func_800BE94C.c` both read
+  the position pointer at context +0, record a hit through the pointer at
+  +8, and modify flags through the pointer at +0x10. Both set `0x4000`,
+  clear it for item ID `0x64` (`800BE94C` also excludes `0x65`), and add
+  `0x2000` according to flags in the same stride-0x28 item pool. The tile
+  probe loads that pool at `(D_80071DFC - 0x55C4) + 0x20`, the same
+  `D_8006C838 + 0x20` pointer used by the item probe. The shared pool alone
+  is broad game-state evidence; the matching context and flag/ID conventions
+  provide the local fingerprint.
+- Original caller assembly
+  `build/ovl_11/asm/nonmatchings/ovl_11_func_800BEB28/ovl_11_func_800BEB28.s`
+  builds the context at `$sp+0x10`, passes it to `800BE6E4` at 0x800BEB84
+  and `800BE94C` at 0x800BEBFC, and handles the tile probe's distinct
+  return values 1 and 2. Its `$sp+0x28` field is context +0x18, the
+  category mask that the tile probe combines with `0x4000`.
+- `configs/splat/ovl_11.yaml` and `build/ovl_11/functions.csv` agree on
+  gapless order: `800BE6E4` (0x268) ends at `800BE94C`; `800BE94C`
+  (0x1DC) ends at `800BEB28`. The original tile-probe assembly at
+  `build/ovl_11/asm/nonmatchings/ovl_11_func_800BE6E4/ovl_11_func_800BE6E4.s`
+  corroborates the context fields and flag updates.
+
+This supports extending the existing low-confidence collision pair to
+include `800BE6E4` as its tile-map probe. It does not establish original TU
+boundaries, a shared static, or a declaration-order/register-variable quirk.
+The two coordinate-conversion callees (`800D7EF8`, `8011E090`) and other
+address-apart grid readers are dependencies, not newly asserted members.
