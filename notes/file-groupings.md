@@ -441,58 +441,21 @@ prior for the rest of this group.
 
 ---
 
-## `ovl_11` farm-object clear/update run — 0x801212C4–0x80121500 (confidence: medium)
+## `ovl_11` farm-object clear/update run — 0x801212C4–0x80121780 (confidence: medium)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) around the
-farm-object update/clear code at the overlay's tail. Evidence is an internal
-call graph plus strict link-order adjacency plus a shared field-14 clear idiom;
-same-TU membership is plausible but unproven (no shared gp-rel cluster or
-register quirk observed yet).
-
-Fingerprints:
-- address adjacency: `ovl_11_func_801212C4` (0x54 bytes, exactly
-  0x801212C4–0x80121318) is the run head and abuts `ovl_11_func_80121318`
-  (0x44 bytes, ends 0x8012135C), which sits immediately before
-  `ovl_11_func_8012135C` and `ovl_11_func_801213D8`
-  (0x120 bytes, exactly 0x801213D8–0x801214F8), which is followed directly
-  by `ovl_11_func_801214F8` (0x801214F8–0x80121500) — the whole run
-  0x801212C4–0x80121500 is contiguous with no unrelated code between;
-- internal call graph: the leaf `ovl_11_func_801214F8` is called by both of
-  its neighbours — `ovl_11_func_80121318` (a `for` loop stepping a
-  `D_8012DB90` 0x18-byte-stride struct array 0x18 times, calling it per
-  entry) and `ovl_11_func_801213D8` (the farm-object update routine, which
-  calls it on the `.L801214DC` no-spawn reset path to drop the entry's
-  live pointer). The run head `ovl_11_func_801212C4` calls
-  `ovl_11_func_801213D8` over the same `D_8012DB90` array (0x18-byte stride,
-  countdown 0x18), so 801213D8 has callers on both sides of it in the run;
-- shared struct + clear idiom: all four operate on the same 0x18-byte
-  farm-object struct with a pointer field at +0x14; `ovl_11_func_801214F8` is
-  the field-14 clear (single `sw $zero, 0x14(a0)`, leaf), the reset every
-  caller uses to blank an entry.
+Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`), supported by
+shared `D_8012DB90` effect records and internal calls agreeing with gapless
+link order. The allocator-to-initializer edge supports including `80121500`;
+original TU boundaries remain unproven.
+Evidence and limits: [grouping research](research/ovl_11_func_80121500-grouping.md).
 
 Members (address order):
-- ovl_11_func_801212C4 (m, matched this session) — guarded farm-array pass:
-  while `!(D_8006C848 & 0x400)`, walk the `D_8012DB90` array at 0x18 stride
-  (countdown 0x18) and call the update routine `ovl_11_func_801213D8` on
-  each entry; typed with the same local `Struct_801213D8` view as 801213D8
-- ovl_11_func_80121318 (m, matched this session) — clears the whole
-  `D_8012DB90` farm array of 0x18-byte-stride entries by stepping a
-  countdown from 0x18 and calling ovl_11_func_801214F8 on each entry
-- ovl_11_func_8012135C (s) — role unknown; sits in the run between 80121318
-  and 801213D8
-- ovl_11_func_801213D8 (m, matched 2026-10-08) — farm-object update: while
-  the sprite at +0x14 is set, frame = tick (+0x2) / 3. The tick advances
-  unless bit 0x08000000 of `D_8006C844` is set. While the frame is below
-  func_80015A18's animation length, the offset position (+0x4/+0x8/+0xC) is
-  projected by ovl_11_func_800F5888 and the frame is drawn by func_80015EE8.
-  Otherwise it calls ovl_11_func_801214F8 (field-14 clear). The record is
-  typed locally as `Struct_801213D8`; 80121318 still walks the same array
-  with byte arithmetic.
-- ovl_11_func_801214F8 (m, matched 2026-11 — this session) — leaf field-14
-  clear: `sw $zero, 0x14(a0)`; byte-exact clean C, baseline flags (no
-  override)
-- ovl_11_func_80121500 (s) — immediate link-order follower, next candidate
-  member
+- ovl_11_func_801212C4 (m) — guarded bulk update of the `D_8012DB90` effect pool.
+- ovl_11_func_80121318 (m) — clears the effect pool through `801214F8`.
+- ovl_11_func_8012135C (s) — finds a free pool entry and calls `80121500` to initialize it.
+- ovl_11_func_801213D8 (m) — advances and draws one effect, clearing it when its animation ends.
+- ovl_11_func_801214F8 (m) — clears an effect entry's sprite pointer.
+- ovl_11_func_80121500 (m) — initializes an effect's sprite, animation selector, tick and position from item/state/area.
 
 ---
 

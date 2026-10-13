@@ -279,6 +279,25 @@ typedef struct SpriteSourceData {
     /* 0x2C */ s32 field_2C;    /* header + offset_frame (frame data / control bytes) */
 } SpriteSourceData;
 
+/* 80121500 initializes this 0x18-byte effect: sh at 0/2, sw at 4/8/C,
+ * sprite pointer at 14. The neighbouring update/clear routines use +14. */
+typedef struct {
+    s16 unk0;
+    u16 unk2;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    SpriteSourceData *unk14;
+} Ovl11SpriteEffect;
+
+/* 80121500 homes each four-byte coordinate in its incoming argument slot.
+ * This byte-aligned by-value view preserves that memory residence; the
+ * original field interpretation is unknown, and the payload is copied whole. */
+typedef struct {
+    u8 bytes[4];
+} Ovl11EffectCoordinate;
+
 /* ovl_11_func_800C32C8: signed identifiers, halfword state stores and
  * SpriteSourceData passed to the animation helpers at +0x80. */
 typedef struct {

@@ -2494,6 +2494,10 @@ typedef struct {
 } Ovl11D8012D538;
 
 typedef struct {
+    u8 bytes[4];
+} Ovl11EffectCoordinate;
+
+typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;
@@ -2628,6 +2632,16 @@ typedef struct {
     s32 field_5C;
     s32 field_60;
 } Ovl11SetFieldsView;
+
+typedef struct {
+    s16 unk0;
+    u16 unk2;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    SpriteSourceData *unk14;
+} Ovl11SpriteEffect;
 
 typedef struct {
                u16 field_0;
