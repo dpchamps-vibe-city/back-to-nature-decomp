@@ -11248,12 +11248,12 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_801273E4/D_801273F4 state-block handler — 0x801014A4 / 0x80102268 (confidence: low)
+## `ovl_11` D_801273E4/D_801273F4 state-block handler/display cluster — 0x801014A4 / 0x80101814 / 0x80102268 (confidence: low)
 
-Members tied to the `D_801273Exx` state block by shared globals and to
-`ovl_11`'s event-handler idiom by their call shape rather than by link
-adjacency (0x801014A4 sits immediately before `ovl_11_func_801014F8` at
-0x801014F8, nowhere near 0x801033D4 run).
+Candidate members tied to the `D_801273Exx` state block by shared globals;
+the event-handler members also share a call idiom. These ties do not establish
+original TU boundaries or a gapless run (0x801014A4 sits immediately before
+`ovl_11_func_801014F8` at 0x801014F8, nowhere near the 0x801033D4 run).
 
 - **link-order contiguity:** `ovl_11_func_80102268` (0x80, ends 0x801022E8)
   → `ovl_11_func_801022E8` (0x80, ends 0x80102368) — the two state-block
@@ -11262,7 +11262,10 @@ adjacency (0x801014A4 sits immediately before `ovl_11_func_801014F8` at
 - **shared global cluster:** writes `D_801273E4 = 3`, a member of the
   `D_801273Exx` block that `ovl_11_func_800FFDCC` clears (the same reset tie
   already recorded for the `D_801273DC` run above); its load uses the u16
-  array `D_801273F4[(s8)arg0]`, a symbol referenced by no other function;
+  array `D_801273F4[(s8)arg0]`, also read by verified
+  `ovl_11_func_80101814`, which reads `D_801273EE` from the same reset block
+  (sources: `src/overlays/ovl_11/ovl_11_func_80101814.c`,
+  `ovl_11_func_801014A4.c`, `ovl_11_func_800FFDCC.c`);
 - **shared handler idiom:** `func_8002261C(3, ...)` then `func_800226A4() == 2`
   then a `D_801273Exx` store — the D_801273DC run's template, here without
   the `func_80013394()` guard and storing `D_801273E4` instead.
@@ -11271,6 +11274,7 @@ Members (address order):
 - ovl_11_func_801014A4 (m, matched this session) — reads `D_801273F4[(s8)arg0]`,
   calls `func_8002261C(3, value)`, sets `D_801273E4 = 3` when
   `func_800226A4() == 2`
+- ovl_11_func_80101814 (m) — renders seven flag-gated `D_801273F4` ID slots and an aggregate-flag slot.
 - ovl_11_func_80102268 (m, matched this session) — resolves
   `ovl_11_func_80102844((s8)arg1, (s8)arg0)` to a 3×s16 record, takes its first
   halfword (0xA4 branch adds `ovl_11_func_800D60D4(record) + 0x3E8`), calls
