@@ -8608,7 +8608,13 @@ Members:
   that 80109E04 reads (D_8012D080) — tying the record-table consumer run to
   the ovl_11 D_8012D040/D_8012D050/D_8012D060 cluster at 0x8012D0xx.
 
+Within this consumer set, 800CE96C / 800CEBC8 form a narrower low-confidence
+candidate same-TU reset/update pair; this does not establish ownership or
+merge the distant consumers ([evidence](research/ovl_11_func_800CE96C-grouping.md)).
+
 Members:
+- ovl_11_func_800CE96C (m) — pool reset/setup for the candidate reset/update pair.
+- ovl_11_func_800CEBC8 (s) — flag-gated pool update sweep for the candidate reset/update pair.
 - ovl_11_func_801097F4 (m, matched this session, byte-exact) — leaf: scans
   six 0xB0-byte records at D_80075BC4 for tag 0x15B, the arg's s16 selector
   at +0x30, and a ±radius window over the s32 coordinates at +0x38/+0x40;
