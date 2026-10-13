@@ -1,3 +1,30 @@
 #include "common.h"
+#include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
-INCLUDE_ASM("build/ovl_19/asm/nonmatchings/ovl_19_func_800BB8F4", ovl_19_func_800BB8F4);
+u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
+void func_8001719C(u8 *arg0);
+/* The caller supplies only the sprite object and its data header. */
+void func_80015704();
+
+void ovl_19_func_800BB8F4(void) {
+    s32 i;
+
+    DrawSync(0);
+    ClearOTagR((u_long *)D_8005E3C0->field_120, 0x800);
+    func_80014CBC(0x14, 0, 0x1AE04, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
+    do {
+    } while (func_80014CBC(0x14, 0, 0x1AE04, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
+    func_8001719C((u8 *)(D_8005E3B0 + 0x52DC));
+    *(Ovl19SpriteBlob *)D_800BE470 = *(Ovl19SpriteBlob *)(D_8005E3B0 + 0x4290);
+    func_80015704((SpriteSourceData *)D_800BF660, (SpriteDataHeader *)(D_800BE470 + D_800BD058[0]));
+    for (i = 0; i < 3; i++) {
+        func_80015704((SpriteSourceData *)(D_800BF660 + i * 0x40 - 0xF0), (SpriteDataHeader *)(D_800BE470 + D_800BD058[i + 2]));
+    }
+    for (i = 0; i < 2; i++) {
+        func_80015704((SpriteSourceData *)(D_800BF4E8 + i * 0x48), (SpriteDataHeader *)(D_800BE470 + D_800BD058[1]));
+    }
+    func_80015704(&D_800BF6D0, (SpriteDataHeader *)(D_800BE470 + D_800BD058[5]));
+}

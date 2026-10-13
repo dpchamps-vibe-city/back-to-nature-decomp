@@ -11084,8 +11084,7 @@ Members (link order):
   confirmed: DrawSync(0) / ClearOTagR(D_8005E3C0->field_120,0x800), then
   func_80014CBC(0,0,0x2000,D_8005E3B0+0x4290,1,1) followed by the zero-return
   poll, then func_8001719C(D_8005E3B0+0x4290)
-- ovl_19_func_800BB8F4 (s) — same display-setup idiom, plus four func_80015704
-  calls
+- ovl_19_func_800BB8F4 (m, byte-exact) — sprite-data loader and overlay-local sprite initializer.
 - ovl_19_func_800BBB48 (m, matched this session, byte-exact) — same idiom via
   func_80014BCC / func_8001719C: reads the `D_800BCB74` CD-position pair table
   for two sector transfers, block-copies `D_8007AFF0`→`D_8009F78C`, then hands
@@ -11094,6 +11093,9 @@ Members (link order):
   this run to the D_8007AFF0 reader run below)
 - ovl_19_func_800BBCCC (m) — audio-setup leaf: func_80020B80(2,0),
   func_80020B80(1,0), func_8001FBF0 x2
+
+Related same-TU candidate ([shared sprite-cluster evidence](research/ovl_19_func_800BB8F4-grouping.md); not part of the gapless run):
+- ovl_19_func_800BAC9C (m, byte-exact) — set/clear slot flags for the same sprite arrays; also listed in the 0x800BAC40–0x800BAC9C run.
 
 ## `ovl_11` D_8006C838 +0x8000 work-area halfword run — 0x801128B4 / 0x80112904 / 0x801129A0 (confidence: medium)
 
