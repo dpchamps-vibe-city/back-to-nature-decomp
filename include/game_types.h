@@ -296,6 +296,12 @@ typedef struct {
     SpriteSourceData sprite;
 } Ovl11AnimationObject;
 
+/* 80107DE0 stores two signed halfwords; 800C35EC passes its object at +0xE0. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} Ovl11C35ECStatePair;
+
 /* Backward-compatibility alias for func_800158E4. */
 typedef SpriteSourceData Struct_S;
 
