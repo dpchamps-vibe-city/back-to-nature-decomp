@@ -10374,7 +10374,7 @@ Members (link order):
 Six members are matched; the rest are read off original asm, hence medium
 confidence.
 
-## `ovl_28` D_800B95F8 handler-pointer table run — 0x800B7F30 … 0x800B83C0 / 0x800B8414 / 0x800B8478 / 0x800B865C (confidence: medium)
+## `ovl_28` D_800B95F8 handler-pointer table run — 0x800B7F30 … 0x800B83C0 / 0x800B8414 / 0x800B8478 / 0x800B865C / 0x800B86D8 (confidence: medium)
 
 Evidence: the data word run at `D_800B95F8`
 (build/ovl_28/asm/data/154C.data.s) is one contiguous pointer table — slots
@@ -10403,6 +10403,7 @@ Members (slot order):
   `D_800B93C0`/`C4`/`C6`/`C8`/`CA`/`CE` halfword/word cluster, and gates on
   the same `D_8006C838+0x8000+0x67A0` u16 against 10 that the counter-run
   terminator `ovl_28_func_800B83C0` reads, storing it (or 10) to `D_800B93CC`
+- ovl_28_func_800B86D8 (m, byte-exact) — [slot 8 state-machine handler](research/ovl_28_func_800B86D8-grouping.md): advances shared selection/timing state
 
 ## `ovl_28` code-segment-head dispatch cluster — 0x800B7E24 / 0x800B7E80 (confidence: medium)
 
