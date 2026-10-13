@@ -11597,6 +11597,12 @@ carries the `D_8012D538` record of the reset-stub family's
 boundary is therefore link order, not a data-cluster boundary; shared-object
 and adjacency evidence, not a proven TU boundary.
 
+Further candidate members (tail extension, confidence: low;
+[evidence and limits](research/ovl_11_func_80118744-grouping.md)):
+- ovl_11_func_801180F0 (s, candidate same TU) — record-driven state controller using the 80117F70 initializer's state/descriptor cluster and invoking 80118744.
+- ovl_11_func_801186FC (m, candidate same TU) — five-id scan helper called by the 80117F70 initializer.
+- ovl_11_func_80118744 (m, candidate same TU) — six-state record interaction handler called by 801180F0.
+
 ---
 
 ## `ovl_11` D_8006C838+0x8000 work-area +0x64C8 halfword pair — 0x800BFCA4 / 0x800BFD04 (confidence: medium)
