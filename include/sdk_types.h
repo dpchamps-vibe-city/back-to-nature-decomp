@@ -2421,6 +2421,21 @@ typedef struct {
 } Ovl11BAFCParams;
 
 typedef struct {
+    u8 pad0[6];
+    u16 unk6;
+    u8 pad8[4];
+    s16 unkC;
+    u8 padE[0x22];
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    u8 pad3C[0x14];
+    s32 unk50;
+    s32 unk54;
+    s32 unk58;
+} Ovl11C3B78Arg0;
+
+typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;

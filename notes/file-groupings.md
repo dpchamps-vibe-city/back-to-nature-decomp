@@ -7541,6 +7541,14 @@ Evidence and limits: [research note](research/ovl_11_func_800C1F94-grouping.md).
 - ovl_11_func_800C1F94 (m, finalized) — handles animation commands 0, 1 and 16.
 - ovl_11_func_800C2044 (s) — advances and dispatches object command-table entries, invoking the helper.
 
+## `ovl_11` event helper/caller pair — 0x800C2C74 / 0x800C2CE8 (confidence: low)
+
+Candidate same-TU pair: direct call and gapless link adjacency; no TU boundary
+proven. Evidence and limits: [research note](research/ovl_11_func_800C2C74-grouping.md).
+
+- ovl_11_func_800C2C74 (m, finalized) — selects the object's current event and invokes heading/animation-command handlers.
+- ovl_11_func_800C2CE8 (s) — updates object state and dispatches ready command events through the helper.
+
 ## `ovl_11` 0x800F1F48–0x800F2354 gapless link run + call edge — 0x800F1F48 / 0x800F213C / 0x800F227C / 0x800F2354 (confidence: low)
 
 Evidence: one unbroken `ovl_11` link-order run — 0x800F1F48 (0x1F4) ends

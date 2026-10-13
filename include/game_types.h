@@ -790,6 +790,32 @@ typedef struct {
     u32 words[15];
 } Ovl15SaveSummary;
 
+/* 800C2C74 forwards the emitter and selected 0xC-byte event to 800C3B78;
+ * these layouts are witnessed by the matched callee's field accesses. */
+typedef struct {
+    u8 pad0[6];
+    u16 unk6;
+    u8 pad8[4];
+    s16 unkC;
+    u8 padE[0x22];
+    s32 unk30;
+    s32 unk34;
+    s32 unk38;
+    u8 pad3C[0x14];
+    s32 unk50;
+    s32 unk54;
+    s32 unk58;
+} Ovl11C3B78Arg0;
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+} Ovl11C3B78Arg1;
+
 #endif /* GAME_TYPES_H */
 
 /* Gradient-draw command shared by func_8001FA0C and func_8001F8A4 (0xC..0x14
