@@ -9477,11 +9477,13 @@ audio-setup leaf, mirroring the ovl_17 run's 800BA504.
 The matched `ovl_21_func_800BB648` adds a shared-cluster tie: it initializes
 `D_800C0B2C` and the `D_800C0458` record pool used by matched
 `ovl_21_func_800BA510`, supporting a common TU with the `D_800C0448` group
-below. This does not establish the TU's boundaries.
+below. Matched `ovl_21_func_800BB328` adds an independent shared-object tie:
+its `D_800C0ACC` initializer targets the same sprite at `D_800C0448 + 0x684`
+reset and projected by matched `ovl_21_func_800BAEEC`, corroborating that
+common TU. These ties do not establish the TU's boundaries.
 
 Members (link order):
-- ovl_21_func_800BB328 (s) — display-setup state: DrawSync/ClearOTagR plus
-  func_80014CBC/1719C/15704
+- ovl_21_func_800BB328 (m, byte-exact) — display-setup and D_800C0ACC sprite initializer.
 - ovl_21_func_800BB59C (m, matched this session, byte-exact) — second state
   handler, same idiom confirmed: DrawSync(0) /
   ClearOTagR(D_8005E3C0->field_120, 0x800), then `func_80014CBC(0, 0, 0x2000,
