@@ -4,6 +4,26 @@
 
 #include "common.h"
 
+/* 800BDF98 forwards this four-byte, halfword-aligned object by value;
+ * 800BE6E4 reads its signed type at +2. */
+typedef struct {
+    s16 field_0;
+    s16 field_2;
+} Ovl11CollisionTag;
+
+/* 800BDF98 builds this 0x20-byte query; 800BE6E4 follows +0/+4/+8/+10
+ * and reads the word at +18. */
+typedef struct {
+    s32 *position;
+    Ovl11CollisionTag *object;
+    void **tile;
+    s32 field_C;
+    s32 *flags;
+    s32 field_14;
+    s32 field_18;
+    s32 field_1C;
+} Ovl11CollisionQuery;
+
 /* ovl_11_func_800BFADC advances signed halfwords at +0/+2 of this by-reference pair. */
 typedef struct {
     s16 unk0;

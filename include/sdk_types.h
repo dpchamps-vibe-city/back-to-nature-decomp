@@ -2405,6 +2405,11 @@ typedef struct {
 } Ovl11CE37CArg0;
 
 typedef struct {
+    s16 field_0;
+    s16 field_2;
+} Ovl11CollisionTag;
+
+typedef struct {
                s16 unk0;
                s16 unk2;
                u8 unk4;
