@@ -7532,6 +7532,15 @@ Members (address order):
   This adds a table-layout/data dependency, not evidence that the distant
   selector belongs to the 800C1Bxx translation unit.
 
+## `ovl_11` animation-command helper/caller pair — 0x800C1F94 / 0x800C2044 (confidence: low)
+
+Candidate same-TU pair: direct call and gapless link adjacency, corroborated
+by shared object-state fields and animation callee; no TU boundary proven.
+Evidence and limits: [research note](research/ovl_11_func_800C1F94-grouping.md).
+
+- ovl_11_func_800C1F94 (m, finalized) — handles animation commands 0, 1 and 16.
+- ovl_11_func_800C2044 (s) — advances and dispatches object command-table entries, invoking the helper.
+
 ## `ovl_11` 0x800F1F48–0x800F2354 gapless link run + call edge — 0x800F1F48 / 0x800F213C / 0x800F227C / 0x800F2354 (confidence: low)
 
 Evidence: one unbroken `ovl_11` link-order run — 0x800F1F48 (0x1F4) ends
