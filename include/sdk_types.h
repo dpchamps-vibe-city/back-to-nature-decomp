@@ -2410,6 +2410,17 @@ typedef struct {
 } Ovl11CollisionTag;
 
 typedef struct {
+    s32 *position;
+    Ovl11CollisionTag *object;
+    void **tile;
+    s32 field_C;
+    s32 *flags;
+    s32 field_14;
+    s32 field_18;
+    s32 field_1C;
+} Ovl11CollisionQuery;
+
+typedef struct {
                s16 unk0;
                s16 unk2;
                u8 unk4;

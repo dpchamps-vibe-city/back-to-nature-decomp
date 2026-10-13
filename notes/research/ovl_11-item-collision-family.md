@@ -76,3 +76,73 @@ include `800BE6E4` as its tile-map probe. It does not establish original TU
 boundaries, a shared static, or a declaration-order/register-variable quirk.
 The two coordinate-conversion callees (`800D7EF8`, `8011E090`) and other
 address-apart grid readers are dependencies, not newly asserted members.
+
+## `ovl_11_func_800BEF64`: actor-probe and stack-box links
+
+Documentation handoff identity:
+`f554627c6d54a0921b01b7757f04d66d68b66fe19d86a96e256d714bc525cc38`.
+The handoff reports byte-exact source, a passed full finalize gate and changes
+in `include/sdk_types.h` and
+`src/overlays/ovl_11/ovl_11_func_800BEF64.c`. This review changes notes only
+and does not repeat matching.
+
+### Collision-dispatcher membership (low confidence)
+
+The verified actor probe consumes the same context fields as the recorded
+tile/item probes: position at +0, hit-output pointer at +8 and flags-output
+pointer at +0x10. Like the tile probe, it writes the category mask at context
++0x18 to the flags output and conditionally adds `0x4000`.
+
+Original caller assembly
+`build/ovl_11/asm/nonmatchings/ovl_11_func_800BEB28/ovl_11_func_800BEB28.s`
+sets context +0x18 (`$sp+0x28`) to `0x80` at 0x800BEC28, calls `800BEF64`
+at 0x800BEC2C and passes the same `$sp+0x10` context in the delay slot.
+`configs/splat/ovl_11.yaml` and `build/ovl_11/functions.csv` agree that the
+caller is 0x43C bytes long and ends exactly at `800BEF64`; the actor probe
+is 0x26C bytes long and ends exactly at `800BF1D0`. Thus a direct call edge,
+shared context/flag conventions and gapless original link order support
+adding `800BEF64` to the existing collision probe/dispatcher candidate run.
+
+### Stack-box record-scan membership (medium confidence)
+
+The immediate follower's verified source,
+`src/overlays/ovl_11/ovl_11_func_800BF1D0.c`, provides a more specific data
+and scan-pattern tie:
+
+- `800BEF64` starts at `D_800763F4`, exactly `D_80076220 + 0x1D4`, and
+  advances by 0x1D4 over indices 1..36. `800BF1D0` starts at `D_80076220`
+  and scans indices 0..36 with that same stride. These are overlapping
+  walks of the same record pool, not two unrelated global arrays.
+- Both use the halfword at record +0x1E: bit `0x1000` selects the alternate
+  position at +0x60 and its eligibility bit `0x800`; the ordinary position
+  at +0x30 uses eligibility bit `0x100`. Both compare strict X/Z/Y bounds
+  from a six-word stack array via `bp = box`, in X/Z/Y order, with Y
+  half-range `0x14`. The actor probe uses X/Z half-range `0xC8` rather than
+  `0x96`, has additional filters and flag writes, and omits the Y test on
+  its alternate-position branch; this is a shared idiom, not identical logic.
+- Original assemblies
+  `build/ovl_11/asm/nonmatchings/ovl_11_func_800BEF64/ovl_11_func_800BEF64.s`
+  and
+  `build/ovl_11/asm/nonmatchings/ovl_11_func_800BF1D0/ovl_11_func_800BF1D0.s`
+  corroborate the base addresses, strides, flag tests and bounds access.
+  Both hold the record pointer in `$a3` and address the stack box through
+  `$a2`. This describes emitted code, not proof of an original register
+  variable or the original spelling of the C locals.
+
+The pre-existing `800BF1D0` / `800BF2F4` pair remains supported by its
+zero-gap adjacency (0x124-byte `800BF1D0` ends at `800BF2F4`) and shared
+`bp = box` strict-bounds scan with X/Z half-range `0x96`.
+`src/overlays/ovl_11/ovl_11_func_800BF2F4.c` scans a different, 0x18-stride
+pool through `D_8006C838 + 0x8000 + 0x5D8C`, returning u16 at record +2.
+The new actor-pool tie extends this candidate pair to include `800BEF64`;
+it does not newly establish a common caller among these three leaves.
+
+### Conditional boundaries
+
+The two memberships are compatible local hypotheses, not proof that the
+whole collision-dispatcher run and stack-box run formed one original TU.
+No shared static, TU-owned global, declaration-order effect or explicit
+register-variable quirk was established. The actor pool is also consumed
+elsewhere; shared pool use alone does not pull distant consumers or callers
+into either group. Keep the existing confidence levels and leave original
+boundaries open.

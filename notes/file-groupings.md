@@ -13986,26 +13986,14 @@ Run context (not asserted members): ovl_27_func_800B9124 (m, HUD text via
 D_8006C838+0x5246/0x5248) and ovl_27_func_800BA814 (m, D_800C4A60-backed
 copy) also touch the D_8006C838 work area but sit outside these gapless runs.
 
-## `ovl_11` stack-box record-scan pair — 0x800BF1D0 / 0x800BF2F4 (confidence: medium)
+## `ovl_11` stack-box record-scan run — 0x800BEF64 / 0x800BF1D0 / 0x800BF2F4 (confidence: medium)
 
-Candidate same-TU pair of `ovl_11`. Evidence: zero-gap link-order contiguity
-(`configs/splat/ovl_11.yaml`): 0x800BF1D0 starts at 0x73B0 and is 0x124 long,
-ending exactly at 0x74D4 = 0x800BF2F4; the two are immediate link-order
-neighbours. Both build a local `s32 box[N]` bounds array, take its address into
-a `s32 *bp` pointer (`bp = box;`), and bracket a scanned record's s32 fields
-with `bp[k] < v && v < bp[k+1]`, using the same 0x96 (150) half-range; both are
-leaves, so no call edge corroborates the tie.
+Candidate same-TU run; original boundaries remain unproven
+([evidence](research/ovl_11-item-collision-family.md#ovl_11_func_800bef64-actor-probe-and-stack-box-links)).
 
-Members (address order):
-- ovl_11_func_800BF1D0 (m, matched this session, 0x124, byte-exact) — range
-  scan over the 37-entry 0x1D4-stride `D_80076220` array: brackets the 3-s32
-  box at record +0x30 (or +0x60 when unk1E bit 0x1000 holds) against a 6-word
-  stack box over arg0[0]/arg0[2]/arg0[1], gated by unk1E bits
-  0x1000→0x800 / 0x100; returns the first matching record else 0.
-- ovl_11_func_800BF2F4 (m, 0xDC) — sibling bounding-box probe: same `bp = box`
-  stack-box idiom over arg0[0]/arg0[2] with the 0x96 half-range, scanning a
-  0xC5-entry 0x18-stride record array reached through the
-  `D_8006C838+0x8000+0x5D8C` pointer slot; returns the record's u16@+2.
+- ovl_11_func_800BEF64 (m) — actor bounding-box collision probe that records a hit and updates query flags.
+- ovl_11_func_800BF1D0 (m) — actor-pool bounds scan that returns the first matching record.
+- ovl_11_func_800BF2F4 (m) — item-pool bounding-box probe that returns the matching record's identifier.
 
 ## `ovl_11` D_8007AFF0+0x23608 45-column pointer-grid readers — 0x800D7EF8 / 0x800D806C / 0x80113208 / 0x801136D0 / 0x8011E090 / 0x80120F30 (confidence: medium-low)
 
@@ -14208,14 +14196,15 @@ use — and it is entry 4 of the same `D_80121780` dispatch table whose entries
 0/1 are the cluster leaves 0x800BC3AC/0x800BC3E0. It is address-apart
 (0x801048A0), so same-TU membership with the run is plausible but unproven.
 
-## `ovl_11` tile/item collision probe/dispatcher run — 0x800BE6E4 / 0x800BE94C / 0x800BEB28 (confidence: low)
+## `ovl_11` tile/item/actor collision probe/dispatcher run — 0x800BE6E4 / 0x800BE94C / 0x800BEB28 / 0x800BEF64 (confidence: low)
 
 Candidate same-TU run; original boundaries remain unproven
-([evidence](research/ovl_11-item-collision-family.md#ovl_11_func_800be6e4-tile-probe-extension)).
+([evidence](research/ovl_11-item-collision-family.md#ovl_11_func_800bef64-actor-probe-and-stack-box-links)).
 
 - ovl_11_func_800BE6E4 (m) — tile-map collision probe that records the selected cell and updates collision flags for the adjacent dispatcher.
 - ovl_11_func_800BE94C (m) — item bounding-box probe that records a hit and updates collision flags for the adjacent dispatcher.
-- ovl_11_func_800BEB28 (s) — collision dispatcher that combines tile-map and item probes.
+- ovl_11_func_800BEB28 (s) — collision dispatcher that combines tile-map, item and actor probes.
+- ovl_11_func_800BEF64 (m) — actor bounding-box collision probe that records a hit and updates query flags.
 
 ## `ovl_11` pending-mode dispatcher caller/callee pair — 0x800D2710 / 0x800D2764 (confidence: low)
 
