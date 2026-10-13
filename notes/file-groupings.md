@@ -2650,6 +2650,7 @@ Members (address order):
   of the documented nearby caller 0x800F42A8: calls the D_80070CF2 switch leaf
   `ovl_11_func_800F581C` and returns either 0, the s16@2 field, or 0x13A after
   the flag-word/@2 checks; struct-shape kin of the record family (low)
+- ovl_11_func_800F42A8 (m) — refreshes record state and resets selected spawn-record pools and the auxiliary pair ([grouping evidence](research/ovl_11_func_800F42A8-grouping.md)).
 - ovl_11_func_800F4360 (m, matched this session) — spawn-record fill leaf:
   s16@0/2 from args, bit 0 of s16@4 set (`lhu`/`ori 1`/`sh`), by-value
   `Vec3` copied into s32@8/C/10; sole caller the run tail 0x800F43CC; the
