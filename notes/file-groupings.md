@@ -8853,6 +8853,7 @@ Members (link order):
   caller (`ovl_11_func_800C7AC0` state machine) ignores the return value.
 
 Members (link order):
+- ovl_11_func_800FEFEC (m) — two-column menu input/cursor updater and caller of adjacent 800FF27C ([grouping evidence](research/ovl_11_func_800FEFEC-grouping.md)).
 - ovl_11_func_800FF8C8 (m, matched this session, byte-exact) — adjacent-band
   predecessor: `D_801273B0` state machine (0x21 branch queues
   `func_8002261C(3, arg1 + 0x37E)` or `(3, arg0 + 0x37B)`, then on
