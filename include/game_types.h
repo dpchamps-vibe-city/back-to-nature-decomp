@@ -1324,3 +1324,29 @@ typedef struct Ovl11RotationState {
     s16 unk12;
     Ovl11RotationSource *unk14;
 } Ovl11RotationState;
+
+/* ovl_11_func_800F5BC0 reads these halfwords while walking 0x18-byte records. */
+typedef struct {
+    s16 unk0;
+    u16 unk2;
+    u16 unk4;
+    u16 pad6;
+    u16 unk8;
+    u16 padA;
+    u16 unkC;
+    u16 padE;
+    u16 unk10;
+    u8 pad12[0x18 - 0x12];
+} M2C_0584a699a1f0_Ovl11Func5BC0Entry;
+
+/* 800F5944 copies six words, tests the low halfword at +4 and adds to +0xC. */
+typedef struct Ovl11DispatchRecord {
+    s16 id;
+    u16 kind;
+    u16 flags;
+    u16 pad6;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 unk14;
+} Ovl11DispatchRecord;
