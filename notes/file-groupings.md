@@ -11248,7 +11248,7 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_801273E4/D_801273F4 state-block handler/display cluster — 0x801014A4 / 0x80101814 / 0x80102268 (confidence: low)
+## `ovl_11` D_801273E4/D_801273F4 state-block handler/display cluster — 0x801014A4 / 0x80101814 / 0x80101964 / 0x80102268 (confidence: low)
 
 Candidate members tied to the `D_801273Exx` state block by shared globals;
 the event-handler members also share a call idiom. These ties do not establish
@@ -11275,6 +11275,7 @@ Members (address order):
   calls `func_8002261C(3, value)`, sets `D_801273E4 = 3` when
   `func_800226A4() == 2`
 - ovl_11_func_80101814 (m) — renders seven flag-gated `D_801273F4` ID slots and an aggregate-flag slot.
+- ovl_11_func_80101964 (m; [grouping evidence](research/ovl_11_func_80101964-grouping.md)) — renders the lower flag-gated icon grid using `D_801273F4` IDs.
 - ovl_11_func_80102268 (m, matched this session) — resolves
   `ovl_11_func_80102844((s8)arg1, (s8)arg0)` to a 3×s16 record, takes its first
   halfword (0xA4 branch adds `ovl_11_func_800D60D4(record) + 0x3E8`), calls
