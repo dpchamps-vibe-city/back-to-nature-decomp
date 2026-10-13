@@ -279,6 +279,23 @@ typedef struct SpriteSourceData {
     /* 0x2C */ s32 field_2C;    /* header + offset_frame (frame data / control bytes) */
 } SpriteSourceData;
 
+/* ovl_11_func_800C32C8: signed identifiers, halfword state stores and
+ * SpriteSourceData passed to the animation helpers at +0x80. */
+typedef struct {
+    s16 id;
+    char pad_2[4];
+    s16 field_6;
+    s16 field_8;
+    char pad_A[4];
+    s16 field_E;
+    char pad_10[0xA];
+    u16 field_1A;
+    u16 field_1C;
+    u16 flags;
+    char pad_20[0x60];
+    SpriteSourceData sprite;
+} Ovl11AnimationObject;
+
 /* Backward-compatibility alias for func_800158E4. */
 typedef SpriteSourceData Struct_S;
 

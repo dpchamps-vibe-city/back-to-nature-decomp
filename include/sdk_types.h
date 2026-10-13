@@ -2373,6 +2373,21 @@ typedef struct {
 } ObjectState;
 
 typedef struct {
+    s16 id;
+    char pad_2[4];
+    s16 field_6;
+    s16 field_8;
+    char pad_A[4];
+    s16 field_E;
+    char pad_10[0xA];
+    u16 field_1A;
+    u16 field_1C;
+    u16 flags;
+    char pad_20[0x60];
+    SpriteSourceData sprite;
+} Ovl11AnimationObject;
+
+typedef struct {
     u16 field_0;
     u8 pad_2[0x16 - 2];
     u16 field_16;
