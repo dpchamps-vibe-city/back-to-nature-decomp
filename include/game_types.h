@@ -201,6 +201,25 @@ typedef struct {
     /* 0x20 */ s32 offset_frame; /* -> frame data (SpriteFrame[] / control bytes) */
 } SpriteDataHeader;
 
+/* Sprite tables: 800F6A24 reads a signed count/byte-offset pair, a
+ * 12-byte piece's u16 texture index, and the texture's lh width/lhu height. */
+typedef struct {
+    s16 count;
+    u16 offset;
+} SpriteTableRef;
+
+typedef struct {
+    u16 index;
+    u16 rest[5];
+} SpriteFramePiece;
+
+typedef struct {
+    s16 x;
+    s16 y;
+    s16 width;
+    u16 height;
+} SpriteTextureRect;
+
 /* Sprite source-data / animation object (0x30 bytes).
  * Initialized by func_80015704 from a SpriteDataHeader, updated by
  * func_800158E4 (animation advance), and consumed by the renderer
