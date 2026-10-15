@@ -17,6 +17,8 @@
 
 /* 80100644 loads this selector with lbu; 800FFDCC clears the same byte. */
 extern s8 D_801273EC;
+/* 801007AC copies the selected record into this byte with sb. */
+extern u8 D_801273E6;
 /* 80100644 installs void handlers called by 800FFF7C; named view preserves legacy declarations. */
 extern void (*Ovl11_D_801273DC)(void) __asm__("D_801273DC");
 
