@@ -10780,6 +10780,7 @@ Members (link order):
   `ovl_15_func_8012F0E8`/`ovl_15_func_80130848` (same updater array and
   immediate), contiguous in link order after `ovl_15_func_80131778` and before
   `ovl_15_func_80131BCC` (0x70 bytes)
+- ovl_15_func_80131858 (m, byte-exact) — three-slot memory-card scan and menu-state selection ([shared-state evidence](research/ovl_15_func_80131858-grouping.md)).
 - ovl_15_func_80131A34 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_800532FE` updater array; then `ret =
   ovl_15_func_80137228(8, 0)`, `D_80137584 = ret` (s8; the value is returned),
