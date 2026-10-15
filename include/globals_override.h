@@ -3861,6 +3861,13 @@ extern s32 D_80134AC0;
 /* ovl_30 data contains five string pointers, indexed by D_80134ABC. */
 extern char *D_80134AC4[5];
 
+/* 801014F8 reads the signed menu index with lb and updates it with sb. */
+extern s8 D_801273E9_selection __asm__("D_801273E9");
+/* 801014F8 stores the state byte to 3 on cancellation. */
+extern u8 D_801273E4_state __asm__("D_801273E4");
+/* 801014F8 adds the text-bank byte offset to this base and +0xC/0x16/0x26/0x38. */
+extern u8 D_8005399A[];
+
 /* 80101814 tests lhu flag bits; the unsigned view preserves legacy signed declarations. */
 extern u16 D_801273EE_flags __asm__("D_801273EE");
 /* 80102F14 walks eight lhu IDs; unsigned view preserves legacy signed declarations. */
