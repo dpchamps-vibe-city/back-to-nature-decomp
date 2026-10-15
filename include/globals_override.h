@@ -2494,6 +2494,38 @@ extern u8 D_800BB710[];
 
 extern u8 D_800BD848[];
 
+/* ovl_17 data/3634.data.s reserves ten halfwords; 800B9940 formats text here. */
+extern u16 D_800BD738[10];
+/* ovl_17_func_800B9940 loads the signed mode at D_8006C838 + 0xE514. */
+typedef struct {
+    u8 pad_0[0xE514];
+    s16 mode;
+} Ovl17ModeView;
+/* 800B9940 reads mode at +0x6514 and value halfwords from +0x6520 of D_80074838. */
+typedef struct {
+    u8 pad_0[0x6514];
+    s16 mode;
+    u8 pad_6516[0xA];
+    u16 values[0xD70];
+} Ovl17WorkView;
+/* 800B9940: six 0x50-byte rows have a u16 name index at +0x40; selector is +0x2BC. */
+typedef struct {
+    u8 pad_0[0x40];
+    u16 nameOffset;
+    u8 pad_42[0xE];
+} Ovl17NameRow;
+typedef struct {
+    Ovl17NameRow rows[6];
+    u8 pad_1E0[0xDC];
+    s16 selected;
+} Ovl17RowsView;
+/* ovl_17_func_800B9940 draws text at this base and byte offsets +0xA/+0x1A. */
+extern s16 D_800BB49A[];
+/* ovl_17_func_800B9940 reads six indexed halfwords with lhu. */
+extern u16 D_800BB6EC[6];
+/* ovl_17_func_800B9940 reads signed/unsigned halfwords at a computed byte offset. */
+extern s16 D_8007AD5A[];
+
 /* D_800BD864 - ovl_17 unsigned counter read (lw) by ovl_17_func_800BAC24
  * and compared against ((x + 1) / 10) * 10 - 1; the target divides with
  * multu and srl 3, so the value is unsigned. Plain extern (never defined in
