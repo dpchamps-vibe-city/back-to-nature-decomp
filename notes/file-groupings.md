@@ -8786,6 +8786,15 @@ Members (link order):
 - ovl_30_func_8012F3D4 (m) — call-sequence leaf, constant 0x3E7
 - ovl_30_func_8012F410 (m) — call-sequence leaf, constant 0x3E8
 
+## `ovl_30` mirrored byte-counter editors — 0x801326C4–0x80132C2C (confidence: medium)
+
+Evidence classes: mirrored editor/SDK idiom, adjacent selector/data clusters
+and shared rodata in a gapless link run. [Evidence and limits](research/ovl_30_func_801326C4-grouping.md).
+
+- ovl_30_func_801326C4 (m) — selects, edits and displays the 128-byte Ke-Day-Cnt0 counter array.
+- ovl_30_func_80132978 (s) — selects, edits and displays the eight-byte Ke-Day-CNT1 counter array.
+- ovl_30_func_80132C2C (s) — selects, edits and displays the 128-byte Ke-N-VAL value array.
+
 ## `ovl_30` adjacent debug editors and shared value helper — 0x80132EE0–0x80133218 (confidence: medium)
 
 Evidence classes: corroborated call/link adjacency, shared editor/SDK idiom
