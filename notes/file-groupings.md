@@ -2534,7 +2534,7 @@ Fingerprints:
 
 Members (address order, matched in bold):
 - ovl_11_func_800E48CC (s) — run head
-- ovl_11_func_800E499C (s)
+- **ovl_11_func_800E499C (m)** — coordinates record copying, sprite-data relocation and shared-state setup for the run's helpers ([grouping evidence](research/ovl_11_func_800E499C-grouping.md)).
 - **ovl_11_func_800E4AEC (m, matched this session)** — scans the s16 array at
   `base+4` for the first entry whose 0x3C00 bit is clear, then returns
   `getter(base, index-2)` or 0 when no entry is found
