@@ -9212,6 +9212,7 @@ Calved in by call graph and shared state, outside the gapless run:
   drives the `800BA914`/`800BAA34`/`800BABD4`/`800BAC14` work-area run; calved
   in by the shared halfword state block and the reset-wrapper call edge, not by
   the handler chain.
+- ovl_27_func_800B80B0 (m, byte-exact) — load-completion stage: consumes link-predecessor `800B7FE8`'s saved `D_800C4A28` and selects shared state `D_800C4A18`.
 - ovl_27_func_800B8D28 (m, matched this session, byte-exact) — 0x800B8D28,
   inside the run's address extent but not a hub caller: reads the
   `D_800C4A26`/`D_800C4A1A` halfwords that `ovl_27_func_800B7F2C` initialises
