@@ -3791,5 +3791,10 @@ extern u8 D_800BCDD4[];
 /* ovl_25 800BAC9C initializes this 0x30-byte sprite source from D_800BCDD4. */
 extern u8 D_800C021C[];
 
+/* ovl_17 800BB0C4 passes the halfword text {0x66, -1} to func_80017B3C. */
+extern s16 D_800BB6E8[2];
+/* ovl_17 800BB0C4 increments this word and uses unsigned constant division. */
+extern u32 D_800BB724;
+
 #endif /* GLOBALS_OVERRIDE_H */
 

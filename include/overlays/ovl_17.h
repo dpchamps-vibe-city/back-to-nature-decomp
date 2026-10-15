@@ -35,5 +35,6 @@ void ovl_17_func_800BAFDC(void);
 s32 ovl_17_func_800BB020(Recon_ovl_17_func_800BB020_A0View *arg0);
 void ovl_17_func_800BB050(void);
 s32 ovl_17_func_800BB094(Recon_ovl_17_func_800BB094_A0View *arg0);
+void ovl_17_func_800BB0C4(s16 arg0);
 void ovl_17_func_800BB394(s16 arg0);
 void ovl_17_func_800BB3F4(s16 arg0);
