@@ -8870,6 +8870,7 @@ Members (link order):
   caller (`ovl_11_func_800C7AC0` state machine) ignores the return value.
 
 Members (link order):
+- ovl_11_func_800FECB8 (m) — active-menu wrapper around adjacent 800FED0C ([grouping evidence](research/ovl_11_func_800FECB8-grouping.md)).
 - ovl_11_func_800FED0C (m) — two-option menu dispatcher/input and settings-restore handler ([grouping evidence](research/ovl_11_func_800FED0C-grouping.md)).
 - ovl_11_func_800FEFEC (m) — two-column menu input/cursor updater and caller of adjacent 800FF27C ([grouping evidence](research/ovl_11_func_800FEFEC-grouping.md)).
 - ovl_11_func_800FF8C8 (m, matched this session, byte-exact) — adjacent-band
