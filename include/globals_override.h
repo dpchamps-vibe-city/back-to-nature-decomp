@@ -3719,6 +3719,8 @@ extern s16 D_80128D64;
 extern u8 D_80051CAE[];
 /* ovl_15_func_80132638 adds the byte text-bank offset before func_8001AC10. */
 extern u8 D_80051EC6[];
+/* ovl_15_func_801320A8 adds the text-bank byte offset before func_8001AC10. */
+extern u8 D_800520A0[];
 /* ovl_15_func_801359FC stores the alternate record-pool byte pointer. */
 extern u8 *D_801376D0;
 /* ovl_15 slot writers use s16 at +0/+2 and s32 at +4, stride 8. */

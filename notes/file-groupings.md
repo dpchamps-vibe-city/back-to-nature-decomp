@@ -10527,9 +10527,7 @@ shared global pair is the cluster tie and the 0x80133538–0x801335F8 boundary i
 exact link adjacency.
 
 Members (link order):
-- ovl_15_func_801320A8 (s) — caller: selects both bases and calls the counter
-  four times, then aggregates the returned counts against the `D_801376D0` run's
-  thresholds
+- ovl_15_func_801320A8 (m, byte-exact) — dual-base slot-transfer capacity validator ([shared-table evidence](research/ovl_15_func_801320A8-grouping.md)).
 - ovl_15_func_80133538 (m, matched this session, byte-exact) — leaf slot counter:
   mode 0 walks 10 records at stride 0xB4 (`u16@0x0`, `u32@0x34 & 0x02000000`),
   mode 1 walks 20 records at stride 0xB8 (`u16@0x708`, `u16@0x7BA`), returning
@@ -10853,6 +10851,7 @@ Members (link order):
   ovl_15_func_80137228(0x11, 9)`, `D_80137584 = ret` (s8; the value is
   returned), and on `D_8013759A >= 0x5B` both `D_80137584` and the return are
   set to 9; contiguous in link order after `func_80131ED8` (0x74 bytes)
+- ovl_15_func_801320A8 (m, byte-exact) — slot-transfer validation and menu-state selection ([grouping evidence](research/ovl_15_func_801320A8-grouping.md)).
 - ovl_15_func_8013237C (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_80052150` updater array (new cluster symbol; not used by
   any function outside the run); then `D_80137584 = ovl_15_func_80137228(0x15,
@@ -10860,7 +10859,7 @@ Members (link order):
   tail absent from the other members: re-reads `D_80137584` and calls
   `ovl_15_func_80134724()` when it is not `0x15`; sits in the link-order stretch
   after the interleaved `ovl_15_func_80131F5C`/`func_80131ED8` block and before
-  `ovl_15_func_801328C4` (non-members `ovl_15_func_80131FD0`/`8013203C`/`801320A8`
+  `ovl_15_func_801328C4` (non-members `ovl_15_func_80131FD0`/`8013203C`
   are interleaved, so the tie is not adjacency)
 - ovl_15_func_80132408 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_80052178` updater array (new cluster symbol; not used by
