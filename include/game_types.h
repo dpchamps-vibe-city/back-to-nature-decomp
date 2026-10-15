@@ -935,6 +935,13 @@ typedef struct {
     /* 0x4E */ char pad_4E[0x108 - 0x4E];
 } UnkStruct800C0448;
 
+/* 800BA698 reads unsigned coordinates at +0/+4; 800B9CA4 passes record +0x1A. */
+typedef struct {
+    u16 unk0;
+    u16 pad_02;
+    u16 unk4;
+} Ovl21DistanceOrigin;
+
 /* 800B836C's three 0x4C-byte states start at record +0x24. */
 typedef struct {
     char pad_00[0x10];

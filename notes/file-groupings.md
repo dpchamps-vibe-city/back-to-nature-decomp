@@ -9685,6 +9685,7 @@ Members (link order):
   `-fno-schedule-insns` (800B98CC's override) and `-fno-gcse` (800BA698's)
   change its code, so neither can be a TU-wide flag of a TU that contains it.
 - ovl_21_func_800B9A20 (m, byte-exact, finalized) — assigns randomized selectors to `D_800C0448` records 1–5; joins through the shared record table, calls to cluster members `ovl_21_func_800BA7F0` / `ovl_21_func_800BA868` / `ovl_21_func_800BA944`, and gapless placement after `ovl_21_func_800B990C` ([verified source](../src/overlays/ovl_21/ovl_21_func_800B9A20.c)).
+- ovl_21_func_800B9CA4 (m, byte-exact, finalized) — randomized state updater for `D_800C0448` records 1–5; joins through the shared record/threshold cluster, calls to members `ovl_21_func_800BA7F0` / `ovl_21_func_800BA698` / `ovl_21_func_800B98CC`, and gapless placement after `ovl_21_func_800B9A20` ([verified source](../src/overlays/ovl_21/ovl_21_func_800B9CA4.c)).
 - ovl_21_func_800BA868 (s) / ovl_21_func_800BA944 (m) — gapless
   link neighbours (0x800BA868 ends at 0x800BA944) that are near-twins of
   `ovl_21_func_800BA7F0`: both fill a 3-entry `s16 buf[4]` with the indices
