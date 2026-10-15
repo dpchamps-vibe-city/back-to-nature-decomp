@@ -15,6 +15,32 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11_func_800F3FB4 reads this absolute-addressed flag word with lw. */
+extern s32 D_8006C848;
+
+/* 8012135C scans 25 effect records at stride 0x18; named view preserves existing pool types. */
+extern u8 Ovl11_D_8012DB90[] __asm__("D_8012DB90");
+
+/* 800C3138 indexes four original signed heading words with an unsigned halfword selector. */
+extern s32 D_80122F8C[4];
+/* 800C3138 stores the squared distance and resets the best-distance word (sw). */
+extern s32 D_80128B6C;
+extern s32 D_80128B70;
+
+/* ovl_11_func_800C35EC reads this absolute-addressed direction value with lhu. */
+extern u16 D_80071A38;
+
+/* ovl_17_func_800B9FA8 copies 0x13DC bytes here, then uses the leading sprite header. */
+extern u8 D_800BB728[0x13DC];
+/* ovl_17_func_800B9FA8 passes this 0x30-byte object to func_80015704. */
+extern u8 D_800BDAA4[0x30];
+
+/* 80120CC4 indexes original 48-halfword texture codes with lhu and stride 2. */
+extern u16 D_80128764[48];
+
+/* ovl_11_func_800F4CA0 clears this s16; 800F62D8 reads its unsigned value with lhu. */
+extern s16 D_80070D0E;
+
 /* Minimal SPU types for the D_8006C368 override below. Do not include
  * psyq/libspu.h here: its `void SpuGetAllKeysStatus` prototype reaches every
  * TU, but the original sound TU observes the call's return value (see
@@ -59,6 +85,17 @@ typedef struct {
     u8 pad_0[0x23608];
     Ovl11GridTextureEntry *entries[1];
 } Ovl11GridTextureTableView;
+
+/* 8011E1E8 reads a signed mode at +25476 beside the 25x45 pointer grid. */
+typedef struct {
+    u8 pad_0[0x23608];
+    Ovl11GridTextureEntry *entries[25 * 45];
+    u8 pad_2479C[0x25476 - 0x2479C];
+    s16 mode;
+} Ovl11TextureStateView;
+
+/* 8011E1E8 indexes ten-byte records here: eight UV bytes and lhu at +8. */
+extern u8 D_801282FC[];
 
 /* ovl_31 rodata: NUL-terminated "bu%d%d:%s" used by sprintf. */
 extern char D_800B7F20[10];
@@ -157,6 +194,25 @@ typedef struct {
 extern Ovl11Rec80124E00 D_80124E00[5];
 extern Ovl11Rec80124E00 D_80124E1E[5];
 extern Ovl11Rec80124E00 D_80124E3C[];
+
+/* 800BEF64 scans 0x1D4-byte records, with lh at +A/+2E, lhu at +1E/+20 and lw position triples at +30/+60. */
+typedef struct {
+    u8 pad_0[0xA];
+    s16 field_A;
+    u8 pad_C[0x1E - 0xC];
+    u16 field_1E;
+    u16 field_20;
+    u8 pad_22[0x2E - 0x22];
+    s16 field_2E;
+    s32 position[3];
+    u8 pad_3C[0x60 - 0x3C];
+    s32 alternatePosition[3];
+    u8 pad_6C[0x1D4 - 0x6C];
+} Ovl11ActorCollisionRecord;
+/* 800BEF64 starts this absolute-addressed scan at record 1 and advances by 0x1D4. */
+extern Ovl11ActorCollisionRecord D_800763F4[];
+/* 800BEF64 tests bit 3 of this absolute-addressed word before scanning. */
+extern s32 D_80071A6C;
 
 /* D_80076280 - second absolute-addressed array of 0x1D4-byte records, 0x60
  * bytes past D_80076220. ovl_11_func_800E8A24 and ovl_11_func_800E9778 index
@@ -260,6 +316,136 @@ struct struct_8006C838 {
     char data[0x3C];  /* 60 bytes per struct */
 };
 extern struct struct_8006C838 D_8006C838[];
+
+/* 800CE96C clears 0x18E bytes; named view preserves the other TUs' cell views. */
+extern u8 D_80075854_reset[0x18E] __asm__("D_80075854");
+/* 800CE96C clears six 0xB0-byte records; named view preserves the existing record type. */
+extern u8 D_80075BC4_reset[0x420] __asm__("D_80075BC4");
+
+/* 800CE96C: reset fields at +0/+4 of 0xB4, 0xB8 and 0xB0-stride records. */
+struct Ovl11ResetB4 {
+    u16 type;
+    u16 pad_2;
+    u16 id;
+    u8 pad_6[0xB4 - 6];
+};
+struct Ovl11ResetB8 {
+    u16 type;
+    u16 pad_2;
+    u16 id;
+    u8 pad_6[0xB8 - 6];
+};
+struct Ovl11ResetB0 {
+    u16 type;
+    u16 pad_2;
+    u16 id;
+    u8 pad_6[0xB0 - 6];
+};
+/* 800CE96C: witnessed base-relative arrays and scalar reset fields. */
+struct Ovl11PoolResetView {
+    u8 pad_0[0x4450];
+    s32 flags;
+    u8 pad_4454[0x7AB4 - 0x4454];
+    struct Ovl11ResetB4 records_7AB4[10];
+    struct Ovl11ResetB8 records_81BC[20];
+    u16 cells_901C[99][2];
+    u8 pad_91A8[4];
+    u16 field_91AC;
+    u8 pad_91AE[0x91E0 - 0x91AE];
+    s32 field_91E0;
+    u8 pad_91E4[0x929C - 0x91E4];
+    u16 field_929C;
+    u16 pad_929E;
+    u16 field_92A0;
+    u8 pad_92A2[0x938C - 0x92A2];
+    struct Ovl11ResetB0 records_938C[6];
+    struct Ovl11ResetB4 records_97AC[3];
+    s16 pairs_99C8[4][2];
+    u16 field_99D8;
+    u8 pad_99DA[0x99E6 - 0x99DA];
+    u16 field_99E6;
+};
+
+/* 800EF488 copies four u16 fields into 0xC-byte records and reads signed indices at +8/+A. */
+typedef struct {
+    u16 field_0;
+    u16 field_2;
+    u16 field_4;
+    u16 field_6;
+    s16 index_8;
+    s16 index_A;
+} Ovl11EF488Record;
+/* 800EF488 uses lhu at +0/+2/+4/+6 of this input state. */
+extern u16 D_80070CF0_halfwords[4] __asm__("D_80070CF0");
+/* 800EF488 selects this single record for arg0 == -1; named view preserves existing local types. */
+extern Ovl11EF488Record D_80071CC0_record __asm__("D_80071CC0");
+/* 800EF488 indexes these records at stride 0xC; named view preserves existing local types. */
+extern Ovl11EF488Record D_8007AD10_records[] __asm__("D_8007AD10");
+/* 800EF488 passes the signed halfword at +0x5492 to 80112904. */
+typedef struct {
+    u8 pad_0[0x5492];
+    s16 selected;
+} Ovl11EF488SelectionView;
+/* 800EF488 indexes records at +0xE4D8 and reads their +8/+A signed indices. */
+typedef struct {
+    u8 pad_0[0xE4D8];
+    Ovl11EF488Record records[5];
+} Ovl11EF488RecordsView;
+/* 800EF488 sets bit 3 in the u16 at +0x9A06 of each 0x1D4-stride record. */
+typedef struct {
+    u8 pad_0[0x9A06];
+    u16 flags;
+} Ovl11EF488FlagView;
+
+/* ovl_11_func_80101964 reads the unsigned flag byte at D_8006C838+0x44CC. */
+typedef struct {
+    u8 pad_0[0x44CC];
+    u8 flags;
+} Ovl11IconFlagsView;
+
+/* 8010B264 compares signed halfwords at +44B8/+44BA/+44BC and reads lh at +E4C8. */
+struct Ovl11B264StateView {
+    u8 pad_0[0x44B8];
+    s16 field_44B8;
+    s16 field_44BA;
+    s16 field_44BC;
+    u8 pad_44BE[0xE4C8 - 0x44BE];
+    s16 field_E4C8;
+};
+
+/* ovl_11_func_800D93C8 reads the flag word at +0x10 and signed mode at +0x44BA. */
+typedef struct {
+    u8 pad_0[0x10];
+    s32 flags;
+    u8 pad_14[0x44BA - 0x14];
+    s16 mode;
+} Ovl11D93C8StateView;
+
+/* ovl_11_func_800D93C8 indexes 8-byte cells by x + y*45, loading u16@0 and u8@4. */
+typedef struct {
+    u16 kind;
+    u16 field_2;
+    u8 value;
+    u8 pad_5[3];
+} Ovl11D93C8Cell;
+typedef struct {
+    u8 pad_0[0x55C4];
+    Ovl11D93C8Cell cells[26][45];
+} Ovl11D93C8MapView;
+/* ovl_11_func_800D93C8 selects these five-argument handlers; each writes three s32 outputs. */
+extern s32 (*D_80128DA8)(u16, u8, s32 *, s32 *, s32 *);
+
+/* ovl_11_func_800BF8B8 reads the date pair and comparison pair, then updates u16 at +0xE4CA. */
+typedef struct {
+    u8 pad_0[0x44BA];
+    u16 field_44BA;
+    u16 field_44BC;
+    u8 pad_44BE[0x548A - 0x44BE];
+    s16 field_548A;
+    s16 field_548C;
+    u8 pad_548E[0xE4CA - 0x548E];
+    u16 field_E4CA;
+} Ovl11BF8B8View;
 
 /* ovl_11_func_800C090C fills 0xC8 bytes here; matched queue users access s32 slots from this base. */
 extern s32 D_80128A88;
@@ -368,11 +554,27 @@ struct struct_8006C838_time {
     s16 field_44C2;         /* 0x44C2 */
 };
 
+/* 80114398 reads the u16 flag at D_8006C838+0x4A86 with lhu. */
+struct Ovl11RecordFlagsView {
+    u8 pad_0[0x4A86];
+    u16 field_4A86;
+};
+
 /* ovl_11_func_800F9FF4 reads u16 at +0x44BC and s16 at +0x44BE from this base. */
 struct Ovl11MenuDateView {
     u8 pad_0[0x44BC];
     u16 field_44BC;
     s16 field_44BE;
+};
+
+/* 800FB674 reads signed date/hour slots and unsigned minute storage from this base. */
+struct Ovl11CalendarDisplayStateView {
+    char pad_0[0x44BA];
+    s16 field_44BA;
+    s16 field_44BC;
+    s16 field_44BE;
+    s16 field_44C0;
+    u16 field_44C2;
 };
 
 /* View of D_8006C838 for ovl_11_func_80111A60: the s16 at +0x44BA plus the
@@ -734,6 +936,24 @@ typedef struct {
 } struct_8005E3C0;
 extern struct_8005E3C0 *D_8005E3C0;
 
+/* 800F8F3C indexes 0x22-byte texture records: lh at 0/2/8/A, lhu at 18/1A. */
+typedef struct {
+    s16 x;
+    s16 y;
+    u8 pad_4[4];
+    s16 width;
+    s16 height;
+    u8 pad_C[12];
+    u16 clutX;
+    u16 clutY;
+    u8 pad_1C[2];
+    /* 800F6C78 sets byte +0x1E and compares the u16 texture ID at +0x20. */
+    u8 active;
+    u8 pad_1F;
+    u16 id;
+} Ovl11TextureRecord;
+extern Ovl11TextureRecord D_80129648_textures[] __asm__("D_80129648");
+
 /* ovl_11_func_800CA044 loads this word as the sprite-submission total. */
 extern s32 D_8005E3BC;
 /* ovl_11_func_800CA044 indexes this storage in 0x78-byte texture banks. */
@@ -757,6 +977,16 @@ extern u8 Ovl23_D_800BF87C_draw[] __asm__("D_800BF87C");
  * its address as an ObjectState and reads the ObjectState fields at +4/+5
  * through a base pointer biased by -0x3B4. */
 extern u8 D_800BFC30[];
+
+/* ovl_23_func_800BB214 copies 0x13DC bytes here and uses the leading sprite header. */
+extern u8 D_800BE49C[0x13DC];
+/* ovl_23_func_800BB214 initializes this 0x30-byte sprite object. */
+extern struct SpriteSourceData D_800BFC60;
+
+/* ovl_23_func_800BB534 indexes four sprite-header offsets in original data. */
+extern s32 D_800BBADC[4];
+/* ovl_23_func_800BB534 copies 0x29A8 bytes here and resolves sprite headers. */
+extern u8 D_800BBAEC[0x29A8];
 
 /* D_80071C90 - ovl_11 object state base (0x80071C90), absolute addressing
  * (lui + %lo in ovl_11_func_800E9104). That function uses its address as an
@@ -1317,6 +1547,24 @@ typedef struct {
  * from overlays that only declare it extern; stride 0x28 per ItemData). */
 extern ItemData *D_8006C858;
 
+/* 800BE6E4: 0x28-byte items have u16@0, s8@3 and signed variant indices at +4. */
+typedef struct {
+    u16 flags;
+    u8 type;
+    s8 group;
+    s16 variants[18];
+} Ovl11TileItem;
+/* 800BE6E4 reaches these pointer fields from D_80071DFC - 0x55C4. */
+typedef struct {
+    u8 pad_0[0x20];
+    Ovl11TileItem *items;
+    u8 pad_24[4];
+    u16 (*properties)[4];
+    u16 (*groups)[8];
+} Ovl11TilePools;
+/* 800BE6E4 reloads this pointer and reads u16 at signed-index*8 + 4. */
+extern u16 (*D_8006C860)[4];
+
 /* D_801247E8 - 51-entry s32 delta table (0xCC bytes, 0x801247E8-0x801248B4).
  * Read as adjacent words by ovl_11_func_800E3978 (a delta lookup) and by
  * ovl_11_func_800E351C/800E36CC (sprite-map offsets). Absolute-addressed. */
@@ -1408,6 +1656,13 @@ extern s16 D_80128422;
  * pointers to the base and to base+0x02 so both bases stay in GPRs; only ever
  * declared extern in the overlays, so it stays absolute-addressed. */
 extern u8 D_801284AC[];
+
+/* D_8012D810 - ovl_11_func_8011EE98 copies 0x264 bytes from the load buffer;
+ * its leading sprite header is passed to func_80015704. */
+typedef struct {
+    u8 data[0x264];
+} Ov11SpriteDataBlock;
+extern Ov11SpriteDataBlock D_8012D810;
 
 /* D_8012DA80 - table of 0x30-byte SpriteSourceData records blitted by
  * ovl_11_func_8011ECC4 at indices 0, 1 and 2. The override header cannot see
@@ -1633,6 +1888,10 @@ extern Ovl28B9628View D_800B9628;
 
 /* D_800BAB0C - ovl_28 state halfword cleared by ovl_28_func_800B9328. */
 extern s16 D_800BAB0C;
+/* 800B9074 initializes a POLY_F4 and accesses its 24-byte packet here. */
+extern u32 D_800BAB10[6];
+/* 800B9074 initializes a DR_MODE and links its three-word packet here. */
+extern u32 D_800BAB30[3];
 
 /* VWD0 - PSY-Q libgs vertical display resolution (libgs.h). Forward-declared
  * here because libgs.h is not self-contained. */
@@ -1715,6 +1974,8 @@ extern s16 D_800B93C8;
 extern s16 D_800B93CA;
 extern s16 D_800B93CC;
 extern s16 D_800B93CE;
+/* 800B86D8 selects unsigned halfwords with row*25 + column in the original table. */
+extern u16 D_800B93D0[][25];
 
 /* D_80070CF2 - s16 global used in overlay 11 button-check functions */
 extern s16 D_80070CF2;
@@ -1885,6 +2146,10 @@ extern void (*D_80127308[8])(void);
  * 0xFFFF, 0x0000) read by ovl_11_func_800FE068 (entries 1..3, absolute
  * addressing) and ovl_11_func_800FE3A0/ovl_11_func_800FE14C. */
 extern u16 D_80127214[];
+/* 800FE14C loads five original 32-bit RGB colors at (abs(level)-1)*4. */
+extern s32 D_80127388[5];
+/* 800FE14C uses this parallel five-word RGB table for the gradient endpoints. */
+extern s32 D_8012739C[5];
 
 extern s16 D_80127222;
 
@@ -1945,6 +2210,23 @@ extern Ovl11D80127274Entry D_80127274[];
 /* D_8012A028 - s16 scratch passed by address to func_8001A970 and
  * ovl_11_func_800FC544 by the ovl_11 countdown-table routines. */
 extern s16 D_8012A028;
+
+/* ovl_11_func_800FD33C adds D_80054BBC[0] bytes and passes this text base to func_80017B3C. */
+extern u8 D_8005360E[];
+/* 800FEFEC adds D_80054BBC[0] bytes to this text base before func_80017B3C. */
+extern u8 D_80053B22[];
+/* 800FEFEC reads/writes this menu state with lw/sw. */
+extern s32 D_801273B0;
+/* 800FEFEC accesses signed menu selectors with lh/sh (lhu for decrement). */
+extern s16 D_801273B6;
+extern s16 D_801273B8;
+/* 800FEFEC reads and writes this single two-byte selector; array view preserves other TUs' scalar view. */
+extern s16 D_801273B8_selection[1] __asm__("D_801273B8");
+
+/* ovl_11_func_800FD3CC adds D_80054BBC[0] and copies lhu units to 0xFFFF. */
+extern u16 D_80053618[];
+/* ovl_11_func_800FD3CC adds D_80054BBC[0] and passes this text to func_80017B3C. */
+extern u16 D_8005362C[];
 
 /* ovl_11_func_800FC358 reads each display counter with lh. */
 extern s16 D_8012CDE4;
@@ -2065,7 +2347,14 @@ extern u8 D_80051E26[];
 
 /* ovl_11_func_80114194 takes these table addresses and adds D_80054BBC[1]. */
 extern u8 D_80051DD6[];
+/* 80118744 adds D_80054BBC[1] bytes to this text base before 8011DD48. */
+extern u8 D_80051DBE[];
 extern u8 D_80051CB0[];
+
+/* 80114398 adds D_80054BBC[1] bytes to these text-table addresses. */
+extern u8 D_80051C7A[];
+extern u8 D_80051CF4[];
+extern u8 D_80051D0C[];
 
 /* D_8005181A - base of the shared D_80051xxx table region (== D_80051E26 -
  * 0x60C); the s32 read from D_80054BBC[1] is added to its address (plus
@@ -2074,6 +2363,9 @@ extern u8 D_80051CB0[];
  * is taken by ovl_11_func_8011DD48. Address taken only; typed s32 to match
  * the pre-existing local view in ovl_11_func_8011DD48. */
 extern s32 D_8005181A;
+
+/* 8011AFB4 adds D_80054BBC[1] bytes to this address and its +0x1E/+0x3E/+0x60 successors. */
+extern u8 D_80051A10[];
 
 /* D_80051A90 - base of the shared D_80051xxx table region (== D_8005181A +
  * 0x276); the s32 read from D_80054BBC[1] is added to its address (plus
@@ -2106,6 +2398,16 @@ extern u32 D_800BD864;
 extern u8 D_800BD758[];
 
 extern u8 D_800BDA74[];
+/* ovl_17_func_800BA2C8 loads five 32-bit offsets from this original table. */
+extern s32 D_800BB6FC[5];
+/* ovl_17_func_800BA2C8 copies 0xC28 bytes here before resolving sprite headers. */
+extern u8 D_800BCB08[0xC28];
+/* ovl_17_func_800BA2C8 stores blob-relative pointers at these word globals. */
+extern u8 *D_800BD74C;
+extern u8 *D_800BD750;
+/* ovl_17_func_800BA2C8 passes this object to the sprite initializer. */
+struct SpriteSourceData;
+extern struct SpriteSourceData D_800BDDF8;
 
 /* D_800BDAD4 - ovl_17 object-state record embedded at +0x28C of the
  * D_800BD848 display-area block. ovl_17_func_800BAD9C passes its address to
@@ -2225,6 +2527,20 @@ extern s16 D_80128138[];
  * as D_8007AD4E). */
 extern u8 D_80074838[0x8000];
 
+/* ovl_11_func_800C1D68: five lhu thresholds at D_8006C838+0x9F68..0xBE7C. */
+struct Ovl11RecordThresholds {
+    u8 pad0[0x9F68];
+    u16 field_9F68;
+    u8 pad9F6A[0xA6B8 - 0x9F6A];
+    u16 field_A6B8;
+    u8 padA6BA[0xAA60 - 0xA6BA];
+    u16 field_AA60;
+    u8 padAA62[0xB384 - 0xAA62];
+    u16 field_B384;
+    u8 padB386[0xBE7C - 0xB386];
+    u16 field_BE7C;
+};
+
 /* D_8007A3F0 - address inside the D_80074838 work area (base + 0x5BB8),
  * referenced absolutely (lui + %lo) by ovl_11_func_801129EC, which passes
  * its address to ovl_11_func_80112B60. Only the address is taken, so the
@@ -2265,6 +2581,32 @@ extern s32 D_8012CF24;
  * ovl_11_func_80103EB8 / ovl_11_func_80103F8C. Absolute-addressed. */
 extern s16 D_8012CF30[12];
 
+/* 80104148 writes a glyph at +0 and a 0xFFFF terminator at +2 in this buffer. */
+typedef struct {
+    s16 glyph;
+    u16 terminator;
+    s16 rest[10];
+} Ovl11GlyphTextBuffer;
+extern Ovl11GlyphTextBuffer D_8012CF30_glyph __asm__("D_8012CF30");
+
+/* 80104148 adds byte offsets to these text bases before func_80017B3C. */
+extern u8 D_80051BF4[];
+/* 80103F8C adds D_80054BBC[0] bytes to this text base and its +0x18 successor. */
+extern u8 D_80051C0E[];
+extern u8 D_800556A8[];
+/* 80104148 loads a signed halfword at index*4 from this text-offset table. */
+extern s16 D_80127430[][2];
+/* 80104148 reads selector@E514 and 14-byte entries at E516 (name@0, value@A). */
+typedef struct {
+    u8 pad_0[0xE514];
+    s16 selector;
+    s16 cards[3][6][7];
+} Ovl11CardView;
+
+/* 8010726C walks ten 0x18-byte rotation states at D_8012CF48; named view preserves existing table views. */
+struct Ovl11RotationState;
+extern struct Ovl11RotationState Ovl11_D_8012CF48[] __asm__("D_8012CF48");
+
 /* ovl_11_func_8010C6A0 scratch state. D_8007A638 is seven 0xF8-byte
  * records (0x6C8 bytes) zeroed by that function and populated one record at
  * a time; D_80127CD0 and D_80127CB4 are the two 7-entry parallel arrays it
@@ -2272,6 +2614,16 @@ extern s16 D_8012CF30[12];
 extern u8 D_8007A638[0x6C8];
 extern s32 D_80127CD0[7];
 extern s32 D_80127CB4[7];
+
+/* ovl_21_func_800B7E98 selects and advances this state with lw/sw. */
+extern u32 D_800BCBB8;
+
+/* 800B836C indexes four u16 triples at stride 6, loading +2/+4 with lhu. */
+extern u16 D_800BCBBC[4][3];
+/* 800B836C indexes u16 triples by selector*12 + variant*6; original data has 24 units. */
+extern u16 D_800BCBD4[4][2][3];
+/* 800B836C loads lhu at selector*4 + variant*2; original data has eight units. */
+extern u16 D_800BCC04[4][2];
 
 /* D_800BCC48 - ovl_21 table of six 4-byte {u16,u16} pairs (0xFD12/0xFD12,
  * 0x0000/0xFA24, 0x02EE/0xFC97, 0xFD12/0x02EE, 0x0000/0x05DC,
@@ -2325,6 +2677,20 @@ extern u8 D_800BCAD8[];
  * other ovl_21 references are unmatched stubs, so this type is the only one
  * the matched pair shares. Absolute-addressed (extern-only, lui + %lo). */
 extern u16 D_800C0448[2];
+/* 800B836C's six 0x108-byte records and table selectors at +0x640/+0x642. */
+struct Ovl21InitState;
+#define D_800C0448_init (*(struct Ovl21InitState *) D_800C0448)
+
+/* 800BB648 loads fifteen 32-bit sprite-header offsets from original data. */
+extern s32 D_800BCCDC[15];
+/* 800BB648 copies the 0x233C-byte sprite blob from the shared load buffer. */
+/* ovl_21_func_800BB328 copies 0x13DC bytes here and uses the leading sprite header. */
+extern u8 D_800BCD28[0x13DC];
+/* ovl_21_func_800BB328 passes this 0x30-byte object to func_80015704. */
+extern struct SpriteSourceData D_800C0ACC;
+extern u8 D_800BE108[0x233C];
+/* 800BB648 initializes this 0x30-byte sprite and its adjacent records. */
+extern struct SpriteSourceData D_800C0B2C;
 
 /* D_800C0458 - ovl_21 object-state base at D_800C0448 + 0x10, the sub-view
  * handed to ovl_21_func_800BAE20. ovl_21_func_800BA510 walks it at stride
@@ -2454,6 +2820,9 @@ extern u8 D_80128818[];
  * lui/addiu addressing. */
 extern u8 D_800BF700[];
 
+/* ovl_19_func_800B7F34 selects and advances this state with lbu/sb. */
+extern u8 D_800BCEE4;
+
 /* D_800BCB74 - ovl_19 s32 {start,end} CD-position pair table. ovl_19
  * func_800BBB48 reads [0], [1] and [2] and passes [1]-[0] and [2]-[1] as
  * the sector counts of two func_80014BCC transfers. Defined in the overlay
@@ -2515,10 +2884,19 @@ extern u8 D_800C02DC[];
  * the record type is defined in game_types.h, forward-declared here. */
 extern struct Ovl25ObjectRecord D_800BFE54;
 
-/* ovl_25_func_800B8848 reads/writes the signed halfword at +0x4CC; this named storage view preserves legacy scalar/array declarations of the base. */
+/* ovl_25_func_800B8848 accesses s16@4CC; 800B97E4 reads s16@C,4D4,4DE..4E4. */
 typedef struct {
-    u8 pad_0[0x4CC];
+    u8 pad_0[0xC];
+    s16 unkC;
+    u8 pad_E[0x4CC - 0xE];
     s16 unk4CC;
+    u8 pad_4CE[6];
+    s16 unk4D4;
+    u8 pad_4D6[8];
+    s16 unk4DE;
+    s16 unk4E0;
+    s16 unk4E2;
+    s16 unk4E4;
 } Ovl25StateView;
 extern Ovl25StateView D_800BFE44_view __asm__("D_800BFE44");
 /* ovl_25_func_800B8848 passes these halfword text streams to func_8001AC10; original data terminates with 0xFFFF. */
@@ -2619,6 +2997,36 @@ extern u8 D_80053350[];
  * D_80054BBC[0] to its address with the split lui/addiu form). Never defined
  * in the overlay, so an incomplete array extern keeps the base name. */
 extern u8 D_80053530[];
+
+/* ovl_15_func_80134A34 copies an aligned word pair and two 18-byte
+ * halfword-aligned names into each 0x3C-byte record at D_801376E0. */
+struct Ovl15SaveWordPair {
+    s32 words[2];
+};
+struct Ovl15SaveName {
+    s16 units[9];
+};
+struct Ovl15SaveHalfwordPair {
+    s16 units[4];
+};
+struct Ovl15SaveHeader {
+    struct Ovl15SaveWordPair words;
+    struct Ovl15SaveName name_8;
+    struct Ovl15SaveName name_1A;
+    struct Ovl15SaveHalfwordPair fields_2C;
+    s32 field_34;
+    s32 field_38;
+};
+extern struct Ovl15SaveHeader D_801376E0_headers[] __asm__("D_801376E0");
+/* ovl_15_func_80134A34 reads the word pair at +0 and names at +0x28/+0xD10. */
+struct Ovl15SaveHeaderSource {
+    struct Ovl15SaveWordPair words;
+    u8 pad_8[0x20];
+    struct Ovl15SaveName name_28;
+    u8 pad_3A[0xD10 - 0x3A];
+    struct Ovl15SaveName name_D10;
+};
+extern struct Ovl15SaveHeaderSource D_80070CF0_headerSource __asm__("D_80070CF0");
 
 /* D_80137830 / D_80137A30 - ovl_15 checksum buffers. Absolute-addressed
  * (lui + %lo) from ovl_15 code; this TU family only declares them. The
@@ -2752,6 +3160,19 @@ extern Ovl11E910Entry _D_8006E910[] __asm__("D_8006E910");
  * belong here. */
 extern u8 D_800BF570[];
 extern u8 D_800BF4E8[];
+/* ovl_19_func_800BB8F4 reads six word offsets for sprite headers. */
+extern s32 D_800BD058[6];
+/* ovl_19_func_800BB8F4 copies a 0x104C-byte sprite-data blob here. */
+typedef struct {
+    u8 bytes[0x104C];
+} Ovl19SpriteBlob;
+extern u8 D_800BE470[0x104C];
+/* ovl_19_func_800BB5D4 copies 0x13DC bytes of sprite-header data here. */
+extern u8 D_800BD090[0x13DC];
+/* ovl_19_func_800BB5D4 initializes this sprite from D_800BD090. */
+extern struct SpriteSourceData D_800BF690;
+/* ovl_19_func_800BB8F4 initializes this sprite from offset table entry 5. */
+extern struct SpriteSourceData D_800BF6D0;
 extern void (*D_800BD07C)(u16 *arg0, s32 arg1);
 
 /* D_80015814 / D_80015828 - the main-EXE bit set/clear helpers under the
@@ -2847,6 +3268,20 @@ typedef struct {
 } Ovl11A04B8Entry;
 extern Ovl11A04B8Entry D_800A04B8[][9];
 
+/* ovl_11_func_800F0A58 scans the first two nine-s16 rows with lh. */
+extern s16 D_800A0494[288];
+/* ovl_11_func_800F0A58 passes this "Error\n" rodata string to FntPrint. */
+extern char D_800B9F58[];
+/* ovl_11_func_800F0A58 copies a 0x1E-byte record at these far-buffer offsets. */
+typedef struct {
+    u8 pad_0[0x254C8];
+    Ovl11A04B8Entry records[32][9];
+} Ovl11FarRecordTableView;
+typedef struct {
+    u8 pad_0[0x445A];
+    Ovl11A04B8Entry record;
+} Ovl11ActiveRecordView;
+
 /* ovl_11 four-entry state dispatch table. The original rodata entries point
  * to ovl_11_func_800E3DC8/800E40CC/800E4280/800E4330; the dispatcher
  * preserves the selected handler's return value across its final flag clear. */
@@ -2877,6 +3312,15 @@ extern u8 D_8012D110[];
  * from the overlay. */
 extern s16 D_80129FF0;
 
+/* 800FB674 builds halfword text in the original 0x20-byte scratch span. */
+typedef struct {
+    s16 field_0;
+    u16 field_2;
+    s16 field_4;
+    s16 text[13];
+} Ovl11CalendarText;
+extern Ovl11CalendarText D_8012A008;
+
 /* ovl_11 indexed halfword table indexed by ovl_11_func_800D0DCC: the target
  * computes 0x15 - obj->unkB2 and stores 0xFFFF through func_8001A970's
  * returned pointer into this table. Absolute-addressed from the overlay. */
@@ -2901,6 +3345,15 @@ extern s32 _D_800B970C[20] __asm__("D_800B970C");
  * writes the pre-mask value here and ovl_27_func_800B7F2C zeroes it;
  * absolute-addressed (overlay build is -G0). */
 extern s32 D_800C4A28;
+
+/* ovl_27_func_800B823C selects and updates this state with lh/sh. */
+extern s16 D_800C4A18;
+
+/* ovl_27_func_800B823C increments the s32 at D_8006C838 + 0x4488. */
+typedef struct {
+    u8 pad_0[0x4488];
+    s32 counter;
+} Ovl27StateCounterView;
 
 /* D_800C4A2C - ovl_27 halfword state counter at 0x800C4A2C. Read
  * unsigned to increment and signed to threshold-test; absolute-addressed
@@ -3086,9 +3539,25 @@ extern s32 D_8009CBF8;
 extern u32 D_8008F7F8_words[] __asm__("D_8008F7F8");
 /* ovl_11 data contains 50 pointers to counted word-offset lists. */
 extern s32 *D_80125DC0[50];
+/* ovl_11_func_800BD6A8 reads adjacent ROM boundary words at index*4 and +4. */
+extern s32 D_80122810[];
+/* ovl_11_func_800BFD1C loads this pointer and indexes 0xC-byte entries. */
+extern s32 *D_80128A80;
 /* ovl_11_func_800C28CC publishes the group and one-based item index (sw). */
 extern s32 D_80128B74;
 extern s32 D_80128B78;
+
+/* ovl_11_func_800C32C8: lh/lhu at +44C4, lhu +44CE and lh +E778/+E77C. */
+struct Ovl11AnimationState {
+    char pad_0[0x44C4];
+    s16 hour;
+    char pad_44C6[8];
+    u16 field_44CE;
+    char pad_44D0[0xE778 - 0x44D0];
+    s16 selected;
+    char pad_E77A[2];
+    s16 mode;
+};
 
 /* ovl_11_func_800C28CC: halfword selectors at the witnessed displacements. */
 struct Ovl11SpriteSelectors {
@@ -3166,6 +3635,72 @@ typedef struct {
 } Ovl15Slot;
 /* Alternate view preserves the existing local views in other ovl_15 TUs. */
 extern Ovl15Slot Ovl15Slots[2][5] __asm__("D_80140F90");
+
+/* ovl_11_func_80107044: 4-byte stride table; original data are +/-0x420. */
+extern s32 D_801274DC[4];
+
+/* ovl_30_func_80133218 reads and writes signed halfwords at row*10 + column*2. */
+extern s16 D_801231C0[5][5];
+/* ovl_30_func_80133218 passes these original NUL-terminated rodata strings to FntPrint. */
+extern char D_8012DF2C[];
+extern char D_8012DF30[];
+extern char D_8012EF2C[];
+extern char D_8012EF90[];
+extern char D_8012EF9C[];
+/* ovl_30_func_80133218 updates these word-sized selectors within 0..4. */
+extern s32 D_80134ABC;
+extern s32 D_80134AC0;
+/* ovl_30 data contains five string pointers, indexed by D_80134ABC. */
+extern char *D_80134AC4[5];
+
+/* 80101814 tests lhu flag bits; the unsigned view preserves legacy signed declarations. */
+extern u16 D_801273EE_flags __asm__("D_801273EE");
+/* 80101814 walks seven consecutive u16 IDs; 801014A4 also indexes this table with lhu. */
+extern u16 D_801273F4[];
+
+/* 800F5944 loads signed halfwords from the original four-entry data table. */
+extern s16 D_80126C98[4];
+/* 800F5944 indexes that table with this absolute-addressed word. */
+extern s32 D_80129634;
+
+/* 800F5944: header pointer at +0x25388 and lhu selector at +0x25476. */
+struct Ovl11DispatchWork {
+    char pad0[0x25388];
+    s16 *header;
+    char pad2538C[0x25476 - 0x2538C];
+    u16 selector;
+};
+
+/* 800F5404 reads status flags, two byte lists and signed counts from this base. */
+struct Ovl11FlagRefreshState {
+    u8 pad0[0x44CC];
+    u8 flags;
+    u8 pad44CD[0x44F8 - 0x44CD];
+    s32 status;
+    u8 pad44FC[0x4AC0 - 0x44FC];
+    u8 enabled[22];
+    u8 enabled2[22];
+    u8 pad4AEC[0x92D0 - 0x4AEC];
+    s32 status2;
+    u8 pad92D4[0xDD8C - 0x92D4];
+    struct Ovl11DispatchRecord *lists[4];
+    u8 padDD9C[0xDDD8 - 0xDD9C];
+    s16 counts[4];
+};
+/* 800F5944: pointer table, two fixed lists and lh counts through D_8006C838. */
+struct Ovl11DispatchState {
+    char pad0[0xDD8C];
+    struct Ovl11DispatchRecord *lists[16];
+    struct Ovl11DispatchRecord *list10;
+    s32 padDDD0;
+    struct Ovl11DispatchRecord *fixed;
+    s16 counts[16];
+};
+
+/* ovl_25 800BAC9C copies 0x13DC bytes here and uses the base as a sprite header. */
+extern u8 D_800BCDD4[];
+/* ovl_25 800BAC9C initializes this 0x30-byte sprite source from D_800BCDD4. */
+extern u8 D_800C021C[];
 
 #endif /* GLOBALS_OVERRIDE_H */
 
