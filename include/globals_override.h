@@ -3749,6 +3749,8 @@ extern char *D_80134AC4[5];
 
 /* 80101814 tests lhu flag bits; the unsigned view preserves legacy signed declarations. */
 extern u16 D_801273EE_flags __asm__("D_801273EE");
+/* 80102F14 walks eight lhu IDs; unsigned view preserves legacy signed declarations. */
+extern u16 D_8012CF00_ids[8] __asm__("D_8012CF00");
 /* 80101814 walks seven consecutive u16 IDs; 801014A4 also indexes this table with lhu. */
 extern u16 D_801273F4[];
 

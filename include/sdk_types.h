@@ -2574,6 +2574,17 @@ typedef struct {
 } Ovl11Func8011D890Arg;
 
 typedef struct {
+    u16 id;
+    u8 adjustment;
+    u8 pad3;
+} Ovl11IdAdjustment;
+
+typedef struct {
+    u8 pad0[0x1C];
+    Ovl11IdAdjustment *adjustments;
+} Ovl11IdAdjustmentObject;
+
+typedef struct {
     u8 pad_0[2];
     s16 unk2;
     u16 unk4;

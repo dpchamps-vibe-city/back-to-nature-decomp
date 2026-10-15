@@ -4,6 +4,19 @@
 
 #include "common.h"
 
+/* 80102F14 scans stride-four IDs and explicitly sign-extends the byte at +2;
+ * 801032BC consumes the same table through the pointer at object +1C. */
+typedef struct {
+    u16 id;
+    u8 adjustment;
+    u8 pad3;
+} Ovl11IdAdjustment;
+
+typedef struct {
+    u8 pad0[0x1C];
+    Ovl11IdAdjustment *adjustments;
+} Ovl11IdAdjustmentObject;
+
 /* 800BDF98 forwards this four-byte, halfword-aligned object by value;
  * 800BE6E4 reads its signed type at +2. */
 typedef struct {
