@@ -180,6 +180,7 @@ void ovl_11_func_800CF2C8(s32 *arg0);
 void ovl_11_func_800CF308(s16 arg0);
 void ovl_11_func_800CF314(u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 void ovl_11_func_800CF36C(s32 arg0);
+void ovl_11_func_800CF428(void);
 void ovl_11_func_800CF748(void);
 void ovl_11_func_800CF848(void);
 void ovl_11_func_800CF95C(Ovl11Func800CF95CArg arg0, s32 arg1);

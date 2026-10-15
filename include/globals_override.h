@@ -2947,9 +2947,15 @@ typedef struct {
     /* 0x06 */ char pad_06[0x08 - 0x06];
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
-    /* 0x10 */ char pad_10[0x18 - 0x10];
+    /* 0x10 */ s32 unk10; /* 800CF428 copies the third coordinate word. */
+    /* 0x14 */ char pad_14[0x18 - 0x14];
 } Ovl11ItemEntry; /* 0x18 */
 extern Ovl11ItemEntry D_80123758[];
+
+/* 800CF428 reads three coordinate words from each of three 0x10-byte records. */
+extern s32 D_801238F0[][4];
+/* 800CF428 reads and updates the item-spawn bit mask with lh/lhu/sh. */
+extern s16 D_80128D66;
 
 /* D_80123940 - ovl_11 table of 0x18-byte records walked by
  * ovl_11_func_800CF848 with an advancing s16 pointer (stride 0x18). Field
