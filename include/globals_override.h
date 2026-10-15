@@ -1689,6 +1689,15 @@ extern Ovl11Triple6 _D_801249F8[] __asm__("D_801249F8");
  * from the overlays (only ever declared extern, never GP). */
 extern u8 D_801249EC[];
 
+/* ovl_11_func_800EB010 copies ten s16 IDs from rodata and walks these parallel ten-entry tables. */
+struct Ovl11IdList {
+    s16 values[2][5];
+};
+extern struct Ovl11IdList D_800B9B1C;
+extern s32 D_80124920[10];
+extern s32 D_80124948[10];
+extern s16 D_80124970[10];
+
 /* ovl_11_func_800ED7E0 copies five signed halfwords from this rodata object. */
 struct Ovl11CandidateList {
     s16 values[5];
