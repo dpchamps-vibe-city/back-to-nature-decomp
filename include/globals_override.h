@@ -1838,6 +1838,12 @@ extern u8 D_80051B9A[];
  * ovl_11_func_8011775C). Only address-taken; absolute-addressed. */
 extern u8 D_80051BF0[];
 
+/* ovl_11_func_8011775C adds the relocation base to these byte-table addresses. */
+extern u8 D_80051B90[];
+extern u8 D_80051BE6[];
+/* ovl_11_func_8011775C reads D_80070CF8 with lhu; retain a distinct typed view. */
+extern u16 D_80070CF8_halfword __asm__("D_80070CF8");
+
 /* D_800535E6 - base of a data table in the PS-X EXE, indexed by
  * D_80054BBC[0] and passed to func_80017B3C by ovl_11_func_800FC998.
  * Only address-taken; absolute-addressed (split lui/%lo pair). */

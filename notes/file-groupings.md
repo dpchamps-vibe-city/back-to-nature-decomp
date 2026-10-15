@@ -11605,7 +11605,7 @@ external s16 table at 0x8012D7A8 — a shared absolute global cluster — and th
 call graph agrees (`80117BB4` calls `80117F14`). The run's table members end
 at 0x80117F70, where its immediate successor does not reference the table.
 Members (address order):
-- ovl_11_func_8011775C (s) — reads D_8012D7A8; role unknown.
+- ovl_11_func_8011775C (m, byte-exact) — initializes the shared D_8012D548 record, D_8012D7B8 descriptor and D_8012D7A8 id table with the same 8011D400 clearer as its zero-gap successor 80117A40.
 - ovl_11_func_80117A40 (m, byte-exact) — writer of the shared cluster:
   initializes the D_8012D7A8 id table (0x128, 0x4F, 0x12F–0x131) and the
   D_8012D7B8 state block, then calls ovl_11_func_8011D400 and returns 1.
