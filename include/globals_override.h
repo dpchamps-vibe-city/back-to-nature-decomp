@@ -3801,5 +3801,17 @@ extern s16 D_800BB6E8[2];
 /* ovl_17 800BB0C4 increments this word and uses unsigned constant division. */
 extern u32 D_800BB724;
 
+/* 800CD0F4 indexes signed halfword actions at 80123290 and reads 80123292. */
+extern s16 D_80123290[];
+extern s16 D_80123292;
+/* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
+extern void *D_80128C4C_dispatch __asm__("D_80128C4C");
+extern s32 D_80128C54;
+/* 800CD0F4 saturating-increments the signed halfword at D_8006C838+0x5240. */
+struct Ovl11ActionCounter {
+    u8 pad_0[0x5240];
+    s16 count;
+};
+
 #endif /* GLOBALS_OVERRIDE_H */
 
