@@ -10285,9 +10285,7 @@ Members (link order):
   `func_80014CBC(0, 0, 0x2000, D_8005E3B0+0x4290, 1, 1)` followed by the
   zero-return poll `func_80014CBC(..., 1, 0) == 0`, then
   `func_8001719C(D_8005E3B0 + 0x4290)`
-- ovl_25_func_800BAFCC (s) — display-setup:
-  `func_80014CBC(0x1A, 0, 0x124D0, D_8005E3B0+0x4290, 1, 1)` poll and
-  `func_8001719C(D_8005E3B0 + 0x5F18)`, then copies into `D_800BE1B4`
+- ovl_25_func_800BAFCC (m, byte-exact) — display-setup and sprite-cluster initializer; candidate same-TU link to the `D_800C024C` object-state base run through its complete shared record set ([evidence](research/ovl_25_func_800BAFCC-grouping.md)).
 - ovl_25_func_800BB2B8 (m, matched this session, byte-exact) — run tail via the
   shared `D_800C0454` descriptor: reads the private `D_800BBED0` CD-position
   table for two `func_80014BCC` sector transfers into `D_8005E3B0+0x4290`,

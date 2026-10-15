@@ -2960,6 +2960,13 @@ extern u8 D_800C0454[];
  * the overlay data segment, so only an extern declaration belongs here. */
 extern s16 D_800C030C;
 
+/* ovl_25_func_800BAFCC copies 0x1C88 streamed bytes here and indexes sprite headers. */
+extern u8 D_800BE1B4[];
+/* 800BAFCC initializes full sprites; named views coexist with legacy halfword/ObjectState views. */
+extern struct SpriteSourceData Ovl25Sprite800C013C __asm__("D_800C013C");
+extern struct SpriteSourceData Ovl25Sprite800C024C __asm__("D_800C024C");
+extern struct SpriteSourceData Ovl25Sprite800C0334 __asm__("D_800C0334");
+
 /* D_800C027C - ovl_25 object-state base (0x800C027C). ovl_25_func_800B9E20
  * resets it with func_80015840(&base, 0), resets the record 0x30 bytes on as
  * +1, and derives the raw u16 buffer 104 bytes below (0x800C0214) for the
