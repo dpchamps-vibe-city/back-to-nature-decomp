@@ -312,6 +312,14 @@ struct struct_80061DE8 {
 extern struct GfxObj *D_8005E3A8;
 extern struct GfxObj *D_8005E3AC;
 
+/* ovl_30_func_80131C38 reads/writes this selection index with lw/sw. */
+extern s32 D_801349AC;
+/* ovl_30_func_80131C38 passes these original rodata strings to FntPrint. */
+extern char D_8012EC90[];
+extern char D_8012ECA0[];
+extern char D_8012ECB0[];
+extern char D_8012ECC4[];
+
 /* D_801349B0 - s32 selection index driven by ovl_30_func_80131F14.
  * Clamped to 0..0x24 and used as a modulo-0x25 record selector.
  * Absolute-addressed (overlay -G0), so a plain extern gives lui+lo. */
