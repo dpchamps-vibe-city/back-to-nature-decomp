@@ -5507,7 +5507,7 @@ Members (address order):
   capture. Zero-gap link order + call edge + static-chain seam agree, so
   the pair shares one original nested-function TU (medium).
 - ovl_11 6-byte struct-copy helper run — 0x800F7E38 / 0x800F8404 /
-  0x800F8480 / 0x800F84D4 (confidence: low): the orchestrator
+  0x800F8480 / 0x800F84D4 / 0x800F84F0 (confidence: low): the orchestrator
   ovl_11_func_800F7E38 (stub) calls three link-adjacent leaf helpers that
   form a zero-gap run 0x800F8404 (0x24) → 0x800F8428 → 0x800F8480 (0x54) →
   0x800F84D4 (0x1c) → 0x800F84F0: ovl_11_func_800F8404 (m, matched this
@@ -5537,6 +5537,12 @@ Members (address order):
   excess moved to arg0, same 0x800D5740 callee — and likewise lives in the
   0x800FBxxx region (at 0x800FB404, beside the 0x800FB3E4 predicate and the
   0x800FB45C swap site). Same-TU membership with 0x800F84xx unproven (low).
+  - ovl_11_func_800F84F0 (m) — menu navigation, page wrapping and cursor placement.
+    Candidate member: zero-gap successor of 0x800F84D4 and caller of
+    0x800F8404; shares D_80126E44/48/4A/4C/4E with 0x800F7AA0 and
+    D_80126E4E with its zero-gap successor 0x800F87AC. Shared state plus
+    call/link order support the regional grouping; original TU ownership
+    remains unconfirmed (low).
 - ovl_11_func_800F8188 (m, matched this session, byte-exact; link-adjacent to
   0x800F8224 in the same 0x800F81xx/0x800F84xx region) — the run's
   caller/dispatcher: it takes the 0x800F8404 level result, and when that
