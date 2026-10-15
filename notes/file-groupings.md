@@ -11277,6 +11277,7 @@ Members (address order):
   `ovl_11_func_80100FFC`, or `ovl_11_func_80103714` into `D_801273DC`
 - ovl_11_func_8010021C (s, candidate same TU) — case-0x3B8 selection handler that produces `D_801273EC` and installs its adjacent detail handler.
 - ovl_11_func_80100644 (m, candidate same TU; [evidence](research/ovl_11_func_80100644-grouping.md)) — case-0x3B9 selected-record display handler that returns to selection or installs the exit handler.
+- ovl_11_func_801006F8 (m, candidate same TU; [evidence](research/ovl_11_func_801006F8-grouping.md)) — case-0x3BA mode-1 selected-record display handler that returns to selection or installs the exit handler.
 - ovl_11_func_801022E8 (m, matched this session) — remote case 0x3BF handler;
   `(s16)func_800225B8() == 1` arm calls `func_800132F0(0xA, 0, 2)` then stores
   `D_801273DC = ovl_11_func_8010289C`, else arm stores `D_801273E4 = 3`
