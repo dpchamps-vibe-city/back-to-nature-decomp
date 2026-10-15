@@ -15,6 +15,11 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 80100644 loads this selector with lbu; 800FFDCC clears the same byte. */
+extern s8 D_801273EC;
+/* 80100644 installs void handlers called by 800FFF7C; named view preserves legacy declarations. */
+extern void (*Ovl11_D_801273DC)(void) __asm__("D_801273DC");
+
 /* ovl_11_func_800F3FB4 reads this absolute-addressed flag word with lw. */
 extern s32 D_8006C848;
 
