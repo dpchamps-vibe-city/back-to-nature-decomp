@@ -222,6 +222,13 @@ extern s32 D_80076280[];
 
 /* ovl_11_func_800E5078 copies 0x30-byte sprites at stride 0x1D4 from base-0x30. */
 extern u8 D_800762D0[];
+/* 800E4DAC initializes this sprite from a SpriteDataHeader. */
+extern struct SpriteSourceData D_8007942C;
+/* 800E4DAC loads the first offset-table pointer, then signed words at +8/+0x18. */
+extern s32 *D_80124FCC_spriteOffsets __asm__("D_80124FCC");
+/* 800E4DAC adds indexed signed offsets to this loaded sprite-data base. */
+extern u8 *D_801291B8;
+extern s32 D_801291C0;
 
 /* D_8012D050 - 3-entry {s16,s16} farm-state array (ovl_11, -G0 absolute).
  * ovl_11_func_80108B8C reads field_0 @0x8 / field_2 @0xA of entry [2]. */
@@ -308,6 +315,33 @@ extern s32 D_801349B0;
 /* D_8012ECD8 - "P %d ADR %x\n" rodata format string whose address is
  * passed to FntPrint by ovl_30_func_80131F14 (absolute overlay rodata). */
 extern char D_8012ECD8[];
+
+/* 801326C4 reads/writes this signed word as its 0..127 selector. */
+extern s32 D_80134AA8;
+/* 801326C4 indexes unsigned bytes at +0xE640, bounded by the 0x80 selector. */
+struct Ovl30DayCounters {
+    u8 pad_0[0xE640];
+    u8 counters[0x80];
+};
+/* 801326C4 passes these original rodata strings to FntPrint. */
+extern char D_8012EED0[];
+extern char D_8012EEE4[];
+/* 80132978 reads/writes this signed selector and indexes eight bytes at +0xE6C0. */
+extern s32 D_80134AAC;
+struct Ovl30DayCounters1 {
+    u8 pad_0[0xE6C0];
+    u8 counters[8];
+};
+/* 80132978 passes this original Ke-Day-CNT1 row format to FntPrint. */
+extern char D_8012EEFC[];
+/* 80132C2C reads/writes this signed selector and indexes 128 bytes at +0xE6C8. */
+extern s32 D_80134AB0;
+struct Ovl30NValues {
+    u8 pad_0[0xE6C8];
+    u8 values[0x80];
+};
+/* 80132C2C passes this original Ke-N-VAL row format to FntPrint. */
+extern char D_8012EF14[];
 
 /* D_8006C838 - array of 0x3C-byte structs used for flags
  * Accessed with 0x3C stride but accessed in 4-byte s32 words
@@ -1624,6 +1658,12 @@ extern Ovl11Triple6 _D_801249F8[] __asm__("D_801249F8");
  * from the overlays (only ever declared extern, never GP). */
 extern u8 D_801249EC[];
 
+/* ovl_11_func_800ED7E0 copies five signed halfwords from this rodata object. */
+struct Ovl11CandidateList {
+    s16 values[5];
+};
+extern struct Ovl11CandidateList D_800B9DB0;
+
 /* D_80129560 - s32 table indexed by an s16 value (0x50 bytes, ovl_11).
  * Store via sw at (s16)index * 4 is done by ovl_11_func_800E8BA0;
  * load-side users ovl_11_func_800E6834/800E686C read lw at the same
@@ -1760,6 +1800,20 @@ extern s16 D_80129FD8[12];
  * read by ovl_11_func_800F8B4C and cleared by ovl_11_func_800F6680.
  * Absolute-addressed from the overlay. */
 extern s16 D_80126E4A;
+/* ovl_11_func_800F84F0 uses these lh/sh menu indices and sentinels. */
+extern s16 D_80126E44;
+extern s16 D_80126E48;
+extern s16 D_80126E4C;
+extern s16 D_80126E4E;
+/* ovl_11_func_800F84F0 reads this lh byte-selector for the navigation table. */
+extern s16 D_80071A1E;
+/* ovl_11_func_800F84F0: 0x10-byte rows, lh x/y at +0/+2, lbu links at +4. */
+struct Ovl11MenuNavigation {
+    s16 x;
+    s16 y;
+    u8 links[4][3];
+};
+extern struct Ovl11MenuNavigation D_80126E54[];
 
 /* D_80051B9A - base of a data table in the PS-X EXE, indexed by
  * D_80054BBC and passed to func_80017B3C by ovl_11_func_800FA6CC.
@@ -2743,6 +2797,10 @@ extern Ovl11E5230Entry _D_80129230[] __asm__("D_80129230");
  * func_80017240. Absolute-addressed (extern-only, lui + %lo). */
 extern s16 D_80129410;
 extern s16 D_80129412;
+/* 800E499C stores the sprite-data byte count here. */
+extern s32 D_80129414;
+/* 800E499C loads this pointer and reads the current object's signed id at +2. */
+extern s16 *Ovl11CurrentObjectId __asm__("D_8006C868");
 
 /* D_8006C904 - byte state written by the func_800226F0/func_80022B20/
  * func_80022D70 cluster (values 0/4/6) and read by
@@ -2998,6 +3056,13 @@ extern u8 D_80053350[];
  * in the overlay, so an incomplete array extern keeps the base name. */
 extern u8 D_80053530[];
 
+/* ovl_15_func_8012F158 adds D_80054BBC[0] to this text-updater address. */
+extern u8 D_80052FC4[];
+/* ovl_15_func_8012E15C initializes two halfword card states here. */
+extern s16 D_80137594[];
+/* ovl_15_func_8012F158 writes three halfword save-slot states at stride 2. */
+extern s16 D_80137820[];
+
 /* ovl_15_func_80134A34 copies an aligned word pair and two 18-byte
  * halfword-aligned names into each 0x3C-byte record at D_801376E0. */
 struct Ovl15SaveWordPair {
@@ -3151,6 +3216,14 @@ typedef struct {
 } Ovl11E910Entry;
 extern Ovl11E910Entry _D_8006E910[] __asm__("D_8006E910");
 #define D_8006E910 ((Ovl11E910Entry *)_D_8006E910)
+
+/* 800E4330 indexes consecutive lw offsets by the current object's signed id. */
+extern s32 D_801240D8[];
+/* 800E4330 initializes both cursors to the D_8006E910 record-array base. */
+extern Ovl11E910Entry *D_801291B0;
+extern Ovl11E910Entry *Ovl11RecordCursor __asm__("D_801291B4");
+/* 800E4330 clears this word before initializing the scene. */
+extern s32 D_80129224;
 
 /* ovl_19_func_800BAC9C slot-programming globals. The function installs a
  * set/clear callback into D_800BD07C and walks two ovl_19 data arrays
@@ -3341,6 +3414,11 @@ extern Ovl11B96BCFunc _D_800B96BC[19] __asm__("D_800B96BC");
 extern s32 _D_800B970C[20] __asm__("D_800B970C");
 #define D_800B970C _D_800B970C
 
+/* ovl_27_func_800B80B0 copies 0x1800 bytes from this three-pointer table. */
+extern void *D_800C4A40[3];
+/* ovl_27_func_800B80B0 uses this address as a 0x1800-byte copy destination. */
+extern u8 D_800605E8[0x1800];
+
 /* D_800C4A28 - ovl_27 saved D_8006C838+0xC flag word. ovl_27_func_800B7FE8
  * writes the pre-mask value here and ovl_27_func_800B7F2C zeroes it;
  * absolute-addressed (overlay build is -G0). */
@@ -3364,6 +3442,15 @@ extern s16 D_800C4A2C;
  * Only its address is taken (passed to func_80015BF0/func_80015840), so an
  * opaque byte object suffices; absolute-addressed from the overlay. */
 extern u8 D_800C4A80[];
+/* ovl_27_func_800BA230 initializes these 0x30-byte sprite objects. */
+extern u8 D_800C4AB0[0x30];
+extern u8 D_800C4AE0[0x30];
+extern u8 D_800C4B10[0x30];
+extern u8 D_800C4B40[0x30];
+extern u8 D_800C4B70[0x30];
+extern u8 D_800C4BA0[0x30];
+/* ovl_27_func_800BA230 copies 0xD1C bytes here before sprite initialization. */
+extern u8 D_800C4C00[0xD1C];
 
 /* D_80075FE4 - ovl_11 2-byte table base scanned at 0xB4 stride (first field
  * u16, lhu) by ovl_11_func_800E1F9C and ovl_11_func_800D2160. Undefined in
@@ -3604,6 +3691,8 @@ struct Ovl11BCB5CState {
 extern u16 Ovl15CardRetries __asm__("D_80137598");
 /* ovl_15 filename builder writes this 0x20-byte data object via strcpy. */
 extern char Ovl15CardFilename[0x20] __asm__("D_80140EC0");
+/* ovl_15_func_80135FF0 passes this original .asciz "*" to MemCardGetDirentry. */
+extern char Ovl15CardWildcard[] __asm__("D_8012E0A0");
 
 /* ovl_11_func_800D2764: lh compares these far fields using each global base. */
 struct Ovl11D2764StateView {
