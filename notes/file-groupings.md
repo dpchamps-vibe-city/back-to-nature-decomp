@@ -7959,6 +7959,7 @@ Members:
   800EB79C/800E9778, inside the 0x800E5A1C–0x800EExxx accessor band.
 - ovl_11_func_800ED760 (m) — writer-side probe: resolves scan target through
   the table when `arg2 != 0`, then scans `D_80070C72[5]`.
+- ovl_11_func_800ED7E0 (m) — selects an eligible maximum-score record with random tie-breaking and optionally stores its ID in `D_80129560[arg1]`.
 - ovl_11_func_800E9CE4 (m, matched 2026-11 — this session, 0x44, byte-exact) —
   byte-slot copy leaf: `p = ovl_11_func_800E3A94(); p->u8@+1 =
   ((u8-stride-4 element *)D_80129560)[(s16)arg0].u8@+0; return 1;`. Same
