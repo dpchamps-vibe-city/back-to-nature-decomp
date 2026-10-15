@@ -9288,6 +9288,9 @@ Members (link order):
   `func_80015BF0` draws with `D_8005E3C0->field_D8 + 0x8C` hoisted into one
   local shared by all three (same multi-draw shared idiom as slot 3)
 
+Probable same-TU extension outside the run (confidence: medium; shared sprite-buffer cluster):
+- ovl_27_func_800BA230 (m, byte-exact) — resource loader and eight-slot initializer for `D_800C4A80`–`D_800C4BD0`, including this family's six buffers.
+
 ## `D_8006C838` one-shot counter leaf, shared across ovl_17/23/25/27 (confidence: medium)
 
 Four byte-exact leaves with one body template: `func_8001FE34(10)` then
@@ -9346,7 +9349,8 @@ Members (link order):
   immediately past `D_800C4A50`; it shares the run's link-order slot but not
   the DrawSync/ClearOTagR idiom
 
-Not a member: `ovl_27_func_800BA230` ends exactly at 0x800BA4C4 but is called
+Not a member of this dispatcher run: `ovl_27_func_800BA230` (see the parallel
+slot-array effect family above) ends exactly at 0x800BA4C4 but is called
 by `ovl_27_func_800B80B0`, not by the dispatcher. Its link-order predecessor
 `ovl_27_func_800BA1CC` (0x800BA1CC–0x800BA230, matched this session,
 byte-exact) shares the display-setup idiom `DrawSync` → `ClearOTagR` →
