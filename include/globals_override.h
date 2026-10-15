@@ -2282,6 +2282,21 @@ extern s16 D_8012A028;
 extern u8 D_8005360E[];
 /* 800FEFEC adds D_80054BBC[0] bytes to this text base before func_80017B3C. */
 extern u8 D_80053B22[];
+/* 800FED0C adds D_80054BBC[0] bytes to this text base for func_80017B3C. */
+extern u8 D_80053AE8[];
+/* 800FED0C restores twelve unaligned bytes saved by 800FEC2C. */
+typedef struct __attribute__((packed)) {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Ovl11MenuSettings;
+extern Ovl11MenuSettings D_8012CEE8_menu __asm__("D_8012CEE8");
+/* 800FED0C reads/writes this signed two-option selector with lh/lhu/sh. */
+extern s16 D_801273B4;
+/* 800FED0C's remainder retains the original halfword through the subtraction. */
+extern s16 D_801273B4_selection[1] __asm__("D_801273B4");
+/* 800FED0C dispatches these two void callbacks without arguments. */
+extern void (*D_801273C0[])(void);
 /* 800FEFEC reads/writes this menu state with lw/sw. */
 extern s32 D_801273B0;
 /* 800FEFEC accesses signed menu selectors with lh/sh (lhu for decrement). */
