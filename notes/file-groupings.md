@@ -8110,6 +8110,7 @@ Members:
   `(0, 0, 0, arg1)` to the matched mode dispatcher `ovl_11_func_800E7798` and
   returns 1. Same `arg2 != 0` conditional table-resolve shape as
   800ED760/800E7CCC, inside the accessor band.
+- ovl_11_func_800EE240 (m) — randomized fullscreen colour-flash updater using the family's shared `D_80129560` timer/RGB slots.
 - ovl_11_func_800EE528 (m, matched this session, 0xDC, byte-exact) —
   0x24-record load-and-compare: rejects `(u32)(arg1 & 0xFFFF) >= 0xA`, resolves
   the 0x24 record through `ovl_11_func_800EFF04(0x24, (s16)arg0, NULL)`, then

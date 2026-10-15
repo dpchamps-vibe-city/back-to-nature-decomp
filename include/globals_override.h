@@ -1677,6 +1677,12 @@ struct Ovl11CandidateList {
 };
 extern struct Ovl11CandidateList D_800B9DB0;
 
+/* ovl_11_func_800EE240 copies three s16s from this rodata object. */
+struct Ovl11ColorTriple {
+    s16 values[3];
+};
+extern struct Ovl11ColorTriple D_800B9E38;
+
 /* D_80129560 - s32 table indexed by an s16 value (0x50 bytes, ovl_11).
  * Store via sw at (s16)index * 4 is done by ovl_11_func_800E8BA0;
  * load-side users ovl_11_func_800E6834/800E686C read lw at the same
