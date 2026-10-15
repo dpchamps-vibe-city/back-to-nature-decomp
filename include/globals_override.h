@@ -749,6 +749,9 @@ extern s16 D_801230A4[];
  * through a base pointer biased by -0x1A0. */
 extern u8 D_800BF660[];
 
+/* 800B954C reads word +0x10, sprite +0x3B4 and the +0x418/+0x5CC record arrays; named base preserves legacy TU views. */
+extern u8 Ovl23_D_800BF87C_draw[] __asm__("D_800BF87C");
+
 /* D_800BFC30 - ovl_23 bss object state base (0x800BFC30). Referenced with
  * absolute addressing (lui + %lo) from ovl_23_func_800BB1B8, which passes
  * its address as an ObjectState and reads the ObjectState fields at +4/+5
