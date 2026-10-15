@@ -4296,11 +4296,13 @@ saved-register allocation. func_8001C0D4 (m) — GTE camera/view driver
 (PushMatrix/PopMatrix), caller of func_8001C1C0 and func_8001C37C, plus
 func_8001D348/func_8001D6B8; func_8001C1C0 (m) — camera-to-point direction via
 VectorNormalSS tested against 4 planes, read by sole caller func_8001C0D4
-(address-adjacent, shares the GTE vector idiom; owns D_80061EC8 camera +
+(address-adjacent, shares the GTE vector idiom; reads D_80061EC8 camera +
 D_80061EA8 plane coefficients); func_8001C37C (s) — projected primitive
 renderer/caller; HasTriangleVertexXInBounds (m) — three-vertex X bounds
-helper; func_8001D2D8 (?) — four-vertex X bounds helper. func_8001D348 is
-the first following function and may mark the next TU; membership unverified.
+helper; func_8001D2D8 (?) — four-vertex X bounds helper; func_8001D348 (m) —
+camera position and four clipping-plane setup (writes D_80061EC8/D_80061EA8
+read by func_8001C1C0; both called by func_8001C0D4 in this link-order run,
+supporting cluster membership, not a proven TU boundary).
 func_8001D6B8's verified read of D_800491C8 now also ties it to the following
 D_800491C8 rotation-scale cluster (see that section).
 

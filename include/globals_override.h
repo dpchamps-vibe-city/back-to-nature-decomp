@@ -1289,6 +1289,9 @@ extern FuncPtr_80049078 _D_80049078[3] __asm__("D_80049078");
  * region is still the 8B splat defines. Verified: [3]=6B and [4]=8B both unsplit (24/26). */
 extern u16 D_80049084[5];
 
+/* D_800491E0 — four signed rotation angles loaded by func_8001D348 at offsets 0, 4, 8 and 12. */
+extern s32 D_800491E0[4];
+
 /* D_80061EC8 — camera/reference position as s32[3], accessed with absolute
  * addressing (lui+lw). func_8001C1C0 reads all three elements. */
 extern s32 _D_80061EC8[3] __asm__("D_80061EC8");
