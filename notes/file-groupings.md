@@ -14263,3 +14263,12 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800F6C78 (m) — texture-ID lookup that marks a hit active and dispatches sprite drawing, with an ID-zero reset path.
 - ovl_11_func_800F6D14 (s) — companion lookup/draw caller that reclaims an inactive record and retries through the preceding helper on a miss.
 - ovl_11_func_800F6E38 (m) — texture-ID lookup and quad-draw caller with inactive-record reclamation, loading, and recursive retry.
+
+## `ovl_11` six-state interaction-handler pair — 0x8011B840 / 0x8011BAFC (confidence: low)
+
+Candidate same-TU pair: consecutive text and jump tables, shared handler idiom
+and shared callers; original TU boundaries remain unproven.
+[Evidence and limits](research/ovl_11_func_8011B840-grouping.md).
+
+- ovl_11_func_8011B840 (m, candidate same TU) — descriptor-driven six-state record interaction handler with start, selection and cancellation paths.
+- ovl_11_func_8011BAFC (m, candidate same TU) — adjacent six-state interaction variant using an auxiliary record and the same state/selection helper family.
