@@ -1594,7 +1594,8 @@ typedef struct {
     /* 0x02 */ u8 type;
     /* 0x03 */ char pad_03[0x10 - 0x03];
     /* 0x10 */ s16 field_10;
-    /* 0x12 */ char pad_12[0x18 - 0x12];
+    /* 0x12 */ s16 field_12; /* ovl_30_func_80132F18: lh/sh SELL value. */
+    /* 0x14 */ char pad_14[0x18 - 0x14];
     /* 0x18 */ s32 field_18;
     /* 0x1C */ ItemAction action;
     /* 0x24 */ char pad_24[0x28 - 0x24];
@@ -3795,6 +3796,15 @@ extern char D_8012DF30[];
 extern char D_8012EF2C[];
 extern char D_8012EF90[];
 extern char D_8012EF9C[];
+/* ovl_30_func_80132F18 passes these original format strings to FntPrint. */
+extern char D_8012EF30[];
+extern char D_8012EF3C[];
+extern char D_8012EF48[];
+extern char D_8012EF54[];
+extern char D_8012EF60[];
+/* ovl_30_func_80132F18 reads/writes word-sized item and field selectors. */
+extern s32 D_80134AB4;
+extern s32 D_80134AB8;
 /* ovl_30_func_80133218 updates these word-sized selectors within 0..4. */
 extern s32 D_80134ABC;
 extern s32 D_80134AC0;
