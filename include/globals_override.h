@@ -99,6 +99,13 @@ typedef struct {
     s16 mode;
 } Ovl11TextureStateView;
 
+/* 800B7F3C copies four bytes from D_8007AFF0+0x2479C to +0x25474;
+ * 801048A0 and 800BB628 witness the leading and trailing halfwords. */
+typedef struct {
+    s16 field_0;
+    s16 field_2;
+} Ovl25SetupStatePair;
+
 /* 8011E1E8 indexes ten-byte records here: eight UV bytes and lhu at +8. */
 extern u8 D_801282FC[];
 

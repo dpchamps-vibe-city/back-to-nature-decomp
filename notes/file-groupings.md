@@ -9919,7 +9919,7 @@ Members (link order):
   dispatcher; reads dispatch counter from `(s32 *)&D_8006C838[0x448C >> 2]`,
   looks up `D_800BCBD8[idx]`, and calls the selected handler with the table
   base as its argument.
-- ovl_25_func_800B7F3C (s) — callback; contract: one of five table entries.
+- ovl_25_func_800B7F3C (m, byte-exact) — setup-state callback; advances the shared dispatch counter after initialization ([grouping evidence](research/ovl_25_func_800B7F3C-grouping.md)).
 - ovl_25_func_800B80A4 (s) — callback; contract: one of five table entries.
 - ovl_25_func_800B813C (s) — callback; contract: one of five table entries.
 - ovl_25_func_800B81B4 (m, matched this session, byte-exact) — callback;
