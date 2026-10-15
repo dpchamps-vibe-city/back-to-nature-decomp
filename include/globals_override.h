@@ -30,6 +30,11 @@ extern s32 D_80128B70;
 /* ovl_11_func_800C35EC reads this absolute-addressed direction value with lhu. */
 extern u16 D_80071A38;
 
+/* ovl_17_func_800B8028 indexes 11 original callbacks; all entries ignore incoming arguments. */
+extern void (*D_800BB4F8[11])(void);
+/* ovl_17_func_800B8028 reads this dispatch selector with lbu. */
+extern u8 D_800BD84C;
+
 /* ovl_17_func_800B9FA8 copies 0x13DC bytes here, then uses the leading sprite header. */
 extern u8 D_800BB728[0x13DC];
 /* ovl_17_func_800B9FA8 passes this 0x30-byte object to func_80015704. */
