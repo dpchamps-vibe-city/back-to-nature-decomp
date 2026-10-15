@@ -2303,6 +2303,8 @@ extern s16 D_8012A028;
 
 /* ovl_11_func_800FD33C adds D_80054BBC[0] bytes and passes this text base to func_80017B3C. */
 extern u8 D_8005360E[];
+/* 80100B50 adds D_80054BBC[0] bytes to this text base and its +0x12 successor for func_80017B3C. */
+extern u8 D_8005396A[];
 /* 800FEFEC adds D_80054BBC[0] bytes to this text base before func_80017B3C. */
 extern u8 D_80053B22[];
 /* 800FED0C adds D_80054BBC[0] bytes to this text base for func_80017B3C. */

@@ -824,6 +824,7 @@ void ovl_11_func_80100194(void);
 void ovl_11_func_80100898(u8 arg0);
 s32 ovl_11_func_80100A34(u16 arg0);
 s32 ovl_11_func_80100A8C(s32 arg0);
+void ovl_11_func_80100B50(u8 arg0, u8 arg1);
 s32 ovl_11_func_80100E68(u16 arg0);
 s32 ovl_11_func_80100EB8(s32 arg0);
 void ovl_11_func_80100F9C(s32 arg0);

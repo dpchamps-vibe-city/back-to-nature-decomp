@@ -2934,7 +2934,7 @@ Members (address order):
   predecessor of the run head 0x80100A8C
 - ovl_11_func_80100A8C (m, matched this session, byte-exact) — direct caller of
   both 0x80100E68 and 0x80100EB8; 0x16-stride `D_80071318` record reader
-- ovl_11_func_80100B50 (s) — direct caller of 0x80100E68
+- ovl_11_func_80100B50 (m) — renders a 0x16-stride `D_80071318` record's mask/ID grids; shares the record layout and both 80100E68/80100EB8 probes with link predecessor 80100A8C.
 - ovl_11_func_80100E68 (m, matched this session, 0x50, byte-exact) — button-bit
   probe leaf: `if (arg0 < 0x80) return (D_80070D04 & arg0) != 0; return
   (D_80070D04 & 0x80) != 0;` spelled as explicit 1/0 branches; no frame, no

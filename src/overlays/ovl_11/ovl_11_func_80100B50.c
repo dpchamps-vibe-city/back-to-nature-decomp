@@ -1,3 +1,112 @@
 #include "common.h"
+#include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_80100B50", ovl_11_func_80100B50);
+
+void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800F6D14 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
+s32 ovl_11_func_80100E68 (u16 arg0);
+void ovl_11_func_800F6F7C (s32 arg0, s16 arg1, s16 arg2);
+void ovl_11_func_800F7010 (s32 arg0, s16 arg1, s16 arg2);
+s32 ovl_11_func_80100EB8 (s32 arg0);
+s32 func_80011F5C (s32 arg0);
+void func_80011FD8 (s32 arg0);
+s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
+void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+void SetVal8005E2BC (s32 arg0);
+void SetVal8005E334 (s32 arg0);
+void ovl_11_func_800F8CF8 (s32 *arg0, s16 arg1, s16 arg2, s16 arg3);
+void ovl_11_func_800F6A24 (u16 arg0);
+void ovl_11_func_800F6C78 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
+void func_80015840 (ObjectState *obj, s8 arg1);
+void func_8001585C (ObjectState *obj, s8 arg1);
+void func_80015F80 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7, u16 arg8);
+void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+s32 func_8002261C (s32 arg0, s32 arg1);
+s32 func_800226B0 (void);
+void func_80022738 (void);
+s32 func_8001FABC (s16 arg0);
+s32 GetVal8005E5B4 (void);
+s32 GetVal8005E5B8 (void);
+void ovl_11_func_80100F9C (s32 arg0);
+void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
+s32 pow_int (s32 arg0, s32 arg1);
+
+
+void ovl_11_func_80100B50(u8 arg0, u8 arg1) {
+    s32 sp18;
+    s32 *sp1C;
+    s32 sp20;
+    s32 sp24;
+    u16 var_s4;
+    u16 var_s5;
+    s32 temp_s3;
+    u8 *temp_v1;
+    s32 var_s6;
+
+    u16 *var_s2;
+
+    u16 var_s7;
+    u32 *temp_s0;
+    u8 *temp_fp;
+
+    sp18 = arg1;
+    temp_v1 = (u8 *)D_8005E3C0->field_D8;
+    var_s6 = 0;
+    temp_s0 = (u32 *)(temp_v1 + 0x74);
+    temp_s3 = (s32)(temp_v1 + 0x70);
+    sp1C = (s32 *)(temp_v1 + 0x68);
+    sp20 = (s32)(temp_v1 + 0x6C);
+    sp24 = (s32)(temp_v1 + 0x60);
+    temp_fp = (void *) ((u8 *) D_80071318 + ((arg0 & 0xFF) * 0x16));
+    func_80022580(temp_s0, 1, 0x16, 0x10, 0x10E, 0x4A);
+    var_s4 = 0x84;
+    var_s5 = 0x14;
+    var_s7 = 1;
+    func_80022580(temp_s0, 1, 0x16, 0x5A, 0x10E, 0x4A);
+    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) &D_8005396A + *D_80054BBC)), 0x21, 0x20);
+    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_8005396A + 0x12)) + *D_80054BBC)), 0x21, 0x6A);
+    var_s2 = D_801273F4;
+    for (; var_s6 < 7; var_s6++) {
+        if (*(u16 *)(temp_fp + 4) & var_s7) {
+            ovl_11_func_800F6D14(sp1C, *var_s2, var_s4, var_s5);
+            if (sp18 == 1 && ovl_11_func_80100E68(var_s7) == 0) {
+                ovl_11_func_800F6F7C(sp24, var_s4, var_s5);
+            }
+        } else {
+            ovl_11_func_800F7010(sp20, var_s4, var_s5);
+        }
+        var_s4 += 0x22;
+        if ((u32) var_s4 >= 0xEBU) {
+            var_s4 = 0x84;
+            var_s5 += 0x22;
+        }
+        var_s7 *= 2;
+        var_s2++;
+    }
+    if (*(u16 *)(temp_fp + 4) & 0xF80) {
+        ovl_11_func_800F6D14(sp1C, 0x79U, var_s4, var_s5);
+        if (sp18 == 1 && ovl_11_func_80100E68(var_s7) == 0) {
+            ovl_11_func_800F6F7C(sp24, var_s4, var_s5);
+        }
+    } else {
+        ovl_11_func_800F7010(sp20, var_s4, var_s5);
+    }
+    var_s4 = 0x84;
+    var_s5 = 0x5E;
+    var_s2 = (u16 *)(temp_fp + 6);
+    for (var_s6 = 0; var_s6 < 8; var_s6++) {
+        ovl_11_func_800F6D14(sp1C, *var_s2, var_s4, var_s5);
+        if (sp18 == 1 && ovl_11_func_80100EB8(*var_s2) == 0) {
+            ovl_11_func_800F6F7C(sp24, var_s4, var_s5);
+        }
+        var_s4 += 0x22;
+        if ((u32)var_s4 >= 0xEBU) {
+            var_s4 = 0x84;
+            var_s5 += 0x22;
+        }
+        var_s2++;
+    }
+}
