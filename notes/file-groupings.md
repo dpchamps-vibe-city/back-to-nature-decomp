@@ -12667,7 +12667,10 @@ Members (address order):
   sets p[6] = 0, p[7] = arg0 and p[3..5] = (v[i] - p[i]) / arg0 for target
   vector `v`, returning p[5].
 
-## `ovl_11` D_801285xx table-lookup run — 0x8011F9EC–0x80120358 (confidence: medium)
+## `ovl_11` D_801285xx–D_801287xx table-selection run — 0x8011F9EC–0x80120414 (confidence: medium)
+
+Candidate extension: [call/link and table-cluster evidence](research/ovl_11_func_80120414-grouping.md).
+Original TU boundaries remain unproven.
 
 Evidence: three functions in one contiguous 0x8011F9EC–0x80120358 link run
 read the same absolute-addressed s16 table region (`D_80128550`/`D_80128554`/
@@ -12699,10 +12702,12 @@ Members (address order):
   `D_80128554`/`D_8012855C`, special-casing values 3/4; calls
   `func_80012A34(2)` and, in its switch arms, the `ovl_11_func_8011FD2C`
   run.
+- ovl_11_func_8011FFA8 (s, candidate same TU) — state-machine driver using the common selection state and both adjacent table-selection helpers.
 - ovl_11_func_80120358 (m, verified byte-exact this session) — 4-entry
   0xE-stride min/max range scan at `D_801285F4`: on a hit stores
   `func_80012A34(D_8012862C[obj->+8]) + 5` and returns the entry's s16 value,
   else 0.
+- ovl_11_func_80120414 (m, byte-exact, candidate same TU) — weighted value selector with eligibility/one-shot gates and periodic fallback.
 
 ---
 
