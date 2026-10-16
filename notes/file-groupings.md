@@ -10763,6 +10763,7 @@ Members (link order):
   and `D_80137584 = 0` when `D_8013759A >= 0x5B` — exact body duplicate of
   `ovl_15_func_80130A94` (same updater array and immediate), sitting in link
   order between `ovl_15_func_801317E8` and `ovl_15_func_80131BCC` (0x70 bytes)
+- ovl_15_func_80131AA4 (m, byte-exact) — save-slot selection and menu-state routing ([grouping evidence](research/ovl_15_func_80131AA4-grouping.md)).
 - ovl_15_func_80131B5C (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_800523AC` updater array (shared with
   `ovl_15_func_80130BBC`); then `ret = ovl_15_func_80137228(0xA, 0)`,
