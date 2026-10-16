@@ -678,6 +678,26 @@ struct struct_8006C838_button {
     s16 field_44C2;         /* 0x44C2 */
 };
 
+/* 800E537C: state reset fields witnessed by sh/lhu/lw and a pointer load. */
+struct Ovl11ResetState {
+    char pad_0[0x4450];
+    s32 field_4450;
+    char pad_4454[0x51EA - 0x4454];
+    s16 field_51EA;
+    char pad_51EC[4];
+    s16 field_51F0;
+    char pad_51F2[0xC];
+    u16 field_51FE;
+    char pad_5200[4];
+    u16 field_5204;
+    char pad_5206[0x2E];
+    s32 field_5234;
+    char pad_5238[0x91DC - 0x5238];
+    s16 field_91DC;
+    char pad_91DE[0xDDD4 - 0x91DE];
+    s16 *field_DDD4;
+};
+
 /* View of D_8006C838 for ovl_11_func_800E7660: the two s16 time-like fields
  * at +0x44C0/+0x44C2 plus the s16 status slot at +0x51EA. Reached as struct
  * members so cc1 keeps lui %hi(D_8006C838) followed by lh/sh with the field

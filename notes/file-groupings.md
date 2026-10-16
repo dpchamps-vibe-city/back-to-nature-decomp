@@ -6196,6 +6196,8 @@ the overlay, never GP-relative), and the large-offset writers use the same
   two D_80071Axx symbols into this cluster; link-sits in the 0x800E5A1C–
   0x800EExxx accessor band between D_8006C858-member 0x800E93CC and
   0x800E95FC
+- ovl_11_func_800E5294 (s) — low-confidence same-TU setup sibling of 800E537C; updates shared flags and work-area state ([pair evidence](research/ovl_11_func_800E537C-grouping.md)).
+- ovl_11_func_800E537C (m) — low-confidence same-TU reset sibling of 800E5294; resets shared status/flags and conditionally dispatches follow-up calls ([pair evidence](research/ovl_11_func_800E537C-grouping.md)).
 - ovl_11_func_800E63C8 (m, matched this session) — flag set/clear leaf on the
   sibling cells: arg0 picks mask path vs set path — s32 at +0xC cleared of
   0x400000 and s32 at +0x5234 cleared of 0x08000400 vs s32 at +0x5234 set of
