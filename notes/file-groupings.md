@@ -6915,29 +6915,18 @@ Cross-container note: the pair is a twin of the ovl_17 pair
 audio-setup twin note above, that relation is not TU-membership evidence; here
 only the gapless link run and the shared caller are.
 
-## `ovl_23` 2D vector math helper run — 0x800BA1E0–0x800BA368 (confidence: medium)
+## `ovl_23` 2D vector math helper/client run — 0x800B9E04–0x800BA368 (confidence: medium)
 
-Evidence: gapless link order in ovl_23 — `ovl_23_func_800BA1E0` (0x98, ends
-0x800BA278), `ovl_23_func_800BA278` (0x94, ends 0x800BA30C),
-`ovl_23_func_800BA30C` (0x5C, ends 0x800BA368), then this function (0x4C, ends
-0x800BA3B4). The call graph agrees: `ovl_23_func_800BA1E0` calls
-`ovl_23_func_800BA368` and forwards its result straight to
-`ovl_23_func_800BA278`. The two helpers share the s16 (dx, dy) argument style —
-`ovl_23_func_800BA30C` squares the deltas and takes `SquareRoot0`, this function
-takes `ratan2` and scales to degrees.
+Membership evidence: shared `D_800BF87C` coordinate records and `D_800BBA40`
+lookup table, the same angle-to-direction helper chain, and corroborating
+gapless link order. [Evidence and per-function detail](research/ovl_23_func_800B9E04-grouping.md).
 
 Members (link order):
-- ovl_23_func_800BA1E0 (m, byte-exact this session) — reads the s16
-  selector from a pointer record and indexes the `D_800BF87C` 0x44-stride
-  record array at +0x210, computes two `>>12` differences, calls this
-  function then passes the result to 800BA278
-- ovl_23_func_800BA278 (s) — 0x2D-wide threshold chain mapping an angle to
-  small indices 0–7
-- ovl_23_func_800BA30C (s) — distance helper: sum of squared s16 deltas through
-  `SquareRoot0`
-- ovl_23_func_800BA368 (m, byte-exact this session) — angle helper:
-  `ratan2(arg0, arg1)`, negative-result wrap by `+0x1000`, then
-  `* 0x168 / 0x1000` to degrees
+- ovl_23_func_800B9E04 (m, byte-exact, finalized) — checks projected y bounds and directional clearance against two six-record coordinate sets.
+- ovl_23_func_800BA1E0 (m, byte-exact) — classifies direction from an argument record to its selected coordinate pair.
+- ovl_23_func_800BA278 (s) — maps an angle to one of eight direction indices.
+- ovl_23_func_800BA30C (s) — computes distance between two s16 coordinate pairs.
+- ovl_23_func_800BA368 (m, byte-exact) — converts a 2D vector to an angle in degrees.
 
 ## `ovl_23` D_800BF87C/D_800BBAB4 threshold-selector run — 0x800BA3B4 / 0x800BA494 (confidence: medium)
 

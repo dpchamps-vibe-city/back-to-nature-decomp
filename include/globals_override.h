@@ -1170,7 +1170,8 @@ struct Ovl23DecisionView {
         s16 unk2E;
         u8 pad30[8];
         s32 unk38;
-        u8 pad3C[0x14];
+        s32 unk3C;
+        u8 pad40[0x10];
     } actors[6];
     u8 pad1E0[0x24];
     struct Ovl23DecisionRecord records[6];
@@ -1191,6 +1192,8 @@ extern struct Ovl23DecisionRecord D_800BFA80[6];
 
 /* 800B954C reads word +0x10, sprite +0x3B4 and the +0x418/+0x5CC record arrays; named base preserves legacy TU views. */
 extern u8 Ovl23_D_800BF87C_draw[] __asm__("D_800BF87C");
+/* 800B9E04 reads actor +0x38/+0x3C and record +0x210 from one aggregate base. */
+extern struct Ovl23DecisionView Ovl23_D_800BF87C_movement __asm__("D_800BF87C");
 
 /* D_800BFC30 - ovl_23 bss object state base (0x800BFC30). Referenced with
  * absolute addressing (lui + %lo) from ovl_23_func_800BB1B8, which passes
