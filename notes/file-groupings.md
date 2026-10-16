@@ -9574,6 +9574,7 @@ contiguous sub-cluster of a larger `ovl_21` TU.
 Members (link order):
 - ovl_21_func_800B7FC8 (m, byte-exact, finalized) — reset/update callback; advances the outer state when both completion probes pass ([grouping evidence](research/ovl_21_func_800B7FC8-grouping.md)).
 - ovl_21_func_800B806C (m, byte-exact, finalized) — `D_800C0448` state-table dispatcher after the common update chain ([grouping evidence](research/ovl_21_func_800B806C-grouping.md)).
+- ovl_21_func_800B8134 (m, byte-exact, finalized) — completion/exit callback; cleans up valid `D_800C0448` handles and marks outer-state completion ([grouping evidence](research/ovl_21_func_800B8134-grouping.md)).
 - ovl_21_func_800B8228 (m, byte-exact, finalized) — `D_800C0448` initializer: clears state, invokes the reset chain, and seeds halfword defaults ([grouping evidence](research/ovl_21_func_800B8228-grouping.md)).
 - ovl_21_func_800B8320 (m, byte-exact) — resets shared `D_800C0448` state and calls its gapless link successor `ovl_21_func_800B836C`.
 - ovl_21_func_800B836C (m, byte-exact) — initializes six `D_800C0448` records and three substates per record; joins through the shared storage consumed by `ovl_21_func_800BA510` / `ovl_21_func_800BA5D0`.

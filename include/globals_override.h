@@ -428,9 +428,11 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
-/* ovl_21_func_800B80D4 increments the lw/sw state at D_8006C838 + 0x448C. */
+/* 800B80D4 increments +0x448C; 800B8134 also updates the lw/sw flags at +0xC. */
 typedef struct {
-    u8 pad_0[0x448C];
+    u8 pad_0[0xC];
+    s32 flags;
+    u8 pad_10[0x448C - 0x10];
     s32 state;
 } Ovl21MainStateView;
 
@@ -2945,6 +2947,11 @@ extern u8 D_800BCAD8[];
  * other ovl_21 references are unmatched stubs, so this type is the only one
  * the matched pair shares. Absolute-addressed (extern-only, lui + %lo). */
 extern u16 D_800C0448[2];
+/* 800B8134 loads the signed handles at D_800C0448 +0x984/+0x986 with lh. */
+typedef struct {
+    u8 pad_0[0x984];
+    s16 handles[2];
+} Ovl21ExitStateView;
 /* 800B836C's six 0x108-byte records and table selectors at +0x640/+0x642. */
 struct Ovl21InitState;
 #define D_800C0448_init (*(struct Ovl21InitState *) D_800C0448)
