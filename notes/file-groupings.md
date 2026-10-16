@@ -3363,7 +3363,7 @@ Members (address order):
   (set by the caller, cleared by the helper's nonzero-arg0 path; see both
   sources under `src/overlays/ovl_11/`). This local pairing does not establish
   a single TU across the wider setter/getter span.
-- ovl_11_func_800E880C (s) — reads and writes D_801295C6, earlier site
+- ovl_11_func_800E880C (m) — resolves `D_80129560` selectors, applies coordinates through 800E60A0, and caches success in `D_801295C6` ([membership evidence](research/ovl_11_func_800E880C-grouping.md)).
 - ovl_11_func_800EE604 (m, matched this session) — run-head state machine: seeds/reads the `D_80129540`..`D_80129554` block and clears `D_801295C6` from the `D_8007AFF0`+0x25394 work area, then steps the `D_80129560[arg0]`/`[arg1]` slot pair through states 0/1/2 via `func_8001F2EC`
 - ovl_11_func_800EE7BC (s) — sandwiched, does not touch the global
 - ovl_11_func_800EE944 (m) — sandwiched `D_80129560` table-writer (calls 800EE7BC(1, arg0, 0, 0)); does not touch `D_801295C6`
