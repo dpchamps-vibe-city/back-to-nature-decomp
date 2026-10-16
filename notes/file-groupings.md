@@ -8629,13 +8629,15 @@ Members:
   D_8006C838+0x44B8 pair and D_8007AFF0+0x25476 halfword and dispatches tag
   0x157/0x15B through 800D3104.
 
-## `ovl_11` bounds / cell-sprite dispatch run — 0x800D92FC–0x800D9EFC (confidence: low)
+## `ovl_11` bounds / cell-sprite dispatch run — 0x800D92FC–0x800D9F1C (confidence: low)
 
 Suspected same TU: gapless bounds-helper → renderer → four selected handlers
-→ shared output helper, with agreeing call/link adjacency and a common
-handler output ABI. Evidence:
-[800D93C8 grouping note](research/ovl_11_func_800D93C8-grouping.md) and
-[800D95EC shared-helper evidence](research/ovl_11_func_800D95EC-grouping.md).
+→ shared output helper → fixed-grid renderer, with agreeing call/link
+adjacency, a common handler output ABI and a shared cell-rendering pattern.
+Evidence:
+[800D93C8 grouping note](research/ovl_11_func_800D93C8-grouping.md),
+[800D95EC shared-helper evidence](research/ovl_11_func_800D95EC-grouping.md) and
+[800D9F1C renderer evidence](research/ovl_11_func_800D9F1C-grouping.md).
 The existing connection to the distant +0x253AC halfword-state run does not
 establish same-TU membership between the runs; these members do not establish
 an original TU boundary.
@@ -8648,6 +8650,7 @@ Members (link order):
 - ovl_11_func_800D9B14 (s) — mode-2 cell-to-sprite resolver, selected by 800D93C8.
 - ovl_11_func_800D9E10 (s) — fallback cell-to-sprite resolver, selected by 800D93C8.
 - ovl_11_func_800D9EFC (m) — conditionally writes two sprite outputs for 800D95EC/800D981C/800D9B14.
+- ovl_11_func_800D9F1C (m, byte-exact) — projects a fixed 7x7 cell grid and draws kind/value-selected sprites using 800D9EFC.
 
 ## `ovl_11` D_8007AFF0 +0x253AC halfword-state consumer/writer run — 0x800DB674 / 0x800DB78C / 0x800DB7F0 / 0x800DB904 / 0x800DB978 (confidence: medium)
 
