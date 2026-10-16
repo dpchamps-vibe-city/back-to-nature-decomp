@@ -4,6 +4,28 @@
 
 #include "common.h"
 
+/* 800E21E4 copies all four words at +38 and passes them by value to F43CC. */
+typedef struct {
+    s32 x, y, z, w;
+} E21E4Position;
+
+/* 800E21E4: 0xB4-byte entry, lhu tag/counters, lh selectors and lw flags. */
+typedef struct {
+    u16 type;
+    u8 pad2[0x16 - 2];
+    u16 energy;
+    u8 pad18[2];
+    s16 age, mode, day;
+    u8 pad20[0x30 - 0x20];
+    s16 kind;
+    u8 pad32[2];
+    s32 flags;
+    E21E4Position position;
+    u8 pad48[0xA8 - 0x48];
+    s16 reset[2];
+    u16 fieldAC, counter, timer, fieldB2;
+} E21E4Object;
+
 /* CE034 reads +38 and +100/+104/+108; C55FC passes this object onward. */
 typedef struct {
     char pad0[0x38];

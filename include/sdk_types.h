@@ -36,6 +36,32 @@ typedef struct {
 typedef signed int s32;
 
 typedef struct {
+    s32 x, y, z, w;
+} E21E4Position;
+
+typedef signed short s16;
+
+typedef unsigned short u16;
+
+typedef unsigned char u8;
+
+typedef struct {
+    u16 type;
+    u8 pad2[0x16 - 2];
+    u16 energy;
+    u8 pad18[2];
+    s16 age, mode, day;
+    u8 pad20[0x30 - 0x20];
+    s16 kind;
+    u8 pad32[2];
+    s32 flags;
+    E21E4Position position;
+    u8 pad48[0xA8 - 0x48];
+    s16 reset[2];
+    u16 fieldAC, counter, timer, fieldB2;
+} E21E4Object;
+
+typedef struct {
     s32 field_0;
     s32 field_4;
     s32 field_8;
@@ -43,10 +69,6 @@ typedef struct {
     s32 field_10;
     s32 field_14;
 } EAE4Query;
-
-typedef signed short s16;
-
-typedef unsigned short u16;
 
 typedef struct {
                s32 field_0;
@@ -112,8 +134,6 @@ typedef struct {
                u16 unk12;
                u16 unk14;
 } M2C_022d8b6d7e6d_SpriteDesc;
-
-typedef unsigned char u8;
 
 typedef struct {
                u8 unk0[4];
