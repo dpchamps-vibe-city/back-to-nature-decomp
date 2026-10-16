@@ -6959,7 +6959,7 @@ Members (link order):
   `func_80012A34(0x64)` is exceeded, and returns the stopping index (3/2/1,
   else -1).
 
-## `ovl_23` D_800BF8A0/D_800BFA80 record-pair driver run — 0x800B9310 / 0x800BAA60 (confidence: medium)
+## `ovl_23` D_800BF8A0/D_800BFA80 record-pair/render driver run — 0x800B9310 / 0x800BA73C–0x800BABD8 (confidence: medium)
 
 Evidence: `ovl_23_func_800B9310` (unmatched) walks two parallel six-entry
 record arrays from one base, one leaf per array — `D_800BF8A0` (stride 0x50,
@@ -6974,7 +6974,8 @@ the `D_800BBA40` table already used by `ovl_23_func_800B937C` and
 `ovl_23_func_800B989C`, and calls the append member `ovl_23_func_800B9454`. Its
 caller chain `ovl_23_func_800B92E8` → `ovl_23_func_800BB1B8` /
 `ovl_23_func_800B9310` ties the run to the documented ObjectState reset leaf.
-Additional membership evidence: [800BA73C grouping research](research/ovl_23_func_800BA73C-grouping.md).
+Additional membership evidence: [800BA73C grouping research](research/ovl_23_func_800BA73C-grouping.md);
+[800BABD8 render-driver membership](research/ovl_23_func_800BABD8-grouping.md).
 
 Members:
 - ovl_23_func_800B9310 (s) — drives six paired 0x50/0x44-stride records through `800BA73C`/`800BAA60`, then calls `800B954C`.
@@ -6982,6 +6983,7 @@ Members:
 - ovl_23_func_800BAA60 (m, byte-exact) — `D_800BFA80` record handler: maps
   `unk4` 1/2/3 to a `func_80015840` state byte and appends the projected
   sprite via `ovl_23_func_800B9454`.
+- ovl_23_func_800BABD8 (m, byte-exact) — draws scrolling strips and culled markers with the shared sprite.
 
 ## `ovl_11` mask-switch leaf run — 0x800F1BD0 / 0x800F1C48 / 0x800F1CC4 (confidence: low)
 
