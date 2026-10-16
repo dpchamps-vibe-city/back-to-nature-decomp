@@ -7918,6 +7918,7 @@ Members:
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
 - ovl_11_func_800EB010 (m, candidate same TU; [evidence](research/ovl_11_func_800EB010-grouping.md)) — ten-ID initializer/updater using the shared state slots and accessor-helper cluster.
+- ovl_11_func_800EB328 (m, candidate same TU; [evidence](research/ovl_11_func_800EB328-grouping.md)) — randomized trigonometric position updater and direction selector using the shared table and 0x22-record helper cluster.
 - ovl_11_func_800EB760 (m, matched this session, 0x3C, byte-exact) —
   guarded-slot forwarder: `ovl_11_func_800EFABC(arg0, D_80129560[(s16)arg1],
   arg2, arg3); return 1;`, the argument-position mirror of family member
