@@ -2949,8 +2949,7 @@ Members (address order):
   calls; baseline flags
 - ovl_11_func_80100EB8 (s) — link follower
 - ovl_11_func_80100F9C (s) — link follower
-- ovl_11_func_80100FFC (s, 0x4A8) — link successor that reads `lbu D_80070D04`
-  with the same absolute `lui`+`lbu %lo` idiom and probes a bit of it
+- ovl_11_func_80100FFC (m; [grouping evidence](research/ovl_11_func_80100FFC-grouping.md)) — eight-slot flag-selection menu controller; also a candidate member of the state-block handler/display cluster.
 
 ---
 
@@ -11266,7 +11265,7 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_801273E4/D_801273F4 state-block handler/display cluster — 0x801014A4 / 0x801014F8 / 0x80101814 / 0x80101964 / 0x80102268 (confidence: low)
+## `ovl_11` D_801273E4/D_801273F4 state-block handler/display cluster — 0x80100FFC–0x80101964 / 0x80102268 (confidence: low)
 
 Candidate members tied to the `D_801273Exx` state block by shared globals;
 the event-handler members also share a call idiom. These ties do not establish
@@ -11289,6 +11288,7 @@ original TU boundaries or a gapless run (0x801014A4 sits immediately before
   the `func_80013394()` guard and storing `D_801273E4` instead.
 
 Members (address order):
+- ovl_11_func_80100FFC (m, candidate same TU; [grouping evidence](research/ovl_11_func_80100FFC-grouping.md)) — controls the eight-slot flag-selection menu and dispatches its detail/submenu states.
 - ovl_11_func_801014A4 (m, matched this session) — reads `D_801273F4[(s8)arg0]`,
   calls `func_8002261C(3, value)`, sets `D_801273E4 = 3` when
   `func_800226A4() == 2`
