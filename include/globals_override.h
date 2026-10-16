@@ -378,6 +378,33 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 8011F1D0: lh mode at +0x44BA, lhu threshold at +0xB384 and byte states at +0xE7AC. */
+struct Ovl11StateSelection {
+    u8 pad_0[0x44BA];
+    s16 mode;
+    u8 pad_44BC[0xB384 - 0x44BC];
+    u16 threshold;
+    u8 pad_B386[0xE7AC - 0xB386];
+    u8 states[10];
+    u8 counters[2];
+};
+/* 8011F1D0 indexes ten byte states and increments the two following bytes. */
+struct Ovl11StateBytes {
+    u8 states[10];
+    u8 first;
+    u8 second;
+};
+extern struct Ovl11StateBytes D_8007AFE4;
+struct Ovl11StateCounters {
+    u8 first;
+    u8 second;
+};
+extern struct Ovl11StateCounters D_8007AFEE;
+/* 8011F1D0 separately addresses the byte at 0x8007AFEF. */
+extern u8 D_8007AFEF;
+/* 8011F1D0 indexes this signed-halfword base-value table with its state index. */
+extern s16 D_8012852C[10];
+
 /* 800CE96C clears 0x18E bytes; named view preserves the other TUs' cell views. */
 extern u8 D_80075854_reset[0x18E] __asm__("D_80075854");
 /* 800CE96C clears six 0xB0-byte records; named view preserves the existing record type. */

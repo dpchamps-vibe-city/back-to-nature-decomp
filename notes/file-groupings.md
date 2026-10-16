@@ -883,9 +883,10 @@ distance argues for several TUs that each carry a copy of the same helper
 rather than one TU containing them.
 
 Role (low confidence, listed only to mark the family): scan-table leaf that
-counts how many of the first 99 `D_80075854` cells have a nonzero low u16;
-no callers matched yet in this container (reads only `D_80075854`, with the
-0x800FEAD4 copy reaching it via the `D_8006C838` two-stage base).
+counts how many of the first 99 `D_80075854` cells have a nonzero low u16.
+The 0x8011F4F4 copy joins the candidate `D_8012DB10` / `D_8012DB14` run below
+with its matched caller `ovl_11_func_8011F1D0`; the distant copies remain
+separate same-family entries, not same-TU members.
 
 ---
 
@@ -3653,36 +3654,19 @@ row refreshers, it stages nothing into `D_8012A028`.
 
 ---
 
-## `ovl_11` D_8012DB10 / D_8012DB14 s32-pair run — 0x8011F0C4–0x8011F1D0 (confidence: medium)
+## `ovl_11` D_8012DB10 / D_8012DB14 s32-pair run — 0x8011F0C4–0x8011F4F4 (confidence: medium)
 
-Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`) whose head resets a
-file-scope s32 pair. Same shared-global + link-adjacency fingerprint class as
-the documented `D_80123754` / `D_800BB7BC` runs: absolute-addressed main-RAM
-globals (no gp-rel in this container), so the referencing TU only *declares* the
-pair extern and the defining TU sits elsewhere in the overlay.
-
-Fingerprints:
-- shared s32 pair `D_8012DB10` / `D_8012DB14` (main RAM 0x8012DB10/0x8012DB14,
-  absolute `lui`+`%lo` at every site): referenced by the three functions of the
-  run head — `ovl_11_func_8011F0C4` zeroes both, `ovl_11_func_8011F0D8` reads
-  `D_8012DB10` as a one-shot guard (`bnez`, sets it to 1 on first entry) then
-  clamps/writes `D_8012DB14`, `func_8011F114` reads and rewrites both heavily;
-- zero-gap link order: `ovl_11_func_8011F0C4` (0x14) → `ovl_11_func_8011F0D8`
-  (0x3C) → `func_8011F114` (0xBC) → `func_8011F1D0` (0x324), each starting
-exactly where the previous one ends; the first three share the pair, the last
-(0x8011F1D0) continues the run but reads other globals (`D_8012852C`,
-`D_8007AFEE`, `jtbl_800BB5E8`) — same-TU tie via run continuity, not the pair.
+Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`): the first three members
+share the s32 pair; `8011F1D0` and `8011F4F4` are lower-confidence extensions
+supported by direct caller/callee adjacency, not access to that pair.
+See [grouping evidence and limits](research/ovl_11_func_8011F1D0-grouping.md).
 
 Members (address order):
-- ovl_11_func_8011F0C4 (m, matched this session) — run head at 0x8011F0C4; resets
-  both members of the pair to 0 by absolute addressing: `lui %hi(D_8012DB10); lui
-  %hi(D_8012DB14); sw $zero, %lo(D_8012DB10); jr $ra; sw $zero, %lo(D_8012DB14)`
-  (second store in the delay slot); byte-exact clean C, baseline flags
-- ovl_11_func_8011F0D8 (m, matched this session) — guard-then-clamp confirm of the
-  documented role: reads `D_8012DB10` as a first-entry guard, stores 1 to it, and
-  writes a clamped (0..9) value to `D_8012DB14`; byte-exact clean C (s32 `a0`
-  clamped with the `bgez`/`slti 0xA` pair), baseline flags
-- func_8011F114 (s) — heavier reader/writer of both words (0xBC bytes)
+- ovl_11_func_8011F0C4 (m) — resets both words of the s32 pair.
+- ovl_11_func_8011F0D8 (m) — first-entry guard; clamps the selection to 0..9.
+- ovl_11_func_8011F114 (s) — pair-state driver; passes the selection to `8011F1D0`.
+- ovl_11_func_8011F1D0 (m, candidate extension) — updates an indexed byte state and returns a table-based selection value.
+- ovl_11_func_8011F4F4 (m, candidate extension) — counts nonzero cells for `8011F1D0`'s state-selection gate.
 
 ---
 
