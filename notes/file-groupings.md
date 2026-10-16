@@ -10688,6 +10688,7 @@ Members (link order):
   and `D_80137584 = 0` when `D_8013759A >= 0x5B` — same body as
   `ovl_15_func_8012F078`/`ovl_15_func_8012F0E8`/`ovl_15_func_8012F86C` with only
   the updater array and the immediate changed (0x70 bytes)
+- ovl_15_func_80130B04 (m, byte-exact) — save-slot selection and menu-state routing ([grouping evidence](research/ovl_15_func_80130B04-grouping.md)).
 - ovl_15_func_80130BBC (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_800523AC` updater array (a new cluster symbol); then `ret
   = ovl_15_func_80137228(0xA, 0)`, `D_80137584 = ret` (s8; the value is
