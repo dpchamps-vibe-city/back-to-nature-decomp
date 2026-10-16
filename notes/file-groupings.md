@@ -6433,9 +6433,7 @@ Fingerprints:
   cluster member 0x800EF8BC.
 
 Members (address order):
-- ovl_11_func_800EEECC (s) — run head: gates on the +0x44BA/`+0x44BC == 7`
-  pair and `func_8001AF44(0x1B)`, clearing +0xE668 through the cluster's
-  +0x8000 two-stage split, and calls 0x800EF0E8 per index.
+- ovl_11_func_800EEECC (m) — five-slot refresh dispatcher; candidate member of the adjacent EF0E8/EF488/EF6E4/EF870 record family ([evidence](research/ovl_11_func_800EEECC-grouping.md)), original TU boundary unproven.
 - ovl_11_func_800EEFB8 (m, matched this session, byte-exact) — run middle:
   reads +0x44B8/+0x44BA/+0x44BC, wraps the +0x44B8 count by +1 (or seeds the
   `0x1D` result for arg0 == 4), and steps the loop through the shared callees

@@ -730,6 +730,15 @@ struct Ovl11CalendarDisplayStateView {
     u16 field_44C2;
 };
 
+/* 800EEECC: lh at +0x44BA/+0x44BC and sb at +0xE668 from one state base. */
+struct Ovl11ButtonUpdateState {
+    char pad_0[0x44BA];
+    s16 field_44BA;
+    s16 field_44BC;
+    char pad_44BE[0xE668 - 0x44BE];
+    s8 field_E668;
+};
+
 /* View of D_8006C838 for ovl_11_func_80111A60: the s16 at +0x44BA plus the
  * two time-like fields at +0x44C0/+0x44C2. Reached as a struct member so cc1
  * keeps lui %hi(D_8006C838) followed by lh 0x44BA/0x44C0/0x44C2 rather than
