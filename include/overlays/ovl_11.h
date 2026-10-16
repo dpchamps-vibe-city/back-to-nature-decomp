@@ -126,6 +126,7 @@ s32 ovl_11_func_800C97D0(Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800C9888(u16 arg0, u16 arg1);
 s32 ovl_11_func_800C9938(M2C_1052de249052_Ovl119938View *arg0);
 void ovl_11_func_800C9BB8(void);
+void ovl_11_func_800C9C60(void);
 void ovl_11_func_800C9D38(void);
 s32 ovl_11_func_800C9D64(void);
 void ovl_11_func_800C9D98(void);
