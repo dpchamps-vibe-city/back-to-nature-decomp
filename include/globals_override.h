@@ -357,6 +357,13 @@ struct struct_80061DE8 {
     s32 field_1C;       /* 0x1C */
 };
 
+/* func_8001B6A0 reads all eight words of the camera parameters. */
+extern struct struct_80061DE8 D_80061DE8;
+/* func_8001B6A0 builds a MATRIX at E08, with row aliases E0E/E14. */
+extern s16 D_80061E08[16];
+extern s16 D_80061E0E[3];
+extern s16 D_80061E14[3];
+
 /* D_8005E3A8 and D_8005E3AC - graphics display object pointers
  * Target uses GP-relative sw (4-byte scalar, within -G8 threshold).
  * func_80011370 stores pointers here and reads them back. */
