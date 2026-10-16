@@ -6915,14 +6915,16 @@ Cross-container note: the pair is a twin of the ovl_17 pair
 audio-setup twin note above, that relation is not TU-membership evidence; here
 only the gapless link run and the shared caller are.
 
-## `ovl_23` 2D vector math helper/client run — 0x800B9CCC–0x800BA368 (confidence: medium)
+## `ovl_23` 2D vector math helper/client run — 0x800B9B18–0x800BA368 (confidence: medium)
 
 Membership evidence: shared `D_800BF87C` coordinate records and `D_800BBA40`
 lookup table, the same angle-to-direction helper chain, and corroborating
 gapless link order. [Evidence and per-function detail](research/ovl_23_func_800B9E04-grouping.md);
-[800B9CCC membership extension](research/ovl_23_func_800B9CCC-grouping.md).
+[800B9CCC membership extension](research/ovl_23_func_800B9CCC-grouping.md);
+[800B9B18 membership extension](research/ovl_23_func_800B9B18-grouping.md).
 
 Members (link order):
+- ovl_23_func_800B9B18 (m, byte-exact, finalized) — applies clearance-checked eight-direction movement and clamps the record's x position.
 - ovl_23_func_800B9CCC (m, byte-exact, finalized) — selects a direction with clearance checking and a randomized alternate on failure.
 - ovl_23_func_800B9E04 (m, byte-exact, finalized) — checks projected y bounds and directional clearance against two six-record coordinate sets.
 - ovl_23_func_800BA1E0 (m, byte-exact) — classifies direction from an argument record to its selected coordinate pair.

@@ -31,6 +31,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
+      - [0x1C, .rodata, ovl_23_func_800B9B18]
       - [0x3C, .rodata, ovl_23_func_800B9E04]
       - [0x5C, .rodata, ovl_23_func_800BA73C]
       - [0x84, c, ovl_23_func_800B7EA4]
