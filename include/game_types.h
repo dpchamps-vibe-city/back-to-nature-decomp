@@ -1572,7 +1572,7 @@ typedef struct Ovl11DispatchRecord {
 
 /* 80133454 walks 20-byte records: pointer +0, lh lower bound +4,
  * lw upper bound +8, lbu width +C, lb id +D, and text pointer +10. */
-typedef struct {
+typedef struct Ovl30ValueMenuEntry {
     u8 *value;
     s16 lower;
     u8 pad6[2];

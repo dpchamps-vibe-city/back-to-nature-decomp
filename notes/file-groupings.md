@@ -8766,6 +8766,13 @@ Members (link order):
 - ovl_30_func_8012F3D4 (m) — call-sequence leaf, constant 0x3E7
 - ovl_30_func_8012F410 (m) — call-sequence leaf, constant 0x3E8
 
+## `ovl_30` adjacent value-menu wrappers — 0x8012FEEC / 0x8012FF50 (confidence: medium)
+
+[Evidence and limits](research/ovl_30_func_8012FEEC-grouping.md).
+
+- ovl_30_func_8012FEEC (m) — gated 22-entry value-menu wrapper returning the updated cursor.
+- ovl_30_func_8012FF50 (s) — sibling gated 23-entry value-menu wrapper returning the updated cursor.
+
 ## `ovl_30` mirrored byte-counter editors — 0x801326C4–0x80132C2C (confidence: medium)
 
 Evidence classes: mirrored editor/SDK idiom, adjacent selector/data clusters

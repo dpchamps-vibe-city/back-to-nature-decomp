@@ -30,6 +30,10 @@ struct Ovl30FlagMenuEntry;
 
 typedef struct Ovl30FlagMenuEntry Ovl30FlagMenuEntry;
 
+struct Ovl30ValueMenuEntry;
+
+typedef struct Ovl30ValueMenuEntry Ovl30ValueMenuEntry;
+
 typedef unsigned long u_long;
 
 typedef struct {
@@ -2862,7 +2866,7 @@ struct Ovl30FlagMenuEntry {
     char *text;
 };
 
-typedef struct {
+struct Ovl30ValueMenuEntry {
     u8 *value;
     s16 lower;
     u8 pad6[2];
@@ -2871,7 +2875,7 @@ typedef struct {
     s8 id;
     u8 padE[2];
     char *text;
-} Ovl30ValueMenuEntry;
+};
 
 typedef unsigned short u_short;
 
