@@ -8779,7 +8779,13 @@ Members (link order):
 
 - ovl_30_func_801306F4 (s) — 25-entry animal-record editor using selector D_801349A0.
 - ovl_30_func_80130C20 (m) — 23-entry animal-record editor using selector D_801349A4.
-- ovl_30_func_80131100 (s) — 23-entry animal-record editor using selector D_801349A8.
+- ovl_30_func_80131100 (m) — 23-entry animal-record editor using selector D_801349A8.
+
+80131100 reproduces 80130C20's automatic 23-entry initializer and gated
+menu/input tail byte-exactly, substituting the record base D_80075FE4,
+selector D_801349A8, heading D_8012E9D8 and selector maximum 2. Both use the
+same stride-0xB4 record layout and label sequence. This strengthens their
+shared editor-family evidence; it does not establish a translation-unit boundary.
 
 ## `ovl_30` mirrored byte-counter editors — 0x801326C4–0x80132C2C (confidence: medium)
 
