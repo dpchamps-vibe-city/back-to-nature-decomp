@@ -9892,7 +9892,7 @@ Members (link order):
   looks up `D_800BCBD8[idx]`, and calls the selected handler with the table
   base as its argument.
 - ovl_25_func_800B7F3C (m, byte-exact) — setup-state callback; advances the shared dispatch counter after initialization ([grouping evidence](research/ovl_25_func_800B7F3C-grouping.md)).
-- ovl_25_func_800B80A4 (s) — callback; contract: one of five table entries.
+- ovl_25_func_800B80A4 (m, byte-exact) — update-state callback; advances the shared dispatch counter when both probes pass ([grouping evidence](research/ovl_25_func_800B80A4-grouping.md)).
 - ovl_25_func_800B813C (s) — callback; contract: one of five table entries.
 - ovl_25_func_800B81B4 (m, matched this session, byte-exact) — callback;
   calls `ovl_25_func_800B93E4`, then increments and stores the dispatch
