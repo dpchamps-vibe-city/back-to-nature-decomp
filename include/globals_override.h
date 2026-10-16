@@ -2789,6 +2789,15 @@ extern u32 D_800BD864;
 extern u8 D_800BD758[];
 
 extern u8 D_800BDA74[];
+/* 800BA808 indexes 8-byte records: signed halfword id at +0, fixed-point x at +4. */
+typedef struct {
+    s16 id;
+    s16 pad_2;
+    s32 x;
+} Ovl17BackdropEntry;
+extern Ovl17BackdropEntry D_800BB5F0[];
+/* ovl_17 data/3634.data.s holds halfword frame indices; 800BA808 loads their low byte unsigned. */
+extern u16 D_800BB5D4[];
 /* ovl_17_func_800BA2C8 loads five 32-bit offsets from this original table. */
 extern s32 D_800BB6FC[5];
 /* ovl_17_func_800BA2C8 copies 0xC28 bytes here before resolving sprite headers. */

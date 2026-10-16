@@ -2,6 +2,7 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
+void drawTile(s32 ot, u8 *sprite, s16 x);
 void ovl_17_func_800B7E38(void);
 void ovl_17_func_800B8028(void);
 s32 ovl_17_func_800B8078(void);
@@ -27,6 +28,7 @@ void ovl_17_func_800BA2C8(void);
 void ovl_17_func_800BA504(void);
 void ovl_17_func_800BA630(void);
 void ovl_17_func_800BA698(void);
+void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BAD9C(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BAEF0(void);

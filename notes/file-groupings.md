@@ -9031,11 +9031,16 @@ Additional adjacency: the gapless link-order run `ovl_17_func_800BAEF0`
 +0x28C/+0x290 and +0x230/+0x231 via the +0x22C alias `D_800BDA74`) and all
 three call `func_80015840(ObjectState *, s8)`.
 
+800BA808 shares 800BAF50's `D_800BDA74` work-area alias and renderer
+callees, and is the gapless predecessor of cluster member 800BAC24. This
+supports adding it to the cluster, without establishing a TU boundary.
+
 - ovl_17_func_800BAF50 (m, 2026-10-03) — D_800BD848 work-area sprite setup:
   `func_80015840(&D_800BDA74, 4)` then
   `func_80015EE8(D_8005E3C0->field_D8 + 4, &D_800BDA74, work[0x230],
   work[0x231], 0, 0)`; link-adjacent to 800BAEF0/800BAFAC, same
   func_80015840 callee.
+- ovl_17_func_800BA808 (m, byte-exact) — scrolling backdrop and decoration renderer.
 - ovl_17_func_800BAD9C (m, 2026-10-09) — per-record display step over the
   D_800BD870 records (0x50 stride): reads the record's u8 flags@+0x00 and
   s32@+0x10, indexes `D_8005E3C0->field_D8` by `record->+0x14->s16@+0x4 * 4`,
