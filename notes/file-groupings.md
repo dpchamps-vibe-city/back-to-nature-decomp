@@ -7979,6 +7979,7 @@ Members:
   2), and forwards to the shared three-arg compare leaf
   `ovl_11_func_800EFDA0(temp, arg3, arg2)`; same `!= -1` guard-write and
   compare-forward shape as 800EC490/800E6834, inside the accessor band.
+- ovl_11_func_800E9724 (m, finalized; [evidence](research/ovl_11_func_800E9724-grouping.md)) — forwards three `D_80129560` coordinate slots to `ovl_11_func_800E60A0`.
 - ovl_11_func_800E9778 (m, matched 2026-11 — this session, 0xC0, byte-exact) —
   three-slot snapshot write: selects a 0xC-byte record from the `D_80076280`
   0x1D4-stride table (special base `D_80071B00` when `arg0 == 0x29`, bounds
