@@ -1,3 +1,129 @@
 #include "common.h"
+#include "game_types.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_8011B2B0", ovl_11_func_8011B2B0);
+s32 func_80012A34(s32 arg0);
+void ovl_11_func_8011D400(s32 *arg0);
+s16 ovl_11_func_8011D890(Ovl11D548Arg x, s32 mode);
+
+s32 ovl_11_func_8011B2B0(void) {
+    s32 flags;
+    u8 *p;
+    u8 *p2;
+    u8 *r;
+    void **q;
+    s16 *a;
+    s8 *c;
+    s16 *b;
+
+    flags = D_800719F8;
+    p = D_8012D548;
+    ovl_11_func_8011D400((s32 *) p);
+    *(s8 *) (p + 0x5A) = 0xD;
+    *(s8 *) (p + 0x5B) = 0xD;
+    *(s16 *) (p + 0x5C) = 0;
+    q = (void **) p;
+    a = (s16 *) ((u8 *) q + 0x28);
+    c = (s8 *) ((u8 *) q + 0x3C);
+    b = (s16 *) ((u8 *) q + 0x46);
+    *q = (void *) ((s32) D_80051B76 + D_80054BBC[1]);
+    *(s16 *) ((u8 *) q + 0x28) = 0;
+    *(s8 *) ((u8 *) q + 0x3C) = 1;
+    *(s16 *) ((u8 *) q + 0x46) = 0x87;
+    q++;
+    a++;
+    c++;
+    b++;
+    *q++ = (void *) ((s32) D_80051B76 - 0xAC + D_80054BBC[1]);
+    *a++ = D_801282DC[func_80012A34(3)];
+    *c++ = 1;
+    *b++ = 0x88;
+    if (flags & 0x10000) {
+        *(s8 *) (p + 0x5A) = 0x10;
+        *(s8 *) (p + 0x5B) = 0x10;
+        *q = (void *) ((s32) D_80051B76 - 0x76 + D_80054BBC[1]);
+    } else {
+        *q = 0;
+    }
+    q++;
+    *a++ = 0x13F;
+    *c++ = 1;
+    *b++ = 0x89;
+    if (flags & 0x8000) {
+        *q = (void *) ((s32) D_80051AE6 + D_80054BBC[1]);
+    } else {
+        *q = 0;
+    }
+    q++;
+    *a++ = 0x140;
+    *c++ = 1;
+    *b++ = 0x8A;
+    if (flags & 0x20000) {
+        *q = (void *) ((s32) D_80051B22 + D_80054BBC[1]);
+    } else {
+        *q = 0;
+    }
+    q++;
+    *a++ = 0x141;
+    *c++ = 1;
+    *b++ = 0x8B;
+    *q = (void *) ((s32) D_80051B38 + D_80054BBC[1]);
+    *a = 0;
+    *c = 1;
+    *b = 0x8C;
+
+    p2 = D_8012D5A8;
+    ovl_11_func_8011D400((s32 *) p2);
+    *(s8 *) (p2 + 0x5A) = 0;
+    *(s8 *) (p2 + 0x5B) = 0;
+    *(s16 *) (p2 + 0x5C) = 0;
+    q = (void **) p2;
+    a = (s16 *) ((u8 *) q + 0x28);
+    c = (s8 *) ((u8 *) q + 0x3C);
+    b = (s16 *) ((u8 *) q + 0x46);
+    if (flags & 0x40000) {
+        *q = (void *) ((s32) D_80051B38 + 0x12 + D_80054BBC[1]);
+        *(s8 *) ((u8 *) q + 0x5A) = 5;
+        *(s8 *) ((u8 *) q + 0x5B) = 10;
+    } else {
+        *q = 0;
+    }
+    q++;
+    *a++ = 0x1C;
+    *c++ = 0;
+    *b++ = 0xAA;
+    if (flags & 0x80000) {
+        r = D_8012D5A8;
+        *(s8 *) (r + 0x5A) = 6;
+        *(s8 *) (r + 0x5B) = 12;
+        *q = (void *) ((s32) D_80051B56 + D_80054BBC[1]);
+    } else {
+        *q = 0;
+    }
+    q++;
+    *a++ = 0x1A;
+    *c++ = 0;
+    *b++ = 0xAB;
+    if (flags & 0x100000) {
+        u8 *entry;
+
+        *q = (void *) ((s32) D_80051B64 + D_80054BBC[1]);
+        entry = D_8012D5A8;
+        *(s8 *) (entry + 0x5A) = 8;
+        *(s8 *) (entry + 0x5B) = 14;
+    } else {
+        *q = 0;
+    }
+    *a = 0x1B;
+    *c = 0;
+    *b = 0xAC;
+    if ((flags & 0x1C0000) && !(flags & 0x40000)) {
+        s16 selected;
+        u8 *record;
+
+        selected = ovl_11_func_8011D890(*(Ovl11D548Arg *) D_8012D5A8, 1);
+        record = D_8012D5A8;
+        *(s16 *) (record + 0x5C) = selected;
+    }
+    D_8012D52C = 0;
+    return 1;
+}

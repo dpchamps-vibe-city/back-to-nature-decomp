@@ -2667,6 +2667,16 @@ extern u8 D_80051C36[];
  * ovl_11 D_8012D548 record (ovl_11_func_8011B210). Address taken only. */
 extern u8 D_80051AA8[];
 
+/* 8011B2B0 adds D_80054BBC[1] bytes to these text-table addresses. */
+extern u8 D_80051B76[];
+extern u8 D_80051AE6[];
+extern u8 D_80051B22[];
+extern u8 D_80051B38[];
+extern u8 D_80051B56[];
+extern u8 D_80051B64[];
+/* 8011B2B0 indexes this u16 table with func_80012A34(3), using lhu. */
+extern u16 D_801282DC[];
+
 /* D_80051E26 - base of a table in the D_80051xxx region; the s32 read from
  * D_80054BC0[0] is added to its address (plus offsets 0/0x1A/0x32/0x4C and
  * -0x60C) to form the four pointers stored into the ovl_11 D_8012D548 record
