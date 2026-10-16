@@ -3798,6 +3798,10 @@ struct Ovl11SpriteSelectors {
     char padE778[4];
     s16 variant;
 };
+/* ovl_11_func_8011F114: lw/sw state and lw selection in the adjacent word pair. */
+extern s32 D_8012DB10;
+extern s32 D_8012DB14;
+
 /* ovl_11_func_800C28CC: lw at D_8007AFF0+0x25388 points to a halfword header. */
 struct Ovl11SpriteWork {
     char pad0[0x25388];
