@@ -3349,6 +3349,8 @@ extern u8 D_80053530[];
 
 /* ovl_15_func_80130B04 adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_80053596[];
+/* ovl_15_func_8012F300 adds D_80054BBC[0] bytes to this text-updater address. */
+extern u8 D_80053566[];
 
 /* ovl_15_func_8012F3FC adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_80051FEA[];
