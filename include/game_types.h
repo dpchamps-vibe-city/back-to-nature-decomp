@@ -4,6 +4,23 @@
 
 #include "common.h"
 
+/* CE034 reads +38 and +100/+104/+108; C55FC passes this object onward. */
+typedef struct {
+    char pad0[0x38];
+    u16 unk38;
+    char pad3A[0x100 - 0x3A];
+    s32 unk100;
+    s32 unk104;
+    s32 unk108;
+} Ovl11CE034Object;
+
+/* CE034 writes the three coordinates passed to C55FC's grid callback. */
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Ovl11CE034Position;
+
 /* 80102F14 scans stride-four IDs and explicitly sign-extends the byte at +2;
  * 801032BC consumes the same table through the pointer at object +1C. */
 typedef struct {

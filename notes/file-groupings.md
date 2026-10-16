@@ -1920,6 +1920,13 @@ Members:
   copies the D_8006C838 u16 at +0x44CA to +0x51F4 — joins the D_80071A00 pool
   sub-base idiom
 
+Related local dispatch-caller TU candidate (confidence: medium; distinct
+from the tier/clamp run; [evidence](research/ovl_11_func_800C55FC-grouping.md)):
+- ovl_11_func_800C541C (s) — mode-selected grid-action handler with a clamped object-counter update.
+- ovl_11_func_800C55FC (m) — mode-selected grid-cell resetter with object-tag remapping.
+- ovl_11_func_800C5738 (s) — four-direction position probe/update helper.
+- ovl_11_func_800C580C (s) — object-action dispatcher calling the three local helpers.
+
 ---
 
 ## `ovl_11` D_800742EC 0xB4-struct-array scan/count/init run — 0x800D0CD8, 0x800E20B8, 0x800E2934 / 0x800E2968 (confidence: low)

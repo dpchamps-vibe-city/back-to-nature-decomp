@@ -1976,6 +1976,9 @@ typedef struct {
 } Ovl11D124Entry;
 extern Ovl11D124Entry D_80074124[7][7];
 
+/* 800C55FC dispatches three pointers through the D7EF8/E090 callback pair. */
+extern s32 (*D_80123234[])();
+
 /* D_800742AC - word cleared by ovl_11_func_800DBE30 (`extern s32`) and reset
  * together with its following 0x3C bytes by ovl_11_func_800DB9A4, which memsets
  * 0x40 bytes from its address. Absolute-addressed from ovl_11. */

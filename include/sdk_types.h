@@ -2444,6 +2444,15 @@ typedef struct {
 } Ovl11CC4E0Object;
 
 typedef struct {
+    char pad0[0x38];
+    u16 unk38;
+    char pad3A[0x100 - 0x3A];
+    s32 unk100;
+    s32 unk104;
+    s32 unk108;
+} Ovl11CE034Object;
+
+typedef struct {
                char pad_00[0x100];
                 s32 unk100;
                 s32 unk104;
