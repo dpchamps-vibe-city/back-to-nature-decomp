@@ -11859,7 +11859,7 @@ Members (link order):
 
 ---
 
-## `ovl_19` D_800BF4D0 overlay-local s16-state consumer cluster — 0x800B89C8 … 0x800BA834 (confidence: medium)
+## `ovl_19` D_800BF4D0 overlay-local s16-state consumer cluster — 0x800B80E8 … 0x800BA834 (confidence: medium)
 
 Evidence: seven `ovl_19` functions build the absolute base
 `lui/addiu %hi/%lo(D_800BF4D0)` (0x800BF4D0, a 16-byte label that begins a larger
@@ -11876,6 +11876,7 @@ its own and against which it folds the neighbouring `D_800BF4E0[-0xD]` access �
 the same overlay-local-symbol-folding fingerprint the `D_800BF560` member shows.
 
 Members (link order):
+- ovl_19_func_800B80E8 (m, byte-exact; candidate member) — update prelude and eight-handler dispatcher on `D_800BF4C0[2]` ([grouping evidence](research/ovl_19_func_800B80E8-grouping.md)).
 - ovl_19_func_800B82B8 (m, byte-exact, verified this session) — gapless
   link-order predecessor of `800B843C` (offset 0x498, 0x184 bytes, ending
   0x61C = 0x800B843C); initialises the same overlay-local `D_800BF4C0` s16

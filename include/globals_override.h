@@ -3398,6 +3398,10 @@ extern s32 D_8007AE58;
 /* D_800BCD68 - ovl_19 text data: 0x12C bytes of halfwords, indexed by byte offsets. */
 extern u16 D_800BCD68[0x96];
 extern s16 D_800BF4C0[];
+/* ovl_19 800B80E8 indexes eight original handlers; each overwrites incoming $a0 before use. */
+extern void (*D_800BCEA8[8])(void);
+/* ovl_19 800B80E8 loads this signed halfword as the handler index. */
+extern s16 D_800BF4C4;
 /* D_800BF4E0 - the s16 field at D_800BF4C0 + 0x20, addressed by ovl_19_func_800B8DE8
  * through its own symbol (the compiler materialises D_800BF4E0 and expresses the
  * neighbouring D_800BF4C0 accesses as negative displacements from it). */
