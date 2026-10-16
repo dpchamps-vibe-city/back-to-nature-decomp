@@ -27,6 +27,7 @@ void ovl_27_func_800B9324(void);
 void ovl_27_func_800B9368(s16 arg0);
 void ovl_27_func_800B93B4(s16 arg0);
 void ovl_27_func_800B9400(s16 arg0);
+void ovl_27_func_800B944C(void);
 void ovl_27_func_800B998C(void);
 void ovl_27_func_800B9A8C(void);
 void ovl_27_func_800B9C84(void);

@@ -9286,7 +9286,7 @@ counter span 0x4A2C–0x4A36 is exactly the range zeroed by
 `ovl_27_func_800B7F7C` of the D_800C4A1C state-block cluster above, so the
 family indexes the same file-scope halfword state block. Link order is
 gapless 0x800B998C→0x800B9A8C→0x800B9B98→0x800B9C84 and
-0x800B9CB4→0x800B9DBC→0x800B9EEC; 0x800B998C starts where the 0x540 hub
+0x800B9CB4→0x800B9DBC→0x800B9EEC; 0x800B998C starts where the 0x540 backdrop renderer
 `ovl_27_func_800B944C` ends, and 0x800B9EEC ends where the already-recorded
 `ovl_27_func_800B9FF4` begins.
 
@@ -9313,7 +9313,8 @@ Members (link order):
   `func_80015BF0` draws with `D_8005E3C0->field_D8 + 0x8C` hoisted into one
   local shared by all three (same multi-draw shared idiom as slot 3)
 
-Probable same-TU extension outside the run (confidence: medium; shared sprite-buffer cluster):
+Probable same-TU extensions outside the run (confidence: medium; shared sprite-buffer cluster):
+- [ovl_27_func_800B944C](research/ovl_27_func_800B944C-grouping.md) (m, byte-exact) — animated tiled backdrop from `D_800C4BD0`.
 - ovl_27_func_800BA230 (m, byte-exact) — resource loader and eight-slot initializer for `D_800C4A80`–`D_800C4BD0`, including this family's six buffers.
 
 ## `D_8006C838` one-shot counter leaf, shared across ovl_17/23/25/27 (confidence: medium)
