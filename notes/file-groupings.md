@@ -8553,7 +8553,8 @@ Members:
   leaf: on `D_80128C54 & 0x206`, calls `ovl_11_func_800DF010(D_80128C4C, 0)`
   for 0x2/0x4 and `ovl_11_func_8010B57C(&D_80075AD4, 0)` for 0x200.
 - ovl_11_func_800C7878 (s) — reads then writes both halves.
-- ovl_11_func_800C9C60 (s) — writes both halves.
+- ovl_11_func_800C9BB8 (m) — preloads sprite assets for three record tables; candidate same-TU helper of adjacent caller 800C9C60 ([evidence and limits](research/ovl_11_func_800C9BB8-grouping.md)).
+- ovl_11_func_800C9C60 (s) — writes both state halves, seeds record-table entries, and calls its immediate predecessor 800C9BB8.
 - ovl_11_func_800CA708 (s) — reads, then writes both halves.
 - ovl_11_func_800CB114 (s) — writes both halves repeatedly.
 - ovl_11_func_800C4DE0 / 800C523C / 800C541C / 800C580C / 800C8FA8 /
