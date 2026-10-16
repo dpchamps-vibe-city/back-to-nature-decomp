@@ -3356,7 +3356,13 @@ Fingerprints:
   the flag, which strengthens the same-TU read of the run.
 
 Members (address order):
-- ovl_11_func_800E60A0 (s) — writes D_801295C6 (`sh v0`), earlier site
+- ovl_11_func_800E60A0 (m) — coordinate snap/interpolation; resets `D_801295C6` to -1.
+  Local candidate same-TU pair with its direct callee `ovl_11_func_800E63C8`:
+  zero-gap link order (0x800E60A0 + 0x328 = 0x800E63C8,
+  `configs/splat/ovl_11.yaml`) and shared bit 0x400000 at `D_8006C838`+0xC
+  (set by the caller, cleared by the helper's nonzero-arg0 path; see both
+  sources under `src/overlays/ovl_11/`). This local pairing does not establish
+  a single TU across the wider setter/getter span.
 - ovl_11_func_800E880C (s) — reads and writes D_801295C6, earlier site
 - ovl_11_func_800EE604 (m, matched this session) — run-head state machine: seeds/reads the `D_80129540`..`D_80129554` block and clears `D_801295C6` from the `D_8007AFF0`+0x25394 work area, then steps the `D_80129560[arg0]`/`[arg1]` slot pair through states 0/1/2 via `func_8001F2EC`
 - ovl_11_func_800EE7BC (s) — sandwiched, does not touch the global

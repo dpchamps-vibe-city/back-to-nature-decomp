@@ -1759,6 +1759,10 @@ extern s32 D_80129550;
 extern s16 D_80129554;
 extern s16 D_801295C6;
 
+/* 800E60A0 loads/stores the active s32 flag and three s32 coordinates at +0/+4/+8. */
+extern s32 D_80124908;
+extern s32 D_801294F0[4];
+
 /* D_80128422 - s16 slot index into the D_801284AC position table, read by
  * ovl_11_func_8011ECC4 (lh) and cleared by ovl_11_func_8011E574. Only ever
  * declared extern in the overlays, so it stays absolute-addressed. */
