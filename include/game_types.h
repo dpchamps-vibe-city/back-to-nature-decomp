@@ -102,6 +102,8 @@ typedef struct {
     u16 field_AE;
     u16 field_B0;
     u16 field_B2;
+    /* 800E06E0 increments and saturates this lhu/sh counter at 7. */
+    u16 field_B4;
 } Ovl11Deb00Object;
 
 /* Shared struct for functions that access void* with offset 0x14 and 0x18 */

@@ -2533,6 +2533,8 @@ typedef struct {
     u16 field_AE;
     u16 field_B0;
     u16 field_B2;
+
+    u16 field_B4;
 } Ovl11Deb00Object;
 
 typedef struct {
