@@ -8951,6 +8951,7 @@ weak TU evidence on its own; the group's binding evidence is the call graph:
 800B9CE4, 800B9F44 and 800B9F78 in one branch sequence.
 
 Members:
+- ovl_17_func_800B7F90 (m) — six-record display callback; advances the outer state after both completion probes pass ([grouping evidence](research/ovl_17_func_800B7F90-grouping.md)).
 - ovl_17_func_800B90F8 (m, 0x60, byte-exact, finalized) — initializes the
   90 stride-8 entries at +0x2D8/+0x2DC and sets their +0x5A8 cursor to 6.
   Every word becomes -0x20000; the halfword is -1 except the first six,
