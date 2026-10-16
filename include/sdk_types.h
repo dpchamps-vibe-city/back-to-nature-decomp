@@ -26,6 +26,10 @@ struct Ovl25ObjectRecord;
 
 typedef struct Ovl25ObjectRecord Ovl25ObjectRecord;
 
+struct Ovl30FlagMenuEntry;
+
+typedef struct Ovl30FlagMenuEntry Ovl30FlagMenuEntry;
+
 typedef unsigned long u_long;
 
 typedef struct {
@@ -2848,7 +2852,7 @@ struct Ovl25ObjectRecord {
                SpriteSourceData record1;
 };
 
-typedef struct {
+struct Ovl30FlagMenuEntry {
     void *value;
     u8 pad4[4];
     s32 mask;
@@ -2856,7 +2860,7 @@ typedef struct {
     s8 id;
     u8 padE[2];
     char *text;
-} Ovl30FlagMenuEntry;
+};
 
 typedef unsigned short u_short;
 

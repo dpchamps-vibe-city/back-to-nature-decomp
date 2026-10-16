@@ -1572,7 +1572,7 @@ typedef struct Ovl11DispatchRecord {
 
 /* 80133A8C walks 20-byte menu records: pointer +0, mask +8, width +C,
  * signed selection id +D and display text +10. */
-typedef struct {
+typedef struct Ovl30FlagMenuEntry {
     void *value;
     u8 pad4[4];
     s32 mask;
