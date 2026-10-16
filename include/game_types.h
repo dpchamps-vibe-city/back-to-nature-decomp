@@ -4,6 +4,16 @@
 
 #include "common.h"
 
+/* 800C6770: lhu state at +3C, lw/sw flags at +6C, six-byte item at +8A. */
+typedef struct {
+    u8 pad0[0x3C];
+    u16 unk3C;
+    u8 pad3E[0x6C - 0x3E];
+    s32 unk6C;
+    u8 pad70[0x8A - 0x70];
+    Ovl11ItemState item;
+} Ovl11C6770Object;
+
 /* 800E21E4 copies all four words at +38 and passes them by value to F43CC. */
 typedef struct {
     s32 x, y, z, w;

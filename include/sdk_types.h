@@ -2456,6 +2456,21 @@ typedef struct {
 } Ovl11C3B78Arg0;
 
 typedef struct {
+    s16 id;
+    u8 unk2[2];
+    s16 unk4;
+} Ovl11ItemState;
+
+typedef struct {
+    u8 pad0[0x3C];
+    u16 unk3C;
+    u8 pad3E[0x6C - 0x3E];
+    s32 unk6C;
+    u8 pad70[0x8A - 0x70];
+    Ovl11ItemState item;
+} Ovl11C6770Object;
+
+typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;

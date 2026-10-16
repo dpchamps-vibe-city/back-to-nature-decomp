@@ -8561,6 +8561,16 @@ Members:
   800C907C / 800CB850 / 800CD0F4 (s) — readers of one or both halves.
 - ovl_11_func_800C8D24 (s) — reads D_80128C54 only.
 
+## `ovl_11` D_80128C58 item-snapshot save/restore pair — 0x800C6770 / 0x800CBB9C (confidence: low)
+
+Shared-global evidence: the verified reader restores the six-byte snapshot
+that the writer saves from the same object offset. This supports candidate
+same-TU membership, not ownership or a boundary; both accesses are absolute.
+Evidence paths and limits: [grouping research](research/ovl_11_func_800C6770-grouping.md).
+
+- ovl_11_func_800C6770 (m) — item-action cleanup restoring the shared snapshot in state 0x31 and updating object flags.
+- ovl_11_func_800CBB9C (s) — saves the shared item snapshot before clearing/replacing the object's item record.
+
 ## `ovl_11` D_80123758 lookup / item-spawn cluster — 0x800CF258 / 0x800CF428–0x800CFA48 (confidence: medium)
 
 Candidate same-TU membership, extending the split-base spawn run above
