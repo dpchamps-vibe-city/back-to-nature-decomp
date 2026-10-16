@@ -24,3 +24,4 @@ s32 ovl_30_func_80132EE0(s32 arg0);
 s32 ovl_30_func_80132F18(s32 arg0);
 s32 ovl_30_func_80133218(s32 arg0);
 void ovl_30_func_80133974(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void ovl_30_func_80133A8C(Ovl30FlagMenuEntry *arg0, s32 arg1);

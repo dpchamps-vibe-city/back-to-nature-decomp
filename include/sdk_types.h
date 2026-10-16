@@ -2848,6 +2848,16 @@ struct Ovl25ObjectRecord {
                SpriteSourceData record1;
 };
 
+typedef struct {
+    void *value;
+    u8 pad4[4];
+    s32 mask;
+    u8 width;
+    s8 id;
+    u8 padE[2];
+    char *text;
+} Ovl30FlagMenuEntry;
+
 typedef unsigned short u_short;
 
 typedef struct {
