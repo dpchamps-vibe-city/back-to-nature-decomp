@@ -2880,6 +2880,9 @@ extern u8 D_8007A638[0x6C8];
 extern s32 D_80127CD0[7];
 extern s32 D_80127CB4[7];
 
+/* 800B806C dispatches 19 no-argument state handlers listed in original ovl_21 data at 800BCB6C. */
+extern void (*D_800BCB6C[19])(void);
+
 /* ovl_21_func_800B7E98 selects and advances this state with lw/sw. */
 extern u32 D_800BCBB8;
 
