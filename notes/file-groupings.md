@@ -6440,8 +6440,7 @@ Members (address order):
   reads +0x44B8/+0x44BA/+0x44BC, wraps the +0x44B8 count by +1 (or seeds the
   `0x1D` result for arg0 == 4), and steps the loop through the shared callees
   0x800EF8BC and 0x800C1280 into the {s16,s16,s16} arg1 result.
-- ovl_11_func_800EF0E8 (s) — run tail: reads the `D_80070CF0` (+0x44B8) trio
-  and calls the cluster members 0x800EF8BC and 0x800EFA1C.
+- ovl_11_func_800EF0E8 (m) — record-state eligibility classifier; candidate member of the adjacent 800EF488/800EF6E4/800EF870 snapshot/set/reset family ([evidence](research/ovl_11_func_800EF0E8-grouping.md)), original TU boundary unproven.
 
 ---
 

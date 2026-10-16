@@ -537,6 +537,13 @@ typedef struct {
     u8 pad_0[0xE4D8];
     Ovl11EF488Record records[5];
 } Ovl11EF488RecordsView;
+/* 800EF0E8 reads lh +0x99EA and lhu +0x99EC after a signed index * 0x1D4. */
+typedef struct {
+    u8 pad_0[0x99EA];
+    s16 field_99EA;
+    u16 field_99EC;
+} Ovl11EF0E8StatusView;
+
 /* 800EF488 sets bit 3 in the u16 at +0x9A06 of each 0x1D4-stride record. */
 typedef struct {
     u8 pad_0[0x9A06];
