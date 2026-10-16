@@ -2949,6 +2949,9 @@ extern u16 D_800BCBD4[4][2][3];
 /* 800B836C loads lhu at selector*4 + variant*2; original data has eight units. */
 extern u16 D_800BCC04[4][2];
 
+/* 800B9F3C loads u16 values at (entity * 3 + target % 3) * 2. */
+extern u16 D_800BCC24[18];
+
 /* D_800BCC48 - ovl_21 table of six 4-byte {u16,u16} pairs (0xFD12/0xFD12,
  * 0x0000/0xFA24, 0x02EE/0xFC97, 0xFD12/0x02EE, 0x0000/0x05DC,
  * 0x02EE/0x02EE). ovl_21_func_800BAEEC indexes it by arg0*4 and loads both

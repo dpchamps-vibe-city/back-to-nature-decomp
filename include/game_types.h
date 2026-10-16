@@ -972,6 +972,31 @@ typedef struct {
     u16 unk4;
 } Ovl21DistanceOrigin;
 
+/* 800B9F3C forms signed 16-bit displacements from the positions at +0x1A/+0x1E. */
+typedef struct {
+    char pad_00[0x18];
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    s16 unk1E;
+    char pad_20[4];
+    s16 unk24;
+    char pad_26[6];
+    s16 unk2C;
+    char pad_2E[0x108 - 0x2E];
+} Ovl21SignedRecordView;
+
+/* 800B9F3C writes the projectile fields at record +0x34..+0x4C,
+ * stepping between projectiles by 0x4C bytes. */
+typedef struct {
+    char pad_00[0x34];
+    s32 active;
+    u16 kind;
+    s16 life;
+    s16 duration;
+    s16 steps;
+} Ovl21ProjectileView;
+
 /* 800B836C's three 0x4C-byte states start at record +0x24. */
 typedef struct {
     char pad_00[0x10];
