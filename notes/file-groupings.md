@@ -12379,6 +12379,11 @@ Members:
 - ovl_11_func_800D88D0 (s) — reaches the same table.
 - ovl_11_func_800DA638 (s) — reaches the same table.
 
+Separate local mode-1 texture-update candidate TU pair (confidence: medium;
+[call/link-order evidence](research/ovl_11_func_800D759C-grouping.md)):
+- ovl_11_func_800D759C (m, byte-exact) — updates a mode-1 grid cell's UVs/tpage/CLUT from a texture-index table.
+- ovl_11_func_800D78D0 (s) — scans the 25×45 records and applies selected textures through 800D759C.
+
 ## `ovl_11` D_8006C838+0x5488 state-trio run — 0x800FA31C–0x800FA410 (confidence: medium)
 
 Evidence: zero-gap link-order adjacency (`ovl_11_func_800FA31C` len 0x84 ends

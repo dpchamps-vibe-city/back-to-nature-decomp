@@ -113,6 +113,11 @@ typedef struct {
     s16 field_2;
 } Ovl25SetupStatePair;
 
+/* 800D759C indexes 30 ten-byte UV/clut records here (lbu +0..7, lhu +8). */
+extern u8 D_80123CA0[300];
+/* 800D759C reads a per-column flag with lbu; original data spans 48 bytes. */
+extern u8 D_80123DCC[48];
+
 /* 8011E1E8 indexes ten-byte records here: eight UV bytes and lhu at +8. */
 extern u8 D_801282FC[];
 
