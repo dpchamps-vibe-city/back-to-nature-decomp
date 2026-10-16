@@ -4198,5 +4198,16 @@ extern u8 D_80051D9E[];
 /* ovl_15_func_80136C70 clears 0x28 bytes and formats halfword text here. */
 extern s16 D_80140EE0[20];
 
+/* 800DEB00 reads lh +44BA/+44BC, updates the word at +44F8 and scans 22 bytes at +4AC0. */
+typedef struct {
+    u8 pad0[0x44BA];
+    s16 field_44BA;
+    s16 field_44BC;
+    u8 pad44BE[0x44F8 - 0x44BE];
+    s32 field_44F8;
+    u8 pad44FC[0x4AC0 - 0x44FC];
+    u8 field_4AC0[22];
+} Ovl11Deb00State;
+
 #endif /* GLOBALS_OVERRIDE_H */
 

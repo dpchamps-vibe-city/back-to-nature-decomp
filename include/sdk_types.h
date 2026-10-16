@@ -2513,6 +2513,29 @@ typedef struct {
 } Ovl11D8012D7B8;
 
 typedef struct {
+    u8 pad0[0x16];
+    u16 field_16;
+    u8 pad18[2];
+    s16 field_1A;
+    s16 field_1C;
+    s16 field_1E;
+    u8 pad20[0x2C - 0x20];
+    u16 field_2C;
+    u8 pad2E[2];
+    s16 field_30;
+    u8 pad32[2];
+    s32 field_34;
+    u8 pad38[0x8C - 0x38];
+    s32 field_8C;
+    u8 pad90[0xA8 - 0x90];
+    s16 field_A8[2];
+    u16 field_AC;
+    u16 field_AE;
+    u16 field_B0;
+    u16 field_B2;
+} Ovl11Deb00Object;
+
+typedef struct {
     u8 bytes[4];
 } Ovl11EffectCoordinate;
 

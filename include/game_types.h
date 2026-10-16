@@ -79,6 +79,31 @@ typedef struct {
     u16 field_AC;
 } Ovl11B264Object;
 
+/* 800DEB00: lhu/sh counters at +16/+2C/+AC..+B2, lh state at
+ * +1A/+1C/+1E/+30, lw/sw flags at +34, and the cleared word at +8C. */
+typedef struct {
+    u8 pad0[0x16];
+    u16 field_16;
+    u8 pad18[2];
+    s16 field_1A;
+    s16 field_1C;
+    s16 field_1E;
+    u8 pad20[0x2C - 0x20];
+    u16 field_2C;
+    u8 pad2E[2];
+    s16 field_30;
+    u8 pad32[2];
+    s32 field_34;
+    u8 pad38[0x8C - 0x38];
+    s32 field_8C;
+    u8 pad90[0xA8 - 0x90];
+    s16 field_A8[2];
+    u16 field_AC;
+    u16 field_AE;
+    u16 field_B0;
+    u16 field_B2;
+} Ovl11Deb00Object;
+
 /* Shared struct for functions that access void* with offset 0x14 and 0x18 */
 typedef struct {
     /* 0x00 */ s32 field_0x0;
