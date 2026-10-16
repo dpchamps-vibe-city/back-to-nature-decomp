@@ -2862,6 +2862,17 @@ struct Ovl30FlagMenuEntry {
     char *text;
 };
 
+typedef struct {
+    u8 *value;
+    s16 lower;
+    u8 pad6[2];
+    s32 upper;
+    u8 width;
+    s8 id;
+    u8 padE[2];
+    char *text;
+} Ovl30ValueMenuEntry;
+
 typedef unsigned short u_short;
 
 typedef struct {
