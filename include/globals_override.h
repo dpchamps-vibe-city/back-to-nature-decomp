@@ -1177,6 +1177,33 @@ struct Ovl23DecisionView {
     struct Ovl23DecisionRecord records[6];
 };
 
+/* 800B8FA4 reads six 0x50-byte actors at +0x24 and timer/limit fields through +0x3AE. */
+struct Ovl23ActorDecision {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    u8 padC[8];
+    s32 unk14;
+    s32 unk18;
+    u8 pad1C[0x34];
+};
+struct Ovl23ActorDecisionView {
+    u8 pad0[0x14];
+    u16 unk14;
+    u8 pad16[0xE];
+    struct Ovl23ActorDecision actors[6];
+    struct Ovl23DecisionRecord records[6];
+    s16 unk39C;
+    s16 unk39E;
+    u8 pad3A0[0xC];
+    s16 unk3AC;
+    s16 unk3AE;
+};
+extern struct Ovl23ActorDecisionView Ovl23_D_800BF87C_decision __asm__("D_800BF87C");
+
 /* 800B8C18 retains the aggregate-relative state address across calls. */
 struct Ovl23DecisionWindow {
     u8 pad0[0x206];

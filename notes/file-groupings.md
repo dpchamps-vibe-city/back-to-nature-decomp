@@ -6823,13 +6823,15 @@ Members:
   `D_800BBA40[unk0] << 12` by the `(unk3B2 << 12)/10` step; sets state via the
   adjacent 800BB0C8 setter.
 
-## `ovl_23` D_800BFA80/D_800BFB08 complementary state-driver pair — 0x800B8B94 / 0x800B8C18 (confidence: medium)
+## `ovl_23` D_800BF87C complementary record-state drivers — 0x800B8B94–0x800B8FA4 (confidence: medium)
 
-Membership evidence: [shared array, complementary indices and corroborated call/link order](research/ovl_23_func_800B8C18-grouping.md).
+Membership evidence: [shared array, complementary indices and corroborated call/link order](research/ovl_23_func_800B8C18-grouping.md);
+[actor-side driver extension](research/ovl_23_func_800B8FA4-grouping.md).
 
 Members (link order):
 - ovl_23_func_800B8B94 (m, byte-exact) — display-bit state selector and movement updater for record 2 (`D_800BFB08`).
 - ovl_23_func_800B8C18 (m, byte-exact) — timer/threshold state selector and movement dispatcher for the other five `D_800BFA80` records.
+- ovl_23_func_800B8FA4 (m, byte-exact, finalized) — timer/distance-driven state selector and movement dispatcher for the six `D_800BF8A0` actors.
 
 ## `ovl_23` D_800BF87C screen-record init run — 0x800B823C–0x800B8354 (confidence: medium)
 
