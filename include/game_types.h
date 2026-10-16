@@ -1571,15 +1571,14 @@ typedef struct Ovl11DispatchRecord {
 } Ovl11DispatchRecord;
 
 /* 80133454 walks 20-byte records: pointer +0, lh lower bound +4,
- * lw upper bound +8, lbu width +C, lb id +D, and text pointer +10. */
+ * lw upper bound +8, lbu width +C, lb id +D, and text pointer +10.
+ * 80130C20's automatic initializer leaves +6/+E as implicit padding. */
 typedef struct Ovl30ValueMenuEntry {
     u8 *value;
     s16 lower;
-    u8 pad6[2];
     s32 upper;
     u8 width;
     s8 id;
-    u8 padE[2];
     char *text;
 } Ovl30ValueMenuEntry;
 

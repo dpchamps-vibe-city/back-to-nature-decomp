@@ -8773,6 +8773,14 @@ Members (link order):
 - ovl_30_func_8012FEEC (m) — gated 22-entry value-menu wrapper returning the updated cursor.
 - ovl_30_func_8012FF50 (s) — sibling gated 23-entry value-menu wrapper returning the updated cursor.
 
+## `ovl_30` adjacent animal-record editors — 0x801306F4–0x80131100 (confidence: medium)
+
+[Evidence and limits](research/ovl_30_func_80130C20-grouping.md).
+
+- ovl_30_func_801306F4 (s) — 25-entry animal-record editor using selector D_801349A0.
+- ovl_30_func_80130C20 (m) — 23-entry animal-record editor using selector D_801349A4.
+- ovl_30_func_80131100 (s) — 23-entry animal-record editor using selector D_801349A8.
+
 ## `ovl_30` mirrored byte-counter editors — 0x801326C4–0x80132C2C (confidence: medium)
 
 Evidence classes: mirrored editor/SDK idiom, adjacent selector/data clusters

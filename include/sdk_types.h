@@ -2869,11 +2869,9 @@ struct Ovl30FlagMenuEntry {
 struct Ovl30ValueMenuEntry {
     u8 *value;
     s16 lower;
-    u8 pad6[2];
     s32 upper;
     u8 width;
     s8 id;
-    u8 padE[2];
     char *text;
 };
 
