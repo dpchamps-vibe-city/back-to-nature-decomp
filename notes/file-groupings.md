@@ -12857,17 +12857,13 @@ parallel table, so this is a helper/layout cluster, not proof of a shared TU.
 
 ## ovl_11 800D6944 / 800D6A94 caller-link adjacency (confidence: low)
 
-- ovl_11_func_800D6944 (m, byte-exact this session) — sprite-cel blit:
-  two MoveImage calls per backward-walked sprite-ref, staging rectangles
-  in the D_80128D80 RECT scratch.
-- ovl_11_func_800D6A94 (s) — sole caller and zero-gap link successor of
-  800D6944 (0x150 bytes, ending exactly at 800D6A94); also calls
-  800D6730 / 800D678C / 800D67F4 / 800D688C / 800D5750 in the same band.
+- ovl_11_func_800D6944 (m) — sprite-cel texture/CLUT blitter.
+- ovl_11_func_800D6A94 (m) — allocates a paired sprite-placement record and uploads its texture/CLUT.
 
-Call graph (callGraph.json: 800D6944 calledBy 800D6A94 only) and link order
-agree on the adjacency. No shared global or static joins 800D6944 to any
-neighbour — D_80128D80 is used by 800D6944 alone — so this records an
-adjacency, not a shared-global cluster and not a proved TU boundary.
+800D6A94 also joins the paired nine-slot row/record family containing
+800D666C / 800D6730 / 800D678C / 800D67F4. The blitter pair remains a
+caller/link-adjacency candidate, not a proved TU boundary; see
+[grouping evidence](research/ovl_11_func_800D6A94-grouping.md).
 
 
 ## ovl_11 padded-vector view consumers (confidence: low)
