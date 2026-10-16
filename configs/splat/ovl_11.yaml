@@ -46,6 +46,8 @@ segments:
       - [0x12C4, rodata]
       - [0x1494, .rodata, ovl_11_func_800D3BB0]
       - [0x1664, rodata]
+      - [0x1678, .rodata, ovl_11_func_800D78D0]
+      - [0x168C, rodata]
       - [0x1B10, .rodata, ovl_11_func_800E5704]
       - [0x1B28, .rodata, ovl_11_func_800E60A0]
       - [0x1B40, .rodata, ovl_11_func_800E7954]
