@@ -15,6 +15,38 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_30 8012F084 reads a signed word through D_8007AFF0 + 0x2547C. */
+struct Ovl30SettingsView {
+    u8 pad[0x2547C];
+    s32 selected;
+};
+
+/* ovl_30 8012F030 supplies this four-halfword rectangle to StoreImage/LoadImage. */
+extern s16 Ovl30_DisplayRect[4] __asm__("D_8013400C");
+
+/* ovl_30 8012F084 stores this word after comparing the selected setting. */
+extern s32 D_8005E32C;
+/* ovl_30 8012F084 clears this halfword with sh. */
+extern s16 D_80133FBC;
+/* ovl_30 8012F084 indexes 18 callbacks; one table member takes no arguments. */
+extern s32 (*D_80133FC0[18])();
+/* ovl_30 8012EFEC clears this word and 8012F084 tests it. */
+extern s32 D_80134008;
+/* ovl_30 8012F084 maintains this word-sized active flag. */
+extern s32 D_80134AD8;
+/* ovl_30 8012F084 loads this word-sized index; decrement uses a signed zero clamp. */
+extern s32 D_80134ADC;
+/* ovl_30 8012F084 passes this word to the selected callback and stores its result. */
+extern s32 D_80134AE0;
+/* ovl_30 8012F084 dispatches on this word-sized state. */
+extern s32 D_80134B0C;
+/* ovl_30 8012F084 resets this word to -1 on a selection change. */
+extern s32 D_80134B10;
+/* ovl_30 8012F084 compares and copies this word-sized setting. */
+extern s32 D_80134B14;
+/* ovl_30 8012F084 publishes the callback loaded from D_80133FC0. */
+extern s32 (*D_80134B18)();
+
 /* 80100644 loads this selector with lbu; 800FFDCC clears the same byte. */
 extern s8 D_801273EC;
 /* 801007AC copies the selected record into this byte with sb. */

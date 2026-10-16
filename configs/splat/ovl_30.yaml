@@ -36,6 +36,7 @@ segments:
       - [0x1218, c, ovl_30_func_8012F000]
       - [0x1238, c, ovl_30_func_8012F020]
       - [0x1240, c, ovl_30_func_8012F028]
+      # 8012F030's empty object is supplied by the nested definition in 8012F084.
       - [0x1248, c, ovl_30_func_8012F030]
       - [0x129C, c, ovl_30_func_8012F084]
       - [0x15EC, c, ovl_30_func_8012F3D4]
