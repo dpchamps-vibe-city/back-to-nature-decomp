@@ -9409,22 +9409,15 @@ Members (link order):
 - ovl_27_func_800BABD4 (m) — `D_8006C838 + 0xE4CC` s16 field writer, calls `func_80020A40`
 - ovl_27_func_800BAC14 (m, matched this session) — leaf: 5×6-byte record copy `D_800BCFF0` → `D_8006C838 + 0x468A`
 
-## `ovl_11` D_8012720C guard/set pair — 0x800FBE4C / 0x800FC320 (confidence: low)
+## `ovl_11` D_8012720C state-control run — 0x800FBE4C–0x800FC320 (confidence: low)
 
-Evidence: both functions write the same overlay-local flag `D_8012720C`
-(`globals_override.h`) and both call `func_800132F0(10, 0, 2)` with the same
-three constants — a shared global plus an identical constant-argument callee,
-the same call-init-then-set idiom recorded for the D_80128420 cluster. They
-are address-apart (0x800FBE4C vs 0x800FC320, ~0x4D4), so gapless link
-adjacency does not cover them. `ovl_11_func_800FC320` (this session,
-byte-exact) additionally calls `func_8001FABC(3)`, exactly as the matched
-D_80128420 members 0x8011EC54/0x8011EC84 do.
+Candidate same-TU members ([controller-extension evidence and limits](research/ovl_11_func_800FC054-grouping.md)), in link order:
 
-Members (link order):
-- ovl_11_func_800FBE4C (s) — first-time guard: if `D_8012720C == 0` set it to 1
-  and call `func_800132F0(10, 0, 2)`, else return `D_8012720C`
-- ovl_11_func_800FC320 (m, matched this session) — void: `func_8001FABC(3)`,
-  `func_800132F0(10, 0, 2)`, `D_8012720C = 5`
+- ovl_11_func_800FBE4C (s) — first-time guard that starts the transition when the state is idle.
+- ovl_11_func_800FBE88 (m) — display-state reset and sprite-resource setup.
+- ovl_11_func_800FC054 (m, byte-exact) — six-state transition controller that invokes setup, frame dispatch and exit.
+- ovl_11_func_800FC1AC (m) — per-frame input, drawing and row-handler dispatch.
+- ovl_11_func_800FC320 (m) — starts the exit transition and sets state 5.
 
 ## `ovl_28` D_800B9630 record-table run — 0x800B895C / 0x800B8994 / 0x800B8A20 / 0x800B8AA8 (confidence: medium)
 

@@ -7,7 +7,6 @@ void ovl_30_func_8012EFEC(void);
 s32 ovl_30_func_8012F000(void);
 s32 ovl_30_func_8012F020(void);
 void ovl_30_func_8012F028(void);
-void ovl_30_func_8012F030(s32 arg0);
 void ovl_30_func_8012F084(void);
 void ovl_30_func_8012F3D4(void);
 void ovl_30_func_8012F410(void);
