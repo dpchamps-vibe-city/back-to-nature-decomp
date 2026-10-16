@@ -1135,6 +1135,44 @@ extern s16 D_801230A4[];
  * through a base pointer biased by -0x1A0. */
 extern u8 D_800BF660[];
 
+/* 800B8C18 reads these halfwords/position in six 0x44-byte records. */
+struct Ovl23DecisionRecord {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s32 unkC;
+    u8 pad10[0x34];
+};
+
+/* 800B8C18 pairs 0x50-stride fields at +0x2E/+0x38 with records at +0x204. */
+struct Ovl23DecisionView {
+    struct {
+        u8 pad0[0x2E];
+        s16 unk2E;
+        u8 pad30[8];
+        s32 unk38;
+        u8 pad3C[0x14];
+    } actors[6];
+    u8 pad1E0[0x24];
+    struct Ovl23DecisionRecord records[6];
+};
+
+/* 800B8C18 retains the aggregate-relative state address across calls. */
+struct Ovl23DecisionWindow {
+    u8 pad0[0x206];
+    s16 unk206;
+    u8 pad208[4];
+    s16 unk20C;
+    s16 unk20E;
+    s32 unk210;
+};
+
+/* 800B8C18 passes these 0x44-stride records to BB0D8/BA610/B9A00. */
+extern struct Ovl23DecisionRecord D_800BFA80[6];
+
 /* 800B954C reads word +0x10, sprite +0x3B4 and the +0x418/+0x5CC record arrays; named base preserves legacy TU views. */
 extern u8 Ovl23_D_800BF87C_draw[] __asm__("D_800BF87C");
 
