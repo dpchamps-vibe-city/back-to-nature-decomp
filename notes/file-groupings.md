@@ -3162,8 +3162,15 @@ predecessor of that draw leaf (0x800FC754 + 0x9C = 0x800FC7F0) is matched as a
 caller of `ovl_11_func_800FC7F0`: it walks the 4-entry stride-0xC `.data` table
 `D_80127234` (record type `Ovl11D80127234Entry` now in `globals_override.h`)
 and draws each nonzero entry. Membership rests on the zero-gap link order plus
-the call edge, which agree; it shares `D_80127234` with the unmatched writer
-stub `ovl_11_func_800FB908` (fields +0x00/+0x04/+0x09).
+the call edge, which agree; it shares `D_80127234` with the matched initializer
+below.
+
+- ovl_11_func_800FB908 (m) — summary/name-table initializer and display-state
+  resetter; shares `D_80127234` with 800FC754. Candidate same-TU run with
+  gapless followers 800FBE4C (flag guard/setter) and 800FBE88 (setup caller):
+  all write `D_8012720C`, and 800FBE88 calls 800FB908 before setting that flag
+  (link order: `configs/splat/ovl_11.yaml`; call/set:
+  `build/ovl_11/asm/nonmatchings/ovl_11_func_800FBE88/ovl_11_func_800FBE88.s`).
 
 ---
 
