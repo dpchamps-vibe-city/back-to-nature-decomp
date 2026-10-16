@@ -14250,9 +14250,11 @@ and shared callers; original TU boundaries remain unproven.
 - ovl_11_func_8011B840 (m, candidate same TU) — descriptor-driven six-state record interaction handler with start, selection and cancellation paths.
 - ovl_11_func_8011BAFC (m, candidate same TU) — adjacent six-state interaction variant using an auxiliary record and the same state/selection helper family.
 
-## `ovl_11` paired-value row renderer caller/callee — 0x800FD7B4 / 0x800FD968 (confidence: low)
+## `ovl_11` paired-value row renderer caller/callee run — 0x800FD5E8 / 0x800FD7B4 / 0x800FD968 (confidence: low)
 
-[Call/link evidence and limits](research/ovl_11_func_800FD968-grouping.md).
+[Pair evidence and limits](research/ovl_11_func_800FD968-grouping.md);
+[caller-extension evidence and limits](research/ovl_11_func_800FD7B4-grouping.md).
 
-- ovl_11_func_800FD7B4 (s, candidate same TU) — selects an eight-byte work-area value pair, calls its gapless successor to draw bars, and draws the row label.
+- ovl_11_func_800FD5E8 (s, candidate same TU) — draws the first pair's numeric values and dispatches four paired-value rows.
+- ovl_11_func_800FD7B4 (m, candidate same TU) — selects an eight-byte work-area value pair, calls its gapless successor to draw bars, and draws the row label.
 - ovl_11_func_800FD968 (m, candidate same TU) — draws opposed bars and optional higher-order value labels for the supplied two-word pair.

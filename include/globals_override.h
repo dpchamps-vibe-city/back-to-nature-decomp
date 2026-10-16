@@ -2523,6 +2523,18 @@ extern Ovl11D80127274Entry D_80127274[];
  * ovl_11_func_800FC544 by the ovl_11 countdown-table routines. */
 extern s16 D_8012A028;
 
+/* 800FD7B4 adds D_80054BBC[0] bytes to this empty-pair label base. */
+extern u8 D_80053770[];
+/* 800FD7B4 indexes nine signed halfword text offsets as a 3-by-3 table. */
+extern s16 D_8012735C[3][3];
+/* 800FD7B4: lh at +0x44BA, four eight-byte word pairs at +0x49C4; caller 800FD5E8 selects 0..3. */
+struct Ovl11PairedValues {
+    char pad_0[0x44BA];
+    s16 field_44BA;
+    char pad_44BC[0x49C4 - 0x44BC];
+    s32 pairs[4][2];
+};
+
 /* ovl_11_func_800FD33C adds D_80054BBC[0] bytes and passes this text base to func_80017B3C. */
 extern u8 D_8005360E[];
 /* 80100B50 adds D_80054BBC[0] bytes to this text base and its +0x12 successor for func_80017B3C. */
