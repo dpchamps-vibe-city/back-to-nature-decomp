@@ -29,6 +29,7 @@ void ovl_25_func_800B9B28(Ovl25ObjectRecord *arg0);
 void ovl_25_func_800B9C90(Ovl25ObjectRecord *arg0);
 void ovl_25_func_800B9D4C(void);
 void ovl_25_func_800B9E20(void);
+void ovl_25_func_800B9E84(void);
 void ovl_25_func_800BA2E8(void);
 void ovl_25_func_800BA40C(void);
 void ovl_25_func_800BA530(void);
