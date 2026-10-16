@@ -4124,5 +4124,18 @@ struct Ovl11ActionCounter {
     s16 count;
 };
 
+/* 800DBC4C increments 0x80 and 8 byte counters through lbu/sb loops. */
+extern u8 D_8007AE78[0x80];
+extern u8 D_8007AEF8[8];
+
+/* 800DBC4C reads lh at +0x44BA/+0x44BC and lhu at +0xE4C8. */
+struct Ovl11TimerState {
+    u8 pad_0[0x44BA];
+    s16 field_44BA;
+    s16 field_44BC;
+    u8 pad_44BE[0xE4C8 - 0x44BE];
+    u16 field_E4C8;
+};
+
 #endif /* GLOBALS_OVERRIDE_H */
 
