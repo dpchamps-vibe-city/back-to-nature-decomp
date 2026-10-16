@@ -2522,6 +2522,14 @@ extern Ovl11D80127274Entry D_80127274[];
 /* D_8012A028 - s16 scratch passed by address to func_8001A970 and
  * ovl_11_func_800FC544 by the ovl_11 countdown-table routines. */
 extern s16 D_8012A028;
+/* 800FD5E8 writes a two-halfword text header at D_8012A028+0/+2. */
+struct Ovl11NumberTextHeader {
+    s16 prefix;
+    s16 marker;
+};
+
+/* 800FD5E8 adds D_80054BBC[0] bytes to this text base and its +0x28 successor. */
+extern u8 D_80053636[];
 
 /* 800FD7B4 adds D_80054BBC[0] bytes to this empty-pair label base. */
 extern u8 D_80053770[];
