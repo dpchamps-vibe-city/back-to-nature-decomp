@@ -10601,6 +10601,7 @@ Members (link order):
   and `D_80137584 = 0` when `D_8013759A >= 0x5B` — same body as
   `ovl_15_func_8012F078` with only the updater array and the immediate `0x5`→`0x6`
   changed, and contiguous with it in link order (both 0x70 bytes)
+- ovl_15_func_8012F3FC (m, byte-exact) — three-slot save-summary display and confirmation-state handler ([grouping evidence](research/ovl_15_func_8012F3FC-grouping.md)).
 - ovl_15_func_8012F6C0 (m, verified byte-exact this session) — shared text-draw
   prologue with the `D_80053114` updater array in case 0 and `D_80051FA8` in case
   1; gapless link successor of the `D_80052FC4` member `ovl_15_func_8012F4F4`
