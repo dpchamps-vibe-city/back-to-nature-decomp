@@ -1186,6 +1186,24 @@ typedef struct {
     s16 unk3B2;        /* 0x3B2 */
 } Ovl23D87CView39C;
 
+/* ovl_23_func_800BA73C reads these fields in each 0x50-byte record
+ * passed by ovl_23_func_800B9310; the sprite begins at +0x1C. */
+typedef struct {
+    u8 pad_00[4];
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    u8 pad_0A[0xA];
+    s32 unk14;
+    s32 unk18;
+    u8 pad_1C[4];
+    u8 unk20;
+    u8 unk21;
+    u8 pad_22[0x2A];
+    s16 unk4C;
+    s16 unk4E;
+} Ovl23BA73CArg;
+
 /* ovl_23_func_800BAA60 argument record: one 0x44-stride entry of the
  * D_800BFA80 array driven by ovl_23_func_800B9310. The s16 selector switched
  * on is at 0x04, the ObjectState-ish block begins at 0x10 (its +0x04 byte is

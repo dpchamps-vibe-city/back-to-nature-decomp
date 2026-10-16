@@ -2727,6 +2727,22 @@ typedef struct {
 } Ovl21Func800B98CCArg;
 
 typedef struct {
+    u8 pad_00[4];
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    u8 pad_0A[0xA];
+    s32 unk14;
+    s32 unk18;
+    u8 pad_1C[4];
+    u8 unk20;
+    u8 unk21;
+    u8 pad_22[0x2A];
+    s16 unk4C;
+    s16 unk4E;
+} Ovl23BA73CArg;
+
+typedef struct {
                s16 unk0;
                s16 unk2;
                s16 unk4;

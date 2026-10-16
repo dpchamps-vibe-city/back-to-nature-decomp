@@ -22,6 +22,7 @@ s32 ovl_23_func_800BA368(s32 arg0, s32 arg1);
 s32 ovl_23_func_800BA3B4(s16 arg0, s16 arg1);
 s32 ovl_23_func_800BA494(s16 arg0, s16 arg1);
 void ovl_23_func_800BA610(Ovl23Func800BB0C8Arg *arg0);
+void ovl_23_func_800BA73C(Ovl23BA73CArg *arg0);
 void ovl_23_func_800BAA60(Ovl23BAA60Arg *arg0);
 s32 ovl_23_func_800BAFFC(s32 arg0);
 s32 ovl_23_func_800BB040(s32 arg0);

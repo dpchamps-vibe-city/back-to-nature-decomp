@@ -6973,10 +6973,11 @@ the `D_800BBA40` table already used by `ovl_23_func_800B937C` and
 `ovl_23_func_800B989C`, and calls the append member `ovl_23_func_800B9454`. Its
 caller chain `ovl_23_func_800B92E8` → `ovl_23_func_800BB1B8` /
 `ovl_23_func_800B9310` ties the run to the documented ObjectState reset leaf.
+Additional membership evidence: [800BA73C grouping research](research/ovl_23_func_800BA73C-grouping.md).
 
 Members:
-- ovl_23_func_800B9310 (s) — six `ovl_23_func_800BA73C(D_800BF8A0 + i*0x50)`
-  then six `ovl_23_func_800BAA60(D_800BFA80 + i*0x44)`, then `800B954C`.
+- ovl_23_func_800B9310 (s) — drives six paired 0x50/0x44-stride records through `800BA73C`/`800BAA60`, then calls `800B954C`.
+- ovl_23_func_800BA73C (m, byte-exact) — selects and draws the `D_800BF8A0` record sprite, with timed appends via `800B94D0`.
 - ovl_23_func_800BAA60 (m, byte-exact) — `D_800BFA80` record handler: maps
   `unk4` 1/2/3 to a `func_80015840` state byte and appends the projected
   sprite via `ovl_23_func_800B9454`.
