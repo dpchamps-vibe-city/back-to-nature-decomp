@@ -7,6 +7,7 @@ void ovl_17_func_800B7E38(void);
 void ovl_17_func_800B7F90(void);
 void ovl_17_func_800B8028(void);
 s32 ovl_17_func_800B8078(void);
+void ovl_17_func_800B80B0(void);
 void ovl_17_func_800B83A4(void);
 void ovl_17_func_800B8470(void);
 void ovl_17_func_800B86C4(void);
