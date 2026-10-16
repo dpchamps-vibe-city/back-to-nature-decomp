@@ -15,6 +15,12 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 8001B5DC loads this fog distance with lw; SetVal8005E2D8 stores s32. */
+extern s32 D_8005E2D8;
+/* 8001B5DC loads these colors with lbu; 8001BF74/8001BF88 store bytes. */
+extern u8 D_8005E2DC;
+extern u8 D_8005E2E0;
+
 /* ovl_30 8012F084 reads a signed word through D_8007AFF0 + 0x2547C. */
 struct Ovl30SettingsView {
     u8 pad[0x2547C];

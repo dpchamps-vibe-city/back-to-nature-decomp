@@ -188,6 +188,7 @@ void func_8001B3EC(s32 arg0);
 void func_8001B4D0(s32 arg0, s32 arg1);
 void func_8001B4E4(s32 arg0);
 void func_8001B530(void);
+void func_8001B5DC(void);
 void func_8001B6A0(void);
 void func_8001B9F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8001BA40(s32 arg0, s32 arg1, s32 arg2);
