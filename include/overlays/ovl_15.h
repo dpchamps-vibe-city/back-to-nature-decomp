@@ -92,6 +92,7 @@ s32 ovl_15_func_80136558(s16 arg0, s16 arg1);
 s32 ovl_15_func_80136660(s16 arg0, s16 arg1, u32 *arg2);
 s32 ovl_15_func_801367F8(s16 arg0, s16 arg1, u32 *arg2);
 s8 ovl_15_func_80136990(void);
+void ovl_15_func_80136C70(s16 slot, s16 mode);
 void ovl_15_func_8013703C(s16 arg0, s16 *arg1, s32 arg2);
 s8 ovl_15_func_801370B4(void);
 s32 ovl_15_func_80137228(s16 arg0, s16 arg1);

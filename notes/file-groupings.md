@@ -10502,21 +10502,16 @@ Members (link order):
   flag matrix 132/132 masked vs baseline 84/132; neighbour `ovl_15_func_8013345C`
   shares the override; per-TU override in `configs/flag_overrides.mk`)
 
-## `ovl_15` number-text formatter pair — 0x80136C70 / 0x8013703C (confidence: medium)
+## `ovl_15` save-slot renderer/formatter run — 0x80136B18–0x8013703C (confidence: medium)
 
-Evidence: gapless link adjacency agreeing with the call graph. `ovl_15_func_80136C70`
-(0x3CC bytes at 0x80136C70) ends exactly where `ovl_15_func_8013703C` begins, and it
-is 8013703C's sole caller (two call sites). Both wrap the exe-side number/text helpers
-`func_8001A970` / `func_8001ABF0` and build the source pointer with the same
-`D_80054BBC[0] + (s32)<array>` idiom (`D_80054BBC` is also read by the 0x8012EE84–
-0x801328C4 prologue cluster and by func_8001A284/func_80024108/func_80023D08 in the
-exe; the array operand differs per function and is weak evidence on its own).
+Evidence: [gapless caller → renderer → formatter link order](research/ovl_15_func_80136C70-grouping.md).
+The renderer also shares `D_80140EE0` text scratch with `ovl_15_func_80133808`;
+this cross-cluster tie does not establish a TU boundary or merge the groups.
 
 Members (link order):
-- ovl_15_func_80136C70 (s) — number-field renderer; the only caller of 8013703C
-- ovl_15_func_8013703C (m, matched this session, byte-exact) — leaf: formats arg0 into
-  `arg1` via `func_8001A970`, then copies `D_80054BBC[0] + {0x12|0x18|0x1E|0x24} +
-  &D_8005175C` with `func_8001ABF0`
+- ovl_15_func_80136B18 (s) — renders all three save slots and handles cursor selection.
+- ovl_15_func_80136C70 (m, byte-exact) — renders one save-slot summary with status, date and names.
+- ovl_15_func_8013703C (m, byte-exact) — formats a number and appends a relocated text suffix.
 
 ## `ovl_15` two-digit text-number run — 0x80134770 / 0x80134890 / 0x801349C8 (confidence: medium)
 

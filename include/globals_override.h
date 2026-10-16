@@ -3360,7 +3360,8 @@ struct Ovl15SaveWordPair {
     s32 words[2];
 };
 struct Ovl15SaveName {
-    s16 units[9];
+    /* 80136C70 sanitizes unsigned glyphs and stores the 0xFFFF terminator. */
+    u16 units[9];
 };
 struct Ovl15SaveHalfwordPair {
     s16 units[4];
@@ -4141,6 +4142,14 @@ struct Ovl11TimerState {
     u8 pad_44BE[0xE4C8 - 0x44BE];
     u16 field_E4C8;
 };
+
+/* ovl_15_func_80136C70 indexes three 4-byte terminated text labels. */
+extern u32 D_801375A8[3];
+/* ovl_15_func_80136C70 adds the text relocation base to these byte addresses. */
+extern u8 D_80051D8E[];
+extern u8 D_80051D9E[];
+/* ovl_15_func_80136C70 clears 0x28 bytes and formats halfword text here. */
+extern s16 D_80140EE0[20];
 
 #endif /* GLOBALS_OVERRIDE_H */
 
