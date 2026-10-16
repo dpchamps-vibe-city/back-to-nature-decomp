@@ -1,3 +1,31 @@
 #include "common.h"
 
-INCLUDE_ASM("build/ovl_21/asm/nonmatchings/ovl_21_func_800B7FC8", ovl_21_func_800B7FC8);
+void ovl_21_func_800BB138(void);
+void ovl_21_func_800BB250(void);
+void func_8001B5DC(void);
+void ovl_21_func_800BB2B4(void);
+void ovl_21_func_800B8320(void);
+void ovl_21_func_800B9798(s16 arg0, s16 arg1);
+void ovl_21_func_800BA4C0(void);
+s32 func_80013394(void);
+s32 func_8001FE6C(void);
+
+void ovl_21_func_800B7FC8(void) {
+    u8 var_s0;
+
+    ovl_21_func_800BB138();
+    ovl_21_func_800BB250();
+    func_8001B5DC();
+    ovl_21_func_800BB2B4();
+    ovl_21_func_800B8320();
+    ovl_21_func_800B9798(0, 0);
+    ovl_21_func_800B9798(1, 0);
+    ovl_21_func_800BA4C0();
+    var_s0 = func_80013394() == 1;
+    if (func_8001FE6C() == 0) {
+        var_s0++;
+    }
+    if (var_s0 == 2) {
+        ((Ovl21MainStateView *) D_8006C838)->state++;
+    }
+}
