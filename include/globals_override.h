@@ -428,6 +428,12 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* ovl_21_func_800B80D4 increments the lw/sw state at D_8006C838 + 0x448C. */
+typedef struct {
+    u8 pad_0[0x448C];
+    s32 state;
+} Ovl21MainStateView;
+
 /* 8011F1D0: lh mode at +0x44BA, lhu threshold at +0xB384 and byte states at +0xE7AC. */
 struct Ovl11StateSelection {
     u8 pad_0[0x44BA];
