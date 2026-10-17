@@ -4101,6 +4101,8 @@ extern s16 D_800BF650;
 extern s16 D_800BF652;
 extern u16 D_800BCEF0[];
 extern s16 D_800BCF0C[];
+/* ovl_19 800B8830 indexes this overlay-local table with a signed halfword load. */
+extern s16 Ovl19_D_800BCFF0[] __asm__("D_800BCFF0");
 extern u16 D_800BCF28[];
 /* ovl_19 800B9AB0 indexes byte weights by flag * 16 + direction * 4 + choice. */
 extern u8 D_800BCF58[];
