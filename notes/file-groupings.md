@@ -5535,6 +5535,7 @@ Members (address order):
     D_80126E4E with its zero-gap successor 0x800F87AC. Shared state plus
     call/link order support the regional grouping; original TU ownership
     remains unconfirmed (low).
+  - ovl_11_func_800F87AC (m; candidate, low) — selected-record message handler ([evidence](research/ovl_11_func_800F87AC-grouping.md)).
 - ovl_11_func_800F8188 (m, matched this session, byte-exact; link-adjacent to
   0x800F8224 in the same 0x800F81xx/0x800F84xx region) — the run's
   caller/dispatcher: it takes the 0x800F8404 level result, and when that
