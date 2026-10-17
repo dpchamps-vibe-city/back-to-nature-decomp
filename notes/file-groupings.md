@@ -5364,23 +5364,10 @@ Members (address order):
   private-table reader with no shared gp-rel/absolute global); confidence
   low.
 
-- ovl_11 0x800F9210→0x800F9BE4 caller/leaf pair — zero-gap link order
-  (ovl_11_func_800F9210 (s), last word 0x800F9BE0, ends exactly where
-  0x800F9BE4 begins) agrees with the call graph: the head's first `jal` (at
-  0x800F9254) calls the leaf. Both serve the D_800A0494 row table. The head
-  also calls cluster members 800D666C and 800D6730 and the row-index source
-  800D5750 (three times). The leaf reads rows 0–1 through the far base and
-  calls 800D666C.
-  - ovl_11_func_800F9210 (s) — 0x9D4-byte image/table handler (LoadImage,
-    StoreImage, MoveImage2, DrawSync; `D_80129638`/`D_80129648`) that
-    drives the D_800A0494 row helpers
-  - ovl_11_func_800F9BE4 (m, matched 2026-10-09) — slot reconciler, recorded
-    in the D_800A0494 cluster above; also called twice by the orchestrator
-    0x800F7AA0 (0x800F7C28, 0x800F7C48). It ends exactly at 0x800F9D3C, the
-    head of the D_80126F7C menu-state run, but shares none of that run's
-    state words, so no link to that run is claimed.
-  Evidence class: link-order adjacency + caller relation + shared row-table
-  callees; no shared gp-rel global; confidence low.
+- ovl_11 0x800F9174→0x800F9210→0x800F9BE4 caller run — candidate same-TU membership, confidence low; original boundaries remain unproven ([evidence](research/ovl_11_func_800F9174-grouping.md)).
+  - ovl_11_func_800F9174 (m, byte-exact) — category-2 transition dispatcher that orders two IDs for the adjacent image/table handler.
+  - ovl_11_func_800F9210 (s) — image/table transfer handler that drives the D_800A0494 row helpers.
+  - ovl_11_func_800F9BE4 (m, matched 2026-10-09) — slot reconciler for D_800A0494 rows 0–1, also recorded in that data cluster.
 
 - func_80021DA8 (m) — buffer/address initializer: clears D_8006C838 and
   D_8007AFF0, calls func_80021E60(0), computes 2048-byte-aligned addresses
