@@ -11117,6 +11117,9 @@ Members (link order):
   same six halfwords, calls `func_8001C0D4` with the `D_800BF700`
   `FuncC0D4Args` descriptor.
 
+Related same-TU candidate ([shared descriptor and gapless adjacency](research/ovl_19_func_800BB548-grouping.md); not a far-buffer reader):
+- ovl_19_func_800BB548 (m, byte-exact) — collision-height adjustment using the same `D_800BF700` descriptor as its immediate predecessor, ovl_19_func_800BB4D4.
+
 ## `ovl_19` D_800BCEE4 display-setup state-handler run — 0x800BB5D4–0x800BBD14 (confidence: medium)
 
 Evidence: the dispatcher `ovl_19_func_800B7F34` (s) selects on the state byte
