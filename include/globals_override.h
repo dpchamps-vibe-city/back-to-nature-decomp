@@ -4091,6 +4091,8 @@ extern s16 D_800BF64E;
  * against the +0x6 state field of its record argument. Absolute-addressed
  * (overlay build is -G0). */
 extern s16 D_800BF650;
+/* ovl_19 800BA834 loads this signed halfword for the case-10 thresholds. */
+extern s16 D_800BF652;
 extern u16 D_800BCEF0[];
 extern s16 D_800BCF0C[];
 extern u16 D_800BCF28[];

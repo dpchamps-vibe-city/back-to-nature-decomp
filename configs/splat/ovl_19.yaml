@@ -35,6 +35,7 @@ segments:
       - [0x1C, .rodata, ovl_19_func_800B998C]
       - [0x4C, .rodata, ovl_19_func_800BA0A0]
       - [0x70, rodata]
+      - [0x74, .rodata, ovl_19_func_800BA834]
       - [0xA4, .rodata, ovl_19_func_800BAB4C]
       - [0xB8, c, ovl_19_func_800B7ED8]
       - [0x114, c, ovl_19_func_800B7F34]
