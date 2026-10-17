@@ -166,6 +166,50 @@ extern s32 D_801349A8;
 /* 80131100 passes this NUL-terminated Shift-JIS format to KanjiFntPrint. */
 extern char D_8012E9D8[];
 
+/* 801320C8's 0xF8-stride menu addresses witness these halfword/word fields. */
+typedef struct Ovl30RecordF8 {
+    u8 pad0[0x16];
+    u16 affection;
+    u8 pad18[0xC];
+    u16 gestation;
+    u16 action;
+    u16 process_no;
+    u16 process_id;
+    u16 process_time;
+    u16 elapsed[2];
+    u8 pad32[2];
+    u32 flags;
+    s32 position[3];
+    u8 pad44[4];
+    s32 speed[3];
+    u8 pad54[4];
+    s32 target[3];
+    u8 pad64[0xAE - 0x64];
+    u16 field_AE;
+    u16 field_B0;
+    u16 field_B2;
+    u16 field_B4;
+    u16 field_B6;
+    u16 field_B8;
+    u16 field_BA;
+    u8 padBC[0xF8 - 0xBC];
+} Ovl30RecordF8;
+#define Ovl30_RecordsA638 ((Ovl30RecordF8 *)D_8007A638)
+/* 801320C8 loads this record selector with lw and edits it with width four. */
+extern s32 D_801349B4;
+/* 801320C8 installs these NUL-terminated rodata labels and print format. */
+extern char D_8012ECE8[];
+extern char D_8012ECF4[];
+extern char D_8012ED00[];
+extern char D_8012ED0C[];
+extern char D_8012ED18[];
+extern char D_8012ED24[];
+extern char D_8012ED30[];
+extern char D_8012ED3C[];
+extern char D_8012ED48[];
+extern char D_8012ED54[];
+extern char D_8012ED60[];
+extern char D_8012ED6C[];
 /* ovl_30 8012F084 maintains this word-sized active flag. */
 extern s32 D_80134AD8;
 /* ovl_30 8012F084 loads this word-sized index; decrement uses a signed zero clamp. */
@@ -2814,6 +2858,17 @@ extern s16 D_801273B6;
 extern s16 D_801273B8;
 /* 800FEFEC reads and writes this single two-byte selector; array view preserves other TUs' scalar view. */
 extern s16 D_801273B8_selection[1] __asm__("D_801273B8");
+/* 800FF324 reads/writes these signed menu selectors with lh/sh. */
+extern s16 D_801273BA;
+extern s16 D_801273BC;
+/* 800FF324 edits and tests the first four halfwords of the twelve-byte settings. */
+extern s16 D_8012CEE8_options[6] __asm__("D_8012CEE8");
+/* 800FF324 dispatches the two no-argument setter pairs in these tables. */
+extern void (*D_801273C8[2])(void);
+extern void (*D_801273D0[2])(void);
+/* 800FF324 adds D_80054BBC[0] bytes to these text bases and label offsets. */
+extern u8 D_80053CB8[];
+extern u8 D_80053D6A[];
 
 /* ovl_11_func_800FD3CC adds D_80054BBC[0] and copies lhu units to 0xFFFF. */
 extern u16 D_80053618[];
@@ -2852,6 +2907,19 @@ extern u8 D_80051D34[];
 /* D_80128264 - ovl_11 s32 table indexed by the ovl_11_func_80117F70
  * sub-state (lw at base + index*4). Absolute-addressed. */
 extern s32 D_80128264[];
+
+/* 80116980 reads/writes these two-byte menu indices with lh/lhu/sh. */
+extern s16 D_8012D518;
+extern s16 D_8012D51A;
+/* 8012823C contains the three-argument draw routines 8002462C..800246D4. */
+extern void (*D_8012823C[4])(s32, s16, s16);
+/* 80116980 reads halfwords at +44E0 and +8270 through this common base. */
+typedef struct {
+    u8 pad0[0x44E0];
+    u16 text[1];
+    u8 pad44E2[0x8270 - 0x44E2];
+    u16 status;
+} Ovl11MenuGlobals;
 
 /* D_8012D608 - ovl_11 halfword table; the 0x18-halfword fill in
  * ovl_11_func_80116F4C is the largest witnessed extent, and the same base is
