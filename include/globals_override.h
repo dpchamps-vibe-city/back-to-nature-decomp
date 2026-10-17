@@ -4367,6 +4367,12 @@ typedef struct {
     s32 counter;
 } Ovl27StateCounterView;
 
+/* ovl_19_func_800B8064 increments the signed word at D_8006C838 + 0x448C. */
+typedef struct {
+    u8 pad_0[0x448C];
+    s32 counter;
+} Ovl19CompletionCounterView;
+
 /* D_800C4A2C - ovl_27 halfword state counter at 0x800C4A2C. Read
  * unsigned to increment and signed to threshold-test; absolute-addressed
  * (overlay build is -G0). */
