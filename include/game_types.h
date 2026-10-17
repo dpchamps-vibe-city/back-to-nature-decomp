@@ -4,6 +4,21 @@
 
 #include "common.h"
 
+/* 800DB354/800DB4E0 consume these 0x16-byte slots; 800DB5CC walks eight. */
+typedef struct {
+    u16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u16 unk10;
+    u16 unk12;
+    u16 unk14;
+} Ovl11AnimationSlot;
+
 /* 800F8480/800F84D4 copy these three halfwords; 800F7E38 passes both records. */
 typedef struct {
     s16 field_0;

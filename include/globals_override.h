@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800DB140/800DB5CC: leading u16 of eight 0x16-byte slots at this base. */
+extern u16 D_800A03B0;
+
 /* ovl_11 80118B84 loads this selection with lh and resets it with sh. */
 extern s16 D_80128294;
 
