@@ -5024,5 +5024,8 @@ extern Ovl15CardHeaderBlock Ovl15CardHeader __asm__("D_80140F10");
 /* 8012FAE0 adds the shared text-bank offset before func_8001AC10. */
 extern u8 D_8005346A[];
 
+/* ovl_11_func_8011D35C reads/writes this selection state with lh/sh. */
+extern s16 D_801282E2;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
