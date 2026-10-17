@@ -3854,6 +3854,11 @@ extern u8 D_80053350[];
  * in the overlay, so an incomplete array extern keeps the base name. */
 extern u8 D_80053530[];
 
+/* ovl_15_func_80130FF0 adds D_80054BBC[0] bytes to this text-updater base. */
+extern u8 D_800533C8[];
+/* ovl_15_func_80130FF0 reads this state with lh and compares it against 0x5B. */
+extern s16 D_8013759A;
+
 /* ovl_15_func_80130B04 adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_80053596[];
 /* ovl_15_func_8012F300 adds D_80054BBC[0] bytes to this text-updater address. */

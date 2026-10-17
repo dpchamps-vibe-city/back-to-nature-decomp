@@ -10800,6 +10800,7 @@ Members (link order):
   state bytes `D_80137587`/`D_80137584` — body-identical to
   `ovl_15_func_80130048` except for the updater array and the immediate
   `0x17`→`0x12`
+- ovl_15_func_80130FF0 (m, byte-exact) — text-update and conditional menu reset ([grouping evidence](research/ovl_15_func_80130FF0-grouping.md)).
 - ovl_15_func_8013143C (m, matched this session, byte-exact) — shared
   `D_80052FC4` text-draw prologue, body-identical to `ovl_15_func_80130468`
   (calls `ovl_15_func_8012E15C` and sets `D_80137584 = 1`) plus a trailing
@@ -12647,6 +12648,7 @@ Members (address order):
 - ovl_15_func_80130FC8 (m, verified byte-exact this session) — second reset
   wrapper, exact body duplicate of `ovl_15_func_801300E4`; calls
   `ovl_15_func_8012E15C` then stores `-1` to `D_80137586`.
+- ovl_15_func_80130FF0 (m, byte-exact) — conditional reset handler for the shared menu-state block ([grouping evidence](research/ovl_15_func_80130FF0-grouping.md)).
 - ovl_15_func_801329D0 (m, verified byte-exact this session) — third reset
   wrapper, exact body duplicate of `ovl_15_func_801300E4`/`ovl_15_func_80130FC8`:
   calls `ovl_15_func_8012E15C` and stores `-1` to `D_80137586`; gapless in
