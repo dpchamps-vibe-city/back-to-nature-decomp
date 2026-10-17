@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 800F77F0 uses lh for this state threshold and sh for updates. */
+extern s16 D_80126E2C;
+
 /* ovl_11 80116878 loads this word with lw for a signed threshold comparison. */
 extern s32 D_80071A60;
 
