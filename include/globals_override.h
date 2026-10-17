@@ -1503,7 +1503,7 @@ struct Ovl23DecisionView {
     struct Ovl23DecisionRecord records[6];
 };
 
-/* 800B823C writes +4..+414; 800B8584 writes the dispatch halfword at +0. */
+/* 800B823C writes +4..+414; 800B8584 writes +0; 800B8754 increments s16 +416. */
 struct Ovl23ScreenHeader {
     s16 unk0;
     u8 pad2[2];
@@ -1514,6 +1514,7 @@ struct Ovl23ScreenHeader {
     s16 unk14;
     u8 pad16[0x3FE];
     s16 unk414;
+    s16 unk416;
 };
 extern struct Ovl23ScreenHeader Ovl23_D_800BF87C_header __asm__("D_800BF87C");
 

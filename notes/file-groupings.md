@@ -6708,6 +6708,7 @@ Membership extension: [shared outer selector, ordered callbacks and local initia
 Membership extension: [shared outer selector and gapless callback/text order](research/ovl_23_func_800B8018-grouping.md).
 Membership extension: [shared dispatch halfword/updater and gapless callback order](research/ovl_23_func_800B853C-grouping.md).
 Membership extension: [state-3 callback, shared transition machinery and corroborated callback/text order](research/ovl_23_func_800B85FC-grouping.md).
+Membership extension: [timed callback, shared counter handoff and corroborated callback/text order](research/ovl_23_func_800B8754-grouping.md).
 
 Evidence: the state dispatcher `ovl_23_func_800B7F00`'s gapless link-order
 predecessor `ovl_23_func_800B7EA4` (the ovl_23 code-segment head) dispatches
@@ -6733,6 +6734,7 @@ Members (link order):
 - ovl_23_func_800B850C (s) — two calls then sets `D_800BF87C = 1`.
 - ovl_23_func_800B853C (m, byte-exact, finalized) — `D_800BB9F8[1]` callback; updates records, polls state and conditionally advances the dispatch index to 2.
 - ovl_23_func_800B85FC (m, byte-exact, finalized) — `D_800BB9F8[3]` callback; updates records, polls state and conditionally advances the dispatch index to 4.
+- ovl_23_func_800B8754 (m, byte-exact, finalized) — `D_800BB9F8[5]` callback; updates records and advances the dispatch index to 6 after a 60-update delay.
 - ovl_23_func_800B87F8 (s) — larger state routine; loads the address of
   `D_800BF87C`.
 
