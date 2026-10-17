@@ -15,6 +15,31 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 80120A2C reads/writes a u16 state at +0 and signed coordinates at +0xC/+0x14. */
+typedef struct {
+    u16 unk0;
+    u8 pad2[0xC - 2];
+    s32 unkC;
+    u8 pad10[4];
+    s32 unk14;
+} Ovl11MapCameraState;
+extern s16 D_8012DB58;
+
+/* 80120A2C writes camera words/halfwords and the exit flag through this far base. */
+struct Ovl11MapCameraWork {
+    u8 pad0[0x25394];
+    s32 field_25394;
+    s32 field_25398;
+    u8 pad2539C[4];
+    s32 field_253A0;
+    u8 pad253A4[0x10];
+    u16 field_253B4;
+    u8 pad253B6[2];
+    u16 field_253B8;
+    u8 pad253BA[0x2548C - 0x253BA];
+    s32 field_2548C;
+};
+
 /* 80121134 passes this UV/CLUT buffer to 80120CC4 and 80120F30. */
 extern struct Ovl11TextureCoordinates D_8012DB38;
 
