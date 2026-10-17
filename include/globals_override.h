@@ -24,6 +24,9 @@ extern s16 D_80126E2C;
 /* ovl_11 80116878 loads this word with lw for a signed threshold comparison. */
 extern s32 D_80071A60;
 
+/* ovl_11 8010B4D8 indexes these 20 rodata handler-address words at +0x26. */
+extern s32 D_800BAA34[20];
+
 /* ovl_11 800D3048/800D3104 index these 21 rodata handler-address words. */
 extern s32 D_800B8EC0[21];
 

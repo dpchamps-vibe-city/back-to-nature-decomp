@@ -1000,6 +1000,7 @@ u16 *ovl_11_func_8010B1C4(s32 arg0);
 s32 ovl_11_func_8010B218(M2C_4224e215b714_Ov11FlagSet8010B218 *arg0);
 s32 ovl_11_func_8010B264(Ovl11B264Object *arg0);
 s32 ovl_11_func_8010B49C(M2C_24e7ca662cda_Ov11FlagSet *arg0);
+s32 ovl_11_func_8010B4D8(u16 *arg0);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 void ovl_11_func_8010B64C(s32 arg0);
 void ovl_11_func_8010B67C(void);
