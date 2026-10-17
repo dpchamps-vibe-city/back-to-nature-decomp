@@ -1443,6 +1443,8 @@ typedef struct {
     u16 id;
 } Ovl11TextureRecord;
 extern Ovl11TextureRecord D_80129648_textures[] __asm__("D_80129648");
+/* 800F9210 passes this four-halfword scratch rectangle to the image routines. */
+extern s16 D_80129638[4];
 /* 800F7230 reads lh counts, lhu overflow IDs, and writes stride-0x22 piece fields. */
 extern s16 D_80126F74[];
 extern u16 D_80126E30[];
@@ -4216,6 +4218,11 @@ extern u8 D_8006CA10[];
 extern s16 D_800A0494[288];
 /* ovl_11_func_800F0A58 passes this "Error\n" rodata string to FntPrint. */
 extern char D_800B9F58[];
+/* 800F9210 reads and writes the two nine-halfword rows at base +0x254A4. */
+typedef struct {
+    u8 pad_0[0x254A4];
+    s16 slots[2][9];
+} Ovl11FarSlotTableView;
 /* ovl_11_func_800F0A58 copies a 0x1E-byte record at these far-buffer offsets. */
 typedef struct {
     u8 pad_0[0x254C8];
