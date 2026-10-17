@@ -11836,12 +11836,12 @@ cluster tie and the run is zero-gap. The two tail members additionally share an
 identical prologue (the same `lui $v1,%hi(D_801376D0)` / `lui
 $v0,%hi(D_80137AB0)` / `addiu` / `sw $v0,%lo(D_801376D0)($v1)` sequence) and
 mirror 201-iteration memmove loops on the same buffer, which is what the run's
-tail adjacency adds to the global tie.
+tail adjacency adds to the global tie. The adjacent head pair additionally
+saves/restores the same runtime-global cluster through matching save-buffer
+offsets, corroborating their membership beyond the shared pointer initialization.
 Members (link order):
-- ovl_15_func_80134C48 (s) — sets `D_801376D0 = D_80137AB0`, then repeatedly
-  reads the pointer back; calls `memset`; role otherwise unknown.
-- ovl_15_func_80135380 (s) — sets `D_801376D0 = D_80137AB0` and is the
-  heaviest reader/writer of the pointer; role unknown.
+- ovl_15_func_80134C48 (m, byte-exact) — serializes runtime state into the shared save buffer and clears transient fields.
+- ovl_15_func_80135380 (s) — restores runtime state from the same save-buffer layout.
 - ovl_15_func_801359FC (m, matched this session, byte-exact) — mirrored sibling: writes the pointer, then 201×
   `memmove(p + 0x80, p + 0x7F, size)` with `size` decreasing by 0x80; afterwards
   `func_80012A34(0x100)` and `D_80137830[0x7FFE] = (u8)result`.

@@ -4605,6 +4605,46 @@ typedef struct { s32 words[0x3C / 4]; } Ovl15SaveBlock3C;
 typedef struct { s32 words[0x108 / 4]; } Ovl15SaveBlock108;
 typedef struct { s32 words[0x24 / 4]; } Ovl15SaveBlock24;
 typedef struct { s32 words[0x34 / 4]; } Ovl15SaveBlock34;
+/* 80134C48 copies 0x74 aligned bytes from D_8007A5C4 into the save buffer. */
+typedef struct { s32 words[0x74 / 4]; } Ovl15SaveBlock74;
+extern s32 D_8007A5C4[0x74 / 4];
+/* 80134C48's scalar word stores in the serialized save buffer. */
+typedef struct {
+    u8 pad_0[0x2274];
+    s32 field_2274;
+    s32 field_2278;
+    s32 field_227C;
+    s32 field_2280;
+    u8 pad_2284[0x2320 - 0x2284];
+    s32 field_2320;
+    s32 field_2324;
+    u8 pad_2328[0x2350 - 0x2328];
+    s32 field_2350;
+    s32 field_2354;
+    s32 field_2358;
+    s32 field_235C;
+    s32 field_2360;
+    u8 pad_2364[0x6088 - 0x2364];
+    s32 field_6088;
+    u8 pad_608C[0x6360 - 0x608C];
+    s32 field_6360;
+    s32 field_6364;
+    s32 field_6368;
+} Ovl15SaveBufferWords;
+/* 80134C48 clears words in ten 0xB4-byte and twenty 0xB8-byte save records. */
+typedef struct {
+    s32 state;
+    u8 pad_4[0xB4 - 4];
+} Ovl15SaveRecordB4;
+typedef struct {
+    s32 state;
+    u8 pad_4[0xB8 - 4];
+} Ovl15SaveRecordB8;
+typedef struct {
+    u8 pad_0[0x8C];
+    Ovl15SaveRecordB4 records_B4[10];
+    Ovl15SaveRecordB8 records_B8[20];
+} Ovl15SaveRecordStates;
 /* 80135380 loads the two destination pointers through the D_8006C838 base. */
 typedef struct {
     u8 pad_0[0xDDCC];

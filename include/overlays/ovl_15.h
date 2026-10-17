@@ -90,6 +90,7 @@ s8 *ovl_15_func_80134770(s16 arg0);
 s8 *ovl_15_func_80134890(s16 arg0, s8 *arg1, s16 arg2);
 void ovl_15_func_801349C8(s16 arg0, char *arg1);
 void ovl_15_func_80134A34(s16 arg0);
+void ovl_15_func_80134C48(void);
 void ovl_15_func_80135380(void);
 void ovl_15_func_801359FC(void);
 void ovl_15_func_80135A78(void);
