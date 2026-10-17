@@ -4,6 +4,13 @@
 
 #include "common.h"
 
+/* 800F8480/800F84D4 copy these three halfwords; 800F7E38 passes both records. */
+typedef struct {
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+} Ovl11CopyRecord;
+
 /* 800C6770: lhu state at +3C, lw/sw flags at +6C, six-byte item at +8A. */
 typedef struct {
     u8 pad0[0x3C];
