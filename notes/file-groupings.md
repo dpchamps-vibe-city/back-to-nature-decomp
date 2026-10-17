@@ -321,16 +321,13 @@ Members:
 - ovl_11_func_800FE780 (m) — sub-mode argument `3`,
   trailing args `0x120` / `0xC8`.
 
-## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C8764 / 0x800C8D9C (confidence: medium)
+## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7010 / 0x800C70CC / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C8764 / 0x800C8D9C (confidence: medium)
 
-Evidence: four functions in the same small 0x800C6E0C–0x800C72F4 link-order
-run that read and write the same
-recovered field layout and end in the same call idiom. The three earlier ones
-take an a0 view with `u16@+0x38` and `u16@+0x3C`, switch on `+0x3C`, store an
-s32 into an a1 view's 4-byte union at `+0`, then call
-`func_80015840((u8*)arg0 + 0x260, arg1->unk0.unk0_b)`. The view typedefs
-recovered from the already-matched `ovl_11_func_800C6F0C` fit the new function
-unchanged, which is shared-type-cluster plus shared-idiom evidence.
+Candidate same-TU family supported by shared state/animation idioms and a
+local caller/helper cluster whose call graph agrees with gapless link order.
+Original TU boundaries remain unproven.
+Evidence and limits for the 800C7010/800C70CC addition:
+[grouping research](research/ovl_11_func_800C7010-grouping.md).
 
 Members:
 - ovl_11_func_800C6E0C (m, matched this session) — switch on `+0x3C` over
@@ -347,6 +344,8 @@ Members:
   on `+0x3C` over {1,2,4}: `+0x3C==1` → `0x36`, cases 2/4 → `+0x38 + 0x3B`,
   and the case-4 arm additionally calls `func_8001B2CC(0, 0)`; constants plus
   the extra call are all that differ.
+- ovl_11_func_800C7010 (m, byte-exact) — flag-dependent animation selector used by the adjacent state-change dispatcher.
+- ovl_11_func_800C70CC (s) — state-change dispatcher calling the five preceding animation-selection helpers.
 - ovl_11_func_800C7270 (m, matched this session) — stores `+0x3C = arg1`,
   copies old `+0x3C` into `+0x3E`, sets bit 0x20000000 / clears bit 0x04000000
   of `+0x6C`, then calls `func_80015840((u8*)arg0 + 0x260, arg2 & 0xFF)` and

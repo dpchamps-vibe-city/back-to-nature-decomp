@@ -587,6 +587,18 @@ typedef struct {
     u16 unk3C;
 } Recon_ovl_11_func_800C6F0C_A0View;
 
+/* 800C7010: halfwords at 38/3C, flags at 6C, animation data at 260. */
+typedef struct {
+    char pad_0[0x38];
+    u16 unk38;
+    char pad_3A[2];
+    u16 unk3C;
+    char pad_3E[0x2E];
+    s32 unk6C;
+    char pad_70[0x1F0];
+    SpriteSourceData sprite;
+} Ovl11C7010Object;
+
 typedef struct {
     union {
         u8 unk0_b;

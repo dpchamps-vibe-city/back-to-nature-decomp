@@ -2479,6 +2479,17 @@ typedef struct {
 } Ovl11C6770Object;
 
 typedef struct {
+    char pad_0[0x38];
+    u16 unk38;
+    char pad_3A[2];
+    u16 unk3C;
+    char pad_3E[0x2E];
+    s32 unk6C;
+    char pad_70[0x1F0];
+    SpriteSourceData sprite;
+} Ovl11C7010Object;
+
+typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;

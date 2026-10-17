@@ -112,6 +112,7 @@ void ovl_11_func_800C6E0C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_
 void ovl_11_func_800C6E8C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F0C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F6C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
+void ovl_11_func_800C7010(Ovl11C7010Object *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C7650(void);
 s32 ovl_11_func_800C7838(u8 *arg0);
