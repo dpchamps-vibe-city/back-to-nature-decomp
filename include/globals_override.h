@@ -4831,5 +4831,30 @@ typedef struct {
     u8 field_4AC0[22];
 } Ovl11Deb00State;
 
+/* 8012FAE0 copies the aligned "SC" signature with lh + lb (three bytes). */
+extern const s16 D_8012DEBC[4];
+/* 8012FAE0 selects nine word offsets in three 12-byte rows. */
+extern u32 D_801375B4[3][3];
+/* 8012E15C publishes this buffer pointer; 8012FAE0 adds the icon offsets. */
+extern u8 *D_80137828;
+/* 8012FAE0 copies 0x80-byte icon frames to these byte-addressed blocks. */
+extern u8 D_801378B0[0x80];
+extern u8 D_80137930[0x80];
+extern u8 D_801379B0[0x80];
+/* 8012FAE0 copies a 32-byte under-aligned palette as one aggregate. */
+typedef struct { u8 bytes[0x20]; } Ovl15IconPalette;
+/* 8012FAE0 writes the SC header, clears +44..+5F and copies a palette at +60. */
+typedef struct {
+    s16 magic;
+    s8 type;
+    s8 blocks;
+    char title[0x40];
+    u8 reserved[0x1C];
+    Ovl15IconPalette palette;
+} Ovl15CardHeaderBlock;
+extern Ovl15CardHeaderBlock Ovl15CardHeader __asm__("D_80140F10");
+/* 8012FAE0 adds the shared text-bank offset before func_8001AC10. */
+extern u8 D_8005346A[];
+
 #endif /* GLOBALS_OVERRIDE_H */
 

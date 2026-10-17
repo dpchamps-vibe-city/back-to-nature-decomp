@@ -10619,7 +10619,7 @@ seven members use `D_80053350`, `ovl_15_func_8012EE84` uses `D_80052FFA`,
 `D_80051E02`, `ovl_15_func_80132934` uses `D_80051E88`,
 `ovl_15_func_80130A94` uses `D_800532FE`, `ovl_15_func_80130BBC` and
 `ovl_15_func_80131B5C` use `D_800523AC`, `ovl_15_func_80130DDC` uses `D_8005341E`,
-`ovl_15_func_8012F8DC` and `ovl_15_func_8012FF28` use `D_8005346A`,
+`ovl_15_func_8012F8DC`, `ovl_15_func_8012FAE0` and `ovl_15_func_8012FF28` use `D_8005346A`,
 `ovl_15_func_8013010C` uses `D_800534DC`,
 `ovl_15_func_8012EEEC` uses `D_80053530` (shared with the in-run
 `ovl_15_func_8013063C` and `ovl_15_func_80131618`), and
@@ -10706,6 +10706,7 @@ Members (link order):
   returned), and `D_80137584 = 0` when `D_8013759A >= 0x5B` — same body as
   `ovl_15_func_8012FA00` with only the updater array and the immediate
   `0x11`→`0x12` changed, and contiguous in link order after it (both 0x70 bytes)
+- ovl_15_func_8012FAE0 (m, byte-exact) — assembles the memory-card save header and icon frames ([shared-prologue evidence](research/ovl_15_func_8012FAE0-grouping.md)).
 - ovl_15_func_8012FF28 (m, verified byte-exact this session) — shared text-draw
   prologue with the `D_8005346A` updater array (shared with `ovl_15_func_8012F8DC`);
   then `ovl_15_func_80136660(D_8013758C, D_8013758E, D_80137830)` and maps the
@@ -12670,7 +12671,7 @@ Members (address order):
   up/down and clamps it to 0/1, then draws at `(D_80137588 * 0xE) + 0xC8`;
   gapless link successor of `ovl_15_func_8013703C` and predecessor of
   `ovl_15_func_80137228`.
-- ovl_15_func_8012FAE0 (s) — reads `D_80137828` as a buffer base.
+- ovl_15_func_8012FAE0 (m, byte-exact) — assembles save-card header/icons from `D_80137828`; also in the shared-prologue cluster ([evidence](research/ovl_15_func_8012FAE0-grouping.md)).
 - ovl_15_func_80137300 (m, verified byte-exact this session) — `DrawSync(0)`,
   `ClearOTagR(D_8005E3C0->field_120, 0x800)`, then polls
   `func_80014CBC(0x10, 0, 0x900, D_80137828, 1, 0)` until non-zero and returns
