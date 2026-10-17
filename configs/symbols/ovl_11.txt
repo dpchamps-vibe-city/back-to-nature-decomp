@@ -1604,3 +1604,7 @@ ovl_11_func_8012135C = 0x8012135C; // type:func
 ovl_11_func_801213D8 = 0x801213D8; // type:func
 ovl_11_func_801214F8 = 0x801214F8; // type:func
 ovl_11_func_80121500 = 0x80121500; // type:func
+
+// 800DA638 independently loads/stores the two coordinate halfwords in this data word.
+D_80128DAC = 0x80128DAC; // type:u16 size:0x2
+D_80128DAE = 0x80128DAE; // type:u16 size:0x2

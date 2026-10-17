@@ -2313,6 +2313,22 @@ typedef struct {
     /* 0x06 */ s16 unk6;
 } Ovl11D124Entry;
 extern Ovl11D124Entry D_80074124[7][7];
+/* 800DA638 dispatches the two matched three-s16 texture setters. */
+extern s32 (*D_80123DFC[2])(s16, s16, s16);
+/* 800DA638 reads signed row/column bounds at index*4 and +2. */
+typedef struct {
+    s16 height;
+    s16 width;
+} Ovl11GridBounds;
+extern Ovl11GridBounds D_80123E0C[2];
+/* 800DA638 loads nine pairs of halfword offsets, then narrows sums to s16. */
+extern u16 D_80123E14[18];
+/* 800DA638 accesses the first coordinate halfword in the data word at 80128DAC. */
+extern u16 D_80128DAC;
+/* 800DA638 independently addresses the second coordinate halfword at +2. */
+extern u16 D_80128DAE;
+/* 800DA638 stores the signed variant selector after the coordinate pair. */
+extern s16 D_80128DB0;
 
 /* 800C55FC dispatches three pointers through the D7EF8/E090 callback pair. */
 extern s32 (*D_80123234[])();

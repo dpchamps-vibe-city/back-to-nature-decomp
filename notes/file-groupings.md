@@ -12399,7 +12399,7 @@ Members:
   gate then `D_80123DFC[arg0](arg1, arg2, var_a2)`.
 - ovl_11_func_800DACD4 (s) — indexes the same table, keyed by arg2.
 - ovl_11_func_800D88D0 (s) — reaches the same table.
-- ovl_11_func_800DA638 (s) — reaches the same table.
+- ovl_11_func_800DA638 (m, byte-exact) — classifies 3x3 grid neighbourhoods via `800DAF60`, stores cell variants, and dispatches texture updates through `D_80123DFC[arg2]`.
 
 Separate local mode-1 texture-update candidate TU pair (confidence: medium;
 [call/link-order evidence](research/ovl_11_func_800D759C-grouping.md)):
