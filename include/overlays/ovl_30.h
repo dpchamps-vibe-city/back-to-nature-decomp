@@ -11,6 +11,7 @@ void ovl_30_func_8012F084(void);
 void ovl_30_func_8012F3D4(void);
 void ovl_30_func_8012F410(void);
 void ovl_30_func_8012F44C(void);
+s32 ovl_30_func_8012F454(s32 state);
 void ovl_30_func_8012FDEC(void);
 s32 ovl_30_func_8012FE68(s32 arg0, s32 arg1);
 void ovl_30_func_8012FE94(void);

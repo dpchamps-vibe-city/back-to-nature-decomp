@@ -8765,22 +8765,15 @@ Members (link order):
 - ovl_30_func_8012F084 (m) — debug-menu lifecycle, callback dispatch and edited-setting application.
 - ovl_30_func_8012FDEC (m) — input-driven editor of D_80134B14 shared with 8012F084/8012F454 (wider-TU membership uncertain).
 
-## `ovl_30` mirror sibling pair — 0x8012F3D4 / 0x8012F410 (confidence: medium)
+## `ovl_30` debug menu and mirror-helper run — 0x8012F3D4–0x8012F454 (confidence: medium)
 
-Two call-sequence leaves in `ovl_30` (`Obj\GF_swind.bin`):
-
-- **gapless link adjacency:** `ovl_30_func_8012F3D4` (0x3C bytes at
-  0x8012F3D4, matched) ends exactly at `ovl_30_func_8012F410` (0x3C bytes at
-  0x8012F410, matched byte-exact this session) — one unbroken link run;
-- **identical call shape, one differing constant:** both emit the same
-  three-call sequence `func_80020B80(2, 0)`, `func_80020B80(1, 0)`,
-  `func_8001FBF0(<k>, 0)` — 8012F3D4 uses 0x3E7, 8012F410 uses 0x3E8;
-- **what the tie is not:** the next link neighbours (`ovl_30_func_8012F44C`,
-  empty leaf; `ovl_30_func_8012F454`, stub) share no call shape with the pair.
+[Common-caller and gapless-link evidence; membership limits](research/ovl_30_func_8012F454-grouping.md).
 
 Members (link order):
-- ovl_30_func_8012F3D4 (m) — call-sequence leaf, constant 0x3E7
-- ovl_30_func_8012F410 (m) — call-sequence leaf, constant 0x3E8
+- ovl_30_func_8012F3D4 (m) — menu-row entry call sequence, constant 0x3E7.
+- ovl_30_func_8012F410 (m) — menu-row exit call sequence, constant 0x3E8.
+- ovl_30_func_8012F44C (m) — empty per-call hook for 8012F454.
+- ovl_30_func_8012F454 (m, byte-exact) — debug flags and sound-test menu state machine.
 
 ## `ovl_30` adjacent value-menu wrappers — 0x8012FEEC / 0x8012FF50 (confidence: medium)
 

@@ -620,6 +620,33 @@ extern s16 D_80061E14[3];
 extern struct GfxObj *D_8005E3A8;
 extern struct GfxObj *D_8005E3AC;
 
+/* 8012F454 accesses flag words at +0xC and +0x10 through this shared base. */
+struct Ovl30DebugFlags {
+    u8 pad[0xC];
+    s32 flagsC;
+    s32 flags10;
+};
+
+/* 8012F454 passes these original debug-menu strings to FntPrint. */
+extern char D_8012DEC4[];
+extern char D_8012DEE0[];
+extern char D_8012DEF0[];
+extern char D_8012DF00[];
+extern char D_8012DF14[];
+extern char D_8012DF20[];
+extern char D_8012DF34[];
+/* 8012F454 indexes the two status strings and the loaded menu-label table. */
+extern char *D_80133F70[2];
+extern char **D_80133FB4;
+extern u32 D_80133FB8;
+/* 8012F454 uses lw/sw for the cursor, sound selectors and playback handle. */
+extern s32 D_80134AE4;
+extern s32 D_80134AE8;
+extern s32 D_80134AEC;
+extern s32 D_80134AF0;
+extern s32 D_80134AF4;
+extern s32 D_80134AF8;
+
 /* ovl_30_func_80131C38 reads/writes this selection index with lw/sw. */
 extern s32 D_801349AC;
 /* ovl_30_func_80131C38 passes these original rodata strings to FntPrint. */
