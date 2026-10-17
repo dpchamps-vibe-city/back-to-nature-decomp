@@ -7944,6 +7944,7 @@ Members:
   0x3FFF payload and re-sets 0x8000 (`arg1 == 0`) / 0x4000 (`arg1 == 2`) via a
   case-0/1/2 switch; returns 1. Reader-side counterpart of the writer members:
   the table slot it consumes is what `800E8BA0`/`800E8D00`/`800E9778` fill.
+- ovl_11_func_800EB85C (m, candidate same TU; [evidence](research/ovl_11_func_800EB85C-grouping.md)) — five-ID position/action sequencer using the shared state slots and accessor-helper cluster.
 - ovl_11_func_800EC490 (m, matched 2026-11 — this session, 0x9C, byte-exact) —
   four-slot default restore: for each of four args, if `!= -1`, writes
   `D_80129560[arg] = D_80070D06/08/0A/0C` (four adjacent engine-rodata u16s,

@@ -2208,6 +2208,10 @@ extern s32 D_80124920[10];
 extern s32 D_80124948[10];
 extern s16 D_80124970[10];
 
+/* ovl_11_func_800EB85C walks five s16 IDs and two parallel five-s32 coordinate arrays. */
+extern s16 D_80124984[5];
+extern s32 D_80124990[2][5];
+
 /* ovl_11_func_800ED7E0 copies five signed halfwords from this rodata object. */
 struct Ovl11CandidateList {
     s16 values[5];
