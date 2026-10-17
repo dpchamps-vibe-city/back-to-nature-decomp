@@ -11967,6 +11967,7 @@ Members (link order):
 - ovl_19_func_800B8908 (m, byte-exact; candidate member) — timed outer callback; resets three command records and hands off to the next outer handler ([grouping evidence](research/ovl_19_func_800B8908-grouping.md)).
 - ovl_19_func_800B89C8 (s, 0x2AC) — cluster hub; also reads `D_800BF4C0` and
   calls `800B95D4`/`800B998C`/`800BA25C`/`800BA770`/`800BAC5C`/`800BAC7C`.
+- ovl_19_func_800B8C74 (m, byte-exact; candidate member) — selection-result text callback; advances selection and chooses restart, completion or exit ([grouping evidence](research/ovl_19_func_800B8C74-grouping.md)).
 - ovl_19_func_800B8DA8 (m, byte-exact; candidate member) — final inner handler; runs the shared render driver, marks completion and advances the outer state ([grouping evidence](research/ovl_19_func_800B8DA8-grouping.md)).
 - ovl_19_func_800B8DE8 (m, matched this session, byte-exact) — gapless
   link-order neighbour on the same overlay-local s16 array through the

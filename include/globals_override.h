@@ -4059,7 +4059,22 @@ extern s16 D_800BFC90;
 extern s32 D_8007AE58;
 /* D_800BCD68 - ovl_19 text data: 0x12C bytes of halfwords, indexed by byte offsets. */
 extern u16 D_800BCD68[0x96];
+/* 800B8C74 indexes this byte table with the signed selection at state +0x8. */
+extern u8 D_800BCF24[];
 extern s16 D_800BF4C0[];
+/* 800B8C74: state at +4, signed selection at +8, byte flag at +C,
+ * indexed signed values at +160 and signed handle at +204. */
+typedef struct {
+    u8 pad_0[4];
+    s16 state;
+    u8 pad_6[2];
+    s16 selection;
+    u8 pad_A[2];
+    u8 flag;
+    u8 pad_D[0x153];
+    s16 values[0x52];
+    s16 handle;
+} Ovl19SelectionState;
 /* ovl_19 800B9124 increments/resets this signed word and tests its remainder modulo 30. */
 extern s32 D_800BD078;
 /* ovl_19 800B95D4 anchors its two 0x48-byte signed-halfword records here. */
@@ -4391,11 +4406,13 @@ typedef struct {
     s32 counter;
 } Ovl27StateCounterView;
 
-/* 800B8064 increments s32@+0x448C; 800B8DA8 also sets s32@+0xE624. */
+/* 800B8064 increments s32@+0x448C; 800B8DA8 sets s32@+0xE624;
+ * 800B8C74 reads the text word at +0xE620 and clears completion. */
 typedef struct {
     u8 pad_0[0x448C];
     s32 counter;
-    u8 pad_4490[0xA194];
+    u8 pad_4490[0xA190];
+    s32 text;
     s32 completed;
 } Ovl19CompletionCounterView;
 
