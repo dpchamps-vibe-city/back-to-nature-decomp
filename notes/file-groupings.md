@@ -4303,6 +4303,10 @@ PushMatrix/PopMatrix, call func_8001D6B8 and func_8001C37C, and pass the
 primitive origin at descriptor+0xC together with a 0x1C-stride entry. Both
 use the independently classified scratchpad-stack switching idiom; this is
 shared rendering machinery plus adjacency, not a proven TU boundary.
+The verified func_8001C37C increments the same GP-relative D_8005E4E8
+counter that func_8001C0D4 resets and returns, adding a shared-global
+fingerprint to their existing direct-call and GTE-idiom relationship
+([evidence](research/func_8001C37C-rendering.md)); TU boundaries remain unproven.
 Members: func_8001BFEC (m) — batch driver: publishes D_8005E4D8, optionally
 runs func_8001D6B8 under the D_8005E2D4 guard, and renders each primitive on
 the scratchpad stack; its counter-based entry guard yields the original
@@ -4311,8 +4315,9 @@ saved-register allocation. func_8001C0D4 (m) — GTE camera/view driver
 func_8001D348/func_8001D6B8; func_8001C1C0 (m) — camera-to-point direction via
 VectorNormalSS tested against 4 planes, read by sole caller func_8001C0D4
 (address-adjacent, shares the GTE vector idiom; reads D_80061EC8 camera +
-D_80061EA8 plane coefficients); func_8001C37C (s) — projected primitive
-renderer/caller; HasTriangleVertexXInBounds (m) — three-vertex X bounds
+D_80061EA8 plane coefficients); func_8001C37C (m) — projects and emits
+F/G/FT/GT triangles and quads, incrementing the caller's D_8005E4E8 count;
+HasTriangleVertexXInBounds (m) — three-vertex X bounds
 helper; func_8001D2D8 (?) — four-vertex X bounds helper; func_8001D348 (m) —
 camera position and four clipping-plane setup (writes D_80061EC8/D_80061EA8
 read by func_8001C1C0; both called by func_8001C0D4 in this link-order run,

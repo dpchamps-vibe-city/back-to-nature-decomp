@@ -1,19 +1,4 @@
 #include "common.h"
-#include "include_asm.h"
-
-INCLUDE_ASM("build/asm/nonmatchings/func_8001C37C", func_8001C37C);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-17T19:27:45.625Z.
- * Reason: asm-needs-human-approval.
- * Escalation reached: gpt-6.1-sol.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/func_8001C37C.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -454,4 +439,3 @@ loop_89:
         D_8005E4DC->field_118 = (s32)var_s0;
     }
 }
-#endif
