@@ -4569,6 +4569,54 @@ extern u8 D_80051EC6[];
 extern u8 D_800520A0[];
 /* ovl_15_func_801359FC stores the alternate record-pool byte pointer. */
 extern u8 *D_801376D0;
+/* 80135380 restores these word-aligned save blocks (0x4C/0x24/0x34/0x18 bytes). */
+extern s32 D_8007AD00[0x13];
+extern u8 D_8007AF80[0x24];
+extern s32 D_8007AFA4[13];
+extern s32 D_8007AFD8[6];
+/* 80135380 selects this save buffer and reads through byte offset 0x6377. */
+extern u8 D_80137AB0[];
+
+/* 80135380's aligned aggregate transfers establish these save-block extents. */
+typedef struct { s32 words[0xF0 / 4]; } Ovl15SaveBlockF0;
+typedef struct { s32 words[0x30 / 4]; } Ovl15SaveBlock30;
+typedef struct { s32 words[0x1F34 / 4]; } Ovl15SaveBlock1F34;
+typedef struct { s32 words[0x18 / 4]; } Ovl15SaveBlock18;
+typedef struct { s32 words[0x14 / 4]; } Ovl15SaveBlock14;
+typedef struct { s32 words[8 / 4]; } Ovl15SaveBlock8;
+typedef struct { s32 words[0x94 / 4]; } Ovl15SaveBlock94;
+typedef struct { s32 words[0xCFC / 4]; } Ovl15SaveBlockCFC;
+typedef struct { s32 words[0x3FC / 4]; } Ovl15SaveBlock3FC;
+typedef struct { s32 words[0x2328 / 4]; } Ovl15SaveBlock2328;
+typedef struct { s32 words[0x188 / 4]; } Ovl15SaveBlock188;
+typedef struct { s32 words[0x40 / 4]; } Ovl15SaveBlock40;
+typedef struct { s32 words[0x6C8 / 4]; } Ovl15SaveBlock6C8;
+typedef struct { s32 words[0xC / 4]; } Ovl15SaveBlockC;
+typedef struct { s32 words[0x3C / 4]; } Ovl15SaveBlock3C;
+typedef struct { s32 words[0x108 / 4]; } Ovl15SaveBlock108;
+typedef struct { s32 words[0x24 / 4]; } Ovl15SaveBlock24;
+typedef struct { s32 words[0x34 / 4]; } Ovl15SaveBlock34;
+/* 80135380 loads the two destination pointers through the D_8006C838 base. */
+typedef struct {
+    u8 pad_0[0xDDCC];
+    Ovl15SaveBlockF0 *block_DDCC;
+    u8 pad_DDD0[4];
+    Ovl15SaveBlock30 *block_DDD4;
+} Ovl15SaveRestoreRuntime;
+/* 80135380 copies four unaligned bytes and five u16 fields at stride 14. */
+typedef struct { u8 bytes[4]; } Ovl15SaveBytes4;
+typedef struct {
+    Ovl15SaveBytes4 bytes;
+    u16 field_4;
+    u16 field_6;
+    u16 field_8;
+    u16 field_A;
+    u16 field_C;
+} Ovl15SavedRecord;
+typedef struct {
+    u8 pad_0[0x1F34];
+    Ovl15SavedRecord records[37];
+} Ovl15SavedRecordList;
 /* 80133808 adds the language offset and reads four halfwords from this text. */
 extern u8 D_800535C6[];
 /* Address-only text anchor in 80133808; s32 view also witnessed by 800FD194. */
