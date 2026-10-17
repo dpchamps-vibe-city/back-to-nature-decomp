@@ -6705,6 +6705,7 @@ agrees (0x800BB0E8 + 0x68 = 0x800BB150).
 ## `ovl_23` D_800BF87C dispatch-index cluster — 0x800B7EA4–0x800B87F8 (confidence: medium)
 
 Membership extension: [shared outer selector, ordered callbacks and local initialization connection](research/ovl_23_func_800B7F00-grouping.md).
+Membership extension: [shared dispatch halfword/updater and gapless callback order](research/ovl_23_func_800B853C-grouping.md).
 
 Evidence: the state dispatcher `ovl_23_func_800B7F00`'s gapless link-order
 predecessor `ovl_23_func_800B7EA4` (the ovl_23 code-segment head) dispatches
@@ -6727,6 +6728,7 @@ Members (link order):
   `((void (*)(s32 *))D_800BB9F8[D_800BF87C])(D_800BB9F8)`, a no-arg table
   dispatch stub.
 - ovl_23_func_800B850C (s) — two calls then sets `D_800BF87C = 1`.
+- ovl_23_func_800B853C (m, byte-exact, finalized) — `D_800BB9F8[1]` callback; updates records, polls state and conditionally advances the dispatch index to 2.
 - ovl_23_func_800B87F8 (s) — larger state routine; loads the address of
   `D_800BF87C`.
 
