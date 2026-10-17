@@ -4390,6 +4390,18 @@ extern s32 D_801217A4;
  * scalar extern keeps the base name. */
 extern s16 D_80129418;
 
+/* ovl_11_func_800D3574 selects byte offsets into these sprite-data banks. */
+extern s32 D_80098BF8;
+extern s32 D_8009A3F8;
+/* ovl_11_func_800D3574 loads word offsets at +4 through +14 from these pointers. */
+extern s32 *D_80124FD4;
+extern s32 *D_80124FD8;
+extern s32 *D_80124FDC;
+extern s32 *D_80124FE0;
+extern s32 *D_80124FE4;
+/* ovl_11_func_800D3574 reads the engine mode with lw, unlike halfword users. */
+extern s32 D_80070CF8_word __asm__("D_80070CF8");
+
 /* D_8009CBF8: ovl_11_func_800C2884 reads counted words; other users copy bytes. */
 extern s32 D_8009CBF8;
 /* D_8008F7F8 word view: the helper reads u32 counts/items; existing users

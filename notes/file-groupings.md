@@ -2210,10 +2210,10 @@ in the D_80123754 setter run. Members:
 
 ---
 
-## `ovl_11` D_800B8EC0 state-dispatch table run — 0x800D3048 / 0x800D3104 (confidence: medium)
+## `ovl_11` D_800B8EC0 state-dispatch table run + ID helpers — 0x800D3048 / 0x800D3104 / 0x800D3468 / 0x800D3574 (confidence: medium)
 
 Two absolute-addressed (-G0) tables in `build/ovl_11/asm/data/104C.rodata.s`
-tie these adjacent functions together. `D_800B8EC0` is a 21-word table of
+tie `800D3048` and `800D3104` together. `D_800B8EC0` is a 21-word table of
 per-state handlers (index 5 null; entries include 800D3FEC, 800D55F8, 800D539C)
 and `D_800B8E6C` is a parallel 21-word table with only indices 5–7 populated
 (800D4030 / 800D3FEC / 800D4028). Shared fingerprint: both functions read the
@@ -2222,6 +2222,12 @@ table as a function pointer on the same object, and test the +0x34 flag 0x800.
 Zero-gap link-order contiguity: 0x800D3048 (0xBC) ends exactly where 0x800D3104
 begins. The D_800B8EC0 handlers overlap the D_80128D78 cluster above, whose
 dispatch caller ovl_11_func_800D3468 drives this run.
+
+Extension from verified `800D3574`: it and its gapless predecessor `800D3468`
+share the object-ID case set and `SystemError(0x45, ...)` convention;
+`800D3048` calls both on the same object. Call/link adjacency plus shared
+idiom supports candidate membership, not a proven TU boundary. Evidence and
+limits: [grouping research](research/ovl_11_func_800D3574-grouping.md).
 
 Corroborated handler run (match of ovl_11_func_800D4030): the three populated
 `D_800B8E6C` handlers are also a gapless link-order run — 0x800D3FEC (0x3C) →
@@ -2240,6 +2246,8 @@ contiguity plus the shared handler table, not index order.
 - ovl_11_func_800D3104 (m) — state-entry wrapper: pre-checks `D_800B8E6C[arg1]`,
   sets +0x26 = arg1, zeroes +0x28/+0x2A/+0x2C, and runs the `D_800B8EC0[arg1]`
   handler, then re-inits the +0x48 vector via ovl_11_func_800D0408(4, ...).
+- ovl_11_func_800D3468 (m) — object-ID dispatcher selecting and entering a state.
+- ovl_11_func_800D3574 (m, byte-exact) — object-ID sprite-source refresh, clearing the object ID when a dynamic source is unavailable.
 
 ---
 
