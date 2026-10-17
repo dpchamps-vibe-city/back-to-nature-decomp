@@ -2789,6 +2789,15 @@ typedef struct {
 } Ovl19Func800BA73CArg;
 
 typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 position[4];
+    SpriteSourceData sprite;
+} Ovl19Func800BAB4CArg;
+
+typedef struct {
                char pad_0[0x2];
                s16 unk2;
                s16 unk4;

@@ -531,6 +531,17 @@ typedef struct {
     /* 0x02 */ u16 unk2;
 } Ovl19Func800BA73CArg;
 
+/* ovl_19_func_800BAB4C: signed halfwords at +0/+2/+6, position passed
+ * at +8, SpriteSourceData at +0x10 with its unsigned state byte at +0x14. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 position[4];
+    SpriteSourceData sprite;
+} Ovl19Func800BAB4CArg;
+
 /* Shared by ovl_19_func_800BAC40 and ovl_19_func_800BAC50. */
 typedef struct {
     /* 0x00 */ char pad_0[0x2];
