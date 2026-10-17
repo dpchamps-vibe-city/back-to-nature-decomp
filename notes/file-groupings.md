@@ -11960,6 +11960,7 @@ Members (link order):
   overlay-data u16 table, passes the entry through `func_80012A34` (shared
   callee with `800BA2D4`); its link-order neighbour and caller
   `ovl_19_func_800B847C` initialises the `D_800BF4C0` records.
+- ovl_19_func_800B86DC (m, byte-exact; candidate member) — selection-dependent command/completion callback; hands off to nested dispatch or the timed outer callback ([grouping evidence](research/ovl_19_func_800B86DC-grouping.md)).
 - ovl_19_func_800B87C4 (m, byte-exact; candidate member) — nested seven-handler dispatcher with a completion handoff to the next outer callback ([grouping evidence](research/ovl_19_func_800B87C4-grouping.md)).
 - ovl_19_func_800B8830 (m, byte-exact; candidate member) — timed outer callback; commands three shared records and advances to the next outer handler ([grouping evidence](research/ovl_19_func_800B8830-grouping.md)).
 - ovl_19_func_800B8908 (m, byte-exact; candidate member) — timed outer callback; resets three command records and hands off to the next outer handler ([grouping evidence](research/ovl_19_func_800B8908-grouping.md)).
