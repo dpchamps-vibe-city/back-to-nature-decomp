@@ -14310,3 +14310,11 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_801165E0 (s) — multi-state record interaction driver that dispatches the following threshold predicate and update helper.
 - ovl_11_func_80116878 (m) — tests whether `D_80071A60` meets the selected record entry's signed threshold.
 - ovl_11_func_801168C0 (s) — subtracts the selected entry's threshold from the same word and applies selection-dependent state transitions.
+
+## `ovl_11` record-classification helper/caller pair — 0x800D062C / 0x800D0698 (confidence: low)
+
+Candidate same-TU membership; original boundaries remain unproven
+([evidence and limits](research/ovl_11_func_800D0698-grouping.md)).
+
+- ovl_11_func_800D062C (s) — classifies two record-field pairs through rank comparisons and a table lookup.
+- ovl_11_func_800D0698 (m) — selects the record's +0x22 code using its predecessor's classification and an absolute-delta comparison.
