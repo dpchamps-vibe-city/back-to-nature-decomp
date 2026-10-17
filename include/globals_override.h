@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 800D3048/800D3104 index these 21 rodata handler-address words. */
+extern s32 D_800B8EC0[21];
+
 /* 8001B5DC loads this fog distance with lw; SetVal8005E2D8 stores s32. */
 extern s32 D_8005E2D8;
 /* 8001B5DC loads these colors with lbu; 8001BF74/8001BF88 store bytes. */
