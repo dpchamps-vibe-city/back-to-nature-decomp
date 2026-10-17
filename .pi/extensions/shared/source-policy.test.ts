@@ -140,6 +140,12 @@ test("an asm label on a declaration is a symbol rename, not embedded assembly", 
   for (const line of [
     'extern struct_80070000 _D_80070000[1] __asm__("D_80070000");',
     'extern s32 _D_8004B1A4[3] __asm__("D_8004B1A4");',
+    'extern u16 D_80076226[] __asm__("D_80076224+2");',
+    'extern u16 D_8007622A[] __asm__("D_80076228+2");',
+    'extern u16 D_80076236[] __asm__("D_80076234+2");',
+    'extern u16 D_8007623E[] __asm__("D_8007623C+2");',
+    'extern u16 field[] __asm__("record + 0x2");',
+    'extern u16 field[] __asm__("record.end-16");',
   ]) {
     const result = checkSourcePolicy({ projectRoot: root, config, functionName: "target", patch: added(line) });
     assert.equal(result.pass, true, `expected an asm label to pass: ${line}`);
@@ -151,9 +157,29 @@ test("an asm label on a declaration is a symbol rename, not embedded assembly", 
     'int x = 0; __asm__("nop");',
     'void f(void) { __asm__("nop"); }',
     'extern int x __asm__("lw %0, 0(%1)" : "=r"(a));',
+    '__asm__("D_80076224+2");',
+    'int x; __asm__("D_80076224+2");',
+    'void f(void) { __asm__("D_80076224+2"); }',
+    'extern int x __asm__("record+other");',
+    'extern int x __asm__("record+2; nop");',
+    'extern int x __asm__("record+2\\nnop");',
+    'extern int x __asm__("record+2" "nop");',
+    'extern int x __asm__("record+2" : "=r"(a));',
+    'extern int x = ({ __asm__("record+2"); 0; });',
+    'register int x __asm__("$2");',
   ]) {
     const result = checkSourcePolicy({ projectRoot: root, config, functionName: "target", patch: added(line) });
     assert.equal(result.pass, false, `expected an asm statement to fail: ${line}`);
+  }
+});
+
+test("symbol-offset labels pass the complete-source audit without exempting instructions or pins", () => {
+  const { root, config } = fixture('extern int field[] __asm__("record+2");\nvoid target(void) {}\n');
+  const options = { projectRoot: root, config, functionName: "target" };
+  assert.equal(checkSourcePolicy(options).pass, true);
+  for (const body of ['__asm__("record+2");', 'register int x __asm__("$2");']) {
+    writeFileSync(join(root, "src/target.c"), `extern int field[] __asm__("record+2");\nvoid target(void) { ${body} }\n`);
+    assert.equal(checkSourcePolicy(options).pass, false, body);
   }
 });
 

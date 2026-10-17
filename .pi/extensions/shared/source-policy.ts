@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { relative, resolve, sep } from "node:path";
 import type { AutodecompConfig, PolicyFinding, SourcePolicyResult } from "./types.ts";
 import { analyzeCSource, capturePrevRetSites, matchingConstructs, walkActiveC } from "../../../tools/agent/cSourceGuard.ts";
-import { parseC, field } from "../../../tools/agent/residual-source-search/tree-sitter-c.ts";
+import { parseC, field, namedChildren } from "../../../tools/agent/residual-source-search/tree-sitter-c.ts";
 
 interface PolicyOptions {
   projectRoot: string;
@@ -75,18 +75,30 @@ function allowlisted(
  * override header. It is not embedded assembly and must not be policed as
  * such.
  *
- * Recognised narrowly, so instructions cannot enter through it: one plain
- * string operand that is a bare identifier (no colon operand lists, no
- * instruction text), preceded on the same line by a declarator, and closing a
- * declaration. Anything statement-initial, or following a `;`/`{`/`}`, is an
- * asm statement and stays forbidden. A register pin is a different construct
- * and is matched before this, on the `register` keyword.
+ * The patch/header fallback accepts one symbol, optionally plus or minus an
+ * integer byte offset (e.g. "D_80076224+2"). The AST must put the asm directly
+ * on a non-register declaration, never in an initializer or an asm statement.
+ * Only one plain string is allowed: no escapes, operand lists, extra symbols
+ * or instruction/directive text. Complete translation units use the AST audit
+ * below; a partial declaration remains conservatively forbidden here.
  */
 function asmLabel(line: string): boolean {
-  const match = line.match(/\b(?:__asm__|__asm|asm)\s*\(\s*"([^"\\]*)"\s*\)\s*;\s*$/);
-  if (!match || !/^[A-Za-z_][A-Za-z0-9_.]*$/.test(match[1])) return false;
-  const declarator = line.slice(0, match.index).trim();
-  return declarator.length > 0 && !/[;{}]$/.test(declarator);
+  if (!analyzeCSource(line).parses) return false;
+  const tree = parseC(line);
+  try {
+    const declarations = namedChildren(tree.rootNode).filter(node => node.type !== "comment");
+    if (declarations.length !== 1 || declarations[0]!.type !== "declaration") return false;
+    const declaration = declarations[0]!;
+    if (namedChildren(declaration).some(node => node.type === "storage_class_specifier" && node.text === "register")) return false;
+    const sites = declaration.descendantsOfType("gnu_asm_expression");
+    if (sites.length !== 1) return false;
+    const asm = sites[0]!;
+    const owner = asm.parent?.type === "function_declarator" ? asm.parent.parent : asm.parent;
+    if (owner?.id !== declaration.id) return false;
+    const operands = namedChildren(asm);
+    return operands.length === 1 && operands[0]!.type === "string_literal" &&
+      /^"[A-Za-z_][A-Za-z0-9_.]*(?:[ \t]*[+-][ \t]*(?:0[xX][0-9A-Fa-f]+|[0-9]+))?"$/.test(operands[0]!.text);
+  } finally { tree.delete(); }
 }
 
 /**
