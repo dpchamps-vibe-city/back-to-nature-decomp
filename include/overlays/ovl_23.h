@@ -6,6 +6,7 @@ void ovl_23_func_800B7EA4(void);
 void ovl_23_func_800B8084(void);
 s32 ovl_23_func_800B80CC(void);
 void ovl_23_func_800B8104(void);
+void ovl_23_func_800B81AC(void);
 void ovl_23_func_800B823C(void);
 void ovl_23_func_800B8290(void);
 void ovl_23_func_800B8B94(void);

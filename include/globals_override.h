@@ -1561,12 +1561,21 @@ extern u8 Ovl23_D_800BF87C_draw[] __asm__("D_800BF87C");
 /* 800B9E04 reads actor +0x38/+0x3C and record +0x210 from one aggregate base. */
 extern struct Ovl23DecisionView Ovl23_D_800BF87C_movement __asm__("D_800BF87C");
 
-/* 800B9B18 reads signed halfwords at +0x39C/+0x39E/+0x3B2 from this aggregate. */
+/* 800B9B18 reads +0x39C/+0x39E/+0x3B2; 800B81AC initializes halfwords +0/+0x39C..+0x3B2. */
 struct Ovl23MovementBounds {
-    u8 pad0[0x39C];
+    s16 unk0;
+    u8 pad2[0x39A];
     s16 unk39C;
     s16 unk39E;
-    u8 pad3A0[0x12];
+    s16 unk3A0;
+    s16 unk3A2;
+    s16 unk3A4;
+    s16 unk3A6;
+    s16 unk3A8;
+    s16 unk3AA;
+    s16 unk3AC;
+    s16 unk3AE;
+    s16 unk3B0;
     s16 unk3B2;
 };
 extern struct Ovl23MovementBounds Ovl23_D_800BF87C_bounds __asm__("D_800BF87C");

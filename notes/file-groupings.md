@@ -6824,7 +6824,9 @@ Members (link order):
 - ovl_23_func_800B8C18 (m, byte-exact) — timer/threshold state selector and movement dispatcher for the other five `D_800BFA80` records.
 - ovl_23_func_800B8FA4 (m, byte-exact, finalized) — timer/distance-driven state selector and movement dispatcher for the six `D_800BF8A0` actors.
 
-## `ovl_23` D_800BF87C screen-record init run — 0x800B823C–0x800B8354 (confidence: medium)
+## `ovl_23` D_800BF87C screen-record init run — 0x800B81AC–0x800B8354 (confidence: medium)
+
+Membership extension: [shared initialization cluster and corroborated call/link adjacency](research/ovl_23_func_800B81AC-grouping.md).
 
 Evidence: gapless link order and the call graph agree over the same
 `D_800BF87C` aggregate. `ovl_23_func_800B823C` (0x800B823C, ends 0x800B8290)
@@ -6838,6 +6840,7 @@ and `ovl_23_func_800B8354` continues over `D_800BF87C` records (base +0x24/+0x26
 call edge corroborate the same TU.
 
 Members (link order):
+- ovl_23_func_800B81AC (m, byte-exact, finalized) — resets dispatch state and movement parameters, then invokes screen-record and unique-draw initialization.
 - ovl_23_func_800B823C (s) — clears the `D_800BF87C` header, then calls
   800B8290, 800B8354 and 800B937C.
 - ovl_23_func_800B8290 (m, byte-exact this session) — fills six 0x44-stride
