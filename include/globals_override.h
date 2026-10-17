@@ -1419,6 +1419,9 @@ typedef struct {
     /* 0x12C */ s32     field_12C;
 } struct_8005E3C0;
 extern struct_8005E3C0 *D_8005E3C0;
+/* func_8001C37C caches the render context and increments the GP-relative polygon count. */
+extern struct_8005E3C0 *D_8005E4DC;
+extern s16 D_8005E4E8;
 
 /* 800F8F3C indexes 0x22-byte texture records: lh at 0/2/8/A, lhu at 18/1A. */
 typedef struct {

@@ -2,3 +2,456 @@
 #include "include_asm.h"
 
 INCLUDE_ASM("build/asm/nonmatchings/func_8001C37C", func_8001C37C);
+
+
+/* PARKED by /auto_decompilation_loop on 2026-10-17T19:27:45.625Z.
+ * Reason: asm-needs-human-approval.
+ * Escalation reached: gpt-6.1-sol.
+ * The best non-matching attempt is preserved verbatim below, disabled.
+ * Findings and the decision needed: notes/human-needed-approvals/func_8001C37C.md
+ */
+
+#if 0
+/* Best non-matching attempt, preserved for the next session. */
+#include "common.h"
+#include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/inline_c.h"
+#include "psyq/inline_c_gas.h"
+
+typedef struct { u32 color; } PrimitiveColor;
+
+#define WORD(p, n) (*(s32 *)((u8 *)(p) + (n)))
+#define HALF(p, n) (*(u16 *)((u8 *)(p) + (n)))
+
+
+void PopMatrix ();
+void PushMatrix ();
+void func_8001E158 ();
+s32 HasTriangleVertexXInBounds (s32 sxy0, s32 sxy1, s32 sxy2);
+void func_8001D6B8 (void);
+void func_8001D348 (VECTOR *arg0, VECTOR *arg1);
+s32 func_8001C1C0 (SVECTOR *arg0);
+
+s32 func_8001D2D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3); /* static */
+struct_8005E3C0 *D_8005E4DC;
+s16 D_8005E4E8;
+
+void func_8001C37C(u8 *arg0, u8 *arg1) {
+    s32 sp10;
+    s32 offset;
+    u32 flags;
+    s32 *temp_a0;
+    s32 *temp_a0_2;
+    s32 *temp_a0_3;
+    s32 *temp_a0_4;
+    s32 *temp_a0_5;
+    s32 *temp_a0_6;
+    s32 *temp_a0_7;
+    s32 *temp_a0_8;
+    POLY_F4 *temp_s1;
+    POLY_G4 *temp_s1_2;
+    POLY_F3 *temp_s4;
+    POLY_G3 *temp_s4_2;
+    s32 temp_s7;
+    s32 var_a0;
+    s32 var_a0_2;
+    s32 var_a0_3;
+    s32 var_a0_4;
+    s32 var_a0_5;
+    s32 var_a0_6;
+    s32 var_a0_7;
+    s32 var_a0_8;
+    s32 var_s0;
+    s32 var_s6;
+    s32 var_v0;
+    s32 var_v0_2;
+    s32 var_v0_3;
+    s32 var_v0_4;
+    s32 var_v0_6;
+    s32 var_v0_7;
+    s32 var_v0_8;
+    s32 var_v0_9;
+    u32 var_v0_5;
+    u8 *temp_a1;
+    u8 *temp_a1_2;
+    u8 *temp_a1_3;
+    u8 *temp_a1_4;
+    u8 *temp_s1_3;
+    u8 *temp_s1_4;
+    u8 *temp_s4_3;
+    u8 *temp_s4_4;
+    u8 *temp_s5;
+    u8 *var_s2;
+    u8 *packet;
+
+    var_s6 = WORD(arg1, 0x14);
+    if (var_s6 > 0) {
+        func_8001E158(0x2000);
+        temp_s5 = arg0 + WORD(arg1, 0x0);
+        var_s2 = arg0 + WORD(arg1, 0x10);
+        var_s0 = D_8005E3C0->field_118;
+        temp_s7 = D_8005E3C0->field_120;
+        D_8005E4DC = D_8005E3C0;
+loop_2:
+        if (var_s6 > 0) {
+            flags = WORD(var_s2, 0x0);
+            if ((flags & 0xFDFF0000) == 0x21010000) {
+                temp_s4 = (POLY_F3 *)var_s0;
+                temp_a1 = var_s2;
+                gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 8), (SVECTOR *)temp_s5 + HALF(var_s2, 10), (SVECTOR *)temp_s5 + HALF(var_s2, 12));
+                var_s2 = (u8 *) ((u8 *) var_s2 + 0x10);
+                var_s6 -= 1;
+                gte_rtpt_b();
+                *(PrimitiveColor *)&temp_s4->r0 = *(PrimitiveColor *)(temp_a1 + 4);
+                gte_stflg(&sp10);
+                if (sp10 >= 0) {
+                    gte_nclip_b();
+                    setcode(var_s0, (((flags >> 0x18) & 2) | 0x20));
+                    gte_stopz(&sp10);
+                    if (sp10 > 0) {
+                        gte_stsxy3_f3(temp_s4);
+                        if (HasTriangleVertexXInBounds(WORD(var_s0, 0x8), WORD(var_s0, 0xC), WORD(var_s0, 0x10)) != 0) {
+                            gte_avsz3_b();
+                            var_s0 += 0x14;
+                            gte_stotz(&sp10);
+                            if (!(flags & 0x8000)) {
+                                sp10 += 0x23;
+                            }
+                            if (flags & 0x4000) {
+                                sp10 += 1;
+                            }
+                            temp_a0 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                            WORD(temp_s4, 0x0) = (s32) ((*temp_a0 & 0xFFFFFF) | 0x04000000);
+                            *temp_a0 = (s32)temp_s4 & 0xFFFFFF;
+                            D_8005E4E8 += 1;
+                        }
+                    }
+                }
+                goto loop_2;
+            }
+loop_14:
+            if (var_s6 > 0) {
+                flags = WORD(var_s2, 0x0);
+                if ((flags & 0xFDFF0000) == 0x31010000) {
+                temp_s4_2 = (POLY_G3 *)var_s0;
+                    temp_a1_2 = var_s2;
+                    gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 16), (SVECTOR *)temp_s5 + HALF(var_s2, 18), (SVECTOR *)temp_s5 + HALF(var_s2, 20));
+                    var_s2 = (u8 *) ((u8 *) var_s2 + 0x18);
+                    var_s6 -= 1;
+                    gte_rtpt_b();
+                    *(s32 *)&temp_s4_2->r0 = (s32) WORD(temp_a1_2, 0x4);
+                    *(s32 *)&temp_s4_2->r1 = (s32) WORD(temp_a1_2, 0x8);
+                    gte_stflg(&sp10);
+                    if (sp10 >= 0) {
+                        gte_nclip_b();
+                        WORD(var_s0, 0x14) = (s32) WORD(temp_a1_2, 0xC);
+                        gte_stopz(&sp10);
+                        if (sp10 > 0) {
+                            gte_stsxy3_g3(temp_s4_2);
+                            if (HasTriangleVertexXInBounds(WORD(var_s0, 0x8), WORD(var_s0, 0x10), WORD(var_s0, 0x18)) != 0) {
+                                gte_avsz3_b();
+                                setcode(var_s0, (((flags >> 0x18) & 2) | 0x30));
+                                var_s0 += 0x1C;
+                                gte_stotz(&sp10);
+                                if (!(flags & 0x8000)) {
+                                    sp10 += 0x23;
+                                }
+                                if (flags & 0x4000) {
+                                    sp10 += 1;
+                                }
+                                temp_a0_2 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                                WORD(temp_s4_2, 0x0) = (s32) ((*temp_a0_2 & 0xFFFFFF) | 0x06000000);
+                                *temp_a0_2 = (s32)temp_s4_2 & 0xFFFFFF;
+                                D_8005E4E8 += 1;
+                            }
+                        }
+                    }
+                    goto loop_14;
+                }
+loop_26:
+                if (var_s6 > 0) {
+                    flags = WORD(var_s2, 0x0);
+                    packet = (u8 *)var_s0;
+                    if ((flags & 0xFDFF0000) == 0x25010000) {
+                        temp_s4_3 = var_s2;
+                        packet = (u8 *)var_s0;
+                        gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 20), (SVECTOR *)temp_s5 + HALF(var_s2, 22), (SVECTOR *)temp_s5 + HALF(var_s2, 24));
+                        var_s2 = (u8 *) ((u8 *) var_s2 + 0x1C);
+                        var_s6 -= 1;
+                        gte_rtpt_b();
+                        WORD(packet, 0xC) = (s32) WORD(temp_s4_3, 0x4);
+                        WORD(packet, 0x14) = (s32) WORD(temp_s4_3, 0x8);
+                        gte_stflg(&sp10);
+                        if (sp10 >= 0) {
+                            gte_nclip_b();
+                            WORD(var_s0, 0x1C) = (s32) WORD(temp_s4_3, 0xC);
+                            gte_stopz(&sp10);
+                            if (sp10 > 0) {
+                                gte_stsxy3_ft3(packet);
+                                if (HasTriangleVertexXInBounds(WORD(var_s0, 0x8), WORD(var_s0, 0x10), WORD(var_s0, 0x18)) != 0) {
+                                    gte_avsz3_b();
+                                    WORD(var_s0, 0x4) = (s32) WORD(temp_s4_3, 0x10);
+                                    setcode(var_s0, (((flags >> 0x18) & 2) | 0x24));
+                                    gte_stotz(&sp10);
+                                    if (!(flags & 0x8000)) {
+                                        sp10 += 0x23;
+                                    }
+                                    if (flags & 0x4000) {
+                                        sp10 += 1;
+                                    }
+                                    temp_a0_3 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                                    WORD(var_s0, 0x0) = (s32) ((*temp_a0_3 & 0xFFFFFF) | 0x07000000);
+                                    *temp_a0_3 = (s32)var_s0 & 0xFFFFFF;
+                                    D_8005E4E8 += 1;
+                                    var_s0 += 0x20;
+                                }
+                            }
+                        }
+                        goto loop_26;
+                    }
+loop_38:
+                    if (var_s6 > 0) {
+                        flags = WORD(var_s2, 0x0);
+                    packet = (u8 *)var_s0;
+                        if ((flags & 0xFDFF0000) == 0x35010000) {
+                            temp_s4_4 = var_s2;
+                            packet = (u8 *)var_s0;
+                            gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 28), (SVECTOR *)temp_s5 + HALF(var_s2, 30), (SVECTOR *)temp_s5 + HALF(var_s2, 32));
+                            var_s2 = (u8 *) ((u8 *) var_s2 + 0x24);
+                            var_s6 -= 1;
+                            gte_rtpt_b();
+                            WORD(packet, 0x4) = (s32) WORD(temp_s4_4, 0x10);
+                            WORD(packet, 0x10) = (s32) WORD(temp_s4_4, 0x14);
+                            gte_stflg(&sp10);
+                            if (sp10 >= 0) {
+                                gte_nclip_b();
+                                WORD(var_s0, 0x1C) = (s32) WORD(temp_s4_4, 0x18);
+                                gte_stopz(&sp10);
+                                if (sp10 > 0) {
+                                    gte_stsxy3_gt3(packet);
+                                    if (HasTriangleVertexXInBounds(WORD(var_s0, 0x8), WORD(var_s0, 0x14), WORD(var_s0, 0x20)) != 0) {
+                                        gte_avsz3_b();
+                                        WORD(var_s0, 0xC) = (s32) WORD(temp_s4_4, 0x4);
+                                        WORD(var_s0, 0x18) = (s32) WORD(temp_s4_4, 0x8);
+                                        gte_stotz(&sp10);
+                                        if (!(flags & 0x8000)) {
+                                            sp10 += 0x23;
+                                        }
+                                        if (flags & 0x4000) {
+                                            sp10 += 1;
+                                        }
+                                        WORD(var_s0, 0x24) = (s32) WORD(temp_s4_4, 0xC);
+                                        setcode(var_s0, (((flags >> 0x18) & 2) | 0x34));
+                                        temp_a0_4 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                                        WORD(var_s0, 0x0) = (s32) ((*temp_a0_4 & 0xFFFFFF) | 0x09000000);
+                                        *temp_a0_4 = (s32)var_s0 & 0xFFFFFF;
+                                        D_8005E4E8 += 1;
+                                        var_s0 += 0x28;
+                                    }
+                                }
+                            }
+                            goto loop_38;
+                        }
+loop_50:
+                        if (var_s6 > 0) {
+                            flags = WORD(var_s2, 0x0);
+                            if ((flags & 0xFDFF0000) == 0x29010000) {
+                temp_s1 = (POLY_F4 *)var_s0;
+                                temp_a1_3 = var_s2;
+                                gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 8), (SVECTOR *)temp_s5 + HALF(var_s2, 10), (SVECTOR *)temp_s5 + HALF(var_s2, 12));
+                                var_s2 = (u8 *) ((u8 *) var_s2 + 0x10);
+                                var_s6 -= 1;
+                                gte_rtpt_b();
+                                *(s32 *)&temp_s1->r0 = (s32) WORD(temp_a1_3, 0x4);
+                                gte_stflg(&sp10);
+                                if (sp10 >= 0) {
+                                    gte_nclip_b();
+                                    gte_stopz(&sp10);
+                                    if (sp10 > 0) {
+                                        gte_stsxy3_f4(temp_s1);
+                                        gte_ldv0((SVECTOR *)temp_s5 + HALF(temp_a1_3, 14));
+                                        gte_rtps();
+                                        setcode(var_s0, (((flags >> 0x18) & 2) | 0x28));
+                                        gte_stflg(&sp10);
+                                        if (sp10 >= 0) {
+                                            gte_stsxy(&WORD(var_s0, 20));
+                                            if (func_8001D2D8(WORD(var_s0, 0x8), WORD(var_s0, 0xC), WORD(var_s0, 0x10), WORD(var_s0, 0x14)) != 0) {
+                                                gte_avsz4_b();
+                                                var_s0 += 0x18;
+                                                gte_stotz(&sp10);
+                                                if (!(flags & 0x8000)) {
+                                                    sp10 += 0x23;
+                                                }
+                                                if (flags & 0x4000) {
+                                                    sp10 += 1;
+                                                }
+                                                temp_a0_5 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                                                WORD(temp_s1, 0x0) = (s32) ((*temp_a0_5 & 0xFFFFFF) | 0x05000000);
+                                                *temp_a0_5 = (s32)temp_s1 & 0xFFFFFF;
+                                                D_8005E4E8 += 1;
+                                            }
+                                        }
+                                    }
+                                }
+                                goto loop_50;
+                            }
+loop_63:
+                            if (var_s6 > 0) {
+                                flags = WORD(var_s2, 0x0);
+                                if ((flags & 0xFDFF0000) == 0x39010000) {
+                temp_s1_2 = (POLY_G4 *)var_s0;
+                                    temp_a1_4 = var_s2;
+                                    gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 20), (SVECTOR *)temp_s5 + HALF(var_s2, 22), (SVECTOR *)temp_s5 + HALF(var_s2, 24));
+                                    var_s2 = (u8 *) ((u8 *) var_s2 + 0x1C);
+                                    var_s6 -= 1;
+                                    gte_rtpt_b();
+                                    *(s32 *)&temp_s1_2->r0 = (s32) WORD(temp_a1_4, 0x4);
+                                    *(s32 *)&temp_s1_2->r1 = (s32) WORD(temp_a1_4, 0x8);
+                                    gte_stflg(&sp10);
+                                    if (sp10 >= 0) {
+                                        gte_nclip_b();
+                                        WORD(var_s0, 0x14) = (s32) WORD(temp_a1_4, 0xC);
+                                        gte_stopz(&sp10);
+                                        if (sp10 > 0) {
+                                            gte_stsxy3_g4(temp_s1_2);
+                                            gte_ldv0((SVECTOR *)temp_s5 + HALF(temp_a1_4, 26));
+                                            gte_rtps();
+                                            WORD(var_s0, 0x1C) = (s32) WORD(temp_a1_4, 0x10);
+                                            gte_stflg(&sp10);
+                                            if (sp10 >= 0) {
+                                                gte_stsxy(&WORD(var_s0, 32));
+                                                if (func_8001D2D8(WORD(var_s0, 0x8), WORD(var_s0, 0x10), WORD(var_s0, 0x18), WORD(var_s0, 0x20)) != 0) {
+                                                    gte_avsz4_b();
+                                                    setcode(var_s0, (((flags >> 0x18) & 2) | 0x38));
+                                                    var_s0 += 0x24;
+                                                    gte_stotz(&sp10);
+                                                    if (!(flags & 0x8000)) {
+                                                        sp10 += 0x23;
+                                                    }
+                                                    if (flags & 0x4000) {
+                                                        sp10 += 1;
+                                                    }
+                                                    temp_a0_6 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                                                    WORD(temp_s1_2, 0x0) = (s32) ((*temp_a0_6 & 0xFFFFFF) | 0x08000000);
+                                                    *temp_a0_6 = (s32)temp_s1_2 & 0xFFFFFF;
+                                                    D_8005E4E8 += 1;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    goto loop_63;
+                                }
+loop_76:
+                                if (var_s6 > 0) {
+                                    flags = WORD(var_s2, 0x0);
+                    
+                                    if ((flags & 0xFDFF0000) == 0x2D010000) {
+                        packet = (u8 *)var_s0;
+                                        temp_s1_3 = var_s2;
+                                        gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 24), (SVECTOR *)temp_s5 + HALF(var_s2, 26), (SVECTOR *)temp_s5 + HALF(var_s2, 28));
+                                        var_s2 = (u8 *) ((u8 *) var_s2 + 0x20);
+                                        var_s6 -= 1;
+                                        gte_rtpt_b();
+                                        *(s32 *)&((POLY_FT4 *)packet)->r0 = (s32) WORD(temp_s1_3, 0x14);
+                                        *(s32 *)&((POLY_FT4 *)packet)->u0 = (s32) WORD(temp_s1_3, 0x4);
+                                        gte_stflg(&sp10);
+                                        if (sp10 >= 0) {
+                                            gte_nclip_b();
+                                            WORD(var_s0, 0x1C) = (s32) WORD(temp_s1_3, 0xC);
+                                            gte_stopz(&sp10);
+                                            if (sp10 > 0) {
+                                                gte_stsxy3_ft4(packet);
+                                                gte_ldv0((SVECTOR *)temp_s5 + HALF(temp_s1_3, 30));
+                                                gte_rtps();
+                                                WORD(var_s0, 0x24) = (s32) WORD(temp_s1_3, 0x10);
+                                                gte_stflg(&sp10);
+                                                if (sp10 >= 0) {
+                                                    gte_stsxy(&WORD(var_s0, 32));
+                                                    if (func_8001D2D8(WORD(var_s0, 0x8), WORD(var_s0, 0x10), WORD(var_s0, 0x18), WORD(var_s0, 0x20)) != 0) {
+                                                        gte_avsz4_b();
+                                                        WORD(var_s0, 0x14) = (s32) WORD(temp_s1_3, 0x8);
+                                                        setcode(var_s0, (((flags >> 0x18) & 2) | 0x2C));
+                                                        gte_stotz(&sp10);
+                                                        if (!(flags & 0x8000)) {
+                                                            sp10 += 0x23;
+                                                        }
+                                                        if (flags & 0x4000) {
+                                                            sp10 += 1;
+                                                        }
+                                                        temp_a0_7 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                                                        WORD(var_s0, 0x0) = (s32) ((*temp_a0_7 & 0xFFFFFF) | 0x09000000);
+                                                        *temp_a0_7 = (s32)var_s0 & 0xFFFFFF;
+                                                        D_8005E4E8 += 1;
+                                                        var_s0 += 0x28;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        goto loop_76;
+                                    }
+loop_89:
+                                    if (var_s6 != 0) {
+                                        flags = WORD(var_s2, 0x0);
+                    
+                                        if ((flags & 0xFDFF0000) == 0x3D010000) {
+                        packet = (u8 *)var_s0;
+                                            temp_s1_4 = var_s2;
+                                            gte_ldv3((SVECTOR *)temp_s5 + HALF(var_s2, 36), (SVECTOR *)temp_s5 + HALF(var_s2, 38), (SVECTOR *)temp_s5 + HALF(var_s2, 40));
+                                            var_s2 = (u8 *) ((u8 *) var_s2 + 0x2C);
+                                            var_s6 -= 1;
+                                            gte_rtpt_b();
+                                            *(s32 *)&((POLY_GT4 *)packet)->r0 = (s32) WORD(temp_s1_4, 0x14);
+                                            *(s32 *)&((POLY_GT4 *)packet)->r1 = (s32) WORD(temp_s1_4, 0x18);
+                                            gte_stflg(&sp10);
+                                            if (sp10 >= 0) {
+                                                gte_nclip_b();
+                                                WORD(var_s0, 0x1C) = (s32) WORD(temp_s1_4, 0x1C);
+                                                gte_stopz(&sp10);
+                                                if (sp10 > 0) {
+                                                    gte_stsxy3_gt4(packet);
+                                                    gte_ldv0((SVECTOR *)temp_s5 + HALF(temp_s1_4, 42));
+                                                    gte_rtps();
+                                                    WORD(var_s0, 0x28) = (s32) WORD(temp_s1_4, 0x20);
+                                                    gte_stflg(&sp10);
+                                                    if (sp10 >= 0) {
+                                                        gte_stsxy(&WORD(var_s0, 44));
+                                                        if (func_8001D2D8(WORD(var_s0, 0x8), WORD(var_s0, 0x14), WORD(var_s0, 0x20), WORD(var_s0, 0x2C)) != 0) {
+                                                            gte_avsz4();
+                                                            WORD(var_s0, 0xC) = (s32) WORD(temp_s1_4, 0x4);
+                                                            WORD(var_s0, 0x18) = (s32) WORD(temp_s1_4, 0x8);
+                                                            WORD(var_s0, 0x24) = (s32) WORD(temp_s1_4, 0xC);
+                                                            WORD(var_s0, 0x30) = (s32) WORD(temp_s1_4, 0x10);
+                                                            setcode(var_s0, (((flags >> 0x18) & 2) | 0x3C));
+                                                            gte_stotz(&sp10);
+                                                            if (!(flags & 0x8000)) {
+                                                                sp10 += 0x23;
+                                                            }
+                                                            if (flags & 0x4000) {
+                                                                sp10 += 1;
+                                                            }
+                                                            temp_a0_8 = (s32 *)(temp_s7 + (sp10 / 4) * 4);
+                                                            WORD(var_s0, 0x0) = (s32) ((*temp_a0_8 & 0xFFFFFF) | 0x0C000000);
+                                                            *temp_a0_8 = (s32)var_s0 & 0xFFFFFF;
+                                                            D_8005E4E8 += 1;
+                                                            var_s0 += 0x34;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            goto loop_89;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        D_8005E4DC->field_118 = (s32)var_s0;
+    }
+}
+#endif
