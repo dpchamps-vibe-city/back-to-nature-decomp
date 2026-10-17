@@ -4127,6 +4127,10 @@ extern s32 D_80129224;
  * belong here. */
 extern u8 D_800BF570[];
 extern u8 D_800BF4E8[];
+/* ovl_19_func_800BADF8 passes this two-word output to func_8001DFD4. */
+extern s32 D_800BD048[2];
+/* ovl_19_func_800BADF8 fills three halfwords of this eight-byte GTE vector. */
+extern s16 D_800BD080[4];
 /* ovl_19_func_800BAFAC passes this two-word output to func_8001DFD4. */
 extern s32 D_800BD050[2];
 /* ovl_19_func_800BAFAC fills three halfwords of this eight-byte GTE vector. */
