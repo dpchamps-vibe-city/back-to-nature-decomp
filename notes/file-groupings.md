@@ -10663,6 +10663,7 @@ Members (link order):
   (0x114 bytes); switch on the private state `D_8013759C`, guards with
   `ovl_15_func_801370B4()` and writes `D_80137584` (void) — body shape shared
   with `ovl_15_func_80130048`/`ovl_15_func_80130F2C`
+- ovl_15_func_8012F7D4 (m, byte-exact) — memory-card formatting and result-based menu-state routing ([grouping evidence](research/ovl_15_func_8012F7D4-grouping.md)).
 - ovl_15_func_8012F86C (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_800531B8` updater array; then `ret =
   ovl_15_func_80137228(14, 0)`, `D_80137584 = ret` (s8; the value is returned),
