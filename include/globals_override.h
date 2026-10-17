@@ -1503,6 +1503,19 @@ struct Ovl23DecisionView {
     struct Ovl23DecisionRecord records[6];
 };
 
+/* 800B823C writes words +4/+8/+C/+10 and halfwords +14/+414 at this aggregate base. */
+struct Ovl23ScreenHeader {
+    u8 pad0[4];
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s16 unk14;
+    u8 pad16[0x3FE];
+    s16 unk414;
+};
+extern struct Ovl23ScreenHeader Ovl23_D_800BF87C_header __asm__("D_800BF87C");
+
 /* 800B8FA4 reads six 0x50-byte actors at +0x24 and timer/limit fields through +0x3AE. */
 struct Ovl23ActorDecision {
     s16 unk0;
