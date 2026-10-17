@@ -38,6 +38,134 @@ extern s16 D_80133FBC;
 extern s32 (*D_80133FC0[18])();
 /* ovl_30 8012EFEC clears this word and 8012F084 tests it. */
 extern s32 D_80134008;
+/* 80133A8C divides this signed menu-selection word by nine and updates it with sw. */
+extern s32 D_80134014;
+/* 8012FEEC prints this NUL-terminated Shift-JIS rodata heading. */
+extern char D_8012E11C[];
+/* 8012FEEC passes this 20-byte record base to 80133454 with count 22. */
+extern struct Ovl30ValueMenuEntry D_80134018;
+/* 8012FF50 prints this NUL-terminated Shift-JIS rodata heading. */
+extern char D_8012E29C[];
+/* 8012FF50 passes this 20-byte menu-record base to 80133454 with count 23. */
+extern struct Ovl30ValueMenuEntry D_801341D0;
+/* 80130690 prints this NUL-terminated Shift-JIS rodata heading. */
+extern char D_8012E848[];
+/* 80130690 passes this 20-byte menu-record base to 80133454 with count 48. */
+extern struct Ovl30ValueMenuEntry D_801345E0;
+/* 80132660 prints this NUL-terminated Shift-JIS rodata heading. */
+extern char D_8012EEB8[];
+/* 80132660 passes this 20-byte menu-record base to 80133A8C with count 12. */
+extern struct Ovl30FlagMenuEntry D_801349B8;
+/* 80133A8C copies the two string pointers in this rodata table to its local array. */
+extern char *D_8012EFB0[2];
+/* 80133A8C passes these rodata formats and selection markers to KanjiFntPrint. */
+extern char D_8012EFB8[];
+extern char D_8012EFD0[];
+extern char D_8012EFD4[];
+extern char D_8012EFD8[];
+extern char D_8012EFE8[];
+
+/* 80130C20 indexes stride-B4 records; menu widths witness halfwords and words. */
+typedef struct Ovl30AnimalRecord {
+    u16 number;
+    u8 pad2[0x16 - 2];
+    u16 affection;
+    u8 pad18[2];
+    u16 birth[3];
+    u8 pad20[4];
+    u16 gestation;
+    u16 action;
+    u16 process_no;
+    u16 process_id;
+    u16 process_time;
+    u16 elapsed[2];
+    u8 pad32[2];
+    u32 flags;
+    s32 position[3];
+    u8 pad44[4];
+    s32 speed[3];
+    u8 pad54[4];
+    s32 target[3];
+    u8 pad64[0xAC - 0x64];
+    u16 grazing;
+    u16 sick;
+    u16 growth;
+    u8 padB2[2];
+} Ovl30AnimalRecord;
+/* 80130C20 forms field addresses in this record array, retaining the legacy scalar alias. */
+#define Ovl30_AnimalRecords ((Ovl30AnimalRecord *)_D_800742EC)
+/* 801306F4 indexes stride-B8 records and supplies these halfword/word field widths. */
+typedef struct Ovl30AnimalRecordB8 {
+    u16 number;
+    u8 pad2[0x16 - 2];
+    u16 affection;
+    u8 pad18[2];
+    u16 birth[3];
+    u8 pad20[4];
+    u16 gestation;
+    u16 action;
+    u16 process_no;
+    u16 process_id;
+    u16 process_time;
+    u16 elapsed[2];
+    u8 pad32[2];
+    u32 flags;
+    s32 position[3];
+    u8 pad44[4];
+    s32 speed[3];
+    u8 pad54[4];
+    s32 target[3];
+    u8 pad64[0xAC - 0x64];
+    u16 grazing;
+    u16 sick;
+    u16 growth;
+    u16 growth_time;
+    u16 pregnancy;
+    u8 padB6[2];
+} Ovl30AnimalRecordB8;
+/* 801306F4 forms menu field addresses from the legacy D_800749F4 base. */
+#define Ovl30_AnimalRecords749F4 ((Ovl30AnimalRecordB8 *)&D_800749F4)
+/* 801306F4 reads this selector with lw and edits it as a four-byte value. */
+extern s32 D_801349A0;
+/* 801306F4 installs these NUL-terminated Shift-JIS labels and print format. */
+extern char D_8012E8B0[];
+extern char D_8012E8C8[];
+extern char D_8012E994[];
+/* 80130C20 reads this record selector with lw and edits it as a four-byte value. */
+extern s32 D_801349A4;
+/* 80130C20 installs these NUL-terminated Shift-JIS labels in its local menu. */
+extern char D_8012E868[];
+extern char D_8012E874[];
+extern char D_8012E880[];
+extern char D_8012E88C[];
+extern char D_8012E898[];
+extern char D_8012E8A4[];
+extern char D_8012E8BC[];
+extern char D_8012E8D4[];
+extern char D_8012E8E0[];
+extern char D_8012E8EC[];
+extern char D_8012E8F8[];
+extern char D_8012E904[];
+extern char D_8012E910[];
+extern char D_8012E91C[];
+extern char D_8012E928[];
+extern char D_8012E934[];
+extern char D_8012E940[];
+extern char D_8012E94C[];
+extern char D_8012E958[];
+extern char D_8012E964[];
+extern char D_8012E970[];
+extern char D_8012E97C[];
+extern char D_8012E988[];
+/* 80130C20 passes this NUL-terminated Shift-JIS format to KanjiFntPrint. */
+extern char D_8012E9B8[];
+/* 80131100 forms the same stride-B4 menu fields from this second record base. */
+#define Ovl30_AnimalRecords75FE4 ((Ovl30AnimalRecord *)&D_80075FE4)
+/* 80131100 reads this selector with lw and edits it as a four-byte value. */
+extern s32 D_801349A8;
+/* 80131100 passes this NUL-terminated Shift-JIS format to KanjiFntPrint. */
+extern char D_8012E9D8[];
+
 /* ovl_30 8012F084 maintains this word-sized active flag. */
 extern s32 D_80134AD8;
 /* ovl_30 8012F084 loads this word-sized index; decrement uses a signed zero clamp. */
@@ -53,6 +181,14 @@ extern s32 D_80134B14;
 /* ovl_30 8012F084 publishes the callback loaded from D_80133FC0. */
 extern s32 (*D_80134B18)();
 
+/* 8010021C wraps signed byte selectors; named views preserve legacy declarations. */
+extern s8 Ovl11_D_801273E7 __asm__("D_801273E7");
+extern s8 Ovl11_D_801273E8 __asm__("D_801273E8");
+/* 8010021C reads the first u16 of 0x16-byte records at base +0x4AE0. */
+typedef struct {
+    u8 pad_0[0x4AE0];
+    u16 records[80][11];
+} Ovl11SelectionRecords;
 /* 80100644 loads this selector with lbu; 800FFDCC clears the same byte. */
 extern s8 D_801273EC;
 /* 801007AC copies the selected record into this byte with sb. */
@@ -428,6 +564,22 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800E7D4C loads the unsigned availability halfword at base +0x44D4. */
+typedef struct {
+    u8 pad[0x44D4];
+    u16 available;
+} Ovl11E7D4CState;
+
+/* 800E21E4: lh +44BA/+44BC, lw/sw +44F8 and ten lbu/sb cells at +4AD6. */
+typedef struct {
+    u8 pad0[0x44BA];
+    s16 mode, day;
+    u8 pad44BE[0x44F8 - 0x44BE];
+    s32 flags;
+    u8 pad44FC[0x4AD6 - 0x44FC];
+    u8 pending[10];
+} E21E4State;
+
 /* 800B80D4 increments +0x448C; 800B8134 also updates the lw/sw flags at +0xC. */
 typedef struct {
     u8 pad_0[0xC];
@@ -585,6 +737,11 @@ typedef struct {
     u8 pad_0[0x55C4];
     Ovl11D93C8Cell cells[26][45];
 } Ovl11D93C8MapView;
+/* 800D9F1C reads kind/value at +0x78EC/+0x78F0 in a 7x7 stride-8 grid. */
+typedef struct {
+    u8 pad_0[0x78EC];
+    Ovl11D93C8Cell cells[49];
+} Ovl11D9F1CMapView;
 /* ovl_11_func_800D93C8 selects these five-argument handlers; each writes three s32 outputs. */
 extern s32 (*D_80128DA8)(u16, u8, s32 *, s32 *, s32 *);
 
@@ -872,6 +1029,16 @@ struct struct_8006C838_800E8F78 {
     s32 field_5234;         /* 0x5234 */
 };
 
+/* 80102B6C: lw/sw flags at +0x5234 and sh fields at +0x5252/+0x5254/+0x5256. */
+struct Ovl11SpriteRequestState {
+    u8 pad0[0x5234];
+    s32 flags;
+    u8 pad5238[0x5252 - 0x5238];
+    u16 id;
+    s16 value;
+    s16 active;
+};
+
 /* View of D_8006C838 for ovl_11_func_800E65AC: the u8 at +0x9A6C. Reached as
  * a struct member with the base D_80071B00 - 0x52C8 kept live, so cc1 emits
  * addiu -0x52C8, ori 0x8000, addu followed by lbu 0x1A6C. */
@@ -1122,10 +1289,16 @@ extern struct_8005E3C0 *D_8005E3C0;
 typedef struct {
     s16 x;
     s16 y;
-    u8 pad_4[4];
+    s16 x2;
+    s16 y2;
     s16 width;
     s16 height;
-    u8 pad_C[12];
+    s16 width2;
+    u16 height2;
+    u16 pieceX;
+    u16 pieceY;
+    u16 pieceX2;
+    u16 pieceY2;
     u16 clutX;
     u16 clutY;
     u8 pad_1C[2];
@@ -1135,6 +1308,16 @@ typedef struct {
     u16 id;
 } Ovl11TextureRecord;
 extern Ovl11TextureRecord D_80129648_textures[] __asm__("D_80129648");
+/* 800F7230 reads lh counts, lhu overflow IDs, and writes stride-0x22 piece fields. */
+extern s16 D_80126F74[];
+extern u16 D_80126E30[];
+extern u16 D_8012965C[][17];
+extern u16 D_8012965E[][17];
+/* 800F7230 reads three stride-six request lists at +450A/+468A/+480A. */
+typedef struct {
+    u8 pad_0[0x450A];
+    u16 lists[3][64][3];
+} Ovl11TextureRequests;
 
 /* ovl_11_func_800CA044 loads this word as the sprite-submission total. */
 extern s32 D_8005E3BC;
@@ -1774,6 +1957,14 @@ extern s32 D_800BB888;
 extern s32 D_800BB88C;
 extern unsigned char D_800BB9BC[];
 extern s32 D_800BBA3C;
+
+/* 800C6770 copies six bytes from D_80128C58 to +8A; lh at +0/+4, alignment two. */
+typedef struct {
+    s16 id;
+    u8 unk2[2];
+    s16 unk4;
+} Ovl11ItemState;
+extern Ovl11ItemState D_80128C58;
 
 /* Action sub-structure at 0x1C of ItemData (ovl_11_func_800D58D0): fn ptr at
  * +0 called as (s8, s8, s16, s32) -> s32, signed byte at +4, signed byte at
@@ -2480,6 +2671,42 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } Ovl11D80127220Entry;
 extern Ovl11D80127220Entry D_80127220[];
+/* 800FB908 writes +2/+6/+A/+E; 800FC5F4 walks four pairs of signed halfwords. */
+extern s16 D_80127264[];
+
+/* 800FB908 accesses these fields through D_8006C838, retaining its base. */
+typedef struct {
+    u8 pad0[0x44CD];
+    u8 field_44CD;
+    u16 field_44CE;
+    u16 field_44D0;
+    u16 field_44D2;
+    u16 field_44D4;
+    u8 pad44D6[0x4500 - 0x44D6];
+    u16 field_4500;
+    u16 field_4502;
+    u16 field_4504;
+    u16 field_4506;
+    u16 field_4508;
+    u8 pad450A[0x498C - 0x450A];
+    u16 values[170];
+    u16 records[80][11];
+    u8 pad51C0[0x91AC - 0x51C0];
+    u16 field_91AC;
+    u8 pad91AE[0x91C2 - 0x91AE];
+    u16 field_91C2;
+    u8 pad91C4[0x929C - 0x91C4];
+    u16 field_929C;
+    u8 pad929E[0x92B2 - 0x929E];
+    u16 field_92B2;
+    u8 pad92B4[0xDBBA - 0x92B4];
+    u16 field_DBBA;
+    u8 padDBBC[0xE776 - 0xDBBC];
+    s16 field_E776;
+    s16 field_E778;
+    u8 padE77A[6];
+    s32 field_E780;
+} Ovl11FB908State;
 
 /* D_80127234 - 4-entry table of 0xC-byte records walked by
  * ovl_11_func_800FC754: s32 unk0 at +0x00 (lw, passed as first argument),
@@ -2582,6 +2809,10 @@ extern s16 D_8012CDE4;
 extern s16 D_8012CDE6;
 extern s16 D_8012CDE8;
 /* ovl_11_func_800FC358 passes this buffer to func_80015EE8; 800FC544 uses 0x30-byte rows. */
+/* 800FBE88 copies 0x2D74 sprite-header bytes here before indexing its offsets. */
+extern u8 D_8012A048[];
+/* 800FBE88 walks five lw offsets into D_8012A048 (original data: five words). */
+extern s32 D_801272F4[5];
 extern u8 D_8012CDF8[];
 
 extern u8 D_8012737C[];
@@ -2739,12 +2970,35 @@ extern s32 D_80051A90;
 extern s32 D_8012D52C;
 
 extern s16 D_80128420;
+/* 8011E5B0 passes this eight-byte rectangle to StoreImage and LoadImage. */
+extern s16 D_80128524[4];
 
+/* ovl_27 800B944C tests bit zero of this absolute-addressed word. */
+extern s32 D_8006C840;
+/* ovl_27 800B944C divides two signed halfword counters at independent absolute bases. */
+extern s16 D_800C4A4C;
+/* The second halfword is at +2 from D_800C4A4C, immediately before D_800C4A50. */
+#define D_800C4A4E (((s16 *)D_800C4A50)[-1])
 extern u8 D_800C4BD0[];
 
 extern s32 D_800BB4E4[];
 
 extern u8 D_800BB710[];
+
+/* ovl_17_func_800B8470 increments this byte and compares its signed value to 30. */
+extern s8 D_800BB6F8;
+
+/* 800B80B0 loads this signed halfword and uses -1 as its inactive value. */
+extern s16 D_800BDB10;
+/* 800B80B0 reads mode at +0xE614 and updates words at +0xC/+0x448C. */
+typedef struct {
+    u8 pad_0[0xC];
+    s32 flags;
+    u8 pad_10[0x448C - 0x10];
+    s32 state;
+    u8 pad_4490[0xE614 - 0x4490];
+    s32 mode;
+} Ovl17CompletionView;
 
 extern u8 D_800BD848[];
 
@@ -3334,6 +3588,20 @@ extern u16 D_800BCB8E[];
 extern u8 D_800BCD21;
 /* ovl_25_func_800B8848 writes the first three halfwords; original data allocates four. */
 extern s16 D_800BCD48[4];
+/* 800B9E84 reads/writes unsigned state and flag bytes; its counter is D_800BCD21 + 2. */
+extern u8 D_800BCD22;
+extern u8 D_800BCD24;
+/* 800B9E84 passes these coordinate buffers to BA5BC; signed x comparisons use the first halfword. */
+extern s16 D_800BCD30[4];
+extern s16 D_800BCD38[4];
+extern s16 D_800BCD40[4];
+/* 800B9E84 uses signed division by 3/5 and signed comparisons on this halfword. */
+extern s16 D_800BCD54;
+/* 800B9E84 compares this signed halfword against 0x690. */
+extern s16 D_800BFE64;
+/* 800B9E84 animates full 0x30-byte sprite records at these bases and +30/+60 from 800C0394. */
+extern struct SpriteSourceData D_800C0394;
+extern struct SpriteSourceData D_800C0424;
 
 /* D_800C0124 - ovl_25 base of a two-entry run of the same 0x78-byte
  * Ovl25ObjectRecord records, walked by ovl_25_func_800B941C after the
@@ -3660,6 +3928,26 @@ typedef struct {
 } Ovl11D1285F4Entry;
 extern Ovl11D1285F4Entry D_801285F4[4];
 
+/* 80120414 reads count-prefixed s16 weight/value pairs and four table pointers. */
+extern s16 D_801286D0[20];
+extern s16 D_801286F8[8];
+extern s16 D_80128708[18];
+extern s16 D_8012872C[14];
+extern s16 *D_80128748[4];
+/* 80120414 indexes six signed fallback values with the object's +8 word. */
+extern s16 D_80128758[6];
+/* 80120414 increments this signed word and resets it after eleven. */
+extern s32 D_8012DB8C;
+/* 80120414 reads lh +44BA, lhu +44CA and updates the word at +44F8. */
+struct Ovl11WeightedSelectionState {
+    u8 pad0[0x44BA];
+    s16 mode;
+    u8 pad44BC[0x44CA - 0x44BC];
+    u16 time;
+    u8 pad44CC[0x44F8 - 0x44CC];
+    s32 flags;
+};
+
 /* D_8012862C - ovl_11 u16 table indexed by the s32 field at +8 of the object
  * passed to ovl_11_func_80120358 (lhu load, s16-scale). Absolute-addressed. */
 extern u16 D_8012862C[6];
@@ -3724,6 +4012,9 @@ typedef struct {
     /* 0x1C */ char pad[2];
 } Ovl11A04B8Entry;
 extern Ovl11A04B8Entry D_800A04B8[][9];
+
+/* 800D6A94 passes this sprite-data buffer to func_80017200. */
+extern u8 D_8006CA10[];
 
 /* ovl_11_func_800F0A58 scans the first two nine-s16 rows with lh. */
 extern s16 D_800A0494[288];
@@ -4106,6 +4397,18 @@ extern u8 D_80051EC6[];
 extern u8 D_800520A0[];
 /* ovl_15_func_801359FC stores the alternate record-pool byte pointer. */
 extern u8 *D_801376D0;
+/* 80133808 adds the language offset and reads four halfwords from this text. */
+extern u8 D_800535C6[];
+/* Address-only text anchor in 80133808; s32 view also witnessed by 800FD194. */
+extern s32 D_80053604;
+/* 80133808 indexes one unsigned byte with D_8013759E. */
+extern u8 D_80137658[];
+/* 80133808 and 80134134 pass this overlay buffer to func_80015EE8. */
+extern u8 D_801456A0[];
+/* ovl_15 slot state: sh updates/clears in 80133B28/80134724; signed comparisons use lh. */
+extern u16 D_801375A0;
+extern u16 D_801375A2;
+extern u16 D_801375A4;
 /* ovl_15 slot writers use s16 at +0/+2 and s32 at +4, stride 8. */
 typedef struct {
     s16 unk0;
@@ -4140,6 +4443,13 @@ extern s32 D_80134ABC;
 extern s32 D_80134AC0;
 /* ovl_30 data contains five string pointers, indexed by D_80134ABC. */
 extern char *D_80134AC4[5];
+
+/* 80100FFC loads the unlocked-menu bitset with lbu. */
+extern u8 D_80070D04;
+/* 80100FFC tests this menu-origin byte with lbu; unsigned view preserves legacy declarations. */
+extern u8 D_801273E5_origin __asm__("D_801273E5");
+/* 80100FFC clears this halfword before installing the next handler. */
+extern s16 D_801273F0;
 
 /* 801014F8 reads the signed menu index with lb and updates it with sb. */
 extern s8 D_801273E9_selection __asm__("D_801273E9");
@@ -4210,6 +4520,10 @@ extern s16 D_80123292;
 /* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
 extern void *D_80128C4C_dispatch __asm__("D_80128C4C");
 extern s32 D_80128C54;
+/* 800C9C60 clears these three absolute-addressed words with sw. */
+extern s32 D_80128C68;
+extern s32 D_80128C6C;
+extern s32 D_80128D30;
 /* 800CD0F4 saturating-increments the signed halfword at D_8006C838+0x5240. */
 struct Ovl11ActionCounter {
     u8 pad_0[0x5240];
