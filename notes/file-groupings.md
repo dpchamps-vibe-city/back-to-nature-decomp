@@ -11996,6 +11996,7 @@ Members (link order):
   `s16@+0xE` (index 7) and `s16@+0x6` (index 3); shares the `func_8002261C(4, …)` /
   `func_800226A4() == 2` handler shape with `800B8E88`/`800B93B0` and its callee set
   (`func_8002261C`/`func_800226A4`, two `BAC50`, two `BAC40`) with `800B8F38`.
+- ovl_19_func_800B9124 (m, byte-exact; candidate member) — timed command-record handler advancing the shared state to 5 ([grouping evidence](research/ovl_19_func_800B9124-grouping.md)).
 - ovl_19_func_800B9288 (m, matched this session, byte-exact) — gapless
   link-order predecessor of `800B93B0` (0x800B9288 + 0x128 = 0x800B93B0) and
   same overlay-local `D_800BF4C0` state array via the `D_800BF560` label

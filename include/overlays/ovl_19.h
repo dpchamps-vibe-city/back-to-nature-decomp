@@ -15,6 +15,7 @@ void ovl_19_func_800B8DE8(void);
 void ovl_19_func_800B8E88(void);
 void ovl_19_func_800B8F38(void);
 void ovl_19_func_800B9050(void);
+void ovl_19_func_800B9124(void);
 void ovl_19_func_800B9288(void);
 void ovl_19_func_800B93B0(void);
 void ovl_19_func_800B942C(void);
