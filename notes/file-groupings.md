@@ -7910,6 +7910,7 @@ Members:
   table-resolved value (`D_80129560[arg2]` when `arg1 != 0`, the raw `arg2`
   otherwise) into `ovl_11_func_800EFE34`; returns 1. Zero-gap link-order
   successor of 800E69B8 (0x40), extending the contiguous run above.
+- ovl_11_func_800E6A50 (m, candidate same TU; [evidence](research/ovl_11_func_800E6A50-grouping.md)) — forwards a resolved value and a `D_80129560` slot pointer to `ovl_11_func_800EFE34`.
 - ovl_11_func_800E7D4C (m, candidate same TU; [evidence](research/ovl_11_func_800E7D4C-grouping.md)) — grid-item selector that writes the selected item ID to `D_80129560[slot]`.
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
