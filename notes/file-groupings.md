@@ -7893,6 +7893,7 @@ Members:
   table/address idiom joins this accessor family, not a proven TU; the
   recovery's address-prefix assembly and bindings are not original-source
   evidence.
+- ovl_11_func_800E6744 (m, candidate local same TU with 800E67D4; [evidence](research/ovl_11_func_800E6744-grouping.md)) — flag-gated raw-value resolve-and-compare counterpart of its immediate successor.
 - ovl_11_func_800E67D4 (m, candidate same TU; [evidence](research/ovl_11_func_800E67D4-grouping.md)) — compares `ovl_11_func_800EFC68`'s result with `D_80129560[arg3]` via `ovl_11_func_800EFDA0`.
 - ovl_11_func_800E6834 (m, matched 2026-11 — this session, 0x38, byte-exact) —
   compare-forward leaf: `return ovl_11_func_800EFDA0(D_80129560[(s16)arg0],
