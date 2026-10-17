@@ -8135,18 +8135,8 @@ Members:
   4-byte index and `struct_8006C838_time` view as 800E99EC; a new writer-side
   tie to the `D_80071A22` byte global and a further ovl_11 site carrying the
   `-fno-cse-skip-blocks` override (cf. 80103B24/800F1678).
-- ovl_11_func_800E946C (m, matched this session, 0xD0, byte-exact) —
-  guarded four-slot resolver + record-family forwarder: for each of four args,
-  `!= -1` resolves the slot through the family's s16-scaled index (low halfword
-  for `arg0`/`arg1`, full s32 for `arg2`/`arg3`) and the `== -1` arm yields -1,
-  then all four are forwarded to the `D_80076220` record reset dispatcher
-  `ovl_11_func_800E7504`; returns 1. Same absolute base, `s16`-fused index and
-  `!= -1` guard-resolve shape as the sibling readers (cf. 800EC490/800E78E4),
-  inside the accessor band; one of the two external callers of
-  `ovl_11_func_800E7504` in the container (with the newer
-  `ovl_11_func_800E5D00`) — a call-graph edge from the `D_80129560` accessor
-  family into the `D_80076220` record family. Link-order neighbours 800E93CC
-  (stub) and 800E953C do not reach the table, so adjacency adds nothing here.
+- ovl_11_func_800E93CC (m, candidate same TU with 800E946C; [evidence](research/ovl_11_func_800E93CC-grouping.md)) — optional-slot item eligibility predicate.
+- ovl_11_func_800E946C (m, candidate same TU with 800E93CC; [evidence](research/ovl_11_func_800E93CC-grouping.md)) — resolves four guarded slots and forwards them to the record-reset dispatcher.
 - ovl_11_func_800EE944 (m, 0x174, byte-exact) — prior-value table writer:
   snapshots `D_80129560[arg0]` then writes prior-selected constants into
   `[arg1]`/`[arg2]` and `D_801249EC[prior] + 0x7C3` into `[arg3]`; extends the
