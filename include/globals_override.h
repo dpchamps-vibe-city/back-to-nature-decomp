@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 80116878 loads this word with lw for a signed threshold comparison. */
+extern s32 D_80071A60;
+
 /* ovl_11 800D3048/800D3104 index these 21 rodata handler-address words. */
 extern s32 D_800B8EC0[21];
 

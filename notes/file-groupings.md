@@ -14305,3 +14305,12 @@ and shared callers; original TU boundaries remain unproven.
 - ovl_11_func_800FD5E8 (s, candidate same TU) — draws the first pair's numeric values and dispatches four paired-value rows.
 - ovl_11_func_800FD7B4 (m, candidate same TU) — selects an eight-byte work-area value pair, calls its gapless successor to draw bars, and draws the row label.
 - ovl_11_func_800FD968 (m, candidate same TU) — draws opposed bars and optional higher-order value labels for the supplied two-word pair.
+
+## `ovl_11` selected-record threshold caller/helper run — 0x801165E0–0x80116980 (confidence: medium)
+
+Candidate same-TU membership; original boundaries remain unproven
+([evidence and limits](research/ovl_11_func_80116878-grouping.md)).
+
+- ovl_11_func_801165E0 (s) — multi-state record interaction driver that dispatches the following threshold predicate and update helper.
+- ovl_11_func_80116878 (m) — tests whether `D_80071A60` meets the selected record entry's signed threshold.
+- ovl_11_func_801168C0 (s) — subtracts the selected entry's threshold from the same word and applies selection-dependent state transitions.
