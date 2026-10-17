@@ -1503,9 +1503,10 @@ struct Ovl23DecisionView {
     struct Ovl23DecisionRecord records[6];
 };
 
-/* 800B823C writes words +4/+8/+C/+10 and halfwords +14/+414 at this aggregate base. */
+/* 800B823C writes +4..+414; 800B8584 writes the dispatch halfword at +0. */
 struct Ovl23ScreenHeader {
-    u8 pad0[4];
+    s16 unk0;
+    u8 pad2[2];
     s32 unk4;
     s32 unk8;
     s32 unkC;
