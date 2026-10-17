@@ -4385,10 +4385,12 @@ typedef struct {
     s32 counter;
 } Ovl27StateCounterView;
 
-/* ovl_19_func_800B8064 increments the signed word at D_8006C838 + 0x448C. */
+/* 800B8064 increments s32@+0x448C; 800B8DA8 also sets s32@+0xE624. */
 typedef struct {
     u8 pad_0[0x448C];
     s32 counter;
+    u8 pad_4490[0xA194];
+    s32 completed;
 } Ovl19CompletionCounterView;
 
 /* D_800C4A2C - ovl_27 halfword state counter at 0x800C4A2C. Read
