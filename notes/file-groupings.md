@@ -12106,6 +12106,9 @@ Members (link order):
 - ovl_19_func_800BA834 (s, 0x318) — base reader; resets an ObjectState via
   `func_80015840`/`8001585C`/`80015868` and calls `800BADF8`.
 
+Related same-TU candidate ([paired render helpers and caller/link-order evidence](research/ovl_19_func_800BAFAC-grouping.md)):
+- ovl_19_func_800BAFAC (m, byte-exact) — collision-adjusted, depth-bucketed sprite submission helper for `800BA770`.
+
 ---
 
 ## `ovl_11` `ovl_11_func_800DF4F0` predicate-caller run — 0x800DE9C8–0x800DFB98 (confidence: medium)

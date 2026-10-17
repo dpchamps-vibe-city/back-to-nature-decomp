@@ -4125,6 +4125,10 @@ extern s32 D_80129224;
  * belong here. */
 extern u8 D_800BF570[];
 extern u8 D_800BF4E8[];
+/* ovl_19_func_800BAFAC passes this two-word output to func_8001DFD4. */
+extern s32 D_800BD050[2];
+/* ovl_19_func_800BAFAC fills three halfwords of this eight-byte GTE vector. */
+extern s16 D_800BD088[4];
 /* ovl_19_func_800BB8F4 reads six word offsets for sprite headers. */
 extern s32 D_800BD058[6];
 /* ovl_19_func_800BB8F4 copies a 0x104C-byte sprite-data blob here. */
