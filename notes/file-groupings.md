@@ -12359,6 +12359,7 @@ Members:
 - ovl_11_func_800D8320 (m, matched this session, byte-exact) — consumes an
   entry via `ovl_11_func_800DAF60` (tag 0x168/0x16A, `+0x0 == 0x36`,
   `+0x4 != 0`), then dispatches through `D_80123DFC[arg0]`.
+- ovl_11_func_800D8428 (m, candidate same TU; [evidence](research/ovl_11_func_800D8428-grouping.md)) — resets a grid entry's tags/state and refreshes its cell and neighbourhood.
 - ovl_11_func_800D85F8 (m, matched this session, byte-exact) — item-state
   updater over one `Ovl11D124Entry`-shaped record (`+0x0` id, `+0x2` next id,
   `+0x4` state byte, `+0x5`, `+0x6` flags): `ovl_11_func_800D5868`/`589C` tag
@@ -12386,7 +12387,7 @@ Members:
 ## `ovl_11` D_80123DFC two-entry callback-table cluster — 0x80123DFC (confidence: low)
 
 Evidence: `build/ovl_11/asm/data/69960.data.s` emits `D_80123DFC` as a
-2-word table of `ovl_11_func_800D759C` / `ovl_11_func_8011E1E8`, and five
+2-word table of `ovl_11_func_800D759C` / `ovl_11_func_8011E1E8`, and six
 container functions reach that table absolutely and call one entry. Both
 table entries end `jr $ra; addiu $v0,1` (they return s32); the shared table is
 global data rather than a proven TU-private static, so membership stays low
@@ -12397,6 +12398,7 @@ Members:
   gate then `D_80123DFC[arg0](arg1, arg2, var_s5)`.
 - ovl_11_func_800D8320 (m, matched this session, byte-exact) — record-state
   gate then `D_80123DFC[arg0](arg1, arg2, var_a2)`.
+- ovl_11_func_800D8428 (m, candidate same TU; [evidence](research/ovl_11_func_800D8428-grouping.md)) — dispatches the reset cell's texture variant through `D_80123DFC[arg0]`.
 - ovl_11_func_800DACD4 (s) — indexes the same table, keyed by arg2.
 - ovl_11_func_800D88D0 (s) — reaches the same table.
 - ovl_11_func_800DA638 (m, byte-exact) — classifies 3x3 grid neighbourhoods via `800DAF60`, stores cell variants, and dispatches texture updates through `D_80123DFC[arg2]`.
