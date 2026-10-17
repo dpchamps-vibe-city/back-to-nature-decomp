@@ -32,7 +32,7 @@ segments:
     subsegments:
       - [0x0, rodata]
       - [0x4, .rodata, ovl_19_func_800B7F34]
-      - [0x1C, rodata]
+      - [0x1C, .rodata, ovl_19_func_800B998C]
       - [0x4C, .rodata, ovl_19_func_800BA0A0]
       - [0x70, rodata]
       - [0xA4, .rodata, ovl_19_func_800BAB4C]
