@@ -5,6 +5,20 @@ import { readFileSync, existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { digest, filesUnder, snapshot, writeIfChanged } from "../lib/contentCache.js";
 
+/** Ask make for its actual source selection, without building anything. This
+ * includes its executable wildcard and configured overlay C subsegments; a
+ * second parser (or a stale call graph) cannot establish dependency coverage. */
+export function configuredCSources(root: string): string[] {
+  const goal = "__psx_inspect_c_sources";
+  const output = execFileSync("make", ["--no-print-directory", "--silent",
+    `--eval=.PHONY: ${goal}\n${goal}: ; @printf '%s\\n' $(C_SRCS) $(foreach overlay,$(OVERLAYS),$($(overlay)_C_SRCS))`, goal],
+    { cwd: root, encoding: "utf8", timeout: 15_000, maxBuffer: 4 * 1024 * 1024 });
+  const sources = output.trim().split("\n").filter(Boolean);
+  if (sources.some((p) => !/^src\/[\w./-]+\.c$/.test(p) || p.split("/").includes("..")))
+    throw new Error("make returned an invalid configured C source list");
+  return [...new Set(sources)].sort();
+}
+
 export function buildToolInputs(root: string): string[] {
   const mk = readFileSync(join(root, "Makefile"), "utf8");
   const version = mk.match(/^GCC_VERSION\s*:=\s*(\S+)/m)?.[1];

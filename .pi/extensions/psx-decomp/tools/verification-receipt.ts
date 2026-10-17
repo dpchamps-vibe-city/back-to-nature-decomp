@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { buildToolInputs } from "../../../../tools/build/buildInputs.js";
+import { buildToolInputs, configuredCSources } from "../../../../tools/build/buildInputs.js";
 import { dependencyPaths } from "../../../../tools/agent/preprocessedCache.js";
 import { digest, filesUnder, snapshot } from "../../../../tools/lib/contentCache.js";
 import type { AutodecompConfig, GateResult } from "../../shared/types.ts";
@@ -65,13 +65,17 @@ export function compilerInputs(root: string, omitContext = false): string {
     (p) => (!roots.assembly.some((a) => p.startsWith(a + "/")) || p.endsWith(".s")) && !p.endsWith(".test.ts") && !p.endsWith(".pyc") && !p.includes("/__pycache__/") && !p.endsWith("configs/project-profile.md") && !(omitContext && contextOnly(p)))));
 }
 export function contextIsCompilerIndependent(root: string): boolean {
-  for (const source of filesUnder(join(root, "src")).filter((p) => p.endsWith(".c"))) {
-    const dep = join(root, "build", source.slice(root.length + 1) + ".o.d");
-    if (!existsSync(dep)) return false;
-    const text = readFileSync(dep, "utf8");
-    if (/include\/(?:functions\.h|sdk_types\.h|overlays\/[^\s]+\.h)/.test(text)) return false;
-  }
-  return true;
+  try {
+    const sources = configuredCSources(root);
+    if (!sources.length) return false;
+    for (const source of sources) {
+      const dep = join(root, "build", source + ".o.d");
+      if (!existsSync(dep)) return false;
+      const dependencies = dependencyPaths(readFileSync(dep, "utf8"), root);
+      if (!dependencies.includes(resolve(root, source)) || dependencies.some(contextOnly)) return false;
+    }
+    return true;
+  } catch { return false; /* Unknown make selection or malformed depfile is not proof. */ }
 }
 export function verificationOutputs(root: string, functionName?: string): string {
   const roots = buildRoots(root);

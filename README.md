@@ -179,9 +179,11 @@ PSYQ2ELF=/absolute/path/to/psyq2elf/psyq2elf make split
 `splitSdkLibs.ts` recovers those members from the original SDK `.LIB` files
 under `tools/vendor/psyq47/LIB/`. Recovered objects and the member/signature
 map live only in `build/sdk/`; existing non-colliding `lib/` inputs stay
-unchanged. Warm splits reuse the content-identified members and need no
-converter. `make clean` removes them, so the next split needs the converter
-again.
+unchanged. Warm splits validate an input/output content cache, including archive,
+signature, conventional-object and recovered-output membership/content. Unchanged
+requests skip member/signature reconstruction; `npx tsx tools/build/splitSdkLibs.ts
+--write --force` explicitly replays it. `make clean` removes the recovered members,
+so the next split needs the converter again.
 
 Put the original EXE at `extracted/iso/slus_011.15` before splitting. Git
 ignores that path.
@@ -888,7 +890,12 @@ and the build, the gates, and the autonomous loop still call it;
 reason, and a test keeps it honest.
 
 `psx_finalize_function` is the last gate. It runs the exact function diff, the
-full binary check, the scope check, and the clean-source check.
+full binary check, the scope check, and the clean-source check. Full checks use
+at most eight build jobs. Context-only publication reuses machine verification
+only with complete depfiles for Make's actual configured C sources; unused drafts
+do not count as compilation inputs. Context export caches per-file AST facts and
+resolved type projections by content, retaining cpp dependency/search validation
+and the fresh m2c context parse check.
 
 ### Registered tools
 

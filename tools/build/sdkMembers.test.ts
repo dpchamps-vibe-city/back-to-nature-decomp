@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, unlinkSync, writeFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { splitSdkLibs } from "./splitSdkLibs.js";
@@ -111,6 +111,49 @@ test("split is deterministic, preserves non-colliding input filenames, and never
     assert.equal(patchedSdkObjectPath("build/sdk/lib/470/libtest/same__Large.o"), "build/lib/470/libtest/same__Large.o");
     assert.equal(patchedSdkObjectPath("lib/libtest/stable.o"), "build/lib/libtest/stable.o");
   } finally { rmSync(f.root, { recursive: true, force: true }); }
+});
+
+test("SDK reuse validates inputs, membership and outputs, and agrees with forced reconstruction", (t) => {
+  const f = fixture(); t.after(() => rmSync(f.root, { recursive: true, force: true }));
+  const events: string[] = [], options = { root: f.root, sdkDir: join(f.root, "sdk"), version: "470", write: true,
+    onCache: (status: "hit" | "miss") => events.push(status) };
+  const first = splitSdkLibs(options), cache = join(f.root, "build/cache/sdk-members-470.json");
+  assert.deepEqual(events, ["hit"]);
+  const time = statSync(cache).mtimeMs;
+  const second = splitSdkLibs(options); assert.deepEqual(second, first); assert.equal(statSync(cache).mtimeMs, time);
+  assert.deepEqual(splitSdkLibs({ ...options, force: true }), first);
+  assert.deepEqual(events, ["hit", "hit", "miss"]);
+  const output = join(f.root, first.members[0]!.oPath);
+  for (const missing of [false, true]) {
+    if (missing) unlinkSync(output); else writeFileSync(output, "corrupt object");
+    assert.deepEqual(splitSdkLibs(options), first);
+    assert.ok(readFileSync(output).equals(f.small)); assert.equal(events.at(-1), "miss");
+  }
+  writeFileSync(cache, "{interrupted");
+  assert.deepEqual(splitSdkLibs(options), first); assert.equal(events.at(-1), "miss");
+  writeFileSync(join(f.root, "sdk/libtest.a"), ar([{ name: "same.o", bytes: f.small }, { name: "same.o", bytes: f.large }, { name: "new.o", bytes: f.small }]));
+  const changed = splitSdkLibs(options); assert.equal(changed.members.length, 3); assert.equal(events.at(-1), "miss");
+  assert.deepEqual(splitSdkLibs({ ...options, force: true }), changed);
+  mkdirSync(join(f.root, "lib/libtest"), { recursive: true });
+  writeFileSync(join(f.root, "lib/libtest/new.o"), f.large);
+  const available = splitSdkLibs(options);
+  assert.ok(available.members.some((m) => m.oPath === "lib/libtest/new.o")); assert.equal(events.at(-1), "miss");
+  writeFileSync(join(f.root, "tools/vendor/psx_psyq_signatures/470/EMPTY.LIB.json"), "[]");
+  splitSdkLibs(options); assert.equal(events.at(-1), "miss");
+  writeFileSync(join(f.root, "tools/vendor/psx_psyq_signatures/470/LIBTEST.LIB.json"), JSON.stringify([...f.entries].reverse()));
+  const reordered = splitSdkLibs(options); assert.equal(events.at(-1), "miss");
+  assert.deepEqual(splitSdkLibs({ ...options, force: true }), reordered);
+  const converter = join(f.root, "converter"); writeFileSync(converter, "first tool bytes");
+  splitSdkLibs({ ...options, converter }); assert.equal(events.at(-1), "miss");
+  splitSdkLibs({ ...options, converter }); assert.equal(events.at(-1), "hit");
+  writeFileSync(converter, "changed tool bytes");
+  splitSdkLibs({ ...options, converter }); assert.equal(events.at(-1), "miss");
+});
+
+test("SDK reuse cannot hide a corrupt output member map", (t) => {
+  const f = fixture(); t.after(() => rmSync(f.root, { recursive: true, force: true }));
+  writeFileSync(join(f.root, "build/sdk/member-map-470.json"), "{invalid map");
+  assert.throws(() => splitSdkLibs({ root: f.root, sdkDir: join(f.root, "sdk"), version: "470", write: true }));
 });
 
 test("SDK version namespaces cannot overwrite another version's colliding objects", () => {

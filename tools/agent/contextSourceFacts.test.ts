@@ -1,0 +1,80 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync, statSync, utimesSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { contextSourceReader } from "./contextSourceFacts.js";
+import { generatedContextIncludes, resolveContextTypes } from "./contextExport.js";
+import { scopedTypeCatalog, filesUnder } from "./scopedTypes.js";
+
+function fixture(t: { after: (fn: () => void) => void }) {
+  const root = mkdtempSync(join(tmpdir(), "context-facts-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  for (const dir of ["src", "include"]) mkdirSync(join(root, dir));
+  return root;
+}
+test("raw facts are content-cached, independent per file, isolated, and repair corrupt records", (t) => {
+  const root = fixture(t), a = join(root, "src/a.c"), b = join(root, "src/b.c");
+  writeFileSync(a, '/* #include "functions.h" */\nint declared(int);\nvoid a(void) {}\n');
+  writeFileSync(b, "void b(void) {}\n");
+  const cold = contextSourceReader(root), first = cold(a); cold(b);
+  assert.deepEqual(cold.stats, { hits: 0, misses: 2 });
+  const warm = contextSourceReader(root);
+  assert.deepEqual(warm(a), first); warm(b);
+  assert.deepEqual(warm.stats, { hits: 2, misses: 0 });
+  const time = statSync(a);
+  writeFileSync(a, '#include "functions.h"\nvoid a(int changed) {}\n');
+  utimesSync(a, time.atime, time.mtime);
+  const edited = contextSourceReader(root);
+  assert.equal(edited(a).signatures[0]!.signature, "void a(int changed);"); edited(b);
+  assert.deepEqual(edited.stats, { hits: 1, misses: 1 });
+  assert.deepEqual(generatedContextIncludes(root), ["src/a.c:1: functions.h"]);
+  const exposed = edited(a); exposed.signatures.length = 0;
+  assert.equal(edited(a).signatures.length, 1, "returned facts cannot mutate the cache");
+  for (const path of filesUnder(join(root, "build/cache/context-source"), ".json")) writeFileSync(path, "{interrupted");
+  const repaired = contextSourceReader(root); assert.equal(repaired(a).signatures.length, 1);
+  assert.equal(repaired.stats.misses, 1);
+});
+test("new source/header membership is audited even after all existing facts hit", (t) => {
+  const root = fixture(t);
+  writeFileSync(join(root, "src/f.c"), "void f(void) {}\n");
+  assert.deepEqual(generatedContextIncludes(root), []);
+  writeFileSync(join(root, "include/new.h"), '#include "overlays/ovl_test.h"\n');
+  assert.deepEqual(generatedContextIncludes(root), ["include/new.h:1: overlays/ovl_test.h"]);
+  rmSync(join(root, "include/new.h"));
+  assert.deepEqual(generatedContextIncludes(root), []);
+});
+test("cached raw facts do not mask transitive type changes, new shadow headers or source membership", (t) => {
+  const root = fixture(t);
+  writeFileSync(join(root, "include/field.h"), "#define FIELD short\n");
+  writeFileSync(join(root, "src/f.c"), '#include "field.h"\ntypedef struct { FIELD value; } Private;\nvoid f(Private *p) {}\n');
+  const first = scopedTypeCatalog(root);
+  const name = first.byFunction.get("f")!.get("Private")!;
+  assert.match(first.defs.get(name)!, /short value/);
+  assert.deepEqual(scopedTypeCatalog(root + "/"), first, "equivalent root spellings share preprocessing identity");
+  writeFileSync(join(root, "include/field.h"), "#define FIELD long\n");
+  assert.match(scopedTypeCatalog(root).defs.get(name)!, /long value/);
+  writeFileSync(join(root, "src/field.h"), "#define FIELD unsigned\n");
+  assert.match(scopedTypeCatalog(root).defs.get(name)!, /unsigned value/);
+  writeFileSync(join(root, "src/g.c"), "typedef int Private;\nvoid g(Private *p) {}\n");
+  assert.notEqual(scopedTypeCatalog(root).byFunction.get("g")!.get("Private"), name);
+  rmSync(join(root, "src/g.c"));
+  assert.equal(scopedTypeCatalog(root).byFunction.has("g"), false);
+});
+test("resolution cache preserves ordered results, invalidates contracts and repairs corruption", (t) => {
+  const root = fixture(t), signatures = () => new Map([["f", "void f(Record *p);"]]);
+  writeFileSync(join(root, "include/type.h"), "typedef struct { short value; } Record;\n");
+  const first = resolveContextTypes(root, signatures());
+  const path = join(root, "build/cache/context-resolution.json"), time = statSync(path).mtimeMs;
+  const second = resolveContextTypes(root, signatures());
+  assert.deepEqual(second, first); assert.equal(statSync(path).mtimeMs, time);
+  second.resolution.ordered.length = 0; second.referencedBy.clear();
+  assert.deepEqual(resolveContextTypes(root, signatures()), first);
+  writeFileSync(path, "interrupted");
+  assert.deepEqual(resolveContextTypes(root, signatures()), first);
+  writeFileSync(join(root, "include/type.h"), "typedef struct { long value; } Record;\n");
+  assert.match(resolveContextTypes(root, signatures()).defs.get("Record")!, /long value/);
+  const unknown = resolveContextTypes(root, new Map([["g", "void g(Unknown *p);"]]));
+  assert.deepEqual(unknown.resolution.unresolved, ["Unknown"]);
+  assert.ok(readFileSync(path, "utf8").includes("Unknown"));
+});

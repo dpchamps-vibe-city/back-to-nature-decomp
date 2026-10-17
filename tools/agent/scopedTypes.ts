@@ -1,14 +1,14 @@
 /** Scope-aware context-only names; compiler headers are never populated here. */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { isAbsolute, join, relative } from "node:path";
-import { collectTypedefs, extractSignaturesFromSource } from "./sdkTypes.js";
+import { existsSync, readdirSync } from "node:fs";
+import { isAbsolute, join, relative, resolve } from "node:path";
+import { collectTypedefs } from "./sdkTypes.js";
 import { parseC, walk, namedChildren, field, C_FRONTEND_IDENTITY } from "./residual-source-search/tree-sitter-c.js";
 import { configuredCppFlags, ROOT } from "./decompToolchain.js";
-import { analyzeCSource } from "./cSourceGuard.js";
+import { contextImplementation, contextSourceReader } from "./contextSourceFacts.js";
 import { scopeFromPreprocessed } from "./calleeTruth.js";
 import { cachedPreprocess, withPreprocessorMetadata } from "./preprocessedCache.js";
-import { digest, fileDigest, readCache, writeCache } from "../lib/contentCache.js";
+import { digest, readCache, writeCache } from "../lib/contentCache.js";
 
 export function filesUnder(dir: string, extension: string): string[] {
   if (!existsSync(dir)) return [];
@@ -16,6 +16,7 @@ export function filesUnder(dir: string, extension: string): string[] {
     .flatMap((e) => e.isDirectory() ? filesUnder(join(dir, e.name), extension) : e.name.endsWith(extension) ? [join(dir, e.name)] : []);
 }
 export function renameTypeTokens(source: string, names: Map<string, string>): string {
+  if (!names.size) return source;
   const edits: Array<{ start: number; end: number; text: string }> = [];
   const tree = parseC(source);
   walk(tree.rootNode, (n) => {
@@ -28,14 +29,13 @@ export function renameTypeTokens(source: string, names: Map<string, string>): st
   return result;
 }
 interface TypeFact { name: string; text: string; origin: string; kind: "typedef" | "tag" | "standalone" }
-function cachedTypeFacts(root: string, path: string, processed: ReturnType<typeof scopeFromPreprocessed>, sourceLocal: boolean): TypeFact[] {
-  const implementation = ["scopedTypes.ts", "sdkTypes.ts", "calleeTruth.ts", "residual-source-search/tree-sitter-c.ts"].map((p) => fileDigest(join(ROOT, "tools/agent", p)));
-  implementation.push(fileDigest(join(ROOT, "tools/vendor/tree-sitter-c/tree-sitter-c.wasm")), fileDigest(join(ROOT, "package-lock.json")));
-  const key = digest(JSON.stringify([processed.identity, sourceLocal, implementation, C_FRONTEND_IDENTITY]));
+function cachedTypeFacts(root: string, path: string, text: string, sourceLocal: boolean, implementation: string): TypeFact[] {
+  const key = digest(JSON.stringify([digest(text), sourceLocal, implementation, C_FRONTEND_IDENTITY]));
   const cache = join(root, "build/cache/scoped-types", `${digest(path + sourceLocal)}.json`);
   const hit = readCache<TypeFact[]>(cache, key);
   if (hit) return hit;
   const result: TypeFact[] = [];
+  const processed = scopeFromPreprocessed(text);
   const tree = parseC(processed.source);
   try {
     for (const node of namedChildren(tree.rootNode)) {
@@ -54,7 +54,7 @@ function cachedTypeFacts(root: string, path: string, processed: ReturnType<typeo
   return result;
 }
 export function scopedTypeCatalog(root: string): ReturnType<typeof buildScopedTypeCatalog> {
-  return withPreprocessorMetadata(() => buildScopedTypeCatalog(root));
+  return withPreprocessorMetadata(() => buildScopedTypeCatalog(resolve(root)));
 }
 function buildScopedTypeCatalog(root: string): {
   defs: Map<string, string>; byFunction: Map<string, Map<string, string>>;
@@ -68,9 +68,9 @@ function buildScopedTypeCatalog(root: string): {
   const conflicts: Array<{ name: string; origins: string[] }> = [];
   const normalize = (s: string) => s.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s+/g, "");
   const flags = configuredCppFlags().map((f) => f.startsWith(`-I${ROOT}/`) ? `-I${join(root, relative(ROOT, f.slice(2)))}` : f);
-  const preprocess = (path: string) => {
-    return scopeFromPreprocessed(cachedPreprocess(path, root, flags).text);
-  };
+  const read = contextSourceReader(root);
+  const implementation = contextImplementation(["tools/agent/scopedTypes.ts", "tools/agent/calleeTruth.ts"]);
+  const preprocess = (path: string) => cachedPreprocess(path, root, flags).text;
   const publicType = (name: string, text: string, origin: string) => {
     if (defs.has(name) && normalize(defs.get(name)!) !== normalize(text)) {
       conflicts.push({ name, origins: [origins.get(name)!, origin] }); defs.delete(name); return;
@@ -81,23 +81,22 @@ function buildScopedTypeCatalog(root: string): {
   for (const path of filesUnder(join(root, "include"), ".h")) {
     if (excluded(path)) continue;
     const processed = preprocess(path);
-    for (const entry of cachedTypeFacts(root, path, processed, false)) publicType(entry.name, entry.text, entry.origin);
+    for (const entry of cachedTypeFacts(root, path, processed, false, implementation)) publicType(entry.name, entry.text, entry.origin);
   }
   for (const path of filesUnder(join(root, "src"), ".c")) {
-    const source = readFileSync(path, "utf8");
-    if (source.includes("INCLUDE_ASM(")) {
-      for (const site of analyzeCSource(source).includeAsm) excludedFunctions.add(site.symbol);
+    const facts = read(path);
+    if (facts.hasIncludeAsmText) {
+      for (const name of facts.stubSymbols) excludedFunctions.add(name);
       continue;
     }
-    const signatures = extractSignaturesFromSource(source);
+    const signatures = facts.signatures;
     if (!signatures.length) continue;
-    const rawLocal = new Map<string, string>(); collectTypedefs(source, rawLocal);
     const local = new Map<string, string>();
     const localTags = new Set<string>();
     const standalone = new Map<string, string>();
-    if (rawLocal.size || source.includes("struct ") || source.includes("union ") || source.includes("enum ")) {
+    if (facts.hasLocalTypes) {
       const processed = preprocess(path);
-      for (const entry of cachedTypeFacts(root, path, processed, true)) {
+      for (const entry of cachedTypeFacts(root, path, processed, true, implementation)) {
         if (entry.kind === "typedef") local.set(entry.name, entry.text);
         else {
           localTags.add(entry.name.split(" ")[1]!);

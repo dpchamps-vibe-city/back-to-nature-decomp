@@ -1,6 +1,21 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { parseFunctionDiffSummary } from "./gates.ts";
+import { parseFunctionDiffSummary, runBuildCheck } from "./gates.ts";
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+test("full build checks retain check-all with bounded parallelism", async (t) => {
+  const root = mkdtempSync(join(tmpdir(), "build-check-jobs-")), oldPath = process.env.PATH;
+  mkdirSync(join(root, "bin"));
+  writeFileSync(join(root, "bin/make"), `#!${process.execPath}\nrequire('node:fs').writeFileSync('args.json', JSON.stringify(process.argv.slice(2)));\n`, { mode: 0o755 });
+  process.env.PATH = join(root, "bin") + ":" + oldPath;
+  t.after(() => { process.env.PATH = oldPath; rmSync(root, { recursive: true, force: true }); });
+  assert.equal((await runBuildCheck(root)).code, 0);
+  const args = JSON.parse(readFileSync(join(root, "args.json"), "utf8"));
+  assert.equal(args.length, 2); assert.equal(args[1], "check-all");
+  assert.match(args[0], /^-j[1-8]$/);
+});
 
 test("parses the oracle's word count and verdict", () => {
   const result = parseFunctionDiffSummary(

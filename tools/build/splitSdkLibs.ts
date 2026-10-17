@@ -1,7 +1,7 @@
 #!/usr/bin/env npx tsx
 /** Recover colliding SDK members without last-write-wins extraction.
  * Usage: splitSdkLibs.ts [--write] [--converter /path/to/psyq2elf]
- *   [--sdk-dir tools/vendor/psyq47/LIB] [--version 470]
+ *   [--sdk-dir tools/vendor/psyq47/LIB] [--version 470] [--force]
  * Existing non-colliding objects (including BSS patches) are not rewritten.
  * Generated objects/map are reproducible outputs, not checked-in artifacts.
  */
@@ -12,8 +12,28 @@ import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { collisionNames, hash, loadMemberMap, memberKey, readAr, readPsyqLib, readTextObject, signatureFits, signatureId, type MemberMap, type MemberRecord, type SigEntry } from "../lib/psyqMembers.js";
 import { ROOT } from "../lib/psxExeInfo.js";
+import { digest, snapshot, readCache, writeCache } from "../lib/contentCache.js";
 
-export interface SplitOptions { root: string; sdkDir: string; version: string; converter?: string; write: boolean }
+export interface SplitOptions {
+  root: string; sdkDir: string; version: string; converter?: string; write: boolean;
+  force?: boolean;
+  onCache?: (status: "hit" | "miss") => void;
+}
+/** The SDK archives/signatures and conventional objects are inputs; recovered
+ * objects and the member map are outputs. New/missing files belong to both
+ * proofs. Never infer freshness from the map's existence or timestamps. */
+function splitInputs(options: SplitOptions): string {
+  const implementation = ["tools/build/splitSdkLibs.ts", "tools/lib/psyqMembers.ts", "tools/lib/elfSections.ts", "tools/lib/contentCache.ts"];
+  const converter = options.converter && (options.converter.includes("/") ? resolve(options.converter) :
+    execFileSync("which", [options.converter], { encoding: "utf8" }).trim());
+  return digest(JSON.stringify([options.version, options.converter ?? null, snapshot(options.root,
+    [resolve(options.sdkDir), `tools/vendor/psx_psyq_signatures/${options.version}`, "lib",
+      ...implementation.map((p) => join(ROOT, p)), ...(converter ? [converter] : [])],
+    (p) => /\.(?:LIB|a|LIB\.json|o)$/i.test(p))]));
+}
+function splitOutputs(root: string, map: MemberMap): Record<string, string> {
+  return snapshot(root, [`build/sdk/member-map-${map.version}.json`, ...map.members.map((m) => m.oPath)]);
+}
 function writeChanged(file: string, bytes: Buffer | string): void {
   const data = Buffer.from(bytes);
   if (existsSync(file) && readFileSync(file).equals(data)) return;
@@ -24,6 +44,14 @@ function writeChanged(file: string, bytes: Buffer | string): void {
 export function splitSdkLibs(options: SplitOptions): MemberMap {
   const { root, sdkDir, version, write } = options;
   if (!/^\d+$/.test(version)) throw new Error("SDK version must be a numeric directory name");
+  const key = splitInputs(options), cache = join(root, "build/cache", `sdk-members-${version}.json`);
+  type Cached = { map: MemberMap; outputs: Record<string, string> };
+  const hit = options.force ? undefined : readCache<Cached>(cache, key);
+  if (hit && JSON.stringify(hit.outputs) === JSON.stringify(splitOutputs(root, hit.map))) {
+    options.onCache?.("hit");
+    return hit.map;
+  }
+  options.onCache?.("miss");
   const scratch = mkdtempSync(join(tmpdir(), "psyq-members-"));
   const map: MemberMap = { schemaVersion: 1, version, members: [], signatures: [] };
   const pending = new Map<string, Buffer>();
@@ -91,9 +119,11 @@ export function splitSdkLibs(options: SplitOptions): MemberMap {
         else if (records.some(m => m.collision)) throw new Error(`Cannot uniquely map ${sigFile}:${entry.name} (${entry.labels?.[0]?.name}): ${matches.length} verified objects`);
       }
     }
+    if (key !== splitInputs(options)) throw new Error("SDK split inputs changed during reconstruction");
     if (write) {
       for (const [oPath, elf] of pending) writeChanged(join(root, oPath), elf);
       writeChanged(join(root, "build/sdk", `member-map-${version}.json`), JSON.stringify(map, null, 2) + "\n");
+      writeCache(cache, key, { map, outputs: splitOutputs(root, map) } satisfies Cached);
     }
     return map;
   } finally { rmSync(scratch, { recursive: true, force: true }); }
@@ -107,7 +137,9 @@ function main(): void {
     return args[i + 1]!;
   };
   const converter = option("--converter", process.env.PSYQ2ELF ?? "");
-  const map = splitSdkLibs({ root: ROOT, sdkDir: option("--sdk-dir", join(ROOT, "tools/vendor/psyq47/LIB")), version: option("--version", "470"), write: args.includes("--write"), ...(converter ? { converter } : {}) });
+  const map = splitSdkLibs({ root: ROOT, sdkDir: option("--sdk-dir", join(ROOT, "tools/vendor/psyq47/LIB")), version: option("--version", "470"), write: args.includes("--write"),
+    force: args.includes("--force"), onCache: (status) => console.error(`SDK members: cache ${status}${status === "hit" ? " (inputs and outputs unchanged)" : ""}`),
+    ...(converter ? { converter } : {}) });
   const collisionPaths = new Set(map.members.filter(m => m.collision).map(m => m.oPath));
   console.log(`${args.includes("--write") ? "Wrote" : "Dry run:"} SDK ${map.version}: ${map.members.length} members, ${collisionPaths.size} collision-safe objects, ${map.signatures.length} signature mappings`);
 }

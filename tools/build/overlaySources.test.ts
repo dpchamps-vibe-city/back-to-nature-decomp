@@ -5,6 +5,7 @@ import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
+import { configuredCSources } from "./buildInputs.js";
 
 test("overlay builds select configured functions without deleting retired source files", (t) => {
   const root = mkdtempSync(join(tmpdir(), "overlay-sources-"));
@@ -12,7 +13,7 @@ test("overlay builds select configured functions without deleting retired source
   for (const dir of ["configs/splat", "src/overlays/ovl_test"]) mkdirSync(join(root, dir), { recursive: true });
   const original = readFileSync(join(ROOT, "Makefile"), "utf8");
   const start = original.indexOf("define OverlayRules\n"), end = original.indexOf("\nendef", start) + "\nendef".length;
-  writeFileSync(join(root, "Makefile"), "BUILD_DIR := build\n" + original.slice(start, end) +
+  writeFileSync(join(root, "Makefile"), "BUILD_DIR := build\nC_SRCS := $(wildcard src/*.c)\nOVERLAYS := ovl_test\n" + original.slice(start, end) +
     "\n$(eval $(call OverlayRules,ovl_test))\n.PHONY: selected\nselected:\n\t@echo $(ovl_test_C_SRCS)\n");
   const live = "src/overlays/ovl_test/head.c", retired = "src/overlays/ovl_test/case.c";
   writeFileSync(join(root, live), "int head(void) {return 1;}\n");
@@ -22,7 +23,11 @@ test("overlay builds select configured functions without deleting retired source
   const selected = () => execFileSync("make", ["--no-print-directory", "selected"], { cwd: root, encoding: "utf8" }).trim().split(/\s+/);
   writeFileSync(config, "subsegments:\n  - [0x0, .rodata, head]\n  - [0x10, c, head]\n  - [0x18, c, case]\n  - [0x20, data]\n");
   assert.deepEqual(selected(), [live, retired]);
+  writeFileSync(join(root, "src/exe.c"), "void exe(void) {}\n");
+  writeFileSync(join(root, "src/overlays/misplaced.c"), "void misplaced(void) {}\n");
+  assert.deepEqual(configuredCSources(root), ["src/exe.c", retired, live].sort());
   writeFileSync(config, "subsegments:\n  - [0x0, .rodata, head]\n  - [0x10, c, head]\n  - [0x20, data]\n");
   assert.deepEqual(selected(), [live]);
+  assert.deepEqual(configuredCSources(root), ["src/exe.c", live]);
   assert.equal(readFileSync(join(root, retired), "utf8"), stub, "retired source remains untouched, with no standalone asm prerequisite");
 });

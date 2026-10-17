@@ -1,4 +1,5 @@
 import { basename, extname } from "node:path";
+import { availableParallelism } from "node:os";
 import type { AutodecompConfig, DiffResult, GateResult, WorkMode } from "./types.ts";
 import { runCommand } from "./process.ts";
 import { checkSourcePolicy } from "./source-policy.ts";
@@ -156,7 +157,7 @@ export interface ResidualReading {
  * container's binary had silently changed.
  */
 export async function runBuildCheck(projectRoot: string, timeoutMs = 5 * 60_000, signal?: AbortSignal) {
-  return runCommand("make", ["check-all"], { cwd: projectRoot, timeoutMs, signal, maxCaptureBytes: 4 * 1024 * 1024 });
+  return runCommand("make", [`-j${Math.min(8, availableParallelism())}`, "check-all"], { cwd: projectRoot, timeoutMs, signal, maxCaptureBytes: 4 * 1024 * 1024 });
 }
 
 function sourceNames(changedFiles: string[]): string[] {

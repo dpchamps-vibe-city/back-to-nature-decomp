@@ -26,7 +26,7 @@ The recent finalization sample is small: two successful calls. The component mea
 
 ### Repeated verification
 
-`.pi/extensions/psx-decomp/tools/finalization.ts` performs:
+`.pi/extensions/psx-decomp/tools/finalization.ts` performs: <!-- doc-ref-ignore: extension-rooted path -->
 
 ```text
 policy → function diff → make check-all
@@ -286,3 +286,77 @@ Measurement artifacts and scripts are ignored under `build/optimization-evidence
 ### Deliberate limits
 
 The outer preparation packet still conservatively fingerprints the source/header population. Expensive analysis, independent seed verification, and draft generation have their own narrower freshness domains, so an unrelated edit need not redo them. Request-scoped metadata is not shared indefinitely, and persistent cache corruption is a miss. Receipts do not cross processes or worktree/trunk boundaries. No game source, generated headers, inference-policy changes, or unrelated baseline repairs are part of this changeset.
+
+## 6. Follow-up: configured coverage, incremental context and warm build overhead
+
+Implemented after the October finalization investigation. This is additional work
+on the existing gate, not a replacement for the verification boundary above.
+
+- Dependency coverage now asks Make for its configured C source variables rather
+  than recursively requiring depfiles for every `.c` beneath `src/`. The query
+  runs no build goal and does not consume the call graph. Missing active depfiles,
+  malformed rules, rules omitting their source, unknown/empty source selection and
+  real generated-context dependencies cannot establish compiler independence.
+  Policy/scope and input/output boundary snapshots remain in place.
+- `contextSourceFacts.ts` caches immutable per-file AST facts for includes,
+  signatures, local prototypes, parked symbols and local-type presence. Fresh
+  directory enumeration detects additions/removals. Source bytes, parser/grammar
+  and implementation hashes determine reuse; actual preprocessed type facts still
+  validate cpp dependencies and include-search membership. Type-origin mapping is
+  deferred until a type-fact miss. Resolved declaration projections are cached by
+  complete projected signatures, definitions and implementation. The fresh m2c
+  parse check remains mandatory. Equivalent root spellings share preprocessing
+  identity instead of evicting one another's caches.
+- Full build gates use available CPU parallelism capped at eight jobs, still
+  checking every container. SDK-member reconstruction has a content-validated
+  cache over archives, signatures, conventional objects, converter/implementation
+  and required outputs (including the member map). `splitSdkLibs.ts --write
+  --force` independently replays reconstruction. Buffered EXE hashing uses byte
+  skip/count flags to retain exactly the old payload slice.
+
+Two misplaced draft files were separately removed at the user's request before
+this implementation. The timings below use that already-cleaned tree as their
+baseline; they do not attribute the earlier duplicate-gate saving to this work.
+
+### Measurements
+
+Same workspace, `CopyVec3`, incremental build and analysis caches warm, fresh
+process with no finalization receipt. These are individual runs, not a cold-cache
+benchmark or a claim about discovering a new match.
+
+| Operation | Before | After |
+|---|---:|---:|
+| End-to-end finalization | 10.82 s | 7.68 / 7.97 s |
+| Context export | 4.36 s | 2.15 / 2.49 s |
+| All-container build check inside finalization | 3.98 s | 2.38 / 2.42 s |
+| Immediate same-process receipt repeat | 0.87 s | 0.88 / 0.89 s |
+| Warm SDK-member CLI | 0.91 s | 0.36 / 0.38 s |
+
+The Make source-selection query costs approximately 0.58 s; it is deliberate
+hardening, not itself a speedup once the stray drafts have been removed. Fingerprint
+boundary scans remain a substantial cost and were not changed. Component timings
+must not be added together as hypothetical end-to-end savings.
+
+### Verification
+
+- 95 focused tests pass, covering configured/retired source membership, missing or
+  malformed dependency evidence, real context dependencies, source/header edits,
+  new shadow headers, private type identity, cache corruption, SDK archive and
+  signature changes, converter changes, missing/corrupt outputs, forced replay,
+  bounded build jobs and byte-exact hashing across partial/truncated ranges.
+- Frozen original implementations produce the same catalog (1,171 definitions,
+  2,114 function entries), include findings, resolution and rendered type context.
+  Cached and forced SDK maps agree over all 2,172 members. Generated headers and
+  project configuration remain unchanged.
+- Full suite: 1,314 pass, one existing failure in `macroCoverage.test.ts`, whose
+  historical fixture expects `func_8001B5DC` still to be an INCLUDE_ASM stub. An
+  archived `HEAD` tree reproduces the identical assertion. It is not repaired or
+  suppressed here. Repository typechecking likewise has 1,376 diagnostics in both
+  archived `HEAD` and this tree, with no added normalized diagnostics.
+- `make -j8 check-all` passes for the executable and all thirteen overlays;
+  `git diff --check` and the touched-document reference check pass. No commit.
+
+Ignored measurement/replay artifacts live under `build/finalize-investigation/`:
+`before-warm-finalization-profile.json`, `final-warm1-finalization-profile.json`,
+`final-warm2-finalization-profile.json`, `equivalence.json`, focused/full test
+logs, the archived-baseline failure replay and `typecheck-comparison.json`.

@@ -31,7 +31,7 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, rmSync
 import { dirname, join, relative } from "path";
 import { prototypesIn } from "./calleeTruth.js";
 import { inspectType } from "./type-propagation/c-types.js";
-import { parseC } from "./residual-source-search/tree-sitter-c.js";
+import { contextImplementation, contextSourceReader } from "./contextSourceFacts.js";
 import {
   extractPrototypesFromSource,
   extractSignaturesFromSource,
@@ -51,7 +51,7 @@ import {
 } from "../lib/container.js";
 import { requireFunctionLocation } from "../lib/symbolIndex.js";
 import { scopedTypeCatalog, projectScopedSignatures } from "./scopedTypes.js";
-import { writeIfChanged } from "../lib/contentCache.js";
+import { digest, readCache, writeCache, writeIfChanged } from "../lib/contentCache.js";
 import { emptyDeclarationIndex, indexDeclarations, projectDeclarations } from "./declarationContext.js";
 import { PREAMBLE_TYPES } from "./sdkTypes.js";
 
@@ -106,25 +106,21 @@ function filesUnder(root: string): string[] {
 /** These files are inference context, never compiler headers. AST inspection
  * distinguishes real directives from examples inside comments and strings. */
 export function generatedContextIncludes(rootDir: string): string[] {
-  const findings: string[] = [];
+  const findings: string[] = [], read = contextSourceReader(rootDir);
   for (const path of [...filesUnder(join(rootDir, "src")), ...filesUnder(join(rootDir, "include"))]) {
     const file = relative(rootDir, path);
     if (!/\.[ch]$/.test(file) || file === SDK_TYPES_HEADER || file === FUNCTIONS_HEADER || file.startsWith("include/overlays/")) continue;
-    const tree = parseC(readFileSync(path, "utf8"));
-    try {
-      for (const n of tree.rootNode.descendantsOfType("preproc_include")) {
-        const included = n.childForFieldName("path")?.text.slice(1, -1) ?? "";
-        if (/(?:^|\/)functions\.h$|(?:^|\/)overlays\/[^/]+\.h$/.test(included)) findings.push(`${file}:${n.startPosition.row + 1}: ${included}`);
-      }
-    } finally { tree.delete(); }
+    for (const included of read(path).includes) {
+      if (/(?:^|\/)functions\.h$|(?:^|\/)overlays\/[^/]+\.h$/.test(included.path)) findings.push(`${file}:${included.line}: ${included.path}`);
+    }
   }
   return findings;
 }
 
 function localPrototypeDisagreements(rootDir: string, pairs: ExtractedSignature[]): ExportResult["localPrototypes"] {
-  const signatures = new Map(pairs.map((p) => [p.name, p.signature]));
+  const signatures = new Map(pairs.map((p) => [p.name, p.signature])), read = contextSourceReader(rootDir);
   return filesUnder(join(rootDir, "src")).filter((p) => p.endsWith(".c")).flatMap((path) =>
-    extractPrototypesFromSource(readFileSync(path, "utf8")).flatMap((p) => {
+    read(path).prototypes.flatMap((p) => {
       const published = signatures.get(p.name);
       return published && signatureContract(published) !== signatureContract(p.signature)
         ? [{ name: p.name, file: relative(rootDir, path), signature: p.signature, published }] : [];
@@ -135,15 +131,11 @@ function localPrototypeDisagreements(rootDir: string, pairs: ExtractedSignature[
 /**
  * Extract the function definitions a decompiled C file publishes.
  */
-export function extractSignaturePairs(cFilePath: string): ExtractedSignature[] {
+export function extractSignaturePairs(cFilePath: string, read?: ReturnType<typeof contextSourceReader>): ExtractedSignature[] {
   if (!existsSync(cFilePath)) return [];
-
-  const source = readFileSync(cFilePath, "utf-8");
-
-  // Skip stubs that still use INCLUDE_ASM
-  if (source.includes("INCLUDE_ASM(")) return [];
-
-  return extractSignaturesFromSource(source);
+  if (read) return read(cFilePath).signatures;
+  const source = readFileSync(cFilePath, "utf8");
+  return source.includes("INCLUDE_ASM(") ? [] : extractSignaturesFromSource(source);
 }
 
 /**
@@ -183,6 +175,11 @@ export function resolveContextTypes(
   for (const name of catalog.excludedFunctions) signatures.delete(name);
   projectScopedSignatures(signatures, catalog);
   const defs = catalog.defs;
+  const key = digest(JSON.stringify([contextImplementation(["tools/agent/contextExport.ts"]), [...signatures], [...defs]]));
+  const cache = join(rootDir, "build/cache/context-resolution.json");
+  type Cached = { resolution: Resolution; referencedBy: Array<[string, string[]]> };
+  const hit = readCache<Cached>(cache, key);
+  if (hit) return { resolution: hit.resolution, defs, referencedBy: new Map(hit.referencedBy) };
 
   const referencedBy = new Map<string, string[]>();
   for (const sig of signatures.values()) {
@@ -198,8 +195,10 @@ export function resolveContextTypes(
   for (const [name, text] of defs) indexDeclarations(model, text, name, "public", "public-header");
   for (const [name, signature] of signatures) indexDeclarations(model, signature, name, "public", "public-header");
   const projection = projectDeclarations(model, signatures.keys(), "public");
-  return { resolution: { ordered: projection.selected.filter((d) => d.kind === "type" && !PREAMBLE_TYPES.has(d.name)).map((d) => d.name),
-    unresolved: projection.unknown }, defs, referencedBy };
+  const resolution = { ordered: projection.selected.filter((d) => d.kind === "type" && !PREAMBLE_TYPES.has(d.name)).map((d) => d.name),
+    unresolved: projection.unknown };
+  writeCache(cache, key, { resolution, referencedBy: [...referencedBy] } satisfies Cached);
+  return { resolution, defs, referencedBy };
 }
 
 /** Render include/functions.h: signatures only, sorted by name. */
@@ -347,7 +346,7 @@ export function exportContext(
     return { signatures: [], skipped: true, status: "skipped", signatureMatches: false, localPrototypes: [], reason: "file not found" };
   }
 
-  const pairs = extractSignaturePairs(cFile);
+  const pairs = extractSignaturePairs(cFile, contextSourceReader(rootDir));
   if (pairs.length === 0) {
     return { signatures: [], skipped: true, status: "skipped", signatureMatches: false, localPrototypes: [], reason: "no function definitions (stub?)" };
   }
@@ -394,14 +393,14 @@ function collectAllSignatures(
 ): { signatures: Map<string, string>; exported: string[]; skipped: string[] } {
   const srcDir = join(rootDir, container.paths.srcDir);
   if (!existsSync(srcDir)) return { signatures: new Map(), exported: [], skipped: [] };
-  const files = readdirSync(srcDir).filter((f) => f.endsWith(".c"));
+  const files = readdirSync(srcDir).filter((f) => f.endsWith(".c")), read = contextSourceReader(rootDir);
   const signatures = readExistingHeader(join(rootDir, functionsHeaderFor(container)));
   const exported: string[] = [];
   const skipped: string[] = [];
 
   for (const file of files) {
     const funcName = file.replace(/\.c$/, "");
-    const pairs = extractSignaturePairs(join(srcDir, file));
+    const pairs = extractSignaturePairs(join(srcDir, file), read);
 
     if (pairs.length === 0) {
       signatures.delete(funcName);

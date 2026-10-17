@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DEFAULT_CONFIG } from "../../shared/config.ts";
 import { finalizeWorkspace } from "./finalization.ts";
-import { consumeReceipt } from "./verification-receipt.ts";
+import { consumeReceipt, contextIsCompilerIndependent } from "./verification-receipt.ts";
 
 /* Real gate/orchestration, Git tree snapshots and process runner. Fixed fixture
  * commands replace the expensive byte/build oracles, not their acceptance order. */
@@ -28,6 +28,7 @@ const fs=require('node:fs'),path=require('node:path');
 const root=process.cwd(),s=JSON.parse(fs.readFileSync('scenario.json','utf8'));
 const events=fs.existsSync('events')?fs.readFileSync('events','utf8').trim().split('\\n'):[];
 const isMake=path.basename(process.argv[1])==='make';
+if(isMake&&process.argv.includes('__psx_inspect_c_sources')) { console.log('src/f.c'); process.exit(0); }
 let kind=isMake?'build':process.argv.some(a=>a.includes('contextExport.ts'))?'export':'diff';
 const count=events.filter(e=>e.startsWith(kind+':')).length+1;
 const label=kind+':'+count;fs.appendFileSync('events',label+'\\n');
@@ -136,6 +137,26 @@ for (const scenario of ["missing depfile", "context is a compiler dependency"]) 
     else writeFileSync(dep, "build/src/f.c.o: src/f.c include/common.h include/functions.h\n");
     assert.equal((await finalizeWorkspace(f.options)).pass, true);
     assert.deepEqual(f.events(), ["diff:1", "build:1", "export:1", "diff:2", "build:2"]);
+  });
+}
+test("unconfigured drafts do not invalidate dependency coverage or repeat machine work", async (t) => {
+  const f = fixture(t);
+  mkdirSync(join(f.root, "src/overlays"));
+  writeFileSync(join(f.root, "src/overlays/retired.c"), "void retired(void) {}\n");
+  assert.equal(contextIsCompilerIndependent(f.root), true);
+  assert.equal((await finalizeWorkspace(f.options)).pass, true);
+  assert.deepEqual(f.events(), ["diff:1", "build:1", "export:1"]);
+});
+for (const text of ["not a dependency rule", "build/src/f.c.o: include/common.h\n"]) {
+  test(`incomplete dependency evidence forces machine verification: ${text.trim()}`, async (t) => {
+    const f = fixture(t);
+    writeFileSync(join(f.root, "build/src/f.c.o.d"), text);
+    assert.equal(contextIsCompilerIndependent(f.root), false);
+    if (!text.includes(":")) await assert.rejects(finalizeWorkspace(f.options), /dependency rule/);
+    else {
+      assert.equal((await finalizeWorkspace(f.options)).pass, true);
+      assert.deepEqual(f.events(), ["diff:1", "build:1", "export:1", "diff:2", "build:2"]);
+    }
   });
 }
 test("publication cannot reuse changed machine outputs", async (t) => {

@@ -209,9 +209,9 @@ check-exe: check
 
 check: $(BUILT_BIN)
 	@if [ "$(SKIP_RODATA_CHECK)" != 1 ]; then npx tsx tools/build/deriveRodataSplits.ts; fi
-	@dd if=$(TARGET) bs=1 skip=$(PAYLOAD_OFF) count=$(PAYLOAD_SZ) 2>/dev/null | \
+	@dd if=$(TARGET) bs=64K skip=$(PAYLOAD_OFF) count=$(PAYLOAD_SZ) iflag=skip_bytes,count_bytes 2>/dev/null | \
 		sha256sum | awk '{print $$1}' > $(BUILD_DIR)/original.sha256
-	@dd if=$(BUILT_BIN) bs=1 skip=$(PAYLOAD_OFF) count=$(PAYLOAD_SZ) 2>/dev/null | \
+	@dd if=$(BUILT_BIN) bs=64K skip=$(PAYLOAD_OFF) count=$(PAYLOAD_SZ) iflag=skip_bytes,count_bytes 2>/dev/null | \
 		sha256sum | awk '{print $$1}' > $(BUILD_DIR)/built.sha256
 	@if diff -q $(BUILD_DIR)/original.sha256 $(BUILD_DIR)/built.sha256 > /dev/null 2>&1; then \
 		echo "OK: $(BUILT_BIN) matches original payload"; \
