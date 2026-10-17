@@ -2793,6 +2793,9 @@ extern s32 D_80126E40;
 
 extern s32 D_80126FE0;
 
+/* ovl_11 800FB648 tests this word flag with lw; 800FB608/800FB628 set and clear it. */
+extern s32 D_80127208;
+
 extern s16 D_8012720C;
 
 /* D_8012720E - u16 countdown timer decremented by ovl_11_func_800FEA00 and

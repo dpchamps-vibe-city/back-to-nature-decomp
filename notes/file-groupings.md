@@ -3290,31 +3290,15 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_80127208 set-once flag trio — 0x800FB5FC / 0x800FB608 / 0x800FB628 (confidence: medium)
+## `ovl_11` D_80127208 flag run — 0x800FB5FC–0x800FB648 (confidence: medium)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): three address-adjacent
-leaf functions sharing one file-scope s32 flag `D_80127208`.
+Candidate same-TU shared-flag run
+([evidence and limits](research/ovl_11_func_800FB648-grouping.md)).
 
-Fingerprints:
-- **address adjacency.** `ovl_11_func_800FB5FC` (0xC bytes, ends 0x800FB608)
-  sits immediately before `ovl_11_func_800FB608` (0x20 bytes, ends 0x800FB628)
-  which sits immediately before `ovl_11_func_800FB628` (0x20 bytes) — a
-  contiguous link-order run, no gaps.
-- **same shared global.** All three functions reference only `D_80127208`; one
-  clears it, one sets it once, one clears it conditionally. A shared main-RAM
-  s32 flag absent from `globals.h` is the same file-scope-state fingerprint
-  documented for the D_80071A00 / D_800719FE clusters. All three reach it with
-  the same absolute-addressing pattern (`lui`/`lw`/`sw %lo`), i.e. an `extern`
-  declaration rather than a defining TU.
-
-Members (address order):
-- ovl_11_func_800FB5FC (s) — leaf clear: `D_80127208 = 0` (3 words)
-- ovl_11_func_800FB608 (m, matched this session) — leaf set-once guard: if
-  `D_80127208 == 0` then `D_80127208 = 1` (8 words, `lw`/branch/`sw`, no
-  calls, no frame); byte-exact clean C, baseline flags
-- ovl_11_func_800FB628 (m, matched this session) — leaf conditional clear: if
-  `D_80127208 != 0` then `D_80127208 = 0` (8 words, `lw`/`beqz`/`sw`, no
-  calls, no frame); byte-exact clean C, baseline flags
+- ovl_11_func_800FB5FC (s) — clears `D_80127208` unconditionally.
+- ovl_11_func_800FB608 (m) — sets `D_80127208` to 1 when it is zero.
+- ovl_11_func_800FB628 (m) — clears `D_80127208` when it is nonzero.
+- ovl_11_func_800FB648 (m) — calls `ovl_11_func_800FB674` when `D_80127208` is nonzero.
 
 ---
 
@@ -5534,7 +5518,7 @@ Members (address order):
   member of the same 6-byte {s16;s16;s16} swap-helper family — its whole
   instruction stream is byte-identical to the run's swap helper 0x800F8480 —
   but it lives address-apart at 0x800FB45C, in the `0x800FBxxx` region beside
-  the recorded D_80127208 trio (0x800FB5FC/0x800FB608/0x800FB628) and the
+  the recorded D_80127208 flag run (0x800FB5FC–0x800FB648) and the
   predicate helper 0x800FB3E4, and is called (per the recorded summary) by the
   same link-adjacent 0x800FB218/0x800FB290 that call 0x800FB3E4; same-TU
   membership with the 0x800F84xx run unproven, but the swap-shape family now

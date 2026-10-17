@@ -793,6 +793,7 @@ char *ovl_11_func_800FB4B0(s32 arg0);
 void ovl_11_func_800FB5FC(void);
 void ovl_11_func_800FB608(void);
 void ovl_11_func_800FB628(void);
+void ovl_11_func_800FB648(void);
 void ovl_11_func_800FB908(void);
 s32 ovl_11_func_800FBE4C(void);
 void ovl_11_func_800FBE88(void);
