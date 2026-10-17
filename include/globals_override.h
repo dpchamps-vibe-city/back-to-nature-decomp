@@ -4070,6 +4070,8 @@ extern s16 D_800BF560[];
 extern s16 D_800BCF7C[];
 /* ovl_19 800B80E8 indexes eight original handlers; each overwrites incoming $a0 before use. */
 extern void (*D_800BCEA8[8])(void);
+/* ovl_19 800B87C4 indexes seven original handlers; none consumes incoming $a0. */
+extern void (*D_800BCEC8[7])(void);
 /* ovl_19 800B80E8 loads this signed halfword as the handler index. */
 extern s16 D_800BF4C4;
 /* D_800BF4E0 - the s16 field at D_800BF4C0 + 0x20, addressed by ovl_19_func_800B8DE8
