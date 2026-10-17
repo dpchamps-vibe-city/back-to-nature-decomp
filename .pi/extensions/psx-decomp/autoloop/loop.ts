@@ -535,6 +535,14 @@ async function runFunctionWithSignal(deps: LoopDeps, state: LoopState, functionN
     signal,
   });
 
+  const prepare = async () => {
+    const started = Date.now();
+    const update = () => setStatus(deps, `◎ ${functionName} · preparing · ${Math.floor((Date.now() - started) / 1000)}s`);
+    update();
+    const timer = setInterval(update, 1000);
+    try { return await prepareAttempt(deps.projectRoot, functionName, signal); }
+    finally { clearInterval(timer); }
+  };
   let current = state;
   if (deps.flag.aborted || signal.aborted) return { state: current, outcome: { kind: "aborted", functionName } };
   let lastReport = "";
@@ -561,9 +569,10 @@ async function runFunctionWithSignal(deps: LoopDeps, state: LoopState, functionN
      role first; completion/static shortcuts must not open documentation here. */
   let preparedOpening = "";
   try {
-    const prepared = await prepareAttempt(deps.projectRoot, functionName, signal);
+    const prepared = await prepare();
     preparedOpening = packetOpening(prepared.packet, prepared.path);
     if (!prepFirst) {
+      setStatus(deps, `◎ ${functionName} · checking static candidate`);
       const result = await attemptStaticFinalization({ root: deps.projectRoot, attempt: prepared, aborted: () => deps.flag.aborted,
         finalize: async () => {
           const gate = await finalize(oracle(current), functionName);
@@ -606,7 +615,7 @@ async function runFunctionWithSignal(deps: LoopDeps, state: LoopState, functionN
              stub. Forward this refreshed packet without replacing agent edits. */
           let ready = false;
           try {
-            const prepared = await prepareAttempt(deps.projectRoot, functionName, signal);
+            const prepared = await prepare();
             preparedOpening = packetOpening(prepared.packet, prepared.path);
             const status = prepStatus(prepared.packet);
             lastReport = status.report;

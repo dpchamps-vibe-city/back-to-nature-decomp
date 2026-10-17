@@ -35,6 +35,8 @@ import { loadFunctionSpans } from "../lib/symbolIndex.js";
 import { dependencyReadySmallFirstStrategy, rankWorklist } from "./callGraphStrategies.js";
 import { detectMacroIdentities } from "../diagnostics/macroIdentity.js";
 import { macroRouteSummary, type MacroRouteSummary } from "../diagnostics/macroTiler.js";
+import { callGraphInputKey, recordCallGraph } from "../lib/callGraphCache.js";
+import { loadManifest } from "../lib/overlayManifest.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "../..");
@@ -96,6 +98,17 @@ interface FuncEntry {
   crossContainerCalls: string[];
 }
 
+/* Keep explicit CLI rebuilds available, but let target selection reuse a graph
+   whose complete inputs (including recursive overlay C status) still agree. */
+const archive = loadManifest()?.archive.dataPath;
+const graphInputs = ["src", "include", "configs", "tools/agent", "tools/diagnostics", "tools/lib",
+  "notes/file-groupings.md", "extracted/overlays", "package-lock.json", "tools/vendor/tree-sitter-c",
+  "node_modules/web-tree-sitter/web-tree-sitter.js", "node_modules/web-tree-sitter/web-tree-sitter.wasm",
+  ...(archive ? [archive] : []),
+  ...containers.flatMap(c => [c.targetPath, c.paths.asmDir, c.paths.ldScript, c.paths.functionsCsv,
+    c.paths.sectionLayout, c.paths.undefinedFuncs, c.paths.undefinedSyms]),
+  "build/engine_syms.txt", "build/dep_syms.txt", "build/lib_bss_syms.txt"];
+const inputKey = onlyContainer ? undefined : callGraphInputKey(ROOT, graphInputs);
 const macroCensus = detectMacroIdentities({ containers });
 const macroReports = new Map(macroCensus.functions.map(f => [f.name, macroRouteSummary(f)]));
 const funcMap = new Map<string, FuncEntry>();
@@ -411,6 +424,7 @@ const output = {
 
 mkdirSync(dirname(OUT_FILE), { recursive: true });
 writeFileSync(OUT_FILE, JSON.stringify(output, null, 2));
+if (inputKey) recordCallGraph(ROOT, graphInputs, inputKey);
 
 console.log(`Call graph: ${entries.length} functions (${worklistStrategy.name})`);
 console.log(`  Tier 1 (pure leaf):    ${String(tier1).padStart(3)} functions`);

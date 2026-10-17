@@ -2,6 +2,7 @@ import { finalizeWorkspace, finalizedDiff } from "../tools/finalization.ts";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { loadCallGraph, rebuildCallGraph } from "../../shared/call-graph.ts";
+import { callGraphIsFresh } from "../../../../tools/lib/callGraphCache.ts";
 import { loadConfig } from "../../shared/config.ts";
 import { runBuildCheck, runFunctionDiff } from "../../shared/gates.ts";
 import { checkSourcePolicy, isPendingStub, withinAllowedRoots } from "../../shared/source-policy.ts";
@@ -175,7 +176,8 @@ export async function nextTarget(
   skip: Set<string>,
   defer: Set<string> = new Set(),
 ): Promise<string | undefined> {
-  const graph = await rebuildCallGraph(projectRoot).catch(() => loadCallGraph(projectRoot));
+  const graph = callGraphIsFresh(projectRoot) ? loadCallGraph(projectRoot)
+    : await rebuildCallGraph(projectRoot).catch(() => loadCallGraph(projectRoot));
   const eligible = graph.functions.filter(
     (entry) => !entry.decompiled && entry.handwritten === false && !entry.dead && !skip.has(entry.name),
   );

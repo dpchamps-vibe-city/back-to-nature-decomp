@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { existsSync, readFileSync, mkdtempSync, mkdirSync, writeFileSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { ROOT } from "../lib/psxExeInfo.js";
@@ -159,6 +159,21 @@ test("production oracle uses the repo include graph and both configured flag col
   assert.ok(productionExe.report.asFlags.includes("-G8"));
   assert.ok(productionOverlay.report.asFlags.includes("-G0"));
   assert.throws(() => deriveRepoMacroEncodings(productionExe.library, "overlay"), /raw header templates/);
+});
+
+test("encoding receipts reuse stable provenance, repair corrupt output and track header changes", () => {
+  const library = fixture('#define gte_rtps() __asm__ volatile("nop;nop;.word 0x1800017f")\n');
+  const first = deriveRepoMacroEncodings(library);
+  const object = join(ROOT, first.report.probeObject), stamp = statSync(object).mtimeMs;
+  const original = readFileSync(object);
+  assert.deepEqual(deriveRepoMacroEncodings(library), first);
+  assert.equal(statSync(object).mtimeMs, stamp, "a cache hit must not recompile the probe");
+  writeFileSync(object, "corrupt");
+  assert.deepEqual(deriveRepoMacroEncodings(library), first);
+  assert.deepEqual(readFileSync(object), original);
+  const changed = deriveRepoMacroEncodings(fixture('/* changed header */\n#define gte_rtps() __asm__ volatile("nop;nop;.word 0x1800017f")\n'));
+  assert.notEqual(changed.report.probeObject, first.report.probeObject);
+  assert.deepEqual(changed.report.commands, first.report.commands);
 });
 
 test("default census resolves commands locally; raw mode and removed inputs are explicit", () => {

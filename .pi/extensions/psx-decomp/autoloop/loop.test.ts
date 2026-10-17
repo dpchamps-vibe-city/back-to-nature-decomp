@@ -76,6 +76,7 @@ console.log(JSON.stringify({ path: 'build/packet.json' }));
   } } };
   const statePath = join(root, "run_output/state.json");
   const messages: string[] = [];
+  const statuses: Array<string | undefined> = [];
   const flag = { aborted: false };
   let tools = ["read", "bash", "edit", "write", "psx_finalize_function"];
   const deps = {
@@ -89,12 +90,15 @@ console.log(JSON.stringify({ path: 'build/packet.json' }));
       sendUserMessage: (message: string) => { messages.push(message); flag.aborted = true; } },
     ctx: { model: { id: "fixture" }, isIdle: () => true, waitForIdle: async () => {}, getContextUsage: () => undefined,
       sessionManager: { getEntries: () => [] }, modelRegistry: { find: () => ({ id: "fixture" }) },
-      ui: { notify: () => {}, setStatus: () => {}, theme: { fg: (_color: string, text: string) => text } } },
+      ui: { notify: () => {}, setStatus: (_key: string, text: string | undefined) => { statuses.push(text); },
+        theme: { fg: (_color: string, text: string) => text } } },
   } as unknown as LoopDeps;
 
   writeFileSync(statePath, JSON.stringify(state));
   await runLoop(deps);
   assert.equal(messages.length, 1);
+  assert.ok(statuses.some(text => text?.includes(`${fresh} · preparing · 0s`)));
+  assert.equal(statuses.at(-1), undefined, "startup status is cleared when the loop stops");
   assert.match(messages[0]!, /Role: prep/);
   assert.match(messages[0]!, new RegExp(`Target: ${fresh}`));
   assert.doesNotMatch(messages[0]!, /psx-post-decompile-documentation/);

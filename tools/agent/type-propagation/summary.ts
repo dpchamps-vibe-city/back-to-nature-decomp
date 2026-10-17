@@ -17,9 +17,16 @@ export function baseBias(report: MachineIrReport, value: number, active = new Se
     }
   }
   if (op?.kind === "phi") {
-    const inputs = op.inputs.filter((id) => id !== value).map((id) => baseBias(report, id, next));
-    const first = inputs[0];
-    if (first && inputs.every((p) => p && p.base === first.base && p.bias === first.bias)) return first;
+    let first: { base: string; bias: number } | undefined;
+    for (const id of op.inputs) {
+      if (id === value) continue;
+      const p = baseBias(report, id, next);
+      /* One unknown/disagreement already rules out a common address. Do not
+         enumerate the remaining paths through a shared phi graph. */
+      if (!p || (first && (p.base !== first.base || p.bias !== first.bias))) return null;
+      if (!first) first = p;
+    }
+    if (first) return first;
   }
   return null;
 }
@@ -33,8 +40,14 @@ export function storedValue(report: MachineIrReport, memory: number, address: nu
   if (!version) return null;
   const next = new Set(active).add(memory);
   if (version.kind === "phi") {
-    const inputs = version.inputs.filter((m) => m !== memory).map((m) => storedValue(report, m, address, width, next));
-    return inputs.length && inputs[0] !== null && inputs.every((v) => v === inputs[0]) ? inputs[0]! : null;
+    let first: number | undefined;
+    for (const m of version.inputs) {
+      if (m === memory) continue;
+      const value = storedValue(report, m, address, width, next);
+      if (value === null || (first !== undefined && value !== first)) return null;
+      if (first === undefined) first = value;
+    }
+    return first ?? null;
   }
   if (version.kind !== "store") return null;
   const effect = report.ir.effects[version.effect];

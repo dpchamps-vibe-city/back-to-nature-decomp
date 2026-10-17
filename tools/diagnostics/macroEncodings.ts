@@ -4,10 +4,13 @@
  * replacement header, copied opcode table or target-dependent choice is used.
  * SDK literals remain intact; the report records the required GAS substitution. */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import { compileSource, configuredAsFlagsForContainer, configuredCppFlags, configuredMaspsxFlags, configuredToolchainIdentity, ROOT } from "../agent/decompToolchain.js";
 import { elf32SectionSizes } from "../lib/elfSections.js";
+import { fileDigest, readCache, snapshot, writeCache, writeIfChanged } from "../lib/contentCache.js";
+import { buildToolInputs } from "../build/buildInputs.js";
+import { cachedPreprocess, preprocessingTools } from "../agent/preprocessedCache.js";
 import type { CommandEncodingEvidence, MacroTemplate, TemplateLibrary } from "./macroTemplates.js";
 
 const digest = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
@@ -136,13 +139,27 @@ function substitutionLiteral(template: MacroTemplate, statement: string): string
 export function deriveRepoMacroEncodings(library: TemplateLibrary, containerKind: "exe" | "overlay" = "exe"): { library: TemplateLibrary; report: RepoEncodingReport } {
   if (library.templates.some(t => t.encodingEvidence.length)) throw new Error("Production encoding derivation requires raw header templates, not previously translated libraries");
   const base = join(ROOT, "build/macroIdentity/repo-encodings", containerKind);
-  mkdirSync(base, { recursive: true });
-  const dir = mkdtempSync(join(base, "probe-"));
-  const contextSource = join(dir, "context.c");
-  writeFileSync(contextSource, '#include "common.h"\n');
-  const context = compileSource(contextSource, dir, "context", { assemble: false, useOverrides: false, containerKind });
+  const contextDir = join(base, "context");
+  const contextSource = join(contextDir, "context.c");
+  writeIfChanged(contextSource, '#include "common.h"\n');
+  const processed = cachedPreprocess(contextSource);
+  const context = compileSource(contextSource, contextDir, "context", {
+    assemble: false, useOverrides: false, containerKind, preprocessedText: processed.text,
+  });
   const asFlags = configuredAsFlagsForContainer(containerKind);
   const includes = includeClosure(readFileSync(context.assembly, "utf8"), asFlags);
+  /* Random probe paths changed the graph hash on every rebuild, invalidating
+     preparation even when the code and command encodings were identical. */
+  const key = digest(JSON.stringify({ library, containerKind, context: processed.text, inputs: processed.inputs,
+    includes, tools: snapshot(ROOT, [...buildToolInputs(ROOT), "tools/diagnostics/macroEncodings.ts",
+      "tools/agent/decompToolchain.ts", "tools/lib/elfSections.ts"], p => !p.endsWith(".pyc")), environment: preprocessingTools().environment,
+    cppFlags: configuredCppFlags(), cc1Flags: context.cc1Flags, maspsxFlags: configuredMaspsxFlags(), asFlags }));
+  const dir = join(base, key), cachePath = join(dir, "receipt.json");
+  type Cached = { library: TemplateLibrary; report: RepoEncodingReport; outputs: Record<string, string> };
+  const cached = readCache<Cached>(cachePath, key);
+  if (cached && Object.entries(cached.outputs).every(([path, hash]) => fileDigest(join(ROOT, path)) === hash))
+    return { library: cached.library, report: cached.report };
+  mkdirSync(dir, { recursive: true });
   const gasDefs = includes.flatMap(input => parseGasMacroDefinitions(input.source, projectPath(input.path)));
   const available = new Map<string, GasMacroDefinition[]>();
   for (const def of gasDefs) available.set(def.macro, [...(available.get(def.macro) ?? []), def]);
@@ -203,5 +220,8 @@ export function deriveRepoMacroEncodings(library: TemplateLibrary, containerKind
   }
   const report: RepoEncodingReport = { containerKind, toolchain: configuredToolchainIdentity(), cppFlags: configuredCppFlags(), cc1Flags: probe.cc1Flags, maspsxFlags: configuredMaspsxFlags(), asFlags, includes: includes.map(input => ({ path: projectPath(input.path), sha256: digest(input.source) })), probeSource: projectPath(probeSource), probeAssembly: projectPath(probe.assembly), probeObject: projectPath(probe.object!), probeObjectSha256: objectSha256, commands, reconstructionHeaders };
   writeFileSync(join(dir, "report.json"), `${JSON.stringify(report, null, 2)}\n`);
-  return { library: { templates, diagnostics: diagnostics.filter(d => !d.reason.startsWith("DMPSX sentinel") || templates.some(t => t.header === d.header && t.macro === d.macro && t.blocks.some(b => b.instructions.some(p => p.op === "literal-word")))) }, report };
+  const result = { library: { templates, diagnostics: diagnostics.filter(d => !d.reason.startsWith("DMPSX sentinel") || templates.some(t => t.header === d.header && t.macro === d.macro && t.blocks.some(b => b.instructions.some(p => p.op === "literal-word")))) }, report };
+  writeCache(cachePath, key, { ...result, outputs: snapshot(ROOT, [probeSource, probe.preprocessed, probe.assembly, probe.object!,
+    join(dir, "report.json"), ...reconstructionHeaders.map(h => h.path)]) } satisfies Cached);
+  return result;
 }

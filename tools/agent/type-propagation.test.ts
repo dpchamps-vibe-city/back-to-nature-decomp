@@ -8,7 +8,7 @@ import { assemble, type AsmLine } from "./matching-reconstruction/fixture-asm.js
 import { decodeFunction } from "./matching-reconstruction/decode.js";
 import { buildMachineIrFrom } from "./machine-ir/index.js";
 import { prototypesIn, contradictionsAgainst, type Prototype } from "./calleeTruth.js";
-import { localSummary } from "./type-propagation/summary.js";
+import { baseBias, localSummary } from "./type-propagation/summary.js";
 import { propagate, inferenceInput } from "./type-propagation/solve.js";
 import { DEFAULT_BOUNDS, type EvidenceGraph } from "./type-propagation/model.js";
 import { buildEvidenceGraph } from "./type-propagation/graph.js";
@@ -59,6 +59,44 @@ test("control-only arguments remain live even when they never reach an arithmeti
   const report = buildMachineIrFrom("guard", decodeFunction(assemble([["beq", "a3", "zero", "done"], ["nop"], ["jr", "ra"], ["addiu", "v0", "zero", 1], ["label", "done"], ["jr", "ra"], ["addiu", "v0", "zero", 2]], addresses[0]!)));
   assert.equal(localSummary(report).summary.slots.find((s) => s.slot === 3)?.used, true);
 });
+test("phi proofs preserve agreement, disagreements and unknown paths", () => {
+  for (const other of ["a2", "a3", null]) {
+    const code: AsmLine[] = [["beq", "a1", "zero", "left"], ["nop"], ["sw", "a2", 0, "a0"],
+      ["beq", "zero", "zero", "join"], ["nop"], ["label", "left"], ...(other ? [["sw", other, 0, "a0"] as AsmLine] : []),
+      ["label", "join"], ["lw", "v0", 0, "a0"], ["jr", "ra"], ["nop"]];
+    const report = buildMachineIrFrom("merged-store", decodeFunction(assemble(code, addresses[0]!)));
+    assert.equal(localSummary(report).relations.some(r => r.rule === "memory"), other === "a2");
+  }
+  for (const offset of [4, 8]) {
+    const report = buildMachineIrFrom("merged-address", decodeFunction(assemble([
+      ["beq", "a1", "zero", "left"], ["nop"], ["addiu", "t0", "a0", 4], ["beq", "zero", "zero", "join"], ["nop"],
+      ["label", "left"], ["addiu", "t0", "a0", offset], ["label", "join"], ["lw", "v0", 0, "t0"], ["jr", "ra"], ["nop"],
+    ], addresses[0]!)));
+    const load = report.ir.values.find(v => v.op.kind === "load")!;
+    assert.ok(load.op.kind === "load");
+    assert.deepEqual(baseBias(report, load.op.address), offset === 4 ? { base: "entry:a0", bias: 4 } : null);
+  }
+  const loop = buildMachineIrFrom("loop-memory", decodeFunction(assemble([
+    ["label", "repeat"], ["beq", "a1", "zero", "done"], ["nop"], ["sw", "a2", 4, "a0"],
+    ["beq", "zero", "zero", "repeat"], ["nop"], ["label", "done"], ["lw", "v0", 0, "a0"], ["jr", "ra"], ["nop"],
+  ], addresses[0]!)));
+  assert.equal(localSummary(loop).relations.some(r => r.rule === "memory"), false);
+});
+
+test("local summary does not enumerate overlapping unknown memory paths", () => {
+  const code: AsmLine[] = [];
+  for (let i = 0; i < 20; i++) code.push(["beq", "a1", "zero", `join${i}`], ["nop"],
+    ["sw", "a2", 4, "a0"], ["label", `join${i}`]);
+  code.push(["lw", "v0", 0, "a0"], ["jr", "ra"], ["nop"]);
+  const report = buildMachineIrFrom("unknown-diamonds", decodeFunction(assemble(code, addresses[0]!)));
+  let reads = 0;
+  report.ir.memory = new Proxy(report.ir.memory, { get(target, key, receiver) {
+    if (typeof key === "string" && /^\d+$/.test(key)) assert.ok(++reads < 2000, "shared paths must stop once the proof is unknown");
+    return Reflect.get(target, key, receiver);
+  } });
+  assert.equal(localSummary(report).relations.some(r => r.rule === "memory"), false);
+});
+
 test("AST seed reads respect shadowing, assignments and strings; unspecified lists remain unspecified", () => {
   assert.deepEqual(parameterReads('void reads(int used, int unread, int shadow) { int copy = used; { int shadow = 3; copy += shadow; } puts("unread"); unread = 0; }', "reads"), [true, false, false]);
   const projected = unspecifiedParameters("typedef int I; void f(I a, I b);", "f");
