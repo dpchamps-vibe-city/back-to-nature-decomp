@@ -118,6 +118,25 @@ export function parseAsmPattern(literal: string, bindings: Map<number, string>):
   });
 }
 
+/** The SDK's zero-argument DMPSX command shim, without changing its asm-block,
+ * nop or clobber boundaries. Shared by diagnostic header generation and the
+ * source-policy recognizer: compatibility syntax is not handwritten assembly.
+ * This describes a substitution, not proof of its assembled command word. */
+export function sdkCommandSubstitution(template: MacroTemplate): { from: number; statement: string; body: string } | null {
+  if (template.parameters.length || template.dependencies.length || !template.macro.startsWith("gte_")) return null;
+  const instructions = template.blocks.flatMap(b => b.instructions);
+  const words = instructions.filter(i => i.op === "literal-word");
+  if (words.length !== 1 || instructions.some(i => i.op !== "nop" && i.op !== "literal-word")) return null;
+  const from = words[0]!.args[0]?.value;
+  if (typeof from !== "number" || (from & 63) !== 63) return null;
+  const statement = template.macro.slice(4).replace(/_b$/, "");
+  const body = template.blocks.map(block => {
+    const literal = block.instructions.map(p => p.op === "literal-word" ? statement : p.literal).join(";");
+    return `__asm__ volatile(${JSON.stringify(literal)}${block.clobbers.length ? ` : : : ${block.clobbers.map(c => JSON.stringify(c)).join(",")}` : ""})`;
+  }).join("; ");
+  return { from, statement, body };
+}
+
 function definitions(headers: readonly MacroHeader[]): Definition[] {
   const result: Definition[] = [];
   for (const header of headers) {

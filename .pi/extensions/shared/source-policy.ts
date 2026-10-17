@@ -3,6 +3,7 @@ import { relative, resolve, sep } from "node:path";
 import type { AutodecompConfig, PolicyFinding, SourcePolicyResult } from "./types.ts";
 import { analyzeCSource, capturePrevRetSites, matchingConstructs, walkActiveC } from "../../../tools/agent/cSourceGuard.ts";
 import { parseC, field, namedChildren } from "../../../tools/agent/residual-source-search/tree-sitter-c.ts";
+import { approvedSdkMacroDefinitions } from "./sdk-macros.ts";
 
 interface PolicyOptions {
   projectRoot: string;
@@ -306,10 +307,11 @@ function logicalLines(lines: string[]): Array<{ line: number; text: string }> {
   return out;
 }
 
-/** AST classifications for complete C translation units. Macro invocations
- * are the standing approval at either scope, not per-function pin grants.
- * Keep legacy header/partial-patch handling separate: a diff hunk is not C. */
-export function sourceConstructFindings(source: string, config: AutodecompConfig, scope: { name?: string; vram?: string; container?: string } = {}): Array<Omit<PolicyFinding, "file">> {
+/** AST classifications for complete C/headers. Macro invocations have
+ * standing approval, not per-function pin grants. Independently recognized
+ * SDK definitions skip only their replacement-list audit; arbitrary local
+ * asm wrappers remain forbidden. A partial diff hunk is not C. */
+export function sourceConstructFindings(source: string, config: AutodecompConfig, scope: { name?: string; vram?: string; container?: string } = {}, approvedMacroDefinitions: ReadonlySet<number> = new Set()): Array<Omit<PolicyFinding, "file">> {
   const guard = analyzeCSource(source), findings: Array<Omit<PolicyFinding, "file">> = [];
   if (!guard.parses) return [{ kind: "invalid-source", message: `Cannot audit malformed C: ${guard.reasons.join("; ")}` }];
   const allowed = (kind: string) => allowlisted(config, scope.name, scope.vram, scope.container, kind);
@@ -336,6 +338,7 @@ export function sourceConstructFindings(source: string, config: AutodecompConfig
   const tree = parseC(source);
   try { walkActiveC(tree.rootNode, node => {
     if (node.type === "preproc_function_def" || node.type === "preproc_def") {
+      if (approvedMacroDefinitions.has(node.startIndex)) return false;
       if (field(node, "name")?.text === "CAPTURE_PREV_RET")
         findings.push({ kind: "register-asm", line: node.startPosition.row + 1, message: "Do not redefine the standing CAPTURE_PREV_RET construct; use common.h" });
       /* tree-sitter exposes a replacement list as opaque preproc_arg. Fold
@@ -413,6 +416,15 @@ function patchScope(options: PolicyOptions, file: string): { name?: string; vram
 function scanAddedPatch(options: PolicyOptions): PolicyFinding[] {
   if (!options.patch) return [];
   const findings: PolicyFinding[] = [];
+  const sources = new Map<string, string | undefined>();
+  const headerChanges = new Map<string, { source: string; lines: Set<number> }>();
+  const sourceOf = (file: string): string | undefined => {
+    if (!sources.has(file)) {
+      const path = resolve(options.projectRoot, file);
+      sources.set(file, existsSync(path) ? readFileSync(path, "utf8") : undefined);
+    }
+    return sources.get(file);
+  };
   let file = "";
   let scope: ReturnType<typeof patchScope> = {};
   let newLine = 0;
@@ -432,11 +444,16 @@ function scanAddedPatch(options: PolicyOptions): PolicyFinding[] {
       const text = line.slice(1);
       const trimmed = text.trim();
       const commentOnly = trimmed.startsWith("/*") || trimmed.startsWith("*") || trimmed.startsWith("//");
-      /* Complete source files are audited through the AST once below; a hunk
-         cannot distinguish code from a multiline comment/string/disabled arm.
-         Missing-file patch fixtures retain the conservative legacy fallback. */
-      const completeSource = sourceIdentity(file) && existsSync(resolve(options.projectRoot, file)) &&
-        readFileSync(resolve(options.projectRoot, file), "utf8").split("\n")[newLine - 1] === text;
+      /* Audit complete C/headers through the AST, not a physical line of a
+         macro definition. The old header fallback flagged blessed SDK GAS
+         shims even though their calls were already permitted. Missing/stale
+         patch fixtures retain the conservative legacy fallback. */
+      const source = policesConstructs(file) ? sourceOf(file) : undefined;
+      const completeSource = source !== undefined && source.split("\n")[newLine - 1] === text;
+      if (completeSource && file.endsWith(".h")) {
+        if (!headerChanges.has(file)) headerChanges.set(file, { source: source!, lines: new Set() });
+        headerChanges.get(file)!.lines.add(newLine);
+      }
       const violation = commentOnly || !policesConstructs(file) || completeSource
         ? undefined
         : forbiddenLine(text, options.config, scope.name, scope.vram, scope.container);
@@ -467,6 +484,24 @@ function scanAddedPatch(options: PolicyOptions): PolicyFinding[] {
     } else if (!line.startsWith("-") && !line.startsWith("\\")) {
       newLine++;
     }
+  }
+  for (const [header, { source, lines }] of headerChanges) {
+    /* A change to a continuation belongs to the whole definition/asm site,
+       whose finding points at its opening line. Do not grandfather a changed
+       body merely because its opening line was context rather than added. */
+    const touchedStarts = new Set(lines), tree = parseC(source);
+    try {
+      walkActiveC(tree.rootNode, node => {
+        if (["preproc_function_def", "preproc_def", "gnu_asm_expression", "declaration", "call_expression"].includes(node.type) &&
+            [...lines].some(line => node.startPosition.row + 1 <= line && line <= node.endPosition.row + 1))
+          touchedStarts.add(node.startPosition.row + 1);
+        return true;
+      });
+    } finally { tree.delete(); }
+    const approved = approvedSdkMacroDefinitions(options.projectRoot, header, source);
+    findings.push(...sourceConstructFindings(source, options.config, patchScope(options, header), approved)
+      .filter(f => f.line === undefined || touchedStarts.has(f.line))
+      .map(f => ({ ...f, file: header })));
   }
   return findings;
 }

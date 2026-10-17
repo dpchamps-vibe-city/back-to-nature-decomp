@@ -70,9 +70,15 @@ workaround that the C sources still use.
 | Full function in assembly | 2 | The handwritten-assembly class |
 | Per-file compiler flag | 1 | `func_80014494` uses `-fno-cse-skip-blocks` |
 
+SDK macro calls need **no approval or per-function allowlist entry**, even
+when they expand to assembly. SDK definitions and their DMPSX-to-GAS command
+shims are recognized against the independent vendored headers, preserving the
+SDK's nop, operand and asm-block boundaries. This does not permit arbitrary
+assembly hidden in a new macro or a changed SDK body.
+
 The allowlist is `.pi/autoloop.json`, key `sourcePolicy.allowlist`. Each
-entry is the audit trail for one construct. The gate refuses a construct that
-has no entry. Key an entry by the function's name. An address key must carry
+entry is the audit trail for one otherwise-forbidden construct. The gate
+refuses such a construct that has no entry. Key an entry by the function's name. An address key must carry
 its container, `<container>:<address>`, because overlays share RAM; the gate
 honours a bare address only for the executable.
 

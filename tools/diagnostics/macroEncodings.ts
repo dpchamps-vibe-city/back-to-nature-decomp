@@ -11,7 +11,7 @@ import { elf32SectionSizes } from "../lib/elfSections.js";
 import { fileDigest, readCache, snapshot, writeCache, writeIfChanged } from "../lib/contentCache.js";
 import { buildToolInputs } from "../build/buildInputs.js";
 import { cachedPreprocess, preprocessingTools } from "../agent/preprocessedCache.js";
-import type { CommandEncodingEvidence, MacroTemplate, TemplateLibrary } from "./macroTemplates.js";
+import { sdkCommandSubstitution, type CommandEncodingEvidence, type MacroTemplate, type TemplateLibrary } from "./macroTemplates.js";
 
 const digest = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
 const projectPath = (path: string): string => relative(ROOT, path).split("\\").join("/");
@@ -97,18 +97,6 @@ function includeClosure(assembly: string, asFlags: string[]): Array<{ path: stri
   return includes;
 }
 
-function commandOf(template: MacroTemplate): { from: number; statement: string } | null {
-  if (template.parameters.length || template.dependencies.length || !template.macro.startsWith("gte_")) return null;
-  const instructions = template.blocks.flatMap(b => b.instructions);
-  const words = instructions.filter(i => i.op === "literal-word");
-  if (words.length !== 1 || instructions.some(i => i.op !== "nop" && i.op !== "literal-word")) return null;
-  const from = words[0]!.args[0]?.value;
-  if (typeof from !== "number" || (from & 63) !== 63) return null;
-  // SDK's documented gte_ prefix and no-nop _b suffix; no synonym/argument
-  // guesses for names absent from the actual GAS include graph.
-  return { from, statement: template.macro.slice(4).replace(/_b$/, "") };
-}
-
 /** Validate via the shared ELF reader, then read this probe's own section.
  * These are object bytes, not comments containing example hex words. */
 export function readEncodingProbeSection(object: Buffer, sectionName = ".macro_identity_probe"): Buffer {
@@ -129,10 +117,6 @@ export function readEncodingProbeSection(object: Buffer, sectionName = ".macro_i
   throw new Error("Production compiler did not emit the macro probe section");
 }
 
-function substitutionLiteral(template: MacroTemplate, statement: string): string[] {
-  return template.blocks.map(b => b.instructions.map(p => p.op === "literal-word" ? statement : p.literal).join(";"));
-}
-
 /** Pure transforms are intentionally insufficient here: command encodings must
  * have passed the actual project compiler/assembler path for this flag column.
  * Artifacts land only under build/. Failure is fatal, never a foreign fallback. */
@@ -151,7 +135,7 @@ export function deriveRepoMacroEncodings(library: TemplateLibrary, containerKind
   /* Random probe paths changed the graph hash on every rebuild, invalidating
      preparation even when the code and command encodings were identical. */
   const key = digest(JSON.stringify({ library, containerKind, context: processed.text, inputs: processed.inputs,
-    includes, tools: snapshot(ROOT, [...buildToolInputs(ROOT), "tools/diagnostics/macroEncodings.ts",
+    includes, tools: snapshot(ROOT, [...buildToolInputs(ROOT), "tools/diagnostics/macroEncodings.ts", "tools/diagnostics/macroTemplates.ts",
       "tools/agent/decompToolchain.ts", "tools/lib/elfSections.ts"], p => !p.endsWith(".pyc")), environment: preprocessingTools().environment,
     cppFlags: configuredCppFlags(), cc1Flags: context.cc1Flags, maspsxFlags: configuredMaspsxFlags(), asFlags }));
   const dir = join(base, key), cachePath = join(dir, "receipt.json");
@@ -163,7 +147,7 @@ export function deriveRepoMacroEncodings(library: TemplateLibrary, containerKind
   const gasDefs = includes.flatMap(input => parseGasMacroDefinitions(input.source, projectPath(input.path)));
   const available = new Map<string, GasMacroDefinition[]>();
   for (const def of gasDefs) available.set(def.macro, [...(available.get(def.macro) ?? []), def]);
-  const primitives = library.templates.map(t => ({ template: t, command: commandOf(t) })).filter((entry): entry is { template: MacroTemplate; command: { from: number; statement: string } } => entry.command !== null);
+  const primitives = library.templates.map(t => ({ template: t, command: sdkCommandSubstitution(t) })).filter((entry): entry is { template: MacroTemplate; command: NonNullable<ReturnType<typeof sdkCommandSubstitution>> } => entry.command !== null);
   const diagnostics = [...library.diagnostics];
   const matched = primitives.filter(({ template, command }) => {
     const defs = available.get(command.statement) ?? [];
@@ -210,9 +194,7 @@ export function deriveRepoMacroEncodings(library: TemplateLibrary, containerKind
   for (const vintage of [...new Set(matched.map(p => p.template.vintage))].sort()) {
     const entries = matched.filter(p => p.template.vintage === vintage && accepted.has(p.command.from));
     const definitions = entries.map(({ template, command }) => {
-      const literals = substitutionLiteral(template, command.statement);
-      const body = template.blocks.map((block, index) => `__asm__ volatile(${JSON.stringify(literals[index])}${block.clobbers.length ? ` : : : ${block.clobbers.map(c => JSON.stringify(c)).join(",")}` : ""})`).join("; ");
-      return `#undef ${template.macro}\n#define ${template.macro}() ${body}\n`;
+      return `#undef ${template.macro}\n#define ${template.macro}() ${command.body}\n`;
     }).join("\n");
     const path = join(dir, `${vintage}.gas.h`);
     writeFileSync(path, `/* Generated diagnostic GAS substitutions; include after ${vintage}. */\n${definitions}`);
