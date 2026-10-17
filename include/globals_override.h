@@ -1529,6 +1529,9 @@ struct Ovl23ActorDecision {
     s32 unk18;
     u8 pad1C[0x34];
 };
+/* 800B9310 passes six 0x50-byte records at this base to 800BA73C. */
+extern struct Ovl23ActorDecision D_800BF8A0[6];
+
 struct Ovl23ActorDecisionView {
     u8 pad0[0x14];
     u16 unk14;
