@@ -4094,6 +4094,8 @@ extern s16 D_800BF650;
 extern u16 D_800BCEF0[];
 extern s16 D_800BCF0C[];
 extern u16 D_800BCF28[];
+/* ovl_19 800B9AB0 indexes byte weights by flag * 16 + direction * 4 + choice. */
+extern u8 D_800BCF58[];
 extern u16 D_800BCEE8[];
 extern s16 D_800BCEFC[];
 

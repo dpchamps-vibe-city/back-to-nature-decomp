@@ -12030,8 +12030,7 @@ Members (link order):
   `800BA468`, `800BA5B4`, `800BA73C`, `800BA750`, `800BAC40`.
 - ovl_19_func_800B998C (s, 0x124) — reads the base then calls the
   `800B9AB0`/`800B9DC8`/`800B9DD0`/`800B9E14`/… writer chain.
-- ovl_19_func_800B9AB0 (s, 0x318) — second base reader; calls
-  `800BA0A0`/`800BA564`/`800BA5B4`/`800BA65C`/`800BAC40`.
+- ovl_19_func_800B9AB0 (m, byte-exact; candidate member) — randomized direction/action handler for the paired state records ([additional grouping evidence](research/ovl_19_func_800B9AB0-grouping.md)).
 - ovl_19_func_800B9E14 (m, matched this session, byte-exact) — same overlay-local
   s16 state array via the absolute-addressed `D_800BF64E` (= `D_800BF4C0` + 0x18E):
   gates on `D_800BF64E - 0x1E` against its record's `s16@+0x6` and calls cluster
