@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 80118B84 loads this selection with lh and resets it with sh. */
+extern s16 D_80128294;
+
 /* ovl_11 800F77F0 uses lh for this state threshold and sh for updates. */
 extern s16 D_80126E2C;
 

@@ -1127,6 +1127,7 @@ s32 ovl_11_func_80117F70(void);
 s32 ovl_11_func_801186FC(void);
 s32 ovl_11_func_80118744(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_801189C8(void);
+s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80118C28(s16 id);
 s32 ovl_11_func_80118C6C(void);
 s32 ovl_11_func_80118C7C(s16 arg0, s16 arg1, s16 arg2);
