@@ -4064,6 +4064,10 @@ extern s16 D_800BF4C0[];
 extern s32 D_800BD078;
 /* ovl_19 800B95D4 anchors its two 0x48-byte signed-halfword records here. */
 extern s16 D_800BF4D0[];
+/* ovl_19 800BA770 walks three 0x40-byte halfword records through 800BAB4C. */
+extern s16 D_800BF560[];
+/* ovl_19 800BA770 passes positions at this base, stepping by six halfwords. */
+extern s16 D_800BCF7C[];
 /* ovl_19 800B80E8 indexes eight original handlers; each overwrites incoming $a0 before use. */
 extern void (*D_800BCEA8[8])(void);
 /* ovl_19 800B80E8 loads this signed halfword as the handler index. */
