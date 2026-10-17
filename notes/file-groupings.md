@@ -12356,6 +12356,7 @@ Members:
 - ovl_11_func_800E7D4C (m, candidate same TU; [evidence](research/ovl_11_func_800E7D4C-grouping.md)) — grid-entry reset/selection dispatcher using the shared search and item-update helpers.
 - ovl_11_func_800D7B24 (m, byte-exact) — initializes every `D_80074124` entry
   (two 0x167 halfwords, two zero bytes, one zero halfword).
+- ovl_11_func_800D7B8C (m, candidate same TU; [evidence](research/ovl_11_func_800D7B8C-grouping.md)) — advances seasonal growth and normalizes tags across both entry grids.
 - ovl_11_func_800D8320 (m, matched this session, byte-exact) — consumes an
   entry via `ovl_11_func_800DAF60` (tag 0x168/0x16A, `+0x0 == 0x36`,
   `+0x4 != 0`), then dispatches through `D_80123DFC[arg0]`.

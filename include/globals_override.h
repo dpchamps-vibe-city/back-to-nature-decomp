@@ -2061,6 +2061,18 @@ typedef struct {
     u16 (*properties)[4];
     u16 (*groups)[8];
 } Ovl11TilePools;
+/* 800D7B8C reads item/group pointers at +20/+2C, lh +44BA and lhu +44D4. */
+typedef struct {
+    u8 pad_0[0x20];
+    Ovl11TileItem *items;
+    u8 pad_24[4];
+    u16 (*properties)[4];
+    u16 (*groups)[8];
+    u8 pad_30[0x44BA - 0x30];
+    s16 season;
+    u8 pad_44BC[0x44D4 - 0x44BC];
+    u16 enabled;
+} Ovl11GrowthGlobals;
 /* 800BE6E4 reloads this pointer and reads u16 at signed-index*8 + 4. */
 extern u16 (*D_8006C860)[4];
 

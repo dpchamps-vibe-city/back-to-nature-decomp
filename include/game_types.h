@@ -1593,3 +1593,19 @@ typedef struct Ovl30FlagMenuEntry {
     u8 padE[2];
     char *text;
 } Ovl30FlagMenuEntry;
+
+/* 800D7B8C keeps a pointer to the grid entry's four-byte state at +4. */
+typedef struct {
+    u8 stage;
+    u8 days;
+    u16 flags;
+} Ovl11GrowthState;
+
+/* 800DA390 resets u16 tags at +0/+2, bytes at +4/+5 and u16 flags at +6. */
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u8 unk4;
+    u8 unk5;
+    u16 unk6;
+} Ovl11GridResetEntry;
