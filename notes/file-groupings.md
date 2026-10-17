@@ -11961,6 +11961,7 @@ Members (link order):
   callee with `800BA2D4`); its link-order neighbour and caller
   `ovl_19_func_800B847C` initialises the `D_800BF4C0` records.
 - ovl_19_func_800B87C4 (m, byte-exact; candidate member) — nested seven-handler dispatcher with a completion handoff to the next outer callback ([grouping evidence](research/ovl_19_func_800B87C4-grouping.md)).
+- ovl_19_func_800B8908 (m, byte-exact; candidate member) — timed outer callback; resets three command records and hands off to the next outer handler ([grouping evidence](research/ovl_19_func_800B8908-grouping.md)).
 - ovl_19_func_800B89C8 (s, 0x2AC) — cluster hub; also reads `D_800BF4C0` and
   calls `800B95D4`/`800B998C`/`800BA25C`/`800BA770`/`800BAC5C`/`800BAC7C`.
 - ovl_19_func_800B8DA8 (m, byte-exact; candidate member) — final inner handler; runs the shared render driver, marks completion and advances the outer state ([grouping evidence](research/ovl_19_func_800B8DA8-grouping.md)).
