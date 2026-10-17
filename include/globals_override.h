@@ -3209,6 +3209,14 @@ extern s32 D_80051A90;
 /* D_8012D52C - container-wide s32 busy/finished state flag of ovl_11, reset
  * by the 0x80114184 reset-stub family (see notes/file-groupings.md). */
 extern s32 D_8012D52C;
+/* ovl_11 801173B8 dispatches and stores this signed word state. */
+extern s32 D_8012D794;
+/* ovl_11 801173B8 loads this signed id, comparing it with -1. */
+extern s32 D_8012D798;
+/* ovl_11 801173B8 tests this signed halfword against 6. */
+extern s16 D_80070CF6;
+/* ovl_11 801173B8 tests this signed word against 10. */
+extern s32 D_80071A5C;
 
 extern s16 D_80128420;
 /* 8011E5B0 passes this eight-byte rectangle to StoreImage and LoadImage. */
