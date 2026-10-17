@@ -3340,6 +3340,8 @@ extern struct SpriteSourceData D_800BDDF8;
 extern u8 D_800BDAD4[];
 
 extern u8 D_800BD870[];
+/* ovl_17_func_800B861C passes this record to 800BAC24 and stores a byte at -0xC4. */
+extern u8 D_800BD910[];
 
 extern u8 D_800BFA90[];
 

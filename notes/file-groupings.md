@@ -8984,6 +8984,7 @@ Members:
 - ovl_17_func_800B7F90 (m) — six-record display callback; advances the outer state after both completion probes pass ([grouping evidence](research/ovl_17_func_800B7F90-grouping.md)).
 - ovl_17_func_800B80B0 (m, byte-exact) — completion callback; performs gated cleanup and marks the outer state finished ([grouping evidence](research/ovl_17_func_800B80B0-grouping.md)).
 - ovl_17_func_800B83A4 (m, byte-exact) — six-record display/transition callback; clears a counter and selects state 6 on completion ([grouping evidence](research/ovl_17_func_800B83A4-grouping.md)).
+- ovl_17_func_800B861C (m, byte-exact) — six-record display/completion callback; defers record 2 and selects state 5 on completion ([grouping evidence](research/ovl_17_func_800B861C-grouping.md)).
 - ovl_17_func_800B86C4 (m, byte-exact) — six-record display/transition callback; clears the transition counter and selects state 6 on completion ([grouping evidence](research/ovl_17_func_800B86C4-grouping.md)).
 - ovl_17_func_800B8790 (m, byte-exact) — six-record display/delay callback; seeds record values and selects state 7 after the transition delay ([grouping evidence](research/ovl_17_func_800B8790-grouping.md)).
 - ovl_17_func_800B90F8 (m, 0x60, byte-exact, finalized) — initializes the
