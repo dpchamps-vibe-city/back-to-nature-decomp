@@ -3121,6 +3121,19 @@ extern Ovl11D8012D7D8 D_8012D7D8;
 extern s32 D_8012D7CC;
 extern s32 D_8012D7D0;
 extern s32 D_8012D7D4;
+/* 801180F0 passes this state word by address and clears the adjacent word. */
+extern s32 D_8012D524;
+extern s32 D_8012D528;
+/* 801180F0 reads signed halfword pairs with a four-byte table stride. */
+extern s16 D_80128278[][2];
+/* 801180F0 stores the next message id and next state as signed words. */
+extern s32 D_8012828C;
+extern s32 D_80128290;
+/* 801180F0 reads and updates the unsigned halfword at work-area +0x4500. */
+typedef struct {
+    u8 pad0[0x4500];
+    u16 amount;
+} Ovl11ResourceGlobals;
 
 /* D_8012D7B8 - 0x14-byte ovl_11 record initialized by ovl_11_func_80117A40
  * (pointer at +0, s16 fields at +4/+6/+8/+A, s32 at +0x10) and passed as five
