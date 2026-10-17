@@ -1503,6 +1503,10 @@ struct Ovl23DecisionView {
     struct Ovl23DecisionRecord records[6];
 };
 
+/* 800B8644 indexes ten word offsets into the byte data at D_800BB860. */
+extern s32 D_800BBA14[10];
+extern u8 D_800BB860[];
+
 /* 800B823C writes +4..+414; 800B8584 writes +0; 800B8754 increments s16 +416. */
 struct Ovl23ScreenHeader {
     s16 unk0;
@@ -1512,7 +1516,9 @@ struct Ovl23ScreenHeader {
     s32 unkC;
     s32 unk10;
     s16 unk14;
-    u8 pad16[0x3FE];
+    /* 800B97E0 fills six u16 choices; 800B8644 reads indices 0, 1, 3, 5. */
+    u16 unk16[6];
+    u8 pad22[0x3F2];
     s16 unk414;
     s16 unk416;
 };
