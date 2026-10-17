@@ -714,6 +714,20 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800E4280: lw/sw flags at +0xC/+0x4450 and cleared words at +0x448C/+0x5214/+0x7A74. */
+struct Ovl11E4280State {
+    u8 pad_0[0xC];
+    s32 flags_C;
+    u8 pad_10[0x4450 - 0x10];
+    s32 flags_4450;
+    u8 pad_4454[0x448C - 0x4454];
+    s32 field_448C;
+    u8 pad_4490[0x5214 - 0x4490];
+    s32 field_5214;
+    u8 pad_5218[0x7A74 - 0x5218];
+    s32 selector;
+};
+
 /* 800E7D4C loads the unsigned availability halfword at base +0x44D4. */
 typedef struct {
     u8 pad[0x44D4];
