@@ -3834,9 +3834,13 @@ extern u8 D_800C02DC[];
  * the record type is defined in game_types.h, forward-declared here. */
 extern struct Ovl25ObjectRecord D_800BFE54;
 
-/* ovl_25_func_800B8848 accesses s16@4CC; 800B97E4 reads s16@C,4D4,4DE..4E4. */
+/* 800B813C indexes these three original callbacks; each ignores incoming arguments. */
+extern void (*D_800BCBEC[3])(void);
+
+/* 800B813C reads the s16 selector@0; 800B8848 accesses s16@4CC; 800B97E4 reads s16@C,4D4,4DE..4E4. */
 typedef struct {
-    u8 pad_0[0xC];
+    s16 selector;
+    u8 pad_2[0xA];
     s16 unkC;
     u8 pad_E[0x4CC - 0xE];
     s16 unk4CC;
