@@ -36,6 +36,7 @@ s32 ovl_19_func_800BA544(s32 arg0);
 void ovl_19_func_800BA564(M2C_2b0e4444e645_ReconA0View *arg0, M2C_2b0e4444e645_ReconA1View *arg1);
 s32 ovl_19_func_800BA5B4(M2C_3ad8e07a3b9c_ReconA0View *arg0, M2C_3ad8e07a3b9c_ReconA1View *arg1);
 void ovl_19_func_800BA628(M2C_190b52b5a3be_ReconA0View *arg0, M2C_190b52b5a3be_ReconA1View *arg1);
+s32 ovl_19_func_800BA65C(Ovl19Func800BAC40Arg *arg0);
 s32 ovl_19_func_800BA73C(Ovl19Func800BA73CArg *arg0);
 s32 ovl_19_func_800BA750(M2C_d030f1db9199_Recon800BA750A0View *arg0);
 void ovl_19_func_800BAC40(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
