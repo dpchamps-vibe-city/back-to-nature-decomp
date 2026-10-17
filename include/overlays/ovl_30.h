@@ -20,6 +20,7 @@ s32 ovl_30_func_80130690(s32 arg0);
 s32 ovl_30_func_801306F4(s32 arg0);
 s32 ovl_30_func_80130C20(s32 arg0);
 s32 ovl_30_func_80131100(s32 arg0);
+s32 ovl_30_func_801315E0(s32 arg0);
 s32 ovl_30_func_80131C38(s32 arg0);
 s32 ovl_30_func_80131F14(void);
 s32 ovl_30_func_801320C8(s32 arg0);

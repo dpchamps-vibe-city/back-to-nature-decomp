@@ -414,6 +414,67 @@ typedef struct {
 extern struct_80076220 _D_80076220[1] __asm__("D_80076220");
 #define D_80076220 (*((struct_80076220*)_D_80076220))
 
+/* 801315E0 takes width-two field addresses at these bases, stride 0x1D4. */
+extern u16 D_80076222[];
+extern u16 D_80076224[];
+/* 801315E0 also addresses the adjacent halfwords independently. */
+extern u16 D_80076226[] __asm__("D_80076224+2");
+extern u16 D_8007622A[] __asm__("D_80076228+2");
+extern u16 D_80076236[] __asm__("D_80076234+2");
+extern u16 D_8007623E[] __asm__("D_8007623C+2");
+extern u16 D_80076228[];
+extern u16 D_8007622C[];
+extern u16 D_80076234[];
+extern u16 D_8007623A[];
+extern u16 D_8007623C[];
+extern u16 D_80076242[];
+extern u16 D_8007624C[];
+/* 801315E0 takes width-four vector addresses at these bases, stride 0x1D4. */
+extern s32 D_80076250[];
+extern s32 D_80076270[];
+extern s32 D_80076290[];
+
+/* 801315E0 selects a resident with lh +0x4458 and edits the same halfword. */
+typedef struct {
+    u8 pad0[0x4458];
+    s16 resident;
+} Ovl30ResidentSelection;
+#define Ovl30_ResidentSelection ((Ovl30ResidentSelection *)D_8006C838)
+
+/* 801315E0 passes these resident-record labels and heading to KanjiFntPrint. */
+extern char D_8012EA00[];
+extern char D_8012EA14[];
+extern char D_8012EA28[];
+extern char D_8012EA3C[];
+extern char D_8012EA50[];
+extern char D_8012EA64[];
+extern char D_8012EA78[];
+extern char D_8012EA8C[];
+extern char D_8012EAA0[];
+extern char D_8012EAB4[];
+extern char D_8012EAC8[];
+extern char D_8012EADC[];
+extern char D_8012EAF0[];
+extern char D_8012EB04[];
+extern char D_8012EB18[];
+extern char D_8012EB2C[];
+extern char D_8012EB40[];
+extern char D_8012EB54[];
+extern char D_8012EB68[];
+extern char D_8012EB7C[];
+extern char D_8012EB90[];
+extern char D_8012EBA4[];
+extern char D_8012EBB8[];
+extern char D_8012EBCC[];
+extern char D_8012EBE0[];
+extern char D_8012EBF4[];
+extern char D_8012EC08[];
+extern char D_8012EC1C[];
+extern char D_8012EC30[];
+extern char D_8012EC44[];
+extern char D_8012EC58[];
+extern char D_8012EC6C[];
+
 /* ovl_11_func_800F1F48 indexes this 40-word table and passes each entry to the u16 stream walker. */
 extern u16 *D_80126BF0[40];
 

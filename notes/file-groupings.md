@@ -8788,19 +8788,28 @@ Members (link order):
 - ovl_30_func_8012FEEC (m) — gated 22-entry value-menu wrapper returning the updated cursor.
 - ovl_30_func_8012FF50 (s) — sibling gated 23-entry value-menu wrapper returning the updated cursor.
 
-## `ovl_30` adjacent animal-record editors — 0x801306F4–0x80131100 (confidence: medium)
+## `ovl_30` adjacent animal/resident-record editors — 0x801306F4–0x801315E0 (confidence: medium)
 
-[Evidence and limits](research/ovl_30_func_80130C20-grouping.md).
+[Animal-editor evidence and limits](research/ovl_30_func_80130C20-grouping.md).
+[Resident-editor extension and verification](research/ovl_30_func_801315E0-resident-editor.md).
 
 - ovl_30_func_801306F4 (s) — 25-entry animal-record editor using selector D_801349A0.
 - ovl_30_func_80130C20 (m) — 23-entry animal-record editor using selector D_801349A4.
 - ovl_30_func_80131100 (m) — 23-entry animal-record editor using selector D_801349A8.
+- ovl_30_func_801315E0 (m) — 32-entry resident-record editor using the signed-halfword selector D_8006C838+0x4458.
 
 80131100 reproduces 80130C20's automatic 23-entry initializer and gated
 menu/input tail byte-exactly, substituting the record base D_80075FE4,
 selector D_801349A8, heading D_8012E9D8 and selector maximum 2. Both use the
 same stride-0xB4 record layout and label sequence. This strengthens their
 shared editor-family evidence; it does not establish a translation-unit boundary.
+
+801315E0 follows 80131100 without a gap and repeats the automatic menu-array,
+gate, shared-cursor/helper and selector-input protocol. Its labels immediately
+follow the animal headings in rodata. Unlike the three animal editors, it
+selects 0x1D4-byte resident records with a two-byte selector. These independent
+ties support extending the candidate group, not a proven TU boundary or a
+merger with the distant 80133454/80133974 helper cluster.
 
 ## `ovl_30` mirrored byte-counter editors — 0x801326C4–0x80132C2C (confidence: medium)
 
