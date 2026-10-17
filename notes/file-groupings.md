@@ -8874,6 +8874,7 @@ Members (link order):
 - ovl_11_func_800FECB8 (m) — active-menu wrapper around adjacent 800FED0C ([grouping evidence](research/ovl_11_func_800FECB8-grouping.md)).
 - ovl_11_func_800FED0C (m) — two-option menu dispatcher/input and settings-restore handler ([grouping evidence](research/ovl_11_func_800FED0C-grouping.md)).
 - ovl_11_func_800FEFEC (m) — two-column menu input/cursor updater and caller of adjacent 800FF27C ([grouping evidence](research/ovl_11_func_800FEFEC-grouping.md)).
+- ovl_11_func_800FF324 (m) — options-menu input/settings editor and cursor/text renderer ([grouping evidence](research/ovl_11_func_800FF324-grouping.md)).
 - ovl_11_func_800FF8C8 (m, matched this session, byte-exact) — adjacent-band
   predecessor: `D_801273B0` state machine (0x21 branch queues
   `func_8002261C(3, arg1 + 0x37E)` or `(3, arg0 + 0x37B)`, then on
