@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 80121134 passes this UV/CLUT buffer to 80120CC4 and 80120F30. */
+extern struct Ovl11TextureCoordinates D_8012DB38;
+
 /* 800DB140/800DB5CC: leading u16 of eight 0x16-byte slots at this base. */
 extern u16 D_800A03B0;
 

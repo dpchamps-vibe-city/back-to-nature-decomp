@@ -193,7 +193,7 @@ typedef struct {
 } Ovl11ItemCollisionObject;
 
 /* ovl_11_func_80120F30 reads eight UV bytes and a u16 at +8. */
-typedef struct {
+typedef struct Ovl11TextureCoordinates {
     u8 u0, v0;
     u8 u1, v1;
     u8 u2, v2;

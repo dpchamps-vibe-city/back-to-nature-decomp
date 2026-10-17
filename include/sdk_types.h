@@ -22,6 +22,10 @@ struct Ovl11RotationState;
 
 typedef struct Ovl11RotationState Ovl11RotationState;
 
+struct Ovl11TextureCoordinates;
+
+typedef struct Ovl11TextureCoordinates Ovl11TextureCoordinates;
+
 struct Ovl25ObjectRecord;
 
 typedef struct Ovl25ObjectRecord Ovl25ObjectRecord;
@@ -2778,13 +2782,13 @@ typedef struct {
                s32 unk40;
 } Ovl11StateArg0;
 
-typedef struct {
+struct Ovl11TextureCoordinates {
     u8 u0, v0;
     u8 u1, v1;
     u8 u2, v2;
     u8 u3, v3;
     u16 clut;
-} Ovl11TextureCoordinates;
+};
 
 typedef struct {
                s16 unk0;

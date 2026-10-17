@@ -1223,6 +1223,7 @@ void ovl_11_func_80120850(s32 arg0);
 void ovl_11_func_801209A8(void);
 void ovl_11_func_801209D4(void);
 s32 ovl_11_func_80120F30(s16 arg0, s16 arg1, Ovl11TextureCoordinates *arg2);
+void ovl_11_func_80121134(void);
 void ovl_11_func_801212C4(void);
 void ovl_11_func_80121318(void);
 s32 ovl_11_func_8012135C(s32 arg0, Ovl11EffectCoordinate arg1, Ovl11EffectCoordinate arg2, Ovl11EffectCoordinate arg3, Ovl11EffectCoordinate arg4);
