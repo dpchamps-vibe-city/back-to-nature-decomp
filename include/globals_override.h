@@ -4270,6 +4270,20 @@ extern s32 D_800C4A28;
 
 /* ovl_27_func_800B823C selects and updates this state with lh/sh. */
 extern s16 D_800C4A18;
+/* 800B845C calls this handler; neighboring matched stages store code addresses. */
+extern s32 D_800C4A14;
+/* 800B845C increments this signed halfword and takes its signed remainder. */
+extern s16 D_800C4A1A;
+/* 800B845C increments and reduces this signed word modulo 108000. */
+extern s32 D_800C4A1C;
+/* 800B845C increments and thresholds this signed word at 1800. */
+extern s32 D_800C4A20;
+/* 800B845C dispatches on this signed halfword and stores state numbers. */
+extern s16 D_800C4A24;
+/* 800B845C sets this halfword when either timeout expires. */
+extern s16 D_800C4A26;
+/* 800B845C passes this address to the halfword-list consumer 80023030. */
+extern u16 D_80071A7C[];
 
 /* ovl_27_func_800B823C increments the s32 at D_8006C838 + 0x4488. */
 typedef struct {

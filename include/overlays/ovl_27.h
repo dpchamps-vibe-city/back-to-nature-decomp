@@ -8,6 +8,7 @@ void ovl_27_func_800B7F7C(void);
 void ovl_27_func_800B7FE8(void);
 void ovl_27_func_800B80B0(void);
 void ovl_27_func_800B823C(void);
+void ovl_27_func_800B845C(void);
 s32 ovl_27_func_800B8C6C(void);
 s32 ovl_27_func_800B8CAC(void);
 void ovl_27_func_800B8D28(void);
