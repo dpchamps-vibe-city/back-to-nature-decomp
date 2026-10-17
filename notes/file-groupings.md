@@ -11931,6 +11931,7 @@ Members (link order):
 - ovl_19_func_800B8064 (m, byte-exact; candidate member) — update/completion callback; advances the outer state after both completion probes pass.
 - ovl_19_func_800B80E8 (m, byte-exact; candidate member) — update prelude and eight-handler dispatcher on `D_800BF4C0[2]` ([grouping evidence](research/ovl_19_func_800B80E8-grouping.md)).
 - ovl_19_func_800B8150 (m, byte-exact; candidate member) — transition callback; runs the shared render driver and advances the outer state ([grouping evidence](research/ovl_19_func_800B8150-grouping.md)).
+- ovl_19_func_800B8190 (m, byte-exact; candidate member) — final outer callback; runs the render driver, then performs completion-gated cleanup and marks exit ([grouping evidence](research/ovl_19_func_800B8190-grouping.md)).
 - ovl_19_func_800B82B8 (m, byte-exact, verified this session) — gapless
   link-order predecessor of `800B843C` (offset 0x498, 0x184 bytes, ending
   0x61C = 0x800B843C); initialises the same overlay-local `D_800BF4C0` s16

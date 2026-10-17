@@ -4074,6 +4074,8 @@ extern void (*D_800BCEA8[8])(void);
 extern void (*D_800BCEC8[7])(void);
 /* ovl_19 800B80E8 loads this signed halfword as the handler index. */
 extern s16 D_800BF4C4;
+/* ovl_19 800B8190 loads this handle with lh and compares it against -1. */
+extern s16 D_800BF6C2;
 /* D_800BF4E0 - the s16 field at D_800BF4C0 + 0x20, addressed by ovl_19_func_800B8DE8
  * through its own symbol (the compiler materialises D_800BF4E0 and expresses the
  * neighbouring D_800BF4C0 accesses as negative displacements from it). */
