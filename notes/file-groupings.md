@@ -7884,6 +7884,7 @@ Members:
   table/address idiom joins this accessor family, not a proven TU; the
   recovery's address-prefix assembly and bindings are not original-source
   evidence.
+- ovl_11_func_800E67D4 (m, candidate same TU; [evidence](research/ovl_11_func_800E67D4-grouping.md)) — compares `ovl_11_func_800EFC68`'s result with `D_80129560[arg3]` via `ovl_11_func_800EFDA0`.
 - ovl_11_func_800E6834 (m, matched 2026-11 — this session, 0x38, byte-exact) —
   compare-forward leaf: `return ovl_11_func_800EFDA0(D_80129560[(s16)arg0],
   arg3, arg2)` — loads the s16-scaled slot with the same `sll 16`/`sra 14`
