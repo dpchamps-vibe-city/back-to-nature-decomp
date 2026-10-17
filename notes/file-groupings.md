@@ -6704,6 +6704,8 @@ agrees (0x800BB0E8 + 0x68 = 0x800BB150).
 
 ## `ovl_23` D_800BF87C dispatch-index cluster — 0x800B7EA4–0x800B87F8 (confidence: medium)
 
+Membership extension: [shared outer selector, ordered callbacks and local initialization connection](research/ovl_23_func_800B7F00-grouping.md).
+
 Evidence: the state dispatcher `ovl_23_func_800B7F00`'s gapless link-order
 predecessor `ovl_23_func_800B7EA4` (the ovl_23 code-segment head) dispatches
 `((void (*)(s32 *))D_800BB9E4[D_80070CC4])(&D_800BB9E4)`, the same
@@ -6720,6 +6722,7 @@ one contiguous link-order span running from the code-segment head through
 Members (link order):
 - ovl_23_func_800B7EA4 (m, byte-exact this session) — `func_80017A64()` saved,
   `func_80017A48(3)`, then `((void (*)(s32 *))D_800BB9E4[D_80070CC4])(&D_800BB9E4)`.
+- ovl_23_func_800B7F00 (m, byte-exact, finalized) — staged display/audio setup callback; initializes screen state and advances the outer selector.
 - ovl_23_func_800B8084 (m, byte-exact this session) — `func_800225C4()` then
   `((void (*)(s32 *))D_800BB9F8[D_800BF87C])(D_800BB9F8)`, a no-arg table
   dispatch stub.

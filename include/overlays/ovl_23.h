@@ -3,6 +3,7 @@
  * passed to m2c before this file. */
 
 void ovl_23_func_800B7EA4(void);
+void ovl_23_func_800B7F00(void);
 void ovl_23_func_800B8084(void);
 s32 ovl_23_func_800B80CC(void);
 void ovl_23_func_800B8104(void);
