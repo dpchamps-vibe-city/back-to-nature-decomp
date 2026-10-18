@@ -1085,6 +1085,27 @@ struct Ovl11CurrentObjectView {
     s16 *current;
 };
 
+/* 800CE834 reads these state fields and reads/clears s16 at D_8006C838+0x99E6. */
+struct Ovl11UpdateState {
+    u8 pad_0[0x10];
+    s32 field_10;
+    u8 pad_14[0xCC - 0x14];
+    u8 field_CC;
+    u8 pad_CD[0x44C0 - 0xCD];
+    s16 field_44C0;
+    s16 field_44C2;
+    u8 pad_44C4[0x44F8 - 0x44C4];
+    s32 field_44F8;
+    u8 pad_44FC[0x99E6 - 0x44FC];
+    s16 field_99E6;
+};
+
+/* 800CE834 compares the signed halfword at D_8007AFF0+0x25476 with 1. */
+struct Ovl11UpdateWork {
+    u8 pad_0[0x25476];
+    s16 field_25476;
+};
+
 /* ovl_11_func_800C090C resets these halfword/word fields through one D_8006C838 base. */
 struct Ovl11StateInitView {
     u8 pad_0[0xD0];
