@@ -2617,6 +2617,13 @@ typedef struct {
 typedef struct {
     s16 unk0;
     s16 unk2;
+    u16 unk4;
+    s16 unk6;
+} Ovl11FA1CCArg;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
     s16 unk4;
 } Ovl11Func800CADBCArg0;
 

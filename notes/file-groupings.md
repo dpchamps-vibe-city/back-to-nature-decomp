@@ -12415,28 +12415,16 @@ Separate local mode-1 texture-update candidate TU pair (confidence: medium;
 - ovl_11_func_800D759C (m, byte-exact) — updates a mode-1 grid cell's UVs/tpage/CLUT from a texture-index table.
 - ovl_11_func_800D78D0 (s) — scans the 25×45 records and applies selected textures through 800D759C.
 
-## `ovl_11` D_8006C838+0x5488 state-trio run — 0x800FA31C–0x800FA410 (confidence: medium)
+## `ovl_11` D_8006C838+0x5488 state-trio run — 0x800FA1CC–0x800FA410 (confidence: medium)
 
-Evidence: zero-gap link-order adjacency (`ovl_11_func_800FA31C` len 0x84 ends
-0x800FA3A0; `ovl_11_func_800FA3A0` len 0x70 ends 0x800FA410) and a shared
-state cluster — all three address the `D_80126F8C` table (800FA31C walks it,
-800FA410 reads it beside `D_80126F80`) and the latter two take the
-`(view *)&D_8006C838` base and read the same `s16` trio at `+0x5488`,
-`+0x548A`, `+0x548C`. The nearby caller `ovl_11_func_800FA1CC` calls
-`ovl_11_func_800FA31C`, `ovl_11_func_800FA3A0` and the selector wrapper
-`ovl_11_func_800FA5C8`, tying the run into one call cluster.
+Candidate TU supported by shared table/state use and call/link-order adjacency;
+[including the zero-gap dispatcher predecessor](research/ovl_11_func_800FA1CC-grouping.md).
 
 Members (link order):
-- ovl_11_func_800FA31C (m, matched this session, byte-exact) — scans all 18
-  `D_80126F8C` entries for `u8@+0 == arg1`, calling
-  `ovl_11_func_800FA590(arg0, u8@+1, arg2)`.
-- ovl_11_func_800FA3A0 (m, matched this session, byte-exact) — guard on
-  `D_8006C838+0x5492 != -1` then `+0x5488 == arg1 && +0x548A == arg2`, then
-  `ovl_11_func_800FA5C8(arg0, +0x548C, arg3)`.
-- ovl_11_func_800FA410 (m, matched this session, byte-exact) — link successor;
-  scans the same 18-entry `D_80126F8C` table (`lh` of `s16@+2` on a
-  `unk0`/`unk1` match) beside `D_80126F80`, then tests the same `+0x5488`/
-  `+0x548A`/`+0x548C` trio; called by `ovl_11_func_800F9E4C`.
+- ovl_11_func_800FA1CC (m, byte-exact) — dispatches context drawing with a modulo-7 offset.
+- ovl_11_func_800FA31C (m, byte-exact) — draws matching entries from `D_80126F8C`.
+- ovl_11_func_800FA3A0 (m, byte-exact) — draws the active state-trio selection when its coordinates match.
+- ovl_11_func_800FA410 (m, byte-exact) — selects and advances a table/state-dependent message.
 
 ## `ovl_11` D_8006C838+0x8000 work-area run — 0x801128B4–0x80112C98 (confidence: medium)
 

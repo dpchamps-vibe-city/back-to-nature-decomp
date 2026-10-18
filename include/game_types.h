@@ -4,6 +4,14 @@
 
 #include "common.h"
 
+/* 800FA1CC: lh at +0/+2/+6; lhu at +4 narrowed before signed modulo. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    u16 unk4;
+    s16 unk6;
+} Ovl11FA1CCArg;
+
 /* 800D0DBC clears both signed halfwords; 800F05C0 passes a selected pair. */
 typedef struct {
     s16 unk0;
