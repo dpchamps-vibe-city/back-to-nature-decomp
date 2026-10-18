@@ -14413,3 +14413,11 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800CB4E0 (m, candidate same TU) — resets the global object to state 1, clears a halfword and restores state flags.
 - ovl_11_func_800CB540 (s, candidate same TU) — selects a record-dependent state/animation for the same global object and sets flags.
 - ovl_11_func_800CB618 (m, candidate same TU) — flag-gated selected-record check that falls back to the reset helper or selects state 0xC and clears flag 0x8000 when the record is empty.
+
+## `ovl_11` state-selected ID resolver/caller pair — 0x800DC388 / 0x800DC560 (confidence: low)
+
+Candidate same-TU membership; original boundaries remain unproven
+([call/link-order evidence and limits](research/ovl_11_func_800DC388-grouping.md)).
+
+- ovl_11_func_800DC388 (m, candidate same TU) — resolves an ID from state variants and event flags, then applies the range-table remapper.
+- ovl_11_func_800DC560 (s, candidate same TU) — refreshes the current work-area ID through the preceding resolver before record-dependent setup.

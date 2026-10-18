@@ -1209,6 +1209,16 @@ struct struct_8006C838_button {
     s16 field_44C2;         /* 0x44C2 */
 };
 
+/* 800DC388: lh at +44BA and lhu variant selectors at +44CE/+44D0/+44D2. */
+struct Ovl11MessageState {
+    char pad0[0x44BA];
+    s16 base;
+    char pad44BC[0x44CE - 0x44BC];
+    u16 variant50;
+    u16 variant60;
+    u16 variant70;
+};
+
 /* 800E537C: state reset fields witnessed by sh/lhu/lw and a pointer load. */
 struct Ovl11ResetState {
     char pad_0[0x4450];
