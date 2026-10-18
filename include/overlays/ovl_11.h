@@ -915,6 +915,7 @@ void ovl_11_func_801033D4(void);
 void ovl_11_func_80103424(void);
 void ovl_11_func_80103480(void);
 void ovl_11_func_801034D0(void);
+void ovl_11_func_80103548(void);
 void ovl_11_func_801035C0(void);
 void ovl_11_func_80103714(void);
 s32 ovl_11_func_80103770(void);
