@@ -1,3 +1,30 @@
 #include "common.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_8011B784", ovl_11_func_8011B784);
+void ovl_11_func_800D7338(s16 *arg0, s16 arg1, s16 arg2, s16 arg3);
+s32 ovl_11_func_800CB540(u16 *arg0);
+
+s32 ovl_11_func_8011B784(s32 *arg0, s32 arg1, s16 arg2) {
+    s16 sp10[3];
+    s32 var_s2;
+    u32 var_a1;
+
+    var_s2 = 0;
+    var_a1 = *arg0 - arg1;
+    if (var_a1 >= 2U) {
+        return 0;
+    }
+    switch (var_a1) {
+    case 0:
+        ovl_11_func_800D7338(sp10, 0xA4, arg2, 1);
+        ovl_11_func_800CB540((u16 *) sp10);
+        var_a1++;
+        break;
+    case 1:
+        if (D_80071A6C & 0x04000000) {
+            var_s2 = 1;
+        }
+        break;
+    }
+    *arg0 = arg1 + var_a1;
+    return var_s2;
+}
