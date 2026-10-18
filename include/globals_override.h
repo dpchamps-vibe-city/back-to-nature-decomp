@@ -2298,6 +2298,15 @@ typedef struct {
  * from overlays that only declare it extern; stride 0x28 per ItemData). */
 extern ItemData *D_8006C858;
 
+/* 800CBB9C: D_8006C838 pointer at +20, object at +51C8, u16 at +5200. */
+typedef struct {
+    char pad0[0x20];
+    ItemData *items;
+    char pad24[0x51C8 - 0x24];
+    char object[0x38];
+    u16 state;
+} Ovl11CBB9CGlobals;
+
 /* 800BE6E4: 0x28-byte items have u16@0, s8@3 and signed variant indices at +4. */
 typedef struct {
     u16 flags;
