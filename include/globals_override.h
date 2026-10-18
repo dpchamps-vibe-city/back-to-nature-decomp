@@ -3543,6 +3543,28 @@ typedef struct {
     u8 pad_522C[0xE514 - 0x522C];
     s16 mode;
 } Ovl17SummaryView;
+/* 800B8F28 reads +0x5228/+0xE514, writes +0xE614/+0xE618 and increments +0x448C. */
+typedef struct {
+    u8 pad_0[0x448C];
+    s32 state;
+    u8 pad_4490[0x5228 - 0x4490];
+    s32 value;
+    u8 pad_522C[0xE514 - 0x522C];
+    s16 mode;
+    u8 pad_E516[0xE614 - 0xE516];
+    s32 enabled;
+    s16 total;
+} Ovl17SummaryResultView;
+/* 800B8F28 shares D_8006C838+0x8000 for mode and the enabled word. */
+typedef struct {
+    u8 pad_0[0x6514];
+    s16 mode;
+    u8 pad_6516[0x6614 - 0x6516];
+    s32 enabled;
+} Ovl17SummaryUpperView;
+/* 800B8F28 compares this signed halfword with 2. */
+extern s16 D_800BDB04;
+
 /* 800B8D88 selects one of three four-byte text entries in data/3634.data.s. */
 extern u16 D_800BB528[6];
 /* 800B8D88 draws this halfword text and the preceding text at byte offset -0x2E. */
