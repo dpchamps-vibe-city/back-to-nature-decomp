@@ -329,7 +329,7 @@ Members:
 - ovl_11_func_800FE780 (m) — sub-mode argument `3`,
   trailing args `0x120` / `0xC8`.
 
-## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6A24 / 0x800C6AFC / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7010 / 0x800C70CC / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C84DC / 0x800C8764 / 0x800C893C / 0x800C8AD4 / 0x800C8D9C / 0x800C93A4 / 0x800C9424 (confidence: medium)
+## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6A24 / 0x800C6AFC / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7010 / 0x800C70CC / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C84DC / 0x800C8764 / 0x800C893C / 0x800C8AD4 / 0x800C8D9C / 0x800C8E98 / 0x800C93A4 / 0x800C9424 (confidence: medium)
 
 Candidate same-TU family supported by shared state/animation idioms and a
 local caller/helper cluster whose call graph agrees with gapless link order.
@@ -346,6 +346,8 @@ Evidence and limits for the adjacent 800C93A4/800C9424 pair:
 [state-initializer/caller research](research/ovl_11_func_800C93A4-grouping.md).
 Evidence and limits for the adjacent 800C6A24/800C6AFC pair:
 [timer/state helper/caller research](research/ovl_11_func_800C6A24-grouping.md).
+Evidence and limits for the adjacent 800C8E98 counterpart:
+[item-slot helper research](research/ovl_11_func_800C8E98-grouping.md).
 
 Members:
 - ovl_11_func_800C6A24 (m, candidate same TU) — advances state with timer-dependent sound/animation and updates the sprite byte.
@@ -433,6 +435,7 @@ Members:
   `ovl_11_func_800C7270(0x15, 0x47, 0xA)`, copies the `+0x84` element onto
   `+0xF0` with `ovl_11_func_800D7348`, sets bit 0x8000 and `func_8001FABC(7)`
   — same type, same 0x15/0x47 run call and same copy/bit tail as 800C4F44.
+- ovl_11_func_800C8E98 (m, candidate same TU) — handles the +0x8A item slot, dispatching held items or selecting state 0xA after acquisition.
 - ovl_11_func_800C93A4 (m, candidate same TU) — initializes state 0x3B, direction, sprite animation and flags for the adjacent caller's object.
 - ovl_11_func_800C9424 (s, candidate same TU) — dispatches D_80071A00 pending flags and input to the initializer and existing state-switch helpers.
 
