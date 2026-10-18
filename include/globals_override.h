@@ -15,6 +15,12 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800CB618 indexes s16 triples at D_80071A00+0xC0; 800C9D98 supplies count 8. */
+typedef struct {
+    char pad[0xC0];
+    s16 records[8][3];
+} Ovl11CB618RecordView;
+
 /* 80120A2C reads/writes a u16 state at +0 and signed coordinates at +0xC/+0x14. */
 typedef struct {
     u16 unk0;

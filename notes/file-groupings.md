@@ -14361,10 +14361,12 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800D3230 (m, candidate same TU) — mode-selected record-index wrapper around `ovl_11_func_800D3D60`.
 - ovl_11_func_800D3250 (m, candidate same TU) — code-0x15B gated update of a selected record's +0x16 halfword, falling back to the second record family.
 
-## `ovl_11` global-object state/flag caller pair — 0x800CB4E0 / 0x800CB540 (confidence: low)
+## `ovl_11` global-object state/flag caller run — 0x800CB4E0 / 0x800CB540 / 0x800CB618 (confidence: low)
 
 Candidate same-TU membership; original boundaries remain unproven
-([evidence and limits](research/ovl_11_func_800CB4E0-grouping.md)).
+([pair evidence](research/ovl_11_func_800CB4E0-grouping.md),
+[extension evidence and limits](research/ovl_11_func_800CB618-grouping.md)).
 
 - ovl_11_func_800CB4E0 (m, candidate same TU) — resets the global object to state 1, clears a halfword and restores state flags.
 - ovl_11_func_800CB540 (s, candidate same TU) — selects a record-dependent state/animation for the same global object and sets flags.
+- ovl_11_func_800CB618 (m, candidate same TU) — flag-gated selected-record check that falls back to the reset helper or selects state 0xC and clears flag 0x8000 when the record is empty.
