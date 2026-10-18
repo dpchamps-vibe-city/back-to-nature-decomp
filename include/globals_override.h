@@ -748,6 +748,12 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800E8C14 reads a signed halfword at D_8006C838 + 0x5252 and passes its address. */
+struct Ovl11E8C14State {
+    u8 pad_0[0x5252];
+    s16 value;
+};
+
 /* 800E9914 reads and clears a signed halfword through D_8006C838 + 0x51F0. */
 struct Ovl11E9914State {
     u8 pad_0[0x51F0];

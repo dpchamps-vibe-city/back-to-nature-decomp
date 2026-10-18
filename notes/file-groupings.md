@@ -7913,6 +7913,7 @@ Members:
 - ovl_11_func_800E6A50 (m, candidate same TU; [evidence](research/ovl_11_func_800E6A50-grouping.md)) — forwards a resolved value and a `D_80129560` slot pointer to `ovl_11_func_800EFE34`.
 - ovl_11_func_800E7D4C (m, candidate same TU; [evidence](research/ovl_11_func_800E7D4C-grouping.md)) — grid-item selector that writes the selected item ID to `D_80129560[slot]`.
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
+- ovl_11_func_800E8C14 (m, candidate local same TU with 800E8D00; [evidence](research/ovl_11_func_800E8C14-grouping.md)) — writes a one-based lookup result to a selected `D_80129560` slot.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
 - ovl_11_func_800EB010 (m, candidate same TU; [evidence](research/ovl_11_func_800EB010-grouping.md)) — ten-ID initializer/updater using the shared state slots and accessor-helper cluster.
 - ovl_11_func_800EB328 (m, candidate same TU; [evidence](research/ovl_11_func_800EB328-grouping.md)) — randomized trigonometric position updater and direction selector using the shared table and 0x22-record helper cluster.
