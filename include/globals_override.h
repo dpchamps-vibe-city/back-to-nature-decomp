@@ -3324,6 +3324,36 @@ typedef struct {
 
 extern u8 D_800BD848[];
 
+/* 800BA54C initializes byte/halfword/word fields and six halfwords at +0x2BC. */
+typedef struct {
+    s32 field_0;
+    s8 field_4;
+    u8 pad_5;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s16 field_12;
+    s16 field_14;
+    s16 field_16;
+    s16 field_18;
+    u8 pad_1A[2];
+    s32 field_1C;
+    s16 field_20;
+    s16 field_22;
+    s32 field_24;
+    u8 pad_28[0x2BC - 0x28];
+    s16 entries[6];
+    s16 field_2C8;
+    u8 pad_2CA[6];
+    s16 field_2D0;
+    s16 field_2D2;
+    s16 field_2D4;
+} Ovl17DisplaySetup;
+#define Ovl17_D_800BD848 (*(Ovl17DisplaySetup *)D_800BD848)
+
 /* ovl_17 data/3634.data.s reserves ten halfwords; 800B9940 formats text here. */
 extern u16 D_800BD738[10];
 /* ovl_17_func_800B9940 loads the signed mode at D_8006C838 + 0xE514. */
