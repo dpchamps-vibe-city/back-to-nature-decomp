@@ -10716,6 +10716,7 @@ Members (link order):
   calls `ovl_15_func_8012E15C` and sets the private `D_80137586 = 1` — variant
   body sitting in link order after the reset wrapper `ovl_15_func_801300E4`
   (0x94 bytes)
+- ovl_15_func_801301A0 (m, byte-exact) — dispatches memory-card menu states and refreshes the shared card-status cache ([grouping evidence](research/ovl_15_func_801301A0-grouping.md)).
 - ovl_15_func_80130468 (m, verified byte-exact this session) — shared
   `D_80052FC4` text-draw prologue, byte-identical to `ovl_15_func_8012ED18`:
   calls `ovl_15_func_8012E15C` and sets `D_80137584 = 1` (void)

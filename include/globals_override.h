@@ -4084,6 +4084,9 @@ extern s8 D_80137584;
  * Absolute-addressed (lui + %lo) from -G0 overlay code. */
 extern s16 D_8013758C;
 
+/* ovl_15_func_801301A0 reads this card index with lh and updates it with sh. */
+extern s16 D_8013758A;
+
 /* D_8013758E - ovl_15 private state s16 in the overlay data segment, read by
  * ovl_15_func_80130C8C and passed to ovl_15_func_801367F8 and by the
  * ovl_15_func_80130C2C/80130D3C family. Absolute-addressed (lui + %lo) from
