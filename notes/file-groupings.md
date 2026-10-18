@@ -8905,9 +8905,7 @@ Members (link order):
 - **shared globals with complementary roles:** 800FFA28 is the init leaf —
   zeroes `D_801273D8` and sets `D_801273DA = 0xFF`; 800FFA40 calls 800FFA28
   then clears `D_801273DA` back to 0 (init + reset of the same flag pair);
-- **sole referencers:** no other function in `src/` touches
-  `D_801273D8`/`D_801273DA`; 800FFA40's one call edge is to 800FFA28, and the
-  caller (`ovl_11_func_800C7AC0` state machine) ignores the return value.
+- [Selection-controller extension evidence and limits](research/ovl_11_func_800FFB08-grouping.md).
 
 Members (link order):
 - ovl_11_func_800FECB8 (m) — active-menu wrapper around adjacent 800FED0C ([grouping evidence](research/ovl_11_func_800FECB8-grouping.md)).
@@ -8942,6 +8940,8 @@ Members (link order):
   `D_801273DA = 0xFF`
 - ovl_11_func_800FFA40 (m) — void reset: calls 800FFA28, then
   `D_801273DA = 0`
+- ovl_11_func_800FFA64 (s, candidate same TU) — flag-gated menu caller that latches the result and completes the exit transition.
+- ovl_11_func_800FFB08 (m, candidate same TU) — four-choice menu input/cursor controller and selection-dependent action dispatcher.
 
 ## `ovl_11` D_80128420/D_80128422 init/set cluster — 0x8011E574 / 0x8011E588 / 0x8011E5B0 / 0x8011EA0C / 0x8011EC54 / 0x8011EC84 / 0x8011ECC4 / 0x8011EE98 (confidence: medium for the pair, low for 0x8011E5B0, 0x8011EA0C, 0x8011EC54, 0x8011EC84, 0x8011ECC4 and 0x8011EE98)
 

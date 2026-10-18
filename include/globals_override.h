@@ -3106,6 +3106,11 @@ struct Ovl11NumberTextHeader {
     s16 marker;
 };
 
+/* 800FFA28 declares this s16 selection; 800FFB08 reads it as unsigned. */
+extern s16 D_801273D8;
+/* 800FFB08 adds D_80054BBC[0] bytes to this menu text base. */
+extern u8 D_80053A22[];
+
 /* 800FD5E8 adds D_80054BBC[0] bytes to this text base and its +0x28 successor. */
 extern u8 D_80053636[];
 
