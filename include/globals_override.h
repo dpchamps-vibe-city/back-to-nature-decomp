@@ -2322,6 +2322,14 @@ struct Ovl11E8250State {
     u16 *effect;
 };
 
+/* 80102368 reads lh +51E6 and scans signed IDs in six-byte records at +5288. */
+struct Ovl11ItemGridState {
+    u8 pad0[0x51E6];
+    s16 exponent;
+    u8 pad51E8[0x5288 - 0x51E8];
+    Ovl11ItemState slots[8];
+};
+
 /* Action sub-structure at 0x1C of ItemData (ovl_11_func_800D58D0): fn ptr at
  * +0 called as (s8, s8, s16, s32) -> s32, signed byte at +4, signed byte at
  * +5, s16 at +6. */

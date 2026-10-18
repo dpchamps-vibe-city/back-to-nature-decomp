@@ -8314,7 +8314,7 @@ Same object, outside the suspected TU:
   entry whose first s16 is in [0x15,0x1A); shares the entry shape and the
   compaction-loop idiom, cross-container.
 
-## `ovl_11` D_80071AC0/D_80070D42 record-table consumer run — 0x801027D4–0x80102B6C (confidence: medium)
+## `ovl_11` D_80071AC0/D_80070D42 record-table consumer run — 0x80102368–0x80102B6C (confidence: medium)
 
 Evidence: a gapless link run 0x80101B9C–0x80102DC4 in which the
 D_80071AC0/D_80070D42 6-byte-stride accessor `ovl_11_func_80102844` sits two
@@ -8328,6 +8328,7 @@ source-file hypothesis; the D_8006C838+0x51E6/+0x450A/+0x5288 table shape is
 shared with the separate 0x80100EB8 run (different link region).
 
 Members (address order):
+- ovl_11_func_80102368 (m, candidate same TU; [evidence](research/ovl_11_func_80102368-grouping.md)) — renders eight selected IDs, choosing their display by membership in the D_80071AC0 record table.
 - ovl_11_func_80102844 (m) — D_80071AC0/D_80070D42 stride-6 accessor.
 - ovl_11_func_80102A10 (m, matched this session, byte-exact) — immediate link
   predecessor; sole caller of 80102A64: walks the 8-entry `D_8012CF00` u16
