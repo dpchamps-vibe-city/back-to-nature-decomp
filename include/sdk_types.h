@@ -2782,6 +2782,19 @@ struct Ovl11RotationState {
 };
 
 typedef struct {
+    u8 pad0[0x38];
+    u8 direction;
+    u8 pad39[3];
+    u16 phase;
+    u8 pad3E[0x6C - 0x3E];
+    s32 flags;
+    u8 pad70[0x84 - 0x70];
+    s16 id;
+    u8 pad86[0x260 - 0x86];
+    ObjectState animation;
+} Ovl11SelectionObject;
+
+typedef struct {
     char pad_00[0x30];
     s16 field_30;
     char pad_32[2];

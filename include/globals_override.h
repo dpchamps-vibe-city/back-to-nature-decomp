@@ -5367,5 +5367,8 @@ extern s16 D_801282E2;
 /* ovl_11 800DEF30 dispatches the 20-word table; matched 800DFC44/800DFCFC take one object and return s32. */
 extern s32 (*D_800B95CC[20])(void *);
 
+/* 8011FFA8 reads/writes the three selection words at +0/+4/+8. */
+extern s32 D_8012DB48[3];
+
 #endif /* GLOBALS_OVERRIDE_H */
 
