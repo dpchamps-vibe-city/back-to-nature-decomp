@@ -396,11 +396,16 @@ typedef struct {
     s16 mode;
 } Ovl11TextureStateView;
 
-/* 80112DA8 tests signed halfwords at work-area +0x25474/+0x25476. */
+/* 80112DA8 tests signed halfwords at work-area +0x25474/+0x25476;
+ * 80113818 reads/writes the words at +0x25480 and +0x254A0. */
 typedef struct {
     u8 pad_0[0x25474];
     s16 field_25474;
     s16 field_25476;
+    u8 pad_25478[8];
+    s32 field_25480;
+    u8 pad_25484[0x1C];
+    s32 field_254A0;
 } Ovl11TriggerWorkView;
 
 /* 800B7F3C copies four bytes from D_8007AFF0+0x2479C to +0x25474;
@@ -4625,9 +4630,14 @@ extern s16 D_8012855A;
  * 10x10x10 byte grid, initial halfword and word at +400. */
 extern u8 D_8012D110[];
 
-/* 80112EC4 indexes the +0x16 byte grid with strides 100/10/1 and updates the +0x400 word. */
+/* 80113818 passes this data address or its +0x34 byte offset to func_8001AC10. */
+extern u8 D_80128148[];
+
+/* 80112EC4 indexes the +0x16 byte grid with strides 100/10/1 and updates
+ * the +0x400 word; 80113818 increments the initial unsigned halfword. */
 typedef struct {
-    u8 pad0[0x16];
+    u16 count;
+    u8 pad2[0x14];
     u8 grid[10][10][10];
     u8 pad3FE[2];
     s32 flags;
