@@ -720,6 +720,25 @@ typedef struct {
 
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 
+/* 800D0DB0 stores the two signed indices passed by 800DF72C. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} Ovl11DF72CPair;
+
+/* 800D049C passes its +0xA8 pair to 80107DE0. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} Ovl11DF72CResetPair;
+
+typedef struct {
+    char pad_00[0x16];
+    s16 unk16;
+    char pad_18[0xA8 - 0x18];
+    Ovl11DF72CResetPair unkA8;
+} Ovl11DF72CResetView;
+
 typedef struct {
     char pad_0[0xB0];
     u16 unkB0;
