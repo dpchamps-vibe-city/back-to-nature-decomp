@@ -12290,7 +12290,8 @@ Members (link order):
   else `(s32@+0x34 & 0x10000) > 0` (twin of ovl_11_func_800DF4F0).
 - ovl_11_func_800E0AFC (m) — earlier caller: guard then `u16@+0xB0 < 14` →
   `0x164` / `0x165`.
-- ovl_11_func_800E05A8 (s), 800E06E0 (s), 800E0D3C (s), 800E10C8 (m,
+- ovl_11_func_800E05A8 (m, byte-exact; candidate member) — per-object counter/flag update handler ([adjacent consumer/reset and link-order evidence](research/ovl_11_func_800E05A8-grouping.md)).
+- ovl_11_func_800E06E0 (s), 800E0D3C (s), 800E10C8 (m,
   byte-exact), 800E15C8 (s) — callers; the common guard is
   `if (ovl_11_func_800E109C(arg0) == 0) return -1;`.
 - ovl_11_func_800E11C0 (m, byte-exact, matched this session) — guard then
