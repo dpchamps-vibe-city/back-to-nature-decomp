@@ -5277,6 +5277,8 @@ extern s8 D_801273E9_selection __asm__("D_801273E9");
 extern u8 D_801273E4_state __asm__("D_801273E4");
 /* 801014F8 adds the text-bank byte offset to this base and +0xC/0x16/0x26/0x38. */
 extern u8 D_8005399A[];
+/* 80101B9C adds D_80054BBC[0] to this text base and its +0x16/+0x28/+0x36 labels. */
+extern u8 D_800539E8[];
 
 /* 80102BCC walks 0x20-byte objects, reading the ID at +4 and value at +6. */
 extern u8 D_80050B5C_objects[] __asm__("D_80050B5C");
