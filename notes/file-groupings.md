@@ -10720,6 +10720,7 @@ Members (link order):
 - ovl_15_func_801305D4 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_80052FFA` updater array; then
   `D_80137584 = ovl_15_func_80137228(2, 0x11)` and `D_80137588 = 1`
+- ovl_15_func_801306D4 (m, byte-exact) — memory-card status polling and menu-state routing ([shared-state evidence](research/ovl_15_func_801306D4-grouping.md)).
 - ovl_15_func_801307D8 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_8005306A` updater array; then `ret =
   ovl_15_func_80137228(5, 0)`, `D_80137584 = ret` (s8; the value is returned),
