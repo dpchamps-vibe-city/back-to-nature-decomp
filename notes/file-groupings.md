@@ -7996,6 +7996,7 @@ Members:
   the same relative +0x253B6/+0x253B4/+0x253B8 halfword block 800E9778 reads
   from its selected record — a new accessor-family tie to the `D_8007AFF0`
   far-base halfword-state block.
+- ovl_11_func_800E9914 (m, candidate local same TU with 800E9838/800E99EC; [evidence](research/ovl_11_func_800E9914-grouping.md)) — consumes a pending halfword with an optional `D_80129560` snapshot, or probes status bit `0x20`.
 - ovl_11_func_800E99EC (m, matched 2026-11 — this session, 0x110, byte-exact) —
   conditional-slot position leaf: `arg3 & 1`/`arg3 & 2` select the low half of
   `D_80129560[arg0]`/`[arg1]` (raw s16 args otherwise), then either calls

@@ -734,6 +734,9 @@ struct Ovl30NValues {
 /* 80132C2C passes this original Ke-N-VAL row format to FntPrint. */
 extern char D_8012EF14[];
 
+/* ovl_11_func_800E9914 tests bit 0x20 of this word with lw. */
+extern s32 D_80070C88;
+
 /* D_8006C838 - array of 0x3C-byte structs used for flags
  * Accessed with 0x3C stride but accessed in 4-byte s32 words
  * Struct size must be 4 bytes to get correct indexing (index * 0x3C as byte offset) */ 
@@ -741,6 +744,12 @@ struct struct_8006C838 {
     char data[0x3C];  /* 60 bytes per struct */
 };
 extern struct struct_8006C838 D_8006C838[];
+
+/* 800E9914 reads and clears a signed halfword through D_8006C838 + 0x51F0. */
+struct Ovl11E9914State {
+    u8 pad_0[0x51F0];
+    s16 pending;
+};
 
 /* 800E4280: lw/sw flags at +0xC/+0x4450 and cleared words at +0x448C/+0x5214/+0x7A74. */
 struct Ovl11E4280State {
