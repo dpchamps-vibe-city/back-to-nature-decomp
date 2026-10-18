@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800C6A9C stores the sound helper's return value with sh. */
+extern s16 D_80128C70;
+
 /* 800CB618 indexes s16 triples at D_80071A00+0xC0; 800C9D98 supplies count 8. */
 typedef struct {
     char pad[0xC0];
