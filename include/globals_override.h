@@ -2272,6 +2272,33 @@ typedef struct {
 } Ovl11ItemState;
 extern Ovl11ItemState D_80128C58;
 
+/* 800E8250 saves/restores a six-byte item and a 48-byte, word-aligned item list. */
+typedef struct {
+    s32 words[12];
+} Ovl11ItemSnapshot;
+/* Typed aliases coexist with legacy scalar/array declarations of these symbols. */
+extern Ovl11ItemState Ovl11Item_80071A8A __asm__("D_80071A8A");
+extern Ovl11ItemSnapshot Ovl11Items_80071AC0 __asm__("D_80071AC0");
+extern Ovl11ItemState D_80129500;
+extern s32 D_80129510[12];
+
+/* 800E8250: item-table pointer +20, flags +5234/+91E0, six-byte items,
+ * and a pointer +DDD4 whose unsigned halfwords +4/+1C are updated. */
+struct Ovl11E8250State {
+    u8 pad0[0x20];
+    void *items;
+    u8 pad24[0x5234 - 0x24];
+    s32 flags;
+    u8 pad5238[0x5252 - 0x5238];
+    Ovl11ItemState item;
+    u8 pad5258[0x5288 - 0x5258];
+    Ovl11ItemState slots[8];
+    u8 pad52B8[0x91E0 - 0x52B8];
+    s32 effectFlags;
+    u8 pad91E4[0xDDD4 - 0x91E4];
+    u16 *effect;
+};
+
 /* Action sub-structure at 0x1C of ItemData (ovl_11_func_800D58D0): fn ptr at
  * +0 called as (s8, s8, s16, s32) -> s32, signed byte at +4, signed byte at
  * +5, s16 at +6. */
