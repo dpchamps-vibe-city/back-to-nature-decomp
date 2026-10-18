@@ -55,6 +55,9 @@ extern s16 D_80126E2C;
 /* ovl_11 80116878 loads this word with lw for a signed threshold comparison. */
 extern s32 D_80071A60;
 
+/* ovl_11 800E0B40 indexes 20 rodata callbacks; matched members take an object and return s32. */
+extern s32 (*D_800B966C[20])(void *);
+
 /* ovl_11 8010B4D8 indexes these 20 rodata handler-address words at +0x26. */
 extern s32 D_800BAA34[20];
 
