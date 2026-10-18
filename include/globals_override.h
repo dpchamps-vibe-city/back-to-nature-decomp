@@ -1230,6 +1230,16 @@ struct struct_8006C838_button {
     s16 field_44C2;         /* 0x44C2 */
 };
 
+/* 800DE9C8 reads s16 at +44BA/+E4C8 and u16 at +44C0 through D_8006C838. */
+struct Ovl11HandlerState {
+    u8 pad0[0x44BA];
+    s16 field_44BA;
+    u8 pad44BC[4];
+    u16 field_44C0;
+    u8 pad44C2[0xE4C8 - 0x44C2];
+    s16 field_E4C8;
+};
+
 /* 800DC388: lh at +44BA and lhu variant selectors at +44CE/+44D0/+44D2. */
 struct Ovl11MessageState {
     char pad0[0x44BA];
