@@ -3340,6 +3340,8 @@ extern s16 D_8012D7A8[];
 /* D_8012D79C - s32 ovl_11 state/case word written by ovl_11_func_80117A40
  * and read by ovl_11_func_80117BB4. Address taken (lui/addiu). */
 extern s32 D_8012D79C;
+/* 80117BB4 stores a selected id with sw, then reloads it with lw/lhu. */
+extern s32 D_80128260;
 
 /* D_8012D7A0 - s32 ovl_11 state word written by ovl_11_func_80117A40 and
  * read by ovl_11_func_80117BB4. */
