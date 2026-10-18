@@ -185,6 +185,14 @@ Members:
   destination D_800749F4 slot via `800DF128(..., 0x160)`, copies source fields
   +0x38/+0x3C/+0x40(minus 0xC8)/+0x30/+0x22, returns the destination.
 
+## `ovl_11` code-0x164/0x165 allocator/clone pair — 0x800E047C / 0x800E04FC (confidence: low)
+
+Candidate same-TU pair: gapless link adjacency and a shared record initializer
+([evidence and limits](research/ovl_11_func_800E04FC-grouping.md)).
+
+- ovl_11_func_800E047C (m) — allocates, initializes, and tags a D_800749F4 record for code 0x164 or 0x165.
+- ovl_11_func_800E04FC (m) — initializes a selected destination slot for code 0x164, copies source position/tag fields with a third-coordinate offset, and returns it.
+
 ## `ovl_11` D_800749F4 record consumer `ovl_11_func_800D0DCC` — 0x800D0DCC (confidence: medium)
 
 Evidence: called by both predicate-run twin heads — `ovl_11_func_800DF9F0`
