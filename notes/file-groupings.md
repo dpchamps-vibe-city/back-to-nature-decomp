@@ -12206,6 +12206,7 @@ Members (link order):
   calls `D_800B961C[arg1]` unless `s16@+0x26 == arg1 && (s32@+0x34 & 0x800)`
   (then -1); when `D_800B966C[arg1]` is set and the result != -1 records the
   selection and calls `ovl_11_func_800D0408`; stores -1 at `s16@+0xB6`.
+- ovl_11_func_800E12D8 (m, byte-exact; candidate member) — code-0x165 record-pair reservation/reset handler ([neighbour idiom and link-order evidence](research/ovl_11_func_800E12D8-grouping.md)).
 - ovl_11_func_800E1654 (m, matched this session, byte-exact) — `D_800B961C`
   table handler (id 0x12): the guarded twin of ovl_11_func_800E1714 on this
   dispatcher — `s16@+0x30 == *(s16 *)(&D_8007AFF0 + 0x25476)` gate, then
