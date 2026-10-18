@@ -2472,6 +2472,17 @@ typedef struct {
 } Ovl11C3B78Arg0;
 
 typedef struct {
+    u8 pad0[0x38];
+    s16 unk38;
+    u8 pad3A[0x84 - 0x3A];
+    s16 unk84;
+    u8 pad86[0x100 - 0x86];
+    s32 unk100;
+    s32 unk104;
+    s32 unk108;
+} Ovl11C4A2CObject;
+
+typedef struct {
     s16 id;
     u8 unk2[2];
     s16 unk4;

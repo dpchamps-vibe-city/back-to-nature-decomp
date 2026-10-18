@@ -83,6 +83,18 @@ typedef struct {
     s32 unk108;
 } Ovl11CE034Object;
 
+/* C4A2C reads signed halfwords at +38/+84 and coordinates at +100..+108. */
+typedef struct {
+    u8 pad0[0x38];
+    s16 unk38;
+    u8 pad3A[0x84 - 0x3A];
+    s16 unk84;
+    u8 pad86[0x100 - 0x86];
+    s32 unk100;
+    s32 unk104;
+    s32 unk108;
+} Ovl11C4A2CObject;
+
 /* CE034 writes the three coordinates passed to C55FC's grid callback. */
 typedef struct {
     s32 unk0;
