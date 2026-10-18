@@ -12102,11 +12102,12 @@ same-TU caller-cluster evidence. Two further matched callers (`800DEEE0`,
 Members (link order):
 - ovl_11_func_800DF4F0 (m) — shared predicate: returns 0 when `u16@+0x0 == 0`,
   else `(s32@+0x34 & 0x10000) < 1`.
-- ovl_11_func_800DE9C8 (s, 0x138), 800DEB00 (s, 0x3E0), 800DEF30 (s, 0xE0),
+- ovl_11_func_800DE9C8 (s, 0x138), 800DEB00 (s, 0x3E0),
   800DF128 (m, 0x100), 800DF51C (m, 0x90), 800DF614 (m, 0x94),
   800DF72C (s, 0x120), 800DF84C (s, 0x1A4), 800DF9F0 (s, 0x8C) —
   callers; the common guard is
   `if (ovl_11_func_800DF4F0(arg0) == 0) return -1;`.
+- ovl_11_func_800DEF30 (m, byte-exact) — guarded per-tick handler dispatcher ([additional same-TU evidence](research/ovl_11_func_800DEF30-grouping.md)).
 - ovl_11_func_800DFB98 (m, 0xA4, matched this session, byte-exact) — caller;
   guard then the `ovl_11_func_800D05D0` view consumer: adds
   `s32@+0x38/+0x3C/+0x40` into a 4-word vector seeded by
@@ -12130,7 +12131,7 @@ Members (link order):
   ovl_11_func_800DF6A8's far-state gate and a reader of the same far-state
   halfword accessor family.
 
-## `ovl_11` `D_800B957C`/`D_800B95CC` two-table handler dispatcher — 0x800DF010 (confidence: medium)
+## `ovl_11` `D_800B957C`/`D_800B95CC` two-table handler dispatcher — 0x800DEF30 / 0x800DF010 (confidence: medium)
 
 Evidence: `ovl_11_func_800DF010` is a zero-gap member of the confirmed
 `ovl_11_func_800DF4F0` predicate-caller span — its predecessor
@@ -12144,6 +12145,7 @@ first 20-word function-pointer table `D_800B957C` (0x800B957C,
 span's object layout (`s16@+0x26` handler id, `s16@+0x28/+0x2A/+0x2C`,
 `s32@+0x34` flag 0x800) and the `ovl_11_func_800D0408(4, this + 0x48, 0)`
 call idiom.
+- ovl_11_func_800DEF30 (m, byte-exact; candidate member) — per-tick `D_800B95CC` handler invoker and timer driver ([shared-table and link-adjacency evidence](research/ovl_11_func_800DEF30-grouping.md)).
 - ovl_11_func_800DF010 (m, matched this session, byte-exact) — table-driven
   dispatcher: when `D_800B957C[arg1]` is set calls it unless
   `s16@+0x26 == arg1 && (s32@+0x34 & 0x800)` (then -1); when `D_800B95CC[arg1]`

@@ -5090,5 +5090,8 @@ extern u8 D_8005346A[];
 /* ovl_11_func_8011D35C reads/writes this selection state with lh/sh. */
 extern s16 D_801282E2;
 
+/* ovl_11 800DEF30 dispatches the 20-word table; matched 800DFC44/800DFCFC take one object and return s32. */
+extern s32 (*D_800B95CC[20])(void *);
+
 #endif /* GLOBALS_OVERRIDE_H */
 
