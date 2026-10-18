@@ -5579,5 +5579,22 @@ extern s32 (*D_800B95CC[20])(void *);
 /* 8011FFA8 reads/writes the three selection words at +0/+4/+8. */
 extern s32 D_8012DB48[3];
 
+/* 800DC148 scans ten 0xB4-byte records, reading u16 +0/+AE. */
+struct Ovl11EventDispatchRecord {
+    u16 type;
+    u8 pad_2[0xAE - 2];
+    u16 active;
+    u8 pad_B0[4];
+};
+/* 800DC148 reads lw +44C0 and updates lw/sw +44F8 through this base. */
+struct Ovl11EventDispatchState {
+    u8 pad_0[0x44C0];
+    s32 mode;
+    u8 pad_44C4[0x44F8 - 0x44C4];
+    s32 flags;
+    u8 pad_44FC[0x7AB4 - 0x44FC];
+    struct Ovl11EventDispatchRecord records[10];
+};
+
 #endif /* GLOBALS_OVERRIDE_H */
 
