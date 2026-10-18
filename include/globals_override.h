@@ -2335,6 +2335,12 @@ typedef struct {
  * from overlays that only declare it extern; stride 0x28 per ItemData). */
 extern ItemData *D_8006C858;
 
+/* 800CB850 reads the unsigned selected record at D_8006C838 + 0x929C. */
+typedef struct {
+    u8 pad0[0x929C];
+    u16 selectedRecord;
+} Ovl11CB850State;
+
 /* 800CBB9C: D_8006C838 pointer at +20, object at +51C8, u16 at +5200. */
 typedef struct {
     char pad0[0x20];
