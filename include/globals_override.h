@@ -4193,6 +4193,9 @@ extern s32 D_800BBED0[];
  * TU only declares it, so an opaque byte object is enough. */
 extern u8 D_8009F78C[];
 
+/* ovl_11 800BCF54/800BD374 use this word as the anchor for stride-0x10 records. */
+extern s32 D_801217A8;
+
 /* D_800C0454 - ovl_25 FuncC0D4Args descriptor whose address
  * ovl_25_func_800BAC28 hands to func_8001C0D4. Only its address is taken, so
  * an opaque byte object is enough; the overlay build is -G0, giving absolute

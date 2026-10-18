@@ -11295,6 +11295,11 @@ Members (link order):
   `func_8001719C(D_8005E3B0 + 0x5790)`. Confirms the shared-global tie, not
   just the wrapper idiom.
 
+Related same-TU candidate (low confidence, outside the gapless run): the verified
+C sources share the `D_801217A8` stride-0x10 table with `ovl_11_func_800BD374`
+and the run's `D_8005E3B0 + 0x4290` load/initialize buffer.
+- ovl_11_func_800BCF54 (m, byte-exact) — multi-part resource loader and setup-state initializer.
+
 ---
 
 ## `ovl_11` D_801273DC handler-table run — 0x801033D4–0x801035C0 (confidence: high)
