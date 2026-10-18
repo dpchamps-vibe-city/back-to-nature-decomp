@@ -3384,6 +3384,18 @@ typedef struct {
 } Ovl17DisplaySetup;
 #define Ovl17_D_800BD848 (*(Ovl17DisplaySetup *)D_800BD848)
 
+/* 800B8D88 reads a word at +0x5228 and a signed mode halfword at +0xE514. */
+typedef struct {
+    u8 pad_0[0x5228];
+    s32 value;
+    u8 pad_522C[0xE514 - 0x522C];
+    s16 mode;
+} Ovl17SummaryView;
+/* 800B8D88 selects one of three four-byte text entries in data/3634.data.s. */
+extern u16 D_800BB528[6];
+/* 800B8D88 draws this halfword text and the preceding text at byte offset -0x2E. */
+extern u16 D_800BB482[];
+
 /* ovl_17 data/3634.data.s reserves ten halfwords; 800B9940 formats text here. */
 extern u16 D_800BD738[10];
 /* ovl_17_func_800B9940 loads the signed mode at D_8006C838 + 0xE514. */
