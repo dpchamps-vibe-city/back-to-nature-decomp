@@ -654,6 +654,7 @@ s32 ovl_11_func_800F1744(u8 arg0, u16 arg1, s32 arg2);
 s32 ovl_11_func_800F1878(u32 arg0, s32 arg1);
 s32 ovl_11_func_800F1954(s32 arg0);
 s32 ovl_11_func_800F19C8(s32 arg0);
+s32 ovl_11_func_800F19E0(u8 arg0, u8 arg1);
 s32 ovl_11_func_800F1AE0(s32 arg0);
 s32 ovl_11_func_800F1BD0(s32 arg0);
 s32 ovl_11_func_800F1C48(s32 arg0);
