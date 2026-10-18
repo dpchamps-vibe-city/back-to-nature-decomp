@@ -5198,6 +5198,8 @@ extern s16 D_80123292;
 /* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
 extern void *D_80128C4C_dispatch __asm__("D_80128C4C");
 extern s32 D_80128C54;
+/* 800C72F8 reads this absolute-addressed word and tests its low two bits. */
+extern s32 D_80128C50;
 /* 800C9C60 clears these three absolute-addressed words with sw. */
 extern s32 D_80128C68;
 extern s32 D_80128C6C;
