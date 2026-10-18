@@ -15,6 +15,57 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 80104A90: word flags/counters, signed state halfwords and u16 at +44CE. */
+typedef struct {
+    u8 pad_0[0xC];
+    s32 flags;
+    u8 pad_10[0x4438 - 0x10];
+    s16 field_4438;
+    u8 pad_443A[0x4450 - 0x443A];
+    s32 field_4450;
+    u8 pad_4454[0x4488 - 0x4454];
+    s32 field_4488;
+    u8 pad_448C[0x44BA - 0x448C];
+    s16 field_44BA;
+    u8 pad_44BC[4];
+    s16 field_44C0;
+    u8 pad_44C2[0x44CE - 0x44C2];
+    u16 field_44CE;
+    u8 pad_44D0[0x51C8 - 0x44D0];
+    u8 field_51C8[0x5214 - 0x51C8];
+    s32 field_5214;
+    u8 pad_5218[0xE4C8 - 0x5218];
+    s16 field_E4C8;
+} Ovl11AreaInitView;
+
+/* ovl_11 80104A90: three halfword sentinels and the far pointer/state slots. */
+typedef struct {
+    u8 pad_0[0x2479C];
+    s16 field_2479C;
+    u8 pad_2479E[8];
+    s16 field_247A6;
+    s16 field_247A8;
+    u8 pad_247AA[0x25388 - 0x247AA];
+    u8 *data;
+    void *buffer;
+    s32 field_25390;
+    u8 pad_25394[0x2547C - 0x25394];
+    s32 field_2547C;
+    u8 pad_25480[4];
+    s32 field_25484;
+    s32 field_25488;
+    s32 field_2548C;
+    u8 pad_25490[8];
+    s32 field_25498;
+    s32 field_2549C;
+    s32 field_254A0;
+} Ovl11FarInitView;
+
+/* ovl_11 80104A90 clears 0x10 bytes and publishes this buffer's address. */
+extern u8 D_800A0368[0x10];
+/* ovl_11 80104A90 stores the word value 10 here. */
+extern s32 D_801287F4;
+
 /* ovl_11 800FB510 reads s16 coordinates at +0/+2 of 0x1C-byte table rows. */
 /* 800FAC0C: coordinates followed by eight triples of unsigned navigation indices. */
 struct Ovl11FarmMenuRow {
