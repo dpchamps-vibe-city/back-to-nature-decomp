@@ -3054,6 +3054,13 @@ extern u8 D_80053636[];
 
 /* 800FD7B4 adds D_80054BBC[0] bytes to this empty-pair label base. */
 extern u8 D_80053770[];
+/* 800FDD74 adds D_80054BBC[0] bytes to this text base for func_80017B3C. */
+extern u8 D_80053780[];
+/* 800FDD74 walks five unsigned halfwords at D_8006C838+0x5208. */
+struct Ovl11FDD74State {
+    u8 pad_0[0x5208];
+    u16 entries[5];
+};
 /* 800FD7B4 indexes nine signed halfword text offsets as a 3-by-3 table. */
 extern s16 D_8012735C[3][3];
 /* 800FD7B4: lh at +0x44BA, four eight-byte word pairs at +0x49C4; caller 800FD5E8 selects 0..3. */

@@ -13034,6 +13034,10 @@ contiguous table block plus the member-address table and the shared `D_8012CE..`
 draw path (`D_8012CDC8` via `func_80017B3C`); it stages nothing into
 `D_8012A028`.
 
+- ovl_11_func_800FDD74 (m; low-confidence same-TU candidate with
+  800FDE98; [evidence and limits](research/ovl_11_func_800FDD74-grouping.md)) —
+  dispatch-table row builder drawing five stored-value rows.
+
 
 ## `ovl_11` s16 range-map / store-view run — 0x8011DD48–0x8011DF4C (confidence: high)
 
