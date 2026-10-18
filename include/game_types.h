@@ -41,6 +41,15 @@ typedef struct {
     s32 x, y, z, w;
 } E21E4Position;
 
+/* 800D09E0 writes state +22, flags +34, and the position at +38..+40. */
+typedef struct {
+    u8 pad_0[0x22];
+    s16 state;
+    u8 pad_24[0x10];
+    s32 flags;
+    E21E4Position position;
+} Ovl11D09E0Object;
+
 /* 800E21E4: 0xB4-byte entry, lhu tag/counters, lh selectors and lw flags. */
 typedef struct {
     u16 type;

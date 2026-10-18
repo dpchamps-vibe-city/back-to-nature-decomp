@@ -3555,6 +3555,13 @@ extern s16 D_80128138[];
  * as D_8007AD4E). */
 extern u8 D_80074838[0x8000];
 
+/* 800D09E0 reads signed slot/kind halfwords at work+0x19C8/+0x19CA. */
+struct Ovl11D09E0SelectionView {
+    u8 pad0[0x19C8];
+    s16 slot;
+    s16 kind;
+};
+
 /* ovl_11_func_800C1D68: five lhu thresholds at D_8006C838+0x9F68..0xBE7C. */
 struct Ovl11RecordThresholds {
     u8 pad0[0x9F68];
