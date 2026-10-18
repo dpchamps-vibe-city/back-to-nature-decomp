@@ -3305,6 +3305,9 @@ extern u8 D_800C4BD0[];
 
 extern s32 D_800BB4E4[];
 
+/* 800B7E78 dispatches and advances this unsigned state byte with lbu/sb. */
+extern u8 D_800BB524;
+
 extern u8 D_800BB710[];
 
 /* ovl_17_func_800B8470 increments this byte and compares its signed value to 30. */
