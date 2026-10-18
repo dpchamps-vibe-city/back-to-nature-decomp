@@ -14421,3 +14421,13 @@ Candidate same-TU membership; original boundaries remain unproven
 
 - ovl_11_func_800DC388 (m, candidate same TU) — resolves an ID from state variants and event flags, then applies the range-table remapper.
 - ovl_11_func_800DC560 (s, candidate same TU) — refreshes the current work-area ID through the preceding resolver before record-dependent setup.
+
+## `ovl_11` object-render variants and marker helper — 0x800CFE40–0x800D037C (confidence: low)
+
+Candidate same-TU membership; original boundaries remain unproven
+([evidence and limits](research/ovl_11_func_800CFE40-grouping.md)).
+
+- ovl_11_func_800CFE40 (m, candidate same TU) — object sprite/companion drawing with optional fixed-height marker projection.
+- ovl_11_func_800D001C (s, candidate same TU) — object draw variant with fixed companion offsets and an optional extra sprite.
+- ovl_11_func_800D0198 (s, candidate same TU) — parameterized object draw variant with optional fixed-height marker projection.
+- ovl_11_func_800D037C (m, candidate same TU) — flag-gated marker submission shared by the three preceding draw variants.

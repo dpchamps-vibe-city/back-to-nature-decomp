@@ -1600,6 +1600,10 @@ typedef struct {
     /* 0x12C */ s32     field_12C;
 } struct_8005E3C0;
 extern struct_8005E3C0 *D_8005E3C0;
+
+/* 800CFE40: three position halfwords and two projected screen words. */
+extern s16 D_80128D38[4];
+extern s32 D_80128D40[2];
 /* func_8001C37C caches the render context and increments the GP-relative polygon count. */
 extern struct_8005E3C0 *D_8005E4DC;
 extern s16 D_8005E4E8;
