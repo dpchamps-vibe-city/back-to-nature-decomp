@@ -16,7 +16,22 @@
 #define GLOBALS_OVERRIDE_H
 
 /* ovl_11 800FB510 reads s16 coordinates at +0/+2 of 0x1C-byte table rows. */
+/* 800FAC0C: coordinates followed by eight triples of unsigned navigation indices. */
+struct Ovl11FarmMenuRow {
+    s16 x;
+    s16 y;
+    u8 destinations[24];
+};
+extern struct Ovl11FarmMenuRow Ovl11FarmMenuRows[] __asm__("D_80126FF0");
 extern s16 D_80126FF0[][14];
+/* 800FAC0C indexes four signed halfwords per eight-byte rectangle. */
+extern s16 D_801271E8[][4];
+/* 800FAC0C adds the language byte offset to this label and its +0xC successor. */
+extern u8 D_80051B7C[];
+/* 800FAC0C reads and writes these menu-state words with lw/sw. */
+extern s32 D_80126FE4;
+extern s32 D_80126FE8;
+extern s32 D_80126FEC;
 
 /* ovl_11 800C5048/800C5098 store/load the counter, limit and result as words. */
 extern s32 D_80128CB4;
