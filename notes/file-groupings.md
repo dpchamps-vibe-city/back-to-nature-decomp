@@ -5557,6 +5557,8 @@ Members (address order):
     call/link order support the regional grouping; original TU ownership
     remains unconfirmed (low).
   - ovl_11_func_800F87AC (m; candidate, low) — selected-record message handler ([evidence](research/ovl_11_func_800F87AC-grouping.md)).
+  - ovl_11_func_800F882C (s; candidate, low) — six-byte-record range renderer ([evidence](research/ovl_11_func_800F889C-grouping.md)).
+  - ovl_11_func_800F889C (m; candidate, low) — menu-slot icon and conditional quantity renderer ([evidence](research/ovl_11_func_800F889C-grouping.md)).
 - ovl_11_func_800F8188 (m, matched this session, byte-exact; link-adjacent to
   0x800F8224 in the same 0x800F81xx/0x800F84xx region) — the run's
   caller/dispatcher: it takes the 0x800F8404 level result, and when that
