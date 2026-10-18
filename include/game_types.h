@@ -4,6 +4,24 @@
 
 #include "common.h"
 
+/* 800DC9D4 returns 0x30-byte entries; 800DCA60 writes flags at +0x28. */
+typedef struct {
+    u8 pad[0x28];
+    u16 unk28;
+    u8 pad2[0x6];
+} Ovl11FuncC9D4Entry;
+
+/* 800DCF10 returns 0x34-byte entries; 800DCA60 writes +0x2E/+0x30. */
+typedef struct {
+    u8 pad0[0x18];
+    u16 unk18;
+    u16 unk1A;
+    u16 unk1C;
+    u8 pad1[0x0E];
+    u16 unk2C;
+    u8 pad2[0x6];
+} Ovl11FuncDCF10Entry;
+
 /* 800FA1CC: lh at +0/+2/+6; lhu at +4 narrowed before signed modulo. */
 typedef struct {
     s16 unk0;
