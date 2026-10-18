@@ -4,6 +4,12 @@
 
 #include "common.h"
 
+/* 800D0DBC clears both signed halfwords; 800F05C0 passes a selected pair. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} UnkStruct800D0DBC;
+
 /* 800DB354/800DB4E0 consume these 0x16-byte slots; 800DB5CC walks eight. */
 typedef struct {
     u16 unk0;

@@ -3569,6 +3569,23 @@ extern s16 D_80128138[];
  * as D_8007AD4E). */
 extern u8 D_80074838[0x8000];
 
+/* 800F05C0 masks word flags at work+0x1F0 in 0xB8-byte records. */
+typedef struct {
+    s32 flags;
+    u8 pad4[0xB8 - 4];
+} Ovl11ClearFlagRecord;
+
+typedef struct {
+    u8 pad0[0x1F0];
+    Ovl11ClearFlagRecord records[1];
+} Ovl11ClearFlagWorkView;
+
+/* 800F05C0 reads the second signed halfword of four work+0x19C8 pairs. */
+typedef struct {
+    u8 pad0[0x19C8];
+    s16 pairs[4][2];
+} Ovl11ClearPairWorkView;
+
 /* 800D09E0 reads signed slot/kind halfwords at work+0x19C8/+0x19CA. */
 struct Ovl11D09E0SelectionView {
     u8 pad0[0x19C8];
