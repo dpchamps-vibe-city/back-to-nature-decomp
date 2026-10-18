@@ -3388,9 +3388,14 @@ typedef struct {
     u8 pad_6516[0xA];
     u16 values[0xD70];
 } Ovl17WorkView;
-/* 800B9940: six 0x50-byte rows have a u16 name index at +0x40; selector is +0x2BC. */
+/* 800B9940: six 0x50-byte rows have a u16 name index at +0x40; selector is +0x2BC.
+ * 800B8294 clears flags at +0x28, stores the data pointer at +0x3C,
+ * and sets bit 0 on row two. */
 typedef struct {
-    u8 pad_0[0x40];
+    u8 pad_0[0x28];
+    u8 flags;
+    u8 pad_29[0x13];
+    u8 *data;
     u16 nameOffset;
     u8 pad_42[0xE];
 } Ovl17NameRow;
@@ -3413,6 +3418,10 @@ extern s16 D_8007AD5A[];
 extern u32 D_800BD864;
 
 extern u8 D_800BD758[];
+/* ovl_17 data/3634.data.s holds four-byte text offsets; 800B8294 stores their low halfwords. */
+extern s32 D_800BB534[];
+/* 800B8294 initializes a sprite here and writes a signed halfword at +0x1E4. */
+extern u8 D_800BD930[];
 
 extern u8 D_800BDA74[];
 /* 800BA808 indexes 8-byte records: signed halfword id at +0, fixed-point x at +4. */
