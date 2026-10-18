@@ -10688,10 +10688,11 @@ Members (link order):
   changed, and contiguous with it in link order (both 0x70 bytes)
 - ovl_15_func_8012F300 (m, byte-exact) — save-slot selection and status-based menu-state routing ([grouping evidence](research/ovl_15_func_8012F300-grouping.md)).
 - ovl_15_func_8012F3FC (m, byte-exact) — three-slot save-summary display and confirmation-state handler ([grouping evidence](research/ovl_15_func_8012F3FC-grouping.md)).
+- ovl_15_func_8012F4F4 (m, byte-exact) — card-status-based menu routing and follow-up substate initialization ([shared-state evidence](research/ovl_15_func_8012F4F4-grouping.md)).
 - ovl_15_func_8012F6C0 (m, verified byte-exact this session) — shared text-draw
   prologue with the `D_80053114` updater array in case 0 and `D_80051FA8` in case
   1; gapless link successor of the `D_80052FC4` member `ovl_15_func_8012F4F4`
-  (0x114 bytes); switch on the private state `D_8013759C`, guards with
+  (0x1CC bytes); switch on the private state `D_8013759C`, guards with
   `ovl_15_func_801370B4()` and writes `D_80137584` (void) — body shape shared
   with `ovl_15_func_80130048`/`ovl_15_func_80130F2C`
 - ovl_15_func_8012F7D4 (m, byte-exact) — memory-card formatting and result-based menu-state routing ([grouping evidence](research/ovl_15_func_8012F7D4-grouping.md)).

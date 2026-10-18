@@ -4306,6 +4306,8 @@ extern u8 D_80053530[];
 extern u8 D_800533C8[];
 /* ovl_15_func_80130FF0 reads this state with lh and compares it against 0x5B. */
 extern s16 D_8013759A;
+/* ovl_15_func_8012F4F4 clears this state with sh; 8012F6C0 reads it with lh. */
+extern s16 D_8013759C;
 
 /* ovl_15_func_80130B04 adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_80053596[];
