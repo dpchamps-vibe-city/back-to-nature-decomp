@@ -4920,6 +4920,8 @@ extern s32 D_80128CEC;
  * load/store width. */
 extern s32 D_801231F4;
 extern s32 D_801231F8;
+/* 800C6C24 loads this word and scales it by ten for the state timer. */
+extern s32 D_80122F78;
 
 /* D_80128CF8 - ovl_11 word tested non-zero by ovl_11_func_800C47F0 to make
  * the flag-word rotation run. Absolute-addressed from the -G0 overlay. */
