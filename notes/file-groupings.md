@@ -415,6 +415,12 @@ Members:
   with `ovl_11_func_800D7348`, sets bit 0x8000 of `+0x6C`, then
   `func_8001FABC(7)` — shared-type plus direct call-edge into the run.
 - ovl_11_func_800C893C (m, candidate same TU) — handles item-0x68 interactions, requesting it when empty or selecting state 0x65 when held.
+- ovl_11_func_800C8A08 (m, candidate same TU) — adjacent twin of 800C893C:
+  requests item 0x69 through 800F3BA0/800CB540 when `s16@+0x8A == 0`,
+  or clears flag 0xC000 at +0x6C and selects state 0x64 through 800C7270
+  when holding it; same six-byte stack item, +0x38 + 0x17 argument and
+  rejection-call shape. Shared idioms and call edges support the group,
+  not a proven original TU boundary.
 - ovl_11_func_800C8AD4 (m, candidate same TU) — validates an interaction and selects state 0x66 on success, reporting rejected requests.
 - ovl_11_func_800C8D9C (m, matched this session, byte-exact) — second witness
   of the `+0xF0` copy sub-idiom for the same a0 object: scans the 8-entry
