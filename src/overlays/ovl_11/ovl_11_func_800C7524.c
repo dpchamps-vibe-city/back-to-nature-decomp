@@ -1,3 +1,51 @@
 #include "common.h"
+#include "game_types.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800C7524", ovl_11_func_800C7524);
+s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0);
+/* No complete prototype: this call supplies only the object and zero.
+ * The callee's trailing parameters are unused in its matched C; the
+ * transitive arity bound also includes FntPrint's variadic argument saves. */
+void ovl_11_func_800CCFF8();
+/* The callee stores only the low byte of the animation selector. */
+void func_80015840(ObjectState *obj, u8 arg1);
+void ovl_11_func_800C7650(void);
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800D7348(u16 *dst, u16 *src);
+void ovl_11_func_801209A8(void);
+
+s32 ovl_11_func_800C7524(Ovl11C7010Object *arg0, u16 *arg1) {
+    switch ((s16) *arg1) {
+    case 0x38:
+    case 0x39:
+        ovl_11_func_800CDD7C(arg0);
+        ovl_11_func_800CCFF8((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
+        func_80015840((ObjectState *) &arg0->sprite, (u8) arg0->unk38);
+        return 1;
+    case 0x21:
+        ovl_11_func_800C70CC(arg0, 0x32, 0x47, 0xA);
+        ovl_11_func_800D7348((u16 *) ((u8 *) arg0 + 0xF0), (u16 *) &arg0->unk84);
+        arg0->unk6C |= 0x8000;
+        return 1;
+    case 0x1E:
+        ovl_11_func_800C7650();
+        arg0->unk6C |= 0x1800;
+        ovl_11_func_800C70CC(arg0, 0x51, arg0->unk38, -2);
+        ovl_11_func_800D7348((u16 *) ((u8 *) arg0 + 0xF0), (u16 *) &arg0->unk84);
+        arg0->unk6C |= 0x8000;
+        return 1;
+    case 0x1F:
+    case 0x20:
+        ovl_11_func_800C7650();
+        arg0->unk6C |= 0x1800;
+        ovl_11_func_800C70CC(arg0, 0x55, arg0->unk38, -2);
+        ovl_11_func_800D7348((u16 *) ((u8 *) arg0 + 0xF0), (u16 *) &arg0->unk84);
+        arg0->unk6C |= 0x8000;
+        return 1;
+    case 0x12D:
+        arg0->unk6C |= 0x400;
+        ovl_11_func_801209A8();
+        return 1;
+    default:
+        return 0;
+    }
+}
