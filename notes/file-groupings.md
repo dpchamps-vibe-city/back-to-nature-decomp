@@ -5522,6 +5522,7 @@ Members (address order):
   excess moved to arg0, same 0x800D5740 callee — and likewise lives in the
   0x800FBxxx region (at 0x800FB404, beside the 0x800FB3E4 predicate and the
   0x800FB45C swap site). Same-TU membership with 0x800F84xx unproven (low).
+  - ovl_11_func_800F7D34 (m; candidate, low) — selected-record operation dispatcher ([evidence](research/ovl_11_func_800F7D34-grouping.md)).
   - ovl_11_func_800F84F0 (m) — menu navigation, page wrapping and cursor placement.
     Candidate member: zero-gap successor of 0x800F84D4 and caller of
     0x800F8404; shares D_80126E44/48/4A/4C/4E with 0x800F7AA0 and
