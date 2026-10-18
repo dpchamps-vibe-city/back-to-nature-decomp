@@ -3485,24 +3485,16 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_8006C838 +0x7AE8 0xB4-stride flag-pair — 0x80115F38 / 0x80115F80 (confidence: medium)
+## `ovl_11` selected-record handler/flag-helper run — 0x80115CAC / 0x80115F38 / 0x80115F80 (candidate)
 
-Zero-gap link-order adjacency (ovl_11_func_80115F38 is 0x48 bytes, ends exactly
-at 0x80115F80 where ovl_11_func_80115F80 begins) plus a shared global cluster
-argue one TU. Both index the same 10-entry 0xB4-stride u32-flag array at
-`D_8006C838 + 0x7AE8` with the same two-stage `lui %hi`+`addiu %lo` base, and
-0x80115F80 calls 0x80115F38 directly (jal at 0x80115F88) then re-derives the
-same array element, so the pair partitions one flag word's bits: 0x80115F38
-selects an entry by bit 0x20000, 0x80115F80 probes bit 0x40 of the same entry.
-Members:
-- ovl_11_func_80115F38 (m, matched this session) — scans the 10 entries at
-  `D_8006C838 + 0x7AE8` stepping +0xB4, returns the last index whose u32 flag
-  word has bit 0x20000 set, else -1 (s16 result; the 0x20000 mask materializes
-  as a preheader `lui` before the address build)
-- ovl_11_func_80115F80 (m, matched this session) — calls it and re-reads the
-  selected entry's `D_8006C838 + 0x7AE8` word, returns `(word & 0x40) != 0`;
-  clean C reuses the sibling's `base = (char *)&D_8006C838; base += 0x7AE8`
-  idiom and its 0x2D-word (0xB4-byte) stride, confirming the shared cluster
+Candidate same-TU membership: medium confidence for the existing helper pair,
+low for the handler extension; original boundaries remain unproven
+([grouping evidence](research/ovl_11_func_80115CAC-grouping.md)).
+
+Members (address order):
+- ovl_11_func_80115CAC (m, byte-exact) — selected-record interaction state handler.
+- ovl_11_func_80115F38 (m) — selects the last flagged record among ten entries, or returns -1.
+- ovl_11_func_80115F80 (m) — tests bit 0x40 of the selected record's flag word.
 
 ---
 
@@ -5496,8 +5488,9 @@ Members (address order):
   second callee: same s16 +0x8/+0xA view, same `-(unkA*unk8)` first argument
   to 0x800F2354, and `2,unk8` forwarded to counter-leaf 0x800F3AF0 in place of
   0x800F397C. Ties 80115C60 to the 801152BC idiom/struct cluster across the
-  0x5D49C/0x5DE40 link gap; zero-gap successor 0x80115CAC is a stub. Shared
-  idiom + struct layout; data TU ownership unconfirmed.
+  0x5D49C/0x5DE40 link gap; zero-gap successor 0x80115CAC is recorded
+  separately in the selected-record handler/flag-helper run. Shared idiom +
+  struct layout; data TU ownership unconfirmed.
 - ovl_11 v0-channel/static-chain fossil run — 0x8011D400 / 0x8011D438 /
   0x8011D474, zero-gap link run (0x8011D400 0x38 → 0x8011D438 0x3C →
   0x8011D474 0x2C0, each ending exactly where the next starts; the caller
