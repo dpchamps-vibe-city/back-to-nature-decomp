@@ -7870,6 +7870,14 @@ Members:
   `D_800A00E8`/`D_800A00EC` (the latter doubled as the function's residual
   `$v0`), and copies +0x8/+0xA back into +0x4/+0x6.
 
+### Separate `ovl_11` scene-setup/render-context helper pair — 0x800DBFEC / 0x800DC114 (confidence: low)
+
+Candidate same-TU membership, separate from the D_8012D110 pair above
+([call/link-order evidence and limits](research/ovl_11_func_800DBFEC-grouping.md)).
+
+- ovl_11_func_800DBFEC (m, candidate same TU) — scene setup, render-context reset and header-selected initialization.
+- ovl_11_func_800DC114 (m, candidate same TU) — sets both render contexts' color bytes and update flags.
+
 ## `ovl_11` work-area +0x52C8/+0x52D0 producer/predicate family (confidence: low)
 
 A data-only relation, not original-TU evidence: both matched functions use

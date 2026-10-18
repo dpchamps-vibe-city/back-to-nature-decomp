@@ -5148,6 +5148,17 @@ struct Ovl11SpriteSelectors {
 extern s32 D_8012DB10;
 extern s32 D_8012DB14;
 
+/* 800DBFEC passes these halfword triplets to the matched 800DB00C. */
+extern struct Ovl11SceneCoordinates D_800A00C4;
+extern struct Ovl11SceneCoordinates D_800A00CC;
+
+/* 800DBFEC: the work pointer at +0x25388 has lh +2 and lw +4. */
+struct Ovl11SceneHeader {
+    s16 field_0;
+    s16 kind;
+    s32 id;
+};
+
 /* ovl_11_func_800C28CC: lw at D_8007AFF0+0x25388 points to a halfword header. */
 struct Ovl11SpriteWork {
     char pad0[0x25388];
