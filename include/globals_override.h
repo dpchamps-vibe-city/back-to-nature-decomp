@@ -49,6 +49,9 @@ extern u16 D_800A03B0;
 /* ovl_11 80118B84 loads this selection with lh and resets it with sh. */
 extern s16 D_80128294;
 
+/* ovl_11 800BF4B4/800CE034 read signed halfword pairs at four-byte strides. */
+extern u8 D_801281F0[];
+
 /* ovl_11 800F77F0 uses lh for this state threshold and sh for updates. */
 extern s16 D_80126E2C;
 

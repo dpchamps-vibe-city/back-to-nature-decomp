@@ -8388,13 +8388,11 @@ Fingerprints:
   component and cell[1] to the +0x108 component;
 - what the tie is not: the members are scattered over ~0x73E5C of text
   (0x800BF4B4 → 0x80113310) with no call edges among them, so per the ledger
-  convention this is a data-family tie, not proven TU membership (two of the
-  three members are still stubs).
+  convention this is a data-family tie, not proven TU membership
+  (`80113310` remains a stub).
 
 Members:
-- ovl_11_func_800BF4B4 (s) — collision-ish probe: reads a cell pair from
-  `D_801281F0[arg<<2]`, forms {x+dx, y, z+dz} records on the stack and calls
-  `ovl_11_func_8011E090` twice on them
+- ovl_11_func_800BF4B4 (m, candidate member of the local 800BF630–800BF844 TU run; [evidence](research/ovl_11_func_800BF4B4-grouping.md)) — directional near/far grid probe using the pair-table offsets.
 - ovl_11_func_800CE034 (m, matched this session, 0xBC, byte-exact) — cell
   applier: copies arg0's s32@0x100/0x104/0x108 into arg1, selects the table
   segment (+0x10 when arg2==2), then adds cell[0] to the first component and
@@ -12346,6 +12344,9 @@ A same-TU candidate run sits inside the cluster: `ovl_11_func_800BF630` /
 neighbours (`configs/splat/ovl_11.yaml`: 0x7810/0xF0 → 0x7900/0x124 →
 0x7A24/0x74) and index the same two tables by `(row, col)`, the first two
 with the same `arg != 0` 7x7-vs-25x45 selector.
+The local candidate run also includes its immediate predecessor `800BF4B4`
+([call/link-order evidence](research/ovl_11_func_800BF4B4-grouping.md)); this
+extension does not merge the distant D_801281F0 consumers into the TU.
 Members:
 - ovl_11_func_800D8FC8 (m, matched this session, byte-exact) — walks all 25x45
   `D_80071DFC` entries and calls `ovl_11_func_800DA454(entry, arg0 == 0 ?
@@ -12383,7 +12384,8 @@ Members:
   link-order predecessor of ovl_11_func_800D8320 (ends exactly at 0x800D8320)
   and its twin: same `ovl_11_func_800DAF60` entry view then `D_80123DFC[arg0]`
   dispatch.
-- ovl_11_func_800BF630 (s) — run head: `arg != 0` picks the 7x7 `D_80074124`
+- ovl_11_func_800BF4B4 (m, candidate same TU; [evidence](research/ovl_11_func_800BF4B4-grouping.md)) — directional near/far grid probe through the immediately following classifier.
+- ovl_11_func_800BF630 (s) — classifier: `arg != 0` picks the 7x7 `D_80074124`
   (else the 25x45 `D_80071DFC`), reads the entry word at `(arg0, arg1)`,
   rejects tag 0x167, then uses the `D_8006C838` +0x20/+0x28 pools.
 - ovl_11_func_800BF720 (m, matched this session, 0x124, byte-exact) — same
