@@ -3991,19 +3991,32 @@ extern void (*D_800BCBEC[3])(void);
 /* 800B813C reads the s16 selector@0; 800B8848 accesses s16@4CC; 800B97E4 reads s16@C,4D4,4DE..4E4. */
 typedef struct {
     s16 selector;
-    u8 pad_2[0xA];
+    u8 pad_2[6];
+    s32 unk8;
     s16 unkC;
-    u8 pad_E[0x4CC - 0xE];
+    s16 unkE;
+    u8 pad_10[0x10];
+    s16 unk20;
+    u8 pad_22[0x4CA - 0x22];
+    s16 unk4CA;
     s16 unk4CC;
-    u8 pad_4CE[6];
+    s16 unk4CE;
+    s16 unk4D0;
+    s16 unk4D2;
     s16 unk4D4;
-    u8 pad_4D6[8];
+    s16 unk4D6;
+    s16 unk4D8;
+    s16 unk4DA;
+    s16 unk4DC;
     s16 unk4DE;
     s16 unk4E0;
     s16 unk4E2;
     s16 unk4E4;
 } Ovl25StateView;
 extern Ovl25StateView D_800BFE44_view __asm__("D_800BFE44");
+/* 800B8DF4 reads signed halfwords at +E,+20,+4CA..4DC and a word at +8 in the view above. */
+/* 800B8DF4 compares this signed halfword with state +20. */
+extern s16 D_800BCC40;
 /* ovl_25_func_800B8848 passes these halfword text streams to func_8001AC10; original data terminates with 0xFFFF. */
 extern u16 D_800BCB34[];
 extern u16 D_800BCB8E[];

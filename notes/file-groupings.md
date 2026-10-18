@@ -9983,7 +9983,7 @@ Members (link order):
   path selects `D_800BFE46` = 4/0 by `func_800225B8() == 1`, otherwise clamps
   the halfword down by 0x21
 
-## `ovl_25` D_800BFE54/D_800C0124 record-array driver run — 0x800B9208–0x800B941C (confidence: medium)
+## `ovl_25` D_800BFE54/D_800C0124 record-array driver run — 0x800B8D70–0x800B941C (confidence: medium)
 
 Candidate same-TU run of `ovl_25` that drives the record-reset
 `D_800BFE54`/`D_800C0124` object-array block. Evidence is gapless link
@@ -9991,6 +9991,9 @@ adjacency plus a shared call graph onto all five members of the record-reset
 transform-caller run below and a shared object-record array cluster; the array
 bases are `extern`/absolute, so this ties the callers and the record block, not
 a TU-owned gp-rel symbol.
+
+Candidate backward extension through the adjacent record updater and its caller
+([evidence and limits](research/ovl_25_func_800B8DF4-grouping.md)).
 
 Fingerprints:
 - address adjacency: `ovl_25_func_800B93BC` (0x28, ends exactly 0x800B93E4),
@@ -10014,6 +10017,8 @@ Fingerprints:
   `D_800C024C` object-state base run, coupling this run to that one.
 
 Members (link order):
+- ovl_25_func_800B8D70 (s, candidate member) — decrements six record timers and dispatches each record to 800B8DF4.
+- ovl_25_func_800B8DF4 (m, byte-exact; candidate member) — per-record fixed-point/state updater with first-record sound and status handling.
 - ovl_25_func_800B9208 (m, byte-exact) — six-record scan; walks the six
   0x78-byte records, calls `ovl_25_func_800B9B00` on each `D_800BFE54` record,
   and increments the `D_8006C838`+0x448C dispatch counter after a clean scan

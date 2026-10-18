@@ -32,7 +32,8 @@ segments:
     subsegments:
       - [0x0, rodata]
       - [0x4, .rodata, ovl_25_func_800B7F3C]
-      - [0x1C, rodata]
+      - [0x1C, .rodata, ovl_25_func_800B8DF4]
+      - [0x50, rodata]
       - [0x54, .rodata, ovl_25_func_800B9B28]
       - [0x94, c, ovl_25_func_800B7EB4]
       - [0x11C, c, ovl_25_func_800B7F3C]
