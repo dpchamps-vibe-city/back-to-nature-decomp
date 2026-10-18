@@ -9003,6 +9003,7 @@ Members:
 - ovl_17_func_800B861C (m, byte-exact) — six-record display/completion callback; defers record 2 and selects state 5 on completion ([grouping evidence](research/ovl_17_func_800B861C-grouping.md)).
 - ovl_17_func_800B86C4 (m, byte-exact) — six-record display/transition callback; clears the transition counter and selects state 6 on completion ([grouping evidence](research/ovl_17_func_800B86C4-grouping.md)).
 - ovl_17_func_800B8790 (m, byte-exact) — six-record display/delay callback; seeds record values and selects state 7 after the transition delay ([grouping evidence](research/ovl_17_func_800B8790-grouping.md)).
+- ovl_17_func_800B8C38 (m, byte-exact) — six-row text callback; defers record 2 and selects state 9 on completion ([grouping evidence](research/ovl_17_func_800B8C38-grouping.md)).
 - ovl_17_func_800B90F8 (m, 0x60, byte-exact, finalized) — initializes the
   90 stride-8 entries at +0x2D8/+0x2DC and sets their +0x5A8 cursor to 6.
   Every word becomes -0x20000; the halfword is -1 except the first six,
