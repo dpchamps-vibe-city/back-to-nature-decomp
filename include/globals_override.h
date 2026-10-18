@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 800FB510 reads s16 coordinates at +0/+2 of 0x1C-byte table rows. */
+extern s16 D_80126FF0[][14];
+
 /* ovl_11 800C5048/800C5098 store/load the counter, limit and result as words. */
 extern s32 D_80128CB4;
 extern s32 D_80128CB8;

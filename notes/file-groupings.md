@@ -3545,6 +3545,7 @@ Members (address order):
   same local `SwapStruct_B45C` {s16; s16; s16} typedef as the 800FB218/290
   pair, so it call-graph- and idiom-links this state cluster to that pair
   (same-TU, address-apart so low)
+- ovl_11_func_800FB510 (m, candidate same TU, low confidence) — draws a menu entry at `D_80126FF0` coordinates ([grouping evidence](research/ovl_11_func_800FB510-grouping.md)).
 
 ---
 
