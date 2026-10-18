@@ -4078,6 +4078,8 @@ extern s8 D_80137588;
  * ovl_15_func_80136990. Absolute-addressed (lui + %lo) from -G0 overlay
  * code; only extern declarations belong here. */
 extern s8 D_80137584;
+/* 8012E520 compares this previous-state byte with lb and updates it with sb. */
+extern s8 D_80137585;
 
 /* D_8013758C - ovl_15 private state s16 in the overlay data segment; the
  * same cluster stores the ovl_15_func_80136990 result to it (sh $v0, %lo).

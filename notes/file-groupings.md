@@ -12633,6 +12633,7 @@ Members (address order):
   `D_80137828 = (u8 *)D_8007BFF8`, clears adjacent `D_80137820` and the
   `D_80137584`–`D_8013759A` state words, memsets several buffers, then calls
   `ovl_15_func_8013468C`.
+- ovl_15_func_8012E520 (m, byte-exact) — memory-card menu lifecycle, state timing and exit fades ([shared-state evidence](research/ovl_15_func_8012E520-grouping.md)).
 - ovl_15_func_801300E4 (m, verified byte-exact this session) — one of three
   duplicate reset wrappers tied to the initialiser through `D_80137586`: calls
   `ovl_15_func_8012E15C` and stores `-1` to that private state byte.

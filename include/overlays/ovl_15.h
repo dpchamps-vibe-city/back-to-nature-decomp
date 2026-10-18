@@ -3,6 +3,7 @@
  * passed to m2c before this file. */
 
 void ovl_15_func_8012E15C(void);
+void ovl_15_func_8012E520(void);
 void ovl_15_func_8012ED18(void);
 void ovl_15_func_8012ED6C(void);
 void ovl_15_func_8012EE84(void);
