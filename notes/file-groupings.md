@@ -653,7 +653,7 @@ Members:
 
 ---
 
-## `ovl_11` D_800A0494 9-`s16`-row table cluster — 0x800D6628 / 0x800D666C / 0x800D6730 / 0x800D6F78 / 0x800F0A58 / 0x800F9BE4 (confidence: medium)
+## `ovl_11` D_800A0494 9-`s16`-row table cluster — 0x800D6628 / 0x800D666C / 0x800D6730 / 0x800D6F78 / 0x800D7144 / 0x800F0A58 / 0x800F9BE4 (confidence: medium)
 
 Evidence: one shared data object, D_800A0494, addressed by five functions in
 this container and by no others in any extracted bytes, with a consistent
@@ -682,8 +682,8 @@ Members:
   (far-buffer view of the row) scans the same 9 `s16`, and on a match zeroes
   the slot and `memset`s the paired 0x1E-byte record in the D_800A04B8 view
   0x24 above the row base; row index comes from ovl_11_func_800D5750
-- ovl_11_func_800D6F78 (s) — dual-row scan: walks `i < 9` comparing
-  `base + 2i` against `base + 0x12 + 2i` (adjacent rows), returns 0/1/-1
+- ovl_11_func_800D6F78 (m, byte-exact) — looks up an identifier in rows 0–1 and draws its paired sprite record.
+- ovl_11_func_800D7144 (s, candidate via caller/link adjacency) — emits a paired-record sprite and texture-page primitive ([membership evidence](research/ovl_11_func_800D6F78-grouping.md)).
 - ovl_11_func_800F0A58 (m, byte-exact) — activates a paired record from rows 0–1 and relocates its texture and CLUT.
 - ovl_11_func_800F9BE4 (m, matched 2026-10-09, byte-exact) — slot
   reconciler: mirrors the 18 six-byte slot records at D_8006C838+0x524C as
