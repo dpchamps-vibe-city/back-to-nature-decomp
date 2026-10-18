@@ -8289,7 +8289,7 @@ Members (address order):
 - ovl_11_func_80102A64 (m, matched this session, byte-exact) — counter-decrement
   consumer of the D_80071AC0 and D_8006C838+0x450A 6-byte record tables.
 
-## `ovl_11` D_8012CF00 8-entry table id-map run — 0x80102E1C–0x801033D4 (confidence: medium)
+## `ovl_11` D_8012CF00 8-entry table id-map run — 0x80102BCC–0x801033D4 (confidence: medium)
 
 Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`) built around the
 8-entry `D_8012CF00` u16 table and the raw id set 0x181–0x184. Evidence
@@ -8299,7 +8299,7 @@ produced by matching `ovl_11_func_801032BC` this session:
   0x80102F14) → `ovl_11_func_80102F14` (0x2D0, ends 0x801031E4) →
   `ovl_11_func_801031E4` (0xD8, ends 0x801032BC) → `ovl_11_func_801032BC`
   (0x118, ends 0x801033D4); each starts exactly where the previous ends;
-- **call graph agrees with link order:** run head `80102E1C` has a single
+- **call graph agrees with link order:** `80102E1C` has a single
   `jal`, to its link successor's successor `801031E4`; `80102F14` has a
   single `jal`, to its link successor `801032BC`. Both call sites read
   `D_8012CF00` and pass a table entry as the id;
@@ -8316,8 +8316,9 @@ produced by matching `ovl_11_func_801032BC` this session:
   not claimed as membership here.
 
 Members (address order):
-- ovl_11_func_80102E1C (s) — run head; reads the 8-entry `D_8012CF00` table;
-  its only call is its link successor's successor `801031E4`.
+- ovl_11_func_80102BCC (m, candidate same TU; [evidence](research/ovl_11_func_80102BCC-grouping.md)) — selects an eligible object through the run's validators while preserving shared selection state.
+- ovl_11_func_80102DC4 (candidate same TU; [evidence](research/ovl_11_func_80102BCC-grouping.md)) — validates and consumes the candidate object's required `D_801273EE` flag bits.
+- ovl_11_func_80102E1C (s) — validates and consumes the candidate object's IDs from the eight-entry `D_8012CF00` table.
 - ovl_11_func_80102F14 (s) — reads `D_8012CF00`; walks the table and calls its
   link successor `801032BC` with the shared object and a stack u16, testing
   the 1/2 result codes.

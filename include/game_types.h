@@ -83,9 +83,13 @@ typedef struct {
     u8 pad3;
 } Ovl11IdAdjustment;
 
-/* 80102E1C scans eight u16 IDs at +0xA; 80102F14 uses +0x1C. */
-typedef struct {
-    u8 pad0[0xA];
+/* 80102BCC scans 0x20-byte objects: u16 ID at +4, u8 value at +6.
+ * 80102E1C scans eight u16 IDs at +0xA; 80102F14 uses +0x1C. */
+typedef struct Ovl11IdAdjustmentObject {
+    u8 pad0[4];
+    u16 id;
+    u8 value;
+    u8 pad7[3];
     u16 ids[8];
     u8 pad1A[2];
     Ovl11IdAdjustment *adjustments;

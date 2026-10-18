@@ -5000,6 +5000,9 @@ extern u8 D_801273E4_state __asm__("D_801273E4");
 /* 801014F8 adds the text-bank byte offset to this base and +0xC/0x16/0x26/0x38. */
 extern u8 D_8005399A[];
 
+/* 80102BCC walks 0x20-byte objects, reading the ID at +4 and value at +6. */
+extern u8 D_80050B5C_objects[] __asm__("D_80050B5C");
+
 /* 80101814 tests lhu flag bits; the unsigned view preserves legacy signed declarations. */
 extern u16 D_801273EE_flags __asm__("D_801273EE");
 /* 80102F14 walks eight lhu IDs; unsigned view preserves legacy signed declarations. */

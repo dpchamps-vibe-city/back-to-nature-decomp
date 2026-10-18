@@ -18,6 +18,10 @@ struct M2C_6fc629d778b7_Unk800D3D2C;
 
 typedef struct M2C_6fc629d778b7_Unk800D3D2C M2C_6fc629d778b7_Unk800D3D2C;
 
+struct Ovl11IdAdjustmentObject;
+
+typedef struct Ovl11IdAdjustmentObject Ovl11IdAdjustmentObject;
+
 struct Ovl11RotationState;
 
 typedef struct Ovl11RotationState Ovl11RotationState;
@@ -2671,12 +2675,15 @@ typedef struct {
     u8 pad3;
 } Ovl11IdAdjustment;
 
-typedef struct {
-    u8 pad0[0xA];
+struct Ovl11IdAdjustmentObject {
+    u8 pad0[4];
+    u16 id;
+    u8 value;
+    u8 pad7[3];
     u16 ids[8];
     u8 pad1A[2];
     Ovl11IdAdjustment *adjustments;
-} Ovl11IdAdjustmentObject;
+};
 
 typedef struct {
     u8 pad_0[2];

@@ -906,6 +906,7 @@ void *ovl_11_func_80102844(s8 arg0, s8 arg1);
 void ovl_11_func_80102A10(void);
 void ovl_11_func_80102A64(s32 arg0);
 void ovl_11_func_80102B6C(u16 arg0, s16 arg1);
+s16 ovl_11_func_80102BCC(u16 *outId, u16 *outValue);
 s32 ovl_11_func_80102DC4(void *arg0);
 s32 ovl_11_func_80102E1C(Ovl11IdAdjustmentObject *arg0);
 s32 ovl_11_func_80102F14(Ovl11IdAdjustmentObject *arg0, u16 *arg1);
