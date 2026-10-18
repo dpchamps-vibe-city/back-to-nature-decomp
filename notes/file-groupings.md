@@ -14346,3 +14346,11 @@ Candidate same-TU membership; original boundaries remain unproven
 
 - ovl_11_func_800D062C (s) — classifies two record-field pairs through rank comparisons and a table lookup.
 - ovl_11_func_800D0698 (m) — selects the record's +0x22 code using its predecessor's classification and an absolute-delta comparison.
+
+## `ovl_11` record-selector caller pair — 0x800D3230 / 0x800D3250 (confidence: low)
+
+Candidate same-TU membership; original boundaries remain unproven
+([evidence and limits](research/ovl_11_func_800D3250-grouping.md)).
+
+- ovl_11_func_800D3230 (m, candidate same TU) — mode-selected record-index wrapper around `ovl_11_func_800D3D60`.
+- ovl_11_func_800D3250 (m, candidate same TU) — code-0x15B gated update of a selected record's +0x16 halfword, falling back to the second record family.

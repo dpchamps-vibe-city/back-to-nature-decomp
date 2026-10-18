@@ -4395,6 +4395,21 @@ extern void (*D_800BD07C)(u16 *arg0, s32 arg1);
 extern void D_80015814(u16 *arg0, s32 arg1);
 extern void D_80015828(u16 *arg0, s32 arg1);
 
+/* 800D3250 reads u16 at +0x1086 and updates +index*0xB8 through this base. */
+struct Ovl11D3250FirstView {
+    u16 value;
+    u8 pad_2[0x1086 - 2];
+    u16 scale;
+};
+extern struct Ovl11D3250FirstView D_80074A0A;
+
+/* 800D3250 reads u16 at +0x178E from D_8006C838+0x7ACA. */
+struct Ovl11D3250SecondView {
+    u16 value;
+    u8 pad_2[0x178E - 2];
+    u16 scale;
+};
+
 /* D_80075AEA - ovl_11 signed halfword state, loaded with lh by
  * ovl_11_func_8010BBA8 (range-tested against 9 and 0xC9). */
 extern s16 D_80075AEA;
