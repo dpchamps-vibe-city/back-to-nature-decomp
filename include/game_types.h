@@ -657,6 +657,32 @@ typedef struct {
     u16 unk3C;
 } Recon_ovl_11_func_800C6F0C_A0View;
 
+/* 800CBF70's matched definition copies this three-word position into an effect. */
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Ovl11CBF70Position;
+
+/* Fields returned by 800CBF70, as witnessed by its matched definition. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    char pad0A[2];
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    char pad20[4];
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+} Ovl11CBF70Effect;
+
 /* 800C7010: halfwords at 38/3C, flags at 6C, animation data at 260.
  * 800C69B8 reads the signed item-table index at 8A. */
 typedef struct {
@@ -666,7 +692,9 @@ typedef struct {
     u16 unk3C;
     char pad_3E[0x2E];
     s32 unk6C;
-    char pad_70[0x1A];
+    char pad_70[0x14];
+    s16 unk84; /* 800CDD7C tests this element against 0x39. */
+    char pad_86[4];
     s16 itemIndex;
     char pad_8C[0x1D4];
     SpriteSourceData sprite;

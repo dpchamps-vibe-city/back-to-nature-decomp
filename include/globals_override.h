@@ -441,6 +441,18 @@ extern s16 D_80128D68;
 extern struct SpriteSourceData D_80128C80;
 /* ovl_11_func_800CC4E0 stores a word flag when object id is 0x186. */
 extern s32 D_8012DB80;
+/* 800CDD7C clears three halfwords; 80120850 reads these coordinates. */
+typedef struct {
+    u16 x;
+    u16 y;
+    u16 z;
+    u16 w;
+} Ovl11EffectCoordinates;
+extern Ovl11EffectCoordinates D_8012DB78;
+/* 800CDD7C writes this mode word; 80120850 reads its low byte. */
+extern s32 D_8012DB84;
+/* 800CDD7C resets this word; 80120850 increments it. */
+extern s32 D_8012DB88;
 
 /* Per-entry 8-byte table stored at offset 0xE4 of each D_80076220 record.
  * ovl_11_func_800F227C scans .unk0 (s16 threshold) and reads .unk2/.unk4/.unk6
