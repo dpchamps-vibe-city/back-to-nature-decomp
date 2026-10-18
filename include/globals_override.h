@@ -1250,6 +1250,18 @@ struct Ovl11MessageState {
     u16 variant70;
 };
 
+/* 800E5E98: lw/sw +4450, lh +44BA, lhu +44CE, and lw +44F8. */
+struct Ovl11MessageSelectState {
+    char pad0[0x4450];
+    s32 flags;
+    char pad4454[0x44BA - 0x4454];
+    s16 base;
+    char pad44BC[0x44CE - 0x44BC];
+    u16 variant;
+    char pad44D0[0x44F8 - 0x44D0];
+    s32 status;
+};
+
 /* 800E537C: state reset fields witnessed by sh/lhu/lw and a pointer load. */
 struct Ovl11ResetState {
     char pad_0[0x4450];
