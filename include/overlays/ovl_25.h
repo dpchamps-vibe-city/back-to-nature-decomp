@@ -20,6 +20,7 @@ void ovl_25_func_800B9208(void);
 void ovl_25_func_800B93BC(void);
 void ovl_25_func_800B93E4(void);
 void ovl_25_func_800B941C(void);
+s32 ovl_25_func_800B9480(s16 *arg0);
 s32 ovl_25_func_800B9758(M2C_32ba532776b0_ReconA0View *arg0);
 s32 ovl_25_func_800B977C(M2C_a070b354da22_Recon800B977CA0View *arg0, s16 arg1);
 void ovl_25_func_800B97E4(s16 *arg0);

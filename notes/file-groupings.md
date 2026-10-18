@@ -10307,31 +10307,15 @@ Members (link order):
   and drives the shared `D_800C0454` object through `func_8001BFA8`/
   `func_8001E340`/`func_8001E334`
 
-## `ovl_25` s16-struct predicate run — 0x800B9758–0x800B97E4 (confidence: low)
+## `ovl_25` s16-record decision/predicate run — 0x800B9480–0x800B97E4 (confidence: low)
 
-Evidence is gapless link adjacency plus a shared overlay-local data-table
-region; no symbol is shared between the members, so this is the weakest kind of
-tie and is recorded only as a candidate same-TU run.
-
-Fingerprints:
-- address adjacency: `ovl_25_func_800B9758` (0x24, ends 0x800B977C) sits
-  immediately before `ovl_25_func_800B977C` (0x68, ends 0x800B97E4), which is
-  followed directly by `ovl_25_func_800B97E4` — contiguous, no unrelated code
-  between;
-- shared overlay-local table region: `ovl_25_func_800B977C` reads the s16 table
-  `D_800BCCA0` (= 0x800BCCA0, stride-5 halfwords indexed by a struct field),
-  which lies in the same gapless overlay-local data run as the `D_800BCC10` /
-  `D_800BCC70` tables above (`D_800BCC10` + 0x90 = `D_800BCCA0`); the two
-  functions reference different symbols, so this ties the data region, not the
-  symbol;
-- shared a0-struct idiom: both matched members take a pointer to an
-  overlay-local struct whose field is an s16 (`+0x2` for `ovl_25_func_800B9758`,
-  `+0x0` for `ovl_25_func_800B977C`) and return an s32 boolean.
+Candidate same-TU membership ([evidence and limits](research/ovl_25_func_800B9480-grouping.md)).
 
 Members (link order):
-- ovl_25_func_800B9758 (m) — returns 0 when the `+0x2` field is 7 or 4, else 1
-- ovl_25_func_800B977C (m, matched this session, byte-exact) — `func_80012A34(0x80)`
-  then returns `result < D_800BCCA0[5*(field-1) + arg1] ^ 1`
+- ovl_25_func_800B9480 (m, byte-exact) — randomized record-state/timer selector; delegates to 800B95B0 when the predicate fails.
+- ovl_25_func_800B95B0 (s) — table-weighted fallback selecting state 5 and its timer.
+- ovl_25_func_800B9758 (m) — record-state eligibility predicate; rejects states 7 and 4.
+- ovl_25_func_800B977C (m, byte-exact) — randomized per-record threshold predicate.
 - ovl_25_func_800B97E4 (s) — unclassified
 
 ## `ovl_25` fixed-point threshold-lookup run — 0x800B9A10–0x800B9A84 (confidence: low)
