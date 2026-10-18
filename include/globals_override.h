@@ -2636,6 +2636,8 @@ extern u16 D_80128DAE;
 /* 800DA638 stores the signed variant selector after the coordinate pair. */
 extern s16 D_80128DB0;
 
+/* 800C4B6C indexes signed halfwords; original data spans six entries. */
+extern s16 D_8012319C[6];
 /* 800C55FC dispatches three pointers through the D7EF8/E090 callback pair. */
 extern s32 (*D_80123234[])();
 

@@ -1937,11 +1937,16 @@ Members:
   sub-base idiom
 
 Related local dispatch-caller TU candidate (confidence: medium; distinct
-from the tier/clamp run; [evidence](research/ovl_11_func_800C55FC-grouping.md)):
+from the tier/clamp run; [initial evidence](research/ovl_11_func_800C55FC-grouping.md),
+[tier-table sibling extension](research/ovl_11_func_800C4B6C-grouping.md)):
+- ovl_11_func_800C4B6C (m) — kind-0 tier-scaled grid-action handler selecting object state 0x68.
+- ovl_11_func_800C4C94 (s) — kind-1 grid-action handler with clamped object-resource consumption.
+- ovl_11_func_800C4DE0 (s) — kind-2 grid-action handler with state-dependent mode-2 handling.
+- ovl_11_func_800C5048 (m) — initializes the shared grid-action request state.
 - ovl_11_func_800C541C (s) — mode-selected grid-action handler with a clamped object-counter update.
 - ovl_11_func_800C55FC (m) — mode-selected grid-cell resetter with object-tag remapping.
 - ovl_11_func_800C5738 (s) — four-direction position probe/update helper.
-- ovl_11_func_800C580C (s) — object-action dispatcher calling the three local helpers.
+- ovl_11_func_800C580C (s) — object-action dispatcher calling the local grid-action handlers.
 
 ---
 
