@@ -13000,6 +13000,11 @@ two independently matched readers use the same absolute state buffer.
 The first-halfword initializer/guard tie and common coordinate consumers
 support one state family; they do not prove shared translation-unit ownership.
 
+Local grid-trigger candidate TU pair (confidence: medium;
+[call/link-order evidence](research/ovl_11_func_80112EC4-grouping.md)):
+- ovl_11_func_80112DA8 (s) — gates pending state flags, resolves cell coordinates and tries previous/current planes through 80112EC4.
+- ovl_11_func_80112EC4 (m, byte-exact) — tests a grid cell for value 2 and latches mode-dependent trigger flags/events.
+
 
 ## ovl_11 D_80127328 six-entry masked helper-dispatch family (confidence: low)
 

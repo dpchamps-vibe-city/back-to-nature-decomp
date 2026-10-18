@@ -4597,6 +4597,14 @@ extern s16 D_8012855A;
  * 10x10x10 byte grid, initial halfword and word at +400. */
 extern u8 D_8012D110[];
 
+/* 80112EC4 indexes the +0x16 byte grid with strides 100/10/1 and updates the +0x400 word. */
+typedef struct {
+    u8 pad0[0x16];
+    u8 grid[10][10][10];
+    u8 pad3FE[2];
+    s32 flags;
+} Ovl11GridState;
+
 /* ovl_11 24-byte scratch span (six words) at 0x80129FF0: func_8001A970
  * fills a halfword through a returned pointer into it and ovl_11
  * functions pass its address as an argument buffer. Absolute-addressed
