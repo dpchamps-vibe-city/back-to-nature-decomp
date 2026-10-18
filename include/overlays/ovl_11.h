@@ -903,6 +903,7 @@ void ovl_11_func_80102268(s8 arg0, s8 arg1);
 void ovl_11_func_801022E8(void);
 s32 ovl_11_func_801027D4(s8 arg0, s8 arg1);
 void *ovl_11_func_80102844(s8 arg0, s8 arg1);
+void ovl_11_func_8010289C(void);
 void ovl_11_func_80102A10(void);
 void ovl_11_func_80102A64(s32 arg0);
 void ovl_11_func_80102B6C(u16 arg0, s16 arg1);
