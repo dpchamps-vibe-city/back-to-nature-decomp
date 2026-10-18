@@ -2092,7 +2092,7 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_80123754 setter/getter run — 0x800D12A0–0x800D2160 (confidence: medium)
+## `ovl_11` D_80123754 setter/getter run + updater siblings — 0x800D12A0–0x800D2240 (confidence: medium)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) in the middle of the
 overlay, sharing a single file-scope s16 global. Evidence is a shared global
@@ -2109,8 +2109,9 @@ Fingerprints:
 - zero-gap link-order contiguity (map): 0x800D12A0 (0x18) → 0x800D12B8
   (0x6A8) → 0x800D1960 (0xC) → 0x800D196C (0x2AC) → 0x800D1C18 (0xB8) →
   0x800D1CD0 (0x2C) → 0x800D1CFC (0x120) → 0x800D1E1C (0x9C) → 0x800D1EB8
-  (0x2A8) — each starts exactly where the previous ends, the whole span
-  0x800D12A0–0x800D2160 contiguous with no unrelated code between;
+  (0x2A8) → 0x800D2160 (0xE0) — each starts exactly where the previous
+  ends, the whole span 0x800D12A0–0x800D2240 contiguous with no unrelated
+  code between;
 - the two `D_80123754` writers and the reader sit at the run's nodes
   (12B8 / 1960 at the front, 1CFC later), with the untouched members
   sandwiched between them — a single global threading one contiguous file.
@@ -2129,6 +2130,12 @@ Fingerprints:
   `sw $v0, 0($sp)` as GCC's static-chain spill without any capture construct.
   The same holds for 800D0600 inside 800D062C (scratch match, not integrated).
   See notes/research/ovl_11_func_800D1CFC-nested-function-cse-not-expected.md.
+- updater sibling extension from verified `800D1EB8`: its gapless successor
+  `800D2160` shares the 0xB4-record update/reset/timer callee cluster, and
+  `800CE834` calls them consecutively at 0x800CE868 / 0x800CE870 (original
+  assembly in `build/ovl_11/asm/nonmatchings/ovl_11_func_800CE834/`).
+  Shared callees plus link adjacency support a candidate same-TU pair, not
+  proof of the run's outer boundaries or ownership of the engine globals.
 
 Members (address order):
 - ovl_11_func_800D12A0 (m, matched this session) — run head; s16 setter into
@@ -2153,7 +2160,8 @@ Members (address order):
   run's getter; parent of nested 800D1CD0, seeds $v0 with $sp+0x10 before
   each call
 - ovl_11_func_800D1E1C (s) — does not touch the global
-- ovl_11_func_800D1EB8 (s) — run tail, does not touch the global
+- ovl_11_func_800D1EB8 (m) — updates D_800749F4's 20 records and D_800742EC's 10 records; updater sibling of 800D2160.
+- ovl_11_func_800D2160 (m) — updates D_80075FE4's three 0xB4 records using the shared update/reset/timer helpers.
 
 ---
 
