@@ -12416,6 +12416,7 @@ Members:
   0x20 : 0x10)` on each.
 - ovl_11_func_800D9064 (m, byte-exact) — walks all 25x45 `D_80071DFC` entries
   and applies the `800DA49C`/`800DA518`/`800DA454` tag-update trio to each.
+- ovl_11_func_800D9108 (m, candidate same TU; [evidence](research/ovl_11_func_800D9108-grouping.md)) — searches nearby then all main-grid cells for a threshold-ready tag-0x36 entry and dispatches its update.
 - ovl_11_func_800DADB0 (m, matched this session, byte-exact) — search entry
   in the same gapless link-order run as 800DACD4/800DAF60 (800DACD4 ends
   0x800DADB0; 800DADB0 ends 0x800DAF24; 800DAF60 follows 800DAF24): scans the
