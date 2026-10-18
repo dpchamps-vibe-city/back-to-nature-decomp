@@ -6079,6 +6079,15 @@ Local placement of 800BE2C4 (confidence: low; distinct from membership in
 this accessor TU; [evidence](research/ovl_11-item-collision-family.md)):
 - ovl_11_func_800BE2C4 (m) — item X/Z bounds probe and hit recorder; candidate same-TU sibling of the ovl_11_func_800BE94C / ovl_11_func_800BEB28 collision pair.
 
+Local placement of 800C74AC and its candidate same-TU family (confidence:
+medium; distinct from membership in this accessor TU;
+[evidence and limits](research/ovl_11_func_800C74AC-grouping.md)):
+- ovl_11_func_800C72F8 (s) — handles item codes 1–0x19 through mapped state/animation selection.
+- ovl_11_func_800C73FC (s) — handles item codes 0x1A–0x1D through state selection and sound dispatch.
+- ovl_11_func_800C74AC (m, byte-exact) — handles item codes 0x22–0x36 by selecting state 0x53 with an item-table animation value.
+- ovl_11_func_800C7524 (s) — handles additional item codes through state changes or special actions.
+- ovl_11_func_800C76EC (s) — input-gated dispatcher trying the four item-code helpers in order.
+
 ---
 ## `ovl_11` D_8006C838 +0x8000 split-base gapless run — 0x800CF748 / 0x800CF848 / 0x800CF95C / 0x800CFA48 (confidence: medium)
 
