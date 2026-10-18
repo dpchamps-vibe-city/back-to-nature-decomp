@@ -914,6 +914,7 @@ s32 ovl_11_func_801032BC(M2C_a3c645de7bec_M2C_Arg801032BC *arg0, s32 arg1, u16 *
 void ovl_11_func_801033D4(void);
 void ovl_11_func_80103424(void);
 void ovl_11_func_80103480(void);
+void ovl_11_func_801034D0(void);
 void ovl_11_func_801035C0(void);
 void ovl_11_func_80103714(void);
 s32 ovl_11_func_80103770(void);
