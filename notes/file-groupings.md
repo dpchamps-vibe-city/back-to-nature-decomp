@@ -14108,6 +14108,11 @@ Members (address order):
     `notes/retros/2026-10-09-ovl_11_func_8011E090-retro.md`.
   - Corrected 2026-10-09: there is no `+0x45476` read.
 
+Local 10×10 texture-update candidate TU pair (confidence: medium;
+[call/link-order evidence](research/ovl_11_func_80113124-grouping.md)):
+- ovl_11_func_80113124 (m, byte-exact) — scans the selected D_8012D110 byte plane and applies cell selectors 1/2 through 80113208.
+- ovl_11_func_80113208 (s, parked) — updates a grid cell's UVs/CLUT from the selected D_801281D0 record.
+
 Local mode-6 texture-update candidate TU pair (confidence: medium;
 [call/link-order evidence](research/ovl_11_func_8011E1E8-grouping.md)):
 - ovl_11_func_8011E1E8 (m, byte-exact) — updates a mode-6 grid cell's UVs/tpage/CLUT from a texture-index table.
