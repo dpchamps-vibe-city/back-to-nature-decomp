@@ -10620,7 +10620,7 @@ Members (link order):
 - ovl_15_func_801349C8 (m, matched earlier) — appends `D_8013765C[clamp(arg0,0,3)]`
   to `arg1`
 
-## `ovl_15` D_80053350/func_8001AC10 shared-prologue cluster — 0x8012ED18–0x80132934 (confidence: medium)
+## `ovl_15` D_80053350/func_8001AC10 shared-prologue cluster — 0x8012EA18–0x80132934 (confidence: medium)
 
 Evidence: a link-order run of ten functions that all open with the same
 text-draw call idiom: `func_8001AC10(D_8005E3C0->field_D8 + 0x18,
@@ -10647,7 +10647,7 @@ seven members use `D_80053350`, `ovl_15_func_8012EE84` uses `D_80052FFA`,
 `ovl_15_func_80132520` uses `D_80052280`, `ovl_15_func_801325AC` uses
 `D_8005230A`, and
 `ovl_15_func_80130EBC` also uses `D_80052F4E` (shared with `ovl_15_func_8012FFD8`);
-`ovl_15_func_8012ED18` (the earliest address in the run) uses `D_80052FC4`,
+`ovl_15_func_8012ED18` (the earliest text-draw handler in the run) uses `D_80052FC4`,
 a second multi-member updater array also used by the immediate link successor
 `ovl_15_func_8012ED6C` and by later members `ovl_15_func_8012EF84`,
 `ovl_15_func_8012F158`, `ovl_15_func_8012F4F4`, `ovl_15_func_80130468`,
@@ -10660,7 +10660,8 @@ between cluster members in link order; `ovl_15_func_80131BCC`, `ovl_15_func_8013
 and `func_80131ED8` are members with variant bodies that sit among the gaps).
 
 Members (link order):
-- ovl_15_func_8012ED18 (m, matched this session, byte-exact) — earliest member:
+- ovl_15_func_8012EA18 (m, byte-exact) — memory-card menu dispatcher and shared card-status cache updater ([grouping evidence](research/ovl_15_func_8012EA18-grouping.md)).
+- ovl_15_func_8012ED18 (m, matched this session, byte-exact) — earliest text-draw handler:
   shared `D_80052FC4` text-draw prologue, then calls `ovl_15_func_8012E15C`
   and sets `D_80137584 = 1` (void)
 - ovl_15_func_8012ED6C (m, byte-exact) — polls both cached card statuses and selects the next menu state ([shared-state evidence](research/ovl_15_func_8012ED6C-grouping.md)).
