@@ -2515,7 +2515,11 @@ typedef struct {
 typedef struct {
     char pad0[0x22];
     u16 unk22;
-    char pad24[0x3C - 0x24];
+    char pad24[0x34 - 0x24];
+    s16 unk34;
+    char pad36[2];
+    u16 unk38;
+    char pad3A[2];
     u16 unk3C;
     char pad3E[0x6C - 0x3E];
     s32 unk6C;

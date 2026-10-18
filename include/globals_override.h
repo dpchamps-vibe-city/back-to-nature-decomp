@@ -5037,6 +5037,13 @@ extern char Ovl15CardFilename[0x20] __asm__("D_80140EC0");
 /* ovl_15_func_80135FF0 passes this original .asciz "*" to MemCardGetDirentry. */
 extern char Ovl15CardWildcard[] __asm__("D_8012E0A0");
 
+/* 800C907C reads lhu +0x92BE and updates lw/sw flags at +0x92D0. */
+struct Ovl11C907CStateView {
+    char pad0[0x92BE];
+    u16 field_92BE;
+    char pad92C0[0x10];
+    s32 field_92D0;
+};
 /* ovl_11_func_800D2764: lh compares these far fields using each global base. */
 struct Ovl11D2764StateView {
     char pad_0[0x25476];
@@ -5275,6 +5282,8 @@ extern s16 D_80123292;
 /* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
 extern void *D_80128C4C_dispatch __asm__("D_80128C4C");
 extern s32 D_80128C54;
+/* 800C907C saves the dispatched object pointer here and reads its u16 +0x22. */
+extern void *Ovl11SavedInteractionObject __asm__("D_80128CF4");
 /* 800C72F8 reads this absolute-addressed word and tests its low two bits. */
 extern s32 D_80128C50;
 /* 800C9C60 clears these three absolute-addressed words with sw. */
