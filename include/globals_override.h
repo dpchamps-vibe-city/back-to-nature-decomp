@@ -4535,6 +4535,11 @@ extern s32 D_80126F88;
  * overlay data segment, so only an extern declaration belongs here. */
 extern u16 *D_801287F8;
 
+/* ovl_11_func_800DCC5C writes three halfwords before projecting this vector. */
+extern s16 D_80128DF8[4];
+/* ovl_11_func_800DCC5C reads the two signed screen-coordinate words. */
+extern s32 D_80128E00[2];
+
 /* D_80128E08 - fifteen 0x30-byte entries. Byte storage keeps the existing
  * partial views compatible; each client casts to its witnessed layout. */
 extern u8 D_80128E08[15 * 0x30];
