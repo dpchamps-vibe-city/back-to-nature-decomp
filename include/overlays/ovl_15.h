@@ -27,6 +27,7 @@ void ovl_15_func_80130048(void);
 void ovl_15_func_801300E4(void);
 void ovl_15_func_8013010C(void);
 void ovl_15_func_80130468(void);
+void ovl_15_func_801304BC(void);
 void ovl_15_func_801305D4(void);
 void ovl_15_func_8013063C(void);
 void ovl_15_func_801306D4(void);
