@@ -396,6 +396,13 @@ typedef struct {
     s16 mode;
 } Ovl11TextureStateView;
 
+/* 80112DA8 tests signed halfwords at work-area +0x25474/+0x25476. */
+typedef struct {
+    u8 pad_0[0x25474];
+    s16 field_25474;
+    s16 field_25476;
+} Ovl11TriggerWorkView;
+
 /* 800B7F3C copies four bytes from D_8007AFF0+0x2479C to +0x25474;
  * 801048A0 and 800BB628 witness the leading and trailing halfwords. */
 typedef struct {
