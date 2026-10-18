@@ -2513,6 +2513,15 @@ typedef struct {
 } Ovl11C7010Object;
 
 typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    char pad24[0x3C - 0x24];
+    u16 unk3C;
+    char pad3E[0x6C - 0x3E];
+    s32 unk6C;
+} Ovl11C8FA8Object;
+
+typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;

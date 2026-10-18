@@ -700,6 +700,16 @@ typedef struct {
     SpriteSourceData sprite;
 } Ovl11C7010Object;
 
+/* 800C8FA8: sh at 0x22, lhu at 0x3C and lw/sw flags at 0x6C. */
+typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    char pad24[0x3C - 0x24];
+    u16 unk3C;
+    char pad3E[0x6C - 0x3E];
+    s32 unk6C;
+} Ovl11C8FA8Object;
+
 typedef struct {
     union {
         u8 unk0_b;
