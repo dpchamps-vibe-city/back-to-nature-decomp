@@ -15,6 +15,11 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 800FFA64 reads its state with lh and advances it with sh. */
+extern s16 D_801273DA;
+/* ovl_11 800FFA64 stores the menu return and compares it with signed -1 using lw. */
+extern s32 D_8012CEF8;
+
 /* 800C6A9C stores the sound helper's return value with sh. */
 extern s16 D_80128C70;
 
