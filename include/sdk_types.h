@@ -2534,6 +2534,14 @@ typedef struct {
 } Ovl11CC4E0Object;
 
 typedef struct {
+    char pad0[0x36];
+    u16 flags;
+    char pad38[0x40 - 0x38];
+    u16 vals[(0x84 - 0x40) / 2];
+    s16 value;
+} Ovl11CD5BCObject;
+
+typedef struct {
     char pad0[0x38];
     u16 unk38;
     char pad3A[0x100 - 0x3A];

@@ -15,6 +15,17 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* ovl_11 800C5048/800C5098 store/load the counter, limit and result as words. */
+extern s32 D_80128CB4;
+extern s32 D_80128CB8;
+extern s32 D_80128CBC;
+/* ovl_11 800C5048 writes these halfwords; 800C5098 reads coordinates and modes. */
+extern s16 D_80128CC0;
+extern s16 D_80128CC2;
+extern s16 D_80128CC4;
+extern s16 D_80128CC6;
+extern s16 D_80128CC8;
+
 /* ovl_11 800FFA64 reads its state with lh and advances it with sh. */
 extern s16 D_801273DA;
 /* ovl_11 800FFA64 stores the menu return and compares it with signed -1 using lw. */
