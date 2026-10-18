@@ -807,6 +807,21 @@ typedef struct {
     /* 0x06 */ u16 unk6;
 } Recon_ovl_11_func_800D85F8_A0View;
 
+/* 800C7878 stores the selected item pointer at +0x50 and flags at +0x54;
+ * 800C8CC8 passes this same object to it. */
+typedef struct {
+    char pad0[0x50];
+    Recon_ovl_11_func_800D85F8_A0View *unk50;
+    s32 unk54;
+} M2C_15512f31231d_Func800C7878Arg0;
+
+/* 800C7878 writes the six-byte result's id, state and count at +0/+2/+4. */
+typedef struct {
+    s16 unk0;
+    char pad2[2];
+    u16 unk4;
+} M2C_15512f31231d_F413CArg1;
+
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 
 /* 800D0DB0 stores the two signed indices passed by 800DF72C. */

@@ -8575,6 +8575,7 @@ Members:
 - ovl_11_func_800CB114 (s) — writes both halves repeatedly.
 - ovl_11_func_800C4DE0 / 800C523C / 800C541C / 800C580C / 800C8FA8 /
   800C907C / 800CB850 / 800CD0F4 (s) — readers of one or both halves.
+- ovl_11_func_800C8CC8 (m, low-confidence candidate same TU) — applies selected-item state for the adjacent input/state gate ([evidence and limits](research/ovl_11_func_800C8CC8-grouping.md)).
 - ovl_11_func_800C8D24 (s) — reads D_80128C54 only.
 
 ## `ovl_11` D_80128C58 item-snapshot save/restore pair — 0x800C6770 / 0x800CBB9C (confidence: low)
