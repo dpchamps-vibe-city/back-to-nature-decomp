@@ -11292,7 +11292,7 @@ Members (address order):
 - ovl_11_func_80103480 (m, matched this session) — case 0x3C2 handler; same store, no helper call
 - ovl_11_func_801034D0 (s) — case 0x3C3 handler; same store, gated helper call
 - ovl_11_func_80103548 (s) — case 0x3C4 handler; same store, gated helper call
-- ovl_11_func_801035C0 (s) — shared helper called by the 0x3C1/0x3C3/0x3C4 arms
+- ovl_11_func_801035C0 (m; [evidence](research/ovl_11_func_801035C0-grouping.md)) — commits the selected record, flags and eight IDs for the 0x3C1/0x3C3/0x3C4 handlers.
 
 ---
 

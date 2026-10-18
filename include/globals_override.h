@@ -282,6 +282,17 @@ typedef struct {
     u8 pad_0[0x4AE0];
     u16 records[80][11];
 } Ovl11SelectionRecords;
+/* 801035C0 copies eight IDs after each record's three-halfword header. */
+typedef struct {
+    u16 id;
+    u16 value;
+    u16 flags;
+    u16 ids[8];
+} Ovl11SelectionRecord;
+typedef struct {
+    u8 pad_0[0x4AE0];
+    Ovl11SelectionRecord records[80];
+} Ovl11SelectionRecordArray;
 /* 80100644 loads this selector with lbu; 800FFDCC clears the same byte. */
 extern s8 D_801273EC;
 /* 801007AC copies the selected record into this byte with sb. */
