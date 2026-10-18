@@ -123,6 +123,7 @@ void ovl_11_func_800C838C(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void ovl_11_func_800C83FC(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void ovl_11_func_800C846C(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void ovl_11_func_800C8764(Recon_ovl_11_func_800C8334_A0View *arg0);
+s32 ovl_11_func_800C8AD4(Recon_ovl_11_func_800C7270_A0View *arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800C8D9C(Recon_ovl_11_func_800C7270_A0View *arg0);
 s32 ovl_11_func_800C97D0(Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800C9888(u16 arg0, u16 arg1);
