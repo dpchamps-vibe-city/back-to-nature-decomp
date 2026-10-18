@@ -12153,10 +12153,11 @@ Members (link order):
   else `(s32@+0x34 & 0x10000) < 1`.
 - ovl_11_func_800DE9C8 (s, 0x138), 800DEB00 (s, 0x3E0),
   800DF128 (m, 0x100), 800DF51C (m, 0x90), 800DF614 (m, 0x94),
-  800DF84C (s, 0x1A4), 800DF9F0 (s, 0x8C) —
+  800DF9F0 (s, 0x8C) —
   callers; the common guard is
   `if (ovl_11_func_800DF4F0(arg0) == 0) return -1;`.
 - ovl_11_func_800DF72C (m, byte-exact; candidate member) — code-0x162 record-pair reservation and reset handler ([shared neighbour idiom and link-order evidence](research/ovl_11_func_800DF72C-grouping.md)).
+- ovl_11_func_800DF84C (m, byte-exact; candidate member) — code-0x162 threshold-selected request submission/queue handler ([shared neighbour guards, reset tail and link-order evidence](research/ovl_11_func_800DF84C-grouping.md)).
 - ovl_11_func_800DEF30 (m, byte-exact) — guarded per-tick handler dispatcher ([additional same-TU evidence](research/ovl_11_func_800DEF30-grouping.md)).
 - ovl_11_func_800DFB98 (m, 0xA4, matched this session, byte-exact) — caller;
   guard then the `ovl_11_func_800D05D0` view consumer: adds

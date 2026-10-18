@@ -1306,6 +1306,12 @@ struct struct_8006C838_800E65AC_b {
     s16 field_DE22;         /* 0xDE22 */
 };
 
+/* 800DF84C reads/writes u16 at D_8006C838 + index*0xF8 + 0xDEB6. */
+typedef struct {
+    u8 pad0[0xDEB6];
+    u16 pending;
+} Ovl11DF84CStateView;
+
 /* View of D_8006C838 for ovl_11_func_800C47F0: the s16 state word at
  * +0xE4CC. Reached as a struct member so cc1 keeps lui %hi(D_8006C838),
  * addiu %lo, ori 0x8000, addu followed by lh 0x64CC. */
