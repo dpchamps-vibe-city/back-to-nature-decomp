@@ -3524,6 +3524,7 @@ Members (address order):
 - ovl_11_func_800FAAAC (m, matched this session) — leaf reset stub: writes
   `D_80126FE0 = 0; D_80126FE4 = 0; D_80126FE8 = 0; D_80126FEC = 0xFF;`
   byte-identical (10/10 words), baseline flags; the reset head of the cluster
+- ovl_11_func_800FAB18 (m, candidate same TU) — menu update/draw dispatcher and close-completion handler ([grouping evidence](research/ovl_11_func_800FAB18-grouping.md)).
 - ovl_11_func_800FB4B0 (m, matched this session) — the state machine
   `ovl_11_func_800FAC0C`'s direct callee (jal at 0x800FADE8 and 0x800FAE60,
   feeding it `D_80126FE4` as the index); table-address leaf returning a
