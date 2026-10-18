@@ -10795,6 +10795,7 @@ Members (link order):
   `D_80052FC4` text-draw prologue, body-identical to `ovl_15_func_80130468`
   (calls `ovl_15_func_8012E15C` and sets `D_80137584 = 1`) plus a trailing
   `ovl_15_func_8013468C()` call (void)
+- ovl_15_func_80131498 (m, byte-exact) — polls both cached card statuses and selects the next menu state ([shared-state evidence](research/ovl_15_func_80131498-grouping.md)).
 - ovl_15_func_801315B0 (m, matched this session, byte-exact) — shared text-draw
   prologue with the `D_80052FFA` updater array; then
   `D_80137584 = ovl_15_func_80137228(2, 0x1F)` and `D_80137588 = 1` (void;
