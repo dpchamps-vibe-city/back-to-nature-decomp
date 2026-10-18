@@ -907,6 +907,7 @@ void ovl_11_func_80102A10(void);
 void ovl_11_func_80102A64(s32 arg0);
 void ovl_11_func_80102B6C(u16 arg0, s16 arg1);
 s32 ovl_11_func_80102DC4(void *arg0);
+s32 ovl_11_func_80102E1C(Ovl11IdAdjustmentObject *arg0);
 s32 ovl_11_func_80102F14(Ovl11IdAdjustmentObject *arg0, u16 *arg1);
 s32 ovl_11_func_801032BC(M2C_a3c645de7bec_M2C_Arg801032BC *arg0, s32 arg1, u16 *arg2);
 void ovl_11_func_801033D4(void);
