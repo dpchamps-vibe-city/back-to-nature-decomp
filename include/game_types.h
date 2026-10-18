@@ -657,7 +657,8 @@ typedef struct {
     u16 unk3C;
 } Recon_ovl_11_func_800C6F0C_A0View;
 
-/* 800C7010: halfwords at 38/3C, flags at 6C, animation data at 260. */
+/* 800C7010: halfwords at 38/3C, flags at 6C, animation data at 260.
+ * 800C69B8 reads the signed item-table index at 8A. */
 typedef struct {
     char pad_0[0x38];
     u16 unk38;
@@ -665,7 +666,9 @@ typedef struct {
     u16 unk3C;
     char pad_3E[0x2E];
     s32 unk6C;
-    char pad_70[0x1F0];
+    char pad_70[0x1A];
+    s16 itemIndex;
+    char pad_8C[0x1D4];
     SpriteSourceData sprite;
 } Ovl11C7010Object;
 

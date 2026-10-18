@@ -2504,7 +2504,9 @@ typedef struct {
     u16 unk3C;
     char pad_3E[0x2E];
     s32 unk6C;
-    char pad_70[0x1F0];
+    char pad_70[0x1A];
+    s16 itemIndex;
+    char pad_8C[0x1D4];
     SpriteSourceData sprite;
 } Ovl11C7010Object;
 
