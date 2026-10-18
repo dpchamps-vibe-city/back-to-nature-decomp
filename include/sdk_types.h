@@ -2747,7 +2747,9 @@ struct Ovl11RotationState {
 };
 
 typedef struct {
-    char pad_00[0x34];
+    char pad_00[0x30];
+    s16 field_30;
+    char pad_32[2];
     s32 field_34;
     char pad_38[0x58 - 0x38];
     s32 field_58;

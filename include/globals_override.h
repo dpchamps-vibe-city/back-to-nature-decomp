@@ -3487,6 +3487,11 @@ typedef struct {
 } Ovl11D060Fields;
 extern Ovl11D060Fields D_8012D060;
 
+/* 80109D08 clears/passes this record pointer, then forwards its +0x38 vector. */
+extern s32 *D_8012D078;
+/* 801096FC writes a word through this output passed by 80109D08. */
+extern s32 D_8012D07C;
+
 /* D_8012D080 - ovl_11 absolute-addressed pointer cell (outside $gp range).
  * ovl_11_func_801098B0 passes its address as the out pointer of the
  * D_80075BC4 record scan and clears it to 0 when the scan fails;

@@ -1228,6 +1228,7 @@ Members (address order, matched so far):
   increments D_8012D068; the D_8012D068/D_8012D06C pair's second site alongside
   writer/resetter ovl_11_func_801088E4 and the D_8012D060 reader alongside
   ovl_11_func_80108864/ovl_11_func_801089DC; byte-exact clean C, baseline flags
+- ovl_11_func_80109D08 (m, byte-exact) — guarded record selector and position handoff using D_8012D078/D_8012D07C ([grouping evidence](research/ovl_11_func_80109D08-grouping.md)).
 - ovl_11_func_80109E04 (m, this session) — guard/probe leaf: returns -1 unless
   the u16 at arg0+0 is nonzero and the cluster pointer D_8012D080 is set,
   otherwise forwards arg0 plus D_8012D080's +0x38/+0x3C/+0x40/+0x44 words to

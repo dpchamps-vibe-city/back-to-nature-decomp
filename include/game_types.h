@@ -1474,9 +1474,12 @@ typedef struct {
     u8 states[9];
 } Ovl11StatesE7A2View;
 
-/* Object fields written by ovl_11_func_800D05D0. */
+/* Object fields written by ovl_11_func_800D05D0; 80109D08 also reads the
+ * signed selector at +0x30. */
 typedef struct {
-    char pad_00[0x34];
+    char pad_00[0x30];
+    s16 field_30;
+    char pad_32[2];
     s32 field_34;
     char pad_38[0x58 - 0x38];
     s32 field_58;
