@@ -1604,6 +1604,9 @@ extern struct_8005E3C0 *D_8005E3C0;
 /* 800CFE40: three position halfwords and two projected screen words. */
 extern s16 D_80128D38[4];
 extern s32 D_80128D40[2];
+/* 800D0198: two screen words and three position halfwords passed to projection. */
+extern s32 D_80128D48[2];
+extern s16 D_80128D50[4];
 /* func_8001C37C caches the render context and increments the GP-relative polygon count. */
 extern struct_8005E3C0 *D_8005E4DC;
 extern s16 D_8005E4E8;
