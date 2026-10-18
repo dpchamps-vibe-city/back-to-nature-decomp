@@ -1126,6 +1126,15 @@ struct struct_8006C838_time {
     s16 field_44C2;         /* 0x44C2 */
 };
 
+/* 801168C0 uses u16 +4A86, an object at +51C8, and s32 +5228 through one base. */
+typedef struct {
+    u8 pad0[0x4A86];
+    u16 flags;
+    u8 pad4A88[0x51C8 - 0x4A88];
+    u8 object[0x60];
+    s32 value;
+} Ovl11SelectedThresholdState;
+
 /* 80114398 reads the u16 flag at D_8006C838+0x4A86 with lhu. */
 struct Ovl11RecordFlagsView {
     u8 pad_0[0x4A86];
