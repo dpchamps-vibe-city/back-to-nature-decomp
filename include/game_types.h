@@ -4,6 +4,16 @@
 
 #include "common.h"
 
+/* 801110CC reads these fields; 8010CA0C forwards the same object. */
+typedef struct {
+    char pad_00[0x30];
+    s16 unk30;
+    char pad_32[0xB6 - 0x32];
+    u16 unkB6;
+    char pad_B8[0xDC - 0xB8];
+    s32 unkDC;
+} M2C_ececd3ff98bf_Struct_801110CC;
+
 /* 800DC9D4 returns 0x30-byte entries; 800DCA60 writes flags at +0x28. */
 typedef struct {
     u8 pad[0x28];
