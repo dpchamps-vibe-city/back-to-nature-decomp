@@ -3219,6 +3219,8 @@ typedef struct {
 
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 
+typedef struct { u16 unk0; } UnkStruct800E109C;
+
 typedef struct {
     s32 x;
     s32 y;

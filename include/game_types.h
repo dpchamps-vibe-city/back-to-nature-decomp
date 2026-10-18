@@ -720,6 +720,12 @@ typedef struct {
 
 typedef struct { u16 unk0; } UnkStruct800E109C;
 
+/* 800E0D3C copies eight bytes from state +0x44B8 to object +0x1A with lwl/lwr and swl/swr. */
+typedef struct __attribute__((packed)) {
+    s32 word0;
+    s32 word4;
+} Ovl11InitStamp;
+
 typedef struct {
     char pad_0[0xB0];
     u16 unkB0;
