@@ -12271,7 +12271,7 @@ Members (link order):
 - ovl_11_func_800E0AFC (m) — earlier caller: guard then `u16@+0xB0 < 14` →
   `0x164` / `0x165`.
 - ovl_11_func_800E05A8 (s), 800E06E0 (s), 800E0D3C (s), 800E10C8 (m,
-  byte-exact), 800E1404 (s), 800E15C8 (s) — callers; the common guard is
+  byte-exact), 800E15C8 (s) — callers; the common guard is
   `if (ovl_11_func_800E109C(arg0) == 0) return -1;`.
 - ovl_11_func_800E11C0 (m, byte-exact, matched this session) — guard then
   `u16@+0xAE` latch (`== 0` → -1, else clear), `func_80015868(this + 0x78, 0,
@@ -12295,6 +12295,7 @@ Members (link order):
   `ovl_11_func_800D12A0(0xC)` when `s16@+0x30 == *(s16 *)(&D_8007AFF0 +
   0x25476)`; structural twin of ovl_11_func_800DF51C on the 800E109C
   predicate, and a reader of the far state halfword accessor family.
+- ovl_11_func_800E1404 (m, byte-exact; candidate member) — code-0x165 threshold-selected request submission/queue handler ([shared neighbour guards/tail and link-order evidence](research/ovl_11_func_800E1404-grouping.md)).
 - ovl_11_func_800E0FD0 (m, matched this session, byte-exact) — link-order-only
   member: zero-gap predecessor of the predicate leaf (0x800E0FD0 + 0xCC =
   0x800E109C); shares the `s16@+0x26` / `s32@+0x34` object view and the
