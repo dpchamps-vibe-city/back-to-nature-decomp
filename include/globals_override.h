@@ -3309,6 +3309,9 @@ extern u8 D_800957F8[];
  * and ovl_11_func_800E6B18 writes its argument here. Absolute-addressed. */
 extern s16 D_80070C70;
 
+/* 800ED760 writes five word slots; 80107C80 reads each as two signed halfwords. */
+extern s32 D_80070C72[5];
+
 /* D_80070C92 - ovl_11 sprite descriptor read by ovl_11_func_800E559C. It
  * passes the signed halfwords at +0x18/+0x1A to GetClut, reads the unsigned
  * frame size at +0x8/+0xA, a signed scroll value at +0 and a frame byte at
