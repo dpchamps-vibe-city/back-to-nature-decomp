@@ -14419,6 +14419,15 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800F6D14 (s) — companion lookup/draw caller that reclaims an inactive record and retries through the preceding helper on a miss.
 - ovl_11_func_800F6E38 (m) — texture-ID lookup and quad-draw caller with inactive-record reclamation, loading, and recursive retry.
 
+## `ovl_11` two-state start/wait helper pair — 0x8011B6C4 / 0x8011B784 (confidence: low)
+
+Candidate same-TU pair: gapless helper order, shared state/status idiom and
+corroborating consecutive-client order; original TU boundaries remain unproven.
+[Evidence and limits](research/ovl_11_func_8011B6C4-grouping.md).
+
+- ovl_11_func_8011B6C4 (m, candidate same TU) — starts item insertion and waits for the completion-status mask.
+- ovl_11_func_8011B784 (m, candidate same TU) — submits an ID-selected three-halfword record and waits for the completion-status bit.
+
 ## `ovl_11` six-state interaction-handler pair — 0x8011B840 / 0x8011BAFC (confidence: low)
 
 Candidate same-TU pair: consecutive text and jump tables, shared handler idiom
