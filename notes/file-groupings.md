@@ -8622,7 +8622,8 @@ Members:
 - ovl_11_func_800C7878 (s) — reads then writes both halves.
 - ovl_11_func_800C9BB8 (m) — preloads sprite assets for three record tables; candidate same-TU helper of adjacent caller 800C9C60 ([evidence and limits](research/ovl_11_func_800C9BB8-grouping.md)).
 - ovl_11_func_800C9C60 (s) — writes both state halves, seeds record-table entries, and calls its immediate predecessor 800C9BB8.
-- ovl_11_func_800CA708 (s) — reads, then writes both halves.
+- ovl_11_func_800CA708 (m, low-confidence candidate same TU as adjacent caller 800CAADC) — collision/side-slide probe adjusting player velocity and dispatch state ([evidence and limits](research/ovl_11_func_800CA708-grouping.md)).
+- ovl_11_func_800CAADC (s, low-confidence candidate same TU as 800CA708) — player movement update applying the helper-adjusted velocity.
 - ovl_11_func_800CB114 (s) — writes both halves repeatedly.
 - ovl_11_func_800C523C (m) — tier-scaled grid/object action reading the state pair and updating D_80128C64.
 - ovl_11_func_800C4DE0 / 800C541C / 800C580C / 800CD0F4 (s) — readers of one or both halves.

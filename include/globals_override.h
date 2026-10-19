@@ -23,6 +23,25 @@ typedef struct {
     s32 pad;
 } Ovl11CC7CCPosition;
 
+/* 800CA708: direction/mode at +38/+3C, word flags +6C, four-word
+ * position +100 and velocity +110; two tables of signed halfword pairs. */
+typedef struct {
+    char pad0[0x38];
+    u16 direction;
+    char pad3A[2];
+    u16 mode;
+    char pad3E[0x6C - 0x3E];
+    s32 flags;
+    char pad70[0x100 - 0x70];
+    Ovl11CC7CCPosition position;
+    s32 velocity[4];
+} Ovl11CA708Player;
+typedef struct {
+    s16 x, z;
+} Ovl11SlideOffset;
+extern Ovl11SlideOffset D_80123250[8];
+extern Ovl11SlideOffset D_80123270[8];
+
 typedef struct {
     u16 id;
     u16 kind;
