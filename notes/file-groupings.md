@@ -13010,7 +13010,7 @@ corroborates an operation/layout family, not a common TU across distant bands.
   updates flag word +34; shared padded interface preserves all original words.
 
 
-## ovl_11 numeric-row display helper (confidence: low; dependency only)
+## ovl_11 menu driver / numeric-row display helpers (confidence: low)
 
 Original ovl_11_func_800F787C calls 800F8B4C at 800F79B8. The helper
 formats D_80126E4A+1 and a signed argument divided by eight into the shared
@@ -13018,7 +13018,6 @@ formats D_80126E4A+1 and a signed argument divided by eight into the shared
 those strings at x=28/42, y=6E, with a table-selected separator at x=35.
 The direct caller edge corroborates a rendering dependency, not a source-file
 boundary or a common TU across the intervening link addresses.
-- ovl_11_func_800F787C (s) — recorded original caller.
 - ovl_11_func_800F8B4C (m, 0xD0) — finalized numeric/separator row helper;
   four inline address/setup instructions and scoped register bindings are
   explicitly user-authorized matching workarounds, not original-TU evidence.
@@ -13032,6 +13031,11 @@ boundary or a common TU across the intervening link addresses.
   plus the shared caller/callee, not on a shared overlay global (low). It
   calls ovl_11_func_800F8A3C but reads no D_800A0728, so it is not a member
   of that object's reset/handoff group above.
+
+Menu-driver candidate pair (low; [grouping evidence](research/ovl_11_func_800F787C-grouping.md));
+not a claim that the driver and display-helper pair share a TU:
+- ovl_11_func_800F787C (m, 0x224) — mode-selected menu rendering/update driver.
+- ovl_11_func_800F7AA0 (s) — selected-record input/actions and menu-exit handler.
 
 
 ## ovl_11 D_8012D110 state-buffer initializer/consumer family (confidence: low)
