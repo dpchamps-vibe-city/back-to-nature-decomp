@@ -6342,6 +6342,8 @@ the overlay, never GP-relative), and the large-offset writers use the same
   corroborated storage/layout link, not evidence for placing that distant
   function in this run's original TU. Its split-address assembly/register
   bindings are explicitly authorized matching workarounds.
+- ovl_11_func_800F2400 (m, low-confidence local queue-TU candidate; [evidence and limits](research/ovl_11_func_800F2400-grouping.md)) — active-dialog progression/cancellation and special-entry-latch consumption.
+- ovl_11_func_800F24B0 (m, candidate same local queue TU) — idle-only queued-dialog starter with a fallback request.
 - ovl_11_func_800F2724 (m, matched this session) — dialog/record-advance leaf:
   reads the s8 sentinel at +0x49E6; when it is not -1, calls 0x80022738 then
   func_8002261C(s8@+0x49E6, s16@+0x49E4), and on a 0 result sets the ovl_11 data

@@ -5862,5 +5862,9 @@ extern s32 D_8012D7F4;
 /* 8011DF4C passes this position to 800BDB88 and steps words +0/+8; data spans 16 bytes. */
 extern s32 D_8012D800[4];
 
+/* 800F2400 reads/clears these word flags; 800F24B0/800F2724 set them. */
+extern s32 D_80126C90;
+extern s32 D_80126C94;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
