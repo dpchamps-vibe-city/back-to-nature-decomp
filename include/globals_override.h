@@ -5586,6 +5586,8 @@ extern s16 D_80123292;
 /* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
 extern void *D_80128C4C_dispatch __asm__("D_80128C4C");
 extern s32 D_80128C54;
+/* 800C523C reads and updates this counter with lhu/sh. */
+extern u16 D_80128C64;
 /* 800C907C saves the dispatched object pointer here and reads its u16 +0x22. */
 extern void *Ovl11SavedInteractionObject __asm__("D_80128CF4");
 /* 800C72F8 reads this absolute-addressed word and tests its low two bits. */

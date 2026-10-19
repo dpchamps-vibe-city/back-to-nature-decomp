@@ -1952,6 +1952,7 @@ from the tier/clamp run; [initial evidence](research/ovl_11_func_800C55FC-groupi
 - ovl_11_func_800C4DE0 (s) — kind-2 grid-action handler with state-dependent mode-2 handling.
 - ovl_11_func_800C5048 (m) — initializes the shared grid-action request state.
 - ovl_11_func_800C5098 (m, candidate same TU) — advances the shared grid-action request and applies its completion result to the object.
+- ovl_11_func_800C523C (m, candidate same TU) — tier-scaled grid/object action updating the shared counter ([evidence and limits](research/ovl_11_func_800C523C-grouping.md)).
 - ovl_11_func_800C541C (s) — mode-selected grid-action handler with a clamped object-counter update.
 - ovl_11_func_800C55FC (m) — mode-selected grid-cell resetter with object-tag remapping.
 - ovl_11_func_800C5738 (s) — four-direction position probe/update helper.
@@ -8632,7 +8633,8 @@ Members:
 - ovl_11_func_800C9C60 (s) — writes both state halves, seeds record-table entries, and calls its immediate predecessor 800C9BB8.
 - ovl_11_func_800CA708 (s) — reads, then writes both halves.
 - ovl_11_func_800CB114 (s) — writes both halves repeatedly.
-- ovl_11_func_800C4DE0 / 800C523C / 800C541C / 800C580C / 800CD0F4 (s) — readers of one or both halves.
+- ovl_11_func_800C523C (m) — tier-scaled grid/object action reading the state pair and updating D_80128C64.
+- ovl_11_func_800C4DE0 / 800C541C / 800C580C / 800CD0F4 (s) — readers of one or both halves.
 - ovl_11_func_800CB730 (m, low-confidence candidate same TU as adjacent caller 800CB850) — mode-gated cell probe returning an item-action status.
 - ovl_11_func_800CB850 (m, low-confidence candidate same TU as 800CB730) — item-action gate selecting follow-up states from probe, item and dispatch flags ([evidence and limits](research/ovl_11_func_800CB850-grouping.md)).
 - ovl_11_func_800C8FA8 (low-confidence candidate same TU as adjacent caller 800C907C) — flag-0x80 interaction helper.

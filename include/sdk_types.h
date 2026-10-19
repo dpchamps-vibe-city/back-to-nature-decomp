@@ -2510,6 +2510,22 @@ typedef struct {
 } Ovl11CC4E0Object;
 
 typedef struct {
+    char pad0[0x18];
+    s16 power;
+    char pad1A[0x36 - 0x1A];
+    u16 flags;
+    s16 direction;
+    char pad3A[0x40 - 0x3A];
+    u16 vals[(0x84 - 0x40) / 2];
+    s16 value;
+    s16 amount;
+    char pad88[0x100 - 0x88];
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11CD5BCObject;
+
+typedef struct {
     char pad0[0x38];
     u16 unk38;
     char pad3A[0x100 - 0x3A];
