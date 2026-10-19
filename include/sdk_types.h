@@ -212,6 +212,26 @@ typedef struct {
 } M2C_06c1c0460361_Struct_800E1714;
 
 typedef struct {
+    char pad_00[2];
+    u16 index;
+    char pad_04[0x16 - 4];
+    s16 pool;
+    char pad_18[0x22 - 0x18];
+    u16 direction;
+    char pad_24[4];
+    s16 state;
+    u16 step;
+    s16 timer;
+    char pad_2E[2];
+    s16 map;
+    char pad_32[2];
+    s32 flags;
+    s32 x;
+    s32 y;
+    s32 z;
+} M2C_07567038918a_Ovl11D539CObject;
+
+typedef struct {
     u16 unk0;
     char pad_02[0x22];
     u16 unk24;

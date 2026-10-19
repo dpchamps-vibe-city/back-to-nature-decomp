@@ -5596,5 +5596,8 @@ struct Ovl11EventDispatchState {
     struct Ovl11EventDispatchRecord records[10];
 };
 
+/* 800D539C passes this byte-table address to the state-step helper D04D4. */
+extern u8 D_80123C88;
+
 #endif /* GLOBALS_OVERRIDE_H */
 

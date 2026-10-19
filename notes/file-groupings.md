@@ -2287,6 +2287,10 @@ contiguity plus the shared handler table, not index order.
 - ovl_11_func_800D3468 (m) — object-ID dispatcher selecting and entering a state.
 - ovl_11_func_800D3574 (m, byte-exact) — object-ID sprite-source refresh, clearing the object ID when a dynamic source is unavailable.
 
+Candidate handler-tail pair ([evidence and limits](research/ovl_11_func_800D539C-grouping.md)):
+- ovl_11_func_800D539C (m, candidate same TU) — pool-slot allocation and object-placement state handler.
+- ovl_11_func_800D55F8 (s, candidate same TU) — timed object-state handler.
+
 ---
 
 ## `ovl_11` D_80128CD0 coord-set run — 0x800CE210–0x800CE37C (confidence: medium)
