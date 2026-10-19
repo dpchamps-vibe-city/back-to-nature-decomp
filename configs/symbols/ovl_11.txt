@@ -1608,3 +1608,8 @@ ovl_11_func_80121500 = 0x80121500; // type:func
 // 800DA638 independently loads/stores the two coordinate halfwords in this data word.
 D_80128DAC = 0x80128DAC; // type:u16 size:0x2
 D_80128DAE = 0x80128DAE; // type:u16 size:0x2
+
+/* 80110944 loads the resident selection bytes through this original address. */
+D_800712F8 = 0x800712F8; // type:data
+/* Original overlay call labels retain the executable Rand address. */
+func_80012A34 = 0x80012A34; // type:func

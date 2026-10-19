@@ -901,6 +901,62 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 80110944 reads the low halfword, signed +30, word +34 and u16 +B4. */
+typedef struct {
+    u16 number;
+    u16 unused;
+    u8 pad4[0x30 - 4];
+    s16 area;
+    u16 pad32;
+    u32 flags;
+    u8 pad38[0xB4 - 0x38];
+    u16 pregnancy;
+    u16 padB6;
+} Ovl11AnimalSelection;
+
+/* 80110944 reads these bytes directly and at +0x16 from the 742EC base. */
+extern u8 D_800712F8[32];
+
+/* 80110944 scans seven stride-F8 entries at +DE00 and two selection slots. */
+typedef struct {
+    u8 pad0[0x26];
+    s16 kind;
+    u8 pad28[8];
+    s16 area;
+    u8 pad32[0xB8 - 0x32];
+    u16 flags;
+    s16 index;
+    u8 padBC[0xF8 - 0xBC];
+} Ovl11SelectionEntry;
+
+typedef struct {
+    u8 pad0[0x4AC0];
+    u8 available[20];
+    u8 selected[2];
+    u8 smallAvailable[10];
+    u8 pad4AE0[0x7AB4 - 0x4AE0];
+    Ovl30AnimalRecord smallAnimals[10];
+    Ovl30AnimalRecordB8 largeAnimals[20];
+    u8 pad901C[0x99CA - 0x901C];
+    s16 index0;
+    s16 pad99CC;
+    s16 index1;
+    u8 pad99D0[0xDE00 - 0x99D0];
+    Ovl11SelectionEntry entries[7];
+} Ovl11SelectionState;
+#define Ovl11_SelectionState ((Ovl11SelectionState *)D_8006C838)
+
+/* 80110944 also walks the +8000 view in F8-byte steps, with signed displacements. */
+typedef struct {
+    u8 pad0[0x5E26];
+    s16 kind;
+    u8 pad5E28[8];
+    s16 area;
+    u8 pad5E32[0x5EB8 - 0x5E32];
+    u16 flags;
+    s16 index;
+} Ovl11SelectionFarView;
+
 /* 800E8C14 reads a signed halfword at D_8006C838 + 0x5252 and passes its address. */
 struct Ovl11E8C14State {
     u8 pad_0[0x5252];
