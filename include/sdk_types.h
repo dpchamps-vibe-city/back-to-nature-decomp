@@ -2573,6 +2573,14 @@ typedef struct {
 } Ovl11CE37CArg0;
 
 typedef struct {
+    char pad0[0x2E];
+    Ovl11CollisionTag collision;
+    char pad32[2];
+    s32 flags;
+    s32 position[4];
+} Ovl11CEFCCObject;
+
+typedef struct {
     s32 *position;
     Ovl11CollisionTag *object;
     void **tile;
