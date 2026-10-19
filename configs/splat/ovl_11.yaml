@@ -38,6 +38,8 @@ segments:
       - [0x620, .rodata, ovl_11_func_800CE2EC]
       - [0x650, .rodata, ovl_11_func_800CE744]
       - [0x9BC, rodata]
+      - [0x9C0, .rodata, ovl_11_func_800CF044]
+      - [0x9DC, rodata]
       - [0x9E0, .rodata, ovl_11_func_800D0408]
       - [0x9FC, rodata]
       - [0xA00, .rodata, ovl_11_func_800D0698]
