@@ -10592,7 +10592,7 @@ Members (link order):
 - ovl_15_func_80134724 (m, matched this session, byte-exact) — zeroes
   `D_8013759E`/`A0`/`A2`/`A4` and memsets `D_80140FE0` to 0 (0x1568 bytes)
 
-## `ovl_15` D_800742EC/D_801376D0 dual-base slot machinery — 0x801320A8 / 0x80133538 / 0x801335F8 (confidence: medium for the 0x80133538/0x801335F8 pair, low for 0x801320A8)
+## `ovl_15` D_800742EC/D_801376D0 dual-base slot machinery — 0x801320A8 / 0x801331C4 / 0x80133538 / 0x801335F8 (confidence: medium for the 0x80133538/0x801335F8 pair, low for 0x801320A8/0x801331C4)
 
 Evidence: the same two record bases select this run. `ovl_15_func_801320A8`
 loads `&D_800742EC` and `D_801376D0` and calls `ovl_15_func_80133538` four times
@@ -10607,6 +10607,7 @@ exact link adjacency.
 
 Members (link order):
 - ovl_15_func_801320A8 (m, byte-exact) — dual-base slot-transfer capacity validator ([shared-table evidence](research/ovl_15_func_801320A8-grouping.md)).
+- ovl_15_func_801331C4 (m, byte-exact; candidate same TU) — copies selected row-1 records into runtime slots and runs their setup helpers ([grouping evidence](research/ovl_15_func_801331C4-grouping.md)).
 - ovl_15_func_80133538 (m, matched this session, byte-exact) — leaf slot counter:
   mode 0 walks 10 records at stride 0xB4 (`u16@0x0`, `u32@0x34 & 0x02000000`),
   mode 1 walks 20 records at stride 0xB8 (`u16@0x708`, `u16@0x7BA`), returning
