@@ -2592,6 +2592,26 @@ typedef struct {
 } Ovl11CC4E0Object;
 
 typedef struct {
+    s32 vx;
+    s32 vy;
+    s32 vz;
+    s32 pad;
+} Ovl11CC7CCPosition;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 direction;
+    s16 padA;
+    s32 unkC;
+    s32 height;
+    Ovl11CC7CCPosition velocity;
+    Ovl11CC7CCPosition position;
+} Ovl11CC7CCObject;
+
+typedef struct {
     char pad0[0x18];
     s16 power;
     char pad1A[0x36 - 0x1A];

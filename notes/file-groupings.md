@@ -1,15 +1,17 @@
 # Suspected source-file groupings (ledger)
 
-## `ovl_11` D_80128C80 sprite initializer/draw + local helper run — 0x800CC0F8–0x800CCBE8 (confidence: medium)
+## `ovl_11` D_80128C80 sprite initializer/draw + local helper run — 0x800CBF70–0x800CCBE8 (confidence: medium)
 
-Candidate membership rests on the shared sprite and corroborated call/link
-adjacency; original TU boundaries remain unproven.
+Candidate membership rests on the shared sprite, the allocator/dispatcher's
+shared `D_80123130` direction table and corroborated call/link adjacency;
+original TU boundaries remain unproven.
 Evidence paths and limits: [grouping research](research/ovl_11_func_800CC4E0-grouping.md).
 
+- ovl_11_func_800CBF70 (m) — allocates a `D_80128BB0` entry and seeds velocities from the direction table reused by `800CC7CC`.
 - ovl_11_func_800CC0F8 (s) — object update/draw driver using the shared sprite.
 - ovl_11_func_800CC4E0 (m) — gated object-state transition initializing the shared sprite and dispatching position-dependent effects.
 - ovl_11_func_800CC6A8 (m) — stage-grid query helper resetting object state on a hit.
-- ovl_11_func_800CC7CC (s) — object interaction dispatcher calling both adjacent helpers.
+- ovl_11_func_800CC7CC (m) — object interaction dispatcher redirecting velocity and calling the local transition, grid-query and removal helpers.
 - ovl_11_func_800CCB90 (s) — three-entry `D_80128BB0` update driver calling `800CC0F8` for occupied slots.
 - ovl_11_func_800CCBE8 (m) — clears an object's item slot, then records effect coordinates or invokes item cleanup.
 

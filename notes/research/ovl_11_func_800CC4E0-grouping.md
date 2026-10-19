@@ -88,3 +88,57 @@ declaration-order constraint or TU-specific register quirk was established.
 The already-recorded `D_8012DB78` relationship to distant `80120850` does not
 justify merging that state cluster into this run; nor does the call to
 `800CBD78` alone establish that callee's original-TU membership.
+
+## Extension review: ovl_11_func_800CC7CC
+
+The supplied handoff reports byte-exact matching and a passing full finalize
+gate for `src/overlays/ovl_11/ovl_11_func_800CC7CC.c`, source/evidence identity
+`e1f1be83f6bcf90b3c707e3f920b388bb209e3cf571d2ca6a7fad06ee0f50f66`,
+origin agent. Its supplied changed-file list is `include/globals_override.h`,
+`include/sdk_types.h` and that source. This review changed documentation only
+and did not repeat the solver gate.
+
+### New shared-table evidence
+
+The verified dispatcher reverses the object's direction at +0x8 modulo four,
+reads the corresponding 8-byte pair from `D_80123130`, and writes twice the
+pair's signed words to X/Z velocity at +0x14/+0x1C. Original instructions
+0x800CC878–0x800CC8B8 show the direction update, table addressing and stores;
+the subsequent path preserves those velocities for item 0x65 and otherwise
+clears them.
+
+`src/overlays/ovl_11/ovl_11_func_800CBF70.c` allocates an entry from the three
+0x34-byte `D_80128BB0` records, stores its direction at +0x8 and initializes
+those same velocity fields from the same table pair. Its item-0x65 case also
+doubles both table components. The original assembly places the table base
+at 0x800CBFA0/0x800CBFA4, the direction store at 0x800CBFE4, ordinary velocity
+stores at 0x800CC01C/0x800CC038, and doubled stores at
+0x800CC054/0x800CC058. Thus the new tie is a specific initializer/update
+relationship, not another use of a general engine base. The existing init-run
+ledger already records the allocator's table use, but not this shared use by
+`800CC7CC`.
+
+### Corroboration and membership limits
+
+The already-recorded link relation `800CBF70 + 0x188 = 800CC0F8` makes the
+allocator the gapless predecessor of the sprite/helper run. The existing
+call path `800CCB90` → `800CC0F8` → `800CC7CC` passes occupied entries from
+that same pool into the dispatcher. Together with the new table/field tie,
+this supports adding `800CBF70` to the medium-confidence candidate run.
+
+Evidence paths: the two C sources above,
+`build/ovl_11/asm/nonmatchings/<function>/<function>.s` for full names
+`ovl_11_func_800CBF70`, `ovl_11_func_800CC7CC`,
+`ovl_11_func_800CC0F8` and `ovl_11_func_800CCB90`, and
+`configs/splat/ovl_11.yaml` (allocator offset 0x14150, followed by updater
+0x142D8). The current nonmatching assembly corpus contains only the allocator
+and dispatcher as named users of `D_80123130`; this is not proof that the
+table was private or that all original references are named.
+
+The premise remains that this linked pool lifecycle and local direction-table
+reuse reflect source-file locality. No private static, GP ownership,
+declaration-order effect or register-variable quirk was established. The
+allocator also remains in the separate `D_80128BB0` init-run hypothesis;
+this overlap does not merge every member of those hypotheses or establish
+an exact TU boundary. The dispatcher's distant spawn/helper calls and shared
+`D_8006C858` item-table accesses do not justify adding their other users.

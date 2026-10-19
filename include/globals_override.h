@@ -15,6 +15,32 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800CC7CC copies four position words to the spawn at owner +18. */
+typedef struct {
+    s32 vx;
+    s32 vy;
+    s32 vz;
+    s32 pad;
+} Ovl11CC7CCPosition;
+
+typedef struct {
+    u16 id;
+    u16 kind;
+    u16 flags;
+    u16 pad6;
+    Ovl11CC7CCPosition position;
+} Ovl11CC7CCSpawn;
+
+typedef struct {
+    char pad0[0x18];
+    Ovl11CC7CCSpawn spawn;
+} Ovl11CC7CCSpawnOwner;
+
+/* 800CC7CC/800CBF70 index four pairs of signed words; retain the byte-array linkage view. */
+extern u8 D_80123130[0x20];
+/* 800CC7CC loads this shared entity selector with lhu. */
+extern u16 D_80071AFE;
+
 /* 800CE550 reads five signed halfwords at D_801232C8 with stride two. */
 extern s16 D_801232C8[5];
 
