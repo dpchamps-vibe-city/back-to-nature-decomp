@@ -12830,6 +12830,7 @@ Members (address order):
   tail-clears the shared `D_80128550` selector state to -1 plus the
   neighbouring `D_80128540`/`D_80128544`/`D_80128556`/`D_8012855A` fields;
   same data cluster, not a `func_80012A34` caller.
+- ovl_11_func_8011F5BC (m, candidate same TU) — active-selection wrapper that selects context 3, runs the driver and restores the prior context ([evidence and limits](research/ovl_11_func_8011F5BC-grouping.md)).
 - ovl_11_func_8011F608 (m, byte-exact) — selection-state driver coordinating text choices, transitions and reset.
 - ovl_11_func_8011F958 (candidate same TU) — saves the selection and resets the shared selection state.
 - ovl_11_func_8011F9EC (m, verified byte-exact this session) — scans two
