@@ -1055,16 +1055,18 @@ Members (link order):
 
 ---
 
-## `ovl_11` 0x80107418 gapless run (button/state guards) — 0x80107418–0x80107B54 (confidence: medium)
+## `ovl_11` 0x80107390 gapless run (button/state guards) — 0x80107390–0x80107B54 (confidence: medium)
 
 Candidate same-TU guard family; neither outer file boundary is established.
 High-confidence membership applies only to `8010780C`/`80107888`.
-See [list-evaluator membership evidence](research/ovl_11_func_80107418-grouping.md),
+See [lookup-entry membership evidence](research/ovl_11_func_80107390-grouping.md),
+[list-evaluator membership evidence](research/ovl_11_func_80107418-grouping.md),
 [record-evaluator membership evidence](research/ovl_11_func_80107480-grouping.md),
 [dispatcher membership evidence](research/ovl_11_func_80107528-grouping.md)
 and [nested-pair evidence](research/ovl_11_func_80107888-grouping.md).
 
 Members (address order):
+- ovl_11_func_80107390 (m) — resets the guard selector, finds an ID-keyed list and returns its guard result or override.
 - ovl_11_func_80107418 (m) — evaluates a guard-record list, returning the first non--1 result or -1.
 - ovl_11_func_80107480 (m) — evaluates paired guards under D_8012D038 and returns the record result or -1.
 - ovl_11_func_80107528 (m) — selector/payload dispatcher immediately preceding its guard callees.

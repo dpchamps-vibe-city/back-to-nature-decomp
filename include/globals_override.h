@@ -782,6 +782,8 @@ extern Ovl11D050Entry D_8012D050[3];
 extern s32 D_8012D044;
 /* 80107888 stores its u32 selector here when the selected guard returns one. */
 extern u32 D_8012D038;
+/* 80107390 scans 31 pointers and reads each record's signed halfword ID. */
+extern s16 *D_80127814[31];
 /* The halfword view used by ovl_11_func_801082B0 has no witnessed full extent. */
 extern s16 D_8012D050_halfwords[] __asm__("D_8012D050");
 
