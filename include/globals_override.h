@@ -6007,5 +6007,17 @@ extern s32 D_8012D800[4];
 extern s32 D_80126C90;
 extern s32 D_80126C94;
 
+/* 800CD9A0 stores the BDCE8 result here and reads u16 +0/+2, s16 +8/+A. */
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    char pad4[4];
+    s16 unk8;
+    s16 unkA;
+} Ovl11CD9A0Record;
+extern Ovl11CD9A0Record *D_801287F0;
+/* 800CD9A0 compares this signed halfword with 2. */
+extern s16 D_80128CB0;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
