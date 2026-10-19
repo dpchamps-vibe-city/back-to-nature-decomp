@@ -539,6 +539,22 @@ typedef struct {
     Ovl25SetupStatePair collision;
 } Ovl11CollisionWorkView;
 
+/* 800F4E84 compares signed tags at +0/+18 and probes positions at +8/+20. */
+typedef struct {
+    s16 type;
+    u8 pad2[6];
+    s32 position[3];
+    u8 pad14[4];
+} Ovl11PoolGateRecord;
+
+/* 800F4E84 tests the +44F8 word and follows the pool pointer at +DDD4. */
+typedef struct {
+    u8 pad0[0x44F8];
+    s32 flags;
+    u8 pad44FC[0xDDD4 - 0x44FC];
+    void *entry;
+} Ovl11PoolGateState;
+
 /* 800D759C indexes 30 ten-byte UV/clut records here (lbu +0..7, lhu +8). */
 extern u8 D_80123CA0[300];
 /* 800D759C reads a per-column flag with lbu; original data spans 48 bytes. */
