@@ -5662,12 +5662,24 @@ extern s16 D_800BB6E8[2];
 /* ovl_17 800BB0C4 increments this word and uses unsigned constant division. */
 extern u32 D_800BB724;
 
+/* 800CB114 indexes signed halfword pairs with 2 * direction + arg2. */
+extern s16 Ovl11CollisionOffsets[] __asm__("D_801230B0");
+/* 800CB114 uses lw/sw and unsigned comparison for the saturating counter. */
+extern u32 D_80123158;
+
 /* 800CD0F4 indexes signed halfword actions at 80123290 and reads 80123292. */
 extern s16 D_80123290[];
 extern s16 D_80123292;
 /* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
 extern void *D_80128C4C_dispatch __asm__("D_80128C4C");
+/* 800CB114 publishes an opaque pointer; legacy readers still have private
+ * record-pointer declarations, so select this direct view explicitly. */
+#ifdef OVL11_COLLISION_OUTPUT_VIEW
+extern void *D_80128C4C;
+#endif
 extern s32 D_80128C54;
+/* 800CB114 publishes this flag word alongside the dispatched object pointer. */
+extern s32 Ovl11CollisionFlags __asm__("D_80128C54");
 /* 800C523C reads and updates this counter with lhu/sh. */
 extern u16 D_80128C64;
 /* 800C907C saves the dispatched object pointer here and reads its u16 +0x22. */

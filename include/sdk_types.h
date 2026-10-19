@@ -2520,6 +2520,17 @@ typedef struct {
 } Ovl11C7010Object;
 
 typedef struct {
+    char pad0[0x38];
+    u16 direction;
+    char pad3A[2];
+    u16 mode;
+    char pad3E[0x6C - 0x3E];
+    s32 flags;
+    char pad70[0xFC - 0x70];
+    Ovl11CollisionTag collision;
+} Ovl11CB114Object;
+
+typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;
