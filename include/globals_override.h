@@ -655,6 +655,12 @@ struct GfxObj;
 /* ovl_11_func_800D2710 reads the pending mode with lh and resets it with sh to -1. */
 extern s16 D_80128D68;
 
+/* 800CC0F8 projects to two signed words, then reads their low halfwords. */
+extern s32 D_80128B98[2];
+/* 800CC0F8 stores three halfwords and passes the vector to 8001DFD4. */
+extern s16 D_80128BA0[4];
+/* 800CC0F8 tests bit 0x100 in the sprite's flags halfword. */
+extern u16 D_80128C82;
 /* ovl_11_func_800CC4E0 initializes this sprite via func_80015704. */
 extern struct SpriteSourceData D_80128C80;
 /* ovl_11_func_800CC4E0 stores a word flag when object id is 0x186. */
