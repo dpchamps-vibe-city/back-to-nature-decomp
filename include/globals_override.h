@@ -4420,6 +4420,19 @@ extern s16 D_80123940[];
  * base/offset relation. Absolute-addressed (lui + %lo). */
 extern u8 D_8009AFF0[];
 
+/* 8010C7F0 reads words at D_8006C838 +0xC and +0x10. */
+struct Ovl11C7F0Flags {
+    u8 pad_0[0xC];
+    s32 flagsC;
+    s32 flags10;
+};
+
+/* 8010C7F0 compares the signed halfword at D_8009AFF0 +0x5476. */
+struct Ovl11C7F0NearState {
+    u8 pad_0[0x5476];
+    s16 area;
+};
+
 /* D_80128818 - ovl_11 FuncC0D4Args descriptor whose address
  * ovl_11_func_800DB904 hands to func_8001C0D4. Only its address is taken, so
  * an opaque byte object is enough; the overlay build is -G0, giving absolute
