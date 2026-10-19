@@ -1,18 +1,17 @@
 # Suspected source-file groupings (ledger)
 
-## `ovl_11` D_80128C80 sprite initializer/draw + local helper run — 0x800CC0F8–0x800CC7CC (confidence: medium)
+## `ovl_11` D_80128C80 sprite initializer/draw + local helper run — 0x800CC0F8–0x800CCBE8 (confidence: medium)
 
-Evidence: verified `800CC4E0` initializes `D_80128C80`, which its gapless
-predecessor `800CC0F8` draws. The contiguous run continues through `800CC6A8`
-and `800CC7CC`; `800CC0F8` calls `800CC7CC`, which calls both helpers.
-The shared sprite anchors the first pair; call/link adjacency supports the
-wider candidate group, without proving its original TU boundaries.
+Candidate membership rests on the shared sprite and corroborated call/link
+adjacency; original TU boundaries remain unproven.
 Evidence paths and limits: [grouping research](research/ovl_11_func_800CC4E0-grouping.md).
 
 - ovl_11_func_800CC0F8 (s) — object update/draw driver using the shared sprite.
 - ovl_11_func_800CC4E0 (m) — gated object-state transition initializing the shared sprite and dispatching position-dependent effects.
 - ovl_11_func_800CC6A8 (m) — stage-grid query helper resetting object state on a hit.
 - ovl_11_func_800CC7CC (s) — object interaction dispatcher calling both adjacent helpers.
+- ovl_11_func_800CCB90 (s) — three-entry `D_80128BB0` update driver calling `800CC0F8` for occupied slots.
+- ovl_11_func_800CCBE8 (m) — clears an object's item slot, then records effect coordinates or invokes item cleanup.
 
 ## `ovl_11` D_800B9920 four-state dispatch cluster — 0x800E3A3C–0x800E4330 (confidence: medium)
 
@@ -607,7 +606,7 @@ table). Members:
   `D_80128BB0`: on the first free entry (unk2 == 0) calls 800CBF40, seeds it
   from the `D_80123130[arg2]` 8-byte pair and `D_8006C838+0x52CC`, returns the
   slot or 0
-- ovl_11_func_800CCB90 (s) — reads `D_80128BB0`; role unknown
+- ovl_11_func_800CCB90 (s) — three-entry `D_80128BB0` update driver calling `800CC0F8` for occupied slots.
 
 ---
 
