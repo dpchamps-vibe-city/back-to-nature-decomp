@@ -3724,6 +3724,8 @@ extern Ovl11D8012D7D8 D_8012D7D8;
 extern s32 D_8012D7CC;
 extern s32 D_8012D7D0;
 extern s32 D_8012D7D4;
+/* 80119008 stores the selected ID with sh and reads it with lh/lhu. */
+extern s16 D_8012D51C;
 /* 801180F0 passes this state word by address and clears the adjacent word. */
 extern s32 D_8012D524;
 extern s32 D_8012D528;
