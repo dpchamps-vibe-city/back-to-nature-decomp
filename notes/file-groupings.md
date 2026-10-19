@@ -8039,6 +8039,7 @@ Members:
   `ovl_11_func_800EC354` (0x800EC354 + 0x13C), so that edge is
   matched-to-matched; still zero-gap before `ovl_11_func_800EC52C` (0xF7C,
   stub), whose adjacency stays uncorroborated.
+- ovl_11_func_800EC064 (m, candidate same TU; [evidence](research/ovl_11_func_800EC064-grouping.md)) — optionally slot-resolved object flag/sub-state dispatcher.
 - ovl_11_func_800EC304 (m) — forwards two `D_80129560` values and a mutable table-slot pointer to `ovl_11_func_800F07EC`; zero-gap predecessor of family member 800EC354.
 - ovl_11_func_800EC354 (m, matched 2026-11 — this session, 0x13C, byte-exact) —
   guarded slot read + record resolve + multi-slot writer: when `arg1 != 0`

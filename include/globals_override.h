@@ -2766,6 +2766,9 @@ extern u16 (*D_8006C860)[4];
 extern s32 _D_801247E8[51] __asm__("D_801247E8");
 #define D_801247E8 (*((s32 *)_D_801247E8))
 
+/* 800EC064 scans ten flag words at stride 0xB4, starting at this address. */
+extern s32 D_80074320;
+
 /* D_800759E4 - shared field/stage-config struct (absolute-addressed from the
  * ovl_11 overlays, owned by the main EXE's data). Accessed at 0x00 (u16,
  * lhu by ovl_11_func_80108CD0), 0x34 (s32 flags word, func_800CF044 /

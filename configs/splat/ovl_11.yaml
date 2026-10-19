@@ -64,6 +64,8 @@ segments:
       - [0x1D10, .rodata, ovl_11_func_800EB010]
       - [0x1D58, .rodata, ovl_11_func_800EB85C]
       - [0x1D9C, rodata]
+      - [0x1DA0, .rodata, ovl_11_func_800EC064]
+      - [0x1DB4, rodata]
       - [0x1FA0, .rodata, ovl_11_func_800EE000]
       - [0x2018, rodata]
       - [0x2020, .rodata, ovl_11_func_800EF488]
