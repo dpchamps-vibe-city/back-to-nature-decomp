@@ -2443,6 +2443,10 @@ typedef struct {
 extern Ovl11ItemState D_80128C58;
 /* 801024D8 selects 48-byte groups of eight six-byte records. */
 extern Ovl11ItemState D_80070D42_slots[][8] __asm__("D_80070D42");
+/* 800F7AA0 passes this base to 800F8224's 64-record, six-byte compaction scan. */
+extern Ovl11ItemState D_80071042[64];
+/* 800F7AA0 saves/restores D_80126E44 here using sh/lhu across the transfer calls. */
+extern s16 D_80126E46;
 /* 801024D8 reads the table selector with lb. */
 extern s8 D_801273EA_table __asm__("D_801273EA");
 
