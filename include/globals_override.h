@@ -5796,5 +5796,11 @@ struct Ovl11EventDispatchState {
 /* 800D539C passes this byte-table address to the state-step helper D04D4. */
 extern u8 D_80123C88;
 
+/* 800D79E8 uses these signed word counters for the 25-by-45 scan. */
+extern s32 D_80128D88;
+extern s32 D_80128D8C;
+/* 800D79E8 passes this position to 800BDB88 and steps words +0/+8. */
+extern s32 D_80128D98[4];
+
 #endif /* GLOBALS_OVERRIDE_H */
 
