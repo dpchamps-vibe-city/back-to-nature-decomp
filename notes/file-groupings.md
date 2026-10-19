@@ -12471,6 +12471,7 @@ Members:
   record-tag update run above (sibling of 800DA49C/800DA518); not link-adjacent
   (0x800D85F8 sits ~0x1E00 above the run).
 - ovl_11_func_800D876C (m, candidate same TU; [evidence](research/ovl_11_func_800D876C-grouping.md)) — validates a grid entry's item/state, emits effects, and resets or refreshes the cell.
+- ovl_11_func_800D8C6C (m, byte-exact, candidate same TU; [evidence](research/ovl_11_func_800D8C6C-grouping.md)) — threshold-gated grid clear with 2×2 footprint handling and item-effect dispatch.
 - ovl_11_func_800D81BC (m, matched this session, byte-exact) — the zero-gap
   link-order predecessor of ovl_11_func_800D8320 (ends exactly at 0x800D8320)
   and its twin: same `ovl_11_func_800DAF60` entry view then `D_80123DFC[arg0]`
