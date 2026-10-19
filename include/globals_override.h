@@ -935,6 +935,14 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800F3840 loads u8 at +0x44B8 and stores its increment at +0xE6CB. */
+struct Ovl11F3840State {
+    u8 pad_0[0x44B8];
+    u8 field_44B8;
+    u8 pad_44B9[0xE6CB - 0x44B9];
+    u8 field_E6CB;
+};
+
 /* 80110944 reads the low halfword, signed +30, word +34 and u16 +B4. */
 typedef struct {
     u16 number;
