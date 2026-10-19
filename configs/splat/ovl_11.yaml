@@ -107,6 +107,7 @@ segments:
       - [0x3194, rodata]
       - [0x32A8, .rodata, ovl_11_func_80115CAC]
       - [0x32C8, rodata]
+      - [0x3340, .rodata, ovl_11_func_801165E0]
       - [0x3378, .rodata, ovl_11_func_801173B8]
       - [0x339C, rodata]
       - [0x33A0, .rodata, ovl_11_func_80117BB4]
