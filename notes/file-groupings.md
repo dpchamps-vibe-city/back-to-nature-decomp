@@ -293,7 +293,7 @@ Members:
 - ovl_11_func_800D3CA4 (m) — flag → arg 2/7, result 0xA / 1.
 - ovl_11_func_800D3CE8 (m) — flag → arg 2/7, result 0xD / 1.
 
-## `ovl_11` ovl_11_func_800F6680-driven state-set run — 0x800F66F0–0x800F67E0 (confidence: medium)
+## `ovl_11` ovl_11_func_800F6680-driven state-set / dispatcher run — 0x800F66F0–0x800F67E0 (confidence: medium)
 
 Evidence: three link-order-contiguous functions with no gaps
 (0x800F66F0 len 0x44, 0x800F6734 len 0x44, 0x800F6778 len 0x68) that all
@@ -303,6 +303,8 @@ short fixed sequence of `func_8001AF70` / `func_8001B2CC` / `func_800226D8` /
 0x20000 into `D_8006C838.field_0C`, the shared flag word reached by other
 `D_8006C838` views. Adjacency plus the shared entry callee and shared global
 cluster all point the same way.
+Evidence and limits for the adjacent dispatcher addition:
+[state-set/dispatcher research](research/ovl_11_func_800F67E0-grouping.md).
 
 Members:
 - ovl_11_func_800F66F0 (m) — opens with `ovl_11_func_800F6680`, sets
@@ -312,6 +314,7 @@ Members:
 - ovl_11_func_800F6778 (m, matched this session) — same prologue, ORs bit
   0x20000 into `D_8006C838.field_0C`, sets `D_80126E40 = 4`, then
   `func_800226D8(0)` / `func_80017B18(0)` / `func_8002261C(3, 0x37A)`.
+- ovl_11_func_800F67E0 (m) — dispatches the shared state machine through readiness checks, message completion, menu updates and exit cleanup.
 
 ## `ovl_11` s16 /30 HUD-argument run — 0x800FE640 / 0x800FE704 / 0x800FE780 (confidence: medium)
 
