@@ -8010,6 +8010,7 @@ Members:
 - ovl_11_func_800E6EAC (m, candidate local same TU with 800E6EE0; [evidence](research/ovl_11_func_800E6EE0-grouping.md)) — forwards `(0, arg0, arg1, 0)` to `ovl_11_func_800E6EE0`.
 - ovl_11_func_800E6EE0 (m, accessor family; candidate local same TU with 800E6EAC; [evidence](research/ovl_11_func_800E6EE0-grouping.md)) — optionally resolves an item ID from `D_80129560` and returns whether `ovl_11_func_800EEC1C` finds it.
 - ovl_11_func_800E6F34 (m, candidate local same TU with 800E6EE0; [evidence](research/ovl_11_func_800E6F34-grouping.md)) — inserts an optionally slot-resolved item through the item helper or into the first empty item-grid slot.
+- ovl_11_func_800E7088 (m, candidate local same TU with 800E6F34/800E6EE0; [evidence](research/ovl_11_func_800E7088-grouping.md)) — inserts an optionally slot-resolved item into held, grid or overflow storage, with optional UI feedback.
 - ovl_11_func_800E7D4C (m, candidate same TU; [evidence](research/ovl_11_func_800E7D4C-grouping.md)) — grid-item selector that writes the selected item ID to `D_80129560[slot]`.
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8C14 (m, candidate local same TU with 800E8D00; [evidence](research/ovl_11_func_800E8C14-grouping.md)) — writes a one-based lookup result to a selected `D_80129560` slot.
