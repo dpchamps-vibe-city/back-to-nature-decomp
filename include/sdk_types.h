@@ -2411,7 +2411,9 @@ typedef struct {
 typedef struct {
     s16 field_0;
     s16 field_2;
-} Ovl11CollisionTag;
+} Ovl25SetupStatePair;
+
+typedef Ovl25SetupStatePair Ovl11CollisionTag;
 
 typedef struct {
     char pad0[0x22];
