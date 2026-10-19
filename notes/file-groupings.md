@@ -14498,3 +14498,17 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800D001C (s, candidate same TU) — object draw variant with fixed companion offsets and an optional extra sprite.
 - ovl_11_func_800D0198 (s, candidate same TU) — parameterized object draw variant with optional fixed-height marker projection.
 - ovl_11_func_800D037C (m, candidate same TU) — flag-gated marker submission shared by the three preceding draw variants.
+
+## `ovl_11` constant/flag-selected callback-wrapper run — 0x80119338–0x80119470 (confidence: low)
+
+Candidate same-TU membership; callback order agrees with link order and the
+members share a helper-call idiom. Original boundaries remain unproven
+([evidence and limits](research/ovl_11_func_80119414-grouping.md)).
+
+- ovl_11_func_80119338 (candidate same TU) — submits the fixed 0x99/0x1DD helper request.
+- ovl_11_func_80119364 (candidate same TU) — submits the fixed 0x9A/0x1DE helper request.
+- ovl_11_func_80119390 (candidate same TU) — submits the fixed 0xA5/0xD9 helper request.
+- ovl_11_func_801193BC (candidate same TU) — submits the fixed 0xA6/0xDA helper request.
+- ovl_11_func_801193E8 (candidate same TU) — submits the fixed 0xA7/0xDB helper request.
+- ovl_11_func_80119414 (m, candidate same TU) — selects the 0x6D/0xD4 or 0x6E/0x248 helper request from flag bits 0x40/0x80.
+- ovl_11_func_80119470 (s, candidate same TU) — flag-gated callback selecting a direct action or the 0x64/0xD5 helper request.
