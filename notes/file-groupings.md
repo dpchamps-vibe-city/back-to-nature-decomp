@@ -16,17 +16,19 @@ Evidence paths and limits: [grouping research](research/ovl_11_func_800CC4E0-gro
 
 ## `ovl_11` D_800B9920 four-state dispatch cluster — 0x800E3A3C–0x800E4330 (confidence: medium)
 
-Evidence: `build/ovl_11/asm/data/1664.rodata.s` contains the four-entry
+Evidence: `build/ovl_11/asm/data/1740.rodata.s` contains the four-entry
 D_800B9920 handler table; the dispatcher and handlers share the D_8006C838
 +0x7A74 selector (original handler assemblies, including 800E3DC8/800E4280).
-The table links the dispatcher to this nearby handler run, but does not prove
-its translation-unit boundaries.
+Verified 800E3DC8 adds the shared D_801240D8 offset table and
+D_801291B0/D_801291B4/D_80129224 cursor/reset cluster with 800E4330;
+800E40CC consumes that cursor cluster. This strengthens the existing candidate
+group without proving TU boundaries; see [evidence](research/ovl_11_func_800E3DC8-grouping.md).
 
 - ovl_11_func_800E3A3C (m) — clears +0x522C/+0x5230, dispatches by the shared
   selector, clears flag 0x20 at +0x4450 and returns the selected handler result.
 - ovl_11_func_800E3C04 (m) — initializer entry in the same cluster: writes the
   shared +0x7A74 selector to 2, calls ovl_11_func_800E7798, then clears +0x522C/+0x5230.
-- ovl_11_func_800E3DC8 (s) — table handler that updates the shared selector.
+- ovl_11_func_800E3DC8 (m) — load/decode handler that starts deferred reads or resets the shared cursors and selects state 1 on completion.
 - ovl_11_func_800E40CC (s) — second handler in the same original dispatch table.
 - ovl_11_func_800E4280 (s) — table handler that resets the selector and returns 1.
 - ovl_11_func_800E4330 (s) — table handler that writes selector 1 and returns 0.

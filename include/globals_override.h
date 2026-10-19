@@ -2034,7 +2034,12 @@ typedef struct {
     /* 0x19 */ u8 unk19;
     /* 0x1A */ u8 unk1A;
     /* 0x1B */ u8 unk1B;
-    char pad_1C[0x130 - 0x1C];
+    /* 800E3DC8 reads signed capacity at +11C and buffer word at +124. */
+    char pad_1C[0x11C - 0x1C];
+    s32 field_11C;
+    char pad_120[4];
+    s32 field_124;
+    char pad_128[8];
     void *field_130;
 } env_struct_0x134;
 
