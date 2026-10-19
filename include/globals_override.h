@@ -6051,5 +6051,42 @@ extern Ovl11CD9A0Record *D_801287F0;
 /* 800CD9A0 compares this signed halfword with 2. */
 extern s16 D_80128CB0;
 
+/* 8012FFB4 passes these strings and the 29-entry value menu to the debug UI. */
+extern char D_8012E48C[];
+extern char D_8012E4AC[];
+extern char D_8012E4C4[];
+extern char D_8012E4C8[];
+extern struct Ovl30ValueMenuEntry D_8013439C;
+/* 8012FFB4 loads these words; calls narrow the selected IDs to signed halfwords. */
+extern s32 D_80134AFC;
+extern s32 D_80134B00;
+extern s32 D_80134B04;
+extern s32 D_80134B08;
+/* 8012FFB4 retains the save-state base while indexing these fields by 0x1D4. */
+typedef struct {
+    u8 pad0[0x99EA];
+    u16 field_99EA;
+    u16 field_99EC;
+    u8 pad99EE[0x9A06 - 0x99EE];
+    u16 field_9A06;
+} Ovl30EventRecordView;
+/* 8012FFB4 accesses flag words, three event-state halfwords and a random selector. */
+typedef struct {
+    u8 pad0[0xC];
+    u32 flagsC;
+    u8 pad10[0x44CE - 0x10];
+    u16 state44CE;
+    u16 state44D0;
+    u16 state44D2;
+    u8 pad44D4[0x5234 - 0x44D4];
+    u32 flags5234;
+    u8 pad5238[0x5492 - 0x5238];
+    s16 selected;
+    u8 pad5494[0x99E8 - 0x5494];
+    struct_80076220 records[37];
+    u8 padDD8C[0xE76C - 0xDD8C];
+    u16 random;
+} Ovl30ActionState;
+
 #endif /* GLOBALS_OVERRIDE_H */
 

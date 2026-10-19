@@ -8840,12 +8840,14 @@ Members (link order):
 - ovl_30_func_8012F44C (m) — empty per-call hook for 8012F454.
 - ovl_30_func_8012F454 (m, byte-exact) — debug flags and sound-test menu state machine.
 
-## `ovl_30` adjacent value-menu wrappers — 0x8012FEEC / 0x8012FF50 (confidence: medium)
+## `ovl_30` adjacent value-menu callbacks — 0x8012FEEC–0x8012FFB4 (confidence: medium)
 
-[Evidence and limits](research/ovl_30_func_8012FEEC-grouping.md).
+[Pair evidence and limits](research/ovl_30_func_8012FEEC-grouping.md).
+[Third-callback extension: shared menu protocol and corroborated code/table/caller order](research/ovl_30_func_8012FFB4-grouping.md).
 
 - ovl_30_func_8012FEEC (m) — gated 22-entry value-menu wrapper returning the updated cursor.
 - ovl_30_func_8012FF50 (s) — sibling gated 23-entry value-menu wrapper returning the updated cursor.
+- ovl_30_func_8012FFB4 (m) — gated 29-entry action-menu callback dispatching selections through D_80134B10.
 
 ## `ovl_30` adjacent animal/resident-record editors — 0x801306F4–0x801315E0 (confidence: medium)
 
