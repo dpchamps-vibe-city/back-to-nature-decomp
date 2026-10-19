@@ -73,6 +73,9 @@ typedef struct {
     Ovl11CC7CCSpawn spawn;
 } Ovl11CC7CCSpawnOwner;
 
+/* 800CCB90 walks three 0x34-byte records at +2; retain the siblings' byte-array linkage view. */
+extern u8 D_80128BB0[];
+
 /* 800CC7CC/800CBF70 index four pairs of signed words; retain the byte-array linkage view. */
 extern u8 D_80123130[0x20];
 /* 800CC7CC loads this shared entity selector with lhu. */
