@@ -13914,6 +13914,8 @@ container-wide object view whose +0x48 `Recon800D0408A1View` that helper takes.
   on a zero return with +0x28 == 2, calls
   `ovl_11_func_800D0408(obj->unk22, &obj->unk48, 0xC)`.
 
+- ovl_11_func_800D4314 (m, byte-exact) — collision-responsive keyframe-state handler; candidate same-TU run with `ovl_11_func_800D4558` ([evidence](research/ovl_11_func_800D4314-grouping.md)).
+
 Forty-fifth family member, link-order-adjacent to the nineteenth (confidence:
 high). `ovl_11_func_800D4D1C` (0x800D4D1C) is the immediate gapless predecessor
 of the documented nineteenth member `ovl_11_func_800D4DE8` (splat

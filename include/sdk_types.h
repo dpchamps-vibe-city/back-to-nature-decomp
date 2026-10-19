@@ -2585,6 +2585,22 @@ typedef struct {
 } Ovl11D4030Arg;
 
 typedef struct {
+    char pad0[0x22];
+    u16 direction;
+    s16 unk24;
+    s16 unk26;
+    s16 state;
+    u16 timer;
+    s16 unk2C;
+    Ovl11CollisionTag collision;
+    char pad32[2];
+    s32 flags;
+    s32 position[3];
+    char pad44[4];
+    Recon800D0408A1View velocity;
+} Ovl11D4314Object;
+
+typedef struct {
                s32 field_00[23];
                s16 index;
                s16 field_5E;

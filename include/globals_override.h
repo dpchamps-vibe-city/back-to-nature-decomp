@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800D4314 passes this six-word keyframe table to 800D04D4. */
+extern u8 D_80123BD4;
+
 /* 800BE26C increments this word; 800BE2B8 clears it. */
 extern s32 D_80128810;
 
