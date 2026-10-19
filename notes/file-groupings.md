@@ -1066,6 +1066,10 @@ ovl_11_func_80107528 calls four of the five members, and the sole caller of
 ovl_11_func_8010780C is its zero-gap successor ovl_11_func_80107888. Both
 0x8010780C and 0x80107888 call `func_8001AF44` and touch the same main-binary
 `D_8006C838` +0x44BA/+0x44BC state s16 pair (`D_80070CF2`/`D_80070CF4`).
+The verified nested guard/dispatcher pair supplies high-confidence same-TU
+evidence for 0x8010780C and 0x80107888 specifically; the wider run remains a
+medium-confidence candidate, with no recovered outer file boundary (see
+[reviewed evidence](research/ovl_11_func_80107888-grouping.md)).
 Members (address order):
 - ovl_11_func_801075C0 (s) — shared caller's first callee, gapless run head
 - ovl_11_func_80107604 (m) — second gapless member; shares the 0x1D4-stride
@@ -1075,15 +1079,8 @@ Members (address order):
 - ovl_11_func_8010775C (m, matched this session) — third gapless member;
   9-case jump-table dispatch on arg0 (0–8) selecting an (a0, a1) pair, then
   tail-calls the 0x80107B54 lookup leaf; default returns 0
-- ovl_11_func_8010780C (m, matched this session) — state guard leaf: reads the
-  +0x44BA/+0x44BC s16 pair (D_80070CF2 == 3 && D_80070CF4 == 0x17) through
-  the shared `base = (char *)&D_8006C838` idiom, then gates two
-  `func_8001AF44` flag tests (0x1B, and `(arg0 + 0x21) & 0xFFFF`); returns 0
-  or 1. Carries the CAPTURE_PREV_RET dead-$v0 fossil (same family as the
-  documented v0-channel ovl_11 leaves 800D1CD0/800D0600/800D12A0 and
-  800DD45C; see notes/research/func_8001EAE4-v0-channel-delay-slot-fossil.md)
-- ovl_11_func_80107888 (s) — sole caller of 0x8010780C and its zero-gap
-  successor; run tail, ends at 0x80107B54; also calls `func_8001AF44`
+- ovl_11_func_8010780C (m) — nested state/flag guard belonging to 80107888.
+- ovl_11_func_80107888 (m) — guard dispatcher; records a successful selector in D_8012D038.
 
 ---
 
