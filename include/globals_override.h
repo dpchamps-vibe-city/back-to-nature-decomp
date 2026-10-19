@@ -1228,6 +1228,16 @@ struct Ovl11ClockAnchor {
     u32 counter;
 };
 
+/* 800BEB28 reads the s16 at +91DC, flags at +91E0 and pool pointer at +DD8C. */
+struct Ovl11CollisionDispatchState {
+    char pad0[0x91DC];
+    s16 region;
+    char pad91DE[2];
+    s32 flags;
+    char pad91E4[0xDD8C - 0x91E4];
+    void *pool;
+};
+
 /* ovl_11_func_800BE94C shares this base for the +0x20 pool and +0x44BA selector. */
 struct Ovl11ItemCollisionGlobals {
     u8 pad_0[0x20];
