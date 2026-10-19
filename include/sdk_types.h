@@ -2666,6 +2666,12 @@ typedef struct {
 } Ovl11EffectCoordinate;
 
 typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Ovl11Func800BDCE8Arg1;
+
+typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;

@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800D2DB8 loads this signed word and compares it with 1. */
+extern s32 D_80128D6C;
+
 /* 800D4314 passes this six-word keyframe table to 800D04D4. */
 extern u8 D_80123BD4;
 

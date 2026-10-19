@@ -2098,7 +2098,7 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_80123754 setter/getter run + updater siblings — 0x800D12A0–0x800D24FC (confidence: medium; updater-tail extension: low)
+## `ovl_11` D_80123754 setter/getter run + updater siblings / flag-reader helper — 0x800D12A0–0x800D24FC / 0x800D2DB8 (confidence: medium; extensions: low)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) in the middle of the
 overlay, sharing a single file-scope s16 global. Evidence is a shared global
@@ -2172,6 +2172,9 @@ Members (address order):
 Candidate updater-tail extension ([evidence and limits](research/ovl_11_func_800D2334-grouping.md)):
 - ovl_11_func_800D2240 (candidate same TU) — updates six 0xB0 object records through state/reset/timer helpers.
 - ovl_11_func_800D2334 (m, candidate same TU) — updates the paired singleton objects with state/flag gates and reset/timer helpers.
+
+Candidate shared-flag helper ([evidence and limits](research/ovl_11_func_800D2DB8-grouping.md)):
+- ovl_11_func_800D2DB8 (m, candidate same TU) — shared-flag-controlled probe helper for 800D12B8 and 800D196C.
 
 ---
 
