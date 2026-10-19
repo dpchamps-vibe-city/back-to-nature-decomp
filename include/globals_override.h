@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800CE550 reads five signed halfwords at D_801232C8 with stride two. */
+extern s16 D_801232C8[5];
+
 /* 800D2DB8 loads this signed word and compares it with 1. */
 extern s32 D_80128D6C;
 
