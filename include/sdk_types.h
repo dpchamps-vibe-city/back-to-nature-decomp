@@ -212,26 +212,6 @@ typedef struct {
 } M2C_06c1c0460361_Struct_800E1714;
 
 typedef struct {
-    char pad_00[2];
-    u16 index;
-    char pad_04[0x16 - 4];
-    s16 pool;
-    char pad_18[0x22 - 0x18];
-    u16 direction;
-    char pad_24[4];
-    s16 state;
-    u16 step;
-    s16 timer;
-    char pad_2E[2];
-    s16 map;
-    char pad_32[2];
-    s32 flags;
-    s32 x;
-    s32 y;
-    s32 z;
-} M2C_07567038918a_Ovl11D539CObject;
-
-typedef struct {
     u16 unk0;
     char pad_02[0x22];
     u16 unk24;
@@ -2492,17 +2472,6 @@ typedef struct {
 } Ovl11C3B78Arg0;
 
 typedef struct {
-    u8 pad0[0x38];
-    s16 unk38;
-    u8 pad3A[0x84 - 0x3A];
-    s16 unk84;
-    u8 pad86[0x100 - 0x86];
-    s32 unk100;
-    s32 unk104;
-    s32 unk108;
-} Ovl11C4A2CObject;
-
-typedef struct {
     s16 id;
     u8 unk2[2];
     s16 unk4;
@@ -2533,33 +2502,12 @@ typedef struct {
 } Ovl11C7010Object;
 
 typedef struct {
-    char pad0[0x22];
-    u16 unk22;
-    char pad24[0x34 - 0x24];
-    s16 unk34;
-    char pad36[2];
-    u16 unk38;
-    char pad3A[2];
-    u16 unk3C;
-    char pad3E[0x6C - 0x3E];
-    s32 unk6C;
-} Ovl11C8FA8Object;
-
-typedef struct {
                char pad_0[4];
                s16 unk4;
                s16 unk6;
                char pad_8[4];
                s32 unkC;
 } Ovl11CC4E0Object;
-
-typedef struct {
-    char pad0[0x36];
-    u16 flags;
-    char pad38[0x40 - 0x38];
-    u16 vals[(0x84 - 0x40) / 2];
-    s16 value;
-} Ovl11CD5BCObject;
 
 typedef struct {
     char pad0[0x38];
@@ -2658,13 +2606,6 @@ typedef struct {
 typedef struct {
     u8 bytes[4];
 } Ovl11EffectCoordinate;
-
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    u16 unk4;
-    s16 unk6;
-} Ovl11FA1CCArg;
 
 typedef struct {
     s16 unk0;
@@ -2808,19 +2749,6 @@ struct Ovl11RotationState {
     s16 unk12;
     Ovl11RotationSource *unk14;
 };
-
-typedef struct {
-    u8 pad0[0x38];
-    u8 direction;
-    u8 pad39[3];
-    u16 phase;
-    u8 pad3E[0x6C - 0x3E];
-    s32 flags;
-    u8 pad70[0x84 - 0x70];
-    s16 id;
-    u8 pad86[0x260 - 0x86];
-    ObjectState animation;
-} Ovl11SelectionObject;
 
 typedef struct {
     char pad_00[0x30];

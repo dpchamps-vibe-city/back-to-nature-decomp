@@ -4130,6 +4130,15 @@ extern struct SpriteSourceData D_800C0B2C;
  * Absolute-addressed (extern-only, lui + %lo) in the -G0 overlay build. */
 extern u8 D_800C0458[];
 
+/* 800CA24C writes three projection-input halfwords and passes them to 8001DFD4. */
+extern s16 D_80128B80[4];
+/* 8001DFD4 writes two screen-coordinate words, read by 800CA24C at +0/+4. */
+extern s32 D_80128B88[2];
+/* 800CA24C tests this word before consulting the per-index halfword table. */
+extern s32 D_80123154;
+/* 800CA24C indexes this signed-halfword table with the object's signed +FE. */
+extern s16 D_80125F24[];
+
 /* D_800BCD18 - ovl_21 four-halfword (SVECTOR-shaped) projection workspace.
  * ovl_21_func_800BAFFC writes vx/vy/vz and passes its address as the SVECTOR
  * argument of func_8001DFD4. Absolute-addressed; classified in globals.h as
