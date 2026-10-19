@@ -1073,18 +1073,22 @@ extern u8 D_80075854_reset[0x18E] __asm__("D_80075854");
 /* 800CE96C clears six 0xB0-byte records; named view preserves the existing record type. */
 extern u8 D_80075BC4_reset[0x420] __asm__("D_80075BC4");
 
-/* 800CE96C: reset fields at +0/+4 of 0xB4, 0xB8 and 0xB0-stride records. */
+/* 800CE96C resets +0/+4 in these records; 800CFC20 tests flags at +34. */
 struct Ovl11ResetB4 {
     u16 type;
     u16 pad_2;
     u16 id;
-    u8 pad_6[0xB4 - 6];
+    u8 pad_6[0x34 - 6];
+    s32 flags;
+    u8 pad_38[0xB4 - 0x38];
 };
 struct Ovl11ResetB8 {
     u16 type;
     u16 pad_2;
     u16 id;
-    u8 pad_6[0xB8 - 6];
+    u8 pad_6[0x34 - 6];
+    s32 flags;
+    u8 pad_38[0xB8 - 0x38];
 };
 struct Ovl11ResetB0 {
     u16 type;
@@ -1092,6 +1096,19 @@ struct Ovl11ResetB0 {
     u16 id;
     u8 pad_6[0xB0 - 6];
 };
+/* 800CFC20 updates the byte at +44CD, flags at +5234 and count at +523E. */
+struct Ovl11CFC20Status {
+    u8 pad_0[0x44CD];
+    u8 field_44CD;
+    u8 pad_44CE[0x51C8 - 0x44CE];
+    u8 object[0x5234 - 0x51C8];
+    s32 flags;
+    u8 pad_5238[6];
+    u16 count;
+    u8 pad_5240[0x7AB4 - 0x5240];
+    struct Ovl11ResetB4 records[10];
+};
+
 /* 800CE96C: witnessed base-relative arrays and scalar reset fields. */
 struct Ovl11PoolResetView {
     u8 pad_0[0x4450];
