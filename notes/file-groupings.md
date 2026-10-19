@@ -1055,15 +1055,17 @@ Members (link order):
 
 ---
 
-## `ovl_11` 0x80107480 gapless run (button/state guards) — 0x80107480–0x80107B54 (confidence: medium)
+## `ovl_11` 0x80107418 gapless run (button/state guards) — 0x80107418–0x80107B54 (confidence: medium)
 
 Candidate same-TU guard family; neither outer file boundary is established.
 High-confidence membership applies only to `8010780C`/`80107888`.
-See [record-evaluator membership evidence](research/ovl_11_func_80107480-grouping.md),
+See [list-evaluator membership evidence](research/ovl_11_func_80107418-grouping.md),
+[record-evaluator membership evidence](research/ovl_11_func_80107480-grouping.md),
 [dispatcher membership evidence](research/ovl_11_func_80107528-grouping.md)
 and [nested-pair evidence](research/ovl_11_func_80107888-grouping.md).
 
 Members (address order):
+- ovl_11_func_80107418 (m) — evaluates a guard-record list, returning the first non--1 result or -1.
 - ovl_11_func_80107480 (m) — evaluates paired guards under D_8012D038 and returns the record result or -1.
 - ovl_11_func_80107528 (m) — selector/payload dispatcher immediately preceding its guard callees.
 - ovl_11_func_801075C0 (s) — first guard callee, sharing the record view with 80107604.
