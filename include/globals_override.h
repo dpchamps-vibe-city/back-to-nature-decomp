@@ -5818,5 +5818,11 @@ extern s32 D_80128D8C;
 /* 800D79E8 passes this position to 800BDB88 and steps words +0/+8. */
 extern s32 D_80128D98[4];
 
+/* 8011DF4C uses signed word counters for a seven-by-seven scan. */
+extern s32 D_8012D7F0;
+extern s32 D_8012D7F4;
+/* 8011DF4C passes this position to 800BDB88 and steps words +0/+8; data spans 16 bytes. */
+extern s32 D_8012D800[4];
+
 #endif /* GLOBALS_OVERRIDE_H */
 
