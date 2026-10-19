@@ -7052,7 +7052,7 @@ Members:
   sprite via `ovl_23_func_800B9454`.
 - ovl_23_func_800BABD8 (m, byte-exact) — draws scrolling strips and culled markers with the shared sprite.
 
-## `ovl_11` mask-switch leaf run — 0x800F1BD0 / 0x800F1C48 / 0x800F1CC4 (confidence: low)
+## `ovl_11` mask-check caller/leaf run — 0x800F1B28 / 0x800F1BD0 / 0x800F1C48 / 0x800F1CC4 (confidence: low)
 
 Candidate same-TU run in `ovl_11` (`Obj\GF_FARM.bin`): gapless
 link-contiguous switch-on-global mask-selector leaves. Already-matched
@@ -7084,6 +7084,7 @@ link run and the shared idiom (13/16 shapes align in order with
 `ovl_11_func_800F1C48`), not on a shared global cluster.
 
 Members (link order):
+- ovl_11_func_800F1B28 (m, candidate same TU; [evidence](research/ovl_11_func_800F1B28-grouping.md)) — combines the three following mask-check leaves and optional `800E6EE0` checks.
 - ovl_11_func_800F1BD0 (m) — 4-case mask-switch over D_80070CF2
   (masks 0x40000000 / 0x20000000 / 0x10000000 / 0x08000000)
 - ovl_11_func_800F1C48 (m) — 7-case sibling over D_80070CF6
