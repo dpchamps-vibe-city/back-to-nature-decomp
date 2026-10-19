@@ -12803,9 +12803,10 @@ Members (address order):
   sets p[6] = 0, p[7] = arg0 and p[3..5] = (v[i] - p[i]) / arg0 for target
   vector `v`, returning p[5].
 
-## `ovl_11` D_801285xx–D_801287xx table-selection run — 0x8011F9EC–0x80120414 (confidence: medium)
+## `ovl_11` D_801285xx–D_801287xx table-selection run — 0x8011F52C–0x80120414 (confidence: medium)
 
-Candidate extension: [call/link and table-cluster evidence](research/ovl_11_func_80120414-grouping.md).
+Candidate extensions: [driver/reset shared-state and call/link evidence](research/ovl_11_func_8011F608-grouping.md);
+[upper call/link and table-cluster evidence](research/ovl_11_func_80120414-grouping.md).
 Original TU boundaries remain unproven.
 
 Evidence: three functions in one contiguous 0x8011F9EC–0x80120358 link run
@@ -12829,6 +12830,8 @@ Members (address order):
   tail-clears the shared `D_80128550` selector state to -1 plus the
   neighbouring `D_80128540`/`D_80128544`/`D_80128556`/`D_8012855A` fields;
   same data cluster, not a `func_80012A34` caller.
+- ovl_11_func_8011F608 (m, byte-exact) — selection-state driver coordinating text choices, transitions and reset.
+- ovl_11_func_8011F958 (candidate same TU) — saves the selection and resets the shared selection state.
 - ovl_11_func_8011F9EC (m, verified byte-exact this session) — scans two
   6-entry s16 tables at `D_80071A70` (stride 2, -1 sentinel), reads
   `D_8012855C`/`D_80128580` and writes the `D_80128550` selector state;

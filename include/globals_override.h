@@ -5155,6 +5155,17 @@ extern u32 D_8012880C;
  * 8011F574. Their signed storage views agree with the matched reset leaf. */
 extern s16 D_80128540;
 extern s16 D_8012855A;
+/* 8011F608 reads three word text pointers at +0/+4/+8; array alias
+ * preserves the existing initializer's struct view of the same symbol. */
+extern s32 Ovl11_D_80128544[3] __asm__("D_80128544");
+/* 8011F608 stores/loads the selected signed text ID and decrements a timer. */
+extern s16 D_80128556;
+extern s16 D_80128558;
+/* 8011F608 reads the signed music ID through D_8007AFF0 + 0x2549C. */
+struct Ovl11SelectionMusic {
+    u8 pad0[0x2549C];
+    s16 music;
+};
 
 /* 80112FA8 uses signed word loop counters and a four-word position buffer. */
 extern s32 D_8012D0F0;
