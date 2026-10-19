@@ -5673,6 +5673,8 @@ extern u32 D_800BB724;
 
 /* 800CB114 indexes signed halfword pairs with 2 * direction + arg2. */
 extern s16 Ovl11CollisionOffsets[] __asm__("D_801230B0");
+/* 800C498C reads signed halfword pairs indexed by u16 direction * 4. */
+extern s16 D_80123110[][2];
 /* 800CB114 uses lw/sw and unsigned comparison for the saturating counter. */
 extern u32 D_80123158;
 

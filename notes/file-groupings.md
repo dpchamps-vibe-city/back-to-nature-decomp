@@ -7352,7 +7352,7 @@ Members:
 - ovl_11_func_800CB114 (stub) — second reader of `D_801230B0`, same absolute
   `lui`+`addiu %lo` base and `lh` pair-load idiom, 0x3CC.
 
-## `ovl_11` D_80128CF8 / D_801231F4-D_801231F8 shared-flag pair — 0x800C401C / 0x800C47F0 (confidence: medium)
+## `ovl_11` D_80128CF8 / D_801231F4-D_801231F8 shared-flag pair and adjacent probe helper — 0x800C401C–0x800C498C (confidence: medium for pair; low for helper)
 
 Evidence: `ovl_11_func_800C401C` is the sole caller of `ovl_11_func_800C47F0`
 (jal 0x800C41D4) and ends exactly at 0x800C47F0 (head + 0x7D4), so the call
@@ -7373,6 +7373,7 @@ Members:
 - ovl_11_func_800C47F0 (m, byte-exact) — nibble-rotation writer of
   D_801231F4/D_801231F8, gated on D_80128CF8 and the D_8006C838+0xE4CC state
   word.
+- ovl_11_func_800C498C (m, low-confidence candidate same TU as 800C401C/800C47F0) — direction-offset position probe caching normalized flags in D_80128C50 ([evidence and limits](research/ovl_11_func_800C498C-grouping.md)).
 
 ## `ovl_11` D_80128DE8 bounds-struct init/copy/clamp run — 0x800DAFD4–0x800DB054 (confidence: medium)
 
