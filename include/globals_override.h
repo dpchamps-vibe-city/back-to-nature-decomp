@@ -1011,6 +1011,14 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 80119470 reads signed words at +44F8 and +51C0 through the shared base. */
+struct Ovl11CallbackGateState {
+    u8 pad0[0x44F8];
+    s32 status;
+    u8 pad44FC[0x51C0 - 0x44FC];
+    s32 flags;
+};
+
 /* 800F3840 loads u8 at +0x44B8 and stores its increment at +0xE6CB. */
 struct Ovl11F3840State {
     u8 pad_0[0x44B8];
