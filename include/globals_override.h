@@ -41,6 +41,24 @@ typedef struct {
 } Ovl11SlideOffset;
 extern Ovl11SlideOffset D_80123250[8];
 extern Ovl11SlideOffset D_80123270[8];
+/* 800CAADC selects four signed X/Z pairs at 80123100 or base -0x30. */
+extern Ovl11SlideOffset D_80123100[4];
+/* 800CAADC projects into two words at 80128B90 and passes this short vector. */
+extern s32 D_80128B90[2];
+extern s16 D_800A03A4[4];
+/* 800CAADC reads flags +C/+10 and position halfwords +52C8/+52CC/+52D0. */
+typedef struct {
+    char pad0[0xC];
+    s32 flagsC;
+    s32 flags10;
+    char pad14[0x51C8 - 0x14];
+    Ovl11CA708Player player;
+} Ovl11MovementState;
+/* 800CAADC copies three halfword coordinates at D_8007AFF0 +0x253B4. */
+typedef struct {
+    char pad0[0x253B4];
+    u16 coordinates[3];
+} Ovl11MovementCameraWork;
 
 typedef struct {
     u16 id;
