@@ -2813,6 +2813,14 @@ typedef struct {
 } Ovl11Func8011D890Arg;
 
 typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+} Ovl11GuardRecord;
+
+typedef struct {
     u16 id;
     u8 adjustment;
     u8 pad3;

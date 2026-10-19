@@ -1055,16 +1055,16 @@ Members (link order):
 
 ---
 
-## `ovl_11` 0x80107528 gapless run (button/state guards) — 0x80107528–0x80107B54 (confidence: medium)
+## `ovl_11` 0x80107480 gapless run (button/state guards) — 0x80107480–0x80107B54 (confidence: medium)
 
-Candidate membership follows corroborated call/link adjacency and shared state:
-verified dispatcher `80107528` ends exactly at its first callee `801075C0`
-and calls four members of the contiguous guard family. No outer file boundary
-is established; high-confidence nested-function evidence applies only to
-`8010780C`/`80107888`. See [dispatcher membership evidence](research/ovl_11_func_80107528-grouping.md)
+Candidate same-TU guard family; neither outer file boundary is established.
+High-confidence membership applies only to `8010780C`/`80107888`.
+See [record-evaluator membership evidence](research/ovl_11_func_80107480-grouping.md),
+[dispatcher membership evidence](research/ovl_11_func_80107528-grouping.md)
 and [nested-pair evidence](research/ovl_11_func_80107888-grouping.md).
 
 Members (address order):
+- ovl_11_func_80107480 (m) — evaluates paired guards under D_8012D038 and returns the record result or -1.
 - ovl_11_func_80107528 (m) — selector/payload dispatcher immediately preceding its guard callees.
 - ovl_11_func_801075C0 (s) — first guard callee, sharing the record view with 80107604.
 - ovl_11_func_80107604 (m) — record-state guard sharing the 80107B54 range-lookup tail-call with 8010775C.
