@@ -4886,7 +4886,9 @@ extern s16 D_80075AEA;
 /* D_80075AD4 - ovl_11 u16 flag, loaded with lhu (absolute access) by
  * ovl_11_func_8010B1C4, which tests it for zero and passes its address
  * to ovl_11_func_8010B778. */
-extern u16 D_80075AD4;
+/* 800D0FB4 also accesses a tag at +2E and position words through +40. */
+extern u16 _D_80075AD4[0x44 / 2] __asm__("D_80075AD4");
+#define D_80075AD4 (_D_80075AD4[0])
 
 /* D_801285F4 - ovl_11 table of 4 entries with 0xE-byte stride walked by
  * ovl_11_func_80120358. Each entry holds an s16 min at +0, an s16 max at +2
@@ -5267,6 +5269,8 @@ extern Ovl11StateEntry D_80127E40[2];
  * other matched ovl_11 leaves. Absolute-addressed from the -G0 overlay. */
 extern u16 D_80070D08;
 extern u16 D_80070D0A;
+/* 800D0FB4 reads this absolute-addressed status halfword with lhu. */
+extern u16 D_80070D0C;
 
 /* D_80128CD0 / D_80128CE0 / D_80128CEC - main-RAM coordinate pair and its
  * count. ovl_11_func_800CE2EC fills D_80128CD0 +0/+4/+8 from a 3-entry table;
