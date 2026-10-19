@@ -7175,11 +7175,11 @@ Members (link order):
 - ovl_11_func_800F6578 (m, already matched) — dispatch target case 6: leaf
   switch-return-id mapper, maps id 0x64→0x11/0x65→0x13
 
-## `ovl_11` D_800719F8 flag-word status group — 0x801124E8–0x801126C8 (confidence: medium)
+## `ovl_11` D_800719F8 flag-word status group — 0x801124E8–0x8011282C (confidence: medium)
 
 Candidate same-TU group of `ovl_11` (`Obj\GF_FARM.bin`) built around the
-`D_800719F8` flag word. Evidence produced by matching the members across
-this region's sessions:
+`D_800719F8` flag word ([extension through 8011282C](research/ovl_11_func_8011282C-grouping.md)).
+Evidence produced by matching the members across this region's sessions:
 
 - **address adjacency:** `ovl_11_func_80112440` (0x54 bytes) ends exactly at
   the `ovl_11_func_80112494` stub, leading the zero-gap run into
@@ -7230,6 +7230,8 @@ Members (link order):
   0x10000 when `D_80070D0A` is set and the `D_80070D30` 0x100000 bit is
   clear; otherwise gates on `D_80070D08` and the `D_80070D30` 0x100000 bit
   and sets 0x8000/0x20000 from the `D_80070D30` 0x100/0x200 bits
+- ovl_11_func_8011277C (s, candidate same TU) — refreshes D_800719F8 bits 0x40000/0x80000/0x100000 from three helper queries.
+- ovl_11_func_8011282C (m, candidate same TU) — refreshes D_800719F8 bits 0x200000/0x400000 from helper queries for IDs 0x1F/0x20.
 
 The stubs before the proven run (`ovl_11_func_801123AC`, 80112318, 80112160)
 may extend it; membership is not yet evidenced here. 80112284 is now matched
