@@ -15,6 +15,27 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* Rand defines this u32 seed; ovl_11 801044E4 stores 1 with sw. */
+extern u32 D_8005E290;
+
+/* 801044E4: word flags/pointer at +C/+1C and signed state halfwords. */
+typedef struct {
+    u8 pad_0[0xC];
+    s32 flags;
+    u8 pad_10[0xC];
+    s32 *reset;
+    u8 pad_20[0x4438 - 0x20];
+    s16 field_4438;
+    u8 pad_443A[0x44BA - 0x443A];
+    s16 field_44BA;
+    u8 pad_44BC[0x4502 - 0x44BC];
+    s16 field_4502;
+    u8 pad_4504[4];
+    s16 field_4508;
+    u8 pad_450A[0x51C8 - 0x450A];
+    u8 field_51C8[0x5200 - 0x51C8];
+} Ovl11StartupView;
+
 /* ovl_11 80104A90: word flags/counters, signed state halfwords and u16 at +44CE. */
 typedef struct {
     u8 pad_0[0xC];
