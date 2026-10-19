@@ -15,6 +15,9 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800BE26C increments this word; 800BE2B8 clears it. */
+extern s32 D_80128810;
+
 /* Rand defines this u32 seed; ovl_11 801044E4 stores 1 with sw. */
 extern u32 D_8005E290;
 
