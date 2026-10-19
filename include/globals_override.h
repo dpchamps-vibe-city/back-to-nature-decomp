@@ -4605,6 +4605,8 @@ extern u16 D_800BCD68[0x96];
 /* 800B8C74 indexes this byte table with the signed selection at state +0x8. */
 extern u8 D_800BCF24[];
 extern s16 D_800BF4C0[];
+/* ovl_19 800B89C8 loads/stores this selection as a signed halfword. */
+extern s16 D_800BD070;
 /* 800B8C74: state at +4, signed selection at +8, byte flag at +C,
  * indexed signed values at +160 and signed handle at +204. */
 typedef struct {
