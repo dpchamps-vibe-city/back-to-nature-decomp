@@ -2387,6 +2387,23 @@ extern char D_800B8868[];
 extern char D_800B8878[];
 extern char D_800B8884[];
 
+/* ovl_31 driver: original rodata strings passed to FntPrint. */
+extern char D_800B7E48[];
+extern char D_800B7E4C[];
+extern char D_800B7E64[];
+extern char D_800B7E78[];
+extern char D_800B7E7C[];
+extern char D_800B7E88[];
+extern char D_800B7E90[];
+extern char D_800B7EA0[];
+extern char D_800B7EA8[];
+extern char D_800B7EB0[];
+extern char D_800B7EC0[];
+extern char D_800B7EC8[];
+/* ovl_31 driver: six menu strings at stride 20, and word status loads/stores. */
+extern char D_800B87F0[][20];
+extern s32 D_800B886C;
+
 /* ovl_31 memory-card directory listing.  D_800B7EF0 is the "*" name
  * pattern and D_800B7EF4 the "%d file(s) %d block(s)\n" format;
  * D_800B88B0 is the DIRENTRY buffer MemCardGetDirentry fills (the loop

@@ -466,8 +466,7 @@ Fingerprints:
   `overlayIdentity.ts` from three agreeing sources.
 
 Members (address order):
-- ovl_31_func_800B7FCC (s) — driver; the only member with an `FntPrint` debug
-  overlay and the only caller of the other five
+- [ovl_31_func_800B7FCC](research/ovl_31_func_800B7FCC-grouping.md) (m) — input/debug driver; dispatches five memory-card helpers and displays their results.
 - ovl_31_func_800B82E8 (m) — format: `MemCardSync` then `MemCardFormat`,
   mapping the card's status onto 1 / 0 / -1 (matched 2026-08-21)
 - ovl_31_func_800B8348 (s) — unformat; same shape as the above
