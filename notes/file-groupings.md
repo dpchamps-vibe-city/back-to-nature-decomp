@@ -8461,8 +8461,7 @@ Fingerprints:
   component and cell[1] to the +0x108 component;
 - what the tie is not: the members are scattered over ~0x73E5C of text
   (0x800BF4B4 → 0x80113310) with no call edges among them, so per the ledger
-  convention this is a data-family tie, not proven TU membership
-  (`80113310` remains a stub).
+  convention this is a data-family tie, not proven TU membership.
 
 Members:
 - ovl_11_func_800BF4B4 (m, candidate member of the local 800BF630–800BF844 TU run; [evidence](research/ovl_11_func_800BF4B4-grouping.md)) — directional near/far grid probe using the pair-table offsets.
@@ -8470,8 +8469,7 @@ Members:
   applier: copies arg0's s32@0x100/0x104/0x108 into arg1, selects the table
   segment (+0x10 when arg2==2), then adds cell[0] to the first component and
   cell[1] to the third (dividing each by 2 when arg2==4)
-- ovl_11_func_80113310 (s) — same struct view and table read as 800CE034
-  (no +0x10 select), passing the summed pair to `ovl_11_func_801136D0`
+- ovl_11_func_80113310 (m, candidate member of the local 80113124–801136D0 TU run; [evidence](research/ovl_11_func_80113310-grouping.md)) — classifies and textures an empty grid cell, optionally awarding an item.
 
 ## `ovl_11` D_8006C838 pool-entry run — 0x800F4994 / 0x800F4A58 / 0x800F4FC8 (confidence: medium for the pair, low for 0x800F4FC8)
 
@@ -14219,10 +14217,13 @@ Members (address order):
     `notes/retros/2026-10-09-ovl_11_func_8011E090-retro.md`.
   - Corrected 2026-10-09: there is no `+0x45476` read.
 
-Local 10×10 texture-update candidate TU pair (confidence: medium;
-[call/link-order evidence](research/ovl_11_func_80113124-grouping.md)):
+Local 10×10 grid/texture-update candidate TU run (confidence: medium;
+[core evidence](research/ovl_11_func_80113124-grouping.md),
+[80113310 extension evidence](research/ovl_11_func_80113310-grouping.md)):
 - ovl_11_func_80113124 (m, byte-exact) — scans the selected D_8012D110 byte plane and applies cell selectors 1/2 through 80113208.
 - ovl_11_func_80113208 (s, parked) — updates a grid cell's UVs/CLUT from the selected D_801281D0 record.
+- ovl_11_func_80113310 (m, byte-exact) — classifies and textures an empty grid cell, optionally awarding an item.
+- ovl_11_func_801136D0 (m, byte-exact) — maps a position to a 10×10 cell and checks its pointer-grid flag.
 
 Local mode-6 texture-update candidate TU pair (confidence: medium;
 [call/link-order evidence](research/ovl_11_func_8011E1E8-grouping.md)):

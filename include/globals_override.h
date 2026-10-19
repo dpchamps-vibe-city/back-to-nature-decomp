@@ -5018,10 +5018,16 @@ extern u8 D_8012D110[];
 extern u8 D_80128148[];
 
 /* 80112EC4 indexes the +0x16 byte grid with strides 100/10/1 and updates
- * the +0x400 word; 80113818 increments the initial unsigned halfword. */
+ * the +0x400 word; 80113818 increments the initial unsigned halfword.
+ * 80113310 reads +2/+4/+6, writes +8/+A and indexes ten flags at +C. */
 typedef struct {
     u16 count;
-    u8 pad2[0x14];
+    s16 probability;
+    s16 centerX;
+    s16 centerY;
+    s16 lastX;
+    s16 lastY;
+    u8 found[10];
     u8 grid[10][10][10];
     u8 pad3FE[2];
     s32 flags;
