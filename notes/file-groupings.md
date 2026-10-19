@@ -5475,6 +5475,9 @@ Members (address order):
     arg1/arg2; same by-value record.
   - ovl_11_func_8011D9DC (s) — run tail, different shape (reads statics via
     $s0 + 0x51E6/0x524C); link-order follower only.
+  - ovl_11_func_8011DAD4 (m; low-confidence same-TU candidate with
+    8011D9DC; [evidence and limits](research/ovl_11_func_8011DAD4-grouping.md)) —
+    item-stack insertion with a fallback record list; returns unplaced quantity.
   Call-graph agreement via the shared by-value parameter ABI + zero-gap
   link order; callers (0x80114604 etc.) are stubs, so data TU ownership
   unconfirmed. StructD548 is shared-typed in include/game_types.h.
