@@ -1665,6 +1665,18 @@ struct struct_8006C838_800C47F0 {
     s16 field_E4CC;         /* 0xE4CC */
 };
 
+/* 8011F958 stores a halfword at D_8006C838 + 0xE4D2 before resetting selection. */
+struct Ovl11SelectionResetState {
+    char pad0[0xE4D2];
+    u16 savedSelection;
+};
+
+/* 8011F958 writes the word at D_8007AFF0 + 0x254A0 through that base. */
+struct Ovl11SelectionResetMode {
+    char pad0[0x254A0];
+    s32 mode;
+};
+
 /* D_8007A670 - u8 base of the 0xF8-stride records reached by
  * ovl_11_func_800E65AC for arg3 == 1: the target passes (char *)D_8007A670 +
  * idx*0xF8 to ovl_11_func_800F06D8 (lui + addiu %lo(D_8007A670)).
