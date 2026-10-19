@@ -5056,6 +5056,11 @@ extern u32 D_8012880C;
 extern s16 D_80128540;
 extern s16 D_8012855A;
 
+/* 80112FA8 uses signed word loop counters and a four-word position buffer. */
+extern s32 D_8012D0F0;
+extern s32 D_8012D0F4;
+extern s32 D_8012D100[4];
+
 /* ovl_11 state buffer: 80112D10 clears its +C ten-byte flags, +16
  * 10x10x10 byte grid, initial halfword and word at +400. */
 extern u8 D_8012D110[];
