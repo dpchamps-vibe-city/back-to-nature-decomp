@@ -17,6 +17,7 @@ void ovl_17_func_800B8534(void);
 void ovl_17_func_800B861C(void);
 void ovl_17_func_800B86C4(void);
 void ovl_17_func_800B8790(void);
+void ovl_17_func_800B8898(void);
 void ovl_17_func_800B8C38(void);
 void ovl_17_func_800B8D88(void);
 void ovl_17_func_800B8F28(void);
