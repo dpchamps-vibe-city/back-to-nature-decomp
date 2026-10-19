@@ -598,6 +598,7 @@ the same global is read again by `800CBF70` and by `800CCB90` (absolute
 `lui`+`%lo`, non-GP). Shared global + call edge + link adjacency; the
 `D_801290D8` cluster above is the structural twin (same 3×0x34 walk, different
 table). Members:
+- ovl_11_func_800CBE2C (m, low-confidence candidate same TU as this init/update family) — selected-record collision gate invoking item-progress and object-removal helpers on success ([evidence and limits](research/ovl_11_func_800CBE2C-grouping.md)).
 - ovl_11_func_800CBEF8 (m, matched this session) — bulk init: `p = D_80128BB0;
   for i < 3 { clear(p); p += 0x34; }`, baseline flags
 - ovl_11_func_800CBF40 (m) — field-clear leaf: zeroes eleven s16/s32 fields of

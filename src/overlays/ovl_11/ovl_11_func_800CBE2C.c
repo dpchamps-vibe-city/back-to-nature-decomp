@@ -1,3 +1,32 @@
 #include "common.h"
+#include "game_types.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800CBE2C", ovl_11_func_800CBE2C);
+s32 ovl_11_func_800BE208(s32 *arg0, Ovl11CollisionTag arg1, u16 arg2,
+                       u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
+s32 ovl_11_func_800F3BCC(u16 arg0);
+s32 func_8001FABC(s16 arg0);
+void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
+
+s32 ovl_11_func_800CBE2C(Ovl11CC4E0Object *arg0) {
+    void *object;
+    s32 result;
+
+    if (*((struct Ovl11SpriteWork *)&D_8007AFF0)->header != 0) {
+        goto failed;
+    }
+    if (((Ovl11CBE2CState *)D_8006C838)->selectedRecord != 0x15F) {
+        return 0;
+    }
+    if (ovl_11_func_800BE208((s32 *)((u8 *)arg0 + 0x24),
+            ((Ovl11CBE2CState *)D_8006C838)->collision,
+            0, 0, &object, &result, 0, 0x200) != 0) {
+        goto success;
+    }
+failed:
+    return 0;
+success:
+    ovl_11_func_800F3BCC(*(u16 *)((u8 *)arg0 + 2));
+    func_8001FABC(0x13);
+    ovl_11_func_800CCBE8(arg0);
+    return 1;
+}

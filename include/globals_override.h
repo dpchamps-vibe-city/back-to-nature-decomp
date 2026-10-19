@@ -2672,6 +2672,14 @@ typedef struct {
  * from overlays that only declare it extern; stride 0x28 per ItemData). */
 extern ItemData *D_8006C858;
 
+/* 800CBE2C passes the halfword-aligned tag at +52C4 and reads u16 +929C. */
+typedef struct {
+    char pad0[0x52C4];
+    Ovl25SetupStatePair collision;
+    char pad52C8[0x929C - 0x52C8];
+    u16 selectedRecord;
+} Ovl11CBE2CState;
+
 /* 800CB850 reads the unsigned selected record at D_8006C838 + 0x929C. */
 typedef struct {
     u8 pad0[0x929C];
