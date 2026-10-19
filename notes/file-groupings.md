@@ -1003,8 +1003,7 @@ below, tying the table's head to that idiom/table cluster.
   u16@0xB8. Clean C, baseline flags (no override); the -1-guard merge shape
   (`unk26==arg1 && (unk34&0x800)` ternary-style single call site) was the
   byte-exact spelling
-- ovl_11_func_8010CF58 (s) — adjacent tail, no shared data with the run
-  (listed only to mark the link-order boundary)
+- ovl_11_func_8010CF58 (m) — candidate run member: mode-2 gated item action and object movement reset ([grouping evidence](research/ovl_11_func_8010CF58-grouping.md)).
 - ovl_11_func_8010D04C (m, matched this session, byte-exact) — object
   initializer: memsets 0xF8, packs u16@+0x16=0x32 / s16@+0x30=1 / flag
   `s32@+0x34 |= 0x3C000000`, stores `func_80012A34(0x12C)` at s16@+0x2C and
