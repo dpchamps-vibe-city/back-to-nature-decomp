@@ -1142,6 +1142,35 @@ struct Ovl11Scan109Globals {
 
 /* ovl_11_func_800BE94C indexes four original-data halfwords by the +0x44BA selector. */
 extern u16 D_80122E6C[4];
+/* 800C0A4C walks ten 0xE-byte records; 800C0DB4 reads seven signed halfwords. */
+extern s16 D_80122E80[10][7];
+/* 800C0A4C: signed date/time pairs, flag words and elapsed halfword through the resident state. */
+struct Ovl11ClockPair {
+    s16 hour;
+    s16 minute;
+};
+struct Ovl11ClockDate {
+    s16 year;
+    s16 season;
+    s16 day;
+    s16 weekday;
+};
+struct Ovl11ClockState {
+    u8 pad_0[0xC];
+    s32 flags;
+    s32 flags_10;
+    u8 pad_14[0x44BA - 0x14];
+    s16 season;
+    s16 day;
+    s16 weekday;
+    u8 pad_44C0[0xA];
+    u16 elapsed;
+};
+/* 800C0A4C uses a u32 counter at +8 of D_8006C904, alongside its byte state. */
+struct Ovl11ClockAnchor {
+    u8 pad_0[8];
+    u32 counter;
+};
 
 /* ovl_11_func_800BE94C shares this base for the +0x20 pool and +0x44BA selector. */
 struct Ovl11ItemCollisionGlobals {
