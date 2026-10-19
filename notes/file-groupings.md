@@ -1332,6 +1332,7 @@ Members:
   far-state halfword, then routes selector s16@+0x30 through the private
   `D_800BAC04` table / the s16 dispatch maps and resolves a `D_80125528`
   record into a `D_800957F8` sprite header via func_80015704
+- ovl_11_func_8011031C (m, byte-exact) — offset-position collision probe that clears action state; shares its probe setup with the immediate successor ([evidence](research/ovl_11_func_8011031C-grouping.md)).
 - ovl_11_func_801103E8 (m, matched this session) — run member immediately
   before the state-key probe run head: its end 0x801103E8+0xAC = 0x80110494 is
   the zero-gap start of `ovl_11_func_80110494`; reads the

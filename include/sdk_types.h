@@ -2409,6 +2409,24 @@ typedef struct {
 } ObjectState;
 
 typedef struct {
+    s16 field_0;
+    s16 field_2;
+} Ovl11CollisionTag;
+
+typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    char pad24[0x2E - 0x24];
+    Ovl11CollisionTag collision;
+    char pad32[0x38 - 0x32];
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
+    char pad44[0xDC - 0x44];
+    s32 unkDC;
+} Ovl11ActionProbeObject;
+
+typedef struct {
     s16 id;
     char pad_2[4];
     s16 field_6;
@@ -2540,11 +2558,6 @@ typedef struct {
                 s32 unk104;
                 s32 unk108;
 } Ovl11CE37CArg0;
-
-typedef struct {
-    s16 field_0;
-    s16 field_2;
-} Ovl11CollisionTag;
 
 typedef struct {
     s32 *position;
