@@ -1691,6 +1691,21 @@ struct struct_8006C838_800EE944 {
  * +0x5230 and the s32 flag word at +0x5234. The tail reaches these as struct
  * members so cc1 rematerialises lui %hi(D_8006C838) + addiu %lo instead of
  * reusing the D_80071B00 - 0x52C8 base kept live across the switch. */
+/* 8011C298 clears the 25-entry counter table and updates the player state. */
+typedef struct {
+    u8 pad0[0x44F8];
+    s32 status;
+    u8 pad44FC[0x4A88 - 0x44FC];
+    u16 count;
+    u16 entries[25];
+    s32 total;
+    u8 pad4AC0[0x51C4 - 0x4AC0];
+    s16 action;
+    u8 pad51C6[0x51C8 - 0x51C6];
+    u8 object[0x51E6 - 0x51C8];
+    s16 level;
+} Ovl11PurchaseState;
+
 struct struct_8006C838_800E8F78 {
     char pad_000[0x522C];   /* 0x0000-0x522B */
     s32 field_522C;         /* 0x522C */
