@@ -3484,6 +3484,7 @@ Fingerprints:
   unproven; evidence: `notes/research/ovl_11_func_80114194-grouping.md`.
 
 Members (address order):
+- ovl_11_func_80113CD0 (m, candidate same TU) — initialises `D_8012D538` and nine entries of `D_8012D548`, then clears the busy flag ([grouping evidence](research/ovl_11_func_80113CD0-grouping.md)).
 - ovl_11_func_80114184 (m, matched this session) — leaf reset stub:
   `D_8012D52C = 0; return 1;` (`lui`/`sw`/`jr`/`addiu`); byte-exact clean C,
   baseline flags; the 0x80114184 member of the reset-stub family

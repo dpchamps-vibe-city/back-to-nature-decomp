@@ -3794,6 +3794,12 @@ extern u16 D_801282DC[];
  * Address taken only (split lui/addiu). Never defined in the overlays. */
 extern u8 D_80051E26[];
 
+/* 80113CD0 adds D_80054BBC[1] byte offsets to these text-table addresses. */
+extern u8 D_80051E92[];
+extern u8 D_80051EB8[];
+extern u8 D_80051ED0[];
+extern u8 D_80051F1C[];
+
 /* ovl_11_func_80114194 takes these table addresses and adds D_80054BBC[1]. */
 extern u8 D_80051DD6[];
 /* 80118744 adds D_80054BBC[1] bytes to this text base before 8011DD48. */
