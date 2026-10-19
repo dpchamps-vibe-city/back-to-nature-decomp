@@ -1055,30 +1055,20 @@ Members (link order):
 
 ---
 
-## `ovl_11` 0x801075C0 gapless run (button/state guards) — 0x801075C0–0x80107B54 (confidence: medium)
+## `ovl_11` 0x80107528 gapless run (button/state guards) — 0x80107528–0x80107B54 (confidence: medium)
 
-Gapless link-order run 0x801075C0 (0x44) → 0x80107604 (0x158) → 0x8010775C
-(0xB0) → 0x8010780C (0x7C) → 0x80107888 (0x2CC = 716), each starting exactly
-where the previous ends and the last ending exactly at 0x80107B54, the head of
-the documented keyed-table lookup run below (so the two entries are one
-contiguous band). Call graph and link order agree: the shared caller
-ovl_11_func_80107528 calls four of the five members, and the sole caller of
-ovl_11_func_8010780C is its zero-gap successor ovl_11_func_80107888. Both
-0x8010780C and 0x80107888 call `func_8001AF44` and touch the same main-binary
-`D_8006C838` +0x44BA/+0x44BC state s16 pair (`D_80070CF2`/`D_80070CF4`).
-The verified nested guard/dispatcher pair supplies high-confidence same-TU
-evidence for 0x8010780C and 0x80107888 specifically; the wider run remains a
-medium-confidence candidate, with no recovered outer file boundary (see
-[reviewed evidence](research/ovl_11_func_80107888-grouping.md)).
+Candidate membership follows corroborated call/link adjacency and shared state:
+verified dispatcher `80107528` ends exactly at its first callee `801075C0`
+and calls four members of the contiguous guard family. No outer file boundary
+is established; high-confidence nested-function evidence applies only to
+`8010780C`/`80107888`. See [dispatcher membership evidence](research/ovl_11_func_80107528-grouping.md)
+and [nested-pair evidence](research/ovl_11_func_80107888-grouping.md).
+
 Members (address order):
-- ovl_11_func_801075C0 (s) — shared caller's first callee, gapless run head
-- ovl_11_func_80107604 (m) — second gapless member; shares the 0x1D4-stride
-  D_8006C838 +0x8000 record view with 0x801075C0 (reads +0x19EA/+0x19EC
-  where 0x801075C0 reads +0x1A16) and the 0x80107B54 lookup tail-call with
-  0x8010775C
-- ovl_11_func_8010775C (m, matched this session) — third gapless member;
-  9-case jump-table dispatch on arg0 (0–8) selecting an (a0, a1) pair, then
-  tail-calls the 0x80107B54 lookup leaf; default returns 0
+- ovl_11_func_80107528 (m) — selector/payload dispatcher immediately preceding its guard callees.
+- ovl_11_func_801075C0 (s) — first guard callee, sharing the record view with 80107604.
+- ovl_11_func_80107604 (m) — record-state guard sharing the 80107B54 range-lookup tail-call with 8010775C.
+- ovl_11_func_8010775C (m) — selector-to-range dispatcher tail-calling 80107B54.
 - ovl_11_func_8010780C (m) — nested state/flag guard belonging to 80107888.
 - ovl_11_func_80107888 (m) — guard dispatcher; records a successful selector in D_8012D038.
 
