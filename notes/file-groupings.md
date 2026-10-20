@@ -14567,3 +14567,13 @@ members share a helper-call idiom. Original boundaries remain unproven
 - ovl_11_func_801193E8 (candidate same TU) — submits the fixed 0xA7/0xDB helper request.
 - ovl_11_func_80119414 (m, candidate same TU) — selects the 0x6D/0xD4 or 0x6E/0x248 helper request from flag bits 0x40/0x80.
 - ovl_11_func_80119470 (s, candidate same TU) — flag-gated callback selecting a direct action or the 0x64/0xD5 helper request.
+
+## `ovl_11` descriptor-driven purchase-wrapper run — 0x801194DC–0x8011977C (confidence: low)
+
+Candidate same-TU membership; original boundaries remain unproven
+([evidence and limits](research/ovl_11_func_8011977C-grouping.md)).
+
+- ovl_11_func_801194DC (s, candidate same TU) — state-gated item/quantity purchase wrapper for variant 0.
+- ovl_11_func_801195BC (s, candidate same TU) — state-gated item/quantity purchase wrapper for variant 1.
+- ovl_11_func_8011969C (s, candidate same TU) — state-gated item/quantity purchase wrapper for variant 2.
+- ovl_11_func_8011977C (m, candidate same TU) — fixed-message item/quantity purchase wrapper using the shared record.

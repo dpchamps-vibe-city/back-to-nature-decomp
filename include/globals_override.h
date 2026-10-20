@@ -3905,7 +3905,8 @@ typedef struct {
     /* 0x06 */ s16 unk6;
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
-    /* 0x0C */ s32 unkC;
+    /* 0x0C */ s16 unkC;
+    /* 0x0E */ s16 unkE; /* 8011977C initializes this message pair with sh. */
     /* 0x10 */ s32 unk10;
 } Ovl11D8012D7B8;
 extern Ovl11D8012D7B8 D_8012D7B8;

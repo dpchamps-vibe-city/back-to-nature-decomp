@@ -2791,7 +2791,8 @@ typedef struct {
                s16 unk6;
                s16 unk8;
                s16 unkA;
-               s32 unkC;
+               s16 unkC;
+               s16 unkE;
                s32 unk10;
 } Ovl11D8012D7B8;
 
