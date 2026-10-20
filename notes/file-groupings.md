@@ -2306,6 +2306,9 @@ Candidate handler-tail pair ([evidence and limits](research/ovl_11_func_800D539C
 - ovl_11_func_800D539C (m, candidate same TU) — pool-slot allocation and object-placement state handler.
 - ovl_11_func_800D55F8 (s, candidate same TU) — timed object-state handler.
 
+Candidate handler-tail extension (confidence: low; [evidence and limits](research/ovl_11_func_800D5224-grouping.md)):
+- ovl_11_func_800D5224 (m, candidate same TU) — state-0x14 selected-pool position follower, returning to state 7 when flag 0x2000 clears.
+
 ---
 
 ## `ovl_11` D_80128CD0 coord-set run — 0x800CE210–0x800CE37C (confidence: medium)
