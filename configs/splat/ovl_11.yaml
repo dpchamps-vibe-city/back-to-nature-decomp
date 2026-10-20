@@ -142,7 +142,7 @@ segments:
       - [0x36E0, .rodata, ovl_11_func_8011BAFC]
       - [0x36F8, rodata]
       - [0x3738, .rodata, ovl_11_func_8011C298]
-      - [0x3770, rodata]
+      - [0x3770, .rodata, ovl_11_func_8011C6CC]
       - [0x37B4, .rodata, ovl_11_func_8011E45C]
       - [0x37C8, .rodata, ovl_11_func_8011F1D0]
       - [0x37F0, .rodata, ovl_11_func_8011F608]

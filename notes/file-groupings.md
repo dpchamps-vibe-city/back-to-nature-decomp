@@ -14483,6 +14483,15 @@ and shared callers; original TU boundaries remain unproven.
 - ovl_11_func_8011B840 (m, candidate same TU) — descriptor-driven six-state record interaction handler with start, selection and cancellation paths.
 - ovl_11_func_8011BAFC (m, candidate same TU) — adjacent six-state interaction variant using an auxiliary record and the same state/selection helper family.
 
+## `ovl_11` adjacent transaction-handler pair — 0x8011C298 / 0x8011C6CC (confidence: low)
+
+Candidate same-TU membership: consecutive text/jump tables, shared state-global
+cluster and transaction-helper idiom; original TU boundaries remain unproven.
+[Evidence and limits](research/ovl_11_func_8011C6CC-grouping.md).
+
+- ovl_11_func_8011C298 (m, candidate same TU) — single-item purchase/dialogue state handler with mode-specific completion actions.
+- ovl_11_func_8011C6CC (m, candidate same TU) — descriptor-driven item/quantity purchase handler with stock, capacity and funds checks.
+
 ## `ovl_11` paired-value row renderer caller/callee run — 0x800FD5E8 / 0x800FD7B4 / 0x800FD968 (confidence: low)
 
 [Pair evidence and limits](research/ovl_11_func_800FD968-grouping.md);

@@ -3882,6 +3882,9 @@ extern s16 D_8012D51C;
 /* 801180F0 passes this state word by address and clears the adjacent word. */
 extern s32 D_8012D524;
 extern s32 D_8012D528;
+/* 8011C6CC reads the mode with lw and stores the selected count with sh. */
+extern s32 D_8012D520;
+extern s16 D_8012D540;
 /* 801180F0 reads signed halfword pairs with a four-byte table stride. */
 extern s16 D_80128278[][2];
 /* 801180F0 stores the next message id and next state as signed words. */
