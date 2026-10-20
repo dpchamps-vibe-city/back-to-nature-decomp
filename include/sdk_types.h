@@ -2755,6 +2755,19 @@ typedef struct {
 } Ovl11Deb00Object;
 
 typedef struct {
+    char pad0[0x24];
+    s16 unk24;
+    char pad26[0x34 - 0x26];
+    s32 unk34;
+    char pad38[0x48 - 0x38];
+    s32 unk48;
+    s32 unk4C;
+    s32 unk50;
+    char pad54[0xB6 - 0x54];
+    u16 unkB6;
+} Ovl11E644Object;
+
+typedef struct {
     u8 bytes[4];
 } Ovl11EffectCoordinate;
 
