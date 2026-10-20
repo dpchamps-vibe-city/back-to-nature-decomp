@@ -5100,6 +5100,8 @@ extern Ovl11E910Entry *D_801291B0;
 extern Ovl11E910Entry *Ovl11RecordCursor __asm__("D_801291B4");
 /* 800E4330 clears this word before initializing the scene. */
 extern s32 D_80129224;
+/* 800E40CC dispatches this 113-entry table with lh +4/+6 and lw +8/+C arguments. */
+extern s32 (*D_800B975C[0x71])(s16, s16, s32, s32);
 
 /* ovl_19_func_800BAC9C slot-programming globals. The function installs a
  * set/clear callback into D_800BD07C and walks two ovl_19 data arrays
