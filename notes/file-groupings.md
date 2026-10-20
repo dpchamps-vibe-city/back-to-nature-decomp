@@ -3756,8 +3756,10 @@ Members (address order):
   (@0x7A & 0x300) == 0`; byte-exact clean C, baseline flags
 - ovl_11_func_80110520 (m) — gapless link successor and direct caller; maps the
   leaf's result to 0/1 via `sltu`; shares the link run
-- ovl_11_func_80110544 (s) — 0x84-byte stub continuing the run (no grouping
-  evidence of its own yet)
+- ovl_11_func_80110544 (m) — 0x84-byte clean-C match continuing the run:
+  preserves bit 0x800 of object +0x34 across `8010E644`, then clears the
+  +0x48 vector through `800D0408` unless bit 0x2000 is set; the shared
+  `Ovl11E644Object` view ties it to that callee, not independently to this TU
 - ovl_11_func_801105C8 (m, matched this session, byte-exact) — run bridge:
   gets an (s16,s16) coordinate from the 0x80110658 dispatcher, projects it
   through `ovl_11_func_800D812C` into a four-word `Ovl11PaddedVec3` view, and
