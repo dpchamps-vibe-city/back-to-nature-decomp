@@ -14478,14 +14478,15 @@ corroborating consecutive-client order; original TU boundaries remain unproven.
 - ovl_11_func_8011B6C4 (m, candidate same TU) — starts item insertion and waits for the completion-status mask.
 - ovl_11_func_8011B784 (m, candidate same TU) — submits an ID-selected three-halfword record and waits for the completion-status bit.
 
-## `ovl_11` six-state interaction-handler pair — 0x8011B840 / 0x8011BAFC (confidence: low)
+## `ovl_11` interaction-handler run — 0x8011B840 / 0x8011BAFC / 0x8011BD6C (confidence: low)
 
-Candidate same-TU pair: consecutive text and jump tables, shared handler idiom
-and shared callers; original TU boundaries remain unproven.
-[Evidence and limits](research/ovl_11_func_8011B840-grouping.md).
+Candidate same-TU membership; original TU boundaries remain unproven.
+[Pair evidence and limits](research/ovl_11_func_8011B840-grouping.md);
+[BD6C extension evidence and limits](research/ovl_11_func_8011BD6C-grouping.md).
 
 - ovl_11_func_8011B840 (m, candidate same TU) — descriptor-driven six-state record interaction handler with start, selection and cancellation paths.
 - ovl_11_func_8011BAFC (m, candidate same TU) — adjacent six-state interaction variant using an auxiliary record and the same state/selection helper family.
+- ovl_11_func_8011BD6C (m, candidate extension) — selected-item purchase/confirmation handler with completion and scene-transition paths.
 
 ## `ovl_11` adjacent transaction-handler pair — 0x8011C298 / 0x8011C6CC (confidence: low)
 
