@@ -12284,6 +12284,7 @@ call idiom.
   `ovl_11_func_800DF010(this, 0x12)`; zero-gap link predecessor of the run's
   800DFB98, so the rodata-table membership and link adjacency agree.
 - ovl_11_func_800DFE74 (m, byte-exact; candidate member) — `D_800B95CC[3]` frame-sequence/flag handler ([dispatch and code/data-order evidence](research/ovl_11_func_800DFE74-grouping.md)).
+- ovl_11_func_800E0280 (m, byte-exact; candidate member) — `D_800B95CC[18]` state/flag handler, also used by the adjacent id-13 handler ([shared flag protocol and caller/link-order evidence](research/ovl_11_func_800E0280-grouping.md)).
 
 ## `ovl_11` `D_800B961C`/`D_800B966C` two-table handler dispatcher — 0x800E0C24 (confidence: medium)
 
