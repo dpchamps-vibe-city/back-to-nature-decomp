@@ -79,6 +79,7 @@ void ovl_15_func_80132494(void);
 void ovl_15_func_80132520(void);
 void ovl_15_func_801325AC(void);
 void ovl_15_func_80132638(void);
+void ovl_15_func_801326E8(void);
 void ovl_15_func_8013280C(void);
 s32 ovl_15_func_801328C4(void);
 void ovl_15_func_80132934(void);
