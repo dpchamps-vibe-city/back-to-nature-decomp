@@ -8045,6 +8045,7 @@ Members:
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8C14 (m, candidate local same TU with 800E8D00; [evidence](research/ovl_11_func_800E8C14-grouping.md)) — writes a one-based lookup result to a selected `D_80129560` slot.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
+- ovl_11_func_800E8E78 (m, candidate local same TU with 800E8F78; [shared-global/link-adjacency evidence](research/ovl_11_func_800E8E78-grouping.md)) — sets or resets the position triple from raw coordinates or table slots, then refreshes collision state.
 - ovl_11_func_800EB010 (m, candidate same TU; [evidence](research/ovl_11_func_800EB010-grouping.md)) — ten-ID initializer/updater using the shared state slots and accessor-helper cluster.
 - ovl_11_func_800EB328 (m, candidate same TU; [evidence](research/ovl_11_func_800EB328-grouping.md)) — randomized trigonometric position updater and direction selector using the shared table and 0x22-record helper cluster.
 - ovl_11_func_800EB700 (m, candidate same TU; [evidence](research/ovl_11_func_800EB700-grouping.md)) — resolves a `D_80129560` slot through `ovl_11_func_800EFC68` and compares the result via `ovl_11_func_800EFDA0`.
