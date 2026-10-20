@@ -1802,8 +1802,11 @@ typedef struct {
     s16 level;
 } Ovl11PurchaseState;
 
+/* 800ED634 also clears the signed halfword at +0x51F6. */
 struct struct_8006C838_800E8F78 {
-    char pad_000[0x522C];   /* 0x0000-0x522B */
+    char pad_000[0x51F6];
+    s16 field_51F6;
+    char pad_51F8[0x522C - 0x51F8];
     s32 field_522C;         /* 0x522C */
     s32 field_5230;         /* 0x5230 */
     s32 field_5234;         /* 0x5234 */
