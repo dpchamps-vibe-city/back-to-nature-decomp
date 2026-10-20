@@ -2429,6 +2429,26 @@ typedef struct {
 } ObjectState;
 
 typedef struct {
+    char pad_00[0x24];
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[2];
+    s16 unk30;
+    char pad_32[2];
+    s32 unk34;
+    char pad_38[0x58 - 0x38];
+    s32 unk58;
+    s32 unk5C;
+    s32 unk60;
+    s32 unk64;
+    char pad_68[0x7A - 0x68];
+    u16 unk7A;
+} Ovl11A47CObject;
+
+typedef struct {
     s16 field_0;
     s16 field_2;
 } Ovl25SetupStatePair;
