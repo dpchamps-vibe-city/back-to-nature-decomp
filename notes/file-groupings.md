@@ -1022,6 +1022,8 @@ below, tying the table's head to that idiom/table cluster.
   `s16@+0x26 != 0xF`, promotes the staged `s16@+0xBE/0xC0/0xC2` triple into
   `+0x26/+0x28/+0x2A` when `s16@+0xBE != 0`, else calls
   `ovl_11_func_8010CE80(this, s1)`; called by run member 8010CD80.
+- ovl_11_func_8010D314 (s, low-confidence candidate same TU as 8010D648) — flag-selected object-action dispatcher with area fallback helpers ([pair evidence and limits](research/ovl_11_func_8010D648-grouping.md)).
+- ovl_11_func_8010D648 (m, low-confidence candidate same TU as 8010D314) — area-selected record claim/flag helper with counter consumption and failure reporting ([pair evidence and limits](research/ovl_11_func_8010D648-grouping.md)).
 - ovl_11_func_8010E434 (m, matched this session, byte-exact) — `D_800BAABC[2]`
   handler inside the gapless block: two-state update of the shared s16@+0x28
   field (state 0 → 1 sets flag 0x800 in s32@+0x34; state -1 clears it) and
