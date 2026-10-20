@@ -2796,6 +2796,18 @@ typedef struct {
 } Ovl11D8012D7B8;
 
 typedef struct {
+    u8 pad_00[0x16];
+    u16 unk16;
+    u8 pad_18[0xAC - 0x18];
+    u16 unkAC;
+    u8 pad_AE[0xB8 - 0xAE];
+    u16 unkB8;
+    u8 pad_BA[0xC4 - 0xBA];
+    s16 unkC4;
+    s16 unkC6;
+} Ovl11DE68Object;
+
+typedef struct {
     u8 pad0[0x16];
     u16 field_16;
     u8 pad18[2];

@@ -1063,7 +1063,7 @@ Members (link order):
   handler: bobs the `D_8006C838+0x5200` u16 by ±2 into `u16@+0x22`, queues
   `func_8002261C(0, D_80127D04[u16@+0xAC])`, clears bit 0x400 of the
   `D_8006C838+0x5234` flag word, returns -1.
-- ovl_11_func_8010DE68 (s, 0x45C) — gapless tail; only marks the band boundary.
+- ovl_11_func_8010DE68 (m) — candidate run member: item-response message selection and clamped object-value/flag update ([grouping evidence](research/ovl_11_func_8010DE68-grouping.md)).
 
 ---
 

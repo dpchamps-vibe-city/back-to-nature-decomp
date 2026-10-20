@@ -6245,5 +6245,22 @@ extern u16 D_8012D074;
 /* 8010A850 reads this signed halfword as the previous action state. */
 extern s16 D_8012D076;
 
+/* 8010DE68 indexes eight lh entries, and two rows of five signed deltas. */
+extern s16 D_80127D14[8];
+extern s16 D_80127D24[8];
+extern s16 D_80127D34[2][5];
+
+/* 8010DE68 reads the signed location/item fields and the unsigned event flag. */
+typedef struct {
+    u8 pad_0[0x44BA];
+    s16 area;
+    s16 room;
+    u8 pad_44BE[0x44CE - 0x44BE];
+    u16 event;
+    u8 pad_44D0[0x5252 - 0x44D0];
+    s16 item;
+    s16 alternateItem;
+} Ovl11DE68State;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
