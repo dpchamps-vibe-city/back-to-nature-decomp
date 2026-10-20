@@ -1044,6 +1044,14 @@ struct Ovl11CCCC0State {
 extern s32 D_8007AFF0[3];
 #define D_8007AFF0 (D_8007AFF0[0])
 
+/* 800C7AC0 reads/writes flags +0xC and a queued item u16 at +0x44D6. */
+struct Ovl11InteractionState {
+    char pad0[0xC];
+    s32 flags;
+    char pad10[0x44D6 - 0x10];
+    u16 queuedItem;
+};
+
 /* 800C8808 compares a signed halfword through D_8006C838 at +0xE778. */
 struct Ovl11C8808State {
     char pad0[0xE778];
