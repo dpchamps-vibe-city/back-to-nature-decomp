@@ -3816,6 +3816,26 @@ typedef struct {
     u16 values[9];
 } Ovl11NameRecord;
 extern Ovl11NameRecord D_8012D6E8;
+/* 80114604 copies nine halfwords from D638+4 and passes D63C to 800231AC. */
+extern Ovl11NameRecord D_8012D638;
+extern u16 D_8012D63C[];
+/* 80114604 reads the u16 amount at resident-state +4502. */
+typedef struct {
+    u8 pad0[0x4502];
+    u16 amount;
+} Ovl11SaleGlobals;
+/* 80114604 reads signed affection +16 and flags +34 in stride-B8 records. */
+typedef struct {
+    u8 pad0[0x16];
+    s16 affection;
+    u8 pad18[0x34 - 0x18];
+    u32 flags;
+    u8 pad38[0xB8 - 0x38];
+} Ovl11SaleAnimal;
+typedef struct {
+    u8 pad0[0x81BC];
+    Ovl11SaleAnimal animals[20];
+} Ovl11SaleAnimalGlobals;
 /* 80115308 passes this text to 800231AC. */
 extern u16 D_8012D6EC[];
 /* 80115308 reads the unsigned halfword at resident-state +0x4508. */
