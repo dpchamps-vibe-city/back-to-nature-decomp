@@ -86,6 +86,9 @@ extern s16 D_801232C8[5];
 
 /* 800D2DB8 loads this signed word and compares it with 1. */
 extern s32 D_80128D6C;
+/* 800D12B8 passes the word at 80123A14 to 80012CB4 and toggles 80128D58. */
+extern s32 D_80123A14;
+extern s32 D_80128D58;
 
 /* 800D4314 passes this six-word keyframe table to 800D04D4. */
 extern u8 D_80123BD4;
