@@ -5869,6 +5869,21 @@ typedef struct {
 } Ovl15Slot;
 /* Alternate view preserves the existing local views in other ovl_15 TUs. */
 extern Ovl15Slot Ovl15Slots[2][5] __asm__("D_80140F90");
+/* 80132C1C packs up to five 0xB4/0xB8-byte copies into this byte buffer. */
+extern u8 D_80142550[];
+/* 80132C1C clears record words at runtime base +0x7B40/+0x8248. */
+typedef struct {
+    u8 pad_0[0x7AB4];
+    Ovl15SaveRecordStates pool;
+} Ovl15TransferRuntimeStates;
+/* 80132C1C transfers 0xB8 bytes with runtime alignment checks. */
+typedef struct { u8 bytes[0xB8]; } Ovl15TransferBytesB8;
+/* Runtime copies in 80132C1C: ten 0xB4-byte records then twenty 0xB8-byte records. */
+typedef struct {
+    u8 pad_0[0x7AB4];
+    u8 records_B4[10][0xB4];
+    Ovl15TransferBytesB8 records_B8[20];
+} Ovl15TransferRuntimeRecords;
 
 /* ovl_11_func_80107044: 4-byte stride table; original data are +/-0x420. */
 extern s32 D_801274DC[4];
