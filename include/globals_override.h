@@ -6205,5 +6205,10 @@ extern u8 D_80127AD0[12];
 /* 8010A47C clears this halfword and passes it as the 800D04D4 frame timer. */
 extern u16 D_8012D070;
 
+/* 8010A654 passes this 12-byte sequence from 69960.data.s to 800D04D4. */
+extern u8 D_80127ADC[12];
+/* 8010A654 clears this halfword and passes it as the 800D04D4 frame timer. */
+extern u16 D_8012D072;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
