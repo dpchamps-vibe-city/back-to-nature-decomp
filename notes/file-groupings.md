@@ -2640,13 +2640,15 @@ Members (address order, matched in bold):
 
 ---
 
-## `ovl_11` 0x800E4568–0x800E48CC `ovl_11_func_800F5888` box-fixup caller run (confidence: medium)
+## `ovl_11` 0x800E44D4–0x800E48CC `ovl_11_func_800F5888` box-fixup caller run (confidence: medium; 800E44D4 extension: low)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) — a zero-gap
-link-order run whose members all feed the GTE/bounds hit-test leaf
-`ovl_11_func_800F5888` a local three-halfword box built by the identical
-`+0x96 / -0x64 / -0x96` fixup from three consecutive `u16` fields, then scale
-the result's third word by `D_8005E3C0->field_120`.
+link-order run of scan drivers and box testers. The testers feed the GTE/bounds
+hit-test leaf `ovl_11_func_800F5888` a local three-halfword box built by the
+identical `+0x96 / -0x64 / -0x96` fixup from three consecutive `u16` fields,
+then scale the result's third word by `D_8005E3C0->field_120`.
+The tentative `800E44D4` extension has corroborated call/link adjacency and a
+shared gate, not a proven TU boundary; see [evidence](research/ovl_11_func_800E44D4-grouping.md).
 
 Fingerprints:
 - zero-gap link-order contiguity (map): 0x800E4568 (0xA0) → 0x800E4608
@@ -2661,6 +2663,7 @@ Fingerprints:
   and `ovl_11_func_800E48CC`.
 
 Members (address order, matched in bold):
+- ovl_11_func_800E44D4 (m) — scans 37 D_80076220 records, updating timers and calling the run's object-relative tester for eligible entries.
 - ovl_11_func_800E4568 (m, matched this session, byte-exact) — walks the
   D_80129230 0x30-byte records and calls the box tester for each flagged
   work-area entity (see the D_80129230 entry); also the run's call-graph hub
