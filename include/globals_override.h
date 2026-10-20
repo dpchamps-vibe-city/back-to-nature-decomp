@@ -4459,6 +4459,9 @@ extern s16 D_800BCCD4[];
  * overlay build. Not classified in globals.h. */
 extern u32 D_800BCC60[];
 
+/* 800B8B3C stores this data object's address at state +0xC; no typed access. */
+extern u8 D_800BCA78[];
+
 /* D_800BCAD8 - ovl_21 data block at 0x800BCAD8 (0x80 bytes, ending where
  * D_800BCB58 begins). ovl_21_func_800B990C takes its address and stores it
  * into the D_800C0448 state block; no field is read through it, so an opaque
