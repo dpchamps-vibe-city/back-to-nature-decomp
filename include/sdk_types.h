@@ -2864,6 +2864,16 @@ typedef struct {
 } Ovl11E6E8Object;
 
 typedef struct {
+    char pad0[0xB8];
+    u16 flags;
+    s16 index;
+    u16 unkBC;
+    u16 saved26;
+    u16 saved28;
+    u16 saved2A;
+} Ovl11EEE4Object;
+
+typedef struct {
     u8 bytes[4];
 } Ovl11EffectCoordinate;
 
