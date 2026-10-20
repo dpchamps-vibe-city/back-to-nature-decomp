@@ -5457,6 +5457,7 @@ Members (address order):
   D_8012D520 sits in the contiguous data block D_8012D51A/51C/520/524 that
   no other code references. Shared-global fingerprint only; data TU ownership
   unconfirmed.
+  - ovl_11_func_80118A68 (m, byte-exact; low-confidence same-TU candidate with 801189C8; [evidence and limits](research/ovl_11_func_80118A68-grouping.md)) — guarded D_8012D520 state starter and initialization-callback dispatcher.
 - ovl_11 D_8012D520/D_8012D52C block bridge — 0x8011D084/0x8011D098/
   0x8011D0B4 setter/sum-copy/copy run over the orphan block's top two rows,
   in strict zero-gap link order (0x8011D084, 0x14 → 0x8011D098, 0x1C →

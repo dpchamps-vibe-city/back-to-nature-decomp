@@ -3956,6 +3956,8 @@ extern s32 D_8012D524;
 extern s32 D_8012D528;
 /* 8011C6CC reads the mode with lw and stores the selected count with sh. */
 extern s32 D_8012D520;
+/* 80118A68 indexes this stride-4 no-argument handler table; matched entries return s32. */
+extern s32 (*D_800BB2BC[])(void);
 extern s16 D_8012D540;
 /* 801180F0 reads signed halfword pairs with a four-byte table stride. */
 extern s16 D_80128278[][2];
