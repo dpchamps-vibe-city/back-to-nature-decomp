@@ -1387,6 +1387,7 @@ Candidate same-TU family; [shared-table, call/link-order evidence and limits](re
 
 - ovl_11_func_8010B4D8 (m, byte-exact) — selected-handler update step with a counter-gated state-selection refresh.
 - ovl_11_func_8010B57C (m, byte-exact) — dual-table transition dispatcher that records the selection and resets handler state.
+- ovl_11_func_8010BFEC (m, byte-exact; low-confidence candidate extension) — selection-dependent setup/reset handler ([grouping evidence](research/ovl_11_func_8010BFEC-grouping.md)).
 
 ---
 
