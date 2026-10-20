@@ -932,7 +932,7 @@ separate same-family entries, not same-TU members.
 
 ---
 
-## `ovl_11` D_8007A638 seven-record state run — 0x8010C6A0 / 0x8010C7F0 / 0x8010C95C / 0x8010C9B4 (confidence: medium)
+## `ovl_11` D_8007A638 seven-record state run — 0x8010C6A0 / 0x8010C7F0 / 0x8010C95C / 0x8010C9B4 / 0x8010CAD4 (confidence: medium; CAD4 low)
 
 Candidate same-TU family over the overlay-local global `D_8007A638` (a
 seven-entry, 0xF8-stride record array, 0x6C8 bytes).
@@ -961,6 +961,7 @@ Members (link order):
 - ovl_11_func_8010C7F0 (s) — reads `D_8007A638` (with a `D_8006C838` arm).
 - ovl_11_func_8010C95C (s) — reads `D_8007A638`.
 - ovl_11_func_8010C9B4 (m) — seven-record update sweep calling nearby 8010CB6C ([grouping evidence](research/ovl_11_func_8010C9B4-grouping.md)).
+- ovl_11_func_8010CAD4 (m, low-confidence candidate) — state/flag-gated per-record action wrapper ([call/link evidence and limits](research/ovl_11_func_8010CAD4-grouping.md)).
 
 ---
 

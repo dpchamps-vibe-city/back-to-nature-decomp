@@ -1806,6 +1806,14 @@ typedef struct {
     u16 pending;
 } Ovl11DF84CStateView;
 
+/* 8010CAD4 reads unsigned halfwords at D_8006C838 +0x44C0 and +0xE4C8. */
+typedef struct {
+    u8 pad0[0x44C0];
+    u16 field_44C0;
+    u8 pad44C2[0xE4C8 - 0x44C2];
+    u16 field_E4C8;
+} Ovl11CAD4StateView;
+
 /* View of D_8006C838 for ovl_11_func_800C47F0: the s16 state word at
  * +0xE4CC. Reached as a struct member so cc1 keeps lui %hi(D_8006C838),
  * addiu %lo, ori 0x8000, addu followed by lh 0x64CC. */
