@@ -1295,7 +1295,7 @@ that documented cluster. Members (address order):
 
 ---
 
-## `ovl_11` far-state/reset band — 0x8010FEF8 → 0x801110CC (confidence: medium-low; 8010FEF8 extension: low)
+## `ovl_11` far-state/reset band — 0x8010FBC4 → 0x801110CC (confidence: medium-low; 8010FBC4/8010FEF8 extensions: low)
 
 Same-TU candidate band of `ovl_11` (`Obj\GF_FARM.bin`): its previously
 documented core starts with matched `ovl_11_func_80110118` in the unbroken link
@@ -1326,6 +1326,7 @@ idioms at once:
   object's +0x38/+0x3C/+0x40/+0x22; run member 801103E8 reads that same
   {s32@+0x38, s32@+0x40} pair.
 Members:
+- ovl_11_func_8010FBC4 (m, low-confidence candidate predecessor) — mode-6 animal-selection/action state driver with position tracking and completion reset ([evidence and limits](research/ovl_11_func_8010FBC4-grouping.md)).
 - ovl_11_func_8010FEF8 (m, candidate predecessor) — seven-state record-selection/action driver ending in the adjacent reset helper ([evidence](research/ovl_11_func_8010FEF8-grouping.md)).
 - ovl_11_func_80110188 (m, this session, byte-exact) — keyed-position lookup
   over the band's 0x10-byte `D_80127D90`–`D_80127E40` record cluster
@@ -3772,9 +3773,8 @@ Fingerprints:
 - the arg0 object view {u16@0x24, s16@0x2A, s16@0x30, u16@0x7A} now has a
   second matched reader in `ovl_11_func_800D04D4` (which reads the
   {s16@0x24, s16@0x30, u16@0x7A} subset and the same far-state gate, but
-  not +0x2A); the remaining callers (`ovl_11_func_8010F80C`,
-  `ovl_11_func_8010FBC4`) are stubs. The view is an overlay-wide data tie at
-  this confidence, not evidence of shared link order.
+  not +0x2A). The view is an overlay-wide data tie at this confidence, not
+  evidence of shared link order.
 
 Members (address order):
 - ovl_11_func_80110494 (m, matched this session) — state-key probe leaf: guards
