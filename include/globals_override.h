@@ -1024,6 +1024,10 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 80021DA8 initializes three base words; 800DE4C0 reaches the far work area. */
+extern s32 D_8007AFF0[3];
+#define D_8007AFF0 (D_8007AFF0[0])
+
 /* 800C8808 compares a signed halfword through D_8006C838 at +0xE778. */
 struct Ovl11C8808State {
     char pad0[0xE778];
