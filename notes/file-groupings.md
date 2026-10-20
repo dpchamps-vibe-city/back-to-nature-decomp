@@ -8483,15 +8483,19 @@ Members:
   cell[1] to the third (dividing each by 2 when arg2==4)
 - ovl_11_func_80113310 (m, candidate member of the local 80113124–801136D0 TU run; [evidence](research/ovl_11_func_80113310-grouping.md)) — classifies and textures an empty grid cell, optionally awarding an item.
 
-## `ovl_11` D_8006C838 pool-entry run — 0x800F4994 / 0x800F4A58 / 0x800F4E84 / 0x800F4FC8 (confidence: medium within pairs, low between pairs)
+## `ovl_11` D_8006C838 pool-entry run — 0x800F4994 / 0x800F4A58 / 0x800F4CAC–0x800F4FC8 (confidence: medium within local groups, low between groups)
 
-Candidate same-TU pairs: `800F4994`/`800F4A58` and `800F4E84`/`800F4FC8`;
-a common TU spanning both remains low-confidence.
-Evidence and limits: [grouping research](research/ovl_11_func_800F4E84-grouping.md).
+Candidate same-TU pair `800F4994`/`800F4A58` and local transition/probe run
+`800F4CAC`–`800F4FC8`; a common TU spanning both remains low-confidence.
+Evidence and limits: [earlier pool-entry ties](research/ovl_11_func_800F4E84-grouping.md)
+and [shared state/output globals plus corroborated call/link adjacency](research/ovl_11_func_800F4D28-grouping.md).
 
 Members (address order):
 - ovl_11_func_800F4994 (m) — returns the matching in-bounds pool entry and arms `D_80129634`.
 - ovl_11_func_800F4A58 (m) — conditionally clears the pool-entry flag bit 8 or decrements `D_80129634`.
+- ovl_11_func_800F4CAC (m) — publishes the next pool record to `D_80129630` and initializes its transition state.
+- ovl_11_func_800F4CEC (m) — publishes the current pool record to `D_80129630` and initializes its transition state.
+- ovl_11_func_800F4D28 (m) — probes IDs 0x64/0x65 and dispatches current/next-record transitions or completion.
 - ovl_11_func_800F4E84 (m) — probes the selected pool records and dispatches hit transitions.
 - ovl_11_func_800F4FC8 (m) — clears the active pool gate and deactivates the next record.
 

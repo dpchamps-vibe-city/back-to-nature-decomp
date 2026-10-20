@@ -621,6 +621,16 @@ typedef struct {
     void *entry;
 } Ovl11PoolGateState;
 
+/* 800F4D28 tests lw +44F8 / lh +5252 and updates u16 +4 through +DDD4. */
+typedef struct {
+    u8 pad0[0x44F8];
+    s32 flags;
+    u8 pad44FC[0x5252 - 0x44FC];
+    s16 selected;
+    u8 pad5254[0xDDD4 - 0x5254];
+    u16 *record;
+} Ovl11SpawnProbeState;
+
 /* 800D759C indexes 30 ten-byte UV/clut records here (lbu +0..7, lhu +8). */
 extern u8 D_80123CA0[300];
 /* 800D759C reads a per-column flag with lbu; original data spans 48 bytes. */
