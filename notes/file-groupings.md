@@ -6380,6 +6380,7 @@ the overlay, never GP-relative), and the large-offset writers use the same
   fields. Shared 20-entry stride-four layout and -1 kind marker corroborate the
   F2724/F27B0 queue family; gapless after F27B0. Three register bindings are
   explicitly user-authorized workarounds, not original-TU evidence.
+- ovl_11_func_800F291C (m, candidate same local queue TU) — evaluates state-gated dialog requests through 800F2538 and updates the one-shot flags reset by 800F2508 ([evidence and limits](research/ovl_11_func_800F291C-grouping.md)).
 - ovl_11_func_800F45A4 (m, matched this session, byte-exact) — loads the +0x8000+0x5DB4 entity slot and
   calls ovl_11_func_800F5700 to find a matching entry, then OR/AND flips bit 0
   of the result's u16 at +0x4; one of the two readers of the same slot

@@ -4285,6 +4285,71 @@ extern s32 D_800BA894[];
 extern s32 D_80070D30;
 extern s32 D_800719F8;
 
+/* 800F291C reads these signed/unsigned state fields through one buffer base. */
+typedef struct {
+    u8 pad0[0xC];
+    s32 field_C;
+    u8 pad10[0x44B8 - 0x10];
+    union {
+        s32 word;
+        struct { s16 low; s16 high; } halves;
+    } field_44B8;
+    s16 field_44BC;
+    u8 pad44BE[0x44D4 - 0x44BE];
+    u16 field_44D4;
+    u8 pad44D6[0x498C - 0x44D6];
+    u16 field_498C[(0x51C0 - 0x498C) / 2];
+    s32 field_51C0;
+    u8 pad51C4[0x5246 - 0x51C4];
+    s16 field_5246;
+    s16 field_5248;
+    u8 pad524A[0x5492 - 0x524A];
+    s16 field_5492;
+    u8 pad5494[0x929C - 0x5494];
+    u16 field_929C;
+    u8 pad929E[0x9F68 - 0x929E];
+    u16 field_9F68;
+    u8 pad9F6A[0xA13A - 0x9F6A];
+    s16 field_A13A;
+    u8 padA13C[0xA30E - 0xA13C];
+    s16 field_A30E;
+    u8 padA310[0xA6B8 - 0xA310];
+    u16 field_A6B8;
+    u8 padA6BA[0xA88A - 0xA6BA];
+    s16 field_A88A;
+    u8 padA88C[0xAA60 - 0xA88C];
+    u16 field_AA60;
+    u8 padAA62[0xAE06 - 0xAA62];
+    s16 field_AE06;
+    u8 padAE08[0xAFDA - 0xAE08];
+    s16 field_AFDA;
+    u8 padAFDC[0xB384 - 0xAFDC];
+    u16 field_B384;
+    u8 padB386[0xB72A - 0xB386];
+    s16 field_B72A;
+    u8 padB72C[0xB8FE - 0xB72C];
+    s16 field_B8FE;
+    u8 padB900[0xBCA6 - 0xB900];
+    s16 field_BCA6;
+    u8 padBCA8[0xBE7C - 0xBCA8];
+    u16 field_BE7C;
+    u8 padBE7E[0xC04E - 0xBE7E];
+    s16 field_C04E;
+    u8 padC050[0xC3F6 - 0xC050];
+    s16 field_C3F6;
+    u8 padC3F8[0xC79E - 0xC3F8];
+    s16 field_C79E;
+} Ovl11EventStateView;
+
+/* 800F291C loads a signed halfword at flag anchor +690A. */
+typedef struct {
+    s32 flags;
+    u8 pad4[0x690A - 4];
+    s16 field_690A;
+} Ovl11EventFlagView;
+/* 800F291C reads/sets the leading word and retains this address across calls. */
+extern Ovl11EventFlagView D_80070D34;
+
 /* D_80127F80 - ovl_11 table of four halfwords scanned by
  * ovl_11_func_80112284 through an advancing s16 pointer.
  * Accessed with absolute addressing from ovl_11 code. */
