@@ -335,7 +335,7 @@ Members:
 - ovl_11_func_800FE780 (m) — sub-mode argument `3`,
   trailing args `0x120` / `0xC8`.
 
-## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6858 / 0x800C6A24 / 0x800C6AFC / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7010 / 0x800C70CC / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C84DC / 0x800C8764 / 0x800C8808 / 0x800C893C / 0x800C8AD4 / 0x800C8D9C / 0x800C8E98 / 0x800C93A4 / 0x800C9424 (confidence: medium)
+## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6858 / 0x800C6A24 / 0x800C6AFC / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7010 / 0x800C70CC / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C84DC / 0x800C8764 / 0x800C8808 / 0x800C893C / 0x800C8AD4 / 0x800C8BA8 / 0x800C8D9C / 0x800C8E98 / 0x800C93A4 / 0x800C9424 (confidence: medium)
 
 Candidate same-TU family supported by shared state/animation idioms and a
 local caller/helper cluster whose call graph agrees with gapless link order.
@@ -344,6 +344,8 @@ Evidence and limits for the 800C7010/800C70CC addition:
 [grouping research](research/ovl_11_func_800C7010-grouping.md).
 Evidence and limits for the 800C8AD4 addition:
 [dispatcher/helper research](research/ovl_11_func_800C8AD4-grouping.md).
+Evidence and limits for the 800C8BA8 addition:
+[input-gate/dispatcher research](research/ovl_11_func_800C8BA8-grouping.md).
 Evidence and limits for the 800C84DC addition:
 [adjacent interaction-helper research](research/ovl_11_func_800C84DC-grouping.md).
 Evidence and limits for the 800C8808 addition:
@@ -440,6 +442,7 @@ Members:
   rejection-call shape. Shared idioms and call edges support the group,
   not a proven original TU boundary.
 - ovl_11_func_800C8AD4 (m, candidate same TU) — validates an interaction and selects state 0x66 on success, reporting rejected requests.
+- ovl_11_func_800C8BA8 (m, candidate same TU) — gates menu/interaction input, launching menus or delegating object interactions to 800C7AC0.
 - ovl_11_func_800C8D9C (m, matched this session, byte-exact) — second witness
   of the `+0xF0` copy sub-idiom for the same a0 object: scans the 8-entry
   6-byte `+0x90` array, gates the `+0x84` element through
