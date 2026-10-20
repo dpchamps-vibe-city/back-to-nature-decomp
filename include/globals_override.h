@@ -3810,6 +3810,19 @@ extern u8 D_8012CE58[];
 extern u8 D_8012CEB8[];
 
 extern u8 D_8012D548[];
+/* 80115308 copies nine halfwords from the record at D6E8+4. */
+typedef struct {
+    s32 header;
+    u16 values[9];
+} Ovl11NameRecord;
+extern Ovl11NameRecord D_8012D6E8;
+/* 80115308 passes this text to 800231AC. */
+extern u16 D_8012D6EC[];
+/* 80115308 reads the unsigned halfword at resident-state +0x4508. */
+typedef struct {
+    u8 pad0[0x4508];
+    u16 amount;
+} Ovl11FeedGlobals;
 
 /* D_80051D34 - base of the shared D_80051xxx table region referenced by
  * ovl_11_func_80117F70: `&D_80051D34 + *D_80054BC0` (offset 0) and
