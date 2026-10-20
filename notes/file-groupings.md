@@ -12325,6 +12325,7 @@ Members (link order):
   latch into `s32@+0x58..+0x64` and OR 0x2000 into `s32@+0x34`), differing
   only in the callee `ovl_11_func_800E0C24(this, 0x12)`, which ties the
   work-area idiom to the 800E0C24 run.
+- ovl_11_func_800E1A3C (m, byte-exact; candidate member) — `D_800B966C[3]` frame-sequence/flag handler ([shared handler idiom and callback/code/data-order evidence](research/ovl_11_func_800E1A3C-grouping.md)).
 
 ## `ovl_11` `ovl_11_func_800E109C` predicate-caller run — 0x800E05A8–0x800E15C8 (confidence: medium)
 

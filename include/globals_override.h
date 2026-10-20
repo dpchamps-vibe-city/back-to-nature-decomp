@@ -6185,6 +6185,8 @@ typedef struct {
 
 /* 800DFE74 passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
 extern u8 D_80123F24[12];
+/* 800E1A3C passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
+extern u8 D_80123FDC[12];
 
 #endif /* GLOBALS_OVERRIDE_H */
 
