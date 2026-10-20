@@ -2300,6 +2300,10 @@ contiguity plus the shared handler table, not index order.
 - ovl_11_func_800D3468 (m) — object-ID dispatcher selecting and entering a state.
 - ovl_11_func_800D3574 (m, byte-exact) — object-ID sprite-source refresh, clearing the object ID when a dynamic source is unavailable.
 
+Candidate progress-flag handler pair (confidence: low; [evidence and limits](research/ovl_11_func_800D506C-grouping.md)):
+- ovl_11_func_800D4EA0 (s, candidate same TU) — progress-flag-setting placement handler selecting a follow-up state.
+- ovl_11_func_800D506C (m, candidate same TU) — progress-flag-clearing staged movement handler ending in object reset.
+
 Candidate handler-tail pair ([evidence and limits](research/ovl_11_func_800D539C-grouping.md)):
 - ovl_11_func_800D539C (m, candidate same TU) — pool-slot allocation and object-placement state handler.
 - ovl_11_func_800D55F8 (s, candidate same TU) — timed object-state handler.
