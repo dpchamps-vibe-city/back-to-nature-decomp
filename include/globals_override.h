@@ -4837,13 +4837,15 @@ extern void (*D_800BCBEC[3])(void);
 /* 800B813C reads the s16 selector@0; 800B8848 accesses s16@4CC; 800B97E4 reads s16@C,4D4,4DE..4E4. */
 typedef struct {
     s16 selector;
-    u8 pad_2[6];
+    u8 pad_2[2];
+    s32 unk4; /* 800B8728 loads/stores the pause flag as a word at +4. */
     s32 unk8;
     s16 unkC;
     s16 unkE;
     u8 pad_10[0x10];
     s16 unk20;
-    u8 pad_22[0x4CA - 0x22];
+    u8 pad_22[0x4C8 - 0x22];
+    s16 unk4C8; /* 800B8728 stores the returned sound handle at +4C8. */
     s16 unk4CA;
     s16 unk4CC;
     s16 unk4CE;
