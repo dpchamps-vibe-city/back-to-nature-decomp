@@ -2724,6 +2724,20 @@ typedef struct {
 } Ovl11D548Arg;
 
 typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad2E[2];
+    s16 unk30;
+    char pad32[2];
+    s32 unk34;
+} Ovl11D55F8Object;
+
+typedef struct {
                s32 unk0;
                void *unk4;
                s16 unk8;

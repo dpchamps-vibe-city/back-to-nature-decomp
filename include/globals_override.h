@@ -6192,6 +6192,10 @@ typedef struct {
 extern u8 D_80123F24[12];
 /* 800E1A3C passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
 extern u8 D_80123FDC[12];
+/* 800D55F8 passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
+extern u8 D_80123C94[12];
+/* 800D31EC stores a signed halfword; 800D55F8 copies it as u16 to +0x22. */
+extern s16 D_80128D7A;
 
 #endif /* GLOBALS_OVERRIDE_H */
 
