@@ -6457,6 +6457,7 @@ the overlay, never GP-relative), and the large-offset writers use the same
   and returns 1; shares the cluster's base-kept-live idiom (the `&D_8006C838`
   base stays in a callee-saved register across both calls) and sits in one
   gapless link run with members 0x800DE46C/0x800DE76C
+- ovl_11_func_800DE334 (m, low-confidence local callback-TU candidate with 800DE2EC) — queued update callback with state-gated record-field clearing ([shared-caller/link-order evidence and limits](research/ovl_11_func_800DE334-grouping.md)).
 - ovl_11_func_800CFA48 (m, matched this session) — gated bit-set leaf: after
   two `ovl_11_func_800D3230` probes, reads the s16 at +0xE4C8 via the
   cluster's +0x8000 two-stage split (base+0x8000, disp +0x64C8; same cell as
