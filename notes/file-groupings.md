@@ -1032,6 +1032,16 @@ below, tying the table's head to that idiom/table cluster.
 
 ---
 
+## `ovl_11` nested state/flag helper + parent — 0x8010EE5C / 0x8010EEE4 (confidence: high within pair)
+
+[Static-chain and gapless-link evidence; wider-TU limits](research/ovl_11_func_8010EE5C-grouping.md).
+
+Members (link order):
+- ovl_11_func_8010EE5C (m) — nested state/flag helper capturing 8010EEE4's object argument.
+- ovl_11_func_8010EEE4 (s) — enclosing object-mode handler calling 8010EE5C.
+
+---
+
 ## `ovl_11` D_800BAA84 handler run — 0x8010DA04–0x8010DE68 (confidence: medium-low)
 
 Evidence: the three `D_800BAA84` function-pointer table entries named in the
