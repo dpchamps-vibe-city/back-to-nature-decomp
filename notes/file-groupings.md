@@ -12757,6 +12757,7 @@ Members (address order):
   `ovl_15_func_8013468C`.
 - ovl_15_func_8012E2CC (m, candidate same TU) — memory-card menu lifecycle, state timing and exit fades ([grouping evidence](research/ovl_15_func_8012E2CC-grouping.md)).
 - ovl_15_func_8012E520 (m, byte-exact) — memory-card menu lifecycle, state timing and exit fades ([shared-state evidence](research/ovl_15_func_8012E520-grouping.md)).
+- ovl_15_func_8012E7C8 (m, candidate same TU) — memory-card menu lifecycle, state timing and exit fades ([grouping evidence](research/ovl_15_func_8012E7C8-grouping.md)).
 - ovl_15_func_801300E4 (m, verified byte-exact this session) — one of three
   duplicate reset wrappers tied to the initialiser through `D_80137586`: calls
   `ovl_15_func_8012E15C` and stores `-1` to that private state byte.
