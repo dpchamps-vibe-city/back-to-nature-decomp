@@ -1812,6 +1812,24 @@ struct struct_8006C838_800E8F78 {
     s32 field_5234;         /* 0x5234 */
 };
 
+/* 8011A25C: signed selections at 524C/5252, flag word and position stores. */
+typedef struct {
+    u8 pad0[0x522C];
+    s32 field_522C;
+    s32 field_5230;
+    s32 field_5234;
+    u8 pad5238[0x524C - 0x5238];
+    s16 field_524C;
+    u8 pad524E[4];
+    s16 field_5252;
+    u8 pad5254[0x52C8 - 0x5254];
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11A25CState;
+/* 8011A25C indexes this six-halfword message table with a signed load. */
+extern s16 D_801282D0[6];
+
 /* 80102B6C: lw/sw flags at +0x5234 and sh fields at +0x5252/+0x5254/+0x5256. */
 struct Ovl11SpriteRequestState {
     u8 pad0[0x5234];
