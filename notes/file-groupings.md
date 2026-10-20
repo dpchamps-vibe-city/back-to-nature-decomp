@@ -7606,7 +7606,7 @@ Members (address order):
   800EFF9C/800F1744 and calling `ovl_11_func_800EFABC` for each entry whose
   unk1E bit 0x800 is set. Non-adjacent data + idiom tie (the unk1E field the
   clear members 800C1C90/800E9620 touch); its zero-gap link predecessor is
-  the D_80129560-touching stub 800EC52C, which calls it.
+  the D_80129560-backed sequencer 800EC52C, which calls it.
 - ovl_11_func_800F227C (m, 0xD8, finalized) — non-adjacent consumer of
   the same 30-entry +0xE4 table: scans all 37 records (stride 0x1D4),
   selects the first signed threshold >= arg0, writes its index to +0x22,
@@ -7951,7 +7951,7 @@ with different widths and far-apart addresses.
 
 ## `ovl_11` D_80129560 s32-table accessor family — 0x800E5A1C–0x800EE944 + 0x800EC490 (confidence: medium)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): twenty-six matched
+Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): matched
 functions sharing the one ovl_11-private 0x50-byte s32 table
 `D_80129560` (`globals_override.h`), each guarded-indexing it with
 `s16`-scaled slots.
@@ -8068,8 +8068,8 @@ Members:
   read nowhere else in ovl_11 except `D_80070D06` at 800CD0C0); returns 1.
   Zero-gap link-order successor of the now-matched
   `ovl_11_func_800EC354` (0x800EC354 + 0x13C), so that edge is
-  matched-to-matched; still zero-gap before `ovl_11_func_800EC52C` (0xF7C,
-  stub), whose adjacency stays uncorroborated.
+  matched-to-matched.
+- ovl_11_func_800EC52C (m, candidate same TU; [evidence](research/ovl_11_func_800EC52C-grouping.md)) — score-based actor selector and scene sequencer using the shared state slots and accessor-helper cluster.
 - ovl_11_func_800EC064 (m, candidate same TU; [evidence](research/ovl_11_func_800EC064-grouping.md)) — optionally slot-resolved object flag/sub-state dispatcher.
 - ovl_11_func_800EC304 (m) — forwards two `D_80129560` values and a mutable table-slot pointer to `ovl_11_func_800F07EC`; zero-gap predecessor of family member 800EC354.
 - ovl_11_func_800EC354 (m, matched 2026-11 — this session, 0x13C, byte-exact) —

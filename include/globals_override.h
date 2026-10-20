@@ -3120,6 +3120,24 @@ struct Ovl11ColorTriple {
 };
 extern struct Ovl11ColorTriple D_800B9E38;
 
+/* 800EC52C copies 25 signed halfwords and adds values from a 5x5 unsigned table. */
+struct Ovl11SceneScores {
+    s16 values[5][5];
+};
+extern struct Ovl11SceneScores D_800B9BD4;
+extern u16 D_801249B8[5][5];
+/* 800EC52C writes this word to 1000 before starting the item operation. */
+extern s32 D_80070CB4;
+/* 800EC52C uses signed word coordinates and a signed halfword at +44B8. */
+typedef struct {
+    u8 pad0[0x4478];
+    s32 x;
+    s32 y;
+    s32 z;
+    u8 pad4484[0x44B8 - 0x4484];
+    s16 level;
+} Ovl11SceneState;
+
 /* D_80129560 - s32 table indexed by an s16 value (0x50 bytes, ovl_11).
  * Store via sw at (s16)index * 4 is done by ovl_11_func_800E8BA0;
  * load-side users ovl_11_func_800E6834/800E686C read lw at the same
