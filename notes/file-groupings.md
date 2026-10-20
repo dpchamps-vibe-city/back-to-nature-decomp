@@ -8710,19 +8710,21 @@ Members:
   that 80109E04 reads (D_8012D080) — tying the record-table consumer run to
   the ovl_11 D_8012D040/D_8012D050/D_8012D060 cluster at 0x8012D0xx.
 
-Within this consumer set, 800CE96C / 800CEBC8 form a narrower low-confidence
-candidate same-TU reset/update pair; this does not establish ownership or
-merge the distant consumers ([evidence](research/ovl_11_func_800CE96C-grouping.md)).
+The narrower low-confidence candidate same-TU pool reset/update run is
+800CE96C / 800CEBC8 / 800CECB0; this does not establish ownership or merge
+the distant consumers ([reset/update evidence](research/ovl_11_func_800CE96C-grouping.md),
+[successor evidence and limits](research/ovl_11_func_800CECB0-grouping.md)).
 
 A separate low-confidence candidate same-TU run is
-800CEFCC / 800CF044 / 800CF258; it does not merge with the reset/update pair,
+800CEFCC / 800CF044 / 800CF258; it does not merge with the reset/update run,
 the distant consumers or the D_80123758 spawn run
 ([original pair](research/ovl_11_func_800CEFCC-grouping.md),
 [successor link and limits](research/ovl_11_func_800CF044-grouping.md)).
 
 Members:
-- ovl_11_func_800CE96C (m) — pool reset/setup for the candidate reset/update pair.
-- ovl_11_func_800CEBC8 (s) — flag-gated pool update sweep for the candidate reset/update pair.
+- ovl_11_func_800CE96C (m) — pool reset/setup for the candidate reset/update run.
+- ovl_11_func_800CEBC8 (s) — flag-gated pool update sweep for the candidate reset/update run.
+- ovl_11_func_800CECB0 (m) — second-stage pool sweep and state-flag cleanup for the candidate reset/update run.
 - ovl_11_func_800CEFCC (m) — clears the selected record's flag and replaces its collision tag/position before a position probe.
 - ovl_11_func_800CF044 (m) — selects flagged pool records by ID, replaces tag/position and conditionally clears the selected record.
 - ovl_11_func_800CF258 (m, adjacent helper candidate; also in the lookup/spawn cluster) — item-id/mask test controlling whether the selected record is cleared.

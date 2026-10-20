@@ -1249,11 +1249,16 @@ struct Ovl11CFC20Status {
     struct Ovl11ResetB4 records[10];
 };
 
-/* 800CE96C: witnessed base-relative arrays and scalar reset fields. */
+/* 800CE96C: witnessed base-relative arrays and scalar reset fields.
+ * 800CECB0 also reads/writes flags +44F8 and the counter +523C. */
 struct Ovl11PoolResetView {
     u8 pad_0[0x4450];
     s32 flags;
-    u8 pad_4454[0x7AB4 - 0x4454];
+    u8 pad_4454[0x44F8 - 0x4454];
+    s32 flags_44F8;
+    u8 pad_44FC[0x523C - 0x44FC];
+    s16 counter_523C;
+    u8 pad_523E[0x7AB4 - 0x523E];
     struct Ovl11ResetB4 records_7AB4[10];
     struct Ovl11ResetB8 records_81BC[20];
     u16 cells_901C[99][2];
@@ -1272,6 +1277,9 @@ struct Ovl11PoolResetView {
     u16 field_99D8;
     u8 pad_99DA[0x99E6 - 0x99DA];
     u16 field_99E6;
+    /* 800CECB0 branches on the signed halfword at +E4CA. */
+    u8 pad_99E8[0xE4CA - 0x99E8];
+    s16 field_E4CA;
 };
 
 /* 800EF488 copies four u16 fields into 0xC-byte records and reads signed indices at +8/+A. */
