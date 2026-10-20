@@ -6368,6 +6368,12 @@ struct Ovl11A850State {
     u8 *record;
 };
 
+/* 8010FEF8 loads the stride-0x18 record pool through the word at +0xDDCC. */
+struct Ovl11FEF8State {
+    u8 pad0[0xDDCC];
+    u8 *records;
+};
+
 /* 8010A850 passes this 20-byte state sequence in 69960.data.s to 800D04D4. */
 extern u8 D_80127AE8[20];
 /* 8010A850 clears this u16 timer and passes its address to 800D04D4. */

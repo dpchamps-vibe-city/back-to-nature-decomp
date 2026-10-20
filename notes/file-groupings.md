@@ -1295,11 +1295,11 @@ that documented cluster. Members (address order):
 
 ---
 
-## `ovl_11` 0x582F8 far-state/reset band — 0x80110118 → 0x801110CC (confidence: medium-low)
+## `ovl_11` far-state/reset band — 0x8010FEF8 → 0x801110CC (confidence: medium-low; 8010FEF8 extension: low)
 
-Same-TU candidate band of `ovl_11` (`Obj\GF_FARM.bin`): matched
-`ovl_11_func_80110118` sits at the head of the unbroken link run that opens at
-0x582F8 and continues through 0x80110188 / 0x8011031C / 0x801103E8 /
+Same-TU candidate band of `ovl_11` (`Obj\GF_FARM.bin`): its previously
+documented core starts with matched `ovl_11_func_80110118` in the unbroken link
+run that opens at 0x582F8 and continues through 0x80110188 / 0x8011031C / 0x801103E8 /
 0x80110494 / 0x80110520 / 0x80110544 / 0x801105C8 / 0x80110658 / 0x80110790 /
 0x80110838 / 0x80110890 / 0x801108F8 / 0x80110944 / 0x80110CE8 /
 0x80110DA0 / 0x80110E28 / 0x80110E34, and it ties that run to two documented
@@ -1326,6 +1326,7 @@ idioms at once:
   object's +0x38/+0x3C/+0x40/+0x22; run member 801103E8 reads that same
   {s32@+0x38, s32@+0x40} pair.
 Members:
+- ovl_11_func_8010FEF8 (m, candidate predecessor) — seven-state record-selection/action driver ending in the adjacent reset helper ([evidence](research/ovl_11_func_8010FEF8-grouping.md)).
 - ovl_11_func_80110188 (m, this session, byte-exact) — keyed-position lookup
   over the band's 0x10-byte `D_80127D90`–`D_80127E40` record cluster
 - ovl_11_func_80110118 (m, this session) — far-state reset leaf: forwards
