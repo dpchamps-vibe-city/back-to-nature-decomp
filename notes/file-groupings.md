@@ -1025,6 +1025,7 @@ below, tying the table's head to that idiom/table cluster.
 - ovl_11_func_8010D314 (s, low-confidence candidate same TU as 8010D648) — flag-selected object-action dispatcher with area fallback helpers ([pair evidence and limits](research/ovl_11_func_8010D648-grouping.md)).
 - ovl_11_func_8010D648 (m, low-confidence candidate same TU as 8010D314) — area-selected record claim/flag helper with counter consumption and failure reporting ([pair evidence and limits](research/ovl_11_func_8010D648-grouping.md)).
 - ovl_11_func_8010D748 (m, low-confidence candidate same TU as 8010D314/8010D648) — area-selected 0xB8-record action-6 dispatcher with failure reporting ([sibling/link evidence and limits](research/ovl_11_func_8010D748-grouping.md)).
+- ovl_11_func_8010D850 (m, low-confidence candidate same TU as 8010D314/8010D648/8010D748) — area-selected action-7/8 dispatcher with 0x18-record fallback and failure reporting ([sibling/link evidence and limits](research/ovl_11_func_8010D850-grouping.md)).
 - ovl_11_func_8010E434 (m, matched this session, byte-exact) — `D_800BAABC[2]`
   handler inside the gapless block: two-state update of the shared s16@+0x28
   field (state 0 → 1 sets flag 0x800 in s32@+0x34; state -1 clears it) and
