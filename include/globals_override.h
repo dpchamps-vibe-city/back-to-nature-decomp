@@ -6197,5 +6197,8 @@ extern u8 D_80123C94[12];
 /* 800D31EC stores a signed halfword; 800D55F8 copies it as u16 to +0x22. */
 extern s16 D_80128D7A;
 
+/* 8010AE64 selects one of two triples; 69960.data.s contains six halfwords. */
+extern u16 D_80127B2C[6];
+
 #endif /* GLOBALS_OVERRIDE_H */
 
