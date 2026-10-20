@@ -1024,6 +1024,22 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800CCCC0 uses these word/halfword fields through the D_8006C838 base. */
+struct Ovl11CCCC0State {
+    u8 pad0[0x4450];
+    s32 flags;
+    u8 pad4454[0x44C0 - 0x4454];
+    s16 time;
+    u8 pad44C2[8];
+    s16 angle;
+    u8 pad44CC[0x12];
+    s16 pending;
+    u8 pad44E0[0x18];
+    s32 status;
+    u8 pad44FC[0x5242 - 0x44FC];
+    s16 counter;
+};
+
 /* 80021DA8 initializes three base words; 800DE4C0 reaches the far work area. */
 extern s32 D_8007AFF0[3];
 #define D_8007AFF0 (D_8007AFF0[0])
