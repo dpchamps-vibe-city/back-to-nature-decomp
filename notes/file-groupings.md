@@ -3225,7 +3225,7 @@ below.
 
 ---
 
-## `ovl_11` D_80070D10/D_800719FE reset run — 0x80111D94–0x80111F10 (confidence: medium)
+## `ovl_11` D_80070D10/D_800719FE reset/update run — 0x80111D94–0x80111F88 (confidence: medium; 80111F88 extension: low)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): a fully gapless
 link run (0x80111D94 +0xA4 → 0x80111E38 +0x30 → 0x80111E68 +0x78 →
@@ -3262,6 +3262,9 @@ Members (address order):
 - ovl_11_func_80111EE0 (m) — sets `D_80070D10 = 3` (leaf)
 - ovl_11_func_80111EF0 (s) — trampoline to `ovl_11_func_80111F10`
 - ovl_11_func_80111F10 (s) — role unknown
+- ovl_11_func_80111F88 (m) — ticks signed timers and advances progress stages on pending-timer expiry.
+
+The timer-update member is a low-confidence extension; [evidence and limits](research/ovl_11_func_80111F88-grouping.md).
 
 ---
 

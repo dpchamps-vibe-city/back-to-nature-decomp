@@ -1021,6 +1021,27 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 80111F88 reads/decrements signed timers and updates progress through this base. */
+typedef struct {
+    u8 pad0[0x44CE];
+    s16 stage0;
+    s16 stage1;
+    s16 stage2;
+    s16 complete;
+    u8 pad44D6[2];
+    s16 pendingTimer;
+    s16 activeTimer;
+    u8 pad44DC[0x44F8 - 0x44DC];
+    s32 flags;
+    u8 pad44FC[0x51C4 - 0x44FC];
+    s16 cooldown;
+    u8 pad51C6[0x91DC - 0x51C6];
+    s16 mode;
+} Ovl11ProgressState;
+
+/* 80111F88 passes this address to the matched s32-pointer callee 800CD0C0. */
+extern s32 D_80075A1C;
+
 /* 80119470 reads signed words at +44F8 and +51C0 through the shared base. */
 struct Ovl11CallbackGateState {
     u8 pad0[0x44F8];
