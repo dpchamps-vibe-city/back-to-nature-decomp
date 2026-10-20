@@ -15,6 +15,106 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800E9D28: original lh/lhu/lw/sb/sh/sw offsets through the shared
+ * work-area bases, with 0xB4/0xB8 scans and a 0xC-byte index table. */
+typedef struct { s16 pad0; s16 f2; char pad4[8]; s16 fC; } E9Ptr;
+typedef struct { s16 id; char pad[10]; } E9Small;
+/* 800E9D28 indexes four 0xC-byte records from the work-area +0xE4E0. */
+typedef struct { char pad[0xE4E0]; E9Small records[4]; } E9SmallView;
+typedef struct { s32 flags; char pad[0xB0]; } E9Flags;
+/* 800E9D28 publishes the record address, reads id +12 and flags +30. */
+typedef struct { char pad0[0x12]; u16 id; char pad14[0x1C]; s32 flags; char pad34[0x80]; } E9Record;
+typedef struct { char pad[0x7AB8]; E9Record records[10]; } E9RecordsView;
+/* 800E9D28 scans twenty 0xB8-byte flags from D_80074838 +0x1F0. */
+typedef struct { s32 flags; char pad[0xB4]; } E9Flags2;
+/* 800E9D28 reads the signed halfword at upper-base +0x1D2. */
+typedef struct { char pad[0x1D2]; s16 health; } E9Health;
+typedef struct {
+    char pad0[0xC];
+    s32 fC;
+    char pad10[0x20];
+    E9Ptr * f30;
+    char pad34[0x441C];
+    s32 f4450;
+    char pad4454[0x66];
+    s16 f44BA;
+    s16 f44BC;
+    char pad44BE[0xE];
+    u8 f44CC;
+    char pad44CD[0x2B];
+    s32 f44F8;
+    char pad44FC[0x58A];
+    u16 f4A86;
+    char pad4A88[0x738];
+    s32 f51C0;
+    char pad51C4[0x64];
+    s32 f5228;
+    char pad522C[0x8];
+    s32 f5234;
+    char pad5238[0x2];
+    s16 f523A;
+    char pad523C[0x256];
+    u16 f5492;
+    char pad5494[0x2636];
+    u16 f7ACA;
+    char pad7ACC[0x1C];
+    s32 f7AE8;
+    char pad7AEC[0x6E6];
+    s16 f81D2;
+    char pad81D4[0xFEE];
+    s16 f91C2;
+    char pad91C4[0x10C];
+    s32 f92D0;
+    char pad92D4[0x704];
+    u16 f99D8;
+    char pad99DA[0x10];
+    s16 f99EA;
+    s16 f99EC;
+    char pad99EE[0x18];
+    u16 f9A06;
+    char pad9A08[0x64];
+    u8 f9A6C;
+    char pad9A6D[0x2D31];
+    s16 fC79E;
+    char padC7A0[0x1D74];
+    s16 fE514;
+    char padE516[0xFE];
+    s32 fE614;
+    s16 fE618;
+    char padE61A[0x2];
+    u16 fE61C;
+    char padE61E[0x2];
+    void * fE620;
+    s32 fE624;
+    s16 fE628;
+    s16 fE62A;
+    s32 fE62C;
+    s32 fE630;
+    s16 fE634;
+    char padE636[0x2];
+    s32 fE638;
+    s16 fE63C;
+    char padE63E[0x12E];
+    s16 fE76C;
+    s16 fE76E;
+    char padE770[0x2];
+    s16 fE772;
+    char padE774[0x6];
+    s16 fE77A;
+    s16 fE77C;
+    char padE77E[0x2];
+    s32 fE780;
+} E9State;
+typedef struct { char pad[0x25388]; E9Ptr *f25388; } E9Other;
+
+
+/* 800E9D28 uses absolute lhu of this input-mask halfword. */
+extern u16 D_800712BE;
+/* 800E9D28 stores the halfword 100 at this absolute address. */
+extern s16 D_80071A16;
+/* 800E9D28 loads this selected-record index with signed lh. */
+extern s16 D_80071CCA;
+
 /* 800CC7CC copies four position words to the spawn at owner +18. */
 typedef struct {
     s32 vx;

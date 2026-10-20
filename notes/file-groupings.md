@@ -8087,6 +8087,7 @@ Members:
   the table when `arg2 != 0`, then scans `D_80070C72[5]`.
 - ovl_11_func_800ED7E0 (m) — selects an eligible maximum-score record with random tie-breaking and optionally stores its ID in `D_80129560[arg1]`.
 - ovl_11_func_800EDD54 (m, accessor family; candidate local same TU with 800EDEB8; [evidence](research/ovl_11_func_800EDD54-grouping.md)) — optionally resolves two table slots and dispatches their record-to-record direction.
+- ovl_11_func_800E9D28 (m, candidate same TU; [evidence](research/ovl_11_func_800E9D28-grouping.md)) — state-command dispatcher with optional `D_80129560` operand resolution and result-slot writes.
 - ovl_11_func_800E9CE4 (m, matched 2026-11 — this session, 0x44, byte-exact) —
   byte-slot copy leaf: `p = ovl_11_func_800E3A94(); p->u8@+1 =
   ((u8-stride-4 element *)D_80129560)[(s16)arg0].u8@+0; return 1;`. Same
