@@ -6429,5 +6429,25 @@ typedef struct {
     s16 alternateItem;
 } Ovl11DE68State;
 
+/* 800F1078 stores a record pointer +4454 and reads/passes s16 +44B8/+44C0. */
+struct Ovl11ConditionState {
+    u8 pad0[0x4454];
+    void *current;
+    u8 pad4458[0x44B8 - 0x4458];
+    s16 date[4];
+    s16 time[2];
+};
+
+/* 800F1078 loads two pointers +25388/+2538C, then lhu flags at +8. */
+struct Ovl11ConditionObject {
+    u8 pad0[8];
+    u16 flags;
+};
+struct Ovl11ConditionObjects {
+    u8 pad0[0x25388];
+    struct Ovl11ConditionObject *first;
+    struct Ovl11ConditionObject *second;
+};
+
 #endif /* GLOBALS_OVERRIDE_H */
 

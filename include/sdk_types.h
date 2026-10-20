@@ -2718,6 +2718,26 @@ typedef struct {
 } Ovl11CollisionQuery;
 
 typedef struct {
+    u16 unk0;
+    u8 unk2;
+    u8 unk3;
+    u16 unk4;
+    u16 unk6;
+    u32 unk8;
+    u8 unkC;
+    u8 unkD;
+    u16 unkE;
+    u32 unk10;
+    u32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+} Ovl11ConditionRecord;
+
+typedef struct {
     char pad_00[0x24];
     s16 unk24;
     s16 unk26;
