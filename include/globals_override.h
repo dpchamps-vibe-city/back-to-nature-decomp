@@ -2259,6 +2259,21 @@ extern u8 D_80071C90[];
  * s16 fields at +6/+8/+A/+C. */
 extern u8 D_801248BC[];
 
+/* 8010E6E8: signed halfword lookup, eight entries before D_80127D88. */
+extern s16 D_80127D78[8];
+
+/* 8010E6E8 retains this base for sh +51EE, lhu +5200 and words +522C..+5234. */
+typedef struct {
+    u8 pad0[0x51EE];
+    s16 field_51EE;
+    u8 pad51F0[0x5200 - 0x51F0];
+    u16 field_5200;
+    u8 pad5202[0x522C - 0x5202];
+    s32 field_522C;
+    s32 field_5230;
+    s32 field_5234;
+} Ovl11E6E8State;
+
 /* 8010DA04: signed halfword lookup, eight entries in original 69960.data. */
 extern s16 D_80127CF4[8];
 

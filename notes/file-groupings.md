@@ -1034,6 +1034,7 @@ below, tying the table's head to that idiom/table cluster.
   &s16@+0x2A)` to advance the +0x2A counter; same sparse-switch
   `case 1: default:` decision tree, object view and 800D04D4 call as the
   gapless-run sibling ovl_11_func_800D4624 (different handler table).
+- ovl_11_func_8010E6E8 (m, low-confidence candidate same TU as 8010EA6C) — availability-gated dialogue/choice state handler ([data/link evidence and limits](research/ovl_11_func_8010E6E8-grouping.md)).
 
 ---
 
