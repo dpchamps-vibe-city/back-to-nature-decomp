@@ -5909,6 +5909,30 @@ extern s16 D_80123110[][2];
 /* 800CB114 uses lw/sw and unsigned comparison for the saturating counter. */
 extern u32 D_80123158;
 
+/* 800C580C uses the D_8006C838 base for u16 counters and the +DDD4 record pointer. */
+struct Ovl11C580CState {
+    u8 pad0[0x44DE];
+    u16 count;
+    u8 pad44E0[0x51F0 - 0x44E0];
+    u16 selected;
+    u8 pad51F2[0x5254 - 0x51F2];
+    u16 fallback;
+    u8 pad5256[0xDDD4 - 0x5256];
+    Ovl11CC7CCSpawn *record;
+};
+
+/* 800C580C reads the header at +25388 and writes the word at +254A0. */
+struct Ovl11C580CWork {
+    u8 pad0[0x25388];
+    s16 *header;
+    u8 pad2538C[0x254A0 - 0x2538C];
+    s32 mode;
+};
+
+/* 800C580C indexes u16 slots at 8012323C and s32 delays at 80123244. */
+extern u16 D_8012323C[4];
+extern s32 D_80123244[3];
+
 /* 800CD0F4 indexes signed halfword actions at 80123290 and reads 80123292. */
 extern s16 D_80123290[];
 extern s16 D_80123292;
