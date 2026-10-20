@@ -2259,6 +2259,22 @@ extern u8 D_80071C90[];
  * s16 fields at +6/+8/+A/+C. */
 extern u8 D_801248BC[];
 
+/* 8010DA04: signed halfword lookup, eight entries in original 69960.data. */
+extern s16 D_80127CF4[8];
+
+/* 8010DA04 retains D_8006C838 as the base for these halfword/word fields. */
+typedef struct {
+    u8 pad_0[0x44BA];
+    s16 field_44BA;
+    s16 field_44BC;
+    u8 pad_44BE[0x5200 - 0x44BE];
+    u16 field_5200;
+    u8 pad_5202[0x5234 - 0x5202];
+    s32 field_5234;
+    u8 pad_5238[0x5252 - 0x5238];
+    s16 field_5252;
+} Ovl11DA04State;
+
 /* D_800A0708 - 32-byte halfword table (u16[0x10]), absolute addressing.
  * func_80023A9C fills it with a walking halfword pointer (16 stores at
  * byte offsets 0..0x1E, stride 2) then writes entry 15 via a base+0x1E

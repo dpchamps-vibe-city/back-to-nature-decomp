@@ -1059,7 +1059,7 @@ the `ovl_11_func_80107DE0(this + 0xA8, ...)` call idiom of the far-state gate
 bands, but sits ~0x1FD0 bytes past them, so the link run — not the shared idiom —
 is the TU signal claimed here.
 Members (link order):
-- ovl_11_func_8010DA04 (s, 0x334) — `D_800BAA84` handler; bytes not yet recovered.
+- ovl_11_func_8010DA04 (m, candidate run member) — object-mode handler selecting messages and updating facing/response flags ([table-cluster evidence and limits](research/ovl_11_func_8010DA04-grouping.md)).
 - ovl_11_func_8010DD38 (m, matched this session, byte-exact) — `D_800BAA84`
   handler: `u16@+0x16 -= 3` clamped to [0, 0xFF], clears 0x800 of `s32@+0x34`,
   then `ovl_11_func_80107DE0(this + 0xA8, 0x24, 0x1E)`; returns -1 when
