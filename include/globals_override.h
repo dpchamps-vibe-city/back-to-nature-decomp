@@ -3124,6 +3124,9 @@ extern u8 D_80127D48;
  * the overlay. */
 extern u8 D_80127D88;
 
+/* 800E30FC passes this 12-byte state table at 801240B0 to 800D04D4. */
+extern u8 D_801240B0[12];
+
 /* D_801281D0 - overlay-local 10-byte (0xA-stride) record table in ovl_11
  * data at 0x801281D0, indexed by a signed s16 selector in
  * ovl_11_func_80113208 and copied field-by-field into a loaded object

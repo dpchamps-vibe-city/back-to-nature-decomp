@@ -13990,6 +13990,8 @@ rests on both code and table adjacency.
   s32@+0x34; else selects `D_801240A8`/`D_8012409C` by `u16@0 == 0x10A` and
   steps it, storing 4 back to +0x28 on call success.
 
+- ovl_11_func_800E30FC (m, byte-exact) — keyframe-state handler preserving +0x2A across secondary updates; candidate same-TU run with `ovl_11_func_800E3020` and `ovl_11_func_800E3200` ([evidence](research/ovl_11_func_800E30FC-grouping.md)).
+
 Forty-seventh family member, link-order-adjacent to the eighteenth
 (confidence: high). `ovl_11_func_800D4B1C` (0x800D4B1C) is the immediate gapless
 successor of the eighteenth member `ovl_11_func_800D4A64` (splat
