@@ -1024,6 +1024,12 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800C8808 compares a signed halfword through D_8006C838 at +0xE778. */
+struct Ovl11C8808State {
+    char pad0[0xE778];
+    s16 selected;
+};
+
 /* 80111F88 reads/decrements signed timers and updates progress through this base. */
 typedef struct {
     u8 pad0[0x44CE];

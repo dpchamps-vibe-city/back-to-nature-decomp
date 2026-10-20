@@ -2608,6 +2608,17 @@ typedef struct {
 typedef struct {
     char pad0[0x22];
     u16 unk22;
+    char pad24[0x38 - 0x24];
+    u16 unk38;
+    char pad3A[0x6C - 0x3A];
+    s32 unk6C;
+    char pad70[0xFC - 0x70];
+    s16 point[3];
+} Ovl11C8808Object;
+
+typedef struct {
+    char pad0[0x22];
+    u16 unk22;
     char pad24[0x34 - 0x24];
     s16 unk34;
     char pad36[2];

@@ -335,7 +335,7 @@ Members:
 - ovl_11_func_800FE780 (m) — sub-mode argument `3`,
   trailing args `0x120` / `0xC8`.
 
-## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6858 / 0x800C6A24 / 0x800C6AFC / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7010 / 0x800C70CC / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C84DC / 0x800C8764 / 0x800C893C / 0x800C8AD4 / 0x800C8D9C / 0x800C8E98 / 0x800C93A4 / 0x800C9424 (confidence: medium)
+## `ovl_11` 0x38/0x3C state-switch run — 0x800C4F44 / 0x800C6858 / 0x800C6A24 / 0x800C6AFC / 0x800C6E0C / 0x800C6E8C / 0x800C6F0C / 0x800C6F6C / 0x800C7010 / 0x800C70CC / 0x800C7270 / 0x800C8334 / 0x800C838C / 0x800C83FC / 0x800C846C / 0x800C84DC / 0x800C8764 / 0x800C8808 / 0x800C893C / 0x800C8AD4 / 0x800C8D9C / 0x800C8E98 / 0x800C93A4 / 0x800C9424 (confidence: medium)
 
 Candidate same-TU family supported by shared state/animation idioms and a
 local caller/helper cluster whose call graph agrees with gapless link order.
@@ -346,6 +346,8 @@ Evidence and limits for the 800C8AD4 addition:
 [dispatcher/helper research](research/ovl_11_func_800C8AD4-grouping.md).
 Evidence and limits for the 800C84DC addition:
 [adjacent interaction-helper research](research/ovl_11_func_800C84DC-grouping.md).
+Evidence and limits for the 800C8808 addition:
+[record-interaction helper research](research/ovl_11_func_800C8808-grouping.md).
 Evidence and limits for the 800C893C addition:
 [interaction-twin research](research/ovl_11_func_800C893C-grouping.md).
 Evidence and limits for the adjacent 800C93A4/800C9424 pair:
@@ -429,6 +431,7 @@ Members:
   `ovl_11_func_800C7270(0x15, 0x47, arg3)`, copies the element onto `+0xF0`
   with `ovl_11_func_800D7348`, sets bit 0x8000 of `+0x6C`, then
   `func_8001FABC(7)` — shared-type plus direct call-edge into the run.
+- ovl_11_func_800C8808 (m, candidate same TU) — validates a probed record and direction, then initiates the corresponding interaction.
 - ovl_11_func_800C893C (m, candidate same TU) — handles item-0x68 interactions, requesting it when empty or selecting state 0x65 when held.
 - ovl_11_func_800C8A08 (m, candidate same TU) — adjacent twin of 800C893C:
   requests item 0x69 through 800F3BA0/800CB540 when `s16@+0x8A == 0`,
