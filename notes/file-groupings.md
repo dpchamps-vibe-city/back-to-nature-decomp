@@ -14417,6 +14417,7 @@ Members (address order):
   s16s and the +0x25388 record and calls `ovl_11_func_800C0834`.
 - ovl_11_func_800BCD28 (s) — reads `D_801287F4` and `D_801217A0`.
 - ovl_11_func_80104A90 (m, candidate TU member) — area-entry initializer and `D_80121780[5]` handler ([grouping evidence](research/ovl_11_func_80104A90-grouping.md)).
+- ovl_11_func_80104CB8 (m, low-confidence local TU candidate) — area-entry completion and `D_80121780[6]` handler ([grouping evidence and limits](research/ovl_11_func_80104CB8-grouping.md)).
 
 Widening (byte-exact match of `ovl_11_func_801048A0`): the cluster's mode-entry
 initializer is now matched (0x1B8, void). It stores the cluster's counter state
