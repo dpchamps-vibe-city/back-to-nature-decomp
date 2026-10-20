@@ -5075,6 +5075,9 @@ typedef struct {
 extern Ovl11E910Entry _D_8006E910[] __asm__("D_8006E910");
 #define D_8006E910 ((Ovl11E910Entry *)_D_8006E910)
 
+/* 800E3200 passes this 12-byte animation table to 800D04D4's byte-pointer parameter. */
+extern u8 D_801240BC[];
+
 /* 800E4330 indexes consecutive lw offsets by the current object's signed id. */
 extern s32 D_801240D8[];
 /* 800E4330 initializes both cursors to the D_8006E910 record-array base. */

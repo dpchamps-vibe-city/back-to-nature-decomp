@@ -14044,7 +14044,7 @@ member's `D_80124000` and 800E00E0's `D_80123F48`) sits in the 69960.data.s
 handler-table band immediately after `D_801240BC` and immediately before the
 twenty-sixth member `ovl_11_func_800E3464`'s `D_801240D0`, so membership rests on
 the shared idiom and table cluster plus link adjacency. Splat
-`configs/splat/ovl_11.yaml` shows it gapless between the non-member
+`configs/splat/ovl_11.yaml` shows it gapless between
 `ovl_11_func_800E3200` (predecessor, 0x2B3E0 + 0xE4 = 0x2B4C4) and the
 non-member `ovl_11_func_800E33E8` (successor, 0x2B4C4 + 0x104 = 0x2B5C8, which
 in turn gaplessly precedes `ovl_11_func_800E3464`). Its state 0 is a family
@@ -14057,6 +14057,8 @@ obj->unk30 and, when equal, dispatches on u16@0 == 0x109/0x10A to
   `func_8001FABC` for u16@0 == 0x109/0x10A, then sets +0x28 = 1 *and* flag 0x800
   at s32@+0x34; state −1 sets the loop variable 1 and clears flag 0x800; else
   steps table `D_801240C8`.
+
+- ovl_11_func_800E3200 (m, byte-exact) — keyframe-state handler with a timer-preserving secondary update; candidate same-TU pair with `ovl_11_func_800E32E4` ([evidence](research/ovl_11_func_800E3200-grouping.md)).
 
 ---
 
