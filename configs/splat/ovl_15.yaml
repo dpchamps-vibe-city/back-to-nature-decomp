@@ -40,7 +40,7 @@ segments:
       - [0x144, .rodata, ovl_15_func_801306D4]
       - [0x158, rodata]
       - [0x15C, .rodata, ovl_15_func_80130C8C]
-      - [0x174, rodata]
+      - [0x174, .rodata, ovl_15_func_80131094]
       - [0x1FC, .rodata, ovl_15_func_80131C2C]
       - [0x214, .rodata, ovl_15_func_8013280C]
       - [0x22C, rodata]

@@ -10900,6 +10900,7 @@ Members (link order):
   `ovl_15_func_80130048` except for the updater array and the immediate
   `0x17`→`0x12`
 - ovl_15_func_80130FF0 (m, byte-exact) — text-update and conditional menu reset ([grouping evidence](research/ovl_15_func_80130FF0-grouping.md)).
+- ovl_15_func_80131094 (m, byte-exact) — dispatches memory-card menu states and maintains the shared card-status cache ([grouping evidence](research/ovl_15_func_80131094-grouping.md)).
 - ovl_15_func_8013143C (m, matched this session, byte-exact) — shared
   `D_80052FC4` text-draw prologue, body-identical to `ovl_15_func_80130468`
   (calls `ovl_15_func_8012E15C` and sets `D_80137584 = 1`) plus a trailing
