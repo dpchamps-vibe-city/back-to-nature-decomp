@@ -5775,6 +5775,8 @@ extern s32 D_80128CEC;
  * ovl_11_func_800CD6F4 clears D_801231F8 and stores a table value into
  * D_801231F4. Absolute-addressed from the -G0 overlay; s32 keeps the word
  * load/store width. */
+/* 800C9424 increments this word and compares it unsigned against 8 or 12. */
+extern u32 D_80123150;
 extern s32 D_801231F4;
 extern s32 D_801231F8;
 /* 800C6C24 loads this word and scales it by ten for the state timer. */
