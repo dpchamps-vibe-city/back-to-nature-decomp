@@ -6487,5 +6487,51 @@ struct Ovl11ConditionObjects {
     struct Ovl11ConditionObject *second;
 };
 
+/* 800C401C: lh/sh counters, lw/sw flags, two 10-entry position histories,
+ * and 10 halfword-pair tags copied with lwl/lwr/swl/swr. */
+typedef struct {
+    u16 direction;
+    s16 phase;
+} Ovl11HistoryTag;
+
+typedef struct {
+    u8 pad0[0x1C];
+    s16 countdown;
+    u8 pad1E[0x2E - 0x1E];
+    s16 timer;
+    u8 pad30[6];
+    u16 flags36;
+    u16 direction;
+    u8 pad3A[0x6C - 0x3A];
+    s32 flags;
+    u8 pad70[0xFC - 0x70];
+    s16 collision[2];
+    Ovl11CC7CCPosition position;
+    u8 pad110[0x10];
+    Ovl11CC7CCPosition historyA[10];
+    Ovl11CC7CCPosition historyB[10];
+    u16 pad260;
+    u16 flags262;
+    u8 pad264[0x2CC - 0x264];
+    s16 effectTimer[2];
+    u8 pad2D0[0x3D4 - 0x2D0];
+    Ovl11HistoryTag tags[10];
+} Ovl11PlayerUpdate;
+
+/* 800C401C retains this base for the tick at +8 and player at +0x51C8. */
+typedef struct {
+    s32 pad0[2];
+    s32 tick;
+    u8 padC[0x51C8 - 0xC];
+    Ovl11PlayerUpdate player;
+} Ovl11UpdateState;
+
+/* 800C401C reads these two words through the D_8005E3A8 pointer. */
+typedef struct {
+    s32 pad0;
+    s32 held;
+    s32 pressed;
+} Ovl11UpdateInput;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
