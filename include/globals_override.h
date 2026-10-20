@@ -1678,6 +1678,16 @@ struct struct_8006C838_800E4608 {
     u16 field_4480;         /* 0x4480 */
 };
 
+/* 800E46A8 reads flags +0xC, an s16-record pointer +0x30 and s16 +0xE778. */
+typedef struct {
+    char pad_00[0xC];
+    s32 flags;
+    char pad_10[0x30 - 0x10];
+    s16 *current;
+    char pad_34[0xE778 - 0x34];
+    s16 selectedId;
+} Ovl11E46A8State;
+
 /* View of D_8006C838 for ovl_11_func_800EE7BC: the u8 at +0x44CD, the s16 at
  * +0x91C2 and the u16 at +0xE7A0. Reached as struct members so cc1 keeps the
  * base address of D_8006C838 and uses each field offset as a displacement; for
