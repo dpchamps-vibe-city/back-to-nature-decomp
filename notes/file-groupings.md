@@ -14321,13 +14321,14 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_801287F4 counter-state run — 0x800BC3AC–0x800BCD28 (confidence: medium)
+## `ovl_11` D_801287F4 counter-state run — 0x800BBCB8–0x800BCD28 (confidence: medium)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): the unbroken
 link-order run around the recorded `D_801287F4` counter-state cluster, now
-extended by the matched `ovl_11_func_800BC9AC`. Shared-global + gapless-
-adjacency fingerprint, with the container's usual absolute-addressed main-RAM
-globals (`-G0`, never gp-rel).
+extended backward by matched `ovl_11_func_800BBCB8`
+([evidence and limits](research/ovl_11_func_800BBCB8-grouping.md)).
+Shared-global + gapless-adjacency fingerprint, with the container's usual
+absolute-addressed main-RAM globals (`-G0`, never gp-rel).
 
 Fingerprints:
 - **gapless link-order run** (`configs/splat/ovl_11.yaml`): 0x800BC3AC (0x34)
@@ -14348,6 +14349,7 @@ Fingerprints:
   and 0x800BCD28 reads it.
 
 Members (address order):
+- ovl_11_func_800BBCB8 (m, candidate TU member) — work-area state dispatcher that completes selections and releases the shared counter.
 - ovl_11_func_800BC3AC (m) — zeroes `D_801287F4` and `D_8007AFF0`+0x2548C,
   increments the `D_8006C838`+0x4488 counter.
 - ovl_11_func_800BC3E0 (s) — reads `D_801287F4` and switch-dispatches on it.

@@ -3197,8 +3197,9 @@ extern Ovl11GridBounds D_80123E0C[2];
 extern u16 D_80123E14[18];
 /* 800DA638 accesses the first coordinate halfword in the data word at 80128DAC. */
 extern u16 D_80128DAC;
-/* 800DA638 independently addresses the second coordinate halfword at +2. */
-extern u16 D_80128DAE;
+/* 800DA638 addresses the second halfword of D_80128DAC; retain the
+ * data-word alias when re-splitting the overlay for compiled jump tables. */
+extern u16 D_80128DAE __asm__("D_80128DAC+2");
 /* 800DA638 stores the signed variant selector after the coordinate pair. */
 extern s16 D_80128DB0;
 
@@ -6048,6 +6049,39 @@ typedef struct {
     s16 unkA;
 } Ovl11CD9A0Record;
 extern Ovl11CD9A0Record *D_801287F0;
+/* 800BBCB8 reads/writes the load ID, selection flag and load-active words. */
+extern s32 D_801287E8;
+extern s32 D_801287EC;
+extern s32 D_801217A0;
+
+/* 800BBCB8: shared flags, counter, direction and mode through the status base. */
+typedef struct {
+    char pad0[0xC];
+    s32 flags;
+    char pad10[0x4488 - 0x10];
+    s32 counter;
+    char pad448C[0x44BA - 0x448C];
+    s16 direction;
+    char pad44BC[0x51FE - 0x44BC];
+    u16 selectionFlags;
+    char pad5200[0x5234 - 0x5200];
+    s32 objectFlags;
+    char pad5238[0x7A74 - 0x5238];
+    s32 mode;
+} Ovl11BBCB8Status;
+
+/* 800BBCB8: pointer +25390, signed selection +2547C and state +254A0. */
+typedef struct {
+    char pad0[0x25390];
+    Ovl11CD9A0Record *object;
+    char pad25394[0x2547C - 0x25394];
+    s32 selection;
+    s32 savedSelection;
+    char pad25484[8];
+    s32 pendingMode;
+    char pad25490[0x10];
+    s32 state;
+} Ovl11BBCB8Work;
 /* 800CD9A0 compares this signed halfword with 2. */
 extern s16 D_80128CB0;
 
