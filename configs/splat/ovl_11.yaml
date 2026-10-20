@@ -109,6 +109,8 @@ segments:
       - [0x2AC0, .rodata, ovl_11_func_80108D84]
       - [0x2B90, .rodata, ovl_11_func_80109594]
       - [0x2BB0, rodata]
+      - [0x2D44, .rodata, ovl_11_func_8010F6C0]
+      - [0x2D60, rodata]
       - [0x2DCC, .rodata, ovl_11_func_80110188]
       - [0x2DE4, rodata]
       - [0x2E04, .rodata, ovl_11_func_8011184C]
