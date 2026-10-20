@@ -4,6 +4,77 @@
 
 #include "common.h"
 
+/* 800CC7CC passes this halfword request to 800CB540: id +0, count +4. */
+typedef struct {
+    u16 id;
+    u16 pad2;
+    s16 count;
+    s16 pad6;
+} Ovl11CC7CCRequest;
+
+/* 800CC7CC: item +2, state +4/+6/+C, direction +8, height +10,
+ * fixed-point velocity +14/+1C and four position words at +24. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 direction;
+    s16 padA;
+    s32 unkC;
+    s32 height;
+    Ovl11CC7CCPosition velocity;
+    Ovl11CC7CCPosition position;
+} Ovl11CC7CCObject;
+
+/* 8010E6E8: direction +22, state +28, timer +2C, flags +34,
+ * unsigned index +AC and halfword choice/attributes +B4/+B8. */
+typedef struct {
+    u8 pad0[0x22];
+    u16 direction;
+    u8 pad24[4];
+    s16 state;
+    s16 pad2A;
+    s16 timer;
+    u8 pad2E[6];
+    s32 flags;
+    u8 pad38[0xAC - 0x38];
+    u16 index;
+    u8 padAE[6];
+    u16 choice;
+    u16 padB6;
+    u16 attributes;
+} Ovl11E6E8Object;
+
+/* 8010E644: sh +24, lw/sw +34, lw +48/+4C/+50, lhu +B6. */
+typedef struct {
+    char pad0[0x24];
+    s16 unk24;
+    char pad26[0x34 - 0x26];
+    s32 unk34;
+    char pad38[0x48 - 0x38];
+    s32 unk48;
+    s32 unk4C;
+    s32 unk50;
+    char pad54[0xB6 - 0x54];
+    u16 unkB6;
+} Ovl11E644Object;
+
+/* 80110E34's matched object view, also passed by 8010F4CC: direction +22,
+ * map +30, position +38/+3C/+40 and unsigned table index +AC. */
+typedef struct {
+    char pad[0x22];
+    u16 unk22;
+    char pad2[0x30 - 0x24];
+    u16 unk30;
+    char pad3[0x38 - 0x32];
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
+    char pad4[0xAC - 0x44];
+    u16 unkAC;
+} M2C_269c1560d5f5_Unk80110E34;
+
 /* 801110CC reads these fields; 8010CA0C forwards the same object. */
 typedef struct {
     char pad_00[0x30];
@@ -119,6 +190,24 @@ typedef struct {
     s32 unk108;
 } Ovl11CE034Object;
 
+/* CD5BC tests flags at +36 and updates a u16 slot at +40 using +84.
+ * C523C also reads the signed +18/+38/+86 fields and +100..+108 position. */
+typedef struct {
+    char pad0[0x18];
+    s16 power;
+    char pad1A[0x36 - 0x1A];
+    u16 flags;
+    s16 direction;
+    char pad3A[0x40 - 0x3A];
+    u16 vals[(0x84 - 0x40) / 2];
+    s16 value;
+    s16 amount;
+    char pad88[0x100 - 0x88];
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11CD5BCObject;
+
 /* C4A2C reads signed halfwords at +38/+84 and coordinates at +100..+108. */
 typedef struct {
     u8 pad0[0x38];
@@ -159,11 +248,42 @@ typedef struct Ovl11IdAdjustmentObject {
 } Ovl11IdAdjustmentObject;
 
 /* 800BDF98 forwards this four-byte, halfword-aligned object by value;
- * 800BE6E4 reads its signed type at +2. */
+ * 800BE6E4 reads its signed type at +2. 800BDB88 forwards the same pair
+ * stored by 800B7F3C at work-area +25474. */
+typedef Ovl25SetupStatePair Ovl11CollisionTag;
+
+/* 800CEFCC clears flag 0x20000 at +34, copies the tag at +2E,
+ * and copies four position words at +38 before calling 800BDB88. */
 typedef struct {
-    s16 field_0;
-    s16 field_2;
-} Ovl11CollisionTag;
+    char pad0[0x2E];
+    Ovl11CollisionTag collision;
+    char pad32[2];
+    s32 flags;
+    s32 position[4];
+} Ovl11CEFCCObject;
+
+/* 800D0FB4 resets the tag state at +30 and position at +38 in
+ * ten 0xB4 records and twenty 0xB8 records. */
+typedef struct {
+    char pad00[0x2E];
+    Ovl11CollisionTag collision;
+    char pad32[6];
+    s32 position[3];
+    char pad44[0xB4 - 0x44];
+} Ovl11ResetRecordB4;
+
+typedef struct {
+    char pad00[0x2E];
+    Ovl11CollisionTag collision;
+    char pad32[6];
+    s32 position[3];
+    char pad44[0xB8 - 0x44];
+} Ovl11ResetRecordB8;
+
+/* 800D0FB4 reads the halfword at +44D4 of the shared status base. */
+typedef struct {
+    u16 halfwords[0x44D6 / 2];
+} Ovl11ResetStatus;
 
 /* 800BDF98 builds this 0x20-byte query; 800BE6E4 follows +0/+4/+8/+10
  * and reads the word at +18. */
@@ -325,6 +445,27 @@ typedef struct {
     /* 0x06 */ s16 field_6;     /* timer or counter */
 } ObjectState;
 
+/* 8011FFA8: byte +38, u16 +3C, word +6C, s16 +84 and animation +260. */
+typedef struct {
+    u8 pad0[0x38];
+    u8 direction;
+    u8 pad39[3];
+    u16 phase;
+    u8 pad3E[0x6C - 0x3E];
+    s32 flags;
+    u8 pad70[0x84 - 0x70];
+    s16 id;
+    u8 pad86[0x260 - 0x86];
+    ObjectState animation;
+} Ovl11SelectionObject;
+
+/* 80120358 reads +8 and writes +0; 8011FFA8 also maintains +4. */
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Ovl11SelectArg;
+
 /* Per-pad input/auto-repeat state object (0x38 bytes, 4 ports at D_8005E870).
  * Cleared restfully by func_80013F90; func_80013CD0 (per-pad processing
  * driver) drives the hold/edge/auto-repeat state machine, reading threshold
@@ -459,6 +600,17 @@ typedef struct SpriteSourceData {
     /* 0x28 */ s32 field_28;    /* header + offset_anim (animation index table) */
     /* 0x2C */ s32 field_2C;    /* header + offset_frame (frame data / control bytes) */
 } SpriteSourceData;
+
+/* 8010D0EC's matched sprite-object view, also passed by 8010C7F0. */
+typedef struct {
+    s16 field_0;
+    char pad_02[0x30 - 0x02];
+    s16 unk30;
+    char pad_32[0x78 - 0x32];
+    SpriteSourceData sprite;
+    char pad_A8[0xAC - 0xA8];
+    u16 unkAC;
+} M2C_90bbdd1382f9_Struct_8010D0EC;
 
 /* 80121500 initializes this 0x18-byte effect: sh at 0/2, sw at 4/8/C,
  * sprite pointer at 14. The neighbouring update/clear routines use +14. */
@@ -696,19 +848,83 @@ typedef struct {
     s16 unk84; /* 800CDD7C tests this element against 0x39. */
     char pad_86[4];
     s16 itemIndex;
-    char pad_8C[0x1D4];
+    char pad_8C[0x100 - 0x8C];
+    /* 800CD9A0 passes the position words at +100 to 800BDCE8. */
+    s32 unk100;
+    s32 unk104;
+    s32 unk108;
+    char pad_10C[0x260 - 0x10C];
     SpriteSourceData sprite;
 } Ovl11C7010Object;
 
-/* 800C8FA8: sh at 0x22, lhu at 0x3C and lw/sw flags at 0x6C. */
+/* 800CB114 reads u16 +38/+3C, updates flags +6C, and forwards the
+ * halfword-aligned collision tag at +FC by value. */
+typedef struct {
+    char pad0[0x38];
+    u16 direction;
+    char pad3A[2];
+    u16 mode;
+    char pad3E[0x6C - 0x3E];
+    s32 flags;
+    char pad70[0xFC - 0x70];
+    Ovl11CollisionTag collision;
+} Ovl11CB114Object;
+
+/* 800C498C indexes with u16 +38 and copies the four words at +100. */
+typedef struct {
+    char pad0[0x38];
+    u16 direction;
+    char pad3A[0x100 - 0x3A];
+    s32 position[4];
+} Ovl11C498CObject;
+
+/* 800C9938's matched parameter view, also used by its caller 800C99C8. */
+typedef struct {
+    char pad_0[0x38];
+    u16 unk38;
+    char pad_3A[0x2];
+    u16 unk3C;
+    char pad_3E[0x2E];
+    s32 unk6C;
+    char pad_70[0xA0];
+    s32 unk110;
+    char pad_114[0x4];
+    s32 unk118;
+} Ovl119938View;
+
+/* 800CEEF8 and 800F4240 pass records with s16 +2 and u16 +4. */
+typedef struct {
+    char pad0[2];
+    s16 unk2;
+    u16 unk4;
+} Ovl11InteractionRecord;
+
+/* 800C8FA8: sh at 0x22, lhu at 0x3C and lw/sw flags at 0x6C;
+ * 800C907C also reads lh at 0x34 and writes sh at 0x38. */
 typedef struct {
     char pad0[0x22];
     u16 unk22;
-    char pad24[0x3C - 0x24];
+    char pad24[0x34 - 0x24];
+    s16 unk34;
+    char pad36[2];
+    u16 unk38;
+    char pad3A[2];
     u16 unk3C;
     char pad3E[0x6C - 0x3E];
     s32 unk6C;
 } Ovl11C8FA8Object;
+
+/* 800C8808: halfword fields +22/+38, flags +6C and a query point at +FC. */
+typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    char pad24[0x38 - 0x24];
+    u16 unk38;
+    char pad3A[0x6C - 0x3A];
+    s32 unk6C;
+    char pad70[0xFC - 0x70];
+    s16 point[3];
+} Ovl11C8808Object;
 
 typedef struct {
     union {
@@ -929,6 +1145,17 @@ typedef struct {
     u16 unkBE;
 } Ovl11ObjectCB6C;
 
+/* 8010CF58 reads signed state/handler halfwords at +30/+26 and
+ * reads/clears flag 0x800 in the unsigned halfword at +B8. */
+typedef struct {
+    char pad0[0x26];
+    s16 unk26;
+    char pad28[0x30 - 0x28];
+    s16 unk30;
+    char pad32[0xB8 - 0x32];
+    u16 unkB8;
+} Ovl11CF58Object;
+
 /* The matched ovl_11_func_80110E34 definition supplies this movement view. */
 typedef struct {
     char pad[0x22];
@@ -1101,6 +1328,38 @@ typedef struct {
     /* 0x0C */ s32 unkC;
 } Ovl11CC4E0Object;
 
+/* 800DB00C copies the +0/+2/+4 coordinates and the +8/+A/+C triplet. */
+typedef struct Ovl11SceneCoordinates {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 pad6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+} Ovl11SceneCoordinates;
+
+/* func_8001E340's matched grid definition: count +8, 0x1C-byte cells. */
+typedef struct {
+    u8 filler[0x18];
+    s32 flag;
+} Ovl11SceneCell;
+
+typedef struct {
+    s32 field_0;
+    s32 field_4;
+    s32 count;
+    Ovl11SceneCell cells[1];
+} Ovl11SceneGrid;
+
+/* Matched 800BDCE8 reads the position words at +0/+8; 800D2DB8
+ * forwards the same three-word object to 800BDB88. */
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Ovl11Func800BDCE8Arg1;
+
 /* Object reached through D_8007AFF0+0x25388: lh at +0x2. */
 typedef struct {
     /* 0x00 */ s16 unk0;
@@ -1137,6 +1396,66 @@ typedef struct {
     s16 unk8;
     s16 unkA;
 } Ovl11C3B78Arg1;
+
+/* Matched ovl_15_func_80132A8C parameter view, also passed by 801331C4. */
+struct ovl_15_80132A8C_data {
+    s16 pad0[17];
+    s16 field_22;
+    s16 pad1[6];
+    s16 field_30;
+    s16 pad2[3];
+    s32 field_38;
+    s32 field_3C;
+    s32 field_40;
+};
+
+/* Matched ovl_15_func_80132B44 parameter view, also passed by 801331C4. */
+typedef struct {
+    char pad[0x22];
+    u16 unk22;
+    char pad2[0x30 - 0x24];
+    u16 unk30;
+    char pad3[0x38 - 0x32];
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
+} Unk80132B44;
+
+/* 8010A654: unsigned call operands +22/+AC, state +28, timer +2C,
+ * flags +34, key +30 and copied motion words +58..+64. */
+typedef struct {
+    char pad_00[0x22];
+    u16 unk22;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[2];
+    s16 unk30;
+    char pad_32[2];
+    s32 unk34;
+    char pad_38[0x58 - 0x38];
+    s32 unk58;
+    s32 unk5C;
+    s32 unk60;
+    s32 unk64;
+    char pad_68[0xAC - 0x68];
+    u16 unkAC;
+} Ovl11A654Object;
+
+/* 8010DE68: halfword counter, table index, flags and signed location pair. */
+typedef struct {
+    u8 pad_00[0x16];
+    u16 unk16;
+    u8 pad_18[0xAC - 0x18];
+    u16 unkAC;
+    u8 pad_AE[0xB8 - 0xAE];
+    u16 unkB8;
+    u8 pad_BA[0xC4 - 0xBA];
+    s16 unkC4;
+    s16 unkC6;
+} Ovl11DE68Object;
 
 #endif /* GAME_TYPES_H */
 
@@ -1304,17 +1623,27 @@ typedef struct {
  * before the scaled index only for an array member of a BLKmode object
  * (expr.c expand_expr COMPONENT_REF). Only witnessed fields are named. */
 typedef struct {
-    /* 0x000 */ char pad_000[0xC];
+    /* 800B8B3C updates the pause word and signed frame counter. */
+    /* 0x000 */ u16 unk0;
+    /* 0x002 */ u16 unk2;
+    /* 0x004 */ s32 unk4;
+    /* 0x008 */ s16 unk8;
+    /* 0x00A */ char pad_00A[2];
     /* 0x00C */ void *unkC;
     /* 0x010 */ char pad_010[4];
     /* 0x014 */ Ovl21C0448Record recs[6];
     /* 0x644 */ char pad_644[2];
     /* 0x646 */ s16 unk646;
-    /* 0x648 */ char pad_648[0x65C - 0x648];
+    /* 800B8B3C reads three signed update periods at +648/+64E/+650. */
+    /* 0x648 */ s16 unk648;
+    /* 0x64A */ char pad_64A[4];
+    /* 0x64E */ s16 unk64E;
+    /* 0x650 */ s16 unk650;
+    /* 0x652 */ char pad_652[0x65C - 0x652];
     /* 0x65C */ s16 unk65C;
     /* 0x65E */ char pad_65E[0x984 - 0x65E];
     /* 0x984 */ s16 unk984;
-    /* 0x986 */ char pad_986[2];
+    /* 0x986 */ s16 unk986;
     /* 0x988 */ s16 unk988;
 } Ovl21C0448View;
 
@@ -1544,7 +1873,9 @@ typedef struct {
     char pad_000[0x44D0];
     u16 field_44D0;
     u16 field_44D2;
-    char pad_44D4[0x99C8 - 0x44D4];
+    /* 800D0FB4 tests this status before resetting a record. */
+    u16 field_44D4;
+    char pad_44D6[0x99C8 - 0x44D6];
     s16 field_99C8[1];
 } Ovl11Status99C8View;
 
@@ -1629,6 +1960,12 @@ typedef struct {
     /* 0x60 */ s32 unk60;
 } Ovl11RankPair;
 
+/* 80107DE0 writes two consecutive halfwords; 800D506C passes object+0xA8. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} M2C_729a6ccf4038_UnkStruct80107DE0;
+
 /* Callers pass four words; D0408 initializes and D05D0 consumes only
  * the three components. The final word is unused byte padding. */
 typedef struct {
@@ -1637,6 +1974,17 @@ typedef struct {
     s32 field_8;
     u8 pad_C[4];
 } Ovl11PaddedVec3;
+
+/* 800D5224 copies these four-word positions from the indexed pool bases. */
+typedef struct {
+    u8 pad0[0x81F4];
+    Ovl11PaddedVec3 position;
+} Ovl11D5224LargeView;
+
+typedef struct {
+    u8 pad0[0x7AEC];
+    Ovl11PaddedVec3 position;
+} Ovl11D5224SmallView;
 
 /* Six-byte slot record at D_8006C838+0x524C; only the leading halfword is
  * read by ovl_11_func_800F9BE4. */
@@ -1743,6 +2091,15 @@ typedef struct Ovl11RotationState {
     Ovl11RotationSource *unk14;
 } Ovl11RotationState;
 
+/* 80107480 reads two u8 selectors, two u16 payloads and a u16 result. */
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+} Ovl11GuardRecord;
+
 /* ovl_11_func_800F5BC0 reads these halfwords while walking 0x18-byte records. */
 typedef struct {
     s16 unk0;
@@ -1808,3 +2165,307 @@ typedef struct {
     u8 unk5;
     u16 unk6;
 } Ovl11GridResetEntry;
+
+/* 800D2160 passes the record's +0xA8 pair to 80107DEC, whose matched
+ * definition reads/decrements the signed halfword at +2. */
+typedef struct {
+    s16 field_0;
+    s16 field_2;
+} Ov11Timer;
+
+/* 801090A4's matched object view, passed by 800D2334. */
+typedef struct {
+    u16 unk0;
+    char pad_02[0x22];
+    u16 unk24;
+    u16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[0x06];
+    s32 unk34;
+} Ovl11HandlerObjectView;
+
+/* 800D266C's matched parameter view, also passed by 800D2334. */
+typedef struct {
+    char pad_00[0x26];
+    s16 field_26;
+    char pad_28[0x34 - 0x28];
+    s32 field_34;
+} Ov11D266CFields;
+
+/* 80109188's matched parameter view, also passed by 80108D84. */
+typedef struct {
+    char pad_00[0x24];
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[0x06];
+    s32 unk34;
+} Ovl11D04D4Obj;
+
+/* 800CA580 and 8010C1C0 copy these four words from the drawing object. */
+typedef struct {
+    char pad0[0x100];
+    s32 unk100;
+    s32 unk104;
+    s32 unk108;
+    s32 unk10C;
+} Ovl11DrawState;
+
+/* 8011031C: u16 direction +22, halfword-aligned tag +2E,
+ * coordinates +38/+40 and cleared action state +DC. */
+typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    char pad24[0x2E - 0x24];
+    Ovl11CollisionTag collision;
+    char pad32[0x38 - 0x32];
+    s32 unk38;
+    s32 unk3C;
+    s32 unk40;
+    char pad44[0xDC - 0x44];
+    s32 unkDC;
+} Ovl11ActionProbeObject;
+
+/* 800D4314: state/timer +28/+2A, halfword-aligned tag +2E,
+ * position +38 and velocity +48; direction +22 excludes value 1. */
+typedef struct {
+    char pad0[0x22];
+    u16 direction;
+    s16 unk24;
+    s16 unk26;
+    s16 state;
+    u16 timer;
+    s16 unk2C;
+    Ovl11CollisionTag collision;
+    char pad32[2];
+    s32 flags;
+    s32 position[3];
+    char pad44[4];
+    Recon800D0408A1View velocity;
+} Ovl11D4314Object;
+
+/* 800C580C: state +3C, flags +6C, item +8A and script pointer +4C. */
+typedef struct {
+    u8 pad0[0x18];
+    u16 power;
+    u8 pad1A[4];
+    s16 kind;
+    u16 slot;
+    u8 pad22[0x36 - 0x22];
+    u16 attributes;
+    u16 direction;
+    u8 pad3A[2];
+    u16 state;
+    u8 pad3E[0x4C - 0x3E];
+    void *script;
+    u8 pad50[0x6C - 0x50];
+    s32 unk6C;
+    u8 pad70[0x84 - 0x70];
+    u16 value;
+    u16 amount;
+    s16 timer;
+    s16 item;
+    u8 pad8C[0xFC - 0x8C];
+    u16 collisionType;
+    u16 collisionId;
+    s32 position[4];
+    s32 pad110;
+    s32 timer114;
+    u8 pad118[0x264 - 0x118];
+    u8 phase;
+} Ovl11C580CObject;
+
+/* Parameter views used by 800C580C: layouts from the selected callee access witnesses. */
+typedef struct {
+               u8 unk0[4];
+               s16 unk4;
+} C580C_7f0a9cc905ed_UnkStruct800D72E8;
+
+typedef struct {
+               u16 unk0;
+               u16 unk2;
+} C580C_b6c4596908ca_Ovl11CF314Arg1;
+
+typedef struct {
+               s32 unk0;
+               s32 unk4;
+               s32 unk8;
+} C580C_b6c4596908ca_Ovl11CF314Arg2;
+
+typedef struct {
+               char pad0[0x38];
+               u16 unk38;
+               char pad3A[0x100 - 0x3A];
+                s32 unk100;
+                s32 unk104;
+                s32 unk108;
+} C580C_ad72053e5aa9_StructOvl11CE034A;
+
+typedef struct {
+               s32 unk0;
+               s32 unk4;
+               s32 unk8;
+} C580C_ad72053e5aa9_StructOvl11CE034B;
+
+typedef struct {
+               s16 unk0;
+               s16 unk2;
+               s16 unk4;
+               s16 unk6;
+               s16 unk8;
+               char pad0A[0x0C - 0x0A];
+               s32 unkC;
+               s32 unk10;
+               s32 unk14;
+               s32 unk18;
+               s32 unk1C;
+               char pad20[0x24 - 0x20];
+               s32 unk24;
+               s32 unk28;
+               s32 unk2C;
+} C580C_f3fe4d9631b5_UnkStruct800CBF40;
+
+typedef struct {
+               s32 unk0;
+               s32 unk4;
+               s32 unk8;
+} C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0;
+
+typedef struct {
+               char pad0[0x36];
+               u16 flags;
+               char pad38[0x40 - 0x38];
+               u16 vals[(0x84 - 0x40) / 2];
+               s16 value;
+} C580C_583b0b68ff5a_UnkStruct800CD5BC;
+
+/* 80110494's matched parameter layout, also passed by 8010F80C. */
+typedef struct {
+    char pad0[0x24];
+    u16 unk24;
+    char pad26[4];
+    s16 unk2A;
+    char pad2C[4];
+    s16 unk30;
+    char pad32[0x48];
+    u16 unk7A;
+} Ovl11StateKeyProbeView;
+
+/* 801103E8's matched parameter layout, also passed by 8010F80C. */
+typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    char pad24[0x38 - 0x24];
+    s32 unk38;
+    char pad3C[4];
+    s32 unk40;
+} Ovl11StateDirectionView;
+
+/* 800D55F8: direction +22, state/timers +28/+2A/+2C, map +30 and flags +34. */
+typedef struct {
+    char pad0[0x22];
+    u16 unk22;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad2E[2];
+    s16 unk30;
+    char pad32[2];
+    s32 unk34;
+} Ovl11D55F8Object;
+
+/* 8010EEE4: movement flags/index +B8/+BA and retained point +BE/+C0/+C2. */
+typedef struct {
+    char pad0[0xB8];
+    u16 flags;
+    s16 index;
+    u16 unkBC;
+    u16 saved26;
+    u16 saved28;
+    u16 saved2A;
+} Ovl11EEE4Object;
+
+/* 80110118's matched parameter view, also passed by 8010F6C0. */
+typedef struct {
+    char pad_00[0x30];
+    s16 unk30;
+    char pad_32[0xB6 - 0x32];
+    u16 unkB6;
+    char pad_B8[0xDC - 0xB8];
+    s32 unkDC;
+} Ovl11ActionCompletionView;
+
+/* 8010A47C: action state +28, timer +2C, flags +34 and four-word
+ * motion state +58; 800D04D4 also reads the key +30 and flags +7A. */
+typedef struct {
+    char pad_00[0x24];
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[2];
+    s16 unk30;
+    char pad_32[2];
+    s32 unk34;
+    char pad_38[0x58 - 0x38];
+    s32 unk58;
+    s32 unk5C;
+    s32 unk60;
+    s32 unk64;
+    char pad_68[0x7A - 0x68];
+    u16 unk7A;
+} Ovl11A47CObject;
+
+/* 800DF010/800E0C24 matched dispatch views, called by 8010A47C. */
+typedef struct {
+    char pad_00[0x26];
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[0x34 - 0x2E];
+    s32 unk34;
+    char pad_38[0xB6 - 0x38];
+    s16 unkB6;
+} Ovl11ActionDispatchView;
+
+/* 800F413C's matched parameter views, also passed by 8010A850. */
+typedef struct {
+    char pad0[2];
+    s16 unk2;
+    u16 unk4;
+} Ovl11F413CArg0View;
+
+typedef struct {
+    s16 unk0;
+    char pad2[2];
+    u16 unk4;
+} Ovl11F413CArg1View;
+
+/* 800F1078 walks 0x24-byte records; widths follow its lbu/lhu/lw loads. */
+typedef struct {
+    u16 unk0;
+    u8 unk2;
+    u8 unk3;
+    u16 unk4;
+    u16 unk6;
+    u32 unk8;
+    u8 unkC;
+    u8 unkD;
+    u16 unkE;
+    u32 unk10;
+    u32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+} Ovl11ConditionRecord;
