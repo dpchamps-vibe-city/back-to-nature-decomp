@@ -14321,7 +14321,7 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_801287F4 counter-state run — 0x800BBCB8–0x800BCD28 (confidence: medium)
+## `ovl_11` D_801287F4 counter-state run — 0x800BBC74–0x800BCD28 (confidence: medium for shared-state core; low for wrapper extension)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): the unbroken
 link-order run around the recorded `D_801287F4` counter-state cluster, now
@@ -14349,6 +14349,7 @@ Fingerprints:
   and 0x800BCD28 reads it.
 
 Members (address order):
+- ovl_11_func_800BBC74 (m, candidate TU member) — scratchpad-stack wrapper for the adjacent state dispatcher ([grouping evidence](research/ovl_11_func_800BBC74-grouping.md)).
 - ovl_11_func_800BBCB8 (m, candidate TU member) — work-area state dispatcher that completes selections and releases the shared counter.
 - ovl_11_func_800BC3AC (m) — zeroes `D_801287F4` and `D_8007AFF0`+0x2548C,
   increments the `D_8006C838`+0x4488 counter.
