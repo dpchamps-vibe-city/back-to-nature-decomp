@@ -1263,6 +1263,7 @@ Members (address order, matched so far):
 - ovl_11_func_80109D08 (m, byte-exact) — guarded record selector and position handoff using D_8012D078/D_8012D07C ([grouping evidence](research/ovl_11_func_80109D08-grouping.md)).
 - ovl_11_func_80109E04 (m) — guarded D_8012D080 record-position handoff to ovl_11_func_800D05D0.
 - ovl_11_func_8010A654 (m, byte-exact) — action-state handler using timer D_8012D072 and record D_8012D080 ([grouping evidence](research/ovl_11_func_8010A654-grouping.md)).
+- ovl_11_func_8010A850 (m, byte-exact, candidate same TU) — action-state sequencer using D_8012D074/D_8012D076 and setting D_8012D084 for motion refresh ([grouping evidence](research/ovl_11_func_8010A850-grouping.md)).
 - ovl_11_func_8010AFCC (m, candidate same TU) — flag-gated position lookup and motion refresh through ovl_11_func_8010AE64 ([call/link-order evidence and limits](research/ovl_11_func_8010AFCC-grouping.md)).
 
 ---

@@ -6230,5 +6230,20 @@ extern u8 D_80127ADC[12];
 /* 8010A654 clears this halfword and passes it as the 800D04D4 frame timer. */
 extern u16 D_8012D072;
 
+/* 8010A850 passes the four-word position +52C8 and reads a pointer +DDD4. */
+struct Ovl11A850State {
+    u8 pad0[0x52C8];
+    Ovl11CC7CCPosition position;
+    u8 pad52D8[0xDDD4 - 0x52D8];
+    u8 *record;
+};
+
+/* 8010A850 passes this 20-byte state sequence in 69960.data.s to 800D04D4. */
+extern u8 D_80127AE8[20];
+/* 8010A850 clears this u16 timer and passes its address to 800D04D4. */
+extern u16 D_8012D074;
+/* 8010A850 reads this signed halfword as the previous action state. */
+extern s16 D_8012D076;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
