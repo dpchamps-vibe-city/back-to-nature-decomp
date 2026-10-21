@@ -14385,7 +14385,9 @@ link-order run around the recorded `D_801287F4` counter-state cluster, now
 extended backward by matched `ovl_11_func_800BBCB8`
 ([evidence and limits](research/ovl_11_func_800BBCB8-grouping.md)).
 Shared-global + gapless-adjacency fingerprint, with the container's usual
-absolute-addressed main-RAM globals (`-G0`, never gp-rel).
+absolute-addressed main-RAM globals (`-G0`, never gp-rel). Core membership is
+further supported by the verified dispatcher's
+[shared-flag/local-call evidence](research/ovl_11_func_800BC3E0-grouping.md).
 
 Fingerprints:
 - **gapless link-order run** (`configs/splat/ovl_11.yaml`): 0x800BC3AC (0x34)
@@ -14410,7 +14412,7 @@ Members (address order):
 - ovl_11_func_800BBCB8 (m, candidate TU member) — work-area state dispatcher that completes selections and releases the shared counter.
 - ovl_11_func_800BC3AC (m) — zeroes `D_801287F4` and `D_8007AFF0`+0x2548C,
   increments the `D_8006C838`+0x4488 counter.
-- ovl_11_func_800BC3E0 (s) — reads `D_801287F4` and switch-dispatches on it.
+- ovl_11_func_800BC3E0 (m) — counter-state dispatcher coordinating the local transition, reset and volume helpers.
 - ovl_11_func_800BC868 (s) — state reset: calls 0x800BCB5C, gates on the
   `D_8006C838`+0x4450 flags, and writes `D_801217A4` plus
   `D_8007AFF0`+0x25498/+0x2549C.
