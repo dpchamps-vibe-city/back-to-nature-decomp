@@ -1196,6 +1196,8 @@ extern char D_8012EF14[];
 
 /* ovl_11_func_800E9914 tests bit 0x20 of this word with lw. */
 extern s32 D_80070C88;
+/* 800E5294 passes this pair to 80107DD0, which stores s16 -1 and 0. */
+extern s16 D_80071CCC[2];
 
 /* D_8006C838 - array of 0x3C-byte structs used for flags
  * Accessed with 0x3C stride but accessed in 4-byte s32 words
@@ -1956,6 +1958,18 @@ struct struct_8006C838_800E4608 {
     u16 field_447C;         /* 0x447C */
     u16 pad_447E;           /* 0x447E */
     u16 field_4480;         /* 0x4480 */
+};
+
+/* 800E5294: lw pointer +30, lw flags +4450/+5234 and sh state +4476. */
+struct Ovl11E5294State {
+    char pad0[0x30];
+    u16 *current;
+    char pad34[0x4450 - 0x34];
+    s32 flags;
+    char pad4454[0x4476 - 0x4454];
+    s16 state;
+    char pad4478[0x5234 - 0x4478];
+    s32 status;
 };
 
 /* 800E46A8 reads flags +0xC, an s16-record pointer +0x30 and s16 +0xE778. */

@@ -666,6 +666,7 @@ void ovl_11_func_800E4DAC(s32 arg0);
 void ovl_11_func_800E5078(void);
 void ovl_11_func_800E516C(SpriteDataHeader *arg0, s32 arg1);
 void ovl_11_func_800E5230(void);
+void ovl_11_func_800E5294(void);
 void ovl_11_func_800E537C(void);
 void ovl_11_func_800E549C(void);
 void ovl_11_func_800E54C8(void);
