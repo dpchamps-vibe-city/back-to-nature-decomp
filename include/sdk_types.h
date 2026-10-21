@@ -3286,6 +3286,20 @@ struct Ovl25ObjectRecord {
                SpriteSourceData record1;
 };
 
+typedef struct {
+    u16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u16 unk10;
+    u16 unk12;
+    u16 unk14;
+} Ovl25SpriteDesc;
+
 struct Ovl30FlagMenuEntry {
     void *value;
     u8 pad4[4];

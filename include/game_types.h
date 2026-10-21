@@ -4,6 +4,22 @@
 
 #include "common.h"
 
+/* ovl_25 800BB628/800BB788: 0x16-byte sprite descriptor; destination
+ * coordinates at +4/+6, counters at +8/+A/+C, source rectangle at +E. */
+typedef struct {
+    u16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u16 unk10;
+    u16 unk12;
+    u16 unk14;
+} Ovl25SpriteDesc;
+
 /* 800DB2AC's matched parameter: nine halfwords; 800DC560 forwards its header. */
 typedef struct {
     u16 unk0;
