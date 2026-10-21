@@ -6815,12 +6815,15 @@ struct Ovl11FrameState {
     s32 field_52E0;
 };
 
-/* 800C162C: halfword resets at +0x253A8/+0x253AA, word mode +0x254A0. */
+/* 800C162C: halfword resets at +0x253A8/+0x253AA, word mode +0x254A0.
+ * 800C14A0 dispatches on the signed word at +0x2548C. */
 struct Ovl11FrameWork {
     u8 pad0[0x253A8];
     s16 field_253A8;
     s16 field_253AA;
-    u8 pad253AC[0x254A0 - 0x253AC];
+    u8 pad253AC[0x2548C - 0x253AC];
+    s32 dispatch;
+    u8 pad25490[0x254A0 - 0x25490];
     s32 mode;
 };
 
