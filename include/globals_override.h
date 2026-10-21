@@ -2050,6 +2050,12 @@ struct struct_8006C838_800FC358 {
     s32 field_5224;
 };
 
+/* 8010B994 passes four words at D_8006C838+0x52C8 by value to 800D05D0. */
+typedef struct {
+    char pad_00[0x52C8];
+    s32 position[4];
+} Ovl11B994PositionView;
+
 /* View of D_8006C838 for ovl_11_func_800CBF70: the s32 at +0x52CC. Reached
  * as a struct member so cc1 keeps lui %hi(D_8006C838) as the base and uses
  * 0x52CC as the load displacement (the target keeps lui %hi(D_8006C838),

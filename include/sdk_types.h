@@ -1763,6 +1763,16 @@ typedef struct {
 } M2C_b3ce6a63fca8_Ovl11E1CA8Obj;
 
 typedef struct {
+    u16 field_0;
+    char pad_02[0x14];
+    s16 field_16;
+    char pad_18[0x18];
+    s16 field_30;
+    char pad_32[2];
+    s32 field_34;
+} M2C_b48d168c5d53_Ovl11B994Object;
+
+typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
