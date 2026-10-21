@@ -2,6 +2,10 @@
 /* m2c context only: type definitions for include/functions.h.
  * Must be passed to m2c *before* functions.h; see tools/agent/m2cFunc.ts. */
 
+struct Ovl11ResetB4;
+
+struct Ovl11ResetB8;
+
 struct M2C_3586522a33fd_ovl_11_800D2A88_data;
 
 struct M2C_9e3562919d92_ovl_15_80132A8C_data;
@@ -3209,6 +3213,29 @@ struct Ovl11TextureCoordinates {
 typedef struct {
                s16 unk0;
 } Ovl15Func80134444Arg;
+
+struct Ovl11ResetB4 {
+    u16 type;
+    u16 pad_2;
+    u16 id;
+    u8 pad_6[0x34 - 6];
+    s32 flags;
+    u8 pad_38[0xB4 - 0x38];
+};
+
+struct Ovl11ResetB8 {
+    u16 type;
+    u16 pad_2;
+    u16 id;
+    u8 pad_6[0x34 - 6];
+    s32 flags;
+    u8 pad_38[0xB8 - 0x38];
+};
+
+typedef struct {
+    struct Ovl11ResetB4 small[10];
+    struct Ovl11ResetB8 large[20];
+} Ovl15RecordPools;
 
 typedef struct {
     u32 words[15];

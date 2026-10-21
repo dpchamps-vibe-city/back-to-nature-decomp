@@ -91,6 +91,7 @@ void ovl_15_func_80132A8C(struct M2C_9e3562919d92_ovl_15_80132A8C_data *arg0, s1
 s32 ovl_15_func_80132B44(M2C_bc5770384c5b_Unk80132B44 *arg0, s16 arg1);
 void ovl_15_func_80132C1C(void);
 void ovl_15_func_801331C4(void);
+void *ovl_15_func_8013345C(Ovl15RecordPools *pools, s16 kind, s16 *index);
 s16 ovl_15_func_80133538(u8 *arg0, s16 arg1);
 void ovl_15_func_801335F8(void);
 s32 ovl_15_func_80133808(s16 arg0);
@@ -115,6 +116,7 @@ void ovl_15_func_801359FC(void);
 void ovl_15_func_80135A78(void);
 void ovl_15_func_80135AE0(void);
 s32 ovl_15_func_80135B68(void);
+s32 ovl_15_func_80135C20(s32 arg0);
 s32 ovl_15_func_80135E9C(s16 arg0);
 s32 ovl_15_func_80135FF0(s16 arg0, s16 arg1);
 s32 ovl_15_func_80136288(s16 arg0, s16 arg1, Ovl15SaveSummary *arg2);
