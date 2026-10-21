@@ -2694,12 +2694,12 @@ Members (address order, matched in bold):
 
 ---
 
-## `ovl_11` 0x18-byte spawn-record fill/clear/dispatch run — 0x800F4360–0x800F43CC (confidence: low)
+## `ovl_11` 0x18-byte spawn-record fill/clear/dispatch/read run — 0x800F4360–0x800F44B4 (confidence: low)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) — three
-link-contiguous functions that are complementary writers of one 0x18-byte
-record (s16@0, s16@2, bit-0 flag s16@4, s32@8, s32@C, s32@10), with the run
-tail dispatching into the run head.
+Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) — contiguous
+fill/clear/dispatch/read helpers, with nearby record-state predecessors listed
+below. Original TU boundaries remain unproven; see the
+[reader-extension evidence](research/ovl_11_func_800F44B4-grouping.md).
 
 Fingerprints:
 - link-order adjacency: `ovl_11_func_800F4360` (0x30) ends exactly at
@@ -2762,6 +2762,7 @@ Members (address order):
   the `+0x8000+0x5DD4` entity-pointer slot through the same two-stage base
   idiom as the matched `ovl_11_func_800F4CEC` (same slot, same `*(T **)(base +
   0x5DD4)` read), a shared entity-base-slot fingerprint
+- ovl_11_func_800F44B4 (m) — selects a spawn record, copies its position and id, and returns its active flag.
 
 ---
 
