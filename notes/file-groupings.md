@@ -12950,11 +12950,19 @@ Members (address order):
   1/3, then reads the signed halfword at 99C8 + selector * 4.
 - ovl_11_func_800D0CD8 (m): the same 44D2 field selects a five- versus
   ten-record scan at 7AB4, stride B4.
+- ovl_11_func_800F0380 (m, byte-exact): the same selector-1/3 availability
+  guards precede a predicate over the 99C8 signed-index pairs and the B8/B4
+  record pools; see [selected-record predicate](research/ovl_11_func_800F0380-selected-record-predicate.md).
 
 The shared typed field and nearby addresses support a data-access link, not a
 proved translation-unit boundary. Original calls from D0F20 and F4618 to D0BC8
 establish clients only. D0BC8 is now byte-exact using independent global member
 expressions; no per-file flag inference follows from this reconstruction.
+F0380 ends exactly at the adjacent F0474 status-record copier below and shares
+its 99C8/stride-4 lookup and 7AB4/stride-B4 record storage. The original F05C0
+loop calls F0380 for selectors 0..3 before conditionally resetting their pairs.
+These are additional local adjacency/call/data fingerprints, not grounds to
+merge the distant status-reader and copy clusters into a proved original TU.
 
 
 ## ovl_11 D_801295D0 status-record copy cluster — 0x800E729C / 0x800F0474 (confidence: low)
