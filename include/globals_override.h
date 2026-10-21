@@ -3207,7 +3207,8 @@ typedef struct {
         /* 0x00 */ s16 field_00;
     } u0;
     /* 0x02 */ u8 type;
-    /* 0x03 */ char pad_03[0x10 - 0x03];
+    /* 0x03 */ char pad_03[0x0E - 0x03];
+    /* 0x0E */ s16 field_0E; /* 800D60F0: signed packed-property row index. */
     /* 0x10 */ s16 field_10;
     /* 0x12 */ s16 field_12; /* ovl_30_func_80132F18: lh/sh SELL value. */
     /* 0x14 */ char pad_14[0x18 - 0x14];
@@ -3219,6 +3220,14 @@ typedef struct {
 /* D_8006C858 - shared item table pointer (main-binary data, absolute addressed
  * from overlays that only declare it extern; stride 0x28 per ItemData). */
 extern ItemData *D_8006C858;
+
+/* 800D60F0 loads item and four-word packed-property pointers at +20/+34. */
+typedef struct {
+    u8 pad_00[0x20];
+    ItemData *items;
+    u8 pad_24[0x34 - 0x24];
+    s32 (*properties)[4];
+} Ovl11PackedItemGlobals;
 
 /* 800CBE2C passes the halfword-aligned tag at +52C4 and reads u16 +929C. */
 typedef struct {
