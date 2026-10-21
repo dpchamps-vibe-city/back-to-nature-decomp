@@ -1,18 +1,5 @@
 #include "common.h"
 
-typedef struct {
-    /* 0x00 */ u8 pad[0x10];
-    /* 0x10 */ u16 unk10;
-    /* 0x12 */ u16 unk12;
-    /* 0x14 */ u16 unk14;
-    /* 0x16 */ u8 pad2[0x12];
-    /* 0x28 */ u16 unk28;
-    /* 0x2A */ u8 pad3[0x6];
-} Ovl11FuncD8ACEntry;
-
-extern s32 D_80129198;
-extern Ovl11FuncD8ACEntry *D_80129194;
-
 void ovl_11_func_800DD8AC(void) {
     s32 i;
     Ovl11FuncD8ACEntry *p;

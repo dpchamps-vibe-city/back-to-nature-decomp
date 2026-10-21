@@ -5494,6 +5494,21 @@ extern s32 D_80128E00[2];
  * partial views compatible; each client casts to its witnessed layout. */
 extern u8 D_80128E08[15 * 0x30];
 
+/* 800DD8AC scans 0x30-byte entries; 800DD904 clamps signed +0x14. */
+typedef struct {
+    /* 0x00 */ u8 pad[0x10];
+    /* 0x10 */ u16 unk10;
+    /* 0x12 */ u16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u8 pad2[0x12];
+    /* 0x28 */ u16 unk28;
+    /* 0x2A */ u8 pad3[0x6];
+} Ovl11FuncD8ACEntry;
+/* 800DD8AC records the selected entry; 800DD904 updates its signed +0x14. */
+extern Ovl11FuncD8ACEntry *D_80129194;
+/* 800DD904 reads and writes the four-state transition index as a word. */
+extern s32 D_80129198;
+
 /* D_801290D8 - three 0x34-byte overlay entries walked by ovl_11 
    func_800DCECC and ovl_11_func_800DCF10. Byte storage keeps the existing 
    partial views compatible; each client casts to its witnessed layout. */
