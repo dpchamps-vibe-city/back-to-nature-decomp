@@ -57,13 +57,44 @@ Additional assembly witnesses use the same path convention above for
 `ovl_11_func_800C2F74` and `ovl_11_func_800C3020`; the dispatcher witness
 supplies both calls and the flag writes.
 
+## Extension from verified ovl_11_func_800C30AC
+
+- Supplied verified identity: `d97dfa482df6d2adb3f52865d8b0c9d78b4015b4423811c8000d5d330614c69c`
+  (origin: agent; full finalize gate passed).
+- Verified source: `src/overlays/ovl_11/ovl_11_func_800C30AC.c`;
+  the supplied changed-file list contains only that source.
+- `configs/splat/ovl_11.yaml` places 800C30AC at file offset 0xB28C,
+  immediately after 800C3020 at 0xB200. The original sizes establish
+  0x800C3020 + 0x8C = 0x800C30AC, and 0x800C30AC + 0x8C =
+  0x800C3138 (exclusive end of the extended candidate run).
+- The driver calls existing member 800C2F74 at 0x800C30EC with the
+  current object pointer. Thus the new adjacent function is connected to
+  the existing helper/update chain, rather than included by proximity alone.
+- Both 800C30AC and existing member 800C2CE8 increment D_80122F88:
+  the driver does so at 0x800C30C0–0x800C30D4 before its global gate;
+  800C2CE8 does so at 0x800C2F34–0x800C2F40 when D_80128B68 is zero.
+  The latter is reached through 800C2F74. This adds a concrete shared
+  counter to the call/link evidence, without establishing its TU ownership.
+- The verified driver visits 37 D_80076220 records at stride 0x1D4 unless
+  D_8006C848 bit 0x02000000 inhibits the walk. It calls 800C2F74 on each
+  record, then 800C3590 when +0x1E has bit 0x100 and lacks bit 0x1000.
+  These are role facts, not proof that every callee belongs to this TU.
+
+Assembly witnesses are
+`build/ovl_11/asm/nonmatchings/<function>/<function>.s` for
+`ovl_11_func_800C30AC` and `ovl_11_func_800C2CE8`, together with the
+previously cited 800C3020 size and 800C2F74 call-chain witnesses.
+
 ## Limits
 
-This supports extending the low-confidence candidate pair to the four-member
+This supports extending the low-confidence candidate pair to the five-member
 run, conditional on link order preserving original source ordering. No
 shared-static/global ownership, declaration-order quirk or TU boundary is
 established; the run's endpoints are not claimed as original file boundaries.
 The run does not merge with the non-adjacent animation-command pair at
 0x800C1F94 / 0x800C2044, the far-buffer reader pair at 0x800C3B78 /
-0x800C3CCC, or 800C2678 merely because its members call them. Modern shared
+0x800C3CCC, or 800C2678 merely because its members call them. Likewise,
+800C3590 is not added solely for the driver's call, nor 800C3138 solely
+for adjacency and use of the broadly shared D_80076220 pool. Absolute
+counter accesses do not establish a shared owning TU. Modern shared
 argument types are not evidence of an original translation unit.

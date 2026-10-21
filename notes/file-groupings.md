@@ -7624,16 +7624,19 @@ Evidence and limits: [research note](research/ovl_11_func_800C1F94-grouping.md).
 - ovl_11_func_800C1F94 (m, finalized) — handles animation commands 0, 1 and 16.
 - ovl_11_func_800C2044 (s) — advances and dispatches object command-table entries, invoking the helper.
 
-## `ovl_11` event helper/update run — 0x800C2C74 / 0x800C2CE8 / 0x800C2F74 / 0x800C3020 (confidence: low)
+## `ovl_11` event helper/update run — 0x800C2C74 / 0x800C2CE8 / 0x800C2F74 / 0x800C3020 / 0x800C30AC (confidence: low)
 
 Candidate same-TU run: call graph and gapless link order agree, with shared
-object-state dependencies; no TU boundary proven. Evidence and limits:
+object-state dependencies. Verified 800C30AC extends the run through its call
+to 800C2F74 and shared D_80122F88 counter with 800C2CE8; no TU boundary
+proven. Evidence and limits:
 [research note](research/ovl_11_func_800C2C74-grouping.md).
 
 - ovl_11_func_800C2C74 (m, finalized) — selects the object's current event and invokes heading/animation-command handlers.
 - ovl_11_func_800C2CE8 (s) — updates object state and dispatches ready command events through the helper.
 - ovl_11_func_800C2F74 (s) — clears a transient object flag and conditionally drives object updates.
 - ovl_11_func_800C3020 (m, finalized) — updates the state-gated object countdown and dispatches motion/event helpers.
+- ovl_11_func_800C30AC (m, finalized) — increments the shared counter and drives globally gated updates and flag-gated processing across 37 object records.
 
 ## `ovl_11` 0x800F1F48–0x800F2354 gapless link run + call edge — 0x800F1F48 / 0x800F213C / 0x800F227C / 0x800F2354 (confidence: low)
 
