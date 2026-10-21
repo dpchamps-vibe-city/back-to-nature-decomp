@@ -9917,6 +9917,7 @@ Members (link order):
   `func_80015840` / `ovl_21_func_800BAFFC` with the fixed `D_800C0458 +
   0x6D4` (the `D_800C0B2C` label). Membership rests on the shared global,
   that callee pair, and `ovl_21_func_800BA4C0`'s dispatch.
+- ovl_21_func_800BAA38 (m, byte-exact, finalized) — bulk flag-4 toggle for the shared `D_800C0ACC` sprites and `D_800C0458` sprite subrecords ([grouping evidence](research/ovl_21_func_800BAA38-grouping.md)).
 - ovl_21_func_800BA5D0 (m, matched this session, byte-exact) — walks the
   `D_800C0448` record table over the six-record outer loop (0x108 stride),
   stepping three +0x34 sub-records (0x4C stride) per record and calling
