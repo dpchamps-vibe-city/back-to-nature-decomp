@@ -5952,6 +5952,8 @@ typedef struct {
  * unsigned to increment and signed to threshold-test; absolute-addressed
  * (overlay build is -G0). */
 extern s16 D_800C4A2C;
+/* ovl_27_func_800B9B98 increments with lhu/sh and threshold-tests with lh. */
+extern s16 D_800C4A30;
 
 /* D_800C4A80 - ovl_27 SpriteSourceData block (0x30 bytes) at 0x800C4A80.
  * Only its address is taken (passed to func_80015BF0/func_80015840), so an
