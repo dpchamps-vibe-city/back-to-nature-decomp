@@ -849,6 +849,7 @@ s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_800F2400(void);
 s32 ovl_11_func_800F24B0(void);
 void ovl_11_func_800F2508(void);
+void ovl_11_func_800F2538(s16 kind, s16 value, s16 days);
 void ovl_11_func_800F2620(void);
 s32 ovl_11_func_800F2724(void);
 void ovl_11_func_800F27B0(s16 kind, s16 value);
