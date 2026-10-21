@@ -37,6 +37,7 @@ s32 ovl_11_func_800BDCE0(void);
 void *ovl_11_func_800BDCE8(u8 *arg0, M2C_cec44150eede_Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 void *ovl_11_func_800BDE84(u8 *arg0, s16 *arg1);
 s32 ovl_11_func_800BDF98(VECTOR position, Ovl11CollisionTag arg4, s16 arg5, s32 arg6);
+s32 ovl_11_func_800BE118(VECTOR position, s16 arg4, VECTOR *arg5, u16 *arg6, u32 arg7);
 s32 ovl_11_func_800BE208(s32 *arg0, Ovl11CollisionTag arg1, u16 arg2, u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
 s32 ovl_11_func_800BE26C(s32 *arg0, Ovl11CollisionTag arg1, s32 arg2, s32 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
 void ovl_11_func_800BE2B8(void);

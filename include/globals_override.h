@@ -15,6 +15,19 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800BE118: four pairs of 0x1C-byte X/Z bounds, halfword tags and exit X/Z. */
+typedef struct {
+    s32 minX;
+    s32 minZ;
+    s32 maxX;
+    s32 maxZ;
+    u16 source;
+    u16 destination;
+    s32 exitX;
+    s32 exitZ;
+} Ovl11TransitionBounds;
+extern Ovl11TransitionBounds D_80122D8C[4][2];
+
 /* 800C2CE8 compares this absolute-addressed unsigned halfword to 4. */
 extern u16 D_80071A3C;
 /* 800C2CE8 increments this absolute-addressed word once per update. */
