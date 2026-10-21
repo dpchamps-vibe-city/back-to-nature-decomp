@@ -7624,13 +7624,16 @@ Evidence and limits: [research note](research/ovl_11_func_800C1F94-grouping.md).
 - ovl_11_func_800C1F94 (m, finalized) — handles animation commands 0, 1 and 16.
 - ovl_11_func_800C2044 (s) — advances and dispatches object command-table entries, invoking the helper.
 
-## `ovl_11` event helper/caller pair — 0x800C2C74 / 0x800C2CE8 (confidence: low)
+## `ovl_11` event helper/update run — 0x800C2C74 / 0x800C2CE8 / 0x800C2F74 / 0x800C3020 (confidence: low)
 
-Candidate same-TU pair: direct call and gapless link adjacency; no TU boundary
-proven. Evidence and limits: [research note](research/ovl_11_func_800C2C74-grouping.md).
+Candidate same-TU run: call graph and gapless link order agree, with shared
+object-state dependencies; no TU boundary proven. Evidence and limits:
+[research note](research/ovl_11_func_800C2C74-grouping.md).
 
 - ovl_11_func_800C2C74 (m, finalized) — selects the object's current event and invokes heading/animation-command handlers.
 - ovl_11_func_800C2CE8 (s) — updates object state and dispatches ready command events through the helper.
+- ovl_11_func_800C2F74 (s) — clears a transient object flag and conditionally drives object updates.
+- ovl_11_func_800C3020 (m, finalized) — updates the state-gated object countdown and dispatches motion/event helpers.
 
 ## `ovl_11` 0x800F1F48–0x800F2354 gapless link run + call edge — 0x800F1F48 / 0x800F213C / 0x800F227C / 0x800F2354 (confidence: low)
 
