@@ -7728,23 +7728,16 @@ Members (address order):
 
 ---
 
-## `ovl_11` 0x800C3B78 / 0x800C3CCC link-order pair — far-buffer readers (confidence: low)
+## `ovl_11` command/heading + far-buffer reader run — 0x800C3828 / 0x800C3838 / 0x800C3B78 / 0x800C3CCC (confidence: low)
 
-Gapless link-order neighbours in `ovl_11` that each dereference the
-`D_8007AFF0 + 0x25388` far-buffer pointer slot, at different fields of the
-pointed-to object. That slot is container-wide (many `ovl_11` functions reach
-it), so the shared deref is only a data tie; the pair's membership evidence is
-the zero-gap link order confirmed by `configs/splat/ovl_11.yaml`
-(0xBD58 + 0x154 = 0xBEAC). TU membership unproven.
+Candidate same-TU run: adjacent getter/caller/helper edges and command/object
+data flow extend the existing far-buffer reader pair; no TU boundary proven.
+Evidence and limits: [research note](research/ovl_11_func_800C3838-grouping.md).
 
-- ovl_11_func_800C3B78 (m, matched this session, 0x154, byte-exact) — heading
-  emitter: selects the +0x6 heading halfword from arg1 +0x4 or -0x8, converts
-  the +0x30/+0x38 vs +0x6/+0xA deltas through `ratan2`, writes `rsin`/`rcos`-
-  scaled speed to +0x50/+0x58, and zeroes those for event codes 3/9/0x11/0x12
-  or both-unit deltas; reads the far pointer's u16@+8 bit 0x1000 to choose
-  D_80122F7C or D_80122F80.
-- ovl_11_func_800C3CCC (m) — see the `struct_80076220` u16@+4 cluster above;
-  it reads the same far pointer's s16@+0.
+- ovl_11_func_800C3828 (m, candidate same TU) — returns the command-table base used by its adjacent caller.
+- ovl_11_func_800C3838 (m, finalized, candidate same TU) — initializes object state from the selected command row and dispatches heading, animation and command handlers.
+- ovl_11_func_800C3B78 (m, candidate same TU) — computes or clears X/Z motion from the object's current heading command.
+- ovl_11_func_800C3CCC (m, candidate same TU) — far-buffer-gated countdown sweep over the shared record array.
 
 ---
 
