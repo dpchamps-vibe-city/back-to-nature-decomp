@@ -4,13 +4,14 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { basename, join, relative } from "path";
 import {
   AS_FLAGS,
-  CC1_FLAGS,
   CPP_FLAGS,
   ROOT,
   assembleCompilerOutput,
   assembleTarget,
   compileSource,
+  configuredCc1FlagsForContainer,
   configuredCompilerPath,
+  containerKindForSymbol,
   disassembleObject,
   loadFlagOverrides,
   resolveSource,
@@ -126,6 +127,40 @@ function runCc1(
   }
 }
 
+/**
+ * The cc1 flags the production build gives this function: its container's set
+ * (overlays are -G0, the executable -G8) plus any per-file override. Compiling
+ * an overlay function under the executable's set changes small-data addressing
+ * and so the whole program the oracle describes.
+ */
+export function oracleCc1Flags(functionName: string): string[] {
+  return [
+    ...configuredCc1FlagsForContainer(containerKindForSymbol(functionName)),
+    ...(loadFlagOverrides().get(functionName) || []),
+  ];
+}
+
+/**
+ * Refuse a diagnostic reading that does not describe the production program.
+ *
+ * The instrumented cc1 stands in for production only while its untouched
+ * baseline compiles to the same instructions. When it does not, every
+ * allocation or schedule decision it logs belongs to a different program, and
+ * a verdict built on it closes nothing.
+ */
+export function assertOracleReproducesProduction(
+  functionName: string,
+  source: string,
+  oracleObject: string,
+  directory: string,
+): void {
+  const production = compileSource(source, directory, functionName, { assemble: true });
+  if (!instructionComparison(oracleObject, production.object!).same) {
+    throw new Error(`Diagnostic compiler baseline for ${functionName} does not reproduce the production compile; `
+      + "its allocation and schedule readings would describe a different program.");
+  }
+}
+
 export function compileOracleVariant(
   functionName: string,
   source: string,
@@ -143,8 +178,7 @@ export function compileOracleVariant(
   execFileSync("mips-linux-gnu-cpp", [...CPP_FLAGS, source, "-o", preprocessed], {
     cwd: ROOT, stdio: ["ignore", "pipe", "pipe"], maxBuffer: 64 * 1024 * 1024,
   });
-  const overrides = loadFlagOverrides().get(stem) || [];
-  const flags = [...CC1_FLAGS, ...overrides, "-da"];
+  const flags = [...oracleCc1Flags(stem), "-da"];
   const environment: Record<string, string> = { PSX_ORACLE_LOG: log };
   if (interventions.scheduleEdges.length > 0) {
     environment.PSX_ORACLE_SCHEDULE_EDGES = interventions.scheduleEdges
@@ -159,7 +193,7 @@ export function compileOracleVariant(
       .map((assignment) => `${assignment.pseudo}:${assignment.hardRegister}`).join(",");
   }
   runCc1(compiler, preprocessed, assembly, directory, flags, environment);
-  assembleCompilerOutput(assembly, object);
+  assembleCompilerOutput(assembly, object, containerKindForSymbol(stem));
   return { object, events: parseOracleEvents(existsSync(log) ? readFileSync(log, "utf8") : "") };
 }
 
@@ -231,7 +265,7 @@ export function runCompilerOracle(
   const diagnostic = buildDiagnosticCompiler(options.forceBuild);
   const productionCompiler = configuredCompilerPath();
   const runId = createHash("sha256").update(JSON.stringify({
-    source: sha256File(source), compiler: sha256File(diagnostic.compiler), interventions,
+    source: sha256File(source), compiler: sha256File(diagnostic.compiler), flags: oracleCc1Flags(functionName), interventions,
   })).digest("hex").slice(0, 16);
   const runDirectory = join(ROOT, "build/compilerOracle/runs", functionName, runId);
   mkdirSync(runDirectory, { recursive: true });

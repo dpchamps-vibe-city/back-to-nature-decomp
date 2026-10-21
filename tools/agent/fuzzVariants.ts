@@ -10,10 +10,11 @@
 import { existsSync, readdirSync, rmSync } from "node:fs";
 import { basename, isAbsolute, join, relative } from "node:path";
 import {
-  CC1_FLAGS,
   ROOT,
   assembleTarget,
+  configuredCc1FlagsForContainer,
   configuredToolchainIdentity,
+  containerKindForSymbol,
   disassembleObject,
   loadFlagOverrides,
   normalizeFunctionName,
@@ -534,7 +535,10 @@ function main(): void {
     ...configuredToolchainIdentity(),
     variantLab: { schemaVersion: 1 as const, sha256: variantLabImplementationHash() },
   };
-  const compilerFlags = [...CC1_FLAGS, ...(loadFlagOverrides().get(options.functionName) || [])];
+  const compilerFlags = [
+    ...configuredCc1FlagsForContainer(containerKindForSymbol(options.functionName)),
+    ...(loadFlagOverrides().get(options.functionName) || []),
+  ];
   if (options.tracePasses) compilerFlags.push("-da");
   const runId = deterministicRunId({
     functionName: options.functionName,

@@ -189,6 +189,10 @@ export function ensureLocalAllocationAnalysis(
       if (!baseline || !counterfactual) {
         throw new Error("compiler-oracle report lacks baseline/local counterfactual variants");
       }
+      if (!report.baselineProductionEquivalent) {
+        throw new Error(`Diagnostic compiler baseline for ${functionName} does not reproduce the production compile `
+          + `(${projectPath(reportPath)}); a local-allocation replay from it would describe a different program.`);
+      }
       const readEvents = (artifactDirectory: string) => {
         const path = join(ROOT, artifactDirectory, "events.jsonl");
         return parseOracleEvents(existsSync(path) ? readFileSync(path, "utf8") : "");

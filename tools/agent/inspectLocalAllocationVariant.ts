@@ -5,7 +5,7 @@ import { basename, join, relative, resolve } from "path";
 import { assembleTarget, normalizeFunctionName, ROOT } from "./decompToolchain.js";
 import { buildDiagnosticCompiler } from "./compiler-oracle/build.js";
 import { replayLocalAllocation } from "./compiler-oracle/local-allocation.js";
-import { compileOracleVariant, instructionComparison } from "./compiler-oracle/run.js";
+import { assertOracleReproducesProduction, compileOracleVariant, instructionComparison } from "./compiler-oracle/run.js";
 
 const args = process.argv.slice(2);
 const functionArg = args[0];
@@ -25,6 +25,7 @@ mkdirSync(output, { recursive: true });
 const compiled = compileOracleVariant(functionName, source, compiler.compiler, output, {
   scheduleEdges: [], forcedLocalAssignments: [], forbiddenLocalCandidates: [],
 });
+assertOracleReproducesProduction(functionName, source, compiled.object, join(output, "production"));
 const replay = replayLocalAllocation(compiled.events, []);
 const target = assembleTarget(functionName, join(output, "target"));
 const comparison = instructionComparison(compiled.object, target);

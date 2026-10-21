@@ -5,7 +5,7 @@ import { join, relative } from "path";
 import { assembleTarget, normalizeFunctionName, resolveSource, ROOT } from "./decompToolchain.js";
 import { buildDiagnosticCompiler } from "./compiler-oracle/build.js";
 import { replayLocalAllocation, type LocalAllocationReplay } from "./compiler-oracle/local-allocation.js";
-import { compileOracleVariant, deriveOracleInterventions, instructionComparison } from "./compiler-oracle/run.js";
+import { assertOracleReproducesProduction, compileOracleVariant, deriveOracleInterventions, instructionComparison } from "./compiler-oracle/run.js";
 import { ensureAllocatorCounterfactual } from "./compiler-oracle/ensure.js";
 import type { CompilerOracleEvent, CompilerOracleInterventions, ForbiddenLocalCandidate, ForcedLocalAssignment } from "./compiler-oracle/types.js";
 
@@ -72,6 +72,7 @@ function compile(id: string, forbidden: ForbiddenLocalCandidate[]): { events: Co
 }
 
 const baseline = compile("baseline", []);
+assertOracleReproducesProduction(functionName, source, baseline.object, join(output, "production"));
 const baselineReplay = replayLocalAllocation(baseline.events, requests);
 if (!baselineReplay.replayVerified) throw new Error("Instrumented local allocator did not replay its stock choices");
 /* A request unavailable even before candidate exclusions needs a lifetime or

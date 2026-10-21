@@ -11,12 +11,13 @@ import {
 } from "node:fs";
 import { join, relative } from "node:path";
 import {
-  CC1_FLAGS,
   CPP_FLAGS,
   ROOT,
   assembleTarget,
   compileSourceAsync,
+  configuredCc1FlagsForContainer,
   configuredToolchainIdentity,
+  containerKindForSymbol,
   disassembleObject,
   loadFlagOverrides,
   normalizeFunctionName,
@@ -240,7 +241,10 @@ async function main(): Promise<void> {
   const targetObject = assembleTarget(options.functionName, runRoot);
   const target = normalizeDisassembly(disassembleObject(targetObject));
   const cacheRoot = join(ROOT, "build/sourceShapeSearch/cache");
-  const compilerFlags = [...CC1_FLAGS, ...(loadFlagOverrides().get(options.functionName) || [])];
+  const compilerFlags = [
+    ...configuredCc1FlagsForContainer(containerKindForSymbol(options.functionName)),
+    ...(loadFlagOverrides().get(options.functionName) || []),
+  ];
   const abort = new AbortController();
   process.once("SIGINT", () => abort.abort());
   process.once("SIGTERM", () => abort.abort());
