@@ -709,6 +709,43 @@ typedef struct {
     s16 field_2;
 } Ovl25SetupStatePair;
 
+/* 800DC560 copies the state pair and accesses these far pointer/ID slots. */
+typedef struct {
+    u8 pad0[0x2479C];
+    Ovl25SetupStatePair previous;
+    u8 pad247A0[6];
+    s16 music;
+    u8 pad247A8[0x25388 - 0x247A8];
+    u8 *header;
+    u8 *buffer;
+    u8 *record;
+    u8 pad25394[0x25474 - 0x25394];
+    Ovl25SetupStatePair current;
+    u8 pad25478[4];
+    s32 id;
+    u8 pad25480[4];
+    s32 normalId;
+    s32 alternateId;
+    u8 pad2548C[0x14];
+    s32 state;
+} Ovl11SetupWorkView;
+
+/* 800DC560: flag words, music/time halfwords and three signed coordinates. */
+typedef struct {
+    u8 pad0[0xC];
+    s32 flags;
+    u8 pad10[0x4450 - 0x10];
+    s32 control;
+    u8 pad4454[0x44BA - 0x4454];
+    u16 music;
+    u8 pad44BC[0xE];
+    s16 time;
+    u8 pad44CC[0x52C8 - 0x44CC];
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11SetupResidentView;
+
 /* 800BDB88 tests the signed +25476 type and forwards the +25474 pair. */
 typedef struct {
     u8 pad_0[0x25474];
@@ -6060,6 +6097,9 @@ struct Ovl11SceneHeader {
     s16 field_0;
     s16 kind;
     s32 id;
+    u16 flags;
+    s16 music; /* 800DC560 reads/writes +0xA and reads signed +0xC. */
+    s16 sound;
 };
 
 /* ovl_11_func_800C28CC: lw at D_8007AFF0+0x25388 points to a halfword header. */
