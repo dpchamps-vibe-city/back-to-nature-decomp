@@ -28,7 +28,8 @@ Limits:
 
 ## Inventory
 
-- 28 overrides. 23 are live in matched C. 5 sit on `INCLUDE_ASM` stubs with
+- 28 overrides at the time of the audit (25 after step 1 below). 23 were live
+  in matched C. 5 sit on `INCLUDE_ASM` stubs with
   the attempt under `#if 0`, so they currently affect nothing:
   `func_80018B98`, `ovl_11_func_800F1678`, `ovl_11_func_80113FF0`,
   `ovl_11_func_800F0E00`, `ovl_25_func_800B95B0`.
@@ -64,11 +65,20 @@ Limits:
   pointer-walk fingerprint; 9 other family members are unchanged. Not clean:
   `8011B2B0` changes 2/257 and `80114398` 1/155, both on stores to the same
   `D_8012D548`/`D_8012D5A8` record.
-- `ovl_15_func_8013345C` / `801335F8`, `-fno-gcse`: with the unchanged
-  `80133538` they form a self-consistent contiguous block
-  0x8013345C–0x80133808. Both flanking functions change heavily
-  (`801331C4` 165/166, `80133808` 164/200). Holds only if a file boundary
-  falls at both ends of the block; there is no evidence for that yet.
+- `ovl_15_func_8013345C` / `801335F8`, `-fno-gcse`: **resolved for
+  `8013345C`, likely the same for `801335F8`.** No split or boundary problem
+  was found (gapless, `configs/splat/ovl_15.yaml` unchanged). The override on
+  `8013345C` was fitted on 2026-10-07 to the m2c goto-form source; the
+  2026-10-20 idiomatic rewrite compiles to identical words with or without
+  the flag, so the override was dead and is withdrawn. `801335F8` is still
+  m2c-shaped: its source spells GCC's own strength-reduced `y` accumulator
+  (`(y << 16) + 0x180000`) and the early `x + 0x88` as C, which is what hands
+  PRE the shift it hoists. A natural rewrite (nested `for` loops, `s16 y`
+  reset to 0x22 at the bottom of the outer loop, `x += 0x88`) reproduces the
+  hoisted `0x180000` register and the runtime `sll` at baseline, and makes
+  the flag *worse*. Its best spelling so far is 132/132 words with 23
+  positions differing: the order of the inner-loop setup block and register
+  choice, not a flag.
 
 ## Tier 3: no organisational signal
 
@@ -101,11 +111,17 @@ argument that failed for the split-address pair.
 
 ## Plan
 
-1. **Split-address pair.** Add `extern s16 D_800A3FB0;` and
-   `extern s16 D_800A3FB4;` to `include/globals_override.h` with an evidence
-   comment, drop the two overrides and their allowlist entries, and check that
-   no other source depends on the array form (`ovl_10_func_800BB728` refers to
-   the symbols).
+1. **Split-address pair. Done 2026-10-21.** `D_800A3FB0`/`D_800A3FB4` are
+   now `extern s16` in `include/globals_override.h`; both overrides and their
+   allowlist entries are gone, and the `ovl_15_func_8013345C` override was
+   withdrawn alongside them. `make check-all` passes (exe and all 13 overlays).
+   Root cause to keep in mind: `tools/build/classifyGlobals.ts` turns every
+   global outside the gp window into a fake >8-byte array to force split
+   addressing, so any small out-of-window scalar whose target shows the
+   unsplit self-clobbering load needs a real scalar declaration in the
+   override header.
+1a. **`ovl_15_func_801335F8`.** Rematch from the natural nested-loop shape at
+   baseline and drop its `-fno-gcse` override.
 2. **Probe detector.** Retarget the `flagProbe.ts` self-clobber fingerprint to
    the declaration-size and ownership causes instead of `-mno-split-addresses`.
 3. **Neighbour test as a tool.** Make the method above a repository check

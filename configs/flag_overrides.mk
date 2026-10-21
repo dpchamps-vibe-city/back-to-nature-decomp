@@ -76,38 +76,15 @@
 # No contrary regional witness: the other matched members of the
 # 0x80013B04-0x80014554 pad group still match byte-for-byte with this flag
 # applied (checked 2026-08-09).
-# func_800231E8: -mno-split-addresses.
-#
-# Fingerprint (decoded from the original bytes, no source needed): the target
-# loads D_800A3FB4/D_800A3FB0 (extern arrays, >8 bytes, absolute) via self-
-# clobbering unsplit assembler-macro loads (lui $v1 / lh $v1,%lo($v1), lui
-# $a3 / lh $a3,%lo($a3), and lui $v0 / lw $v0,%lo($v0) for D_8005E3C0).
-# Under baseline -msplit-addresses the lui is an independent RTL insn that
-# sched2 lifts to a different register (lui $2 / lh $5). psx_flag_probe
-# matrix: -mno-split-addresses 40/40 masked vs baseline 29/40 — the only
-# row beating baseline. Regional witnesses func_800229F4/func_80024030 show
-# the same self-clobber load shape in matched neighbours; no contrary
-# regional witness. D_8005E3C0's self-clobber is automatic (4-byte extern
-# scalar), the flag is required for the two D_800A3FBx halfword loads.
-CC1FLAGS_func_800231E8 := -mno-split-addresses
-
-# func_80023060: -mno-split-addresses.
-#
-# Same TU fingerprint as func_800231E8 (byte-identical call block at
-# 0x80023070-0x800230A8): the target loads D_800A3FB4/D_800A3FB0 (extern
-# arrays, >8 bytes, absolute) and D_8005E3C0 (4-byte extern scalar) via
-# self-clobbering unsplit assembler-macro loads (lui $v1 / lh $v1,%lo($v1),
-# lui $a3 / lh $a3,%lo($a3), lui $v0 / lw $v0,%lo($v0)). Under baseline
-# -msplit-addresses the lui is an independent RTL insn that sched2 lifts to
-# a different register (lui $2 / lh $5) and reorders the whole block.
-# psx_flag_probe matrix: -mno-split-addresses 40/40 masked vs baseline
-# 29/40 — the only row beating baseline. Regional witness: the target at
-# 0x80023060 is adjacent to func_800231E8 (0x800231E8), which requires the
-# same flag with the same self-clobber fingerprint; no contrary regional
-# witness.
-CC1FLAGS_func_80023060 := -mno-split-addresses
-
 CC1FLAGS_func_80014494 := -fno-cse-skip-blocks
+
+# func_800231E8 / func_80023060: NO override. The -mno-split-addresses entries
+# that used to sit here were withdrawn 2026-10-21. They existed to force the
+# unsplit self-clobbering lui/lh loads of D_800A3FB0/D_800A3FB4, which the
+# generated globals.h declared as >8-byte s16[5] arrays. Declared as the s16
+# scalars they are (include/globals_override.h), cc1 leaves them unsplit and
+# both functions match byte-for-byte under baseline flags; the flag was the
+# same wrong lever as the withdrawn func_80016C08/func_800165D8 entries.
 
 # func_80018B98: -fno-gcse.
 #
@@ -444,36 +421,18 @@ CC1FLAGS_ovl_11_func_800F1678 := -fno-cse-skip-blocks
 # file), so the override cannot disturb the matched ovl_11 neighbours.
 CC1FLAGS_ovl_11_func_800F8224 := -fno-strength-reduce
 
-# ovl_15_func_8013345C: -fno-gcse.
-#
-# Fingerprint (decoded from the original bytes / provable unreachability):
-# the target TU's function is exactly 55 instructions, and no clean-C source
-# shape reachable from the current reconstruction (roughly 250 measured
-# variants: goto/for/while/do-while, merged/separate found/count/result webs,
-# mask variable vs literal, scoped per-case masks, and a 128-way cross product)
-# produces 55 instructions under baseline flags -- all produce 54 (the found
-# loop-temp copy is deleted by coalescing). The flag matrix measured by
-# psx_flag_probe shows exactly one row that reaches 55 instructions and
-# dominates baseline: -fno-gcse (38/55 masked and 54/55 opcodes, vs 14/55 for
-# baseline with 54 instructions). -fno-gcse is the only column that reproduces
-# both the instruction count and the opcode stream, i.e. the count is a
-# property no source shape can reach under baseline flags.
-#
-# Regional precedent: ovl_11_func_800F3D40 is an overlay TU in this project
-# that also requires -fno-gcse, so disabling global CSE is an observed per-TU
-# fact of this build, not a workaround.
-#
-# Under -fno-gcse the mismatch is residual allocation only (cfg 0, population
-# 0, schedule 0); the remaining register choices are ordinary local/global
-# allocation ordering.
-CC1FLAGS_ovl_15_func_8013345C := -fno-gcse
+# ovl_15_func_8013345C: NO override. The -fno-gcse entry that used to sit here
+# was withdrawn 2026-10-21. It was fitted to the m2c goto-form reconstruction
+# (54 instructions at baseline). The idiomatic Ovl15RecordPools scan that
+# replaced it compiles to identical words with or without -fno-gcse and is
+# byte-exact under baseline flags.
 
 # ovl_15_func_801335F8: target retains the bottom signed-coordinate
 # conversion inside a nested loop; baseline GCSE PRE hoists its left shift
 # into the inner preheader. The flag matrix on the compiling C reports
 # -fno-gcse 132/132 masked versus baseline 84/132; the relocated-byte oracle
-# confirms 132/132 exact. Nearby ovl_15_func_8013345C has the same override;
-# this per-function TU leaves its matched neighbours' flags unchanged.
+# confirms 132/132 exact. The source is still m2c-shaped: no matched ovl_15
+# neighbour needs this flag, and 801331C4/80133808 change under it.
 # User authorized the evidence-backed exception in the matching session.
 CC1FLAGS_ovl_15_func_801335F8 := -fno-gcse
 

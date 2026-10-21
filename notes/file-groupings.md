@@ -4630,9 +4630,10 @@ state machine, immediately preceding the callback driver family. Evidence
   exactly at 0x80023100); structural twin of func_800231E8 — same
   func_80015114 font/geometry call (D_800A3FB0/3FB4), same state-gate then
   switch-map (4→clear,-1; 5→clear,+1; else 2 on its own u16 D_8005E338), and
-  byte-identical call block; matched under the same -mno-split-addresses
-  override (self-clobber D_8005E3C0/D_800A3FBx loads, see
-  configs/flag_overrides.mk func_80023060). Ties the D_8005E338 cluster
+  byte-identical call block; the same self-clobbering D_8005E3C0/D_800A3FBx
+  loads, byte-exact under baseline flags once D_800A3FB0/D_800A3FB4 are
+  declared as s16 scalars (the former -mno-split-addresses override was
+  withdrawn 2026-10-21). Ties the D_8005E338 cluster
   (driven by func_80023288/func_80023600) to this family's dispatch-tail
   idiom.
 Members (address order):
@@ -4654,8 +4655,9 @@ Members (address order):
   func_800239F8, then maps the resulting state back into D_8005E344
   (3→clear, -1; 4→clear, +1; else 2). Tentatively defines the same u16
   D_8005E344 cluster member as func_80023100.c/func_800239F8.c (gp-rel
-  lhu/sw %gp_rel(D_8005E344)); matched under a -mno-split-addresses override
-  (absolute D_800A3FBx halfword loads, see configs/flag_overrides.mk func_800231E8)
+  lhu/sw %gp_rel(D_8005E344)); the absolute D_800A3FBx halfword loads are the
+  unsplit loads of extern s16 scalars, byte-exact under baseline flags (the
+  former -mno-split-addresses override was withdrawn 2026-10-21)
 
 ## callback driver family — 0x80023600–0x80023910 (confidence: medium)
 
@@ -10656,8 +10658,10 @@ Members (link order):
 - ovl_15_func_801335F8 (m, matched this session, byte-exact) — gapless successor
   (ends exactly at 0x80133808, the D_8013759E run head); same two-base selection,
   walks `D_80140F90`; matched under `-fno-gcse` (PRE-fatal nested-loop shape;
-  flag matrix 132/132 masked vs baseline 84/132; neighbour `ovl_15_func_8013345C`
-  shares the override; per-TU override in `configs/flag_overrides.mk`)
+  flag matrix 132/132 masked vs baseline 84/132; per-TU override in
+  `configs/flag_overrides.mk`). Still m2c-shaped: `ovl_15_func_8013345C`'s
+  former `-fno-gcse` override was withdrawn 2026-10-21 (byte-exact at baseline),
+  so no matched neighbour needs this flag, and 801331C4/80133808 change under it)
 
 ## `ovl_15` save-slot renderer/formatter run — 0x80136B18–0x8013703C (confidence: medium)
 

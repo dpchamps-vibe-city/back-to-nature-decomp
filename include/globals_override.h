@@ -2427,6 +2427,13 @@ typedef struct {
 } struct_8005E3C0;
 extern struct_8005E3C0 *D_8005E3C0;
 
+/* D_800A3FB0 / D_800A3FB4 - s16 font/geometry offsets passed to func_80015114 by
+   func_80023060 / func_800231E8. Small scalars: the target's self-clobbering
+   lui/lh pairs are the unsplit load cc1 emits for a <=8-byte extern, byte-exact
+   under baseline flags (the generated s16[5] view needed -mno-split-addresses). */
+extern s16 D_800A3FB0;
+extern s16 D_800A3FB4;
+
 /* 800CFE40: three position halfwords and two projected screen words. */
 extern s16 D_80128D38[4];
 extern s32 D_80128D40[2];
