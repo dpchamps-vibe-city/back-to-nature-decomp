@@ -105,8 +105,8 @@ previously cited 800C3020 size and 800C2F74 call-chain witnesses.
   0x800C2FE4 before potentially invoking 800C2CE8. This supplies a concrete
   flag producer/consumer tie alongside the call/link evidence.
 - The predecessor conditionally increments the object's +0x22 table index,
-  calls 800C2A98 and prepares event flags. Its role and flag writes remain
-  assembly-derived; its C source is still an `INCLUDE_ASM` stub.
+  calls 800C2A98 and prepares event flags. At that handoff its role and flag
+  writes were assembly-derived; its C source was still an `INCLUDE_ASM` stub.
 
 Assembly witnesses are
 `build/ovl_11/asm/nonmatchings/<function>/<function>.s` for
@@ -114,9 +114,42 @@ Assembly witnesses are
 candidate run by one member; it does not establish TU ownership of the
 object pool or the broadly shared global gate.
 
+## Extension from verified ovl_11_func_800C2B04
+
+- Supplied verified identity: `32ed161773a9f0ec21cd9e043bf0bc1eee50c98ab87312d5d15a22e3ccb76011`
+  (origin: agent; byte-exact and full finalize gate passed).
+- Verified source: `src/overlays/ovl_11/ovl_11_func_800C2B04.c`
+  (SHA-256 `055147b21484f2e430069cdf5b4b584230da11083aaeea8384ade1748678da6f`).
+  The supplied changed-file list is `include/globals_override.h`,
+  `include/sdk_types.h` and that source. The new global-state and object
+  views document layouts, not original TU ownership.
+- `configs/splat/ovl_11.yaml` places 800C2A98 at file offset 0xAC78
+  immediately before 800C2B04 at 0xACE4. The original helper size is
+  0x6C: 0x800C2A98 + 0x6C = 0x800C2B04. This adds a gapless
+  predecessor to the existing run.
+- The verified caller increments the object's u16 index at +0x22 and
+  passes the same object to 800C2A98. Original assembly places the call
+  at 0x800C2BC4 and stores the incremented index in its delay slot at
+  0x800C2BC8. Thus call graph and link adjacency corroborate membership.
+- The helper consumes that index at 0x800C2A9C, uses the same 8-byte
+  table stride, and copies entry +4..+7 (object +0xE8 + index*8) to
+  object +0x2C..+0x2F at 0x800C2AAC–0x800C2ABC. The caller saves
+  s16@+0x2E before the call and compares it afterward at 0x800C2BCC–
+  0x800C2BD4 to decide whether to prepare a changed event. This is
+  concrete index-producer/event-field-consumer data flow, not merely
+  shared argument types.
+
+Assembly witnesses are
+`build/ovl_11/functions/ovl_11_func_800C2A98.s` and
+`build/ovl_11/asm/nonmatchings/ovl_11_func_800C2B04/ovl_11_func_800C2B04.s`.
+The helper also has C source at
+`src/overlays/ovl_11/ovl_11_func_800C2A98.c`; its role above is independently
+supported by the original assembly. This extends the candidate run by one
+member. The existing 800C2B04 membership and flag tie are confirmed, not new.
+
 ## Limits
 
-This supports extending the low-confidence candidate pair to the six-member
+This supports extending the low-confidence candidate pair to the seven-member
 run, conditional on link order preserving original source ordering. No
 shared-static/global ownership, declaration-order quirk or TU boundary is
 established; the run's endpoints are not claimed as original file boundaries.
@@ -124,6 +157,9 @@ The run does not merge with the non-adjacent animation-command pair at
 0x800C1F94 / 0x800C2044, the far-buffer reader pair at 0x800C3B78 /
 0x800C3CCC, or 800C2678 merely because its members call them. Likewise,
 800C3590 is not added solely for the driver's call, nor 800C3138 solely
-for adjacency and use of the broadly shared D_80076220 pool. Absolute
+for adjacency and use of the broadly shared D_80076220 pool. The separate
+800C2884/800C28CC pair is not merged here: 800C2B04's call to 800C28CC
+is not an immediate-neighbour edge and lacks the demonstrated table-index/
+event-field data flow of 800C2A98. Absolute
 counter accesses do not establish a shared owning TU. Modern shared
 argument types are not evidence of an original translation unit.

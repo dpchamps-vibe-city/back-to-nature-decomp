@@ -2919,6 +2919,24 @@ typedef struct {
 } Ovl11EffectCoordinate;
 
 typedef struct {
+    s16 time;
+    u16 data[3];
+} Ovl11EventEntry;
+
+typedef struct {
+    u8 pad0[0x12];
+    s16 field12;
+    s16 field14;
+    u16 field16;
+    u8 pad18[6];
+    u16 flags;
+    u16 flags20;
+    u16 entryIndex;
+    u8 pad24[0xE4 - 0x24];
+    Ovl11EventEntry entries[30];
+} Ovl11EventObject;
+
+typedef struct {
     s16 unk0;
     s16 unk2;
     u16 unk4;

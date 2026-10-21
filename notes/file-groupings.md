@@ -7624,15 +7624,16 @@ Evidence and limits: [research note](research/ovl_11_func_800C1F94-grouping.md).
 - ovl_11_func_800C1F94 (m, finalized) — handles animation commands 0, 1 and 16.
 - ovl_11_func_800C2044 (s) — advances and dispatches object command-table entries, invoking the helper.
 
-## `ovl_11` event helper/update run — 0x800C2B04 / 0x800C2C74 / 0x800C2CE8 / 0x800C2F74 / 0x800C3020 / 0x800C30AC (confidence: low)
+## `ovl_11` event helper/update run — 0x800C2A98 / 0x800C2B04 / 0x800C2C74 / 0x800C2CE8 / 0x800C2F74 / 0x800C3020 / 0x800C30AC (confidence: low)
 
 Candidate same-TU run: call graph and gapless link order agree, with shared
-object-state dependencies. Verified 800C2F74 adds predecessor 800C2B04 through
-a direct call and object-flag producer/consumer tie. The 800C30AC tail shares
-D_80122F88 with 800C2CE8 and calls 800C2F74; no TU boundary proven.
+object-state dependencies and counter D_80122F88. Verified 800C2B04 adds
+predecessor 800C2A98 through a direct call and table-index/event-field data
+flow; no TU boundary proven.
 Evidence and limits: [research note](research/ovl_11_func_800C2C74-grouping.md).
 
-- ovl_11_func_800C2B04 (s) — conditionally advances the object's table entry and prepares event flags.
+- ovl_11_func_800C2A98 — loads the indexed table entry into object event/state fields.
+- ovl_11_func_800C2B04 (m, finalized) — conditionally advances the object's table entry and prepares event flags.
 - ovl_11_func_800C2C74 (m, finalized) — selects the object's current event and invokes heading/animation-command handlers.
 - ovl_11_func_800C2CE8 (s) — updates object state and dispatches ready command events through the helper.
 - ovl_11_func_800C2F74 (m, finalized) — clears a transient object flag and conditionally drives object updates.

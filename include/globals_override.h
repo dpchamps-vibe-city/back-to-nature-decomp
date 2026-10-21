@@ -1811,6 +1811,14 @@ struct struct_8006C838_800E3AA4 {
     s16 field_4438;         /* 0x4438 */
 };
 
+/* 800C2B04 reads the flag word at +0xC and signed time at +0x44CA. */
+typedef struct {
+    u8 pad0[0xC];
+    s32 flags;
+    u8 pad10[0x44CA - 0x10];
+    s16 time;
+} Ovl11C2B04GlobalState;
+
 /* View of D_8006C838 for ovl_11_func_800E4608: the flag word at +0xC and the
  * s16/u16 pair at +0x4476..+0x4480. Reached as a struct member so cc1 keeps
  * lui %hi(D_8006C838) as the base and uses each offset as a displacement
