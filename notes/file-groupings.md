@@ -5444,6 +5444,10 @@ Members (address order):
 - func_80021E60's pool-carving table neighborhood (19-entry pointer/count
   parallel arrays over 0x18-byte elements) — func_80021DA8 is a confirmed
   caller and address predecessor; shared gp-rel globals unverified.
+- ovl_11 0x800C14A0 / 0x800C162C frame-driver pair — low-confidence candidate same-TU membership ([evidence and limits](research/ovl_11_func_800C162C-grouping.md)).
+  - ovl_11_func_800C14A0 (s) — mode-gated frame dispatcher and control-flag updater.
+  - ovl_11_func_800C162C (m, byte-exact) — staged frame-update driver with scratchpad-stack call batches.
+
 - ovl_11 D_8012D520 getter/compare quartet — ovl_11_func_80118C6C (m, matched
   this session), ovl_11_func_801165C8 (m, now matched),
   ovl_11_func_80115FC8 (m, matched this session) and

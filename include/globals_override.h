@@ -6803,5 +6803,29 @@ typedef struct {
     struct Ovl11SceneHeader *otherHeader;
 } Ovl11ConditionWork;
 
+/* 800C162C: word flags at +0xC, position at +0x52C8 and reset words. */
+struct Ovl11FrameState {
+    u8 pad0[0xC];
+    s32 flags;
+    u8 pad10[0x52C8 - 0x10];
+    u16 position[5];
+    u8 pad52D2[6];
+    s32 field_52D8;
+    s32 field_52DC;
+    s32 field_52E0;
+};
+
+/* 800C162C: halfword resets at +0x253A8/+0x253AA, word mode +0x254A0. */
+struct Ovl11FrameWork {
+    u8 pad0[0x253A8];
+    s16 field_253A8;
+    s16 field_253AA;
+    u8 pad253AC[0x254A0 - 0x253AC];
+    s32 mode;
+};
+
+/* 800C162C initializes, loads and stores this absolute-addressed s32 result. */
+extern s32 D_80128B60;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
