@@ -12285,6 +12285,7 @@ call idiom.
   `s16@+0x26 == arg1 && (s32@+0x34 & 0x800)` (then -1); when `D_800B95CC[arg1]`
   is set and the result ≠ -1 records the selection (0x26/0x28/0x2A/0x2C) and
   calls `ovl_11_func_800D0408`; stores -1 at `s16@+0xB6`.
+- ovl_11_func_800DF400 (m, byte-exact; candidate member) — timer-triggered handler-state selector ([shared state protocol and call/link-order evidence](research/ovl_11_func_800DF400-grouping.md)).
 - ovl_11_func_800DFA7C (m, matched this session, byte-exact) — `D_800B957C`
   table handler: gates `s16@+0x30 == *(s16 *)(&D_8007AFF0 + 0x25476)` and
   `func_80012A34(0xC8) < s16@+0x16`, then shares 800DFB3C's work-area latch
