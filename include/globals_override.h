@@ -3839,6 +3839,10 @@ extern u16 D_800B93D0[][25];
 
 /* D_80070CF2 - s16 global used in overlay 11 button-check functions */
 extern s16 D_80070CF2;
+/* 800C0DB4 compares signed record halfwords against these lh-loaded globals. */
+extern s16 D_80070CF4;
+extern s16 D_80070CF8_signedHalfword __asm__("D_80070CF8");
+extern s16 D_80070CFA;
 
 /* D_800BAC04 - ovl_11 four-entry {s32 id, handler} dispatch table. The records
  * are {0, ovl_11_func_80111258}, {1, ovl_11_func_80111400}, {2,
