@@ -836,6 +836,27 @@ typedef struct {
     u8 unk30[0xE4 - 0x30];    /* 0x30 */
     struct_80076220_entry unkE4[30]; /* 0xE4 - ends at 0x1D4 */
 } struct_80076220;
+/* 800C19B0: signed id/+A/+2E, reset halfword +10 and words +30..38,
+ * u16 flags/index, and the 30-entry +E4 table; loop stride is 0x1D4. */
+struct Ovl11EventInitRecord {
+    s16 id;
+    u8 pad2[8];
+    s16 offset;
+    u8 padC[4];
+    s16 field10;
+    u8 pad12[0x1E - 0x12];
+    u16 flags;
+    u16 flags20;
+    u16 index;
+    u8 pad24[8];
+    s16 field2C;
+    s16 field2E;
+    s32 field30;
+    s32 field34;
+    s32 field38;
+    u8 pad3C[0xE4 - 0x3C];
+    struct_80076220_entry entries[30];
+};
 extern struct_80076220 _D_80076220[1] __asm__("D_80076220");
 #define D_80076220 (*((struct_80076220*)_D_80076220))
 
@@ -1631,6 +1652,21 @@ struct Ovl11StateInitView {
     u8 pad_44C4[4];
     s16 field_44C8;
     s16 field_44CA;
+};
+
+/* 800C19B0 reads lh +44CA and writes sh +CB70/+CB72 through D_8006C838. */
+struct Ovl11EventInitState {
+    u8 pad0[0x44CA];
+    s16 time;
+    u8 pad44CC[0xCB70 - 0x44CC];
+    s16 fieldCB70;
+    s16 fieldCB72;
+};
+
+/* 800C19B0 loads the pointer at D_8009AFF0+5388, then reads lh +2. */
+struct Ovl11EventInitWork {
+    u8 pad0[0x5388];
+    s16 *header;
 };
 
 /* ovl_11_func_800C0FC0 compares signed halfwords at these D_8006C838 offsets. */
