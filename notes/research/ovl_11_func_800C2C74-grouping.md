@@ -85,9 +85,38 @@ Assembly witnesses are
 `ovl_11_func_800C30AC` and `ovl_11_func_800C2CE8`, together with the
 previously cited 800C3020 size and 800C2F74 call-chain witnesses.
 
+## Extension from verified ovl_11_func_800C2F74
+
+- Supplied verified identity: `6498c77a086697a19ecf90496412c1ed81a54258b91bdef8205abd948d2d1dfc`
+  (origin: agent; full finalize gate passed).
+- Verified source: `src/overlays/ovl_11/ovl_11_func_800C2F74.c`
+  (SHA-256 `114fb11aaace09f5bbfe8a39bc7c76c623261aa7f46085f5986987369362ce3b`);
+  the supplied changed-file list contains only that source.
+- The verified caller invokes 800C2B04 on the same object before testing
+  its event flags. Original assembly places the call at 0x800C2FC4 and
+  passes the object pointer at 0x800C2FC8.
+- `configs/splat/ovl_11.yaml` places 800C2B04 at file offset 0xACE4,
+  immediately before existing run head 800C2C74 at 0xAE54. The original
+  size is 0x170: 0x800C2B04 + 0x170 = 0x800C2C74. The new call therefore
+  connects a gapless predecessor to the existing run, not a distant callee.
+- 800C2B04 conditionally sets bit 0x100 of the object's u16@+0x1E at
+  0x800C2C38–0x800C2C3C. After calling it (and `func_80013394`),
+  800C2F74 reloads that field at 0x800C2FDC and tests bit 0x100 at
+  0x800C2FE4 before potentially invoking 800C2CE8. This supplies a concrete
+  flag producer/consumer tie alongside the call/link evidence.
+- The predecessor conditionally increments the object's +0x22 table index,
+  calls 800C2A98 and prepares event flags. Its role and flag writes remain
+  assembly-derived; its C source is still an `INCLUDE_ASM` stub.
+
+Assembly witnesses are
+`build/ovl_11/asm/nonmatchings/<function>/<function>.s` for
+`ovl_11_func_800C2F74` and `ovl_11_func_800C2B04`. This extends the
+candidate run by one member; it does not establish TU ownership of the
+object pool or the broadly shared global gate.
+
 ## Limits
 
-This supports extending the low-confidence candidate pair to the five-member
+This supports extending the low-confidence candidate pair to the six-member
 run, conditional on link order preserving original source ordering. No
 shared-static/global ownership, declaration-order quirk or TU boundary is
 established; the run's endpoints are not claimed as original file boundaries.
