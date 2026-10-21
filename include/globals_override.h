@@ -1860,6 +1860,11 @@ struct struct_8006C838_button {
     char pad_44BC[4];       /* 0x44BC-0x44BF */
     s16 field_44C0;         /* 0x44C0 */
     s16 field_44C2;         /* 0x44C2 */
+    /* 800F4BB4 reads u16 +44D6 and decrements/clamps s16 +51DE. */
+    char pad_44C4[0x44D6 - 0x44C4];
+    u16 field_44D6;
+    char pad_44D8[0x51DE - 0x44D8];
+    s16 field_51DE;
 };
 
 /* 800DE9C8 reads +44BA/+E4C8 and +44C0; 800E1DA8 reads s16 at +52C6/+E4C8. */
