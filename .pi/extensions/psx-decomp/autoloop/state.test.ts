@@ -1,8 +1,89 @@
 import assert from "node:assert/strict";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 import { DEFAULT_CONFIG } from "../../shared/config.ts";
-import { emptyState, withLoopExemptions } from "./state.ts";
+import { DEFAULT_LOOP_CONFIG } from "./config.ts";
+import { emptyState, readState, statePath, withLoopExemptions, writeState } from "./state.ts";
+import type { Completion } from "../tools/prepared-attempt.ts";
 import { KEEP_GOING, escalationMessage, nudgeMessage, openingMessage } from "./prompts.ts";
+
+test("state storage losslessly delta-encodes inputs, including removals, empty maps and replaced records", (t) => {
+  const runtimeDir = mkdtempSync(join(tmpdir(), "autoloop-state-"));
+  t.after(() => rmSync(runtimeDir, { recursive: true, force: true }));
+  const config = { ...DEFAULT_LOOP_CONFIG, runtimeDir };
+  const completion = (inputs: Record<string, string>): Completion => ({
+    origin: "agent", tier: "matching-tier", documentationModel: "docs-tier",
+    verifiedIdentity: "identity", verification: "passed", inputs,
+    changedFiles: ["src/a.c"], documentation: "pending", error: "resume me",
+  });
+  const state = { ...emptyState(), completions: {
+    first: completion({ "src/a.c": "a", "src/deleted.c": "d" }),
+    second: completion({ "src/a.c": "a", "src/new.c": "n" }),
+    third: completion({ "src/a.c": "changed", "src/new.c": "n" }),
+    empty: completion({}),
+    restored: completion({ "src/a.c": "a" }),
+  } };
+  state.approvals.first = { functionName: "first", kinds: ["embedded-asm"], approvedAt: "today", approvedBy: "reviewer", rationale: "evidence" };
+  writeState(config, state);
+  const stored = JSON.parse(readFileSync(statePath(config), "utf8"));
+  assert.equal(stored.format, "autoloop-input-deltas-v1");
+  assert.deepEqual(stored.completions.second.inputsDelta, { "src/deleted.c": null, "src/new.c": "n" });
+  assert.deepEqual(stored.completions.third.inputsDelta, { "src/a.c": "changed" });
+  const restored = readState(config);
+  assert.deepEqual(restored, state);
+  restored.completions!.second!.inputs["src/a.c"] = "mutation";
+  assert.equal(restored.completions!.first!.inputs["src/a.c"], "a", "decoded snapshots must not alias");
+  assert.equal(state.completions.second.inputs["src/a.c"], "a", "writing must not mutate the caller");
+
+  /* Updating/removing an earlier completion must rebase the following deltas. */
+  state.completions.first = completion({ "src/replacement.c": "r" });
+  delete (state.completions as Record<string, Completion>).third;
+  writeState(config, state);
+  assert.deepEqual(readState(config), state);
+});
+
+test("legacy states remain readable and migrate on write without dropping parked work", (t) => {
+  const runtimeDir = mkdtempSync(join(tmpdir(), "autoloop-state-legacy-"));
+  t.after(() => rmSync(runtimeDir, { recursive: true, force: true }));
+  const config = { ...DEFAULT_LOOP_CONFIG, runtimeDir };
+  assert.deepEqual(readState(config), emptyState());
+  const state = emptyState();
+  state.parked.first = { functionName: "first", reason: "blocked", parkedAt: "today", reachedTier: "tier", lastReport: "full report", findings: [] };
+  writeFileSync(statePath(config), JSON.stringify(state));
+  assert.deepEqual(readState(config), state);
+  writeState(config, readState(config));
+  assert.deepEqual(readState(config), state);
+  state.completions = {};
+  writeState(config, state);
+  assert.deepEqual(readState(config), state, "absent and empty completion maps both survive");
+});
+
+test("invalid or unsupported state fails closed instead of silently discarding all history", (t) => {
+  const runtimeDir = mkdtempSync(join(tmpdir(), "autoloop-state-invalid-"));
+  t.after(() => rmSync(runtimeDir, { recursive: true, force: true }));
+  const config = { ...DEFAULT_LOOP_CONFIG, runtimeDir };
+  for (const text of ["{", '{"format":"future-version"}', '{"format":"autoloop-input-deltas-v1","completions":{"first":{}}}',
+    '{"format":"autoloop-input-deltas-v1","completions":{"first":{"inputsDelta":{"a":42}}}}']) {
+    writeFileSync(statePath(config), text);
+    assert.throws(() => readState(config));
+    assert.equal(readFileSync(statePath(config), "utf8"), text);
+  }
+});
+
+test("repeated large snapshots are stored once rather than growing with every completion", (t) => {
+  const runtimeDir = mkdtempSync(join(tmpdir(), "autoloop-state-size-"));
+  t.after(() => rmSync(runtimeDir, { recursive: true, force: true }));
+  const config = { ...DEFAULT_LOOP_CONFIG, runtimeDir };
+  const inputs = Object.fromEntries(Array.from({ length: 2000 }, (_, i) => [`src/function_${i}.c`, "a".repeat(64)]));
+  const state = { ...emptyState(), completions: Object.fromEntries(Array.from({ length: 100 }, (_, i) => [`function_${i}`, {
+    origin: "static" as const, inputs, verifiedIdentity: "identity", changedFiles: [], documentation: "passed" as const,
+  }])) };
+  writeState(config, state);
+  assert.ok(readFileSync(statePath(config)).length < JSON.stringify(state).length / 50);
+  assert.deepEqual(readState(config), state);
+});
 
 test("a parked function is exempted from the include-asm rule, and nothing else is", () => {
   const state = emptyState();

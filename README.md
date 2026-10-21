@@ -271,6 +271,14 @@ status before dispatching the model.
 Start `pi` from the repository root. Then use a command. Run `/reload` after
 you edit a `.pi` resource in an open session.
 
+The loop's `run_output/autoloop/state.json` stores completion build-input maps
+as lossless deltas from the preceding completion (`autoloop-input-deltas-v1`);
+`readState` restores each full independent snapshot. No parked work, approvals,
+completion metadata or input hashes are pruned. Legacy plain states remain
+readable and migrate on the next write. Use the state helpers rather than
+reading or editing completion input maps directly; invalid/unknown formats
+stop the loop instead of silently resetting its history.
+
 ### Commands
 
 ```text
