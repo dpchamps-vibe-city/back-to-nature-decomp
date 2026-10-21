@@ -202,6 +202,7 @@ ignores that path.
 | `make split` | Runs the full splat pipeline. See "The `make split` pipeline" |
 | `make split-sdk-libs` | Regenerates collision-safe SDK members/map under `build/sdk/`; cold recovery requires `PSYQ2ELF` |
 | `make progress` | Shows a summary of the decompilation progress |
+| `make complete` | Quiet, read-only progress check across all containers: exits 0 at 100%, 1 otherwise; does not build or verify bytes |
 | `make disassemble` | Runs the spimdisasm bootstrap and writes `functions.csv` and one `.s` file for each function |
 | `make config-check` | Runs `make split` again and fails if a tracked file changes |
 | `make setup` | Initializes the git submodules |

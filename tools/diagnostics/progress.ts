@@ -20,13 +20,14 @@
  *   npx tsx tools/diagnostics/progress.ts --remaining        # only what is left
  *   npx tsx tools/diagnostics/progress.ts --done             # only what matches
  *   npx tsx tools/diagnostics/progress.ts --markdown         # markdown table
+ *   npx tsx tools/diagnostics/progress.ts --check-complete   # quiet: exit 0 at 100%, else 1
  */
 
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { computeLiveness, isOverlayOnlyReference } from "../lib/liveness.js";
-import { containerPath, loadContainers, requireContainer, type Container } from "../lib/container.js";
+import { containerPath, loadContainers, requireContainer, unresolvedCodeMembers, type Container } from "../lib/container.js";
 import { loadFunctionSpans } from "../lib/symbolIndex.js";
 import { detectMacroIdentities } from "./macroIdentity.js";
 import { macroRouteSummary, type MacroRouteSummary } from "./macroTiler.js";
@@ -137,6 +138,16 @@ function measure(container: Container): ContainerTotals {
 }
 
 const measured = containers.map(measure);
+
+if (args.includes("--check-complete")) {
+  /* Compare exact counts, not rounded percentages. Missing coverage must not
+     turn an empty or partially configured project into a successful check. */
+  const complete = liveness.overlaysIncluded && macroCensus.censusComplete &&
+    (onlyContainer !== undefined || unresolvedCodeMembers().length === 0) &&
+    measured.length > 0 && measured.every((m) =>
+      m.totalFuncs > 0 && m.decompFuncs === m.totalFuncs && m.decompBytes === m.totalBytes);
+  process.exit(complete ? 0 : 1);
+}
 
 function percent(part: number, whole: number): string {
   return whole > 0 ? ((part / whole) * 100).toFixed(2) : "0.00";

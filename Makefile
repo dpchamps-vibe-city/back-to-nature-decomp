@@ -343,6 +343,22 @@ setup:
 progress:
 	@npx tsx tools/diagnostics/progress.ts
 
+# Read-only completion query. GNU make normally maps recipe failures to exit 2;
+# query mode instead returns exactly 0 (complete) or 1 (work remains). An empty
+# phony target is up to date; an unexecuted no-op recipe makes it out of date.
+# Limit query mode to this standalone invocation so other goals still build.
+ifeq ($(MAKECMDGOALS),complete)
+MAKEFLAGS += --question
+ifneq ($(shell npx tsx tools/diagnostics/progress.ts --check-complete; echo $$?),0)
+complete: ; @:
+else
+complete:
+endif
+else
+complete:
+	@npx tsx tools/diagnostics/progress.ts --check-complete
+endif
+
 # Config convergence guard: re-run the split pipeline across every container and
 # assert that NO tracked config or generated header changes. With fourteen
 # containers the fixpoint is harder to reach than with one, and a chain that
@@ -381,4 +397,4 @@ open('configs/splat/exe.yaml','w').writelines(lines[:idx+1])"
 	rm -rf $(BUILD_DIR)
 	@echo "Configs wiped. Run 'make split && make && make check' to rebuild from scratch."
 
-.PHONY: all disassemble split split-sdk-libs check check-exe check-all split-all setup progress clean wipe FORCE_BUILD_INPUTS
+.PHONY: all disassemble split split-sdk-libs check check-exe check-all split-all setup progress complete clean wipe FORCE_BUILD_INPUTS
