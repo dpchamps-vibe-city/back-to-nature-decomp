@@ -5982,14 +5982,15 @@ Fingerprints:
 - signature corroborated by the byte-exact wrappers; frame map (10 args, arg8
   4-byte BLKmode struct) matches every caller.
 
-Member: func_80018B98 (in progress — 257/292 clean C; residual is pure greg
-  register assignment). Same residual class as func_80019070: block-0
-  prologue allocation plus a hard-register rotation that two exhaustive
-  source-space searches and 60+ measured experiments place outside the
-  reachable clean-C domain. func_80019070's governed resolution was a
-  narrowly allowlisted embedded-asm/register-asm hybrid
-  (notes/research/func_80019070-prologue-allocation-and-arg2-truncation.md);
-  func_80018B98 is expected to need the same exception category.
+Member: func_80018B98 (suspended at user request, 2026-10-21 — improved
+  disabled C attempt 283/293 compared words, staged `[0,0,1,2]`; not matched).
+  One explicit source loop corrects the old flag/scale allocation, and
+  sequential temporary-role changes resolve most of the former rotation.
+  Earlier assertions of a clean-C ceiling or necessary hybrid exception
+  were conditional on superseded source shapes, not impossibility proofs.
+  See notes/research/func_80018B98-hybrid-asm-and-clean-ceiling.md for the
+  bounded 877-partition closure and the remaining two sites. No new
+  translation-unit membership claim follows from these source experiments.
 
 ## fade/option-dim state machine — 0x8001328C–0x80013400 (confidence: medium)
 

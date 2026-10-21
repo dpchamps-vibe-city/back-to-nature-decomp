@@ -1,10 +1,99 @@
 # func_80018B98 — clean-C ceiling and hybrid-asm non-transferability
 
-Status: reparked 2026-08-21. Clean-C best 257/292 (87.7%), key `[0,2,3,9]`.
-Owner of the residual: greg (register allocation). Human decision pending
-(see notes/human-needed-approvals/func_80018B98.md).
+Status: suspended at the user's request on 2026-10-21, not matched. Latest
+preserved C attempt: **283/293 compared words**, staged key **`[0,0,1,2]`**.
+The assembly stub is active; the complete improved attempt is preserved under
+`#if 0` in `src/func_80018B98.c`. No new policy exception was requested or
+adopted. Do not read the historical "ceiling" below as an impossibility proof.
 
-## Classification (this is the whole story)
+## 2026-10-21: loop-note and temporary-web premises reopened
+
+The former best `[0,2,3,9]` was reproduced against the current toolchain before
+experimentation. The decisive changes were structural, not pins or flags:
+
+1. The old goto-only source's compiler trace reported **zero source loops**.
+   Retaining the same branches but expressing one back-edge with an explicit
+   `do ... while` produces `[0,0,1,7]`. Both inner-only and outer-only loop-note
+   forms compiled identically. Two explicit loops instead measured
+   `[0,0,6,17]`; a nested top-tested form regressed CFG/population. One-loop
+   weighting gives the flag `$s5` and scale `$s6` without pinning either.
+2. Separating the y product from the masked-token variable improves that
+   one-loop seed to `[0,0,1,4]`. This directly overturns the old blanket claim
+   that splitting this web is intrinsically destructive. Its earlier failure
+   was conditional on the old loop shape and/or pinned variants.
+3. An explicit raw-token load, masked-token assignment, then token copy,
+   with the raw temporary reused for the x product, reaches **`[0,0,1,2]`**.
+   The mask, lasting token copy and remask now use the target's `$a0`, `$a1`
+   and `$v1`. The source's generic `work0` is the raw load/x-product web;
+   `work1` is the token copy, `work2` the initial mask, `work3` the y product,
+   `work4` the nested-text pointer, and `work5` the outer index.
+
+Fresh best measurement: `psx_residual_objective` on source hash
+`6315afc200716cbfc2d5f0cb7f85ba606e23d43ed74d84ff9f19891babba33c0`.
+The disabled body preserves those bytes as source; its umbrella include is
+inside the disabled region as well. Scratch duplicate:
+`build/manual/func_80018B98/best-283-of-293.c`.
+
+### What actually remains
+
+- Block 0: one scheduling difference, the incoming arg8 load appears earlier
+  than the target. Saved-register roles otherwise agree.
+- Block 17 (`0x80018CEC`): two allocation differences. Target loads the raw
+  token into `$v0` and births `0xFFFF` in `$v1`; this candidate uses `$v1`
+  and `$v0`, respectively. The surviving token copy therefore reads `$v1`
+  instead of `$v0`. Other blocks are clear under the staged residual.
+- This is **not a match**. The staged zero population is not an independent
+  whole-function semantic proof, and the reversal's mach round-trip had a
+  reported failure on the earlier seed; do not inflate its attribution.
+
+### Bounded experiments already measured
+
+All **877/877** set partitions of seven sequential temporary roles were
+compiled: raw load, lasting token, initial mask, x product, y product,
+lookup pointer and outer index. One-loop source shape, existing `-fno-gcse`,
+fixed u16 remask and fixed expression/branch sites were held constant.
+None was exact. Simplest best partition: `0120345`, i.e. raw/x-product share
+one variable, all other roles distinct. Richer partition `0120332` emits the
+same words. This closes **only this finite partition grammar**, not other
+source types, expression boundaries, declaration births or loop constructions.
+
+Artifacts:
+- `build/manual/func_80018B98/make-web-search.ts` and `web-search.json`;
+- `build/sourceShapeSearch/func_80018B98/413e6478114b31c7/summary.json`;
+- simple best source: `variants/v000004__sequential-web-partitions-partition-0120345/source.c`
+  under that search directory;
+- `psx_record_closed` has the scope and results, and the experiment ledger
+  contains the hand-measured variants.
+
+Other bounded findings:
+- Scalar **volatile** arg8 and the former 4-byte BLKmode `TextFlag` produce
+  identical words on the one-loop pre-partition seed. Thus prior regression
+  of a plain scalar did **not** prove an original struct parameter. The best
+  preservation uses volatile scalar for a compatible recursive-call ABI;
+  volatility itself is not independently proven. Re-audit that contract.
+- A single-set token with fresh x/y products loses three target range masks.
+  Reusing token for the lookup pointer restores them but damages call-result
+  allocation; using it for the return result emits the old `[0,0,1,4]` program.
+  The compiler's `combine.c` `nonzero_bits` / global nonzero-bit union is the
+  relevant rule: a multi-set source variable can prevent range-mask removal.
+- One read/write empty token barrier was measured under `build/` and regressed
+  to `[0,0,2,4]`; no barrier was adopted. No new pin experiments were run.
+- `psx_synthesize_source_shapes` generated **zero alternatives**, covering
+  11/181 requirements: its contiguous-prologue MVP stops at the first compound
+  statement. This is a capability limit, not an exhausted C domain.
+- `psx_jump_trace` failed to parse an RTL function section for the result-web
+  candidate; it supplied no branch-fold proof.
+- The refreshed m2c handoff did not compile (SDK include-order errors) and
+  contained inferred signatures, including a two-argument `func_8001A284`
+  contradicted by that callee's matched one-argument definition. It was not
+  used as the primary source. Current authored declarations were audited;
+  `func_8001FABC` has a value/void dispute but its return is unused here.
+
+The next investigation should address the two named remaining sites against
+this new seed. Do not rerun the 877 partitions unchanged or seek approval for
+full assembly on the strength of the superseded 2026-08-21 "ceiling".
+
+## Historical classification (2026-08-21; superseded where noted above)
 
 Semantics are correct: 294 = 294 instructions against the target, every
 premise audited (callee_truth 0 contradicted; matched wrappers; frame map +

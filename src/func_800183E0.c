@@ -3,16 +3,14 @@
 
 INCLUDE_ASM("build/asm/nonmatchings/func_800183E0", func_800183E0);
 
-
-/* PARKED by /auto_decompilation_loop on 2026-08-20T02:13:16.735Z.
- * Reason: asm-needs-human-approval.
- * Escalation reached: deepseek-v4-flash.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/func_800183E0.md
+/* Suspended at the user's request, 2026-10-21; not matched.
+ * Corrected C attempt preserved below. Best measurement [0,42,10,24]
+ * (355/466 compared words) used experimental -fno-gcse; that override and
+ * its temporary allowlist entry were removed when reparking.
+ * Findings, flag scope and remaining defects: notes/research/func_800183E0.md
  */
 
 #if 0
-/* Best non-matching attempt, preserved for the next session. */
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
@@ -58,7 +56,7 @@ s32 D_8005E488;
 s32 D_8005E48C;
 s16 D_8005E4A0;
 s16 D_8005E4A2;
-s16 D_8005E4A4;
+u16 D_8005E4A4;
 u16 *D_8005E4A8;    /* extern decl in globals_override.h; tentative def here */
 u16 D_8005E444;     /* extern decl in globals_override.h; tentative def here */
 s32 D_8005E4AC;
@@ -185,8 +183,8 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
     case 8:
     case 9:
         s3 = D_8005E44E;
-        if (func_80019CBC(arg2, arg3, (u16 *)&D_8005E4A4,
-                          (s16)(s3 - 5)) != 0) {
+        if (func_80019CBC(arg2, arg3, &D_8005E4A4,
+                          (s16)(s3 + 0xFFFB)) != 0) {
             D_8005E4B0 = 0;
             return func_80019E50((D_8005E4A4 + 1) & 0xFFFF) & 0xFFFF;
         }
@@ -196,6 +194,7 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
         D_8005E44E = (u16)s2;
         func_8001A11C();
         func_8001A19C();
+        sp1C = arg3;
         if (D_8005E474 == 0) {
             if (D_8005E4B4 == 1) {
                 if (D_8005E444 != 0) {
@@ -237,7 +236,6 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
                 goto tail_189E8;
             }
         } else {
-            sp1C = arg3;
             s6 = (u16)s3;
             s5 = arg2 - 4;
             s4 = sp1C - 0x54;
@@ -252,12 +250,12 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
                             if ((buf1 != NULL) && ((u32)buf1 < (u32)ptr)) {
                                 ptr = func_800191B4(buf1, 0xFFFE, 1, 0);
                             }
-                            D_8005E4A8 = ptr + 2;
+                            D_8005E4A8 = ptr + 1;
                         }
                     } else if (buf1 != NULL) {
-                        D_8005E4A8 = buf1 + 2;
+                        D_8005E4A8 = buf1 + 1;
                         if (buf1[1] == 0xFFFE) {
-                            D_8005E4A8 = buf1 + 4;
+                            D_8005E4A8 = buf1 + 2;
                         }
                     }
                 }
@@ -283,12 +281,12 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
                             s6 = (u16)s3;
                             s5 = arg2 - 4;
                             s4 = arg3 - 0x54;
+                            s3 = 0xFFFE;
                             do {
                                 s2 = s2 + func_8001945C(cur, 0xFFFE, 0);
-                                if (i < 3 && *cur != 0xFFFE) {
+                                if (i < 3 && *cur != s3) {
                                     cur++;
-                                    while (*cur != 0xFFFE) {
-                                        cur++;
+                                    while (*cur++ != 0xFFFE) {
                                     }
                                     cur--;
                                 }
@@ -330,11 +328,9 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
         rect.h = (s16)sp18;
         SetDrawArea((DR_AREA *)buf3, &rect);
         SetDrawArea((DR_AREA *)buf1, (RECT *)D_8005E3C0);
-        *(s32 *)buf1 = (*(s32 *)buf1 & 0xFF000000) | (*arg0 & 0xFFFFFF);
-        *arg0 = (*arg0 & 0xFF000000) | ((s32)buf1 & 0xFFFFFF);
+        addPrim(arg0, buf1);
         func_80019564((s32)arg0, (s32)D_8005E4A8, arg2, sp1C);
-        *(s32 *)buf3 = (*(s32 *)buf3 & 0xFF000000) | (*arg0 & 0xFFFFFF);
-        *arg0 = (*arg0 & 0xFF000000) | ((s32)buf3 & 0xFFFFFF);
+        addPrim(arg0, buf3);
         func_80017A70(sp20);
         func_8001A018(D_8005E454, D_8005E458);
         a3var = -1;
