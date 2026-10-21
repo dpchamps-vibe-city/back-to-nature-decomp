@@ -1230,6 +1230,7 @@ s32 ovl_11_func_8010AD1C(M2C_326bb2a0f3cc_Ovl11D04D4Obj *arg0);
 s32 ovl_11_func_8010ADD4(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_8010AFCC(Ovl11SetFieldsView *arg0);
+void ovl_11_func_8010B05C(Ovl11B05CObject *arg0);
 void ovl_11_func_8010B0E8(u8 *arg0);
 void ovl_11_func_8010B198(s32 arg0);
 u16 *ovl_11_func_8010B1C4(s32 arg0);

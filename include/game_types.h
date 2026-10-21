@@ -167,6 +167,16 @@ typedef struct {
     s32 x, y, z, w;
 } E21E4Position;
 
+/* 8010B05C copies 0xAC bytes, then passes the u16 at +30 and vector at +38. */
+typedef struct {
+    s32 pad0[0xC];
+    u16 selector;
+    u16 pad32;
+    s32 flags;
+    E21E4Position position;
+    u8 pad48[0x64];
+} Ovl11B05CObject;
+
 /* 800D09E0 writes state +22, flags +34, and the position at +38..+40. */
 typedef struct {
     u8 pad_0[0x22];
