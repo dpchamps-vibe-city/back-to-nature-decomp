@@ -1220,6 +1220,21 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800CE654: unsigned cursor +0, current halfword +4, samples +6, bound 0x738. */
+struct Ovl11CE654Input {
+    u32 index;
+    u16 current;
+    u16 samples[0x738];
+};
+
+/* 800CE654 reads/writes flags +0xC and follows the word pointer at +0x1C. */
+struct Ovl11CE654State {
+    u8 pad0[0xC];
+    s32 flags;
+    u8 pad10[0xC];
+    struct Ovl11CE654Input *input;
+};
+
 /* 800DDDFC: resident flags, signed phase/mode and unsigned ID component. */
 typedef struct {
     u8 pad0[0xC];

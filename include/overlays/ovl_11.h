@@ -270,6 +270,7 @@ s16 ovl_11_func_800CE528(s16 arg0);
 s32 ovl_11_func_800CE53C(s16 arg0);
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 void ovl_11_func_800CE5FC(void);
+s32 ovl_11_func_800CE654(void);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800CE834(void);
 void ovl_11_func_800CE96C(void);
