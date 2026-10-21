@@ -153,9 +153,10 @@ This supports extending the low-confidence candidate pair to the seven-member
 run, conditional on link order preserving original source ordering. No
 shared-static/global ownership, declaration-order quirk or TU boundary is
 established; the run's endpoints are not claimed as original file boundaries.
-The run does not merge with the non-adjacent animation-command pair at
-0x800C1F94 / 0x800C2044, the far-buffer reader pair at 0x800C3B78 /
-0x800C3CCC, or 800C2678 merely because its members call them. Likewise,
+The run does not merge with the non-adjacent animation-command run at
+0x800C1F94 / 0x800C2044 / 0x800C2678 (see
+[its grouping note](ovl_11_func_800C1F94-grouping.md)), or the far-buffer
+reader pair at 0x800C3B78 / 0x800C3CCC merely because its members call them. Likewise,
 800C3590 is not added solely for the driver's call, nor 800C3138 solely
 for adjacency and use of the broadly shared D_80076220 pool. The separate
 800C2884/800C28CC pair is not merged here: 800C2B04's call to 800C28CC
