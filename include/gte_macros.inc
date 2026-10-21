@@ -154,6 +154,11 @@
     mvmva       1, 0, 3, 3, 0
 .endm
 
+/*  rtir    -       0x4A49E012  SDK gte_rtir() name for rtir12 */
+.macro rtir
+    rtir12
+.endm
+
 /*  rtir0   -       0x4A41E012  ir * rotmatrix */
 .macro rtir0
     # .word 0x4A41E012

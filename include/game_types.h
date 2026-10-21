@@ -1452,6 +1452,13 @@ typedef struct {
     s16 unk2E;
 } Ovl11C3F6CObjectView;
 
+/* ovl_15_func_8013345C scans these pools for a free record; 801331C4 passes
+ * D_800742EC (D_8006C838 + 0x7AB4): ten 0xB4 records, then twenty 0xB8. */
+typedef struct {
+    struct Ovl11ResetB4 small[10];
+    struct Ovl11ResetB8 large[20];
+} Ovl15RecordPools;
+
 /* Matched ovl_15_func_80132A8C parameter view, also passed by 801331C4. */
 struct ovl_15_80132A8C_data {
     s16 pad0[17];

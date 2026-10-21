@@ -1,37 +1,21 @@
 #include "common.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800D806C", ovl_11_func_800D806C);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-09-16T05:25:59.853Z.
- * Reason: escalation-exhausted.
- * Escalation reached: glm-5-3-flash.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_800D806C.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
-
 s32 ovl_11_func_800D806C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-    struct_80123E04 *temp_a3;
-    char *far_base;
-    s32 *temp_a1;
-    s32 var_v0;
+    struct_80123E04 *bounds;
+    Ovl11GridTextureEntry *entry;
 
-    temp_a3 = &D_80123E04 + arg3;
-    if ((arg0 < 0) || (arg0 >= temp_a3->unk0)) {
+    bounds = &D_80123E04 + arg3;
+    if ((arg0 < 0) || (arg0 >= bounds->unk0)) {
         return 1;
     }
-    if ((arg1 < 0) || (arg1 >= temp_a3->unk2)) {
+    if ((arg1 < 0) || (arg1 >= bounds->unk2)) {
         return 1;
     }
-    far_base = (char *) &D_8007AFF0;
-    temp_a1 = *(s32 **) (far_base + 0x23608 + ((arg1 * 45) + arg0) * 4);
-    if ((arg2 == 0) || (var_v0 = 1, ((*temp_a1 & 8) != 0))) {
-        var_v0 = 0;
+    entry = ((Ovl11GridTextureRowsView *)&D_8007AFF0)->entries[arg1][arg0];
+    if (arg2 != 0) {
+        if (!(entry->header & 8)) {
+            return 1;
+        }
     }
-    return var_v0;
+    return 0;
 }
-#endif

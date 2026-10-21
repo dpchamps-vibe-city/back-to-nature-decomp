@@ -682,6 +682,13 @@ typedef struct {
     Ovl11GridTextureEntry *entries[1];
 } Ovl11GridTextureTableView;
 
+/* 800D806C and 80113208 index the same pointer grid by row and column:
+ * base+0x23608 is added before the scaled index (addu base,off then +idx*4). */
+typedef struct {
+    u8 pad_0[0x23608];
+    Ovl11GridTextureEntry *entries[25][45];
+} Ovl11GridTextureRowsView;
+
 /* 8011E1E8 reads a signed mode at +25476 beside the 25x45 pointer grid. */
 typedef struct {
     u8 pad_0[0x23608];
@@ -1015,6 +1022,15 @@ extern u8 D_800762D0[];
 extern struct SpriteSourceData D_8007942C;
 /* 800E4DAC loads the first offset-table pointer, then signed words at +8/+0x18. */
 extern s32 *D_80124FCC_spriteOffsets __asm__("D_80124FCC");
+/* 800BD3C4 indexes the same offset-table pointers by item number. */
+extern s32 *D_80124FCC_tables[] __asm__("D_80124FCC");
+/* 800BD3C4 reads [item] and [item + 1] as a start/end pair. */
+extern s32 D_801227B0[];
+/* 800BD3C4 stores the loaded item number at work-area +0x25478. */
+typedef struct {
+    u8 pad0[0x25478];
+    s32 loadedItem;
+} Ovl11LoadedItemView;
 /* 800E4DAC adds indexed signed offsets to this loaded sprite-data base. */
 extern u8 *D_801291B8;
 extern s32 D_801291C0;
@@ -1429,6 +1445,12 @@ extern s16 D_8012852C[10];
 
 /* 800CE96C clears 0x18E bytes; named view preserves the other TUs' cell views. */
 extern u8 D_80075854_reset[0x18E] __asm__("D_80075854");
+/* 8010C4D4 walks 99 four-byte cells, matching an item ID at +0 and clearing it. */
+typedef struct {
+    u16 id;
+    u16 count;
+} Ovl11ItemCell;
+extern Ovl11ItemCell D_80075854_cells[] __asm__("D_80075854");
 /* 800CE96C clears six 0xB0-byte records; named view preserves the existing record type. */
 extern u8 D_80075BC4_reset[0x420] __asm__("D_80075BC4");
 
@@ -3057,6 +3079,8 @@ extern char D_800B7EF0[];
 extern char D_800B7EF4[];
 extern struct DIRENTRY D_800B88B0;
 extern char D_800B8B10[];
+/* 800B83B8 receives the file count here; ovl_10 reads a string at this address. */
+extern s32 D_800B8868_fileCount __asm__("D_800B8868");
 extern s32 D_800BB8A4;
 extern s32 D_800BB8A8;
 extern s32 D_800BB8AC;
@@ -3480,6 +3504,15 @@ extern u8 D_801240B0[12];
  * ovl_11_func_80113208 and copied field-by-field into a loaded object
  * record. Absolute-addressed from the overlay. */
 extern u8 D_801281D0;
+
+/* One D_801281D0 record: four u/v byte pairs, then the clut halfword. */
+typedef struct {
+    u8 u0, v0;
+    u8 u1, v1;
+    u8 u2, v2;
+    u8 u3, v3;
+    u16 clut;
+} Ovl11GridUvRecord;
 
 /* D_801295B0 - 11 halfword scratch buffer (0x16 bytes, ovl_11) that
  * ovl_11_func_800E8550 fills via func_8001A970 and then scans for the
@@ -4912,6 +4945,14 @@ typedef struct {
     u8 pad_0[0x984];
     s16 handles[2];
 } Ovl21ExitStateView;
+/* 800B90C4 indexes the +0x640 selectors by slot; the array member keeps the
+ * base-first address form. It also clears the halfword at +0x988. */
+typedef struct {
+    u8 pad_0[0x640];
+    s16 selectors[2];
+    u8 pad_644[0x988 - 0x644];
+    s16 field_988;
+} Ovl21SelectorView;
 /* 800B836C's six 0x108-byte records and table selectors at +0x640/+0x642. */
 struct Ovl21InitState;
 #define D_800C0448_init (*(struct Ovl21InitState *) D_800C0448)
@@ -6369,6 +6410,8 @@ extern u8 D_80050B5C_objects[] __asm__("D_80050B5C");
 extern u16 D_801273EE_flags __asm__("D_801273EE");
 /* 80102F14 walks eight lhu IDs; unsigned view preserves legacy signed declarations. */
 extern u16 D_8012CF00_ids[8] __asm__("D_8012CF00");
+/* 801031E4 compares those IDs against one four-entry row selected by 0x181..0x184. */
+extern u16 D_80127404[][4];
 /* 80101814 walks seven consecutive u16 IDs; 801014A4 also indexes this table with lhu. */
 extern u16 D_801273F4[];
 
@@ -6744,6 +6787,16 @@ struct Ovl11ConditionObjects {
     struct Ovl11ConditionObject *first;
     struct Ovl11ConditionObject *second;
 };
+
+/* 800F1540 compares a kind against lh +0x2 of the header at work-area +0x2538C. */
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} Ovl11WorkHeader;
+typedef struct {
+    u8 pad0[0x2538C];
+    Ovl11WorkHeader *header;
+} Ovl11WorkHeaderView;
 
 /* 800C401C: lh/sh counters, lw/sw flags, two 10-entry position histories,
  * and 10 halfword-pair tags copied with lwl/lwr/swl/swr. */

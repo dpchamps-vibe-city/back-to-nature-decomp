@@ -16,3 +16,9 @@
 
 #undef gte_avsz4_b
 #define gte_avsz4_b() __asm__ volatile("avsz4")
+
+#undef gte_rtir
+#define gte_rtir() __asm__ volatile("nop;nop;rtir")
+
+#undef gte_rtv0tr
+#define gte_rtv0tr() __asm__ volatile("nop;nop;rtv0tr")
