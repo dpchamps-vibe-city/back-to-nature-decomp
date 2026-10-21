@@ -6672,5 +6672,119 @@ typedef struct {
     s32 pressed;
 } Ovl11UpdateInput;
 
+/* 80104EC8 passes two seven-halfword strings at byte offsets 0 and 0xE. */
+extern u16 D_80051F26[];
+/* Signed declarations are witnessed by matched 800B85F4 (ovl_19) and 800F19C8 (ovl_11). */
+extern s16 D_80070CF0;
+extern s16 D_80071A22;
+/* 80104EC8, 800CD0C0 and 800EC490 read this unsigned state halfword. */
+extern u16 D_80070D06;
+/* 80104EC8 walks five item IDs with lhu and a two-byte stride. */
+extern u16 D_801274D0[5];
+
+/* 80104EC8: ten 0xB4-byte slots, id +0, name +4, value +0x16, tile +0x1E, flags +0x34. */
+typedef struct {
+    u16 id;
+    u16 pad2;
+    u16 name[7];
+    u8 pad12[4];
+    s16 value;
+    u8 pad18[6];
+    s16 tile;
+    u8 pad20[0x14];
+    s32 flags;
+    u8 pad38[0xB4 - 0x38];
+} Ovl11ConditionItem;
+
+/* 80104EC8: actor and animal strides and field widths from its indexed reads. */
+typedef struct {
+    u8 pad0[8];
+    u16 kind;
+    u8 padA[0x14 - 0xA];
+    s16 field14;
+    u8 pad16[0x1C - 0x16];
+    u16 amount;
+    u8 pad1E[0x36 - 0x1E];
+    u16 flags;
+    u8 pad38[4];
+    s16 location;
+    s16 tile;
+    u8 pad40[6];
+    s16 field46;
+    u8 pad48[0x1D4 - 0x48];
+} Ovl11ConditionActor;
+typedef struct {
+    u8 pad0[0x16];
+    s16 amount;
+    u8 pad18[0x30 - 0x18];
+    s16 kind;
+    u8 pad32[0xB8 - 0x32];
+    s16 flags;
+    u8 padBA[0xF8 - 0xBA];
+} Ovl11ConditionAnimal;
+
+/* 80104EC8: field offsets and load widths witnessed in its original code. */
+typedef struct {
+    u8 pad_0[0x44b8 - 0x0];
+    s16 date[3];
+    u16 field_44BE;
+    u16 field_44C0;
+    u8 pad_44C2[0x44ce - 0x44c2];
+    u16 field_44CE;
+    u8 pad_44D0[0x44d2 - 0x44d0];
+    u16 field_44D2;
+    u8 pad_44D4[0x44f8 - 0x44d4];
+    s32 field_44F8;
+    u8 pad_44FC[0x5224 - 0x44fc];
+    s32 field_5224;
+    u8 pad_5228[0x5246 - 0x5228];
+    s16 field_5246;
+    s16 field_5248;
+    u8 pad_524A[0x52c6 - 0x524a];
+    s16 field_52C6;
+    u8 pad_52C8[0x5492 - 0x52c8];
+    s16 field_5492;
+    u8 pad_5494[0x7AB4 - 0x5494];
+    Ovl11ConditionItem items[10];
+    u8 pad_81BC[0x91AC - 0x81BC];
+    u16 field_91AC;
+    u8 pad_91AE[0x91e1 - 0x91ae];
+    u8 field_91E1;
+    u8 pad_91E2[0x929c - 0x91e2];
+    u16 field_929C;
+    u8 pad_929E[0x92d1 - 0x929e];
+    u8 field_92D1;
+    u8 pad_92D2[0x99d0 - 0x92d2];
+    Ovl11ConditionActor actors[37];
+    u8 pad_DD74[0xde00 - 0xdd74];
+    Ovl11ConditionAnimal animals[7];
+    u8 pad_E4C8[0xe641 - 0xe4c8];
+    u8 field_E641;
+    u8 field_E642;
+    u8 pad_E643[0xe657 - 0xe643];
+    u8 field_E657;
+    u8 pad_E658[0xe670 - 0xe658];
+    u8 field_E670;
+    u8 pad_E671[0xe6ca - 0xe671];
+    u8 field_E6CA;
+    u8 field_E6CB;
+    u8 pad_E6CC[0xe76e - 0xe6cc];
+    u16 field_E76E;
+    u16 field_E770;
+    u16 field_E772;
+    u8 pad_E774[0xe77a - 0xe774];
+    s16 field_E77A;
+    u8 pad_E77C[0xe798 - 0xe77c];
+    s16 field_E798;
+    s16 field_E79A;
+} Ovl11ConditionState;
+
+/* 80104EC8 loads two scene-header pointers through this work-area base. */
+typedef struct {
+    u8 pad0[0x25388];
+    struct Ovl11SceneHeader *header;
+    struct Ovl11SceneHeader *otherHeader;
+} Ovl11ConditionWork;
+
 #endif /* GLOBALS_OVERRIDE_H */
 
