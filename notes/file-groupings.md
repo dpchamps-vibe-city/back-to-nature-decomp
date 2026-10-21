@@ -9130,6 +9130,7 @@ Members:
   original's different operand orders at the two address calculations;
   four matched regional witnesses have unchanged text under it. Neither
   the flag nor today's source files establishes a TU boundary.
+- ovl_17_func_800B91B8 (m, byte-exact, finalized) — renders active entries from the 90-entry work-area queue ([grouping evidence](research/ovl_17_func_800B91B8-grouping.md)).
 - ovl_17_func_800B9F10 (m) — leaf predicate: returns
   `(s16)arg1 < record[arg0].s16@+0x2A` over the D_800BD848 record area.
 - ovl_17_func_800B9F44 (m) — leaf predicate twin of 800B9F10: returns
