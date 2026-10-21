@@ -1909,7 +1909,7 @@ struct Ovl11HandlerState {
     s16 field_E4C8;
 };
 
-/* 800DC388: lh at +44BA and lhu variant selectors at +44CE/+44D0/+44D2. */
+/* 800DC388/800DD274: lh +44BA and lhu selectors +44CE/+44D0/+44D2/+44D4. */
 struct Ovl11MessageState {
     char pad0[0x44BA];
     s16 base;
@@ -1917,6 +1917,7 @@ struct Ovl11MessageState {
     u16 variant50;
     u16 variant60;
     u16 variant70;
+    u16 variant80;
 };
 
 /* 800E5E98: lw/sw +4450, lh +44BA, lhu +44CE, and lw +44F8. */
@@ -7096,6 +7097,19 @@ struct Ovl11FrameWork {
 
 /* 800C162C initializes, loads and stores this absolute-addressed s32 result. */
 extern s32 D_80128B60;
+
+/* 800DD274 indexes signed halfwords at 80123E38 by the +44CE selector. */
+extern s16 D_80123E38[];
+/* 800DD274 loads this signed halfword for the +44D0 == 0 arm. */
+extern s16 D_80123E40;
+/* 800DD274 loads this signed halfword for the +44D0 != 0 arm. */
+extern s16 D_80123E42;
+/* 800DD274 loads this signed halfword for the +44D2 == 0 arm. */
+extern s16 D_80123E48;
+/* 800DD274 loads this signed halfword for the +44D2 != 0 arm. */
+extern s16 D_80123E4A;
+/* 800DD274 indexes signed halfwords at 80123E50 by the +44D4 selector. */
+extern s16 D_80123E50[];
 
 #endif /* GLOBALS_OVERRIDE_H */
 
