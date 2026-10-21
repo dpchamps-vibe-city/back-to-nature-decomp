@@ -1720,6 +1720,12 @@ struct Ovl11EventInitState {
     s16 fieldCB72;
 };
 
+/* 800C2044 loads the unsigned event time at D_8006C838+0x44CA. */
+struct Ovl11CommandTimeState {
+    u8 pad0[0x44CA];
+    u16 time;
+};
+
 /* 800C19B0 loads the pointer at D_8009AFF0+5388, then reads lh +2. */
 struct Ovl11EventInitWork {
     u8 pad0[0x5388];
