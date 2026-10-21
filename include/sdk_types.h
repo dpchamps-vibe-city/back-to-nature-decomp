@@ -2505,6 +2505,20 @@ typedef struct {
 } Ovl11AnimationObject;
 
 typedef struct {
+    u16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u16 unk10;
+    u16 unk12;
+    u16 unk14;
+} Ovl11AnimationSlot;
+
+typedef struct {
     s32 pad0[0xC];
     u16 selector;
     u16 pad32;

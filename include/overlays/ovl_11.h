@@ -468,6 +468,7 @@ void ovl_11_func_800DB140(M2C_d1b1d801165c_M2C_b93e11a2_Arg0 *arg0);
 void ovl_11_func_800DB23C(s16 arg0);
 void ovl_11_func_800DB2AC(M2C_267fa2417d8d_M2C_d1b1d801165c_M2C_b93e11a2_Arg0 *arg0);
 void ovl_11_func_800DB354(M2C_bf20b0042153_Ovl11DB354Arg0 *arg0);
+void ovl_11_func_800DB4E0(Ovl11AnimationSlot *arg0);
 void ovl_11_func_800DB5CC(void);
 void ovl_11_func_800DB674(void);
 void ovl_11_func_800DB78C(void);
