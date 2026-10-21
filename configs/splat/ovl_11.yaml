@@ -83,7 +83,7 @@ segments:
       - [0x2080, .rodata, ovl_11_func_800EF6E4]
       - [0x2094, rodata]
       - [0x2098, .rodata, ovl_11_func_800EFABC]
-      - [0x20C8, rodata]
+      - [0x20C8, .rodata, ovl_11_func_800EFC68]
       - [0x20E0, .rodata, ovl_11_func_800EFDA0]
       - [0x20F4, rodata]
       - [0x20F8, .rodata, ovl_11_func_800EFE34]
