@@ -207,6 +207,7 @@ void ovl_11_func_800C9F20(Ovl11C7010Object *arg0, s32 arg1, s32 *arg2);
 void ovl_11_func_800CA044(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32 *arg2);
 void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0);
 void ovl_11_func_800CA580(M2C_6201b6a06ca1_ReconA0View *arg0);
+void ovl_11_func_800CA5D4(Ovl11C7010Object *arg0);
 void ovl_11_func_800CA6C4(void *arg0);
 void ovl_11_func_800CA708(void);
 void ovl_11_func_800CAADC(void);

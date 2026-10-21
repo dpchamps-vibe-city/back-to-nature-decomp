@@ -14441,6 +14441,15 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800CA044 (m) — object sprite submission with optional signed-halfword substitutions.
 - ovl_11_func_800CA24C (s) — object drawing dispatcher that selects the order of the two preceding draw helpers.
 
+## `ovl_11` D_80128CF4 saved-object helper pair — 0x800CA580 / 0x800CA5D4 (confidence: low)
+
+Candidate membership rests on gapless placement and complementary updates of
+one saved object through `D_80128CF4`; original ownership and TU boundaries
+remain unproven ([evidence and limits](research/ovl_11_func_800CA5D4-grouping.md)).
+
+- ovl_11_func_800CA580 (m) — copies draw-state words into the saved interaction object and draws it.
+- ovl_11_func_800CA5D4 (m) — synchronizes the saved interaction object's direction and sprite animation from the incoming object.
+
 ## `ovl_11` D_80129648 texture-draw helper pair — 0x800F8CF8 / 0x800F8F3C (confidence: medium)
 
 Candidate same-TU membership; original boundaries remain unproven
