@@ -4908,6 +4908,17 @@ extern u16 D_800BCC04[4][2];
 /* 800B9F3C loads u16 values at (entity * 3 + target % 3) * 2. */
 extern u16 D_800BCC24[18];
 
+/* 800B96B0 indexes this halfword table with stride 2 and loads with lhu. */
+extern u16 D_800BCC14[];
+/* 800B96B0 stores a halfword at D_8006C838+E62A and words at +448C/+E62C. */
+typedef struct {
+    u8 pad_0[0x448C];
+    s32 counter;
+    u8 pad_4490[0xE62A - 0x4490];
+    u16 selection;
+    s32 flag;
+} Ovl21ResultView;
+
 /* D_800BCC48 - ovl_21 table of six 4-byte {u16,u16} pairs (0xFD12/0xFD12,
  * 0x0000/0xFA24, 0x02EE/0xFC97, 0xFD12/0x02EE, 0x0000/0x05DC,
  * 0x02EE/0x02EE). ovl_21_func_800BAEEC indexes it by arg0*4 and loads both

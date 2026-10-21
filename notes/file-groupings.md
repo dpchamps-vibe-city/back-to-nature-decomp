@@ -9738,6 +9738,7 @@ Members (link order):
   `ovl_21_func_800BAB28` after `ovl_21_func_800BA4C0`, then copies a u16
   within the `D_8006C838` +0x8000 sub-block and increments its +0x448C word;
   membership rests on adjacency and the shared `D_800C0448` global.
+- ovl_21_func_800B96B0 (m, byte-exact, finalized) — result-selection handler; writes the selected result and advances the shared counter ([grouping evidence](research/ovl_21_func_800B96B0-grouping.md)).
 - ovl_21_func_800B9798 (m, matched this session, byte-exact) — leaf that
   writes a halfword at record offset 0x18 into three consecutive
   `D_800C0448` records starting at index `arg0*3`; membership rests on the
