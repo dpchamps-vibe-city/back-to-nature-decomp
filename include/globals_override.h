@@ -1522,6 +1522,8 @@ extern s32 D_80128A88;
 extern s32 D_80128B50;
 extern s32 D_80128B54;
 extern s32 D_80128B58;
+/* 800C06B0 reads and clears this word; 800C0A40 stores its argument here. */
+extern s32 D_80128B5C;
 
 /* ovl_11_func_80117178 scans ten 0xB4-byte records at +0x7AB4, reading u16 at +0 and flag bit 18 at +0x34. */
 struct Ovl11Scan109Record {
