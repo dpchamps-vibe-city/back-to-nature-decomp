@@ -1642,7 +1642,9 @@ typedef struct {
     u8 pad_44BE[0x548A - 0x44BE];
     s16 field_548A;
     s16 field_548C;
-    u8 pad_548E[0xE4CA - 0x548E];
+    /* 800BFB28 copies +E4CA to +E4C8, then adjusts and returns that u16. */
+    u8 pad_548E[0xE4C8 - 0x548E];
+    u16 field_E4C8;
     u16 field_E4CA;
 } Ovl11BF8B8View;
 
