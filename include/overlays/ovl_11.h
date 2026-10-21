@@ -54,6 +54,7 @@ s32 ovl_11_func_800BF3F4(void);
 s32 ovl_11_func_800BF450(void);
 s32 ovl_11_func_800BF4AC(void);
 s32 ovl_11_func_800BF4B4(s32 *arg0, s32 arg1);
+s32 ovl_11_func_800BF630(s16 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800BF720(M2C_2d95792b818e_M2C_f90dacf3c1c7_Ovl11CheckArg *arg0);
 void ovl_11_func_800BF844(void);
 s16 ovl_11_func_800BF8B8(void);
