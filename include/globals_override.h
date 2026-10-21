@@ -15,6 +15,13 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* 800C2CE8 compares this absolute-addressed unsigned halfword to 4. */
+extern u16 D_80071A3C;
+/* 800C2CE8 increments this absolute-addressed word once per update. */
+extern s32 D_80122F88;
+/* 800C2CE8 tests this absolute-addressed signed halfword before incrementing. */
+extern s16 D_80128B68;
+
 /* 800E9D28: original lh/lhu/lw/sb/sh/sw offsets through the shared
  * work-area bases, with 0xB4/0xB8 scans and a 0xC-byte index table. */
 typedef struct { s16 pad0; s16 f2; char pad4[8]; s16 fC; } E9Ptr;
