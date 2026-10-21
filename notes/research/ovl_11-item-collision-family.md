@@ -146,3 +146,42 @@ register-variable quirk was established. The actor pool is also consumed
 elsewhere; shared pool use alone does not pull distant consumers or callers
 into either group. Keep the existing confidence levels and leave original
 boundaries open.
+
+## `ovl_11_func_800BE4A8`: player-probe extension
+
+Handoff evidence identity:
+`bab96b8a24010a147c08410d2a7c7801dae0b1fb9d11b7f3b54e3b01ffc73462`.
+The handoff reports byte-exact source and a passed full finalize gate;
+this review changes notes only and does not repeat matching.
+
+The verified `src/overlays/ovl_11/ovl_11_func_800BE4A8.c` adds a
+source-level bounds/query fingerprint to the earlier observation that it
+is an intervening helper in the collision call/link neighbourhood:
+
+- Like `800BE2C4` and `800BE94C`, it reads a position through context +0,
+  compares strict X/Z bounds after narrowing each computed bound to s16,
+  records a hit through context +8 and writes flags through context +0x10.
+  Its fixed X/Z half-range is `0xDA`; it also checks Y with half-range
+  `0x14`. The original assembly at
+  `build/ovl_11/asm/nonmatchings/ovl_11_func_800BE4A8/ovl_11_func_800BE4A8.s`
+  corroborates the halfword narrowing and these context offsets.
+- Like the verified `src/overlays/ovl_11/ovl_11_func_800BEF64.c`, it
+  checks a region against the signed halfword at context->object +2 and
+  initializes the hit flags from context +0x18. It records `&D_80071A00`
+  as the hit; its region and X/Y/Z halfwords are at that base's
+  +0xFE/+0x100/+0x104/+0x108. This global's use alone is not TU evidence.
+- Original dispatcher assembly at
+  `build/ovl_11/asm/nonmatchings/ovl_11_func_800BEB28/ovl_11_func_800BEB28.s`
+  sets context +0x18 (`$sp+0x28`) to 1 at 0x800BEC50, calls `800BE4A8`
+  at 0x800BEC54 and passes `$sp+0x10` in the delay slot. It uses the same
+  context for the recorded tile/item/actor probes.
+- `configs/splat/ovl_11.yaml` and `build/ovl_11/functions.csv` agree on
+  gapless order `800BE2C4` (0x1E4) → `800BE4A8` (0xF8) → `800BE5A0`
+  (0x144) → `800BE6E4`. Thus the verified bounds/query idiom is supported
+  by the already-observed local call/link order, not adjacency alone.
+
+This supports adding `800BE4A8` as the player bounding-box probe in the
+existing low-confidence collision probe/dispatcher same-TU hypothesis.
+It does not establish original boundaries or newly assert membership for
+`800BE5A0`. No shared static, TU-owned global, declaration-order effect or
+register-variable quirk was established; retain low confidence.

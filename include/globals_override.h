@@ -325,6 +325,17 @@ extern s32 D_8012CEF8;
 /* 800C6A9C stores the sound helper's return value with sh. */
 extern s16 D_80128C70;
 
+/* 800BE4A8 reads signed halfwords at D_80071A00+FE/+100/+104/+108. */
+typedef struct {
+    u8 pad0[0xFE];
+    s16 region;
+    s16 x;
+    u8 pad102[2];
+    s16 y;
+    u8 pad106[2];
+    s16 z;
+} Ovl11PlayerCollisionView;
+
 /* 800CB618 indexes s16 triples at D_80071A00+0xC0; 800C9D98 supplies count 8. */
 typedef struct {
     char pad[0xC0];

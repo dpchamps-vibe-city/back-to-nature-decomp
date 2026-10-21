@@ -14424,14 +14424,16 @@ use — and it is entry 4 of the same `D_80121780` dispatch table whose entries
 0/1 are the cluster leaves 0x800BC3AC/0x800BC3E0. It is address-apart
 (0x801048A0), so same-TU membership with the run is plausible but unproven.
 
-## `ovl_11` tile/item/actor collision probe/dispatcher run — 0x800BE6E4 / 0x800BE94C / 0x800BEB28 / 0x800BEF64 (confidence: low)
+## `ovl_11` tile/item/actor/player collision probe/dispatcher run — 0x800BE4A8 / 0x800BE6E4 / 0x800BE94C / 0x800BEB28 / 0x800BEF64 (confidence: low)
 
 Candidate same-TU run; original boundaries remain unproven
-([evidence](research/ovl_11-item-collision-family.md#ovl_11_func_800bef64-actor-probe-and-stack-box-links)).
+([actor evidence](research/ovl_11-item-collision-family.md#ovl_11_func_800bef64-actor-probe-and-stack-box-links),
+[player extension evidence](research/ovl_11-item-collision-family.md#ovl_11_func_800be4a8-player-probe-extension)).
 
+- ovl_11_func_800BE4A8 (m, candidate same TU) — player bounding-box collision probe that records a hit and sets query flags.
 - ovl_11_func_800BE6E4 (m) — tile-map collision probe that records the selected cell and updates collision flags for the adjacent dispatcher.
 - ovl_11_func_800BE94C (m) — item bounding-box probe that records a hit and updates collision flags for the adjacent dispatcher.
-- ovl_11_func_800BEB28 (s) — collision dispatcher that combines tile-map, item and actor probes.
+- ovl_11_func_800BEB28 (s) — collision dispatcher that combines tile-map, item, actor and player probes.
 - ovl_11_func_800BEF64 (m) — actor bounding-box collision probe that records a hit and updates query flags.
 
 ## `ovl_11` pending-mode dispatcher caller/callee pair — 0x800D2710 / 0x800D2764 (confidence: low)
