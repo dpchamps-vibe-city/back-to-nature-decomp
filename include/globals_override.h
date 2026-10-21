@@ -1189,6 +1189,26 @@ struct struct_8006C838 {
 };
 extern struct struct_8006C838 D_8006C838[];
 
+/* 800DDDFC: resident flags, signed phase/mode and unsigned ID component. */
+typedef struct {
+    u8 pad0[0xC];
+    s32 flags;
+    u8 pad10[0xD0 - 0x10];
+    s16 phase;
+    u8 padD2[0x4450 - 0xD2];
+    s32 control;
+    u8 pad4454[0x44BA - 0x4454];
+    s16 index;
+    u8 pad44BC[0x44CE - 0x44BC];
+    u16 variant;
+    u8 pad44D0[0x44F8 - 0x44D0];
+    s32 status;
+    u8 pad44FC[0x52C8 - 0x44FC];
+    s32 position[3];
+    u8 pad52D4[0xE4C8 - 0x52D4];
+    s16 mode;
+} Ovl11DDDFCState;
+
 /* 800CCCC0 uses these word/halfword fields through the D_8006C838 base. */
 struct Ovl11CCCC0State {
     u8 pad0[0x4450];
