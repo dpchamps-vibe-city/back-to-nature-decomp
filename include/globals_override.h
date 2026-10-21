@@ -2152,6 +2152,16 @@ typedef struct {
     u16 pending;
 } Ovl11DF84CStateView;
 
+/* 800E20F0 reads lh +44BA, lhu +44C0 and lh +E4C8 through D_8006C838. */
+typedef struct {
+    u8 pad0[0x44BA];
+    s16 field_44BA;
+    u8 pad44BC[4];
+    u16 field_44C0;
+    u8 pad44C2[0xE4C8 - 0x44C2];
+    s16 field_E4C8;
+} Ovl11E20F0StateView;
+
 /* 8010CAD4 reads unsigned halfwords at D_8006C838 +0x44C0 and +0xE4C8. */
 typedef struct {
     u8 pad0[0x44C0];

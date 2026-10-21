@@ -2027,6 +2027,7 @@ Members:
   `u16@+0 == 0 && !(u32@+0x34 & 0x02000000)`, returns the entry pointer or
   NULL; same accessor role for D_800742EC that 0x800D0C34 plays for
   D_800749F4
+- ovl_11_func_800E20F0 (m, byte-exact; candidate member) — code-0x109 counter/energy and time-window flag updater ([shared neighbour protocol and caller/link-order evidence](research/ovl_11_func_800E20F0-grouping.md)).
 - ovl_11_func_800E21E4 (s) — state machine over one 0xB4-byte entry: calls
   0x800E2934 (index lookup), 0x800E2A30 and 0x800E2BE8 (state update) on the
   same struct; zero-gap link predecessor of 0x800E2654 (ends exactly at
