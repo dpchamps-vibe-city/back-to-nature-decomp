@@ -4,6 +4,19 @@
 
 #include "common.h"
 
+/* 800DB2AC's matched parameter: nine halfwords; 800DC560 forwards its header. */
+typedef struct {
+    u16 unk0;
+    s16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u16 unk10;
+} Ovl11SetupHeader;
+
 /* 800CC7CC passes this halfword request to 800CB540: id +0, count +4. */
 typedef struct {
     u16 id;
@@ -659,6 +672,26 @@ typedef struct {
     char pad_20[0x60];
     SpriteSourceData sprite;
 } Ovl11AnimationObject;
+
+/* 800C2B04 advances the u16 index at +0x22 through 30 eight-byte
+ * entries at +0xE4; 800C2A98 also reads the state fields at +0x14..+0x22. */
+typedef struct {
+    s16 time;
+    u16 data[3];
+} Ovl11EventEntry;
+
+typedef struct {
+    u8 pad0[0x12];
+    s16 field12;
+    s16 field14;
+    u16 field16;
+    u8 pad18[6];
+    u16 flags;
+    u16 flags20;
+    u16 entryIndex;
+    u8 pad24[0xE4 - 0x24];
+    Ovl11EventEntry entries[30];
+} Ovl11EventObject;
 
 /* 80107DE0 stores two signed halfwords; 800C35EC passes its object at +0xE0. */
 typedef struct {
@@ -1382,18 +1415,23 @@ typedef struct {
     u32 words[15];
 } Ovl15SaveSummary;
 
-/* 800C2C74 forwards the emitter and selected 0xC-byte event to 800C3B78;
- * these layouts are witnessed by the matched callee's field accesses. */
+/* 800C2C74 forwards this emitter and 0xC-byte event to 800C3B78.
+ * 800C2044 also accesses signed indices at C/E and fixed positions at 40/44/48. */
 typedef struct {
     u8 pad0[6];
     u16 unk6;
     u8 pad8[4];
     s16 unkC;
-    u8 padE[0x22];
+    s16 unkE;
+    u8 pad10[0x20];
     s32 unk30;
     s32 unk34;
     s32 unk38;
-    u8 pad3C[0x14];
+    s32 pad3C;
+    s32 unk40;
+    s32 unk44;
+    s32 unk48;
+    s32 pad4C;
     s32 unk50;
     s32 unk54;
     s32 unk58;
@@ -1407,6 +1445,12 @@ typedef struct {
     s16 unk8;
     s16 unkA;
 } Ovl11C3B78Arg1;
+
+/* 800C3838 forwards this object to 800C3F6C, whose matched body reads +0x2E. */
+typedef struct {
+    u8 pad0[0x2E];
+    s16 unk2E;
+} Ovl11C3F6CObjectView;
 
 /* Matched ovl_15_func_80132A8C parameter view, also passed by 801331C4. */
 struct ovl_15_80132A8C_data {
