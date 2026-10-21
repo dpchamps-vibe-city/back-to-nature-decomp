@@ -5709,8 +5709,9 @@ extern s16 D_80075AEA;
 /* D_80075AD4 - ovl_11 u16 flag, loaded with lhu (absolute access) by
  * ovl_11_func_8010B1C4, which tests it for zero and passes its address
  * to ovl_11_func_8010B778. */
-/* 800D0FB4 also accesses a tag at +2E and position words through +40. */
-extern u16 _D_80075AD4[0x44 / 2] __asm__("D_80075AD4");
+/* 800D0FB4 accesses fields through +40; 8010C1FC uses the sprite at +78,
+ * and 8010B778 clears the complete 0xF0-byte record. */
+extern u16 _D_80075AD4[0xF0 / 2] __asm__("D_80075AD4");
 #define D_80075AD4 (_D_80075AD4[0])
 
 /* D_801285F4 - ovl_11 table of 4 entries with 0xE-byte stride walked by
