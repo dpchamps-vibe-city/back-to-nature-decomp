@@ -761,6 +761,39 @@ typedef struct {
     s32 field_14;
 } EAE4Query;
 
+/* 8001E4C0/8001E340: 0x1C-byte cells, query prefix at +0 and flag at +0x18. */
+typedef struct {
+    u8 filler[0x18];
+    s32 flag;
+} CellGrid_1E4C0;
+
+/* 8001E4C0: count at +8, followed by cells at +0xC. */
+typedef struct {
+    s32 field_0;
+    s32 field_4;
+    s32 count;
+    CellGrid_1E4C0 cells[1];
+} Grid_1E4C0;
+
+/* 8001E4C0: signed XYZ halfwords in 8-byte entries, starting at +4. */
+typedef struct {
+    s16 vx;
+    s16 vy;
+    s16 vz;
+    s16 pad;
+} Pt_1E4C0;
+
+typedef struct {
+    s32 field_0;
+    Pt_1E4C0 pt[1];
+} Verts_1E4C0;
+
+/* 8001E4C0 loads the grid pointer at +0 and vertex-buffer pointer at +4. */
+typedef struct {
+    Grid_1E4C0 *grid;
+    Verts_1E4C0 *verts;
+} DriverArg_1E4C0;
+
 /* 8-byte entry in the D_80049170 table (indexed by arg1 in func_8001B2CC).
  * field_0 is read as a byte; field_4 as a u32 (a pointer into the same
  * 0x80049xxx region). */

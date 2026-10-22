@@ -46,6 +46,21 @@ struct Ovl30ValueMenuEntry;
 
 typedef struct Ovl30ValueMenuEntry Ovl30ValueMenuEntry;
 
+typedef signed int s32;
+
+typedef struct {
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+} BoundsStruct_8001E878;
+
+typedef unsigned char u8;
+
+typedef struct {
+    u8 filler[0x18];
+    s32 flag;
+} CellGrid_1E4C0;
+
 typedef unsigned long u_long;
 
 typedef struct {
@@ -53,17 +68,37 @@ typedef struct {
  u_long code[2];
 } DR_MODE;
 
-typedef signed int s32;
+typedef struct {
+    s32 field_0;
+    s32 field_4;
+    s32 count;
+    CellGrid_1E4C0 cells[1];
+} Grid_1E4C0;
+
+typedef signed short s16;
+
+typedef struct {
+    s16 vx;
+    s16 vy;
+    s16 vz;
+    s16 pad;
+} Pt_1E4C0;
+
+typedef struct {
+    s32 field_0;
+    Pt_1E4C0 pt[1];
+} Verts_1E4C0;
+
+typedef struct {
+    Grid_1E4C0 *grid;
+    Verts_1E4C0 *verts;
+} DriverArg_1E4C0;
 
 typedef struct {
     s32 x, y, z, w;
 } E21E4Position;
 
-typedef signed short s16;
-
 typedef unsigned short u16;
-
-typedef unsigned char u8;
 
 typedef struct {
     u16 type;

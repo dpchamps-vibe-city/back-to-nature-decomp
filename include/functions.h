@@ -212,6 +212,7 @@ void func_8001E158(void);
 void func_8001E160(void);
 void func_8001E340(M2C_64b5d3016a4e_Grid8001E340 **arg0);
 s32 func_8001E38C(void);
+s32 func_8001E4C0(DriverArg_1E4C0 *arg0, BoundsStruct_8001E878 *arg1);
 s32 func_8001E78C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_8001E7DC(s32 *arg0, s32 *arg1);
 s32 func_8001E878(M2C_2bc7a43223fd_CoordTri *p0, M2C_2bc7a43223fd_CoordTri *p1, M2C_2bc7a43223fd_CoordTri *p2);
