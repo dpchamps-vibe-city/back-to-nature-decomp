@@ -41,3 +41,28 @@ initialization and corroborated call/link adjacency support suspected same-TU
 membership, not exact original boundaries or static linkage. The recovered
 struct views do not establish original declarations; no compiler quirk,
 declaration-order or register-variable premise is asserted.
+
+## 800B8354: interleaved initialization-table evidence
+
+The verified `800B8354` handoff passed the full finalize gate (identity
+`68b7423a2aca3dcbe82108fa2555764b5a26d13652b46545555d0c010ec12a61`).
+Its source adds a table-cluster corroboration not recorded above:
+
+- `800B8354` consumes six two-halfword pairs at `D_800BBA64`, an observed
+  0x18-byte footprint ending at `D_800BBA7C`.
+- Existing member `800B8290` consumes six halfwords at `D_800BBA7C`, ending
+  at `D_800BBA88`, and selects one of four halfwords at `D_800BBA88` through
+  `func_80012A34(4)`, reaching the next table at `D_800BBA90`.
+- `800B8354` consumes that `D_800BBA90` speed table. Its complete bound is
+  not established here.
+
+Thus the two initializers consume interleaved, abutting table footprints,
+in addition to their already-recorded aggregate, caller and link-order
+agreement. Evidence: their verified sources under `src/overlays/ovl_23/`
+and original listings under `build/ovl_23/functions/`; the latter show the
+six-iteration bounds, pair-pointer step four and selector argument four.
+
+This corroborates the existing medium-confidence candidate group; it adds
+no distant member or exact TU boundary. The newly shared 0x50-record view
+with `800BA494` alone does not justify merging that consumer into this run,
+and the table observations do not establish original static linkage.

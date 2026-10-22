@@ -1900,19 +1900,25 @@ typedef struct {
     Ovl23D87CEntry0 unk210[32]; /* 0x210 */
 } Ovl23D87CView210;
 
-/* One 0x50-byte entry of the D_800BF87C record array read by
- * ovl_23_func_800BA494: a u16 at 0x28, an s16 at 0x2E and an s32 at 0x38.
+/* One 0x50-byte entry of the D_800BF87C record array: 800B8354 writes
+ * +0x24..+0x3C; 800BA494 reads u16 +0x28, s16 +0x2E and s32 +0x38.
  * The entries are read as an array member, not with byte-pointer arithmetic:
  * cc1 adds the base before the scaled index (expr.c EXPAND_SUM), which is
  * what puts the target's base register first in the `addu`. */
 typedef struct {
-    u8 pad_00[0x28];
+    u8 pad_00[0x24];
+    u16 unk24;         /* 0x24 */
+    u16 unk26;         /* 0x26 */
     u16 unk28;         /* 0x28 */
-    u8 pad_2A[0x4];
+    u16 unk2A;         /* 0x2A */
+    u16 unk2C;         /* 0x2C */
     s16 unk2E;         /* 0x2E */
-    u8 pad_30[0x8];
+    u16 unk30;         /* 0x30 */
+    u16 unk32;         /* 0x32 */
+    u32 unk34;         /* 0x34 */
     s32 unk38;         /* 0x38 */
-    u8 pad_3C[0x14];
+    u32 unk3C;         /* 0x3C */
+    u8 pad_40[0x10];
 } Ovl23D87CEntry50;
 
 /* D_800BF87C view for ovl_23_func_800BA494: a 0x50-stride record array. */

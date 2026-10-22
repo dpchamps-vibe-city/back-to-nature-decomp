@@ -6916,7 +6916,7 @@ Members (link order):
 
 ## `ovl_23` D_800BF87C screen-record init run — 0x800B81AC–0x800B8354 (confidence: medium)
 
-Membership extension: [shared initialization cluster and corroborated call/link adjacency](research/ovl_23_func_800B81AC-grouping.md).
+Membership corroboration: [shared initialization/table cluster and call/link adjacency](research/ovl_23_func_800B81AC-grouping.md).
 
 Evidence: gapless link order and the call graph agree over the same
 `D_800BF87C` aggregate. `ovl_23_func_800B823C` (0x800B823C, ends 0x800B8290)
@@ -6936,8 +6936,7 @@ Members (link order):
 - ovl_23_func_800B8290 (m, byte-exact this session) — fills six 0x44-stride
   records at `D_800BF87C`+0x204 from `D_800BBA7C`, tagging each with
   `D_800BBA88[func_80012A34(4)]`.
-- ovl_23_func_800B8354 (s) — `D_800BF87C` record/field initialiser; calls
-  `func_80012A34`.
+- ovl_23_func_800B8354 (m, byte-exact, finalized) — initializes six 0x50-stride screen records from pair/speed tables and the EXE random selector.
 
 ## `ovl_23` sprite-state/display-setup run — 0x800BB0E8–0x800BB758 (confidence: medium)
 

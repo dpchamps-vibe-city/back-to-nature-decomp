@@ -2525,6 +2525,18 @@ struct Ovl23DecisionView {
 extern s32 D_800BBA14[10];
 extern u8 D_800BB860[];
 
+/* 800B8354 reads six u16 pairs at +0/+2 with four-byte stride. */
+extern u16 D_800BBA64[12];
+/* 800B8354 indexes this u16 table by signed record +0x32 divided by 50. */
+extern u16 D_800BBA90[];
+
+/* 800B8354 writes +0x70/+0x72 relative to each 0x50-stride record base. */
+struct Ovl23ScreenInitTail {
+    u8 pad0[0x70];
+    u16 unk70;
+    u16 unk72;
+};
+
 /* 800B823C writes +4..+414; 800B8584 writes +0; 800B8754 increments s16 +416. */
 struct Ovl23ScreenHeader {
     s16 unk0;
