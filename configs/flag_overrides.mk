@@ -577,15 +577,16 @@ CC1FLAGS_ovl_11_func_80113FF0 := -fno-cse-follow-jumps -fno-cse-skip-blocks
 # `beqz` sense are unreachable under -fcse-follow-jumps from the natural
 # if/else-if cascade.
 #
-# Flag column: psx_flag_probe --with-source on the reconstructed source:
-# baseline 23/106 masked, -fno-cse-follow-jumps 76/106 and the only row that
-# restores the target's cascade (every other row <= 23). Instruction count
-# 105 vs target 106; the residual is source shape, not the flag.
+# Final-source flag matrix (2026-10-22): baseline 22/106, 105 instructions;
+# -fno-cse-follow-jumps 106/106, 106 instructions, confirmed byte-exact.
+# Adding -fno-cse-skip-blocks ties rather than improves it. Evidence:
+# build/ovl_25_func_800B95B0/exact-source-flag-probe.txt.
 #
-# No contrary regional witness: this src file is its own TU (one function per
-# file); the flag is already a project precedent (ovl_11_func_80113FF0 uses
-# -fno-cse-follow-jumps -fno-cse-skip-blocks for the same cse.c branch-following
-# mechanism).
+# No contrary regional witness: the immediate matched neighbours 800B9480
+# and 800B9758 retain their baseline 76/76 and 9/9 masked instruction streams
+# under -fno-cse-follow-jumps (neighbor-*-flag-probe.txt in the same directory).
+# This does not infer an original TU boundary from today's source-file layout.
+# The matching sourcePolicy flag-override entry records this requirement.
 CC1FLAGS_ovl_25_func_800B95B0 := -fno-cse-follow-jumps
 
 # ovl_11_func_8011ADF4: -fno-cse-follow-jumps -fno-cse-skip-blocks.

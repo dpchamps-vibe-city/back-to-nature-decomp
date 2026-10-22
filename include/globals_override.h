@@ -5341,6 +5341,8 @@ typedef struct {
     s16 unk4E4;
 } Ovl25StateView;
 extern Ovl25StateView D_800BFE44_view __asm__("D_800BFE44");
+/* 800B95B0 reads unsigned halfwords with category*24 + (record-1)*8 + choice*2. */
+extern u16 D_800BCCC0[][3][4];
 /* 800B8DF4 reads signed halfwords at +E,+20,+4CA..4DC and a word at +8 in the view above. */
 /* 800B8DF4 compares this signed halfword with state +20. */
 extern s16 D_800BCC40;
