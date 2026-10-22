@@ -3,6 +3,9 @@
 #include "psyq/libsnd.h"
 #include "psyq/libcd.h"
 
+s32 func_80020540(s32 arg0);
+void func_8001FF98(void);
+
 /* Tentative definitions — this TU owns these GP-relative globals. */
 s32 D_8005E538;
 s32 D_8005E53C;
@@ -10,8 +13,9 @@ s32 D_8005E558;
 s32 D_8005E55C;
 
 void func_8001FEA4(void) {
-    register s32 one asm("$16") = 1; /* $s0 — constant 1 across call. */
+    register s32 one __asm__("$16"); /* $s0 — constant 1 across call. */
 
+    one = 1;
     SsInit();
     SsSetTableSize((char *)&D_8006C398, 6, 1);
     SsSetTickMode(1);
