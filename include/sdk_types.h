@@ -2588,6 +2588,15 @@ typedef struct {
 } Ovl11C3B78Arg0;
 
 typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+} Ovl11C3B78Arg1;
+
+typedef struct {
     char pad0[0x38];
     u16 direction;
     char pad3A[0x100 - 0x3A];

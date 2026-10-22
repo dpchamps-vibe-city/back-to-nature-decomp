@@ -77,7 +77,7 @@ void *func_800153BC(M2C_8ffcafc4ec70_Struct_800153BC *arg0, s32 *arg1, s16 arg2,
 void *func_800154CC(Struct_800154CC *arg0, s32 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 arg6, s16 arg7);
 TILE *func_80015594(TILE *p, u_long *ot, s16 x0, s16 y0, s16 w, s16 h, s32 color, s16 cond);
 void *func_80015644(Struct_800154CC *arg0, s32 *arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s16 arg7, u8 arg8);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header, s32 arg2, s32 arg3);
+void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80015814(u16 *arg0, s32 arg1);
 void func_80015828(u16 *arg0, u16 arg1);
 void func_80015840(ObjectState *obj, s8 arg1);
@@ -171,6 +171,7 @@ void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
 void func_8001ABF0(u16 *dst, u16 *src);
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 void func_8001ACA0(void);
+void func_8001ACBC(u16 arg0);
 void func_8001AD00(s32 arg0, u16 arg1, s16 arg2, s16 arg3);
 s32 func_8001AD6C(s32 arg0);
 void func_8001ADD8(u32 *arg0, u16 arg1, s16 arg2, s16 arg3);
