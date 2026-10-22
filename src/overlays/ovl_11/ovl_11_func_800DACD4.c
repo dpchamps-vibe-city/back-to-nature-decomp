@@ -1,189 +1,24 @@
 #include "common.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800DACD4", ovl_11_func_800DACD4);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-07T10:53:07.273Z.
- * Reason: escalation-exhausted.
- * Escalation reached: deepseek-v4-1-flash.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_800DACD4.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
-#include "game_types.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
-#include "psyq/libcd.h"
-#include "psyq/libsnd.h"
-#include "psyq/libapi.h"
-
-typedef struct {
-               char pad0[0x36];
-               u16 flags;
-               char pad38[0x40 - 0x38];
-               u16 vals[(0x84 - 0x40) / 2];
-               s16 value;
-} M2C_583b0b68ff5a_UnkStruct800CD5BC;
-
-typedef struct {
-               char pad0[0x38];
-               u16 unk38;
-               char pad3A[0x100 - 0x3A];
-                s32 unk100;
-                s32 unk104;
-                s32 unk108;
-} M2C_ad72053e5aa9_StructOvl11CE034A;
-
-typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-} M2C_ad72053e5aa9_StructOvl11CE034B;
-
-typedef struct {
-               s16 field_0;
-               s16 field_2;
-} M2C_42071334137b_Ov11Timer;
-
-typedef struct {
-    char pad_00[0x26];
-    s16 field_26;
-    char pad_28[0x34 - 0x28];
-    s32 field_34;
-} M2C_d59586abe320_Ov11D266CFields;
-
-typedef struct {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-} M2C_057dca34f681_Struct_800D03B4;
-
-typedef struct {
-               u16 unk0;
-               u16 unk2;
-               u8 unk4;
-               u8 unk5;
-               u16 unk6;
-} M2C_abf795ba7347_UnkStruct800DA390;
-
-typedef struct {
-               u16 unk0;
-} M2C_a5df3a0a31de_UnkStruct800DF4F0;
-
-typedef struct {
-    char pad0[2];
-    s16 unk2;
-    u16 unk4;
-} M2C_4c1a205b3b09_ReconA0View;
-
-typedef struct {
-    u16 field_0;
-    u16 field_2;
-} M2C_e88a4985b4f4_Cell4;
-
-int CdControlB (u_char com, u_char *param, u_char *result);
-void CdFlush (void);
-int CdPosToInt (CdlLOC *p);
-void SsSetSerialVol (char, short, short);
-void SystemError (char, long);
-Ovl11D124Entry *ovl_11_func_800DAF60 (s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800D5C90 (s16 arg0);
-s32 func_8001AF44 (u32 arg0);
-void func_80021B20 ();
-void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
-s32 ovl_11_func_800C9D64 (void);
-void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
-s32 ovl_11_func_8010C330 (s32 arg0);
-void ovl_11_func_800D2D54 (void *arg0);
-s32 func_80021B64 (void);
-void func_80021B90 (s32 arg0);
-u32 Rand (s32 arg0);
-s32 ovl_11_func_800F5888 ();
-s32 ovl_11_func_800D2950 (s32 arg0);
-void func_80016054 ();
-s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
-s32 ovl_11_func_800D037C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800158E4 (SpriteSourceData *src);
-void ovl_11_func_800E0450 (s32 arg0);
-s32 ovl_11_func_80107DEC (M2C_42071334137b_Ov11Timer *arg0);
-void ovl_11_func_800DE878 (s32 arg0);
-void ovl_11_func_80107DD0 (s16 *arg0);
-void ovl_11_func_800E1F70 (s32 arg0);
-void ovl_11_func_800D2F1C (s32 arg0);
-s32 ovl_11_func_800C1224 (s16 arg0, s16 arg1);
-void ovl_11_func_800D266C (M2C_d59586abe320_Ov11D266CFields *arg0, u16 *arg1, s32 arg2);
-void ovl_11_func_80108CA4 (s32 arg0);
-void ovl_11_func_8010B198 (s32 arg0);
-void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-s32 ovl_11_func_800CBDFC (void);
-s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
-s32 ovl_11_func_800D3424 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-void func_80015840 (ObjectState *obj, s8 arg1);
-void func_8001585C (ObjectState *obj, s8 arg1);
-void SetVal8005E43C (s32 arg0);
-void ovl_11_func_800D03B4 (M2C_057dca34f681_Struct_800D03B4 *arg0, M2C_057dca34f681_Struct_800D03B4 *arg1, s32 arg2);
-s32 ovl_11_func_800D3C04 (void *arg0);
-s32 ovl_11_func_800D3CA4 (void *arg0);
-s32 ovl_11_func_800D3C54 (void *arg0);
-s32 ovl_11_func_800D3CE8 (void *arg0);
-void func_80015704 ();
-s32 ovl_11_func_800D5868 (s16 arg0);
-s32 ovl_11_func_800D5F44 (u16 a, u16 b);
-s32 ovl_11_func_800D812C (s16 arg0, s16 arg1, Vec3 *arg2, s16 arg3);
-s32 ovl_11_func_800D5D38 (u16 a, u16 b);
-void ovl_11_func_800F397C (u16 arg0, u16 arg1);
-s32 ovl_11_func_800D5D9C (u16 a, u16 b);
-s32 ovl_11_func_800D5E64 (u16 a, u16 b);
-s32 ovl_11_func_800D5ED4 (u16 a, u16 b);
-void ovl_11_func_800DA390 (M2C_abf795ba7347_UnkStruct800DA390 *arg0);
-s32 ovl_11_func_800D5E00 (u16 a, u16 b);
-void ovl_11_func_800F3898 (u16 arg0, u16 arg1);
-s32 ovl_11_func_800D5C3C (s16 arg0);
-s32 ovl_11_func_800DF3BC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-s32 ovl_11_func_800DF4F0 (M2C_a5df3a0a31de_UnkStruct800DF4F0 *arg0);
-s32 ovl_11_func_800E0F8C (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-s32 ovl_11_func_800E0AFC ();
-void func_80015868 (Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-s32 ovl_11_func_800E2AAC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-s32 ovl_11_func_800E2A30 (s16 *arg0);
-s32 ovl_11_func_800E2718 (void *arg0);
-s32 ovl_11_func_800C0A28 (void);
-s32 ovl_11_func_800F581C (void);
-s32 ovl_11_func_800F4240 (M2C_4c1a205b3b09_ReconA0View *arg0);
-void ovl_11_func_800F0FB0 (s32 arg0);
-s32 ovl_11_func_80109550 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-s32 ovl_11_func_8010B898 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-void ovl_11_func_8010C550 (M2C_e88a4985b4f4_Cell4 *arg0, s32 arg1);
-s32 ovl_11_func_8010C668 (void);
-s32 ovl_11_func_800D61D8 (s16 arg0);
-
-s32 ovl_11_func_800D759C(s16 arg0, s16 arg1, s16 arg2, s32); /* static */
-s32 ovl_11_func_8011E1E8(s16 arg0, s16 arg1, s16 arg2, s32); /* static */
-extern void (*D_80123DFC[])(s16, s16, s16);
+Ovl11D124Entry *ovl_11_func_800DAF60(s32 arg0, s16 arg1, s16 arg2);
+s32 ovl_11_func_800D5C90(s16 arg0);
 
 void ovl_11_func_800DACD4(s16 arg0, s16 arg1, s32 arg2) {
-    Ovl11D124Entry *temp_v0;
-    u16 temp_v1;
-    s32 temp_v0_2;
-    s16 temp_a2;
+    Ovl11D124Entry *entry;
+    u16 flags;
+    s16 texture;
 
-    temp_v0 = ovl_11_func_800DAF60(arg2, arg1, arg0);
-    if (temp_v0 != NULL) {
-        if ((u16) temp_v0->unk0 == 0x36) {
-            temp_v0_2 = ovl_11_func_800D5C90((s16) temp_v0->unk0);
-            temp_v0->unk4 = temp_v0_2;
-            temp_v0->unk5 = 0;
-            temp_v1 = (u16) temp_v0->unk6 | 0x8000;
-            temp_v0->unk6 = temp_v1;
-            if (temp_v0_2 & 0xFF) {
-                temp_a2 = (s16) ((((temp_v0->unk4 - 1) * 8) | 5) + (temp_v1 & 0xF));
-                D_80123DFC[arg2](arg1, arg0, temp_a2);
+    entry = ovl_11_func_800DAF60(arg2, arg1, arg0);
+    if (entry != 0) {
+        if ((u16)entry->unk0 == 0x36) {
+            entry->unk4 = ovl_11_func_800D5C90(entry->unk0);
+            entry->unk5 = 0;
+            flags = (u16)entry->unk6 | 0x8000;
+            entry->unk6 = flags;
+            if (entry->unk4 != 0) {
+                texture = (((entry->unk4 - 1) * 8) | 5) + (flags & 15);
+                D_80123DFC[arg2](arg1, arg0, texture);
             }
         }
     }
 }
-/* Warning: callback table D_80123DFC: incomplete contracts; open original target set: ovl_11:D_80123DFC: index range and table immutability not proven; examined ovl_11_func_800D759C, ovl_11_func_8011E1E8 */
-#endif

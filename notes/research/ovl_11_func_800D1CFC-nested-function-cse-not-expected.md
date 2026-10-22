@@ -204,6 +204,12 @@ At the time of writing, the integrated tree had not been through `make
 check-all` or `psx_finalize_function`. The sibling pair was left as the parked
 stub.
 
+**Subsequent verification:** 800D0600/800D062C is now integrated with the
+comparator defined inside the caller, and 800D062C has passed the full
+`psx_finalize_function` gate. See the
+[verified grouping evidence](ovl_11_func_800D062C-grouping.md). Earlier
+scratch-only statements in this study describe its original checkpoint.
+
 ## 8. What the earlier sessions' closures were conditional on
 
 Every closed direction in `build/experimentLedger/ovl_11_func_800D1CFC.jsonl`

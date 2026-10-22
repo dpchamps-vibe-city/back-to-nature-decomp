@@ -1451,13 +1451,6 @@ typedef struct {
 } M2C_884f54480578_Ov11FlagSet80108D38;
 
 typedef struct {
-    char _00[0x28];
-    u16 field_28;
-    char _2A[0x2];
-    void *ptr;
-} M2C_891425437069_BufView;
-
-typedef struct {
     s32 unk0;
     s16 unk4;
     s16 unk6;
@@ -2892,6 +2885,11 @@ typedef struct {
 } Ovl11DE68Object;
 
 typedef struct {
+    s16 unk0;
+    s16 unk2;
+} Ovl11DF72CPair;
+
+typedef struct {
     u8 pad0[0x16];
     u16 field_16;
     u8 pad18[2];
@@ -3119,6 +3117,17 @@ typedef struct {
     s32 field_8;
     u8 pad_C[4];
 } Ovl11PaddedVec3;
+
+typedef struct {
+               char pad_00[0x38];
+               s32 unk38;
+               char pad_3C[0x4];
+               s32 unk40;
+               char pad_44[0x14];
+               s32 unk58;
+               char pad_5C[0x4];
+               s32 unk60;
+} Ovl11RankPair;
 
 typedef struct {
     char pad0[0xC];

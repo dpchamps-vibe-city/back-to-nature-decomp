@@ -230,10 +230,18 @@ D_800742EC 10×0xB4), selects entries with `u16@+0 != 0 && s16@+0x30 == 5`
 membership rests on this closed call/data cluster, not on the global alone.
 Call graph + adjacency + shared idiom; not a proven TU boundary.
 
+800D08FC is a low-confidence extension: it immediately follows 800D079C
+(size 0x160, ending at 800D08FC) and selects free four-byte pairs from
+D_80076200. The predecessor's final scan reads those same pairs through
+D_80074838+0x19C8 and D_8006C838+0x99C8. Shared pair storage plus zero-gap
+adjacency supports association, but does not extend the closed call cluster
+or establish a TU boundary. See `notes/research/ovl_11_func_800D08FC-grouping.md`.
+
 Members:
 - ovl_11_func_800D075C (m) — dispatcher leaf: `arg2 == 1` → 800D29B0, else 800D2A88.
 - ovl_11_func_800D079C (m) — tag scanner over both arrays, re-applying the
   dispatcher to every tagged live entry.
+- ovl_11_func_800D08FC (m, low-confidence extension) — selects a free D_80076200 pair from slots 0–1 or 2–3, respecting the second-slot enable flag.
 - ovl_11_func_800D29B0 (m) — D_800749F4-path setter: `+0x30 = 5`, seeds
   +0x38/+0x3C/+0x40 from D_80123A2C.
 - ovl_11_func_800D2A88 (m) — D_800742EC-path setter: `+0x30 = 4`, seeds
@@ -2141,21 +2149,11 @@ Fingerprints:
 - the two `D_80123754` writers and the reader sit at the run's nodes
   (12B8 / 1960 at the front, 1CFC later), with the untouched members
   sandwiched between them — a single global threading one contiguous file.
-- register-capture quirk crossing the run boundary: ovl_11_func_800D1CD0
-  (matched, this session) is byte-identical to ovl_11_func_800D0600 (~0xC80
-  earlier; now matched and fully finalized with the established entry-v0
-  exception), both leaves fold a two-index compare to {0,1,2} and both
-  open with the dead `sw $v0, 0($sp)` hard-`$v0` capture, and both callers
-  (800D1CFC here, 800D062C there) seed `$v0 = $sp + 0x10` before every call
-  — the v0-channel/static-chain fossil shared cluster, same family signature
-  as func_8001E878/E9F8/EAE4 (see notes/research/
-  func_8001EAE4-v0-channel-delay-slot-fossil.md).
-- proven same-TU pair (2026-10-08): ovl_11_func_800D1CD0 is a GNU nested
-  function *defined inside* ovl_11_func_800D1CFC. The parent only byte-matches
-  with that definition, and the definition reproduces the leaf's dead
-  `sw $v0, 0($sp)` as GCC's static-chain spill without any capture construct.
-  The same holds for 800D0600 inside 800D062C (scratch match, not integrated).
-  See notes/research/ovl_11_func_800D1CFC-nested-function-cse-not-expected.md.
+- confirmed same-TU nested pair: ovl_11_func_800D1CD0 is defined inside
+  ovl_11_func_800D1CFC. The analogous 800D0600/800D062C pair is now also
+  integrated and fully verified; this shared nesting idiom does not prove
+  that the two pairs belong to one TU
+  ([evidence and limits](research/ovl_11_func_800D062C-grouping.md)).
 - updater sibling extension from verified `800D1EB8`: its gapless successor
   `800D2160` shares the 0xB4-record update/reset/timer callee cluster, and
   `800CE834` calls them consecutively at 0x800CE868 / 0x800CE870 (original
@@ -6585,8 +6583,14 @@ ovl_11_func_800DBE9C is address-adjacent (0x3E8 below 0x800DBB94 in the
 ovl_11_func_800DBE30/ovl_11_func_800DBEF8 are both called by the band head
 ovl_11_func_800DBAB0, now matched, which also reads lh 0x7A78; func_800DBD78
 calls ovl_11_func_800DBB94) — shared-global + adjacency + call edges, TU
-membership still unproven.
+membership still unproven. The matched initializer 800DB9A4 extends the
+candidate band backwards: its 0x10C-byte body ends exactly at 800DBAB0,
+clears the +0x7A74 word and all five records, restores their -1 leading
+halfwords, and clears the +0x30 pointer that 800DBAB0 publishes and
+800DBEF8 consumes. Shared table/pointer state plus zero-gap adjacency;
+confidence remains low ([evidence](research/ovl_11_func_800DB9A4-grouping.md)).
 Members:
+- ovl_11_func_800DB9A4 (m, candidate extension) — initializes the five-record table and selected-record pointer, and resets the associated byte buffers.
 - ovl_11_func_800DBAB0 (m, matched this session, 0xE4, byte-exact) — the band
   head/selector: guards the D_8006C838+0x10 bit 0x1000, reads the table's
   first s16 at 0x7A78 as the -1 sentinel, publishes the +0x7A78 record base
@@ -6712,14 +6716,16 @@ on the single s32 flag, and all sit inside the unbroken link run
   helper with two shared tables `D_8009CBF8` and `D_8008F7F8` (both absolute
   `lui`+`addiu` %lo), feeding `(s16)`-sign-extended keys from an `lh`.
 
-## `ovl_11` D_80129178 / D_80129184 initializer/transition run — 0x800DD374–0x800DD4D8 (confidence: medium for initializer extension; high for caller/helper core)
+## `ovl_11` D_80129178 / D_80129184 initializer/transition run — 0x800DD374–0x800DD4D8 (confidence: medium for initializer extension; confirmed nested caller/helper core)
 
-Candidate same-TU run extending the documented 800DD45C/800DD4D8 pair backward
-([evidence and limits](research/ovl_11_func_800DD374-grouping.md)).
+Confirmed same-TU nested pair 800DD45C/800DD4D8
+([core evidence](research/ovl_11_func_800DD4D8-grouping.md)), with a candidate
+initializer extension backward
+([extension evidence and limits](research/ovl_11_func_800DD374-grouping.md)).
 
 - ovl_11_func_800DD374 (m, byte-exact, candidate extension) — initializes the three-slot entry index, entry counters/limits and shared transition state.
-- ovl_11_func_800DD45C (m) — advances an entry counter and transfers flags/state to the next entry when the limit is reached.
-- ovl_11_func_800DD4D8 (s) — drives indexed-entry transitions through the preceding helper using the shared state word.
+- ovl_11_func_800DD45C (m, nested in 800DD4D8) — advances an entry counter and transfers flags/state to the next entry at its limit.
+- ovl_11_func_800DD4D8 (m) — drives indexed-entry transitions through its nested helper using the shared state word.
 
 ## `exe` byte-triple setter twins — 0x8001BF74 / 0x8001BF88 (confidence: medium)
 
@@ -7314,7 +7320,9 @@ call graph agrees on a shared caller:
 at 0x800F1194). The now-matched 0x800F14D8 shares 0x800F144C's masked
 halfword arguments, 0x1F sentinels, clamped window and wrapped scan predicate;
 its sole caller is also 0x800F1078. This supports the sibling relationship,
-not a definitive TU boundary. 0x800F1540 / 0x800F1678 remain unmatched; the
+not a definitive TU boundary. The verified 0x800F1678 adds a shared-caller
+and 0x1D4-strided save-state record tie to its successor
+([evidence and limits](research/ovl_11_func_800F1678-grouping.md)). The
 now-matched 0x800F1744 extends the run's tail to 0x800F1878 and reaches the
 same `D_8006C838` record stride 0x1D4 (`+0x8000+0x19EA/0x19EC`) idiom as the
 matched 0x800EFF9C, through the shared callee `ovl_11_func_800C3548`.
@@ -7328,6 +7336,7 @@ Members:
 - ovl_11_func_800F14D8 (m, 0x68, byte-exact) — returns 1 for a 0x1F
   sentinel or when the clamped, inclusive window contains the signed halfword
   at arg2+4; wraps values >=31 by subtracting 29.
+- ovl_11_func_800F1678 (m) — selection-dependent encoded-byte predicate combining sentinel and per-record flag tests.
 - ovl_11_func_800F1744 (m, matched this session, 0x134, byte-exact) — masked
   mode dispatch returning a `sltu` comparison against a `D_8006C838` record
   halfword: 0x32/0x33 select the +0x12B2/+0x11C2 halfwords, otherwise the
@@ -9105,6 +9114,12 @@ weak TU evidence on its own; the group's binding evidence is the call graph:
 800B9F10's sole caller is `ovl_17_func_800B9324`, which also calls
 800B9CE4, 800B9F44 and 800B9F78 in one branch sequence.
 
+Matched 800B9324 supplies a specific producer/consumer link: it writes each
+record's s32@+0x30, which gapless successor 800B946C tests before updating
+that record. Shared caller 800B8898 invokes them consecutively in this link
+order. This corroborates the local subgroup, not an original TU boundary
+([evidence](research/ovl_17_func_800B9324-grouping.md)).
+
 Members:
 - ovl_17_func_800B7F90 (m) — six-record display callback; advances the outer state after both completion probes pass ([grouping evidence](research/ovl_17_func_800B7F90-grouping.md)).
 - ovl_17_func_800B80B0 (m, byte-exact) — completion callback; performs gated cleanup and marks the outer state finished ([grouping evidence](research/ovl_17_func_800B80B0-grouping.md)).
@@ -9188,8 +9203,7 @@ Members:
   (16/16 instruction shapes, identical toolchain): countdown walk of 6
   D_800BD870 records (0x50 stride), calls ovl_17_func_800BB020(base).
 - ovl_17_func_800B92B0 (m) — six-record display hub with sprite setup and backdrop rendering ([grouping evidence](research/ovl_17_func_800B92B0-grouping.md)).
-- ovl_17_func_800B9324 (s) — caller hub: twice calls 800B9F10 with record
-  halfword fields around calls to 800B9CE4/800B9F44/800B9F78.
+- ovl_17_func_800B9324 (m, byte-exact) — six-record decision hub; selects table-driven results for the +0x30 words consumed by 800B946C.
 - func_800B8470 (s) — counter reset that walks the same records from
   D_800BD870 with the 0x50 stride (5 records, per-record func_800BAC24 call).
 
@@ -14535,13 +14549,16 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_80116878 (m) — tests whether `D_80071A60` meets the selected record entry's signed threshold.
 - ovl_11_func_801168C0 (s) — subtracts the selected entry's threshold from the same word and applies selection-dependent state transitions.
 
-## `ovl_11` record-classification helper/caller pair — 0x800D062C / 0x800D0698 (confidence: low)
+## `ovl_11` record-classification nested pair and caller — 0x800D0600–0x800D0698 (confidence: confirmed pair; caller extension: low)
 
-Candidate same-TU membership; original boundaries remain unproven
-([evidence and limits](research/ovl_11_func_800D0698-grouping.md)).
+Confirmed same-TU nested pair 800D0600/800D062C
+([evidence and limits](research/ovl_11_func_800D062C-grouping.md));
+800D0698 remains a candidate extension, not a proven original TU boundary
+([caller evidence](research/ovl_11_func_800D0698-grouping.md)).
 
-- ovl_11_func_800D062C (s) — classifies two record-field pairs through rank comparisons and a table lookup.
-- ovl_11_func_800D0698 (m) — selects the record's +0x22 code using its predecessor's classification and an absolute-delta comparison.
+- ovl_11_func_800D0600 (m) — nested comparator in 800D062C, returning equal/less/greater ranks.
+- ovl_11_func_800D062C (m) — classifies two record-field pairs through its nested comparator and a table lookup.
+- ovl_11_func_800D0698 (m, candidate same TU) — selects the record's +0x22 code using its predecessor's classification and an absolute-delta comparison.
 
 ## `ovl_11` record-selector caller pair — 0x800D3230 / 0x800D3250 (confidence: low)
 

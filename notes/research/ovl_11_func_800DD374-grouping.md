@@ -41,8 +41,12 @@ This note records grouping evidence only; verification was not repeated.
 The former ledger description of a two-word block referenced only by the
 caller/helper pair is superseded: `D_80129178` has three pointer slots,
 followed by the state word, and 800DD374 initializes all four words.
-The previously noted incoming-$v0 save in 800DD45C at 800DD464 is a
-per-function compiler detail, not evidence for this initializer's membership.
+The previously noted incoming-$v0 save in 800DD45C at 800DD464 is not
+evidence for this initializer's membership. Subsequent full verification
+established 800DD45C as a nested function defined inside 800DD4D8; the
+[core-pair study](ovl_11_func_800DD4D8-grouping.md) supersedes the core's
+high-confidence designation with a confirmed nested same-TU reconstruction.
+It does not strengthen the initializer extension or prove an outer boundary.
 
 ## Membership and limits
 

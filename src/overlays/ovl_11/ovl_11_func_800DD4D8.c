@@ -1,49 +1,69 @@
 #include "common.h"
 
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800DD4D8", ovl_11_func_800DD4D8);
+typedef struct {
+    char pad_00[0x2E];
+    u16 count;
+} IncrementView;
 
+typedef struct {
+    char pad_00[0x2E];
+    s16 count;
+    s16 max;
+} CompareView;
 
-/* PARKED by /auto_decompilation_loop on 2026-10-07T09:38:51.479Z.
- * Reason: escalation-exhausted.
- * Escalation reached: deepseek-v4-1-flash.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_800DD4D8.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
+typedef struct {
+    char pad_00[0x28];
+    u16 field_28;
+    char pad_2A[2];
+    void *ptr;
+} BufView;
 
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 
 void ovl_11_func_800DD4D8(void) {
-    auto s32 nested_800DD45C(void *arg0, void *arg1, s32 arg2) __asm__("ovl_11_func_800DD45C");
-    void *p = D_80129178.unk0;
+    s32 ovl_11_func_800DD45C(BufView *arg0, BufView *arg1, s32 arg2) {
+        IncrementView *iv;
+        CompareView *cv;
+
+        iv = arg0->ptr;
+        iv->count = iv->count + 1;
+        cv = arg0->ptr;
+        if (cv->count < cv->max) {
+            return 0;
+        }
+        *(s16 *)((u8 *)arg1->ptr + 0x2E) = 0;
+        cv->count = 0;
+        arg0->field_28 |= 0x1000;
+        arg1->field_28 &= 0xEFFF;
+        D_80129184 = arg2;
+        return 1;
+    }
+    BufView *first;
     s32 one;
-    if (p != 0) {
+
+    first = (BufView *)D_80129178[0];
+    if (first != 0) {
         one = 1;
-        if (D_80129184 == one) goto L1;
-        if (D_80129184 == 0) goto L0;
-        if (D_80129184 == 2) goto L2;
-        if (D_80129184 == 3) goto L3;
+        if (D_80129184 == one) goto state_1;
+        if (D_80129184 == 0) goto state_0;
+        if (D_80129184 == 2) goto state_2;
+        if (D_80129184 == 3) goto state_3;
     }
     return;
-L0:
-    if (func_8001AF44(7U) == one) {
+state_0:
+    if (func_8001AF44(7) == one) {
         D_80129184 = one;
     }
     return;
-L1:
-    nested_800DD45C(p, D_80129178.unk4, 2);
+state_1:
+    ovl_11_func_800DD45C(first, (BufView *)D_80129178[1], 2);
     return;
-L2:
-    nested_800DD45C(D_80129178.unk4, D_80129178.unk8, 3);
+state_2:
+    ovl_11_func_800DD45C((BufView *)D_80129178[1], (BufView *)D_80129178[2], 3);
     return;
-L3:
-    if (nested_800DD45C(D_80129178.unk8, p, 0) == one) {
-        func_8001AF70(7U, 0U);
+state_3:
+    if (ovl_11_func_800DD45C((BufView *)D_80129178[2], first, 0) == one) {
+        func_8001AF70(7, 0);
     }
-    return;
 }
-#endif
