@@ -1,18 +1,4 @@
 #include "common.h"
-
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800FB674", ovl_11_func_800FB674);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-14T01:06:42.160Z.
- * Reason: escalation-exhausted.
- * Escalation reached: gpt-6.1-sol.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_800FB674.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -40,6 +26,7 @@ void ovl_11_func_800FB674(void) {
     u16 terminator;
     s32 var_a0_2;
     s32 digit, minute;
+    s32 wideQuotient;
     s32 call_object, final_object;
     s32 temp_s5;
     s32 temp_s7;
@@ -91,7 +78,6 @@ void ovl_11_func_800FB674(void) {
         *temp_v0++ = 0xFFD;
         quotient = (s16) ((s16)(((struct Ovl11CalendarDisplayStateView *)D_8006C838)->field_44C2) / 10);
         temp_v0 = func_8001A970(0, func_8001A970((s32)quotient, temp_v0, 1), 1);
-        do {
         display = (s16 *)&D_8012A008;
         final_display = display;
         glyph_display = final_display;
@@ -101,16 +87,17 @@ void ovl_11_func_800FB674(void) {
         func_80017B3C(temp_s5, (s32)display, x, row);
         display = 0;
         final_display = 0;
+        minute = (s16)((struct Ovl11CalendarDisplayStateView *)D_8006C838)->field_44C2;
+        wideQuotient = minute / 10;
+        do {
+            quotient = (s16)wideQuotient;
+        } while (0);
+        digit = (minute - quotient * 10) / 5;
         D_8012A008.field_0 = 0x66;
         ((u16 *)glyph_display)[1] = 0xFFFF;
-        digit = (s16)((struct Ovl11CalendarDisplayStateView *)D_8006C838)->field_44C2;
-        quotient = (s16)(digit / 10);
-        digit = (digit - quotient * 10) / 5;
         func_80017D9C((s32 *) temp_s5, (u16 *)glyph_display, 0x110, row, digit);
-        } while (repeat);
         x = 0;
         y = 0;
         } while (repeat);
     } while (repeat);
 }
-#endif

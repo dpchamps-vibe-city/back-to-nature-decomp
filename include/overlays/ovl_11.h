@@ -1048,6 +1048,7 @@ void ovl_11_func_800FB5FC(void);
 void ovl_11_func_800FB608(void);
 void ovl_11_func_800FB628(void);
 void ovl_11_func_800FB648(void);
+void ovl_11_func_800FB674(void);
 void ovl_11_func_800FB908(void);
 s32 ovl_11_func_800FBE4C(void);
 void ovl_11_func_800FBE88(void);
