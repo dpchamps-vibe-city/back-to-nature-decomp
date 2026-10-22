@@ -1,19 +1,5 @@
 #include "common.h"
 
-INCLUDE_ASM("build/ovl_25/asm/nonmatchings/ovl_25_func_800B8A30", ovl_25_func_800B8A30);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-19T02:15:21.974Z.
- * Reason: escalation-exhausted.
- * Escalation reached: gpt-6.1-sol.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_25_func_800B8A30.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
-
 typedef struct {
     s16 unk0;
 } Recon800B977CA0View;
@@ -39,8 +25,7 @@ void ovl_25_func_800B8A30(void) {
     if (state[0x135] != 8) {
         ovl_25_func_800B9B00(&state[0x134], 4, 1);
     }
-    ref = state;
-    objects = ref + 8;
+    objects = state + 8;
     for (i = 1; i < 4; i++) {
         s16 *state;
 
@@ -57,21 +42,57 @@ void ovl_25_func_800B8A30(void) {
         }
         if (*(s32 *)&rec[6] > 0x27FFF) {
             if (ovl_25_func_800B977C((Recon800B977CA0View *)rec, 0) == 1) {
-                ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                do {
+                    do {
+                        do {
+                            ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                        } while (0);
+                    } while (0);
+                } while (0);
             } else {
-                ovl_25_func_800B95B0(rec);
+                do {
+                    do {
+                        do {
+                            ovl_25_func_800B95B0(rec);
+                        } while (0);
+                    } while (0);
+                } while (0);
             }
         } else if (*(s32 *)&rec[6] > 0x1DFFF) {
             if (ovl_25_func_800B977C((Recon800B977CA0View *)rec, 1) == 1) {
-                ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                do {
+                    do {
+                        do {
+                            ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                        } while (0);
+                    } while (0);
+                } while (0);
             } else {
-                ovl_25_func_800B95B0(rec);
+                do {
+                    do {
+                        do {
+                            ovl_25_func_800B95B0(rec);
+                        } while (0);
+                    } while (0);
+                } while (0);
             }
         } else if (*(s32 *)&rec[6] > 0x13FFF) {
             if (ovl_25_func_800B977C((Recon800B977CA0View *)rec, 2) == 1) {
-                ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                do {
+                    do {
+                        do {
+                            ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                        } while (0);
+                    } while (0);
+                } while (0);
             } else {
-                ovl_25_func_800B95B0(rec);
+                do {
+                    do {
+                        do {
+                            ovl_25_func_800B95B0(rec);
+                        } while (0);
+                    } while (0);
+                } while (0);
             }
         } else if (*(s32 *)&rec[6] > 0x9FFF) {
             if (ovl_25_func_800B977C((Recon800B977CA0View *)rec, 3) == 1) {
@@ -95,4 +116,3 @@ void ovl_25_func_800B8A30(void) {
         }
     }
 }
-#endif
