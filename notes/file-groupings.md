@@ -9174,6 +9174,7 @@ Members:
 - ovl_17_func_800B9CAC (m, 2026-10-03) — countdown walk of 6 D_800BD848
   records (0x50 stride): bumps each s16@+0x2A by 5 when it is < 0xFF; same
   `base = D_800BD848` + 0x50-stride record idiom as 800B9F10/800B9F44.
+- ovl_17_func_800B9628 (m, byte-exact, finalized) — maintains the six-row selection list, falling back to the maximum +0x38 value; its +0x2BC result is consumed by gapless successor 800B9784, and matched caller 800B8898 invokes both.
 - ovl_17_func_800B9784 (m, byte-exact) — selected-record scroll-speed controller ([grouping evidence](research/ovl_17_func_800B9784-grouping.md)).
 - ovl_17_func_800B986C (m, 2026-10-07) — 0x50-stride walk of 6 D_800BD848
   records clamping s32@+0x38 to 0x940000, plus a record lookup at

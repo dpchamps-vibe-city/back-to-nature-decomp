@@ -4530,6 +4530,21 @@ typedef struct {
 
 extern u8 D_800BD848[];
 
+/* 800B9628 reads s32 values at +0x38 with stride 0x50 and s16 selections/count at +0x2BC/+0x2D4. */
+typedef struct {
+    s32 field0;
+    u8 pad[0x4C];
+} Ovl17Rec;
+
+typedef struct {
+    u8 pad_000[0x38];
+    Ovl17Rec recs[6];
+    u8 pad_218[0x2BC - 0x218];
+    s16 sel[6];
+    u8 pad_2C8[0x2D4 - 0x2C8];
+    s16 count;
+} Ovl17SelView;
+
 /* 800BA54C initializes byte/halfword/word fields and six halfwords at +0x2BC. */
 typedef struct {
     s32 field_0;
