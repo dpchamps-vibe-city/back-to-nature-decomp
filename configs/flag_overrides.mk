@@ -407,18 +407,20 @@ CC1FLAGS_ovl_11_func_800F1678 := -fno-cse-skip-blocks
 # v1,v0,v1`). The target carries no strength-reduced induction variable and no
 # `addiu <reg>,<reg>,6` walker update for the inner scan. Under baseline flags
 # loop.c reduces `j*6` to exactly that `addiu ...,6` induction (keeping a
-# second counter register), so the target's redundant arithmetic is unreachable
-# from any C spelling at baseline.
+# second counter register) in the current matched source.
 #
-# Flag column: -fno-strength-reduce is the only measured column reaching the
-# target's 54 words. The matched source (a single reused `p` pointer threaded
-# through the outer check and the inner scan, with `dst = p` copied before the
-# scan) is byte-exact 54/54 under this flag; masked baseline is 42/52 with the
-# giv present, and -fno-rerun-loop-opt (53 insns), -fno-gcse (52) and
-# -fno-peephole (53) are all non-exact.
+# Flag column: the matched source (a single reused `p` pointer threaded
+# through the outer check and inner scan, with `dst = p` copied before the
+# scan) is relocated-byte exact 54/54 with -fno-strength-reduce, versus
+# baseline 42/54 with 53 emitted instructions. Remeasured under overlay -G0,
+# ignoring existing overrides: build/ovl_11_func_800F8224/existing-flag-audit.json.
+# Earlier -fno-rerun-loop-opt, -fno-gcse and -fno-peephole columns were also
+# non-exact. This source-scoped result is not a proof about every C spelling.
 #
-# No contrary regional witness: this src file is its own TU (one function per
-# file), so the override cannot disturb the matched ovl_11 neighbours.
+# No original TU boundary is established by the one-function source layout.
+# There is no established same-TU contrary witness; FE068's withdrawn flag
+# does not support grouping it with this function. The matching flag-override
+# audit entry is present in .pi/autoloop.json.
 CC1FLAGS_ovl_11_func_800F8224 := -fno-strength-reduce
 
 # ovl_15_func_8013345C: NO override. The -fno-gcse entry that used to sit here
