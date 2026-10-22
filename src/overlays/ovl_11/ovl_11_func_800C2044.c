@@ -1,18 +1,4 @@
 #include "common.h"
-
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_800C2044", ovl_11_func_800C2044);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-21T04:53:28.055Z.
- * Reason: escalation-exhausted.
- * Escalation reached: gpt-6.1-sol.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_800C2044.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "game_types.h"
 
 s32 ovl_11_func_800C3EE8(Ovl11AnimationObject *, u16 *);
@@ -32,7 +18,6 @@ void ovl_11_func_800C1F94(Ovl11AnimationObject *, u16 *);
 void ovl_11_func_800C2044(Ovl11C3B78Arg0 *arg0, s32 arg1, Ovl11C3B78Arg1 *event) {
     u16 command;
     s32 index;
-    s32 work;
     s32 next;
     s32 z;
     u16 count;
@@ -122,23 +107,21 @@ set_position:
         ovl_11_func_800C3F6C((Ovl11C3F6CObjectView *) arg0, (u16 *) event);
         return;
     case 4:
-        work = ((Ovl11EventObject *)arg0)->entryIndex + 1;
-        ((Ovl11EventObject *)arg0)->entryIndex = work;
+        ((Ovl11EventObject *)arg0)->entryIndex++;
         ovl_11_func_800C2A98((Ovl11EventObject *) arg0);
-        work = (s32) ((u8 *) arg0 + 0xE4);
         U(0x2C) = ((Ovl11EventObject *)arg0)->entries[((Ovl11EventObject *)arg0)->entryIndex].data[1];
         U(0x2E) = ((Ovl11EventObject *)arg0)->entries[((Ovl11EventObject *)arg0)->entryIndex].data[2];
-        ((Ovl11EventEntry *)work)[((Ovl11EventObject *)arg0)->entryIndex].time = ((struct Ovl11CommandTimeState *) D_8006C838)->time;
+        ((Ovl11EventObject *)arg0)->entries[((Ovl11EventObject *)arg0)->entryIndex].time = ((struct Ovl11CommandTimeState *) D_8006C838)->time;
         if (H(0x2E) != ((struct Ovl11SpriteWork *) &D_8007AFF0)->header[1]) {
             U(0x20) &= 0xDFFF;
             U(0x1E) &= 0xFEFF;
-            ((Ovl11EventEntry *)work)[((Ovl11EventObject *)arg0)->entryIndex].time -= U(0xA);
+            ((Ovl11EventObject *)arg0)->entries[((Ovl11EventObject *)arg0)->entryIndex].time -= U(0xA);
             if (D_80125F24[H(0x2E)] != 0) {
                 H(0xA) = 0;
             }
             return;
         }
-        ((Ovl11EventEntry *)work)[((Ovl11EventObject *)arg0)->entryIndex].time = ((struct Ovl11CommandTimeState *) D_8006C838)->time;
+        ((Ovl11EventObject *)arg0)->entries[((Ovl11EventObject *)arg0)->entryIndex].time = ((struct Ovl11CommandTimeState *) D_8006C838)->time;
         ovl_11_func_800C3838(arg0, D_80128B68, 0);
         if (D_80128B68 != 0) {
             H(0x10) = event->unk2;
@@ -167,4 +150,3 @@ process:
     }
     ovl_11_func_800C1F94((Ovl11AnimationObject *) arg0, (u16 *) event);
 }
-#endif
