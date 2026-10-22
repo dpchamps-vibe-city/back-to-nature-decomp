@@ -475,10 +475,12 @@ CC1FLAGS_ovl_11_func_800FE068 := -fno-strength-reduce
 # 14), so the target's redundant per-iteration arithmetic is unreachable from
 # any C spelling at baseline.
 #
-# Flag column: -fno-strength-reduce is the only column that leaves the
-# recomputed index multiply in place. Baseline is 22/72 words; the two
-# precedent ovl_11 TUs below show the same fingerprint resolving to an exact
-# match under this flag alone.
+# Flag column (reconfirmed 2026-10-22 on the complete matching source):
+# production baseline emits 81 instructions and matches 73/84 target words;
+# -fno-strength-reduce preserves the index multiply and matches all 84/84.
+# No other flags differ. The two-object comparison is preserved in
+# build/ovl_11_func_800F0E00/flag-confirmation.json. The matching flag-override
+# allowlist entry records this measured per-TU requirement.
 #
 # Regional precedent: ovl_11_func_800F8224 and ovl_11_func_800FE068 in this
 # same overlay are matched TUs whose overrides are also -fno-strength-reduce,
