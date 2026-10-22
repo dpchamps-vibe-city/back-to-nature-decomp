@@ -1,22 +1,4 @@
 #include "common.h"
-#include "include_asm.h"
-
-INCLUDE_ASM("build/asm/nonmatchings/func_80018B98", func_80018B98);
-
-/* Suspended at the user's request, 2026-10-21.
- * The preserved attempt below measures [0,0,1,2] (283/293 compared words),
- * improving the former [0,2,3,9]. It is NOT byte-exact.
- * One explicit loop fixes the flag/scale register ordering; separating the
- * y product and retaining distinct token/copy roles fixes most other webs.
- * All 877 specified sequential-role partitions were measured; none exact.
- * Remaining: block 0 argument-load position; block 17 load/constant register
- * swap. No new flags, register pins, or assembly barriers were adopted.
- * See notes/research/func_80018B98-hybrid-asm-and-clean-ceiling.md for the
- * bounded search, contract caveats and the earlier claims it supersedes.
- */
-
-#if 0
-#include "common.h"
 
 /* TU-owned GP globals (tentative definitions -> .comm, so cc1 emits the
  * target's %gp_rel accesses). Types match include/globals.h where present. */
@@ -52,8 +34,10 @@ void *func_80019070(s32 *ordering_table, u8 *packet, u32 glyph, s32 x,
                     s32 semitransparent);
 s32 func_8001A284(s32 arg0);
 
-s32 func_80018B98(s32 *arg0, s32 arg1, u16 *arg2, s16 arg3, s16 arg4,
-                  s32 arg5, s32 arg6, s32 arg7, volatile s32 arg8, s32 arg9) {
+u8 *func_80018B98(s32 *arg0, u8 *arg1, u16 *arg2, s16 arg3, s16 arg4,
+                  s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9) {
+    s32 terminator;
+    s32 xProduct;
     s32 work0;
     s32 work1;
     s32 work2;
@@ -115,10 +99,12 @@ outer_body:
     do {
 inner:
         work0 = *arg2;
+        terminator = 0xFFFF;
         work2 = work0 & 0xFFFF;
         work1 = work0;
 
-        if (work2 == 0xFFFF) {
+        work0 = terminator;
+        if (work2 == work0) {
             if (arg6 != 0 && arg8 == 0 && flag == 0) {
                 D_8005E446 = 2;
             }
@@ -223,11 +209,11 @@ inner:
         }
 
         if ((work1 & 0xFFF) != 0xFFD) {
-            work0 = (D_8005E478 - arg3) * arg5;
-            if (work0 < 0) {
-                work0 += 0xFFF;
+            xProduct = (D_8005E478 - arg3) * arg5;
+            if (xProduct < 0) {
+                xProduct += 0xFFF;
             }
-            x = (s32)(s16)(arg3 + (work0 >> 12));
+            x = (s32)(s16)(arg3 + (xProduct >> 12));
             work3 = (D_8005E47A - arg4) * arg5;
             if (work3 < 0) {
                 work3 += 0xFFF;
@@ -250,10 +236,10 @@ outer_test:
     }
 done:
     D_8005E482 = arg2[-1];
-    return arg1;
+    work1 = (s32)arg1;
+    return (u8 *)work1;
 }
 
 
 
 
-#endif
