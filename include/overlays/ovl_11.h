@@ -1426,6 +1426,7 @@ s32 ovl_11_func_80113A20(s32 arg0);
 void ovl_11_func_80113B80(void);
 void ovl_11_func_80113C3C(void);
 s32 ovl_11_func_80113CD0(void);
+s32 ovl_11_func_80113FF0(void);
 s32 ovl_11_func_80114184(void);
 s32 ovl_11_func_80114194(void);
 s32 ovl_11_func_80114398(void);

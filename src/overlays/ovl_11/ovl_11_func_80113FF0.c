@@ -1,18 +1,4 @@
 #include "common.h"
-
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_80113FF0", ovl_11_func_80113FF0);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-10T20:27:20.530Z.
- * Reason: escalation-exhausted.
- * Escalation reached: deepseek-v4-1-flash.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_80113FF0.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -32,25 +18,27 @@ s32 ovl_11_func_80113FF0(void) {
 
     ovl_11_func_80111F10();
     D_8012D538.unk0 = (s32) ((void *) ((u8 *) &D_80051E26 + D_80054BBC[1]));
-    D_8012D538.unk4 = (void *) ((u8 *) ((void *) ((u8 *) &D_80051E26 - 0x60C)) + D_80054BBC[1]);
+    *(s32 *) ((u8 *) &D_8012D538 + 4) = (s32) D_80051E26 - 0x60C + D_80054BBC[1];
     temp_s3 = D_800719F8;
     D_8012D538.unkA = ovl_11_func_800D6014(0x69U);
     D_8012D538.unk8 = 1;
     ovl_11_func_8011D400((s32 *) D_8012D548);
 
     p = D_8012D548;
-    q = (void **) p;
-    a = (s16 *) (p + 0x28);
-    c = (s8 *) (p + 0x3C);
-    b = (s16 *) (p + 0x46);
-
-    *q++ = (void *) ((s32) &D_80051E26 + 0 + D_80054BBC[1]);
     *(s8 *) (p + 0x5A) = 0xF;
     *(s8 *) (p + 0x5B) = 0x15;
     *(s16 *) (p + 0x5C) = 0;
-    *(s16 *) (p + 0x28) = 0x69;
-    *(s8 *) (p + 0x3C) = 0;
-    *(s16 *) (p + 0x46) = 0x47;
+
+    q = (void **) p;
+    a = (s16 *) ((u8 *) q + 0x28);
+    c = (s8 *) ((u8 *) q + 0x3C);
+    b = (s16 *) ((u8 *) q + 0x46);
+
+    *q = (void *) ((s32) &D_80051E26 + D_80054BBC[1]);
+    *(s16 *) ((u8 *) q + 0x28) = 0x69;
+    *(s8 *) ((u8 *) q + 0x3C) = 0;
+    *(s16 *) ((u8 *) q + 0x46) = 0x47;
+    q++;
     a++;
     c++;
     b++;
@@ -73,4 +61,3 @@ s32 ovl_11_func_80113FF0(void) {
     D_8012D52C = 0;
     return 1;
 }
-#endif
