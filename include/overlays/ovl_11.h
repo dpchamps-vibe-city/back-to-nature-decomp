@@ -367,6 +367,7 @@ s32 ovl_11_func_800D3CA4(void *arg0);
 s32 ovl_11_func_800D3CE8(void *arg0);
 s32 ovl_11_func_800D3D2C(M2C_6fc629d778b7_Unk800D3D2C *arg0);
 s32 ovl_11_func_800D3D60(u16 arg0);
+s32 ovl_11_func_800D3E40(Ovl11PaddedVec3 position, s16 key, s32 radius, s32 *flag, void **out);
 s32 ovl_11_func_800D3FEC(M2C_1e7e93467acd_Unk800D3FEC *arg0);
 int ovl_11_func_800D4028(void);
 s32 ovl_11_func_800D4030(Ovl11D4030Arg *arg0);

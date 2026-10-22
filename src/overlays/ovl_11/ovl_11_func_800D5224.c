@@ -4,9 +4,8 @@
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800D425C(u16 *arg0);
-/* 800D3E40 reads these eight ABI slots and writes both output pointers. */
-s32 ovl_11_func_800D3E40(s32 arg0, s32 arg1, s32 arg2, s32 arg3,
-    s16 arg4, s32 arg5, s32 *arg6, void **arg7);
+s32 ovl_11_func_800D3E40(Ovl11PaddedVec3 position, s16 key, s32 radius,
+    s32 *flag, void **out);
 
 s32 ovl_11_func_800D5224(u16 *arg0) {
     s32 kind;
@@ -16,9 +15,8 @@ s32 ovl_11_func_800D5224(u16 *arg0) {
     if (((struct struct_8006C838_time *)D_8006C838)->field_44C0 < 7) {
         ovl_11_func_800D3104(arg0, 0x13);
     }
-    index = ovl_11_func_800D3E40(*(s32 *)((u8 *)arg0 + 0x38),
-        *(s32 *)((u8 *)arg0 + 0x3C), *(s32 *)((u8 *)arg0 + 0x40),
-        *(s32 *)((u8 *)arg0 + 0x44), 1, 0x320, &kind, &object);
+    index = ovl_11_func_800D3E40(*(Ovl11PaddedVec3 *)((u8 *)arg0 + 0x38),
+        1, 0x320, &kind, &object);
     if (index != -1) {
         arg0[1] = index;
         if (kind == 2) {

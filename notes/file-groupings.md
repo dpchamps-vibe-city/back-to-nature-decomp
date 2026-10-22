@@ -14561,6 +14561,15 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800D3230 (m, candidate same TU) — mode-selected record-index wrapper around `ovl_11_func_800D3D60`.
 - ovl_11_func_800D3250 (m, candidate same TU) — code-0x15B gated update of a selected record's +0x16 halfword, falling back to the second record family.
 
+## `ovl_11` paired-record selector helpers — 0x800D3D60 / 0x800D3E40 (confidence: low)
+
+Candidate same-TU membership from a shared specialized record cluster and
+gapless original adjacency; original boundaries remain unproven
+([evidence and limits](research/ovl_11_func_800D3E40-grouping.md)).
+
+- ovl_11_func_800D3D60 (m, candidate same TU) — returns a random eligible index from the mode-selected large or small record family.
+- ovl_11_func_800D3E40 (m, candidate same TU) — returns the first record index inside the supplied X/Z bounds, with category and object-pointer outputs.
+
 ## `ovl_11` global-object state/flag caller run — 0x800CB4E0 / 0x800CB540 / 0x800CB618 (confidence: low)
 
 Candidate same-TU membership; original boundaries remain unproven
