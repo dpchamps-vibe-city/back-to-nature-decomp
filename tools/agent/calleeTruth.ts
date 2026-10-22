@@ -385,6 +385,21 @@ function buildSdkPrototypes(): Map<string, Prototype> {
     for (const prototype of prototypesIn(scope.source, where, scope.lineOf)) {
       if (!index.has(prototype.name)) index.set(prototype.name, prototype);
     }
+    /* Some SDK C declarations are unprototyped because C cannot express an
+       ellipsis without a named parameter. The same header's C++ branch can
+       independently establish variadic status. Only refine an existing
+       unknown C declaration, and validate the alternate branch through cpp. */
+    const hasVariadicAlternative = prototypesIn(readFileSync(header, "utf8"), where)
+      .some((p) => p.variadic && index.get(p.name)?.parameters === null);
+    if (hasVariadicAlternative) {
+      const cxx = cachedPreprocess(header, ROOT, [...configuredCppFlags(), "-D__cplusplus"]);
+      for (const path of cxx.dependencies) dependencies.add(path);
+      const cxxScope = scopeFromPreprocessed(cxx.text);
+      for (const prototype of prototypesIn(cxxScope.source, where, cxxScope.lineOf)) {
+        if (prototype.variadic && index.get(prototype.name)?.parameters === null)
+          index.set(prototype.name, prototype);
+      }
+    }
   }
   const observed = snapshot(ROOT, [...dependencies]);
   sdkIndexCache = { identity, index, observed };
@@ -515,7 +530,14 @@ function targetReadObserver(scratch: string,
         const name = insn.mnemonic === "jal" ? insn.relocation?.symbol : undefined;
         if (!name || name === ".text") return { reads: [], unknown: [0, 1, 2, 3] };
         const sdk = (sdkIndex ??= sdkPrototypes()).get(name);
-        if (sdk?.parameters !== null && sdk?.parameters !== undefined && !sdk.variadic && sdk.slots?.every((s) => s !== null))
+        /* A variadic prologue homes registers even when this call supplied
+           no values for them. Propagate only named SDK arguments as proven
+           reads; variadic tail registers remain possible, never an arity floor. */
+        if (sdk?.variadic) {
+          const fixed = sdk.slots?.filter((s): s is number => s !== null) ?? [];
+          return { reads: fixed, unknown: [0, 1, 2, 3].filter((s) => !fixed.includes(s)) };
+        }
+        if (sdk?.parameters !== null && sdk?.parameters !== undefined && sdk.slots?.every((s) => s !== null))
           return { reads: sdk.slots as number[], unknown: [] };
         const child = read(name);
         return { reads: child.reads ?? [], unknown: child.readsComplete === false ? [0, 1, 2, 3] : child.undeterminedReads ?? [] };

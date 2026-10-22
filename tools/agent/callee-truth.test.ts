@@ -12,6 +12,7 @@ import {
   callSiteWrites,
   targetWitness,
   targetReadEvidence,
+  sdkPrototypes,
   renderTruthReport,
   contradictionsAgainst,
   prototypesIn,
@@ -201,6 +202,21 @@ projectTest("original callee exposes its reads, irrespective of its definition's
     assert.ok(targetWitness("func_8001526C", scratch)?.reads?.includes(5), "frameless leaf stack reads are still parameters");
   }
   finally { rmSync(scratch, { recursive: true, force: true }); }
+});
+
+projectTest("SDK variadic homing does not inflate a forwarding caller's proven arity", () => {
+  const scratch = join(ROOT, "build/calleeVariadicReadSetTest");
+  try {
+    const print = sdkPrototypes().get("FntPrint");
+    assert.equal(print?.variadic, true, "the SDK C++ branch retains the ellipsis lost in C");
+    assert.match(print!.signature, /\.\.\./);
+    const caller = targetWitness("func_80015704", scratch);
+    assert.deepEqual(caller?.reads, [0, 1]);
+    assert.equal(caller?.arity?.min, 2);
+    assert.ok(caller?.undeterminedReads?.includes(2));
+    assert.ok(caller?.undeterminedReads?.includes(3));
+    assert.deepEqual(contradictionsAgainst(only("void func_80015704(void *, void *);", "func_80015704"), caller!, false), []);
+  } finally { rmSync(scratch, { recursive: true, force: true }); }
 });
 
 test("a declaration shorter than what the callee reads is refuted", () => {

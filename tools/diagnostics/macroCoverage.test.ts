@@ -52,31 +52,46 @@ test("extracted overlays without container mappings are explicit skips, with pre
 const containers = existsSync(join(ROOT, "extracted/iso/slus_011.15")) ? loadContainers() : [];
 const loaded = containers.length ? loadMacroFunctions(containers) : { functions: [], findings: [] };
 
-test("all 13 game EXE COP2 functions include the remaining INCLUDE_ASM payloads and the converted macro function; SDK OuterProduct0 is not a conversion target", { skip: !containers.length }, () => {
+test("all 13 game EXE COP2 functions survive stub-to-C conversion; SDK OuterProduct0 is not a conversion target", { skip: !containers.length }, () => {
   const exe = containers.find(c => c.id === "exe")!;
   const report = detectMacroIdentities({ containers: [exe] });
   const cop = report.functions.filter(f => f.name.startsWith("func_") && f.cop2.count);
   assert.equal(cop.length, 13);
-  const parked = ["8001B5DC", "8001B6A0", "8001BBD8", "8001C37C", "8001D348", "8001D6B8", "8001DCB0", "8001DE4C", "8001E088", "8001E26C"];
-  for (const suffix of parked) {
+  const historicalPayloads = ["8001B5DC", "8001B6A0", "8001BBD8", "8001C37C", "8001D348", "8001D6B8", "8001DCB0", "8001DE4C", "8001E088", "8001E26C"];
+  const representations = new Map<string, string>();
+  let stubCount = 0;
+  for (const suffix of historicalPayloads) {
     const name = `func_${suffix}`, f = cop.find(f => f.name.toLowerCase() === name.toLowerCase());
     assert.ok(f, name);
-    const source = readFileSync(join(ROOT, "src", `${f.name}.c`), "utf8");
+    const sourcePath = join(ROOT, "src", `${f.name}.c`);
+    const source = readFileSync(sourcePath, "utf8");
     const tree = parseC(source); let stub = false;
     try { walk(tree.rootNode, n => { if (n.type === "call_expression" && n.childForFieldName("function")?.text === "INCLUDE_ASM") stub = true; return true; }); }
     finally { tree.delete(); }
-    assert.ok(stub, `${name} remains an INCLUDE_ASM payload, not excluded`);
+    const representation = stub ? "INCLUDE_ASM" : "compiled-C";
+    representations.set(f.name, representation);
+    assert.equal(f.sourceRepresentation, representation, `${name} is retained regardless of source stage`);
+    if (stub) stubCount++;
+    else {
+      assert.ok(!report.conversionQueue.some(row => row.function === f.name), `${name} is already converted`);
+      const directory = mkdtempSync(join(ROOT, "build/macro-coverage-converted-"));
+      try {
+        const artifact = compileSource(sourcePath, directory, f.name, { assemble: true });
+        assert.equal(compareFunction(f.name, { container: exe, objectPath: artifact.object! }).verdict,
+          "match", `${name}'s converted C must actually reproduce the original bytes`);
+      } finally { rmSync(directory, { recursive: true, force: true }); }
+    }
   }
   assert.equal(report.coverage.functionByteSource, "original-target-bytes");
   assert.equal(report.coverage.sourceEligibility, "all-function-extents-including-INCLUDE_ASM");
   const entry = cop.find(f => f.name === "func_8001D6B8")!.tiling[0]!;
   assert.equal(entry.macro, "gte_ReadRotMatrix"); assert.equal(entry.vintage, "inline_c.h");
   assert.equal(entry.operands[0]!.value, 29); assert.equal(entry.operands[0]!.expression, "&stack_0x0");
-  assert.equal(cop.find(f => f.name === "func_8001D6B8")!.sourceRepresentation, "INCLUDE_ASM");
+  assert.equal(cop.find(f => f.name === "func_8001D6B8")!.sourceRepresentation, representations.get("func_8001D6B8"));
   assert.ok(!report.conversionQueue.some(f => ["func_80038674", "OuterProduct0"].includes(f.function)));
   assert.equal(cop.find(f => f.name === "func_8001BB88")!.sourceRepresentation, "compiled-C");
   assert.ok(!report.conversionQueue.some(f => f.function === "func_8001BB88"));
-  assert.equal(report.conversionQueue.filter(f => f.sourceRepresentation === "INCLUDE_ASM").length, parked.length);
+  assert.equal(report.conversionQueue.filter(f => f.sourceRepresentation === "INCLUDE_ASM").length, stubCount);
   assert.ok(!cop.some(f => f.name === "func_80038674"));
   const outer = report.functions.find(f => f.name === "OuterProduct0")!;
   assert.equal(outer.sourceRepresentation, "missing", "SDK object, not game C/assembly");
