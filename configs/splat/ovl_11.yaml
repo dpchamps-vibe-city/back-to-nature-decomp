@@ -170,7 +170,7 @@ segments:
       - [0x37F0, .rodata, ovl_11_func_8011F608]
       - [0x3814, rodata]
       - [0x3818, .rodata, ovl_11_func_8011FB80]
-      - [0x382C, rodata]
+      - [0x382C, .rodata, ovl_11_func_80120CC4]
       - [0x3E14, c, ovl_11_func_800BBC34]
       - [0x3E54, c, ovl_11_func_800BBC74]
       - [0x3E98, c, ovl_11_func_800BBCB8]

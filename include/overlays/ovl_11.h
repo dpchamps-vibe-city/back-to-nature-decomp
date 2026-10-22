@@ -1578,6 +1578,7 @@ void ovl_11_func_80120850(s32 arg0);
 void ovl_11_func_801209A8(void);
 void ovl_11_func_801209D4(void);
 void ovl_11_func_80120A2C(void);
+s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *arg0, s32 arg1);
 s32 ovl_11_func_80120F30(s16 arg0, s16 arg1, Ovl11TextureCoordinates *arg2);
 void ovl_11_func_80121134(void);
 s32 ovl_11_func_80121204(void);

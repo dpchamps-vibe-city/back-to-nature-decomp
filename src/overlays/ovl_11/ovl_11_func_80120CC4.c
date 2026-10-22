@@ -1,29 +1,12 @@
 #include "common.h"
-
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_80120CC4", ovl_11_func_80120CC4);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-13T13:12:44.800Z.
- * Reason: escalation-exhausted.
- * Escalation reached: gpt-6.1-sol.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_80120CC4.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 
-static __inline__ s32 texture_y(s32 row) {
-    return row + 0x100;
-}
-
 s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *arg0, s32 arg1) {
     s32 var_a0;
+    s32 row;
     u16 temp_a1;
     s32 temp_a0;
     u16 temp_v1;
@@ -31,7 +14,7 @@ s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *arg0, s32 arg1) {
     s32 temp_a2;
     s32 temp_a3 = 0;
     s32 temp_v1_2;
-    register u32 u_left;
+    u32 u_left;
     s32 v_top;
     s32 v_top_coord;
     u32 clut_shift;
@@ -196,21 +179,18 @@ s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *arg0, s32 arg1) {
     temp_a2 = temp_v1;
     temp_a2 <<= 5;
     temp_a2 |= 0x1F;
-    var_a0 = (temp_a1 & 0x1C0) / 2;
-    temp_a3 = var_a0 + 0x11F;
-    /* Diagnostic only: order bottom -> left -> top; needs owner exception. */
-    __asm__ volatile ("" : "=r" (temp_v1), "=r" (temp_a0), "=r" (var_a0) : "0" (temp_v1), "1" (temp_a0), "2" (var_a0));
-    u_left = temp_v1 << 5;
-    __asm__ volatile ("" : "=r" (var_a0) : "0" (var_a0), "r" (u_left));
-    arg0->u1 = u_left;
-    arg0->u3 = u_left;
-    var_a0 += 0x100;
+    row = (temp_a1 & 0x1C0) / 2;
+    temp_a3 = row + 0x11F;
     arg0->u0 = temp_a2;
     arg0->v0 = temp_a3;
+    u_left = temp_v1 << 5;
+    arg0->u1 = u_left;
+    arg0->u3 = u_left;
+    v_top_coord = row + 0x100;
     arg0->v1 = temp_a3;
     arg0->u2 = temp_a2;
-    arg0->v2 = var_a0;
-    arg0->v3 = var_a0;
+    arg0->v2 = v_top_coord;
+    arg0->v3 = v_top_coord;
     clut_shift = (u32) temp_a1 >> 1;
     v_top = temp_a1 & 0x1F;
     temp_v1_2 = (clut_shift & 0x10) + 0x3C0;
@@ -218,4 +198,3 @@ s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *arg0, s32 arg1) {
     arg0->clut = (temp_v1_2 >> 4) | (temp_a0_2 << 6);
     return temp_a0;
 }
-#endif
