@@ -20,8 +20,7 @@
  * Called by func_8001B074, func_800223D4, func_800229F4, and func_80024A4C
  * (which caches the result by comparing field_14 against the requested
  * header to skip redundant initialization). */
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header,
-                   s32 arg2, s32 arg3) {
+void func_80015704(SpriteSourceData *out, SpriteDataHeader *header) {
     s32 sp10;
 
     CAPTURE_RA(&sp10);
