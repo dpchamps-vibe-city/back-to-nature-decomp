@@ -49,6 +49,7 @@ void ovl_17_func_800BA504(void);
 void ovl_17_func_800BA54C(void);
 void ovl_17_func_800BA630(void);
 void ovl_17_func_800BA698(void);
+void ovl_17_func_800BA704(void);
 void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BAD9C(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);

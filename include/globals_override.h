@@ -4623,10 +4623,32 @@ extern u16 D_800BB482[];
 
 /* ovl_17 data/3634.data.s reserves ten halfwords; 800B9940 formats text here. */
 extern u16 D_800BD738[10];
-/* ovl_17_func_800B9940 loads the signed mode at D_8006C838 + 0xE514. */
+/* One slot of the 3x6 card table at D_8006C838 + 0xE516 (D_8007AD4E): a
+ * value, an x/y pair, two attribute halfwords, a weight and a halfword that
+ * ovl_17_func_800B9940 multiplies by the weight for the selected slot.
+ * ovl_17_func_800BA704 copies x/y and the attributes of one row into the
+ * D_800BD848 display rows. */
 typedef struct {
-    u8 pad_0[0xE514];
+    s16 value;
+    s16 x;
+    s16 y;
+    u16 attr[2];
+    s16 weight;
+    s16 unkC;
+} CardGameSlot;
+/* ovl_17 view of D_8006C838: the card-game mode at +0xE514 (3 shows row 2
+ * with a special slot), the card table after it, and the two halfwords at
+ * +0x92B2/+0x9348 that ovl_17_func_800BA704 places in display row 2. The
+ * cast base goes through a register, so the far fields split as
+ * (base + 0x8000) + low offset. */
+typedef struct {
+    u8 pad_0[0x92B2];
+    u16 unk92B2;
+    u8 pad_92B4[0x9348 - 0x92B4];
+    u16 unk9348;
+    u8 pad_934A[0xE514 - 0x934A];
     s16 mode;
+    CardGameSlot cards[3][6];
 } Ovl17ModeView;
 /* 800B9940 reads mode at +0x6514 and value halfwords from +0x6520 of D_80074838. */
 typedef struct {
@@ -4637,14 +4659,23 @@ typedef struct {
 } Ovl17WorkView;
 /* 800B9940: six 0x50-byte rows have a u16 name index at +0x40; selector is +0x2BC.
  * 800B8294 clears flags at +0x28, stores the data pointer at +0x3C,
- * and sets bit 0 on row two. */
+ * and sets bit 0 on row two. 800BA704 resets +0x2A..+0x38 and copies a
+ * card-table slot's x/y and attributes into +0x34/+0x36 and +0x42/+0x44. */
 typedef struct {
     u8 pad_0[0x28];
     u8 flags;
-    u8 pad_29[0x13];
+    u8 pad_29;
+    s16 unk2A;
+    s16 unk2C;
+    s16 unk2E;
+    s32 unk30;
+    s16 x;
+    s16 y;
+    s32 unk38;
     u8 *data;
     u16 nameOffset;
-    u8 pad_42[0xE];
+    u16 attr[2];
+    u8 pad_46[0xA];
 } Ovl17NameRow;
 typedef struct {
     Ovl17NameRow rows[6];

@@ -9291,6 +9291,15 @@ Members (link order):
 - ovl_17_func_800BA54C (s) — D_800BD848 record-area initialiser (calls
   800BA630/800BA698/800BA704/800BB0C4)
 
+Callee evidence for 800BA704 (m, 2026-10-23), which sits outside this run:
+it writes the six display rows through the same
+`((Ovl17RowsView *)D_800BD848)->rows[i].field` idiom as the matched
+800B8294, and reads the card table through the `Ovl17ModeView` cast of
+D_8006C838 (`cards[row][i]`, mode at +0xE514). The same table is read by
+800B9940 and dealt by the executable's func_8002206C. Both 800BA704 and
+func_8002206C put the +0x9348/+0x92B2 halfwords into row 2 in mode 3. That is
+data-layout evidence only and does not establish a TU boundary.
+
 Cross-container note: 800BA504's leading three calls are the same sequence the
 `ovl_30` mirror pair 8012F3D4/8012F410 emit; that twin relation is not
 TU-membership evidence here.
