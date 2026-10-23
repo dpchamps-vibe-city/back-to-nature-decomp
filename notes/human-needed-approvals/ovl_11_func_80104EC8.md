@@ -1,17 +1,20 @@
-# ovl_11_func_80104EC8 — parked, unmatched
+# ovl_11_func_80104EC8 — resolved with matching C
 
-**Current status:** Kept parked at the user's request. The original assembly is
-active and the C attempt remains disabled in the source. The provisional
-compiler override has been removed; no policy exception was approved or proved
-necessary. The approval request and flag findings below are historical, not a
-current request. Measurements below used the experimental flags, not baseline
-flags.
+**Current status:** Matching resumed at the user's request. The active C now
+matches all 1982 relocated words, with residual `[0, 0, 0, 0]` and no unresolved
+relocations. The evidence-gated override is **only** `-fno-cse-skip-blocks`;
+the earlier two-flag proposal was not adopted. Its evidence comment and policy
+audit entry accompany the source. No assembly/register-binding exception is
+needed, and the source-policy gate passes.
 
-**Build verification:** `make -j8 check-all` passed after removing the override,
-regenerating the stub's rodata attribution, and reconciling the shared signed
-halfword declarations. The PS-X EXE and all 13 overlays match their originals.
-Unrelated pre-existing edits to `include/game_types.h` and
-`include/overlays/ovl_11.h` are excluded from the park commit.
+**Build verification:** `make -j8 check-all` passes for the PS-X EXE and all 13
+overlays. The jump-table attribution was regenerated from the compiled source.
+See [the matching and flag evidence](../research/ovl_11_func_80104EC8-cse-and-return-sharing.md).
+
+## Historical parking record
+
+The following records the earlier user-requested parking and withdrawn request.
+Its measurements and preserved source are historical, not the active solution.
 
 - **Parked:** 2026-10-20T18:49:42.517Z
 - **Original reason (withdrawn):** asm-needs-human-approval

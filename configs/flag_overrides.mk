@@ -249,6 +249,17 @@ CC1FLAGS_ovl_11_func_800F00E4 := -fno-gcse
 # under this flag, so there is no contrary witness in the suspected TU group.
 CC1FLAGS_ovl_11_func_80103B24 := -fno-cse-skip-blocks
 
+# ovl_11_func_80104EC8: repeated full D_8006C838 address materializations
+# after actor/date guard diamonds (e.g. 0x80105260 and 0x80105674).
+# Baseline CSE skips those diamonds and carries the address through them;
+# the final-source matrix emits 1793 words versus the original's 1982.
+# Disabling only skip-blocks reproduces all 1982 relocated words, including
+# all three jump tables' references, with residual [0, 0, 0, 0]. Disabling
+# follow-jumps too emits 1988 words: it destroys sharing the target retains
+# within case 0x15. Scheduling, GCSE and CSE jump following remain enabled.
+# Same-overlay precedent: 80103B24 above. See the function's research note.
+CC1FLAGS_ovl_11_func_80104EC8 := -fno-cse-skip-blocks
+
 # 80104148 retains signed-short column updates across the text-choice join
 # while sharing the scratch-address high half across calls. CSE branch
 # following exposes column constants to gcse.c:cprop_insn, folding the

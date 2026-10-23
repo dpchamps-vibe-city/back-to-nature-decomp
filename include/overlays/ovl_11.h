@@ -1191,6 +1191,7 @@ void ovl_11_func_80104A88(void);
 void ovl_11_func_80104A90(void);
 void ovl_11_func_80104CB8(void);
 void ovl_11_func_80104EA8(void);
+s32 ovl_11_func_80104EC8(s16 arg0);
 void ovl_11_func_80106DC0(M2C_7147e7f955dc_UnkStruct80106DC0 *arg0);
 void ovl_11_func_80106DE8(void);
 void ovl_11_func_80106E38(M2C_a146efbf8f1a_Ovl11Func80106E38Arg *arg0);

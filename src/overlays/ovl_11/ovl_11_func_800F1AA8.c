@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 ovl_11_func_80104EC8(s32 arg0);
+s32 ovl_11_func_80104EC8(s16 arg0);
 
 s32 ovl_11_func_800F1AA8(u8 arg0) {
     s32 result;
