@@ -319,11 +319,6 @@ typedef struct {
     char pad44[0xB8 - 0x44];
 } Ovl11ResetRecordB8;
 
-/* 800D0FB4 reads the halfword at +44D4 of the shared status base. */
-typedef struct {
-    u16 halfwords[0x44D6 / 2];
-} Ovl11ResetStatus;
-
 /* 800BDF98 builds this 0x20-byte query; 800BE6E4 follows +0/+4/+8/+10
  * and reads the word at +18. */
 typedef struct {
@@ -2007,14 +2002,25 @@ typedef struct {
 } Ovl23Func800BA1E0Arg;
 
 /* D_8006C838 status view used by ovl_11_func_800D0BC8. The final
- * halfword array is indexed with stride two; its full extent is unknown. */
+ * halfword array is indexed with stride two; its full extent is unknown.
+ * 800D0FB4 reaches the record arrays and the two single records from this
+ * same base: its loop hoist matches only when they share the symbol with
+ * +44D4. The single records are 0xF0 bytes; only their 0xB4-byte prefix
+ * is typed. */
 typedef struct {
     char pad_000[0x44D0];
     u16 field_44D0;
     u16 field_44D2;
     /* 800D0FB4 tests this status before resetting a record. */
     u16 field_44D4;
-    char pad_44D6[0x99C8 - 0x44D6];
+    char pad_44D6[0x7AB4 - 0x44D6];
+    Ovl11ResetRecordB4 records_7AB4[10];
+    Ovl11ResetRecordB8 records_81BC[20];
+    char pad_901C[0x91AC - 0x901C];
+    Ovl11ResetRecordB4 record_91AC;
+    char pad_9260[0x929C - 0x9260];
+    Ovl11ResetRecordB4 record_929C;
+    char pad_9350[0x99C8 - 0x9350];
     s16 field_99C8[1];
 } Ovl11Status99C8View;
 

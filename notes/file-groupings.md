@@ -12990,6 +12990,11 @@ Members (address order):
 - ovl_11_func_800F0380 (m, byte-exact): the same selector-1/3 availability
   guards precede a predicate over the 99C8 signed-index pairs and the B8/B4
   record pools; see [selected-record predicate](research/ovl_11_func_800F0380-selected-record-predicate.md).
+- ovl_11_func_800D0FB4 (m, 2026-10-23): resets colliding records at 91AC and
+  929C and in the 7AB4/B4 and 81BC/B8 pools. It gates state-6 7AB4 records on
+  the u16 at 44D4. It matches only when the pools and 44D4 are addressed from
+  the one `D_8006C838` base: with separate symbols the 7AB4 base is not hoisted
+  out of the loop.
 
 The shared typed field and nearby addresses support a data-access link, not a
 proved translation-unit boundary. Original calls from D0F20 and F4618 to D0BC8

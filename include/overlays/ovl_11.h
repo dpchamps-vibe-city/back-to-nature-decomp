@@ -323,6 +323,7 @@ s32 ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0);
 void ovl_11_func_800D0EA4(s32 arg0, s32 arg1);
 s32 ovl_11_func_800D0ED0(s32 arg0, s32 arg1);
 s32 ovl_11_func_800D0F20(s32 arg0, s32 arg1);
+void ovl_11_func_800D0FB4(void);
 void ovl_11_func_800D12A0(s16 arg0);
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800D1960(s16 arg0);
