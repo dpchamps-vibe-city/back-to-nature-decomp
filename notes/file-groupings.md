@@ -11225,8 +11225,10 @@ Members (link order):
 - ovl_19_func_800BB08C (m, matched this session, byte-exact) — `D_800BF660`
   ObjectState reset/handoff leaf: `func_80015840`/`func_8001585C` on the object,
   then `func_80015EE8(D_8005E3C0->field_D8 + 0x14, &D_800BF660, state[0x1A4], state[0x1A5], 0, 0)`.
-- ovl_19_func_800BB108 (s) — parent driver; calls 800BB08C repeatedly with
-  (a0,a1) = (1,0),(4,0),(5,0),(7,0),(1,1),(7,1).
+- ovl_19_func_800BB108 (m, 2026-10-23) — parent driver; calls 800BB08C repeatedly with
+  (a0,a1) = (1,0),(4,0),(5,0),(7,0),(1,1),(7,1). Its file now defines the
+  nested helper, so `ovl_19_func_800BB08C.c` defines nothing. The match carries
+  a user-authorized register binding; see `notes/asm-exception-evidence.md`.
 - Evidence (TU quirk, strong): 800BB08C is an **auto (nested) function** of
   800BB108 — the parent sets `$v0 = $sp + 0x18` immediately before every call and
   the child stores incoming `$v0` (this target's `STATIC_CHAIN_REGNUM`) to its

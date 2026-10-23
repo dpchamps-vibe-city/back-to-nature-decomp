@@ -65,6 +65,7 @@ s32 ovl_19_func_800BADAC(s16 arg0);
 void ovl_19_func_800BADF8(s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3);
 void ovl_19_func_800BAFAC(s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
 void ovl_19_func_800BB08C(s32 arg0, s32 arg1);
+void ovl_19_func_800BB108(void);
 void ovl_19_func_800BB318(void);
 void ovl_19_func_800BB358(void);
 void ovl_19_func_800BB470(void);

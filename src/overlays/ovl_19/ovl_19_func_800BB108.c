@@ -1,43 +1,44 @@
 #include "common.h"
-
-INCLUDE_ASM("build/ovl_19/asm/nonmatchings/ovl_19_func_800BB108", ovl_19_func_800BB108);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-12T05:30:13.203Z.
- * Reason: escalation-exhausted.
- * Escalation reached: gpt-6.1-sol.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_19_func_800BB108.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "game_types.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
 
+void func_80015840(ObjectState *obj, u8 arg1);
+void func_8001585C(ObjectState *obj, u8 arg1);
+void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+u32 func_80017A64(void);
+void func_80017A48(u32 arg0);
+s32 ovl_19_func_800BADAC(s16 arg0);
+void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-void func_80015840 (ObjectState *obj, s8 arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-u32 func_80017A64 (void);
-void func_80017A48 (u32 arg0);
-s32 ovl_19_func_800BADAC (s16 arg0);
-void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_19_func_800BB08C (s32 arg0, s32 arg1);
-s32 func_80011F5C (s32 arg0);
-void func_80011FD8 (s32 arg0);
-void func_8001585C (ObjectState *obj, s8 arg1);
-
-static __inline__ s16 display_value(s16 *data, s32 row, s32 column) {
-    return data[row * 4 + column];
-}
-
+/* Draws the 2x4 value table at the D_800BF4C0 view with the draw mode
+ * switched to 1, then refreshes the object at D_800BF660 through the nested
+ * helper for the entries the D_800BF4C0 count enables.
+ *
+ * The helper at 0x800BB08C is a GCC nested function, defined here as in the
+ * original translation unit, which emits it immediately before this function
+ * (see ovl_19_func_800BB08C.c).
+ *
+ * User-authorized matching workaround (2026-10-23): `column` is bound to s0.
+ * The original keeps the first `column = 0` below the func_80015EE8 call; our
+ * cc1's backward scheduler floats a constant write to a call-crossing pseudo
+ * above that call, which pushes column out of s0 and rotates row/column/y.
+ * Binding the variable makes that one write a hard-register set, which this
+ * sched.c keeps below the preceding call. The rest of the body is C. This is
+ * evidence of a toolchain scheduling difference, not of a register pin in
+ * the original source; see notes/asm-exception-evidence.md.
+ */
 void ovl_19_func_800BB108(void) {
-    u32 sp18;
+    void ovl_19_func_800BB08C(s32 arg0, s32 arg1) {
+        u8 *base;
+
+        func_80015840((ObjectState *)&D_800BF660, arg0 & 0xFF);
+        func_8001585C((ObjectState *)&D_800BF660, arg1 & 0xFF);
+        base = D_800BF660 - 0x1A0;
+        func_80015EE8(D_8005E3C0->field_D8 + 0x14, (s32)&D_800BF660,
+                      base[0x1A4], base[0x1A5], 0, 0);
+    }
+    u32 saved;
     u8 *base;
-    u8 *object_base;
-    ObjectState *const obj = (ObjectState *) D_800BF660;
+    u8 *obj = D_800BF660;
     s32 values;
     u8 *state;
     s32 *first;
@@ -46,72 +47,55 @@ void ovl_19_func_800BB108(void) {
     s32 rowY;
     s32 next;
     s32 more;
-    s32 index;
-    s32 var_a1;
-    s32 var_a3;
-    s32 surface;
-    s32 width;
-    s32 height;
-    s32 column;
-    s32 remaining;
+    s32 offset;
+    s32 label;
+    register s32 column asm("$16");
     u8 *counter;
-    s32 var_s1;
+    s32 row;
 
-    func_80015840((ObjectState *) obj, 0);
-    var_a1 = (s32) obj;
-    var_s1 = 0;
-    counter = (u8 *) obj;
-    counter -= 0x1A0;
-    values = (s32) counter;
-    index = (s32) D_8005E3C0;
-    surface = ((struct_8005E3C0 *) index)->field_D8;
-    base = counter + 0x1A4;
-    width = *base++;
-    state = (u8 *) values + 0x1A5;
-    height = *state;
-    func_80015EE8(surface + 0x18, values + 0x1A0, width, height, 0, 0);
+    func_80015840((ObjectState *)obj, 0);
+    base = obj;
+    obj -= 0x1A0;
+    values = (s32)obj;
+    func_80015EE8(D_8005E3C0->field_D8 + 0x18, (s32)base, obj[0x1A4], obj[0x1A5], 0, 0);
+    row = 0;
     column = 0;
-    index = func_80017A64();
-    sp18 = index;
-    surface = 1;
-    func_80017A48(surface);
+    saved = func_80017A64();
+    func_80017A48(1);
     first = &D_8007AE58;
-    text = (u8 *) D_800BCD68;
+    text = (u8 *)D_800BCD68;
     do {
-        next = var_s1 + 1;
+        next = row + 1;
         rowY = 60 << 16;
         y = 57;
-        state = (u8 *) (values + 0x160);
+        state = (u8 *)(values + 0x160);
         do {
-            if (var_s1 == 0 && column == 0) {
-                var_a1 = *first;
+            if (row == 0 && column == 0) {
+                label = *first;
             } else {
-                var_a3 = ovl_19_func_800BADAC(((s16 *) state)[var_s1 * 4 + column]);
-                var_a1 = (s32) (text + var_a3);
+                offset = ovl_19_func_800BADAC(((s16 *)state)[row * 4 + column]);
+                label = offset + (s32)text;
             }
-            func_80017B3C(D_8005E3C0->field_D8 + 0xC, var_a1, (s16) (var_s1 * 200 + 21), column > 0 ? rowY >> 16 : (s16) y);
+            func_80017B3C(D_8005E3C0->field_D8 + 0xC, label, (s16)(row * 200 + 21),
+                          column > 0 ? rowY >> 16 : (s16)y);
             y += 45;
             rowY += 45 << 16;
             column++;
         } while (column < 4);
         more = next < 2;
-        var_s1 = next;
+        row = next;
         column = 0;
     } while (more);
-    func_80017A48(sp18);
-    {
-    auto void nested_BB08C(s32 arg0, s32 arg1) __asm__("ovl_19_func_800BB08C");
-    counter = (u8 *) D_800BF4C0;
-    if (((s16 *) counter)[4] > 0) {
-        nested_BB08C(1, 0);
-        nested_BB08C(4, 0);
-        nested_BB08C(5, 0);
-        nested_BB08C(7, 0);
+    func_80017A48(saved);
+    counter = (u8 *)D_800BF4C0;
+    if (((s16 *)counter)[4] > 0) {
+        ovl_19_func_800BB08C(1, 0);
+        ovl_19_func_800BB08C(4, 0);
+        ovl_19_func_800BB08C(5, 0);
+        ovl_19_func_800BB08C(7, 0);
     }
-    if (((s16 *) counter)[4] >= 2) {
-        nested_BB08C(1, 1);
-        nested_BB08C(7, 1);
-    }
+    if (((s16 *)counter)[4] >= 2) {
+        ovl_19_func_800BB08C(1, 1);
+        ovl_19_func_800BB08C(7, 1);
     }
 }
-#endif
