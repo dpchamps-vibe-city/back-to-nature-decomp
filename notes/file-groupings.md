@@ -3177,6 +3177,13 @@ claim neither separates it from its baseline-matched neighbours nor supports
 grouping it with `ovl_11_func_800F8224`
 ([audit](research/ovl_11_func_800FE068-flag-audit.md)).
 
+Widening (`ovl_11_func_800FE14C`, matched; confidence: low): threshold-scaled
+outlined gauge with background and gradient fill. Its zero-gap predecessor
+`800FE068` ends at `800FE14C` (`0x800FE068 + 0xE4`); both read `D_80127214`
+and are called by `800FDD74` for the same five stored-value rows. This supports
+a candidate same-TU pair, not a wider boundary or a `D_800719FE` reader
+([evidence and limits](research/ovl_11_func_800FE14C-grouping.md)).
+
 Widening (byte-exact match of `ovl_11_func_800FE704`, 2026-11): the
 same text-draw path continues further down the link run as a gapless pair,
 0x800FE704 -> 0x800FE780 (both 0x7C, each ending exactly where the next
