@@ -9188,6 +9188,11 @@ Members:
   800B9C48/800B9CAC/800B9594/800B9324) reads its result. Same
   `base = D_800BD848` + 0x50-stride and s32@+0x38 field as 800B9E94; gapless
   link-order run 800B9784 → 800B986C → 800B9940.
+- ovl_17_func_800B9940 (m, 2026-10-23) — six-row card-table drawer: the
+  `((Ovl17RowsView *)D_800BD848)->rows[i].nameOffset` names, plus the
+  `Ovl17ModeView` card table read the same way as 800BA704. Gapless
+  link-order successor of 800B986C. The match relies on four dead `text`
+  bindings that size the re-run loop pass (see the source comment).
 - ovl_17_func_800B9594 (m, 2026-10-05) — countdown walk of 6 D_800BD848
   records (0x50 stride): decays each s16@+0x2E toward s16@+0x2C by
   `(rec[0x2E] - rec[0x2C]) * 0xFF / ((rec[0x2A] + 1) * work.s16@+0x14)` and
