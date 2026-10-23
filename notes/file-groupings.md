@@ -9874,6 +9874,17 @@ Members (link order):
 - ovl_21_func_800B9A20 (m, byte-exact, finalized) — assigns randomized selectors to `D_800C0448` records 1–5; joins through the shared record table, calls to cluster members `ovl_21_func_800BA7F0` / `ovl_21_func_800BA868` / `ovl_21_func_800BA944`, and gapless placement after `ovl_21_func_800B990C` ([verified source](../src/overlays/ovl_21/ovl_21_func_800B9A20.c)).
 - ovl_21_func_800B9CA4 (m, byte-exact, finalized) — randomized state updater for `D_800C0448` records 1–5; joins through the shared record/threshold cluster, calls to members `ovl_21_func_800BA7F0` / `ovl_21_func_800BA698` / `ovl_21_func_800B98CC`, and gapless placement after `ovl_21_func_800B9A20` ([verified source](../src/overlays/ovl_21/ovl_21_func_800B9CA4.c)).
 - ovl_21_func_800B9F3C (m, byte-exact, finalized) — projectile-slot initializer for the six `D_800C0448` records ([grouping evidence](research/ovl_21_func_800B9F3C-grouping.md)).
+- ovl_21_func_800BA300 (m, byte-exact, finalized) — projectile-slot stepper
+  over the same six records (0x108 outer stride, 0x4C slots bounded by
+  `D_800C0448 + 0x64A`). For each slot whose active word at +0x34 is set, it
+  counts down +0x3A, adds the +0x48/+0x4A/+0x4C velocity to the +0x40/+0x42/
+  +0x44 position, sets +0x4A from `ccos` of the elapsed fraction
+  ((+0x3C - life) << 12) / (+0x3E * 2), and clears the active word once +0x3A
+  falls below -0x3B. It consumes the fields that 800B9F3C seeds and 800B9844
+  counts. Gapless between `ovl_21_func_800B9F3C` (0x800B9F3C + 0x3C4) and
+  `ovl_21_func_800BA4C0` (0x800BA300 + 0x1C0)
+  ([verified source](../src/overlays/ovl_21/ovl_21_func_800BA300.c),
+  [mechanism](research/ovl_21_func_800BA300-shared-high.md)).
 - ovl_21_func_800BA868 (s) / ovl_21_func_800BA944 (m) — gapless
   link neighbours (0x800BA868 ends at 0x800BA944) that are near-twins of
   `ovl_21_func_800BA7F0`: both fill a 3-entry `s16 buf[4]` with the indices

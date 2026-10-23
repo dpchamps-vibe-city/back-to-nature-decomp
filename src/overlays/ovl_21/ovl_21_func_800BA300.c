@@ -1,18 +1,4 @@
 #include "common.h"
-
-INCLUDE_ASM("build/ovl_21/asm/nonmatchings/ovl_21_func_800BA300", ovl_21_func_800BA300);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-11T14:51:15.824Z.
- * Reason: escalation-exhausted.
- * Escalation reached: deepseek-v4-1-flash.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_21_func_800BA300.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -36,73 +22,92 @@ typedef struct {
     u16 unk4C;
 } Ovl21Func800BA300Rec;
 
+/* Steps the three 0x4C-byte projectile states of each of the six
+ * D_800C0448 records: counts down unk3A, advances the position by the
+ * velocity, recomputes the vertical velocity from a cosine, and clears the
+ * slot's active word once unk3A passes -0x3B.
+ *
+ * Three constructs are here for the compiler, not for behaviour:
+ *
+ * - "raw" is assigned inside the outer loop, and the dead "base = raw;" at the
+ *   end of the outer body stretches raw's in-loop lifetime. loop.c then rates
+ *   moving its LO_SUM out as desirable (29 x savings x lifetime >= insns), and
+ *   it shares the prologue HIGH that GCSE inserted (lui s6 / addiu s7,s6).
+ *   Without the dead binding the LO_SUM stays in the loop.
+ *
+ * - "flags = (s32 *)((s32)flags | zero);" is a no-op that keeps the load's
+ *   and the store's flags + offset apart. GCSE's cprop turns zero into 0 but
+ *   validate_replace_rtx only simplifies PLUS/MINUS, so the IOR stays a set
+ *   of flags. PRE then sees the expression killed between the load and the
+ *   store and leaves the store's add in place, and loop.c sees flags as
+ *   non-invariant and builds no giv to combine and strength-reduce. cse2
+ *   folds the IOR to a self-copy and deletes it. Without it the two adds are
+ *   merged and reduced into a pointer stepped by 0x4C.
+ *
+ * - The record base is spelled D_800C0458 - 0x10, a different HIGH from
+ *   D_800C0448, so it gets its own lui in the outer body as in the target.
+ *
+ * Mechanism: notes/research/ovl_21_func_800BA300-shared-high.md. */
 void ovl_21_func_800BA300(void) {
-    s16 temp_v1;
-    s32 temp_lo;
-    s32 var_s1;
-    s32 var_s2;
-    s32 var_v0;
-    s32 var_v0_2;
-    s32 var_v1;
-    s32 *temp_s4;
-    s32 temp_a0;
-    u16 temp_a2;
-    Ovl21Func800BA300Rec *temp_a0_2;
-    u16 *temp_v0;
-    Ovl21Func800BA300Rec *var_s0;
+    s16 steps;
+    s16 life;
+    s32 active;
+    s32 angle;
+    s32 offset;
+    s32 slot;
+    s32 zero;
+    s32 group;
+    s32 *flags;
+    Ovl21Func800BA300Rec *state;
+    Ovl21Func800BA300Rec *record;
+    u16 *velocity;
     u8 *raw;
-    u8 *temp_s3;
+    u8 *base;
 
-    var_v1 = 0;
-    var_s2 = 0;
-    raw = (u8 *) D_800C0458 - 0x10;
+    zero = 0;
+    group = 0;
     do {
+        slot = 0;
+        raw = (u8 *) D_800C0448;
         if ((*(s16 *) (raw + 0x64A)) > 0) {
-            temp_s3 = (u8 *) D_800C0448;
-            var_s1 = var_v1 * 0x108;
-            var_s0 = (Ovl21Func800BA300Rec *) (temp_s3 + var_s1);
-            temp_s4 = (s32 *) (temp_s3 + 0x34);
+            base = (u8 *) D_800C0458 - 0x10;
+            offset = group * 0x108;
+            state = (Ovl21Func800BA300Rec *) (base + offset);
+            flags = (s32 *) (base + 0x34);
             do {
-                if (*(s32 *) ((u8 *) temp_s4 + var_s1) != 0) {
-                    temp_a2 = var_s0->unk4A;
-                    temp_a0 = var_s0->unk3A - 1;
-                    var_s0->unk3A = temp_a0;
-                    var_s0->unk40 = (u16) (var_s0->unk40 + var_s0->unk48);
-                    var_s0->unk42 = (u16) (var_s0->unk42 + temp_a2);
-                    temp_v1 = var_s0->unk3E;
-                    var_s0->unk44 = (u16) (var_s0->unk44 + var_s0->unk4C);
-                    if (temp_v1 != 0) {
-                        temp_lo = (s32) ((var_s0->unk3C - (s16) temp_a0) << 0xC) / (s32) (temp_v1 * 2);
-                        var_v0 = temp_a2 + 0xC;
-                        if (temp_lo < 0x800) {
-                            var_v0_2 = ccos(temp_lo) * 0x18;
-                            if (var_v0_2 < 0) {
-                                var_v0_2 += 0xFFF;
-                            }
-                            var_v0 = -(var_v0_2 >> 0xC);
+                active = *(s32 *)(offset + (s32)flags);
+                if (active != 0) {
+                    flags = (s32 *)((s32)flags | zero);
+                    life = --state->unk3A;
+                    state->unk40 = (u16) (state->unk40 + state->unk48);
+                    state->unk42 += state->unk4A;
+                    steps = state->unk3E;
+                    state->unk44 = (u16) (state->unk44 + state->unk4C);
+                    angle = state->unk3C;
+                    if (steps != 0) {
+                        angle = (s32) ((angle - life) << 0xC) / (s32) (steps * 2);
+                        state->unk4A = (u16)(angle < 0x800
+                            ? -(ccos(angle) * 0x18 / 0x1000)
+                            : state->unk4A + 0xC);
+                        record = (Ovl21Func800BA300Rec *) ((u8 *) D_800C0448 + offset);
+                        if ((s16) record->unk42 >= 0) {
+                            velocity = (u16 *) ((u8 *) D_800C0448 + 0x48 + offset);
+                            record->unk42 = 0;
+                            velocity[0] = 0;
+                            velocity[1] = 0;
+                            velocity[2] = 0;
+                            record->unk38 = 1;
                         }
-                        var_s0->unk4A = (u16) var_v0;
-                        temp_a0_2 = (Ovl21Func800BA300Rec *) ((u8 *) D_800C0448 + var_s1);
-                        if ((s16) temp_a0_2->unk42 >= 0) {
-                            temp_v0 = (u16 *) ((u8 *) D_800C0448 + 0x48 + var_s1);
-                            temp_a0_2->unk42 = 0;
-                            temp_v0[0] = 0;
-                            temp_v0[1] = 0;
-                            temp_v0[2] = 0;
-                            temp_a0_2->unk38 = 1;
-                        }
-                        if ((s16) temp_a0_2->unk3A < -0x3B) {
-                            temp_s4[var_s1 >> 2] = 0;
+                        if ((s16) record->unk3A < -0x3B) {
+                            *(s32 *)(offset + (s32)flags) = 0;
                         }
                     }
                 }
-                var_s1 += 0x4C;
-                var_s2 += 1;
-                var_s0 = (Ovl21Func800BA300Rec *) ((u8 *) var_s0 + 0x4C);
-            } while (var_s2 < (*(s16 *) (temp_s3 + 0x64A)));
+                offset += 0x4C;
+                state = (Ovl21Func800BA300Rec *) ((u8 *) state + 0x4C);
+            } while (++slot < (*(s16 *) (base + 0x64A)));
         }
-        var_v1 += 1;
-        var_s2 = 0;
-    } while (var_v1 < 6);
+        base = raw;
+        group += 1;
+    } while (group < 6);
 }
-#endif
