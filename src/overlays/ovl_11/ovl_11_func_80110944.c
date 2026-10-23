@@ -1,24 +1,10 @@
 #include "common.h"
-
-INCLUDE_ASM("build/ovl_11/asm/nonmatchings/ovl_11_func_80110944", ovl_11_func_80110944);
-
-
-/* PARKED by /auto_decompilation_loop on 2026-10-19T10:05:45.990Z.
- * Reason: escalation-exhausted.
- * Escalation reached: gpt-6.1-sol.
- * The best non-matching attempt is preserved verbatim below, disabled.
- * Findings and the decision needed: notes/human-needed-approvals/ovl_11_func_80110944.md
- */
-
-#if 0
-/* Best non-matching attempt, preserved for the next session. */
-#include "common.h"
 #include "psyq/memory.h"
 
 u32 func_80012A34(s32 arg0);
 s32 ovl_11_func_800F44B4(u16 arg0, s32 *position, s16 *area, s32 index);
 
-s32 ovl_11_func_80110944(s16 area, u16 mode) {
+s16 ovl_11_func_80110944(s16 area, u16 mode) {
     u8 choices[20];
     s32 position[3];
     s16 foundArea;
@@ -28,11 +14,11 @@ s32 ovl_11_func_80110944(s16 area, u16 mode) {
     s32 i;
     s32 eligible;
     Ovl11AnimalSelection *animal;
-    Ovl11AnimalSelection *smallAnimal;
     u8 *innerBase;
     Ovl11SelectionState *state;
     Ovl30AnimalRecordB8 *large;
     s32 flags;
+    s32 recordOffset;
     u8 *available;
 
     memset(choices, 0xFF, 20);
@@ -53,20 +39,14 @@ s32 ovl_11_func_80110944(s16 area, u16 mode) {
             }
         }
         if (!small) {
+            recordOffset = i * sizeof(Ovl30AnimalRecordB8);
             state = Ovl11_SelectionState;
-            large = state->largeAnimals;
-            animal = (Ovl11AnimalSelection *)&large[i];
-            if (animal->area != area) {
-                goto scan_entries;
-            }
-            if (animal->number == 0) {
-                goto scan_entries;
-            }
-            if (animal->flags & 0x20400) {
-                goto scan_entries;
-            }
-            {
-                if ((mode & 1) && area == 5 && available[i] == 0) {
+            /* Keep the root binding separate from the large-array binding. */
+            animal = (Ovl11AnimalSelection *)state;
+            large = Ovl30_AnimalRecords749F4;
+            animal = (Ovl11AnimalSelection *)(recordOffset + (u32)large);
+            if (animal->area == area && animal->number != 0 && !(animal->flags & 0x20400)) {
+                if ((mode & 1) && area == 5 && *(u8 *)((u32)i + (u32)available) == 0) {
                     eligible = 1;
                 }
                 if ((mode & 2) && !(animal->flags & 4)) {
@@ -85,14 +65,13 @@ s32 ovl_11_func_80110944(s16 area, u16 mode) {
                 }
             }
         } else {
-            smallAnimal = (Ovl11AnimalSelection *)&Ovl11_SelectionState->smallAnimals[i];
-            if (smallAnimal->area == area && smallAnimal->number != 0 && smallAnimal->number != 0x10A) {
+            animal = (Ovl11AnimalSelection *)&Ovl11_SelectionState->smallAnimals[i];
+            if (animal->area == area && animal->number != 0 && animal->number != 0x10A) {
                 if ((mode & 1) && area == 4 && Ovl11_SelectionState->smallAvailable[i] == 0) {
                     eligible = 1;
                 }
             }
         }
-scan_entries:
         innerBase = (u8 *)D_8006C838;
         for (flags = 0; flags < 7; flags++) {
             if (((Ovl11SelectionState *)(innerBase + flags * 0xF8))->entries[0].kind == 10 &&
@@ -120,9 +99,11 @@ scan_entries:
             }
         }
     }
+    /* This second binding preserves the original untied HIGH/LOW allocation.
+     * See notes/research/ovl_11_func_80110944-untied-high-low.md. */
+    large = Ovl30_AnimalRecords749F4;
     if (count) {
         return choices[func_80012A34((u16)count)];
     }
     return -1;
 }
-#endif

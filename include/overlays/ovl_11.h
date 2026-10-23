@@ -1373,6 +1373,7 @@ s32 ovl_11_func_80110790(M2C_59ee2b8b632a_ReconA0View *arg0);
 s32 ovl_11_func_80110838(M2C_8740fcdc649a_Recon80110838A0View *arg0);
 s32 ovl_11_func_80110890(M2C_33501d1b78e1_Recon80110838A0View *arg0);
 s32 ovl_11_func_801108F8(M2C_25616469e147_ReconA0View *arg0);
+s16 ovl_11_func_80110944(s16 area, u16 mode);
 void ovl_11_func_80110CE8(s32 *dst, s16 arg1);
 void ovl_11_func_80110DA0(s32 *arg0, s16 arg1);
 void ovl_11_func_80110E28(u8 *arg0);
