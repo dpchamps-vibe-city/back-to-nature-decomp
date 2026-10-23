@@ -6868,6 +6868,11 @@ Members (link order):
   `D_800BF87C`+0x418, cursor at +0x5C8, bound 0x36 (`(s32, s16, s16)`).
 - ovl_23_func_800B94D0 (m, byte-exact this session) — same routine, 12-entry
   array at +0x5CC, cursor at +0x62C, bound 0xC (`(s32, s16, s16)`).
+- ovl_23_func_800B954C (m, 2026-10-23) — gapless after 800B94D0
+  (0x800B94D0 + 0x7C). It consumes both arrays this run fills: every live
+  +0x5CC (12) and +0x418 (54) record within half a screen of the camera at
+  +0x10 is drawn through the +0x3B4 sprite. The match relies on two
+  allocator-only constructs; see the source comment.
 
 ## `ovl_23` D_800BF87C +0x16 unique-draw fill — 0x800B97E0 (confidence: low)
 
