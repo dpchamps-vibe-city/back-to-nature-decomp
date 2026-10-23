@@ -81,3 +81,65 @@ original source. The sample is small, so this is a judgement, not a proof.
 
 Related: `notes/file-groupings.md` (`ovl_19` nested-callee pair) and the
 precedent `ovl_11_func_800FC8C8`, also a user-authorized callee-saved binding.
+
+## ovl_19_func_800B95D4 — `register s16 *opponent asm("$19")` (authorized 2026-10-23)
+
+**Exception.** The opponent pointer is declared
+`register s16 *opponent asm("$19")` in
+`src/overlays/ovl_19/ovl_19_func_800B95D4.c`. The allowlist entry is
+`ovl_19_func_800b95d4` (`register-asm`) in `.pi/autoloop.json`. There is no
+embedded asm, and the rest of the body is C. The user authorized "anything"
+for this function after two sessions and 112 ledgered clean-C measurements
+failed to match it (`notes/research/ovl_19_func_800B95D4-matching-attempts.md`).
+
+**What the target needs.** The callee-saved roles are: s0 origin/command,
+s1 angle, s2 actor pointer, s3 opponent (main and selected), s4 state, s5 the
+constant one, s6 the actor base, s7 i, fp the walking view. All of these
+except s0 cross every call in the loop, so `global_alloc` hands out
+registers in `allocno_compare` priority order,
+floor_log2(refs) * refs / live_length * 10000 (`global.c:593`). The target
+therefore needs angle > actor > opponent > state.
+
+**Why plain C does not reach it under our cc1.** The actor pointer is the
+loop's strength-reduced giv. It is live over the whole loop (about 390 insns)
+with 47 weighted refs, which caps its priority near 6056. Every clean
+opponent spelling scores above that:
+- One body-wide opponent: 34 refs over 119 insns, 14285, which also beats
+  angle's 12352. Result: other s1, angle s2, actor s3 (`[0,0,2,7]`).
+- A per-iteration `q` plus a separate selected-arm opponent: 12413 and 9670.
+  Angle wins only when `angle = 0` follows the opponent reset, which puts the
+  wrong insn in the loop-top delay slot (`[0,0,2,3]`, 194/238).
+
+For the target order, the opponent must fall below about 6056, meaning a live
+range around the whole loop, which its per-iteration reset rules out. The
+other option is for the actor pointer to gain about 35 weighted refs. Neither
+appears in the target's code.
+- `REG_EQUAL` live-length doubling (`local-alloc.c:874`) halves the
+  opponent's priority when its first set is a constant. Measured: the
+  selected-arm opponent drops to 6206 and the main one to 4347. But it makes
+  the reset a fresh `lui`/`addiu` (cse cannot see `base` at the loop top), or
+  reverses the selected arm's two sets, because jump.c moves the else arm.
+- Loop-note weighting (`do { } while (0)`) cannot be focused on the actor:
+  its references are spread one or two per block across about 25 blocks
+  (`flow.c` `calculate_loop_depth` weights whole blocks).
+
+**Measurements** (scratch, this session).
+- Pin the actor to `$18` (explicit walk): angle/opponent swap remains, 201/238.
+- Pin the actor and the opponent: byte-exact once the selected record is
+  spelled `(s16 *)(choice * 72 + (s32)actors)`, which gives the
+  `addu s0,v1,s6` operand order.
+- Pin the opponent alone, on the reset-family body: byte-exact, 238/238. This
+  is the committed form and the smallest exception found. With s3 taken, the
+  giv falls into s2 by itself.
+
+**Reading.** This is an allocation-priority gap, not a scheduler hold like
+800BB108. The original either had a variable structure we have not
+reconstructed, or ranked these pseudos differently. The binding encodes the
+one register the original chose and leaves every other decision to the
+compiler.
+
+**What would retire it.** A clean source in which the opponent's priority
+falls below the actor giv's (a loop-carried opponent with no extra
+instruction, or an actor pointer with far more weighted references). Start
+from the reset family (`[0,0,2,7]`) and check the `.lreg` priorities with
+`tools/agent/compilerTrace.ts`.

@@ -30,6 +30,7 @@ void ovl_19_func_800B9288(void);
 void ovl_19_func_800B93B0(void);
 void ovl_19_func_800B942C(void);
 void ovl_19_func_800B9454(void);
+void ovl_19_func_800B95D4(void);
 void ovl_19_func_800B998C(void);
 void ovl_19_func_800B9AB0(s16 *arg0);
 void ovl_19_func_800B9DC8(void);

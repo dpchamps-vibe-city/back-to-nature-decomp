@@ -12174,9 +12174,11 @@ Members (link order):
   `800B93B0` (ends 0x800B942C) → `800B942C` (0x28, ends 0x800B9454) →
   `800B9454` (0x180, ends 0x800B95D4) with the documented `800B95D4`; calls
   cluster members `800BA468`/`800BA73C`/`800BAC50`.
-- ovl_19_func_800B95D4 (s, 0x3B8) — cluster's large reader/driver on the
+- ovl_19_func_800B95D4 (m, 2026-10-23, 0x3B8) — cluster's large reader/driver on the
   `D_800BF4D0` base; calls `800BA2D4` (reads its result), `800BA33C`,
-  `800BA468`, `800BA5B4`, `800BA73C`, `800BA750`, `800BAC40`.
+  `800BA468`, `800BA5B4`, `800BA73C`, `800BA750`, `800BAC40`. The match
+  carries a user-authorized opponent-pointer binding; see
+  `notes/asm-exception-evidence.md`.
 - ovl_19_func_800B998C (s, 0x124) — reads the base then calls the
   `800B9AB0`/`800B9DC8`/`800B9DD0`/`800B9E14`/… writer chain.
 - ovl_19_func_800B9AB0 (m, byte-exact; candidate member) — randomized direction/action handler for the paired state records ([additional grouping evidence](research/ovl_19_func_800B9AB0-grouping.md)).
