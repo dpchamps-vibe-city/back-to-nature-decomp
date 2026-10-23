@@ -1565,13 +1565,25 @@ typedef struct {
     u16 unkAC;
 } Ovl11A654Object;
 
-/* 8010DE68: halfword counter, table index, flags and signed location pair. */
+/* 8010DE68 / 80110E98: the matched 8010DA04 caller passes this same object view. */
 typedef struct {
     u8 pad_00[0x16];
     u16 unk16;
-    u8 pad_18[0xAC - 0x18];
+    u8 pad_18[0x24 - 0x18];
+    s16 unk24;
+    s16 unk26;
+    u8 pad_28[0x2C - 0x28];
+    s16 unk2C;
+    u8 pad_2E[0x30 - 0x2E];
+    s16 unk30;
+    u8 pad_32[0x34 - 0x32];
+    s32 unk34;
+    u8 pad_38[0xAC - 0x38];
     u16 unkAC;
-    u8 pad_AE[0xB8 - 0xAE];
+    s16 unkAE;
+    s16 unkB0;
+    s16 unkB2;
+    u8 pad_B4[0xB8 - 0xB4];
     u16 unkB8;
     u8 pad_BA[0xC4 - 0xBA];
     s16 unkC4;

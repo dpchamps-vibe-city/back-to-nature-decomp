@@ -7158,5 +7158,8 @@ extern s16 D_80123E4A;
 /* 800DD274 indexes signed halfwords at 80123E50 by the +44D4 selector. */
 extern s16 D_80123E50[];
 
+/* 80110E98 indexes this signed-halfword table by the object's u16 field at +0xAC. */
+extern s16 D_80127F50[];
+
 #endif /* GLOBALS_OVERRIDE_H */
 
