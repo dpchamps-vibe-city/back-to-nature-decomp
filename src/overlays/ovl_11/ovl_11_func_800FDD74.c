@@ -5,7 +5,7 @@ void ovl_11_func_800FDFF4(u16 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800FE068(u16 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800FDE98(u16 arg0);
 void ovl_11_func_800FE14C(s32 input_level, u32 input_value, s32 input_x, s32 input_y);
-void ovl_11_func_800FE3A0(s32 arg0, u16 arg1, s16 arg2, s32 arg3);
+void ovl_11_func_800FE3A0(s32 input_level, u32 input_value, s32 input_x, s32 input_y);
 
 void ovl_11_func_800FDD74(void) {
     s32 i;

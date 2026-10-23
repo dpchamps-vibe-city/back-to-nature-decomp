@@ -3618,10 +3618,10 @@ no gp-rel in this container). The nine sites below are the only references to
 `D_8012A028` outside the data segment.
 
 Fingerprints:
-- shared buffer `D_8012A028` (0x8012A028): every member passes it as the
-destination to exe helper `func_8001A970` (the number formatter), writes the
+- shared buffer `D_8012A028` (0x8012A028): number-formatting members pass it as the
+destination to exe helper `func_8001A970` (the number formatter); several write the
 `0xFFFF` halfword terminator at the returned cursor (`ori $v1,$zero,0xFFFF;
-sh $v1,0($v0)`), then draws the buffer with `func_80017B3C` at
+sh $v1,0($v0)`), then draw the buffer with `func_80017B3C` at
 `D_8005E3C0->field_D8 + 0x54`; some members also seed `0xFFD`/`0x90`/`0x71`
 marker halfwords directly;
 - link-order spread 0x800FC358–0x800FE558, non-gapless (interleaved
@@ -3679,11 +3679,18 @@ Members (address order):
 - ovl_11_func_800FD5E8 (s) — string/table draw over `D_80054BBC` /
   `D_80053636`; writes `0xFFD` into `D_8012A028+2` and draws via
   `func_80017B3C`
-- ovl_11_func_800FE3A0 (s) — reads the `D_80127214` halfword table and
-  transports a computed s16 into `D_8012A028` via `func_8001A970`
+- ovl_11_func_800FE3A0 (m) — formats a `D_80127214` threshold-relative value
+  into `D_8012A028`, with fixed-label alternatives, then draws the text.
 - ovl_11_func_800FE558 (s) — formats 0xE digits into `D_8012A028`, writes the
   `0xFFFF` terminator, scans the buffer for `0xFFD`, draws at
   `D_8005E3C0->field_D8+0x54` via `func_80017B3C`
+
+Widening (`ovl_11_func_800FE3A0`, matched; adjacent-helper pair: low confidence):
+its zero-gap predecessor `800FE14C` (`0x800FE14C + 0x254 = 0x800FE3A0`)
+uses the same `D_80127214` table, and `800FDD74` supplies both helpers the same
+level/value pair for each of five rows. This supports a candidate same-TU pair,
+not a merger of the broader UI clusters or a wider original source boundary
+([evidence and limits](research/ovl_11_func_800FE3A0-grouping.md)).
 
 Widening (byte-exact match of `ovl_11_func_800FCBB4`, 2026-11): the gapless link
 run that starts at member `ovl_11_func_800FCAF4` (0x800FCAF4, 0x8C) continues
