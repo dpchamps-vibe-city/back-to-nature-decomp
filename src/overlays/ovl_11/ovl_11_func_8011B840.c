@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void func_80022738(void);
 void ovl_11_func_8011D098(s32 arg0, s32 arg1, s32 arg2);
@@ -40,18 +40,18 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2) {
         }
         break;
     case 1:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 2:
-        if (func_800226A4() == 5) {
+        if (GetVal8005E5B4() == 5) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 3:
-        func_800226D8(0);
-        func_80017B18(0);
+        SetVal8005E334(0);
+        SetVal8005E2BC(0);
         if (D_8012D52C == 7) {
             D_8012D52C = state;
             if (func_8002261C(2, 0x5F) == 0) {

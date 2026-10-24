@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 
-void ovl_27_func_800B93B4(s32 arg0);
+void ovl_27_func_800B93B4(s16 arg0);
 
-void ovl_27_func_800B9368(s32 arg0);
+void ovl_27_func_800B9368(s16 arg0);
 
 void ovl_27_func_800B944C(void);
 

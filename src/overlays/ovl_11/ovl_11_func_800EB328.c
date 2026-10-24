@@ -3,7 +3,7 @@
 #include "psyq/abs.h"
 
 /* Overlay import of the executable's matched Rand(s32). */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
 s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
@@ -23,11 +23,11 @@ s32 ovl_11_func_800EB328(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
     index = arg3;
     position = (s32 *)ovl_11_func_800EFF04(0x22, arg0, 0);
-    random = func_80012A34(51);
+    random = Rand(51);
     offset = D_80129560[index] - 25;
     x = random + offset;
-    y = (s32)func_80012A34(51) - 700;
-    random = func_80012A34(51);
+    y = (s32)Rand(51) - 700;
+    random = Rand(51);
     zOffset = D_80129560[++index] - 25;
     z = random + zOffset;
     result = 0;

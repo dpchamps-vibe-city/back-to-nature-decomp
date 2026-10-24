@@ -6,7 +6,7 @@ void func_80017B3C(s32, s32, s32, s32);
 s32 func_800226B0(void);
 s32 func_8001FABC(s16);
 void func_80022738(void);
-void func_80013AEC(s32);
+void SetVal8005E3EC(s32);
 void func_8001B2CC(s32, s32);
 void func_800248B0(s32, s16, s16);
 void func_80017D9C(s32 *, u16 *, s16, s16, s32);
@@ -56,7 +56,7 @@ void ovl_11_func_800FF324(void) {
                 break;
             case 1:
                 if (remainder == 0 && D_8012CEE8_options[1] == 0) {
-                    func_80013AEC(1);
+                    SetVal8005E3EC(1);
                     func_8001B2CC(0, 0);
                 }
                 D_8012CEE8_options[1] = D_801273BA != 1;

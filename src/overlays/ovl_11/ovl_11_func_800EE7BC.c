@@ -6,7 +6,7 @@ s16 ovl_11_func_800EFF9C(void);
 s32 ovl_11_func_800F00AC(void);
 s32 ovl_11_func_800F00E4(void);
 
-s32 ovl_11_func_800EE7BC(s16 arg0, s16 arg1) {
+s32 ovl_11_func_800EE7BC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 temp_s0;
     s32 temp_v0;
     u16 var_v0;

@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_8001E878(s32, s32, s32);
+s32 func_8001E878(void *, void *, void *);
 s32 D_8005E4F0;
 
 /* Split-file static-chain capture: the original-word census proves the

@@ -4,7 +4,7 @@
 s32 func_8001FABC(s16);
 s32 ovl_11_func_800CB114(Ovl11CB114Object *, s32 *, s16);
 s32 ovl_11_func_800BF4B4(s32 *, s32);
-void ovl_11_func_800C70CC(Ovl11C7010Object *, u16, s32, s32);
+void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 s32 ovl_11_func_800BDB88(s32 *, s32);
 
 void ovl_11_func_800CA708(void) {

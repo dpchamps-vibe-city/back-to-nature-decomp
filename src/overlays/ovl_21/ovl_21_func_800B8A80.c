@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 void ovl_21_func_800BA4C0(void);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 s32 func_8001FABC(s16 arg0);
 void func_80022738(void);
 
@@ -17,7 +17,7 @@ void ovl_21_func_800B8A80(void) {
         ((UnkStruct800C0448 *)D_800C0448)[i].unk18 = fill;
     }
     ovl_21_func_800BA4C0();
-    if (func_800226A4() == 5) {
+    if (GetVal8005E5B4() == 5) {
         base = (u8 *)D_800C0448;
         tmp = *(u16 *)(base + 0x988);
         tmp++;

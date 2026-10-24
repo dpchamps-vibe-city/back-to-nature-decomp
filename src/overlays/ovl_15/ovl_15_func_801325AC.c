@@ -5,7 +5,7 @@ extern s8 D_80137584;
 extern s16 D_8013759A;
 
 void func_8001AC10(void *arg0, s32 arg1, s32 arg2);
-s32 ovl_15_func_80137228(s32 arg0, s32 arg1);
+s32 ovl_15_func_80137228(s16 arg0, s16 arg1);
 void ovl_15_func_80134724(void);
 
 void ovl_15_func_801325AC(void) {

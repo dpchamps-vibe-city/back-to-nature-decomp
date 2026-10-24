@@ -1,7 +1,7 @@
 #include "common.h"
 
 /* Rand at 0x80012A34; use the overlay link's imported symbol name. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 func_8001AF44(u32 arg0);
 s32 ovl_11_func_800EFA1C(s16 arg0);
 s32 ovl_11_func_800EDF3C();
@@ -53,7 +53,7 @@ s32 ovl_11_func_800ED7E0(s16 arg0, s16 arg1) {
             }
         }
     }
-    count = func_80012A34((u16)count);
+    count = Rand((u16)count);
     for (i = 0; i < 5; i++) {
         if (choices.values[i] != -1) {
             base2 = (char *)&D_8006C838;

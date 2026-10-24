@@ -3,7 +3,7 @@
 
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800D7348(u16 *dst, u16 *src);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_800C4F44(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3) {
     Recon_ovl_11_func_800C7270_A0View *var_s0;

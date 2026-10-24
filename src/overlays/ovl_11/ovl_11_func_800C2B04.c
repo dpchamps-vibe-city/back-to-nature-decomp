@@ -4,7 +4,7 @@
 void ovl_11_func_800C2A98(Ovl11EventObject *arg0);
 s32 ovl_11_func_800DD1D0(s16 *arg0);
 s32 ovl_11_func_800C28CC(s16 arg0, SpriteSourceData *arg1);
-s32 ovl_11_func_800C3838(Ovl11EventObject *arg0, s16 arg1, s32 arg2);
+s32 ovl_11_func_800C3838(Ovl11EventObject *arg0, s32 arg1, s32 arg2);
 
 void ovl_11_func_800C2B04(Ovl11EventObject *arg0) {
     s16 oldEvent;

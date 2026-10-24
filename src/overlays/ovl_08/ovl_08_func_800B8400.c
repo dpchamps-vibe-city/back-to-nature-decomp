@@ -1,9 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 void func_8001B2CC(s32 arg0, s32 arg1);
 void func_8001B3CC(s32 arg0);
-int FntPrint();
 
 extern char D_800B8008[];
 extern s32 D_800B8608;

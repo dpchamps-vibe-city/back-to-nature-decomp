@@ -1,6 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 
+void ovl_11_func_800CE0F0(Ovl11SpritePositionView *position, u8 *object, s32 mode, u32 index);
+
 u32 ovl_11_func_800CDEEC(u8 *arg0) {
     u32 var_s1;
     u8 *var_s0;

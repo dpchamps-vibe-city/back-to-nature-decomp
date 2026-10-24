@@ -5,7 +5,7 @@ extern s16 D_800BCD60[4];
 extern s16 D_800BCDCC[4];
 
 s32 func_8001DFD4(s32 *arg0, s16 *arg1);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
+void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 
 void ovl_25_func_800BA758(SpriteSourceData *arg0, u16 *arg1) {
     s32 ret;

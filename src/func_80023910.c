@@ -24,6 +24,8 @@ u16 D_8005E33C;
 u16 D_8005E338;
 struct struct_8005E340_target *D_8005E340;
 
+s32 func_8001FABC(s16 arg0);
+
 void func_80023910(void) {
     s32 temp_v1;
     command_word *gfx;

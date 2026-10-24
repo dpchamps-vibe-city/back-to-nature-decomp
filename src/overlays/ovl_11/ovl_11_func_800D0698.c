@@ -2,7 +2,7 @@
 #include "game_types.h"
 #include "psyq/abs.h"
 
-s32 ovl_11_func_800D062C(Recon_ovl_11_func_800D2594_A0View *arg0);
+u16 ovl_11_func_800D062C(Recon_ovl_11_func_800D2594_A0View *arg0);
 
 void ovl_11_func_800D0698(Recon_ovl_11_func_800D2594_A0View *arg0) {
     s32 var_s0;

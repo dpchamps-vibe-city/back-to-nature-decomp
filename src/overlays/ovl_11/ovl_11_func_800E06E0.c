@@ -5,7 +5,7 @@ s32 ovl_11_func_800E109C(UnkStruct800E109C *arg0);
 s32 ovl_11_func_800D0D7C(u8 *arg0);
 void ovl_11_func_80107DD0(s16 *arg0);
 /* Overlay import of Rand at 0x80012A34; type from src/Rand.c. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
     s32 i;
@@ -70,10 +70,10 @@ s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
                 temp = 31;
             }
             arg0->field_AE = temp;
-            if (arg0->field_AE >= 3 && (s32)func_80012A34(100) <= arg0->field_AE * 10) {
+            if (arg0->field_AE >= 3 && (s32)Rand(100) <= arg0->field_AE * 10) {
                 arg0->field_34 |= 0x100;
             }
-        } else if ((s16)arg0->field_16 <= 0 && func_80012A34(100) < 11) {
+        } else if ((s16)arg0->field_16 <= 0 && Rand(100) < 11) {
             arg0->field_AE++;
         }
     }
@@ -86,11 +86,11 @@ s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
     }
     if (!(arg0->field_34 & 0x100)) {
         if (arg0->field_1A == 3) {
-            if (func_80012A34(100) < 26) {
+            if (Rand(100) < 26) {
                 arg0->field_34 |= 0x80100;
             }
         } else if (arg0->field_1A == 4) {
-            if (func_80012A34(100) < 76) {
+            if (Rand(100) < 76) {
                 arg0->field_34 |= 0x80100;
             }
         }
@@ -111,7 +111,7 @@ s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
         arg0->field_1C == ((Ovl11Deb00State *)D_8006C838)->field_44BA) {
         arg0->field_1A++;
     }
-    arg0->field_2C = func_80012A34(300);
+    arg0->field_2C = Rand(300);
     if (!(arg0->field_34 & 1)) {
         ((Ovl11Deb00State *)D_8006C838)->field_44F8 |= 0x8000000;
     }

@@ -2,7 +2,7 @@
 
 void func_8001AF70(u16 arg0, u16 arg1);
 
-u16 ovl_11_func_800EAF5C(s16 arg0) {
+u16 ovl_11_func_800EAF5C(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     switch (arg0) {
     case 0:
         func_8001AF70(4, 0);

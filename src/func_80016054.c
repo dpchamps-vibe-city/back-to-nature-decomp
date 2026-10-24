@@ -1,7 +1,7 @@
 #include "common.h"
 #include "debughook.h"
 
-void func_800165D8(s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+void *func_800165D8(u32 *, void *, void *, u8 arg3, u8 arg4, s16 arg5, s16 arg6, s32, s32, s32, u16 arg10, s16 arg11, s16 arg12, s16 arg13, s16 arg14);
 
 /*
  * Sprite-submission wrapper: masks arg3 to a byte, records its caller's

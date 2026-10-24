@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 s32 ovl_11_func_80112DA8 (Ovl11C7010Object *arg0);
-void ovl_11_func_800C70CC (Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C93A4 (Ovl11C7010Object *arg0);
 u16 ovl_11_func_8010734C (s32 id);
 s32 ovl_11_func_800C8BA8 (Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1);

@@ -1,6 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-s32 ovl_11_func_8010BFEC(s32 arg0, s32 arg1);
+s32 ovl_11_func_8010BFEC(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_8010BF8C(Recon_ovl_11_func_8010BF8C_A0View *arg0) {
     arg0->unk34 = arg0->unk34 | 0x800;

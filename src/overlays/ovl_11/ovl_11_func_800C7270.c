@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 void func_80015840(ObjectState *obj, u8 arg1);
-s32 func_8001589C(SpriteSourceData *src);
+u32 func_8001589C(SpriteSourceData *src);
 
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 ret;

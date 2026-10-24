@@ -1,5 +1,7 @@
 #include "common.h"
 
+void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
+
 void func_80024448(u16 arg0) {
     u16 temp;
     s32 quot;

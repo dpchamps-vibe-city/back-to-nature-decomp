@@ -9,6 +9,12 @@
 extern void SpuGetAllKeysStatus(char *status);
 extern s32 D_80049A10[3];
 
+u32 Rand(s32 arg0);
+
+s32 func_800217B0(s32 arg0, s32 arg1, s32 arg2, u8 *arg3);
+
+s32 func_80021820(s32 start, s32 end);
+
 s32 func_800212A8(s32 soundId, s32 lo, s32 hi) {
     char status[24];
     s32 vsync;

@@ -5,7 +5,6 @@
 #include "psyq/memory.h"
 
 
-void *memset ();
 void ovl_11_func_800C1C5C (s32 arg0);
 void ovl_11_func_80107DD0 (s16 *arg0);
 void ovl_11_func_800F0C70 (void);

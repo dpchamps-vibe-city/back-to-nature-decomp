@@ -4,7 +4,7 @@ void func_8001AF70(u16 arg0, u16 arg1);
 s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 /* The original calls explicitly supply zero in both trailing argument slots. */
 s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F4CEC(void);
 void ovl_11_func_8010941C(s32 arg0);
 

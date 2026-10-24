@@ -5,6 +5,10 @@ typedef struct {
     /* 0x16 */ s16 unk16;
 } UnkStruct800CD4E4;
 
+s32 ovl_11_func_800C087C(s32 arg0);
+
+s32 ovl_11_func_800CD4E4(UnkStruct800CD4E4 *arg0);
+
 void ovl_11_func_800CD624(void) {
     char *base;
     char *p;

@@ -5,11 +5,11 @@ void ovl_17_func_800BAFDC(void);
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
 /* Original overlay imports for SetVal8005E2BC and SetVal8005E334. */
-void func_80017B18(s32 arg0);
-void func_800226D8(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
+void SetVal8005E334(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 /* Original overlay import for GetVal8005E5B4. */
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 s16 ovl_17_func_800B9C48(s16 arg0);
 void func_80022738(void);
 /* The original 8001FAD0 jal forwards func_800212A8's s32 voice result. */
@@ -29,10 +29,10 @@ void ovl_17_func_800B8790(void) {
         base += 0x50;
     }
     ovl_17_func_800BA808(0x40000);
-    func_80017B18(0);
-    func_800226D8(0);
+    SetVal8005E2BC(0);
+    SetVal8005E334(0);
     func_8002261C(4, 5);
-    if (func_800226A4() == 5) {
+    if (GetVal8005E5B4() == 5) {
         u8 *counter = D_800BD848;
         (*(s16 *)(counter + 0x2CE))++;
         if (*(s16 *)(counter + 0x2CE) >= 60) {

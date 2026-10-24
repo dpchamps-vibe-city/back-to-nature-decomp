@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 extern s16 D_80127CEC[];
 
 s32 ovl_11_func_8010D250(Recon_ovl_11_func_8010D250_A0View *arg0) {
     s32 s1 = 0;
-    s32 idx = func_80012A34(4);
+    s32 idx = Rand(4);
 
     if (arg0->unk30 != 0x28) {
         if (arg0->unk26 == 0xF) {

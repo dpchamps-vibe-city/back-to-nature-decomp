@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 s32 ovl_11_func_80109974(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 position, s16 arg5, s32 arg6);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 
 s32 ovl_11_func_80109C24(Ovl11SetFieldsView *arg0) {
     s32 result;

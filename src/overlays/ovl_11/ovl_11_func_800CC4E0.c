@@ -5,7 +5,7 @@ s32 ovl_11_func_800BF3F4(void);
 /* This caller supplies two arguments; the callee's trailing debug arguments
  * do not participate in sprite initialization. */
 void func_80015704();
-void func_80015840(ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_8010C330(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);

@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern s32 D_800719F8;
-extern s32 ovl_11_func_800F3E00(u16 arg0);
+extern s32 ovl_11_func_800F3E00(s16 arg0);
 
 void ovl_11_func_80112494(void) {
     s32 *base;

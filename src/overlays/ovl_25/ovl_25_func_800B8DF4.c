@@ -2,7 +2,7 @@
 
 s32 ovl_25_func_800B9480 (s16 *arg0);
 void ovl_25_func_800B97E4 (s16 *arg0);
-s32 ovl_25_func_800B9B00 (s16 *arg0, s16 arg1, s16 arg2);
+void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 s32 func_8001FABC (s16 arg0);
 void func_8001FAE8 (s32 arg0);
 s32 func_800207E4 (s16 arg0, s16 arg1, s16 arg2);

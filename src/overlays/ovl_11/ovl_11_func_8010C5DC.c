@@ -6,7 +6,11 @@ typedef struct {
     u16 field_2;
 } Cell4;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
+
+s32 ovl_11_func_8010C330(s32 arg0);
+
+s32 ovl_11_func_8010C668(void);
 
 void ovl_11_func_8010C5DC(Cell4 *arg0) {
     s32 s0;
@@ -14,7 +18,7 @@ void ovl_11_func_8010C5DC(Cell4 *arg0) {
 
     s0 = ovl_11_func_8010C668();
     if (arg0->field_2 >= 0x1E) {
-        n = (func_80012A34(0x64) - s0) / 25;
+        n = ((s32)Rand(0x64) - s0) / 25;
         arg0->field_2 = 0x14;
         if (n > 0) {
             s0 = n;

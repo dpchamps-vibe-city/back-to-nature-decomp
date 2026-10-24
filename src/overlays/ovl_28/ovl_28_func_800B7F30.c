@@ -5,8 +5,6 @@
 #include "psyq/libgpu.h"
 
 
-u_long *ClearOTagR (u_long *ot, int n);
-int DrawSync (int mode);
 void ovl_28_func_800B7E80 (void);
 void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 void ovl_28_func_800B8B0C (void);

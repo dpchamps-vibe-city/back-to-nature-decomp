@@ -6,7 +6,7 @@ typedef struct {
 
 extern ReconPointee0View *D_8006C868;
 
-s32 func_8001AF44(s32 arg0);
+s32 func_8001AF44(u32 arg0);
 
 s32 ovl_11_func_800E3D88(void) {
     s32 callRet1;

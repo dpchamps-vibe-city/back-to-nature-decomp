@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_800225B8(void);
+s32 GetVal8005E5B8(void);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
@@ -34,7 +34,7 @@ s32 ovl_11_func_8010E6E8(Ovl11E6E8Object *obj) {
     switch (obj->state) {
     case 0:
         obj->flags |= 0x800;
-        switch (func_800225B8()) {
+        switch (GetVal8005E5B8()) {
         case 0:
             break;
         case 1:
@@ -79,7 +79,7 @@ s32 ovl_11_func_8010E6E8(Ovl11E6E8Object *obj) {
         obj->state = 3;
         break;
     case 3:
-        switch (func_800225B8()) {
+        switch (GetVal8005E5B8()) {
         case 0:
             break;
         case 1:

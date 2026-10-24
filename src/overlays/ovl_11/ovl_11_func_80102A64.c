@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_8001F250(s32 arg0, s32 arg1);
+s32 pow_int(s32 arg0, s32 arg1);
 void ovl_11_func_800D666C(s16 arg0);
 
 extern u8 D_80071AC0;
@@ -36,7 +36,7 @@ void ovl_11_func_80102A64(s32 arg0) {
     s2 = arg0 & 0xFFFF;
     i = 0;
     p = (Rec6 *)&D_80071AC0;
-    while (i < func_8001F250(2, ((View *)D_8006C838)->field_51E6 + 1)) {
+    while (i < pow_int(2, ((View *)D_8006C838)->field_51E6 + 1)) {
         i++;
         if (p->f0 == s2) {
             p->f2 = p->f2 - 1;

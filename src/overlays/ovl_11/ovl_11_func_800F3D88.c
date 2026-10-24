@@ -4,6 +4,8 @@ s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void func_8001AF70(u16 arg0, u16 arg1);
 
+s32 func_8001AF44(u32 arg0);
+
 s32 ovl_11_func_800F3D88(void) {
     u8 *base;
     u16 *p;

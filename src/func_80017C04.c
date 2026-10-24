@@ -1,5 +1,5 @@
 #include "common.h"
-s32 func_80019030(void);
+s16 func_80019030(void);
 
 s32 func_80017C04(void) {
     s32 callRet1;

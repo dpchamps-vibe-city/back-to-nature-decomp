@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8001719C(u8 *arg0);

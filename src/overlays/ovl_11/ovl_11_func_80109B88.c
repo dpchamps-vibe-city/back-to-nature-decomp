@@ -14,7 +14,7 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } UnkStruct80107DE0;
 
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 void ovl_11_func_80107DE0(UnkStruct80107DE0 *arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_80109B88(Struct_80109B88 *arg0) {

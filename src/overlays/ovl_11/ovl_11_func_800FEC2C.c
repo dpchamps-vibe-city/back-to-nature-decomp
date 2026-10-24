@@ -10,7 +10,7 @@ extern s32 D_801273B0;
 extern Ovl11Packed12 D_8012CEE8;
 
 void ovl_11_func_800FEBF8(void);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_800FEC2C(void) {
     u8 *dst;

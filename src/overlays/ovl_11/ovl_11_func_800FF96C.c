@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_80013AEC(s32 arg0);
+void SetVal8005E3EC(s32 arg0);
 void func_80020A40(void);
 void func_80020A14(void);
 void ovl_11_func_800FB608(void);
@@ -13,9 +13,9 @@ void ovl_11_func_800FF96C(void) {
 
     p = (s16 *)D_8006C838;
     if (p[0x7267]) {
-        func_80013AEC(1);
+        SetVal8005E3EC(1);
     } else {
-        func_80013AEC(0);
+        SetVal8005E3EC(0);
     }
     base1 = (char *)&D_8006C838;
     base1 += 0x8000;

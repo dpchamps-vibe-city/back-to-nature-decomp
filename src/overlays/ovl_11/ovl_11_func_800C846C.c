@@ -4,6 +4,8 @@
 s32 ovl_11_func_800D753C(s16 arg0);
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 
+s32 func_8002261C(s32 arg0, s32 arg1);
+
 void ovl_11_func_800C846C(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1) {
     s32 temp_a2;
 

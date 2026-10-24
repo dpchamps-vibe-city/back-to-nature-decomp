@@ -10,7 +10,7 @@ typedef struct {
 } Struct_80110118;
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 
 u16 ovl_11_func_80110118(Struct_80110118 *arg0) {

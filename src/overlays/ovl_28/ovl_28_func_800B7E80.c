@@ -1,6 +1,6 @@
 #include "common.h"
 
-void ovl_28_func_800B8414(void);
+s32 ovl_28_func_800B8414(void);
 void ovl_28_func_800B865C(void);
 
 void ovl_28_func_800B7E80(void) {

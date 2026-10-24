@@ -2,6 +2,10 @@
 
 extern s32 D_800BCB58;
 
+void func_80017A48(u32 arg0);
+
+u32 func_80017A64(void);
+
 void ovl_21_func_800B7E3C(void) {
     s32 *base;
     u32 temp_s0;

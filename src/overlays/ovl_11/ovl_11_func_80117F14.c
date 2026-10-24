@@ -2,6 +2,10 @@
 
 extern s16 D_8012D7A8[];
 
+s32 func_8002261C(s32 arg0, s32 arg1);
+
+void func_80022738(void);
+
 s32 ovl_11_func_80117F14(s32 arg0) {
     if (arg0 < 0) {
         arg0 = 0;

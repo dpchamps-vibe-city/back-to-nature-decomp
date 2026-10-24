@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Legacy overlay name for Rand; prototype witnessed by src/Rand.c. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void ovl_11_func_80110E28(u8 *arg0);
 void ovl_11_func_80110E34(Ovl11MotionState *arg0);
@@ -63,7 +63,7 @@ s32 ovl_11_func_8010CB6C(Ovl11ObjectCB6C *arg0) {
         arg0->unkBE = 0;
         ovl_11_func_80110E34((Ovl11MotionState *)arg0);
     }
-    arg0->unk2C = func_80012A34(300);
+    arg0->unk2C = Rand(300);
     arg0->unkB8 &= 0xFCA7;
     arg0->unk34 &= ~2;
     arg0->unk34 &= ~0x2000;

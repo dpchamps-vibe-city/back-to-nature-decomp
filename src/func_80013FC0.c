@@ -1,5 +1,7 @@
 #include "common.h"
 
+s32 func_8001413C(s32 arg0);
+
 s32 func_80013FC0(s32 arg0) {
     s32 type;
 

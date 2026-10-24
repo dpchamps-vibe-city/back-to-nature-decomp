@@ -8,9 +8,9 @@ s32 *D_8005E5B0;
 s32 D_8005E5CC;
 
 /* Callee prototypes as this caller TU saw them. */
-s32 func_80022AF0(void);
+s16 func_80022AF0(void);
 u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
-s32 func_80022794(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 *arg6, s32 arg7, s32 arg8);
+s32 func_80022794(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 *arg6, s32 arg7, s32 arg8);
 void func_80022FE0(s32 *arg0);
 void func_800179E8(void);
 void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);

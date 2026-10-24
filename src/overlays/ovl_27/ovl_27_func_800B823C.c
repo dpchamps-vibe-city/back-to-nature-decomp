@@ -6,15 +6,11 @@
 #include "psyq/libgpu.h"
 
 
-u_long *ClearOTagR (u_long *ot, int n);
-int DrawSync (int mode);
 short SsSeqOpen (unsigned long *, short);
 void SsSetMono (void);
 void SsSetStereo (void);
 void SsStart (void);
 void SsUtReverbOn (void);
-void SsUtSetReverbDepth (short, short);
-short SsUtSetReverbType (short);
 void ovl_27_func_800B9324 (void);
 s32 func_80013394 (void);
 void ovl_27_func_800BA5BC (void);
@@ -39,7 +35,7 @@ s32 func_80020E58 (void);
 void func_8001FD84 (void);
 void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_8001FBE4 (s32 arg0, s32 arg1);
-void func_8001FBF0 (s16 arg0);
+void func_8001FBF0(s16 arg0, s16 arg1);
 void func_8001719C (u8 *arg0);
 
 void ovl_27_func_800B823C(void) {

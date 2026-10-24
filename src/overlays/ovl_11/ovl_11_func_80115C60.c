@@ -6,7 +6,7 @@ typedef struct {
     /* 0x0A */ s16 unkA;
 } UnkStruct80115C60;
 
-void ovl_11_func_800F2354(s32 arg0, s32 arg1);
+s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 
 void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
 

@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
-int FntPrint();
 int McxExecFlag(int, int, int);
 long MemCardAccept(long);
 long MemCardSync(long, long *, long *);

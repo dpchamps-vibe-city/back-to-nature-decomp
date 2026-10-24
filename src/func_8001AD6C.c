@@ -2,6 +2,12 @@
 
 s16 D_8005E460;
 
+s16 GetPairedTpage(s32 tpage);
+
+u16 func_80017C30(void);
+
+void func_8001A018(s32 arg0, s32 arg1);
+
 s32 func_8001AD6C(s32 arg0) {
     s16 temp_s0;
     s32 temp_v0;

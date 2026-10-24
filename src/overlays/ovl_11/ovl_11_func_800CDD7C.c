@@ -1,12 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80015840(ObjectState *obj, u8 arg1);
 s32 func_8001FABC(s16 arg0);
 Ovl11CBF70Effect *ovl_11_func_800CBF70(Ovl11CBF70Position *arg0, u16 *arg1, s16 arg2);
 
-s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0, u16 *arg1) {
+s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0) {
     u16 effect[3];
 
     arg0->unk6C |= 0x1870;

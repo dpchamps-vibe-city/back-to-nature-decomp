@@ -1,4 +1,7 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 /* Globals accessed GP-relatively (this TU defines them) */
 struct_8005E3C0 *D_8005E3C0;

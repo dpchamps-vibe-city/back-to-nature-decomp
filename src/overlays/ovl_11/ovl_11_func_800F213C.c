@@ -1,6 +1,8 @@
 #include "common.h"
 #include "psyq/stddef.h"
 
+s32 func_8001AF44(u32 arg0);
+
 void *ovl_11_func_800F213C(u16 *arg0, s32 arg1, u16 *arg2) {
     s32 a0;
     s32 s1;

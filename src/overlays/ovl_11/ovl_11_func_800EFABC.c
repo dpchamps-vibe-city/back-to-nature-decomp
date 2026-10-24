@@ -4,6 +4,8 @@ u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
 s32 ovl_11_func_800EFE34(s32 *ptr, s32 arg1, s32 arg2);
 s32 ovl_11_func_800EFD54(s32 arg0, s32 arg1, s32 arg2);
 
+void func_8001AF70(u16 arg0, u16 arg1);
+
 void ovl_11_func_800EFABC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 sp10;
     s32 sp14;

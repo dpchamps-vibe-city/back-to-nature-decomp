@@ -1,9 +1,14 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 /* SDK callees (libgte.h not included here: it needs PSY-Q type aliases this
  * TU does not pull in). Declared to match include/psyq/libgte.h. */
 void SetGeomOffset(long ofx, long ofy);
 void SetGeomScreen(long h);
+
+void func_8001B9F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+void func_8001BA40(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8001B530(void) {
     SetGeomOffset(0xA0, 0x78);

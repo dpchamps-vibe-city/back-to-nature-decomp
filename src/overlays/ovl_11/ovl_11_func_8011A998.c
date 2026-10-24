@@ -3,7 +3,7 @@
 
 void ovl_11_func_8011CBE8(void);
 
-void ovl_11_func_8011D474(s32 arg0, s32 arg1, s32 arg2);
+void ovl_11_func_8011D474(s32 *arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_8011A998(void) {
     ovl_11_func_8011CBE8();

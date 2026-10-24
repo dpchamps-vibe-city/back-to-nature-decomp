@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_11_func_8011FD2C(s16 arg0);
 void ovl_11_func_8011FD7C(s32 arg0);
 void ovl_11_func_8011FDCC(s16 arg0);
@@ -18,7 +18,7 @@ s32 ovl_11_func_8011FB80(s16 arg0) {
         s32 n;
 
         p = D_80128580_ary;
-        n = func_80012A34(2) + 1;
+        n = Rand(2) + 1;
         return p[D_80128554 * 3 + n];
     }
     cnt = D_80071A70;

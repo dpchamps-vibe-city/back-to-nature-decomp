@@ -3,7 +3,7 @@
 
 void ovl_11_func_800FAAAC(void);
 
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 
 s32 ovl_11_func_800FAAD4(void) {
     if (D_80126FE0 == 0) {

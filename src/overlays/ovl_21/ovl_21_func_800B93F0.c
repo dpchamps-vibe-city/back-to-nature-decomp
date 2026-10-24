@@ -4,7 +4,7 @@
 void ovl_21_func_800BA4C0(void);
 void func_80022738(void);
 void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 s32 func_8001FABC(s16 arg0);
 
 void ovl_21_func_800B93F0(void) {
@@ -28,7 +28,7 @@ void ovl_21_func_800B93F0(void) {
     }
     p = (u8 *)D_800C0448;
     if (*(s16 *)(p + 0x988) == 0) {
-        if (func_800226A4() == 5) {
+        if (GetVal8005E5B4() == 5) {
             *(s16 *)(p + 0x986) = func_8001FABC(0x44);
             *(s16 *)(p + 0x988) = 1;
         }

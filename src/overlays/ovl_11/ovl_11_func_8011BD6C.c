@@ -4,10 +4,10 @@
 void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 s32 func_80013394(void);
-void func_80017B18(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
 void func_80022738(void);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -64,7 +64,7 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
         case 0:
             if (ovl_11_func_800E6EE0(mode, 1, 1, 0) == 1) {
                 if (ovl_11_func_8011D06C(ovl_11_func_800D6014(item)) == 1) {
-                    func_800226D8(0);
+                    SetVal8005E334(0);
                     func_8002261C(messages[0][0], messages[0][1]);
                     ovl_11_func_8011D098(2, 4, arg1);
                 } else {
@@ -77,13 +77,13 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
             }
             break;
         case 1:
-            if (func_800226A4() == 2) {
+            if (GetVal8005E5B4() == 2) {
                 ovl_11_func_8011D0B4();
             }
             break;
         case 2:
-            if (func_800226A4() == 5) {
-                func_80017B18(0);
+            if (GetVal8005E5B4() == 5) {
+                SetVal8005E2BC(0);
                 ovl_11_func_8011D0B4();
             }
             break;
@@ -101,7 +101,7 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
                 break;
             case 1:
                 func_80022738();
-                func_800226D8(0);
+                SetVal8005E334(0);
                 func_8002261C(messages[3][0], messages[3][1]);
                 ovl_11_func_8011D098(2, 6, arg1);
                 break;

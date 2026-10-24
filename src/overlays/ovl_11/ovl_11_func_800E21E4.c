@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Overlay import of Rand; return signedness is established by src/Rand.c. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800E2934(void *arg0);
 s32 ovl_11_func_800E2A30(s16 *arg0);
 void ovl_11_func_800E2BE8(s32 arg0);
@@ -95,10 +95,10 @@ s32 ovl_11_func_800E21E4(E21E4Object *arg0) {
             }
             arg0->counter = temp;
             if (arg0->counter >= 3 && !(arg0->flags & 0x40000) &&
-                (s32)func_80012A34(100) <= arg0->counter * 10) {
+                (s32)Rand(100) <= arg0->counter * 10) {
                 arg0->flags |= 0x100;
             }
-        } else if ((s16)arg0->energy <= 0 && func_80012A34(100) < 11) {
+        } else if ((s16)arg0->energy <= 0 && Rand(100) < 11) {
             arg0->counter++;
         }
     }
@@ -113,7 +113,7 @@ s32 ovl_11_func_800E21E4(E21E4Object *arg0) {
             } else {
                 selection = 100;
             }
-            if (selection != 0 && func_80012A34(100) <= (u32)selection) {
+            if (selection != 0 && Rand(100) <= (u32)selection) {
                 arg0->flags |= 0x80100;
             }
         }

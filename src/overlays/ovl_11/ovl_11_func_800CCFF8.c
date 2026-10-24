@@ -5,10 +5,10 @@ extern u16 D_801231FC[];
 
 void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80015894(SomeStruct *arg0, s32 arg1);
-void func_80015840(ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_11_func_800BD8DC(s16 arg0);
 
-void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, u8 arg2, s32 arg3) {
+void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3) {
     SpriteSourceData *temp_s1;
     s16 temp_v0;
 

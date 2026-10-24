@@ -1,11 +1,11 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8001719C(u8 *arg0);
 void func_8001BFA8(void *arg0, void *arg1);
 void func_8001E340(void **arg0);
-void func_8001E334(s32 arg0);
-void *memcpy(void *dest, const void *src, u32 n);
+void SetVal8005E51C(s32 arg0);
 
 /* dst is name-bound to D_800C0DD8 before the copy so the address is
  * materialised in the aligned/unaligned copy arms; the empty memory
@@ -24,5 +24,5 @@ void ovl_21_func_800BB8B8(void) {
     __asm__("" : : : "memory");
     func_8001BFA8(dst, (void *)(D_8007AFF0 + 0x2000));
     func_8001E340((void **)dst);
-    func_8001E334(0xC8);
+    SetVal8005E51C(0xC8);
 }

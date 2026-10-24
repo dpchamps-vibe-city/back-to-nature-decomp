@@ -1,5 +1,11 @@
 #include "common.h"
 
+void func_8001FD84(void);
+
+s32 func_80020E38(void);
+
+s32 func_80020E58(void);
+
 void func_8001FD10(void) {
     if (func_80020E38() != -1) {
         func_80020E58();

@@ -1,6 +1,7 @@
 # Project-wide symbol canonicalization
 
-Status: planned; not implemented. No automatic commits.
+Status: implemented 2026-10-24 (`tools/build/exportEngineSymbols.ts`, `tools/diagnostics/canonicalNames.ts`,
+`tools/diagnostics/interfaceAudit.ts`). No automatic commits.
 
 ## Purpose
 

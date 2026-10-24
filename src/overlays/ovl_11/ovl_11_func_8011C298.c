@@ -4,10 +4,10 @@
 #include "psyq/libgte.h"
 
 /* Original overlay labels for the resident setters and state getter. */
-void func_80017B18(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
 void func_80022738(void);
 void ovl_11_func_800C4FDC(Ovl11C7010Object *arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -54,19 +54,19 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         }
         break;
     case 2:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 3:
-        if (func_800226A4() == 5) {
-            func_80017B18(0);
+        if (GetVal8005E5B4() == 5) {
+            SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
         break;
     case 11:
         if (((GfxObj *)D_8005E3A8)->field_8 & 0x60) {
-            func_800226D8(0);
+            SetVal8005E334(0);
             ovl_11_func_8011D084(4, 4);
         }
         break;

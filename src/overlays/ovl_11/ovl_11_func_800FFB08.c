@@ -4,8 +4,8 @@
 #define SELECTION (*(u16 *)&D_801273D8)
 
 void func_8001316C(u32, u32, u32);
-void func_800226D8(s32);
-void func_80017B18(s32);
+void SetVal8005E334(s32);
+void SetVal8005E2BC(s32);
 s32 func_8002261C(s32, s32);
 void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017A38(s16, s16);
@@ -25,8 +25,8 @@ s32 ovl_11_func_800FFB08(void) {
     s16 row;
 
     func_8001316C(0x40000, 0x40000, 0x40000);
-    func_800226D8(0);
-    func_80017B18(0);
+    SetVal8005E334(0);
+    SetVal8005E2BC(0);
     func_8002261C(3, 0x1B7);
     func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x58), 1, 0x10, 0x10, 0xAC, 0x58);
     func_80017A38(0, 2);

@@ -9,7 +9,7 @@ s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 
 void ovl_11_func_800D7348(u16 *dst, u16 *src);
 s32 func_8001FABC(s16 arg0);
 
-void ovl_11_func_800C8E98(Recon_ovl_11_func_800C7270_A0View *arg0) {
+void ovl_11_func_800C8E98(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1) {
     s16 (*entries)[3];
     s32 empty;
     u16 item;

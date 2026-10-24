@@ -4,6 +4,8 @@
 /* Tentative definition — this TU owns this GP-relative global. */
 s32 D_8005E55C;
 
+void func_800218BC(void);
+
 void func_80020A14(void) {
     SsSetMono();
     D_8005E55C = 0;

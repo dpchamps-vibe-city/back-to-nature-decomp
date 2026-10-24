@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void func_80015840(ObjectState *obj, u8 arg1);
 void func_8001B2CC(s32 arg0, s32 arg1);
 void func_8001B3CC(s32 arg0);
@@ -61,7 +61,7 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
                 chance = 10;
                 if (obj->id == 0x39) chance = 20;
                 threshold = chance * 2;
-                if (func_80012A34(100) < threshold) {
+                if ((s32)Rand(100) < threshold) {
                     obj->phase = 1;
                     func_80015840(&obj->animation, (u8)(obj->direction + 9));
                     func_8001B2CC(0, 0);

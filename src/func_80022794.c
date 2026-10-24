@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_80022580(u32 *arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5);
+void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
 s32 func_80022794(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 *arg6, s32 arg7, s32 arg8) {
     s32 q1;
@@ -72,7 +72,7 @@ loop_1:
         *arg6 = var_s0;
         return 1;
     }
-    func_80022580(arg0, 0, var_a2, var_a3, (s32) var_t1, (s32) var_v1);
+    func_80022580(arg0, 0, (s16)var_a2, (s16)var_a3, (s32) var_t1, (s32) var_v1);
     *arg6 += 1;
     return 0;
 }

@@ -11,7 +11,7 @@ void ovl_11_func_800DBAB0(void);
 void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE00(s32 arg0);
 /* Overlay import of the matched Rand definition at 80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 /* 800CBB9C consumes argument 1 with sh; its upper bits are immaterial. */
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 
@@ -54,7 +54,7 @@ void ovl_11_func_800DE4C0(void) {
         }
         base = (char *)D_8006C838;
         if ((*(s32 *)(base + 0x4450) & 4) == 0 && func_8001AF44(2) == 0) {
-            ovl_11_func_800CBB9C((Ovl11C7010Object *)(base + 0x51C8), func_80012A34(4) + 0x11B, 0);
+            ovl_11_func_800CBB9C((Ovl11C7010Object *)(base + 0x51C8), Rand(4) + 0x11B, 0);
             if (*(s16 *)(base + 0x44C0) >= 7) {
                 func_8001AF70(0xAD, 1);
             }

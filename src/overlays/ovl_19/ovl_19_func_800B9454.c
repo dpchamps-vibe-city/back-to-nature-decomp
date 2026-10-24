@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_19_func_800BA73C(Ovl19Func800BA73CArg *arg0);
-s32 ovl_19_func_800BA468(s32 arg0, s32 arg1);
+s32 ovl_19_func_800BA468(void *, void *);
 s32 ovl_19_func_800BA544(s32 arg0, s32 arg1);
 void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
 
@@ -33,7 +33,7 @@ void ovl_19_func_800B9454(void) {
         if (s1[5] != s1[5] / s1[0xBD] * s1[0xBD]) {
             return;
         }
-        s5 = func_80012A34(0x80);
+        s5 = Rand(0x80);
         s4 = 0;
         s0 = ovl_19_func_800BA73C((Ovl19Func800BA73CArg *)s3);
         if (s0 == 1) {

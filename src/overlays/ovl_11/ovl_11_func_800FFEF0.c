@@ -8,9 +8,9 @@ void ovl_11_func_800FFDCC(void);
 void ovl_11_func_800F69D0(void);
 extern void ovl_11_func_8010021C(void);
 s32 ovl_11_func_800F77A8(s16 arg0);
-void func_8001FABC(s16 arg0);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+s32 func_8001FABC(s16 arg0);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 
 void ovl_11_func_800FFEF0(void) {
@@ -22,7 +22,7 @@ void ovl_11_func_800FFEF0(void) {
     D_801273DC = (s32)ovl_11_func_8010021C;
     func_8001FABC(3);
     ovl_11_func_800F77A8(-1);
-    func_800226D8(0);
-    func_80017B18(0);
+    SetVal8005E334(0);
+    SetVal8005E2BC(0);
     func_8002261C(3, 0x3B5);
 }

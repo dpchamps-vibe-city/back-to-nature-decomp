@@ -5822,14 +5822,6 @@ extern struct SpriteSourceData D_800BF690;
 extern struct SpriteSourceData D_800BF6D0;
 extern void (*D_800BD07C)(u16 *arg0, s32 arg1);
 
-/* D_80015814 / D_80015828 - the main-EXE bit set/clear helpers under the
- * names the ovl_19 overlay actually references (undefined_syms_auto.txt lines
- * 1-2 map D_80015814/D_80015828). ovl_19 cannot name the main binary's
- * func_80015814 symbol, so the source references the D_ names and takes their
- * addresses as callback values. Both take a u16 slot and a bit mask. */
-extern void D_80015814(u16 *arg0, s32 arg1);
-extern void D_80015828(u16 *arg0, s32 arg1);
-
 /* 800D3250 reads u16 at +0x1086 and updates +index*0xB8 through this base. */
 struct Ovl11D3250FirstView {
     u16 value;

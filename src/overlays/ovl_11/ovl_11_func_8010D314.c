@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void ovl_11_func_80110E28(u8 *arg0);
 u16 ovl_11_func_800D85F8(Recon_ovl_11_func_800D85F8_A0View *arg0);
@@ -23,7 +23,7 @@ s32 ovl_11_func_8010D314(u8 *arg0) {
     u8 *entry;
 
     if (*(u16 *)(arg0 + 0xB8) & 1) {
-        random = func_80012A34(3);
+        random = Rand(3);
         count = (u16)(*(u16 *)(arg0 + 0xAE) / 50U) + random;
         for (i = 0; i < count; i++) {
             if (*(u16 *)(arg0 + 0xB6) != 0) {
@@ -43,7 +43,7 @@ s32 ovl_11_func_8010D314(u8 *arg0) {
             ovl_11_func_800F3BCC(item);
         }
     } else if (*(u16 *)(arg0 + 0xB8) & 2) {
-        random = func_80012A34(5);
+        random = Rand(5);
         count = (u16)(*(u16 *)(arg0 + 0xB0) / 10U) + random;
         for (i = 0; i < count; i++) {
             if (ovl_11_func_80110658(&x, &y, 1, 0, 1)) {

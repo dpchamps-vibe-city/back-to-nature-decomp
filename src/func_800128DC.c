@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 /* TU-owned globals (GP-relative in target) */
 s32 D_8005E380;

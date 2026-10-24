@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/strings.h"
 
 extern char *D_8013765C[];
 

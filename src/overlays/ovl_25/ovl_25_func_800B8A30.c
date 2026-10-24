@@ -4,7 +4,7 @@ typedef struct {
     s16 unk0;
 } Recon800B977CA0View;
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_25_func_800B977C(Recon800B977CA0View *arg0, s16 arg1);
 void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 void ovl_25_func_800B95B0(s16 *arg0);
@@ -101,7 +101,7 @@ void ovl_25_func_800B8A30(void) {
                 ovl_25_func_800B95B0(rec);
             } else {
                 ref = objects - 8;
-                random = func_80012A34((u16)(120 / ref[0x26C])) + 1;
+                random = Rand((u16)(120 / ref[0x26C])) + 1;
                 value = ref[0x267] * 30;
                 if (random >= value / (ref[0x26C] * 100)) {
                     ovl_25_func_800B9B00(rec, 3, 60);

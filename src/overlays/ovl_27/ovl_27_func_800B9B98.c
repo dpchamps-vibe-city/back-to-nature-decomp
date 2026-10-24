@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void func_80015840(ObjectState *obj, u8 arg1);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
+void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 
 void ovl_27_func_800B9B98(void) {
     s32 var;
@@ -16,7 +16,7 @@ void ovl_27_func_800B9B98(void) {
     func_80015BF0(D_8005E3C0->field_D8 + 0x8C, (SpriteSourceData *)D_800C4AE0, 0x33, 0xB6);
     if (D_800C4A30 >= 0x3C) {
         D_800C4A30 = 0;
-        r = func_80012A34(3) + 0x13;
+        r = Rand(3) + 0x13;
         if (r == 0x13) {
             D_800C4A30 = 0x1E;
         }

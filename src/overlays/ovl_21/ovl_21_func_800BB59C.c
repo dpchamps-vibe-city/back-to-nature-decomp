@@ -26,15 +26,10 @@ int CdRead (int sectors, u_long *buf, int mode);
 void CdReadBreak (void);
 int CdReadSync (int mode, u_char *result);
 int CdSync (int mode, u_char *result);
-u_long *ClearOTagR (u_long *ot, int n);
-int DrawSync (int mode);
-int FntPrint ();
 void SsSetSerialVol (char, short, short);
 int StoreImage (RECT *rect, u_long *p);
 void SystemError (char, long);
-void *memcpy ();
 void *memmove (unsigned char *, const unsigned char *, int);
-void *memset ();
 void func_8001719C (u8 *arg0);
 s32 func_8001205C (void);
 void func_80021B20 ();
@@ -90,7 +85,7 @@ s32 ovl_11_func_800E4B58 (s32 arg0, s32 arg1);
 void func_80017240 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_80015868 (Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void ovl_11_func_800F4390 (M2C_5b7450153aff_Ov11_4390struct *arg0, s32 arg1);
-s32 ovl_11_func_800E63C8 (s16 arg0, s16 arg1);
+s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_80107DD0 (s16 *arg0);
 void ovl_11_func_800C08E8 (s32 arg0);
 void func_80017200 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
@@ -100,7 +95,7 @@ s32 ovl_11_func_800FEB68 (void);
 s32 ovl_11_func_800FEBB0 (void);
 s32 ovl_11_func_800FEAD4 (void);
 s32 ovl_11_func_800F3C9C (u16 arg0);
-void func_8001FABC (s16 arg0);
+s32 func_8001FABC(s16 arg0);
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);
@@ -130,10 +125,10 @@ void ovl_11_func_801128B4 (void);
 void ovl_11_func_800BD668 (void);
 void ovl_11_func_80104A58 (void);
 void ovl_11_func_80104A88 (void);
-void func_80015840 (ObjectState *obj, s8 arg1);
-void func_8001585C (ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
+void func_8001585C(ObjectState *obj, u8 arg1);
 
-s32 func_80014CBC(s16 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5); /* static */
+u_char *func_80014CBC(s32 file_index, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5); /* static */
 
 void ovl_21_func_800BB59C(void) {
     DrawSync(0);

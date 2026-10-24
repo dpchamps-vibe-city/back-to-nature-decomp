@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_19_func_800B843C(void);
 
 void ovl_19_func_800B82B8(void) {
@@ -15,7 +15,7 @@ void ovl_19_func_800B82B8(void) {
     D_800BF4C0[5] = 0;
     for (; i < 8; i++) {
         (*(D_800BF4C0 + 0xB0 + i)) = 0xFF;
-        r = func_80012A34(0x14);
+        r = Rand(0x14);
         for (j = 0; j <= i; j++) {
             if (D_800BF4C0[0xB0 + j] == r) {
                 r++;

@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* EXE Rand import: configs/symbols/exe.txt places Rand at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 void ovl_23_func_800B8354(void) {
     s32 i;
@@ -37,8 +37,8 @@ void ovl_23_func_800B8354(void) {
             *(u16 *)(rec4 + 0x32) = 0xFF;
         } else {
             if (i != 2) {
-                pr->unk30 = func_80012A34(0x60) + 0xA0;
-                pr->unk32 = func_80012A34(0x9C) + 0x64;
+                pr->unk30 = Rand(0x60) + 0xA0;
+                pr->unk32 = Rand(0x9C) + 0x64;
             } else {
                 *(u16 *)(rec2 + 0x30) = *(u16 *)(work + 0x11C2);
                 *(u16 *)(rec2 + 0x32) = *(u16 *)(work + 0x1258);

@@ -6,7 +6,7 @@
 
 void ovl_25_func_800B9B28 (Ovl25ObjectRecord *arg0);
 void ovl_25_func_800B9C90 (Ovl25ObjectRecord *arg0);
-void func_80015840 (ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_25_func_800BA5BC (SpriteSourceData *arg0, u16 *arg1);
 void ovl_25_func_800BA758 (SpriteSourceData *arg0, u16 *arg1);
 

@@ -1,6 +1,7 @@
 #include "common.h"
+#include "psyq/memory.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_11_func_80107DD0(s16 *arg0);
 
 typedef struct __attribute__((packed)) {
@@ -23,7 +24,7 @@ s32 ovl_11_func_8010D04C(s32 arg0) {
     *(s16 *)(arg0 + 0x16) = 0x32;
     *(s32 *)(arg0 + 0x34) |= 0x3C000000;
     ovl_11_func_80107DD0((s16 *)(arg0 + 0xA8));
-    temp_v0 = func_80012A34(0x12C);
+    temp_v0 = Rand(0x12C);
     *(s16 *)(arg0 + 0x2C) = temp_v0;
     return 0;
 }

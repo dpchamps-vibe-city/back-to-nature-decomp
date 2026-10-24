@@ -5,8 +5,8 @@ void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800BA704(void);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
-s32 func_800225B8(void);
+s32 GetVal8005E5B4(void);
+s32 GetVal8005E5B8(void);
 
 void ovl_17_func_800B8534(void) {
     s32 i;
@@ -33,9 +33,9 @@ void ovl_17_func_800B8534(void) {
     ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *)base, 0x40000);
     ovl_17_func_800BA808(0x40000);
     func_8002261C(4, 1);
-    state = func_800226A4();
+    state = GetVal8005E5B4();
     if (state == 2) {
-        result = func_800225B8();
+        result = GetVal8005E5B8();
         if (result == 1) {
             base[-0xC4] = 4;
         } else if (result == state) {

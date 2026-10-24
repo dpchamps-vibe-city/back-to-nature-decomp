@@ -2,6 +2,8 @@
 
 void func_8001AC10(void *arg0, s32 arg1, s32 arg2);
 
+s32 ovl_15_func_801367F8(s16 arg0, s16 arg1, u32 *arg2);
+
 void ovl_15_func_80131C2C(void) {
     s32 temp_a1;
     u32 temp_v0;

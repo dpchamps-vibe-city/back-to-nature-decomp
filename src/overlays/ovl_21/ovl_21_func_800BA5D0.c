@@ -5,7 +5,7 @@
 
 
 void ovl_21_func_800BAEA0 (s32 *arg0);
-void func_80015840 (ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_21_func_800BAFFC ();
 
 void ovl_21_func_800BA5D0(void) {

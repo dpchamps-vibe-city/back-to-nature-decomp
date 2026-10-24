@@ -4,7 +4,7 @@
 extern s32 (*D_80123DFC[])(s16, s16, s16);
 Ovl11D124Entry *ovl_11_func_800DAF60(s32 arg0, s16 arg1, s16 arg2);
 
-s32 ovl_11_func_800D8320(s16 arg0, s16 arg1, s16 arg2) {
+s32 ovl_11_func_800D8320(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     Ovl11D124Entry *temp_v0;
     s16 var_a2;
 

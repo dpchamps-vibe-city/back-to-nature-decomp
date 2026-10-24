@@ -1,6 +1,6 @@
 #include "common.h"
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 
@@ -20,7 +20,7 @@ s16 ovl_11_func_80120414(s32 *arg0) {
     }
     count = *table++;
     total = 0;
-    roll = func_80012A34(100);
+    roll = Rand(100);
     for (i = 0; i < count; i++, table += 2) {
         total += table[0];
         if (roll < total) {

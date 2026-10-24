@@ -18,7 +18,7 @@ void func_8001FEA4(void);
    but the caller must match the target argument setup. The return type is
    s32 because the target never allocates $v0 to a temporary born after this
    call — the call site carries a $v0 definition. */
-s32 func_80011EE8(s32 arg0);
+void func_80011EE8(s32 arg0);
 
 /* SDK callees declared in functions.h (not included to avoid type conflicts) */
 void SetGfxOffset(s32 arg0, s32 arg1);
@@ -39,7 +39,7 @@ void func_80013A24(void);
 /* func_800145F0 ends with `addu $v0,$zero,$zero` before `jr $ra` — it
    returns 0, and the target's callers keep $v0 out of post-call temporaries. */
 s32 func_800145F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800147BC(void);
+s32 func_800147BC(void);
 void func_80017A48(u32 arg0);
 void func_80017A70(u32 arg0);
 /* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
@@ -50,7 +50,7 @@ void func_8001EFA4(void);
 void func_8001FCE4(void);
 void func_8001FE00(s32 arg0);
 void func_8001FE7C(void);
-void func_80020818(void);
+s32 func_80020818(void);
 void func_80021DA8(void);
 void func_80021FD0(void);
 

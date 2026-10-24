@@ -1,5 +1,7 @@
 #include "common.h"
 
+s32 ovl_11_func_80107B54(s32 arg0, s32 arg1);
+
 s32 ovl_11_func_8010775C(u32 arg0) {
     s32 var_a0;
     s32 var_a1;

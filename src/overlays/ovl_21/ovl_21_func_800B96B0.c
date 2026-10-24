@@ -2,7 +2,7 @@
 
 void ovl_21_func_800BA4C0(void);
 /* Legacy overlay import of matched Rand. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 void ovl_21_func_800B96B0(void) {
     u8 *state;
@@ -12,7 +12,7 @@ void ovl_21_func_800B96B0(void) {
     ovl_21_func_800BA4C0();
     state = (u8 *)D_800C0448;
     if (*(s16 *)(state + 2) == 0) {
-        selector = func_80012A34(4);
+        selector = Rand(4);
         if (*(s16 *)(state + 0x640) == selector) {
             selector++;
             selector %= 4;

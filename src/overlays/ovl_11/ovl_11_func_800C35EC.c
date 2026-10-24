@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Overlay import of Rand, whose matched definition returns u32. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_11_func_800C32C8(Ovl11AnimationObject *obj, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_80107DE0(Ovl11C35ECStatePair *arg0, s16 arg1, s16 arg2);
 
@@ -23,7 +23,7 @@ s32 ovl_11_func_800C35EC(Ovl11AnimationObject *obj) {
     }
     if (*(s16 *) ((u8 *) obj + 0xA) < 30) {
         threshold = *(s16 *) ((u8 *) obj + 2) - *(s16 *) ((u8 *) obj + 0xA) + 20;
-        if ((s32) func_80012A34(101) < threshold) {
+        if ((s32) Rand(101) < threshold) {
             ovl_11_func_800C32C8(obj, 3, 0, 150);
             ovl_11_func_80107DE0((Ovl11C35ECStatePair *) ((u8 *) obj + 0xE0), 0x22, 150);
             obj->field_6 = (D_80071A38 + 2) & 3;

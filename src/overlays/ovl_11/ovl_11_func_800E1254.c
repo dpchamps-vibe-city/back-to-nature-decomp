@@ -11,6 +11,10 @@ typedef struct {
 
 void ovl_11_func_800D049C(UnkStruct800E1254 *arg0);
 
+void ovl_11_func_800D12A0(s16 arg0);
+
+s32 ovl_11_func_800E109C(UnkStruct800E109C *arg0);
+
 s32 ovl_11_func_800E1254(UnkStruct800E1254 *arg0) {
     char *far_base;
 

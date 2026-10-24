@@ -7,6 +7,8 @@
  * been stopped by returning 0 like func_80020414 does.
  */
 
+s32 func_80020414(s32 arg0, s32 arg1);
+
 s32 func_8001FBBC(s16 arg0) {
     func_80020414(arg0, 0);
     return 0;

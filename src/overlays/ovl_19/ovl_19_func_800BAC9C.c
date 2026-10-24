@@ -1,10 +1,13 @@
 #include "common.h"
 
+extern void func_80015814(u16 *arg0, s32 arg1);
+extern void func_80015828(u16 *arg0, s32 arg1);
+
 void ovl_19_func_800BAC9C(s32 arg0) {
     u8 *p;
     s32 i;
 
-    *(u32 *)&D_800BD07C = (u32)(arg0 == 0 ? D_80015814 : D_80015828);
+    *(u32 *)&D_800BD07C = (u32)(arg0 == 0 ? func_80015814 : func_80015828);
 
     p = D_800BF570;
     for (i = 2; i >= 0; i--) {

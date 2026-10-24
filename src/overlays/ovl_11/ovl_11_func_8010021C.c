@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 func_800226B0(void);
 void func_80022738(void);
@@ -19,8 +19,8 @@ void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_8010021C(void) {
     s8 column;
 
-    func_800226D8(0);
-    func_80017B18(0);
+    SetVal8005E334(0);
+    SetVal8005E2BC(0);
     func_8002261C(3, 0x3B8);
     ovl_11_func_80100898(Ovl11_D_801273E8);
     if (func_800226B0()) {

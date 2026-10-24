@@ -11,6 +11,10 @@ typedef struct {
     /* 0x5234 */ s32 field_5234;
 } Ov11View800E5B84;
 
+void func_80015840(ObjectState *obj, u8 arg1);
+
+void func_8001585C(ObjectState *obj, u8 arg1);
+
 s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     u8 *ptr;
 

@@ -2,7 +2,7 @@
 
 s32 ovl_11_func_800C3548(s32 arg0);
 /* Engine import of matched u32 Rand(s32), at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 
 void ovl_11_func_800C1D68(void) {
@@ -38,7 +38,7 @@ void ovl_11_func_800C1D68(void) {
         case 0x23:
             break;
         default:
-            if (!(p->unk1E & 0x600) && func_80012A34(10) == 0) {
+            if (!(p->unk1E & 0x600) && Rand(10) == 0) {
                 if (kind == one) {
                     value -= 0xC8;
                 } else {

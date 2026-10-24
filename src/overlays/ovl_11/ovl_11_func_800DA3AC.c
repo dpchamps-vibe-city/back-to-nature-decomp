@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 void ovl_11_func_800DA3AC(Ovl11D124Entry *arg0) {
     s16 temp;
@@ -24,7 +24,7 @@ void ovl_11_func_800DA3AC(Ovl11D124Entry *arg0) {
     }
     if (temp != 0) {
         if ((u32)(arg0->unk0 - 0x167) < 3) {
-            if (func_80012A34(temp) == 0) {
+            if (Rand(temp) == 0) {
                 arg0->unk0 = 0x40;
                 arg0->unk2 = 0x167;
             }

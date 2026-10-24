@@ -12,7 +12,7 @@ s32 ovl_11_func_80110520(s32 arg0, s16 arg1);
 s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 u16 ovl_11_func_80110118(Ovl11ActionCompletionView *arg0);
 
-s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0) {
+s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0, s32 arg1) {
     Ovl11PaddedVec3 position;
     Ovl11ActionDispatchView *record;
     Ovl11ActionDispatchView *animal;

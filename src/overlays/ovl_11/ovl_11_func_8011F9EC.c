@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 void ovl_11_func_8011F9EC(s32 *arg0) {
     s16 *tbl;
@@ -30,13 +30,13 @@ void ovl_11_func_8011F9EC(s32 *arg0) {
         }
     }
     if (max == sec) {
-        if (func_80012A34(2) != 0) {
+        if (Rand(2) != 0) {
             tmp = max_i;
             max_i = sec_i;
             sec_i = tmp;
         }
     }
-    sel = func_80012A34(0x13);
+    sel = Rand(0x13);
     arg0[0] = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + D_8012855C[max_i].unk0));
     arg0[1] = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + D_8012855C[sec_i].unk0));
     arg0[2] = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + D_80128580[sel].unk0));

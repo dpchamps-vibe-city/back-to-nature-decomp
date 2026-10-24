@@ -17,7 +17,7 @@ void ovl_11_func_800CD6F4 (void *arg0);
 s32 ovl_11_func_800C9424 (void);
 s32 ovl_11_func_8011FFA8 (Ovl11SelectionObject *obj);
 s32 ovl_11_func_800C6AFC (Ovl11C7010Object *arg0);
-void ovl_11_func_800C70CC (Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800C580C(Ovl11C580CObject *);
 s32 ovl_11_func_800CE654(void);
 

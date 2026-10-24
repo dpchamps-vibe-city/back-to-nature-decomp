@@ -2,7 +2,7 @@
 #include "psyq/libsnd.h"
 
 /* This overlay imports the resident ClearVal8005E2CC by its address. */
-void func_8001B100(void);
+void ClearVal8005E2CC(void);
 void func_80011EF0(s32);
 void func_800132B8(s32, s32, s32);
 void func_800132F0(s32, s32, s32);
@@ -29,7 +29,7 @@ void ovl_15_func_8012E7C8(void) {
     if (state->state == 0) {
         func_8002029C(0, 0, 0, 0, 0);
         SsUtAllKeyOff(0);
-        func_8001B100();
+        ClearVal8005E2CC();
         func_800226F0();
         ovl_15_func_8012E15C();
         D_80137584 = 0;

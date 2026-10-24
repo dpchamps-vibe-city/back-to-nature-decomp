@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/memory.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;

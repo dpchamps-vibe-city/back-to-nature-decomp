@@ -8,7 +8,7 @@ typedef struct {
     Ovl11D124Entry table[1];
 } D8006C838SearchView;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_80110790(Ovl11D124Entry *arg0);
 s32 ovl_11_func_80110838(Ovl11D124Entry *arg0);
 s32 ovl_11_func_80110890(Ovl11D124Entry *arg0);
@@ -44,7 +44,7 @@ s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4) {
         check = ovl_11_func_80110890;
     }
 
-    i = func_80012A34(count);
+    i = Rand(count);
     start = i;
     do {
         if (check(base + i) != 0) {

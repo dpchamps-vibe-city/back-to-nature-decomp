@@ -4,7 +4,7 @@
 #include "psyq/libgte.h"
 
 s32 ovl_11_func_800CE550(Vec3 *arg0);
-s32 ovl_11_func_800BF450(void);
+unsigned long long ovl_11_func_800BF450(void);
 s32 ovl_11_func_800CE514(s16 arg0);
 s16 ovl_11_func_800CE528(s16 arg0);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
@@ -42,7 +42,7 @@ s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0) {
     if (arg0->position.vy >= 5001) {
         high = 1;
     }
-    if (high == 0 && (ovl_11_func_800BF450() != 0 || next.vy < arg0->position.vy - 100)) {
+    if (high == 0 && ((s32)ovl_11_func_800BF450() != 0 || next.vy < arg0->position.vy - 100)) {
         arg0->direction = (arg0->direction + 2) & 3;
         offset = (s32 *)(D_80123130 + arg0->direction * 8);
         arg0->velocity.vx = offset[0] * 2;

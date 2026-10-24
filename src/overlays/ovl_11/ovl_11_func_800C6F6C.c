@@ -3,6 +3,8 @@
 
 void func_80015840(ObjectState *obj, u8 arg1);
 
+void func_8001B2CC(s32 arg0, s32 arg1);
+
 void ovl_11_func_800C6F6C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1) {
     switch (arg0->unk3C) {
     case 1:

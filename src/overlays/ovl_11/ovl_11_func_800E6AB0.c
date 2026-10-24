@@ -1,5 +1,9 @@
 #include "common.h"
 
+s32 func_80021B64(void);
+
+void func_80021B90(s32 arg0);
+
 s32 ovl_11_func_800E6AB0(s32 arg0, s32 arg1, s32 arg2) {
     s32 var_s0;
 

@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 void func_80015868 (Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-void func_80015840 (ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 void func_8001585C (ObjectState *obj, u8 arg1);
 void ovl_19_func_800BADF8 (s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3);
 

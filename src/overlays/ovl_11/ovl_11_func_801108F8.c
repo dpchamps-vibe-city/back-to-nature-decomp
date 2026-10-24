@@ -3,7 +3,7 @@ typedef struct {
     s16 unk0;
 } ReconA0View;
 
-s32 ovl_11_func_800D5868(s32 arg0);
+s32 ovl_11_func_800D5868(s16 arg0);
 
 s32 ovl_11_func_801108F8(ReconA0View *arg0) {
     s32 callRet2;

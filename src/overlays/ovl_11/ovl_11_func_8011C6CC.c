@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void func_80022738(void);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -41,7 +41,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
         ovl_11_func_8011D084(4, 0);
         break;
     case 1:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;

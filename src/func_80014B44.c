@@ -9,6 +9,8 @@ s32 D_8005E3FC;
 s32 D_8005E400;
 s32 D_8005E40C;
 
+s32 func_80014854(s32 arg0, s32 arg1, s32 arg2);
+
 s32 func_80014B44(void) {
     s32 temp_v0;
 

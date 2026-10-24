@@ -5,7 +5,7 @@ void ovl_11_func_800BFADC(Ovl11CounterPair *arg0);
 s32 ovl_11_func_800BFC20(s16 *arg0);
 s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 /* Executable Rand at 0x80012A34; overlay symbol spelling. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 s16 ovl_11_func_800BF8B8(void) {
     Ovl11CounterPair next;
@@ -27,13 +27,13 @@ s16 ovl_11_func_800BF8B8(void) {
         ovl_11_func_800BFC20((s16 *)&next) != 1) {
         switch (next.unk0) {
         case 0:
-            random = (s32)func_80012A34(10) + 1;
+            random = (s32)Rand(10) + 1;
             if (random % 3 == 0) {
                 *(u16 *)(base + 0xE4CA) = 1;
             }
             break;
         case 1:
-            random = func_80012A34(20);
+            random = Rand(20);
             if (random == 14) {
                 *(u16 *)(base + 0xE4CA) = 3;
             } else if (random == 3) {
@@ -41,12 +41,12 @@ s16 ovl_11_func_800BF8B8(void) {
             }
             break;
         case 2:
-            if (next.unk2 != 12 && func_80012A34(5) == 3) {
+            if (next.unk2 != 12 && Rand(5) == 3) {
                 *(u16 *)(base + 0xE4CA) = 1;
             }
             break;
         case 3:
-            random = func_80012A34(10);
+            random = Rand(10);
             if (random == 7) {
                 *(u16 *)(base + 0xE4CA) = 4;
             } else if (random & 1) {

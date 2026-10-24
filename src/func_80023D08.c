@@ -15,6 +15,8 @@ extern s32 D_80054BBC[4];
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
+void func_80017A38(s16 arg0, s16 arg1);
+
 void func_80023D08(void) {
     s32 sum;
 

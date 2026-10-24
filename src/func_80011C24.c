@@ -34,6 +34,12 @@ void func_800120C8(void);
 void func_80012D30(void);
 void func_800134C4(void);
 
+s32 GetVal8005E2CC(void);
+
+u32 Rand(s32 arg0);
+
+void SetFlag8005E274(u8 arg0);
+
 void func_80011C24(void) {
     char *scene_ptr;
     s32 tmp;

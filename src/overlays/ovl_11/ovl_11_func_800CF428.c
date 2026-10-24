@@ -1,7 +1,7 @@
 #include "common.h"
 
 /* Overlay symbol for Rand at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800CF748(void);
 void ovl_11_func_800CF848(void);
@@ -37,7 +37,7 @@ void ovl_11_func_800CF428(void) {
             if (*(s16 *)(far_base + 0x25476) == entry[1] &&
                 (mask & (u16)entry[2])) {
                 id = entry[0];
-                if (id != 0x163 && id != 0x166 && func_80012A34(10) != 0) {
+                if (id != 0x163 && id != 0x166 && Rand(10) != 0) {
                     entry += 12;
                     continue;
                 }
@@ -46,7 +46,7 @@ void ovl_11_func_800CF428(void) {
                     *(s32 *)(object + 0x38) = *(s32 *)(entry + 4);
                     *(s32 *)(object + 0x3C) = *(s32 *)(entry + 6);
                     *(s32 *)(object + 0x40) = *(s32 *)((char *)entry + 0x10);
-                    if (func_80012A34(2) != 0) {
+                    if (Rand(2) != 0) {
                         *(s16 *)(object + 0x22) = 0;
                     } else {
                         *(s16 *)(object + 0x22) = 3;
@@ -78,7 +78,7 @@ void ovl_11_func_800CF428(void) {
         if (hour >= 9) {
             goto special_done;
         }
-        if (func_80012A34(10) == 0 && *(s16 *)(object + 0x44BA) != 3 &&
+        if (Rand(10) == 0 && *(s16 *)(object + 0x44BA) != 3 &&
             !((u16)D_80128D66 >> 15)) {
             i = 0;
             base = object;

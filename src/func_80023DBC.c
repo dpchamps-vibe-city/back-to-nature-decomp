@@ -10,7 +10,7 @@ u16 D_8005E356;
 s16 D_8005E358;
 u16 *D_8005E360;
 
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 s32 func_800226B0(void);
 void func_80022738(void);
 s32 func_800241EC(s32 arg0, s32 arg1, u32 arg2);

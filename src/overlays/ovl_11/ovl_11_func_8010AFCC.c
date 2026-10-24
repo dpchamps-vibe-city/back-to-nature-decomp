@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 ovl_11_func_800F44B4(u16 arg0, s32 *arg1, u16 *arg2, s8 arg3);
+s32 ovl_11_func_800F44B4(u16 arg0, s32 *arg1, u16 *arg2, s32 arg3);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);

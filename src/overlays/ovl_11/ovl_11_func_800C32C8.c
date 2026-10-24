@@ -8,7 +8,7 @@ u32 func_8001589C(SpriteSourceData *src);
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 /* Overlay import of the matched Rand at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 #define STATE ((struct Ovl11AnimationState *) D_8006C838)
 
@@ -54,7 +54,7 @@ void ovl_11_func_800C32C8(Ovl11AnimationObject *obj, s32 arg1, s32 arg2, s32 arg
                 s32 value;
 
                 obj->field_6 = 0;
-                value = func_80012A34(2);
+                value = Rand(2);
                 if (value != 0) {
                     func_80015840((ObjectState *) sprite, 2);
                 } else {

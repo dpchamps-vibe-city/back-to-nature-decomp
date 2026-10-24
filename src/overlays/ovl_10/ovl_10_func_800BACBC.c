@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
-int FntPrint();
 int McxSetLED(int, int);
 
 extern char D_800B8430[];

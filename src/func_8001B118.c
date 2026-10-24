@@ -1,14 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 extern void func_800129F4(void);
 extern void func_80015D1C(s32 arg0, s32 arg1, s32 arg2, SpriteSourceData *arg3,
                           s16 arg4, s16 arg5);
-extern int DrawSync(int mode);
-extern void DrawOTag(unsigned long *p);
-extern unsigned long *ClearOTagR(unsigned long *ot, int n);
-extern void *PutDispEnv(void *env);
-extern void *PutDrawEnv(void *env);
 
 /* GP-relative in target -> tentative definitions (this TU owns them). */
 s32 D_8005E2CC;

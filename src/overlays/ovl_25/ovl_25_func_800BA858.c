@@ -5,7 +5,7 @@ extern u8 D_800BCD21;
 extern s16 D_800BCD48[4];
 
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 
 void ovl_25_func_800BA858(void) {
     char *base;
@@ -20,7 +20,7 @@ void ovl_25_func_800BA858(void) {
     if (value >= *(s16 *)(ref + 0x4D2) - 0x140) {
         *(u16 *)(p + 0x53B4) = *(u16 *)(ref + 0x4D2) - 0x140;
         func_8002261C(4, 0x32);
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             *(s16 *)(ref + 2) = 3;
             D_800BCD21 = 1;
             D_800BCD48[0] = 0x10CC;

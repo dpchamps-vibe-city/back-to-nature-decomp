@@ -13,6 +13,14 @@ extern void func_80023D08(void);
 extern void func_80023DBC(void);
 extern void func_80024030(void);
 
+void SetVal8005E2BC(s32 arg0);
+
+void SetVal8005E334(s32 arg0);
+
+s32 func_8002261C(s32 arg0, s32 arg1);
+
+void func_80024448(u16 arg0);
+
 void func_800239F8(void) {
     SetVal8005E334(0);
     SetVal8005E2BC(0);

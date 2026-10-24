@@ -1,6 +1,7 @@
 #include "common.h"
-
-extern unsigned long *ClearOTagR(unsigned long *ot, int n);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 extern s32 D_8005E3B0;
 

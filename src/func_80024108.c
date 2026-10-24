@@ -4,6 +4,16 @@
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
+void SetVal8005E2BC(s32 arg0);
+
+void SetVal8005E334(s32 arg0);
+
+s32 func_8002261C(s32 arg0, s32 arg1);
+
+s32 func_800226B0(void);
+
+void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
+
 void func_80024108(s32 arg0, s32 arg1) {
     s32 tmp = arg1 & 0xFFFF;
     s32 sum;

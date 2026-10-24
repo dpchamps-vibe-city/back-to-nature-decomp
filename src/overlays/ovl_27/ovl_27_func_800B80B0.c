@@ -1,7 +1,7 @@
 #include "common.h"
 #include "psyq/memory.h"
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_27_func_800BA230(void);
 void ovl_27_func_800B9324(void);
 void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
@@ -12,7 +12,7 @@ void ovl_27_func_800B80B0(void) {
     Ovl27StateCounterView *state2;
 
     if (ovl_27_func_800BA230() != 0) {
-        memcpy(D_800605E8, D_800C4A40[func_80012A34(3)], 0x1800);
+        memcpy(D_800605E8, D_800C4A40[Rand(3)], 0x1800);
         if (D_800C4A28 & 0x4000) {
             D_800C4A18 = 7;
             state = (Ovl27StateCounterView *)D_8006C838;

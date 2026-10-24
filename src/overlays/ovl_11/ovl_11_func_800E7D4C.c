@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Overlay symbol for the executable's Rand. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800DADB0(s16 *, s16 *, s32, Ovl11D124Entry *, s32);
 u16 ovl_11_func_800D85F8(Recon_ovl_11_func_800D85F8_A0View *);
@@ -53,7 +53,7 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                         break;
                     }
                     if (enabled[0][j] != 0) {
-                        group = func_80012A34(2) != 0;
+                        group = Rand(2) != 0;
                         break;
                     }
                 }
@@ -72,7 +72,7 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                 return 0;
             }
             for (;;) {
-                kind = func_80012A34(6);
+                kind = Rand(6);
                 if (enabled[group][kind] == 0) {
                     continue;
                 }

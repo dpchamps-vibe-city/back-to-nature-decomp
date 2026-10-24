@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-void func_80015840(ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_21_func_800BAFFC();
 
 void ovl_21_func_800BAEEC(s16 arg0) {

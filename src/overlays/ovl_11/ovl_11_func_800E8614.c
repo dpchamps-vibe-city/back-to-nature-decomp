@@ -13,7 +13,6 @@ typedef struct __attribute__((packed)) {
     s8 unk11;
 } Ovl11Rec800E8614;
 
-void *memset();
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800E2904(s32 arg0);
 s32 ovl_11_func_8010C330(s32 arg0);

@@ -1,4 +1,9 @@
 #include "common.h"
+#include "psyq/memory.h"
+
+void SetGfxClip(s32 arg0, s32 arg1);
+
+void SetGfxOffset(s32 arg0, s32 arg1);
 
 void func_80013A24(void) {
     memset(D_8005E3A8, 0, 0x38);

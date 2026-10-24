@@ -11,7 +11,7 @@ void func_8001B530(void);
 void ovl_11_func_800BCD28(void);
 void ovl_11_func_800BC868(void);
 /* Overlay import of ClearVal8005E2CC at 8001B100. */
-void func_8001B100(void);
+void ClearVal8005E2CC(void);
 s32 func_80020818(void);
 void func_8001FE00(s32 arg0);
 void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
@@ -27,7 +27,7 @@ void ovl_11_func_80121318(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 /* The callee stores argument 1 as a halfword; no caller-side narrowing. */
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800F1038(u16 arg0, s32 arg1);
@@ -90,7 +90,7 @@ void ovl_11_func_800BC3E0(void) {
         break;
     case 7:
     case 15:
-        func_8001B100();
+        ClearVal8005E2CC();
         if (D_801217A4 && !(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x4000)) {
             func_80020818();
             func_8001FE00(10);
@@ -140,7 +140,7 @@ void ovl_11_func_800BC3E0(void) {
                 }
             }
             if (!(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 4) && !func_8001AF44(2)) {
-                ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11AreaInitView *)D_8006C838)->field_51C8, func_80012A34(4) + 0x11B, 0);
+                ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11AreaInitView *)D_8006C838)->field_51C8, Rand(4) + 0x11B, 0);
             }
         } else {
             if (((Ovl11MovementState *)D_8006C838)->flagsC & 0x2000) {

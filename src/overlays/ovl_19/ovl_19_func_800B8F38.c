@@ -6,7 +6,7 @@
 extern s32 D_800BD074;
 
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 s32 func_8001FABC(s16 arg0);
 void ovl_19_func_800BAC40(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
@@ -23,7 +23,7 @@ void ovl_19_func_800B8F38(void) {
         D_800BF4C0[0x101] = func_8001FABC(0x3A);
     }
     func_8002261C(4, 0xA);
-    if (func_800226A4() == 2) {
+    if (GetVal8005E5B4() == 2) {
         ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 0x1E);
         ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 1, 0);
         ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 4, 0, 0x1E);

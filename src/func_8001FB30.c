@@ -3,6 +3,8 @@
 
 extern s16 D_800492E0[];
 
+s32 func_800201C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
+
 s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     s16 temp_a0;
 

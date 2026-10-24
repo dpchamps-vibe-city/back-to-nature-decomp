@@ -1,6 +1,13 @@
 #include "common.h"
 #include "debughook.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+
+s32 func_800129E8(void);
+
+void func_80015880(SpriteSourceData *src, s32 header, s32 field_18);
 
 /* Validate a sprite-data header and initialize a SpriteSourceData object.
  *

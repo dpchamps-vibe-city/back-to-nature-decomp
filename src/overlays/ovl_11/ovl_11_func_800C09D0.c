@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 extern s32 D_80128A88;
 extern s32 D_80128B50;

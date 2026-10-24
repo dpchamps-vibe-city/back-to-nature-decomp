@@ -2,7 +2,7 @@
 
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800DF010(void *arg0, s32 arg1);
 
 s32 ovl_11_func_800DF400(UnkStruct800DF4F0 *arg0) {
@@ -18,7 +18,7 @@ s32 ovl_11_func_800DF400(UnkStruct800DF4F0 *arg0) {
         if (*(s32 *)((u8 *)arg0 + 0x34) & 0x2000) {
             limit = 9;
         }
-        switch (func_80012A34(limit)) {
+        switch ((s32)Rand(limit)) {
         case 0:
             state = 18;
             break;

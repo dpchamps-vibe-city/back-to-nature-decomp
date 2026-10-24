@@ -1,11 +1,11 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8001719C(u8 *arg0);
 void func_8001BFA8(void *arg0, void *arg1);
 void func_8001E340(void **arg0);
-void func_8001E334(s32 arg0);
-void *memcpy(void *dest, const void *src, u32 n);
+void SetVal8005E51C(s32 arg0);
 
 /* Streams two CD-sector runs from the D_800BBED0 position table, copies the
  * 0xBDC-byte D_8007AFF0 work area into D_8009F78C, then publishes that copy
@@ -29,5 +29,5 @@ void ovl_25_func_800BB2B8(void) {
     *(s32 *)(far_base + 0x2547C) = 0x39;
     *(s32 *)(far_base + 0x25388) = (s32)&D_8009F78C;
     func_8001E340((void **)dst);
-    func_8001E334(0xC8);
+    SetVal8005E51C(0xC8);
 }

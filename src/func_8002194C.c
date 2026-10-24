@@ -14,6 +14,8 @@ s32 D_8005E584;
 s32 D_8005E58C;
 s32 D_8005E590;
 
+u8 GetFlag8005E274(void);
+
 void func_8002194C(void) {
     u8 buf[8];
     s32 flag;

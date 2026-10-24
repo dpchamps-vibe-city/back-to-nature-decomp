@@ -1,5 +1,7 @@
 #include "common.h"
 
+s32 func_800129E8(void);
+
 u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2) {
     s32 local;
     u8 *p;

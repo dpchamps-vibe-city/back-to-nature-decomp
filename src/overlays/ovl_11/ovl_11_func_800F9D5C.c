@@ -5,7 +5,13 @@ extern s32 D_80126F7C;
 extern s32 D_80126F84;
 extern s32 D_80126F88;
 
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
+
+void ovl_11_func_800F6638(void);
+
+s32 ovl_11_func_800F6648(void);
+
+void ovl_11_func_800F9D3C(void);
 
 void ovl_11_func_800F9D5C(void) {
     s32 temp;

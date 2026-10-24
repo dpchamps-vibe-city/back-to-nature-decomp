@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Overlay import of matched u32 Rand(s32). */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
 s32 ovl_11_func_8010B8DC(Recon_ovl_11_func_8010CE80_A0View *arg0) {
@@ -15,13 +15,13 @@ s32 ovl_11_func_8010B8DC(Recon_ovl_11_func_8010CE80_A0View *arg0) {
         current = arg0->unk26;
         if (arg0->unk26 != 15) {
             if (arg0->unk34 & 0x2000) {
-                random = func_80012A34(7);
+                random = Rand(7);
                 mode = 17;
             } else if (arg0->unk34 & 0x8000) {
-                random = func_80012A34(2);
+                random = Rand(2);
                 mode = 18;
             } else {
-                random = func_80012A34(2);
+                random = Rand(2);
                 mode = 18;
             }
             switch (random) {

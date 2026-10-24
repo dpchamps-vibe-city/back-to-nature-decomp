@@ -1,8 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
-int FntPrint(const char *fmt, ...);
-int FntFlush(int id);
-int DrawSync(int mode);
 int McxSync(int func, long *time, long *param);
 void ovl_10_func_800B9060(void);
 int ovl_10_func_800B9108(int, int);

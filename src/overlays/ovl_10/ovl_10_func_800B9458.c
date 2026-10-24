@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
-int FntPrint();
 int McxGetApl(int, long *);
 
 extern char D_800B8194[];

@@ -7,6 +7,10 @@ s32 ovl_11_func_800E698C(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
  * the jal), matching the ovl_11_func_800E5ADC call shape. */
 s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
+s32 func_8001AF44(u32 arg0);
+
+void func_8001AF70(u16 arg0, u16 arg1);
+
 s32 ovl_11_func_800E648C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 temp_s0;
     s32 var_s1;

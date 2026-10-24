@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 void func_80021E60(s32 arg0);
 s32 GetVal8005E3B0(void);

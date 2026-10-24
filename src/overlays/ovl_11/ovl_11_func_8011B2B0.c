@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_11_func_8011D400(s32 *arg0);
 s16 ovl_11_func_8011D890(Ovl11D548Arg x, s32 mode);
 
@@ -34,7 +34,7 @@ s32 ovl_11_func_8011B2B0(void) {
     c++;
     b++;
     *q++ = (void *) ((s32) D_80051B76 - 0xAC + D_80054BBC[1]);
-    *a++ = D_801282DC[func_80012A34(3)];
+    *a++ = D_801282DC[Rand(3)];
     *c++ = 1;
     *b++ = 0x88;
     if (flags & 0x10000) {

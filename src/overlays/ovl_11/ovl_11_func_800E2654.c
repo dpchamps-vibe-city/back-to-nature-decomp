@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 typedef struct {
     s32 unk0;
@@ -18,7 +18,7 @@ s32 ovl_11_func_800E2654(E2654 *src, E2654 *dst) {
     dst->unk4 = src->unk4;
 
     if (src->unk0 < -1000 || src->unk0 > 1200) {
-        dst->unk0 = func_80012A34(0x898) - 1000;
+        dst->unk0 = Rand(0x898) - 1000;
         result = 1;
     } else {
         dst->unk0 = src->unk0;
@@ -34,7 +34,7 @@ s32 ovl_11_func_800E2654(E2654 *src, E2654 *dst) {
         range = 1500;
     }
     if (hi < src->unk8 || src->unk8 < lo) {
-        dst->unk8 = lo + func_80012A34(range);
+        dst->unk8 = lo + Rand(range);
         result = 1;
     } else {
         dst->unk8 = src->unk8;

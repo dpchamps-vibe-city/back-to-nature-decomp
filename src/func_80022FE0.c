@@ -1,5 +1,9 @@
 #include "common.h"
 
+void func_8001719C(u8 *arg0);
+
+void func_80017C3C(s32 arg0);
+
 void func_80022FE0(s32 *arg0) {
     s32 temp_s0;
 

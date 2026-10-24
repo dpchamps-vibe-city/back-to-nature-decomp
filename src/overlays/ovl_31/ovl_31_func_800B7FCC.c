@@ -11,6 +11,8 @@ s32 ovl_31_func_800B83B8(void);
 s32 ovl_31_func_800B8490(void);
 s32 ovl_31_func_800B8600(void);
 
+void func_80011EF0(s32 arg0);
+
 void ovl_31_func_800B7FCC(void) {
     s32 index;
     s32 result;

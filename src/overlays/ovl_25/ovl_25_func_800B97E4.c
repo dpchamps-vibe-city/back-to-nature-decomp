@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 ovl_25_func_800B9A10(s32 arg0);
-s32 ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
+void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 s32 ovl_25_func_800B9A84(s32 arg0);
 
 void ovl_25_func_800B97E4(s16 *arg0) {

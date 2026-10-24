@@ -2,6 +2,8 @@
 
 extern u8 D_8012DB90[];
 
+void ovl_11_func_801214F8(s32 *arg0);
+
 void ovl_11_func_80121318(void) {
     u8 *var_s1;
     s32 var_s0;

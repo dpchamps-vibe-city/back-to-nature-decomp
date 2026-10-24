@@ -5,9 +5,9 @@ void func_80017A38(s16 arg0, s16 arg1);
 s32 func_800226B0(void);
 void func_80022738(void);
 s32 func_8001FABC(s16 arg0);
-s32 func_8001F250(s32 arg0, s32 arg1);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+s32 pow_int(s32 arg0, s32 arg1);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_800F8C1C(u32 *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F8B4C(s32 arg0, s32 arg1);
@@ -71,14 +71,14 @@ void ovl_11_func_800F787C(void) {
     ovl_11_func_800F8B4C(text, 0x40);
     ovl_11_func_800F7AA0();
     ovl_11_func_800F889C(display, 0, (s16 *)selected);
-    ovl_11_func_800F882C(display, 1, func_8001F250(2, D_80071A1E + 1), (s16 *)snapshot);
+    ovl_11_func_800F882C(display, 1, pow_int(2, D_80071A1E + 1), (s16 *)snapshot);
     ovl_11_func_800F84F0(0x40);
     items += D_80126E4A * 48;
     ovl_11_func_800F882C(display, 9, 8, (s16 *)items);
     ovl_11_func_800F87AC(text, (s32)panel, D_80126E44, D_80126E4A);
     if (D_80126E4E == 0xFF) {
-        func_800226D8(0);
-        func_80017B18(0);
+        SetVal8005E334(0);
+        SetVal8005E2BC(0);
         func_8002261C(3, message);
     }
 }

@@ -1,6 +1,10 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
+
+s32 func_8001AF44(u32 arg0);
+
+void func_8001AF70(u16 arg0, u16 arg1);
 
 s32 ovl_11_func_80113A20(s32 arg0) {
     s16 var_s3;
@@ -20,7 +24,7 @@ s32 ovl_11_func_80113A20(s32 arg0) {
         s1 = D_80128138;
     }
     s2 = 0;
-    a2 = func_80012A34(100);
+    a2 = Rand(100);
     for (i = 0; i < 8; i++, s0++) {
         s2 += *s0;
         if (a2 < s2) {

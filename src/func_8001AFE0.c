@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 void func_8001B074();
 

@@ -1,5 +1,9 @@
 #include "common.h"
 
+s32 func_8001AF44(u32 arg0);
+
+s32 ovl_11_func_800E351C(u8 *arg0, s16 arg1, s16 arg2);
+
 void ovl_11_func_800E3CDC(u8 *arg0) {
     char *far_base;
     s16 var_s0;

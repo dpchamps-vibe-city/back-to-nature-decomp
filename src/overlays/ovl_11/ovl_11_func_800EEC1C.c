@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_8001F250(s32, s32);
+s32 pow_int(s32, s32);
 s32 ovl_11_func_800CB4E0(void);
 void ovl_11_func_800CBD78(Ovl11C7010Object *);
 void ovl_11_func_800D666C(s16);
@@ -41,7 +41,7 @@ s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
             } else {
                 table = (Ovl11ItemState *)&Ovl11Items_80071AC0;
             }
-            count = func_8001F250(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
+            count = pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
             break;
         case 2:
             if (which == 0) {

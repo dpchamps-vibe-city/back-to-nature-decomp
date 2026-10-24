@@ -1,7 +1,7 @@
 #include "common.h"
 
 /* Extern callees (matched definitions: src/func_800191B4.c, src/func_8001945C.c). */
-s32 func_800191B4(u16 *arg0, u16 arg1, s32 arg2, s32 arg3);
+u16 *func_800191B4(u16 *arg0, u16 arg1, s32 arg2, s32 arg3);
 s32 func_8001945C(u16 *arg0, u16 arg1, s16 arg2);
 
 /* Shared u16 global — tentative definition (project idiom for GP-relative

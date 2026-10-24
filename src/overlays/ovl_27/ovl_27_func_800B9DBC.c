@@ -4,9 +4,9 @@
 extern s16 D_800C4A34;
 extern u8 D_800C4B40[];
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void func_80015840(ObjectState *obj, u8 arg1);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
+void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 
 void ovl_27_func_800B9DBC(void) {
     s32 var;
@@ -24,6 +24,6 @@ void ovl_27_func_800B9DBC(void) {
     func_80015BF0(arg0, (SpriteSourceData *)D_800C4B40, 0x126, 0x1E);
     if (D_800C4A34 >= 0x14) {
         D_800C4A34 = 0;
-        func_80015840((ObjectState *)D_800C4B40, func_80012A34(2) + 0x18);
+        func_80015840((ObjectState *)D_800C4B40, Rand(2) + 0x18);
     }
 }

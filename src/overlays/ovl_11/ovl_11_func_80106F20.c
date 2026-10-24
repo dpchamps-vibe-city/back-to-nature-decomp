@@ -16,6 +16,8 @@ typedef struct {
 
 extern Ovl11Func80106F20Entry D_8012CF48[];
 
+s32 func_8001FABC(s16 arg0);
+
 s32 ovl_11_func_80106F20(s16 arg0, u16 arg1) {
     Ovl11Func80106F20Entry *entry;
     u32 i;

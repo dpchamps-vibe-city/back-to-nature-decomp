@@ -6,10 +6,10 @@ extern s16 D_800BCD48[4];
 
 void ovl_25_func_800B93E4(void);
 void func_80022738(void);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
+void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 void ovl_25_func_800B8340(void);
 s32 func_8001FABC(s16 arg0);
 
@@ -22,8 +22,8 @@ void ovl_25_func_800B860C(void) {
     ref = (char *)&D_800BFE44;
     if (*(s16 *)(ref + 0x4CC) == 0) {
         func_80022738();
-        func_80017B18(0);
-        func_800226D8(0);
+        SetVal8005E2BC(0);
+        SetVal8005E334(0);
         func_8002261C(4, 0x35);
         ovl_25_func_800B9B00((s16 *)(ref + 0x2E0), 9, 0x3B);
     }

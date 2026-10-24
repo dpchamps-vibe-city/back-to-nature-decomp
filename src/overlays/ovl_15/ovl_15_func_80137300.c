@@ -10,7 +10,7 @@ extern u8 *D_80137828;
 
 /* Callee prototype as the original caller TU saw it: the result is tested as
  * a full word and arg4/arg5 are plain words in the outgoing area. */
-s32 func_80014CBC(s16 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
+u_char *func_80014CBC(s32 file_index, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
 
 s32 ovl_15_func_80137300(void) {
     s32 temp_v0;

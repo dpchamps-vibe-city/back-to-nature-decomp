@@ -1,5 +1,11 @@
 #include "common.h"
 
+void func_8001AF70(u16 arg0, u16 arg1);
+
+s32 ovl_11_func_800D603C(s32 arg0);
+
+s32 ovl_11_func_800F3C9C(u16 arg0);
+
 s32 ovl_11_func_800F3BCC(u16 arg0) {
     u16 *base;
     u16 *p;

@@ -3,10 +3,10 @@
 void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 s32 func_80013394(void);
-void func_80017B18(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
 void func_80022738(void);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -45,13 +45,13 @@ s32 ovl_11_func_8011A25C(void) {
         ovl_11_func_8011D084(3, 0);
         break;
     case 1:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 2:
-        if (func_800226A4() == 5) {
-            func_80017B18(0);
+        if (GetVal8005E5B4() == 5) {
+            SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
         break;
@@ -67,7 +67,7 @@ s32 ovl_11_func_8011A25C(void) {
             ovl_11_func_8011D084(1, 4);
         } else {
             D_8012D52C = 2;
-            func_800226D8(0);
+            SetVal8005E334(0);
             func_8002261C(2, ovl_11_func_8011DE70(ovl_11_func_8011DF04(item)) + 0x9A);
             ovl_11_func_8011D084(2, 5);
         }
@@ -82,7 +82,7 @@ s32 ovl_11_func_8011A25C(void) {
         case 1:
             func_80022738();
             if (ovl_11_func_8011D06C(price) == 1) {
-                func_800226D8(0);
+                SetVal8005E334(0);
                 func_8002261C(2, 0x9E);
                 ovl_11_func_8011D084(2, 13);
             } else {

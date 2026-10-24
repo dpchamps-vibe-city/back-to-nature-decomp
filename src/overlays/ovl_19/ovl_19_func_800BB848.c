@@ -1,9 +1,14 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 /* Callee prototype as the original caller TU saw it: arg4/arg5 are plain
  * words in the outgoing area (functions.h holds the callee-side 4-byte
  * aggregate type). */
 u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
+
+void func_8001719C(u8 *arg0);
 
 void ovl_19_func_800BB848(void) {
     DrawSync(0);

@@ -9,9 +9,9 @@ void ovl_11_func_80103B24(void);
 void ovl_11_func_800BCF28(void);
 void func_80022738(void);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_80103964(void) {
@@ -58,14 +58,14 @@ void ovl_11_func_80103964(void) {
         D_80127428 = 5;
         return;
     } else if (D_80127428 == 5) {
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             ovl_11_func_800BCF28();
             func_8001FABC(3);
             D_80127428 = 0;
         }
         return;
     }
-    func_800226D8(0);
-    func_80017B18(0);
+    SetVal8005E334(0);
+    SetVal8005E2BC(0);
     func_8002261C(1, 0x764);
 }

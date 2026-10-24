@@ -1,6 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 
+void ovl_11_func_800D075C(s32 arg0, s16 arg1, s32 arg2);
+
 void ovl_11_func_800D079C(s32 arg0) {
     s32 i;
     u8 *p;

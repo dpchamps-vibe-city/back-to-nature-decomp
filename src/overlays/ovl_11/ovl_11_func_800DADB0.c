@@ -8,7 +8,7 @@ typedef struct {
     Ovl11D124Entry table[1];
 } D8006C838SearchView;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4) {
     D8006C838SearchView *view;
@@ -33,7 +33,7 @@ s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s
         base = view->table;
     }
 
-    start = func_80012A34(count);
+    start = Rand(count);
     i = start;
     matches = 0;
     do {

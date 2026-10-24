@@ -12,7 +12,7 @@ typedef struct {
 s32 ovl_11_func_800C9D64(void);
 void ovl_11_func_800CD5BC(M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 void ovl_11_func_800C5048(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800C4C94(Ovl11C7010Object *arg0) {
     Ovl11CE034Position pos;

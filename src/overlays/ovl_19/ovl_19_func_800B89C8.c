@@ -4,7 +4,7 @@
 s32 func_8001FABC(s16 arg0);
 void func_8001FAE8(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 void ovl_19_func_800BAC5C(void);
 void ovl_19_func_800BAC7C(void);
 void ovl_19_func_800B942C(void);
@@ -51,7 +51,7 @@ void ovl_19_func_800B89C8(void) {
                 ovl_19_func_800BAC50(other, 0, 0);
                 ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x90], 4, 0);
             }
-            if (func_800226A4() == 2) {
+            if (GetVal8005E5B4() == 2) {
                 func_8001FAE8(D_800BF4C0[0x102]);
                 D_800BF4C0[2] = 6;
                 D_800BF4C0[6] = D_800BD070;

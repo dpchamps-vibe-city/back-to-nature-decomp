@@ -7,7 +7,7 @@ extern s32 D_8012D798;
 
 s32 ovl_11_func_8011760C(void);
 
-s32 ovl_11_func_80118B84(s32 arg0, s32 arg1, s32 arg2);
+s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_80117370(void) {
     s32 callRet2;

@@ -20,6 +20,8 @@ s32 ovl_11_func_800D04D4(Ovl11D04D4Obj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16
 
 extern u8 D_801240C8;
 
+s32 func_8001FABC(s16 arg0);
+
 s32 ovl_11_func_800E32E4(Ovl11D04D4Obj *arg0) {
     s16 temp_v1;
     s32 var_s1;

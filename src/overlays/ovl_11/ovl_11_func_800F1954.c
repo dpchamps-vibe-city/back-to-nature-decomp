@@ -1,5 +1,7 @@
 #include "common.h"
 
+s32 func_8001AF44(u32 arg0);
+
 s32 ovl_11_func_800F1954(s32 arg0) {
     s32 v;
     s32 one = 1;

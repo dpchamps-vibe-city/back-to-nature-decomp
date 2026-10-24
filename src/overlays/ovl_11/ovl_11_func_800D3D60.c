@@ -2,7 +2,7 @@
 #include "psyq/memory.h"
 
 /* Overlay import of matched u32 Rand(s32). */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 s32 ovl_11_func_800D3D60(u16 arg0) {
     u8 buf[20];
@@ -60,5 +60,5 @@ next_record:
     if (count == 0) {
         return -1;
     }
-    return buf[func_80012A34(count & 0xFFFF)];
+    return buf[Rand(count & 0xFFFF)];
 }

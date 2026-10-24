@@ -6,6 +6,8 @@ void GsSetWorkBase(unsigned char *);
 /* TU-owned global (GP-relative in the target) */
 struct_8005E3C0 *D_8005E3C0;
 
+s32 func_800129E8(void);
+
 void func_80011FD8(s32 arg0) {
     if ((u32)(D_8005E3C0->field_12C + D_8005E3C0->field_128) < (u32)arg0) {
         do {

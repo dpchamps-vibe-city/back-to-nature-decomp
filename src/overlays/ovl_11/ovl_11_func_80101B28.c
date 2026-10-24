@@ -1,7 +1,7 @@
 #include "common.h"
 extern u16 D_801273EE;
 
-s32 ovl_11_func_80101B84(s32 arg0);
+s32 ovl_11_func_80101B84(s8 arg0);
 
 s32 ovl_11_func_80101B28(s8 arg0) {
     s32 callRet1;

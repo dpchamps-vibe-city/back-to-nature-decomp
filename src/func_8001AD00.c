@@ -1,5 +1,5 @@
 #include "common.h"
-s32 GetPairedTpage(s32 arg0);
+s16 GetPairedTpage(s32 arg0);
 
 void func_80019E80(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 

@@ -1,7 +1,7 @@
 #include "common.h"
 
 /* Overlay alias of the matched Rand definition at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_11_func_800D7B24(void);
 void ovl_11_func_800D0FB4(void);
 void ovl_11_func_800F4CEC(void);
@@ -12,7 +12,7 @@ void ovl_11_func_800C05F8(void) {
     char *state;
 
     state = (char *)D_8006C838;
-    if (*(u16 *)(state + 0x44D4) != 0 && func_80012A34(100) < 31) {
+    if (*(u16 *)(state + 0x44D4) != 0 && Rand(100) < 31) {
         *(u16 *)(state + 0x44D4) = 0;
         ovl_11_func_800D7B24();
         ovl_11_func_800D0FB4();

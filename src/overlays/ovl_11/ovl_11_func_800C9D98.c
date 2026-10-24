@@ -1,5 +1,5 @@
 #include "common.h"
-void ovl_11_func_800CADBC(s32 arg0, s32 arg1);
+s32 ovl_11_func_800CADBC(void *, s32 arg1);
 
 extern u8 D_80071AC0[];
 

@@ -10,7 +10,7 @@ s16 ovl_17_func_800B9940(s32 arg0);
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 s32 func_8002261C(s32 arg0, s32 arg1);
 /* GetVal8005E5B4, named by its original overlay import. */
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 /* 8001FAD0 calls 800212A8 and forwards its voice result unchanged;
  * 8002143C sets v0 from s3 before that callee returns. */
 s32 func_8001FABC(s16 arg0);
@@ -41,7 +41,7 @@ void ovl_17_func_800B8D88(void) {
     *(u16 *)func_8001A970(work->value, (s16 *)D_800BD738, 7) = 0xFFFF;
     func_80017B3C(text, (s32)D_800BD738, 0xC5, 0x1E);
     func_8002261C(4, 7);
-    if (func_800226A4() == 2) {
+    if (GetVal8005E5B4() == 2) {
         if (total != 0) {
             Ovl17_D_800BD848.field_2C8 = func_8001FABC(0x3E);
         }

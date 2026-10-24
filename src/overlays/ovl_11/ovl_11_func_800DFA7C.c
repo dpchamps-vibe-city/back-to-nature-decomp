@@ -15,7 +15,7 @@ typedef struct {
     /* 0x64 */ s32 unk64;
 } Struct_800DFA7C;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800DF010(Struct_800DFA7C *arg0, s32 arg1);
 
 s32 ovl_11_func_800DFA7C(Struct_800DFA7C *arg0) {
@@ -28,7 +28,7 @@ s32 ovl_11_func_800DFA7C(Struct_800DFA7C *arg0) {
     if (*(s16 *)(far_base + 0x25476) != arg0->unk30) {
         return -1;
     }
-    if (func_80012A34(0xC8) < arg0->unk16) {
+    if ((s32)Rand(0xC8) < arg0->unk16) {
         base = (char *)&D_8006C838;
         arg0->unk58 = *(s32 *)(base + 0x52C8);
         arg0->unk5C = *(s32 *)(base + 0x52CC);

@@ -3,7 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_23_func_800BA1E0(Ovl23Func800BA1E0Arg *arg0);
 /* The original call promotes direction unchanged and narrows only distance. */
 s32 ovl_23_func_800B9E04();
@@ -22,7 +22,7 @@ s32 ovl_23_func_800B9CCC(Ovl23Func800BA1E0Arg *arg0) {
     SquareRoot0(dx * dx + dy * dy);
     direction = ovl_23_func_800BA1E0(arg0);
     if (ovl_23_func_800B9E04(arg0, direction, (s16)(*(s16 *)((u8 *)state + 0x39E) * 3 / 2)) != 1) {
-        direction = (s16)(direction + 2 + func_80012A34(2) * 2);
+        direction = (s16)(direction + 2 + Rand(2) * 2);
         direction = (s16)(direction % 8);
     }
     return direction;

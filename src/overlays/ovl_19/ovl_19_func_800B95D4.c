@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Overlay alias for Rand; signature from its matched definition. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 func_8001FABC(s16 arg0);
 s32 ovl_19_func_800BA2D4(void);
 s32 ovl_19_func_800BA33C(u8 *arg0);
@@ -134,13 +134,13 @@ void ovl_19_func_800B95D4(void) {
             switch (command) {
                 case 0:
                 case 1:
-                    angle = (s16)func_80012A34(4);
+                    angle = (s16)Rand(4);
                     break;
                 case 3:
                     angle = view[10];
                     break;
                 case 2:
-                    if ((s32)func_80012A34(101) <= actor->value * 100 / 255) {
+                    if ((s32)Rand(101) <= actor->value * 100 / 255) {
                         angle = (s16)(view[10] + ovl_19_func_800BA5B4((ReconA0View *)actor, (ReconA1View *)opponent));
                         angle = (s16)(angle % 4);
                     } else {

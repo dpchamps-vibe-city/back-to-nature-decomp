@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 extern u8 D_800BF87C[];
 extern u8 D_800BBA9C[];
 
@@ -20,7 +20,7 @@ s32 ovl_23_func_800BA494(s16 arg0, s16 arg1) {
     u8 *base0;
 
     sum = 0;
-    limit = (s16)func_80012A34(0x64);
+    limit = (s16)Rand(0x64);
     if (arg1 == 0) {
         base0 = D_800BF87C;
         sel = (u16)(((Ovl23D87CView50 *)base0)->unk0[arg0].unk28 - 1) < 2;

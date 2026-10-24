@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 ovl_11_func_801081A0(s16 arg0, u16 arg1)
+s32 ovl_11_func_801081A0(s16 arg0, s16 arg1)
 {
     s32 temp_a2;
     s32 temp_a0;

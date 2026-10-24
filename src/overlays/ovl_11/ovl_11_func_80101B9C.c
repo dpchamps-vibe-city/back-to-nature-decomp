@@ -3,8 +3,8 @@
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 func_800226B0(void);
 s32 func_8001FABC(s16 arg0);
@@ -54,8 +54,8 @@ void ovl_11_func_80101B9C(void) {
     } else if (D_801273E4_state == 7) {
         ovl_11_func_801022E8();
     } else {
-        func_800226D8(0);
-        func_80017B18(0);
+        SetVal8005E334(0);
+        SetVal8005E2BC(0);
         func_8002261C(3, 0x3BE);
         if (func_800226B0()) {
             switch (((u32 *)D_8005E3A8)[0]) {

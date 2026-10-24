@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 extern s32 D_80123920[];
 
@@ -35,7 +35,7 @@ void ovl_11_func_800CF748(void) {
     *(s32 *)(s0 + 0x38) = buf[0];
     *(s32 *)(s0 + 0x3C) = buf[1];
     *(s32 *)(s0 + 0x40) = buf[2];
-    if (func_80012A34(2) != 0) {
+    if (Rand(2) != 0) {
         *(u16 *)(s0 + 0x22) = 0;
     } else {
         *(u16 *)(s0 + 0x22) = 3;

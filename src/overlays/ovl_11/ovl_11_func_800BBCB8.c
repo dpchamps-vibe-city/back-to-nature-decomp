@@ -2,8 +2,8 @@
 
 void func_80011EF0(s32 arg0);
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
-void func_80011F44(s32 arg0);
-void func_80011F50(s32 arg0);
+void SetVal8005E278(s32 arg0);
+void SetVal8005E27C(s32 arg0);
 void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 void func_80013328(s16 arg0);
 s32 func_80013394(void);
@@ -139,8 +139,8 @@ void ovl_11_func_800BBCB8(void) {
             if (STATUS->mode == 2) {
                 ovl_11_func_800DBAB0();
             }
-            func_80011F44(1);
-            func_80011F50(1);
+            SetVal8005E278(1);
+            SetVal8005E27C(1);
             STATUS->flags &= ~0x800000;
             switch (WORK->state) {
             case 28:

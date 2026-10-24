@@ -10,6 +10,8 @@ typedef struct {
     s8 field_E7A2[8];
 } M2C_ovl11_801176BC_E7A2;
 
+void func_8001AF70(u16 arg0, u16 arg1);
+
 s32 ovl_11_func_801176BC(u32 arg0) {
     s32 temp_v0;
     u8 *base;

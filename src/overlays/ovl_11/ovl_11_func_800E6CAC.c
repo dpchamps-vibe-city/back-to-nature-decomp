@@ -1,6 +1,12 @@
 #include "common.h"
 
-s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1) {
+s32 func_8001FBBC(s16 arg0);
+
+void func_8001FE34(s32 arg0);
+
+s32 func_8001FE6C(void);
+
+s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_s1;
 
     var_s1 = 0;

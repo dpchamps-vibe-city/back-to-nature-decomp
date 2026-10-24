@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 /* Two unaligned s32 words copied as one 8-byte packed aggregate, as in
  * ovl_11_func_8010D04C (D_8006C838+0x44B8 -> object+0x1A). */

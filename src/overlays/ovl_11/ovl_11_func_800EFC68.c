@@ -2,6 +2,8 @@
 
 u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
 
+s32 func_8001AF44(u32 arg0);
+
 s32 ovl_11_func_800EFC68(s32 arg0, s32 arg1) {
     s32 sp10;
     s32 temp_v0;

@@ -23,7 +23,8 @@
 
 import { execFileSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { dirname, join } from "path";
+import { dirname, join, resolve } from "path";
+import { fileURLToPath } from "url";
 import { ROOT } from "../lib/psxExeInfo.js";
 import {
   EXE_CONTAINER_ID,
@@ -31,19 +32,13 @@ import {
   containsVram,
   loadContainers,
   requireContainer,
+  type Container,
 } from "../lib/container.js";
 import { ENGINE_EXPORT_PATH, loadSymbolAddresses } from "../lib/symbolIndex.js";
 
 const NM = "mips-linux-gnu-nm";
 
-const args = process.argv.slice(2);
-const write = args.includes("--write");
-const check = args.includes("--check");
-
-const exe = requireContainer(EXE_CONTAINER_ID);
-const elf = containerPath(exe, "builtElf");
-
-interface ExportedSymbol {
+export interface ExportedSymbol {
   name: string;
   address: number;
   kind: string;
@@ -54,7 +49,7 @@ interface ExportedSymbol {
  * Symbols from the linked ELF — the authoritative post-link answer, because it
  * is what the EXE's own `make check` verified.
  */
-function fromElf(): ExportedSymbol[] {
+function fromElf(elf: string): ExportedSymbol[] {
   if (!existsSync(elf)) return [];
   const output = execFileSync(NM, ["--defined-only", elf], { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
   const symbols: ExportedSymbol[] = [];
@@ -78,7 +73,7 @@ function fromElf(): ExportedSymbol[] {
  * This is strictly weaker — it cannot see a symbol only the link defines — so
  * it is reported as a fallback rather than used silently.
  */
-function fromSymbolTables(): ExportedSymbol[] {
+function fromSymbolTables(exe: Container): ExportedSymbol[] {
   return [...loadSymbolAddresses(exe)].map(([name, address]) => ({
     name,
     address,
@@ -87,127 +82,166 @@ function fromSymbolTables(): ExportedSymbol[] {
   }));
 }
 
-const elfSymbols = fromElf();
-const symbols = elfSymbols.length > 0 ? elfSymbols : fromSymbolTables();
-const source = elfSymbols.length > 0 ? `${exe.paths.builtElf} (linked)` : "the project symbol tables (no linked ELF yet)";
+/** splat names an anonymous symbol after its address; a real name outranks that. */
+const GENERATED_NAME = /^(?:D|B|func|jtbl|T|_)_?[0-9A-Fa-f]{8}$/;
+/** splat's linker script defines section markers; they are geometry, not an interface. */
+const SECTION_MARKER = /_(?:RODATA|TEXT|DATA|SDATA|SBSS|BSS)_(?:START|END)$|_VRAM(?:_END)?$|_ROM_(?:START|END)$/;
 
-if (symbols.length === 0) {
-  console.error("No engine symbols found. Build the PS-X EXE first: make");
-  process.exit(1);
+/** nm's lowercase kinds are local bindings; the symbol-table fallback has no binding. */
+function isLocal(symbol: ExportedSymbol): boolean {
+  return /^[a-z]$/.test(symbol.kind);
 }
 
-/*
+function better(a: ExportedSymbol, b: ExportedSymbol): ExportedSymbol {
+  /* Geometry first: a section boundary that coincides with a function or a
+     data label is still not what a reference to that address means. */
+  const aMarker = SECTION_MARKER.test(a.name);
+  const bMarker = SECTION_MARKER.test(b.name);
+  if (aMarker !== bMarker) return aMarker ? b : a;
+  const aGenerated = GENERATED_NAME.test(a.name);
+  const bGenerated = GENERATED_NAME.test(b.name);
+  if (aGenerated !== bGenerated) return aGenerated ? b : a;
+  /* A file-local name cannot be what another link means by this address. */
+  if (isLocal(a) !== isLocal(b)) return isLocal(a) ? b : a;
+  return a.name.localeCompare(b.name) <= 0 ? a : b;
+}
+
+export interface EngineExportSelection {
+  exported: ExportedSymbol[];
+  /** Names withheld because they are defined at more than one address. */
+  ambiguousNames: string[];
+}
+
+/**
+ * One name per address, from every symbol the executable defines.
+ *
  * Only addresses inside PS1 RAM are an interface an overlay can call, and only
  * addresses outside every overlay slot belong in this list: a slot address is
  * defined by whichever overlay is resident, so exporting the EXE's name for it
  * would give an overlay link two definitions of the same address — one of them
  * the wrong one.
  */
-const overlays = loadContainers().filter((c) => c.kind === "overlay");
-
-/** splat names an anonymous symbol after its address; a real name outranks that. */
-const GENERATED_NAME = /^(?:D|B|func|jtbl|T|_)_?[0-9A-Fa-f]{8}$/;
-/** splat's linker script defines section markers; they are geometry, not an interface. */
-const SECTION_MARKER = /_(?:RODATA|TEXT|DATA|SDATA|SBSS|BSS)_(?:START|END)$|_VRAM(?:_END)?$|_ROM_(?:START|END)$/;
-
-function betterName(a: string, b: string): string {
-  const aGenerated = GENERATED_NAME.test(a);
-  const bGenerated = GENERATED_NAME.test(b);
-  if (aGenerated !== bGenerated) return aGenerated ? b : a;
-  const aMarker = SECTION_MARKER.test(a);
-  const bMarker = SECTION_MARKER.test(b);
-  if (aMarker !== bMarker) return aMarker ? b : a;
-  return a.localeCompare(b) <= 0 ? a : b;
-}
-
-/*
- * One name per address.
- *
- * splat refuses a symbol table that gives one address two names, and the
- * overlay assembly it generates is written against whichever name is here — so
- * picking the most informative one is the whole decision. Aliases are dropped
- * rather than renamed.
- */
-const byAddress = new Map<number, ExportedSymbol>();
-for (const symbol of symbols) {
-  if (symbol.address < 0x80000000 || symbol.address >= 0x80200000) continue;
-  if (overlays.some((container) => containsVram(container, symbol.address))) continue;
-  const existing = byAddress.get(symbol.address);
-  if (!existing) {
-    byAddress.set(symbol.address, symbol);
-    continue;
-  }
-  const winner = betterName(existing.name, symbol.name);
-  if (winner !== existing.name) byAddress.set(symbol.address, symbol);
-}
-
-/*
- * A name defined at more than one address is not an interface.
- *
- * `__gnu_compiled_c` and friends are per-translation-unit assembler markers
- * that recur at every object's first symbol. Exporting one would define a name
- * that means nothing and hide whichever address happened to win.
- */
-const nameCounts = new Map<string, number>();
-for (const symbol of byAddress.values()) {
-  nameCounts.set(symbol.name, (nameCounts.get(symbol.name) ?? 0) + 1);
-}
-const ambiguousNames = [...nameCounts.entries()].filter(([, count]) => count > 1).map(([name]) => name);
-
-const exported = [...byAddress.values()]
-  .filter((symbol) => (nameCounts.get(symbol.name) ?? 0) === 1)
-  .sort((a, b) => a.address - b.address);
-const aliasesDropped = symbols.length - exported.length;
-
-/*
- * Bare assignments, no comment header. This one file is read by two parsers
- * with incompatible comment syntax — splat's symbol_addrs reader (`//`) and
- * GNU ld's linker script reader (`/* *' + '/`) — so it carries no comment at all,
- * and its provenance is written beside it.
- */
-const lines =
-  exported.map((s) => `${s.name} = 0x${s.address.toString(16).toUpperCase().padStart(8, "0")};`).join("\n") + "\n";
-
-const provenance = [
-  "Generated by tools/build/exportEngineSymbols.ts — do not edit engine_syms.txt by hand.",
-  `Source: ${source}`,
-  `Symbols: ${exported.length}`,
-  "",
-].join("\n");
-
-const outPath = join(ROOT, ENGINE_EXPORT_PATH);
-
-if (check) {
-  /* A stale export links cleanly and calls the wrong function, so staleness has
-     to fail the build rather than be reported. */
-  const current = existsSync(outPath) ? readFileSync(outPath, "utf-8") : null;
-  if (current === lines) {
-    console.log(`${ENGINE_EXPORT_PATH} is current (${exported.length} symbols)`);
-    process.exit(0);
-  }
-  console.error(
-    current === null
-      ? `${ENGINE_EXPORT_PATH} does not exist; every overlay link would resolve engine calls to nothing.`
-      : `${ENGINE_EXPORT_PATH} is stale against ${source}. An overlay linked against it would call the wrong function.`
+export function selectEngineExports(
+  symbols: readonly ExportedSymbol[],
+  inOverlaySlot: (address: number) => boolean
+): EngineExportSelection {
+  const inScope = symbols.filter(
+    (symbol) => symbol.address >= 0x80000000 && symbol.address < 0x80200000 && !inOverlaySlot(symbol.address)
   );
-  console.error("  Regenerate: npx tsx tools/build/exportEngineSymbols.ts --write");
-  process.exit(1);
+
+  /*
+   * A name defined at more than one address is not an interface.
+   *
+   * `__gnu_compiled_c` and friends are per-translation-unit assembler markers
+   * that recur at every object's first symbol. They have to leave before any
+   * address chooses its name: a marker and the function it shares an address
+   * with are both hand-written names, so a later tie-break can pick the marker,
+   * and dropping the marker afterwards leaves that address with no name at all.
+   */
+  const addressesByName = new Map<string, Set<number>>();
+  for (const symbol of inScope) {
+    const addresses = addressesByName.get(symbol.name) ?? new Set<number>();
+    addresses.add(symbol.address);
+    addressesByName.set(symbol.name, addresses);
+  }
+  const ambiguousNames = [...addressesByName.entries()]
+    .filter(([, addresses]) => addresses.size > 1)
+    .map(([name]) => name)
+    .sort();
+  const ambiguous = new Set(ambiguousNames);
+
+  /*
+   * splat refuses a symbol table that gives one address two names, and the
+   * overlay assembly it generates is written against whichever name is here — so
+   * picking the most informative one is the whole decision. Aliases are dropped
+   * rather than renamed.
+   */
+  const byAddress = new Map<number, ExportedSymbol>();
+  for (const symbol of inScope) {
+    if (ambiguous.has(symbol.name)) continue;
+    const existing = byAddress.get(symbol.address);
+    byAddress.set(symbol.address, existing ? better(existing, symbol) : symbol);
+  }
+
+  return {
+    exported: [...byAddress.values()].sort((a, b) => a.address - b.address),
+    ambiguousNames,
+  };
 }
 
-if (write) {
-  mkdirSync(dirname(outPath), { recursive: true });
-  writeFileSync(outPath, lines);
-  writeFileSync(`${outPath.replace(/\.txt$/, "")}.provenance.txt`, provenance);
-  console.log(
-    `Wrote ${ENGINE_EXPORT_PATH}: ${exported.length} engine symbols from ${source} ` +
-      `(${aliasesDropped} alias or out-of-scope symbol(s) dropped)`
+function main(): void {
+  const args = process.argv.slice(2);
+  const write = args.includes("--write");
+  const check = args.includes("--check");
+
+  const exe = requireContainer(EXE_CONTAINER_ID);
+  const elfSymbols = fromElf(containerPath(exe, "builtElf"));
+  const symbols = elfSymbols.length > 0 ? elfSymbols : fromSymbolTables(exe);
+  const source = elfSymbols.length > 0 ? `${exe.paths.builtElf} (linked)` : "the project symbol tables (no linked ELF yet)";
+
+  if (symbols.length === 0) {
+    console.error("No engine symbols found. Build the PS-X EXE first: make");
+    process.exit(1);
+  }
+
+  const overlays = loadContainers().filter((c) => c.kind === "overlay");
+  const { exported, ambiguousNames } = selectEngineExports(symbols, (address) =>
+    overlays.some((container) => containsVram(container, address))
   );
-  if (ambiguousNames.length > 0) {
-    console.log(
-      `  ${ambiguousNames.length} name(s) defined at more than one address are not exported: ` +
-        `${ambiguousNames.slice(0, 5).join(", ")}${ambiguousNames.length > 5 ? ", …" : ""}`
+  const aliasesDropped = symbols.length - exported.length;
+
+  /*
+   * Bare assignments, no comment header. This one file is read by two parsers
+   * with incompatible comment syntax — splat's symbol_addrs reader (`//`) and
+   * GNU ld's linker script reader (`/* *' + '/`) — so it carries no comment at all,
+   * and its provenance is written beside it.
+   */
+  const lines =
+    exported.map((s) => `${s.name} = 0x${s.address.toString(16).toUpperCase().padStart(8, "0")};`).join("\n") + "\n";
+
+  const provenance = [
+    "Generated by tools/build/exportEngineSymbols.ts — do not edit engine_syms.txt by hand.",
+    `Source: ${source}`,
+    `Symbols: ${exported.length}`,
+    "",
+  ].join("\n");
+
+  const outPath = join(ROOT, ENGINE_EXPORT_PATH);
+
+  if (check) {
+    /* A stale export links cleanly and calls the wrong function, so staleness has
+       to fail the build rather than be reported. */
+    const current = existsSync(outPath) ? readFileSync(outPath, "utf-8") : null;
+    if (current === lines) {
+      console.log(`${ENGINE_EXPORT_PATH} is current (${exported.length} symbols)`);
+      process.exit(0);
+    }
+    console.error(
+      current === null
+        ? `${ENGINE_EXPORT_PATH} does not exist; every overlay link would resolve engine calls to nothing.`
+        : `${ENGINE_EXPORT_PATH} is stale against ${source}. An overlay linked against it would call the wrong function.`
     );
+    console.error("  Regenerate: npx tsx tools/build/exportEngineSymbols.ts --write");
+    process.exit(1);
   }
-} else {
-  console.log(`Would write ${exported.length} engine symbols from ${source}`);
+
+  if (write) {
+    mkdirSync(dirname(outPath), { recursive: true });
+    writeFileSync(outPath, lines);
+    writeFileSync(`${outPath.replace(/\.txt$/, "")}.provenance.txt`, provenance);
+    console.log(
+      `Wrote ${ENGINE_EXPORT_PATH}: ${exported.length} engine symbols from ${source} ` +
+        `(${aliasesDropped} alias or out-of-scope symbol(s) dropped)`
+    );
+    if (ambiguousNames.length > 0) {
+      console.log(
+        `  ${ambiguousNames.length} name(s) defined at more than one address are not exported: ` +
+          `${ambiguousNames.slice(0, 5).join(", ")}${ambiguousNames.length > 5 ? ", …" : ""}`
+      );
+    }
+  } else {
+    console.log(`Would write ${exported.length} engine symbols from ${source}`);
+  }
 }
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

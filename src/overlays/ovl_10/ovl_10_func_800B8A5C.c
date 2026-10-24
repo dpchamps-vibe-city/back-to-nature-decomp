@@ -21,7 +21,7 @@ typedef struct __attribute__((packed)) {
 
 extern McData28 D_800BBAFC;
 
-void ovl_10_func_800B8A5C(void) {
+void ovl_10_func_800B8A5C(char *arg0) {
     s32 temp_s0;
     s32 temp_v0;
 

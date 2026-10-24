@@ -5,6 +5,8 @@ extern s8 D_801273E4;
 void ovl_11_func_800BCF28(void);
 void func_800226F0(void);
 
+s32 func_8001FABC(s16 arg0);
+
 void ovl_11_func_80103714(void) {
     char *base;
 

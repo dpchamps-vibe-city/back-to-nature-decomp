@@ -8,6 +8,8 @@ void SystemError(char, s32);
 /* TU-owned global (GP-relative in the target) */
 struct_8005E3C0 *D_8005E3C0;
 
+s32 func_800129E8(void);
+
 s32 func_80011F5C(s32 arg0) {
     s32 temp_s0;
     s32 temp_v0;

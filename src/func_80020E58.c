@@ -1,5 +1,6 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "psyq/libsnd.h"
 
 /* Tentative definitions — this TU owns these GP-relative globals
  * (every one of them is accessed via %gp_rel in the target). */
@@ -23,8 +24,6 @@ void func_800214FC(s16);
 void func_800215EC(s32, s32, s32);
 void func_80021604(s32);
 s32 func_80021668(void);
-s32 SsVabOpenHead(s32, s32);
-s32 SsVabTransCompleted(s32);
 
 s32 func_80020E58(void) {
     s32 value;

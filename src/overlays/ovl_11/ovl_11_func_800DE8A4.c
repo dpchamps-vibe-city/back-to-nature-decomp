@@ -1,11 +1,11 @@
 #include "common.h"
-s32 ovl_11_func_800D0C34(void);
+s32 *ovl_11_func_800D0C34(void);
 
-s32 ovl_11_func_800D0D7C(s32 arg0);
+s32 ovl_11_func_800D0D7C(u8 *arg0);
 
-void ovl_11_func_800DF128(s32 arg0, s32 arg1);
+s32 ovl_11_func_800DF128(char *arg0, s32 arg1);
 
-void ovl_11_func_800D075C(s32 arg0, s32 arg1, s32 arg2);
+void ovl_11_func_800D075C(s32 arg0, s16 arg1, s32 arg2);
 
 s32 ovl_11_func_800DE8A4(s32 arg0, s32 arg1, s32 arg2) {
     s32 callRet3;

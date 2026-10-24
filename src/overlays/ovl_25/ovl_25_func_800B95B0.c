@@ -1,6 +1,6 @@
 #include "common.h"
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 
 void ovl_25_func_800B95B0(s16 *arg0) {
@@ -16,7 +16,7 @@ void ovl_25_func_800B95B0(s16 *arg0) {
 
     sum = 0;
     sel = 0;
-    rnd = func_80012A34(0x64);
+    rnd = Rand(0x64);
     val = *(s32 *)&arg0[6];
     if (val > 0x27FFF) {
         sel = -1;

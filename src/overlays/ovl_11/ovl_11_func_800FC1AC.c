@@ -6,6 +6,12 @@ void ovl_11_func_800FE928(void);
 void ovl_11_func_800FEA00(void);
 void ovl_11_func_800FC320(void);
 
+void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+s32 func_8001FABC(s16 arg0);
+
+void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+
 void ovl_11_func_800FC1AC(void) {
     s32 temp_v0;
     s32 temp_v0_2;

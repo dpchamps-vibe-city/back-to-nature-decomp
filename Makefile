@@ -327,6 +327,10 @@ $(foreach overlay,$(OVERLAYS),$(eval $(call OverlayRules,$(overlay))))
 check-all: SKIP_RODATA_CHECK = 1
 check-all: check $(addprefix check-,$(OVERLAYS))
 	@npx tsx tools/build/deriveRodataSplits.ts --all
+	@# Byte identity cannot see a stale alias that still resolves, or two units
+	@# that describe one function differently; these two guards can.
+	@MAKEFLAGS= npx tsx tools/diagnostics/canonicalNames.ts --check
+	@npx tsx tools/diagnostics/interfaceAudit.ts --check
 	@echo "All $(words $(OVERLAYS)) overlay container(s) and the PS-X EXE match."
 
 split-all: split $(addprefix split-,$(OVERLAYS))

@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 void func_80022738(void);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_80108104(void);
@@ -42,7 +42,7 @@ void ovl_11_func_80107F58(void) {
         D_8012D044 = v;
         break;
     case 2:
-        s0 = func_800226A4();
+        s0 = GetVal8005E5B4();
         if (s0 == 5) {
             if (ovl_11_func_801086CC() == 1) {
                 func_80022738();
@@ -59,7 +59,7 @@ void ovl_11_func_80107F58(void) {
         D_8012D044 = v;
         break;
     case 4:
-        s0 = func_800226A4();
+        s0 = GetVal8005E5B4();
         if (s0 == 5) {
             ovl_11_func_80108B8C();
         }
@@ -77,7 +77,7 @@ void ovl_11_func_80107F58(void) {
         ovl_11_func_800BCF28();
         break;
     case 6:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             v = 5;
             D_8012D044 = v;
         }

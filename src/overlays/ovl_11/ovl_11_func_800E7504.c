@@ -6,10 +6,10 @@
 
 void ovl_11_func_80107DD0 (s16 *arg0);
 u8 *ovl_11_func_800EFF04 (s32 arg0, s32 arg1, s32 *arg2);
-void func_80015840 (ObjectState *obj, s8 arg1);
-void func_8001585C (ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
+void func_8001585C(ObjectState *obj, u8 arg1);
 void ovl_11_func_800CF36C (s32 arg0);
-s32 ovl_11_func_800E5C60 (s16 arg0, s16 arg1, s32 arg2);
+s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 struct struct_8006C838_800E7504 {

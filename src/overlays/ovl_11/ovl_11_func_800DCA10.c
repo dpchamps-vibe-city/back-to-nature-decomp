@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 typedef struct {
     char pad0[0x8];

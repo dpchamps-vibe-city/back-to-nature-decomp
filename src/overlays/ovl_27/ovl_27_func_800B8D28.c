@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void func_80011EF0(s32 arg0);
 void ovl_27_func_800BA914(s32 arg0);
 
@@ -27,7 +27,7 @@ void ovl_27_func_800B8D28(void) {
         }
         p = base;
         for (i = 3; i >= 0; i--) {
-            *(s16 *)p = func_80012A34(0xFFFF);
+            *(s16 *)p = Rand(0xFFFF);
             p += 2;
         }
         func_80011EF0(2);

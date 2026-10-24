@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 void ovl_11_func_800C034C(u8 *arg0) {
     u16 flags;
@@ -36,10 +36,10 @@ void ovl_11_func_800C034C(u8 *arg0) {
         e = 0x14;
         f = 0x14;
     }
-    *(s16 *)(arg0 + 8) = func_80012A34(a & 0xFFFF) + d;
-    func_80012A34(a & 0xFFFF);
-    *(s16 *)(arg0 + 0) = func_80012A34(b) + f;
-    func_80012A34(a & 0xFFFF);
-    *(s16 *)(arg0 + 2) = func_80012A34(c) + e;
+    *(s16 *)(arg0 + 8) = Rand(a & 0xFFFF) + d;
+    Rand(a & 0xFFFF);
+    *(s16 *)(arg0 + 0) = Rand(b) + f;
+    Rand(a & 0xFFFF);
+    *(s16 *)(arg0 + 2) = Rand(c) + e;
     *(s16 *)(arg0 + 0xA) = 0;
 }

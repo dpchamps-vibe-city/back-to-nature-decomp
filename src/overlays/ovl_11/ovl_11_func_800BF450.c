@@ -2,7 +2,7 @@
 
 /* Pointer-returning zero-argument interface also used by the matched
  * BF3D0/BF3F4 siblings; the getter itself has no published definition. */
-void *func_8001EF98(void);
+s32 GetVal8005E524(void);
 
 static __inline__ unsigned long long flag_result(u32 high) {
     union {
@@ -31,7 +31,7 @@ unsigned long long ovl_11_func_800BF450(void) {
     u32 low;
     unsigned long long result;
 
-    p = func_8001EF98();
+    p = GetVal8005E524();
     D_80128808 = p;
     if (p == 0) {
         return status_result(1);

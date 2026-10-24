@@ -7,8 +7,8 @@
 s32 ovl_28_func_800B8B70 (void);
 s32 func_80013394 (void);
 void func_8001719C (u8 *arg0);
-void func_80015704 (SpriteSourceData *out, SpriteDataHeader *header, s32 arg2, s32 arg3);
-void func_80015840 (ObjectState *obj, s8 arg1);
+void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
+void func_80015840(ObjectState *obj, u8 arg1);
 
 void ovl_28_func_800B7F80(void) {
     s32 *base;

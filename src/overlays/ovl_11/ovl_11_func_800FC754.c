@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-void ovl_11_func_800FC7F0(s32 arg0, s32 arg1, u8 arg2, u8 arg3, s32 arg4, s16 arg5, s16 arg6);
+void ovl_11_func_800FC7F0(s32 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s16 arg5, s16 arg6);
 
 void ovl_11_func_800FC754(void) {
     Ovl11D80127234Entry *var_s0;

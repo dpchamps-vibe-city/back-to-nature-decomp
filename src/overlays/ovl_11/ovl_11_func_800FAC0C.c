@@ -1,14 +1,14 @@
 #include "common.h"
 
 void func_80017A38(s16, s16);
-void func_80017B18(s32);
+void SetVal8005E2BC(s32);
 void func_80017B3C(s32, s32, s32, s32);
-s32 func_8001F250(s32, s32);
+s32 pow_int(s32, s32);
 s32 func_8001FABC(s16);
 void func_80022580(u32 *, s32, s32, s32, s16, s16);
 s32 func_8002261C(s32, s32);
 s32 func_800226B0(void);
-void func_800226D8(s32);
+void SetVal8005E334(s32);
 void func_80022738(void);
 void func_800248B0(s32, s16, s16);
 void ovl_11_func_800F6F7C(s32, s16, s16);
@@ -38,7 +38,7 @@ void ovl_11_func_800FAC0C(void) {
     func_80017B3C(text, (s32)(D_80051B7C + 0xC + D_80054BBC[0]), 0x1D, 0x5E);
     ovl_11_func_800FB510(items, 0, (s16 *)((u8 *)D_8006C838 + 0x524C));
     ovl_11_func_800FB510(items, 9, (s16 *)((u8 *)D_8006C838 + 0x5252));
-    for (i = 0; i < func_8001F250(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1); i++) {
+    for (i = 0; i < pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1); i++) {
         ovl_11_func_800FB510(items, i + 1, (s16 *)((u8 *)D_8006C838 + 0x5258 + i * 6));
         ovl_11_func_800FB510(items, i + 10, (s16 *)((u8 *)D_8006C838 + 0x5288 + i * 6));
     }
@@ -53,8 +53,8 @@ void ovl_11_func_800FAC0C(void) {
         ovl_11_func_800FB0C4((s16 *)ovl_11_func_800FB4B0(D_80126FE4));
         return;
     }
-    func_800226D8(0);
-    func_80017B18(0);
+    SetVal8005E334(0);
+    SetVal8005E2BC(0);
     func_8002261C(3, 0x3AC);
     if (func_800226B0()) {
         buttons = ((u32 *)D_8005E3A8)[2];

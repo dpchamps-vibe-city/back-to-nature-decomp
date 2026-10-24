@@ -1,7 +1,7 @@
 #include "common.h"
 
 /* Overlay import of u32 Rand(s32), at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 func_8001FABC(s16 arg0);
 void func_800151B4(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6, u8 arg7);
 
@@ -25,14 +25,14 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
             func_8001FABC(0x46);
             break;
         case 300:
-            i = func_80012A34(3);
+            i = Rand(3);
             colors.values[i] = 255;
-            i = func_80012A34(3);
+            i = Rand(3);
             colors.values[i] = 255;
             base = D_80129560;
             for (i = 0; i < 3; i++) {
                 slot = arg1 + i + 1;
-                noise = func_80012A34(32);
+                noise = Rand(32);
                 base[slot] = colors.values[i];
                 base[slot] -= noise;
             }
@@ -69,7 +69,7 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
         }
     }
     if (arg0 != 0) {
-        D_80129560[arg1] = -((s16)func_80012A34(80) * 5) - 200;
+        D_80129560[arg1] = -((s16)Rand(80) * 5) - 200;
     }
     return 1;
 }

@@ -15,6 +15,10 @@ typedef struct {
 
 extern UnkStruct80106DC0 D_8012CF48[];
 
+void ovl_11_func_800E54C8(void);
+
+void ovl_11_func_80106DC0(UnkStruct80106DC0 *arg0);
+
 void ovl_11_func_80106DE8(void) {
     UnkStruct80106DC0 *entry = D_8012CF48;
     u32 i;

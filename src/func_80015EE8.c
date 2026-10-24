@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_80016280(s32, s32, s32, s32, u8, u8, s16, s16);
+void func_80016280(u32 *, void **, void **, void *, u8, u8, s16, s16);
 s32 func_80011F5C(s32);
 void func_80011FD8(s32);
 

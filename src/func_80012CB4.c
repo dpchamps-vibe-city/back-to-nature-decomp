@@ -1,4 +1,9 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
 
 s32 func_80012CB4(s32 arg0, s32 *arg1, s32 arg2) {
     s32 temp_v0;

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *coordinates, u16 tile);
+s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *coordinates, s32 arg1);
 s32 ovl_11_func_80120F30(s16 column, s16 row, Ovl11TextureCoordinates *coordinates);
 
 void ovl_11_func_80121134(void) {

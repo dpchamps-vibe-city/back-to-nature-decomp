@@ -1,4 +1,7 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 /* Callee prototype as the original caller TU saw it: arg4/arg5 are plain
  * words in the outgoing area (functions.h holds the callee-side 4-byte

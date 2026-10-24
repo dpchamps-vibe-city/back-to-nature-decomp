@@ -1,7 +1,5 @@
 #include "common.h"
-s32 SsUtSetReverbType(s32 arg0);
-
-void SsUtSetReverbDepth(s32 arg0, s32 arg1);
+#include "psyq/libsnd.h"
 
 s32 func_80020900(s16 arg0) {
     s32 callRet2;

@@ -1,6 +1,6 @@
 #include "common.h"
 
-u32 func_80012A34(s32);
+u32 Rand(s32);
 s32 ovl_11_func_800E5870(s16, s16, s32, s16);
 s32 ovl_11_func_800E58DC(s16, s16, s32, s32);
 s32 ovl_11_func_800E5ADC(s16, s16, s32, s32);
@@ -103,7 +103,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         best = 0;
         if (level >= 5) { level = 4; }
         for (i = 0; i < 5; i++) {
-            scores.values[level][i] += func_80012A34(D_801249B8[level][i]);
+            scores.values[level][i] += Rand(D_801249B8[level][i]);
             if (scores.values[level][best] < scores.values[level][i]) {
                 best = i;
             }

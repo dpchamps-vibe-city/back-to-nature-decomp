@@ -1,9 +1,8 @@
 #include "common.h"
 #include "game_types.h"
-
-/* PSY-Q Kanji font helpers. */
-int KanjiFntPrint();
-int KanjiFntFlush(int id);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 /* Game callees. */
 void func_80011EF0(s32 arg0);

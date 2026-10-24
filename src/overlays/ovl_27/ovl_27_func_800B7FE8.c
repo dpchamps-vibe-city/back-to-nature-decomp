@@ -2,7 +2,7 @@
 
 void ovl_27_func_800B7F2C(void);
 void func_80021DA8(void);
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_27_func_800BA914(s32 arg0);
 void ovl_27_func_800BAA34(void);
 void ovl_27_func_800BABD4(void);
@@ -25,7 +25,7 @@ void ovl_27_func_800B7FE8(void) {
         sel = *(s32 *)(base + 0x18);
         func_80021DA8();
         *(s32 *)(base + 0x18) = sel;
-        ovl_27_func_800BA914(func_80012A34(3));
+        ovl_27_func_800BA914(Rand(3));
         ovl_27_func_800BAA34();
         ovl_27_func_800BABD4();
         ovl_27_func_800BAC14();

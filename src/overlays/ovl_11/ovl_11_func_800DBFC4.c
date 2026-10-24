@@ -1,6 +1,6 @@
 #include "common.h"
-void func_8001E334(s32 arg0);
+void SetVal8005E51C(s32 arg0);
 
 void ovl_11_func_800DBFC4(void) {
-    func_8001E334(0xC8);
+    SetVal8005E51C(0xC8);
 }

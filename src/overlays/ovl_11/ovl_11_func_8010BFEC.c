@@ -17,7 +17,7 @@ void ovl_11_func_800D0698 (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D2B40 (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 
-s32 ovl_11_func_8010BFEC(Recon_ovl_11_func_800D2594_A0View *arg0) {
+s32 ovl_11_func_8010BFEC(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1) {
     s32 var_a2;
 
     arg0->unk34 &= 0xFF7FFFFF;

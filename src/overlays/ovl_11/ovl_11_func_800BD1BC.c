@@ -1,7 +1,7 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void *memcpy(void *dest, const void *src, u32 n);
 
 void ovl_11_func_800BD1BC(s32 arg0) {
     s32 *p;

@@ -2,7 +2,7 @@
 
 s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
 /* Overlay alias of the matched word-returning GetVal8005E524. */
-s32 func_8001EF98(void);
+s32 GetVal8005E524(void);
 
 s32 ovl_11_func_80112FA8(s32 arg0) {
     s32 *entry;
@@ -24,7 +24,7 @@ s32 ovl_11_func_80112FA8(s32 arg0) {
         for (D_8012D0F0 = 0; D_8012D0F0 < 10;) {
             grid = (s32 **)(base + 0x3608);
             ovl_11_func_800BDB88(D_8012D100, 0xC000);
-            entry = (s32 *)func_8001EF98();
+            entry = (s32 *)GetVal8005E524();
             if (*entry & 8) {
                 cell = grid;
                 cell += D_8012D0F4 * 45 + D_8012D0F0;

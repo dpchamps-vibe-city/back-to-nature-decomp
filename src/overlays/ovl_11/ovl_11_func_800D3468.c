@@ -7,7 +7,7 @@ typedef struct Unk800D3468 {
     /* 0xAC */ s16 unkAC;
 } Unk800D3468;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3C04(void *arg0);
 s32 ovl_11_func_800D3C54(void *arg0);
@@ -33,7 +33,7 @@ s32 ovl_11_func_800D3468(u16 *arg0) {
         var_s0 = ovl_11_func_800D3D2C((Unk800D3468 *)arg0);
         break;
     case 0x108:
-        if (func_80012A34(2) != 0) {
+        if (Rand(2) != 0) {
             var_s0 = 0x11;
         } else {
             var_s0 = 1;

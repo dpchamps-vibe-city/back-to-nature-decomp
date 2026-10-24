@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 func_8001FABC(s16 arg0);
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 void ovl_17_func_800B946C(void) {
     u8 *base;
@@ -25,7 +25,7 @@ void ovl_17_func_800B946C(void) {
                 *(u16 *)(p + 0x2E) = q + *(s16 *)(p + 0x2E);
                 if (flag == 1) {
                     if (*(s16 *)(work + 0x6514) != 3) {
-                        if (func_80012A34(0x64) < 0x22) {
+                        if (Rand(0x64) < 0x22) {
                             *(u16 *)(base + 0x2C8) = func_8001FABC(0x3D);
                         }
                     }

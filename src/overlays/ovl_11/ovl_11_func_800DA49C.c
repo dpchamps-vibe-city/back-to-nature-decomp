@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800D5868(s16 arg0);
 
 typedef struct {
@@ -18,7 +18,7 @@ void ovl_11_func_800DA49C(UnkStruct800DA49C *arg0, s32 arg1) {
         temp_a0 = arg0->unk0;
         if (temp_a0 != 0x36) {
             if (ovl_11_func_800D5868((s16) temp_a0) == 1) {
-                if (func_80012A34(arg1 & 0xFFFF) == 0) {
+                if (Rand(arg1 & 0xFFFF) == 0) {
                     arg0->unk0 = 0x168;
                     arg0->unk2 = 0x168;
                     arg0->unk4 = 0;

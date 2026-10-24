@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 ovl_11_func_800F4240(Ovl11ItemCollisionObject *arg0);
+s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *arg0);
 s32 ovl_11_func_800D5D38(u16 a, u16 b);
 /* Pass the four coordinate payloads as words, as 8012135C does for 80121500. */
 s32 ovl_11_func_8012135C();

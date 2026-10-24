@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 extern u16 D_800BBA7C[];
 extern u16 D_800BBA88[];
 extern u8 D_800BF87C[];
@@ -21,6 +21,6 @@ void ovl_23_func_800B8290(void) {
         *(u16 *)(p + 0x20C) = 0;
         *(u32 *)(p + 0x210) = 0x17000;
         *(u16 *)(p + 0x244) = temp;
-        *(u16 *)(p + 0x20E) = D_800BBA88[func_80012A34(4)];
+        *(u16 *)(p + 0x20E) = D_800BBA88[Rand(4)];
     }
 }

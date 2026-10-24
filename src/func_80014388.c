@@ -1,6 +1,6 @@
 #include "common.h"
-
-s32 ratan2(s32, s32);                               /* extern */
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
 
 s16 func_80014388(s32 arg0, s32 arg1) {
     u8 s1;

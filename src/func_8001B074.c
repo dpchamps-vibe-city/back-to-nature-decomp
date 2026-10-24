@@ -1,12 +1,13 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 extern void func_80012A14(void);
 extern void func_8001719C(u8 *arg0);
-extern void func_80015704(SpriteSourceData *out, SpriteDataHeader *header,
-                          s32 arg2, s32 arg3);
-extern void func_80015840(ObjectState *obj, s8 arg1);
-extern unsigned long *ClearOTagR(unsigned long *ot, int n);
+extern void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
+extern void func_80015840(ObjectState *obj, u8 arg1);
 
 s32 D_8005E2CC;
 

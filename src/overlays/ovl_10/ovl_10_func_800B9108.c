@@ -1,6 +1,7 @@
 #include "common.h"
-
-int FntPrint();
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 extern u32 D_800BB7BC;
 extern char D_800B80C8[];

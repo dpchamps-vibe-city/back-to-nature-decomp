@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 /* Tentative definitions for GP-relative globals owned by this TU. */
 s16 D_8005E3E8[2];

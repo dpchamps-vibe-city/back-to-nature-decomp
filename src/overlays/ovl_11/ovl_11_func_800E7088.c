@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Overlay name for the matched pow_int at 0x8001F250. */
-s32 func_8001F250(s32 arg0, s32 arg1);
+s32 pow_int(s32 arg0, s32 arg1);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800D6A94(s16 arg0);
 void ovl_11_func_800D7338(s16 *arg0, s16 arg1, s16 arg2, s16 arg3);
@@ -38,7 +38,7 @@ s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (((struct Ovl11ItemInsertState *)D_8006C838)->held.id == 0) {
         selected = (s16 *)&((struct Ovl11ItemInsertState *)D_8006C838)->held;
     } else {
-        count = func_8001F250(2, ((struct Ovl11ItemInsertState *)D_8006C838)->exponent + 1);
+        count = pow_int(2, ((struct Ovl11ItemInsertState *)D_8006C838)->exponent + 1);
         slot = ((struct Ovl11ItemInsertState *)D_8006C838)->slots;
         for (i = 0, index = 0; (s32)i < count; i++, slot++, index++) {
             if (slot->id == 0) {

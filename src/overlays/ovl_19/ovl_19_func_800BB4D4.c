@@ -3,6 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 
+s16 func_8001C0D4(FuncC0D4Args *arg0, VECTOR *arg1, VECTOR *arg2);
+
 void ovl_19_func_800BB4D4(void) {
     char *far_base;
     VECTOR v0;

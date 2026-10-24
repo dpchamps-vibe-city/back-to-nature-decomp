@@ -1,6 +1,8 @@
 #include "common.h"
 
-s32 ovl_11_func_800F3E00(u16 arg0) {
+s32 ovl_11_func_800F3C9C(u16 arg0);
+
+s32 ovl_11_func_800F3E00(s16 arg0) {
     u16 *base;
     s32 idx;
 

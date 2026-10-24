@@ -6,10 +6,10 @@ s32 func_80013394(void);
 s32 func_8001FABC(s16);
 void func_8001FE34(s32);
 s32 func_8001FE6C(void);
-s32 func_800225B8(void);
+s32 GetVal8005E5B8(void);
 s32 func_800225C4(void);
 s32 func_8002261C(s32, s32);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 void func_8002301C(void);
 void func_80023030(s32);
 s32 func_80023060(void);
@@ -131,7 +131,7 @@ void ovl_27_func_800B845C(void) {
         break;
     case 12:
         ovl_27_func_800B92E4();
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             D_800C4A24 = 13;
         }
         break;
@@ -143,7 +143,7 @@ void ovl_27_func_800B845C(void) {
         break;
     case 14:
         ovl_27_func_800B92E4();
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             func_80023170((u16 *)&D_80071A00);
             D_800C4A24 = 15;
         }
@@ -163,7 +163,7 @@ void ovl_27_func_800B845C(void) {
         break;
     case 17:
         ovl_27_func_800B92E4();
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             func_80023030((s32)D_80071A7C);
             D_800C4A24 = 18;
         }
@@ -188,7 +188,7 @@ void ovl_27_func_800B845C(void) {
         break;
     case 20:
         ovl_27_func_800B92E4();
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             func_80023130((u16 *)&D_80070D18);
             D_800C4A24 = 21;
         }
@@ -213,7 +213,7 @@ void ovl_27_func_800B845C(void) {
         break;
     case 23:
         ovl_27_func_800B92E4();
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             func_800231AC((u16 *)&D_800759E8);
             D_800C4A24 = 24;
         }
@@ -240,8 +240,8 @@ void ovl_27_func_800B845C(void) {
     case 26:
         ovl_27_func_800B92E4();
         ovl_27_func_800B9124();
-        if (func_800226A4() == 2) {
-            if ((s16)func_800225B8() == 1) {
+        if (GetVal8005E5B4() == 2) {
+            if ((s16)GetVal8005E5B8() == 1) {
                 func_800132F0(10, 0, 2);
                 func_8001FE34(10);
                 D_800C4A24 = 27;

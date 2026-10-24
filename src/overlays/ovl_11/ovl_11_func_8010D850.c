@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
 s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
 s32 ovl_11_func_800E0C24(Ovl11ActionDispatchView *arg0, s32 arg1);
@@ -22,7 +22,7 @@ s32 ovl_11_func_8010D850(u8 *arg0, s16 area) {
     u8 *base;
     Ovl11F413CArg1View out;
 
-    random = func_80012A34(3);
+    random = Rand(3);
     count = (u16)(*(u16 *)(arg0 + 0xB2) / 100U) + random;
     failed = 0;
     for (i = 0; i < count; i++) {

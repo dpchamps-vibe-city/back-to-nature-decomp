@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
-int FntPrint();
 int McxGetMem(int, unsigned char *, unsigned, unsigned);
 int sprintf(char *, const char *, ...);
 s32 ovl_10_func_800BB728(s32);

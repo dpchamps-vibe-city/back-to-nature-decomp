@@ -9,6 +9,14 @@ void func_80023600(void);
 s16 D_8005E33A;
 u16 D_8005E338;
 
+void SetVal8005E2BC(s32 arg0);
+
+void SetVal8005E334(s32 arg0);
+
+s32 func_8002261C(s32 arg0, s32 arg1);
+
+void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
+
 void func_80023288(void) {
     s32 temp_s0;
     s16 q;

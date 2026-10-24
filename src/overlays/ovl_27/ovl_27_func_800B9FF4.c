@@ -3,6 +3,8 @@
 extern s16 D_800C4A1A;
 extern s32 D_800C4A1C;
 
+void func_80015F80(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7, u16 arg8);
+
 void ovl_27_func_800B9FF4(void) {
     s32 var_a1;
     s32 var_a2;

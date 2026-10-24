@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 /* Fields preserved across the memset that clears the record. */
 typedef struct {

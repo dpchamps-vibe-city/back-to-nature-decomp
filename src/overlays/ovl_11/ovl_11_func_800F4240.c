@@ -10,7 +10,7 @@ typedef struct {
 
 s32 ovl_11_func_800F581C(void);
 
-s32 ovl_11_func_800F4240(ReconA0View *arg0) {
+s16 ovl_11_func_800F4240(ReconA0View *arg0) {
     s16 temp_a1;
     u16 temp_v0;
 

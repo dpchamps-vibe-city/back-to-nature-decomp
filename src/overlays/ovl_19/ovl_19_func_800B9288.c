@@ -3,9 +3,9 @@
 
 s32 func_8002261C(s32 arg0, s32 arg1);
 void func_80022738(void);
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 ovl_19_func_800BA25C(void);
 void ovl_19_func_800B843C(void);
 void ovl_19_func_800BAC40(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -15,8 +15,8 @@ void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
  * materialises the D_800BF560 label (D_800BF4C0 + 0xA0) and folds the +0xA0/
  * +0xE0 command records and the -0x90/-0x48 records as displacements from it. */
 void ovl_19_func_800B9288(void) {
-    func_80017B18(0);
-    func_800226D8(0);
+    SetVal8005E2BC(0);
+    SetVal8005E334(0);
     func_8002261C(4, 0xD);
     if (D_800BF4C0[9] == 4) {
         if (D_800BF4C0[0xB] < 2) {
@@ -24,11 +24,11 @@ void ovl_19_func_800B9288(void) {
         }
     }
     if (ovl_19_func_800BA25C() == 1) {
-        if (func_800226A4() == 5) {
-            func_80017B18(1);
-            func_800226D8(1);
+        if (GetVal8005E5B4() == 5) {
+            SetVal8005E2BC(1);
+            SetVal8005E334(1);
         }
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             ovl_19_func_800B843C();
             ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 0, 0);
             ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 0, 0);

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_11_func_800D3200(s32 arg0);
 s32 ovl_11_func_800D04D4(void *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_800BE208(s32 *arg0, Ovl11CollisionTag arg1, u16 arg2, u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
@@ -17,7 +17,7 @@ s32 ovl_11_func_800D4314(Ovl11D4314Object *arg0) {
     case 0:
         arg0->state = 1;
         arg0->flags |= 0x800;
-        arg0->timer = func_80012A34(60);
+        arg0->timer = Rand(60);
         break;
     case -1:
         ovl_11_func_800D3200((s32)arg0);
@@ -34,18 +34,18 @@ s32 ovl_11_func_800D4314(Ovl11D4314Object *arg0) {
                 if (ovl_11_func_800BE208(arg0->position, arg0->collision, 0, 0, 0, 0, 0, 1)) {
                     arg0->state = 4;
                     do {
-                        arg0->direction = func_80012A34(4);
+                        arg0->direction = Rand(4);
                     } while (arg0->direction == 1);
                 }
                 break;
             case 3:
-                if (func_80012A34(100) < 30 && !ovl_11_func_800BE208(arg0->position, arg0->collision, 0, 0, 0, 0, 0, 1)) {
+                if (Rand(100) < 30 && !ovl_11_func_800BE208(arg0->position, arg0->collision, 0, 0, 0, 0, 0, 1)) {
                     arg0->state = 1;
                     ovl_11_func_800D04D4(arg0, &D_80123BD4, &arg0->state, -1, &arg0->timer);
                 } else {
                     arg0->state++;
                     do {
-                        arg0->direction = func_80012A34(4);
+                        arg0->direction = Rand(4);
                     } while (arg0->direction == 1);
                 }
                 break;

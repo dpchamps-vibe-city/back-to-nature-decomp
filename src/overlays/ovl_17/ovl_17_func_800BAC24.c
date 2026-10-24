@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 void func_80015868(Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
+void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 void func_800248E8(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_17_func_800BAEF0(void);
 void ovl_17_func_800B9158(s32 arg0, s16 arg1);

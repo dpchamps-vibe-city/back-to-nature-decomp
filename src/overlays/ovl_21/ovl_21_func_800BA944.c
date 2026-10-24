@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 /* Legacy overlay import of matched Rand at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 s16 ovl_21_func_800BA944(s16 arg0) {
     s16 buf[4];
@@ -20,5 +20,5 @@ s16 ovl_21_func_800BA944(s16 arg0) {
     if (count == 0) {
         return -1;
     }
-    return buf[func_80012A34((u16)count)];
+    return buf[Rand((u16)count)];
 }

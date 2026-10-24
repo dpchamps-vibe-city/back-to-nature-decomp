@@ -5,7 +5,6 @@
 #include "psyq/memory.h"
 
 
-void *memset ();
 UnkStruct800E109C *ovl_11_func_800E04FC (s32 arg0, s32 arg1);
 s8 *ovl_11_func_800DE924 (s32 arg0, s32 arg1);
 void ovl_11_func_800E2904 (s32 arg0);

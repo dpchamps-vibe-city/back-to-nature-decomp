@@ -1,11 +1,12 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
     s32 unk1;
 } Ovl11E2968UnalignedWord;
 
-void ovl_11_func_800E2A30(s16 *arg0);
+s32 ovl_11_func_800E2A30(s16 *arg0);
 void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_800E2968(s16 *arg0, s32 arg1) {

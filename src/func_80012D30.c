@@ -6,7 +6,7 @@
 s32 func_80013394(void);
 void SetVal8005E29C(s32 arg0);
 void SetVal8005E27C(s32 arg0);
-s32 GetFlag8005E274(void);
+u8 GetFlag8005E274(void);
 void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6);
 
 /* TU-owned globals (GP-relative accesses in target). */

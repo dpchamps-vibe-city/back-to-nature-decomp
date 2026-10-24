@@ -1,9 +1,5 @@
 #include "common.h"
-
-extern void SsUtAllKeyOff(short);
-extern void SsSeqSetVol(short, short, short);
-extern void SsSeqStop(short);
-extern void SsSeqPlay(short, char, short);
+#include "psyq/libsnd.h"
 
 s32 func_800201C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4) {
     s32 *score_base;

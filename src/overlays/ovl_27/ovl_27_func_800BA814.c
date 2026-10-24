@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/memory.h"
 
 s32 ovl_27_func_800BA814(void) {
     s32 idx;

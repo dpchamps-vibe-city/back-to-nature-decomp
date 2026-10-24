@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 extern u8 D_800BF87C[];
 extern s16 D_800BBAB4[];
 
@@ -25,5 +25,5 @@ s32 ovl_23_func_800BA3B4(s16 arg0, s16 arg1) {
         sel = 4;
     }
     val = D_800BBAB4[arg0 * 5 + sel];
-    return val > func_80012A34(0x64);
+    return val > (s32)Rand(0x64);
 }

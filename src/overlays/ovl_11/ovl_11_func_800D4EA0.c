@@ -5,8 +5,8 @@ void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800D425C(u16 *arg0);
 s32 ovl_11_func_800D3D60(u16 arg0);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
-void func_8001FABC(s16 arg0);
-u32 func_80012A34(s32 arg0);
+s32 func_8001FABC(s16 arg0);
+u32 Rand(s32 arg0);
 
 s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
     Ovl11PaddedVec3 position;
@@ -45,7 +45,7 @@ s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
         *(s16 *)((u8 *)arg0 + 0x22) = 2;
         break;
     case 2:
-        if (func_80012A34(2) != 0) {
+        if (Rand(2) != 0) {
             *(s16 *)((u8 *)arg0 + 0x22) = 2;
         } else {
             *(s16 *)((u8 *)arg0 + 0x22) = 3;

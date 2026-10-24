@@ -1,6 +1,8 @@
 #include "common.h"
 
-s32 func_8001AF44(s32 arg0);
+s32 func_8001AF44(u32 arg0);
+
+s32 ovl_11_func_800F13D8(u16 arg0);
 
 s32 ovl_11_func_800F1AE0(s32 arg0) {
     s32 var_s0;

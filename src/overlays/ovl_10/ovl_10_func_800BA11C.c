@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
-int FntPrint();
 int McxCurrCtrl(int, int, int, int);
 
 extern char D_800B84DC[];
@@ -12,6 +14,8 @@ extern char *D_800BB858[];
 extern s32 D_800BB9A8;
 extern s32 D_800BB9AC;
 extern s32 D_800BB9B0;
+
+void ovl_10_func_800B92AC(void);
 
 s32 ovl_10_func_800BA11C(s32 arg0, s32 arg1) {
     switch (arg0) {

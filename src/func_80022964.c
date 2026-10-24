@@ -17,7 +17,7 @@ s32 D_8005E5CC;
  * placement as the 4-byte aggregate ReadFlag parameters. */
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
-s32 func_80022AF0(void);
+s16 func_80022AF0(void);
 u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
 
 s32 func_80022964(void) {

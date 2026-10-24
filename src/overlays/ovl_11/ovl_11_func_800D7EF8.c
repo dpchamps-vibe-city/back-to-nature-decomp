@@ -9,7 +9,7 @@ typedef struct {
     s32 unkC;
 } Ovl11_D7EF8_Arg0Copy;
 
-s32 ovl_11_func_800D7EF8(s32 *arg0, u16 *arg1, u16 *arg2, void *arg3) {
+s32 ovl_11_func_800D7EF8(s32 *arg0, u16 *arg1, u16 *arg2) {
     Ovl11_D7EF8_Arg0Copy tmp;
     u8 *base;
     u8 *p;

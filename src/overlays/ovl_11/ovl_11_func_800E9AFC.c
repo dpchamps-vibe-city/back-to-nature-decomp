@@ -1,5 +1,11 @@
 #include "common.h"
 
+void func_8001FE00(s32 arg0);
+
+void func_8001FE34(s32 arg0);
+
+s32 func_8001FE6C(void);
+
 s32 ovl_11_func_800E9AFC(s16 arg0, s16 arg1, s32 arg2) {
     s32 result;
 

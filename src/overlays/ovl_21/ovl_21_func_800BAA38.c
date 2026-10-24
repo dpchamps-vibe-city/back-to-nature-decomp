@@ -1,6 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 
+extern void func_80015814(u16 *arg0, s32 arg1);
+extern void func_80015828(u16 *arg0, u16 arg1);
+
 void ovl_21_func_800BAA38(s32 arg0) {
     s32 i;
     s32 j;
@@ -9,9 +12,9 @@ void ovl_21_func_800BAA38(s32 arg0) {
     void (*updateFlags)(u16 *, s32);
 
     if (arg0 != 0) {
-        updateFlags = D_80015814;
+        updateFlags = func_80015814;
     } else {
-        updateFlags = D_80015828;
+        updateFlags = func_80015828;
     }
     updateFlags(&D_800C0ACC.field_0, 4);
     updateFlags(&(&D_800C0ACC)[1].field_0, 4);

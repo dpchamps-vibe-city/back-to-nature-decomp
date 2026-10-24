@@ -11,7 +11,7 @@ void ovl_11_func_800F1038 (u16 arg0, s32 arg1);
 s32 ovl_11_func_800F0F50 (void);
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 ovl_11_func_80118C6C (void);
-s32 ovl_11_func_800DBEF8 (void);
+s32 ovl_11_func_800DBEF8(s32 arg0);
 s32 ovl_11_func_800DBE30 (s32 arg0);
 s32 ovl_11_func_800E7798 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F1078 (Ovl11ConditionRecord *arg0, s32 arg1);

@@ -1,7 +1,8 @@
 #include "common.h"
 #include "game_types.h"
-
-int FntPrint();
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 s32 ovl_30_func_80131F14(void) {
     s32 temp_v0;

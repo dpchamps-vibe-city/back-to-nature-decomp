@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 extern u8 D_801232D4[];
 
 s32 ovl_11_func_800D1C18(s32 arg0, s32 arg1, s32 arg2) {
@@ -17,7 +17,7 @@ s32 ovl_11_func_800D1C18(s32 arg0, s32 arg1, s32 arg2) {
     arg1 &= 0xFFFF;
     arg2 &= 0xFFFF;
 
-    t0 = func_80012A34(0x65);
+    t0 = Rand(0x65);
 
     a3 = 4;
     a1 = 0;

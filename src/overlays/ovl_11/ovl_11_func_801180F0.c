@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 
-void func_80017B18(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void func_80022738(void);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -106,13 +106,13 @@ s32 ovl_11_func_801180F0(void) {
         return 0;
     case 5:
         ovl_11_func_80118B84(0, -1, 0);
-        func_800226D8(0);
-        func_80017B18(0);
+        SetVal8005E334(0);
+        SetVal8005E2BC(0);
         func_8002261C(2, 0x5F);
         D_8012D7CC = 6;
         return 0;
     case 6:
-        if (func_800226A4() == 5) {
+        if (GetVal8005E5B4() == 5) {
             D_8012D7CC = 7;
         }
         return 0;
@@ -157,7 +157,7 @@ s32 ovl_11_func_801180F0(void) {
         }
         return 0;
     case 8:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             D_8012D7CC = D_8012D7D0;
         }
         return 0;

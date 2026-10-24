@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 SsSetReservedVoice(s32); /* extern */
+#include "psyq/libsnd.h"
 
 s32 func_80020540(s32 arg0) {
     s32 result;

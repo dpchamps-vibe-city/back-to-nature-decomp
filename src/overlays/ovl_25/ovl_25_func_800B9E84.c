@@ -3,7 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 
-void func_80015840(ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_25_func_800BA5BC(SpriteSourceData *arg0, u16 *arg1);
 s32 func_8001FABC(s16 arg0);
 

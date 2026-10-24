@@ -1,5 +1,7 @@
 #include "common.h"
 
+s16 func_80014388(s32 arg0, s32 arg1);
+
 s32 func_8001413C(s32 arg0) {
     s32 type;
     s32 digital_state;

@@ -9,6 +9,10 @@
 
 void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
+void func_8001719C(u8 *arg0);
+
+void func_80017200(u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+
 void ovl_11_func_800BD238(s32 arg0) {
     s32 *p;
     s32 temp_a1;

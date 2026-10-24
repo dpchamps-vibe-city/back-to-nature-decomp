@@ -2,7 +2,7 @@
 #include "psyq/stddef.h"
 
 /* Overlay import of matched u32 Rand(s32) at 0x80012A34. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 func_8001AD6C(s32 arg0);
 void func_8001ADD8(u32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void ovl_28_func_800B8E9C(u_long *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s16 arg9, u8 arg10);
@@ -24,7 +24,7 @@ void ovl_28_func_800B86D8(void) {
                 column = D_800B93CE;
                 D_800B93CE = (u16)D_800B93CE + 1;
                 D_800B93C6 = D_800B93D0[D_800B93CC][column];
-                D_800B93C8 = func_80012A34((u16)(*(u16 *)&HWD0 - 80));
+                D_800B93C8 = Rand((u16)(*(u16 *)&HWD0 - 80));
                 D_800B93CA = 144;
                 D_800B93C4 = -2;
             }

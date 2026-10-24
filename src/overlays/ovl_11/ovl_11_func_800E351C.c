@@ -2,8 +2,15 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "psyq/memory.h"
 
-s32 func_800120BC(void);
+s32 GetVal8005E3B0(void);
+
+s32 func_8001205C(void);
+
+s32 func_8001AF44(u32 arg0);
+
+s32 ovl_11_func_800E39B8(s32 *arg0, u32 arg1);
 
 s32 ovl_11_func_800E351C(u8 *arg0, s16 arg1, s16 arg2) {
     Ovl11Rect801248B4 rect;
@@ -37,7 +44,7 @@ s32 ovl_11_func_800E351C(u8 *arg0, s16 arg1, s16 arg2) {
     diff = end - acc;
     if (func_8001205C() >= diff) {
         p = &D_801294E8;
-        *p = func_800120BC() - diff;
+        *p = GetVal8005E3B0() - diff;
         size = *p;
         if (size & 3) {
             size -= size & 3;

@@ -10,7 +10,7 @@ u16 ovl_11_func_80110118(Ovl11ActionCompletionView *arg0);
 s32 ovl_11_func_800F44B4(u16 arg0, s32 *arg1, s16 *arg2, s32 arg3);
 s32 ovl_11_func_80110944(s16 arg0, u16 arg1);
 
-s32 ovl_11_func_8010FEF8(Ovl11SetFieldsView *arg0) {
+s32 ovl_11_func_8010FEF8(Ovl11SetFieldsView *arg0, s32 arg1) {
     Ovl11PaddedVec3 sp18;
     s16 sp28;
     s16 temp_v0;

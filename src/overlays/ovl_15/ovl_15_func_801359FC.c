@@ -5,7 +5,7 @@ extern u8 D_80137AB0[];
 extern u8 *D_801376D0;
 extern u8 D_80137830[];
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 void ovl_15_func_801359FC(void) {
     u8 *base;
@@ -20,5 +20,5 @@ void ovl_15_func_801359FC(void) {
         base += 0x80;
         size -= 0x80;
     }
-    D_80137830[0x7FFE] = func_80012A34(0x100);
+    D_80137830[0x7FFE] = Rand(0x100);
 }

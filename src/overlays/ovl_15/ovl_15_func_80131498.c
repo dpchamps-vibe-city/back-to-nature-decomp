@@ -2,6 +2,8 @@
 
 s16 ovl_15_func_80135C20(s16 arg0);
 
+void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
+
 void ovl_15_func_80131498(void) {
     s16 *var_s0;
     s32 var_s1;

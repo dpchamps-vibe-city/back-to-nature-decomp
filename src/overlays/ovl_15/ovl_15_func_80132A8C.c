@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 extern s32 D_801375D8[][4];
 
 struct ovl_15_80132A8C_data {
@@ -22,7 +22,7 @@ void ovl_15_func_80132A8C(struct ovl_15_80132A8C_data *arg0, s16 arg1) {
     arg0->field_38 = D_801375D8[q][0] + r * 0x190;
     arg0->field_3C = D_801375D8[q][1];
     arg0->field_40 = D_801375D8[q][2];
-    temp = func_80012A34(4);
+    temp = Rand(4);
     arg0->field_22 = temp;
     arg0->field_30 = 4;
 }

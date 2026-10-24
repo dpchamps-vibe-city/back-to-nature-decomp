@@ -25,8 +25,8 @@ typedef struct {
     /* 0x52D4 */ s32 field_52D4;
 } D8006C838_52C8View;
 
-s32 func_80012A34(s32 arg0);
-void func_8001FABC(s16 arg0);
+u32 Rand(s32 arg0);
+s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80109188(Struct_80109A70 *arg0, s32 arg1);
@@ -57,7 +57,7 @@ s32 ovl_11_func_80109A70(Struct_80109A70 *arg0) {
             return -1;
         }
     }
-    if (func_80012A34(0xC8) < arg0->unk16 + 0x32) {
+    if ((s32)Rand(0xC8) < arg0->unk16 + 0x32) {
         far_base2 = (char *) &D_8007AFF0;
         if (*(s16 *) (far_base2 + 0x25476) == arg0->unk30) {
             func_8001FABC(0x19);

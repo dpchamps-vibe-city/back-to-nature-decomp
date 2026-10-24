@@ -2,8 +2,8 @@
 
 s32 func_80021B64(void);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
-s32 func_800225B8(void);
+s32 GetVal8005E5B4(void);
+s32 GetVal8005E5B8(void);
 
 s32 ovl_11_func_800E58DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;
@@ -29,10 +29,10 @@ s32 ovl_11_func_800E58DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     }
     if (func_80021B64() == 0) {
         func_8002261C(arg0, var_s0);
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             var_v0 = 1;
             if (arg2 != -1) {
-                D_80129560[arg2] = func_800225B8();
+                D_80129560[arg2] = GetVal8005E5B8();
             }
         }
     }

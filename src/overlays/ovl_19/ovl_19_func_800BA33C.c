@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 
 s32 ovl_19_func_800BA33C(u8 *arg0) {
     s32 result;
@@ -23,7 +23,7 @@ s32 ovl_19_func_800BA33C(u8 *arg0) {
     result = 0;
     flag = *(u32 *)(arg0 + 0xC) != 0;
     sum = 0;
-    limit = (s16)func_80012A34(0x64);
+    limit = (s16)Rand(0x64);
     for (i = 0; i < 4; i++) {
         val = *(u16 *)((u8 *)D_800BCF28 + (cat << 4) + (flag << 3) + i * 2);
         sum = (s16)(sum + val);

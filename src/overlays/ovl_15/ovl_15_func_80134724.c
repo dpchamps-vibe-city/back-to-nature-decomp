@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 extern s16 D_8013759E;
 extern u16 D_801375A0;

@@ -1,10 +1,10 @@
 #include "common.h"
 #include "psyq/memory.h"
 
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800F44B4(u16 arg0, s32 *position, s16 *area, s32 index);
 
-s16 ovl_11_func_80110944(s16 area, u16 mode) {
+s32 ovl_11_func_80110944(s16 area, u16 mode) {
     u8 choices[20];
     s32 position[3];
     s16 foundArea;
@@ -103,7 +103,7 @@ s16 ovl_11_func_80110944(s16 area, u16 mode) {
      * See notes/research/ovl_11_func_80110944-untied-high-low.md. */
     large = Ovl30_AnimalRecords749F4;
     if (count) {
-        return choices[func_80012A34((u16)count)];
+        return choices[Rand((u16)count)];
     }
     return -1;
 }

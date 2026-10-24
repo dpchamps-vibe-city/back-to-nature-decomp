@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2) {
+s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3) {
     char *base = (char *)&D_80071A00;
     s32 temp_a0;
     s32 var_a0;

@@ -19,8 +19,8 @@ void ovl_17_func_800BB3F4 (s16 arg0);
 void func_80011EF0 (s32 arg0);
 s32 func_80021484 (s32 arg0);
 s32 func_80020414 (s32 arg0, s32 arg1);
-void func_80015840 (ObjectState *obj, s8 arg1);
-void func_8001585C (ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
+void func_8001585C(ObjectState *obj, u8 arg1);
 void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80015F80 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7, u16 arg8);
 

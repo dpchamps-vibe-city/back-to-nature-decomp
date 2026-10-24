@@ -1,7 +1,7 @@
 #include "common.h"
 
-s32 func_8001F250(s32, s32);
-s32 ovl_11_func_8011D9DC(s16, s32);
+s32 pow_int(s32, s32);
+s16 ovl_11_func_8011D9DC(s16, s32);
 s32 ovl_11_func_800D6A94(s16);
 void ovl_11_func_800D7338(s16 *, s16, s16, s16);
 
@@ -21,7 +21,7 @@ s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
         insufficient = ovl_11_func_8011D9DC(id, 1) < amount;
     }
     if (!insufficient) {
-        count = func_8001F250(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
+        count = pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
         fresh = 0;
         slot = (s16 *)((u8 *)D_8006C838 + 0x524C);
         capacity = 0;

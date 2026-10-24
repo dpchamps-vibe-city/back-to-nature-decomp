@@ -1,10 +1,10 @@
 #include "common.h"
 
-s32 func_8001F250(s32, s32);
+s32 pow_int(s32, s32);
 /* The original caller supplies two additional, unused zero arguments. */
 s32 ovl_11_func_800E6EAC();
 
-s32 ovl_11_func_8011D9DC(s16 id, s32 mode) {
+s16 ovl_11_func_8011D9DC(s16 id, s32 mode) {
     s32 count;
     s32 total;
     s32 i;
@@ -16,7 +16,7 @@ s32 ovl_11_func_8011D9DC(s16 id, s32 mode) {
         }
     }
     total = 0;
-    count = func_8001F250(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
+    count = pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
     slot = (s16 *)&((struct Ovl11ItemInsertState *)D_8006C838)->held;
     if (slot[0] == 0) {
         total = 99;

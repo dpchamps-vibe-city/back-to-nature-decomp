@@ -18,7 +18,7 @@ typedef struct {
     /* 0xDDB4 */ Entry_F5210 *field_DDB4;
 } View_F5210;
 
-void ovl_11_func_800F5210(void) {
+void ovl_11_func_800F5210(s16 arg0) {
     Entry_F5210 *p = (Entry_F5210 *)((u8 *)((View_F5210 *)D_8006C838)->field_DDB4 + 2);
     s16 type;
     u16 flags;

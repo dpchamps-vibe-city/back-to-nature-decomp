@@ -2,6 +2,8 @@
 
 extern u8 D_801290D8[];
 
+void ovl_11_func_800DCE98(s32 arg0);
+
 void ovl_11_func_800DCECC(void) {
     u8 *base;
     s32 i;

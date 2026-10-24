@@ -1,5 +1,7 @@
 #include "common.h"
 
+s32 ovl_11_func_800E4B58(s32 arg0, s32 arg1);
+
 s32 ovl_11_func_800E4AEC(s32 arg0) {
     s32 i;
     s16 v;

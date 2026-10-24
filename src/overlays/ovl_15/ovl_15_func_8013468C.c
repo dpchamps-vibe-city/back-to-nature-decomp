@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 typedef struct {
     s16 unk0;

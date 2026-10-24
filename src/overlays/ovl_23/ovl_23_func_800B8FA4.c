@@ -5,7 +5,7 @@
 #include "psyq/stdlib.h"
 
 /* Overlay-local name for Rand, defined at 0x80012A34 in the executable. */
-u32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_23_func_800BA1E0(Ovl23Func800BA1E0Arg *arg0);
 s32 ovl_23_func_800B9CCC(Ovl23Func800BA1E0Arg *arg0);
 void ovl_23_func_800BB0C8(Ovl23Func800BB0C8Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -55,11 +55,11 @@ void ovl_23_func_800B8FA4(void) {
                             ovl_23_func_800B9CCC((Ovl23Func800BA1E0Arg *)actor), base->unk3AC);
                     }
                 } else {
-                    state = func_80012A34(8) + 3;
+                    state = Rand(8) + 3;
                     if (state != 3) {
-                        direction = (func_80012A34(4) << 1) | 1;
+                        direction = (Rand(4) << 1) | 1;
                     } else {
-                        direction = func_80012A34(5) + 4;
+                        direction = Rand(5) + 4;
                         direction = direction == 8 ? 0 : direction;
                     }
                     ovl_23_func_800BB0C8((Ovl23Func800BB0C8Arg *)actor, state, direction, 60);
@@ -79,7 +79,7 @@ void ovl_23_func_800B8FA4(void) {
     for (i = 0; i < 6; i++, window = (struct Ovl23ActorDecisionView *)((u8 *)window + 0x50)) {
         if (window->actors[0].unk4 == walkingState &&
             window->actors[0].unk8 == (window->actors[0].unk8 / base2->unk3AE) * base2->unk3AE) {
-            sampledDirection = func_80012A34(5) + 4;
+            sampledDirection = Rand(5) + 4;
             direction = sampledDirection;
             sampledDirection = 8;
             direction = direction == sampledDirection ? 0 : direction;

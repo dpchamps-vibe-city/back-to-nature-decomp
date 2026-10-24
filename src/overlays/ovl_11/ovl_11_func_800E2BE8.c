@@ -1,6 +1,6 @@
 #include "common.h"
 
-void ovl_11_func_800D075C(s32 arg0, s32 arg1, s32 arg2);
+void ovl_11_func_800D075C(s32 arg0, s16 arg1, s32 arg2);
 
 void ovl_11_func_800E2BE8(s32 arg0) {
     s32 i;

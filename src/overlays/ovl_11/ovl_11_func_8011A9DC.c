@@ -10,7 +10,7 @@ typedef struct {
     /* 0x0A */ s16 field_A;
 } ovl_11_A9DC_arg0;
 
-s32 ovl_11_func_800D6014(s32 arg0);
+s32 ovl_11_func_800D6014(u16 arg0);
 
 s32 ovl_11_func_8011A9DC(void) {
     ovl_11_A9DC_arg0 *p;

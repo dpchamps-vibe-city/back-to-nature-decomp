@@ -32,6 +32,8 @@ typedef struct {
 extern u8 D_80128BB0[];
 extern u8 D_80123130[];
 
+void ovl_11_func_800CBF40(UnkStruct800CBF40 *arg0);
+
 UnkStruct800CBF40 *ovl_11_func_800CBF70(UnkStruct800CBF70Arg0 *arg0, u16 *arg1, s16 arg2) {
     UnkStruct800CBF40 *var_s0;
     UnkStruct800CBF70Table *temp_s1;

@@ -9,7 +9,7 @@ s16 ovl_17_func_800B9940(s32 arg0);
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 s32 func_8002261C(s32 arg0, s32 arg1);
 /* GetVal8005E5B4, named by its original overlay import. */
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 
 void ovl_17_func_800B8F28(void) {
     u32 *boxes;
@@ -43,7 +43,7 @@ void ovl_17_func_800B8F28(void) {
     }
     ((Ovl17SummaryResultView *)D_8006C838)->total = total;
     func_8002261C(4, 8);
-    if (func_800226A4() == 2) {
+    if (GetVal8005E5B4() == 2) {
         ((Ovl17SummaryResultView *)D_8006C838)->state++;
     }
 }

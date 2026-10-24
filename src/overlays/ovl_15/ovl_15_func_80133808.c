@@ -5,7 +5,6 @@
 #include "psyq/memory.h"
 
 
-void *memset ();
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);

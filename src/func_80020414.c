@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/libsnd.h"
 
 /* func_80020414 - stop the sequence for a song/track slot and mark it empty.
  *

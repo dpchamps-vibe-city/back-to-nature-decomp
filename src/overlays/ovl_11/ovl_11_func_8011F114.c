@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 s32 ovl_11_func_8011F1D0(s32 arg0);
 
 void ovl_11_func_8011F114(void) {
@@ -14,7 +14,7 @@ void ovl_11_func_8011F114(void) {
             D_8012DB10 = 2;
             break;
         case 2:
-            if (func_800226A4() == 2) {
+            if (GetVal8005E5B4() == 2) {
                 D_8012DB10 = 3;
             }
             break;

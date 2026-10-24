@@ -4,7 +4,7 @@
 #include "psyq/stddef.h"
 
 s32 ovl_11_func_800BE208(s32 *, Ovl11CollisionTag, u16, u16, void **, s32 *, s32, s32);
-void ovl_11_func_800C70CC(Ovl11C7010Object *, u16, s32, s32);
+void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 s32 ovl_11_func_800DF010(void *, s32);
 s32 ovl_11_func_800E0C24(void *, s32);
 s32 ovl_11_func_8010B57C(u16 *, s32);

@@ -1,6 +1,6 @@
 #include "common.h"
 
-void ovl_11_func_800FA590(s32 arg0, s16 arg1, s32 arg2);
+void ovl_11_func_800FA590(s32 arg0, s16 arg1, s16 arg2);
 
 void ovl_11_func_800FA31C(s32 arg0, s16 arg1, s16 arg2) {
     Recon_ovl_11_func_800FA31C_D80126F8CEntry *p;

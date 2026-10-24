@@ -37,7 +37,7 @@ extern Ovl11BBox D_80122C10[];
 extern Ovl11BBox D_80122C74[];
 extern Ovl11BBox D_80122D3C[];
 
-s32 ovl_11_func_800BE5A0(Ovl11CheckArg *arg0, s32 arg1, s32 arg2, void *arg3) {
+s32 ovl_11_func_800BE5A0(Ovl11CheckArg *arg0) {
     Ovl11BBox *var_a2;
     s16 temp_a1;
     Ovl11Pos *temp_a1_2;

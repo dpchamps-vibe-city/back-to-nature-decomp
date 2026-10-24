@@ -1,5 +1,5 @@
 #include "common.h"
-s32 ovl_21_func_800BA7F0(s32 arg0);
+s32 ovl_21_func_800BA7F0(s16 arg0);
 
 s32 ovl_21_func_800B97F4(void) {
     s32 callRet3;

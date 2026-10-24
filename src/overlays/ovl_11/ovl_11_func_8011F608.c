@@ -14,8 +14,8 @@ s32 func_8001FE6C(void);
 s32 func_80021B64(void);
 void func_80021B90(s32 arg0);
 /* Overlay imports of GetVal8005E5B8 and GetVal8005E5B4. */
-s32 func_800225B8(void);
-s32 func_800226A4(void);
+s32 GetVal8005E5B8(void);
+s32 GetVal8005E5B4(void);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_800BC9AC(void);
 void ovl_11_func_8011F958(void);
@@ -42,14 +42,14 @@ void ovl_11_func_8011F608(void) {
         func_80017A08(1, Ovl11_D_80128544[1]);
         func_80017A08(2, Ovl11_D_80128544[2]);
         func_8002261C(2, 0xFD);
-        if (func_800226A4() == 2) {
-            D_80128556 = ovl_11_func_8011FB80((s16)func_800225B8());
+        if (GetVal8005E5B4() == 2) {
+            D_80128556 = ovl_11_func_8011FB80((s16)GetVal8005E5B8());
             D_80128540 = 4;
         }
         break;
     case 4:
         func_8002261C(2, D_80128556);
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             if (D_80128556 == 0x10A) {
                 func_8001FB30(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
                 ovl_11_func_800BC9AC();

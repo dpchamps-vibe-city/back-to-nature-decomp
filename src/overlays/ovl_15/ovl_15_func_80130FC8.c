@@ -7,7 +7,6 @@
 
 
 long MemCardSync (long mode, long *cmds, long *rslt);
-void *memset ();
 void ovl_15_func_8012E15C (void);
 void ovl_15_func_8013468C (void);
 

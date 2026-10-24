@@ -1,14 +1,14 @@
 #include "common.h"
 
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 s32 func_800226B0(void);
 void func_800226F0(void);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800FF96C(void);
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800226D8(s32 arg0);
-void func_80017B18(s32 arg0);
+void SetVal8005E334(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 s32 func_8001FABC(s16 arg0);
@@ -22,7 +22,7 @@ void ovl_11_func_800FED0C(void) {
     u8 *base;
 
     if (D_801273B0 == 0x30) {
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             base = (u8 *)D_8006C838;
             *(Ovl11MenuSettings *)(base + 0xE4CC) = D_8012CEE8_menu;
             func_800226F0();
@@ -46,8 +46,8 @@ void ovl_11_func_800FED0C(void) {
     } else {
         func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x64), 1, 0x64, 0x4A, 0x82, 0x22);
         func_80017B3C(D_8005E3C0->field_D8 + 0x60, (s32)(D_80053AE8 + D_80054BBC[0]), 0x70, 0x4E);
-        func_800226D8(0);
-        func_80017B18(0);
+        SetVal8005E334(0);
+        SetVal8005E2BC(0);
         func_8002261C(3, 0x3B0);
         func_800248B0(D_8005E3C0->field_D8 + 0x5C, 0x6C, (s16)(D_801273B4_selection[0] * 14 + 0x54));
         if (ready == 1) {

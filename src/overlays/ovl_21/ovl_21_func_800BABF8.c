@@ -1,6 +1,6 @@
 #include "common.h"
-
-long SquareRoot0(long a);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
 
 s16 ovl_21_func_800BABF8(s16 arg0) {
     s32 callRet1;

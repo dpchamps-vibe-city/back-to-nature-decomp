@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_8011E574(void);
 
-void ovl_11_func_8011EE98(s32 arg0);
+void ovl_11_func_8011EE98(s16 arg0);
 
 void ovl_11_func_8011EC84(void) {
     func_8001FABC(3);

@@ -5,7 +5,7 @@
 #include "psyq/libgpu.h"
 
 s32 func_80013394(void);
-s32 func_80012A34(s32);
+u32 Rand(s32);
 s32 func_8001FABC(s16);
 void func_8001B2CC(s32, s32);
 void func_8001B3CC(s32);
@@ -70,7 +70,7 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             object = ovl_11_func_800CE744(id, -1);
             D_80134B10 = -1;
             for (i = 0; i < 8; i++) {
-                object[i + 2] = func_80012A34(0x94);
+                object[i + 2] = Rand(0x94);
             }
             object[10] = 0xFFFF;
             break;
@@ -197,7 +197,7 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             ACTION->state44CE = 2;
             ACTION->state44D0 = 1;
             ACTION->state44D2 = 1;
-            ACTION->random = func_80012A34(3);
+            ACTION->random = Rand(3);
             D_80134B10 = -1;
             break;
         case 26:

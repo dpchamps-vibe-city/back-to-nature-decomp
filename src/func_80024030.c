@@ -7,6 +7,12 @@ void func_80024108(s32 arg0, s32 arg1); /* extern */
 u16 D_8005E344;
 u16 D_8005E354;
 
+s32 func_8001FABC(s16 arg0);
+
+s32 func_800226B0(void);
+
+void func_80022738(void);
+
 void func_80024030(void) {
     s32 temp_v1;
     SomeStruct *gfx;

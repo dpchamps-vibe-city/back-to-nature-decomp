@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1) {
+s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (arg0 != 0) {
         char *base = (char *)&D_8006C838;
         *(s32 *)(base + 0x5234) &= 0xFF7FFBFF;

@@ -7,7 +7,7 @@ s32 func_80013394(void);
 s32 func_8001DFD4(s32 *arg0, SVECTOR *arg1);
 void func_80015C50(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
 void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-s32 ovl_11_func_800BF450(void);
+unsigned long long ovl_11_func_800BF450(void);
 s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0);
 s32 ovl_11_func_800CBE2C(Ovl11CC4E0Object *arg0);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
@@ -106,7 +106,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
             next.vy = arg0->height;
             next.vz = arg0->position.vz;
             ovl_11_func_800CE550((Vec3 *) &next);
-            if ((var_s3 == 2) && (ovl_11_func_800BF450() == 0)) {
+            if ((var_s3 == 2) && ((s32)ovl_11_func_800BF450() == 0)) {
                 arg0->height = next.vy;
             }
             if (arg0->unk2 != 0x186) {

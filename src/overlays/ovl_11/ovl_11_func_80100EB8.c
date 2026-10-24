@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_8001F250(s32 arg0, s32 arg1);
+s32 pow_int(s32 arg0, s32 arg1);
 
 /* 6-byte record: three s16 fields. Two stride-6 tables live in D_8006C838 at
  * 0x450A (0x40 entries, scanned by the second loop) and 0x5288 (scanned by the
@@ -32,7 +32,7 @@ s32 ovl_11_func_80100EB8(s32 arg0) {
         return 1;
     }
 
-    for (i = 0; i < func_8001F250(2, ((View *)D_8006C838)->field_51E6 + 1); i++) {
+    for (i = 0; i < pow_int(2, ((View *)D_8006C838)->field_51E6 + 1); i++) {
         if (((View *)D_8006C838)->rec_5288[i].f0 == s2) {
             s3 = 1;
             break;

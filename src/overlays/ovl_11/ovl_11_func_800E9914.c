@@ -3,7 +3,7 @@
 /* Both incoming halfwords are sign-extended in the callee. */
 s32 ovl_11_func_800D60F0(s16 arg0, s16 arg1);
 
-s32 ovl_11_func_800E9914(s16 arg0, s16 arg1, s32 arg2) {
+s32 ovl_11_func_800E9914(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 result;
 
     result = 0;

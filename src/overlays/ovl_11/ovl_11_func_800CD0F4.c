@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 void func_80021B90(s32 arg0);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_800E0C24(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);

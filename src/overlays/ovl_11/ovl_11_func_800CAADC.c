@@ -4,11 +4,11 @@
 #include "psyq/libgte.h"
 
 void ovl_11_func_800CA708(void);
-s32 func_8001EF98(void);
-void func_8001E334(s32);
+s32 GetVal8005E524(void);
+void SetVal8005E51C(s32);
 s32 ovl_11_func_800BDB88(s32 *, s32);
 void func_8001B2CC(s32, s32);
-void ovl_11_func_800C70CC(Ovl11C7010Object *, u16, s32, s32);
+void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 void ovl_11_func_800DB054(Ovl11SceneCoordinates *);
 s32 func_8001DFD4(s32 *, SVECTOR *);
 
@@ -25,7 +25,7 @@ void ovl_11_func_800CAADC(void) {
     if (!(player->flags & 2) && !(((Ovl11MovementState *)((u8 *)player - 0x51C8))->flags10 & 0x40000000)) {
         ovl_11_func_800CA708();
     }
-    D_80128C50 = *(s32 *)func_8001EF98();
+    D_80128C50 = *(s32 *)GetVal8005E524();
     position = player->position;
     if (player->flags & 0x40000000) {
       if (!(player->flags & 1)) {
@@ -38,7 +38,7 @@ void ovl_11_func_800CAADC(void) {
         }
         player->velocity[0] += offset->x;
         player->velocity[2] += offset->z;
-        func_8001E334(0x32);
+        SetVal8005E51C(0x32);
       }
     }
     position.vx += player->velocity[0];
@@ -62,7 +62,7 @@ void ovl_11_func_800CAADC(void) {
     } else {
         ovl_11_func_800BDB88((s32 *)&position, 0xC080);
     }
-    func_8001E334(0xC8);
+    SetVal8005E51C(0xC8);
     player->position = position;
     state = (Ovl11MovementState *)D_8006C838;
     if (!(state->flagsC & 0x400000)) {

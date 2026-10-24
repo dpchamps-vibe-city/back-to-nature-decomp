@@ -19,8 +19,6 @@ long MemCardSync (long mode, long *cmds, long *rslt);
 long MemCardWriteFile (long chan, char *file, unsigned long *adrs, long ofs, long bytes);
 int bcmp (const unsigned char *, const unsigned char *, int);
 void *memmove (unsigned char *, const unsigned char *, int);
-void *memset ();
-char *strcat (char *, const char *);
 char *strcpy ();
 s32 func_80011F5C (s32 arg0);
 void func_80011FD8 (s32 arg0);

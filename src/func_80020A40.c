@@ -4,6 +4,8 @@
 /* Tentative definitions — this TU owns these GP-relative globals. */
 s32 D_8005E55C;
 
+void func_800218BC(void);
+
 void func_80020A40(void) {
     SsSetStereo();
     D_8005E55C = 1;

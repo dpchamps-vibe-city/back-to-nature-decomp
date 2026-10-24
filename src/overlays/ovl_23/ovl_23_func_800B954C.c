@@ -2,10 +2,10 @@
 #include "game_types.h"
 #include "psyq/abs.h"
 
-void func_80015840(ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
 /* The original caller masks the promoted frame byte before this legacy call. */
 void func_8001585C();
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
+void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 
 /* Draws the two marker strips (12 entries at +0x5CC, 54 at +0x418): every
  * live entry within half a screen of the camera gets its sprite frame and is

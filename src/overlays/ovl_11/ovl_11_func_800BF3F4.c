@@ -1,14 +1,14 @@
 #include "common.h"
 #include "game_types.h"
 
-void *func_8001EF98(void);
+s32 GetVal8005E524(void);
 
 s32 ovl_11_func_800BF3F4(void) {
     u32 *p;
     u32 v;
     u32 r;
 
-    p = func_8001EF98();
+    p = GetVal8005E524();
     if (p == 0) {
         return 0;
     }

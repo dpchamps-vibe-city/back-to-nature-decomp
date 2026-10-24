@@ -5,7 +5,7 @@ s32 ovl_11_func_800F3BA0(u16 arg0);
 s32 ovl_11_func_800CB540(u16 *arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void ovl_11_func_800C8A08(Recon_ovl_11_func_800C7270_A0View *arg0) {

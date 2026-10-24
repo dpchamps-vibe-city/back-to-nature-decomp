@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-s32 ovl_11_func_800F4240(Ovl11ItemCollisionObject *arg0);
+s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800D5E00(u16 a, u16 b);
 s32 ovl_11_func_800D5E64(u16 a, u16 b);

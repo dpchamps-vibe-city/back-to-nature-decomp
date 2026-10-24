@@ -9,6 +9,10 @@ s16 D_8005E3CC;
 s16 D_8005E3CE;
 s32 D_8005E3D0;
 
+void SetVal8005E278(s32 arg0);
+
+void SetVal8005E27C(s32 arg0);
+
 void func_80013328(s16 arg0) {
     s32 var_v0;
     s32 t;

@@ -3,7 +3,7 @@
 
 extern u16 D_80070CF8;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_800E0C24(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_800E0FD0(Recon_ovl_11_func_8010CE80_A0View *arg0) {
@@ -21,7 +21,7 @@ s32 ovl_11_func_800E0FD0(Recon_ovl_11_func_8010CE80_A0View *arg0) {
             if (arg0->unk34 & 0x2000) {
                 var_a0 = 9;
             }
-            temp_v0 = func_80012A34(var_a0);
+            temp_v0 = Rand(var_a0);
             switch (temp_v0) {
             case 0:
                 var_a1 = 0x12;

@@ -5,7 +5,7 @@ s32 ovl_11_func_800C9D64(void);
 s32 ovl_11_func_800F46A4(Ovl11SpawnEffectRecord *arg0);
 void ovl_11_func_800CD5BC(Ovl11CD5BCObject *arg0, s32 arg1);
 void ovl_11_func_800C5048(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800C4DE0(Ovl11C7010Object *arg0) {
     Ovl11CE034Position pos;

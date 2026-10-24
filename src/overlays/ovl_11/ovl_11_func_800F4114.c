@@ -10,7 +10,7 @@
  * Verified only by the relocated-byte oracle; similarity proves nothing.
  */
 
-void ovl_11_func_800F5210(s32 arg0);
+void ovl_11_func_800F5210(s16 arg0);
 
 void ovl_11_func_800F4114(void) {
     ovl_11_func_800F5210(D_80070CF2);

@@ -1,8 +1,9 @@
 #include "common.h"
 #include "graphics_heap.h"
 #include "psyq/memory.h"
-
-extern unsigned long *ClearOTagR(unsigned long *ot, int n);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
 
 /* TU-owned globals (GP-relative in the target) */
 s32 D_8005E3B0;

@@ -1,6 +1,6 @@
 #include "common.h"
 
-s32 func_8001F250(s32 arg0, s32 arg1);
+s32 pow_int(s32 arg0, s32 arg1);
 void func_80024810(s32 arg0, s16 arg1, s16 arg2);
 void func_80024860(s32 arg0, s16 arg1, s16 arg2);
 s8 ovl_11_func_800D583C(s16 arg0);
@@ -30,7 +30,7 @@ void ovl_11_func_801024D8(void) {
     y = 0x5E;
     if (D_801273EA_table == 0) {
         slot = (Ovl11ItemState *)&Ovl11Items_80071AC0;
-        count = func_8001F250(2, slot[-27].id + 1);
+        count = pow_int(2, slot[-27].id + 1);
     } else {
         table = D_801273EA_table - 1;
         slot = D_80070D42_slots[table];

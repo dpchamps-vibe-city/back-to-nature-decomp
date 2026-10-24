@@ -5,7 +5,7 @@ s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 s32 func_8001AF44(u32 arg0);
 /* Resident SetVal8005E43C, named by its overlay-visible address. */
-void func_800158D8(s32 arg0);
+void SetVal8005E43C(s32 arg0);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 void ovl_11_func_80107E2C(u8 *arg0, s32 arg1, s16 arg2, s16 arg3);
@@ -36,7 +36,7 @@ void ovl_11_func_800E46A8(u8 *arg0) {
         if (func_8001AF44(0x72) && *(s16 *)arg0 == ((Ovl11E46A8State *)D_8006C838)->selectedId) {
             ot -= 0x14;
         }
-        func_800158D8(0);
+        SetVal8005E43C(0);
         func_80016054(ot, D_8005E3C0->field_118, (s32)(arg0 + 0xB0),
                       arg0[0xB4], arg0[0xB5], (s16)screen[0], (s16)screen[1],
                       *(s32 *)(arg0 + 0xB8), 0, 0x40);

@@ -4,10 +4,10 @@
 void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 s32 func_80013394(void);
-void func_80017B18(s32 arg0);
+void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
-void func_800226D8(s32 arg0);
+s32 GetVal8005E5B4(void);
+void SetVal8005E334(s32 arg0);
 void func_80022738(void);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -66,7 +66,7 @@ s32 ovl_11_func_80115FE0(void) {
         case 1:
             switch (((StructD548 *)D_8012D548)->index) {
             case 0:
-                func_800226D8(0);
+                SetVal8005E334(0);
                 func_8002261C(2, 0xE5);
                 ovl_11_func_8011D084(0x19, 9);
                 break;
@@ -161,13 +161,13 @@ s32 ovl_11_func_80115FE0(void) {
         ovl_11_func_8011D084(0x18, 1);
         break;
     case 25:
-        if (func_800226A4() == 5) {
-            func_80017B18(0);
+        if (GetVal8005E5B4() == 5) {
+            SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
         break;
     case 24:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;

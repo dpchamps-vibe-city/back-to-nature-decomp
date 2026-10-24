@@ -5,11 +5,11 @@ s16 D_8005E33A;
 u16 D_8005E338;
 
 s32 func_800226B0(void);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 
 s32 func_800236EC(void);
-s32 func_80023710(void);
-s32 func_8002374C(void);
+void func_80023710(void);
+void func_8002374C(void);
 s32 func_80023774(void);
 s16 func_80023794(s32 a0);
 s16 func_800237FC(s32 a0);

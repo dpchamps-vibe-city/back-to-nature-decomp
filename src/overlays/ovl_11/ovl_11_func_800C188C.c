@@ -7,6 +7,14 @@ typedef struct {
     /* 0xE4D2 */ s16 field_E4D2;
 } OvC188CView;
 
+s32 func_8001AF44(u32 arg0);
+
+s32 ovl_11_func_800C0824(void);
+
+void ovl_11_func_800FB608(void);
+
+void ovl_11_func_800FB628(void);
+
 void ovl_11_func_800C188C(void) {
     char *far_base;
     s32 temp;

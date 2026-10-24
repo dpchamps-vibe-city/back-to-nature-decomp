@@ -4,8 +4,6 @@
 #include "psyq/libgte.h"
 
 
-long SquareRoot0(long a);
-
 typedef struct {
     u16 unk0;
     u16 pad_02;

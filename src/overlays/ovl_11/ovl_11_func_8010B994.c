@@ -11,7 +11,7 @@ typedef struct {
     s32 field_34;
 } Ovl11B994Object;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 void ovl_11_func_800D12A0(s16 arg0);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
@@ -30,7 +30,7 @@ s32 ovl_11_func_8010B994(Ovl11B994Object *arg0) {
     if (arg0->field_34 & 0x400) {
         return -1;
     }
-    if (func_80012A34(0xC8) < arg0->field_16 + 0x64) {
+    if ((s32)Rand(0xC8) < arg0->field_16 + 0x64) {
         base = (Ovl11B994PositionView *)D_8006C838;
         ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, *(Ovl11PaddedVec3 *)base->position);
         arg0->field_34 |= 2;

@@ -1,5 +1,7 @@
 #include "common.h"
 
+u16 *func_8001A808(u16 *arg0, s32 arg1, s32 arg2);
+
 s32 func_8001A790(s32 arg0) {
     u16 *var_a0;
     s32 var_s1;

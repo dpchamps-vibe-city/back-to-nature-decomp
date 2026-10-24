@@ -7,8 +7,8 @@
 u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
 void func_8001719C(u8 *arg0);
 void func_80015704();
-void func_80015840(ObjectState *obj, s8 arg1);
-void func_8001585C(ObjectState *obj, s8 arg1);
+void func_80015840(ObjectState *obj, u8 arg1);
+void func_8001585C(ObjectState *obj, u8 arg1);
 
 void ovl_11_func_8011EE98(s16 arg0) {
     s32 temp_s0;

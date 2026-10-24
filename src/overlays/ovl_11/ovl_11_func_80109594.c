@@ -13,7 +13,7 @@ typedef struct {
 
 extern u16 D_80070CF8;
 
-s32 func_80012A34(s32 arg0);
+u32 Rand(s32 arg0);
 s32 ovl_11_func_801098B0(Ovl11HandlerObj *arg0);
 s32 ovl_11_func_80109188(Ovl11HandlerObj *arg0, s32 arg1);
 
@@ -46,7 +46,7 @@ s32 ovl_11_func_80109594(Ovl11HandlerObj *arg0) {
                 }
                 var_s1 = 0x12;
             }
-            temp_v0 = func_80012A34(var_a0);
+            temp_v0 = Rand(var_a0);
             switch (temp_v0) {
             case 0:
                 var_a1 = var_s1;

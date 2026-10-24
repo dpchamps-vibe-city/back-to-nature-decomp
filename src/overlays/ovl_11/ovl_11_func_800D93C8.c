@@ -3,10 +3,10 @@
 void ovl_11_func_800D92FC(s32 *arg0);
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-s32 ovl_11_func_800D95EC(u16, u8, s32 *, s32 *, s32 *);
-s32 ovl_11_func_800D981C(u16, u8, s32 *, s32 *, s32 *);
-s32 ovl_11_func_800D9B14(u16, u8, s32 *, s32 *, s32 *);
-s32 ovl_11_func_800D9E10(u16, u8, s32 *, s32 *, s32 *);
+s32 ovl_11_func_800D95EC(s32 arg0, s32 arg1, s32 *, s32 *, s32 *);
+s32 ovl_11_func_800D981C(s32 arg0, s32 arg1, s32 *, s32 *, s32 *);
+s32 ovl_11_func_800D9B14(s32 arg0, s32 arg1, s32 *, s32 *, s32 *);
+s32 ovl_11_func_800D9E10(s32 arg0, u8, s32 *, s32 *, s32 *);
 
 void ovl_11_func_800D93C8(void) {
     s32 bounds[4];

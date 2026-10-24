@@ -1,13 +1,15 @@
 #include "common.h"
 
-s32 ovl_11_func_800DBE9C(void);
+void ovl_11_func_800DBE9C(void);
 
 typedef struct {
     char pad_0[0x30];
     s32 *field_30;
 } D8006C838ViewBEF8;
 
-s32 ovl_11_func_800DBEF8(void) {
+void func_8001AF70(u16 arg0, u16 arg1);
+
+s32 ovl_11_func_800DBEF8(s32 arg0) {
     char *base;
     char *far_base;
     s32 *p;

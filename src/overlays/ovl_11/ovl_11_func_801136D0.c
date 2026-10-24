@@ -14,7 +14,7 @@ typedef struct {
     s32 *table[1];
 } Ovl11_801136D0_Table;
 
-s32 ovl_11_func_801136D0(s32 *arg0, u16 *arg1, u16 *arg2, void *arg3) {
+s32 ovl_11_func_801136D0(s32 *arg0, u16 *arg1, u16 *arg2) {
     Ovl11_801136D0_Arg0Copy tmp;
     s16 temp_a1;
     s16 temp_a3;

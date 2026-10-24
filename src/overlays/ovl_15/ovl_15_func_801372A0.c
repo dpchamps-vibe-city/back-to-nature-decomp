@@ -11,8 +11,6 @@
 
 typedef void (*M2C_a048f66bc407_SpriteCallback)(s32, SpriteSourceData *, s16, s32, s32);
 
-u_long *ClearOTagR (u_long *ot, int n);
-int DrawSync (int mode);
 int McxCardType (int);
 int McxSync (int, long *, long *);
 long MemCardAccept (long chan);
@@ -24,8 +22,6 @@ long MemCardSync (long mode, long *cmds, long *rslt);
 void SsSeqSetVol (short, short, short);
 void SsUtAllKeyOff (short);
 void *memmove (unsigned char *, const unsigned char *, int);
-void *memset ();
-char *strcat (char *, const char *);
 char *strcpy ();
 void ovl_15_func_801372F0 (void);
 void ovl_15_func_801372F8 (void);
@@ -46,7 +42,7 @@ void SetVal8005E2BC (s32 arg0);
 void SetVal8005E334 (s32 arg0);
 void func_80024A4C (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
 void ovl_15_func_8013468C (void);
-s32 func_8002029C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 func_8002029C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void ClearVal8005E2CC (void);
 void func_800226F0 (void);
 void ovl_15_func_8012E15C (void);
@@ -140,7 +136,7 @@ s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 void func_8001ABF0 (u16 *dst, u16 *src);
 void func_800249C0 (s32 arg0, s16 arg1, s16 arg2);
 void func_8001719C (u8 *arg0);
-void func_80015704 (SpriteSourceData *out, SpriteDataHeader *header, s32 arg2, s32 arg3);
+void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 
 void ovl_15_func_801372A0(s16 arg0) {
     ovl_15_func_801372F0();

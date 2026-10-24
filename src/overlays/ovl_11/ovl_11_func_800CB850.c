@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 s32 ovl_11_func_800CB730(Ovl11CE034Object *arg0);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3);
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 /* This caller zero-extends the byte; the callee stores only its low byte. */
 void func_80015840(ObjectState *obj, u8 arg1);
 s32 ovl_11_func_800D736C(s16 *arg0);

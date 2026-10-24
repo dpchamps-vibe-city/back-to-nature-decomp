@@ -17,7 +17,7 @@ typedef struct {
 
 extern ReconPointee0View *D_80128CF4;
 
-void ovl_11_func_800CFE40(s32 arg0);
+void ovl_11_func_800CFE40(u8 *arg0);
 
 void ovl_11_func_800CA580(ReconA0View *arg0) {
     D_80128CF4->unk38 = arg0->unk100;

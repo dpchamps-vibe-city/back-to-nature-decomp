@@ -10,7 +10,7 @@ typedef struct {
 } View3830;
 
 void ovl_11_func_801037EC(void);
-void func_8001FABC(s16 arg0);
+s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_80103830(void) {
     View3830 *v;

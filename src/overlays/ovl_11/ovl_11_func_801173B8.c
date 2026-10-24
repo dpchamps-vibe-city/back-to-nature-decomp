@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226A4(void);
+s32 GetVal8005E5B4(void);
 void func_80022738(void);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_8011764C(void);
@@ -40,7 +40,7 @@ s32 ovl_11_func_801173B8(void) {
         func_8002261C(2, message);
         return 0;
     case 2:
-        if (func_800226A4() == 5) {
+        if (GetVal8005E5B4() == 5) {
             D_8012D794 = 3;
         }
         break;
@@ -63,7 +63,7 @@ s32 ovl_11_func_801173B8(void) {
         }
         break;
     case 4:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             D_8012D794 = 5;
         }
         break;
@@ -73,7 +73,7 @@ s32 ovl_11_func_801173B8(void) {
         ovl_11_func_8011764C();
         goto display;
     case 6:
-        if (func_800226A4() == 5) {
+        if (GetVal8005E5B4() == 5) {
             D_8012D794 = 7;
         }
         break;
@@ -96,7 +96,7 @@ s32 ovl_11_func_801173B8(void) {
         }
         break;
     case 8:
-        if (func_800226A4() == 2) {
+        if (GetVal8005E5B4() == 2) {
             D_8012D794 = 0;
         }
         break;

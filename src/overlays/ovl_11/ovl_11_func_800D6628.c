@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/memory.h"
 
 extern s16 D_800A0494[];
 

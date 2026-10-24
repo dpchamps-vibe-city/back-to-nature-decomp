@@ -8,7 +8,7 @@ s32 ovl_11_func_800F06D8(s32 *arg0, s32 *arg1);
 s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
-s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s16 arg2, s32 arg3) {
+s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 var_s2;
     s32 *var_a1;
     s32 var_a2;
