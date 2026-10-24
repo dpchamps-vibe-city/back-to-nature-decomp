@@ -6,6 +6,12 @@ later session can tell a deliberate, justified exception from a workaround that
 should be removed. Each entry says what the exception does, why plain C could
 not reach the target under our toolchain, and what would retire it.
 
+The six-candidate re-audit below also records **unresolved repair debt**. An
+existing authorization, an exhausted source family, or an UNSAT conditioned on
+one compiler state is not proof that arbitrary clean C cannot match. Those
+entries explicitly distinguish a proved local obstruction from that stronger
+claim; they grant no new exceptions.
+
 ## ovl_19_func_800BB108 — `register s32 column asm("$16")` (authorized 2026-10-23)
 
 **Exception.** The table loop's column counter is declared
@@ -204,3 +210,311 @@ Load-bearing facts to keep:
 - `x` is assigned exactly once (sched.c `adjust_priority` boosts only a
   single-set destination);
 - `t = y` does not directly follow `y = arg1 & 0xFF`.
+
+## Six-candidate re-audit — 2026-10-24
+
+**Conclusion:** no whole-function clean-C impossibility was established for any
+of these six. The shared theme is compiler bookkeeping, not an instruction
+that C cannot express: pseudo sets, coalesced quantities, lifetime padding,
+reload-generated copies, and parameter residence. In particular, many pins do
+not imply many independent obstacles. All six target read-before-definition
+scans were clean in this audit; that rules out that fingerprint, not every
+possible handwritten origin.
+
+The strongest family is `func_80012598` / `func_8001231C`: a common first
+initialization loop, with different constants and second phases. The two sprite
+functions share a scheduling/allocation interaction, but are not established as
+one source TU. The CD reader and overlay predicate have different mechanisms.
+There is no evidence here for one compiler-flag change fixing all six.
+
+Measurements below use production container flags and staged keys
+`[control-flow, population, schedule, allocation]`. Scratch sources are under
+`build/asm-exception-audit/` and are also captured by the experiment ledger.
+No live C, headers, flags, or allowlist entries were changed. The pre-existing
+working-tree removal of `func_80016280` from the allowlist was preserved: its
+hybrid still byte-matches, but currently fails the policy gate.
+
+Verification after the audit: `make check` passed (original executable payload
+matched), `git diff --check` passed, and the document's relative links resolve.
+This verifies the unchanged live build, not any non-exact scratch candidate.
+
+### func_80019070 — the historical scheduler ceiling is superseded
+
+**Existing exception.** Sixteen fixed-register locals and prologue, parameter
+load, and primitive-linking asm in `src/func_80019070.c`. Historical reasoning:
+[prologue research](research/func_80019070-prologue-allocation-and-arg2-truncation.md)
+and [tail certificate](research/func_80019070-tail-window-unsat-certificate.md).
+
+**Counterexample to the broad claim.** The complete no-asm candidate preserved
+in [the repair note](human-needed-approvals/func_80019070.repair.md), source SHA
+`ba9cfd7427d527f155157f09e52fb1a8958f872c9f0fbffd0489d9c987a55668`, was freshly
+compiled. It reaches **`[0,0,0,1]`, 79/81 words**. `diffFunc` identifies only
+`0x800190B4` and `0x800190B8`: the `sltiu` result and its branch use `$a0`, not
+`$v0`. Thus the target's instruction population **and final order** are already
+reachable without asm. The earlier scalar/boost UNSAT does not cover this
+aggregate/SUBREG representation. The old tail certificate assumes an asm write
+of `$v0`; it cannot exclude an all-C prologue.
+
+This is a compiler-mechanism witness, not evidence that the original author
+used its union, XOR identities, or empty loop wrappers. It also splits the
+`setSprt` operation into `setlen`/`setcode`, which triage flags for SDK-boundary
+review. It is not a completed, promotion-approved reconstruction.
+
+**A genuine, narrower obstruction: padded local lifetimes.** Current
+instrumented local allocation replays 23/23 decisions on this candidate.
+In compiler block 0:
+
+| Quantity | Meaning | Actual interval | Interval tried first | Assignment |
+|---|---|---|---|---|
+| q0 / r117 | two-word header carrier | 4..28 | 2..30 | `$v0/$v1` |
+| q2 / r123 | palette `< 6` predicate | 30..42 | 28..43 | `$a0` |
+
+Intervals are the allocator's half-instruction positions, not addresses.
+`gcc/local-alloc.c:block_alloc` (lines 1433–1475 in the pinned 2.95.2 tree)
+computes `fake_birth` / `fake_death`, extending each interval by a neighboring
+instruction to avoid false dependencies for sched2. `find_free_reg` unions
+`regs_live_at` over that widened interval. The header is allocated first;
+`$v0/$v1` are unavailable to the predicate in the widened trial. `$a0` succeeds,
+so the allocator **does not retry the true, non-overlapping interval**.
+Neither quantity has a hard-register suggestion bypassing that trial.
+
+With this partition, order, mode, and suggestion state fixed, `$v0` for the
+predicate is unavailable through the ordinary priority path. This is a
+compiler-source explanation of the two-word residual, not an all-C proof.
+Changing those inputs reopens it; disabling sched2 is not justified.
+Receipts: `build/localAllocationOracle/func_80019070/variants/` +
+`ba9cfd7427d527f1-4f755259ee23ed30/analysis.json` and `events.jsonl`.
+The oracle's raw indexed count is not the relocated-byte verdict; the latter
+is the separately reproduced 79/81 result above.
+
+**Bounded checks.** Reusing `header.value.len` for the predicate gives
+`[0,0,0,9]` (also an earlier recorded experiment); assigning the predicate to a
+whole integer-wide carrier gives `[0,0,0,15]`. An empty loop-note boundary ahead
+of the palette load gives `[0,0,4,9]`. None is a repair.
+
+**Retirement criterion.** A different clean representation or allocation state
+that retains the proven order and puts this predicate in `$v0`, followed by SDK,
+policy and full byte verification. The old claim that plain C cannot produce
+the prologue order must not be used to reject that work.
+
+### ovl_11_func_800EDF3C — coalescing, not just priority
+
+**Existing exception.** Three pins (`p`, `off`, `field`) and a two-instruction
+`ori 0x8000; addu` prefix in
+`src/overlays/ovl_11/ovl_11_func_800EDF3C.c`. The target consumes the offset in
+the `addu`; it is not a dead asm output. Calls and control are C.
+
+**Invalid old premise.** The 2026-10-06 local-allocation UNSAT used an oracle
+that then compiled overlays with executable `-G8` flags. The ledger's
+2026-10-21 correction explicitly invalidates using that result for production
+`-G0`. It is not exception evidence.
+
+**Replacement evidence, measured with current flags.** Recompile the old v85
+source with the witnessed declaration `s32 func_8001AF44(u32 arg0);`:
+`edf3c-prototype.c`, SHA prefix `460455261656106c`. The declaration is byte-inert;
+the result is `[0,0,0,4]`, 44/49. The current oracle replays **14/14** local
+allocation decisions. In compiler block 10 it emits a `merge` event for
+**q1 = [r112, r89]**, the address sum and the `0x8000` offset.
+
+The target needs the offset in `$a0` and the sum in `$v1`. A single allocation
+quantity cannot receive both registers. Consequently **no change of quantity
+priorities alone can match this source state**, regardless of phantom-reference
+budget. This is a direct partition contradiction, independent of the old SAT
+result. `local-alloc.c:block_alloc` calls `combine_regs` on a dying input and
+then propagates one hard-register assignment to all quantity members.
+Receipt:
+`build/localAllocationOracle/ovl_11_func_800EDF3C/variants/edf3c-prototype-394db5841269bbd8/events.jsonl`.
+
+A natural local struct view of byte `+0xE647` gives `[0,0,0,6]`, byte-identical
+to the older v50 family. The prefix itself is therefore expressible in C;
+that test does not produce the target's allocation.
+
+**Scope / retirement.** Change the quantity partition, dying-input choice,
+operand/address family, or locality, not merely the ranking of the existing
+quantities. This remains repair debt, not a proven whole-function exception.
+See also [the repair note](human-needed-approvals/ovl_11_func_800EDF3C.repair.md).
+
+### func_80016280 — coupled entry state, ordinary rendering loop
+
+**Existing exception.** Eleven bindings, an entry/guard asm region, and an
+asm-to-C state handoff; the complete rendering loop is active C. The guard
+contains the literal branch word `0x05C0009F`. The historical account explains
+that word as a workaround for an extra maspsx nop at the asm boundary, **not**
+as evidence that the original function needed asm.
+
+**Current reproduction.** Reconstructed the documented clean `work`/`tmp`/
+`base`/`off` entry from
+[the research note](research/func_80016280-web-parity-and-register-recurrence.md)
+while retaining the live SDK loop. `16280-recovered-entry.c`, SHA prefix
+`6f2b2d4ab321614e`, gives **`[0,0,2,5]`**. The byte comparison has 214 words on
+each side; its aligned display reports 202/212. Only entry blocks 0 and 1
+have staged residuals; the rendering suffix is clear. A count-up loop variant
+was also measured, rather than assumed equivalent: `[0,5,6,15]`.
+
+**Mechanism and limit of the claim.** The historical dumps show incoming
+pointer saves scheduling late, keeping argument registers occupied when the
+header/base temporaries need them. Parameter reuse can remove the scheduler's
+single-set birth boost, but combine can merge the save with the entry copy,
+removing the very dependency being sought. It also changes allocation in the
+otherwise solved loop. This links it mechanistically to the *old scalar*
+`80019070` problem, not to the two heap initializers' reload-copy problem.
+
+The current reversal has an ambiguous delay-slot origin and a failed
+pre-dbr-order round trip; its inferred sched1/sched2 ownership is provisional.
+Neither that report nor the historical bounded shape searches proves that a
+different clean entry representation cannot work. In particular, `80019070`'s
+later SUBREG counterexample is a reason to distrust a universal scalar-web
+ceiling, not a ready-made source transplant for these pointer parameters.
+
+**Retirement criterion.** Reproduce the early saves and both entry blocks'
+allocation without changing the already-matching loop. Until then the hybrid
+is unresolved debt. The audit does not restore its currently revoked allowlist
+entry or claim a policy pass.
+
+### func_80012598 — reload-created pointer copies
+
+**Existing exception.** Eighteen bindings at the start of this audit, now ten
+(see the shared-helper follow-up below), with explicit base-copy asm,
+split-address asm and empty operand carriers in `src/func_80012598.c`.
+
+**Shared mechanism.** Its first initialization loop and `func_8001231C`'s have
+the same store-role structure. The [historical investigation](research/func_80012598.md)
+measured **4 register-copy sets at `.lreg`, 18 at `.greg`** in a candidate.
+That demonstrates that our toolchain can introduce the fan-out during
+allocation/reload; it is not a recovered dump of the original compiler run.
+Calling the target copies reload rematerializations is a supported
+interpretation, not direct observation of the target's pass history.
+
+Manufacturing a separate source variable for each final copy changes
+simultaneous register pressure, equivalence recognition and load elimination.
+A single transparent base can instead let CSE remove reloads that the target
+retains. Thus removing pins from the existing disassembly-shaped source and
+permuting its statements does not test the relevant source family.
+
+**Current checks.** The unpinned `local-cluster.c` candidate recompiles to
+`[0,0,4,51]`. Adding the missing SDK `memset` declaration is byte-inert
+(`12598-sdk-declaration.c`); it does not explain the residual. Triage's earlier
+near-exact ledger entries included partially de-pinned/hybrid sources and must
+not be described as a clean-C floor.
+
+**Scope / retirement.** No toolchain impossibility established. The needed
+source must produce the appropriate distinct, reloadable pointer values
+without making all final copies simultaneously register-resident. Preserve
+SDK/store semantics and verify the resulting reload behavior, not merely a
+register permutation. Existing pins remain repair debt.
+
+### func_8001231C — the same heap-initializer family
+
+**Existing exception.** Eighteen bindings at the start of this audit, now ten,
+and copy/address/carrier asm inherited from `func_80012598`, plus explicit
+materialization of `memset` arguments.
+See [the historical twin analysis](research/func_8001231C.md) and
+[the later repair record](human-needed-approvals/func_8001231C.repair.md);
+the former's opening "not yet attempted" status is historical, not current.
+
+**Cross-function experiment.** Transferred the unpinned `80012598` loop rather
+than the pinned implementation: changed `0x801FCFF8` to `0x801F7000`, work
+stride `0x5EDC` to `0x2EE0`, and replaced the second phase with the witnessed
+`func_8001E160()` call. `1231c-sibling-loop.c` gives **`[0,0,6,51]`**. Its loop
+has 47 allocation differences, as does the donor's loop; the preheader has
+four in each. This independently corroborates the shared reconstruction
+problem and reaches zero staged population residual, where the prior repair
+note's selected candidate had three. It is not a byte match or a claim of
+semantic equivalence based solely on the metric.
+
+**Scope / retirement.** Solve the source/reload relationship in either twin
+and transfer the mechanism to the other. The common obstruction does not make
+either function impossible in C, and a wholesale pin transplant is not
+independent evidence for a second exception.
+
+### Heap/copy helper follow-up — exact encapsulation and sixteen fewer pins
+
+At the user's request, tested shared helpers for the two heap initializers.
+`include/graphics_heap.h` now names the common pool layout and centralizes
+only the existing `MATCH_COPY` and `MATCH_LOAD_ADDRESS` operations. Each
+initializer uses twelve explicit register-value copies and one split symbol
+address load. Neither helper embeds register numbers. The address macro keeps
+its two separate asm statements and caller-supplied high-part temporary;
+combining them would change the compiler's instruction/lifetime boundaries.
+These macros are standalone-statement helpers, not memory-copy operations.
+
+The heap constants describe independently witnessed roles: the main OT starts
+at `+0x290`, primitive buffers at `+0x4290` with stride `0x17700`, and work
+areas at `+0x33090`. The work strides are `0x2EE0` and `0x5EDC`. Thus the two
+free-pointer values are `base + 0x33090 + 2 * workSize`, not unrelated magic
+addresses. The large carve ends at offset `0x3EE48`, eight bytes before the
+`0x3EE50` clear extent. `func_8001E160` independently corroborates the OT and
+primitive pools; `func_800120C8` passes the work pointer to `GsSetWorkBase`.
+
+**Measured separately from extraction:** removed each of the eighteen pins
+in isolation, preserving the remaining asm. Nine single removals were exact
+in `80012598`; eleven were exact in `8001231C`. Those results do **not** compose:
+removing all individually redundant pins yields `[0,0,0,9]` and `[0,6,4,16]`,
+respectively. Restoring the context pointers and context-offset binding
+preserves the expected allocation while allowing these joint removals:
+
+| Function | Bindings removed together | Remaining | Final words |
+| --- | --- | ---: | ---: |
+| `func_80012598` | `s2`–`s7`, `t8`, `t9` | 10 | 209/209 |
+| `func_8001231C` | `s0`–`s7` | 10 | 159/159 |
+
+Both retain two context-pointer bindings, the `t7` offset binding and seven
+scratch bindings. In the large initializer, pipeline reversal located the
+combined-removal residual entirely in preheader register allocation; retaining
+`t7` alone restored the exact candidate. In the small initializer, retaining
+both context pointers first removed the population/scheduling residual;
+retaining `t7` then restored exactness. Candidate sources and measurements are
+under `build/heap-copy/` and the two experiment ledgers. This is a bounded
+reduction, not a proof that the remaining set is minimal or necessary for
+another source formulation.
+
+**Interpretation:** a common heap initializer or copy helper is plausible
+original source organization. The matching extraction establishes that this
+organization is usable now, not that these asm templates existed originally.
+No vendored SDK heap-initializer macro or clean-C impossibility was established.
+The empty operand carriers, countdown asm, small initializer's explicit
+`memset` argument materialization and ten pins per function remain visible
+repair debt. Existing policy exceptions remain; no new flag or exemption was
+added. Old source comments claiming the original was certainly plain C, or
+that a candidate's reload dump was the original's, have been corrected.
+
+### func_80014CBC — audit the callee before declaring scheduling impossible
+
+**Existing exception.** Entry/address/shift asm and empty operand carriers
+steering scheduling and reference counts; byte-sized aggregate stack
+parameters and a hand-addressed parameter home slot. The
+[closing retro](retros/2026-08-14-func_80014CBC-retro.md) explicitly records
+several prior "unreachable" walls falling to changes outside their assumed
+source frame. That history is not a proof of a final clean-C ceiling.
+
+**New premise check.** `psx_callee_truth` finds that `func_80021B20` reads **no**
+incoming arguments. Its authored one-argument matched definition does not
+prove that the original caller passed one. The target call sites do not
+establish an upper arity bound; zero arity remains a hypothesis, not a shared
+header correction made by this audit. Keep the vendored `CdSync` declaration:
+its disputed return type is unused here and is not this issue.
+
+**Measured consequence.** Start with archived no-asm scalar/volatile-parameter
+source `e048dbc2faad1438` (in the experiment ledger), not the BLKmode/asm hybrid.
+It recompiles to `[0,0,4,0]`. Change only:
+
+```c
+void func_80021B20(void);  /* instead of (s32 arg0) */
+/* ... */
+func_80021B20();          /* instead of func_80021B20(pos) */
+```
+
+`14cbc-no-debug-arg.c`, SHA prefix `99c6302e4b191301`, gives
+**`[0,0,1,2]`**, with equal 117-word target/candidate lengths in the reversal.
+The remaining differences are the `$s3/$s4` assignments for `one`/`a5` and
+placement of the retry-path `D_8005E410 = 0` store. The ordinary C entry now
+has zero staged schedule residual, without the entry asm's dummy dependencies.
+This is progress over a premise, not a solved function. Replacing
+`CdReadSync(1,0)` with `CdReadSync(one,0)` is byte-inert; hoisting `one = 1` to
+its declaration changes population and does not fix it.
+
+**Scope / retirement.** Audit the callback's other callers before changing its
+shared declaration, then repair allocation and the retry store in the
+no-argument branch. The historical statement that no clean spelling can place
+the entry group is too broad. No whole-function impossibility or new source
+exception is justified by this audit.

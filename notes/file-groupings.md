@@ -5096,6 +5096,17 @@ D_8005E3A4, D_8005E3A8, D_8005E3AC, D_8005E3B0, D_8005E3B4, D_8005E3BC and D_800
   source-policy authorization. This is not a claim that the original source
   pinned registers. Recipe: notes/research/func_8001231C.md; authorization and
   verification: notes/techniques-for-solving-parked-functions.md.
+  The 2026-10-24 asm-exception audit also transferred the unpinned 80012598
+  first loop with only the two configuration constants and second-phase
+  substitution. It reaches zero staged population residual in both twins,
+  with the same 47 loop-allocation differences. This corroborates their
+  shared loop/reload reconstruction problem, not an impossibility in C or
+  additional TU-boundary evidence; see notes/asm-exception-evidence.md.
+  A subsequent shared-helper refinement extracted the witnessed pool layout
+  and existing copy/address asm into include/graphics_heap.h, and removed
+  eight pins from each initializer while retaining exact bytes. This supports
+  a useful common helper boundary, not proof of original asm macros or new
+  TU membership; ten pins and the existing exceptions remain in each.
 - func_800120C8 (s) — touches the widest set of the cluster; called from
   func_80011370's init
 - func_800121D4 (m), func_800128DC (s) — share D_8005E3C0. func_800121D4

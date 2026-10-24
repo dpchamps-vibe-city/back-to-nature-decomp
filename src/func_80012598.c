@@ -1,4 +1,6 @@
 #include "common.h"
+#include "graphics_heap.h"
+#include "psyq/memory.h"
 
 extern unsigned long *ClearOTagR(unsigned long *ot, int n);
 
@@ -17,19 +19,17 @@ s32 D_8005E3BC;
  * explicitly by the user on 2026-08-11 (AGENTS.md defers the clean-source
  * policy to explicit user instruction). Allowlisted in .pi/autoloop.json.
  *
- * This is tracked debt, not a claim about the original source. The original was
- * certainly plain C: the constructs below are forcing devices for register
- * allocation and instruction order, standing in for one mechanism the
- * reconstruction could not reproduce from C. That mechanism is now known and
- * written down -- see notes/research/func_80012598.md section 3.1: the target's
- * sixteen base-address copies are reload rematerialisations with
- * one-instruction live ranges (`lreg` holds 4 reg-to-reg sets, `greg` 18), so
- * they cost the original nothing, while every copy a C reconstruction creates
- * holds a register. Peak simultaneous base-equal webs is 12 in the target;
- * clean-C attempts sat at 13-14 and traded one copy per register, which is why
- * the best clean-C state stalled at 55 differing words. Anyone who finds a
- * single-set, per-view-distinct C spelling of those copies should delete every
- * `register ... asm` and `__asm__` below and the allowlist entry with them.
+ * This is tracked debt, not a claim about the original source. A historical
+ * candidate introduced pointer copies during allocation/reload (4 register
+ * copies at .lreg, 18 at .greg); that supports a compiler-generated-copy
+ * interpretation, but is not the original compiler's pass history. An
+ * original helper macro is also possible, not established.
+ *
+ * Shared heap-layout names and matching helpers live in graphics_heap.h.
+ * Eight redundant bindings have been removed together; ten remain explicit
+ * here. The helpers preserve existing asm, not grant a new exception. See
+ * notes/asm-exception-evidence.md for the bounded tests and remaining debt,
+ * and notes/research/func_80012598.md for the historical investigation.
  *
  * WHAT THE FUNCTION DOES
  *
@@ -56,7 +56,7 @@ s32 D_8005E3BC;
  *
  * Every pool is carved out of the single 0x3EE50-byte block at 0x801BE1B0 that
  * the leading memset clears; 0x33090 + 2*0x5EDC == 0x3EE48, so the carve ends
- * exactly at the end of that block:
+ * eight bytes before the end of that block:
  *   +0x00000  p0  OT tags, 0x40 entries per buffer   (cursor stride 0x100)
  *   +0x00200  p1  OT tags, 0x10 entries per buffer   (cursor stride 0x040)
  *   +0x00280  p2  OT tags, 2 entries per buffer      (cursor stride 0x008)
@@ -77,21 +77,20 @@ s32 D_8005E3BC;
  * variables; s0..s7/t7..t9 are the loop-carried pool cursors and constants.
  */
 
-#define COPY(d, s) __asm__ volatile("addu %0, %1, $zero" : "=r"(d) : "r"(s))
 #define P(x) ((s32 *)(x))
 
 void func_80012598(void) {
     register u8 *s0 asm("$16");
     register u8 *s1 asm("$17");
-    register s32 s2 asm("$18");
-    register s32 s3 asm("$19");
-    register s32 s4 asm("$20");
-    register s32 s5 asm("$21");
-    register s32 s6 asm("$22");
-    register s32 s7 asm("$23");
+    s32 s2;
+    s32 s3;
+    s32 s4;
+    s32 s5;
+    s32 s6;
+    s32 s7;
     register s32 t7 asm("$15");
-    register s32 t8 asm("$24");
-    register s32 t9 asm("$25");
+    s32 t8;
+    s32 t9;
     register s32 rV0 asm("$2");
     register s32 rV1 asm("$3");
     register s32 *rA0 asm("$4");
@@ -111,22 +110,21 @@ void func_80012598(void) {
     s32 j;
     s32 temp_s3;
 
-    s7 = 0x801BE1B0;
+    s7 = GFX_HEAP_BASE;
     D_8005E3B0 = s7;
-    memset((void *)0x801BE1B0, 0, 0x3EE50);
-    rV1 = 0x801FCFF8;
+    memset((void *)GFX_HEAP_BASE, 0, GFX_HEAP_CLEAR_SIZE);
+    rV1 = GFX_HEAP_END(GFX_HEAP_WORK_LARGE_SIZE);
     s5 = 1;
     __asm__("" : "=r"(s5) : "0"(s5));
-    s4 = 0x801C2440;
-    __asm__ volatile("lui %0, %%hi(D_8005E5E8)" : "=r"(rV0));
-    __asm__ volatile("addiu %0, %1, %%lo(D_8005E5E8)" : "=r"(s0) : "r"(rV0));
+    s4 = GFX_HEAP_ADDR(GFX_HEAP_PRIM_OFFSET);
+    MATCH_LOAD_ADDRESS(s0, rV0, D_8005E5E8);
     s1 = s0;
-    s3 = 0x801BE440;
-    t9 = 0x801BE430;
-    t8 = 0x801BE3B0;
-    s2 = 0x801BE1B0;
+    s3 = GFX_HEAP_ADDR(GFX_HEAP_MAIN_OT_OFFSET);
+    t9 = GFX_HEAP_ADDR(GFX_HEAP_OT2_OFFSET);
+    t8 = GFX_HEAP_ADDR(GFX_HEAP_OT1_OFFSET);
+    s2 = GFX_HEAP_ADDR(GFX_HEAP_OT0_OFFSET);
     t7 = 0;
-    s6 = 0x17700;
+    s6 = GFX_HEAP_PRIM_SIZE;
     s8 = 1;
     sp10 = 0;
     __asm__("" : : "m"(sp10));
@@ -134,7 +132,7 @@ void func_80012598(void) {
     D_8005E3B8 = rV1;
 
     do {
-        temp_a2 = 0x33090;
+        temp_a2 = GFX_HEAP_WORK_OFFSET;
         rA1 = P(s0 + 0xD8);
         rA1 = P(t7 + (s32)rA1);
         __asm__("" : "=r"(rA1) : "0"(rA1));
@@ -147,10 +145,10 @@ void func_80012598(void) {
         rV1 = sp10;
         __asm__ volatile("addiu %0, %0, -1" : "+r"(s8));
         temp_a2 = rV1 + temp_a2;
-        rV1 += 0x5EDC;
+        rV1 += GFX_HEAP_WORK_LARGE_SIZE;
         sp10 = rV1;
 
-        COPY(rV1, rA0);
+        MATCH_COPY(rV1, rA0);
         *rA1 = s2;
         rA0[0x3B] = rV0;
         rV0 = 6;
@@ -190,12 +188,12 @@ void func_80012598(void) {
         P(rV0)[0x21] = rV1;
 
         rV1 = rV0;
-        COPY(rT0, rV0);
-        COPY(rT1, rV0);
-        COPY(rT2, rV0);
-        COPY(rT3, rV0);
-        COPY(rT4, rV0);
-        COPY(rT5, rV0);
+        MATCH_COPY(rT0, rV0);
+        MATCH_COPY(rT1, rV0);
+        MATCH_COPY(rT2, rV0);
+        MATCH_COPY(rT3, rV0);
+        MATCH_COPY(rT4, rV0);
+        MATCH_COPY(rT5, rV0);
         P(rV1)[0x24] = 0;
         P(rV0)[0x23] = 0;
 
@@ -203,24 +201,24 @@ void func_80012598(void) {
         temp_a2 = s7 + temp_a2;
         P(rV0)[0x22] = (s32)rA0;
         rV1 = *rA1;
-        COPY(rA0, rV0);
+        MATCH_COPY(rA0, rV0);
         rV1 += 0xFC;
         rA0[0x25] = rV1;
         rV1 = 4;
         P(rV0)[0x26] = rV1;
 
-        COPY(rV1, rV0);
+        MATCH_COPY(rV1, rV0);
         P(rV1)[0x29] = 0;
         P(rV0)[0x28] = 0;
         rA0 = P(*rA3);
-        COPY(rA1, rV0);
+        MATCH_COPY(rA1, rV0);
         P(rV0)[0x27] = (s32)rA0;
         rV1 = *rA3;
-        COPY(rA0, rV0);
+        MATCH_COPY(rA0, rV0);
         rV1 += 0x3C;
         rA0[0x2A] = rV1;
 
-        COPY(rV1, rV0);
+        MATCH_COPY(rV1, rV0);
         P(rV0)[0x2B] = s5;
         P(rV1)[0x2E] = 0;
         P(rV0)[0x2D] = 0;
@@ -231,7 +229,7 @@ void func_80012598(void) {
         t7 += 0x134;
         rV0 += 4;
         rA1[0x2F] = rV0;
-        rV0 = 0x5EDC;
+        rV0 = GFX_HEAP_WORK_LARGE_SIZE;
         rA3[0x30] = 0;
         rT0[0x33] = 0;
         rT1[0x32] = 0;
@@ -246,15 +244,15 @@ void func_80012598(void) {
 
     temp_s3 = D_8005E3B0;
     j = 0;
-    s2 = 0x176FF;
+    s2 = (GFX_HEAP_PRIM_SIZE - 1);
     do {
         s32 *base2;
         base2 = (s32 *)((u8 *)&D_8005E5E8 + (j * 0x134));
         base2[0x44] = 0x800;
         base2[0x45] = 0xB;
-        base2[0x48] = temp_s3 + 0x290 + (j << 13);
-        base2[0x47] = 0x17700;
-        base2[0x49] = temp_s3 + 0x4290 + (j * 0x17700);
+        base2[0x48] = temp_s3 + GFX_HEAP_MAIN_OT_OFFSET + (j << 13);
+        base2[0x47] = GFX_HEAP_PRIM_SIZE;
+        base2[0x49] = temp_s3 + GFX_HEAP_PRIM_OFFSET + (j * GFX_HEAP_PRIM_SIZE);
         ClearOTagR((unsigned long *)base2[0x48], 0x800);
         i = 0;
         do {

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "graphics_heap.h"
 #include "psyq/memory.h"
 
 void func_8001E160(void);
@@ -25,11 +26,15 @@ s32 D_8005E3BC;
  * USER-AUTHORIZED EXCEPTION: the parked-function campaign explicitly permits
  * source-policy exceptions. These allocation-forcing constructs are retained
  * from the historical attempt; they are not evidence of original source pins.
- * Same register-asm / embedded-asm constructs as func_80012598 -- the
- * target's base-address copies are reload rematerialisations with
- * one-instruction live ranges. Two forcing devices beyond the twin's:
+ * Shares graphics_heap.h's layout and matching helpers with func_80012598.
+ * Eight redundant bindings have been removed together; ten remain explicit.
+ * Reload-created copies are a supported interpretation of the shared target
+ * pattern, not an observed original pass history. An original helper macro
+ * is possible, but neither that nor a C impossibility has been established.
+ * See notes/asm-exception-evidence.md for the measured scope.
+ * Two forcing devices beyond the twin's:
  *   - block 1 routes the spilled work-area accumulator through $v0 (rV0),
- *     hoists COPY(rV1, rA0) next to the base, and births the 0x40 constant
+ *     hoists MATCH_COPY(rV1, rA0) next to the base, and births the 0x40 constant
  *     after the accumulator's last use -- the mirror image of the twin's
  *     ordering, which the plain statement swap cannot reproduce because the
  *     accumulator's register choice is an allocation decision.
@@ -37,27 +42,26 @@ s32 D_8005E3BC;
  *     the call's own expansion only births `move a1,0`, which then fills the
  *     jal-delay slot (sched2/dbr otherwise put `ori a2` there). Non-volatile,
  *     not volatile: the pairs must stay schedulable to sit ahead of the
- *     callee-save store block as in the target. GCC folds any C spelling of
- *     this (heap-size local, register vars) back into the call.
+ *     callee-save store block as in the target. The tested C spellings
+ *     (heap-size local, register vars) folded back into the call.
  * See notes/techniques-for-solving-parked-functions.md for the authorization
  * and byte/full-build verification, and notes/research/func_8001231C.md for
  * the historical reconstruction.
  */
 
-#define COPY(d, s) __asm__ volatile("addu %0, %1, $zero" : "=r"(d) : "r"(s))
 #define P(x) ((s32 *)(x))
 
 void func_8001231C(void) {
     register u8 *t8 asm("$24");
     register u8 *t9 asm("$25");
-    register s32 s0 asm("$16");
-    register s32 s1 asm("$17");
-    register s32 s2 asm("$18");
-    register s32 s3 asm("$19");
-    register s32 s4 asm("$20");
-    register s32 s5 asm("$21");
-    register s32 s6 asm("$22");
-    register s32 s7 asm("$23");
+    s32 s0;
+    s32 s1;
+    s32 s2;
+    s32 s3;
+    s32 s4;
+    s32 s5;
+    s32 s6;
+    s32 s7;
     register s32 t7 asm("$15");
     register s32 rV0 asm("$2");
     register s32 rV1 asm("$3");
@@ -75,26 +79,25 @@ void func_8001231C(void) {
     s32 s8;
     s32 sp10;
 
-    s7 = 0x801BE1B0;
+    s7 = GFX_HEAP_BASE;
     __asm__("lui %0, 0x801B" : "=r"(rA0));
     __asm__("ori %0, %0, 0xE1B0" : "+r"(rA0));
     __asm__("lui %0, 0x3" : "=r"(temp_a2));
     __asm__("ori %0, %0, 0xEE50" : "+r"(temp_a2));
     D_8005E3B0 = s7;
     memset((void *)rA0, 0, temp_a2);
-    rV1 = 0x801F7000;
+    rV1 = GFX_HEAP_END(GFX_HEAP_WORK_SMALL_SIZE);
     s5 = 1;
     __asm__("" : "=r"(s5) : "0"(s5));
-    s4 = 0x801C2440;
-    __asm__ volatile("lui %0, %%hi(D_8005E5E8)" : "=r"(rV0));
-    __asm__ volatile("addiu %0, %1, %%lo(D_8005E5E8)" : "=r"(t8) : "r"(rV0));
+    s4 = GFX_HEAP_ADDR(GFX_HEAP_PRIM_OFFSET);
+    MATCH_LOAD_ADDRESS(t8, rV0, D_8005E5E8);
     t9 = t8;
-    s3 = 0x801BE440;
-    s2 = 0x801BE430;
-    s1 = 0x801BE3B0;
-    s0 = 0x801BE1B0;
+    s3 = GFX_HEAP_ADDR(GFX_HEAP_MAIN_OT_OFFSET);
+    s2 = GFX_HEAP_ADDR(GFX_HEAP_OT2_OFFSET);
+    s1 = GFX_HEAP_ADDR(GFX_HEAP_OT1_OFFSET);
+    s0 = GFX_HEAP_ADDR(GFX_HEAP_OT0_OFFSET);
     t7 = 0;
-    s6 = 0x17700;
+    s6 = GFX_HEAP_PRIM_SIZE;
     s8 = 1;
     sp10 = 0;
     __asm__("" : : "m"(sp10));
@@ -102,12 +105,12 @@ void func_8001231C(void) {
     D_8005E3B8 = rV1;
 
     do {
-        temp_a2 = 0x33090;
+        temp_a2 = GFX_HEAP_WORK_OFFSET;
         rA1 = P(t8 + 0xD8);
         rA1 = P(t7 + (s32)rA1);
         __asm__("" : "=r"(rA1) : "0"(rA1));
         rA0 = P((u8 *)t8 + t7);
-        COPY(rV1, rA0);
+        MATCH_COPY(rV1, rA0);
         rA3 = P(t8 + 0xDC);
         rA3 = P(t7 + (s32)rA3);
         rT6 = P(t8 + 0xE0);
@@ -115,7 +118,7 @@ void func_8001231C(void) {
         rV0 = sp10;
         __asm__ volatile("addiu %0, %0, -1" : "+r"(s8));
         temp_a2 = rV0 + temp_a2;
-        rV0 += 0x2EE0;
+        rV0 += GFX_HEAP_WORK_SMALL_SIZE;
         sp10 = rV0;
 
         rV0 = 0x40;
@@ -158,12 +161,12 @@ void func_8001231C(void) {
         P(rV0)[0x21] = rV1;
 
         rV1 = rV0;
-        COPY(rT0, rV0);
-        COPY(rT1, rV0);
-        COPY(rT2, rV0);
-        COPY(rT3, rV0);
-        COPY(rT4, rV0);
-        COPY(rT5, rV0);
+        MATCH_COPY(rT0, rV0);
+        MATCH_COPY(rT1, rV0);
+        MATCH_COPY(rT2, rV0);
+        MATCH_COPY(rT3, rV0);
+        MATCH_COPY(rT4, rV0);
+        MATCH_COPY(rT5, rV0);
         P(rV1)[0x24] = 0;
         P(rV0)[0x23] = 0;
 
@@ -171,24 +174,24 @@ void func_8001231C(void) {
         temp_a2 = s7 + temp_a2;
         P(rV0)[0x22] = (s32)rA0;
         rV1 = *rA1;
-        COPY(rA0, rV0);
+        MATCH_COPY(rA0, rV0);
         rV1 += 0xFC;
         rA0[0x25] = rV1;
         rV1 = 4;
         P(rV0)[0x26] = rV1;
 
-        COPY(rV1, rV0);
+        MATCH_COPY(rV1, rV0);
         P(rV1)[0x29] = 0;
         P(rV0)[0x28] = 0;
         rA0 = P(*rA3);
-        COPY(rA1, rV0);
+        MATCH_COPY(rA1, rV0);
         P(rV0)[0x27] = (s32)rA0;
         rV1 = *rA3;
-        COPY(rA0, rV0);
+        MATCH_COPY(rA0, rV0);
         rV1 += 0x3C;
         rA0[0x2A] = rV1;
 
-        COPY(rV1, rV0);
+        MATCH_COPY(rV1, rV0);
         P(rV0)[0x2B] = s5;
         P(rV1)[0x2E] = 0;
         P(rV0)[0x2D] = 0;
@@ -199,7 +202,7 @@ void func_8001231C(void) {
         t7 += 0x134;
         rV0 += 4;
         rA1[0x2F] = rV0;
-        rV0 = 0x2EE0;
+        rV0 = GFX_HEAP_WORK_SMALL_SIZE;
         rA3[0x30] = 0;
         rT0[0x33] = 0;
         rT1[0x32] = 0;
