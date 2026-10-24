@@ -2459,6 +2459,11 @@ typedef struct {
 } M2C_fffe5a7b4a78_Ovl11C3B78Arg1;
 
 typedef struct {
+ short m[3][3];
+        long t[3];
+} MATRIX;
+
+typedef struct {
                char pad_00[0x02];
                u16 field_2;
                s8 field_4;

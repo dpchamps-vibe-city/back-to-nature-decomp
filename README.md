@@ -163,10 +163,18 @@ Do these steps in this order.
 
 ```bash
 sudo apt install binutils-mips-linux-gnu
-pipx install splat64[mips]
+pipx install "splat64[mips]==0.38.0"
+pipx inject splat64 spimdisasm==1.40.1 rabbitizer==1.15.0
+pipx install spimdisasm==1.40.1
+pipx inject spimdisasm rabbitizer==1.15.0
 git clone --recursive <repo-url> && cd btn-decompilation
 npm install
 ```
+
+Keep these versions. splat and spimdisasm produce the disassembly and linker
+script the build assembles, so another version can change the build. The
+second `pipx install` provides the `spimdisasm` command that
+`make disassemble` runs.
 
 Then build the PlayStation GCC 2.95.2 cross-compiler. This step needs Docker.
 

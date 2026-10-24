@@ -20,6 +20,8 @@ options:
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   extensions_path: tools/vendor/splat_ext
   subalign: 4
+  # include_asm.h, macro.inc, labels.inc and gte_macros.inc are project files.
+  generate_asm_macros_files: false
 
 segments:
   - name: header

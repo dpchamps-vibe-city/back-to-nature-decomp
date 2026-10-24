@@ -241,6 +241,11 @@ function renderSplatConfig(
     '  section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]',
     "  extensions_path: tools/vendor/splat_ext",
     "  subalign: 4",
+    /* include/include_asm.h, macro.inc, labels.inc and gte_macros.inc are
+       project files. splat would otherwise rewrite them from its built-in
+       templates on every split, which drops project additions such as the
+       `rtir` alias and makes their content depend on the installed splat. */
+    "  generate_asm_macros_files: false",
     "",
     "segments:",
     `  - name: ${container.id}`,

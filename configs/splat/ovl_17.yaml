@@ -21,6 +21,7 @@ options:
   section_order: [".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   extensions_path: tools/vendor/splat_ext
   subalign: 4
+  generate_asm_macros_files: false
 
 segments:
   - name: ovl_17

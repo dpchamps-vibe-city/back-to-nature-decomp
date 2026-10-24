@@ -20,6 +20,7 @@ void ovl_21_func_800B8A24(void);
 void ovl_21_func_800B8A80(void);
 void ovl_21_func_800B8B3C(void);
 void ovl_21_func_800B8F98(void);
+void ovl_21_func_800B90C4(void);
 void ovl_21_func_800B9178(void);
 void ovl_21_func_800B92C8(void);
 void ovl_21_func_800B93F0(void);
