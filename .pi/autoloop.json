@@ -181,10 +181,6 @@
    "ovl_17_func_800b9158": [
     "flag-override"
    ],
-   "ovl_11_func_8011f574": [
-    "register-asm",
-    "embedded-asm"
-   ],
    "ovl_11_func_8010476c": [
     "register-asm",
     "embedded-asm"
