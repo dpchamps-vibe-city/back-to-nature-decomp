@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl15_save_checksums.h"
 
 extern u8 D_80053350[];
 extern s8 D_80137584;
@@ -14,7 +15,6 @@ typedef struct {
 extern D_801376E0Entry D_801376E0[];
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-s32 ovl_15_func_80135B68(void);
 void ovl_15_func_80135A78(void);
 
 void ovl_15_func_80131CDC(void) {
@@ -22,7 +22,7 @@ void ovl_15_func_80131CDC(void) {
 
     temp_a1 = D_8005E3C0->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80053350);
-    if (ovl_15_func_80135B68() == -1) {
+    if (Ovl15VerifySaveChecksums() == -1) {
         D_80137584 = 0xE;
     }
     else if (D_801376E0[D_8013758E].field_34 != 0x14) {

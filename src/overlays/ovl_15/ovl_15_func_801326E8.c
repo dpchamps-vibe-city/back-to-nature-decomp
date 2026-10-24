@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl15_save_checksums.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 void ovl_15_func_80136C70(s16 slot, s16 mode);
@@ -7,7 +8,6 @@ s8 ovl_15_func_801370B4(void);
 void ovl_15_func_80134724(void);
 void ovl_15_func_80132C1C(void);
 void ovl_15_func_801359FC(void);
-void ovl_15_func_80135AE0(void);
 
 void ovl_15_func_801326E8(void) {
     s32 var_s0;
@@ -34,7 +34,7 @@ void ovl_15_func_801326E8(void) {
     case 0:
         ovl_15_func_80132C1C();
         ovl_15_func_801359FC();
-        ovl_15_func_80135AE0();
+        Ovl15WriteSaveChecksums();
         D_80137584 = 0x1D;
         return;
     }

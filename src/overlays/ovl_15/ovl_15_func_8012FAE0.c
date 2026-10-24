@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl15_save_checksums.h"
 #include "game_types.h"
 #include "psyq/memory.h"
 #include "psyq/strings.h"
@@ -7,7 +8,6 @@ void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 void ovl_15_func_80134A34(s16 arg0);
 void ovl_15_func_80134C48(void);
 void ovl_15_func_801359FC(void);
-void ovl_15_func_80135AE0(void);
 void ovl_15_func_80137544(char *arg0, s32 arg1);
 s8 *ovl_15_func_80134770(s16 arg0);
 
@@ -23,7 +23,7 @@ void ovl_15_func_8012FAE0(void) {
     ovl_15_func_80134A34(D_8013758E);
     ovl_15_func_80134C48();
     ovl_15_func_801359FC();
-    ovl_15_func_80135AE0();
+    Ovl15WriteSaveChecksums();
     ovl_15_func_80137544(Ovl15CardFilename, D_8013758E);
     memcpy(&Ovl15CardHeader, D_8012DEBC, 3);
     Ovl15CardHeader.type = 0x13;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl15_save_checksums.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -45,7 +46,6 @@ void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 s32 func_8001FABC (s16 arg0);
 s32 ovl_15_func_80136558 (s16 arg0, s16 arg1);
 void ovl_15_func_801359FC (void);
-void ovl_15_func_80135AE0 (void);
 void ovl_15_func_80137544 (char *arg0, s32 arg1);
 s8 *ovl_15_func_80134770 (s16 arg0);
 void ovl_15_func_801305D4 (void);
@@ -58,7 +58,6 @@ void ovl_15_func_80130D3C (void);
 s32 ovl_15_func_80130DDC (void);
 s32 ovl_15_func_80130E4C (void);
 s32 ovl_15_func_80130EBC (void);
-s32 ovl_15_func_80135B68 (void);
 void ovl_15_func_80135A78 (void);
 void ovl_15_func_801315B0 (void);
 s32 ovl_15_func_80131778 (void);

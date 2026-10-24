@@ -12046,12 +12046,13 @@ Members (link order):
 A gapless two-function run in `configs/splat/ovl_15.yaml`: `ovl_15_func_80135AE0`
 at 0x7CF8 (0x88 bytes, ends exactly at 0x80135B68) is immediately followed by
 `ovl_15_func_80135B68` at 0x7D80 (0xB8 bytes, ends exactly at 0x80135C20). Both
-reference exactly the same absolute global pair — `D_80137830` (3 references
-each) and `D_80137A30` (2 references each) — and no other member of the
-preceding D_801376D0 run does; the run boundary at 0x80135AE0 is where that
-shared pair changes. The two are the write and verify halves of one checksum:
-80135AE0 stores the per-0x80-byte-block XOR at `D_80137830[off+0x7F]`, the
-block-sum at `D_80137A30[0x38]`, and the `D_80137A30` checksum at
+reference the same absolute global pair — `D_80137830` (3 references
+each) and `D_80137A30` (2 references each). These are overlapping views:
+`D_80137A30 == D_80137830 + 0x200`. The preceding packing run also touches
+the base buffer (801359FC writes +0x7FFE), so buffer use alone is not a
+boundary signal. The two are the write and verify halves of one checksum:
+80135AE0 stores the per-0x80-byte-record XOR at `D_80137830[off+0x7F]`, the
+combined XOR at `D_80137A30[0x38]`, and the `D_80137A30` checksum at
 `D_80137830[0x27F]`; 80135B68 recomputes the same three values and compares them
 (returning -1/0). They also share one inner-loop XOR idiom — both emit
 `xor $dst, $byte, $acc` — which in this toolchain is produced only by a `u8`
@@ -12067,6 +12068,34 @@ Members (link order):
   in `D_80137A30`/`D_80137830`.
 - ovl_15_func_80135B68 (m, matched this session, byte-exact) — checksum
   verifier: returns 0 when all three stored checksums match, else -1.
+
+Reconstructed as `src/overlays/ovl_15/modules/save_checksums.c`, in original
+order, with the public interface in `include/ovl15_save_checksums.h`:
+`Ovl15WriteSaveChecksums` (ovl_15:0x80135AE0) and
+`Ovl15VerifySaveChecksums` (ovl_15:0x80135B68). The save-preparation callers
+8012FAE0/801326E8 invoke the writer after packing; load-validation callers
+80130D3C/80131CDC reject a -1 verifier result before checking the save header.
+The complementary algorithms, identical 251-record coverage and summary-byte
+layout, caller roles and gapless link order support this small reconstruction.
+They do not establish the complete original TU: serializers/packing neighbors
+and card I/O remain separate, with no claim of private linkage. The transfer
+buffer also serves sprite loading (801373A0), so its data symbols keep their
+neutral address identities and external ownership; no storage or types moved.
+
+The 0x8000-byte image comprises 256 128-byte records (not 8192-byte card API
+allocation blocks). Data records 5..255 each cover 127 payload bytes; metadata
+record 4 covers its first 127 bytes, including the combined data XOR at +0x38.
+Header/icon records 0..3 are not checked. The verifier is read-only and checks
+integrity bytes, not save version/semantic validity. Named layout constants
+and byte accumulators preserve the original loops; no helper or matching
+workaround was introduced. Both members and the merged TU match with baseline
+overlay flags (`-O2 -G0`); neither had a flag override and none was added.
+
+Semantic names are authored in `configs/symbols/ovl_15.names.txt` and applied
+only after independent boundary recovery. This fold exposed and repaired the
+overlay bootstrap's name reset and canonicalization's treatment of inactive
+assembly labels as live aliases. Active references use the shared header;
+original container/address identities remain in the symbol map and API docs.
 
 ---
 

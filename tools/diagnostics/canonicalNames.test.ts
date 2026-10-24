@@ -3,6 +3,7 @@ import test from "node:test";
 import type { Container } from "../lib/container.js";
 import {
   aliasReferences,
+  loadNameTable,
   planHeaderRelocations,
   resolveAlias,
   rewriteAliases,
@@ -34,6 +35,18 @@ test("identity is the defining container plus the entry address", () => {
   assert.deepEqual(resolveAlias("D_80015814", "ovl_10", table), { kind: "obsolete", container: "exe", address: 0x80015814, canonical: "func_80015814" });
   assert.equal(resolveAlias("D_80012000", "ovl_10", table), null, "data at no function entry is not an alias");
   assert.equal(resolveAlias("Rand", "ovl_10", table), null);
+});
+
+test("the project table does not promote inactive checksum assembly to public aliases", () => {
+  /* Warm build trees retain nonmatchings/<old-name>/*.s after a rename.
+     Those labels must not suppress migration to the defining table's name. */
+  const names = loadNameTable(new Map());
+  assert.deepEqual(resolveAlias("ovl_15_func_80135AE0", "ovl_15", names), {
+    kind: "obsolete", container: "ovl_15", address: 0x80135ae0, canonical: "Ovl15WriteSaveChecksums",
+  });
+  assert.deepEqual(resolveAlias("ovl_15_func_80135B68", "ovl_30", names), {
+    kind: "obsolete", container: "ovl_15", address: 0x80135b68, canonical: "Ovl15VerifySaveChecksums",
+  });
 });
 
 const SOURCE = `#include "common.h"

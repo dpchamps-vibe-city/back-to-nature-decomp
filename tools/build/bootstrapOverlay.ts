@@ -44,6 +44,7 @@ import { moduleDeclarationsFromSources } from "../lib/translationUnitAudit.js";
 import { loadPsxExeInfo } from "../lib/psxExeInfo.js";
 import { parseCSV } from "./analyzeLayout.js";
 import {
+  applyOverlayFunctionNames,
   overlayDirectCalls,
   overlayFunctionSymbols,
   overlayFunctionsFromContext,
@@ -340,11 +341,16 @@ for (const container of containers) {
   });
 
   const entries = parseCSV(containerPath(container, "functionsCsv"));
-  const functions = overlayFunctionsFromContext(
+  const recovered = overlayFunctionsFromContext(
     entries, readFileSync(join(ROOT, contextPath), "utf-8"), symbolPrefix(container),
     container.loadAddr + layout.textStart, container.loadAddr + layout.dataStart,
     overlayDirectCalls(bytes, container.loadAddr, layout),
   );
+  /* The generated symbol table is output, not the place to author renames.
+     Its optional sibling names file supplies labels, never boundaries. */
+  const namesPath = containerPath(container, "symbolAddrs").replace(/\.txt$/, ".names.txt");
+  const functions = applyOverlayFunctionNames(recovered,
+    existsSync(namesPath) ? readFileSync(namesPath, "utf-8") : "");
   for (const fn of functions.filter((f) => f.size !== undefined)) {
     console.log(`  ${fn.name}: local fragments recovered into size ${hex(fn.size!)}`);
   }

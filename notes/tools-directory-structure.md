@@ -172,6 +172,13 @@ Outside the split order, and run by hand:
 `bootstrap.ts` (cold start) and `bootstrapOverlay.ts` (every overlay split) emit
 `c` subsegments through `moduleCSegments`, so a module the source tree defines is
 preserved instead of expanded; the in-place EXE tools leave `modules/` stems alone.
+For overlay function renames, author `Name = 0xADDRESS;` lines in the optional
+hand-maintained `configs/symbols/<container>.names.txt`, not the generated
+`<container>.txt`. The bootstrap applies these labels after independent boundary
+recovery, rejecting unknown/interior entries and duplicate names or addresses.
+Then use `canonicalNames.ts --write` for active references and regenerate context
+headers with `contextExport.ts --all`. Each names file is scoped to its container,
+not to other overlays sharing its RAM slot.
 
 ### Library-detection internals (called by the above, not run directly)
 

@@ -5590,10 +5590,11 @@ struct Ovl15SaveHeaderSource {
 };
 extern struct Ovl15SaveHeaderSource D_80070CF0_headerSource __asm__("D_80070CF0");
 
-/* D_80137830 / D_80137A30 - ovl_15 checksum buffers. Absolute-addressed
- * (lui + %lo) from ovl_15 code; this TU family only declares them. The
- * target ovl_15_func_80135AE0 checksums 127-byte records at 0x80 stride
- * into byte 0x7F of each record, and reads D_80137A30 separately. */
+/* ovl_15 transfer buffer and its metadata view (+0x200), not two allocations.
+ * Ovl15WriteSaveChecksums (0x80135AE0) covers records 5..255 at 0x80 stride;
+ * metadata stores their XOR at +0x38 and its own XOR at +0x7F. The base is
+ * also reused for sprite loading by ovl_15_func_801373A0. Keep these external:
+ * target accesses are absolute (lui + %lo); storage stays in the data segment. */
 extern u8 D_80137830[];
 extern u8 D_80137A30[];
 

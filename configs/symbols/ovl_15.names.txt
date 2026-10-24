@@ -1,0 +1,5 @@
+// Hand-maintained ovl_15 function labels; bootstrapOverlay applies these only
+// to independently recovered entry points. ovl_30 shares this RAM slot but
+// has different function identities and does not read these labels.
+Ovl15WriteSaveChecksums = 0x80135AE0;
+Ovl15VerifySaveChecksums = 0x80135B68;

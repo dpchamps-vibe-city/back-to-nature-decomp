@@ -31,7 +31,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { containsVram, loadContainers, type Container } from "../lib/container.js";
-import { ENGINE_EXPORT_PATH, loadSymbolAddresses } from "../lib/symbolIndex.js";
+import { ENGINE_EXPORT_PATH } from "../lib/symbolIndex.js";
 import { configuredCSources } from "../build/buildInputs.js";
 import { analyzeCSource, applyCSourceEdits, walkActiveC, type CSourceEdit } from "../agent/cSourceGuard.js";
 import { prototypesIn } from "../agent/calleeTruth.js";
@@ -159,10 +159,12 @@ export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
   const functions = new Map(containers.map((c) => [c.id, establishedFunctions(c)]));
   const defined = new Map<string, Set<string>>();
   for (const container of containers) {
-    /* An overlay's table carries the engine export and splat's undefined
-       tables, which name other containers' functions; only its own rows count. */
-    const own = [...loadSymbolAddresses(container)].filter(([, address]) => container.kind === "exe" || containsVram(container, address));
-    defined.set(container.id, new Set(own.map(([name]) => name)));
+    /* Only the defining symbol table establishes public aliases. The broad
+       relocation index also contains old, inactive nonmatchings/*.s labels
+       and undefined references; neither is evidence of a second definition. */
+    const own = assignments(container.paths.symbolAddrs)
+      .filter(({ address }) => container.kind === "exe" || containsVram(container, address));
+    defined.set(container.id, new Set(own.map(({ name }) => name)));
   }
   const sourceDefinitions = new Map<string, Set<string>>(containers.map((c) => [c.id, new Set<string>()]));
   const headerDeclarations = new Map<string, string>();

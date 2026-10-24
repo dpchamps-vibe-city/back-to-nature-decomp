@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parseCSV, type CsvEntry } from "../build/analyzeLayout.js";
 import { ROOT } from "./psxExeInfo.js";
-import { overlayDirectCalls, overlayFunctionSymbols, overlayFunctionsFromContext, overlaySectionSplits } from "./overlayFunctionBoundaries.js";
+import { applyOverlayFunctionNames, overlayDirectCalls, overlayFunctionSymbols, overlayFunctionsFromContext, overlaySectionSplits } from "./overlayFunctionBoundaries.js";
 import type { OverlayLayout } from "./overlayLayout.js";
 
 const entry = (address: number, length: number, name = `func_${address.toString(16)}`): CsvEntry =>
@@ -31,6 +31,30 @@ test("jumptable fragments recover their owner's extent, independent of symbol sp
     { address: 0x1bc, name: "ovl_test_func_1BC" },
   ]);
   assert.match(overlayFunctionSymbols(functions), /ovl_test_func_100 = 0x100; \/\/ size:0xbc type:func/);
+});
+
+test("overlay names label independently recovered entries, preserving extents and order", () => {
+  const recovered = overlayFunctionsFromContext(fragments, context(rows), "ovl_test_", 0x100, 0x1c4);
+  const named = applyOverlayFunctionNames(recovered, "// Hand-maintained names\nWriteChecksums = 0x100; // writer\n");
+  assert.deepEqual(named, [{ address: 0x100, name: "WriteChecksums", size: 0xbc }, recovered[1]]);
+  assert.equal(recovered[0]!.name, "ovl_test_func_100", "does not mutate boundary evidence");
+  assert.deepEqual(applyOverlayFunctionNames(named, "WriteChecksums = 0x100;"), named);
+  assert.match(overlayFunctionSymbols(named), /WriteChecksums = 0x100; \/\/ size:0xbc type:func/);
+  const slotMate = [{ address: 0x100, name: "ovl_other_func_100" }];
+  assert.equal(applyOverlayFunctionNames(slotMate, "")[0]!.name, "ovl_other_func_100");
+});
+
+test("overlay names cannot create functions, alias entries or introduce collisions", () => {
+  const recovered = overlayFunctionsFromContext(fragments, context(rows), "ovl_test_", 0x100, 0x1c4);
+  for (const text of ["LocalCase = 0x150;", "OtherOverlay = 0x200;"]) {
+    assert.throws(() => applyOverlayFunctionNames(recovered, text), /not a recovered function entry/);
+  }
+  assert.throws(() => applyOverlayFunctionNames(recovered, "A = 0x100;\nB = 0x100;"), /duplicate overlay name address/);
+  assert.throws(() => applyOverlayFunctionNames(recovered, "A = 0x100;\nA = 0x1BC;"), /duplicate overlay function name/);
+  assert.throws(() => applyOverlayFunctionNames(recovered, "ovl_test_func_1BC = 0x100;"), /duplicate overlay function name/);
+  for (const text of ["Invalid-Name = 0x100;", "A = 0x100; junk", "A = 0x100"]) {
+    assert.throws(() => applyOverlayFunctionNames(recovered, text), /invalid overlay name/);
+  }
 });
 
 test("a separately recognised function is retained, even with a local-looking name", () => {

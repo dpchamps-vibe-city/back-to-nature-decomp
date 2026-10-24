@@ -111,6 +111,33 @@ export function overlayFunctionsFromContext(
   return functions;
 }
 
+/**
+ * Optional, hand-maintained <container>.names.txt labels. Apply only AFTER
+ * independent boundary recovery: a name must never seed or invent an entry.
+ * The owning file scopes addresses to this overlay, not its RAM-slot mates.
+ */
+export function applyOverlayFunctionNames(functions: readonly OverlayFunction[], text: string): OverlayFunction[] {
+  const byAddress = new Map(functions.map((fn) => [fn.address, fn]));
+  const names = new Map<number, string>();
+  for (const [index, raw] of text.split(/\r?\n/).entries()) {
+    const line = raw.replace(/\/\/.*$/, "").trim();
+    if (!line) continue;
+    const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;$/);
+    if (!match) throw new Error(`invalid overlay name at line ${index + 1}: ${raw}`);
+    const address = Number(match[2]);
+    if (!byAddress.has(address)) throw new Error(`overlay name ${match[1]} is not a recovered function entry: ${match[2]}`);
+    if (names.has(address)) throw new Error(`duplicate overlay name address: ${match[2]}`);
+    names.set(address, match[1]!);
+  }
+  const used = new Set<string>();
+  return functions.map((fn) => {
+    const name = names.get(fn.address) ?? fn.name;
+    if (used.has(name)) throw new Error(`duplicate overlay function name: ${name}`);
+    used.add(name);
+    return { ...fn, name };
+  });
+}
+
 /** The same explicit extent must reach both spimdisasm and splat. */
 export function overlayFunctionSymbols(functions: readonly OverlayFunction[]): string {
   return functions.map((fn) => `${fn.name} = 0x${fn.address.toString(16).toUpperCase()}; // ` +
