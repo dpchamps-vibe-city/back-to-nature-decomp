@@ -16,17 +16,10 @@ void func_8001E340(Grid8001E340 **arg0) {
     Grid8001E340 *g = *arg0;
     s32 i;
     s32 off;
-    s32 k;
 
-    if (g->count > 0) {
-        i = 0;
-        k = 1;
-        off = 0xC;
-        do {
-            *(s32 *)((u8 *)g + off + 0x18) = k;
-            __asm__("" : : "g"(i));
-            off += 0x1C;
-            g = *arg0;
-        } while (++i < g->count);
+    for (i = 0; i < g->count; i++) {
+        off = i * 0x1C + 0xC;
+        *(s32 *)((u8 *)g + off + 0x18) = 1;
+        g = *arg0;
     }
 }
