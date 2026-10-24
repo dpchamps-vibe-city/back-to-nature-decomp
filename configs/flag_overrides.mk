@@ -86,6 +86,30 @@ CC1FLAGS_func_80014494 := -fno-cse-skip-blocks
 # both functions match byte-for-byte under baseline flags; the flag was the
 # same wrong lever as the withdrawn func_80016C08/func_800165D8 entries.
 
+# func_800183E0: -fno-gcse.
+#
+# Fingerprint: the target recomputes arg2 - 4, arg3 - 0x54 and (u16)status at
+# 0x80018900-0x80018934 (addiu s5,s7,-4 / addiu s4,fp,-0x54 /
+# andi s6,s3,0xffff). Those points are dominated by the identical
+# computations at 0x800187DC-0x800187E0, and nothing writes arg2, arg3 or
+# status in between. GCSE's PRE deletes such fully redundant computations;
+# the default-flag build of the matching source does ("PRE: redundant insn
+# ... reaching reg" in its .gcse dump). The reaching registers then live
+# across the calls and push arg2, arg3 and the step value onto the stack.
+#
+# Flag column: the matching source is 489/491 words under -fno-gcse (the two
+# remaining words are the jump table's .rodata relocations, which resolve
+# once its rodata is attributed) against 395/517 at baseline and 343/522
+# with -fno-schedule-insns.
+#
+# No contrary regional witness: the scan loop's addiu a0,s1,1 / move s1,a0
+# counter, which a default-flag build gets from PRE, comes under -fno-gcse
+# from the source's explicit next = i + 1. The neighbouring func_80018B98
+# carries -fno-gcse on its own evidence, and the only function between them,
+# ClearVal8005E4B0, clears this function's D_8005E4B0: very likely one
+# original TU.
+CC1FLAGS_func_800183E0 := -fno-gcse
+
 # func_80018B98: -fno-gcse.
 #
 # Fingerprint (proved unreachable from any C shape at baseline, no source

@@ -5685,9 +5685,15 @@ Members (address order):
   (s16 stack args 4/5 sign-extended onto the outgoing frame); nearest
   address predecessor of func_800183E0 and its only direct caller — strong
   same-TU evidence
-- func_800183E0 (s) — u16-table consumer over the loaded buffer
-  (0xFFFF-sentinel scan); reaches D_8005E4B0, D_8005E4A8, D_8005E444,
-  D_8005E45C, D_8005E46C GP-relatively; calls func_8001A018
+- func_800183E0 (m, byte-exact, -fno-gcse) — u16-table consumer over the
+  loaded buffer (0xFFFF-sentinel scan); reaches D_8005E4B0, D_8005E4A8,
+  D_8005E444, D_8005E45C, D_8005E46C GP-relatively; calls func_8001A018.
+  Its -fno-gcse is a TU flag fact (evidence in configs/flag_overrides.mk).
+  func_80018B98 carries the same flag on independent evidence, and the only
+  function between them, ClearVal8005E4B0, clears D_8005E4B0: the three are
+  very likely one original TU, so expect -fno-gcse on its other members
+  ([verified source](../src/func_800183E0.c),
+  [research](research/func_800183E0.md)).
 - func_80019FC4 (s) — per-slot consumer: when D_8005E468 == slot and
   D_8005E46C is set, calls func_8001719C/func_80022008, re-stamps
   D_8005E468, clears D_8005E45C
