@@ -40,7 +40,7 @@ function keyOf(entry: LedgerEntry): string {
   return `[${entry.key.join(", ")}]`;
 }
 
-function describe(entry: LedgerEntry): string {
+export function describe(entry: LedgerEntry): string {
   const verdict = entry.exact === true
     ? "EXACT"
     : isUnprovenZero(entry)

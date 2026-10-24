@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "
 import { dirname, join } from "node:path";
 import type { AutodecompConfig } from "../../shared/types.ts";
 import type { Completion } from "../tools/prepared-attempt.ts";
-import type { ApprovalRecord, LoopConfig, LoopState, ParkRecord } from "./types.ts";
+import type { ApprovalRecord, LoopConfig, LoopState, ParkRecord, RepairRecord } from "./types.ts";
 
 const STATE_FORMAT = "autoloop-input-deltas-v1";
 type StoredCompletion = Omit<Completion, "inputs"> & { inputsDelta: Record<string, string | null> };
@@ -15,7 +15,8 @@ type StoredState = Omit<LoopState, "completions"> & {
  * store only changes from the previous record (null removes a path). Repeating
  * the whole project map per match reached V8's 512 MiB string ceiling. */
 function encodeState(state: LoopState): StoredState {
-  const stored: StoredState = { format: STATE_FORMAT, parked: state.parked, approvals: state.approvals };
+  const stored: StoredState = { format: STATE_FORMAT, parked: state.parked, approvals: state.approvals,
+    ...(state.repairs ? { repairs: state.repairs } : {}) };
   if (state.completions) {
     stored.completions = {};
     let previous: Record<string, string> = {};
@@ -35,7 +36,8 @@ function encodeState(state: LoopState): StoredState {
 }
 
 function decodeState(stored: StoredState): LoopState {
-  const state: LoopState = { parked: stored.parked ?? {}, approvals: stored.approvals ?? {} };
+  const state: LoopState = { parked: stored.parked ?? {}, approvals: stored.approvals ?? {},
+    ...(stored.repairs ? { repairs: stored.repairs } : {}) };
   if (stored.completions) {
     state.completions = {};
     let previous: Record<string, string> = {};
@@ -75,7 +77,14 @@ export function readState(config: LoopConfig): LoopState {
   if (raw.format === STATE_FORMAT) return decodeState(raw as unknown as StoredState);
   if (raw.format !== undefined) throw new Error(`Unsupported autoloop state format: ${String(raw.format)}`);
   /* Legacy state migrates losslessly on its next write. */
-  return { parked: raw.parked ?? {}, approvals: raw.approvals ?? {}, ...(raw.completions ? { completions: raw.completions } : {}) };
+  return { parked: raw.parked ?? {}, approvals: raw.approvals ?? {}, ...(raw.completions ? { completions: raw.completions } : {}),
+    ...(raw.repairs ? { repairs: raw.repairs } : {}) };
+}
+
+export function recordRepair(config: LoopConfig, state: LoopState, record: RepairRecord): LoopState {
+  const next: LoopState = { ...state, repairs: { ...state.repairs, [record.functionName]: record } };
+  writeState(config, next);
+  return next;
 }
 
 export function writeState(config: LoopConfig, state: LoopState): void {

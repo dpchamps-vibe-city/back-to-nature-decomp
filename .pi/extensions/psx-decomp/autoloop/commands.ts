@@ -7,15 +7,20 @@ import { prepSystemPrompt, registerPrepHandoffTool, setPrepHandoffToolActive } f
 import { createHandoffSink, registerHandoffTool, setHandoffToolActive } from "./handoff.ts";
 import { createVerdictSink, registerPolicyVerdictTool, setVerdictToolActive } from "./policy-verdict.ts";
 import { readState } from "./state.ts";
+import { documentedExceptions, repairCandidates, runRepairLoop } from "./repair.ts";
+import { loadCallGraph } from "../../shared/call-graph.ts";
+import { loadConfig } from "../../shared/config.ts";
 import { createTurnGate, registerTurnGate } from "./turn-gate.ts";
 
 export const LOOP_COMMAND = "auto_decompilation_loop";
 
 interface ParsedArgs {
-  action: "run" | "status" | "stop" | "usage";
+  action: "run" | "repair" | "status" | "stop" | "usage";
   target?: string;
   maxFunctions?: number;
 }
+
+const USAGE = `Usage: /${LOOP_COMMAND} [function] [--max=N] | repair [function] [--max=N] | status | stop`;
 
 export function parseArgs(args: string): ParsedArgs {
   const tokens = args.trim().split(/\s+/).filter(Boolean);
@@ -23,8 +28,10 @@ export function parseArgs(args: string): ParsedArgs {
   if (tokens[0] === "status") return { action: "status" };
   if (tokens[0] === "stop") return { action: "stop" };
 
-  const parsed: ParsedArgs = { action: "run" };
-  for (const token of tokens) {
+  /* `repair` is a mode word, not a function name; no symbol is spelled that way. */
+  const repair = tokens[0] === "repair";
+  const parsed: ParsedArgs = { action: repair ? "repair" : "run" };
+  for (const token of repair ? tokens.slice(1) : tokens) {
     const limit = token.match(/^--max(?:-functions)?=(\d+)$/);
     if (limit) {
       parsed.maxFunctions = Number.parseInt(limit[1], 10);
@@ -88,12 +95,12 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
 
   pi.registerCommand(LOOP_COMMAND, {
     description:
-      "Run the tiered escalation decompilation loop in this session. Usage: /auto_decompilation_loop [function] [--max=N] | status | stop",
+      "Run the tiered escalation decompilation loop in this session; `repair` removes asm/pin exceptions from functions that already match. " + USAGE,
     handler: async (args, ctx) => {
       const parsed = parseArgs(args);
 
       if (parsed.action === "usage") {
-        ctx.ui.notify(`Usage: /${LOOP_COMMAND} [function] [--max=N] | status | stop`, "warning");
+        ctx.ui.notify(USAGE, "warning");
         return;
       }
 
@@ -119,6 +126,13 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
         const state = readState(config);
         const parked = Object.keys(state.parked);
         const approvals = Object.keys(state.approvals);
+        const repairs = Object.values(state.repairs ?? {});
+        let queued = "unknown (call graph unavailable)";
+        try {
+          const queue = repairCandidates(loadCallGraph(projectRoot).functions, loadConfig(projectRoot).sourcePolicy.allowlist, documentedExceptions(projectRoot));
+          const pending = queue.filter((candidate) => !["failed", "repaired"].includes(state.repairs?.[candidate.name]?.status ?? ""));
+          queued = `${pending.length} queued, ${queue.length - pending.length} after a failed repair`;
+        } catch { /* status must not fail on a stale or missing graph */ }
         ctx.ui.notify(
           [
             `ladder: ${config.ladder.map((tier) => tier.label + (tier.role ? ` [${tier.role}]` : "")).join(" → ")}`,
@@ -127,6 +141,7 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
             `running: ${active ? "yes" : "no"}`,
             `parked (${parked.length}): ${parked.join(", ") || "none"}`,
             `agent-approved exemptions (${approvals.length}): ${approvals.join(", ") || "none"}`,
+            `repair: ${queued}; repaired ${repairs.filter((record) => record.status === "repaired").length}`,
           ].join("\n"),
           "info",
         );
@@ -145,10 +160,12 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
         "info",
       );
 
-      const task = Promise.resolve().then(async () => runLoop(
-        { pi, ctx, projectRoot, config, sink, flag, baseline: await getSessionBaseline(projectRoot) },
-        { firstTarget: parsed.target, maxFunctions: parsed.maxFunctions },
-      ));
+      const task = Promise.resolve().then(async () => {
+        const deps = { pi, ctx, projectRoot, config, sink, flag, baseline: await getSessionBaseline(projectRoot) };
+        return parsed.action === "repair"
+          ? runRepairLoop(deps, { ...(parsed.target ? { target: parsed.target } : {}), ...(parsed.maxFunctions ? { maxFunctions: parsed.maxFunctions } : {}) })
+          : runLoop(deps, { firstTarget: parsed.target, maxFunctions: parsed.maxFunctions });
+      });
       running = task.catch(() => {});
       try {
         const outcomes = await task;

@@ -57,6 +57,38 @@ export function parkCommitMessage(
 }
 
 /**
+ * A repair takes exceptions away from a function that already matched, so it is
+ * spelled `clean <function>`: history should say the match did not change and
+ * the source did.
+ */
+export function repairCommitMessage(functionName: string, tierLabel: string, revokedKinds: string[]): string {
+  return [
+    `clean ${functionName}`,
+    "",
+    `Removed the ${revokedKinds.join(", ")} exception(s) and their allowlist entry.`,
+    `Still byte-exact; finalized by /auto_decompilation_loop repair on ${tierLabel}.`,
+  ].join("\n");
+}
+
+/** A repair that did not finish leaves the source as it was; only its record is committed. */
+export function repairAttemptCommitMessage(functionName: string, tierLabel: string, notePath: string): string {
+  return [
+    `repair attempt ${functionName}`,
+    "",
+    `/auto_decompilation_loop repair did not reach a clean match on ${tierLabel}.`,
+    `The matching source and its allowlist entry are unchanged; see ${notePath}.`,
+  ].join("\n");
+}
+
+export async function commitRepairedFunction(projectRoot: string, functionName: string, tierLabel: string, revokedKinds: string[], files: string[]): Promise<CommitResult> {
+  return commitFiles(projectRoot, files, repairCommitMessage(functionName, tierLabel, revokedKinds));
+}
+
+export async function commitRepairAttempt(projectRoot: string, functionName: string, tierLabel: string, notePath: string, files: string[]): Promise<CommitResult> {
+  return commitFiles(projectRoot, files, repairAttemptCommitMessage(functionName, tierLabel, notePath));
+}
+
+/**
  * Commit exactly the files this function's work touched, on the current branch.
  *
  * The file list comes from the loop's own changed-file reading, which has

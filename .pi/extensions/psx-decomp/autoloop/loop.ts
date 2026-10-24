@@ -96,16 +96,16 @@ export interface LoopDeps {
   baseline: Set<string>;
 }
 
-function notify(deps: LoopDeps, message: string, level: "info" | "warning" | "error" = "info"): void {
+export function notify(deps: LoopDeps, message: string, level: "info" | "warning" | "error" = "info"): void {
   deps.ctx.ui.notify(message, level);
 }
 
-function setStatus(deps: LoopDeps, text: string | undefined): void {
+export function setStatus(deps: LoopDeps, text: string | undefined): void {
   deps.ctx.ui.setStatus("autoloop", text === undefined ? undefined : deps.ctx.ui.theme.fg("accent", text));
 }
 
 /** Point the session at one rung of the ladder. Returns false when the rung is unusable. */
-async function applyTier(deps: LoopDeps, tier: LoopTier): Promise<boolean> {
+export async function applyTier(deps: LoopDeps, tier: LoopTier): Promise<boolean> {
   const model = deps.ctx.modelRegistry.find(tier.provider, tier.model);
   if (!model) {
     notify(deps, `Escalation tier unavailable: ${tier.provider}/${tier.model} is not in the model catalogue`, "warning");
@@ -226,7 +226,7 @@ async function compactIfLarge(deps: LoopDeps, thresholdTokens: number, forcedTok
  * how much weight it carries. Either way the next tier is told to treat it
  * adversarially, so a weak summary costs nothing beyond the turn.
  */
-async function captureHandoff(
+export async function captureHandoff(
   deps: LoopDeps,
   functionName: string,
   tierLabel: string,
@@ -295,7 +295,7 @@ async function capturePrepHandoff(deps: LoopDeps, functionName: string, lastRepo
  * working one function, where a summary keeps reasoning a clear would discard.
  * Prep role boundaries always clear, so neither role inherits the other's task.
  */
-async function clearContext(deps: LoopDeps, force = false): Promise<void> {
+export async function clearContext(deps: LoopDeps, force = false): Promise<void> {
   if (!force && !deps.config.clearContextBetween) return;
   await deps.ctx.waitForIdle();
 
@@ -960,10 +960,15 @@ export function summarize(outcomes: FunctionOutcome[]): string {
   const parked = outcomes.filter((outcome) => outcome.kind === "parked").length;
   const broken = outcomes.some((outcome) => outcome.kind === "environment-broken");
   const aborted = outcomes.some((outcome) => outcome.kind === "aborted");
+  const repaired = outcomes.filter((outcome) => outcome.kind === "repaired").length;
+  const repairFailed = outcomes.filter((outcome) => outcome.kind === "repair-failed").length;
   const committed = outcomes.filter(
-    (outcome) => (outcome.kind === "matched" || outcome.kind === "parked") && outcome.commit,
+    (outcome) => (outcome.kind === "matched" || outcome.kind === "parked" ||
+      outcome.kind === "repaired" || outcome.kind === "repair-failed") && outcome.commit,
   ).length;
-  const parts = [`${matched} matched`, `${committed} committed`, `${parked} parked`];
+  const parts = repaired || repairFailed
+    ? [`${repaired} repaired`, `${committed} committed`, `${repairFailed} restored`]
+    : [`${matched} matched`, `${committed} committed`, `${parked} parked`];
   if (aborted) parts.push("aborted");
   if (broken) parts.push("environment guard tripped");
   return `autoloop: ${parts.join(", ")}`;

@@ -123,15 +123,50 @@ export interface ApprovalRecord {
   rationale: string;
 }
 
+/**
+ * One `/auto_decompilation_loop repair` attempt on a function that already
+ * matches through source-policy exceptions.
+ *
+ * `in-progress` is written before the loop touches the tree, so a session that
+ * dies mid-repair can be put back on its matching source by the next run.
+ * `failed` takes the function out of the queue until it is named explicitly;
+ * `interrupted` (the operator stopped the loop) leaves it in.
+ */
+export interface RepairRecord {
+  functionName: string;
+  /** Project-relative C file. */
+  sourcePath: string;
+  status: "in-progress" | "repaired" | "failed" | "interrupted";
+  startedAt: string;
+  finishedAt?: string;
+  /** The commit the repair started from; recovery only restores onto it. */
+  head: string;
+  /** The allowlist keys the function answers to, and the kinds the repair revoked under them. */
+  keys: string[];
+  revokedKinds: string[];
+  /** Ladder tier the loop reached. */
+  reachedTier?: string;
+  /** Oracle report for the last program on disk before the restore. */
+  lastReport?: string;
+  /** Which clean program the note preserves, and how it measured. */
+  attemptNote?: string;
+  /** Project-relative note written for a failed repair. */
+  notePath?: string;
+}
+
 export interface LoopState {
   parked: Record<string, ParkRecord>;
   approvals: Record<string, ApprovalRecord>;
   completions?: Record<string, Completion>;
+  repairs?: Record<string, RepairRecord>;
 }
 
 export type FunctionOutcome =
   | { kind: "matched"; functionName: string; tier: string; changedFiles: string[]; documentation?: "pending" | "passed"; commit?: string }
   | { kind: "parked"; functionName: string; record: ParkRecord; commit?: string }
+  | { kind: "repaired"; functionName: string; tier: string; changedFiles: string[]; commit?: string }
+  | { kind: "repair-failed"; functionName: string; record: RepairRecord; commit?: string }
+  | { kind: "skipped"; functionName: string; detail: string }
   | { kind: "aborted"; functionName: string }
   | { kind: "environment-broken"; functionName: string; detail: string };
 

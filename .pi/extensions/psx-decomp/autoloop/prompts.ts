@@ -237,23 +237,28 @@ export function findingsReport(findings: PolicyFinding[]): string {
  * measurement — which is what happened: 30 minutes of work, one measurement, a
  * classification report, and a named next experiment left unrun.
  */
+/** How a matching turn is paced; shared by the fresh and repair openings. */
+const PACING = [
+  "Run experiments back to back — one edit and one psx_residual_objective call each,",
+  "as many as it takes — without pausing to summarise, check in, or report progress.",
+  "The single-experiment rule is about attribution, never about pace: there is no",
+  "budget of one measurement, and no good stopping point short of a match.",
+  "",
+  "If you can name the next experiment, run it. A compile is under a second, so",
+  "'next experiment, when resuming' is always the wrong sentence — the run costs",
+  "less than writing that down. Classify once at the start; after that every",
+  "diagnostic must be followed by an edit and a measurement before the next one.",
+  "Reading the mechanism sheet or compiler function a diagnostic points at is part of",
+  "that diagnostic, not another one.",
+];
+
 export function openingMessage(functionName: string): string {
   return [
     `/skill:${DECOMPILE_SKILL} Target: ${functionName}. Mode: fresh decompilation.`,
     "Start from the prepared packet below; its measured source is primary. Never replace an existing clean-C attempt with a generated draft.",
     "",
     "Do not stop until the function is byte-exact and psx_finalize_function passes.",
-    "Run experiments back to back — one edit and one psx_residual_objective call each,",
-    "as many as it takes — without pausing to summarise, check in, or report progress.",
-    "The single-experiment rule is about attribution, never about pace: there is no",
-    "budget of one measurement, and no good stopping point short of a match.",
-    "",
-    "If you can name the next experiment, run it. A compile is under a second, so",
-    "'next experiment, when resuming' is always the wrong sentence — the run costs",
-    "less than writing that down. Classify once at the start; after that every",
-    "diagnostic must be followed by an edit and a measurement before the next one.",
-    "Reading the mechanism sheet or compiler function a diagnostic points at is part of",
-    "that diagnostic, not another one.",
+    ...PACING,
     "",
     "Return only when the function is byte-exact, or when something genuinely needs a",
     "human decision (an allowlist entry, a policy exception) — then say which, briefly.",
@@ -436,5 +441,85 @@ export function rejectionReport(functionName: string, findings: PolicyFinding[],
     `Reviewer rationale: ${rationale.trim() || "(none given)"}`,
     "",
     "Do not reintroduce them. The remaining divergence has a clean-C expression; find it.",
+  ].join("\n");
+}
+
+/**
+ * The message that opens a repair.
+ *
+ * The function already matches, but only through constructs the clean-source
+ * policy forbids for an ordinary compiled function. The loop has revoked their
+ * allowlist entry on disk, so every gate the agent can call judges the source
+ * as plain C — a finalize that passes means the repair is done, and one that
+ * fails on the untouched hybrid is the starting point, not a fault. The hybrid
+ * is also the specification: each asm statement is an instruction the target
+ * needs, each pin a register it uses.
+ */
+export function repairOpeningMessage(
+  functionName: string,
+  sourcePath: string,
+  revokedKinds: string[],
+  findings: PolicyFinding[],
+  previous?: string,
+): string {
+  return [
+    `/skill:${DECOMPILE_SKILL} Target: ${functionName}. Mode: repair.`,
+    `${functionName} is byte-exact, but only through constructs the clean-source policy forbids for an ordinary`,
+    `compiled function. For this run the loop has revoked its allowlist entry (${revokedKinds.join(", ")}) in`,
+    "`.pi/autoloop.json`, so every gate, psx_finalize_function included, now judges the source as plain C.",
+    `The repair is done when \`${sourcePath}\` carries none of the constructs below, the function is still`,
+    "byte-exact, and psx_finalize_function passes.",
+    "",
+    findingsReport(findings),
+    "",
+    "Start from the source on disk and read its constructs as the specification: each asm statement names",
+    "instructions the target needs, and each pin names a register the target uses. Replace one construct at a",
+    "time with the C that produces the same code, and measure each replacement.",
+    "Do not trade one exception for another: no new asm, register pin, INCLUDE_ASM stub, compiler-flag override",
+    "or allowlist edit. The loop puts `.pi/autoloop.json` back if it changes, and if the repair does not finish",
+    "it restores the matching source and records your best clean program for the next attempt.",
+    ...(previous ? ["", previous] : []),
+    "",
+    "Do not stop until the repair is done.",
+    ...PACING,
+    "",
+    "Return only when the repair is done, or when something genuinely needs a human decision — then say",
+    "which, briefly. Do not commit or create a worktree. Candidate experiments may live under build/;",
+    "integration is scoped to this function's src/, include/, and configs/ inputs.",
+  ].join("\n");
+}
+
+/** What a repair turn left, when it is not finished: the constructs still present, then the oracle. */
+export function repairReport(findings: PolicyFinding[], matchText: string): string {
+  return [
+    ...(findings.length
+      ? ["The source still carries constructs the repair must remove:", "", findingsReport(findings), ""]
+      : ["No forbidden constructs remain.", ""]),
+    matchText,
+  ].join("\n");
+}
+
+/** A repair tier's opening after an earlier tier ran out; the source on disk is that tier's attempt. */
+export function repairEscalationMessage(
+  functionName: string,
+  tierLabel: string,
+  sourcePath: string,
+  revokedKinds: string[],
+  lastReport: string,
+  handoff?: HandoffSummary,
+): string {
+  return [
+    `/skill:${DECOMPILE_SKILL} Target: ${functionName}. Mode: repair.`,
+    `The previous escalation tier did not finish this repair; you are now ${tierLabel}.`,
+    `The allowlist entry (${revokedKinds.join(", ")}) stays revoked. \`${sourcePath}\` holds the previous tier's`,
+    "attempt; the matching hybrid it started from is in git HEAD. The repair is done when the source carries",
+    "no forbidden construct, the function is byte-exact, and psx_finalize_function passes.",
+    "Read psx_experiment_ledger first: re-deriving a classification is warranted, re-running an experiment",
+    "it already records is not.",
+    "",
+    lastReport,
+    ...(handoff ? ["", handoffBlock(handoff)] : []),
+    "",
+    ...PACING,
   ].join("\n");
 }
