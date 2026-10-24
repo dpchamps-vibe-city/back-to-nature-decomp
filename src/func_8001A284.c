@@ -120,19 +120,11 @@ s32 func_8001A284(s32 arg0) {
     }
     case 33: {
         unsigned char *base;
+        s32 address;
         s16 *dest;
         dest = &D_8005E490;
-        /* Scheduling barrier (tracked debt): the target emits the
-         * `addiu a1,gp,%gp_rel(D_8005E490)` argument materialization
-         * BEFORE the D_8006C838 base formation; the compiler ties the two
-         * on priority and places the addiu after the `addu` by original
-         * RTL position. Every hoisted-statement spelling is folded back to
-         * the call site by CSE, so no clean statement order reaches the
-         * target order. The barrier keeps dest's early birth live without
-         * emitting an instruction. */
-        __asm__ volatile("" : "=r"(dest) : "0"(dest));
-        base = (unsigned char *)&D_8006C838;
-        base += 0x8000;
+        address = (s32)&D_8006C838;
+        base = (unsigned char *)(address + 0x8000);
         result = (s32)func_8001A870(*(s16 *)(base + 0x26DA) + 1, dest, 4);
         break;
     }
