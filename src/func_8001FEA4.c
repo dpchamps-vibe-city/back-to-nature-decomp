@@ -13,7 +13,7 @@ s32 D_8005E558;
 s32 D_8005E55C;
 
 void func_8001FEA4(void) {
-    register s32 one __asm__("$16"); /* $s0 — constant 1 across call. */
+    s32 one;
 
     one = 1;
     SsInit();

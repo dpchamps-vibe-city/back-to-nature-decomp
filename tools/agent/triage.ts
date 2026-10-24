@@ -2208,8 +2208,8 @@ function detectCaptureRa(target: TargetFacts): Finding[] {
       severity: "signal",
       summary:
         "CAPTURE_RA debug-hook signature: $ra stored through a non-$sp base. " +
-        "Use the CAPTURE_RA macro from include/debughook.h; this function will " +
-        "also need an embedded-asm sourcePolicy allowlist entry.",
+        "Use the CAPTURE_RA macro from include/debughook.h. It is a standing " +
+        "construct and needs no sourcePolicy allowlist entry.",
       evidence: hook,
       see: [
         "include/debughook.h",

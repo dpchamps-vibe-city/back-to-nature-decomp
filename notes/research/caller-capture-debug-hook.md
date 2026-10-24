@@ -53,8 +53,9 @@ them before choosing a matching strategy:
    address computed by ordinary compiler code nearby (`lui/addiu` for a
    global, `addiu $sp,N` for a local) and the whole cluster appearing
    *before the first `jal`*. Reconstruction: `CAPTURE_RA` from
-   `include/debughook.h`; classification stays compiled-C with an
-   `embedded-asm` allowlist entry.
+   `include/debughook.h`; classification stays compiled-C. `CAPTURE_RA`
+   is a standing construct, so the function needs no allowlist entry
+   (2026-10-23).
 2. **Assembler-macro form (handwritten asm).** `sw $ra, %lo(SYM)($at)` —
    the `$at` register means the assembler expanded a `sw $ra, SYM`
    pseudo-op, which GCC never emits. Retail sites: three around

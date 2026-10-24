@@ -41,20 +41,8 @@
     "register-asm",
     "embedded-asm"
    ],
-   "func_80016054": [
-    "embedded-asm"
-   ],
-   "func_80015704": [
-    "embedded-asm"
-   ],
    "func_8001d2d8": [
     "register-asm",
-    "embedded-asm"
-   ],
-   "func_8001dfd4": [
-    "embedded-asm"
-   ],
-   "func_8002437c": [
     "embedded-asm"
    ],
    "func_8001e9f8": [
@@ -89,10 +77,6 @@
     "embedded-asm"
    ],
    "ovl_11_func_800f8b4c": [
-    "register-asm",
-    "embedded-asm"
-   ],
-   "func_80021820": [
     "register-asm",
     "embedded-asm"
    ],
@@ -138,10 +122,6 @@
     "embedded-asm"
    ],
    "func_80017f30": [
-    "register-asm",
-    "embedded-asm"
-   ],
-   "func_8001FEA4": [
     "register-asm",
     "embedded-asm"
    ],
@@ -204,10 +184,6 @@
    ],
    "ovl_17_func_800b9158": [
     "flag-override"
-   ],
-   "ovl_11_func_800f227c": [
-    "register-asm",
-    "embedded-asm"
    ],
    "ovl_11_func_8011f574": [
     "register-asm",

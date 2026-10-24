@@ -66,7 +66,7 @@ workaround that the C sources still use.
 | Empty assembly barrier | 7 | Permitted as a last resort. The configuration sets `allowEmptyMemoryBarrier`, so these files need no entry |
 | Scratchpad stack switch | 1 | Assembly that does nothing but move `$sp`. No C construct can, so this is a classification rather than an exception: the configuration sets `allowStackPointerSwitch` and these files need no entry. The idiom itself is `SCRATCH_STACK_BEGIN`/`SCRATCH_STACK_END` in `include/scratchpad.h`; see `notes/research/scratchpad-stack-switch.md` |
 | Assembly block with instructions | 5 | Each file has an `embedded-asm` entry |
-| `CAPTURE_RA` debug hook | 2 | The hook is a target feature, not a workaround |
+| `CAPTURE_RA` debug hook | 2 | The hook is a target feature, not a workaround. It is a standing construct from `include/debughook.h`, so these files need no entry |
 | Full function in assembly | 2 | The handwritten-assembly class |
 | Per-file compiler flag | 1 | `func_80014494` uses `-fno-cse-skip-blocks` |
 

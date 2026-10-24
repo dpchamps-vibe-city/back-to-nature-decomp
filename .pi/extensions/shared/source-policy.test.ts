@@ -261,6 +261,14 @@ test("CAPTURE_PREV_RET has standing approval at either AST scope; absent census 
   }
 });
 
+test("CAPTURE_RA has standing approval; a local asm redefinition of it does not", () => {
+  const { root, config } = fixture('#include "debughook.h"\nvoid target(int *dst) {\n CAPTURE_RA(dst);\n}\n');
+  assert.equal(checkSourcePolicy({ projectRoot: root, config, functionName: "target" }).pass, true);
+  writeFileSync(join(root, "src/target.c"), '#define CAPTURE_RA(dst) __asm__ volatile("sw $31,0(%0)" : : "r"(dst))\nvoid target(int *dst) { CAPTURE_RA(dst); }\n');
+  const result = checkSourcePolicy({ projectRoot: root, config, functionName: "target" });
+  assert.equal(result.pass, false); assert(result.hardFailures.some((finding) => finding.kind === "embedded-asm"));
+});
+
 test("raw entry-$2 declarations route to the macro/census, including multiline syntax", () => {
   const { root, config } = fixture('register s32\n phantom\n asm("$2");\nvoid target(void) {}\n');
   const result = checkSourcePolicy({ projectRoot: root, config, functionName: "target" });

@@ -146,3 +146,61 @@ falls below the actor giv's (a loop-carried opponent with no extra
 instruction, or an actor pointer with far more weighted references). Start
 from the reset family (`[0,0,2,7]`) and check the `.lreg` priorities with
 `tools/agent/compilerTrace.ts`.
+
+## func_800142D8 — three-instruction guard branch in asm (authorized 2026-08-09)
+
+**Exception.** Guard branch 2 is written out as embedded asm in
+`src/func_800142D8.c`: `slt %0,%1,165` / `beq %0,$0,$L3` / `slt %0,%1,92`,
+under `.set noreorder` and `.set nomacro`. The allowlist entry is
+`func_800142d8` (`embedded-asm`) in `.pi/autoloop.json`. The operands are plain
+`"=&r"`/`"r"` constraints, so cc1 still allocates them and picks the target's
+`$v0`/`$a2` itself. Branches 1 and 3, the `csqrt` call and the rest of the body
+are C. The full record is `notes/retros/2026-08-09-func_800142D8-retro.md`.
+
+**What the target needs.** In the target, reorg's `fill_eager_delay_slots`
+takes the fall-through thread for branch 2 (`beqz`, predicted not taken): it
+moves `slt $v0,$a2,92` into the delay slot, and the function stays at 44
+instructions. Clean C takes the target thread instead. It copies the
+calculation block's first instruction, `addiu $v0,$v1,-0x80`, into the slot
+and redirects the branch past it. That costs one extra instruction (45), and
+it is the whole residual: clean C reaches 41/45, with registers, schedule and
+webs otherwise exact.
+
+**Why plain C does not reach it under our cc1.** C cannot name a delay slot,
+and every route to the target's reorg choice found so far breaks the
+calculation block.
+- **The sweep.** All 1,057,675 legal variable assignments over the statement
+  skeleton were enumerated, and none reproduces the target. 13,368 reproduce
+  the guard byte-exact, delay slot included, and then lose the calculation
+  block's allocation.
+- **The differential.** Every merge in the current file's partition also
+  appears among those 13,368, so no single merge blocks it.
+- **The catch-22.** The guard-correct sources win a sched.c tie-break by LUID
+  (source order). The source order that gives that tie-break lets cse delete
+  the `move $a2,$a1` copy. The copy survives only when `x = arg0 & 0xFF` sits
+  between `y = arg1 & 0xFF` and `t = y` (`cse_insn`'s copy rewrite).
+- **Premises ruled out.**
+  - Signature: arity 2, 3 and 4 give identical output.
+  - Flags: flagProbe finds no fingerprint, and the only 44-instruction column,
+    `-fno-rerun-cse-after-loop`, scores 34/44.
+  - Assembler: real ASPSX 2.86 under wine emits `nop` for the unfilled slot.
+  - Scheduler: `.sched`/`.sched2` replay exactly in all 12 blocks.
+  - Tail: 576 spellings are all inert.
+
+**Scope of the negative.** The sweep covers renamings of one statement
+skeleton, not every C source. The retro's own conclusion is that the skeleton
+is what is wrong. It compared cc1's text output, so a variant that differs only
+in spelling (`addu` for `move`) would have been rejected. The sweep artifacts
+under `build/bruteForce/func_800142D8/` were removed by a later clean. The
+counts above come from the retro.
+
+**What would retire it.** A different statement skeleton, re-derived from the
+target's instruction stream, that gives both:
+- the guard's fall-through fill on branch 2;
+- the calculation block's allocation.
+
+The 13,368 guard-correct partitions are the positive examples to start from.
+Load-bearing facts to keep:
+- `x` is assigned exactly once (sched.c `adjust_priority` boosts only a
+  single-set destination);
+- `t = y` does not directly follow `y = arg1 & 0xFF`.

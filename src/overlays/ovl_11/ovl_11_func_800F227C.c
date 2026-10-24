@@ -1,12 +1,12 @@
-/* User-authorized matching workaround: retain the entry walker in $a0,
- * birth its address before the inner-loop invariants, and preserve the three
- * commutative address operand orders. Both scans and field updates remain C;
- * these constraints do not establish how the original source was written. */
+/* For each of the 37 records, find the first of its 30 entries (8-byte
+ * stride at +0xE4) whose key is at least arg0, store that index in unk22 and
+ * copy the entry's three fields into unkE, unk2C and unk2E. A key of 0x168
+ * leaves every record unchanged. */
 #include "common.h"
 
 void ovl_11_func_800F227C(s16 arg0) {
     struct_80076220 *rec;
-    register struct_80076220_entry *en asm("$4");
+    struct_80076220_entry *en;
     u8 *b1;
     u16 *b2;
     u16 *b3;
@@ -20,7 +20,7 @@ void ovl_11_func_800F227C(s16 arg0) {
     if (arg0 != 0x168) {
         rec = &D_80076220;
         for (j = 0; j < 37; j++, rec++) {
-            asm volatile("addiu %0,%1,0xE4" : "=r"(en) : "r"(rec));
+            en = (struct_80076220_entry *)((u8 *)rec + 0xE4);
             for (i = 0; i < 30; i++, en++) {
                 temp = en->unk0;
                 if (temp < arg0) {
@@ -33,13 +33,13 @@ void ovl_11_func_800F227C(s16 arg0) {
                 }
                 rec->unkC = 0;
                 b1 = (u8 *)rec + 0xE6;
-                asm("addu %0,%1,%2" : "=r"(p1) : "r"(b1), "r"((u32)rec->unk22 * 8));
+                p1 = (void *)((u8 *)b1 + (u32)rec->unk22 * 8);
                 rec->unkE = *p1;
                 b2 = (u16 *)((u8 *)rec + 0xE8);
-                asm("addu %0,%1,%2" : "=r"(p2) : "r"(b2), "r"((u32)rec->unk22 * 8));
+                p2 = (void *)((u8 *)b2 + (u32)rec->unk22 * 8);
                 rec->unk2C = *p2;
                 b3 = (u16 *)((u8 *)rec + 0xEA);
-                asm("addu %0,%1,%2" : "=r"(p3) : "r"(b3), "r"((u32)rec->unk22 * 8));
+                p3 = (void *)((u8 *)b3 + (u32)rec->unk22 * 8);
                 rec->unk2E = *p3;
                 break;
             }
