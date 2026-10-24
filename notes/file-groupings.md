@@ -496,6 +496,18 @@ agent workflow. Its residual was one shape question — a nested `if` chain rath
 than a `&&`, which GCC folds into a single unsigned compare — and it is a fair
 prior for the rest of this group.
 
+Reconstructed so far (2026-10-24): the five helpers `800B82E8`–`800B8600` are
+one module, `src/overlays/ovl_31/modules/memcard_service.c`, folded by
+`tools/build/foldTranslationUnit.ts` and byte-identical under baseline flags;
+their one jump table (`800B8490`'s) is the module's pooled `.rodata`. The driver
+`800B7FCC` is the same original file but cannot join yet, and the reason is
+itself TU evidence: the original `.rodata` runs driver strings (0x4–0xB4), the
+driver's jump table (0xB4), `800B83B8`'s strings `"*"` / `"%d file(s) %d
+block(s)\n"` (0xD0), `800B8490`'s table (0xEC), then `800B8600`'s strings —
+exactly the order one file compiled in address order emits literals and tables.
+A module object pools only what its C emits, so the driver joins once the
+members' `D_800B7Exx`/`D_800B7Fxx` string externs are written as literals.
+
 ---
 
 ## `ovl_11` farm-object clear/update run — 0x801212C4–0x80121780 (confidence: medium)

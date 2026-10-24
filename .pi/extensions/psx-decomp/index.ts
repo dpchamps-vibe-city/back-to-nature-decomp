@@ -99,12 +99,18 @@ function callGraphStale(root: string): boolean {
     return true;
   }
 
-  const srcDir = join(root, "src");
-  try {
-    for (const file of readdirSync(srcDir)) {
-      if (!file.endsWith(".c")) continue;
-      if (statSync(join(srcDir, file)).mtimeMs > graphMtimeMs) return true;
+  /* Every container's sources, modules included: `src/overlays/<id>/` and
+     `modules/` subdirectories hold units too. */
+  const newer = (directory: string): boolean => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) { if (newer(path)) return true; continue; }
+      if (entry.name.endsWith(".c") && statSync(path).mtimeMs > graphMtimeMs) return true;
     }
+    return false;
+  };
+  try {
+    if (newer(join(root, "src"))) return true;
   } catch {
     return true;
   }

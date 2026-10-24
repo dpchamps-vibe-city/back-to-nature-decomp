@@ -39,6 +39,7 @@ import {
 } from "../lib/functionOracle.js";
 import { requireFunctionLocation } from "../lib/symbolIndex.js";
 import { containerPath, containerTargetPath, vramToRom, type Container } from "../lib/container.js";
+import { flagOverrideKey, functionSourcePath } from "../lib/translationUnits.js";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
 
@@ -119,9 +120,10 @@ function runStep(label: string, cmd: string): string {
  * Artifacts are named after the *function*, not the source file, so a
  * candidate compiled from elsewhere still lands where the rest of the
  * diagnostics look for it (`build/diffFunc/<func>.s`), and picks up the same
- * per-file flag override the build would apply to that function.
+ * per-file flag override the build would apply to that function. A module
+ * compiles under its own key, as the Makefile's FlagsSwitch does.
  */
-function compile(src: string, stem: string, kind: "exe" | "overlay" = "exe"): string {
+function compile(src: string, stem: string, kind: "exe" | "overlay" = "exe", flagKey: string = stem): string {
   const dir = "build/diffFunc";
   const i = `${dir}/${stem}.i`;
   const s = `${dir}/${stem}.s`;
@@ -132,7 +134,7 @@ function compile(src: string, stem: string, kind: "exe" | "overlay" = "exe"): st
      program from the one the build produces. */
   const baseFlags = configuredCc1FlagsForContainer(kind).join(" ");
   const asFlags = configuredAsFlagsForContainer(kind).join(" ");
-  const extraFlags = flagOverrides.get(stem) || "";
+  const extraFlags = flagOverrides.get(flagKey) || "";
   const cc1flags = extraFlags ? `${baseFlags} ${extraFlags}` : baseFlags;
   runStep("cpp", `${CPP} ${CPPFLAGS} ${src} -o ${i}`);
   runStep("cc1", `${CC} ${cc1flags} ${i} -o ${s}`);
@@ -181,7 +183,7 @@ function doDiff(funcName: string, src: string, container: Container): void {
   console.log(`source:  ${src}\n`);
   let result: OracleResult;
   try {
-    const object = compile(src, funcName, container.kind);
+    const object = compile(src, funcName, container.kind, flagKeyFor(src, funcName));
     result = compareFunction(funcName, { objectPath: object, container });
   } catch (e: any) {
     console.error("Compile error:", e.stderr || e.message);
@@ -247,6 +249,11 @@ function verifyLinkedBytes(funcName: string, container: Container): boolean {
   return false;
 }
 
+/** The override key the build would use: a module's own, else the function's. */
+function flagKeyFor(src: string, funcName: string): string {
+  return /(^|\/)modules\//.test(src.replace(/\\/g, "/")) ? flagOverrideKey(src) : funcName;
+}
+
 // --- Main ---
 const rawArgs = process.argv.slice(2);
 const watchMode = rawArgs.includes("--watch");
@@ -280,14 +287,16 @@ try {
 }
 const container = location.container;
 
-const src = srcOverride ?? join(container.paths.srcDir, `${funcName}.c`);
+/* The function's translation unit, which for a module member is the module:
+   the oracle then locates the member's symbol inside the module's object. */
+const src = srcOverride ?? functionSourcePath(container, funcName);
 if (!existsSync(join(ROOT, src)) && !existsSync(src)) {
   console.error(`Not found: ${src}`);
   process.exit(1);
 }
 
 if (bytesMode) {
-  compile(src, funcName, container.kind);
+  compile(src, funcName, container.kind, flagKeyFor(src, funcName));
   verifyLinkedBytes(funcName, container);
 } else {
   doDiff(funcName, src, container);

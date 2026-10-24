@@ -4,6 +4,9 @@ import type { AutodecompConfig, PolicyFinding, SourcePolicyResult } from "./type
 import { analyzeCSource, capturePrevRetSites, matchingConstructs, walkActiveC } from "../../../tools/agent/cSourceGuard.ts";
 import { parseC, field, namedChildren } from "../../../tools/agent/residual-source-search/tree-sitter-c.ts";
 import { approvedSdkMacroDefinitions } from "./sdk-macros.ts";
+import { enclosingDefinition, sourceFacts } from "../../../tools/lib/translationUnitAudit.ts";
+import { flagOverrideKey, loadTranslationUnits } from "../../../tools/lib/translationUnits.ts";
+import { loadContainers } from "../../../tools/lib/container.ts";
 
 interface PolicyOptions {
   projectRoot: string;
@@ -358,12 +361,99 @@ export function sourceConstructFindings(source: string, config: AutodecompConfig
   return findings;
 }
 
+/** One original function a module defines, as the allowlist keys it. */
+export interface MemberScope { name: string; vram?: string; container?: string }
+
+/**
+ * Policy findings for a reconstructed module, each charged to the function it
+ * is written in.
+ *
+ * A per-function file is one function's scope, so a file-scope construct there
+ * belongs to that function. A module holds several, so the AST decides: a
+ * construct inside a member's body inherits that member's allowlist entry; one
+ * inside a nested function keeps the nested function's identity when it is an
+ * original function of its own; and a construct at module scope — a file-scope
+ * pin, a top-level asm statement, a module-local macro that wraps assembly —
+ * belongs to no member and cannot borrow any member's exception. An
+ * `INCLUDE_ASM` inside a module is a partial fold, whatever the allowlist says.
+ */
+export function moduleConstructFindings(
+  source: string,
+  config: AutodecompConfig,
+  members: readonly MemberScope[],
+): Array<Omit<PolicyFinding, "file">> {
+  const raw = sourceConstructFindings(source, config, {});
+  const facts = sourceFacts(source);
+  const byName = new Map(members.map((member) => [member.name, member]));
+  const owner = (line: number): MemberScope | undefined => {
+    let definition = enclosingDefinition(facts.definitions, line);
+    while (definition) {
+      const member = byName.get(definition.name);
+      if (member) return member;
+      const parent = definition.parent;
+      definition = parent ? facts.definitions.find((d) => d.name === parent && d.startIndex < definition!.startIndex) ?? null : null;
+    }
+    return undefined;
+  };
+  const findings: Array<Omit<PolicyFinding, "file">> = [];
+  for (const finding of raw) {
+    if (finding.kind === "include-asm") {
+      findings.push({ ...finding, message: "An INCLUDE_ASM stub inside a module is a partial fold: every member must be compiled C" });
+      continue;
+    }
+    if (finding.kind === "invalid-source" || finding.line === undefined) {
+      findings.push(finding);
+      continue;
+    }
+    const member = owner(finding.line);
+    if (!member) {
+      findings.push({ ...finding, message: `${finding.message} (module scope: no member's exception applies)` });
+      continue;
+    }
+    if (allowlisted(config, member.name, member.vram, member.container, finding.kind)) continue;
+    findings.push({ ...finding, message: `${finding.message} (in ${member.name})` });
+  }
+  return findings;
+}
+
+/** A reconstructed module's source path: `src/modules/<n>.c` or `src/overlays/<id>/modules/<n>.c`. */
+export function isModuleSourcePath(file: string): boolean {
+  return /^src\/(?:overlays\/[^/]+\/)?modules\/[^/]+\.c$/.test(normalizedPath(file));
+}
+
+/**
+ * The original functions a module source defines, from the translation-unit
+ * index: every member of every configured unit whose source it is.
+ */
+export function moduleMembers(projectRoot: string, file: string): MemberScope[] {
+  const target = normalizedPath(relative(projectRoot, resolve(projectRoot, file)));
+  try {
+    for (const container of loadContainers()) {
+      for (const unit of loadTranslationUnits(container)) {
+        if (unit.sourcePath !== target) continue;
+        return unit.members.map((member) => ({
+          name: member.name,
+          vram: `0x${member.vram.toString(16).toUpperCase().padStart(8, "0")}`,
+          container: member.container,
+        }));
+      }
+    }
+  } catch { /* no configuration: no member scopes */ }
+  return [];
+}
+
 function scanSourceFile(options: PolicyOptions, file: string, findings: PolicyFinding[]): void {
   const path = resolve(options.projectRoot, file);
   if (!existsSync(path)) return;
   const source = readFileSync(path, "utf8");
+  const relativePath = normalizedPath(relative(options.projectRoot, path));
+  if (isModuleSourcePath(relativePath)) {
+    findings.push(...moduleConstructFindings(source, options.config, moduleMembers(options.projectRoot, relativePath))
+      .map(f => ({ ...f, file: relativePath })));
+    return;
+  }
   const scope = patchScope(options, file);
-  findings.push(...sourceConstructFindings(source, options.config, scope).map(f => ({ ...f, file: normalizedPath(relative(options.projectRoot, path)) })));
+  findings.push(...sourceConstructFindings(source, options.config, scope).map(f => ({ ...f, file: relativePath })));
 }
 
 /**
@@ -394,6 +484,8 @@ function policesConstructs(file: string): boolean {
  * it is the fallback when the caller supplied no container map.
  */
 function sourceIdentity(file: string): { name: string; container?: string } | undefined {
+  /* A module is several functions; no single one is its identity. */
+  if (isModuleSourcePath(file)) return undefined;
   const match = normalizedPath(file).match(/^src\/(?:(.*)\/)?([^/]+)\.c$/);
   if (!match) return undefined;
   const directory = match[1];
@@ -550,6 +642,8 @@ export function checkSourcePolicy(options: PolicyOptions): SourcePolicyResult {
   const scanNames = options.scanFunctions ?? (options.functionName ? [options.functionName] : []);
   const scannedFiles = new Set<string>();
   for (const name of scanNames) {
+    /* Every member of a module shares its file; scan it once. */
+    if (scannedFiles.has(sourceFileOf(options, name))) continue;
     scannedFiles.add(sourceFileOf(options, name));
     scanSourceFile(
       {
@@ -564,13 +658,25 @@ export function checkSourcePolicy(options: PolicyOptions): SourcePolicyResult {
   }
 
   const patchFiles = (options.patch ?? "").split("\n").flatMap(line => line.startsWith("+++ b/") ? [line.slice(6)] : []);
-  for (const file of [...changedFiles, ...patchFiles]) if (sourceIdentity(file) && !scannedFiles.has(file)) {
+  for (const file of [...changedFiles, ...patchFiles]) if ((sourceIdentity(file) || isModuleSourcePath(file)) && !scannedFiles.has(file)) {
     scannedFiles.add(file); scanSourceFile(options, file, hardFailures);
   }
 
   const overrides = resolve(options.projectRoot, "configs", "flag_overrides.mk");
   if (existsSync(overrides)) {
     const lines = readFileSync(overrides, "utf8").split("\n");
+    /* A module's own override is never covered by a member's entry: that would
+       broaden one function's exception to the whole unit. */
+    for (const file of scannedFiles) {
+      if (!isModuleSourcePath(file)) continue;
+      const key = flagOverrideKey(file).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const index = lines.findIndex((line) => new RegExp(`^CC1FLAGS_${key}\\s*:?=`).test(line));
+      if (index >= 0) hardFailures.push({
+        kind: "flag-override", file: "configs/flag_overrides.mk", line: index + 1,
+        message: `Module-level compiler flag override for ${file}: it needs the evidence review in plans/flag-review-report.md and cannot borrow a member's allowlist entry`,
+        text: lines[index]!.trim(),
+      });
+    }
     const names = options.functionName ? [options.functionName] : scanNames;
     for (const name of names) {
       const vram = options.functionVrams?.[name] ?? (name === options.functionName ? options.functionVram : undefined);

@@ -50,6 +50,7 @@ import {
   type Container,
 } from "../lib/container.js";
 import { requireFunctionLocation } from "../lib/symbolIndex.js";
+import { functionSourcePath, loadTranslationUnits } from "../lib/translationUnits.js";
 import { scopedTypeCatalog, projectScopedSignatures } from "./scopedTypes.js";
 import { digest, readCache, writeCache, writeIfChanged } from "../lib/contentCache.js";
 import { emptyDeclarationIndex, indexDeclarations, projectDeclarations } from "./declarationContext.js";
@@ -340,7 +341,7 @@ export function exportContext(
   rootDir: string = ROOT,
   container: Container = requireContainer(EXE_CONTAINER_ID),
 ): ExportResult {
-  const cFile = join(rootDir, container.paths.srcDir, `${funcName}.c`);
+  const cFile = join(rootDir, functionSourcePath(container, funcName));
 
   if (!existsSync(cFile)) {
     return { signatures: [], skipped: true, status: "skipped", signatureMatches: false, localPrototypes: [], reason: "file not found" };
@@ -385,7 +386,12 @@ function unionSignatures(
 }
 
 /**
- * Collect the signatures published by every decompiled (non-stub) file in src/.
+ * Collect the signatures published by every configured translation unit.
+ *
+ * Read through the units, not a directory listing: a module defines several
+ * functions under `modules/`, which a listing of the container's source root
+ * would never see, and each of its members is published from the one file. A
+ * member its unit's source does not define (a stub) is withdrawn.
  */
 function collectAllSignatures(
   rootDir: string,
@@ -393,23 +399,23 @@ function collectAllSignatures(
 ): { signatures: Map<string, string>; exported: string[]; skipped: string[] } {
   const srcDir = join(rootDir, container.paths.srcDir);
   if (!existsSync(srcDir)) return { signatures: new Map(), exported: [], skipped: [] };
-  const files = readdirSync(srcDir).filter((f) => f.endsWith(".c")), read = contextSourceReader(rootDir);
+  const read = contextSourceReader(rootDir);
   const signatures = readExistingHeader(join(rootDir, functionsHeaderFor(container)));
   const exported: string[] = [];
   const skipped: string[] = [];
 
-  for (const file of files) {
-    const funcName = file.replace(/\.c$/, "");
-    const pairs = extractSignaturePairs(join(srcDir, file), read);
-
-    if (pairs.length === 0) {
-      signatures.delete(funcName);
-      skipped.push(funcName);
-      continue;
+  for (const unit of loadTranslationUnits(container)) {
+    const path = join(rootDir, unit.sourcePath);
+    if (!existsSync(path)) continue;
+    const pairs = extractSignaturePairs(path, read);
+    const defined = new Set(pairs.map((pair) => pair.name));
+    for (const member of unit.members) {
+      if (defined.has(member.name)) continue;
+      signatures.delete(member.name);
+      skipped.push(member.name);
     }
-
     for (const { name, signature } of pairs) signatures.set(name, signature);
-    exported.push(funcName);
+    exported.push(...unit.members.filter((member) => defined.has(member.name)).map((member) => member.name));
   }
 
   return { signatures, exported, skipped };
@@ -514,7 +520,7 @@ if (process.argv[1]?.endsWith("contextExport.ts")) {
       }
     } else {
       const location = requireFunctionLocation(funcName!, containerId);
-      const cFile = join(ROOT, location.container.paths.srcDir, `${funcName}.c`);
+      const cFile = join(ROOT, functionSourcePath(location.container, funcName!));
       const sigs = extractSignatures(cFile);
 
       for (const sig of sigs) {

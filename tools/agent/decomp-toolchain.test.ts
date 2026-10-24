@@ -1,6 +1,9 @@
 import { strict as assert } from "node:assert";
+import { join } from "node:path";
 import { test } from "node:test";
+import { functionSourcePath } from "../lib/translationUnits.js";
 import {
+  ROOT,
   configuredAsFlagsForContainer,
   configuredCc1FlagsForContainer,
   containerForSymbol,
@@ -51,8 +54,11 @@ test("a symbol's container comes from its own name", () => {
 
 test("source and assembly resolve into the symbol's own container", () => {
   assert.match(sourcePathFor("func_80011C24"), /\/src\/func_80011C24\.c$/);
-  assert.match(sourcePathFor("ovl_31_func_800B82E8"), /\/src\/overlays\/ovl_31\/ovl_31_func_800B82E8\.c$/);
+  assert.match(sourcePathFor("ovl_31_func_800B7FCC"), /\/src\/overlays\/ovl_31\/ovl_31_func_800B7FCC\.c$/);
   assert.match(sourceDirFor("ovl_31_func_800B82E8"), /\/src\/overlays\/ovl_31$/);
+  /* A module member's source is its module: the unit index decides, not the name. */
+  assert.equal(sourcePathFor("ovl_31_func_800B82E8"), join(ROOT, functionSourcePath("ovl_31", "ovl_31_func_800B82E8")));
+  assert.match(sourcePathFor("ovl_31_func_800B82E8"), /\/src\/overlays\/ovl_31\/(?:modules\/\w+|ovl_31_func_800B82E8)\.c$/);
 
   const asm = resolveAsmSource("ovl_31_func_800B8348");
   assert.ok(asm, "the overlay's original assembly should resolve");

@@ -33,6 +33,7 @@ import {
   containerPath,
   loadContainers,
   requireContainer,
+  vramToRom,
   type Container,
 } from "./container.js";
 
@@ -49,6 +50,15 @@ function resolveContainer(container?: Container | string): Container {
   return typeof container === "string" ? requireContainer(container) : container;
 }
 
+/**
+ * One original function, as the compatibility API reports it.
+ *
+ * Before translation units could hold more than one function this was a `c`
+ * subsegment under another name. It is now an original function from
+ * `loadOriginalFunctionInventory`; `segment` names the configured subsegment
+ * (the translation unit, for C) that currently owns it, which is no longer the
+ * function's own name once it is folded into a module.
+ */
 export interface FunctionSpan {
   name: string;
   vram: number;
@@ -56,6 +66,8 @@ export interface FunctionSpan {
   size: number;
   /** `c` once splat expects a C implementation, `asm` while it does not. */
   kind: "c" | "asm";
+  /** The owning subsegment's name — the TU stem for C. */
+  segment?: string;
 }
 
 export interface SplatSubsegment {
@@ -64,6 +76,8 @@ export interface SplatSubsegment {
   /** splat's type token: `c`, `asm`, `.rodata`, `o`, `bin`, … */
   type: string;
   name: string | null;
+  /** An `o` subsegment's fourth field: the object section it links (`.rdata`, `.data`). */
+  section?: string;
   /** Distance to the next subsegment of any kind. */
   size: number;
 }
@@ -116,6 +130,7 @@ function computeSubsegments(target: Container): SplatSubsegment[] {
       vram: entry[2] ? Number(entry[2]) : derived,
       type: fields[1] ?? "",
       name: fields[2] || entry[3] || null,
+      ...(fields[3] ? { section: fields[3] } : {}),
     });
   }
 
@@ -127,17 +142,273 @@ function computeSubsegments(target: Container): SplatSubsegment[] {
   });
 }
 
-/** Function extents from the container's splat config. */
+// --- original functions ------------------------------------------------------
+
+/** Game code splat assembles or compiles in place. */
+const GAME_TEXT_TYPES = new Set(["c", "asm", "hasm"]);
+
+/**
+ * What kind of code a configured subsegment holds, or null for data.
+ *
+ * An `o` subsegment links a library object's section; with no section field it
+ * is the object's `.text`.
+ */
+export function textKindOf(segment: Pick<SplatSubsegment, "type" | "section">): "game" | "library" | null {
+  if (GAME_TEXT_TYPES.has(segment.type)) return "game";
+  if ((segment.type === "o" || segment.type === "lib") && (!segment.section || segment.section === ".text")) return "library";
+  return null;
+}
+
+/**
+ * One function of the original program, keyed by container and address.
+ *
+ * Its identity and extent come from the disassembler's function table and the
+ * container's symbol table — never from the C subsegment that happens to hold
+ * it, which is the reconstructed translation unit and may hold several.
+ */
+export interface OriginalFunctionSpan {
+  container: string;
+  name: string;
+  vram: number;
+  rom: number;
+  size: number;
+  /** Game code (a c/asm subsegment) or a member of a library object. */
+  origin: "game" | "library";
+  /** The configured subsegment whose interval holds the function's start. */
+  segment: { type: string; name: string | null; rom: number; vram: number; size: number };
+}
+
+export interface OriginalFunctionInventory {
+  container: string;
+  functions: OriginalFunctionSpan[];
+  /**
+   * Disagreements the artifacts do not settle. Any entry makes the inventory
+   * undetermined: a conflicting name, start or extent, or game text that no
+   * function covers, is never resolved by picking one reading.
+   */
+  findings: string[];
+  /** Disassembler rows that start outside configured text — phantoms in data. */
+  outsideText: number;
+}
+
+interface FunctionTableRow { vram: number; rom: number; name: string; size: number }
+
+function readFunctionTable(path: string): FunctionTableRow[] | null {
+  if (!existsSync(path)) return null;
+  const rows: FunctionTableRow[] = [];
+  for (const line of readFileSync(path, "utf-8").split("\n").slice(1)) {
+    const fields = line.split(",");
+    if (fields.length < 5) continue;
+    const rom = Number(fields[0]), vram = Number(fields[1]), size = Number(fields[4]);
+    if (![rom, vram, size].every(Number.isFinite) || !fields[2]) continue;
+    rows.push({ rom, vram, name: fields[2], size });
+  }
+  return rows;
+}
+
+/** `type:func` entries in the container's symbol table, with any declared size. */
+function readFunctionSymbols(container: Container, findings: string[]): Map<number, { name: string; size?: number }> {
+  const result = new Map<number, { name: string; size?: number }>();
+  const path = containerPath(container, "symbolAddrs");
+  if (!existsSync(path)) {
+    findings.push(`${container.paths.symbolAddrs} is missing`);
+    return result;
+  }
+  for (const line of readFileSync(path, "utf-8").split("\n")) {
+    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_.]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;.*\btype:func\b/);
+    if (!match) continue;
+    const address = Number(match[2]);
+    const size = line.match(/\bsize:(0x[0-9A-Fa-f]+|\d+)/)?.[1];
+    const previous = result.get(address);
+    if (previous && previous.name !== match[1]) {
+      findings.push(`${container.paths.symbolAddrs} names 0x${hex8(address)} both ${previous.name} and ${match[1]}`);
+      continue;
+    }
+    result.set(address, { name: match[1]!, ...(size ? { size: Number(size) } : {}) });
+  }
+  return result;
+}
+
+function hex8(value: number): string {
+  return value.toString(16).toUpperCase().padStart(8, "0");
+}
+
+/**
+ * Every original function in one container, independent of C subsegments.
+ *
+ * The disassembler's function table (`functions.csv`) supplies starts and
+ * extents and the symbol table supplies names; the configured subsegments say
+ * only which functions are game code and which are library members. A
+ * function's identity is therefore the same whether it sits alone in a
+ * per-function file or inside a reconstructed module.
+ */
+export function loadOriginalFunctionInventory(container?: Container | string): OriginalFunctionInventory {
+  const target = resolveContainer(container);
+  return shared("original-functions", target, () => computeOriginalFunctionInventory(target));
+}
+
+export function loadOriginalFunctionSpans(container?: Container | string): OriginalFunctionSpan[] {
+  return loadOriginalFunctionInventory(container).functions;
+}
+
+function computeOriginalFunctionInventory(container: Container): OriginalFunctionInventory {
+  const findings: string[] = [];
+  /* A partial container (a fixture naming only its splat config) has no
+     function table to read, which leaves the inventory undetermined. */
+  const rows = container.paths.functionsCsv ? readFunctionTable(containerPath(container, "functionsCsv")) : null;
+  const symbols = container.paths.symbolAddrs ? readFunctionSymbols(container, findings) : new Map<number, { name: string; size?: number }>();
+  const inventory = buildOriginalFunctionInventory({
+    container: container.id,
+    toRom: (vram) => vramToRom(container, vram),
+    segments: loadSubsegments(container),
+    rows,
+    symbols,
+    labels: { splat: container.paths.splat, table: container.paths.functionsCsv, symbols: container.paths.symbolAddrs },
+  });
+  return { ...inventory, findings: [...findings, ...inventory.findings] };
+}
+
+export interface InventoryInput {
+  container: string;
+  toRom(vram: number): number;
+  segments: readonly SplatSubsegment[];
+  /** The disassembler's function table, or null when it has not been generated. */
+  rows: readonly FunctionTableRow[] | null;
+  /** `type:func` symbols by address, with any declared size. */
+  symbols: ReadonlyMap<number, { name: string; size?: number }>;
+  /** Paths named in findings. */
+  labels: { splat: string; table: string; symbols: string };
+}
+
+export type { FunctionTableRow };
+
+/**
+ * The inventory from its inputs alone — the pure core of
+ * `loadOriginalFunctionInventory`, so its rules can be checked on synthetic
+ * layouts (a module holding several functions, two overlays sharing a slot).
+ */
+export function buildOriginalFunctionInventory(input: InventoryInput): OriginalFunctionInventory {
+  const findings: string[] = [];
+  const segments = input.segments.filter((segment) => segment.type !== "");
+  const { rows, symbols, labels, toRom } = input;
+  if (segments.length === 0) findings.push(`${labels.splat} configures no subsegments`);
+  if (!rows) {
+    findings.push(`${labels.table} is missing — run make disassemble`);
+    return { container: input.container, functions: [], findings, outsideText: 0 };
+  }
+
+  /* The subsegment holding an address: the last one starting at or before it,
+     preferring code when two share a start. */
+  const owner = (rom: number): SplatSubsegment | undefined => {
+    let found: SplatSubsegment | undefined;
+    for (const segment of segments) {
+      if (segment.rom > rom) break;
+      if (!found || segment.rom > found.rom || (textKindOf(segment) && !textKindOf(found))) found = segment;
+    }
+    return found;
+  };
+
+  const functions: OriginalFunctionSpan[] = [];
+  const seen = new Map<number, string>();
+  let outsideText = 0;
+  for (const row of [...rows].sort((a, b) => a.vram - b.vram)) {
+    const rom = toRom(row.vram);
+    if (rom !== row.rom) findings.push(`${row.name}: function table places 0x${hex8(row.vram)} at ROM 0x${row.rom.toString(16)}, the container at 0x${rom.toString(16)}`);
+    const segment = owner(rom);
+    const origin = segment ? textKindOf(segment) : null;
+    if (!segment || !origin || rom >= segment.rom + segment.size) {
+      outsideText++;
+      continue;
+    }
+    if (seen.has(row.vram)) {
+      findings.push(`0x${hex8(row.vram)} appears twice in ${labels.table} (${seen.get(row.vram)}, ${row.name})`);
+      continue;
+    }
+    seen.set(row.vram, row.name);
+    const symbol = symbols.get(row.vram);
+    if (origin === "game" && symbol && symbol.name !== row.name) {
+      findings.push(`0x${hex8(row.vram)}: ${labels.symbols} names ${symbol.name}, ${labels.table} names ${row.name} — re-run make split`);
+    }
+    if (origin === "game" && symbol?.size !== undefined && symbol.size !== row.size) {
+      findings.push(`${symbol.name}: declared size 0x${symbol.size.toString(16)} disagrees with the disassembled extent 0x${row.size.toString(16)}`);
+    }
+    functions.push({
+      container: input.container,
+      name: symbol?.name ?? row.name,
+      vram: row.vram,
+      rom,
+      size: row.size,
+      origin,
+      segment: { type: segment.type, name: segment.name, rom: segment.rom, vram: segment.vram, size: segment.size },
+    });
+  }
+
+  /* Game text must be tiled exactly: every byte of a c/asm subsegment belongs
+     to one function that starts inside it. A gap or an overlap is two readings
+     of the same bytes, and this inventory does not choose between them. */
+  const game = functions.filter((fn) => fn.origin === "game");
+  for (const segment of segments) {
+    if (textKindOf(segment) !== "game" || segment.size === 0) continue;
+    const inside = game.filter((fn) => fn.rom >= segment.rom && fn.rom < segment.rom + segment.size);
+    let cursor = segment.rom;
+    for (const fn of inside) {
+      if (fn.rom !== cursor) findings.push(`${segment.name ?? segment.type}: ${fn.rom > cursor ? "uncovered" : "overlapping"} text at ROM 0x${Math.min(cursor, fn.rom).toString(16)} before ${fn.name}`);
+      cursor = Math.max(cursor, fn.rom + fn.size);
+    }
+    if (cursor !== segment.rom + segment.size) {
+      findings.push(`${segment.name ?? segment.type}: functions end at ROM 0x${cursor.toString(16)}, the subsegment at 0x${(segment.rom + segment.size).toString(16)}`);
+    }
+  }
+
+  /* A symbol-table function the disassembler did not list is either an interior
+     label the table itself sizes away (`size:` on its container function) or a
+     second reading of the bytes. */
+  for (const [address, symbol] of symbols) {
+    if (seen.has(address)) continue;
+    const rom = toRom(address);
+    const segment = owner(rom);
+    if (!segment || textKindOf(segment) !== "game") continue;
+    const enclosing = game.find((fn) => fn.vram < address && address < fn.vram + fn.size);
+    if (enclosing && symbols.get(enclosing.vram)?.size !== undefined) continue;
+    findings.push(`${symbol.name} (0x${hex8(address)}) is a type:func symbol with no row in ${labels.table}` +
+      (enclosing ? ` and lies inside ${enclosing.name}, whose extent is not declared` : ""));
+  }
+
+  return { container: input.container, functions, findings, outsideText };
+}
+
+/**
+ * Game functions of the container — the compatibility view.
+ *
+ * New code should say what it wants: original functions
+ * (`loadOriginalFunctionSpans`) or translation units (`translationUnits.ts`).
+ * This keeps the old shape for the many readers that only need a function's
+ * name and extent. When the disassembler's table is absent it falls back to the
+ * configured subsegments, which is exactly the pre-module meaning.
+ */
 export function loadFunctionSpans(container?: Container | string): FunctionSpan[] {
   const target = resolveContainer(container);
   return shared("spans", target, () => computeFunctionSpans(target));
 }
 function computeFunctionSpans(container: Container): FunctionSpan[] {
+  const inventory = loadOriginalFunctionInventory(container);
+  if (inventory.functions.length > 0) {
+    return inventory.functions
+      .filter((fn) => fn.origin === "game")
+      .map((fn) => ({
+        name: fn.name,
+        vram: fn.vram,
+        rom: fn.rom,
+        size: fn.size,
+        kind: fn.segment.type === "c" ? "c" as const : "asm" as const,
+        ...(fn.segment.name ? { segment: fn.segment.name } : {}),
+      }));
+  }
   const spans: FunctionSpan[] = [];
   for (const entry of loadSubsegments(container)) {
     if (entry.type !== "c" && entry.type !== "asm") continue;
     if (!entry.name) continue;
-    spans.push({ name: entry.name, vram: entry.vram, rom: entry.rom, size: entry.size, kind: entry.type });
+    spans.push({ name: entry.name, vram: entry.vram, rom: entry.rom, size: entry.size, kind: entry.type, segment: entry.name });
   }
   return spans;
 }
@@ -146,9 +417,14 @@ function computeFunctionSpans(container: Container): FunctionSpan[] {
 const LOADED_DATA_SECTIONS = new Set([".rodata", ".rdata", ".data", ".sdata"]);
 
 /**
- * Data subsegments splat assigns to one function, e.g.
+ * Data subsegments splat assigns to one function's translation unit, e.g.
  * `- [0x808, .rodata, func_80011370]` — the only sound source for the original
  * base address of a jump table the compiler emits into the object.
+ *
+ * Ownership is the translation unit's, not the function's: a module object
+ * pools every member's tables into one section, and its attribution is named
+ * for the module (`.rodata, modules/<name>`). A member therefore resolves its
+ * tables through the section base its whole object shares.
  *
  * `.bss`/`.sbss` subsegments are deliberately excluded: they occupy no payload
  * bytes, so their ROM offset does not place them, and a derived address would
@@ -158,9 +434,15 @@ export function loadFunctionDataSubsegments(
   functionName: string,
   container?: Container | string
 ): Map<string, number> {
+  const owner = loadFunctionSpans(container).find((span) => span.name === functionName)?.segment ?? functionName;
+  return loadSegmentDataSubsegments(owner, container);
+}
+
+/** Data subsegments that name one configured segment (a TU stem). */
+export function loadSegmentDataSubsegments(segmentName: string, container?: Container | string): Map<string, number> {
   const result = new Map<string, number>();
   for (const entry of loadSubsegments(container)) {
-    if (entry.name !== functionName) continue;
+    if (entry.name !== segmentName) continue;
     if (!LOADED_DATA_SECTIONS.has(entry.type)) continue;
     result.set(entry.type, entry.vram);
   }

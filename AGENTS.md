@@ -28,6 +28,12 @@ policy, stop and ask rather than silently weakening the policy.
     authority. `psx_compiler_source` searches the code that was actually built.
 - Refining an already-matching function: load
   `.pi/skills/psx-refine-function/SKILL.md`.
+- Reconstructing a source module (folding matched functions into one
+  translation unit): follow `plans/tu-prompt.md`. Measure with
+  `tools/diagnostics/tuProgress.ts`, fold with
+  `tools/build/foldTranslationUnit.ts`, and accept only on
+  `tuProgress.ts --verify`. A function's source is its unit's, so look it up
+  through `tools/lib/translationUnits.ts`, never as `<srcDir>/<function>.c`.
 - Performing a conservative cross-file cleanup batch: load
   `.pi/skills/psx-project-refinement/SKILL.md`.
 - Changing Pi extensions, skills, commands, or autonomous workers: read the Pi

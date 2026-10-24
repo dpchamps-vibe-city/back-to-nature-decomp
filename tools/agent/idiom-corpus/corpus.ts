@@ -41,6 +41,7 @@ import type { MirInsn, MirProgram } from "../pipeline-reversal/types.js";
 import { align, ngrams } from "./align.js";
 import { tokensAt, type Tier } from "./normalize.js";
 import { compatibility, fingerprintOf, type ToolchainFingerprint } from "./fingerprint.js";
+import { functionSourcePath } from "../../lib/translationUnits.js";
 
 /** Why a function is not in the corpus. Reported, never silent. */
 export type Exclusion =
@@ -290,7 +291,7 @@ export function corpusCandidates(): Array<{ functionName: string; sourcePath: st
     let path = join(ROOT, relative);
     if (!existsSync(path)) {
       const found = containers
-        .map((container) => join(ROOT, container.paths.srcDir, `${entry.name}.c`))
+        .map((container) => join(ROOT, functionSourcePath(container, entry.name)))
         .find((candidate) => existsSync(candidate));
       if (!found) continue;
       path = found;

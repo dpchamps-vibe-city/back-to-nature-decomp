@@ -12,12 +12,14 @@
  * TU does not emit, and those must remain generic asm data or the whole
  * binary shifts.
  *
- * Derivation, per compiled C function with a non-empty .o .rodata section:
+ * Derivation, per compiled C translation unit with a non-empty .o .rodata
+ * section (a per-function file and a module alike):
  *   - table address A: the smallest lui/addiu-formed constant inside the
- *     rodata window referenced by the function's original code (the
+ *     rodata window referenced by any compiled member's original code (the
  *     function must also contain a `jr` — the tablejump);
- *   - extent S: the .rodata section size of the function's object file;
- *   - attribution line `[A, .rodata, fn]`, and a generic `[A+S, rodata]`
+ *   - extent S: the .rodata section size of the unit's object file, and every
+ *     member's table must lie inside [A, A+S);
+ *   - attribution line `[A, .rodata, <unit stem>]`, and a generic `[A+S, rodata]`
  *     residue line when A+S does not coincide with the next subsegment.
  * Stub functions get no attribution: their tables stay in generic rodata.
  *
@@ -46,12 +48,9 @@ import {
   vramToRom,
   type Container,
 } from "../lib/container.ts";
+import { loadTranslationUnits, type TranslationUnit } from "../lib/translationUnits.ts";
+import { parseFuncExtents, scanTableAddr } from "../lib/jumpTables.ts";
 
-interface FuncExtent {
-  name: string;
-  start: number;
-  end: number;
-}
 
 interface SubsegLine {
   index: number;
@@ -74,39 +73,6 @@ export interface RodataWindow {
   members: SubsegLine[];
 }
 
-function parseFuncExtents(container: Container): FuncExtent[] {
-  const entries: { name: string; addr: number; size?: number }[] = [];
-  const path = containerPath(container, "symbolAddrs");
-  if (!existsSync(path)) return [];
-  for (const line of readFileSync(path, "utf-8").split("\n")) {
-    const m = line.trim().match(/^(\w+)\s*=\s*(0x[0-9A-Fa-f]+).*type:func/i);
-    if (!m) continue;
-    const size = line.match(/size:(0x[0-9A-Fa-f]+|\d+)/i);
-    entries.push({
-      name: m[1],
-      addr: parseInt(m[2], 16),
-      size: size ? Number(size[1]) : undefined,
-    });
-  }
-  entries.sort((a, b) => a.addr - b.addr);
-  /* The last function ends where the container's image does. Without the
-     clamp the scan runs off the end of a 16 KiB overlay member. */
-  const imageEnd = container.loadAddr + container.payloadSize;
-  return entries.map((e, i) => ({
-    name: e.name,
-    start: e.addr,
-    /* A declared `size:` wins over the next symbol's address. The two disagree
-       exactly where the disassembler named a branch target inside a function
-       as a function of its own, and a jump table's entries are precisely those
-       addresses — so trusting the next symbol truncates the extent to the
-       first table entry and makes the table unrecognisable. */
-    end: e.size
-      ? e.addr + e.size
-      : i + 1 < entries.length
-        ? entries[i + 1].addr
-        : Math.min(e.addr + 0x10000, imageEnd),
-  }));
-}
 
 export function parseSubsegments(lines: string[]): SubsegLine[] {
   const out: SubsegLine[] = [];
@@ -159,18 +125,19 @@ export function existingRodataBlock(container: Container): string[] | null {
   }
 }
 
-function objRodataSize(container: Container, fn: string): number | null {
-  const obj = join(ROOT, container.paths.objDir, `${fn}.c.o`);
+function objRodataSize(unit: TranslationUnit): number | null {
+  const obj = join(ROOT, unit.objectPath);
   if (!existsSync(obj)) return null;
   return elf32SectionSizes(readFileSync(obj)).get(".rodata") ?? 0;
 }
 
-function isCompiledC(container: Container, fn: string): boolean {
-  const src = join(ROOT, container.paths.srcDir, `${fn}.c`);
-  if (!existsSync(src)) return false;
+/** Members of a unit its source compiles rather than hands to the assembler. */
+function compiledMembers(unit: TranslationUnit): string[] {
+  const src = join(ROOT, unit.sourcePath);
+  if (!existsSync(src)) return [];
   const text = readFileSync(src, "utf-8");
-  const re = new RegExp(`INCLUDE_ASM\\([^)]*,\\s*${fn}\\s*\\)`);
-  return !re.test(text);
+  return unit.members.map((member) => member.name).filter((fn) =>
+    !new RegExp(`INCLUDE_ASM\\([^)]*,\\s*${fn}\\s*\\)`).test(text));
 }
 
 /** The derived rodata block for one container, and whether the config agrees. */
@@ -188,31 +155,47 @@ export function deriveContainer(container: Container): Derivation {
   const yamlLines = readFileSync(containerPath(container, "splat"), "utf-8").split("\n");
   const subsegs = parseSubsegments(yamlLines);
   const window = findWindow(subsegs);
-  const funcs = parseFuncExtents(container);
+  const funcs = new Map(parseFuncExtents(container).map((fn) => [fn.name, fn]));
 
-  // Which functions does splat build as C?
-  const cFuncs = new Set(subsegs.filter((s) => s.kind === "c" && s.name).map((s) => s.name!));
-
+  /* Ownership is the translation unit's. A module object pools every member's
+     tables into one .rodata section, in emission order, so the attribution is
+     one line named for the unit: it starts at the lowest table any compiled
+     member references and runs for the object's .rodata size. Every member's
+     table has to fall inside that extent — a table outside it means the pooled
+     section is not one contiguous block of the original, and assigning it to
+     the first member would hide that. */
   const attributions: Attribution[] = [];
-  for (const fn of funcs) {
-    if (!cFuncs.has(fn.name)) continue;
-    if (!isCompiledC(container, fn.name)) continue;
-    const size = objRodataSize(container, fn.name);
+  for (const unit of loadTranslationUnits(container)) {
+    const compiled = compiledMembers(unit);
+    if (compiled.length === 0) continue;
+    const size = objRodataSize(unit);
     if (size === null) {
-      throw new Error(
-        `${fn.name}: compiled C but ${container.paths.objDir}/${fn.name}.c.o is missing — run make first`,
-      );
+      throw new Error(`${unit.segmentName}: compiled C but ${unit.objectPath} is missing — run make first`);
     }
     if (size === 0) continue;
-    const vramAddr = scanTableAddr(buf, container, fn, window.start, window.endAddr);
-    if (vramAddr === null) {
+    const tables: Array<{ name: string; vram: number }> = [];
+    for (const name of compiled) {
+      const fn = funcs.get(name);
+      const vramAddr = fn ? scanTableAddr(buf, container, fn, window.start, window.endAddr) : null;
+      if (vramAddr !== null) tables.push({ name, vram: vramAddr });
+    }
+    if (tables.length === 0) {
       throw new Error(
-        `${fn.name}: object emits 0x${size.toString(16)} bytes of .rodata but no ` +
-          `lui/addiu reference into the rodata window was found in its original code — undetermined`,
+        `${unit.segmentName}: object emits 0x${size.toString(16)} bytes of .rodata but no ` +
+          `lui/addiu reference into the rodata window was found in its members' original code — undetermined`,
       );
     }
-    const addr = vramToRom(container, vramAddr);
-    attributions.push({ addr, end: addr + size, name: fn.name });
+    const addr = vramToRom(container, Math.min(...tables.map((table) => table.vram)));
+    for (const table of tables) {
+      const at = vramToRom(container, table.vram);
+      if (at >= addr + size) {
+        throw new Error(
+          `${unit.segmentName}: ${table.name}'s table at 0x${hex(at)} lies outside the unit's pooled .rodata ` +
+            `0x${hex(addr)}..0x${hex(addr + size)} — ownership undetermined`,
+        );
+      }
+    }
+    attributions.push({ addr, end: addr + size, name: unit.segmentName });
   }
   attributions.sort((a, b) => a.addr - b.addr);
 
@@ -295,89 +278,6 @@ function main(): void {
 
 function hex(n: number): string {
   return n.toString(16).toUpperCase().replace(/^0X/, "");
-}
-
-/**
- * The lowest jump-table base this function references.
- *
- * Two conditions, both necessary. The address must be formed by a lui/addiu
- * pair inside the function and land in the rodata window — that is the
- * reference. And the words at that address must read as a table of this
- * function's own code labels — that is what makes it a *jump table* rather
- * than a string or a constant pool entry.
- *
- * The content test is not a refinement, it is the whole difference between a
- * container whose rodata window holds only jump tables and one whose window is
- * the entire read-only section. In the PS-X EXE the game-rodata window happens
- * to contain nothing else, so "the lowest referenced constant" was right by
- * accident; in an overlay member the same rule picks the function's first
- * format string and attributes 20 bytes of somebody else's data to it.
- */
-function scanTableAddr(
-  buf: Buffer,
-  container: Container,
-  fn: FuncExtent,
-  windowLo: number,
-  windowHi: number,
-): number | null {
-  const luiVal: (number | null)[] = new Array(32).fill(null);
-  let sawJr = false;
-  const candidates: number[] = [];
-  const loVa = romToVramLocal(windowLo);
-  const hiVa = romToVramLocal(windowHi);
-  for (let va = fn.start; va < fn.end; va += 4) {
-    const rom = vramToRom(container, va);
-    if (rom < 0 || rom + 4 > buf.length) break;
-    const w = buf.readUInt32LE(rom);
-    const op = w >>> 26;
-    const rs = (w >>> 21) & 31;
-    const rt = (w >>> 16) & 31;
-    const simm = ((w & 0xffff) << 16) >> 16;
-    if (op === 0x0f && rs === 0) {
-      luiVal[rt] = (w & 0xffff) << 16;
-      continue;
-    }
-    if (op === 0x09) {
-      if (luiVal[rs] !== null) {
-        const c = (luiVal[rs]! + simm) >>> 0;
-        if (c >= loVa && c < hiVa) candidates.push(c);
-      }
-      if (rt !== rs) luiVal[rt] = null;
-      continue;
-    }
-    if (op === 0 && (w & 0x3f) === 0x08) sawJr = true;
-    // Any other write to a register invalidates its tracked lui; keep the
-    // tracker conservative rather than exhaustive.
-    if (op === 0 && ((w >>> 11) & 31) !== 0) luiVal[(w >>> 11) & 31] = null;
-    else if (op !== 0 && op !== 0x2b && op !== 0x29 && op !== 0x28 && rt !== 0) luiVal[rt] = null;
-  }
-  if (!sawJr) return null;
-  const tables = candidates.filter((addr) => jumpTableLength(buf, container, addr, hiVa, fn) >= 2);
-  return tables.length === 0 ? null : Math.min(...tables);
-
-  function romToVramLocal(rom: number): number {
-    return rom - container.payloadOffset + container.loadAddr;
-  }
-}
-
-/** How many consecutive words at `addr` read as code labels inside `fn`. */
-function jumpTableLength(
-  buf: Buffer,
-  container: Container,
-  addr: number,
-  windowHiVa: number,
-  fn: FuncExtent,
-): number {
-  let n = 0;
-  for (let va = addr; va < windowHiVa; va += 4) {
-    const rom = vramToRom(container, va);
-    if (rom < 0 || rom + 4 > buf.length) break;
-    const target = buf.readUInt32LE(rom);
-    if ((target & 3) !== 0) break;
-    if (target < fn.start || target >= fn.end) break;
-    n++;
-  }
-  return n;
 }
 
 if (process.argv[1]?.endsWith("deriveRodataSplits.ts")) main();

@@ -3,7 +3,7 @@
  * passed to m2c before this file. */
 
 s32 ovl_10_func_800B889C(void);
-void ovl_10_func_800B8A5C(void);
+void ovl_10_func_800B8A5C(char *arg0);
 void ovl_10_func_800B8C14(void);
 void ovl_10_func_800B9060(void);
 int ovl_10_func_800B9108(s32 arg0, s32 arg1);

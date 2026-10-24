@@ -53,3 +53,47 @@ export function elf32Sections(bytes: Buffer): Map<string, Elf32Section> {
 export function elf32SectionSizes(bytes: Buffer): Map<string, number> {
   return new Map([...elf32Sections(bytes)].map(([name, section]) => [name, section.size]));
 }
+
+export interface Elf32Symbol {
+  name: string;
+  value: number;
+  size: number;
+  /** STT_*: 0 NOTYPE, 1 OBJECT, 2 FUNC, 3 SECTION, 4 FILE. */
+  type: number;
+  /** STB_*: 0 LOCAL, 1 GLOBAL, 2 WEAK. */
+  bind: number;
+  /** Name of the defining section; "" for undefined, absolute and common. */
+  section: string;
+}
+
+/** The `.symtab` of a relocatable ELF32 object, read in-process. */
+export function elf32Symbols(bytes: Buffer): Elf32Symbol[] {
+  const sections = elf32Sections(bytes);
+  const byIndex = new Map([...sections].map(([name, section]) => [section.index, { name, section }]));
+  const table = sections.get(".symtab");
+  if (!table) return [];
+  if (table.entsize !== 16) throw new Error("Invalid ELF32: unsupported symbol entry size");
+  const strings = byIndex.get(table.link)?.section;
+  if (!strings || strings.type !== 3) throw new Error("Invalid ELF32: symbol names are not STRTAB");
+  const little = bytes[5] === 1;
+  const u16 = (data: Buffer, offset: number) => little ? data.readUInt16LE(offset) : data.readUInt16BE(offset);
+  const u32 = (data: Buffer, offset: number) => little ? data.readUInt32LE(offset) : data.readUInt32BE(offset);
+  const symbols: Elf32Symbol[] = [];
+  for (let offset = 0; offset + 16 <= table.data.length; offset += 16) {
+    const nameOffset = u32(table.data, offset);
+    if (nameOffset >= strings.data.length) throw new Error("Invalid ELF32: symbol name offset");
+    const end = strings.data.indexOf(0, nameOffset);
+    if (end < 0) throw new Error("Invalid ELF32: unterminated symbol name");
+    const info = table.data[offset + 12]!;
+    const shndx = u16(table.data, offset + 14);
+    symbols.push({
+      name: strings.data.toString("utf8", nameOffset, end),
+      value: u32(table.data, offset + 4),
+      size: u32(table.data, offset + 8),
+      type: info & 0xf,
+      bind: info >> 4,
+      section: shndx > 0 && shndx < 0xff00 ? byIndex.get(shndx)?.name ?? "" : "",
+    });
+  }
+  return symbols;
+}

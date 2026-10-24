@@ -29,6 +29,8 @@ import { ROOT } from "../lib/psxExeInfo.js";
 import { computeLiveness, isOverlayOnlyReference } from "../lib/liveness.js";
 import { containerPath, loadContainers, requireContainer, unresolvedCodeMembers, type Container } from "../lib/container.js";
 import { loadFunctionSpans } from "../lib/symbolIndex.js";
+import { translationUnitOf } from "../lib/translationUnits.js";
+import { auditContainer } from "../lib/translationUnitAudit.js";
 import { detectMacroIdentities } from "./macroIdentity.js";
 import { macroRouteSummary, type MacroRouteSummary } from "./macroTiler.js";
 
@@ -68,9 +70,21 @@ const containers = onlyContainer ? [requireContainer(onlyContainer)] : loadConta
 const macroCensus = detectMacroIdentities({ containers });
 const macroReports = new Map(macroCensus.functions.map(f => [f.name, macroRouteSummary(f)]));
 
+/* A module that still hands a member to the assembler is a partial fold. Its
+   stub is excluded from the counts like any other only while the function is
+   dead, so the completion check names it separately. */
+const partialModules: string[] = [];
+
 function measure(container: Container): ContainerTotals {
   const asmDir = join(containerPath(container, "asmDir"), "nonmatchings");
-  const srcDir = containerPath(container, "srcDir");
+  /* Status is read through each function's translation unit: a function folded
+     into a module has no same-named file, and must neither disappear nor stop
+     counting. The source AST decides — defined, or handed to the assembler. */
+  const audit = auditContainer(container, { objects: false });
+  const unitAudits = new Map(audit.units.map((entry) => [entry.unit.segmentName, entry]));
+  for (const entry of audit.units) {
+    if (entry.unit.foldedModule && entry.stubbed.size > 0) partialModules.push(`${entry.unit.sourcePath} (${[...entry.stubbed].join(", ")})`);
+  }
   const funcs: FuncInfo[] = [];
   let totalFuncs = 0;
   let decompFuncs = 0;
@@ -82,9 +96,12 @@ function measure(container: Container): ContainerTotals {
     let handwritten: false | "asm" = false;
     const macroIdentity = macroReports.get(span.name) ?? null;
 
-    let sFile = join(asmDir, span.name, `${span.name}.s`);
+    /* splat writes a C unit's extracted functions under the unit's stem. */
+    const unit = translationUnitOf(container, span.name);
+    const stem = unit?.segmentName ?? span.segment ?? span.name;
+    let sFile = join(asmDir, stem, `${span.name}.s`);
     if (!existsSync(sFile)) {
-      const dir = join(asmDir, span.name);
+      const dir = join(asmDir, stem);
       if (existsSync(dir)) {
         const files = readdirSync(dir).filter((f: string) => f.endsWith(".s"));
         if (files.length === 1) sFile = join(dir, files[0]!);
@@ -95,13 +112,9 @@ function measure(container: Container): ContainerTotals {
       if (sContent.includes("Handwritten function") && macroIdentity?.cop2Count === 0) handwritten = "asm";
     }
 
-    if (span.kind === "c" && handwritten !== "asm") {
-      const cFile = join(srcDir, `${span.name}.c`);
-      if (existsSync(cFile)) {
-        const content = readFileSync(cFile, "utf-8");
-        const hasIncludeAsm = content.includes("INCLUDE_ASM(") && content.includes(span.name);
-        if (!hasIncludeAsm) decompiled = true;
-      }
+    if (span.kind === "c" && handwritten !== "asm" && unit) {
+      const status = unitAudits.get(unit.segmentName);
+      if (status && status.defined.has(span.name) && !status.stubbed.has(span.name)) decompiled = true;
     }
 
     /* An overlay's own functions are live by construction: the member is loaded
@@ -144,6 +157,7 @@ if (args.includes("--check-complete")) {
      turn an empty or partially configured project into a successful check. */
   const complete = liveness.overlaysIncluded && macroCensus.censusComplete &&
     (onlyContainer !== undefined || unresolvedCodeMembers().length === 0) &&
+    partialModules.length === 0 &&
     measured.length > 0 && measured.every((m) =>
       m.totalFuncs > 0 && m.decompFuncs === m.totalFuncs && m.decompBytes === m.totalBytes);
   process.exit(complete ? 0 : 1);
@@ -186,6 +200,7 @@ function reportContainer(totals: ContainerTotals): void {
 }
 
 console.log(`Liveness basis: ${liveness.basis}`);
+for (const module of partialModules) console.log(`PARTIAL FOLD: ${module} — a module may not hand a member to the assembler`);
 if (!liveness.overlaysIncluded) {
   console.log("WARNING: overlay evidence unavailable, so this denominator omits the overlay-facing engine API.");
 }
@@ -222,9 +237,10 @@ if (showList || showRemaining || showDone || showMarkdown) {
     for (const f of filtered) {
       const container = containers.find((c) => c.id === f.container)!;
       const status = f.dead ? "DEAD" : f.decompiled ? "OK" : f.overlayOnly ? "API" : "";
-      const srcPath = `${container.paths.srcDir}/${f.name}.c`;
-      const asmPath = `${container.paths.asmDir}/nonmatchings/${f.name}/${f.name}.s`;
-      console.log(`| ${status} | ${f.container} | ${f.vram} | ${f.size} | [${f.name}.c](${srcPath}) | [${f.name}.s](${asmPath}) | ${f.macroIdentity?.verdict ?? "unscanned"} |`);
+      const unit = translationUnitOf(container, f.name);
+      const srcPath = unit?.sourcePath ?? `${container.paths.srcDir}/${f.name}.c`;
+      const asmPath = `${container.paths.asmDir}/nonmatchings/${unit?.segmentName ?? f.name}/${f.name}.s`;
+      console.log(`| ${status} | ${f.container} | ${f.vram} | ${f.size} | [${srcPath.split("/").pop()}](${srcPath}) | [${f.name}.s](${asmPath}) | ${f.macroIdentity?.verdict ?? "unscanned"} |`);
     }
     console.log();
     console.log(`${filtered.length} functions listed`);

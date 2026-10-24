@@ -32,6 +32,8 @@ import { computeLiveness } from "../lib/liveness.js";
 import { scanOverlayReferences } from "../lib/overlayReferences.js";
 import { containerPath, loadContainers, requireContainer, type Container } from "../lib/container.js";
 import { loadFunctionSpans } from "../lib/symbolIndex.js";
+import { translationUnitOf } from "../lib/translationUnits.js";
+import { auditContainer, type UnitAudit } from "../lib/translationUnitAudit.js";
 import { dependencyReadySmallFirstStrategy, rankWorklist } from "./callGraphStrategies.js";
 import { detectMacroIdentities } from "../diagnostics/macroIdentity.js";
 import { macroRouteSummary, type MacroRouteSummary } from "../diagnostics/macroTiler.js";
@@ -62,11 +64,14 @@ interface FuncEntry {
   container: string;
   /**
    * The project-relative C file that defines this function, whether or not it
-   * exists yet. Emitted so that nothing downstream has to reconstruct a source
+   * exists yet: its translation unit's source, which every member of a module
+   * shares. Emitted so that nothing downstream has to reconstruct a source
    * path from a container id and a layout convention — a reconstruction that is
-   * silently wrong for every container it does not know about.
+   * silently wrong for every container and every module it does not know about.
    */
   source: string;
+  /** The translation unit's configured stem (`modules/<name>` for a module). */
+  unit: string;
   /**
    * The first argument this function's `INCLUDE_ASM` stub takes — its
    * container's assembly directory, not the executable's. Emitted for the same
@@ -118,11 +123,14 @@ const containerOf = new Map<string, Container>();
 for (const container of containers) {
   for (const span of loadFunctionSpans(container)) {
     containerOf.set(span.name, container);
+    const unit = translationUnitOf(container, span.name);
+    const stem = unit?.segmentName ?? span.name;
     funcMap.set(span.name, {
       name: span.name,
       container: container.id,
-      source: join(container.paths.srcDir, `${span.name}.c`),
-      includeAsmPath: join(container.paths.asmDir, "nonmatchings", span.name),
+      source: unit?.sourcePath ?? join(container.paths.srcDir, `${span.name}.c`),
+      unit: stem,
+      includeAsmPath: join(container.paths.asmDir, "nonmatchings", stem),
       vram: `0x${span.vram.toString(16)}`,
       size: span.size,
       tier: 1,
@@ -156,10 +164,11 @@ const gameFuncRegex = /^(?:[A-Za-z_][A-Za-z0-9_]*_)?func_[0-9A-Fa-f]{8}$/;
 for (const [name, entry] of funcMap) {
   const container = containerOf.get(name)!;
   const asmDir = join(containerPath(container, "asmDir"), "nonmatchings");
-  let sFile = join(asmDir, name, `${name}.s`);
+  /* splat writes a C unit's extracted functions under the unit's stem. */
+  let sFile = join(asmDir, entry.unit, `${name}.s`);
   if (!existsSync(sFile)) {
-    // Handle named symbols (e.g. __start) where .s file has a different name
-    const dir = join(asmDir, name);
+    // A unit whose one file is named differently from its function
+    const dir = join(asmDir, entry.unit);
     if (existsSync(dir)) {
       const files = readdirSync(dir).filter((f) => f.endsWith(".s"));
       if (files.length === 1) {
@@ -252,16 +261,16 @@ applyLiveness();
 
 // --- Step 4: Check decompilation status (tiers depend on it) ---
 
+/* Read through each function's translation unit, with the rule progress.ts
+   uses: the unit's source defines the function (or a neighbour's nested
+   definition carries it) and does not hand it to the assembler. */
+const unitStatus = new Map<string, Map<string, UnitAudit>>();
+for (const container of containers) {
+  unitStatus.set(container.id, new Map(auditContainer(container, { objects: false }).units.map((u) => [u.unit.segmentName, u])));
+}
 for (const entry of funcMap.values()) {
-  const container = containerOf.get(entry.name)!;
-  const cFile = join(containerPath(container, "srcDir"), `${entry.name}.c`);
-  if (existsSync(cFile)) {
-    const content = readFileSync(cFile, "utf-8");
-    const hasIncludeAsm = content.includes("INCLUDE_ASM(");
-    if (!hasIncludeAsm) {
-      entry.decompiled = true;
-    }
-  }
+  const status = unitStatus.get(entry.container)?.get(entry.unit);
+  if (status && status.defined.has(entry.name) && !status.stubbed.has(entry.name)) entry.decompiled = true;
 }
 
 // --- Step 5: Classify tiers on resolved dependencies ---

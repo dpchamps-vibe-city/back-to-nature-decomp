@@ -29,6 +29,7 @@ import { originalAssembly } from "./type-propagation/assembly.js";
 import { projectParameters, layoutFields } from "./type-propagation/c-types.js";
 import { injectStaticChain, verifyChainInjection } from "./staticChainInjection.js";
 import type { ChainRow } from "../diagnostics/nestedFunctionScan.js";
+import { functionSourcePath, translationUnitOf } from "../lib/translationUnits.js";
 
 /** Do not invite call-site liveness to reinvent an unread trailing argument.
  * Interior holes stay: a later read proves their ABI slots exist. */
@@ -95,6 +96,12 @@ async function prepareFunctionInView(functionName: string, options: PreparationO
   const discoveryStart = performance.now();
   const location = requireFunctionLocation(functionName);
   const container = location.container;
+  /* Preparation writes a whole per-function file. A module member has none,
+     and writing one would leave a stale per-function source beside its module. */
+  const unit = translationUnitOf(container, functionName);
+  if (unit?.foldedModule) {
+    throw new Error(`${functionName} is a member of ${unit.sourcePath}; prepare a candidate in scratch (diffFunc --src) and edit the module`);
+  }
   const destination = join(container.paths.srcDir, `${functionName}.c`);
   const originalDirectory = join(root, "build/preparation/originals", functionName, hashFile(containerTargetPath(container)));
   mkdirSync(originalDirectory, { recursive: true });
@@ -273,7 +280,7 @@ async function prepareFunctionInView(functionName: string, options: PreparationO
       const observed: Record<string, string> = {};
       for (const record of seeds.records) {
         let source: string;
-        try { const loc = requireFunctionLocation(record.name); source = join(root, loc.container.paths.srcDir, `${record.name}.c`); }
+        try { const loc = requireFunctionLocation(record.name); source = join(root, functionSourcePath(loc.container, record.name)); }
         catch { continue; }
         observed[relative(root, source)] = hashFile(source);
         if (!existsSync(source)) for (const p of allFiles(dirname(source)).filter((p) => p.endsWith(".c"))) observed[relative(root, p)] = hashFile(p);

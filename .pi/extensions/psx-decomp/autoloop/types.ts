@@ -154,11 +154,39 @@ export interface RepairRecord {
   notePath?: string;
 }
 
+/**
+ * One `/auto_decompilation_loop fold` dispatch: one module reconstruction.
+ *
+ * Written as `interrupted` before the agent touches the tree and rewritten
+ * when the dispatch settles, so a session that dies mid-fold leaves a record
+ * the next `fold` run can recover from. `head` and `changedFiles` say exactly
+ * what a restore may put back; nothing else in the tree is the loop's.
+ */
+export interface FoldRecord {
+  container: string;
+  moduleName: string;
+  sourcePath: string;
+  members: string[];
+  status: "accepted" | "failed" | "interrupted";
+  foldedAt: string;
+  tier: string;
+  beforeFolded: number;
+  afterFolded: number;
+  /** The commit the dispatch started from; a restore only ever goes back onto it. */
+  head?: string;
+  /** Project-relative files the dispatch changed, for an interrupted fold's recovery. */
+  changedFiles?: string[];
+  /** Why a fold failed, or how an interrupted one was settled. */
+  detail?: string;
+  commit?: string;
+}
+
 export interface LoopState {
   parked: Record<string, ParkRecord>;
   approvals: Record<string, ApprovalRecord>;
   completions?: Record<string, Completion>;
   repairs?: Record<string, RepairRecord>;
+  folds?: FoldRecord[];
 }
 
 export type FunctionOutcome =
@@ -166,6 +194,8 @@ export type FunctionOutcome =
   | { kind: "parked"; functionName: string; record: ParkRecord; commit?: string }
   | { kind: "repaired"; functionName: string; tier: string; changedFiles: string[]; commit?: string }
   | { kind: "repair-failed"; functionName: string; record: RepairRecord; commit?: string }
+  | { kind: "folded"; functionName: string; members: string[]; moduleName: string; tier: string; changedFiles: string[]; commit?: string }
+  | { kind: "fold-failed"; functionName: string; members: string[]; record: FoldRecord; detail: string; commit?: string }
   | { kind: "skipped"; functionName: string; detail: string }
   | { kind: "aborted"; functionName: string }
   | { kind: "environment-broken"; functionName: string; detail: string };

@@ -39,6 +39,8 @@ import { detectToolchain } from "../lib/toolchainProfile.js";
 import { collectSelfReferences } from "../lib/overlayBase.js";
 import { ENGINE_EXPORT_PATH } from "../lib/symbolIndex.js";
 import { existingRodataBlock } from "./deriveRodataSplits.ts";
+import { moduleCSegments } from "../lib/translationUnits.js";
+import { moduleDeclarationsFromSources } from "../lib/translationUnitAudit.js";
 import { loadPsxExeInfo } from "../lib/psxExeInfo.js";
 import { parseCSV } from "./analyzeLayout.js";
 import {
@@ -206,9 +208,13 @@ function renderSplatConfig(
      forever. So carry the existing block whenever it still describes this
      layout, and fall back to the generic line only when it does not. */
   for (const line of rodataBlock(container, layout, indent)) subsegments.push(line);
-  for (const fn of functions) {
-    const rom = fn.address - container.loadAddr;
-    subsegments.push(`${indent}- [${hex(rom)}, c, ${fn.name}]`);
+  /* One `c` line per function, except that every function a reconstructed
+     module defines is placed in that module: the source tree is the record of
+     a fold, so a re-split preserves it instead of expanding it back. A module
+     this layout cannot honour refuses the whole config. */
+  for (const segment of moduleCSegments(functions, moduleDeclarationsFromSources(container))) {
+    const rom = segment.address - container.loadAddr;
+    subsegments.push(`${indent}- [${hex(rom)}, c, ${segment.name}]`);
   }
   subsegments.push(`${indent}- [${hex(layout.dataStart)}, data]`);
 

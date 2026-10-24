@@ -15,8 +15,10 @@ export interface CallGraphEntry {
   name: string;
   /** The container whose image defines this function. */
   container: string;
-  /** Project-relative C file that defines it, whether or not it exists yet. */
+  /** Project-relative C file that defines it, whether or not it exists yet: its translation unit's. */
   source?: string;
+  /** The translation unit's configured stem; `modules/<name>` for a reconstructed module. */
+  unit?: string;
   /** First argument of its `INCLUDE_ASM` stub: `<asmDir>/nonmatchings/<name>`. */
   includeAsmPath?: string;
   vram: string;

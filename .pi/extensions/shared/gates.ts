@@ -2,7 +2,7 @@ import { basename, extname } from "node:path";
 import { availableParallelism } from "node:os";
 import type { AutodecompConfig, DiffResult, GateResult, WorkMode } from "./types.ts";
 import { runCommand } from "./process.ts";
-import { checkSourcePolicy } from "./source-policy.ts";
+import { checkSourcePolicy, isModuleSourcePath, moduleMembers } from "./source-policy.ts";
 import { Timings } from "../../../tools/lib/contentCache.js";
 
 /**
@@ -160,10 +160,11 @@ export async function runBuildCheck(projectRoot: string, timeoutMs = 5 * 60_000,
   return runCommand("make", [`-j${Math.min(8, availableParallelism())}`, "check-all"], { cwd: projectRoot, timeoutMs, signal, maxCaptureBytes: 4 * 1024 * 1024 });
 }
 
-function sourceNames(changedFiles: string[]): string[] {
+/** The functions changed C files define: a module's every member, else the file's own name. */
+function sourceNames(projectRoot: string, changedFiles: string[]): string[] {
   return changedFiles
     .filter((file) => file.startsWith("src/") && extname(file) === ".c")
-    .map((file) => basename(file, ".c"));
+    .flatMap((file) => isModuleSourcePath(file) ? moduleMembers(projectRoot, file).map((member) => member.name) : [basename(file, ".c")]);
 }
 
 export async function runGate(options: {
@@ -193,7 +194,7 @@ export async function runGate(options: {
   };
   cancelled();
   const scanFunctions = options.mode === "project-refinement"
-    ? sourceNames(options.changedFiles)
+    ? sourceNames(options.projectRoot, options.changedFiles)
     : options.functionName ? [options.functionName] : [];
   const policy = timings.measureSync("policy", () => checkSourcePolicy({
     projectRoot: options.projectRoot,

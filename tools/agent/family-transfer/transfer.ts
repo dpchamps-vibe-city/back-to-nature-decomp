@@ -41,6 +41,7 @@ import {
   type FamilySignature,
   type SignatureTier,
 } from "./signature.js";
+import { functionSourcePath } from "../../lib/translationUnits.js";
 
 export interface TransferCandidate {
   id: string;
@@ -127,7 +128,7 @@ export function transferFromDonor(
   /* The donor's source must be clean, parseable C that defines the donor —
    * an assembly stub or a file that does not parse teaches nothing and cannot
    * be edited soundly. */
-  const donorSourcePath = join(ROOT, donorWords.container.paths.srcDir, `${donor}.c`);
+  const donorSourcePath = join(ROOT, functionSourcePath(donorWords.container, donor));
   let donorSource: string;
   try {
     donorSource = readFileSync(donorSourcePath, "utf-8");

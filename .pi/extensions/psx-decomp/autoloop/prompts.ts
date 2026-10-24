@@ -523,3 +523,80 @@ export function repairEscalationMessage(
     ...PACING,
   ].join("\n");
 }
+
+/** What the fold loop tells a dispatch about the campaign it belongs to. */
+export interface FoldBrief {
+  /** plans/tu-prompt.md, verbatim: the task itself. */
+  task: string;
+  /** Campaign baseline receipt and the commit it was captured on. */
+  baseline: string;
+  folded: number;
+  eligible: number;
+  remaining: number;
+  /** A bounded, address-ordered sample of unfolded functions — not a proposed group. */
+  sample: Array<{ container: string; name: string; vram: string; source: string; neighbors: string[] }>;
+}
+
+function foldSample(brief: FoldBrief): string[] {
+  return [
+    `A bounded sample of functions not yet in a module (${brief.sample.length} of ${brief.remaining}), in address order.`,
+    "It is NOT a proposed group: membership evidence comes from source, callers, private state, link order and",
+    "the relevant section of notes/file-groupings.md.",
+    ...brief.sample.map((entry) => `  ${entry.container} ${entry.vram} ${entry.name}  ${entry.source}  [prev: ${entry.neighbors[0]}; next: ${entry.neighbors[1]}]`),
+  ];
+}
+
+/**
+ * The opening of one module reconstruction: the task, the campaign's state,
+ * and exactly how the loop will judge the result.
+ */
+export function foldOpeningMessage(brief: FoldBrief): string {
+  return [
+    brief.task.trim(),
+    "",
+    "## This run",
+    "",
+    `Campaign baseline: ${brief.baseline}. Folded so far: ${brief.folded} of ${brief.eligible} eligible functions.`,
+    "",
+    ...foldSample(brief),
+    "",
+    "Measure with `npx tsx tools/diagnostics/tuProgress.ts` (`--remaining`, `--json`); it derives progress from",
+    "source, configuration and objects, never from notes. `npx tsx tools/build/foldTranslationUnit.ts` performs",
+    "the checked mechanical fold (dry run first; `--write` re-splits, builds and oracle-checks, and rolls back on",
+    "failure). The loop accepts the module only when the folded count rises, no previously folded function",
+    "regresses, one module carries the change, no exception (allowlist entry, flag override, pin, embedded asm,",
+    "INCLUDE_ASM) has been added since the baseline, and `tuProgress.ts --verify` passes.",
+    "",
+    "You have no authority to commit; the loop commits an accepted module itself. Do not create a worktree.",
+    "Return when the module is folded, named, documented and verified, or when something genuinely needs a",
+    "human decision — then say which, briefly.",
+  ].join("\n");
+}
+
+/** The report a fold dispatch gets back when its result is not yet acceptable. */
+export function foldNudgeMessage(lastReport: string): string {
+  return [
+    "The module is not accepted yet. Continue from the tree as it stands; the measurement below is fresh.",
+    "Fix what it names, re-measure with tuProgress.ts, and return when the module is accepted-ready.",
+    "",
+    lastReport,
+  ].join("\n");
+}
+
+/** A fold tier's opening after an earlier tier did not finish. */
+export function foldEscalationMessage(brief: FoldBrief, tierLabel: string, lastReport: string, handoff?: HandoffSummary): string {
+  return [
+    brief.task.trim(),
+    "",
+    "## This run",
+    "",
+    `The previous escalation tier did not finish this module; you are now ${tierLabel}. The tree holds its`,
+    "attempt; git HEAD holds the state the dispatch started from.",
+    `Campaign baseline: ${brief.baseline}. Folded at dispatch start: ${brief.folded} of ${brief.eligible}.`,
+    "",
+    lastReport,
+    ...(handoff ? ["", handoffBlock(handoff)] : []),
+    "",
+    "You have no authority to commit. Return when the module is accepted-ready or genuinely needs a human.",
+  ].join("\n");
+}

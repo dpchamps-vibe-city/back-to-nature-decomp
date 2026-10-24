@@ -962,13 +962,18 @@ export function summarize(outcomes: FunctionOutcome[]): string {
   const aborted = outcomes.some((outcome) => outcome.kind === "aborted");
   const repaired = outcomes.filter((outcome) => outcome.kind === "repaired").length;
   const repairFailed = outcomes.filter((outcome) => outcome.kind === "repair-failed").length;
+  const folded = outcomes.filter((outcome) => outcome.kind === "folded").length;
+  const foldFailed = outcomes.filter((outcome) => outcome.kind === "fold-failed").length;
   const committed = outcomes.filter(
     (outcome) => (outcome.kind === "matched" || outcome.kind === "parked" ||
-      outcome.kind === "repaired" || outcome.kind === "repair-failed") && outcome.commit,
+      outcome.kind === "repaired" || outcome.kind === "repair-failed" ||
+      outcome.kind === "folded" || outcome.kind === "fold-failed") && outcome.commit,
   ).length;
-  const parts = repaired || repairFailed
-    ? [`${repaired} repaired`, `${committed} committed`, `${repairFailed} restored`]
-    : [`${matched} matched`, `${committed} committed`, `${parked} parked`];
+  const parts = folded || foldFailed
+    ? [`${folded} module(s) folded`, `${committed} committed`, `${foldFailed} restored`]
+    : repaired || repairFailed
+      ? [`${repaired} repaired`, `${committed} committed`, `${repairFailed} restored`]
+      : [`${matched} matched`, `${committed} committed`, `${parked} parked`];
   if (aborted) parts.push("aborted");
   if (broken) parts.push("environment guard tripped");
   return `autoloop: ${parts.join(", ")}`;

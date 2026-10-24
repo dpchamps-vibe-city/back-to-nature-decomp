@@ -317,3 +317,73 @@ test("a bare-address allowlist key is the executable's, never another container'
   assert.equal(scan("ovl_30_fn", "ovl_30", "src/overlays/ovl_30/ovl_30_fn.c").pass, true);
   assert.equal(scan("exe_fn", "exe", "src/exe_fn.c").pass, false);
 });
+
+/* --- reconstructed modules: per-function attribution ----------------------- */
+
+const MODULE_SOURCE = [
+  "#include \"common.h\"",
+  "",
+  "void first(void) {",
+  "    register int x __asm__(\"v0\");",
+  "    __asm__(\"nop\");",
+  "}",
+  "",
+  "void second(void) {",
+  "    __asm__(\"nop\");",
+  "}",
+  "",
+].join("\n");
+const MEMBERS = [{ name: "first", vram: "0x80100000", container: "ovl_t" }, { name: "second", vram: "0x80100010", container: "ovl_t" }];
+
+test("module-local asm is charged to the function whose body holds it", async () => {
+  const { moduleConstructFindings } = await import("./source-policy.ts");
+  const config = structuredClone(DEFAULT_CONFIG);
+  const findings = moduleConstructFindings(MODULE_SOURCE, config, MEMBERS);
+  assert.deepEqual(findings.map((f) => [f.kind, f.line, /\(in (\w+)\)/.exec(f.message)?.[1]]),
+    [["register-asm", 4, "first"], ["embedded-asm", 5, "first"], ["embedded-asm", 9, "second"]]);
+});
+
+test("one member's allowlist entry does not authorize its neighbour", async () => {
+  const { moduleConstructFindings } = await import("./source-policy.ts");
+  const config = structuredClone(DEFAULT_CONFIG);
+  config.sourcePolicy.allowlist["first"] = ["register-asm", "embedded-asm"];
+  const findings = moduleConstructFindings(MODULE_SOURCE, config, MEMBERS);
+  assert.deepEqual(findings.map((f) => [f.kind, f.line]), [["embedded-asm", 9]], "only second's asm remains");
+  config.sourcePolicy.allowlist["ovl_t:0x80100010"] = ["embedded-asm"];
+  assert.deepEqual(moduleConstructFindings(MODULE_SOURCE, config, MEMBERS), [], "a container-qualified address key is honoured");
+});
+
+test("module-scope constructs cannot borrow a member's exception", async () => {
+  const { moduleConstructFindings } = await import("./source-policy.ts");
+  const config = structuredClone(DEFAULT_CONFIG);
+  config.sourcePolicy.allowlist["first"] = ["register-asm", "embedded-asm", "include-asm"];
+  config.sourcePolicy.allowlist["second"] = ["register-asm", "embedded-asm", "include-asm"];
+  const source = [
+    "register int pinned __asm__(\"s0\");",
+    "#define WRAP() __asm__(\"nop\")",
+    "void first(void) { WRAP(); }",
+    "INCLUDE_ASM(\"asm\", second);",
+    "",
+  ].join("\n");
+  const findings = moduleConstructFindings(source, config, MEMBERS);
+  assert.ok(findings.some((f) => f.kind === "register-asm" && f.line === 1 && /module scope/.test(f.message)), "file-scope pin");
+  assert.ok(findings.some((f) => f.kind === "embedded-asm" && f.line === 2 && /module scope/.test(f.message)), "module-local asm macro");
+  assert.ok(findings.some((f) => f.kind === "include-asm" && /partial fold/.test(f.message)), "a stub inside a module, allowlisted or not");
+});
+
+test("a module source is scanned once with member scopes, and a module flag override is never allowlisted", () => {
+  const root = mkdtempSync(join(tmpdir(), "autodecomp-module-policy-"));
+  mkdirSync(join(root, "src", "modules"), { recursive: true });
+  mkdirSync(join(root, "configs"));
+  writeFileSync(join(root, "src", "modules", "widget.c"), MODULE_SOURCE);
+  writeFileSync(join(root, "configs", "flag_overrides.mk"), "CC1FLAGS_modules__widget := -fno-gcse\n");
+  const config = structuredClone(DEFAULT_CONFIG);
+  config.sourcePolicy.allowlist["modules__widget"] = ["flag-override"];
+  const result = checkSourcePolicy({
+    projectRoot: root, config, scanFunctions: ["first", "second"],
+    functionSources: { first: "src/modules/widget.c", second: "src/modules/widget.c" },
+  });
+  const constructs = result.hardFailures.filter((f) => f.kind !== "flag-override");
+  assert.equal(constructs.length, 3, "each construct reported once although two members share the file");
+  assert.ok(result.hardFailures.some((f) => f.kind === "flag-override" && /Module-level/.test(f.message)));
+});

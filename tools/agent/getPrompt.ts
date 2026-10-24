@@ -13,6 +13,7 @@
 
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
+import { sourcePathFor } from "./decompToolchain.js";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
 
@@ -55,7 +56,7 @@ function injectShared(template: string, rootDir: string = ROOT): string {
 
 export function getDecompilationCleanupAgentPrompt(funcName: string, rootDir: string = ROOT): string {
   const template = injectShared(readFileSync(join(rootDir, "prompts/legacy/decompilation-cleanup-agent.md"), "utf-8"), rootDir);
-  const srcFile = join(rootDir, "src", `${funcName}.c`);
+  const srcFile = sourcePathFor(funcName);
 
   /* Assembly */
   const sFile = resolveAsmFile(funcName, rootDir);
@@ -125,8 +126,8 @@ export function getGlobalRefinementAgentPrompt(funcName: string, rootDir: string
     throw new Error(`Function ${funcName} not found in callGraph.json`);
   }
 
-  /* Target function source */
-  const srcFile = join(rootDir, "src", `${funcName}.c`);
+  /* Target function source: its translation unit's file */
+  const srcFile = sourcePathFor(funcName);
   const targetSource = existsSync(srcFile)
     ? readFileSync(srcFile, "utf-8").trim()
     : "(source not found)";
@@ -139,7 +140,7 @@ export function getGlobalRefinementAgentPrompt(funcName: string, rootDir: string
 
   const neighborSections: string[] = [];
   for (const n of neighborNames) {
-    const nSrc = join(rootDir, "src", `${n}.c`);
+    const nSrc = sourcePathFor(n);
     if (!existsSync(nSrc)) continue;
     const content = readFileSync(nSrc, "utf-8").trim();
     /* Skip stubs — they have no useful context */

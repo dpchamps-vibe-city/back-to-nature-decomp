@@ -8,6 +8,7 @@ import { createHandoffSink, registerHandoffTool, setHandoffToolActive } from "./
 import { createVerdictSink, registerPolicyVerdictTool, setVerdictToolActive } from "./policy-verdict.ts";
 import { readState } from "./state.ts";
 import { documentedExceptions, repairCandidates, runRepairLoop } from "./repair.ts";
+import { runFoldLoop } from "./fold.ts";
 import { loadCallGraph } from "../../shared/call-graph.ts";
 import { loadConfig } from "../../shared/config.ts";
 import { createTurnGate, registerTurnGate } from "./turn-gate.ts";
@@ -15,18 +16,21 @@ import { createTurnGate, registerTurnGate } from "./turn-gate.ts";
 export const LOOP_COMMAND = "auto_decompilation_loop";
 
 interface ParsedArgs {
-  action: "run" | "repair" | "status" | "stop" | "usage";
+  action: "run" | "repair" | "fold" | "status" | "stop" | "usage";
   target?: string;
   maxFunctions?: number;
 }
 
-const USAGE = `Usage: /${LOOP_COMMAND} [function] [--max=N] | repair [function] [--max=N] | status | stop`;
+const USAGE = `Usage: /${LOOP_COMMAND} [function] [--max=N] | repair [function] [--max=N] | fold | status | stop`;
 
 export function parseArgs(args: string): ParsedArgs {
   const tokens = args.trim().split(/\s+/).filter(Boolean);
   if (tokens.length === 0) return { action: "run" };
   if (tokens[0] === "status") return { action: "status" };
   if (tokens[0] === "stop") return { action: "stop" };
+  /* `fold` is a mode word like `repair`; it takes no arguments — the queue is
+     derived from tuProgress.ts on every iteration, never named or limited. */
+  if (tokens[0] === "fold") return tokens.length === 1 ? { action: "fold" } : { action: "usage" };
 
   /* `repair` is a mode word, not a function name; no symbol is spelled that way. */
   const repair = tokens[0] === "repair";
@@ -95,7 +99,8 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
 
   pi.registerCommand(LOOP_COMMAND, {
     description:
-      "Run the tiered escalation decompilation loop in this session; `repair` removes asm/pin exceptions from functions that already match. " + USAGE,
+      "Run the tiered escalation decompilation loop in this session; `repair` removes asm/pin exceptions from functions that already match; " +
+      "`fold` reconstructs source modules (plans/tu-prompt.md) until tuProgress.ts reports every eligible function folded. " + USAGE,
     handler: async (args, ctx) => {
       const parsed = parseArgs(args);
 
@@ -127,6 +132,7 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
         const parked = Object.keys(state.parked);
         const approvals = Object.keys(state.approvals);
         const repairs = Object.values(state.repairs ?? {});
+        const folds = state.folds ?? [];
         let queued = "unknown (call graph unavailable)";
         try {
           const queue = repairCandidates(loadCallGraph(projectRoot).functions, loadConfig(projectRoot).sourcePolicy.allowlist, documentedExceptions(projectRoot));
@@ -142,6 +148,9 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
             `parked (${parked.length}): ${parked.join(", ") || "none"}`,
             `agent-approved exemptions (${approvals.length}): ${approvals.join(", ") || "none"}`,
             `repair: ${queued}; repaired ${repairs.filter((record) => record.status === "repaired").length}`,
+            `fold: ${folds.filter((record) => record.status === "accepted").length} module(s) accepted, ` +
+              `${folds.filter((record) => record.status === "failed").length} failed, ` +
+              `${folds.filter((record) => record.status === "interrupted").length} interrupted (settled by the next fold run)`,
           ].join("\n"),
           "info",
         );
@@ -162,6 +171,7 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
 
       const task = Promise.resolve().then(async () => {
         const deps = { pi, ctx, projectRoot, config, sink, flag, baseline: await getSessionBaseline(projectRoot) };
+        if (parsed.action === "fold") return runFoldLoop(deps);
         return parsed.action === "repair"
           ? runRepairLoop(deps, { ...(parsed.target ? { target: parsed.target } : {}), ...(parsed.maxFunctions ? { maxFunctions: parsed.maxFunctions } : {}) })
           : runLoop(deps, { firstTarget: parsed.target, maxFunctions: parsed.maxFunctions });

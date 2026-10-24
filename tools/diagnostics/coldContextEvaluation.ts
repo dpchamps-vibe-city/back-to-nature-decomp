@@ -46,6 +46,7 @@ import { reconstructFunction } from "../agent/matching-reconstruction/engine.js"
 import { describeContextMode, withContextMode } from "../agent/matching-reconstruction/context-mode.js";
 import { buildFamilyIndex, donorsFor } from "../agent/family-transfer/family-index.js";
 import { transferFromDonor } from "../agent/family-transfer/transfer.js";
+import { functionSourcePath } from "../lib/translationUnits.js";
 
 type Stratum = "warm" | "cold" | "family-held-out";
 
@@ -146,7 +147,7 @@ function sampleMatched(containers: Container[], count: number): Array<{ name: st
   const population: Array<{ name: string; containerId: string; sizeBytes: number }> = [];
   for (const container of containers) {
     for (const span of loadFunctionSpans(container)) {
-      const sourcePath = join(ROOT, container.paths.srcDir, `${span.name}.c`);
+      const sourcePath = join(ROOT, functionSourcePath(container, span.name));
       if (!existsSync(sourcePath)) continue;
       const text = readFileSync(sourcePath, "utf-8");
       if (text.includes("INCLUDE_ASM(") && text.includes(span.name)) continue;

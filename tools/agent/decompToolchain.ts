@@ -10,6 +10,7 @@ import {
   symbolPrefix,
   type Container,
 } from "../lib/container.js";
+import { flagOverrideKey, functionSourcePath, translationUnitOf } from "../lib/translationUnits.js";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -169,7 +170,26 @@ export function sourceDirFor(name: string): string {
  * m2c first pass, a policy sweep.
  */
 export function sourcePathFor(name: string): string {
+  /* Through the function's translation unit: a module member has no file of
+     its own. A function no unit configures gets the per-function path. */
+  const container = containerForSymbol(name);
+  if (container) {
+    try { return join(ROOT, functionSourcePath(container, name)); } catch { /* no configuration yet */ }
+  }
   return join(sourceDirFor(name), `${name}.c`);
+}
+
+/**
+ * The flag-override key a compile of `source` answers to.
+ *
+ * A module source compiles under its own key, exactly as the Makefile's
+ * FlagsSwitch computes it. Anything else — a per-function file or a scratch
+ * candidate — keeps the stem's, which is the function's name, so a candidate
+ * compiled from elsewhere still gets the override its function's file has.
+ */
+export function flagOverrideKeyForCompile(source: string, stem: string): string {
+  const normalized = source.split("\\").join("/");
+  return /(^|\/)modules\/[^/]+\.c$/.test(normalized) ? flagOverrideKey(normalized) : stem;
 }
 
 export function configuredMaspsxFlags(): string[] {
@@ -328,8 +348,7 @@ export function normalizeFunctionName(value: string): string {
 }
 
 export function resolveSource(funcName: string, requested?: string): string {
-  const container = containerForSymbol(funcName);
-  const source = requested || join(container?.paths.srcDir ?? "src", `${funcName}.c`);
+  const source = requested || sourcePathFor(funcName);
   const absolute = isAbsolute(source) ? source : join(ROOT, source);
   if (!existsSync(absolute)) throw new Error(`Source file not found: ${source}`);
   return absolute;
@@ -551,7 +570,7 @@ export function compileSource(
 
   const overrides = options.useOverrides === false
     ? []
-    : (loadFlagOverrides().get(stem) || []);
+    : (loadFlagOverrides().get(flagOverrideKeyForCompile(absoluteSource, stem)) || []);
   const kind = options.containerKind ?? containerKindForSymbol(stem);
   const cc1Flags = [...configuredCc1FlagsForContainer(kind), ...overrides, ...(options.extraCc1Flags || [])];
   if (options.dumps) cc1Flags.push("-da");
@@ -594,7 +613,7 @@ export async function compileSourceAsync(
   const assembly = join(absoluteOutput, `${stem}.s`);
   const object = join(absoluteOutput, `${stem}.c.o`);
   await runToolAsync(CPP, [...CPP_FLAGS, absoluteSource, "-o", preprocessed], ROOT, options.signal);
-  const overrides = options.useOverrides === false ? [] : (loadFlagOverrides().get(stem) || []);
+  const overrides = options.useOverrides === false ? [] : (loadFlagOverrides().get(flagOverrideKeyForCompile(absoluteSource, stem)) || []);
   const kind = options.containerKind ?? containerKindForSymbol(stem);
   const cc1Flags = [...configuredCc1FlagsForContainer(kind), ...overrides];
   if (options.dumps) cc1Flags.push("-da");
@@ -618,6 +637,13 @@ export function resolveAsmSource(funcName: string): string | null {
   const asmDir = join(ROOT, container?.paths.asmDir ?? "build/asm");
   const disasmDir = join(ROOT, container?.paths.disasmDir ?? "build");
 
+  /* splat writes a C unit's extracted functions under the unit's stem. */
+  let unitStem: string | undefined;
+  try { unitStem = container ? translationUnitOf(container, funcName)?.segmentName : undefined; } catch { /* unconfigured */ }
+  if (unitStem && unitStem !== funcName) {
+    const inUnit = join(asmDir, "nonmatchings", unitStem, `${funcName}.s`);
+    if (existsSync(inUnit)) return inUnit;
+  }
   const directory = join(asmDir, "nonmatchings", funcName);
   const expected = join(directory, `${funcName}.s`);
   if (existsSync(expected)) return expected;

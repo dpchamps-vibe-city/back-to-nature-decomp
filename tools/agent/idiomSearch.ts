@@ -40,6 +40,7 @@ import { ROOT, normalizeFunctionName } from "./decompToolchain.js";
 import { targetWordsOf } from "../lib/functionOracle.js";
 import { requireFunctionLocation } from "../lib/symbolIndex.js";
 import { loadContainers } from "../lib/container.js";
+import { functionSourcePath } from "../lib/translationUnits.js";
 import { liftWords } from "./pipeline-reversal/lift.js";
 import { inverseAssembler } from "./pipeline-reversal/inverse-assembler.js";
 import { inverseDbr } from "./pipeline-reversal/inverse-dbr.js";
@@ -71,7 +72,7 @@ export function targetProgram(functionName: string): MirProgram | undefined {
 
 function sourcePathOf(functionName: string): string | undefined {
   for (const container of loadContainers()) {
-    const path = join(ROOT, container.paths.srcDir, `${functionName}.c`);
+    const path = join(ROOT, functionSourcePath(container, functionName));
     if (existsSync(path)) return path;
   }
   return undefined;

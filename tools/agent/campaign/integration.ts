@@ -31,6 +31,7 @@ import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "
 import { join, relative } from "node:path";
 import { ROOT, compileSource, preprocessOnly, sourcePathFor } from "../decompToolchain.js";
 import { requireFunctionLocation } from "../../lib/symbolIndex.js";
+import { translationUnitOf } from "../../lib/translationUnits.js";
 import { compareFunction } from "../../lib/functionOracle.js";
 import { analyzeCSource } from "../cSourceGuard.js";
 import { children, declaratorName, field, namedChildren, parseC, walk, type Node } from "../residual-source-search/tree-sitter-c.js";
@@ -192,6 +193,14 @@ function rewriteForProject(
 export function planIntegration(functionName: string): Transaction | { refused: string; detail?: string } {
   const verified = verifiedSource(functionName);
   if ("refused" in verified) return verified;
+
+  /* This transaction replaces a whole file with one function. Inside a
+     reconstructed module that would delete every other member. */
+  const location = requireFunctionLocation(functionName);
+  const unit = translationUnitOf(location.container, functionName);
+  if (unit?.foldedModule) {
+    return { refused: `${functionName} is a member of ${unit.sourcePath}; integrating a whole-file candidate would drop the module's other members — edit the module instead` };
+  }
 
   const sourcePath = sourcePathFor(functionName);
   const before = existsSync(sourcePath) ? readFileSync(sourcePath, "utf-8") : null;

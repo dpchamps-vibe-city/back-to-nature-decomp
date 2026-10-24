@@ -211,6 +211,9 @@ ignores that path.
 | `make split-sdk-libs` | Regenerates collision-safe SDK members/map under `build/sdk/`; cold recovery requires `PSYQ2ELF` |
 | `make progress` | Shows a summary of the decompilation progress |
 | `make complete` | Quiet, read-only progress check across all containers: exits 0 at 100%, 1 otherwise; does not build or verify bytes |
+| `make tu-progress` | Translation-unit reconstruction report: eligible functions folded into modules, remaining, exclusions, module validity |
+| `make tu-complete` | Read-only structural check that every eligible function is folded (see "Translation-unit reconstruction") |
+| `make tu-verify` | The terminal gate: structure, `make complete`, source policy, `make check-all`, config convergence, `git diff --check`, input stability; `BASELINE=<receipt or tree-ish>` adds the exception-growth check |
 | `make disassemble` | Runs the spimdisasm bootstrap and writes `functions.csv` and one `.s` file for each function |
 | `make config-check` | Runs `make split` again and fails if a tracked file changes |
 | `make setup` | Initializes the git submodules |
@@ -220,7 +223,9 @@ ignores that path.
 ## Directory structure
 
 ```
-src/                    One C file for each function (464 files)
+src/                    One C file per translation unit: per-function files, and
+                        reconstructed modules under src/modules/ and
+                        src/overlays/<id>/modules/
 include/
   common.h              PSX scalar types (u8, s32, and others); includes globals.h
   globals.h             Generated externs for D_XXXXXXXX (classifyGlobals.ts)
@@ -297,6 +302,8 @@ stop the loop instead of silently resetting its history.
 /project-refine             Do one careful cleanup batch across files
 /decomp-status              Show the worklist counts and the next target
 /auto_decompilation_loop    Run the tiered escalation loop in this session
+/auto_decompilation_loop repair   Remove asm/pin exceptions from matched functions
+/auto_decompilation_loop fold     Reconstruct source modules until all are folded
 ```
 
 The commands dispatch three skills. The skills are game-agnostic:
@@ -1039,12 +1046,66 @@ npx tsx tools/build/auditSdkCollisions.ts --require-all
    writes `globals.h`.
 8. `contextExport.ts --all` refreshes `functions.h`.
 
+Config generation preserves reconstructed modules: `bootstrap.ts` (cold start)
+and `bootstrapOverlay.ts` (every overlay split) place every function a
+`modules/` source defines into that module's one `c` subsegment, and refuse to
+write a config whose module members are not contiguous.
+
 Overlay bootstrapping analyses `.rodata` and `.text` as separate sections.
 Function-info rows can be switch fragments: the disassembler's symbol type
 and owning-function metadata determine which rows are merged, and the recovered
 extent is supplied to both the next disassembly pass and splat. Overlay builds
 compile only configured C subsegments; retired fragment sources can remain on
 disk for review without requiring nonexistent standalone assembly.
+
+## Translation-unit reconstruction
+
+The matching decompilation is complete; its source organization is not. Most
+translation units are still one address-named file per function. The next
+campaign folds functions into reconstructed modules, one evidence-backed module
+at a time (`plans/tu-prompt.md`), without changing a byte.
+
+Function identity and translation-unit identity are separate tables
+(`tools/lib/translationUnits.ts`):
+
+- an **original function** is a container, an address, an extent and a name,
+  from the disassembler's function table and the symbol table;
+- a **translation unit** is one configured `c` subsegment, one source and one
+  object; its members are the original functions whose starts fall in its
+  interval.
+
+Every tool resolves a function's source, object, flags and data sections
+through its unit, so a module member works with `diffFunc.ts`, triage, callee
+truth, context export, finalization and the policy gate.
+
+A module lives at `src/modules/<name>.c` or `src/overlays/<id>/modules/<name>.c`
+and is configured as `[<rom>, c, modules/<name>]`. The name says what the unit
+does; an address-derived name is rejected. That directory is the progress
+record — there is no module list or queue anywhere else.
+
+```bash
+npx tsx tools/diagnostics/tuProgress.ts                 # folded / remaining / exclusions / integrity
+npx tsx tools/diagnostics/tuProgress.ts --remaining     # bounded listing — not a proposed group
+npx tsx tools/diagnostics/tuProgress.ts --json          # versioned schema for an orchestrator
+npx tsx tools/diagnostics/tuProgress.ts --verify --baseline build/tu-campaign/baseline.json
+npx tsx tools/build/foldTranslationUnit.ts --container ovl_31 --module memcard_service \
+  --members ovl_31_func_800B82E8,ovl_31_func_800B8348 --summary "..." [--write]
+```
+
+`tuProgress.ts` exits 0 when every eligible function is folded and every gate
+it ran passes, 1 when the inventory is valid and module work remains, and 2
+when an invariant fails or is undetermined. `make tu-*` wraps it, but make
+turns any non-zero exit into its own error, so an orchestrator calls the tool
+directly. A campaign baseline (`--write-baseline`) records the normalized
+exception sets; `--baseline` fails on any added allowlist entry, flag override,
+pin, embedded asm, stub or module-scope construct. Removing one is always
+allowed.
+
+`foldTranslationUnit.ts` is the checked mechanical fold, not a grouping
+oracle; membership evidence comes from callers, private state, link order and
+`notes/file-groupings.md`. `/auto_decompilation_loop fold` dispatches
+`plans/tu-prompt.md` repeatedly and accepts a module only on a fresh
+`--verify`.
 
 ## Tools inventory
 

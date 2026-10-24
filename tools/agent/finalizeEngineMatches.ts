@@ -43,6 +43,7 @@ import { ROOT, compileSource } from "./decompToolchain.js";
 import { requireFunctionLocation } from "../lib/symbolIndex.js";
 import { compareFunction } from "../lib/functionOracle.js";
 import { loadContainers, containerOfSymbol, EXE_CONTAINER_ID } from "../lib/container.js";
+import { functionSourcePath, isModuleMember } from "../lib/translationUnits.js";
 import { applyTransaction, planIntegration, renderTransaction } from "./campaign/integration.js";
 
 const RECON_DIR = "build/matchingReconstruction";
@@ -78,7 +79,10 @@ function srcPathFor(functionName: string): string | null {
   const container = containerOfSymbol(functionName, containers)
     ?? containers.find((c) => c.id === EXE_CONTAINER_ID);
   if (!container) return null;
-  return join(ROOT, container.paths.srcDir, `${functionName}.c`);
+  /* A whole-file winner replaces the file; a module member has no file of its
+     own, and replacing the module would drop its other members. */
+  if (isModuleMember(container, functionName)) return null;
+  return join(ROOT, functionSourcePath(container, functionName));
 }
 
 /** All functions the engine matched exactly. Prefer the authoritative census

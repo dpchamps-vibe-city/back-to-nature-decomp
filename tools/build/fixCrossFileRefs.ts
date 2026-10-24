@@ -302,11 +302,22 @@ for (const line of yamlLines) {
   if (m) existingRoms.add(parseInt(m[1], 16));
 }
 
+/* A reconstructed module's interval holds several functions by design; a
+   symbol inside it is a member, never a reason to split the unit. */
+const moduleSpans: Array<{ start: number; end: number }> = [];
+for (let i = 0; i < yamlLines.length; i++) {
+  const m = yamlLines[i].match(/^\s+- \[(0x[0-9A-Fa-f]+),\s*c,\s*modules\//);
+  if (!m) continue;
+  const next = yamlLines.slice(i + 1).map((line) => line.match(/^\s+- \[(0x[0-9A-Fa-f]+)/)).find(Boolean);
+  moduleSpans.push({ start: parseInt(m[1], 16), end: next ? parseInt(next[1], 16) : Number.MAX_SAFE_INTEGER });
+}
+
 // Check which entries need c segments added
 const yamlInserts: { rom: number; name: string }[] = [];
 for (const entry of newEntries as any[]) {
   const { name, vram } = entry;
   const rom = vram - LOAD_ADDR + PAYLOAD_OFFSET;
+  if (moduleSpans.some((span) => rom > span.start && rom < span.end)) continue;
   if (!existingRoms.has(rom)) {
     yamlInserts.push({ rom, name });
   }

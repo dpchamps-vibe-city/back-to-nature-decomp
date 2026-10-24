@@ -29,6 +29,7 @@ import { excludedReason, type Exclusion } from "../idiom-corpus/corpus.js";
 import { contextMode, warmContextAllowed } from "../matching-reconstruction/context-mode.js";
 import { overlayRevision, overlaySourceFor } from "../campaign/artifact-overlay.js";
 import { decodeFunctionWords, signatureOf, symbolResolverFor, type FamilySignature, type SignatureTier } from "./signature.js";
+import { functionSourcePath } from "../../lib/translationUnits.js";
 
 /** Why a function cannot act as a donor. Reported, never silent. */
 export type DonorExclusion = Exclusion | "stub" | "unreadable";
@@ -96,7 +97,7 @@ function classifySource(functionName: string, container: Container): { sourcePat
    * cold measurement still says "this function has eleven siblings", which is
    * the useful part of the retrieval even with nothing to transfer. */
   if (!warmContextAllowed()) return { excluded: "no-source" };
-  const path = join(ROOT, container.paths.srcDir, `${functionName}.c`);
+  const path = join(ROOT, functionSourcePath(container, functionName));
   if (!existsSync(path)) return { excluded: "no-source" };
   let text: string;
   try {

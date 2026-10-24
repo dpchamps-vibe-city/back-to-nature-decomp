@@ -40,8 +40,15 @@ CC1FLAGS    := -O2 -G8 -mips1 -mcpu=r3000 -funsigned-char -fpeephole -ffunction-
 # Sets CC1_EFFECTIVE, SRC_ASFLAGS, MASPSX_FLAGS for the given source file.
 # Appends any per-file overrides from flag_overrides.mk, and swaps the
 # small-data threshold for overlay containers (see OVERLAY_G above).
+#
+# The override key is the source's basename for a per-function file, so every
+# existing CC1FLAGS_<function> entry keeps applying. A reconstructed module is
+# keyed by its path below src/ with `/` spelled `__` (CC1FLAGS_modules__<name>,
+# CC1FLAGS_overlays__<id>__modules__<name>): module names are unique only within
+# a container. tools/lib/translationUnits.ts flagOverrideKey() mirrors this.
+FlagKey = $(if $(findstring /modules/,/$(1)),$(subst /,__,$(patsubst src/%.c,%,$(1))),$(basename $(notdir $(1))))
 define FlagsSwitch
-CC1_EFFECTIVE := $(if $(filter src/overlays/%,$(1)),$(subst -G8,$(OVERLAY_G),$(CC1FLAGS)),$(CC1FLAGS)) $(CC1FLAGS_$(basename $(notdir $(1))))
+CC1_EFFECTIVE := $(if $(filter src/overlays/%,$(1)),$(subst -G8,$(OVERLAY_G),$(CC1FLAGS)),$(CC1FLAGS)) $(CC1FLAGS_$(call FlagKey,$(1)))
 MASPSX_FLAGS := --aspsx-version 2.80 --use-comm-section --run-assembler
 SRC_ASFLAGS := $(if $(filter src/overlays/%,$(1)),$(OVERLAY_ASFLAGS),$(ASFLAGS))
 endef
@@ -65,11 +72,17 @@ FUNCTIONS_CSV := $(BUILD_DIR)/functions.csv
 
 # Source collection — splat generates .s files into build/asm/
 #
-# Object collection is per container and explicit. GNU make's `**` is not
-# recursive (it expands to `*/`), so a glob over src/ would silently miss
-# src/overlays/<id>/ and, worse, would link overlay objects into the PS-X EXE
-# if it ever matched them.
-C_SRCS      := $(wildcard src/*.c)
+# Object collection is per container and explicit, and every container lists
+# the same thing: its configured `c` subsegments, in link order. Not a glob of
+# src/ — GNU make's `**` is not recursive, a glob would miss a nested module
+# stem (`modules/<name>`), would link a retired per-function file beside the
+# module that replaced it, and would pick up any review copy left under src/.
+# One listing for the executable and the overlays means the two rules cannot
+# disagree about what a translation unit is.
+# Usage: $(call ConfiguredCSources,<splat config>,<container source root>)
+ConfiguredCSources = $(shell awk -F', ' '/^[[:space:]]*- \[0x[0-9A-Fa-f]+, c, / { name = $$3; sub(/\].*/, "", name); print "$(2)/" name ".c" }' $(1) 2>/dev/null)
+EXE_SPLAT   := configs/splat/exe.yaml
+C_SRCS      := $(call ConfiguredCSources,$(EXE_SPLAT),src)
 ASM_SRCS    := $(shell find $(BUILD_DIR)/asm -name '*.s' -not -path '*/nonmatchings/*' 2>/dev/null)
 C_OBJS      := $(patsubst src/%.c,$(BUILD_DIR)/src/%.c.o,$(C_SRCS))
 ASM_OBJS    := $(patsubst $(BUILD_DIR)/asm/%.s,$(BUILD_DIR)/asm/%.s.o,$(ASM_SRCS))
@@ -166,7 +179,9 @@ ASM_INCLUDE_DEPS := $(shell find include -name '*.inc' 2>/dev/null)
 -include $(shell find $(BUILD_DIR)/src -name '*.d' 2>/dev/null)
 
 # Compile C: cpp -> cc1 -> maspsx -> .o
-$(BUILD_DIR)/src/%.c.o: src/%.c $(BUILD_DIR)/toolchain-inputs.stamp $(ASM_INCLUDE_DEPS) $$(wildcard $(BUILD_DIR)/asm/nonmatchings/$$(notdir $$*)/*.s $(BUILD_DIR)/*/asm/nonmatchings/$$(notdir $$*)/*.s)
+# A module's extracted functions sit under its own nested stem.
+StubStem = $(if $(findstring /modules/,/$(1)),modules/$(notdir $(1)),$(notdir $(1)))
+$(BUILD_DIR)/src/%.c.o: src/%.c $(BUILD_DIR)/toolchain-inputs.stamp $(ASM_INCLUDE_DEPS) $$(wildcard $(BUILD_DIR)/asm/nonmatchings/$$(call StubStem,$$*)/*.s $(BUILD_DIR)/*/asm/nonmatchings/$$(call StubStem,$$*)/*.s)
 	@mkdir -p $(dir $@)
 	$(eval $(call FlagsSwitch,$<))
 	$(CPP) $(CPPFLAGS) -MD -MP -MF $@.d -MT $@ $< -o $(BUILD_DIR)/src/$*.i
@@ -253,7 +268,7 @@ $(ENGINE_SYMS): $(wildcard $(BUILT_ELF))
 # retire a fragment while preserving its source for review; on a cold build
 # that file has no standalone INCLUDE_ASM output and must not be compiled.
 define OverlayRules
-$(1)_C_SRCS := $$(shell awk -F', ' '/^[[:space:]]*- \[0x[0-9A-Fa-f]+, c, / { name = $$$$3; sub(/\].*/, "", name); print "src/overlays/$(1)/" name ".c" }' configs/splat/$(1).yaml 2>/dev/null)
+$(1)_C_SRCS := $$(call ConfiguredCSources,configs/splat/$(1).yaml,src/overlays/$(1))
 $(1)_ASM_SRCS := $$(shell find $(BUILD_DIR)/$(1)/asm -name '*.s' -not -path '*/nonmatchings/*' 2>/dev/null)
 $(1)_OBJS := $$(patsubst src/%.c,$(BUILD_DIR)/src/%.c.o,$$($(1)_C_SRCS)) \
              $$(patsubst $(BUILD_DIR)/$(1)/asm/%.s,$(BUILD_DIR)/$(1)/asm/%.s.o,$$($(1)_ASM_SRCS))
@@ -347,6 +362,24 @@ setup:
 progress:
 	@npx tsx tools/diagnostics/progress.ts
 
+# Translation-unit reconstruction: how many eligible functions are folded into
+# semantic modules (src/modules/, src/overlays/<id>/modules/), with every unit's
+# membership proved against the original-function inventory, its source AST
+# and its object. `tu-complete` is the read-only structural check; `tu-verify`
+# runs the terminal gate (make complete, source policy, check-all, config
+# convergence, git diff --check, input stability). The tool's own exit status
+# is 0 (all folded), 1 (module work remains) or 2 (an invariant failed); make
+# reports any non-zero recipe as its own error, so an orchestrator that needs
+# the three-way answer calls tools/diagnostics/tuProgress.ts directly.
+tu-progress:
+	@npx tsx tools/diagnostics/tuProgress.ts
+
+tu-complete:
+	@npx tsx tools/diagnostics/tuProgress.ts --check-complete
+
+tu-verify:
+	@npx tsx tools/diagnostics/tuProgress.ts --verify $(if $(BASELINE),--baseline $(BASELINE))
+
 # Read-only completion query. GNU make normally maps recipe failures to exit 2;
 # query mode instead returns exactly 0 (complete) or 1 (work remains). An empty
 # phony target is up to date; an unexecuted no-op recipe makes it out of date.
@@ -401,4 +434,4 @@ open('configs/splat/exe.yaml','w').writelines(lines[:idx+1])"
 	rm -rf $(BUILD_DIR)
 	@echo "Configs wiped. Run 'make split && make && make check' to rebuild from scratch."
 
-.PHONY: all disassemble split split-sdk-libs check check-exe check-all split-all setup progress complete clean wipe FORCE_BUILD_INPUTS
+.PHONY: all disassemble split split-sdk-libs check check-exe check-all split-all setup progress complete tu-progress tu-complete tu-verify clean wipe FORCE_BUILD_INPUTS

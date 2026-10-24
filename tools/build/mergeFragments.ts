@@ -368,7 +368,8 @@ function syncSplatSubsegments(options: {
   const merged = new Map<number, { romStart: number; romEnd: number; name: string }>();
   const stripped: string[] = [];
   for (let k = 0; k < filteredYaml.length; k++) {
-    const existing = filteredYaml[k]!.match(/\[\s*0x([0-9A-Fa-f]+)\s*,\s*\.rodata\s*,\s*(\w+)\s*\]/);
+    /* A unit stem, which for a reconstructed module is `modules/<name>`. */
+    const existing = filteredYaml[k]!.match(/\[\s*0x([0-9A-Fa-f]+)\s*,\s*\.rodata\s*,\s*([\w/]+)\s*\]/);
     if (existing) {
       const romStart = parseInt(existing[1]!, 16);
       const name = existing[2]!;

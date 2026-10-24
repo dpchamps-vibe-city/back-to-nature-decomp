@@ -39,6 +39,8 @@ import {
   loadSymbolIndex,
   resolveAddress,
 } from "../lib/symbolIndex.js";
+import { functionObjectPath, functionSourcePath } from "../lib/translationUnits.js";
+import { objectFacts } from "../lib/translationUnitAudit.js";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -106,17 +108,36 @@ export function scanGpAccesses(
   return accesses;
 }
 
-/** `R_MIPS_GPREL16` symbols of a compiled object — exact, but build-dependent. */
-export function objectGprelSymbols(objectPath: string): Set<string> | null {
+/**
+ * `R_MIPS_GPREL16` symbols of a compiled object — exact, but build-dependent.
+ *
+ * With `functionName`, only the relocations inside that function's own symbol:
+ * a module's object holds every member, and each member's witness is its own
+ * code, not its neighbours'.
+ */
+export function objectGprelSymbols(objectPath: string, functionName?: string): Set<string> | null {
   if (!existsSync(objectPath)) return null;
+  let range: { start: number; end: number } | null = null;
+  if (functionName) {
+    const own = objectFacts(objectPath)?.functions.find((fn) => fn.name === functionName);
+    if (own) range = { start: own.offset, end: own.offset + own.size };
+  }
   const dump = execFileSync("mips-linux-gnu-objdump", ["-r", objectPath], {
     encoding: "utf-8",
     maxBuffer: 64 * 1024 * 1024,
   });
   const symbols = new Set<string>();
+  let inText = false;
   for (const line of dump.split("\n")) {
-    const match = line.match(/^[0-9a-f]+\s+R_MIPS_GPREL16\s+(\S+)/);
-    if (match) symbols.add(match[1].replace(/[-+]0x[0-9a-f]+$/, ""));
+    const section = line.match(/^RELOCATION RECORDS FOR \[([^\]]+)\]/);
+    if (section) {
+      inText = section[1] === ".text";
+      continue;
+    }
+    const match = line.match(/^([0-9a-f]+)\s+R_MIPS_GPREL16\s+(\S+)/);
+    if (!match) continue;
+    if (range && (!inText || parseInt(match[1], 16) < range.start || parseInt(match[1], 16) >= range.end)) continue;
+    symbols.add(match[2].replace(/[-+]0x[0-9a-f]+$/, ""));
   }
   return symbols;
 }
@@ -131,7 +152,8 @@ export type SourceKind = "c" | "include-asm" | "absent";
  * small-data threshold is. Only compiled C depends on the declaration.
  */
 export function classifySource(name: string): { kind: SourceKind; path: string | null } {
-  const path = join(ROOT, "src", `${name}.c`);
+  /* Through the function's translation unit: a module member's file is the module. */
+  const path = join(ROOT, functionSourcePath("exe", name));
   if (!existsSync(path)) return { kind: "absent", path: null };
   const text = readFileSync(path, "utf-8");
   const stub = new RegExp(`INCLUDE_ASM\\([^)]*\\b${name}\\b`).test(text);
@@ -182,7 +204,7 @@ export function deriveOwnership(filter?: string): OwnershipRecord[] {
       unresolved,
       fromObject: source.kind === "absent"
         ? null
-        : [...(objectGprelSymbols(join(ROOT, "build/src", `${span.name}.c.o`)) ?? [])].sort(),
+        : [...(objectGprelSymbols(join(ROOT, functionObjectPath("exe", span.name)), span.name) ?? [])].sort(),
     });
   }
   return records;
@@ -245,6 +267,26 @@ function reportText(records: OwnershipRecord[]): string {
  *
  * A disagreement is reported, never silently reconciled.
  */
+/**
+ * Where one compiled function's two witnesses disagree: a relocation the bytes
+ * do not account for, or a `$gp` reach the object does not relocate (a missing
+ * tentative definition). Empty for agreement, for a stub, and with no object.
+ */
+export function witnessDisagreements(record: OwnershipRecord): string[] {
+  if (record.source !== "c" || record.fromObject === null) return [];
+  const bytes = new Set(record.fromBytes);
+  const relocated = new Set(record.fromObject);
+  const bases = new Set(record.interior.map((entry) => entry.split("+")[0]));
+  const problems: string[] = [];
+  for (const symbol of record.fromObject) {
+    if (!bytes.has(symbol) && !bases.has(symbol)) problems.push(`${record.name}: object relocates ${symbol} gp-relative, the original bytes do not reach it`);
+  }
+  for (const symbol of record.fromBytes) {
+    if (!relocated.has(symbol) && !bases.has(symbol)) problems.push(`${record.name}: reaches ${symbol} through $gp but its unit addresses it absolutely — the unit must define it`);
+  }
+  return problems;
+}
+
 function checkText(records: OwnershipRecord[]): { text: string; failures: number } {
   const lines: string[] = [];
   let failures = 0;

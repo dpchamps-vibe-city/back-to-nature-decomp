@@ -31,6 +31,7 @@ import { decodeBytes } from "../agent/matching-reconstruction/exec.js";
 import { reconstructFunction } from "../agent/matching-reconstruction/engine.js";
 import { describeCategory, failureLayer } from "../agent/matching-reconstruction/failure-category.js";
 import type { ResultBundle } from "../agent/matching-reconstruction/types.js";
+import { functionSourcePath } from "../lib/translationUnits.js";
 
 const PARK_MARKER = "PARKED by /auto_decompilation_loop";
 
@@ -54,7 +55,7 @@ function unmatchedFunctions(): string[] {
   const names: string[] = [];
   for (const container of loadContainers()) {
     for (const span of loadFunctionSpans(container)) {
-      const sourcePath = join(ROOT, container.paths.srcDir, `${span.name}.c`);
+      const sourcePath = join(ROOT, functionSourcePath(container, span.name));
       if (!existsSync(sourcePath)) {
         names.push(span.name);
         continue;
@@ -152,7 +153,7 @@ function freezeManifest(): Manifest {
     const image = readFileSync(join(ROOT, container.targetPath));
     const perStratum = new Map<string, string[]>();
     for (const span of loadFunctionSpans(container)) {
-      const sourcePath = join(ROOT, container.paths.srcDir, `${span.name}.c`);
+      const sourcePath = join(ROOT, functionSourcePath(container, span.name));
       if (!existsSync(sourcePath)) continue;
       const content = readFileSync(sourcePath, "utf-8");
       if (content.includes("INCLUDE_ASM(") && content.includes(span.name)) continue;

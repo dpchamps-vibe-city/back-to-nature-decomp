@@ -44,13 +44,14 @@ import { sha256 } from "./provenance.js";
 import { handsSymbolToAssembler } from "./cSourceGuard.js";
 import { LEDGER_SCHEMA_VERSION, readLedger, type LedgerEntry } from "./experimentLedger.js";
 import { loadContainers } from "../lib/container.js";
+import { functionSourcePath } from "../lib/translationUnits.js";
 
 const LEDGER_DIR = join(ROOT, "build/experimentLedger");
 
 /** Where a function's source lives today, across every container. */
 function sourceOf(functionName: string): string | null {
   for (const container of loadContainers()) {
-    const path = join(ROOT, container.paths.srcDir, `${functionName}.c`);
+    const path = join(ROOT, functionSourcePath(container, functionName));
     if (existsSync(path)) return path;
   }
   return null;

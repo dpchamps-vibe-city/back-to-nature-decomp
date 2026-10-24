@@ -23,6 +23,8 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs
 import { execSync } from "child_process";
 import { join } from "path";
 import { loadPsxExeInfo, ROOT, type PsxExeInfo, type SectionLayout, exeSplatYamlPath, exeSymbolAddrsPath } from "../lib/psxExeInfo.ts";
+import { moduleCSegments } from "../lib/translationUnits.ts";
+import { moduleDeclarationsFromSources } from "../lib/translationUnitAudit.ts";
 import {
   classifyEntries,
   inferSectionBoundaries,
@@ -219,13 +221,18 @@ function generateSplatSubsegments(info: PsxExeInfo, layout: SectionLayout, write
   // rodata section
   subsegments.push(`${indent}- [${romHex(layout.rodataStart)}, rodata]`);
 
-  // Per-function c entries in text section
-  for (const func of textFunctions) {
-    const rom = func.address - info.loadAddr + info.payloadOffset;
-    const name = func.name.startsWith("func_") || func.name === "__start"
+  /* Per-function c entries in the text section, except that a reconstructed
+     module's members share its one entry: a cold regeneration must rebuild a
+     folded module, not expand it (see tools/lib/translationUnits.ts). */
+  const named = textFunctions.map((func) => ({
+    address: func.address,
+    name: func.name.startsWith("func_") || func.name === "__start"
       ? func.name
-      : `func_${func.address.toString(16).toUpperCase()}`;
-    subsegments.push(`${indent}- [${romHex(rom)}, c, ${name}]`);
+      : `func_${func.address.toString(16).toUpperCase()}`,
+  }));
+  for (const segment of moduleCSegments(named, moduleDeclarationsFromSources("exe"))) {
+    const rom = segment.address - info.loadAddr + info.payloadOffset;
+    subsegments.push(`${indent}- [${romHex(rom)}, c, ${segment.name}]`);
   }
 
   // data section

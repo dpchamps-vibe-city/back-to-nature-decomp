@@ -37,6 +37,7 @@ import { reconstructFunction } from "../matching-reconstruction/engine.js";
 import { buildEvidenceGraph, dependentsOf, describeGraph, type EvidenceGraph } from "./evidence-graph.js";
 import { describeOverlay, overlayRevision, publishRecovered } from "./artifact-overlay.js";
 import { bundlePath, prepareBundle, renderBundle, type PreparedBundle } from "./bundle.js";
+import { functionSourcePath } from "../../lib/translationUnits.js";
 
 export interface CampaignOutcome {
   functionName: string;
@@ -107,7 +108,7 @@ function unmatchedFunctions(containers: Container[]): string[] {
   const names: string[] = [];
   for (const container of containers) {
     for (const span of loadFunctionSpans(container)) {
-      const sourcePath = join(ROOT, container.paths.srcDir, `${span.name}.c`);
+      const sourcePath = join(ROOT, functionSourcePath(container, span.name));
       if (!existsSync(sourcePath)) {
         names.push(span.name);
         continue;

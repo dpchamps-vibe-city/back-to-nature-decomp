@@ -34,7 +34,6 @@ import { join } from "path";
 import { ROOT } from "./psxExeInfo.js";
 import {
   EXE_CONTAINER_ID,
-  containerPath,
   containerTargetPath,
   requireContainer,
   vramToRom,
@@ -49,6 +48,8 @@ import {
   resolveAddress,
   addressEncodedInName,
 } from "./symbolIndex.js";
+import { functionObjectPath, translationUnitOf } from "./translationUnits.js";
+import { memberJumpTableAddress } from "./jumpTables.js";
 
 const OBJDUMP = "mips-linux-gnu-objdump";
 const OBJCOPY = "mips-linux-gnu-objcopy";
@@ -524,7 +525,11 @@ export interface OracleResult extends OracleComparison {
 }
 
 export interface OracleOptions {
-  /** Defaults to the container's object directory, `<objDir>/<name>.c.o`. */
+  /**
+   * Defaults to the object the build compiles the function's translation unit
+   * into — `<objDir>/<name>.c.o` for a per-function file, the module's object
+   * for a module member.
+   */
   objectPath?: string;
   /**
    * Which binary the function belongs to. Defaults to `exe`; an overlay
@@ -547,10 +552,21 @@ export interface OracleOptions {
 function resolveSectionBases(
   functionName: string,
   textBase: number,
-  container: Container
+  container: Container,
+  wholeUnit: boolean,
 ): Map<string, number> {
   const bases = new Map<string, number>([[".text", textBase]]);
   for (const [section, vram] of loadFunctionDataSubsegments(functionName, container)) bases.set(section, vram);
+  /* A module pools its members' tables into one `.rodata`, attributed to the
+     module. That base is right for the module's own object. A candidate that
+     compiles this member alone starts its `.rodata` at the member's own table,
+     which the original code itself locates. */
+  const unit = translationUnitOf(container, functionName);
+  if (!wholeUnit && unit && unit.members.length > 1 && bases.has(".rodata")) {
+    const own = memberJumpTableAddress(container, functionName);
+    if (own === null) bases.delete(".rodata");
+    else bases.set(".rodata", own);
+  }
   /* cc1 emits `.rdata`; splat names the same subsegment `.rodata`. */
   if (bases.has(".rodata") && !bases.has(".rdata")) bases.set(".rdata", bases.get(".rodata")!);
   if (bases.has(".rdata") && !bases.has(".rodata")) bases.set(".rodata", bases.get(".rdata")!);
@@ -624,7 +640,7 @@ export function compareFunction(functionName: string, options: OracleOptions = {
       ? requireContainer(options.container)
       : options.container ?? requireContainer(EXE_CONTAINER_ID);
   const index = options.index ?? loadSymbolIndex(container);
-  const objectPath = options.objectPath ?? join(containerPath(container, "objDir"), `${functionName}.c.o`);
+  const objectPath = options.objectPath ?? join(ROOT, functionObjectPath(container, functionName));
   const notes: string[] = [];
 
   const span = loadFunctionSpans(container).find((entry) => entry.name === functionName);
@@ -678,7 +694,10 @@ export function compareFunction(functionName: string, options: OracleOptions = {
   }
 
   const textBase = span.vram - functionSymbol.offset;
-  const sectionBases = resolveSectionBases(functionName, textBase, container);
+  const unit = translationUnitOf(container, functionName);
+  const emitted = new Set(symbols.filter((symbol) => symbol.section === ".text").map((symbol) => symbol.name.replace(/\.\d+$/, "")));
+  const wholeUnit = !unit || unit.members.every((member) => emitted.has(member.name));
+  const sectionBases = resolveSectionBases(functionName, textBase, container, wholeUnit);
   const definedInObject = new Map(symbols.map((symbol) => [symbol.name, symbol]));
 
   /**
@@ -785,7 +804,7 @@ export function compareFunction(functionName: string, options: OracleOptions = {
   if (!sectionBases.has(".rodata") && relocations.some((relocation) => relocation.symbol === ".rodata")) {
     notes.push(
       `This object emits a .rodata block (a jump table) and ${container.paths.splat} has no`,
-      `  '.rodata, ${functionName}' subsegment, so its original base address is unknown and`,
+      `  '.rodata, ${unit?.segmentName ?? functionName}' subsegment, so its original base address is unknown and`,
       "  every word that reaches it is undetermined. Run `make split` to generate the",
       "  subsegment — do not edit splat.yaml by hand, it is regenerated.",
     );

@@ -21,6 +21,7 @@ import { join } from "path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { scanOverlayReferences } from "../lib/overlayReferences.js";
 import { loadFunctionSpans, loadSymbolIndex } from "../lib/symbolIndex.js";
+import { functionSourcePath } from "../lib/translationUnits.js";
 
 const args = process.argv.slice(2);
 const showAll = args.includes("--all");
@@ -57,7 +58,7 @@ function statusOf(address: number): { name: string; status: Status } {
   }
   if (span.kind !== "c") return { name, status: "stub" };
 
-  const cFile = join(ROOT, "src", `${span.name}.c`);
+  const cFile = join(ROOT, functionSourcePath("exe", span.name));
   if (!existsSync(cFile)) return { name, status: "stub" };
   return { name, status: readFileSync(cFile, "utf-8").includes("INCLUDE_ASM(") ? "stub" : "matched" };
 }

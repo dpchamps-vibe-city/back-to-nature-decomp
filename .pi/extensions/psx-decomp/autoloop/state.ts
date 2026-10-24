@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "
 import { dirname, join } from "node:path";
 import type { AutodecompConfig } from "../../shared/types.ts";
 import type { Completion } from "../tools/prepared-attempt.ts";
-import type { ApprovalRecord, LoopConfig, LoopState, ParkRecord, RepairRecord } from "./types.ts";
+import type { ApprovalRecord, FoldRecord, LoopConfig, LoopState, ParkRecord, RepairRecord } from "./types.ts";
 
 const STATE_FORMAT = "autoloop-input-deltas-v1";
 type StoredCompletion = Omit<Completion, "inputs"> & { inputsDelta: Record<string, string | null> };
@@ -16,7 +16,7 @@ type StoredState = Omit<LoopState, "completions"> & {
  * the whole project map per match reached V8's 512 MiB string ceiling. */
 function encodeState(state: LoopState): StoredState {
   const stored: StoredState = { format: STATE_FORMAT, parked: state.parked, approvals: state.approvals,
-    ...(state.repairs ? { repairs: state.repairs } : {}) };
+    ...(state.repairs ? { repairs: state.repairs } : {}), ...(state.folds ? { folds: state.folds } : {}) };
   if (state.completions) {
     stored.completions = {};
     let previous: Record<string, string> = {};
@@ -37,7 +37,7 @@ function encodeState(state: LoopState): StoredState {
 
 function decodeState(stored: StoredState): LoopState {
   const state: LoopState = { parked: stored.parked ?? {}, approvals: stored.approvals ?? {},
-    ...(stored.repairs ? { repairs: stored.repairs } : {}) };
+    ...(stored.repairs ? { repairs: stored.repairs } : {}), ...(stored.folds ? { folds: stored.folds } : {}) };
   if (stored.completions) {
     state.completions = {};
     let previous: Record<string, string> = {};
@@ -78,7 +78,19 @@ export function readState(config: LoopConfig): LoopState {
   if (raw.format !== undefined) throw new Error(`Unsupported autoloop state format: ${String(raw.format)}`);
   /* Legacy state migrates losslessly on its next write. */
   return { parked: raw.parked ?? {}, approvals: raw.approvals ?? {}, ...(raw.completions ? { completions: raw.completions } : {}),
-    ...(raw.repairs ? { repairs: raw.repairs } : {}) };
+    ...(raw.repairs ? { repairs: raw.repairs } : {}), ...(raw.folds ? { folds: raw.folds } : {}) };
+}
+
+/**
+ * Record a fold dispatch. The newest record for a dispatch replaces its
+ * predecessor (same `foldedAt`), so an `interrupted` placeholder becomes the
+ * settled record instead of sitting beside it.
+ */
+export function recordFold(config: LoopConfig, state: LoopState, record: FoldRecord): LoopState {
+  const folds = (state.folds ?? []).filter((existing) => existing.foldedAt !== record.foldedAt);
+  const next: LoopState = { ...state, folds: [...folds, record] };
+  writeState(config, next);
+  return next;
 }
 
 export function recordRepair(config: LoopConfig, state: LoopState, record: RepairRecord): LoopState {

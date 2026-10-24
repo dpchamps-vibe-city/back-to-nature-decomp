@@ -80,6 +80,24 @@ export function repairAttemptCommitMessage(functionName: string, tierLabel: stri
   ].join("\n");
 }
 
+/**
+ * A fold reorganizes source without changing a byte, so it is spelled
+ * `fold <module>`: history names the reconstructed unit and its members.
+ */
+export function foldCommitMessage(moduleName: string, members: string[], tierLabel: string, beforeFolded: number, afterFolded: number): string {
+  return [
+    `fold ${moduleName}`,
+    "",
+    `Reconstructed translation unit ${moduleName}: ${members.join(", ")}.`,
+    `Folded ${beforeFolded} -> ${afterFolded} eligible functions; every container still byte-identical.`,
+    `Accepted by /auto_decompilation_loop fold on ${tierLabel}.`,
+  ].join("\n");
+}
+
+export async function commitFold(projectRoot: string, moduleName: string, members: string[], tierLabel: string, beforeFolded: number, afterFolded: number, files: string[]): Promise<CommitResult> {
+  return commitFiles(projectRoot, files, foldCommitMessage(moduleName, members, tierLabel, beforeFolded, afterFolded));
+}
+
 export async function commitRepairedFunction(projectRoot: string, functionName: string, tierLabel: string, revokedKinds: string[], files: string[]): Promise<CommitResult> {
   return commitFiles(projectRoot, files, repairCommitMessage(functionName, tierLabel, revokedKinds));
 }
