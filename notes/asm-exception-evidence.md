@@ -61,21 +61,24 @@ below a call, with no reference to that register in between.
   | Function | Status | What keeps the write below the call |
   |---|---|---|
   | `ovl_19_func_800BB108` | unmatched (now pinned) | nothing in plain C |
-  | `ovl_11_func_800F7230` | unmatched | not yet examined |
+  | `ovl_11_func_800F7230` | matched (2026-10-23) | one empty `do { } while (0)` directly after the call |
   | `ovl_11_func_801024D8` | matched | false positive: in RTL the loads are in an earlier block |
   | `ovl_15_func_801320A8` | matched | a loop.c constant that crosses no call |
   | `func_8001E4C0` | matched | stacked `do { } while (0)` barriers |
 
-No matched function gets this shape from ordinary C under our toolchain. The
-reading taken: the original compiler keeps such a write below the call and ours
-does not. This is a narrow scheduling difference, not a register pin in the
-original source. The sample is small, so this is a judgement, not a proof.
+No ordinary statement shape gives this under our toolchain. The reading first
+taken here was that the original compiler keeps such a write below the call and
+ours does not. `ovl_11_func_800F7230` weakens that reading. Its two post-call
+clears are held below the call in plain C by loop notes: one empty
+`do { } while (0)` placed directly after the call, which sched1 treats as a
+barrier. The original source may well have had a statement there that expands
+to loop notes, such as a compiled-out debug macro. For 800BB108 the loop-note
+barrier was tried at 308 placements and reached `[0,0,4,3]`, so the pin stays
+until a placement is found that also keeps its allocation.
 
 **What would retire it.**
-- If `ovl_11_func_800F7230` turns out to need the same single-write hold, two
-  cases of one toolchain difference would justify a small `cc1` scheduling
-  change in place of per-function pins. Any such change must keep all matched
-  functions byte-exact.
+- The toolchain itself is not changed. It establishes provenance, and the fact
+  that most functions match under it is the evidence that it is close enough.
 - A plain-C construct that holds that write below the call would replace the
   binding outright.
 

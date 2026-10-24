@@ -11595,7 +11595,15 @@ remain unproven. [Grouping evidence](research/ovl_11_func_800F77F0-grouping.md).
 
 Members (link order):
 - ovl_11_func_800F71DC (m) — start an indexed CD load into the shared buffer.
-- ovl_11_func_800F7230 (s) — process CD-load completion and selected state tables.
+- ovl_11_func_800F7230 (m, byte-exact, finalized) — finishes the CD load
+  started by `800F71DC` (0x50 blocks of 0x800 bytes from id `arg0` into
+  `D_8005E3B0 + 0x4290`). For each in-range id in the request list chosen by
+  `arg1` (`D_8006C838` +0x450A/+0x468A/+0x480A, or `D_80126E30` past 0x40),
+  it parses the sprite, claims a free `D_80129648` texture record and uploads
+  it. It returns 0 when done, 1 when `func_80014CBC` yields nothing and -1
+  when the records are full; the caller `800F77F0` advances only on 0
+  ([verified source](../src/overlays/ovl_11/ovl_11_func_800F7230.c),
+  [case study](research/harness-improvement-case-studies/ovl_11_func_800F7230-spill-slot-provenance-and-post-schedule-allocation.md)).
 - ovl_11_func_800F77A8 (m) — reset load progress or invoke the mode-1 progress step.
 - ovl_11_func_800F77F0 (m) — advance shared-state CD-load start/poll progress.
 
