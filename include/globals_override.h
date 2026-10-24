@@ -4636,6 +4636,20 @@ typedef struct {
     s16 weight;
     s16 unkC;
 } CardGameSlot;
+/* 8002206C clears 0x108 bytes: lh mode at +0, then 3x6 stride-14 card slots. */
+typedef struct {
+    s16 mode;
+    CardGameSlot cards[3][6];
+    u8 unkFE[0x108 - 0xFE];
+} CardGameState;
+extern s16 D_8007AD4C[0x84];
+/* 8002206C's stride-14 walks name the value, x/y, attributes and weight halfwords. */
+extern s16 D_8007AD4E;
+extern s16 D_8007AD50;
+extern s16 D_8007AD52;
+extern u16 D_8007AD54;
+extern u16 D_8007AD56;
+extern s16 D_8007AD58;
 /* ovl_17 view of D_8006C838: the card-game mode at +0xE514 (3 shows row 2
  * with a special slot), the card table after it, and the two halfwords at
  * +0x92B2/+0x9348 that ovl_17_func_800BA704 places in display row 2. The

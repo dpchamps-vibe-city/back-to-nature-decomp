@@ -308,6 +308,7 @@ void func_80021FD0(void);
 s32 *func_80021FE4(void);
 void func_80022008(void);
 s32 func_80022014(s32 arg0, s16 arg1);
+void func_8002206C(void);
 void func_8002238C(s32 arg0);
 void func_800223B0(s32 arg0);
 void func_800223D4(s32 arg0, M2C_a048f66bc407_SpriteCallback callback);
