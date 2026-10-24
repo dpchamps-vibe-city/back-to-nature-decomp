@@ -738,7 +738,7 @@ s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6F34(s16 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E729C(s16 arg0, s16 arg1, s32 arg2);
-s32 ovl_11_func_800E74AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+s32 ovl_11_func_800E74AC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E7504(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E7660(s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800E7798(s16 arg0, s16 arg1, s32 arg2, s32 arg3);

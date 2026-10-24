@@ -1,37 +1,27 @@
 #include "common.h"
 
-/* User-authorized parked recovery: real register roles and five arithmetic
- * instructions preserve limit-conversion and comparison births. Inputs are
- * explicitly narrowed to signed low halfwords; both absolute-value guards,
- * field reads and the return remain C. */
+/* Test the work-area position against signed halfword distance limits. */
 
-s32 ovl_11_func_800E74AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    register s32 result __asm__("$8");
-    register s16 *p __asm__("$3");
-    register s32 delta __asm__("$2");
-    register s32 y __asm__("$3");
-    register s32 xlimit __asm__("$4");
-    register s32 ylimit __asm__("$5");
+s32 ovl_11_func_800E74AC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
+    s32 result;
+    s16 *p;
+    s32 delta;
+    s32 x;
+    s32 y;
+    s32 dy;
+    s32 xlimit;
+    s32 ylimit;
 
     result = 0;
-    xlimit = arg0;
-    ylimit = arg1;
-    __asm__("sll %0,%0,16\n\tsra %0,%0,16\n\tsll %1,%1,16"
-            : "+r"(xlimit), "+r"(ylimit));
+    xlimit = (s16)arg0;
+    ylimit = (s16)arg1;
     p = (s16 *)&D_8006C838;
-    delta = p[0x2964];
+    x = p[0x2964];
     y = p[0x2968];
-    delta = delta - arg2;
-    if (delta < 0) {
-        delta = -delta;
-    }
+    delta = __builtin_abs(x - arg2);
     if (delta < xlimit) {
-        ylimit = ylimit >> 16;
-        __asm__("subu %0,%1,%2" : "=r"(delta) : "r"(y), "r"(arg3));
-        if (delta < 0) {
-            delta = -delta;
-        }
-        __asm__("slt %0,%1,%2" : "=r"(result) : "r"(delta), "r"(ylimit));
+        dy = __builtin_abs(y - arg3);
+        result = dy < ylimit;
     }
     return result;
 }
