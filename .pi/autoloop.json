@@ -114,10 +114,6 @@
     "register-asm",
     "embedded-asm"
    ],
-   "func_80017f30": [
-    "register-asm",
-    "embedded-asm"
-   ],
    "func_80014cbc": [
     "embedded-asm"
    ],
