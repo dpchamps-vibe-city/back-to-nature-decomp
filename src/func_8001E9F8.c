@@ -3,26 +3,9 @@
 void func_8001E878(s32, s32, s32);
 s32 D_8005E4F0;
 
-/* POLICY EXCEPTION (user-approved 2026-07-31): file-scope register variable
- * pinned to $2/$v0. GCC never deletes stores to a global register variable
- * and reserves the register for the rest of the translation unit, which is
- * what keeps the four `move $v0,$s0` re-installs alive, keeps the
- * vertex-pool base out of $v0, and makes `hidden == 0` after each call read
- * the callee's return directly. In the original single source file this
- * declaration sat between func_8001E878 (which still uses $v0 as scratch)
- * and this function.
- *
- * Interpretation (see notes/research/func_8001E9F8.md): $2 is both the MIPS
- * return register and GCC's STATIC_CHAIN_REGNUM, but the nested-function
- * reading is DISPROVEN — no caller loads a static chain (func_8001EAE4
- * calls both functions with $v0 holding its own flags-test residue, zero on
- * every call path). The capture/save/re-install is callee-side only:
- * a register-global whose consumers were compiled out (debug channel), or a
- * misguided register-global on a call-clobbered register being manually
- * saved/restored. Its runtime value here is always the caller's zero.
- * Evidence chain: notes/research/func_8001E878-dead-spill-allocation.md §9.
- */
-register s32 hidden asm("$2");
+/* Split-file static-chain capture: the original-word census proves the
+ * save/forward fingerprint and requires file scope before this function. */
+CAPTURE_PREV_RET(hidden);
 
 /* Point-in-quad test: decomposes a quad into point-in-triangle calls.
  * Args are four vertex indices into the pool at D_8005E4F0 (8-byte stride).

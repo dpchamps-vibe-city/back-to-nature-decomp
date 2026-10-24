@@ -41,10 +41,6 @@
     "register-asm",
     "embedded-asm"
    ],
-   "func_8001e9f8": [
-    "register-asm",
-    "embedded-asm"
-   ],
    "func_800142d8": [
     "embedded-asm"
    ],
