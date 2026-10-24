@@ -10,7 +10,7 @@ s32 func_80022794(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s3
     s32 var_a3;
     s32 var_t1;
     s32 var_v1;
-    register s32 temp_v1 asm("$4");
+    s32 temp_v1;
     s32 prod;
     s32 r;
     s32 tmp6;
@@ -35,24 +35,24 @@ loop_1:
     if (var_a0 < 6) {
         prod = q2 * var_a0;
         if (prod < 0) {
-            r = prod + 0xFFF;
+            var_a0 = prod + 0xFFF;
         } else {
-            r = prod;
+            var_a0 = prod;
         }
-        r = r >> 12;
-        var_a2 -= r;
+        var_a0 >>= 12;
+        var_a2 -= var_a0;
         var_v1 = 4;
-        var_t1 = r * 2;
+        var_t1 = var_a0 * 2;
     } else {
         prod = q1 * (var_a0 - 6);
         var_a2 = arg2;
         if (prod < 0) {
-            temp_v1 = prod + 0xFFF;
+            var_a0 = prod + 0xFFF;
         } else {
-            temp_v1 = prod;
+            var_a0 = prod;
         }
-        var_v1 = temp_v1 >> 12;
-        __asm__("" : : "r"(prod));
+        prod = var_a0 >> 12;
+        var_v1 = prod;
         var_a3 -= var_v1;
         var_v1 = var_v1 * 2;
         var_t1 = arg4;
