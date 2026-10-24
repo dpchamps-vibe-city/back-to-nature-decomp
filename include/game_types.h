@@ -1601,18 +1601,6 @@ typedef struct {
     /* 0x12 */ u16 field_12;    /* RECT h */
 } GradientCmd;
 
-/* Argument-record view witnessed by ovl_11_func_8011D890: a u16 selector at
- * 0x5C and a u32 mode word at 0x60, read off the stack past the spilled
- * first 16 bytes. Same record family as StructD548 but with an unsigned
- * selector (this function loads it with lhu, the D98C/D9B4 pair with lh)
- * and one extra word. Names are placeholders pending semantics. */
-typedef struct {
-    /* 0x00 */ char pad_00[0x5C];
-    /* 0x5C */ u16 index;
-    /* 0x5E */ char pad_5E[2];
-    /* 0x60 */ u32 mode;
-} Ovl11Func8011D890Arg;
-
 /* Records of the table at D_80075BC4, scanned by ovl_11_func_801097F4:
  * six 0xB0-byte entries; entry u16 tag 0x15B at 0x00, an s16 selector at
  * 0x30, and two s32 coordinates at 0x38/0x40 range-tested against an

@@ -1,19 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 
-/* Scans up to nine words of the by-value record x, walking the selector
- * forward or backward depending on the mode word at 0x60, and returns the
- * first position whose word is non-zero. Falls back to the raw selector
- * when all nine probes miss.
- * User-authorized policy exception: the mode binding reproduces allocation;
- * it is a reconstruction workaround, not evidence of original pinned source. */
-s16 ovl_11_func_8011D890(Ovl11Func8011D890Arg x) {
+/* Return the first occupied slot in the selected direction, or the original
+ * index if all nine probes miss. The mode follows the by-value record. */
+s16 ovl_11_func_8011D890(Ovl11D548Arg x, s32 mode) {
     s16 j;
     s32 i;
-    register s32 mode asm("$11");
 
     i = 1;
-    mode = x.mode;
     for (; i < 10; i++) {
         if (mode == 1) {
             j = x.index + i;

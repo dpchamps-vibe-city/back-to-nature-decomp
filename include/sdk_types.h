@@ -3136,13 +3136,6 @@ typedef struct {
 } Ovl11Func80116F4CArg;
 
 typedef struct {
-               char pad_00[0x5C];
-               u16 index;
-               char pad_5E[2];
-               u32 mode;
-} Ovl11Func8011D890Arg;
-
-typedef struct {
     u8 unk0;
     u8 unk1;
     u16 unk2;
