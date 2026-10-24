@@ -10,21 +10,33 @@ void ovl_11_func_80112AB4();
 void ovl_11_func_80112C98();
 void ovl_11_func_80112B60();
 
-/* User-authorized matching workaround: bind the base, index and scaled
- * offset. This is not evidence of register bindings in the original source. */
 void ovl_11_func_801129EC(void) {
-    register unsigned char *base asm("$3");
-    register s32 idx asm("$4");
-    register s32 scaled asm("$2");
+    s32 shifted;
+    s32 product;
+    u32 sum;
+    s32 upper;
+    s16 idx;
+    u32 base;
+    s32 active;
     struct_80076220 *temp_s0;
 
-    if (func_8001AF44(0x41) != 0) {
-        base = (unsigned char *)&D_8006C838;
-        idx = *(s16 *)(base + 0xE778);
-        base = (unsigned char *)&D_80076220;
-        scaled = idx * 0x1D4;
-        temp_s0 = (struct_80076220 *)(scaled + (s32)base);
-
+    active = func_8001AF44(0x41);
+    if (active != 0) {
+        base = (s32)&D_8006C838;
+        do {
+            upper = 0x8000;
+            base += upper;
+        } while (0);
+        idx = *(s16 *)(base + 0x6778);
+        base = (s32)&D_80076220;
+        product = (u32)idx << 3;
+        product -= idx;
+        shifted = (u32)product << 2;
+        sum = shifted + idx;
+        shifted = (u32)sum << 2;
+        sum = shifted + idx;
+        shifted = (u32)sum << 2;
+        temp_s0 = (struct_80076220 *)(base + shifted);
         ovl_11_func_80112C28(temp_s0);
         ovl_11_func_80112AB4(temp_s0);
         ovl_11_func_80112C98(temp_s0);
