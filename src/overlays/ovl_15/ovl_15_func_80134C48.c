@@ -38,7 +38,7 @@ void ovl_15_func_80134C48(void)
     SAVE(Ovl15SaveBlockC, (u8 *)D_8007AD00 + 4, 0x608C);
     SAVE(Ovl15SaveBlock3C, (u8 *)D_8007AD00 + 0x10, 0x6098);
     SAVE(Ovl15SaveBlock108, D_8007AE78, 0x6200);
-    SAVE(Ovl15SaveBlock24, D_8007AF80, 0x6308);
+    SAVE(Ovl15SaveBlock24, &gScreenColorRamp, 0x6308);
     SAVE(Ovl15SaveBlock34, D_8007AFA4, 0x632C);
     ((Ovl15SaveBufferWords *)D_801376D0)->field_6360 = D_8007AFD8[0];
     ((Ovl15SaveBufferWords *)D_801376D0)->field_6364 = D_8007AFD8[1];

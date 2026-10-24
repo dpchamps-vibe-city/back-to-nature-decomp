@@ -11,6 +11,7 @@ import {
   type Container,
 } from "../lib/container.js";
 import { flagOverrideKey, functionSourcePath, translationUnitOf } from "../lib/translationUnits.js";
+import { locateFunction } from "../lib/symbolIndex.js";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -127,32 +128,26 @@ export function configuredAsFlags(): string[] {
 }
 
 /**
- * The container that defines a symbol, derived from the symbol itself.
- *
- * Overlay symbols carry their container id as a prefix and the executable's do
- * not, so the name settles the question and no caller has to name a container.
- * That is the point: an agent working one function should never need to know
- * which binary it is in — its source path, its original assembly and its
- * compiler flags all resolve from here.
- *
- * Answers `null`, never a guess, when the container model cannot be loaded at
- * all (an unconfigured tree, a fixture), so callers fall back to the
- * single-binary layout rather than failing.
+ * Resolve anonymous overlay prefixes first, then semantic function names in
+ * the original-function inventory. A renamed overlay function need not retain
+ * an ovl_<id>_ prefix, and must not inherit the EXE's source path or -G8 flags.
+ * Ambiguous semantic names require an explicit identity, never a slot guess.
+ * Unconfigured trees retain the historical single-binary fallback.
  */
 export function containerForSymbol(name: string): Container | null {
-  try {
-    const containers = loadContainers();
-    return (
-      containerOfSymbol(name, containers) ??
-      containers.find((container) => container.id === EXE_CONTAINER_ID) ??
-      null
-    );
-  } catch {
-    return null;
+  let containers: Container[];
+  try { containers = loadContainers(); } catch { return null; }
+  const prefixed = containerOfSymbol(name, containers);
+  if (prefixed) return prefixed;
+  let matches: ReturnType<typeof locateFunction> = [];
+  try { matches = locateFunction(name, containers); } catch { /* no function inventory yet */ }
+  if (matches.length > 1) {
+    throw new Error(`${name} is defined in multiple containers: ${matches.map((m) => m.container.id).join(", ")}`);
   }
+  return matches[0]?.container ?? containers.find((container) => container.id === EXE_CONTAINER_ID) ?? null;
 }
 
-/** Container kind for a symbol; `exe` whenever the name does not say otherwise. */
+/** Container kind for a symbol, including semantically named overlay members. */
 export function containerKindForSymbol(name: string): "exe" | "overlay" {
   return containerForSymbol(name)?.kind ?? "exe";
 }

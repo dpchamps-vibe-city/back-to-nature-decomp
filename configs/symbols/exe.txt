@@ -1215,3 +1215,6 @@ GsIDMATRIX = 0x800A4008;
 GsIDMATRIX2 = 0x800A4028;
 GsOUT_PACKET_P = 0x800A4060;
 _padRestPeriod = 0x800B7E18;
+
+// Persistent screen-color ramp; ovl_11 helpers and ovl_15's 0x24-byte save block.
+gScreenColorRamp = 0x8007AF80; // size:0x24

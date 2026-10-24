@@ -43,7 +43,7 @@ void ovl_15_func_80135380(void)
     RESTORE(Ovl15SaveBlockC, (u8 *)D_8007AD00 + 4, 0x608C);
     RESTORE(Ovl15SaveBlock3C, (u8 *)D_8007AD00 + 0x10, 0x6098);
     RESTORE(Ovl15SaveBlock108, D_8007AE78, 0x6200);
-    RESTORE(Ovl15SaveBlock24, D_8007AF80, 0x6308);
+    RESTORE(Ovl15SaveBlock24, &gScreenColorRamp, 0x6308);
     RESTORE(Ovl15SaveBlock34, D_8007AFA4, 0x632C);
     D_8007AFD8[0] = *(s32 *)(D_801376D0 + 0x6360);
     D_8007AFD8[1] = *(s32 *)(D_801376D0 + 0x6364);

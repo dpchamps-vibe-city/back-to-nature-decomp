@@ -259,7 +259,7 @@ check: $(BUILT_BIN)
 # not finished cannot link its executable yet, and overlay work is not supposed
 # to wait for it: the fallback cannot see a symbol only the link defines, and
 # the tool names which source it used.
-$(ENGINE_SYMS): $(wildcard $(BUILT_ELF))
+$(ENGINE_SYMS): $(wildcard $(BUILT_ELF)) configs/symbols/exe.txt tools/build/exportEngineSymbols.ts
 	@$(MAKE) --no-print-directory $(BUILT_ELF) || \
 		echo "note: the executable does not link yet — the engine export falls back to the project symbol tables"
 	npx tsx tools/build/exportEngineSymbols.ts --write

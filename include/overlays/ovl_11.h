@@ -72,8 +72,6 @@ void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFEF8(void);
 void ovl_11_func_800BFF00(void);
 void ovl_11_func_800BFF50(M2C_ffca89de536c_UnkStruct800BFF50 *arg0);
-void ovl_11_func_800BFF74(void);
-s32 ovl_11_func_800C0010(s32 arg0, s32 arg1);
 void ovl_11_func_800C009C(u8 *arg0);
 void ovl_11_func_800C02B0(void);
 void ovl_11_func_800C034C(u8 *arg0);
@@ -1603,4 +1601,6 @@ s32 ovl_11_func_8012135C(s32 arg0, Ovl11EffectCoordinate arg1, Ovl11EffectCoordi
 void ovl_11_func_801213D8(M2C_5a4f050efe15_Struct_801213D8 *arg0);
 void ovl_11_func_801214F8(s32 *arg0);
 void ovl_11_func_80121500(Ovl11SpriteEffect *arg0, Ovl11EffectCoordinate arg1, Ovl11EffectCoordinate arg2, Ovl11EffectCoordinate arg3, s32 arg4, u16 arg5);
+void Ovl11DrawAndStepScreenColorRamp(void);
+void Ovl11SetScreenColorRampTarget(s32 updateCount, const s32 targetRgbQ12[3]);
 unsigned long long status_result(u32 low);

@@ -82,6 +82,30 @@ function fromSymbolTables(exe: Container): ExportedSymbol[] {
   }));
 }
 
+/**
+ * Overlay-only persistent data need not appear in the EXE's ELF: no EXE
+ * object references it, so splat emits no definition for that label. Keep
+ * explicitly named data from the owning configuration as well. Never use
+ * the broad relocation index here; it includes inactive assembly aliases.
+ */
+function configuredDataMissingFromElf(exe: Container, linked: readonly ExportedSymbol[]): ExportedSymbol[] {
+  const path = containerPath(exe, "symbolAddrs");
+  if (!existsSync(path)) return [];
+  const extra: ExportedSymbol[] = [];
+  for (const line of readFileSync(path, "utf-8").split("\n")) {
+    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;/);
+    if (!match || /\btype:func\b/.test(line) || GENERATED_NAME.test(match[1]!) || SECTION_MARKER.test(match[1]!)) continue;
+    const name = match[1]!;
+    const address = Number(match[2]);
+    const existing = linked.filter((symbol) => symbol.name === name);
+    if (existing.some((symbol) => symbol.address !== address)) {
+      throw new Error(`${name}: configured data address ${match[2]} conflicts with the linked EXE`);
+    }
+    if (existing.length === 0) extra.push({ name, address, kind: "?", source: "symbol-table" });
+  }
+  return extra;
+}
+
 /** splat names an anonymous symbol after its address; a real name outranks that. */
 const GENERATED_NAME = /^(?:D|B|func|jtbl|T|_)_?[0-9A-Fa-f]{8}$/;
 /** splat's linker script defines section markers; they are geometry, not an interface. */
@@ -176,8 +200,11 @@ function main(): void {
 
   const exe = requireContainer(EXE_CONTAINER_ID);
   const elfSymbols = fromElf(containerPath(exe, "builtElf"));
-  const symbols = elfSymbols.length > 0 ? elfSymbols : fromSymbolTables(exe);
-  const source = elfSymbols.length > 0 ? `${exe.paths.builtElf} (linked)` : "the project symbol tables (no linked ELF yet)";
+  const configuredData = elfSymbols.length > 0 ? configuredDataMissingFromElf(exe, elfSymbols) : [];
+  const symbols = elfSymbols.length > 0 ? [...elfSymbols, ...configuredData] : fromSymbolTables(exe);
+  const source = elfSymbols.length > 0
+    ? `${exe.paths.builtElf} (linked)` + (configuredData.length > 0 ? ` plus ${configuredData.length} configured data symbol(s)` : "")
+    : "the project symbol tables (no linked ELF yet)";
 
   if (symbols.length === 0) {
     console.error("No engine symbols found. Build the PS-X EXE first: make");

@@ -1,0 +1,3 @@
+// Semantic labels within ovl_11 only; applied after independent boundary recovery.
+Ovl11DrawAndStepScreenColorRamp = 0x800BFF74;
+Ovl11SetScreenColorRampTarget = 0x800C0010;
