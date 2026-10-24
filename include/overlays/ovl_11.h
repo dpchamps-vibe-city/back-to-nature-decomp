@@ -2,6 +2,7 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
+unsigned long long flag_result(u32 high);
 void ovl_11_func_800BBC34(void);
 void ovl_11_func_800BBC74(void);
 void ovl_11_func_800BBCB8(void);
@@ -53,7 +54,7 @@ struct_80076220 *ovl_11_func_800BF1D0(s16 *arg0, void *arg1, void *arg2);
 u16 ovl_11_func_800BF2F4(s16 *arg0, s16 *arg1);
 s32 ovl_11_func_800BF3D0(void);
 s32 ovl_11_func_800BF3F4(void);
-s32 ovl_11_func_800BF450(void);
+unsigned long long ovl_11_func_800BF450(void);
 s32 ovl_11_func_800BF4AC(void);
 s32 ovl_11_func_800BF4B4(s32 *arg0, s32 arg1);
 s32 ovl_11_func_800BF630(s16 arg0, s16 arg1, s32 arg2);
@@ -1602,3 +1603,4 @@ s32 ovl_11_func_8012135C(s32 arg0, Ovl11EffectCoordinate arg1, Ovl11EffectCoordi
 void ovl_11_func_801213D8(M2C_5a4f050efe15_Struct_801213D8 *arg0);
 void ovl_11_func_801214F8(s32 *arg0);
 void ovl_11_func_80121500(Ovl11SpriteEffect *arg0, Ovl11EffectCoordinate arg1, Ovl11EffectCoordinate arg2, Ovl11EffectCoordinate arg3, s32 arg4, u16 arg5);
+unsigned long long status_result(u32 low);

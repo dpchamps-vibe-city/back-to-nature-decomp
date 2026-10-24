@@ -4,27 +4,45 @@
  * BF3D0/BF3F4 siblings; the getter itself has no published definition. */
 void *func_8001EF98(void);
 
-/* User-authorized matching workaround: an inline tail preserves the original
- * zero result and dead-ORI write. The a0 low-halfword binding falls out of the
- * named local naturally and is not pinned. Neither proves original source. */
-s32 ovl_11_func_800BF450(void) {
+static __inline__ unsigned long long flag_result(u32 high) {
+    union {
+        struct {
+            u32 low;
+            u32 high;
+        } words;
+        unsigned long long wide;
+    } result = {{0, high}};
+
+    return result.wide;
+}
+
+static __inline__ unsigned long long status_result(u32 low) {
+    union {
+        u32 low;
+        unsigned long long wide;
+    } result = {low};
+
+    return result.wide;
+}
+
+unsigned long long ovl_11_func_800BF450(void) {
     u32 *p;
     u32 v;
     u32 low;
-    s32 result;
+    unsigned long long result;
 
     p = func_8001EF98();
     D_80128808 = p;
     if (p == 0) {
-        return 1;
+        return status_result(1);
     }
     v = *p;
     low = v & 0xFFFF;
     D_8012880C = low;
-    if ((v & 0x2000) == 0) {
-        asm volatile("addu %0,$0,$0\n\tori $3,$0,0x8000"
-                     : "=r"(result) : : "$3");
-        return result;
+    if (v & 0x2000) {
+        result = status_result(0);
+    } else {
+        result = flag_result(0x8000);
     }
-    return 0;
+    return result;
 }
