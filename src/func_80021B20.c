@@ -5,7 +5,7 @@
 
 s16 D_8005E324;
 
-void func_80021B20(s32 arg0) {
+void func_80021B20(void) {
     if (D_8005E324 != 0) {
         SsSetSerialVol(0, 0, 0);
         CdStandby();

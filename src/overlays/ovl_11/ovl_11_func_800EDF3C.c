@@ -1,7 +1,21 @@
 #include "common.h"
 
-/* User-authorized parked recovery: three real local register roles and
- * a two-instruction large-offset address prefix; calls and control are C. */
+/* Existing address-prefix exception, kept local to its authorized caller.
+ * Computes a byte-pointer offset using an unsigned 16-bit constant.
+ * scratch is written before base is consumed, hence its early-clobber
+ * constraint; dst may overlap base. Use side-effect-free operands.
+ * Keep both instructions in one non-volatile template. The scratch output
+ * is consumed internally even when dead afterward. Not a memory barrier,
+ * an SDK primitive, or evidence of an original studio macro. */
+#define MATCH_OFFSET(dst, base, scratch, imm) \
+    __asm__("ori %1,$0,%3\n\taddu %0,%2,%1" \
+            : "=r"(dst), "=&r"(scratch) : "r"(base), "i"(imm))
+
+/* User-authorized parked recovery: three local register bindings and the
+ * existing two-instruction address prefix, now named MATCH_OFFSET.
+ * Calls and control are C. None of the seven pin-removal combinations
+ * preserves the match in this source; this is not a clean-C impossibility
+ * or proof of an original macro. See notes/asm-exception-evidence.md. */
 
 s32 func_8001AF44(u32 arg0);
 
@@ -39,8 +53,7 @@ block_b:
         goto block_7;
     }
     p = (char *) &D_8006C838;
-    __asm__("ori %1,$0,0x8000\n\taddu %0,%2,%1"
-            : "=r"(p), "=&r"(off) : "r"(p));
+    MATCH_OFFSET(p, p, off, 0x8000);
     field = *(u8 *) (p + 0x6647);
     off = 0xFF;
     if (field != off) {

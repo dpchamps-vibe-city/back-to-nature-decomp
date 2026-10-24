@@ -1176,10 +1176,6 @@ typedef struct {
 } M2C_62767b3f842b_Ovl11D04D4Obj;
 
 typedef struct {
-    u_char b[4];
-} M2C_634e145b9b21_ReadFlag;
-
-typedef struct {
     u8 filler[0x18];
     s32 flag;
 } M2C_64b5d3016a4e_Cell8001E340;

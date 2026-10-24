@@ -1,16 +1,109 @@
 # Asm-exception evidence
 
-This file records the evidence behind source-policy exceptions (register
-bindings, inline asm, scheduling barriers) that the user has authorized, so a
-later session can tell a deliberate, justified exception from a workaround that
-should be removed. Each entry says what the exception does, why plain C could
-not reach the target under our toolchain, and what would retire it.
+This is a ledger of functions that **currently contain exceptional asm or
+hard-register bindings**, not a history of completed repairs. Remove a
+function's entry when those constructs are gone; preserve repair history in
+`notes/research/` or `notes/retros/` instead.
 
-The six-candidate re-audit below also records **unresolved repair debt**. An
-existing authorization, an exhausted source family, or an UNSAT conditioned on
-one compiler state is not proof that arbitrary clean C cannot match. Those
-entries explicitly distinguish a proved local obstruction from that stronger
-claim; they grant no new exceptions.
+This file records the evidence behind source-policy exceptions (register
+bindings, inline asm, scheduling barriers), including their authorization,
+recognized idioms, measured compiler mechanisms and remaining repair debt.
+Each entry says what the exception does, what supports that interpretation,
+the scope of any negative result, and what would improve or retire it.
+
+An existing authorization, an exhausted source family, or an UNSAT conditioned
+on one compiler state is not proof that arbitrary clean C cannot match.
+Conversely, **a reusable, byte-verified idiom is a positive reconstruction
+result even while its implementation still uses asm**. It should not be
+counted as indistinguishable from arbitrary register and instruction forcing.
+
+## Accounting: authorization, idiom evidence and retirement
+
+These are separate axes. The allowlist answers whether a construct is
+permitted; it does not measure how much of its intent or compiler mechanism
+we understand. Retirement means the exceptional construct is gone. Between
+an unexplained workaround and retirement, identifying and validating a
+reusable operation is meaningful progress and strengthens its justification.
+
+### Structural classes
+
+- **Shared encapsulated idiom:** a parameterized operation with an explicit
+  semantic/compiler contract, verified in more than one function. Reuse is
+  observed, not just proposed. Remaining caller-specific forcing is recorded
+  separately; extracting a helper does not make its whole caller idiomatic.
+- **Single-site encapsulated idiom:** an operation with a general contract
+  and an exact measured use, but no second verified caller yet. This earns
+  idiom credit, with weaker generalization evidence than a shared idiom.
+- **Localized compiler-mechanism exception:** a bounded decision such as one
+  allocation or delay-slot choice, backed by a scoped mechanism explanation,
+  but not yet represented by a verified reusable helper. This is more
+  understood than an arbitrary hybrid, without claiming idiom extraction.
+- **Function-specific hybrid:** asm or pins couple multiple operations,
+  physical-register roles, stack slots or reference-count adjustments. Giving
+  the fragment a macro name alone would not establish a generalizable unit.
+
+To earn encapsulated-idiom credit, the operation must have meaningful inputs,
+outputs and constraints rather than hide a disassembly fragment; preserve
+exact bytes at its measured sites; and expose the caller-specific assumptions
+that remain. Register numbers, function labels and frame offsets must not be
+smuggled into an ostensibly generic contract. Independent target recurrence,
+SDK/consumer evidence and compiler traces strengthen the classification.
+
+Such a boundary supports two useful research hypotheses: the original
+programmers used a similar helper/source idiom, or the reconstruction exposes
+a repeatable source-to-toolchain mismatch at that operation. Missing source,
+type or header context remains an alternative to an actual compiler/version
+mismatch. Encapsulation alone does not choose among these explanations or
+prove original asm authorship, but successful reuse is evidence of common
+structure, not merely cosmetic cleanup. No impossibility proof is required
+to recognize that progress.
+
+### Current census
+
+Scope: the seven explicit asm/pinning allowlist entries, plus the known
+unallowlisted hybrid. Compiler-flag exceptions and normal assembly stubs are
+not included. Classes describe the strongest established structure in each
+function; the remaining coupling is not erased from the count.
+
+| Structural class | Authorized functions | Members | Remaining coupling |
+| --- | ---: | --- | --- |
+| Shared encapsulated idiom | 2 | `func_80012598`, `func_8001231C` | Ten pins each, operand carriers/countdown asm, and explicit `memset` argument materialization in the smaller initializer |
+| Single-site encapsulated idiom | 1 | `ovl_11_func_800EDF3C` | Three caller bindings; reuse beyond this site not yet measured |
+| Localized compiler-mechanism exception | 3 | `func_800142D8`, `ovl_19_func_800BB108`, `ovl_19_func_800B95D4` | The documented guard/hold/allocation decisions; no extracted shared helper |
+| Function-specific hybrid | 1 | `func_80019070` | Interleaved packet/entry asm and eight pins |
+
+Thus **three of seven authorized functions now have an encapsulated idiom
+component**, while four do not. The three comprise **one shared heap/copy
+family and one single-site offset-idiom candidate**. None is yet free of
+caller-specific forcing. Separately, `func_80016280` remains one
+**unallowlisted function-specific hybrid**, with eleven pins and its entry
+asm; structural classification does not restore its revoked authorization.
+
+### The units that earned idiom credit
+
+| Unit | Contract and measured scope | Positive evidence |
+| --- | --- | --- |
+| Heap/copy family: `MATCH_COPY` | Explicit register-value copy opaque to CSE; twelve static uses in each of the two heap initializers | One parameterized, register-number-free operation preserves both exact functions; the target fan-out and candidate reload traces identify a common copy/reload problem |
+| Heap/copy family: `MATCH_LOAD_ADDRESS` | Symbol address formed through a caller-supplied high-part temporary, as two separate RTL statements; one use per initializer | The same helper works with the twins' different register roles; the shared pool layout is independently corroborated by consumers |
+| Offset candidate: `MATCH_OFFSET` | Unsigned 16-bit byte-pointer addition with an early-clobber offset scratch, in one non-volatile two-instruction template | Exact at `ovl_11_func_800EDF3C`; production allocation evidence identifies offset/sum coalescing as the relevant mismatch class |
+
+These are **three low-level helper operations, not three retired exceptions**.
+The copy sites in two closely related twins are not twenty-four independent
+function witnesses. The offset helper's general contract is explicit, but
+only its existing `0x8000` use has a target-byte witness. Shared heap-layout
+constants also recover semantic organization; they are ordinary C, not an
+additional asm exception.
+
+Report current status with both counts: authorized/unauthorized functions,
+and shared/single-site idiom coverage, alongside remaining pins and raw asm.
+Pin reductions are separate from the reason encapsulation earns credit.
+Adding a second verified offset caller would strengthen that idiom without
+changing the allowlist count. Remove a function from this ledger when its
+last exceptional construct is gone.
+
+These classifications grant no new source-policy exceptions and establish no
+new original translation-unit membership. Detailed measurements and the
+conditions on each interpretation follow below.
 
 ## ovl_19_func_800BB108 — `register s32 column asm("$16")` (authorized 2026-10-23)
 
@@ -211,37 +304,32 @@ Load-bearing facts to keep:
   single-set destination);
 - `t = y` does not directly follow `y = arg1 & 0xFF`.
 
-## Six-candidate re-audit — 2026-10-24
+## Heap, sprite and offset exceptions
 
-**Conclusion:** no whole-function clean-C impossibility was established for any
-of these six. The shared theme is compiler bookkeeping, not an instruction
-that C cannot express: pseudo sets, coalesced quantities, lifetime padding,
-reload-generated copies, and parameter residence. In particular, many pins do
-not imply many independent obstacles. All six target read-before-definition
-scans were clean in this audit; that rules out that fingerprint, not every
-possible handwritten origin.
+No whole-function clean-C impossibility has been established for any of these
+five functions. Their shared theme is compiler bookkeeping, not an instruction
+that C cannot express: pseudo sets, coalesced quantities, lifetime padding and
+reload-generated copies. Many pins do not imply many independent obstacles.
+Their target read-before-definition scans are clean; that rules out that
+fingerprint, not every possible handwritten origin.
 
 The strongest family is `func_80012598` / `func_8001231C`: a common first
 initialization loop, with different constants and second phases. The two sprite
 functions share a scheduling/allocation interaction, but are not established as
-one source TU. The CD reader and overlay predicate have different mechanisms.
-There is no evidence here for one compiler-flag change fixing all six.
+one source TU. The overlay predicate has a distinct coalescing mechanism.
+There is no evidence here for one compiler-flag change fixing all five.
 
 Measurements below use production container flags and staged keys
 `[control-flow, population, schedule, allocation]`. Scratch sources are under
 `build/asm-exception-audit/` and are also captured by the experiment ledger.
-No live C, headers, flags, or allowlist entries were changed. The pre-existing
-working-tree removal of `func_80016280` from the allowlist was preserved: its
-hybrid still byte-matches, but currently fails the policy gate.
-
-Verification after the audit: `make check` passed (original executable payload
-matched), `git diff --check` passed, and the document's relative links resolve.
-This verifies the unchanged live build, not any non-exact scratch candidate.
+`func_80016280` remains unallowlisted: its hybrid byte-matches but fails the
+source-policy gate.
 
 ### func_80019070 — the historical scheduler ceiling is superseded
 
-**Existing exception.** Sixteen fixed-register locals and prologue, parameter
-load, and primitive-linking asm in `src/func_80019070.c`. Historical reasoning:
+**Existing exception.** Sixteen fixed-register locals at the start of this
+audit, now eight (see the remaining-helper follow-up below), with prologue,
+parameter-load and primitive-linking asm in `src/func_80019070.c`. Historical reasoning:
 [prologue research](research/func_80019070-prologue-allocation-and-arg2-truncation.md)
 and [tail certificate](research/func_80019070-tail-window-unsat-certificate.md).
 
@@ -468,53 +556,54 @@ under `build/heap-copy/` and the two experiment ledgers. This is a bounded
 reduction, not a proof that the remaining set is minimal or necessary for
 another source formulation.
 
-**Interpretation:** a common heap initializer or copy helper is plausible
-original source organization. The matching extraction establishes that this
-organization is usable now, not that these asm templates existed originally.
-No vendored SDK heap-initializer macro or clean-C impossibility was established.
-The empty operand carriers, countdown asm, small initializer's explicit
-`memset` argument materialization and ten pins per function remain visible
-repair debt. Existing policy exceptions remain; no new flag or exemption was
-added. Old source comments claiming the original was certainly plain C, or
-that a candidate's reload dump was the original's, have been corrected.
+**Interpretation / classification:** this is a **shared encapsulated idiom**,
+not merely two unchanged exceptions with prettier spelling. The common layout,
+consumer evidence and exact reuse across both configurations support a shared
+operation boundary and concentrate the reconstruction problem around pointer
+copy/reload behavior. A similar original helper is plausible; a repeatable
+source-to-toolchain mismatch is another useful interpretation. The evidence
+does not establish the original asm templates, a vendored SDK heap-initializer
+macro, or clean-C impossibility.
 
-### func_80014CBC — audit the callee before declaring scheduling impossible
+Credit applies to that recovered boundary, not to every construct in its
+callers. The empty operand carriers, countdown asm, small initializer's
+explicit `memset` argument materialization and ten pins per function remain
+visible caller-specific repair debt. Existing policy exceptions remain; no
+new flag or exemption was added. Old source comments claiming the original
+was certainly plain C, or that a candidate's reload dump was the original's,
+have been corrected.
 
-**Existing exception.** Entry/address/shift asm and empty operand carriers
-steering scheduling and reference counts; byte-sized aggregate stack
-parameters and a hand-addressed parameter home slot. The
-[closing retro](retros/2026-08-14-func_80014CBC-retro.md) explicitly records
-several prior "unreachable" walls falling to changes outside their assumed
-source frame. That history is not a proof of a final clean-C ceiling.
+### Non-heap exceptions — encapsulation and remaining coupling
 
-**New premise check.** `psx_callee_truth` finds that `func_80021B20` reads **no**
-incoming arguments. Its authored one-argument matched definition does not
-prove that the original caller passed one. The target call sites do not
-establish an upper arity bound; zero arity remains a hypothesis, not a shared
-header correction made by this audit. Keep the vendored `CdSync` declaration:
-its disputed return type is unused here and is not this issue.
+The three non-heap functions in this group retain the following coupling.
+Scratch sources and measured residuals are under `build/remaining-asm/` and
+the function experiment ledgers.
 
-**Measured consequence.** Start with archived no-asm scalar/volatile-parameter
-source `e048dbc2faad1438` (in the experiment ledger), not the BLKmode/asm hybrid.
-It recompiles to `[0,0,4,0]`. Change only:
-
-```c
-void func_80021B20(void);  /* instead of (s32 arg0) */
-/* ... */
-func_80021B20();          /* instead of func_80021B20(pos) */
-```
-
-`14cbc-no-debug-arg.c`, SHA prefix `99c6302e4b191301`, gives
-**`[0,0,1,2]`**, with equal 117-word target/candidate lengths in the reversal.
-The remaining differences are the `$s3/$s4` assignments for `one`/`a5` and
-placement of the retry-path `D_8005E410 = 0` store. The ordinary C entry now
-has zero staged schedule residual, without the entry asm's dummy dependencies.
-This is progress over a premise, not a solved function. Replacing
-`CdReadSync(1,0)` with `CdReadSync(one,0)` is byte-inert; hoisting `one = 1` to
-its declaration changes population and does not fix it.
-
-**Scope / retirement.** Audit the callback's other callers before changing its
-shared declaration, then repair allocation and the retry store in the
-no-argument branch. The historical statement that no clean spelling can place
-the entry group is too broad. No whole-function impossibility or new source
-exception is justified by this audit.
+- **`ovl_11_func_800EDF3C`:** extracted the existing non-volatile unsigned
+  offset prefix into a file-local `MATCH_OFFSET` macro; exact 49/49. It stays
+  local to its authorized caller: placing asm in a new shared header tripped
+  the changed-header policy check for unrelated, unallowlisted functions.
+  The macro retains its early-clobber scratch output and single two-instruction
+  template. All seven nonempty subsets of the three pins were tested for
+  removal; none matched. Replacing the prefix with `off = 0x8000; p += off`
+  gives `[0,2,1,0]`. Count this as a **single-site encapsulated idiom**:
+  a meaningful address operation with explicit constraints, supported by
+  coalescing evidence, rather than an arbitrary instruction patch. A second
+  verified caller would strengthen its generalization claim. Original macro
+  provenance and a general C impossibility remain unproved. Triage's old
+  `asm-dead` finding is false: the second instruction consumes the first's
+  offset. Its absence after macro extraction is not new semantic evidence.
+- **`func_80019070`:** thirteen individual pin removals match, but removing
+  those thirteen together changes allocation. Jointly removed eight:
+  `sprt`, `header_len`, `address_mask`, `uv_v`, `semitrans_reg`, `red_reg`,
+  `green_reg`, `blue_reg`. The remaining eight retain exact 81/81 words.
+  This does not establish a minimum, and the raw asm still names physical
+  registers even where their local-variable bindings are gone. A direct SDK
+  tail replacement gives `[0,0,12,11]`; no replacement was integrated.
+  That tail interleaves geometry, UV/size stores and two packet links, so a
+  generic macro would hide a function-specific schedule rather than recover
+  an independently established helper boundary.
+- **`func_80016280`:** left untouched. Its removed allowlist entry still
+  makes the hybrid fail source policy. A macro around its literal branch,
+  hardcoded stack slots and asm-to-C handoff would not resolve that failure.
+  The exemption was not restored.
