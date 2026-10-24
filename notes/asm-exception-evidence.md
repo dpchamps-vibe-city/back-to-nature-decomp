@@ -60,24 +60,43 @@ to recognize that progress.
 
 ### Current census
 
-Scope: the seven explicit asm/pinning allowlist entries, plus the known
-unallowlisted hybrid. Compiler-flag exceptions and normal assembly stubs are
-not included. Classes describe the strongest established structure in each
-function; the remaining coupling is not erased from the count.
+Scope: the eight explicit asm/pinning allowlist entries. Compiler-flag
+exceptions and normal assembly stubs are not included. Classes describe the
+strongest established structure in each function; the remaining coupling is
+not erased from the count.
 
 | Structural class | Authorized functions | Members | Remaining coupling |
 | --- | ---: | --- | --- |
 | Shared encapsulated idiom | 2 | `func_80012598`, `func_8001231C` | Ten pins each, operand carriers/countdown asm, and explicit `memset` argument materialization in the smaller initializer |
 | Single-site encapsulated idiom | 1 | `ovl_11_func_800EDF3C` | Three caller bindings; reuse beyond this site not yet measured |
 | Localized compiler-mechanism exception | 3 | `func_800142D8`, `ovl_19_func_800BB108`, `ovl_19_func_800B95D4` | The documented guard/hold/allocation decisions; no extracted shared helper |
-| Function-specific hybrid | 1 | `func_80019070` | Interleaved packet/entry asm and eight pins |
+| Function-specific hybrid | 2 | `func_80019070`, `func_80016280` | Eight pins plus entry/packet asm in the former; eleven pins plus entry/guard asm and an asm-to-C handoff in the latter |
 
-Thus **three of seven authorized functions now have an encapsulated idiom
-component**, while four do not. The three comprise **one shared heap/copy
-family and one single-site offset-idiom candidate**. None is yet free of
-caller-specific forcing. Separately, `func_80016280` remains one
-**unallowlisted function-specific hybrid**, with eleven pins and its entry
-asm; structural classification does not restore its revoked authorization.
+Thus **three of eight authorized functions have an encapsulated idiom
+component; the other five are unresolved technical debt**. The three comprise
+**one shared heap/copy family and one single-site offset-idiom candidate**.
+None is yet free of caller-specific forcing. All eight are authorized;
+authorization does not establish necessity or original-source provenance.
+
+### Unresolved technical debt — further research / exploration required
+
+The following five functions have no verified encapsulated operation boundary.
+Their known mechanisms are recorded, but their reconstruction remains
+incomplete. Retain their existing exact implementations under the exceptions;
+do not treat permission to keep them as a clean-C impossibility result, a
+reusable idiom, or a reason to conceal the forcing behind a macro.
+
+| Function | Current debt | Research / exploration still needed |
+| --- | --- | --- |
+| `func_80019070` | Eight pins and interleaved entry/packet asm | Recover natural SDK/dataflow representations and the remaining allocation state; the near-exact no-asm candidate still contains artificial scaffolding |
+| `func_80016280` | Eleven pins, entry/guard asm, literal branch encoding and stack/register assumptions at the C handoff | Reconstruct the entry lifetimes and guard without disturbing the rendering loop; validate the handoff and branch-boundary assumptions |
+| `func_800142D8` | Three-instruction guard/delay-slot asm tied to a compiler-generated label | Revisit control-flow reconstruction and delay-slot selection beyond the previously searched statement skeleton |
+| `ovl_19_func_800BB108` | Column counter pinned to `$16` for call and loop delay-slot placement | Revisit counter lifetime, source structure and scheduler dependencies; establish a natural spelling or independently supported operation boundary |
+| `ovl_19_func_800B95D4` | Opponent pointer pinned to `$19` | Revisit declarations, value lifetimes and allocation priorities under production overlay flags |
+
+The project owner explicitly authorizes the existing `func_80016280` body via
+`register-asm` and `embedded-asm` in `.pi/autoloop.json`. This permits retaining
+that technical debt; it does not settle the research questions above.
 
 ### The units that earned idiom credit
 
@@ -101,8 +120,8 @@ Adding a second verified offset caller would strengthen that idiom without
 changing the allowlist count. Remove a function from this ledger when its
 last exceptional construct is gone.
 
-These classifications grant no new source-policy exceptions and establish no
-new original translation-unit membership. Detailed measurements and the
+These classifications alone grant no source-policy exceptions and establish
+no original translation-unit membership. Detailed measurements and the
 conditions on each interpretation follow below.
 
 ## ovl_19_func_800BB108 — `register s32 column asm("$16")` (authorized 2026-10-23)
@@ -120,7 +139,7 @@ end of each outer pass sits in the outer back-branch's delay slot, with
 directly before a branch, so that tail reset must be the last insn of the outer
 body. A reset at the top of the outer body loses the slot to `move $s1,$s5`.
 
-**Why plain C does not reach it under our cc1.** The scheduler that runs here
+**Why the measured C source misses.** The scheduler that runs here
 is the old backward list scheduler (`sched.c`, not `haifa-sched.c`).
 - It computes priority from predecessors, so a constant write has priority 1.
 - The `D_8005E3C0->field_D8` double load gives `jal func_80015EE8`, and every
@@ -322,14 +341,14 @@ There is no evidence here for one compiler-flag change fixing all five.
 Measurements below use production container flags and staged keys
 `[control-flow, population, schedule, allocation]`. Scratch sources are under
 `build/asm-exception-audit/` and are also captured by the experiment ledger.
-`func_80016280` remains unallowlisted: its hybrid byte-matches but fails the
-source-policy gate.
+`func_80016280` is authorized for its existing hybrid; its byte match does not
+resolve the entry-state reconstruction debt.
 
 ### func_80019070 — the historical scheduler ceiling is superseded
 
-**Existing exception.** Sixteen fixed-register locals at the start of this
-audit, now eight (see the remaining-helper follow-up below), with prologue,
-parameter-load and primitive-linking asm in `src/func_80019070.c`. Historical reasoning:
+**Existing exception / technical debt.** Eight fixed-register locals, with
+prologue, parameter-load and primitive-linking asm in `src/func_80019070.c`.
+Further research is required; the existing hybrid is retained. Supporting research:
 [prologue research](research/func_80019070-prologue-allocation-and-arg2-truncation.md)
 and [tail certificate](research/func_80019070-tail-window-unsat-certificate.md).
 
@@ -424,8 +443,10 @@ See also [the repair note](human-needed-approvals/ovl_11_func_800EDF3C.repair.md
 
 ### func_80016280 — coupled entry state, ordinary rendering loop
 
-**Existing exception.** Eleven bindings, an entry/guard asm region, and an
-asm-to-C state handoff; the complete rendering loop is active C. The guard
+**Authorized exception / technical debt.** Eleven bindings, an entry/guard
+asm region, and an asm-to-C state handoff; the complete rendering loop is active
+C. The project owner authorizes `register-asm` and `embedded-asm` for this
+existing body. Its reconstruction still needs further research/exploration. The guard
 contains the literal branch word `0x05C0009F`. The historical account explains
 that word as a workaround for an extra maspsx nop at the asm boundary, **not**
 as evidence that the original function needed asm.
@@ -456,8 +477,7 @@ ceiling, not a ready-made source transplant for these pointer parameters.
 
 **Retirement criterion.** Reproduce the early saves and both entry blocks'
 allocation without changing the already-matching loop. Until then the hybrid
-is unresolved debt. The audit does not restore its currently revoked allowlist
-entry or claim a policy pass.
+is unresolved technical debt, even with its explicit authorization.
 
 ### func_80012598 — reload-created pointer copies
 
@@ -603,7 +623,7 @@ the function experiment ledgers.
   That tail interleaves geometry, UV/size stores and two packet links, so a
   generic macro would hide a function-specific schedule rather than recover
   an independently established helper boundary.
-- **`func_80016280`:** left untouched. Its removed allowlist entry still
-  makes the hybrid fail source policy. A macro around its literal branch,
-  hardcoded stack slots and asm-to-C handoff would not resolve that failure.
-  The exemption was not restored.
+- **`func_80016280`:** the existing body is retained under explicit user
+  authorization. Its literal branch, hardcoded stack slots and asm-to-C
+  handoff remain technical debt requiring further research. Wrapping them
+  in a macro would not establish a generalizable operation.
