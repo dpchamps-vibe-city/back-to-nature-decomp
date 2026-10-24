@@ -1,26 +1,20 @@
-/* User-authorized address/register workaround: retain the genuine high
- * in V0 until its LOW16 consumer builds the loop-invariant base in T1.
- * Both nested scans and every store remain C; this does not establish the
- * original source used register declarations or embedded assembly. */
 #include "common.h"
 
 /* Clear three rows of six 14-byte records: first halfword is -1 and the
  * remaining six are zero. The two bases reach the same record array, with
  * pX addressing its last halfword. */
 void ovl_11_func_8010476C(void) {
-    s16 *pW;
-    s16 *pX;
-    register s16 *pBase asm("$9");
-    register u32 high asm("$2");
-    register s16 *base2 asm("$3");
+    volatile s16 *pW;
+    volatile s16 *pX;
+    s16 *pBase;
+    s16 *base2;
     u32 rows;
     u32 n;
     u32 next;
     u32 rb;
 
     rows = 0;
-    asm volatile("lui %0,%%hi(D_80074838)" : "=r"(high));
-    asm volatile("addiu %0,%1,%%lo(D_80074838)" : "=r"(pBase) : "r"(high));
+    pBase = (s16 *)D_80074838;
     base2 = (s16 *)&D_8006C838;
     base2 += 0x7291;
     do {
@@ -38,8 +32,8 @@ void ovl_11_func_8010476C(void) {
             pW[0] = 0;
             *pX = 0;
             pX += 7;
-            n++;
             pW += 7;
+            n++;
         } while (n < 6U);
         rows = next;
     } while (rows < 3U);
