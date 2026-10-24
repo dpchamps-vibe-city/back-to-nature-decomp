@@ -1,4 +1,6 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
 
 typedef struct {
     /* 0x00 */ s16 unk0;
@@ -10,16 +12,9 @@ typedef struct {
     /* 0x10 */ s32 unk10;
 } Ov11_4360struct;
 
-/* 4-byte, alignment-1 block. A BLK-mode parameter is left memory-resident by
- * assign_parms, which reproduces the target's entry home stores and the
- * per-use reloads for the by-value arguments. */
-typedef struct {
-    u8 b[4];
-} Ov11_F43CCArgBlk;
-
 void ovl_11_func_800F4360(Ov11_4360struct *arg0, u16 arg1, u16 arg2, s32 x, s32 y, s32 z, s32 w);
 
-void ovl_11_func_800F43CC(s32 arg0, Ov11_F43CCArgBlk arg1, Ov11_F43CCArgBlk arg2, Ov11_F43CCArgBlk arg3, Ov11_F43CCArgBlk arg4, u16 arg5, s32 arg6) {
+void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6) {
     Ov11_4360struct *var_a3;
     char *p;
     char *p_1;
@@ -46,5 +41,5 @@ void ovl_11_func_800F43CC(s32 arg0, Ov11_F43CCArgBlk arg1, Ov11_F43CCArgBlk arg2
     default:
         return;
     }
-    ovl_11_func_800F4360(var_a3, temp_a1, arg5, *(s32 *)&arg1, *(s32 *)&arg2, *(s32 *)&arg3, *(s32 *)&arg4);
+    ovl_11_func_800F4360(var_a3, temp_a1, arg5, position.vx, position.vy, position.vz, position.pad);
 }

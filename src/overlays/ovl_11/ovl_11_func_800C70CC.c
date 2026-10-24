@@ -15,7 +15,7 @@ void ovl_11_func_800C6F6C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_
 void ovl_11_func_800CA5D4(Ovl11C7010Object *arg0);
 void ovl_11_func_8010C1FC(Ovl11C7010Object *arg0);
 
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, u16 arg1, s32 arg2, s32 arg3) {
+void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3) {
     u16 previousState;
 
     arg0->unk6C = (arg0->unk6C | 0x20000000) & ~0x04000000;

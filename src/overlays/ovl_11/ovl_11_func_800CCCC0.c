@@ -4,7 +4,7 @@
 #include "psyq/libgte.h"
 
 
-s32 ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
+void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
 s32 ovl_11_func_800CB4E0 (void);
 void func_8001AF70 (u16 arg0, u16 arg1);

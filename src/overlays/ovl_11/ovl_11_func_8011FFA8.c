@@ -8,7 +8,7 @@ void func_8001B3CC(s32 arg0);
 s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800CD3C4(s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
-s32 ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
+void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CB540(u16 *arg0);
 s16 ovl_11_func_80120358(Ovl11SelectArg *arg0);
 s16 ovl_11_func_80120414(s32 *arg0);

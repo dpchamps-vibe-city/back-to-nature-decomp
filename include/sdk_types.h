@@ -516,10 +516,6 @@ typedef struct {
 } M2C_1b1b35dbfa0a_Ovl118010EA6CObj;
 
 typedef struct {
-    u8 b[4];
-} M2C_1d1631a2972a_Ov11_F43CCArgBlk;
-
-typedef struct {
                char pad0[0x8];
                s16 unk8;
                s16 unkA;
@@ -2648,6 +2644,36 @@ typedef struct {
     s32 unk104;
     s32 unk108;
 } Ovl11C4A2CObject;
+
+typedef struct {
+    u8 pad0[0x18];
+    u16 power;
+    u8 pad1A[4];
+    s16 kind;
+    u16 slot;
+    u8 pad22[0x36 - 0x22];
+    u16 attributes;
+    u16 direction;
+    u8 pad3A[2];
+    u16 state;
+    u8 pad3E[0x4C - 0x3E];
+    void *script;
+    u8 pad50[0x6C - 0x50];
+    s32 unk6C;
+    u8 pad70[0x84 - 0x70];
+    u16 value;
+    u16 amount;
+    s16 timer;
+    s16 item;
+    u8 pad8C[0xFC - 0x8C];
+    u16 collisionType;
+    u16 collisionId;
+    s32 position[4];
+    s32 pad110;
+    s32 timer114;
+    u8 pad118[0x264 - 0x118];
+    u8 phase;
+} Ovl11C580CObject;
 
 typedef struct {
     s16 id;
