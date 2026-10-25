@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { runCommand } from "../../shared/process.ts";
-import { snapshotDirt } from "../../shared/workspace.ts";
+import { newChangesSince, snapshotDirt } from "../../shared/workspace.ts";
 import { loadConfig } from "../../shared/config.ts";
 import { withinAllowedRoots } from "../../shared/source-policy.ts";
 import type { TuProgressReport } from "../../../../tools/diagnostics/tuProgress.ts";
@@ -301,15 +301,17 @@ export async function runFold(
           const passed = gate.report !== null && gate.code !== 2 && gate.report.gates.every((g) => g.state === "pass");
           if (passed) {
             const module = judgement.module;
+            /* The gate keeps what its re-split regenerates (the headers a rename implies); the fold carries that too. */
+            const { changedFiles: settled } = await loopChangedFiles(oracleContext(deps, current));
             record = {
               ...record, status: "accepted", container: module.container, sourcePath: module.source,
               moduleName: moduleNameOf(module.source), members: module.members.map((m) => m.name),
-              afterFolded: after.report.inventory.folded, changedFiles, preexisting: preexistingOf(deps, changedFiles),
+              afterFolded: after.report.inventory.folded, changedFiles: settled, preexisting: preexistingOf(deps, settled),
             };
             current = recordFold(deps.config, current, record);
             notify(deps, `Accepted ${module.source}: ${module.members.length} member(s); folded ${before.inventory.folded} -> ${after.report.inventory.folded}`, "info");
             return { state: current, outcome: { kind: "folded", functionName: record.moduleName, members: record.members,
-              moduleName: record.moduleName, tier: tier.label, changedFiles } };
+              moduleName: record.moduleName, tier: tier.label, changedFiles: settled } };
           }
           lastReport = foldGateReport(gate);
         } else {
@@ -374,13 +376,16 @@ export async function recoverInterruptedFolds(deps: LoopDeps, state: LoopState, 
       const against = existsSync(join(deps.projectRoot, FOLD_RECEIPT)) ? FOLD_RECEIPT : record.head ?? "HEAD";
       notify(deps, `Settling the interrupted fold of ${label}: running the terminal gate against ${against}`, "info");
       setStatus(deps, `◎ fold · settling ${label} · terminal gate`);
+      const dirt = await snapshotDirt(deps.projectRoot);
       const gate = await oracles.verify(deps.projectRoot, against);
       if (gate.report && gate.code !== 2 && gate.report.gates.every((g) => g.state === "pass")) {
         const accepted: FoldRecord = { ...record, status: "accepted", container: module!.container, members: module!.members.map((m) => m.name),
           afterFolded: reading.report!.inventory.folded, detail: "accepted on recovery: the module was complete when the loop stopped" };
         current = recordFold(deps.config, current, accepted);
         if (deps.config.commitOnMatch) {
-          const files = record.changedFiles ?? [];
+          /* The gate keeps what its re-split regenerates; the fold carries that too. */
+          const regenerated = (await newChangesSince(deps.projectRoot, [...(await snapshotDirt(deps.projectRoot)).keys()], dirt)).newFiles;
+          const files = [...new Set([...(record.changedFiles ?? []), ...regenerated])].sort();
           const commit = await commitFold(deps.projectRoot, accepted.moduleName, accepted.members, accepted.tier || "recovery", accepted.beforeFolded, accepted.afterFolded, files,
             files.filter((file) => !withinAllowedRoots(loadConfig(deps.projectRoot), file)), Object.keys(record.preexisting ?? {}));
           if (commit.committed) current = recordFold(deps.config, current, { ...accepted, commit: commit.detail });

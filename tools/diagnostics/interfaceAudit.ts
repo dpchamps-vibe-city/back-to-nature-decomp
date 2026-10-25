@@ -45,7 +45,8 @@
  */
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT } from "../lib/psxExeInfo.js";
@@ -773,7 +774,9 @@ export function reconciledDeclaration(
  * the declaration, everything else in place.
  */
 function preprocess(text: string, without?: Contract["published"]): string {
-  const result = spawnSync(preprocessingTools().tools.cpp, [...CPP_FLAGS, "-"], {
+  /* Resolved once: outside a preprocessor request, every lookup re-runs `which` and hashes the compiler. */
+  cppPath ??= preprocessingTools().tools.cpp;
+  const result = spawnSync(cppPath, [...CPP_FLAGS, "-"], {
     cwd: ROOT, input: text, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024,
   });
   if (result.status !== 0) throw new Error(`cpp failed: ${result.stderr}`);
@@ -786,22 +789,77 @@ function preprocess(text: string, without?: Contract["published"]): string {
   }).join("\n");
 }
 
-/** Every section's bytes and every relocation of the unit's object, or the compile error. */
-function objectSignature(text: string, path: string, without?: Contract["published"]): { signature?: string; error?: string } {
+let cppPath: string | undefined;
+
+type Signature = { signature?: string; error?: string };
+
+/**
+ * objectSignature results across runs. `--check` re-proves every dispute on
+ * every call, and a dispute's compiles change only with the unit's
+ * preprocessed text, its path (per-file flags), its container's flag set and
+ * the toolchain, which is what the key holds.
+ */
+const SIGNATURE_CACHE = join(WORK_DIR, "signatures.json");
+const SIGNATURE_CACHE_ENTRIES = 20_000;
+let signatures: { salt: string; entries: Map<string, Signature> } | undefined;
+
+function signatureCache(): NonNullable<typeof signatures> {
+  if (signatures) return signatures;
+  const salt = createHash("sha256");
+  for (const path of ["build/toolchain-inputs.stamp", "Makefile", "configs/flag_overrides.mk"]) {
+    salt.update(path).update("\0").update(existsSync(join(ROOT, path)) ? readFileSync(join(ROOT, path)) : "absent").update("\0");
+  }
+  let stored: Record<string, Signature> = {};
+  try { stored = JSON.parse(readFileSync(join(ROOT, SIGNATURE_CACHE), "utf8")) as Record<string, Signature>; } catch { /* a cold cache */ }
+  signatures = { salt: salt.digest("hex"), entries: new Map(Object.entries(stored)) };
+  process.once("exit", () => {
+    /* Renamed into place: concurrent audits each leave a whole file. */
+    const scratch = join(ROOT, `${SIGNATURE_CACHE}.${process.pid}`);
+    mkdirSync(join(ROOT, WORK_DIR), { recursive: true });
+    writeFileSync(scratch, JSON.stringify(Object.fromEntries([...signatures!.entries].slice(-SIGNATURE_CACHE_ENTRIES))));
+    renameSync(scratch, join(ROOT, SIGNATURE_CACHE));
+  });
+  return signatures;
+}
+
+/** A digest of every section's bytes and every relocation of the unit's object, or the compile error. */
+function objectSignature(text: string, path: string, without?: Contract["published"]): Signature {
   const container = sourceContainer(path);
   const stem = basename(path, ".c");
-  try {
-    const artifacts = compileSource(join(ROOT, path), join(ROOT, WORK_DIR, container), stem, {
-      assemble: true, preprocessedText: preprocess(text, without), containerKind: container === "exe" ? "exe" : "overlay",
-    });
-    const dump = execFileSync("mips-linux-gnu-objdump", ["-s", "-r", artifacts.object!], { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
-    return { signature: dump.split("\n").filter((line) => !line.includes(artifacts.object!)).join("\n") };
-  } catch (error) {
-    /* The first diagnostic, not the "In function"/"In file included from" context lines. */
+  const kind = container === "exe" ? "exe" : "overlay";
+  /* The first diagnostic, not the "In function"/"In file included from" context lines. */
+  const failed = (error: unknown): Signature => {
     const lines = (error as Error).message.split("\n").map((l) => l.replace(/^.*cc1 failed: /, "").trim());
     const diagnostic = lines.find((l) => l && !/In function|In file included from|^from /.test(l));
     return { error: diagnostic?.replace(/^<stdin>:/, "line ") ?? "compile failed" };
+  };
+  let preprocessed: string;
+  try {
+    preprocessed = preprocess(text, without);
+  } catch (error) {
+    return failed(error);
   }
+  const cache = signatureCache();
+  const key = createHash("sha256").update(JSON.stringify([1, cache.salt, path, kind, preprocessed])).digest("hex");
+  const known = cache.entries.get(key);
+  if (known) {
+    /* Most recently used last, so the bound drops the stalest. */
+    cache.entries.delete(key);
+    cache.entries.set(key, known);
+    return known;
+  }
+  let result: Signature;
+  try {
+    const artifacts = compileSource(join(ROOT, path), join(ROOT, WORK_DIR, container), stem, {
+      assemble: true, preprocessedText: preprocessed, containerKind: kind,
+    });
+    const dump = execFileSync("mips-linux-gnu-objdump", ["-s", "-r", artifacts.object!], { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+    result = { signature: createHash("sha256").update(dump.split("\n").filter((line) => !line.includes(artifacts.object!)).join("\n")).digest("hex") };
+  } catch (error) {
+    result = failed(error);
+  }
+  cache.entries.set(key, result);
+  return result;
 }
 
 /** Arguments of a call, comments excluded. */

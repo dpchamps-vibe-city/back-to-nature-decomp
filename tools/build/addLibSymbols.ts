@@ -15,6 +15,7 @@ import { execSync } from "child_process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadPsxExeInfo, ROOT, exeSplatYamlPath, exeSymbolAddrsPath } from "../lib/psxExeInfo.ts";
+import { toolOutput } from "../lib/binutilsCache.js";
 import { verifiedMatches, type DetectionReport } from "../lib/sdkDetection.js";
 import { staleSdkSymbols } from "../lib/sdkProvenance.js";
 
@@ -120,10 +121,7 @@ function main() {
 
         // Get global data/rdata symbols from nm
         try {
-          const nmOutput = execSync(`mips-linux-gnu-nm "${ls.oPath}" 2>/dev/null`, {
-            encoding: "utf-8",
-            cwd: ROOT,
-          });
+          const nmOutput = toolOutput("mips-linux-gnu-nm", [], ls.oPath, ROOT);
           for (const line of nmOutput.split("\n")) {
             const m = line.match(/^([0-9a-f]+)\s+([DR])\s+(\S+)/);
             if (!m) continue;

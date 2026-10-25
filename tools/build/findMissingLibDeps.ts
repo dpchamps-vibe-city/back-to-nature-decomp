@@ -18,6 +18,7 @@ import { execSync } from "child_process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadPsxExeInfo, ROOT } from "../lib/psxExeInfo.ts";
+import { sectionBytes, toolOutput } from "../lib/binutilsCache.js";
 import { verifiedMatches } from "../lib/sdkDetection.js";
 import { loadMemberMap } from "../lib/psyqMembers.js";
 
@@ -72,10 +73,7 @@ function main() {
     for (const l of m.labels) matchedSymbols.add(l.name);
     // Also get all global symbols from the .o file itself
     try {
-      const nm = execSync(
-        `mips-linux-gnu-nm --defined-only "${m.oPath}" 2>/dev/null`,
-        { encoding: "utf-8", cwd: ROOT }
-      );
+      const nm = toolOutput("mips-linux-gnu-nm", ["--defined-only"], m.oPath, ROOT);
       for (const line of nm.split("\n")) {
         const match = line.match(/[0-9a-f]+\s+[TDBRCS]\s+(\S+)/);
         if (match) matchedSymbols.add(match[1]);
@@ -88,10 +86,7 @@ function main() {
 
   for (const m of matches) {
     try {
-      const nm = execSync(`mips-linux-gnu-nm -u "${m.oPath}" 2>/dev/null`, {
-        encoding: "utf-8",
-        cwd: ROOT,
-      });
+      const nm = toolOutput("mips-linux-gnu-nm", ["-u"], m.oPath, ROOT);
       for (const line of nm.split("\n")) {
         const match = line.match(/U\s+(\S+)/);
         if (match) {
@@ -129,10 +124,7 @@ function main() {
 
   for (const archive of archives) {
     try {
-      const nm = execSync(
-        `mips-linux-gnu-nm --print-file-name "${archive}" 2>/dev/null`,
-        { encoding: "utf-8", cwd: ROOT }
-      );
+      const nm = toolOutput("mips-linux-gnu-nm", ["--print-file-name"], archive, ROOT);
       for (const line of nm.split("\n")) {
         const m = line.match(
           /^(.+\.a):(.+\.o):[0-9a-f]+\s+([TDBRCS])\s+(\S+)$/
@@ -175,20 +167,12 @@ function main() {
 
       try {
         // Get relocations for this symbol in the referencing .o
-        const relocs = execSync(
-          `mips-linux-gnu-readelf -r "${refPath}" 2>/dev/null`,
-          { encoding: "utf-8", cwd: ROOT }
-        );
+        const relocs = toolOutput("mips-linux-gnu-readelf", ["-r"], refPath, ROOT);
 
         // Extract .text bytes from the .o file for reading addends
         let oTextBytes: Buffer | null = null;
         try {
-          const tmpPath = "/tmp/findMissingLibDeps_text.bin";
-          execSync(
-            `mips-linux-gnu-objcopy -O binary -j .text "${refPath}" "${tmpPath}" 2>/dev/null`,
-            { cwd: ROOT }
-          );
-          oTextBytes = readFileSync(tmpPath);
+          oTextBytes = sectionBytes(refPath, ".text", ROOT);
         } catch {}
 
         for (const line of relocs.split("\n")) {

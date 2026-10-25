@@ -20,6 +20,7 @@ import { execSync } from "child_process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadPsxExeInfo, requireSectionLayout, ROOT, exeSplatYamlPath } from "../lib/psxExeInfo.ts";
+import { sectionBytes, toolOutput } from "../lib/binutilsCache.js";
 import { isReturnPadding, readTextObject } from "../lib/psyqMembers.js";
 import { boundaryPremise } from "../lib/sdkProvenance.js";
 import { loadSubsegments } from "../lib/symbolIndex.js";
@@ -86,10 +87,7 @@ function getSectionSizes(oPath: string): { textSize: number; bssSize: number } {
   let textSize = 0;
   let bssSize = 0;
   try {
-    const output = execSync(
-      `mips-linux-gnu-readelf -S "${oPath}" 2>/dev/null`,
-      { encoding: "utf-8", cwd: ROOT }
-    );
+    const output = toolOutput("mips-linux-gnu-readelf", ["-S"], oPath, ROOT);
     for (const line of output.split("\n")) {
       const m = line.match(
         /\[\s*\d+\]\s+(\S+)\s+\S+\s+[0-9a-f]+\s+[0-9a-f]+\s+([0-9a-f]+)/i
@@ -109,10 +107,7 @@ function getSymbolOffsets(
 ): { name: string; offset: number; type: string }[] {
   const results: { name: string; offset: number; type: string }[] = [];
   try {
-    const output = execSync(`mips-linux-gnu-nm "${oPath}" 2>/dev/null`, {
-      encoding: "utf-8",
-      cwd: ROOT,
-    });
+    const output = toolOutput("mips-linux-gnu-nm", [], oPath, ROOT);
     for (const line of output.split("\n")) {
       const m = line.match(/^([0-9a-f]+)\s+([TDBRCSW])\s+(\S+)/i);
       if (m) {
@@ -129,13 +124,8 @@ function getSymbolOffsets(
 
 /** Extract .text bytes from a .o file */
 function extractTextBytes(oPath: string): Buffer | null {
-  const tmpPath = "/tmp/addDepObjects_text.bin";
   try {
-    execSync(
-      `mips-linux-gnu-objcopy -O binary -j .text "${oPath}" "${tmpPath}" 2>/dev/null`,
-      { cwd: ROOT }
-    );
-    return readFileSync(tmpPath);
+    return sectionBytes(oPath, ".text", ROOT);
   } catch {
     return null;
   }
@@ -337,10 +327,7 @@ function main() {
       // Compare non-relocated bytes
       let skipOffsets = new Set<number>();
       try {
-        const relOutput = execSync(
-          `mips-linux-gnu-readelf -r "${dep.oPath}" 2>/dev/null`,
-          { encoding: "utf-8", cwd: ROOT }
-        );
+        const relOutput = toolOutput("mips-linux-gnu-readelf", ["-r"], dep.oPath, ROOT);
         for (const line of relOutput.split("\n")) {
           const m = line.match(/^([0-9a-f]+)\s+[0-9a-f]+\s+R_MIPS_/i);
           if (m) {

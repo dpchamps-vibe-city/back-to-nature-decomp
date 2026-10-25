@@ -213,7 +213,7 @@ ignores that path.
 | `make complete` | Quiet, read-only progress check across all containers: exits 0 at 100%, 1 otherwise; does not build or verify bytes |
 | `make tu-progress` | Translation-unit reconstruction report: eligible functions folded into modules, remaining, exclusions, module validity |
 | `make tu-complete` | Read-only structural check that every eligible function is folded (see "Translation-unit reconstruction") |
-| `make tu-verify` | The terminal gate: structure, `make complete`, source policy, `make check-all`, config convergence (re-splitting only what changed since the last converged tree), `git diff --check`, input stability; `BASELINE=<receipt or tree-ish>` adds the exception-growth check. A verdict is cached by tree, so re-verifying an unchanged tree is instant |
+| `make tu-verify` | The terminal gate: config convergence (re-splitting only what changed since the last converged tree, overlays in parallel, keeping what the split regenerates), structure, `make complete`, source policy, `make check-all`, `git diff --check`, input stability; `BASELINE=<receipt or tree-ish>` adds the exception-growth check. A verdict is cached by tree, so re-verifying an unchanged tree is instant, and edits under `notes/` or `plans/` re-run only `git diff --check` |
 | `make disassemble` | Runs the spimdisasm bootstrap and writes `functions.csv` and one `.s` file for each function |
 | `make config-check` | Runs `make split` again and fails if a tracked file changes |
 | `make setup` | Initializes the git submodules |
@@ -1106,9 +1106,11 @@ oracle; membership evidence comes from callers, private state, link order and
 `notes/file-groupings.md`. `/auto_decompilation_loop fold` dispatches
 `plans/tu-prompt.md` repeatedly and accepts a module only on a passing
 `--verify` of the tree as it stands. `--verify` caches its verdict by the
-working tree, so the loop reuses the run the agent made on an unchanged tree,
-and its convergence step re-splits only what changed since the last converged
-tree; the loop's final gate re-splits everything (`--full-convergence`).
+working tree (notes and plans aside), so the loop reuses the run the agent
+made on an unchanged tree. Its convergence step re-splits only what changed
+since the last converged tree and keeps what that regenerates, re-running
+until a pass changes nothing; the loop's final gate re-splits everything
+(`--full-convergence`).
 
 At each commit the loop takes everything still uncommitted as pre-existing,
 by content: a later fold that edits such a file commits it, pre-existing

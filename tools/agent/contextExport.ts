@@ -52,7 +52,8 @@ import {
 import { requireFunctionLocation } from "../lib/symbolIndex.js";
 import { functionSourcePath, loadTranslationUnits } from "../lib/translationUnits.js";
 import { scopedTypeCatalog, projectScopedSignatures } from "./scopedTypes.js";
-import { digest, readCache, writeCache, writeIfChanged } from "../lib/contentCache.js";
+import { digest, fileDigest, readCache, writeCache, writeIfChanged } from "../lib/contentCache.js";
+import { executableDigest } from "../lib/binutilsCache.js";
 import { emptyDeclarationIndex, indexDeclarations, projectDeclarations } from "./declarationContext.js";
 import { PREAMBLE_TYPES } from "./sdkTypes.js";
 
@@ -254,6 +255,16 @@ export function verifyContextParses(
   for (const context of contextFilesFor(container)) args.push("--context", context);
   args.push(probe.sFile);
 
+  /* A context that parsed already, byte for byte with the same probe, m2c and
+   * python, parses again; only parses that passed are remembered, the last
+   * few per container. */
+  const parsedPath = join(rootDir, "build/cache/context-parse.json");
+  const m2c = filesUnder(join(rootDir, "tools/vendor/m2c")).filter((path) => /\.(?:py|h)$/.test(path)).sort();
+  const inputs = [globalsCtx, ...contextFilesFor(container).map((context) => join(rootDir, context)), probe.sFile];
+  const parseKey = digest(JSON.stringify([1, args, inputs.map(fileDigest), m2c.map((path) => [relative(rootDir, path), fileDigest(path)]), executableDigest("python3")]));
+  const parsed = readCache<string[]>(parsedPath, "passed-parses") ?? [];
+  if (parsed.includes(parseKey)) return { ok: true };
+
   let output: string;
   try {
     output = execFileSync("python3", args, { cwd: rootDir, encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] });
@@ -266,6 +277,7 @@ export function verifyContextParses(
   if (output.includes("Syntax error when parsing C context")) {
     return { ok: false, diagnostic: output.trim() };
   }
+  writeCache(parsedPath, "passed-parses", [parseKey, ...(readCache<string[]>(parsedPath, "passed-parses") ?? [])].slice(0, 64));
   return { ok: true };
 }
 

@@ -16,6 +16,7 @@ import { execSync } from "child_process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadPsxExeInfo, ROOT } from "../lib/psxExeInfo.ts";
+import { sectionBytes, toolOutput } from "../lib/binutilsCache.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const _info = loadPsxExeInfo();
@@ -54,9 +55,7 @@ interface ElfSection {
 
 /** Parse `readelf -S` output to get section info */
 function parseSections(oPath: string): Map<number, ElfSection> {
-  const output = execSync(`mips-linux-gnu-readelf -S "${oPath}" 2>/dev/null`, {
-    encoding: "utf-8",
-  });
+  const output = toolOutput("mips-linux-gnu-readelf", ["-S"], oPath);
   const sections = new Map<number, ElfSection>();
   const re =
     /\[\s*(\d+)\]\s+(\S+)\s+\S+\s+[0-9a-f]+\s+[0-9a-f]+\s+([0-9a-f]+)\s+/gi;
@@ -73,9 +72,7 @@ function parseSections(oPath: string): Map<number, ElfSection> {
 
 /** Parse `readelf -s` to get symbol table */
 function parseSymbols(oPath: string): Map<number, SymEntry> {
-  const output = execSync(`mips-linux-gnu-readelf -sW "${oPath}" 2>/dev/null`, {
-    encoding: "utf-8",
-  });
+  const output = toolOutput("mips-linux-gnu-readelf", ["-sW"], oPath);
   const symbols = new Map<number, SymEntry>();
   const re =
     /^\s*(\d+):\s+([0-9a-f]+)\s+(\d+)\s+(\S+)\s+(\S+)\s+\S+\s+(\S+)\s+(.*)/gim;
@@ -97,9 +94,7 @@ function parseSymbols(oPath: string): Map<number, SymEntry> {
 
 /** Parse `readelf -r` to get .rel.text relocations */
 function parseRelocs(oPath: string): RelocEntry[] {
-  const output = execSync(`mips-linux-gnu-readelf -r "${oPath}" 2>/dev/null`, {
-    encoding: "utf-8",
-  });
+  const output = toolOutput("mips-linux-gnu-readelf", ["-r"], oPath);
   const relocs: RelocEntry[] = [];
   let inRelText = false;
   for (const line of output.split("\n")) {
@@ -216,11 +211,7 @@ function findPairedLo16(
 /** Extract raw .text bytes from a .o file */
 function extractOTextBytes(oPath: string): Buffer | null {
   try {
-    const tmpPath = "/tmp/extractBss_text.bin";
-    execSync(
-      `mips-linux-gnu-objcopy -O binary -j .text "${oPath}" "${tmpPath}" 2>/dev/null`
-    );
-    return readFileSync(tmpPath);
+    return sectionBytes(oPath, ".text");
   } catch {
     return null;
   }

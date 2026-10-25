@@ -1,6 +1,7 @@
 /** Signature/object cross-checks, independent of placement heuristics. */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { digest, readCache, writeCache } from "./contentCache.js";
 import { isReturnPadding, memberKey, parseSig, readTextObject, resolveSignatureObject, signatureId, signatureFits, type MemberMap, type SigEntry } from "./psyqMembers.js";
 
 export interface CandidateMatch {
@@ -41,6 +42,12 @@ export function findAllPatterns(binary: Buffer, searchStart: number, searchEnd: 
 export function scanSdkSignatures(options: { root: string; sigDir: string; map: MemberMap | null; binary: Buffer; searchStart: number; searchEnd: number }): { candidates: CandidateMatch[]; matchedButUnverifiable: UnverifiableMatch[]; rejectedPlacements: RejectedPlacement[] } {
   const { root, sigDir, map, binary, searchStart, searchEnd } = options;
   const candidates: CandidateMatch[] = [], matchedButUnverifiable: UnverifiableMatch[] = [], rejectedPlacements: RejectedPlacement[] = [];
+  /* Where each signature occurs, by the binary's bytes and the window: every
+     tool that runs detection repeats the search, which is most of its time. */
+  const offsetCache = join(root, "build/cache/sdk-signature-offsets.json");
+  const offsetKey = digest(JSON.stringify([1, digest(binary), searchStart, searchEnd]));
+  const knownOffsets = readCache<Record<string, number[]>>(offsetCache, offsetKey) ?? {};
+  let searched = false;
   for (const sigFile of readdirSync(sigDir).filter(f => f.endsWith(".json")).sort()) {
     const entries: SigEntry[] = JSON.parse(readFileSync(join(sigDir, sigFile), "utf8"));
     const groups = new Map<string, Set<string>>();
@@ -52,7 +59,11 @@ export function scanSdkSignatures(options: { root: string; sigDir: string; map: 
     for (const entry of entries) {
       const { bytes, mask } = parseSig(entry.sig ?? "");
       if (bytes.length < 8) continue;
-      const offsets = findAllPatterns(binary, searchStart, searchEnd, bytes, mask);
+      let offsets = knownOffsets[entry.sig ?? ""];
+      if (!offsets) {
+        offsets = knownOffsets[entry.sig ?? ""] = findAllPatterns(binary, searchStart, searchEnd, bytes, mask);
+        searched = true;
+      }
       if (!offsets.length) continue;
       const mapping = resolveSignatureObject(map, sigFile, entry, groups.get(memberKey(entry.name))!.size > 1);
       const fail = (reason: UnverifiableMatch["reason"], detail: string): void => {
@@ -76,6 +87,7 @@ export function scanSdkSignatures(options: { root: string; sigDir: string; map: 
       candidates.push({ offsets: verifiedOffsets, entry, ...mapping, textSize: object.text.length, sigLength: bytes.length });
     }
   }
+  if (searched) writeCache(offsetCache, offsetKey, knownOffsets);
   return { candidates, matchedButUnverifiable, rejectedPlacements };
 }
 

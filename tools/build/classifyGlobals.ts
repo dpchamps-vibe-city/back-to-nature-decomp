@@ -16,9 +16,10 @@ import { execFileSync } from "node:child_process";
 import { configuredCppFlags } from "../agent/decompToolchain.js";
 import { emptyDeclarationIndex, globalViews, indexDeclarations, projectDeclarations } from "../agent/declarationContext.js";
 import { PREAMBLE_TYPES } from "../agent/sdkTypes.js";
-import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { exeSplatYamlPath } from "../lib/psxExeInfo.js";
+import { writeIfChanged } from "../lib/contentCache.js";
 import { field, namedChildren, parseC } from "../agent/residual-source-search/tree-sitter-c.js";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
@@ -443,13 +444,12 @@ const header = generateHeader(symbols, overridden);
 const m2cContext = generateM2cContextFromHeader(header, symbols.map((s) => s.name));
 
 if (writeMode) {
+  /* Unchanged content keeps its timestamp: every object depends on globals.h. */
   const headerPath = join(ROOT, "include/globals.h");
-  writeFileSync(headerPath, header);
-  console.log(`Wrote ${headerPath}`);
+  console.log(`${writeIfChanged(headerPath, header) ? "Wrote" : "Unchanged"} ${headerPath}`);
 
   const m2cPath = join(ROOT, "build/m2c_globals.ctx");
-  writeFileSync(m2cPath, m2cContext);
-  console.log(`Wrote ${m2cPath}`);
+  console.log(`${writeIfChanged(m2cPath, m2cContext) ? "Wrote" : "Unchanged"} ${m2cPath}`);
 } else {
   console.log("\n--- include/globals.h (dry run) ---\n");
   console.log(header);

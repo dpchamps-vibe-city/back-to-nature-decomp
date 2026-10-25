@@ -16,6 +16,7 @@ import { execSync } from "child_process";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { loadPsxExeInfo, requireSectionLayout, ROOT } from "../lib/psxExeInfo.ts";
+import { sectionBytes, toolOutput } from "../lib/binutilsCache.js";
 import { verifiedMatches } from "../lib/sdkDetection.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -76,9 +77,7 @@ function vramToRom(vram: number): number {
 
 /** Parse `readelf -S` output to get section index→name+size map */
 function parseSections(oPath: string): Map<number, ElfSection> {
-  const output = execSync(`mips-linux-gnu-readelf -S "${oPath}" 2>/dev/null`, {
-    encoding: "utf-8",
-  });
+  const output = toolOutput("mips-linux-gnu-readelf", ["-S"], oPath);
   const sections = new Map<number, ElfSection>();
   // Match: [ N] .name  TYPE  addr  off  size  es  flg  lk  inf  al
   const re =
@@ -97,9 +96,7 @@ function parseSections(oPath: string): Map<number, ElfSection> {
 
 /** Parse `readelf -s` to get symbol index→section index map */
 function parseSymbols(oPath: string): Map<number, SymEntry> {
-  const output = execSync(`mips-linux-gnu-readelf -s "${oPath}" 2>/dev/null`, {
-    encoding: "utf-8",
-  });
+  const output = toolOutput("mips-linux-gnu-readelf", ["-s"], oPath);
   const symbols = new Map<number, SymEntry>();
   // Match: Num: Value Size Type Bind Vis Ndx Name
   const re =
@@ -120,9 +117,7 @@ function parseSymbols(oPath: string): Map<number, SymEntry> {
 
 /** Parse `readelf -r` to get .rel.text relocations */
 function parseRelocs(oPath: string): RelocEntry[] {
-  const output = execSync(`mips-linux-gnu-readelf -r "${oPath}" 2>/dev/null`, {
-    encoding: "utf-8",
-  });
+  const output = toolOutput("mips-linux-gnu-readelf", ["-r"], oPath);
   const relocs: RelocEntry[] = [];
   // Match: offset info type sym.value sym.name
   const re =
@@ -254,16 +249,13 @@ function fuzzyMatchData(
   searchStart: number,
   searchEnd: number
 ): number | null {
-  // Read the .data section content from the .o file via temp file
-  const tmpPath = "/tmp/resolveLibSections_data.bin";
+  // Read the .data section content from the .o file
+  let output: Buffer;
   try {
-    execSync(
-      `mips-linux-gnu-objcopy -O binary -j .data "${oPath}" "${tmpPath}" 2>/dev/null`
-    );
+    output = sectionBytes(oPath, ".data");
   } catch {
     return null;
   }
-  const output = readFileSync(tmpPath);
   if (output.length !== dataSize) return null;
 
   // Search for the pattern in the data region, trying each aligned offset

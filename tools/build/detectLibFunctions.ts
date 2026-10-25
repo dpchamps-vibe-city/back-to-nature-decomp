@@ -15,8 +15,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { execSync } from "child_process";
 import { exeSymbolAddrsPath, loadPsxExeInfo, requireSectionLayout, ROOT } from "../lib/psxExeInfo.ts";
+import { toolOutput } from "../lib/binutilsCache.js";
 import { hash, loadMemberMap } from "../lib/psyqMembers.js";
 import { acknowledgeFindings, scanSdkSignatures, type DetectionAcknowledgement, type DetectionReport } from "../lib/sdkDetection.js";
 
@@ -74,9 +74,7 @@ interface Relocation {
 /** Read R_MIPS_26 and R_MIPS_HI16/LO16 relocations from .text section. */
 function getTextRelocations(oPath: string): Relocation[] {
   try {
-    const output = execSync(`readelf -r "${oPath}" 2>/dev/null`, {
-      encoding: "utf-8",
-    });
+    const output = toolOutput("readelf", ["-r"], oPath);
     const relocs: Relocation[] = [];
     let inTextRelocs = false;
     for (const line of output.split("\n")) {
@@ -200,9 +198,7 @@ function verifyRelocations(
 /** Get all section names from an ELF .o file. */
 function getSections(oPath: string): string[] {
   try {
-    const output = execSync(`readelf -S "${oPath}" 2>/dev/null`, {
-      encoding: "utf-8",
-    });
+    const output = toolOutput("readelf", ["-S"], oPath);
     const sections: string[] = [];
     for (const line of output.split("\n")) {
       const m = line.match(/\]\s+(\.[\w.]+)\s/);

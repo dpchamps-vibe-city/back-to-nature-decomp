@@ -39,12 +39,14 @@
  *
  * --verify re-splits what changed before it builds, so it needs no hand-run
  * `make split` or `make check-all` beforehand. Its convergence step re-splits
- * only what changed since the last tree that converged (tools/lib/splitScope.ts);
- * --full-convergence re-splits every container. It judges the working tree as
- * it stands, so its report is cached under build/tu-campaign/ by the tree
- * object of that state (tracked and untracked files, ignored ones excepted),
- * HEAD, the index and the options; asking again about an unchanged tree
- * returns the same verdict at once.
+ * only what changed since the last tree that converged (tools/lib/splitScope.ts),
+ * the overlays in parallel, and keeps what the split regenerates — the headers
+ * a rename implies — re-running until a pass changes nothing;
+ * --full-convergence re-splits every container. Its report is cached under
+ * build/tu-campaign/ by the tree object of the result (tracked and untracked
+ * files, ignored ones, notes/, plans/ and top-level Markdown excepted), HEAD,
+ * the index and the options; asking again about an unchanged tree returns the
+ * same verdict at once, with only `git diff --check` re-run.
  *
  * Exit status — the same for every mode:
  *   0  every eligible function is folded and every requested gate passes;
@@ -456,7 +458,17 @@ function restore(paths: readonly string[], saved: ReadonlyMap<string, Buffer | n
   }
 }
 
-/** The tree object of the working tree as it stands — tracked and untracked files, ignored ones excepted — or of the index. */
+/**
+ * Paths no gate reads except `git diff --check`, which a reused verdict re-runs:
+ * an edit there leaves the rest of a verdict standing.
+ */
+const NOT_GATE_INPUTS = ["notes", "plans", ":(glob)*.md"];
+
+/**
+ * The tree object of the gate inputs in the working tree as it stands —
+ * tracked and untracked files, ignored ones and NOT_GATE_INPUTS excepted — or
+ * in the index.
+ */
 function treeOf(source: "worktree" | "index"): string | null {
   /* Under build/, not the system temp directory: a full tmpfs must not break the gate. */
   mkdirSync(join(ROOT, "build/tu-campaign"), { recursive: true });
@@ -467,6 +479,7 @@ function treeOf(source: "worktree" | "index"): string | null {
     if (gitIndex && existsSync(join(ROOT, gitIndex))) copyFileSync(join(ROOT, gitIndex), index);
     const env = { ...process.env, GIT_INDEX_FILE: index };
     if (source === "worktree" && spawnSync("git", ["add", "-A", "--", "."], { cwd: ROOT, env, encoding: "utf8" }).status !== 0) return null;
+    if (spawnSync("git", ["rm", "-r", "-q", "--cached", "--ignore-unmatch", "--", ...NOT_GATE_INPUTS], { cwd: ROOT, env, encoding: "utf8" }).status !== 0) return null;
     const tree = spawnSync("git", ["write-tree"], { cwd: ROOT, env, encoding: "utf8" });
     return tree.status === 0 ? tree.stdout.trim() : null;
   } finally {
@@ -508,67 +521,131 @@ function convergenceScope(tree: string | null, full: boolean): { scope: SplitSco
   if (!tree || !receipt || gitLine(["cat-file", "-t", receipt.tree]) !== "tree") return { scope: null, why: "no converged tree on record" };
   const changed = gitLine(["diff", "--name-only", "--no-renames", receipt.tree, tree]);
   if (changed === null) return { scope: null, why: "the converged tree cannot be compared" };
-  const overlays = loadContainers().filter((container) => container.kind === "overlay").map((container) => container.id);
-  const scope = splitScope(changed ? changed.split("\n") : [], overlays, splitToolClosure(ROOT));
+  const scope = splitScope(changed ? changed.split("\n") : [], overlayIds(), splitToolClosure(ROOT));
   return scope.full ? { scope: null, why: scope.reasons.slice(0, 2).join("; ") } : { scope, why: `since ${receipt.tree.slice(0, 12)}` };
 }
 
+function overlayIds(): string[] {
+  return loadContainers().filter((container) => container.kind === "overlay").map((container) => container.id);
+}
+
 /**
- * Config generation reaches a fixed point: a re-split changes nothing. Only the
- * splits this tree's changes can reach are re-run; any drift they find is
- * confirmed by re-splitting everything before it fails the gate.
+ * The overlay splits a set of overlays needs, in waves whose splits run in
+ * parallel. An overlay whose split reads another's symbol table (its splat
+ * config names that table, for cross-slot calls) joins the set whenever the
+ * other is in it, and splits in a later wave.
  */
-function convergence(tree: string | null, full: boolean): { state: GateState; detail: string; receipt?: ConvergenceReceipt } {
+function overlaySplitWaves(ids: Iterable<string>): string[][] {
+  const overlays = loadContainers().filter((container) => container.kind === "overlay");
+  const reads = new Map(overlays.map((reader) => {
+    const config = existsSync(join(ROOT, reader.paths.splat)) ? readFileSync(join(ROOT, reader.paths.splat), "utf8") : "";
+    return [reader.id, overlays.filter((other) => other.id !== reader.id && config.includes(other.paths.symbolAddrs)).map((other) => other.id)];
+  }));
+  const wanted = new Set(ids);
+  for (let grew = true; grew;) {
+    grew = false;
+    for (const [reader, sources] of reads) {
+      if (wanted.has(reader) || !sources.some((id) => wanted.has(id))) continue;
+      wanted.add(reader);
+      grew = true;
+    }
+  }
+  let left = overlays.map((overlay) => overlay.id).filter((id) => wanted.has(id));
+  const waves: string[][] = [];
+  while (left.length > 0) {
+    const wave = left.filter((id) => !reads.get(id)!.some((source) => left.includes(source)));
+    /* A cycle: one at a time, in configuration order, as `make split-all` runs them. */
+    if (wave.length === 0) return [...waves, ...left.map((id) => [id])];
+    waves.push(wave);
+    left = left.filter((id) => !wave.includes(id));
+  }
+  return waves;
+}
+
+/** Regeneration passes the convergence step runs before it calls a tree unsettled. */
+const CONVERGENCE_PASSES = 3;
+
+function listed(paths: readonly string[]): string {
+  return `${paths.slice(0, 6).join(", ")}${paths.length > 6 ? ", …" : ""}`;
+}
+
+/**
+ * Config generation reaches a fixed point. Only the splits this tree's changes
+ * can reach are re-run, the overlays in parallel. What a pass regenerates — the
+ * headers a rename or a fold implies — is kept, as a hand-run split would keep
+ * it, and the next pass re-runs only what that touched, until a pass changes
+ * nothing. A split that fails, or a tree that has not settled after
+ * CONVERGENCE_PASSES, is put back as it was.
+ */
+function convergence(tree: string | null, full: boolean): { state: GateState; detail: string; regenerated: string[]; engineExport: string | null } {
   const roots = ["configs", "include", "src"];
   const pre = snapshot(roots);
   const saved = saveContents(pre.keys());
-  const steps: string[] = [];
-  const step = (command: string, args: string[]): boolean => {
-    const result = run(command, args);
-    steps.push(args.at(-1) === "--write" || args.at(-1) === "--all" ? args.slice(1, 2).join(" ").replace(/^tools\/[^/]+\//, "") : args.join(" "));
-    if (result.code !== 0) failure ??= `${[command, ...args].join(" ")} exited ${result.code}:\n${tail(result.output, 6)}`;
-    return result.code === 0;
-  };
+  const passes: string[][] = [];
   let failure: string | undefined;
+  const step = (label: string, command: string, args: string[]): void => {
+    if (failure) return;
+    passes.at(-1)!.push(label);
+    const result = run(command, args);
+    if (result.code !== 0) failure = `${label} exited ${result.code}:\n${tail(result.output, 6)}`;
+  };
+  const tool = (path: string, flag: string) => step(path.replace(/^tools\/[^/]+\//, ""), "npx", ["tsx", path, flag]);
+  /* The export the overlays were last split against. */
+  let engine = readJson<ConvergenceReceipt>(CONVERGENCE_RECEIPT)?.engineExport ?? null;
+  const pass = (scope: SplitScope | null) => {
+    passes.push([]);
+    let overlays = scope?.overlays ?? overlayIds();
+    if (scope === null || scope.exe) {
+      step("split", "make", ["split"]);
+      step(ENGINE_EXPORT, "make", ["--no-print-directory", ENGINE_EXPORT]);
+      /* The overlays name their external calls from the engine export. */
+      const exported = fileDigest(ENGINE_EXPORT);
+      if (exported !== engine) overlays = overlayIds();
+      engine = exported;
+    }
+    for (const wave of overlaySplitWaves(overlays)) {
+      step(wave.length === 1 ? `split-${wave[0]}` : `split-{${wave.join(",")}}`, "make", ["-k", `-j${Math.min(wave.length, availableParallelism())}`, ...wave.map((id) => `split-${id}`)]);
+    }
+    if (scope !== null && !scope.exe && scope.tail) {
+      /* The EXE split's cross-container tail, which reads every source and header. */
+      tool("tools/agent/contextExport.ts", "--all");
+      tool("tools/build/classifyGlobals.ts", "--write");
+      tool("tools/build/genProjectProfile.ts", "--write");
+    }
+  };
 
   const { scope, why } = convergenceScope(tree, full);
-  const receipt = readJson<ConvergenceReceipt>(CONVERGENCE_RECEIPT);
-  if (scope === null) step("make", ["split-all"]);
-  else {
-    let overlays = scope.overlays;
-    if (scope.exe) {
-      step("make", ["split"]);
-      step("make", ["--no-print-directory", ENGINE_EXPORT]);
-      /* The overlays name their external calls from the engine export. */
-      if (fileDigest(ENGINE_EXPORT) !== receipt?.engineExport) overlays = loadContainers().filter((c) => c.kind === "overlay").map((c) => c.id);
-    }
-    for (const overlay of overlays) step("make", [`split-${overlay}`]);
-    if (!scope.exe && scope.tail) {
-      /* The EXE split's cross-container tail, which reads every source and header. */
-      step("npx", ["tsx", "tools/agent/contextExport.ts", "--all"]);
-      step("npx", ["tsx", "tools/build/classifyGlobals.ts", "--write"]);
-      step("npx", ["tsx", "tools/build/genProjectProfile.ts", "--write"]);
-    }
+  const regenerated = new Set<string>();
+  let unsettled: string[] = [];
+  let before = pre;
+  for (let next: SplitScope | null = scope, count = 1; ; count++) {
+    pass(next);
+    if (failure) break;
+    const after = snapshot(roots);
+    const changed = differences(before, after);
+    if (changed.length === 0) break;
+    for (const path of changed) regenerated.add(path);
+    if (count === CONVERGENCE_PASSES) { unsettled = changed; break; }
+    const touched = splitScope(changed, overlayIds(), splitToolClosure(ROOT));
+    next = touched.full ? null : touched;
+    before = after;
   }
-  let drift = differences(pre, snapshot(roots));
-  let ran = scope === null ? `make split-all (${why})` : steps.length ? `${steps.join(", ")} (${why})` : `no split input changed ${why}`;
-  if (drift.length > 0 && scope !== null) {
-    /* A narrow re-split can read stale build products; only the full one decides. */
-    failure = undefined;
-    step("make", ["split-all"]);
-    drift = differences(pre, snapshot(roots));
-    ran += "; drift confirmed by make split-all";
-  }
-  if (drift.length > 0) {
-    /* Put back exactly what the gate found, so verification is not an edit. */
+
+  const ran = passes.flat().length === 0 ? `no split input changed ${why}` : `${passes.filter((p) => p.length).map((p) => p.join(", ")).join("; then ")} (${why})`;
+  if (failure || unsettled.length > 0) {
+    /* Put back what the passes changed, so a failed gate is not an edit. */
+    const drift = differences(pre, snapshot(roots));
     restore(drift, saved);
-    return { state: "fail", detail: `${ran} changed ${drift.length} file(s): ${drift.slice(0, 6).join(", ")}${drift.length > 6 ? ", …" : ""} (restored)` };
+    const restored = drift.length > 0 ? ` (restored ${drift.length} file(s))` : "";
+    return {
+      state: "fail", regenerated: [], engineExport: engine,
+      detail: failure ? `${failure}${restored}` : `${ran} still changed ${unsettled.length} file(s) on pass ${CONVERGENCE_PASSES}: ${listed(unsettled)}${restored}`,
+    };
   }
-  if (failure) return { state: "fail", detail: failure };
+  const kept = [...regenerated].sort();
   return {
-    state: "pass",
-    detail: steps.length === 0 ? ran : `${ran} changed no config, header or source`,
-    ...(tree ? { receipt: { tree, engineExport: fileDigest(ENGINE_EXPORT), at: new Date().toISOString() } } : {}),
+    state: "pass", regenerated: kept, engineExport: engine,
+    detail: passes.flat().length === 0 ? ran : kept.length === 0 ? `${ran} changed no config, header or source` : `${ran} regenerated ${kept.length} file(s), kept: ${listed(kept)}`,
   };
 }
 
@@ -577,12 +654,12 @@ function convergence(tree: string | null, full: boolean): { state: GateState; de
 const VERIFY_CACHE = "build/tu-campaign/verify-cache.json";
 const VERIFY_CACHE_ENTRIES = 16;
 
-interface CachedVerdict { key: string; tree: string; at: string; report: TuProgressReport }
+interface CachedVerdict { key: string; tree: string; at: string; report: TuProgressReport; structuralComplete: boolean }
 
 /**
- * What a verdict depends on besides the tree: HEAD and the index (git diff
- * --check), the scope and the baseline. Not --limit: a reused verdict lists the
- * remaining functions as the run that reached it did.
+ * What a verdict depends on besides the tree: HEAD and the index, the scope and
+ * the baseline. Not --limit: a reused verdict lists the remaining functions as
+ * the run that reached it did.
  */
 function verdictKey(options: Options, tree: string): string | null {
   const head = gitLine(["rev-parse", "HEAD"]);
@@ -591,16 +668,22 @@ function verdictKey(options: Options, tree: string): string | null {
   const baseline = options.baseline === undefined ? null
     : existsSync(join(ROOT, options.baseline)) ? fileDigest(options.baseline) : gitLine(["rev-parse", "--verify", `${options.baseline}^{commit}`]);
   return createHash("sha256").update(JSON.stringify({
-    version: 1, tree, head, index, container: options.container ?? null,
+    version: 2, tree, head, index, container: options.container ?? null,
     baseline: options.baseline === undefined ? null : [options.baseline, baseline], fullConvergence: options.fullConvergence,
   })).digest("hex");
+}
+
+/** No whitespace damage in the working-tree diff: the one gate that reads NOT_GATE_INPUTS, so never reused. */
+function whitespaceGate(): { state: GateState; detail: string } {
+  const result = run("git", ["diff", "--check"]);
+  return result.code === 0 ? { state: "pass", detail: "clean" } : { state: "fail", detail: tail(result.output, 6) };
 }
 
 /**
  * The terminal gate, in order. Every step runs; a failure is recorded and the
  * remaining steps still report, so one run names every broken invariant. A
  * tree already judged under the same HEAD, index, options and baseline gets
- * the same verdict back without re-running anything.
+ * the same verdict back with only the whitespace gate re-run.
  */
 export function verify(options: Options): TuProgressReport {
   const tree = treeOf("worktree");
@@ -609,31 +692,39 @@ export function verify(options: Options): TuProgressReport {
   const hit = key ? cache.find((entry) => entry.key === key) : undefined;
   if (hit && !options.noCache) {
     console.error(`tuProgress: this tree (${hit.tree.slice(0, 12)}) was verified at ${hit.at}; reusing that verdict (--no-cache re-runs it)`);
-    return { ...hit.report, verifiedTree: hit.tree, cachedFrom: hit.at };
+    const whitespace = whitespaceGate();
+    const gates = hit.report.gates.map((gate) => gate.gate === "git diff --check" ? { ...gate, ...whitespace } : gate);
+    return {
+      ...hit.report, gates, integrity: { ...hit.report.integrity, whitespace: whitespace.state },
+      complete: hit.structuralComplete && gates.every((gate) => gate.state === "pass"), verifiedTree: hit.tree, cachedFrom: hit.at,
+    };
   }
 
   const gates: TuProgressReport["gates"] = [];
   const record = (gate: string, state: GateState, detail: string) => gates.push({ gate, state, detail });
+
+  /* 1. Config generation reaches a fixed point. First, because every later
+     gate reads what the split produces: after a rename or a fold, verifying
+     needs no hand-run split, and keeps what the split regenerates. */
+  const converged = convergence(tree, options.fullConvergence);
+  record("config convergence", converged.state, converged.detail);
+  /* The tree the remaining gates judge, and the verdict is cached under. */
+  const judged = converged.regenerated.length > 0 ? treeOf("worktree") : tree;
+  const judgedKey = judged === tree ? key : judged ? verdictKey(options, judged) : null;
   const startInputs = inputsDigest();
 
-  /* 1. Source/config structure before anything is built. */
+  /* 2. Source/config structure, against the split it was just given. */
   const before = structuralReport({ container: options.container, limit: options.limit, objects: false });
   record("inventory (source/config)", before.integrity.inventory === "pass" ? "pass" : "fail",
     before.integrity.inventory === "pass" ? `${before.inventory.eligible} eligible, ${before.inventory.folded} folded` : before.failures.slice(0, 3).join("; ") || "invalid modules");
 
-  /* 2. The matching decompilation is still complete, read through units. */
+  /* 3. The matching decompilation is still complete, read through units. */
   const complete = run("npx", ["tsx", "tools/diagnostics/progress.ts", "--check-complete"]);
   record("make complete", complete.code === 0 ? "pass" : "fail", complete.code === 0 ? "every live function is compiled C" : `progress --check-complete exited ${complete.code}`);
 
-  /* 3. Repository-wide source policy, attributed per function. */
+  /* 4. Repository-wide source policy, attributed per function. */
   const policy = run("npx", ["tsx", "tools/agent/sourcePolicy.ts", "--final"]);
   record("source policy", policy.code === 0 ? "pass" : "fail", policy.code === 0 ? verdict(policy.output, /^Source policy passed/) : tail(policy.output, 8));
-
-  /* 4. Config generation reaches a fixed point. First, because the re-split is
-     also what the build needs after a rename or a fold: verifying never needs
-     a hand-run split beforehand. */
-  const converged = convergence(tree, options.fullConvergence);
-  record("config convergence", converged.state, converged.detail);
 
   /* 5. Every container's linked bytes, built from what the split produced. */
   const build = run("make", [`-j${Math.min(8, availableParallelism())}`, "check-all"]);
@@ -645,14 +736,14 @@ export function verify(options: Options): TuProgressReport {
     structural.integrity.inventory === "pass" ? `${structural.modules.length} module unit(s) valid` : structural.failures.slice(0, 3).join("; ") || "invalid modules");
 
   /* 6. No whitespace damage in the working-tree diff. */
-  const whitespace = run("git", ["diff", "--check"]);
-  record("git diff --check", whitespace.code === 0 ? "pass" : "fail", whitespace.code === 0 ? "clean" : tail(whitespace.output, 6));
+  const whitespace = whitespaceGate();
+  record("git diff --check", whitespace.state, whitespace.detail);
 
   /* 7. Inputs did not change while verifying. Any other edit leaves the verdict
      standing but unattributable to one tree, so it is not cached. */
   const stable = inputsDigest() === startInputs;
   record("input stability", stable ? "pass" : "fail", stable ? "inputs unchanged during verification" : "sources or configuration changed during verification — rerun");
-  const sameTree = stable && tree !== null && treeOf("worktree") === tree;
+  const sameTree = stable && judged !== null && treeOf("worktree") === judged;
 
   let growth: ExceptionGrowth[] = [];
   let baselineLabel: string | null = null;
@@ -678,10 +769,14 @@ export function verify(options: Options): TuProgressReport {
   const allPass = gates.every((g) => g.state === "pass");
   const report: TuProgressReport = { ...structural, integrity, gates, exceptionGrowth: growth, baseline: baselineLabel, complete: structural.complete && allPass };
   if (sameTree) {
-    if (converged.receipt) writeJson(CONVERGENCE_RECEIPT, converged.receipt);
-    if (key) writeJson(VERIFY_CACHE, [{ key, tree: tree!, at: new Date().toISOString(), report }, ...cache.filter((entry) => entry.key !== key)].slice(0, VERIFY_CACHE_ENTRIES));
+    const at = new Date().toISOString();
+    if (converged.state === "pass") writeJson(CONVERGENCE_RECEIPT, { tree: judged, engineExport: converged.engineExport, at } satisfies ConvergenceReceipt);
+    if (judgedKey) {
+      const entry: CachedVerdict = { key: judgedKey, tree: judged!, at, report, structuralComplete: structural.complete };
+      writeJson(VERIFY_CACHE, [entry, ...cache.filter((cached) => cached.key !== judgedKey)].slice(0, VERIFY_CACHE_ENTRIES));
+    }
   }
-  return { ...report, ...(tree ? { verifiedTree: tree } : {}) };
+  return { ...report, ...(judged ? { verifiedTree: judged } : {}) };
 }
 
 // --- reporting -------------------------------------------------------------------
