@@ -426,7 +426,7 @@ extern struct Ovl11TextureCoordinates D_8012DB38;
 extern u16 D_800A03B0;
 
 /* ovl_11 80118B84 loads this selection with lh and resets it with sh. */
-extern s16 D_80128294;
+extern s16 gOvl11CompactChoiceSelection;
 
 /* ovl_11 800BF4B4/800CE034 read signed halfword pairs at four-byte strides. */
 extern u8 D_801281F0[];
@@ -436,7 +436,7 @@ extern u8 D_801281F0[];
 extern s16 gOvl11TextureStreamCursor;
 
 /* ovl_11 80116878 loads this word with lw for a signed threshold comparison. */
-extern s32 D_80071A60;
+extern s32 gSelectedThresholdBalance;
 
 /* ovl_11 800E0B40 indexes 20 rodata callbacks; matched members take an object and return s32. */
 extern s32 (*D_800B966C[20])(void *);
@@ -1940,7 +1940,7 @@ typedef struct {
     u16 flags;
     u8 pad4A88[0x51C8 - 0x4A88];
     u8 object[0x60];
-    s32 value;
+    s32 balance;
 } Ovl11SelectedThresholdState;
 
 /* 80114398 reads the u16 flag at D_8006C838+0x4A86 with lhu. */
@@ -4317,10 +4317,10 @@ typedef struct {
 } Ovl11D80127274Entry;
 extern Ovl11D80127274Entry D_80127274[];
 
-/* D_8012A028 - s16 scratch passed by address to func_8001A970 and
- * ovl_11_func_800FC544 by the ovl_11 countdown-table routines. */
-extern s16 D_8012A028;
-/* 800FD5E8 writes a two-halfword text header at D_8012A028+0/+2. */
+/* ovl_11: base of shared formatted-number scratch, passed to 8001A970
+ * and 800FC544. The scalar label does not specify the whole buffer extent. */
+extern s16 gOvl11NumberTextScratch;
+/* 800FD5E8 writes a two-halfword text header at scratch +0/+2. */
 struct Ovl11NumberTextHeader {
     s16 prefix;
     s16 marker;
@@ -4344,7 +4344,7 @@ struct Ovl11FDD74State {
     u16 entries[5];
 };
 /* 800FD7B4 indexes nine signed halfword text offsets as a 3-by-3 table. */
-extern s16 D_8012735C[3][3];
+extern s16 gOvl11PairedValueLabelOffsets[3][3];
 /* 800FD7B4: lh at +0x44BA, four eight-byte word pairs at +0x49C4; caller 800FD5E8 selects 0..3. */
 struct Ovl11PairedValues {
     char pad_0[0x44BA];
@@ -6952,7 +6952,7 @@ extern Ovl15CardHeaderBlock Ovl15CardHeader __asm__("D_80140F10");
 extern u8 D_8005346A[];
 
 /* ovl_11_func_8011D35C reads/writes this selection state with lh/sh. */
-extern s16 D_801282E2;
+extern s16 gOvl11WideChoiceSelection;
 
 /* ovl_11 800DEF30 dispatches the 20-word table; matched 800DFC44/800DFCFC take one object and return s32. */
 extern s32 (*D_800B95CC[20])(void *);

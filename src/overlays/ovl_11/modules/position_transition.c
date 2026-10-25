@@ -7,10 +7,10 @@
  * displacement about step 8.
  */
 #include "ovl11_position_transition.h"
+#include "word_interpolation.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_8001F278(s32 step, s32 length, s32 *start, s32 *end, s32 *out);
 void Ovl11SelectPositionTransitionTarget(s32 *out);
 
 void Ovl11BeginPositionTransition(Ovl11C7010Object *object) {
@@ -76,7 +76,7 @@ s32 Ovl11StepPositionTransition(Ovl11PositionTransitionObject *object) {
     Ovl11PositionTransitionSample sample;
     char *work;
 
-    func_8001F278(gOvl11PositionTransitionStep, 0x11, (s32 *)&gOvl11PositionTransitionStart, (s32 *)&gOvl11PositionTransitionTarget, &sample.x);
+    InterpolateThreeWords(gOvl11PositionTransitionStep, 0x11, (s32 *)&gOvl11PositionTransitionStart, (s32 *)&gOvl11PositionTransitionTarget, &sample.x);
     work = (char *)&D_8007AFF0;
     outputY = gOvl11PositionTransitionStart.y - 0x28;
     (*(u16 *)(work + 0x253B4)) = (u16)sample.x;

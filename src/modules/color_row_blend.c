@@ -7,10 +7,10 @@
 #include "render_packet_pool.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "word_interpolation.h"
 
 s32 GetColorRowYOffset(void);
 void InterpolateColorRow(u16 *out, u16 *first, u16 *second, s32 progress, s32 span);
-void func_8001F278(s32 progress, s32 span, s32 *first, s32 *second, s32 *out);
 
 void InitColorRowBlend(ColorRowBlend *blend, u_long *rows, s16 span,
                       s32 src0X, s32 src0Y, s32 src1X, s32 src1Y,
@@ -77,7 +77,7 @@ void InterpolateColorRow(u16 *out, u16 *first, u16 *second, s32 progress, s32 sp
         secondChannels[2] = secondColor & 0x1F;
         secondChannels[1] = (secondWord >> 5) & 0x1F;
         secondChannels[0] = (secondWord >> 0xA) & 0x1F;
-        func_8001F278(progress, span, firstChannels, secondVector, resultVector);
+        InterpolateThreeWords(progress, span, firstChannels, secondVector, resultVector);
         packed = resultChannels[0] & 0x1F;
         middleChannel = resultChannels[1];
         packed <<= 5;

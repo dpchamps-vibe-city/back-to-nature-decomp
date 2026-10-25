@@ -7,10 +7,8 @@
  */
 #include "common.h"
 #include "ovl11_background_color_cycle.h"
+#include "word_interpolation.h"
 
-/* Three-component integer interpolator; the scalar declarations of the
- * endpoint addresses preserve this unit's original address formation. */
-void func_8001F278(s32 index, s32 span, s32 *low, s32 *high, s32 *out);
 /* Enables background clearing and sets the RGB bytes in both render contexts. */
 void ovl_11_func_800DC114(s32 red, s32 green, s32 blue);
 
@@ -25,7 +23,7 @@ void Ovl11StepBackgroundColorCycle(void) {
     s16 nextIncreasing;
     s16 nextDecreasing;
 
-    func_8001F278((s32)gOvl11BackgroundCycleIndex, 0x1FF,
+    InterpolateThreeWords((s32)gOvl11BackgroundCycleIndex, 0x1FF,
                  &gOvl11BackgroundCycleLowRgb, &gOvl11BackgroundCycleHighRgb, rgb);
     ovl_11_func_800DC114(rgb[0], rgb[1], rgb[2]);
     /* Update after writing, and clamp instead of immediately stepping away

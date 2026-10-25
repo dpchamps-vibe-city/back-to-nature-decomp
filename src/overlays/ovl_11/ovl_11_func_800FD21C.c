@@ -10,12 +10,12 @@ void ovl_11_func_800FD21C(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
     s16 *base;
 
     for (var_v1 = 0; var_v1 < 0xF; var_v1++) {
-        (&D_8012A028)[var_v1] = 0xFFD;
+        (&gOvl11NumberTextScratch)[var_v1] = 0xFFD;
     }
     if (arg0 != 0) {
-        D_8012A028 = 0x90;
+        gOvl11NumberTextScratch = 0x90;
     }
-    base = &D_8012A028;
+    base = &gOvl11NumberTextScratch;
     base[4] = 0x71;
     func_8001A970((s32) arg2, base + 5, 2);
     base[8] = 0;

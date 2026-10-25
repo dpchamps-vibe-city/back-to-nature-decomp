@@ -16,8 +16,7 @@
 #include "include_asm.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
-
-void CopyVec3(Vec3 *dest, Vec3 *src);
+#include "vector_ops.h"
 
 /* Tentative definitions preserve the original unit's GP-relative accesses. */
 s8 gCameraOffsetState;

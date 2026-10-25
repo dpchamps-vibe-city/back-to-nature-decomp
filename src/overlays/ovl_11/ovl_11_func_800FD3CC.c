@@ -41,7 +41,7 @@ void ovl_11_func_800FD3CC(s16 arg0, s16 arg1) {
     if (var_a2 >= 0) {
         var_s1 = (u16 *) ((u8 *) &D_80053618 + *gTextBankOffsets);
         DrawSpriteFrameRects(temp_s4, (s32) D_8012CE88, var_a2 & 0xFF, 0, 0x96, (s16) (s32) arg1);
-        var_a1 = func_8001A970((s32) *(u16 *) (temp_s2 + 0xB4), &D_8012A028, 2);
+        var_a1 = func_8001A970((s32) *(u16 *) (temp_s2 + 0xB4), &gOvl11NumberTextScratch, 2);
         *var_a1 = 0xFFD;
         var_a1++;
         var_a3 = arg1 + 4;
@@ -49,7 +49,7 @@ void ovl_11_func_800FD3CC(s16 arg0, s16 arg1) {
             var_s1++;
             var_a1++;
         }
-        var_a1 = &D_8012A028;
+        var_a1 = &gOvl11NumberTextScratch;
     } else {
         var_a3 = arg1 + 4;
         var_a1 = (s16 *) ((u8 *) &D_8005362C + *gTextBankOffsets);

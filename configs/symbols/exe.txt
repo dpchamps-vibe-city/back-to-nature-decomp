@@ -1,4 +1,7 @@
 
+// Selected-entry threshold operations compare/debit this shared signed word.
+gSelectedThresholdBalance = 0x80071A60; // size:0x4
+
 // Raw timing-mode byte shared by input repeat, CD-volume decay and feedback fade.
 gUpdateTimingMode = 0x8005E274; // size:0x1
 
@@ -429,11 +432,11 @@ ClearCameraOffsetState = 0x8001F1B4; // type:func
 func_8001F1C0 = 0x8001F1C0; // type:func
 ComputeCylindricalOffset = 0x8001F1E0; // type:func
 pow_int = 0x8001F250; // type:func
-func_8001F278 = 0x8001F278; // type:func
-func_8001F2EC = 0x8001F2EC; // type:func
+InterpolateThreeWords = 0x8001F278; // type:func
+InterpolateWord = 0x8001F2EC; // type:func
 CopyVec3 = 0x8001F338; // type:func
 func_8001F35C = 0x8001F35C; // type:func
-func_8001F39C = 0x8001F39C; // type:func
+SubtractVec3 = 0x8001F39C; // type:func
 func_8001F3DC = 0x8001F3DC; // size:0x50 type:func
 _8001F41C = 0x8001F41C; // type:label
 _8001F424 = 0x8001F424; // type:label

@@ -5,11 +5,11 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "texture_sprite_draw.h"
 
 
 void ovl_11_func_800F6D14 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F7010 (s32 arg0, s16 arg1, s16 arg2);
-void ovl_11_func_800F8CF8 (s32 *arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F6A24 (u16 arg0);
 void ovl_11_func_800F6C78 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 

@@ -4959,6 +4959,61 @@ membership rose 108 → 113; all fourteen modules are valid.
 
 ## gradient-interpolation cluster — 0x8001F278–0x8001FABC (confidence: low)
 
+**Generic scalar/three-word service reconstructed as
+`src/modules/word_interpolation.c`, 8001F278–8001F338 exclusive (two compiled
+members).** InterpolateThreeWords and InterpolateWord use the exact same
+upper-only clamp, reversed endpoint convention and signed multiply/divide
+order; the scalar body corresponds to one iteration of the three-word body.
+This algorithm/ABI correspondence corroborates their original consecutive
+placement, but supplies no GP/private-state proof. The public header states
+endpoint direction (progress 0 selects first), negative extrapolation,
+nonzero span, overflow and sequential aliasing constraints. All EXE/overlay
+callers use the canonical names and shared declarations. No globals are owned.
+
+The preceding pow_int is a scalar exponent loop with no interpolation data
+or call edge. Following CopyVec3 begins the three-word in-place vector family
+below. These are evidence-limited responsibility edges, not proven original
+object cuts; no positive witness requires merging the whole generic math band.
+The existing color_row_blend module calls the generic service but shares no
+record/VRAM protocol with it. Its earlier withdrawn F278 extension remains
+withdrawn. Both new members and the EXE passed the checked baseline fold.
+
+**Vector operations reconstructed as `src/modules/vector_ops.c`,
+8001F338–8001F5B8 exclusive (two compiled members, three existing dead stubs).**
+CopyVec3 and SubtractVec3 now share the canonical three-s32 Vec3 view, replacing
+the duplicate local subtraction type without changing field widths. Original
+F42C calls CopyVec3 at F45C/F4C0 and subtraction at F468 while forming a
+length-scaled displacement from an origin. F35C/F3DC are the in-place addition
+and three-component inequality companions over the same +0/+4/+8 words,
+inside that copy/subtract/constructor span. These call/layout relationships,
+not deadness or adjacency alone, support taking all five entries. Header
+vector_ops.h publishes the compiled copy/subtract contract; no interface for
+the still-unimplemented dead helpers is invented. Their original INCLUDE_ASM
+placeholders are carried under the module's extracted path, not added.
+
+Left F2EC has a five-argument scalar interpolation/output-word ABI, no vector
+pointer pair or edge into these operations. Right F5B8 is a four-scalar
+2x2 determinant-sign classifier; F5EC beyond it calls VectorNormal twice for
+a dot product and has no edge into this copy/subtract family. With no shared
+small data or rodata, those are conservative cuts where membership says
+nothing further, not GP-proven original boundaries. The checked baseline
+fold passed both compiled members, all carried bytes and the full EXE.
+No member override exists for either new unit and no exception was added.
+
+Batch acceptance (word_interpolation/vector_ops plus ovl_11's
+selected_threshold_interaction, paired_value_panel, two_choice_prompt and
+texture_sprite_draw): `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passed every integrity gate. The EXE and all
+13 overlays retain linked byte identity, including data, callback pointers,
+jump tables and placement. All 76 module TUs are valid; folded eligible
+membership rose **554 → 571** (17 compiled functions), with the same 48 dead
+placeholders excluded. Canonical-name check is clean and the interface audit
+reports zero failing published interfaces; unrelated pre-existing interface
+debt is not silently claimed resolved. No compiler flag, policy exception,
+assembly construct or stub was added. No shared tooling changed. The gate's
+exit 1 denotes the 2054 still-unfolded eligible functions, not a failed gate.
+
+
 **Reconstructed: `src/modules/color_row_blend.c`, 8001F664–8001FABC
 exclusive, six compiled functions.** F664 is not merely an adjacent GPU helper:
 it initializes exactly the shared 0x14-byte record, captures two 16x1 rows
@@ -17347,10 +17402,39 @@ argument-forwarding body calling 800D7EF8/800BE6E4) bound the run.
 
 ## `ovl_11` sprite-draw variant / selection run — 0x8011D0C8–0x8011D35C (confidence: medium for draw trio; low for selection extension)
 
-Evidence: zero-gap link order and caller/callee edges connect the draw trio;
-verified `8011D35C` calls its draw forwarder `8011D10C` and its immediate
-predecessor `8011D264`, extending the candidate group. Original TU boundaries
-remain unproven; [evidence and limits](research/ovl_11_func_8011D35C-grouping.md).
+**Reconstructed `src/overlays/ovl_11/modules/two_choice_prompt.c`,
+8011D0C8–8011D400 exclusive, all five compiled members.** The two forwarders
+produce the exact 0/1 variant encoding consumed only by D150 (40/80-pixel
+panels, separate text bases and 14-pixel cursor pitch). D35C binds the wide
+forwarder and adjacent D264 input helper to its persistent two-choice state.
+This is the full rendering/input/controller protocol, not a slice at D150.
+The compact controller at nonadjacent 80118B84 calls both the compact wrapper
+and input helper; its external use does not disprove the five-member unit.
+It is not absorbed across intervening unrelated code on that dependency alone.
+
+Names: Ovl11DrawCompactChoicePrompt/DrawWideChoicePrompt,
+Ovl11DrawChoicePromptVariant, Ovl11ProcessTwoChoiceInput and
+Ovl11UpdateWideChoicePrompt. two_choice_prompt.h publishes the wrappers,
+shared input service and wide controller; the variant core keeps external
+linkage but is not offered as public API. Selection globals are
+`gOvl11WideChoiceSelection` (801282E2) and
+`gOvl11CompactChoiceSelection` (80128294), preserving signed halfword storage.
+D264's matched u16* definition is canonical: both signed-state callers now
+explicitly take an unsigned-halfword view, rather than restating a conflicting
+s16* prototype. The helper deliberately edits bits then tests signed values.
+No disputed width, layout, linkage or ownership changed; no tentative overlay
+definition is added under -G0. The header documents pressed-input priority,
+cancel/confirm results, sentinel x coordinates and draw-before-input behavior.
+
+Left boundary: D0B4 belongs to the preceding interaction-step copy/set family,
+not the prompt variant/text/input protocol, and shares no private state with
+it. Right boundary: D400 zeroes ten fields in a selection record for purchase
+panel callers; it does not draw/process two-choice state. These protocol
+separations leave neighbors outside on absence of a positive membership edge,
+not GP-proven original object boundaries. No supported member is excluded to
+protect a compiler setting. All five and overlay bytes passed the whole
+baseline checked fold; no override or exception was added. Final six-unit
+batch acceptance is recorded in the gradient-interpolation section above.
 
 Members (address order):
 - ovl_11_func_8011D0C8 (m) — variant-0 forwarder to the shared draw body.
@@ -17704,8 +17788,35 @@ remain unproven ([evidence and limits](research/ovl_11_func_800CA5D4-grouping.md
 
 ## `ovl_11` D_80129648 texture-draw helper pair — 0x800F8CF8 / 0x800F8F3C (confidence: medium)
 
-Candidate same-TU membership; original boundaries remain unproven
-([evidence](research/ovl_11_func_800F8F3C-grouping.md)).
+**Reconstructed `src/overlays/ovl_11/modules/texture_sprite_draw.c`,
+800F8CF8–800F9174 exclusive, both compiled members.** They consume the same
+0x22-byte texture-cache record fields (x/y, width/height, CLUT x/y), use the
+same neutral opaque texture-page protocol and provide complementary SPRT /
+POLY_FT4 packet paths. Gapless order corroborates the shared record/draw
+convention. This is layout/operation evidence, not GP ownership: the cache
+is external and also used by load/lookup/reclamation services elsewhere.
+
+The public texture_sprite_draw.h names Ovl11DrawTextureSpriteInCell and
+Ovl11DrawScaledTextureQuad. It distinguishes a 32-pixel cell from a centered
+quad, shared packet_work from the active POLY_FT4 cursor, and integer-multiple
+scaling (divide by 4096 BEFORE multiplying) from fractional Q12 scaling.
+Locals identify cache indices, coordinates and packet cursors. The signed
+GetClut loads in the sprite path versus unsigned macro fields in the quad
+remain deliberate; no SDK operation or cache declaration changed.
+
+Actual left neighbor 800F8C1C builds three text windows and invokes 800F8A3C,
+not this cache-record draw protocol. Right neighbor 800F9174 selects a texture
+transfer direction by two level tests and calls 800F9210, whose StoreImage /
+MoveImage2 / LoadImage swap protocol changes cache and far-slot records rather
+than drawing them. Neither invokes these two draw helpers. Distant F6C78 /
+F6D14 / F6E38 are lookup-service callers, not adjacent members; a shared cache
+alone does not support swallowing the intervening unrelated code. These are
+conservative protocol edges, not GP-proven original object boundaries under
+-G0. The checked baseline fold passed both members and the complete overlay;
+no flags or exceptions exist for the pair. Final six-unit batch acceptance
+is recorded in the gradient-interpolation section above.
+
+[Earlier evidence](research/ovl_11_func_800F8F3C-grouping.md).
 
 - ovl_11_func_800F8CF8 (s) — 32×32-cell texture sprite drawing with a draw-mode packet.
 - ovl_11_func_800F8F3C (m) — centered, size-scaled textured-quad drawing.
@@ -17752,8 +17863,39 @@ cluster and transaction-helper idiom; original TU boundaries remain unproven.
 
 ## `ovl_11` paired-value row renderer caller/callee run — 0x800FD5E8 / 0x800FD7B4 / 0x800FD968 (confidence: low)
 
-[Pair evidence and limits](research/ovl_11_func_800FD968-grouping.md);
-[caller-extension evidence and limits](research/ovl_11_func_800FD7B4-grouping.md).
+**Reconstructed `src/overlays/ovl_11/modules/paired_value_panel.c`,
+800FD5E8–800FDD74 exclusive, three compiled members.** The panel dispatches
+four rows; each row selects an eight-byte pair from work-area +49C4, passes
+it to the bar renderer and selects its label through the private 3x3 offset
+table at 8012735C. The panel's two totals read that very first pair. Direct
+calls 800FD778/800FD860, common pair selection and gapless original order
+support this closed rendering hierarchy. The broader number-text scratch
+cluster is not a TU witness: other panels reuse that external scratch.
+
+Names: Ovl11DrawPairedValuePanel/Row/Bars, private-table label
+`gOvl11PairedValueLabelOffsets`, and shared scratch base
+`gOvl11NumberTextScratch`. Names propagate through all scratch users without
+changing its scalar extern or assuming a two-byte usable buffer extent.
+Only the panel is published in paired_value_panel.h; helper linkage is
+unchanged. The header distinguishes clamped seven-digit totals from signed,
+unclamped modulo-10000 bar widths and the >=2000/>=5000 label bands. Locals
+now identify ordering-table slots, rows, threshold bands and edges; the
+four-edge loop and signed arithmetic remain intact.
+
+Left boundary: 800FD3CC formats/draws individual 0xF8-byte records and their
+status icons, not these pairs or the private label table. Right boundary:
+800FDD74 starts a five-entry u16 display at work-area +5208 and dispatches
+FDFF4/FE068/FDE98/FE14C/FE3A0, none of this row hierarchy. Shared text/sprite
+services alone do not join either neighbor. These are conservative protocol
+edges, not GP-proven original object edges under -G0; no larger supported
+same-unit group is split. The whole checked fold passed all three members
+and overlay bytes at baseline; no active override exists.
+
+Final six-unit batch acceptance is recorded in the gradient-interpolation
+section above.
+
+[Earlier pair evidence](research/ovl_11_func_800FD968-grouping.md);
+[caller-extension evidence](research/ovl_11_func_800FD7B4-grouping.md).
 
 - ovl_11_func_800FD5E8 (s, candidate same TU) — draws the first pair's numeric values and dispatches four paired-value rows.
 - ovl_11_func_800FD7B4 (m, candidate same TU) — selects an eight-byte work-area value pair, calls its gapless successor to draw bars, and draws the row label.
@@ -17761,8 +17903,41 @@ cluster and transaction-helper idiom; original TU boundaries remain unproven.
 
 ## `ovl_11` selected-record threshold caller/helper run — 0x801165E0–0x80116980 (confidence: medium)
 
-Candidate same-TU membership; original boundaries remain unproven
-([evidence and limits](research/ovl_11_func_80116878-grouping.md)).
+**Reconstructed `src/overlays/ovl_11/modules/selected_threshold_interaction.c`,
+801165E0–80116980 exclusive (three compiled members).** The controller's only
+local threshold helpers are the complementary eligibility/debit pair; both
+resolve the selected +28 halfword through 800D740C, narrow its result to s16,
+and compare/debit the identical shared word (8006C838 + 5228 == 80071A60).
+The original calls at 80116708/80116798 and gapless order corroborate this
+closed operation protocol. Neither adjacency nor the widely shared work area
+alone supplies membership. The full checked fold matches at baseline -O2/-G0,
+including its pooled controller jump table; no member override exists.
+
+Names are Ovl11UpdateThresholdInteraction, Ovl11CanApplySelectedThreshold and
+Ovl11ApplySelectedThreshold. Only the controller is published in
+selected_threshold_interaction.h; the helpers retain external linkage, not
+invented static linkage. 80071A60 is gSelectedThresholdBalance, propagated
+through its other renderer user and the canonical override extern. It is
+not named money: the implementation establishes signed comparison/debit,
+not a resource identity. The canonical state view's `balance` field denotes
+the same address. The header records update-call timing, unchecked selection,
+shared-state effects, signed narrowing and the absence of a debit clamp.
+
+Left boundary: 801165C8 tests a separate mode word against 0x1A; preceding
+801164F8 maps ratios/levels through 80128214. Neither uses this threshold
+lookup/debit protocol or calls these helpers. Right boundary: 80116980 starts
+a list renderer with private cursor/scroll state at 8012D518/51A, numeric
+formatting and row-drawing helpers; it does not invoke this pair. Those are
+conservative protocol edges: no positive membership witness joins either
+neighbor, and -G0 supplies no GP proof of original object edges. Remote
+800D740C is a shared lookup dependency; 8011CC08 only renders the balance.
+No supported same-unit member is intentionally left outside.
+
+Final six-unit batch acceptance is recorded in the gradient-interpolation
+section above.
+
+Earlier evidence and limits:
+[evidence](research/ovl_11_func_80116878-grouping.md).
 
 - ovl_11_func_801165E0 (s) — multi-state record interaction driver that dispatches the following threshold predicate and update helper.
 - ovl_11_func_80116878 (m) — tests whether `D_80071A60` meets the selected record entry's signed threshold.

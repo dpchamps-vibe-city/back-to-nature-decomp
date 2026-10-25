@@ -11,6 +11,7 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "texture_sprite_draw.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
@@ -21,7 +22,6 @@ void ovl_11_func_800F6F7C (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F7010 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80100EB8 (s32 arg0);
 void SetVal8005E2BC (s32 arg0);
-void ovl_11_func_800F8CF8 (s32 *arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F6A24 (u16 arg0);
 void ovl_11_func_800F6C78 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_80100F9C (s32 arg0);

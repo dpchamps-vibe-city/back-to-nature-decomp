@@ -11,7 +11,7 @@ void ovl_11_func_8011CEE0 (u16 *dst);
 void ovl_11_func_8011CF10 (u16 *dst);
 
 extern s32 D_80071A5C;
-extern s32 D_80071A60;
+extern s32 gSelectedThresholdBalance;
 extern s16 D_8012D608;
 
 void ovl_11_func_8011CC08(s32 arg0) {
@@ -25,7 +25,7 @@ void ovl_11_func_8011CC08(s32 arg0) {
     void (*var_s4)(u16 *);
 
     if (arg0 != 0) {
-        var_a0 = D_80071A60;
+        var_a0 = gSelectedThresholdBalance;
         var_s6 = 0x76;
         var_s4 = ovl_11_func_8011CF10;
         var_s3 = 0xBB;

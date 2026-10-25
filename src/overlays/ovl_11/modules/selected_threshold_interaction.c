@@ -1,21 +1,25 @@
-#include "common.h"
-#include "game_types.h"
+/* Message-driven confirmation of a selected entry's signed threshold.
+ * The predicate and debit deliberately use two address views of the same
+ * balance word (8006C838 + 5228 == 80071A60). No storage is owned here.
+ * Membership and conservative protocol boundaries: notes/file-groupings.md. */
+
+#include "selected_threshold_interaction.h"
 #include "message_window.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_80116878(StructD548 *arg0);
-void ovl_11_func_801168C0(StructD548 *arg0);
+s32 Ovl11CanApplySelectedThreshold(StructD548 *arg0);
+void Ovl11ApplySelectedThreshold(StructD548 *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 void ovl_11_func_8011D084(s32 arg0, s32 arg1);
 void ovl_11_func_8011D0B4(void);
 
-s32 ovl_11_func_801165E0(void) {
+s32 Ovl11UpdateThresholdInteraction(void) {
     Ovl11D8012D7B8 params;
-    s32 result;
+    s32 complete;
 
-    result = 0;
+    complete = 0;
     params.unk4 = -1;
     params.unk8 = -1;
     params.unk10 = 7;
@@ -44,7 +48,7 @@ s32 ovl_11_func_801165E0(void) {
             ovl_11_func_8011D084(9, 11);
             break;
         case 1:
-            if (ovl_11_func_80116878((StructD548 *)gOvl11PrimarySelectionRecord) == 1) {
+            if (Ovl11CanApplySelectedThreshold((StructD548 *)gOvl11PrimarySelectionRecord) == 1) {
                 RequestMessageWindow(1, 0x449);
                 ovl_11_func_8011D084(10, 8);
             } else {
@@ -63,7 +67,7 @@ s32 ovl_11_func_801165E0(void) {
         case 1:
             CloseMessageWindow();
             RequestMessageWindow(1, 0x448);
-            ovl_11_func_801168C0((StructD548 *)gOvl11PrimarySelectionRecord);
+            Ovl11ApplySelectedThreshold((StructD548 *)gOvl11PrimarySelectionRecord);
             break;
         case 2:
             CloseMessageWindow();
@@ -84,7 +88,7 @@ s32 ovl_11_func_801165E0(void) {
         }
         break;
     case 11:
-        result = 1;
+        complete = 1;
         break;
     case 12:
     case 13:
@@ -93,5 +97,40 @@ s32 ovl_11_func_801165E0(void) {
         }
         break;
     }
-    return result;
+    return complete;
+}
+
+s32 ovl_11_func_800D740C(u16 arg0);
+
+/* Lookup results are narrowed to s16 before either comparison or debit. */
+s32 Ovl11CanApplySelectedThreshold(StructD548 *record) {
+    s16 threshold;
+
+    threshold = ovl_11_func_800D740C((u16) record->data[record->index]);
+    return gSelectedThresholdBalance >= threshold;
+}
+
+void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
+void ovl_11_func_800F3898(u16 arg0, u16 arg1);
+
+/* The caller checks eligibility first; this operation does not clamp or
+ * repeat the balance test. The selector also chooses the completion action. */
+void Ovl11ApplySelectedThreshold(StructD548 *record) {
+    s16 selection;
+    s16 threshold;
+
+    gOvl11InteractionDrawMode = 0;
+    threshold = ovl_11_func_800D740C((u16)record->data[record->index]);
+    ((Ovl11SelectedThresholdState *)D_8006C838)->balance -= threshold;
+    selection = record->index;
+    if (selection == 0) {
+        ((Ovl11SelectedThresholdState *)D_8006C838)->flags |= 0x10;
+        ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11SelectedThresholdState *)D_8006C838)->object, 0x67, 2);
+        ovl_11_func_8011D084(9, 0xB);
+    } else if (selection == 1) {
+        ovl_11_func_800F3898(3, 0x1F4);
+        ovl_11_func_8011D084(9, 0xB);
+    } else {
+        ovl_11_func_8011D084(9, 0xC);
+    }
 }

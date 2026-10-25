@@ -201,13 +201,8 @@ segments:
       - [0xF798, c, GetVal8005E524]       # 0x8001EF98 GetVal8005E524
       - [0xF7A4, c, modules/camera_offset]
       - [0xFA50, c, pow_int]       # 0x8001F250 pow_int
-      - [0xFA78, c, func_8001F278]       # 0x8001F278 func_8001F278
-      - [0xFAEC, c, func_8001F2EC]       # 0x8001F2EC func_8001F2EC
-      - [0xFB38, c, CopyVec3]             # 0x8001F338 CopyVec3
-      - [0xFB5C, c, func_8001F35C]       # 0x8001F35C func_8001F35C
-      - [0xFB9C, c, func_8001F39C]       # 0x8001F39C func_8001F39C
-      - [0xFBDC, c, func_8001F3DC]       # 0x8001F3DC func_8001F3DC
-      - [0xFC2C, c, func_8001F42C]       # 0x8001F42C func_8001F42C
+      - [0xFA78, c, modules/word_interpolation]
+      - [0xFB38, c, modules/vector_ops]
       - [0xFDB8, c, func_8001F5B8]       # 0x8001F5B8 func_8001F5B8
       - [0xFDEC, c, func_8001F5EC]       # 0x8001F5EC func_8001F5EC
       - [0xFE64, c, modules/color_row_blend]

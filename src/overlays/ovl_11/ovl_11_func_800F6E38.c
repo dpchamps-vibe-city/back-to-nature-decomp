@@ -1,6 +1,6 @@
 #include "common.h"
+#include "texture_sprite_draw.h"
 
-void ovl_11_func_800F8F3C(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4);
 void ovl_11_func_800F6A24(u16 arg0);
 
 void ovl_11_func_800F6E38(s32 *arg0, u16 arg1, s16 arg2, s16 arg3, s32 arg4) {
@@ -12,7 +12,7 @@ void ovl_11_func_800F6E38(s32 *arg0, u16 arg1, s16 arg2, s16 arg3, s32 arg4) {
         for (i = 0; i < 0x48; i++) {
             if (gOvl11TextureCache[i].id == id) {
                 gOvl11TextureCache[i].active = 1;
-                ovl_11_func_800F8F3C(arg0, i, arg2, arg3, arg4);
+                Ovl11DrawScaledTextureQuad(arg0, i, arg2, arg3, arg4);
                 return;
             }
         }

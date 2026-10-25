@@ -5,7 +5,7 @@ s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 void ovl_11_func_800FC544(s32 arg0, s16 arg1, s32 arg2, s32 arg3, s16 arg4);
 
 extern s16 D_80127264[];
-extern s16 D_8012A028;
+extern s16 gOvl11NumberTextScratch;
 
 void ovl_11_func_800FC5F4(void) {
     s16 temp_s0;
@@ -18,7 +18,7 @@ void ovl_11_func_800FC5F4(void) {
 
     var_s0 = 0;
     var_s1 = D_80127264;
-    var_s2 = &D_8012A028;
+    var_s2 = &gOvl11NumberTextScratch;
     for (; var_s0 < 4; var_s0++) {
         *((u16 *)func_8001A970((s32) var_s1[1], var_s2, 3)) = 0xFFFF;
         temp_v1 = (var_s0 + 1) * 0x18;

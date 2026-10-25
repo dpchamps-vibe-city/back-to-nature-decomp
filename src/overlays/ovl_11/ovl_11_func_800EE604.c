@@ -1,4 +1,5 @@
 #include "common.h"
+#include "word_interpolation.h"
 
 /* View of the D_8007AFF0 + 0x25394 work area (fields at 0x25394/0x25398/0x253B6).
  * The struct-field address web (rather than a char* + folded constant offset)
@@ -11,7 +12,6 @@ typedef struct {
 } FarWork;
 
 void Ovl11ResetSceneCameraOrbit(void);
-void func_8001F2EC(s32 cur, s32 span, s32 to, s32 from, s32 *out);
 
 s32 ovl_11_func_800EE604(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 sp18;
@@ -48,9 +48,9 @@ s32 ovl_11_func_800EE604(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         }
     } else {
         temp_s0 = &gOvl11ValueSlots[arg1];
-        func_8001F2EC(*temp_s0, 0xB1, D_80129540, D_8012954C, &sp18);
-        func_8001F2EC(*temp_s0, 0xB1, D_80129544, D_80129550, &sp1C);
-        func_8001F2EC(*temp_s0, 0xB1, D_80129548, D_80129554, &sp20);
+        InterpolateWord(*temp_s0, 0xB1, D_80129540, D_8012954C, &sp18);
+        InterpolateWord(*temp_s0, 0xB1, D_80129544, D_80129550, &sp1C);
+        InterpolateWord(*temp_s0, 0xB1, D_80129548, D_80129554, &sp20);
         {
             char *far_base = (char *)&D_8007AFF0;
             ((FarWork *)(far_base + 0x25394))->f4 = sp18;

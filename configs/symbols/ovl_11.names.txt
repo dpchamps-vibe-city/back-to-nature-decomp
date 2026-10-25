@@ -1,5 +1,30 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Two-choice panel variants, pressed-input service and wide prompt state.
+Ovl11DrawCompactChoicePrompt = 0x8011D0C8; // type:func
+Ovl11DrawWideChoicePrompt = 0x8011D10C; // type:func
+Ovl11DrawChoicePromptVariant = 0x8011D150; // type:func
+Ovl11ProcessTwoChoiceInput = 0x8011D264; // type:func
+Ovl11UpdateWideChoicePrompt = 0x8011D35C; // type:func
+gOvl11WideChoiceSelection = 0x801282E2; // type:data size:0x2
+gOvl11CompactChoiceSelection = 0x80128294; // type:data size:0x2
+
+// Existing texture-cache records drawn as sprites or integer-scaled quads.
+Ovl11DrawTextureSpriteInCell = 0x800F8CF8; // type:func
+Ovl11DrawScaledTextureQuad = 0x800F8F3C; // type:func
+
+// Four-row paired-value panel: shared scratch is not module-owned storage.
+Ovl11DrawPairedValuePanel = 0x800FD5E8; // type:func
+Ovl11DrawPairedValueRow = 0x800FD7B4; // type:func
+Ovl11DrawPairedValueBars = 0x800FD968; // type:func
+gOvl11PairedValueLabelOffsets = 0x8012735C; // type:data size:0x12
+gOvl11NumberTextScratch = 0x8012A028; // type:data size:0x2
+
+// Selected-entry signed threshold check/debit and its message controller.
+Ovl11UpdateThresholdInteraction = 0x801165E0; // type:func
+Ovl11CanApplySelectedThreshold = 0x80116878; // type:func
+Ovl11ApplySelectedThreshold = 0x801168C0; // type:func
+
 // Four-slot contextual messages and their three-block image cycle.
 Ovl11ResetChoiceMessages = 0x80107F18;
 Ovl11RequestChoiceMessages = 0x80107F38;

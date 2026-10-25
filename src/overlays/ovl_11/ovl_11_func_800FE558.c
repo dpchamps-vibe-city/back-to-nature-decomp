@@ -11,11 +11,11 @@ void ovl_11_func_800FE558(s16 arg0, s16 arg1, s16 arg2) {
     s16 *var_a1;
     s32 var_a2;
 
-    it = &D_8012A028;
+    it = &gOvl11NumberTextScratch;
     *((u16 *)func_8001A970((s32)arg0, it, 0xE)) = 0xFFFF;
     var_a1 = it;
     var_a2 = 0;
-    if ((u16)D_8012A028 == 0xFFD) {
+    if ((u16)gOvl11NumberTextScratch == 0xFFD) {
         do {
             var_a2++;
             var_a1++;

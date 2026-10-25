@@ -1,5 +1,6 @@
 #include "common.h"
 #include "message_window.h"
+#include "two_choice_prompt.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -9,7 +10,6 @@ void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
 void ovl_11_func_8011D084(s32 arg0, s32 arg1);
 void ovl_11_func_8011D0B4(void);
-s32 ovl_11_func_8011D35C(s32 arg0, s16 arg1, s16 arg2);
 s16 ovl_11_func_8011D9DC(s16 arg0, s32 arg1);
 
 s32 ovl_11_func_80119820(void) {
@@ -48,9 +48,9 @@ s32 ovl_11_func_80119820(void) {
     case 4:
         gOvl11InteractionDrawMode = 3;
         ovl_11_func_8011D084(8, 0);
-        ovl_11_func_8011D35C(0, -1, 0);
+        Ovl11UpdateWideChoicePrompt(0, -1, 0);
     case 8:
-        switch (ovl_11_func_8011D35C(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
+        switch (Ovl11UpdateWideChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
         case 0:
             break;
         case 1:

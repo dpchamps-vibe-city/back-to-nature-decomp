@@ -21,10 +21,10 @@ void ovl_11_func_800FC358(void) {
     DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x68, (s32) D_8012CDF8, 0, 0, 0x18, 0x30);
     ovl_11_func_800FE7FC(((struct struct_8006C838_800FC358 *) D_8006C838)->field_4A84, 0x78, 0x3C);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) &((struct struct_8006C838_800FC358 *) D_8006C838)->field_51C8, 0x30, 0x32);
-    ovl_11_func_800FE614((u16 *) func_8001A970(D_8012CDE6, &D_8012A028, 3), 0x1E74);
-    ovl_11_func_800FC544(3, 0xB, (s32) &D_8012A028, 0x28, 0x48);
-    ovl_11_func_800FE614((u16 *) func_8001A970(D_8012CDE8, &D_8012A028, 3), 0x1E78);
-    ovl_11_func_800FC544(3, 0xC, (s32) &D_8012A028, 0x28, 0x60);
+    ovl_11_func_800FE614((u16 *) func_8001A970(D_8012CDE6, &gOvl11NumberTextScratch, 3), 0x1E74);
+    ovl_11_func_800FC544(3, 0xB, (s32) &gOvl11NumberTextScratch, 0x28, 0x48);
+    ovl_11_func_800FE614((u16 *) func_8001A970(D_8012CDE8, &gOvl11NumberTextScratch, 3), 0x1E78);
+    ovl_11_func_800FC544(3, 0xC, (s32) &gOvl11NumberTextScratch, 0x28, 0x60);
     ovl_11_func_800FC754();
     value = ((struct struct_8006C838_800FC358 *) D_8006C838)->field_5224;
     if (value >= -9999999) {
@@ -34,11 +34,11 @@ void ovl_11_func_800FC358(void) {
     } else {
         value = -9999999;
     }
-    ovl_11_func_800FE614((u16 *) func_8001A970(value, &D_8012A028, 8), 0x1E86);
-    ovl_11_func_800FC544(3, 0xA, (s32) &D_8012A028, 0x8C, 0x30);
+    ovl_11_func_800FE614((u16 *) func_8001A970(value, &gOvl11NumberTextScratch, 8), 0x1E86);
+    ovl_11_func_800FC544(3, 0xA, (s32) &gOvl11NumberTextScratch, 0x8C, 0x30);
     ovl_11_func_800FC6A4();
     ovl_11_func_800FC8C8();
     ovl_11_func_800FC5F4();
-    ovl_11_func_800FE614((u16 *) func_8001A970(D_8012CDE4, &D_8012A028, 3), 0x1E74);
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) &D_8012A028, 0xBA, 0x1A);
+    ovl_11_func_800FE614((u16 *) func_8001A970(D_8012CDE4, &gOvl11NumberTextScratch, 3), 0x1E74);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) &gOvl11NumberTextScratch, 0xBA, 0x1A);
 }

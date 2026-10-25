@@ -33,9 +33,9 @@ void ovl_11_func_800FE3A0(s32 input_level, u32 input_value, s32 input_x, s32 inp
                                               (s32) (D_80127214[var_a3] - temp_a1) +
                                           (var_a3 - arg0) * 100) &
                                             0xFFFF,
-                                        &D_8012A028, 4),
+                                        &gOvl11NumberTextScratch, 4),
                           (u16 *) ((u8 *) D_800535D0 + *gTextBankOffsets));
-            var_a1 = &D_8012A028;
+            var_a1 = &gOvl11NumberTextScratch;
         }
     }
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) var_a1, (s32) arg2,

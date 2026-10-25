@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "message_window.h"
+#include "two_choice_prompt.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
@@ -18,7 +19,6 @@ s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 void ovl_11_func_8011D084(s32 arg0, s32 arg1);
 void ovl_11_func_8011D0B4(void);
-s32 ovl_11_func_8011D35C(s32 arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     VECTOR position;
@@ -72,7 +72,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         ovl_11_func_8011D084(8, 0);
         ovl_11_func_80118B84(0, -1, 0);
     case 8:
-        switch (ovl_11_func_8011D35C(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
+        switch (Ovl11UpdateWideChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
         case 0:
             break;
         case 1:
