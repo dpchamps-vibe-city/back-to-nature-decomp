@@ -1,16 +1,15 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "master_volume.h"
 
 void ovl_23_func_800BB214 (void);
 void ovl_23_func_800BB488 (void);
 void ovl_23_func_800BB534 (void);
 void ovl_23_func_800BB758 (void);
-s32 func_8001FD74 (void);
 s32 func_80020818 (void);
 s32 func_8001FB30 (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_23_func_800B81AC (void);
 void func_800226F0 (void);
-void func_8001FE00 (s32 arg0);
 
 void ovl_23_func_800B7F00(void) {
     s32 *base;
@@ -33,7 +32,7 @@ void ovl_23_func_800B7F00(void) {
         ++*(u8 *)&D_800BBA3C;
         break;
     case 4:
-        if (func_8001FD74() != 0) {
+        if (IsSoundTransferComplete() != 0) {
             *(u8 *)&D_800BBA3C = 5;
             func_80020818();
             func_8001FB30(0, 0, 0x12, 0x7F);
@@ -44,7 +43,7 @@ void ovl_23_func_800B7F00(void) {
         ovl_23_func_800B81AC();
         func_800226F0();
         BeginScreenFadeDecrease(0xA, 0, 2);
-        func_8001FE00(0xA);
+        BeginMasterVolumeFadeIn(0xA);
         *(u8 *)&D_800BBA3C = 0;
         base = (s32 *)&D_8006C838;
         ++base[0x448C >> 2];

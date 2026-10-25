@@ -1,14 +1,12 @@
 #include "common.h"
 #include "screen_fade.h"
-
-/* Callees. common.h does not pull in functions.h or psyq headers; without
- * these declarations cc1 treats every call as an implicit-int call_value and
- * keeps a $v0 return web alive, corrupting allocation downstream. Real
- * signatures per vendored SDK (libgpu.h) and the callees' matched definitions. */
-void func_8002206C(void);
-void KanjiFntClose(void);
-int KanjiFntOpen(int x, int y, int w, int h, int dx, int dy, int cx, int cy,
-                 int isbg, int n);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "card_deal.h"
 
 void ovl_08_func_800B8054(void) {
     u8 *fnt;
@@ -25,6 +23,6 @@ void ovl_08_func_800B8054(void) {
     fnt[0x19] = 0x40;
     fnt[0x1A] = 0x40;
     fnt[0x1B] = 0x80;
-    func_8002206C();
+    DealCardGameTable();
     D_800B8500 += 1;
 }

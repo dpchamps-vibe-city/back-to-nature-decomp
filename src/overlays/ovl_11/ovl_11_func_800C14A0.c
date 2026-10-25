@@ -1,11 +1,11 @@
 #include "common.h"
 #include "gte_scene_state.h"
+#include "cd_audio.h"
 
 void ovl_11_func_800C188C(void);
 void ovl_11_func_800C162C(void);
 void ovl_11_func_800BBC74(void);
 void ovl_11_func_800E3AA4(void);
-void func_8002194C(void);
 void ovl_11_func_80120A2C(void);
 void ovl_11_func_800DB674(void);
 void ovl_11_func_800DB78C(void);
@@ -24,7 +24,7 @@ void ovl_11_func_800C14A0(void) {
         }
         ovl_11_func_800BBC74();
         ovl_11_func_800E3AA4();
-        func_8002194C();
+        PollCdAudio();
         break;
     case 1:
     case 2:

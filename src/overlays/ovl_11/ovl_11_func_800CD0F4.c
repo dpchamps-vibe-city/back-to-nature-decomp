@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "cd_audio.h"
 
-void func_80021B90(s32 arg0);
 s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_800E0C24(Ovl11StageHandlerObj *arg0, s32 arg1);
@@ -27,7 +27,7 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
             if (((struct Ovl11ActionCounter *) D_8006C838)->count < 15) {
                 ((struct Ovl11ActionCounter *) D_8006C838)->count++;
             }
-            func_80021B90(10);
+            StartCdAudioTrack(10);
         }
         ovl_11_func_800DF010(D_80128C4C_dispatch, action);
         return 1;
@@ -38,7 +38,7 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
             if (((struct Ovl11ActionCounter *) D_8006C838)->count < 15) {
                 ((struct Ovl11ActionCounter *) D_8006C838)->count++;
             }
-            func_80021B90(12);
+            StartCdAudioTrack(12);
         }
         ovl_11_func_800E0C24(D_80128C4C_dispatch, action);
         return 1;
@@ -69,7 +69,7 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
             if (((struct Ovl11ActionCounter *) D_8006C838)->count < 15) {
                 ((struct Ovl11ActionCounter *) D_8006C838)->count++;
             }
-            func_80021B90(14);
+            StartCdAudioTrack(14);
         } else {
             ovl_11_func_8010B57C(D_80128C4C_dispatch, D_80123290[arg1]);
         }

@@ -3,6 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "cd_audio.h"
+#include "master_volume.h"
 
 void ovl_30_func_8012F44C(void);
 void ovl_30_func_8012F410(void);
@@ -15,8 +17,6 @@ s32 func_80020818(void);
 s32 func_80020B80(s32, s32);
 void func_8001FBF0(s16, s16);
 s32 func_8001FABC(s16);
-void func_80021B90(s32);
-s32 func_8001FD74(void);
 s32 func_8001FB30(s16, s16, s16, s16);
 
 #define DEBUG_FLAGS ((struct Ovl30DebugFlags *)D_8006C838)
@@ -168,7 +168,7 @@ s32 ovl_30_func_8012F454(s32 state) {
             break;
         case 9:
             if (INPUT->field_0x8 & 0x20) {
-                func_80021B90(D_80134AF4);
+                StartCdAudioTrack(D_80134AF4);
             } else {
                 if (INPUT->field_0x0 & 0x2000) {
                     if (++D_80134AF4 >= 26) D_80134AF4 = 0;
@@ -181,14 +181,14 @@ s32 ovl_30_func_8012F454(s32 state) {
         }
         break;
     case 999:
-        if (func_8001FD74()) {
+        if (IsSoundTransferComplete()) {
             state = 1;
             func_80020818();
             func_8001FB30(0, 0, D_80134AF0, 127);
         }
         break;
     case 1000:
-        if (func_8001FD74()) {
+        if (IsSoundTransferComplete()) {
             state = 1;
             func_80020818();
         }

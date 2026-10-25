@@ -32,7 +32,7 @@ s32 func_800229F4(void) {
             v0 = 4;
         }
         ((u8 *)&D_8006C910)[-0xC] = v0;
-        func_80015704((SpriteSourceData *)&D_800A06D8, (SpriteDataHeader *)&D_800977F8);
+        func_80015704((SpriteSourceData *)&D_800A06D8, (SpriteDataHeader *)&gSharedSpriteData);
         func_80022008();
     }
     return 0;

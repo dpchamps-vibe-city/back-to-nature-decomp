@@ -645,6 +645,10 @@ typedef struct SpriteSourceData {
     /* 0x2C */ s32 field_2C;    /* header + offset_frame (frame data / control bytes) */
 } SpriteSourceData;
 
+/* Scrolling-grid visitor: ordering-table address, source, sprite index,
+ * x/y in pixels. Coordinates are narrowed to s16 by the renderer callbacks. */
+typedef void (*SpriteGridCallback)(s32, SpriteSourceData *, s16, s32, s32);
+
 /* 8010D0EC's matched sprite-object view, also passed by 8010C7F0. */
 typedef struct {
     s16 field_0;

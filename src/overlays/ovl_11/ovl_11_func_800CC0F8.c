@@ -98,7 +98,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
             }
             temp_a0 = arg0->unk2;
             if (temp_a0 == 0x186) {
-                func_80015EE8(temp_v1_2, (s32) &D_800A0728, (s32) (*(u8 *) ((u8 *) &D_8012DB84 + 0)), 0, (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 0)), (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 4)));
+                func_80015EE8(temp_v1_2, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) &D_8012DB84 + 0)), 0, (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 0)), (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 4)));
             } else {
                 ovl_11_func_800D6F78(temp_a0, arg0->unk0, (s32 *) temp_v1_2, *(s16 *) ((u8 *) D_80128B98 + 0), (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 4)), 2);
             }

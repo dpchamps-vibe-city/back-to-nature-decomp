@@ -2,12 +2,12 @@
 #include "screen_fade.h"
 #include "scene_selection.h"
 #include "gte_scene_state.h"
+#include "master_volume.h"
 
 void ovl_21_func_800BB138(void);
 void ovl_21_func_800BB250(void);
 void ovl_21_func_800BB2B4(void);
 void ovl_21_func_800BA4C0(void);
-s32 func_8001FE6C(void);
 void func_8001FAE8(s32 arg0);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020B80(s32 arg0, s32 arg1);
@@ -21,7 +21,7 @@ void ovl_21_func_800B8134(void) {
     ovl_21_func_800BB2B4();
     ovl_21_func_800BA4C0();
     var_s0 = IsScreenFadeComplete() == 1;
-    if (func_8001FE6C() == 0) {
+    if (GetMasterVolumeRampState() == 0) {
         var_s0 = (var_s0 + 1) & 0xFF;
     }
     if (var_s0 == 2) {

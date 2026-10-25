@@ -2,6 +2,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "master_volume.h"
 
 typedef struct {
     char pad[0xE];
@@ -14,8 +15,6 @@ void func_8001FBE4(s32 arg0, s32 arg1);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020B80(s32 arg0, s32 arg1);
 void func_8001FBF0(s16 arg0, s16 arg1);
-void func_8001FD10(void);
-s32 func_8001FD74(void);
 
 void ovl_11_func_800E3AA4(void) {
     s16 temp_s1;
@@ -51,8 +50,8 @@ void ovl_11_func_800E3AA4(void) {
             *(s32 *)(far + 0x2549C) = (s32)temp_s1;
             ((struct struct_8006C838_800E3AA4 *)D_8006C838)->field_4438 = -1;
             do {
-                func_8001FD10();
-            } while (func_8001FD74() == 0);
+                UpdateMasterVolumeAndSoundTransfer();
+            } while (IsSoundTransferComplete() == 0);
             env = gRenderContexts;
             env->unk19 = temp_s3;
             env->unk1A = temp_s4;

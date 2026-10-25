@@ -4291,6 +4291,21 @@ References: notes/research/func_8001E878-dead-spill-allocation.md §9,
 notes/research/func_8001E9F8.md,
 notes/research/func_8001EAE4-v0-channel-delay-slot-fossil.md.
 
+Whole-unit fold experiment (module campaign): include all twelve entries from
+SetVal8005E51C through GetVal8005E524, including the GP-owned setters at EF8C
+and EF98 and the existing dead E6FC stub. The checked --write attempt rolled
+back before compilation: context publication could not find the local
+CoordTri and Grid8001E340 types once their sources were consolidated. No
+partial collision module was retained, and no boundary was invented inside
+the GP-connected run. Next source experiment: reconcile those parameter
+views into game_types.h, then re-fold at baseline. Also audit the file-scope
+CAPTURE_PREV_RET(hidden) in E9F8: in a merged unit it would reserve $v0 beyond
+that function. Real nested definitions or a proven equivalent must preserve
+the original static-chain lifetime without growing policy exceptions. The
+publication failure does not prove the subsequent compiler result. The
+matching split build and all four newly completed modules still pass the
+full campaign gate.
+
 ## cylindrical camera-offset state — 0x8001EFA4–0x8001F250 (confidence: high)
 
 **Module: `src/modules/camera_offset.c`**, eight original entries, five compiled
@@ -4827,6 +4842,52 @@ Members (address order):
 - func_800223D4 (m) — sprite-source grid callback driver
 - func_800224F0 (s) — callback forwarding grid entries to func_80015EE8
 - func_80022528 (s) — callback forwarding grid entries to func_80015E3C
+
+**Reconstructed module: `src/modules/sprite_grid.c` (2238C..22580)**.
+The two wrappers pair a single five-argument grid visitor with the two
+immediately following callbacks; their common callback protocol and the
+closed internal call/address-taken graph support all five members, not
+adjacency alone. The driver is the sole original-byte GP accessor of E330
+(now gSpriteGridTick) and sole reader of the four frame indices at 55974.
+No additional member shares that private state. The source/header at A0728
+and 977F8 are NOT private: canonical names gSharedSpriteSource and
+gSharedSpriteData deliberately acknowledge their other sprite/UI consumers.
+The data load is witnessed by six overlays' 0x13DC-byte copies. Shared RAM
+or a shared asset alone does not extend this unit to those consumers.
+
+Boundaries: predecessor 2206C initializes a 3x6 card table using 558A4/55944
+and 22014, with neither grid state nor grid-helper calls. Successor 22580
+is solely a forwarding wrapper to the 136D4 panel drawer. It neither
+participates in the callback graph nor uses its state/tables. Thus there is
+no membership evidence to extend either end; neither boundary is claimed as
+a GP-versus-absolute conflict proof. The following unknown-group-B functions
+instead share E5A8..E5CC. Its adjacent 5597C lookup table is separate from
+the four grid entries: configuration records exactly eight bytes at 55974,
+so naming the grid table must not swallow that next label. The inherited
+five-halfword declaration was replaced by an incomplete array: only indices
+0..3 are witnessed, and no fifth entry or original declared extent is proved.
+This retains the split address form without inventing a fifth grid cell.
+
+Names: DrawScrollingSpriteGrid (2238C), DrawScrollingSpriteGridInContext
+(223B0), VisitScrollingSpriteGrid (223D4), DrawSpriteGridCell (224F0), and
+DrawSpriteGridCellInContext (22528). Both callbacks are now ordinary C,
+removing two INCLUDE_ASM placeholders. The first uses the packet-work
+reservation API, the second passes the shared context +118 cursor directly;
+both select animation 29 and narrow frame/coordinates to byte/halfword.
+The driver calls the visitor 165 times (15 columns x11 rows), advances the
+four-frame pattern across row boundaries and subtracts (tick/4)%24 from x/y.
+`SpriteGridCallback` is shared through game_types.h; the initial fold exposed
+a context-publication failure from the duplicated local typedef, fixed by
+placing the real interface type in its canonical header, not a tool change.
+`sprite_grid.h` documents cursor effects, coordinate/tick units, the shared
+source reinitialization and non-reentrancy. Internal callbacks retain external
+linkage without being published; caller declarations use the module header.
+
+Baseline fold and the two C callback replacements passed linked byte checks.
+No member flag override existed, none was added or retired. After all naming,
+interfaces and readability edits the campaign gate passed every container,
+configuration, ownership, interface, source-policy and non-growth check:
+141 folded functions, 18 valid modules, 48 pending stubs (two fewer).
 
 ## unknown group B — around 0x800225C4–0x80022F1C (confidence: medium)
 
@@ -5513,6 +5574,21 @@ the two renderers and entry driver at 0x80016280–0x80016C08. This supersedes
 the earlier assumption that the whole family was one TU. See
 `notes/sprite-renderer-family-campaign.md` for per-function detail.
 
+Module-campaign update: the historical flag-based boundary below is NOT a
+current proof. Both renderer overrides were withdrawn for declaration/
+assembler-ownership reasons (ADR-0001), and there is no active override in
+the full 15704..1782C family. A checked whole-family baseline fold of all
+40 functions (including three existing dead stubs) was attempted, not a
+pre-render slice. It rolled back at context publication: SourceData, used
+by the two renderer signatures, was only defined locally and could not be
+published from the merged source. Compilation/byte checking was therefore
+not reached. Next useful experiment is to reconcile the renderer views,
+SpriteSourceData identity and caller prototypes through game_types.h before
+repeating the whole fold. No new flag, exception or artificial internal
+boundary was retained. The split build remains exact. The shared state,
+source-table protocol and wrapper/loader call graph support investigating
+this whole family; they do not independently prove every original boundary.
+
 Fingerprints:
 - internal call graph: func_80015E3C and func_80015EE8 call func_80016280;
   func_80015E78, func_80015F80, func_80016054, func_800160C8, and
@@ -6055,56 +6131,100 @@ after the gradient-interpolation cluster (0x8001FABC), far from this range —
 sound-playback role by call graph, non-adjacent by link order; TU membership
 unproven.
 
-## CD-music state flag family — 0x8002194C–0x80021CD8 (confidence: low)
+## CD/XA audio — 0x800218C4–0x80021D64 (confidence: high for state family)
 
-Shared gp-rel `s16 D_8005E324` ("noise/music playing" flag): written by
-func_80021B20 (=0, after SsSetSerialVol/SdStandby mute) and func_80021CD8
-(=1, before Cd position control); read by func_8002194C as its entry gate.
-All TUs tentatively define D_8005E324 and the D_8005E580/E584/E58C/E590
-music-state cluster GP-relatively (func_80021B90 defines the full
-D_8005E324..D_8005E59C span) and are address-contiguous in link order
-(func_8002194C runs 0x8002194C–0x80021B20, immediately followed by
-func_80021B20; then func_80021B64, func_80021B90, func_80021CD8 in-range). func_80021B20
-is also a CD-loader callee (of func_80014CBC), so TU membership is
-unconfirmed — the tentative defs merge via -fcommon regardless. Members:
-- func_8002194C (m, 2026-08-21) — CD-music state-machine poll: gate on
-  D_8005E324; picks a per-track step (D_8005E590 0..5) driving
-  CdSync/CdPosToInt/CdControlF and SsSetSerialVol, decrementing D_8005E580;
-  calls func_80021B20 (mute path) and func_80021CD8 (seek path)
-- func_80021B20 (m) — mute/standby: if D_8005E324 != 0, silences serial
-  output and CD, then clears the flag
-- func_80021B64 (m, 2026-08-21) — state query: 0 / 2 / 1 by
-  D_8005E324 value; called only from ovl_11 (800CE834, 800E58DC,
-  800E6AB0, 800FFF7C, 8011F608)
-- func_80021CD8 (m) — sets D_8005E324 = 1, seeks CD position via
-  CdIntToPos/CdControl for a track from D_80049A80
-- func_80021B90 (m, this session) — CD-audio track play: mutes serial and
-  CdFlush, then seeks via CdControlB to the D_80049A80[arg0] entry, filling
-  the D_8005E324..D_8005E59C CD state via D_8006C7D8/CdPosToInt
+**Module: `src/modules/cd_audio.c`**, six functions in original order:
+FindCdAudioFiles (218C4), PollCdAudio (2194C), StopCdAudio (21B20),
+GetCdAudioState (21B64), StartCdAudioTrack (21B90), RestartCdAudioCommand
+(21CD8). The five playback members all reach E324 through $gp in the ORIGINAL
+bytes (`deriveTuOwnedGlobals.ts`), not merely in their new objects. Overlapping
+GP-owned countdown/start-sector/last-sector/phase/selected-track state joins
+2194C, 21B90 and 21CD8. Internal calls connect the poller to stop/restart.
+No other C function accesses this small-data cluster. The old assertion that
+an external caller of StopCdAudio weakened membership was mistaken: calls
+cross TUs; it is the original access form that identifies ownership.
 
-## sound volume/pan fade state — D_80061F08 cluster, 0x8001FCE4–0x8001FE6C (confidence: medium)
+The immediately preceding 218C4 searches four names at 80049A70 into 24-byte
+records at 8006C7D8. Only 21B90 consumes that location table, at the same stride;
+this producer/consumer pair adds the bootstrap helper, not mere adjacency.
+The adjacent six-byte track settings at 80049A80 are private to 21B90/21CD8:
+countdown, file index, XA channel. Commands install a file/channel filter and
+mode C8, then the poller issues ReadS and GetlocP. The countdown measures eligible
+polls scaled by the update timing mode, not seconds. Preserve the discontinuous
+serial-volume mapping (countdown >32 ->45; <=32 ->4*countdown).
 
-Contiguous no-gap run of six matched functions all touching the same
-absolute-addressed 32-bit volume/fade state: D_80061F08 (flag at field_04,
-position accumulator field_08, computed result field_0C, targets field_10/
-field_14), plus the adjacent getters D_80061F0C and D_80061F1C. Shared
-fixed-point domain (clamp/saturation constant 0x7F0000, division-based fade
-timing). func_8001FE7C at 0x8001FE7C — immediately above and already a
-sound-init member — calls the stereo setter func_80020A40, linking this run
-to the sound-init group below; the run's func_8001FD10 also calls VAB-transfer
-members func_80020E38/func_80020E58.
+Boundaries: 21820 is the SPU voice allocator over 8006C0C8/8006C128; neither
+side touches the other's private state or tables. Intervening empty 218BC has
+no ownership, call or table evidence and stays outside. Likewise 21D64 is an
+empty stack-frame function, followed by empty entries and then a card-table
+family; none supplies a playback-state or helper relationship. These cuts are
+absence-of-extension evidence, not claimed GP/absolute conflict proofs.
+The broader sound driver calls this unit's bootstrap, but shares no owned
+playback state. No evidence supports absorbing it solely for that call.
 
-Members (address order):
-- func_8001FCE4 (m) — initializes D_80061F08's six words: 0/0/0x7F0000/0/0x7F0000/1
-- func_8001FD10 (m) — drive: if func_80020E38() != -1 calls func_80020E58, else
-  sets field_14=1; when field_04 != 0 calls func_8001FD84
-- func_8001FD74 (m) — returns D_80061F1C != 0 (Boolean getter)
-- func_8001FD84 (m) — adds field_0C into field_08, clamps field_08 to [0,
-  0x7F0000], clears field_04 at both saturations
-- func_8001FE00 (m) — divides field_10 by arg0 into field_0C, sets field_04=1
-- func_8001FE34 (m) — negates field_08, divides by arg0 into field_0C, sets
-  field_04=2; matched 2026-08-21
-- func_8001FE6C (m) — returns D_80061F0C (getter)
+`cd_audio.h` publishes the control/service interface and documents unchecked
+indices, indefinitely retried blocking commands, asynchronous state results,
+drive sharing, failure-side mutations and countdown units. All nine state
+words and the file-name/settings/location tables have behavior-based names
+at their original EXE identities. Callers across EXE/overlays use the header,
+with unchanged objects confirmed by interfaceAudit. The location storage is
+96 bytes (four 24-byte SDK file records), retaining word access; the settings'
+existing halfword representation and signed field loads are unchanged. The
+obsolete asm-name/macro alias for the settings was removed, not duplicated.
+Linkage remains external; no helper was declared static merely by folding.
+
+Baseline -O2/-G8 fold: all six members and EXE exact. No member override was
+present, added or retired. After names, declarations and readability edits,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passed all
+container bytes, configuration convergence, canonical interfaces, ownership,
+policy and exception non-growth: 136 folded functions, 17 valid modules.
+
+## master-volume ramps — 0x8001FCE4–0x8001FE7C (confidence: medium)
+
+**Module: `src/modules/master_volume.c`**, seven functions in original order.
+All seven access the same six-word state record at 61F08: initialization,
+service, transfer-completion query, level integration, the two ramp starters,
+and ramp-state query. 1FD10's conditional call to 1FD84 and the coherent
+16.16 level/step/full-scale arithmetic corroborate the shared record. The
+initializer writes all six words. The two formerly separate getter labels
+61F0C/61F1C are interior fields, not separate state allocations. This is a
+record/helper family, not GP-based same-TU proof; all accesses are absolute.
+
+Names (former names func_<address>): InitMasterVolumeRamp (1FCE4),
+UpdateMasterVolumeAndSoundTransfer (1FD10), IsSoundTransferComplete (1FD74),
+StepMasterVolumeRamp (1FD84), BeginMasterVolumeFadeIn (1FE00),
+BeginMasterVolumeFadeOut (1FE34), GetMasterVolumeRampState (1FE6C).
+MasterVolumeState/gMasterVolumeState names the record and demonstrated fields:
+rampState, level16, step16, fullScale16 and transferComplete. The first word
+remains neutrally reserved. Type widths, signedness and offsets are unchanged.
+The two named interior anchors remain in configuration; C now uses the actual
+record fields, retiring the old asm-name/macro alias and scalar-interior views.
+
+Boundary evidence: preceding 1FCDC is empty and contributes no ownership,
+call or data relationship. Before it, 1FBF0 clears only the transfer-complete
+latch as a CLIENT of sound loading; its GP-owned E31C/E530 and sequencer
+lookup/command dispatch belong to the preceding slot-wrapper family. No
+volume-level, ramp-step or ramp-helper use supports extending this unit there.
+After the last query, 1FE7C calls the stereo setter and CD/XA file discovery;
+it uses no ramp state. The following sound-init members own a separate GP
+cluster (E538/E53C/E558/E55C etc.). Calls from this module into the transfer
+driver do not establish shared ownership. Thus no positive evidence extends
+either end; these are not claimed GP/absolute conflict proofs. A larger
+original sound TU remains possible, but is not established by shared SDK calls.
+
+`master_volume.h` publishes initialization, service, latch query, both ramp
+starters and state query. The dedicated step helper keeps external linkage
+without being published. Documentation records signed 16.16 levels, update
+counts rather than seconds, fade-in using fullScale/ticks without resetting
+the level, unchecked division, possible zero steps, and the asymmetric stop
+tests (<=0 versus >127). Callers across EXE/overlays use the header and retain
+identical objects. The transfer latch is independent of ramp completion.
+
+The baseline -O2/-G8 fold matched all seven members and EXE. There were no
+member flag overrides, and none was added or retired. After naming, aggregate
+field reconciliation and readability edits, the campaign gate passed all
+container bytes, canonical interfaces, configuration, ownership, source policy
+and exception non-growth: 148 folded functions, 19 valid modules.
 
 ## sound init and control — around 0x8001FEA4–0x80020A94 (confidence: medium)
 
@@ -10205,6 +10325,41 @@ D_8006C838 (`cards[row][i]`, mode at +0xE514). The same table is read by
 800B9940 and dealt by the executable's func_8002206C. Both 800BA704 and
 func_8002206C put the +0x9348/+0x92B2 halfwords into row 2 in mode 3. That is
 data-layout evidence only and does not establish a TU boundary.
+
+### EXE card-dealer unit — 0x80022014–0x8002238C
+
+`src/modules/card_deal.c` folds the complete two-function dealer/helper pair:
+CardTableContainsValue (22014) and DealCardGameTable (2206C). The dealer is
+the helper's only calling C body; the helper scans exactly the same 3x6,
+stride-14 value layout the dealer clears/fills. Its role in rejecting duplicate
+Rand(40) draws, plus the adjacent link order and the dealer's private value-
+attribute table (558A4) and column-position table (55944), support membership.
+There is no GP signal in either function; this is protocol/helper evidence,
+not a claim of GP-proven original boundaries. The card state is deliberately
+shared with ovl_17 consumers, which are not EXE TU members.
+
+Left boundary: 22008 clears the unrelated byte at 6C905 and has no card-table,
+random-deal or helper relationship. Earlier 21DA8/21E60 initialize broad game
+storage/pool tables, not this dealer protocol. Right boundary: 2238C starts
+the complete sprite_grid callback family, whose private tick/frame-index table
+and callbacks have no card-state relationship. Neither end has positive
+extension evidence; neither cut is claimed to be an absolute/GP conflict.
+
+`card_deal.h` publishes the retained address-as-s32 membership ABI and the
+no-argument dealer. Names cover the two functions, gCardGameState and its six
+first-slot field anchors, gCardValueAttributes and gCardColumnPositionRanges.
+The explicit interior labels preserve their original identities inside the
+0x108-byte state; declarations and signed/unsigned field types are unchanged.
+Locals now distinguish row, column, value, saved mode and the x/weight walks.
+Documentation records 18 unique values, half-open coordinate ranges, the old
+mode-3 special slot at [2][2], the fact that mode is NOT restored after memset,
+and the unsigned maximum comparison and distance-squared weight calculation.
+No gameplay meaning was guessed for the two attribute halfwords.
+
+Baseline fold: both members and EXE exact; no flag override involved. After
+naming and header publication, interfaceAudit confirmed caller objects and the
+full campaign gate passed every container, ownership/interface/configuration,
+source-policy and exception non-growth check: 150 folded, 20 valid modules.
 
 Cross-container note: 800BA504's leading three calls are the same sequence the
 `ovl_30` mirror pair 8012F3D4/8012F410 emit; that twin relation is not

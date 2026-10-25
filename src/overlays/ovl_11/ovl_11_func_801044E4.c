@@ -1,4 +1,11 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "card_deal.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -42,7 +49,6 @@ void ovl_11_func_80104A58 (void);
 s16 ovl_11_func_800BF8B8 (void);
 void ovl_11_func_80104A88 (void);
 u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
-void func_8002206C(void);
 s16 ovl_11_func_800BFB28(void);
 void ovl_11_func_800DB9A4(void);
 void ovl_11_func_8010476C(void);
@@ -103,7 +109,7 @@ void ovl_11_func_801044E4(void) {
     base->field_4438 = -1;
     ovl_11_func_80112D10();
     ovl_11_func_80104A58();
-    func_8002206C();
+    DealCardGameTable();
     ovl_11_func_800BFB28();
     ovl_11_func_800BF8B8();
     ovl_11_func_80104A88();

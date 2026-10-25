@@ -1,6 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "scene_selection.h"
+#include "master_volume.h"
 
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
 void SetVal8005E278(s32 arg0);
@@ -9,7 +10,6 @@ s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 s32 func_8001FABC(s16 arg0);
 s32 func_8001FBBC(s16 arg0);
-void func_8001FE34(s32 arg0);
 void ovl_11_func_800BCF28(void);
 s32 ovl_11_func_800BD374(s32 arg0, s32 arg1);
 s32 ovl_11_func_800CB4E0(void);
@@ -30,7 +30,7 @@ void ovl_11_func_800BBCB8(void) {
     case 26:
         WORK->state = 27;
         BeginScreenFadeIncrease(10, 0, 2);
-        func_8001FE34(10);
+        BeginMasterVolumeFadeOut(10);
         break;
     case 27:
         if (IsScreenFadeComplete() == 1) {

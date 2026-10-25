@@ -5,13 +5,13 @@
 #include "psyq/libsnd.h"
 #include "screen_fade.h"
 #include "scene_selection.h"
+#include "master_volume.h"
 
 
 void SsSeqClose (short);
 void SsSeqSetVol (short, short, short);
 void SsVabClose (short);
 void ovl_17_func_800BA808 (s32 arg0);
-s32 func_8001FE6C (void);
 void func_8001FAE8 (s32 arg0);
 s32 func_8001FBBC (s16 arg0);
 s32 func_80020B80 (s32 arg0, s32 arg1);
@@ -31,7 +31,7 @@ void ovl_17_func_800B80B0(void) {
     if (IsScreenFadeComplete() == 1) {
         var_s0++;
     }
-    if (func_8001FE6C() == 0) {
+    if (GetMasterVolumeRampState() == 0) {
         var_s0++;
     }
     if (var_s0 == 2) {

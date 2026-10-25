@@ -23,7 +23,7 @@ s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
 
     temp_v0 = ovl_11_func_800BF3F4();
     if (temp_v0 != 0) {
-        func_80015704(&D_80128C80, (SpriteDataHeader *) &D_800977F8);
+        func_80015704(&D_80128C80, (SpriteDataHeader *) &gSharedSpriteData);
         func_80015840((ObjectState *) &D_80128C80, 0x17);
         func_8001FABC(0x10);
         arg0->unk6 = 3;

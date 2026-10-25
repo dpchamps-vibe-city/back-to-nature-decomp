@@ -29,7 +29,7 @@ void ovl_11_func_800C044C(s16 arg0) {
         }
         D_80128A80 = &D_80125EB8;
         ovl_11_func_800BFF00();
-        func_80015704(&D_80128A50, (SpriteDataHeader *) &D_800977F8);
+        func_80015704(&D_80128A50, (SpriteDataHeader *) &gSharedSpriteData);
         var_s0 = &D_80128820;
         var_s1 = 0;
         do {

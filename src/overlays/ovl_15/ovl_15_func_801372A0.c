@@ -13,8 +13,8 @@
 #include "screen_fade.h"
 #include "scene_selection.h"
 #include "aux_sprite_display.h"
-
-typedef void (*M2C_a048f66bc407_SpriteCallback)(s32, SpriteSourceData *, s16, s32, s32);
+#include "sprite_grid.h"
+#include "master_volume.h"
 
 int McxCardType (int);
 int McxSync (int, long *, long *);
@@ -38,7 +38,6 @@ void func_80017A48 (u32 arg0);
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
-void func_800223D4 (s32 arg0, M2C_a048f66bc407_SpriteCallback callback);
 void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 s32 func_80022DF8 (void);
 void SetVal8005E2BC (s32 arg0);
@@ -48,12 +47,9 @@ void ovl_15_func_8013468C (void);
 s32 func_8002029C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_800226F0 (void);
 void ovl_15_func_8012E15C (void);
-void func_8001FE00 (s32 arg0);
 void func_8002495C (s16 arg0);
-void func_8002238C (s32 arg0);
 void func_80017A08 (s32 arg0, s32 arg1);
 void func_80017A38 (s16 arg0, s16 arg1);
-void func_8001FE34 (s32 arg0);
 void ovl_15_func_8012ED18 (void);
 void ovl_15_func_8012EE84 (void);
 void ovl_15_func_8012EEEC (void);

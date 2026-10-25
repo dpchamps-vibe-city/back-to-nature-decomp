@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "screen_fade.h"
 #include "sprite_rotation.h"
+#include "master_volume.h"
 
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
@@ -17,8 +18,6 @@ void ovl_11_func_800DC990(void);
 void ovl_11_func_800DCA60(void);
 void ovl_11_func_800DB2AC(void *arg0);
 void ovl_11_func_800BC868(void);
-void func_8001FD10(void);
-s32 func_8001FD74(void);
 s32 func_80020818(void);
 void ovl_11_func_800BC9AC(void);
 void ovl_11_func_800F0FB0(s32 arg0);
@@ -28,7 +27,6 @@ s32 func_8001AF44(u32 arg0);
 u32 Rand(s32 arg0);
 void ovl_11_func_800CBB9C();
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_8001FE00(s32 arg0);
 
 void ovl_11_func_80104CB8(void) {
     ((Ovl11AreaInitView *)D_8006C838)->flags &= 0xFF7FFFFF;
@@ -49,8 +47,8 @@ void ovl_11_func_80104CB8(void) {
     ovl_11_func_800DB2AC(D_8009F78C);
     Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);
     ovl_11_func_800BC868();
-    while (func_8001FD74() == 0) {
-        func_8001FD10();
+    while (IsSoundTransferComplete() == 0) {
+        UpdateMasterVolumeAndSoundTransfer();
     }
     func_80020818();
     ovl_11_func_800BC9AC();
@@ -66,7 +64,7 @@ void ovl_11_func_80104CB8(void) {
             func_8001AF70(0xAD, 1);
         }
     }
-    func_8001FE00(10);
+    BeginMasterVolumeFadeIn(10);
     BeginScreenFadeDecrease(10, 0, 2);
     ((Ovl11AreaInitView *)D_8006C838)->flags &= 0xFF7FFFFF;
 }

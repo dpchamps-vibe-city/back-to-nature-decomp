@@ -1591,8 +1591,6 @@ typedef struct {
                u8 pad6[0x18 - 0x06];
 } M2C_9fae74c412a7_Ovl11Func5700Entry;
 
-typedef void (*M2C_a048f66bc407_SpriteCallback)(s32, SpriteSourceData *, s16, s32, s32);
-
 typedef struct {
     s16 unk0;
 } M2C_a070b354da22_Recon800B977CA0View;
@@ -3686,6 +3684,8 @@ typedef struct {
                s32 offset_anim;
                s32 offset_frame;
 } SpriteDataHeader;
+
+typedef void (*SpriteGridCallback)(s32, SpriteSourceData *, s16, s32, s32);
 
 typedef struct {
                s8 field_0;

@@ -1,15 +1,12 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "screen_primitives.h"
+#include "cd_audio.h"
+#include "master_volume.h"
 
 void func_80017A08(s32 arg0, s32 arg1);
 s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 func_8001FBBC(s16 arg0);
-void func_8001FE00(s32 arg0);
-void func_8001FE34(s32 arg0);
-s32 func_8001FE6C(void);
-s32 func_80021B64(void);
-void func_80021B90(s32 arg0);
 /* Overlay imports of GetVal8005E5B8 and GetVal8005E5B4. */
 s32 GetVal8005E5B8(void);
 s32 GetVal8005E5B4(void);
@@ -24,14 +21,14 @@ void ovl_11_func_8011F608(void) {
     case 1:
         func_8001FBBC(0);
         BeginScreenFadeIncrease(30, 1, 2);
-        func_8001FE34(30);
+        BeginMasterVolumeFadeOut(30);
         D_80128540 = 2;
         break;
     case 2:
-        if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
+        if (IsScreenFadeComplete() == 1 && GetMasterVolumeRampState() == 0) {
             D_80128540 = 3;
             ovl_11_func_8011F9EC(Ovl11_D_80128544);
-            func_8001FE00(1);
+            BeginMasterVolumeFadeIn(1);
         }
         break;
     case 3:
@@ -51,25 +48,25 @@ void ovl_11_func_8011F608(void) {
                 func_8001FB30(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
                 ovl_11_func_800BC9AC();
                 BeginScreenFadeDecrease(10, 1, 2);
-                func_8001FE00(10);
+                BeginMasterVolumeFadeIn(10);
                 D_80128540 = 8;
             } else {
                 DrawScreenTileRect((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
                 BeginScreenFadeIncrease(10, 0, 1);
-                func_8001FE00(10);
+                BeginMasterVolumeFadeIn(10);
                 D_80128540 = 5;
             }
         }
         break;
     case 5:
         DrawScreenTileRect((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
-        if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
-            func_80021B90(25);
+        if (IsScreenFadeComplete() == 1 && GetMasterVolumeRampState() == 0) {
+            StartCdAudioTrack(25);
             D_80128540 = 6;
         }
         break;
     case 6:
-        if (func_80021B64() == 0) {
+        if (GetCdAudioState() == 0) {
             D_80128558 = 30;
             D_80128540 = 7;
         }
@@ -79,12 +76,12 @@ void ovl_11_func_8011F608(void) {
             BeginScreenFadeDecrease(10, 0, 1);
             func_8001FB30(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
             ovl_11_func_800BC9AC();
-            func_8001FE00(10);
+            BeginMasterVolumeFadeIn(10);
             D_80128540 = 8;
         }
         break;
     case 8:
-        if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
+        if (IsScreenFadeComplete() == 1 && GetMasterVolumeRampState() == 0) {
             ResetScreenFade();
             D_80128540 = 9;
         }

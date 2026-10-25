@@ -1,4 +1,5 @@
 #include "common.h"
+#include "cd_audio.h"
 
 void ovl_11_func_800D2240(void);
 void ovl_11_func_800D2160(void);
@@ -6,8 +7,6 @@ void ovl_11_func_800D1EB8(void);
 void ovl_11_func_800D2334(void);
 void ovl_11_func_800D2710(void);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
-s32 func_80021B64(void);
-void func_80021B90(s32 arg0);
 
 void ovl_11_func_800CE834(void) {
     if (!(((struct Ovl11UpdateState *) D_8006C838)->field_10 & 0x2000)) {
@@ -29,9 +28,9 @@ void ovl_11_func_800CE834(void) {
             }
         }
         if (((struct Ovl11UpdateState *) D_8006C838)->field_99E6 != 0 &&
-            func_80021B64() == 0 &&
+            GetCdAudioState() == 0 &&
             ((struct Ovl11UpdateState *) D_8006C838)->field_CC == 0) {
-            func_80021B90(((struct Ovl11UpdateState *) D_8006C838)->field_99E6);
+            StartCdAudioTrack(((struct Ovl11UpdateState *) D_8006C838)->field_99E6);
             ((struct Ovl11UpdateState *) D_8006C838)->field_99E6 = 0;
         }
     }

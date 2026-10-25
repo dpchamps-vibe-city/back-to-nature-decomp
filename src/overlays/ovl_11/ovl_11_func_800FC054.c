@@ -1,7 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "sprite_grid.h"
 
-void func_800223B0(s32 arg0);
 void ovl_11_func_800FBE88(void);
 void ovl_11_func_800FC1AC(void);
 void ovl_11_func_800BCF28(void);
@@ -11,7 +11,7 @@ void ovl_11_func_800FC054(void) {
 
     temp_s0 = IsScreenFadeComplete();
     if (D_8012720C >= 3 && D_8012720C <= 5) {
-        func_800223B0(gActiveRenderContext->field_D8 + 0x74);
+        DrawScrollingSpriteGridInContext(gActiveRenderContext->field_D8 + 0x74);
     }
     switch (D_8012720C) {
     case 1:

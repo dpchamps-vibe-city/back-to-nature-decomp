@@ -12,6 +12,8 @@
 #include "cd_loader.h"
 #include "gte_scene_state.h"
 #include "aux_sprite_display.h"
+#include "cd_audio.h"
+#include "master_volume.h"
 
 typedef struct {
                s16 unk0;
@@ -36,7 +38,6 @@ int StoreImage (RECT *rect, u_long *p);
 void SystemError (char, long);
 void *memmove (unsigned char *, const unsigned char *, int);
 void func_8001719C (u8 *arg0);
-void func_80021B20 ();
 s32 func_800129E8 (void);
 void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
 void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
@@ -51,10 +52,8 @@ void func_80015704 ();
 void func_80022008 (void);
 void ovl_11_func_800BD160 (void);
 void ovl_11_func_800BD168 (void);
-s32 func_8001FD74 (void);
 void func_8001E160 (void);
 s32 func_80020818 (void);
-void func_8001FE00 (s32 arg0);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800C1C90 (void);

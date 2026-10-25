@@ -9,6 +9,7 @@
 #include "psyq/libapi.h"
 #include "packet_work.h"
 #include "aged_item_pool.h"
+#include "cd_audio.h"
 
 typedef struct {
                s16 unk0;
@@ -139,11 +140,8 @@ void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
 POLY_FT4 *func_80016C08 (s32 *ot, POLY_FT4 *poly, M2C_d4baf9e5b2ba_SpriteSourceData *src, s16 ox, s16 oy, u16 flags, s32 total, s32 texBase, s16 subst, s16 substFrom, s16 substTo);
 POLY_FT4 *func_800165D8 (u_long *arg0, POLY_FT4 *arg1, M2C_ab2039654fca_SourceData *arg2, u8 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, s32 arg9, u16 arg10, s16 arg11, s16 arg12, s16 arg13, s16 arg14);
 s32 func_8001AF44 (u32 arg0);
-void func_80021B20 ();
 s32 ovl_11_func_800C2884 (s16 key, u32 *table);
 void func_80015704 ();
-s32 func_80021B64 (void);
-void func_80021B90 (s32 arg0);
 void ovl_11_func_800CFD9C (void);
 s32 ovl_11_func_800D2E20 (void);
 u32 Rand (s32 arg0);

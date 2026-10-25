@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "screen_fade.h"
 #include "pad_actuator_sequences.h"
+#include "master_volume.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 func_8001FABC (s16 arg0);
@@ -21,7 +22,6 @@ s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670 (s16 arg0);
-void func_8001FE34 (s32 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 s32 func_8002261C (s32 arg0, s32 arg1);
 void ovl_11_func_800CBD78 (Ovl11C7010Object *arg0);
@@ -242,7 +242,7 @@ state_done:
             if (temp_v1 == 3) {
                 ((struct Ovl11C580CWork *)&D_8007AFF0)->mode = 0xC;
                 BeginScreenFadeIncrease(0x1E, 0, 2);
-                func_8001FE34(0x1E);
+                BeginMasterVolumeFadeOut(0x1E);
                 arg0->unk6C |= 0x400;
                 func_8001AF70(0x47U, 1U);
                 return 0;

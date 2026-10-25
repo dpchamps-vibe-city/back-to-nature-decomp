@@ -1,7 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "master_volume.h"
 
-s32 func_8001FE6C(void);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020818(void);
 s32 func_80020B80(s32 arg0, s32 arg1);
@@ -12,7 +12,7 @@ s32 ovl_28_func_800B8344(void) {
     s32 ret;
 
     x = (IsScreenFadeComplete() ^ 1) == 0;
-    if (func_8001FE6C() == 0) {
+    if (GetMasterVolumeRampState() == 0) {
         x = (x + 1) & 0xFF;
     }
     ret = 2;

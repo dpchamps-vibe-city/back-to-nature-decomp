@@ -8,6 +8,8 @@
 #include "pad_actuator_gate.h"
 #include "pad_actuator_sequences.h"
 #include "sprite_rotation.h"
+#include "cd_audio.h"
+#include "master_volume.h"
 
 typedef struct {
                s16 field_0;
@@ -165,7 +167,6 @@ void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8001FE34 (s32 arg0);
 void ovl_11_func_800CF314 (u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
@@ -205,7 +206,6 @@ void ovl_11_func_800BD8DC (s16 arg0);
 void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80015894 (SomeStruct *arg0, s32 arg1);
 void ovl_11_func_800BD168 (void);
-void func_80021B90 (s32 arg0);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
@@ -215,7 +215,6 @@ void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5704 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 func_80021B64 (void);
 s32 GetVal8005E5B4 (void);
 s32 GetVal8005E5B8 (void);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -229,8 +228,6 @@ s32 func_80020818 (void);
 s32 func_8001FB30 (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800C08E8 (s32 arg0);
-void func_8001FE00 (s32 arg0);
-s32 func_8001FE6C (void);
 s32 ovl_11_func_800E8960 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_801000D4 (s16 arg0);
 s32 ovl_11_func_800E5ADC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);

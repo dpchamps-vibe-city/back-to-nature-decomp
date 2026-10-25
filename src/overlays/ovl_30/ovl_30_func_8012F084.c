@@ -5,14 +5,13 @@
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
 #include "scene_selection.h"
+#include "cd_audio.h"
+#include "master_volume.h"
 
 void ovl_30_func_8012F030(s32 arg0);
 void ovl_30_func_8012FE94(void);
-void func_8001FE00(s32 arg0);
 s32 func_8001FABC(s16 arg0);
-void func_8001FE34(s32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_8002194C(void);
 
 #define clamp_selection(expression) \
     ({ s32 value = (expression); \
@@ -56,7 +55,7 @@ void ovl_30_func_8012F084(void) {
         FntFlush(-1);
         ovl_30_func_8012FE94();
         BeginScreenFadeDecrease(0xA, 0, 2);
-        func_8001FE00(0xA);
+        BeginMasterVolumeFadeIn(0xA);
         break;
     case 3:
         temp_v1 = *(s32 *) ((u8 *) gPad0Input + 8);
@@ -81,7 +80,7 @@ void ovl_30_func_8012F084(void) {
             if (D_80134AD8 == temp_v0_3) {
                 if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x800) {
                     BeginScreenFadeIncrease(0xA, 0, 2);
-                    func_8001FE34(0xA);
+                    BeginMasterVolumeFadeOut(0xA);
                     D_80134AD8 = 0;
                 }
             } else {
@@ -112,7 +111,7 @@ void ovl_30_func_8012F084(void) {
         }
         D_80134B0C = 0;
         BeginScreenFadeDecrease(0xA, 0, 2);
-        func_8001FE00(0xA);
+        BeginMasterVolumeFadeIn(0xA);
         ((struct struct_8006C838_view *)D_8006C838)->field_0C &= 0xF7FFFFFF;
         RequestSceneChange(2);
         func_8001AF70(0x9BU, 0U);
@@ -122,5 +121,5 @@ void ovl_30_func_8012F084(void) {
         break;
     }
     }
-    func_8002194C();
+    PollCdAudio();
 }

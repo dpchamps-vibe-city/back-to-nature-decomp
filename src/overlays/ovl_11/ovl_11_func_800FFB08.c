@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
+#include "master_volume.h"
 
 #define SELECTION (*(u16 *)&D_801273D8)
 
@@ -16,7 +17,6 @@ void func_800248B0(s32, s16, s16);
 void func_80022738(void);
 void func_8001AF70(u16, u16);
 void ovl_11_func_800CE210(Ovl11C7010Object *);
-void func_8001FE34(s32);
 
 s32 ovl_11_func_800FFB08(void) {
     s32 ready;
@@ -74,7 +74,7 @@ s32 ovl_11_func_800FFB08(void) {
                 }
                 D_80070CC4 = 0;
                 BeginScreenFadeIncrease(0xA, 0, 2);
-                func_8001FE34(0xA);
+                BeginMasterVolumeFadeOut(0xA);
                 break;
             }
             return SELECTION + 1;

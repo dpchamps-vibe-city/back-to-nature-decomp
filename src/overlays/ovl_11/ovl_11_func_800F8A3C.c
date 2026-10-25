@@ -16,12 +16,12 @@ void ovl_11_func_800F8A3C(s32 arg0) {
     s32 temp_v0_2;
     s32 var_v0;
 
-    func_80015840((ObjectState *) &D_800A0728, 0xD);
-    func_8001585C((ObjectState *) &D_800A0728, D_80126E50);
-    func_80015EE8(arg0, (s32) &D_800A0728, (s32) (*(u8 *) ((u8 *) &D_800A0728 + 4)), (s32) (*(u8 *) ((u8 *) &D_800A0728 + 5)), 0x7D, 0x90);
-    func_80015840((ObjectState *) &D_800A0728, 0xC);
-    func_8001585C((ObjectState *) &D_800A0728, D_80126E50);
-    func_80015EE8(arg0, (s32) &D_800A0728, (s32) (*(u8 *) ((u8 *) &D_800A0728 + 4)), (s32) (*(u8 *) ((u8 *) &D_800A0728 + 5)), 0x115, 0x90);
+    func_80015840((ObjectState *) &gSharedSpriteSource, 0xD);
+    func_8001585C((ObjectState *) &gSharedSpriteSource, D_80126E50);
+    func_80015EE8(arg0, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) &gSharedSpriteSource + 4)), (s32) (*(u8 *) ((u8 *) &gSharedSpriteSource + 5)), 0x7D, 0x90);
+    func_80015840((ObjectState *) &gSharedSpriteSource, 0xC);
+    func_8001585C((ObjectState *) &gSharedSpriteSource, D_80126E50);
+    func_80015EE8(arg0, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) &gSharedSpriteSource + 4)), (s32) (*(u8 *) ((u8 *) &gSharedSpriteSource + 5)), 0x115, 0x90);
     D_80126E52++;
     if (D_80126E52 >= 9) {
         D_80126E52 = 0;

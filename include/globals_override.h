@@ -2448,18 +2448,17 @@ typedef struct {
 extern PadInputActuatorView _gPadInputStateStorage[1] __asm__("gPadInputStateStorage");
 #define gPadInputStateStorage (*((PadInputActuatorView*)_gPadInputStateStorage))
 
-/* D_80061F08 - struct used by func_8001FD84, func_8001FD10, func_8001FE00
- * Fields at 0x04, 0x08, 0x0C, 0x10, 0x14 for absolute addressing */
+/* exe:8001FCE4 initializes six words; 8001FD84 integrates/clamps the level
+ * and sends its integer part to SsSetMVol. 8001FBF0 clears transferComplete. */
 typedef struct {
-    char pad[4];        /* 0x00-0x03 */
-    s32 field_04;       /* 0x04 */
-    s32 field_08;       /* 0x08 */
-    s32 field_0C;       /* 0x0C */
-    s32 field_10;       /* 0x10 */
-    s32 field_14;       /* 0x14 */
-} struct_80061F08;
-extern struct_80061F08 _D_80061F08[1] __asm__("D_80061F08");
-#define D_80061F08 (*((struct_80061F08*)_D_80061F08))
+    char reserved[4];       /* 0x00, initialized to zero, otherwise unused */
+    s32 rampState;          /* 0x04: 0=idle, 1=fade in, 2=fade out */
+    s32 level16;            /* 0x08: 16.16 master volume */
+    s32 step16;             /* 0x0C: signed increment per update */
+    s32 fullScale16;        /* 0x10: initialized to 127 << 16 */
+    s32 transferComplete;   /* 0x14: completion latch for sound loading */
+} MasterVolumeState;
+extern MasterVolumeState gMasterVolumeState;
 
 /* func_80021E60 - absolute-addressed globals whose addresses are stored */
 extern s32 _D_8004B1A4[3] __asm__("D_8004B1A4");
@@ -2855,7 +2854,7 @@ extern s16 D_800495CC[78 * 7];
 /* D_80049A70 - array of 4 s32 pointers to CD filename strings (func_800218C4).
  * Values point to "\\STR\\01.XA;1" through "\\STR\\04.XA;1" in rodata.
  * Absolute-addressed (lui+addiu). Array size 4 ensures >8 bytes. */
-extern s32 D_80049A70[4];
+extern s32 gCdAudioFileNames[4];
 
 /* PollPadInputs sets 1 after disconnect/find-pad, clears after successful
  * PadSetActAlign (exe:800140C8). Keep the existing eight-byte GP object. */
@@ -2928,33 +2927,43 @@ extern s32 _D_8005E5D8[3] __asm__("D_8005E5D8");
 /* D_80049A80 — absolute-addressed u16 array (func_80021CD8).
  * Accessed with lui/addiu/lhu at byte offset index*6 (index*3 elements).
  * Array size forces >8-byte declaration for absolute addressing under -G8. */
-extern u16 _D_80049A80[6] __asm__("D_80049A80");
-#define D_80049A80 ((_D_80049A80))
+extern u16 gCdAudioTrackSettings[6];
+/* exe:800218C4 searches four 24-byte CdlFILE records; 80021B90 reads their
+ * leading CdlLOCs with the same stride. Retain a word-storage view. */
+extern s32 gCdAudioFileLocationStorage[24];
+/* exe:8002194C/80021B90 use the phase; 80021B90 stores file/filter indices. */
+extern s32 gCdAudioPollPhase;
+extern s32 gCdAudioFileIndex;
+extern s32 gCdAudioChannel;
 
 /* D_8005E330 — GP-relative s32 (func_800223D4 reads/writes via lw/sw %gp_rel). */
-extern s32 D_8005E330;
+extern s32 gSpriteGridTick;
+/* exe:800223D4 initializes and draws this 0x30-byte source; overlays also use
+ * it. Six overlay loaders copy 0x13DC bytes of header/tables to 800977F8. */
+extern struct SpriteSourceData gSharedSpriteSource;
+extern u8 gSharedSpriteData[0x13DC];
 
-/* D_80055974 — absolute-addressed s16 table (func_800223D4 indexes with lui/addiu/lh).
- * Array size 5 ensures >8 byte declaration for absolute addressing under -G8. */
-extern s16 D_80055974[5];
+/* 80055974: the grid reads indices 0..3; 8005597C is the next table's label.
+ * The original declared extent is unknown; keep an incomplete array view. */
+extern s16 gSpriteGridFrameIndices[];
 
 /* D_8005E324 — GP-relative s16 (func_80021CD8 writes 1 via sh %gp_rel). */
-extern s16 D_8005E324;
+extern s16 gCdAudioState;
 
 /* D_8005E580 — GP-relative s16 (func_80021CD8 writes via sh; func_8002194C reads signed via lh %gp_rel). */
-extern s16 D_8005E580;
+extern s16 gCdAudioVolumeCountdown;
 
 /* D_8005E584 — GP-relative s32 (func_80021CD8 reads via lw %gp_rel). */
-extern s32 D_8005E584;
+extern s32 gCdAudioStartSector;
 
 /* D_8005E588 — GP-relative s32 (func_80021CD8 reads+writes via lw/sw %gp_rel). */
-extern s32 D_8005E588;
+extern s32 gCdAudioRestartCount;
 
 /* D_8005E58C — GP-relative s32 (func_80021CD8 writes via sw %gp_rel). */
-extern s32 D_8005E58C;
+extern s32 gCdAudioLastSector;
 
 /* D_8005E594 — GP-relative s32 (func_80021CD8 reads via lw %gp_rel). */
-extern s32 D_8005E594;
+extern s32 gCdAudioTrackIndex;
 
 /* D_8005E538 — GP-relative s32, sound system flag (func_8001FEA4 clears, func_80020E58/func_800214FC read/write). */
 extern s32 D_8005E538;
@@ -3176,12 +3185,12 @@ extern u16 D_80049070[];
 /* D_800558A4 - card/colour table: 4 bytes per card value (two u16).
  * func_8002206C reads byte offsets 4*v and (4*v)|2 (lui+addiu absolute,
  * owned by the nonmatching data file, not classified in globals.h). */
-extern u16 D_800558A4[80];
+extern u16 gCardValueAttributes[80];
 
 /* D_80055944 - per-stall position ranges: stall k uses the u16 entries
  * [4k..4k+3] as (lo, hi, lo, hi). Absolute-addressed, owned by the
  * nonmatching data file, not classified in globals.h. */
-extern u16 D_80055944[24];
+extern u16 gCardColumnPositionRanges[24];
 
 /* D_800B8500 - kanji-font init counter (ovl_08). ovl_08_func_800B8054 and
  * ovl_08_func_800B80FC increment it, ovl_08_func_800B8014 indexes a table with
@@ -4731,14 +4740,14 @@ typedef struct {
     CardGameSlot cards[3][6];
     u8 unkFE[0x108 - 0xFE];
 } CardGameState;
-extern s16 D_8007AD4C[0x84];
+extern s16 gCardGameState[0x84];
 /* 8002206C's stride-14 walks name the value, x/y, attributes and weight halfwords. */
-extern s16 D_8007AD4E;
-extern s16 D_8007AD50;
-extern s16 D_8007AD52;
-extern u16 D_8007AD54;
-extern u16 D_8007AD56;
-extern s16 D_8007AD58;
+extern s16 gCardFirstValue;
+extern s16 gCardFirstX;
+extern s16 gCardFirstY;
+extern u16 gCardFirstAttribute0;
+extern u16 gCardFirstAttribute1;
+extern s16 gCardFirstWeight;
 /* ovl_17 view of D_8006C838: the card-game mode at +0xE514 (3 shows row 2
  * with a special slot), the card table after it, and the two halfwords at
  * +0x92B2/+0x9348 that ovl_17_func_800BA704 places in display row 2. The

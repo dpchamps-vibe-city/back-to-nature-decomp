@@ -1,8 +1,8 @@
 #include "common.h"
+#include "master_volume.h"
 
 void ovl_28_func_800B8A20(void);
 void ovl_28_func_800B8AA8(void);
-void func_8001FE34(s32 arg0);
 void ovl_28_func_800B8994(s16 arg0);
 
 void ovl_28_func_800B8478(void) {
@@ -38,7 +38,7 @@ loop_5:
             } else if (temp_v1 == 0xF1) {
                 D_800B93B8 = 0;
             } else if (temp_v1 == temp_a1) {
-                func_8001FE34(0x3C);
+                BeginMasterVolumeFadeOut(0x3C);
             }
             D_800B93AE = (u16) D_800B93AE + 1;
             goto loop_5;

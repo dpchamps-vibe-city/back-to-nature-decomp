@@ -1,9 +1,8 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "master_volume.h"
 
 s32 func_8001FABC(s16);
-void func_8001FE34(s32);
-s32 func_8001FE6C(void);
 s32 GetVal8005E5B8(void);
 s32 func_800225C4(void);
 s32 func_8002261C(s32, s32);
@@ -96,7 +95,7 @@ void ovl_27_func_800B845C(void) {
                 D_800C4A24 = 8;
             } else {
                 BeginScreenFadeIncrease(10, 0, 2);
-                func_8001FE34(10);
+                BeginMasterVolumeFadeOut(10);
                 D_800C4A24 = 9;
             }
         }
@@ -112,7 +111,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 10:
-        if (func_8001FE6C() == 0) {
+        if (GetMasterVolumeRampState() == 0) {
             s32 *counterBase;
             s32 count;
 
@@ -241,7 +240,7 @@ void ovl_27_func_800B845C(void) {
         if (GetVal8005E5B4() == 2) {
             if ((s16)GetVal8005E5B8() == 1) {
                 BeginScreenFadeIncrease(10, 0, 2);
-                func_8001FE34(10);
+                BeginMasterVolumeFadeOut(10);
                 D_800C4A24 = 27;
             } else {
                 D_800C4A24 = 13;
@@ -255,7 +254,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 28:
-        if (func_8001FE6C() == 0) {
+        if (GetMasterVolumeRampState() == 0) {
             s32 *counterBase;
 
             D_800C4A24 = 0;
@@ -273,7 +272,7 @@ void ovl_27_func_800B845C(void) {
     case 33:
         ((void (*)(void))D_800C4A14)();
         BeginScreenFadeIncrease(10, 0, 2);
-        func_8001FE34(10);
+        BeginMasterVolumeFadeOut(10);
         D_800C4A24 = 34;
         break;
     case 34:
@@ -283,7 +282,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 35:
-        if (func_8001FE6C() == 0) {
+        if (GetMasterVolumeRampState() == 0) {
             base = (s32 *)&D_8006C838;
             if (base[3] & 0x4000) {
                 base[3] &= ~0x4000;

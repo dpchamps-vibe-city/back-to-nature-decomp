@@ -8,6 +8,7 @@
 #include "psyq/memory.h"
 #include "cd_loader.h"
 #include "pad_actuator_sequences.h"
+#include "card_deal.h"
 
 typedef struct {
                char pad0[0x38];
@@ -65,7 +66,6 @@ s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_800C1280 (s16 arg0, s16 arg1);
 void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 u32 Rand (s32 arg0);
-s32 func_80022014 (s32 arg0, s16 arg1);
 void func_8001AF70 (u16 arg0, u16 arg1);
 void func_8001719C (u8 *arg0);
 void SetVal8005E2E8 (s32 arg0);

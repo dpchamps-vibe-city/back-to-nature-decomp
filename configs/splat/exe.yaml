@@ -279,13 +279,7 @@ segments:
       - [0x103E4, c, func_8001FBE4]       # 0x8001FBE4 func_8001FBE4
       - [0x103F0, c, func_8001FBF0]       # 0x8001FBF0 func_8001FBF0
       - [0x104DC, c, func_8001FCDC]       # 0x8001FCDC func_8001FCDC
-      - [0x104E4, c, func_8001FCE4]       # 0x8001FCE4 func_8001FCE4
-      - [0x10510, c, func_8001FD10]       # 0x8001FD10 func_8001FD10
-      - [0x10574, c, func_8001FD74]       # 0x8001FD74 func_8001FD74
-      - [0x10584, c, func_8001FD84]       # 0x8001FD84 func_8001FD84
-      - [0x10600, c, func_8001FE00]       # 0x8001FE00 func_8001FE00
-      - [0x10634, c, func_8001FE34]       # 0x8001FE34 func_8001FE34
-      - [0x1066C, c, func_8001FE6C]       # 0x8001FE6C func_8001FE6C
+      - [0x104E4, c, modules/master_volume]
       - [0x1067C, c, func_8001FE7C]       # 0x8001FE7C func_8001FE7C
       - [0x106A4, c, func_8001FEA4]       # 0x8001FEA4 func_8001FEA4
       - [0x10770, c, func_8001FF70]       # 0x8001FF70 func_8001FF70
@@ -334,12 +328,7 @@ segments:
       - [0x11FB0, c, func_800217B0]       # 0x800217B0 func_800217B0
       - [0x12020, c, func_80021820]       # 0x80021820 func_80021820
       - [0x120BC, c, func_800218BC]       # 0x800218BC func_800218BC
-      - [0x120C4, c, func_800218C4]       # 0x800218C4 func_800218C4
-      - [0x1214C, c, func_8002194C]       # 0x8002194C func_8002194C
-      - [0x12320, c, func_80021B20]       # 0x80021B20 func_80021B20
-      - [0x12364, c, func_80021B64]       # 0x80021B64 func_80021B64
-      - [0x12390, c, func_80021B90]       # 0x80021B90 func_80021B90
-      - [0x124D8, c, func_80021CD8]       # 0x80021CD8 func_80021CD8
+      - [0x120C4, c, modules/cd_audio]
       - [0x12564, c, func_80021D64]       # 0x80021D64 func_80021D64
       - [0x12570, c, func_80021D70]       # 0x80021D70 func_80021D70
       - [0x12578, c, func_80021D78]       # 0x80021D78 func_80021D78
@@ -353,13 +342,8 @@ segments:
       - [0x127D0, c, func_80021FD0]       # 0x80021FD0 func_80021FD0
       - [0x127E4, c, func_80021FE4]       # 0x80021FE4 func_80021FE4
       - [0x12808, c, func_80022008]       # 0x80022008 func_80022008
-      - [0x12814, c, func_80022014]       # 0x80022014 func_80022014
-      - [0x1286C, c, func_8002206C]       # 0x8002206C func_8002206C
-      - [0x12B8C, c, func_8002238C]       # 0x8002238C func_8002238C
-      - [0x12BB0, c, func_800223B0]       # 0x800223B0 func_800223B0
-      - [0x12BD4, c, func_800223D4]       # 0x800223D4 func_800223D4
-      - [0x12CF0, c, func_800224F0]       # 0x800224F0 func_800224F0
-      - [0x12D28, c, func_80022528]       # 0x80022528 func_80022528
+      - [0x12814, c, modules/card_deal]
+      - [0x12B8C, c, modules/sprite_grid]
       - [0x12D80, c, func_80022580]       # 0x80022580 func_80022580
       - [0x12DB8, c, GetVal8005E5B8]       # 0x800225B8 GetVal8005E5B8
       - [0x12DC4, c, func_800225C4]       # 0x800225C4 func_800225C4

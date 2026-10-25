@@ -10,6 +10,7 @@
 #include "cd_loader.h"
 #include "pad_actuator_sequences.h"
 #include "sprite_rotation.h"
+#include "cd_audio.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -107,7 +108,6 @@ void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
 void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 s32 func_8001AF44 (u32 arg0);
-void func_80021B20 (void);
 s32 ovl_11_func_800C1224 (s16 arg0, s16 arg1);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
 s32 ovl_11_func_800D7504 (s16 arg0);
@@ -138,7 +138,6 @@ void ovl_11_func_800D7328 (s16 *arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
 void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80015894 (SomeStruct *arg0, s32 arg1);
-void func_80021B90 (s32 arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);

@@ -3,6 +3,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "card_deal.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
@@ -31,7 +35,6 @@ s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EFDA0 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800EFE34 (s32 *ptr, s32 arg1, s32 arg2);
 
-void func_8002206C(void);
 s32 ovl_11_func_800F0380(s16 arg0);
 void ovl_11_func_800F2538(s16 arg0, s16 arg1, s16 arg2);
 
@@ -273,7 +276,7 @@ block_118:
     case 11:
         switch (arg1) {
         case 0:
-            func_8002206C();
+            DealCardGameTable();
             return 1;
         case 1:
             ((E9State *)D_8006C838)->fE514 = (s16) arg2;

@@ -33,7 +33,7 @@ void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0) {
         }
         if (var_s3 != 0) {
             if ((*(u16 *) (object + 0x36)) & 4) {
-                func_80015EE8(gActiveRenderContext->field_120 + 0xA0, (s32) &D_800A0728, 0xE, ((u32) (*(u32 *) (object + -0x51C0)) >> 2) & 1, (s16) (s32) (*(s16 *) ((u8 *) D_80128B88 + 0)), (s16) (s32) (s16) ((*(u16 *) ((u8 *) D_80128B88 + 4)) - 0x32));
+                func_80015EE8(gActiveRenderContext->field_120 + 0xA0, (s32) &gSharedSpriteSource, 0xE, ((u32) (*(u32 *) (object + -0x51C0)) >> 2) & 1, (s16) (s32) (*(s16 *) ((u8 *) D_80128B88 + 0)), (s16) (s32) (s16) ((*(u16 *) ((u8 *) D_80128B88 + 4)) - 0x32));
             }
             ovl_11_func_80107E2C((s16 *) (object + 0x2CC), gActiveRenderContext->field_120 + ((var_s3 >> 2) * 4), *(s16 *) ((u8 *) D_80128B88 + 0), (s16) ((*(u16 *) ((u8 *) D_80128B88 + 4)) - 0x28));
             if ((*(u16 *) (object + 0x38) == 0) ||

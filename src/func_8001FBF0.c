@@ -19,7 +19,7 @@ s32 func_80020174(s32 arg0, s32 arg1);
 void func_8001FBF0(s16 arg0, s16 arg1) {
     s32 var_s0;
 
-    D_80061F1C = 0;
+    gMasterVolumeState.transferComplete = 0;
     if (arg0 != 0x3E7) {
         if (arg0 < 0x3E8) {
             var_s0 = arg0 * 2;

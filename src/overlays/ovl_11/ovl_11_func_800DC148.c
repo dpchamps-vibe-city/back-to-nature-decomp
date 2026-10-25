@@ -1,6 +1,6 @@
 #include "common.h"
+#include "cd_audio.h"
 
-void func_80021B90(s32 arg0);
 void ovl_11_func_800D93C8(void);
 void ovl_11_func_80111D94(void);
 void ovl_11_func_80111B74(void);
@@ -35,7 +35,7 @@ void ovl_11_func_800DC148(void) {
                 sound = 0x14;
             }
             if (sound != -1) {
-                func_80021B90(sound);
+                StartCdAudioTrack(sound);
             }
         }
         ovl_11_func_800D93C8();
@@ -61,11 +61,11 @@ void ovl_11_func_800DC148(void) {
     }
     if (STATE->mode == 0xC && !(STATE->flags & 0x40000)) {
         STATE->flags |= 0x40000;
-        func_80021B90(0x15);
+        StartCdAudioTrack(0x15);
     }
     if (STATE->mode == 0x12 && !(STATE->flags & 0x80000)) {
         STATE->flags |= 0x80000;
-        func_80021B90(0x15);
+        StartCdAudioTrack(0x15);
     }
     ovl_11_func_800DD4D8();
     ovl_11_func_800DD6F0();

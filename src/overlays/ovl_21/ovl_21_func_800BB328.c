@@ -18,6 +18,6 @@ void ovl_21_func_800BB328(void) {
     } while (CdReadArchiveBytes(0, 0x25000, 0x5800, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
     func_8001719C((u8 *)(D_8005E3B0 + 0x566C));
     memcpy(D_800BCD28, (void *)(D_8005E3B0 + 0x4290), 0x13DC);
-    memcpy(&D_800977F8, (void *)(D_8005E3B0 + 0x4290), 0x13DC);
+    memcpy(&gSharedSpriteData, (void *)(D_8005E3B0 + 0x4290), 0x13DC);
     func_80015704(&D_800C0ACC, (SpriteDataHeader *)D_800BCD28);
 }

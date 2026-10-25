@@ -1,6 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "scene_selection.h"
+#include "master_volume.h"
 
 void ovl_23_func_800BB0E8(void);
 s32 func_8001FABC(s16 arg0);
@@ -9,8 +10,6 @@ void ovl_23_func_800B92E8(void);
 void ovl_23_func_800B8B94(void);
 void ovl_23_func_800B8C18(void);
 void ovl_23_func_800B8FA4(void);
-void func_8001FE34(s32 arg0);
-s32 func_8001FE6C(void);
 void func_8001FAE8(s32 arg0);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020B80(s32 arg0, s32 arg1);
@@ -84,13 +83,13 @@ void ovl_23_func_800B87F8(void) {
                     if (state->unkC == 0) {
                         state->unkC = 1;
                         BeginScreenFadeFeedback(10);
-                        func_8001FE34(10);
+                        BeginMasterVolumeFadeOut(10);
                     } else {
                         result = IsScreenFadeComplete();
                         if (result == 1) {
                             readyCount += 1;
                         }
-                        result = func_8001FE6C();
+                        result = GetMasterVolumeRampState();
                         if (result == 0) {
                             readyCount += 1;
                         }

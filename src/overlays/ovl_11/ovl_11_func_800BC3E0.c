@@ -3,18 +3,17 @@
 #include "screen_fade.h"
 #include "gte_scene_state.h"
 #include "aux_sprite_display.h"
+#include "master_volume.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
 void ovl_11_func_800BD168();
 void func_8001AF70(u16 arg0, u16 arg1);
-s32 func_8001FD74(void);
 void func_8001E160(void);
 void ovl_11_func_800BCD28(void);
 void ovl_11_func_800BC868(void);
 /* Resident sprite-display disable at exe:8001B100. */
 s32 func_80020818(void);
-void func_8001FE00(s32 arg0);
 void ovl_11_func_800CD0C0(s32 *arg0);
 s32 func_8001AF44(u32 arg0);
 void ovl_11_func_800CCC5C(void);
@@ -61,7 +60,7 @@ void ovl_11_func_800BC3E0(void) {
                 state->field_44BA + (offset = state->field_44CE * 4 + 0x50);
         }
     case 10:
-        if (func_8001FD74()) {
+        if (IsSoundTransferComplete()) {
             D_801287F4++;
             func_8001E160();
             InitGteSceneState();
@@ -84,7 +83,7 @@ void ovl_11_func_800BC3E0(void) {
         break;
     case 6:
     case 14:
-        if (func_8001FD74()) {
+        if (IsSoundTransferComplete()) {
             D_801287F4++;
         }
         break;
@@ -93,7 +92,7 @@ void ovl_11_func_800BC3E0(void) {
         DisableAuxSpriteDisplay();
         if (D_801217A4 && !(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x4000)) {
             func_80020818();
-            func_8001FE00(10);
+            BeginMasterVolumeFadeIn(10);
         }
         ((Ovl11AreaInitView *)D_8006C838)->field_4450 &= ~0x4000;
         if (((Ovl11FarInitView *)&D_8007AFF0)->field_254A0 != 0x19) {

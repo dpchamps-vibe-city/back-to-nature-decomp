@@ -44,6 +44,7 @@
 #include "pad_actuator_sequences.h"
 #include "aux_sprite_display.h"
 #include "camera_offset.h"
+#include "master_volume.h"
 
 /* Callees not in functions.h */
 void func_8001FEA4(void);
@@ -72,8 +73,6 @@ void func_80017A70(u32 arg0);
 /* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
    leave the delay slot empty — it takes no arguments. */
 void func_8001E160(void);
-void func_8001FCE4(void);
-void func_8001FE00(s32 arg0);
 void func_8001FE7C(void);
 s32 func_80020818(void);
 void func_80021DA8(void);
@@ -160,7 +159,7 @@ int main(void) {
     func_80012A68(0, 0, 0x280, 0x1E0, 0, 0, 0);
     do {
     } while (DrawSync(1) != 0);
-    func_8001FCE4();
+    InitMasterVolumeRamp();
     func_8001FEA4();
     SetVideoMode(0);
     ResetGraph(0);
@@ -395,7 +394,7 @@ int main(void) {
                     D_8005E288 = 1;
                     D_80070CC0 = 4;
                 } else {
-                    func_8001FE00(0xA);
+                    BeginMasterVolumeFadeIn(0xA);
                     BeginScreenFadeDecrease(0xA, 0, 2);
                     far_base = (char *)&D_8007AFF0;
                     *(s32 *)(far_base + 0x254A0) = 0;
@@ -435,7 +434,6 @@ extern void PresentFrame(void);
  * pulling the generated header). All are void — implicit-int declarations
  * would make cc1 emit call_value_internal1 (a $v0 set) for each void call,
  * stealing $v0 from the loads that follow them. */
-void func_8001FD10(void);
 void func_800129F4(void);
 
 u32 Rand(s32 arg0);
@@ -457,7 +455,7 @@ void RunSceneUpdateLoop(void) {
             Rand(0xFFFF);
             UpdatePadActuatorSequences();
             PollPadInputs();
-            func_8001FD10();
+            UpdateMasterVolumeAndSoundTransfer();
             if (IsAuxSpriteDisplayEnabled() == 1) {
                 D_8005E384();
                 DrawSync(0);

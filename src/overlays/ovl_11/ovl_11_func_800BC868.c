@@ -1,9 +1,7 @@
 #include "common.h"
+#include "master_volume.h"
 
 s32 ovl_11_func_800BCB5C(void);
-void func_8001FE34(s32 arg0);
-void func_8001FD10(void);
-s32 func_8001FE6C(void);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020818(void);
 s32 func_80020B80(s32 arg0, s32 arg1);
@@ -14,9 +12,9 @@ void ovl_11_func_800BC868(void) {
 
     temp_s1 = ovl_11_func_800BCB5C();
     if (!(((struct Ovl11BCB5CState *) D_8006C838)->flags4450 & 0x4000) && (((struct Ovl11SoundWork *) &D_8007AFF0)->selected != temp_s1)) {
-        func_8001FE34(0x14);
-        while (func_8001FE6C() != 0) {
-            func_8001FD10();
+        BeginMasterVolumeFadeOut(0x14);
+        while (GetMasterVolumeRampState() != 0) {
+            UpdateMasterVolumeAndSoundTransfer();
         }
         func_8001FBBC(0);
         func_80020818();

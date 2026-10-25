@@ -9,6 +9,6 @@ s32 ovl_27_func_800BA620(void) {
         return 0;
     }
     func_8001719C((u8 *)(D_8005E3B0 + 0x566C));
-    memcpy(&D_800977F8, (void *)(D_8005E3B0 + 0x4290), 0x13DC);
+    memcpy(&gSharedSpriteData, (void *)(D_8005E3B0 + 0x4290), 0x13DC);
     return 1;
 }

@@ -44,6 +44,6 @@ void ovl_11_func_80120850(s32 arg0) {
         if (arg0 != 0) {
             D_8012DB88 += 1;
         }
-        func_80015EE8(gActiveRenderContext->field_120 + ((temp_v0 >> 2) * 4), (s32) &D_800A0728, (s32) (u8) D_8012DB84, 0, (s16) (*(s16 *) ((u8 *) D_8012DB28 + 0)), (s16) (var_s1 + ((*(u16 *) ((u8 *) D_8012DB28 + 4)) + ((u16) D_8012DB88 & 3))));
+        func_80015EE8(gActiveRenderContext->field_120 + ((temp_v0 >> 2) * 4), (s32) &gSharedSpriteSource, (s32) (u8) D_8012DB84, 0, (s16) (*(s16 *) ((u8 *) D_8012DB28 + 0)), (s16) (var_s1 + ((*(u16 *) ((u8 *) D_8012DB28 + 4)) + ((u16) D_8012DB88 & 3))));
     }
 }

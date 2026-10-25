@@ -16,6 +16,7 @@
 #include "psyq/libcd.h"
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
+#include "cd_audio.h"
 
 /* Tentative definitions preserve this unit's original GP-relative ownership.
  * Location is four bytes of CdlLOC storage, retaining its existing word type. */
@@ -35,8 +36,6 @@ s32 gCdReadByteCount;
 s32 gCdReadSector;
 s32 gCdArchiveBaseSector;
 s32 gCdByteRangeReadBusy;
-
-void func_80021B20(void);
 
 /* exe:0x80014554. Internal filename-based bootstrap; never narrows linkage. */
 s32 CdLoadFileBlocking(s32 filename, s32 destination) {
@@ -306,7 +305,7 @@ u_char *CdReadArchiveBytes(s32 entry, s32 byteOffset, s32 byteCount,
     sectorCount = endSector - firstSector;
 
     if (gCdArchiveReadBusy == 0 || (one = 1, startRequest == one)) {
-        func_80021B20();
+        StopCdAudio();
         gCdReadSector = firstSector + gCdArchiveBaseSector;
         CdReadBreak();
         CdFlush();
