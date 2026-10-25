@@ -7,6 +7,8 @@
 #include "psyq/libgpu.h"
 #include "psyq/libsnd.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
+#include "pad_actuator_sequences.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -110,7 +112,6 @@ s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
 s32 ovl_11_func_800D7504 (s16 arg0);
 s32 ovl_11_func_800BE5A0 (M2C_f90dacf3c1c7_Ovl11CheckArg *arg0);
 void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001B2CC (s32 arg0, s32 arg1);
 u32 func_8001589C (SpriteSourceData *src);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -145,7 +146,6 @@ s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800D6730 (s16 value, s16 row);
 s32 ovl_11_func_800D688C (s16 arg0);
-void func_80014BCC (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 ovl_11_func_800D678C (s16 arg0);
 s32 ovl_11_func_800D67F4 (s16 arg0);
 void ovl_11_func_800D6944 (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);

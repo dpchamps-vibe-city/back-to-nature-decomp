@@ -6,8 +6,7 @@
 #include "psyq/memory.h"
 #include "psyq/libcd.h"
 #include "psyq/libetc.h"
-
-void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+#include "cd_loader.h"
 
 void func_8001719C(u8 *arg0);
 
@@ -28,7 +27,7 @@ void ovl_11_func_800BD238(s32 arg0) {
         var_s1 = 0xA20;
         p = &D_80122804[arg0];
         temp_a1 = p[0];
-        func_80014BCC(0, temp_a1, p[1] - temp_a1, 0, D_8005E3B0 + 0x4290);
+        CdReadDiscSectorsBlocking(0, temp_a1, p[1] - temp_a1, 0, D_8005E3B0 + 0x4290);
         if (arg0 != 0) {
             var_s1 = 0x838;
         }

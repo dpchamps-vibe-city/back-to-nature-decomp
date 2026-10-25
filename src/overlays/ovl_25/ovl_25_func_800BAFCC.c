@@ -4,8 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
 
-u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
 void func_8001719C(u8 *arg0);
 /* Only out and header are consumed; the trailing debug-hook slots are unused. */
 void func_80015704();
@@ -18,9 +18,9 @@ void ovl_25_func_800BAFCC(void) {
 
     DrawSync(0);
     ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
-    func_80014CBC(0x1A, 0, 0x124D0, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
+    CdReadArchiveBytes(0x1A, 0, 0x124D0, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
     do {
-    } while (func_80014CBC(0x1A, 0, 0x124D0, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
+    } while (CdReadArchiveBytes(0x1A, 0, 0x124D0, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
     func_8001719C((u8 *)(D_8005E3B0 + 0x5F18));
     memcpy(D_800BE1B4, (u8 *)(D_8005E3B0 + 0x4290), 0x1C88);
     func_80015704((SpriteSourceData *)&Ovl25Sprite800C024C, (SpriteDataHeader *)(D_800BE1B4 + ((s32 *)D_800BCD68)[0]));

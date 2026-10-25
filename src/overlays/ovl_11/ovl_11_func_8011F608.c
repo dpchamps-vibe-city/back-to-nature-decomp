@@ -1,7 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "screen_primitives.h"
 
-void func_80015114(u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
 void func_80017A08(s32 arg0, s32 arg1);
 s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 func_8001FBBC(s16 arg0);
@@ -54,7 +54,7 @@ void ovl_11_func_8011F608(void) {
                 func_8001FE00(10);
                 D_80128540 = 8;
             } else {
-                func_80015114((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
+                DrawScreenTileRect((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
                 BeginScreenFadeIncrease(10, 0, 1);
                 func_8001FE00(10);
                 D_80128540 = 5;
@@ -62,7 +62,7 @@ void ovl_11_func_8011F608(void) {
         }
         break;
     case 5:
-        func_80015114((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
+        DrawScreenTileRect((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
         if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
             func_80021B90(25);
             D_80128540 = 6;

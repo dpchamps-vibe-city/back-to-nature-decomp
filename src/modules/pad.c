@@ -14,8 +14,9 @@
  * absolutely from outside. It ends at the actuator output service
  * 0x80014494 for a mechanical reason, not evidence: that function carries a
  * per-function -fno-cse-skip-blocks override, and a module compiles under
- * one command line. The evidence puts 0x80014494 and 0x80014554 in this unit
- * too; see notes/file-groupings.md.
+ * one command line. The evidence puts 0x80014494 in this unit too; the next
+ * function, 0x80014554, is cd_loader's filename bootstrap helper. See
+ * notes/file-groupings.md.
  */
 
 #include "common.h"

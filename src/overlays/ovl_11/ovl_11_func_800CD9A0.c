@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "pad_actuator_sequences.h"
 
 void *ovl_11_func_800BDCE8(u8 *arg0, Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
@@ -8,7 +9,6 @@ s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_800CD670(s16 arg0);
 s32 ovl_11_func_800CB4E0(void);
 s32 func_8001AF44(u32 arg0);
-void func_8001B2CC(s32 arg0, s32 arg1);
 void func_8001AF70(u16 arg0, u16 arg1);
 
 s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
@@ -122,7 +122,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                 }
                 result = ovl_11_func_80107C80(D_801287F0->unkA, (u16)D_801287F0->unk8, &messages[1], 0);
                 if (result == 1) {
-                    func_8001B2CC(0, 2);
+                    RequestPadActuatorSequence(0, 2);
                     ((struct Ovl11SelectionResetMode *)&D_8007AFF0)->mode = result;
                     ovl_11_func_800CD670(0xA);
                     ovl_11_func_800CB4E0();

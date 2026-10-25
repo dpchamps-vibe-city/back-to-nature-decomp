@@ -40,6 +40,9 @@
 #include "asset_scratch.h"
 #include "graphics_heap.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
+#include "pad_actuator_sequences.h"
+#include "aux_sprite_display.h"
 
 /* Callees not in functions.h */
 void func_8001FEA4(void);
@@ -53,7 +56,6 @@ void SceneEntryHook(s32 arg0);
 
 /* SDK callees declared in functions.h (not included to avoid type conflicts) */
 void SetVal8005E278(s32 arg0);
-void ClearVal8005E2CC(void);
 
 /* Game-specific callees (signatures from functions.h / target analysis) */
 void RunSceneUpdateLoop(void);
@@ -64,13 +66,10 @@ void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 
 void InitPads(void);
 /* func_800145F0 ends with `addu $v0,$zero,$zero` before `jr $ra` — it
    returns 0, and the target's callers keep $v0 out of post-call temporaries. */
-s32 func_800145F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 func_800147BC(void);
 void func_80017A48(u32 arg0);
 void func_80017A70(u32 arg0);
 /* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
    leave the delay slot empty — it takes no arguments. */
-void func_8001AFE0(void);
 void func_8001E160(void);
 void func_8001EFA4(void);
 void func_8001FCE4(void);
@@ -166,7 +165,7 @@ int main(void) {
     SetVideoMode(0);
     ResetGraph(0);
     gCurrentSceneId = 0xD;
-    func_800147BC();
+    CdInitArchiveIndex();
     env_base = (char *)&gRenderContexts;
     SetDefDrawEnv((DRAWENV *)env_base, 0, 0, 0x140, 0xF0);
     temp_s2 = (s32 *)(env_base + 0x134);
@@ -234,23 +233,23 @@ int main(void) {
             switch ((u32)gCurrentSceneId) {
             case 0:
                 SceneEntryHook(1);
-                func_800145F0(8, 9, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(8, 9, D_80010098, D_80010098);
                 D_8005E384 = (void (*)(void))&D_800B8014;
                 D_8005E288 = 0;
                 break;
 
             case 1:
                 SceneEntryHook(0);
-                func_800145F0(0xA, 0xB, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0xA, 0xB, D_80010098, D_80010098);
                 D_8005E288 = 0;
                 D_8005E384 = (void (*)(void))&D_800B889C;
                 break;
 
             case 2:
                 if (D_8005E288 == 0) {
-                    func_8001AFE0();
+                    ResetAuxSpriteDisplay();
                     SceneEntryHook(0);
-                    func_800145F0(0xB, 0xC, D_80010098, D_80010098);
+                    CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
                     func_80021FD0();
                 }
@@ -260,21 +259,21 @@ int main(void) {
             case 3:
                 SelectRenderConfiguration(1);
                 SceneEntryHook(0);
-                func_800145F0(0x11, 0x12, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x11, 0x12, D_80010098, D_80010098);
                 D_8005E384 = (void (*)(void))&D_800B7E38;
                 D_8005E288 = 0;
                 break;
 
             case 4:
                 SceneEntryHook(0);
-                func_800145F0(0x13, 0x14, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x13, 0x14, D_80010098, D_80010098);
                 D_8005E384 = (void (*)(void))&D_800B7ED8;
                 D_8005E288 = 0;
                 break;
 
             case 5:
                 SceneEntryHook(0);
-                func_800145F0(0x15, 0x16, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x15, 0x16, D_80010098, D_80010098);
                 D_8005E384 = (void (*)(void))&D_800B7E3C;
                 D_8005E288 = 0;
                 break;
@@ -282,7 +281,7 @@ int main(void) {
             case 6:
                 if (D_8005E288 == 0) {
                     SceneEntryHook(0);
-                    func_800145F0(0xB, 0xC, D_80010098, D_80010098);
+                    CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
                 }
                 SetVal8005E278(1);
@@ -294,7 +293,7 @@ int main(void) {
                 SelectRenderConfiguration(1);
                 CopyRenderContextBackup(0, 1);
                 SceneEntryHook(0);
-                func_800145F0(0xF, 0x10, D_8001009C, D_8001009C);
+                CdLoadArchiveRangeBlocking(0xF, 0x10, D_8001009C, D_8001009C);
                 D_80070CC4 = 0;
                 D_8005E384 = (void (*)(void))&D_8012E2CC;
                 break;
@@ -303,7 +302,7 @@ int main(void) {
                 SelectRenderConfiguration(1);
                 CopyRenderContextBackup(0, 1);
                 SceneEntryHook(0);
-                func_800145F0(0xF, 0x10, D_8001009C, D_8001009C);
+                CdLoadArchiveRangeBlocking(0xF, 0x10, D_8001009C, D_8001009C);
                 D_80070CC4 = 0;
                 D_8005E384 = (void (*)(void))&D_8012E520;
                 break;
@@ -312,7 +311,7 @@ int main(void) {
                 SelectRenderConfiguration(1);
                 CopyRenderContextBackup(0, 1);
                 SceneEntryHook(0);
-                func_800145F0(0xF, 0x10, D_8001009C, D_8001009C);
+                CdLoadArchiveRangeBlocking(0xF, 0x10, D_8001009C, D_8001009C);
                 D_80070CC4 = 0;
                 D_8005E384 = (void (*)(void))&D_8012E7C8;
                 break;
@@ -320,21 +319,21 @@ int main(void) {
             case 11:
                 SelectRenderConfiguration(1);
                 SceneEntryHook(0);
-                func_800145F0(0x17, 0x18, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x17, 0x18, D_80010098, D_80010098);
                 D_8005E384 = (void (*)(void))&D_800B7EA4;
                 D_8005E288 = 0;
                 break;
 
             case 12:
                 SceneEntryHook(0);
-                func_800145F0(0x19, 0x1A, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x19, 0x1A, D_80010098, D_80010098);
                 D_8005E384 = (void (*)(void))&D_800B7EB4;
                 D_8005E288 = 0;
                 break;
 
             case 13:
                 SceneEntryHook(0);
-                func_800145F0(0x1B, 0x1C, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x1B, 0x1C, D_80010098, D_80010098);
                 func_80021FD0();
                 D_8005E384 = (void (*)(void))&D_800B7EEC;
                 D_8005E288 = 0;
@@ -342,9 +341,9 @@ int main(void) {
 
             case 14:
                 if (D_8005E288 == 0) {
-                    func_8001AFE0();
+                    ResetAuxSpriteDisplay();
                     SceneEntryHook(0);
-                    func_800145F0(0xB, 0xC, D_80010098, D_80010098);
+                    CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
                 }
                 D_80070CC0 = 5;
@@ -354,7 +353,7 @@ int main(void) {
             case 15:
                 if (D_8005E288 == 0) {
                     SceneEntryHook(0);
-                    func_800145F0(0xB, 0xC, D_8001009C, D_8001009C);
+                    CdLoadArchiveRangeBlocking(0xB, 0xC, D_8001009C, D_8001009C);
                     D_8005E288 = 1;
                 }
                 D_80070CC0 = 6;
@@ -363,7 +362,7 @@ int main(void) {
 
             case 16:
                 SceneEntryHook(0);
-                func_800145F0(0x1C, 0x1D, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x1C, 0x1D, D_80010098, D_80010098);
                 func_80021FD0();
                 D_8005E288 = 0;
                 D_8005E384 = (void (*)(void))&D_800B7E24;
@@ -371,19 +370,19 @@ int main(void) {
 
             case 17:
                 if (D_8005E288 == 0) {
-                    func_800145F0(0xB, 0xC, D_80010098, D_80010098);
+                    CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
-                    ClearVal8005E2CC();
+                    DisableAuxSpriteDisplay();
                 }
                 SelectRenderConfiguration(1);
                 CopyRenderContextBackup(0, 0);
-                func_800145F0(0x1E, 0x1F, D_8001009C, D_8001009C);
+                CdLoadArchiveRangeBlocking(0x1E, 0x1F, D_8001009C, D_8001009C);
                 D_8005E384 = (void (*)(void))&D_8012F084;
                 break;
 
             case 18:
                 SceneEntryHook(0);
-                func_800145F0(0x1F, 0x20, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0x1F, 0x20, D_80010098, D_80010098);
                 func_80021FD0();
                 D_8005E384 = (void (*)(void))&D_800B7FCC;
                 D_8005E288 = 0;
@@ -392,7 +391,7 @@ int main(void) {
             case 19:
                 if (D_8005E288 == 0) {
                     SceneEntryHook(0);
-                    func_800145F0(0xB, 0xC, D_80010098, D_80010098);
+                    CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
                     D_80070CC0 = 4;
                 } else {
@@ -406,7 +405,7 @@ int main(void) {
 
             case 20:
                 SceneEntryHook(0);
-                func_800145F0(0xB, 0xC, D_80010098, D_80010098);
+                CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                 D_8005E288 = 1;
                 func_80021FD0();
                 D_80070CC0 = 7;
@@ -436,11 +435,8 @@ extern void PresentFrame(void);
  * pulling the generated header). All are void — implicit-int declarations
  * would make cc1 emit call_value_internal1 (a $v0 set) for each void call,
  * stealing $v0 from the loads that follow them. */
-void func_8001B258(void);
 void func_8001FD10(void);
 void func_800129F4(void);
-
-s32 GetVal8005E2CC(void);
 
 u32 Rand(s32 arg0);
 
@@ -459,10 +455,10 @@ void RunSceneUpdateLoop(void) {
     if (gSceneUpdateLoopActive == 1) {
         do {
             Rand(0xFFFF);
-            func_8001B258();
+            UpdatePadActuatorSequences();
             PollPadInputs();
             func_8001FD10();
-            if (GetVal8005E2CC() == 1) {
+            if (IsAuxSpriteDisplayEnabled() == 1) {
                 D_8005E384();
                 DrawSync(0);
                 VSync(2);

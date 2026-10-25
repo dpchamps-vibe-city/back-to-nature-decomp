@@ -6,6 +6,7 @@
 #include "psyq/libetc.h"
 #include "psyq/libcd.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
 
 
 int CdControl (u_char com, u_char *param, u_char *result);
@@ -16,7 +17,6 @@ int CdSync (int mode, u_char *result);
 int ResetCallback (void);
 void *memmove (unsigned char *, const unsigned char *, int);
 s32 func_8001AF44 (u32 arg0);
-s32 func_800145F0 (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800E3CDC (u8 *arg0);
 s32 ovl_11_func_800E351C (u8 *arg0, s16 arg1, s16 arg2);
 
@@ -30,7 +30,7 @@ s32 ovl_11_func_800E3C4C(void) {
         DrawSync(0);
         ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
         temp_s0 = D_8005E70C;
-        func_800145F0(0x1D, 0x1E, temp_s0, temp_s0);
+        CdLoadArchiveRangeBlocking(0x1D, 0x1E, temp_s0, temp_s0);
         ovl_11_func_800E3CDC((u8 *) temp_s0);
     }
     return 0;

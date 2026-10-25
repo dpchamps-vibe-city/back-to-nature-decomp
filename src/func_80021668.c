@@ -1,7 +1,6 @@
 #include "common.h"
 #include "psyq/libsnd.h"
-
-s32 func_80014988(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+#include "cd_loader.h"
 
 s32 func_80021668(void) {
     s32 temp_t1;
@@ -9,11 +8,11 @@ s32 func_80021668(void) {
     if ((u32)D_8006C7B8.unk10 <= (u32)D_8006C7B8.unkC) {
         switch (D_8006C7B8.unk1C) {
         case 0:
-            func_80014988(9, D_8006C7B8.unk14, D_8006C7B8.unk8, D_8006C7B8.unk4, 1);
+            CdReadArchiveSectors(9, D_8006C7B8.unk14, D_8006C7B8.unk8, D_8006C7B8.unk4, 1);
             D_8006C7B8.unk1C = 1;
             break;
         case 1:
-            if (func_80014988(9, D_8006C7B8.unk14, D_8006C7B8.unk8, D_8006C7B8.unk4, 0) == 1) {
+            if (CdReadArchiveSectors(9, D_8006C7B8.unk14, D_8006C7B8.unk8, D_8006C7B8.unk4, 0) == 1) {
                 SsVabTransBodyPartly((u8 *)D_8006C7B8.unk4, D_8006C7B8.unk8, D_8006C7B8.unk18);
                 temp_t1 = D_8006C7B8.unk1C;
                 D_8006C7B8.unk1C = 0;

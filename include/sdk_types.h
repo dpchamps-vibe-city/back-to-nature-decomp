@@ -1521,37 +1521,6 @@ typedef struct {
 } M2C_8da617f67856_Ovl11D04D4Obj;
 
 typedef struct {
-               s8 field_0;
-               s8 field_1;
-               s8 field_2;
-               s8 field_3;
-               s8 field_4;
-               s8 field_5;
-               s8 field_6;
-               s8 field_7;
-               s16 field_8;
-               s16 field_A;
-               s8 field_C;
-               s8 field_D;
-               s8 field_E;
-               char pad_F;
-               s16 field_10;
-               s16 field_12;
-               s8 field_14;
-               s8 field_15;
-               s8 field_16;
-               char pad_17;
-               s16 field_18;
-               s16 field_1A;
-               s8 field_1C;
-               s8 field_1D;
-               s8 field_1E;
-               char pad_1F;
-               s16 field_20;
-               s16 field_22;
-} M2C_8ffcafc4ec70_Struct_800153BC;
-
-typedef struct {
                s16 field_0;
                char pad_02[0x30 - 0x02];
                s16 unk30;
@@ -3445,6 +3414,15 @@ struct Ovl30ValueMenuEntry {
     char *text;
 };
 
+typedef struct {
+ u_long tag;
+ u_char r0, g0, b0, code;
+ short x0, y0;
+ short x1, y1;
+ short x2, y2;
+ short x3, y3;
+} POLY_F4;
+
 typedef unsigned short u_short;
 
 typedef struct {
@@ -3459,6 +3437,18 @@ typedef struct {
  short x3, y3;
  u_char u3, v3; u_short pad2;
 } POLY_FT4;
+
+typedef struct {
+ u_long tag;
+ u_char r0, g0, b0, code;
+ short x0, y0;
+ u_char r1, g1, b1, pad1;
+ short x1, y1;
+ u_char r2, g2, b2, pad2;
+ short x2, y2;
+ u_char r3, g3, b3, pad3;
+ short x3, y3;
+} POLY_G4;
 
 struct PadInputState {
                s32 repeatButtons;

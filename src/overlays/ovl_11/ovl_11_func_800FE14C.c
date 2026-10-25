@@ -1,8 +1,5 @@
 #include "common.h"
-
-void func_80014F0C(u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
-void func_80015074(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
-void func_80014FAC(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s16 arg9);
+#include "screen_primitives.h"
 
 void ovl_11_func_800FE14C(s32 input_level, u32 input_value, s32 input_x, s32 input_y) {
     s16 level;
@@ -64,11 +61,11 @@ first_corner_selected:
             end_y = bottom;
         }
         y1 = end_y;
-        func_80014F0C(ot, x0, y0, x1, y1, 0xE0B888, 0);
+        DrawScreenLine(ot, x0, y0, x1, y1, 0xE0B888, 0);
     }
     inner_x = x + 1;
     inner_y = y + 1;
-    func_80015074((s32 *) ot, inner_x, inner_y, 0x82, 7, 0xC8A060, 0);
+    DrawScreenFlatRect((s32 *) ot, inner_x, inner_y, 0x82, 7, 0xC8A060, 0);
     if (level < 0) {
         level *= -1;
     }
@@ -84,6 +81,6 @@ first_corner_selected:
             width = 0x82;
         }
     }
-    func_80014FAC((s32 *) (gActiveRenderContext->field_D8 + 0x5C), inner_x, inner_y, width, 7,
+    DrawScreenGradientRect((s32 *) (gActiveRenderContext->field_D8 + 0x5C), inner_x, inner_y, width, 7,
                   dark_color, light_color, dark_color, light_color, 0);
 }

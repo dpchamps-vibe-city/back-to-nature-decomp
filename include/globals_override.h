@@ -15,6 +15,22 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* exe:8001B258 dispatches two slots; 8001B2CC selects 8-byte presets and
+ * 8001B3EC walks three-byte actuator steps. All four state arrays are GP-owned. */
+typedef struct {
+    u8 priority;
+    u8 reserved1;
+    u8 reserved2;
+    u8 reserved3;
+    s32 stepsAddress;
+} PadActuatorSequencePreset;
+extern PadActuatorSequencePreset gPadActuatorSequencePresets[];
+extern void (*gPadActuatorSequenceDispatch[])(s32);
+extern u16 gPadActuatorSequenceTicks[2];
+extern s16 gPadActuatorSequenceModes[2];
+extern s32 gPadActuatorSequenceAddresses[2];
+extern s16 gPadActuatorSequencePriorities[2];
+
 /* exe:80011EF0 saves/sets these s32 dispatch IDs; 80011F08/80011F14 query them. */
 extern s32 gPreviousSceneId;
 extern s32 gCurrentSceneId;
@@ -429,10 +445,18 @@ extern s32 D_800BAA34[20];
 extern s32 D_800B8EC0[21];
 
 /* 8001B5DC loads this fog distance with lw; SetVal8005E2D8 stores s32. */
-extern s32 D_8005E2D8;
+extern s32 gSceneFogNear;
 /* 8001B5DC loads these colors with lbu; 8001BF74/8001BF88 store bytes. */
-extern u8 D_8005E2DC;
-extern u8 D_8005E2E0;
+extern u8 gSceneBackRed;
+extern u8 gSceneBackGreen;
+extern u8 gSceneBackBlue;
+extern u8 gSceneFarRed;
+extern u8 gSceneFarGreen;
+extern u8 gSceneFarBlue;
+/* 1B530 clears 32 bytes; 1B5DC passes these addresses to GTE matrix macros.
+ * Keep the existing scalar address views; no storage/layout change is implied. */
+extern s32 gSceneLightMatrix;
+extern s32 gSceneColorMatrix;
 
 /* ovl_30 8012F084 reads a signed word through D_8007AFF0 + 0x2547C. */
 struct Ovl30SettingsView {
@@ -1156,22 +1180,21 @@ typedef struct {
 extern struct_8006C7B8 _D_8006C7B8[1] __asm__("D_8006C7B8");
 #define D_8006C7B8 (*((struct_8006C7B8*)_D_8006C7B8))
 
-/* D_80061DE8 - shared struct used by func_8001B9F8 and func_8001BA40 */
-struct struct_80061DE8 {
-    s32 field_00;       /* 0x00 */
-    s32 field_04;       /* 0x04 */
-    s32 field_08;       /* 0x08 */
-    s32 field_0C;       /* 0x0C */
-    s32 field_10;       /* 0x10 */
-    s32 field_14;       /* 0x14 */
-    s32 field_18;       /* 0x18 */
-    s32 field_1C;       /* 0x1C */
+/* exe:80061DE8. The view builder subtracts eye from target, applies roll,
+ * and skips rebuilding while the dead matrix-install API's address is nonzero. */
+struct CameraViewParameters {
+    s32 eyeX;
+    s32 eyeY;
+    s32 eyeZ;
+    s32 targetX;
+    s32 targetY;
+    s32 targetZ;
+    s32 rollAngle;
+    s32 matrixOverrideAddress;
 };
-
-/* func_8001B6A0 reads all eight words of the camera parameters. */
-extern struct struct_80061DE8 D_80061DE8;
+extern struct CameraViewParameters gCameraViewParameters;
 /* func_8001B6A0 builds a MATRIX at E08, with row aliases E0E/E14. */
-extern s16 D_80061E08[16];
+extern s16 gCameraViewMatrix[16];
 extern s16 D_80061E0E[3];
 extern s16 D_80061E14[3];
 
@@ -2277,13 +2300,31 @@ typedef struct {
     u32 loc;            /* 0x24 - CD position, logical >> */
 } CDLocTableEntry;      /* 0x28 */
 
-extern CDLocTableEntry D_80048B1C[];
+extern CDLocTableEntry gCdArchiveEntries[];
+
+/* cd_loader's GP-relative words: witnessed loads/stores and SDK CdlLOC use. */
+extern s32 gCdReadLocation;
+extern s32 gCdRangeReadBusy;
+extern s32 gCdRangeFirstEntry;
+extern s32 gCdRangeEndEntry;
+extern s32 gCdRangeDestination;
+extern s32 gCdRangeLeadingBytes;
+extern s32 gCdRangeEntry;
+extern s32 gCdRangeReadComplete;
+extern volatile s32 gCdArchiveReadBusy;
+extern s16 gCdReadEntry;
+extern s32 gCdReadByteOffset;
+extern s32 gCdReadDestination;
+extern s32 gCdReadByteCount;
+extern s32 gCdReadSector;
+extern s32 gCdArchiveBaseSector;
+extern s32 gCdByteRangeReadBusy;
 
 /* D_80048B40 - view of the .loc fields of D_80048B1C as a flat s32 array.
  * Address 0x80048B40 = 0x80048B1C + 0x24 (offset of .loc within entry).
  * func_800145F0 accesses this with lui+addiu base (no extra offset addiu),
  * then indexes by arg*0x28. Array size forces >8 bytes for absolute addressing. */
-extern s32 D_80048B40[4];
+extern s32 gCdArchiveFirstByteOffset[4];
 
 /* D_80049050 - array used by func_80017A70
  * Array size of 5 ensures >8 byte declaration for absolute addressing (lui+addiu) */
@@ -2761,8 +2802,8 @@ extern s32 D_8005E328;
  * "\\A_FILE.HDT;1" and "\\A_FILE.BIN;1". Accessed absolutely with
  * unsplit lui/addiu. char[] keeps the symbol <= -G8 so the address
  * is not split; this TU does not define them so they are absolute. */
-extern char D_80010078[];
-extern char D_80010088[];
+extern char gCdArchiveIndexPath[];
+extern char gCdArchiveDataPath[];
 
 /* D_800100A0 - string embedded in func_80010000 at offset 0xA0 ("INIT ERROR\n")
  * Referenced by func_80015704 for FntPrint error messages.
@@ -2983,14 +3024,18 @@ extern s16 _D_80061EA8[12] __asm__("D_80061EA8");
 typedef struct {
     short m[3][3];
     long t[3];
-} Matrix80061E88;
-extern Matrix80061E88 _D_80061E88[1] __asm__("D_80061E88");
-#define D_80061E88 (*((Matrix80061E88*)_D_80061E88))
+} GteTransformStorage;
+extern GteTransformStorage _gCapturedGteTransform[1] __asm__("gCapturedGteTransform");
+#define gCapturedGteTransform (*((GteTransformStorage*)_gCapturedGteTransform))
 
 /* D_80010000 - function pointer table at start of code segment (2 entries).
  * Array size 3 forces >-G8 declared size for split absolute addressing (lui/addiu). */
 typedef void (*InitFunc)(void);
 extern InitFunc D_80010000[3];
+
+/* exe:1B074 sets enable, 1B100 clears it; 1B118 guards recursive rendering. */
+extern s32 gAuxSpriteDisplayEnabled;
+extern s32 gAuxSpriteDisplayRendering;
 
 /* D_8005F2E8 - OT ring buffer (0x100 bytes = 0x40 u32 entries; func_8001AFE0
  * zeroes a larger 0x1300-byte sprite render region starting here). Declared
@@ -2999,7 +3044,7 @@ extern InitFunc D_80010000[3];
  * unsplit `la` macro and CSE folded the OT base into each ClearOTagR use,
  * destroying the callee-saved $s2 web func_8001B074 keeps (move a0,s2 /
  * addiu a0,s2,128 across four calls). Size class only; this TU never defines it. */
-extern u32 D_8005F2E8[0x40];
+extern u32 gAuxSpriteOrderingTables[0x40];
 
 /* D_8005F2B8 - SpriteSourceData instance (0x30 bytes). Declared >-G8 so cc1
  * materializes its address as a SPLIT lui/addiu pair in RTL, matching how the
@@ -3008,11 +3053,11 @@ extern u32 D_8005F2E8[0x40];
  * base quantity); with a 4-byte declaration the address is an unsplit `la` macro
  * and the register quantity differs from the original, shifting the callee-saved
  * assignment. This TU never defines it. */
-extern u32 D_8005F2B8[0xC];
+extern u32 gAuxSpriteSource[0xC];
 
 /* D_800605F0 - SpriteDataHeader instance. Same split-address declaration class
  * as D_8005F2B8/D_8005F2E8; target reaches it with lui s0,%hi / addiu s0,%lo. */
-extern u32 D_800605F0[0x10];
+extern u32 gAuxSpriteHeader[0x10];
 
 /* D_80128D00 - ovl_11 sprite source-data object (0x30 bytes).
  * The complete type is defined in game_types.h; forward-declare it here
@@ -3111,7 +3156,7 @@ typedef struct {
     /* 0x1C */ u16 field_1C;
     /* 0x1E */ u16 field_1E;
 } struct_80061E28;
-extern struct_80061E28 D_80061E28;
+extern struct_80061E28 gSceneDefaultMatrix;
 
 /* D_80049068 / D_80049070 - u16 message tables read by func_8001A19C under
  * split absolute addressing (`lui %hi` / `addiu r,%lo` with the base in a

@@ -2,12 +2,12 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "pad_actuator_sequences.h"
 
 void ovl_11_func_800CA708(void);
 s32 GetVal8005E524(void);
 void SetVal8005E51C(s32);
 s32 ovl_11_func_800BDB88(s32 *, s32);
-void func_8001B2CC(s32, s32);
 void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 void ovl_11_func_800DB054(Ovl11SceneCoordinates *);
 s32 func_8001DFD4(s32 *, SVECTOR *);
@@ -46,7 +46,7 @@ void ovl_11_func_800CAADC(void) {
     position.vz += player->velocity[2];
     if (player->flags & 0x40000000) {
         if (ovl_11_func_800BDB88((s32 *)&position, 0xC000) == 0) {
-            func_8001B2CC(0, 2);
+            RequestPadActuatorSequence(0, 2);
             player->velocity[1] = 0;
             player->flags &= ~0x40000000;
             if (player->flags & 0x100) {

@@ -3,9 +3,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
 
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8001719C(u8 *arg0);
 
 void ovl_11_func_800BD6A8(s16 arg0, s16 arg1) {
@@ -57,7 +57,7 @@ block_12:
                 DrawSync(0);
             }
             temp_a1 = temp_s2[0];
-            func_80014BCC(0, temp_a1, temp_s2[1] - temp_a1, 0, temp_s1);
+            CdReadDiscSectorsBlocking(0, temp_a1, temp_s2[1] - temp_a1, 0, temp_s1);
             if (var_s3 == 1) {
                 memcpy(D_8008F7F8_words, (void *) temp_s1, temp_s0);
             } else {

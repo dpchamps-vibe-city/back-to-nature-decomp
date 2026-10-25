@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+#include "cd_loader.h"
 
 void ovl_11_func_800BD668(void) {
-    func_80014BCC(0, 0x74800, 0xA800, 0, D_8005E3B0 + 0x4290);
+    CdReadDiscSectorsBlocking(0, 0x74800, 0xA800, 0, D_8005E3B0 + 0x4290);
 }

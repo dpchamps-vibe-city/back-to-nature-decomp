@@ -1,6 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
+#include "gte_scene_state.h"
+#include "aux_sprite_display.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
@@ -8,11 +10,9 @@ void ovl_11_func_800BD168();
 void func_8001AF70(u16 arg0, u16 arg1);
 s32 func_8001FD74(void);
 void func_8001E160(void);
-void func_8001B530(void);
 void ovl_11_func_800BCD28(void);
 void ovl_11_func_800BC868(void);
-/* Overlay import of ClearVal8005E2CC at 8001B100. */
-void ClearVal8005E2CC(void);
+/* Resident sprite-display disable at exe:8001B100. */
 s32 func_80020818(void);
 void func_8001FE00(s32 arg0);
 void ovl_11_func_800CD0C0(s32 *arg0);
@@ -64,7 +64,7 @@ void ovl_11_func_800BC3E0(void) {
         if (func_8001FD74()) {
             D_801287F4++;
             func_8001E160();
-            func_8001B530();
+            InitGteSceneState();
         }
         break;
     case 3:
@@ -90,7 +90,7 @@ void ovl_11_func_800BC3E0(void) {
         break;
     case 7:
     case 15:
-        ClearVal8005E2CC();
+        DisableAuxSpriteDisplay();
         if (D_801217A4 && !(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x4000)) {
             func_80020818();
             func_8001FE00(10);

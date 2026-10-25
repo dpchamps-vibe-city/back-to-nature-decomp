@@ -4307,7 +4307,55 @@ load + explicit s16 casts), strengthening the score-table sequencer TU
 hypothesis; both still reach the tables absolutely, so TU membership remains
 unproven.
 
-## sprite frame setup and OT — 0x8001AFE0–0x8001B118 (confidence: medium)
+## auxiliary sprite display — 0x8001AFE0–0x8001B258 (confidence: high)
+
+**Reconstructed module: `src/modules/aux_sprite_display.c`**, five compiled
+functions and the existing dead signed-halfword wrapper, in original order.
+This includes B100/B10C's disable/query pair, omitted from the old member list.
+B074/B100/B10C/B118 share E2CC through $gp; B118 also owns the E2D0 recursion
+guard. No function outside the group accesses those two words directly.
+AFE0 and B074 exclusively clear/initialize the source and OT/packet workspace
+that B118 submits and rebuilds. AFE0 calls B074, as does dead B028; the latter
+is carried rather than a boundary. B028 truncates/sign-extends SIX arguments
+before forwarding them, while AFE0 supplies six material zero arguments.
+B074 reads none of them. Its old `(void)` definition is reconciled to six
+unused s32 parameters (the promoted call ABI), preserving both callers and the
+initializer's bytes instead of deleting the material argument setup. This
+also removes one existing interfaceAudit arity conflict.
+
+Boundaries: predecessor AF70 is a bit setter over the widely used game-state
+flag array, with no auxiliary-display state/call/data connection. Successor
+B258 begins the actuator sequencer's independent private GP cluster and
+callback/preset tables; it has no sprite-source or OT use. No evidence supports
+extending this module across either neighbor. Separately, B118 accesses the
+active render context/index absolutely while game_loop owns those words through
+$gp: this is a PROVEN TU boundary despite the shared buffering algorithm.
+The original resident service hook at 80011334 (inside the handwritten startup
+carrier) calls B118 after CD polling; it is a client, not another member.
+
+Names: ResetAuxSpriteDisplay, InitAuxSpriteDisplaySource (and its dead ...16
+wrapper), DisableAuxSpriteDisplay, IsAuxSpriteDisplayEnabled and
+PresentAuxSpriteDisplay. The enable/render guards, source, OTs and embedded
+header are named at their original addresses. The existing word-array data
+views and source/header casts were retained, not silently retyped. The public
+header documents the dedicated OTs/workspace, SHARED main render contexts,
+0x1300-byte reset, deferred next-frame sprite build at (160,120), display
+masking and recursive-present guard. It does not infer a particular loading
+icon or gameplay role. Present submits before toggling contexts and preparing
+the next packet list.
+
+Canonicalization handled address aliases, while the already-named old
+ClearVal/GetVal identities were explicitly renamed at all live callers and
+inactive declarations, not treated as automatically supported aliases.
+interfaceAudit replaced caller-local declarations with the public header and
+confirmed unchanged objects. The service-hook assembly call and overlay imports
+were regenerated from canonical symbols. No new linkage restriction, assembly,
+flag or policy exception was introduced. The fold and full campaign gate passed
+at baseline -O2/-G8: 108 folded functions, thirteen valid modules, every EXE and
+overlay byte, tables/stubs/placement, interfaces, ownership, source policy,
+config convergence and exception non-growth.
+
+Historical function-level evidence (names below are original identities):
 
 Sprite data-area setup: clear the OT ring at D_8005F2E8, load sprite data,
 initialize the SpriteSourceData at D_8005F2B8, and flush it via DrawOTag.
@@ -4337,7 +4385,53 @@ Members (address order):
   D_8005E5E8 absolutely (all defined by func_80011370.c), while D_8005E2CC/
   D_8005E2D0 are defined here GP-relatively like func_8001B074.c
 
-## pad/controller entry processing — 0x8001B2CC–0x8001B4E4 (confidence: medium)
+## pad actuator sequences — 0x8001B258–0x8001B530 (confidence: high)
+
+**Reconstructed module: `src/modules/pad_actuator_sequences.c`**, six compiled
+functions in original order. The private GP-relative cluster E4C0/E4C4/E4C8/E4D0
+joins the dispatcher 1B258, request selector 1B2CC, stepper 1B3EC, address setter
+1B4D0 and resetter 1B4E4. The intervening 1B3CC is the reset pass-through.
+This extends the earlier candidate to include the dispatcher, not a slice.
+All accesses to those globals are inside the run. The original two-word rodata
+table at 8001021C is { NULL, 8001B3EC }, directly corroborating the indirect
+mode-1 callback and the two-state dispatcher. The eleven 8-byte presets at
+80049170 point into the adjacent three-byte actuator streams. main invokes the
+dispatcher once per eligible update; the ovl_08 PANDO debug menu selects
+presets 0..10 and starts/stops slot zero.
+
+Boundaries: 1B118 belongs with 1B074 through its private E2CC/E2D0 render guard,
+uses a sprite/ordering-table buffer, and has no sequence-table access or calls.
+1B530 initializes GTE projection and camera/light matrices, calling 1B9F8 and
+1BA40, with no actuator-state access or calls. The sequence unit's private
+state, dispatch table and internal call graph close at those cuts; there is no
+positive membership evidence for either neighbor. These cuts are not claimed
+as GP-versus-absolute conflict proofs. The far-away pad polling unit reads
+pad buffers and the enable gate, not these sequence tables.
+
+Semantic names are configured at their original EXE addresses: the public
+`UpdatePadActuatorSequences`, `RequestPadActuatorSequence`,
+`StopPadActuatorSequence`, the Step/SetAddress/Reset helpers, four state arrays,
+dispatch table and preset table. `PadActuatorSequencePreset` has named priority
+and stepsAddress fields in globals_override.h (a global-only view); the old
+address-named duplicate was removed from game_types.h. Former scalar/[1]
+declarations are reconciled to two-element arrays, as established by dispatch;
+all remain <=8 bytes and GP-relative. Counter loads remain unsigned and their
+signed comparison is retained. Step addresses retain the original s32 ABI.
+No linkage was narrowed and no scope collision or new exception was introduced.
+
+The public header documents unchecked slot/preset bounds, equal-priority
+replacement only for a different stream, inherited counters on replacement,
+strict duration-threshold comparison, and the surprising first-pad-only output:
+BOTH slots write the same request bytes, and later slot output wins. Stop clears
+them even if another slot remains active. The existing volatile cursor update
+and separately advanced local pointer are preserved. Canonicalization propagated
+all caller and callback identities, and interfaceAudit published the header
+without changing caller objects. The checked fold and complete campaign gate
+passed at baseline -O2/-G8: 93 folded functions, eleven valid modules, every
+linked EXE/overlay byte, interfaces, ownership, source policy, exception
+non-growth. No member had a flag override.
+
+Historical function-level evidence (names below are original identities):
 
 Per-entry processing of the controller/pad state tables indexed by an id:
 func_8001B3EC advances an entry pointer, func_8001B4E4 resets it.
@@ -4379,7 +4473,61 @@ Members (address order):
 - func_8001B4E4 (m) — deactivation: zeroes D_8005E4C8[arg0] pointer and the
   u16 entries (D_8005E4C0/C4/D0) and D_8005E870 field_36/field_37
 
-## 0x8001B530–0x8001BB88 object-setup cluster (confidence: low–medium)
+## GTE scene state — 0x8001B530–0x8001BFA8 (confidence: medium–high)
+
+**Reconstructed module: `src/modules/gte_scene_state.c`**, ten compiled
+functions and six existing dead stubs in original order. This is the whole
+camera/light/fog run, extending the former setup candidate through the color
+and fog setters (BF74/BF88/BF9C). The apply routine B5DC and those tail setters
+share E2D8/E2DC/E2DD/E2DE/E2E0/E2E1/E2E2 through $gp; there are no outside C
+accesses to that cluster. B530 calls the eye/roll and target setters and clears
+the matrices consumed by B5DC. B5DC calls the view builder B6A0, which reads
+exactly the setters' camera parameters and produces the view matrix. BB88 and
+BBD8 share the captured GTE transform, used as a capture/compose pair by
+ovl_11:DCC5C. The dead BA18/BA5C/BAC4/BB28 copy/read the same camera/matrix
+storage; dead BD64/BE18 update the light/color matrices consumed by B5DC.
+Their assembly therefore corroborates membership and is carried, not treated
+as boundaries. Only the setter/apply connection is GP proof; the rest is
+internal calls, data relationships and original link order.
+
+Left boundary: the preceding B258..B4E4 actuator unit closes over its exclusive
+E4C0/E4C4/E4C8/E4D0 state, preset and callback tables. B530 has no connection
+to them. Right boundary: BFA8 initializes a caller-provided primitive descriptor
+from an entry count and 28-byte records, followed by its pair-clear helper and
+projected-primitive rendering family. It uses none of the scene settings or
+camera/matrix objects. There is no evidence to extend this unit across either
+cut; no GP-versus-absolute contradiction is claimed for these two cuts. The
+renderer at D348 reads the public view matrix absolutely, which alone is not
+membership evidence.
+
+Names and interfaces: Init/ApplyGteSceneState, SetCameraEyeAndRoll,
+SetCameraTarget, SetSceneBack/FarColor, SetSceneFogNear, CaptureGteTransform and
+ComposeCapturedGteTransform describe their observed effects. Dead copy APIs
+were named where their behavior is clear; BB28/BE18 remain neutral rather than
+inventing a geometric contract. Camera parameters now have eye, target, roll
+and matrixOverrideAddress fields (unchanged s32 layout). BA5C copies a supplied
+matrix and stores its address at +1C, proving that word is an override address,
+not merely a dirty flag. The view builder skips recomputation while it is
+nonzero. All accessed state/matrix globals are named at their original EXE
+identities. Existing raw scalar/halfword address views of other matrices were
+retained rather than silently changing their types during a rename.
+
+`gte_scene_state.h` documents projection defaults, world/SDK angle and color
+units, deferred setters and register effects. `gte_transform.h` publishes the
+single-snapshot composition API, not a fictitious push/pop stack. SDK MATRIX
+and GTE macros remain authoritative. The obsolete source-local undef/externs
+and duplicate SDK declarations disappeared into the canonical headers without
+changing bytes; no linkage was narrowed. Canonicalization and interfaceAudit
+propagated names/headers to all affected EXE and overlay callers, preserving
+caller objects, and the callback/data relocations were regenerated.
+
+The initial fold, its extension for BF9C, and final full campaign gate all
+passed at baseline -O2/-G8. No member carries an override or needs a new
+exception. Final totals: 103 folded functions, twelve valid modules; all EXE
+and overlay bytes, associated data/stub placement, canonical names, interfaces,
+ownership, policy and exception non-growth pass.
+
+Historical function-level evidence (names below are original identities):
 
 Direct-call + adjacent-data cluster: func_8001B530 (m) initializes the
 0x20-byte u16 objects D_80061E28/.E48/.E68 (memset + 0x1000 writes at 0/8/0x10)
@@ -4953,10 +5101,13 @@ preceding full-screen primitive group ends at 800139F8.
 Boundaries: the start rests on that group's end. The end at 80014494 is a
 **mechanical limit, not evidence**: 80014494 carries the per-function
 `-fno-cse-skip-blocks` override, and a module compiles under one command line.
-80014494 shares the gate word and mode IDs through $gp, and 80014554 follows
-it, so both belong to this unit. Folding them needs the module-wide flag
-decision in plans/flag-review-report.md. 800145F0 starts a different $gp
-cluster (8005E3F0/E404/E428/E430).
+80014494 shares the gate word and mode IDs through $gp. Folding it needs the
+module-wide flag decision in plans/flag-review-report.md. The former claim
+that 80014554 also belonged here rested only on adjacency and flag invariance,
+not membership evidence; it is withdrawn. Its sole caller is the CD archive
+index initializer 800147BC, it operates on CdlFILE, and it has no pad-state
+accesses. It now belongs to cd_loader with that caller. 800145F0 begins the
+CD $gp cluster (8005E3F0/E404/E428/E430).
 
 Names given at the merge: `InitPads` (800139FC), `ReadPadRawButtons`
 (80013FC0, the active-low button word, 0xFF00FFFF without a usable pad),
@@ -5113,7 +5264,53 @@ notes/retros/2026-08-07-func_800140C8-retro.md;
 notes/retros/2026-08-09-func_800142D8-retro.md;
 notes/retros/2026-08-09-func_80014494-retro.md.
 
-## screen-space pixel/line/rect drawers — 0x80014E90–0x80014FAC (confidence: medium)
+## screen-space pixel/line/rect drawers — 0x80014E90–0x80015704 (confidence: medium)
+
+**Reconstructed module: `src/modules/screen_primitives.c`**, all twelve
+functions, combining the wrapper and builder groups below. Membership is not
+adjacency alone: the six wrappers pair in order with six builders, reserving
+exactly their SDK packet sizes (12/16/36/24/16 bytes, or a zero-byte cursor
+query followed by a 32-byte cursor advance). The final builder calls the same
+flat-quad builder and prepends DR_TPAGE. Every builder's direct C callers are
+inside this run; none has an outside table/state user. The common packed-RGB,
+signed-coordinate and semitransparent code-store conventions corroborate this
+closed helper family. There is no small-data signal: all twelve are stateless,
+so this remains helper/call-structure evidence, not a claimed GP proof.
+
+Left boundary: the CD family's GP-connected read/retry state and archive table
+end at 14CBC; these drawers have no CD state or calls. Right boundary: 15704
+initializes a SpriteSourceData from an aligned tagged source header and calls
+its own following accessors/animation helpers. It has no calls to these
+untextured builders. Neither neighboring family supplies evidence for extending
+this unit. The separated beveled-panel client 136D4 and the other EXE/overlay
+clients use the wrappers, not their builders; shared public drawing use is not
+evidence that those clients compiled here.
+
+Names: `DrawScreenPoint`, `DrawScreenLine`, `DrawScreenGradientRect`,
+`DrawScreenFlatRect`, `DrawScreenTileRect`, `DrawScreenFlatRectWithBlendMode`
+and the corresponding `Build...Packet` names retain their configured original
+EXE identities. The public header publishes only the six drawing entry points;
+it documents signed pixel units, 0xRRGGBB colors, packet storage lifetime,
+polygon versus tile behavior, and DR_TPAGE's persistent state change. The
+blend-mode packet is prepended last, so it executes before the quad. Helpers
+retain external linkage without inferring original static declarations.
+
+SDK POLY_G4/POLY_F4 replaced the two address-field packet views in this unit;
+G4 now uses setPolyG4/addPrim and F4 setPolyF4/setRGB0. The F4 tag-link expansion
+and coordinate/tag temporary reuse are retained from its existing matching C:
+a direct addPrim substitution changed coordinate scheduling. No workaround or
+exception was added. Signed versus unsigned pointer ABIs at the wrappers are
+unchanged, declarations are reconciled, and interfaceAudit publishes the header
+to callers with byte-identical caller objects. The unrelated sprite setup's
+existing Struct_800154CC view remains untouched.
+
+The merged baseline -O2/-G8 source and all twelve functions passed the fold
+oracle. No member carries a flag override. The full campaign gate passed with
+87 folded functions and ten valid modules, including executable and every
+overlay, data/tables, canonical identities, published interfaces, ownership,
+source policy and no exception growth.
+
+Historical function-level evidence (names below are original identities):
 
 Three adjacent screen-space drawers with identical skeletons: each calls
 func_80011F5C (packet-buffer getter, boot/main-loop TU) and exactly one
@@ -5145,7 +5342,11 @@ skeleton, TILE via func_80015594) is the remaining unexamined member. The
 drawer entry and the GPU-primitive entry below remain separate lines but
 func_800154CC and func_80015644 are the demonstrated bridges.
 
-## GPU primitive packet initializers — 0x8001526C–0x80015683 (confidence: high)
+## GPU primitive packet initializers — 0x8001526C–0x80015704 (confidence: high)
+
+Now the builder half of `src/modules/screen_primitives.c`, not an independent
+translation unit; the wrapper/builder membership and boundaries are recorded
+in the preceding section.
 
 Adjacent helpers that initialize one PSY-Q primitive, select its opaque or
 semitransparent code through the same conditional diamond, link it with
@@ -5803,7 +6004,49 @@ Members (address order):
 - GetVal8005E548 (s)(?) — adjacent getter; membership unverified
 - func_80020A94 (m) — sound stop: clears D_8005E53C
 
-## CD loading — 0x80014554–0x80014B44 (confidence: high)
+## CD loading — 0x80014554–0x80014E90 (confidence: high)
+
+**Reconstructed module: `src/modules/cd_loader.c`**, ten compiled members and
+one existing dead stub, in original order. The whole 14554..14CBC run is folded,
+not just the former five-function candidate. Original-byte GP ownership
+(`deriveTuOwnedGlobals.ts`) joins 145F0/147BC/14854/14988/14BCC/14CBC through
+8005E428/E430 and the four-byte SDK location at E3F0. 14B44 and the E40C getter
+join through the E2B0/E3F8/E3FC/E400/E40C range-request state; 14CB0 joins
+14CBC through E2B4. 14554 is the filename loader used solely by 147BC to read
+A_FILE.HDT. The intervening dead 14748 variant is carried, not a boundary.
+The 33 offsets copied into the 0x28-byte table and the adjacent HDT/BIN path
+literals corroborate the archive responsibility. All C accesses to this
+small-data cluster are inside the run.
+
+Left boundary: 14494 is a pad actuator output service, sharing pad-owned
+E3E8/E3EC through $gp with pad.c; no CD member touches that cluster and no pad
+helper calls the filename loader. There is no positive evidence to extend the
+CD unit into the pad family. Right boundary: 14E90 begins the packet-reservation
+wrappers paired with the following GPU initializers. That closed helper family
+has no CD state, calls or table use; there is no evidence to extend the CD
+unit past 14CBC. Neither cut is claimed to be a GP/absolute conflict proof;
+the GP-connected CD run and the sole-caller bootstrap determine membership.
+
+Names and interface: `cd_loader.h` documents byte versus 2048-byte sector units,
+unchecked entry indices, shared-drive non-reentrancy, sector-buffer capacity,
+start/poll results, retry behavior and byte compaction. Functions and all 16
+state words, the archive table/interior view and HDT/BIN paths have semantic
+names at their original EXE addresses. Canonicalization propagated references
+across overlays; interfaceAudit replaced caller-local declarations with the
+header while confirming unchanged caller objects. Existing address-as-s32 ABIs
+and the signed interior-table loads were retained. No linkage was narrowed.
+The duplicate qualified/unqualified E410 definitions were reconciled to one
+volatile definition and canonical extern; the entire linked build remains
+exact. Its second observation in CdReadArchiveSectors is deliberately retained.
+
+The fold passed baseline -O2/-G8 first; no member had an override and none was
+added. The current 14CBC source is clean C, superseding the historical hybrid
+notes below. The full `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` gate passed: 75 folded functions, nine valid
+modules, all executable/overlay bytes, interfaces, ownership, policy and
+exception non-growth. No matching exception or tool change was needed.
+
+Historical function-level evidence (names below are original identities):
 
 CD file/disk loading helpers: search for files on disc, set location, read
 sectors, and synchronize. Fingerprints: shared gp-rel cluster
@@ -7244,6 +7487,10 @@ initializer extension backward
 - ovl_11_func_800DD4D8 (m) — drives indexed-entry transitions through its nested helper using the shared state word.
 
 ## `exe` byte-triple setter twins — 0x8001BF74 / 0x8001BF88 (confidence: medium)
+
+These are now SetSceneBackColor/SetSceneFarColor inside gte_scene_state;
+shared GP-relative bytes with B5DC prove the join to that whole unit. See its
+0x8001B530–0x8001BFA8 section above, including BF9C's fog-distance setter.
 
 - func_8001BF74 (m, matched via automatic reconstruction, byte-exact) — stores
   three s32 args into consecutive gp-relative bytes D_8005E2DC/DD/DE.

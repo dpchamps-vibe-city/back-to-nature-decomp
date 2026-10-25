@@ -7,19 +7,20 @@ GP value: 0x8005E274 (range: 0x80056274–0x80066273)
 
 | # | Start | End | Size | Inferred | Confidence | Symbols |
 |---|-------|-----|------|----------|------------|---------|
-| 1 | 0x80010000 | 0x80011270 | 0x1270 | **.data** | low (all 1 symbols ambiguous) | 1 |
-| 3 | 0x8004E7F0 | 0x80055A14 | 0x7224 | **.rodata** | medium (2/21 absolute reads, no writes) | 21 |
-| 5 | 0x80058268 | 0x80058294 | 0x2C | **.data** | high (1/1 absolute writes) | 1 |
-| 7 | 0x800582C0 | 0x8005845C | 0x19C | **.rodata** | medium (1/1 absolute reads, no writes) | 1 |
-| 9 | 0x80058688 | 0x800588C4 | 0x23C | **.sdata** | low (all ambiguous, but in GP range) | 2 |
-| 11 | 0x800592DC | 0x80059B04 | 0x828 | **.sdata** | low (no refs, in GP range) | 0 |
-| 13 | 0x80059CB4 | 0x8005C8C4 | 0x2C10 | **.sdata** | low (no refs, in GP range) | 0 |
-| 15 | 0x8005CB08 | 0x8005D0F4 | 0x5EC | **.sdata** | low (no refs, in GP range) | 0 |
-| 17 | 0x8005D3D8 | 0x8005DC90 | 0x8B8 | **.sdata** | high (13/18 GP-relative, 9 absolute — mixed access) | 18 |
+| 2 | 0x80010224 | 0x80011270 | 0x104C | **.data** | low (all 1 symbols ambiguous) | 1 |
+| 4 | 0x80049044 | 0x80049170 | 0x12C | **.data** | low (all 9 symbols ambiguous) | 9 |
+| 6 | 0x800491C8 | 0x80055A14 | 0xC84C | **.data** | high (2/40 absolute writes) | 40 |
+| 8 | 0x80058268 | 0x80058294 | 0x2C | **.data** | high (1/1 absolute writes) | 1 |
+| 10 | 0x800582C0 | 0x8005845C | 0x19C | **.rodata** | medium (1/1 absolute reads, no writes) | 1 |
+| 12 | 0x80058688 | 0x800588C4 | 0x23C | **.sdata** | low (all ambiguous, but in GP range) | 2 |
+| 14 | 0x800592DC | 0x80059B04 | 0x828 | **.sdata** | low (no refs, in GP range) | 0 |
+| 16 | 0x80059CB4 | 0x8005C8C4 | 0x2C10 | **.sdata** | low (no refs, in GP range) | 0 |
+| 18 | 0x8005CB08 | 0x8005D0F4 | 0x5EC | **.sdata** | low (no refs, in GP range) | 0 |
+| 20 | 0x8005D3D8 | 0x8005DC90 | 0x8B8 | **.sdata** | high (13/18 GP-relative, 9 absolute — mixed access) | 18 |
 
 ## Region Details
 
-### Region 1: 0x80010000–0x80011270 (0x1270) → **.data**
+### Region 2: 0x80010224–0x80011270 (0x104C) → **.data**
 
 Confidence: low (all 1 symbols ambiguous)
 
@@ -31,44 +32,69 @@ Access type breakdown (by symbol count):
 
 | Symbol | Access types | Per-symbol inference | Refs |
 |--------|-------------|---------------------|------|
-| func_80010000 | addr_taken | ambiguous | 2 |
+| func_80010224 | addr_taken | ambiguous | 1 |
 
-### Region 3: 0x8004E7F0–0x80055A14 (0x7224) → **.rodata**
+### Region 4: 0x80049044–0x80049170 (0x12C) → **.data**
 
-Confidence: medium (2/21 absolute reads, no writes)
+Confidence: low (all 9 symbols ambiguous)
 
 Access type breakdown (by symbol count):
 
 | Access type | Symbols |
 |------------|---------|
-| abs_read | 2 |
-| addr_taken | 19 |
+| addr_taken | 9 |
 
 | Symbol | Access types | Per-symbol inference | Refs |
 |--------|-------------|---------------------|------|
-| T_8004ED04 | addr_taken | ambiguous | 1 |
-| T_8005175C | addr_taken | ambiguous | 2 |
-| T_80051768 | addr_taken | ambiguous | 1 |
-| D_800537B2 | addr_taken | ambiguous | 1 |
-| T_80053888 | addr_taken | ambiguous | 1 |
-| D_8005392E | addr_taken | ambiguous | 1 |
-| D_8005393A | addr_taken | ambiguous | 1 |
-| D_80053946 | addr_taken | ambiguous | 1 |
-| T_80054BBC | abs_read | .rodata or .data | 6 |
-| T_80054BC0 | abs_read | .rodata or .data | 2 |
-| T_80054BC8 | addr_taken | ambiguous | 1 |
-| T_800558A4 | addr_taken | ambiguous | 2 |
-| T_80055944 | addr_taken | ambiguous | 1 |
-| T_80055974 | addr_taken | ambiguous | 1 |
-| T_8005597C | addr_taken | ambiguous | 1 |
-| T_80055988 | addr_taken | ambiguous | 1 |
+| func_80049044 | addr_taken | ambiguous | 1 |
+| T_80049050 | addr_taken | ambiguous | 1 |
+| T_80049058 | addr_taken | ambiguous | 1 |
+| T_80049068 | addr_taken | ambiguous | 1 |
+| T_80049070 | addr_taken | ambiguous | 1 |
+| T_80049078 | addr_taken | ambiguous | 1 |
+| T_80049084 | addr_taken | ambiguous | 1 |
+| T_8004908C | addr_taken | ambiguous | 1 |
+| T_800490BC | addr_taken | ambiguous | 1 |
+
+### Region 6: 0x800491C8–0x80055A14 (0xC84C) → **.data**
+
+Confidence: high (2/40 absolute writes)
+
+Access type breakdown (by symbol count):
+
+| Access type | Symbols |
+|------------|---------|
+| abs_read | 5 |
+| abs_write | 2 |
+| addr_taken | 38 |
+
+40 symbols (showing first 15 and last 5):
+
+| Symbol | Access types | Per-symbol inference | Refs |
+|--------|-------------|---------------------|------|
+| func_800491C8 | abs_read, abs_write, addr_taken | .data | 9 |
+| T_800491E0 | abs_read, addr_taken | .rodata or .data | 2 |
+| T_800491F0 | addr_taken | ambiguous | 1 |
+| T_80049218 | addr_taken | ambiguous | 1 |
+| T_80049268 | addr_taken | ambiguous | 2 |
+| T_80049274 | abs_write, addr_taken | .data | 4 |
+| T_80049280 | addr_taken | ambiguous | 1 |
+| T_8004928C | abs_read, addr_taken | .rodata or .data | 3 |
+| D_80049296 | addr_taken | ambiguous | 1 |
+| T_800492E0 | addr_taken | ambiguous | 1 |
+| T_80049370 | addr_taken | ambiguous | 9 |
+| T_800495CC | addr_taken | ambiguous | 3 |
+| T_80049A10 | addr_taken | ambiguous | 3 |
+| T_80049A70 | addr_taken | ambiguous | 1 |
+| T_80049A80 | addr_taken | ambiguous | 2 |
+| ... | ... | ... | ... |
 | T_80055994 | addr_taken | ambiguous | 1 |
 | T_800559BC | addr_taken | ambiguous | 1 |
 | T_800559C4 | addr_taken | ambiguous | 1 |
 | T_800559CC | addr_taken | ambiguous | 1 |
 | T_800559D4 | addr_taken | ambiguous | 1 |
 
-### Region 5: 0x80058268–0x80058294 (0x2C) → **.data**
+### Region 8: 0x80058268–0x80058294 (0x2C) → **.data**
 
 Confidence: high (1/1 absolute writes)
 
@@ -83,7 +109,7 @@ Access type breakdown (by symbol count):
 |--------|-------------|---------------------|------|
 | T_80058284 | abs_read, abs_write | .data | 2 |
 
-### Region 7: 0x800582C0–0x8005845C (0x19C) → **.rodata**
+### Region 10: 0x800582C0–0x8005845C (0x19C) → **.rodata**
 
 Confidence: medium (1/1 absolute reads, no writes)
 
@@ -97,7 +123,7 @@ Access type breakdown (by symbol count):
 |--------|-------------|---------------------|------|
 | T_80058428 | abs_read | .rodata or .data | 2 |
 
-### Region 9: 0x80058688–0x800588C4 (0x23C) → **.sdata**
+### Region 12: 0x80058688–0x800588C4 (0x23C) → **.sdata**
 
 Confidence: low (all ambiguous, but in GP range)
 
@@ -112,25 +138,25 @@ Access type breakdown (by symbol count):
 | T_80058844 | addr_taken | ambiguous | 1 |
 | D_80058875 | addr_taken | ambiguous | 1 |
 
-### Region 11: 0x800592DC–0x80059B04 (0x828) → **.sdata**
+### Region 14: 0x800592DC–0x80059B04 (0x828) → **.sdata**
 
 Confidence: low (no refs, in GP range)
 
 No referenced symbols in this region.
 
-### Region 13: 0x80059CB4–0x8005C8C4 (0x2C10) → **.sdata**
+### Region 16: 0x80059CB4–0x8005C8C4 (0x2C10) → **.sdata**
 
 Confidence: low (no refs, in GP range)
 
 No referenced symbols in this region.
 
-### Region 15: 0x8005CB08–0x8005D0F4 (0x5EC) → **.sdata**
+### Region 18: 0x8005CB08–0x8005D0F4 (0x5EC) → **.sdata**
 
 Confidence: low (no refs, in GP range)
 
 No referenced symbols in this region.
 
-### Region 17: 0x8005D3D8–0x8005DC90 (0x8B8) → **.sdata**
+### Region 20: 0x8005D3D8–0x8005DC90 (0x8B8) → **.sdata**
 
 Confidence: high (13/18 GP-relative, 9 absolute — mixed access)
 
@@ -166,10 +192,10 @@ Access type breakdown (by symbol count):
 
 ## Global Summary
 
-Total symbols scanned: 1134
+Total symbols scanned: 1176
 
 | Inferred section | Regions |
 |-----------------|---------|
-| .data | 2 |
-| .rodata | 2 |
+| .data | 4 |
+| .rodata | 1 |
 | .sdata | 5 |

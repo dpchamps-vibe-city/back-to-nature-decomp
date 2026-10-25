@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "pad_actuator_sequences.h"
 
 s32 *ovl_21_func_800BA698(u16 *arg0, s16 arg1, s16 arg2);
 s32 func_8001FABC(s16 arg0);
-void func_8001B2CC(s32 arg0, s32 arg1);
 
 /* Walks the six D_800C0448 records, skipping record 0 when the flag at +0x646
  * is set. For each record whose word is 1, asks ovl_21_func_800BA698 for a
@@ -43,7 +43,7 @@ void ovl_21_func_800B990C(void) {
                 blk->recs[i].unk1A = 0;
                 blk->unk984 = func_8001FABC(0x3F);
                 if (i == 0) {
-                    func_8001B2CC(0, 1);
+                    RequestPadActuatorSequence(0, 1);
                     blk->unkC = D_800BCAD8;
                     blk->unk988 = 1;
                 }

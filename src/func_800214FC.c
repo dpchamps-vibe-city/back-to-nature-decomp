@@ -1,12 +1,11 @@
 #include "common.h"
+#include "cd_loader.h"
 
 /* Tentative definitions — this TU owns these GP-relative globals. */
 s32 D_8005E538;
 s32 D_8005E54C;
 s32 D_8005E554;
 s16 D_8005E572;
-
-s32 func_80014988(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void func_800214FC(s16 arg0) {
     s32 temp;
@@ -15,12 +14,12 @@ void func_800214FC(s16 arg0) {
     if ((&D_8006BF48)[D_8005E554] >= 0) {
         if ((&D_8006BF68)[D_8005E554] != 0) {
             temp = D_80049370[arg0];
-            func_80014988(9, temp, D_80049370[arg0 + 2] - temp, D_8005E54C, 1);
+            CdReadArchiveSectors(9, temp, D_80049370[arg0 + 2] - temp, D_8005E54C, 1);
             D_8005E538 = 0x32;
             return;
         }
         temp = D_80049370[arg0];
-        func_80014988(9, temp, D_80049370[arg0 + 1] - temp, D_8005E54C, 1);
+        CdReadArchiveSectors(9, temp, D_80049370[arg0 + 1] - temp, D_8005E54C, 1);
         D_8005E538 = 0x1E;
         return;
     }

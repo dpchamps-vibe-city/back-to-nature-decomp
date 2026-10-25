@@ -4,11 +4,11 @@
 #include "psyq/libgpu.h"
 #include "psyq/libapi.h"
 #include "asset_scratch.h"
+#include "cd_loader.h"
 
 void func_8001AF70(u16 arg0, u16 arg1);
 void ClearActiveOrderingTables(void);
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
-u8 *func_80014CBC(s32, s32, s32, u8 *, s32, s32);
 void ovl_11_func_800E5230(void);
 void ovl_11_func_800E5294(void);
 u8 *ovl_11_func_800E54F8(u16 *arg0, s32 arg1);
@@ -52,7 +52,7 @@ s32 ovl_11_func_800E3DC8(void) {
             useAsync = id != 0x12D;
         }
         if (useAsync != 0) {
-            func_80014CBC(0xC, offset, size, (u8 *)GetAssetScratchStart(), 0, 1);
+            CdReadArchiveBytes(0xC, offset, size, (u8 *)GetAssetScratchStart(), 0, 1);
             ((struct Ovl11E4280State *)D_8006C838)->selector = 3;
             return 0;
         }
@@ -68,9 +68,9 @@ s32 ovl_11_func_800E3DC8(void) {
         } else {
             data = (u8 *)gRenderContexts[0].field_124;
         }
-        func_80014CBC(0xC, offset, size, data, 0, 1);
+        CdReadArchiveBytes(0xC, offset, size, data, 0, 1);
         do {
-            result = func_80014CBC(0xC, offset, size, data, 0, 0);
+            result = CdReadArchiveBytes(0xC, offset, size, data, 0, 0);
         } while (result == NULL);
         ovl_11_func_800E499C((s32)result);
     } else {

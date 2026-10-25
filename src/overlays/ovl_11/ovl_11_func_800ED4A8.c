@@ -6,6 +6,7 @@
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
 #include "pad_actuator_gate.h"
+#include "pad_actuator_sequences.h"
 
 typedef struct {
                s16 field_0;
@@ -139,8 +140,8 @@ int MoveImage2 (RECT *rect, int x, int y);
 int csin (int a);
 s32 ovl_11_func_800C3548 (s32 arg0);
 void ovl_11_func_800EFABC (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8001B4D0 (s32 arg0, s32 arg1);
-void func_8001B4E4 (s32 arg0);
+void SetPadActuatorSequenceAddress (s32 arg0, s32 arg1);
+void ResetPadActuatorSequence (s32 arg0);
 s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 s32 func_80021484 (s32 arg0);
 void SetVal8005E2E8 (s32 arg0);
@@ -163,7 +164,6 @@ void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8001B2CC (s32 arg0, s32 arg1);
 void func_8001FE34 (s32 arg0);
 void ovl_11_func_800CF314 (u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
@@ -248,7 +248,6 @@ s32 ovl_11_func_800EFD54 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_801136D0 (s32 *arg0, u16 *arg1, u16 *arg2);
 void ovl_11_func_8011F52C (void);
 s16 ovl_11_func_80120358 (M2C_93d07a715929_Ovl11SelectArg *arg0);
-void func_8001B3CC (s32 arg0);
 void ovl_11_func_80120850 (s32 arg0);
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);

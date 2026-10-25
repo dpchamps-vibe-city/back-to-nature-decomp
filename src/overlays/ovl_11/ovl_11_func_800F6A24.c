@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "cd_loader.h"
 
-void func_80014BCC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80015704();
 void func_80017200(u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
@@ -25,7 +25,7 @@ void ovl_11_func_800F6A24(u16 arg0) {
         }
     }
     if (i != 0x48) {
-        func_80014BCC(0, (id << 11) + 0x03C19000, 0x800, 0, (s32)&D_8006C910);
+        CdReadDiscSectorsBlocking(0, (id << 11) + 0x03C19000, 0x800, 0, (s32)&D_8006C910);
         src = &sprite;
         func_80015704(src, (SpriteDataHeader *)&D_8006C910);
         ref = (SpriteTableRef *)src->field_20 + *(u16 *)(src->field_2C + ((SpriteTableRef *)src->field_28)->offset);

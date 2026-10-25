@@ -1,9 +1,9 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "gte_scene_state.h"
 
 void ovl_25_func_800BAAAC(void);
 void ovl_25_func_800BABC4(void);
-void func_8001B5DC(void);
 void ovl_25_func_800BAC28(void);
 s32 func_8001FE6C(void);
 void ovl_25_func_800B8478(void);
@@ -15,7 +15,7 @@ void ovl_25_func_800B80A4(void) {
 
     ovl_25_func_800BAAAC();
     ovl_25_func_800BABC4();
-    func_8001B5DC();
+    ApplyGteSceneState();
     ovl_25_func_800BAC28();
     var_s0 = IsScreenFadeComplete() == 1;
     if (func_8001FE6C() == 0) {

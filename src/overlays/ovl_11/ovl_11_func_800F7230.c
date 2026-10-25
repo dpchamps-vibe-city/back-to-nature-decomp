@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
 
-u8 *func_80014CBC(s32, s32, s32, u8 *, s32, s32);
 void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80017200(u8 *, s16, s16, s16, s16);
 
@@ -55,7 +55,7 @@ s32 ovl_11_func_800F7230(s16 arg0, s16 arg1) {
     SpriteTextureRect *tex2;
 
     first = arg0;
-    if (func_80014CBC(0, (arg0 << 11) + 0x03C19000, 0x28000,
+    if (CdReadArchiveBytes(0, (arg0 << 11) + 0x03C19000, 0x28000,
             (u8 *)D_8005E3B0 + 0x4290, 1, 0) != 0) {
         if (arg1 >= 0) {
             mode = 3;

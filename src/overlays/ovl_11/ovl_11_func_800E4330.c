@@ -1,9 +1,9 @@
 #include "common.h"
 #include "asset_scratch.h"
 #include "screen_fade.h"
+#include "cd_loader.h"
 
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
-u8 *func_80014CBC(s32, s32, s32, u8 *, s32, s32);
 void ovl_11_func_800E499C(s32);
 s32 ovl_11_func_800EEBC8();
 void ovl_11_func_800E54C8(void);
@@ -19,7 +19,7 @@ s32 ovl_11_func_800E4330(void) {
     offset = D_801240D8[index];
     size = D_801240D8[index + 1] - offset;
     do {
-        data = func_80014CBC(12, offset, size, (u8 *)GetAssetScratchStart(), 0, 0);
+        data = CdReadArchiveBytes(12, offset, size, (u8 *)GetAssetScratchStart(), 0, 0);
         if (data == 0 && IsScreenFadeComplete() != 0) {
             return 0;
         }

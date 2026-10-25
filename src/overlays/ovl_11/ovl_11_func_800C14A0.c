@@ -1,4 +1,5 @@
 #include "common.h"
+#include "gte_scene_state.h"
 
 void ovl_11_func_800C188C(void);
 void ovl_11_func_800C162C(void);
@@ -8,7 +9,6 @@ void func_8002194C(void);
 void ovl_11_func_80120A2C(void);
 void ovl_11_func_800DB674(void);
 void ovl_11_func_800DB78C(void);
-void func_8001B5DC(void);
 void ovl_11_func_800DCC5C(void);
 void ovl_11_func_800DB904(void);
 
@@ -33,7 +33,7 @@ void ovl_11_func_800C14A0(void) {
         ovl_11_func_80120A2C();
         ovl_11_func_800DB674();
         ovl_11_func_800DB78C();
-        func_8001B5DC();
+        ApplyGteSceneState();
         if (!(((struct Ovl11FrameState *) D_8006C838)->flags & 0x800000)) {
             ovl_11_func_800DCC5C();
             ovl_11_func_800DB904();

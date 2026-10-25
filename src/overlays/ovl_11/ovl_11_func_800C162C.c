@@ -3,6 +3,7 @@
 #include "scratchpad.h"
 #include "psyq/libgte.h"
 #include "ovl11_collision_query_budget.h"
+#include "gte_scene_state.h"
 
 void ovl_11_func_800C06B0 (void);
 void ovl_11_func_800C0688 (void);
@@ -21,7 +22,6 @@ void ovl_11_func_8010726C (void);
 void ovl_11_func_800C056C ();
 void ovl_11_func_801209D4 (void);
 void ovl_11_func_800DB78C (void);
-void func_8001B5DC (void);
 void ovl_11_func_800DCC5C (void);
 void ovl_11_func_800DB904 (void);
 void ovl_11_func_800CA24C ();
@@ -73,7 +73,7 @@ void ovl_11_func_800C162C(void) {
     SCRATCH_STACK_END();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
     ovl_11_func_800DB78C();
-    func_8001B5DC();
+    ApplyGteSceneState();
     SCRATCH_STACK_END();
     if (!(((struct Ovl11FrameState *) D_8006C838)->flags & 0x800000)) {
         ovl_11_func_800DCC5C();

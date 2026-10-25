@@ -9,6 +9,9 @@
 #include "psyq/libsnd.h"
 #include "asset_scratch.h"
 #include "screen_fade.h"
+#include "cd_loader.h"
+#include "gte_scene_state.h"
+#include "aux_sprite_display.h"
 
 typedef struct {
                s16 unk0;
@@ -50,8 +53,6 @@ void ovl_11_func_800BD160 (void);
 void ovl_11_func_800BD168 (void);
 s32 func_8001FD74 (void);
 void func_8001E160 (void);
-void func_8001B530 (void);
-void ClearVal8005E2CC (void);
 s32 func_80020818 (void);
 void func_8001FE00 (s32 arg0);
 void ovl_11_func_800CD0C0 (s32 *arg0);
@@ -125,14 +126,12 @@ void ovl_11_func_80104A88 (void);
 void func_80015840(ObjectState *obj, u8 arg1);
 void func_8001585C(ObjectState *obj, u8 arg1);
 
-u_char *func_80014CBC(s32 file_index, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5); /* static */
-
 void ovl_21_func_800BB59C(void) {
     DrawSync(0);
     ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
-    func_80014CBC(0, 0, 0x2000, D_8005E3B0 + 0x4290, 1, 1);
+    CdReadArchiveBytes(0, 0, 0x2000, D_8005E3B0 + 0x4290, 1, 1);
     do {
 
-    } while (func_80014CBC(0, 0, 0x2000, D_8005E3B0 + 0x4290, 1, 0) == 0);
+    } while (CdReadArchiveBytes(0, 0, 0x2000, D_8005E3B0 + 0x4290, 1, 0) == 0);
     func_8001719C(D_8005E3B0 + 0x4290);
 }

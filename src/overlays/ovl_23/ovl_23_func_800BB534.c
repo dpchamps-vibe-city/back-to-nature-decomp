@@ -3,8 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "cd_loader.h"
 
-u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
 void func_8001719C(u8 *arg0);
 /* The original caller uses an unprototyped sprite initializer. */
 void func_80015704();
@@ -19,9 +19,9 @@ void ovl_23_func_800BB534(void) {
 
     DrawSync(0);
     ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
-    func_80014CBC(0x18, 0, 0x1EC1C, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
+    CdReadArchiveBytes(0x18, 0, 0x1EC1C, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
     do {
-    } while (func_80014CBC(0x18, 0, 0x1EC1C, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
+    } while (CdReadArchiveBytes(0x18, 0, 0x1EC1C, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
     func_8001719C((u8 *)(D_8005E3B0 + 0x6C38));
     *(SpriteBlob *)D_800BBAEC = *(SpriteBlob *)(D_8005E3B0 + 0x4290);
     func_80015704((SpriteSourceData *)D_800BFC30, (SpriteDataHeader *)(D_800BBAEC + D_800BBADC[3]));

@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "screen_fade.h"
+#include "screen_primitives.h"
 
 
 u32 func_80017A64 (void);
@@ -20,7 +21,6 @@ s32 GetVal8005E5B8 (void);
 s32 ovl_11_func_8011FB80 (s16 arg0);
 s32 func_8001FB30 (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800BC9AC (void);
-void func_80015114 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
 void func_80021B90 (s32 arg0);
 s32 func_80021B64 (void);
 void ovl_11_func_8011F958 (void);

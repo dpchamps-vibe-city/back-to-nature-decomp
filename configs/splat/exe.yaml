@@ -92,29 +92,8 @@ segments:
       - [0x3ED4, c, func_800136D4]       # 0x800136D4 func_800136D4
       - [0x41FC, c, modules/pad]
       - [0x4C94, c, func_80014494]       # 0x80014494 func_80014494
-      - [0x4D54, c, func_80014554]       # 0x80014554 func_80014554
-      - [0x4DF0, c, func_800145F0]       # 0x800145F0 func_800145F0
-      - [0x4F48, c, func_80014748]       # 0x80014748 func_80014748
-      - [0x4FBC, c, func_800147BC]       # 0x800147BC func_800147BC
-      - [0x5054, c, func_80014854]       # 0x80014854 func_80014854
-      - [0x5188, c, func_80014988]       # 0x80014988 func_80014988
-      - [0x5338, c, GetVal8005E40C]       # 0x80014B38 GetVal8005E40C
-      - [0x5344, c, func_80014B44]       # 0x80014B44 func_80014B44
-      - [0x53CC, c, func_80014BCC]       # 0x80014BCC func_80014BCC
-      - [0x54B0, c, func_80014CB0]       # 0x80014CB0 func_80014CB0
-      - [0x54BC, c, func_80014CBC]       # 0x80014CBC func_80014CBC
-      - [0x5690, c, func_80014E90]       # 0x80014E90 func_80014E90
-      - [0x570C, c, func_80014F0C]       # 0x80014F0C func_80014F0C
-      - [0x57AC, c, func_80014FAC]       # 0x80014FAC func_80014FAC
-      - [0x5874, c, func_80015074]       # 0x80015074 func_80015074
-      - [0x5914, c, func_80015114]       # 0x80015114 func_80015114
-      - [0x59B4, c, func_800151B4]       # 0x800151B4 func_800151B4
-      - [0x5A6C, c, func_8001526C]       # 0x8001526C func_8001526C
-      - [0x5B0C, c, func_8001530C]       # 0x8001530C func_8001530C
-      - [0x5BBC, c, func_800153BC]       # 0x800153BC func_800153BC
-      - [0x5CCC, c, func_800154CC]       # 0x800154CC func_800154CC
-      - [0x5D94, c, func_80015594]       # 0x80015594 func_80015594
-      - [0x5E44, c, func_80015644]       # 0x80015644 func_80015644
+      - [0x4D54, c, modules/cd_loader]
+      - [0x5690, c, modules/screen_primitives]
       - [0x5F04, c, func_80015704]       # 0x80015704 func_80015704
       - [0x6014, c, func_80015814]       # 0x80015814 func_80015814
       - [0x6028, c, func_80015828]       # 0x80015828 func_80015828
@@ -232,34 +211,9 @@ segments:
       - [0xB734, c, func_8001AF34]       # 0x8001AF34 func_8001AF34
       - [0xB744, c, func_8001AF44]       # 0x8001AF44 func_8001AF44
       - [0xB770, c, func_8001AF70]       # 0x8001AF70 func_8001AF70
-      - [0xB7E0, c, func_8001AFE0]       # 0x8001AFE0 func_8001AFE0
-      - [0xB828, c, func_8001B028]       # 0x8001B028 func_8001B028
-      - [0xB874, c, func_8001B074]       # 0x8001B074 func_8001B074
-      - [0xB900, c, ClearVal8005E2CC]       # 0x8001B100 ClearVal8005E2CC
-      - [0xB90C, c, GetVal8005E2CC]       # 0x8001B10C GetVal8005E2CC
-      - [0xB918, c, func_8001B118]       # 0x8001B118 func_8001B118
-      - [0xBA58, c, func_8001B258]       # 0x8001B258 func_8001B258
-      - [0xBACC, c, func_8001B2CC]       # 0x8001B2CC func_8001B2CC
-      - [0xBBCC, c, func_8001B3CC]       # 0x8001B3CC func_8001B3CC
-      - [0xBBEC, c, func_8001B3EC]       # 0x8001B3EC func_8001B3EC
-      - [0xBCD0, c, func_8001B4D0]       # 0x8001B4D0 func_8001B4D0
-      - [0xBCE4, c, func_8001B4E4]       # 0x8001B4E4 func_8001B4E4
-      - [0xBD30, c, func_8001B530]       # 0x8001B530 func_8001B530
-      - [0xBDDC, c, func_8001B5DC]       # 0x8001B5DC func_8001B5DC
-      - [0xBEA0, c, func_8001B6A0]       # 0x8001B6A0 func_8001B6A0
-      - [0xC1F8, c, func_8001B9F8]       # 0x8001B9F8 func_8001B9F8
-      - [0xC218, c, func_8001BA18]       # 0x8001BA18 func_8001BA18
-      - [0xC240, c, func_8001BA40]       # 0x8001BA40 func_8001BA40
-      - [0xC25C, c, func_8001BA5C]       # 0x8001BA5C func_8001BA5C
-      - [0xC2C4, c, func_8001BAC4]       # 0x8001BAC4 func_8001BAC4
-      - [0xC328, c, func_8001BB28]       # 0x8001BB28 func_8001BB28
-      - [0xC388, c, func_8001BB88]       # 0x8001BB88 func_8001BB88
-      - [0xC3D8, c, func_8001BBD8]       # 0x8001BBD8 func_8001BBD8
-      - [0xC564, c, func_8001BD64]       # 0x8001BD64 func_8001BD64
-      - [0xC618, c, func_8001BE18]       # 0x8001BE18 func_8001BE18
-      - [0xC774, c, func_8001BF74]       # 0x8001BF74 func_8001BF74
-      - [0xC788, c, func_8001BF88]       # 0x8001BF88 func_8001BF88
-      - [0xC79C, c, SetVal8005E2D8]       # 0x8001BF9C SetVal8005E2D8
+      - [0xB7E0, c, modules/aux_sprite_display]
+      - [0xBA58, c, modules/pad_actuator_sequences]
+      - [0xBD30, c, modules/gte_scene_state]
       - [0xC7A8, c, func_8001BFA8]       # 0x8001BFA8 func_8001BFA8
       - [0xC7E0, c, ClearPairS32]         # 0x8001BFE0 ClearPairS32
       - [0xC7EC, c, func_8001BFEC]       # 0x8001BFEC func_8001BFEC

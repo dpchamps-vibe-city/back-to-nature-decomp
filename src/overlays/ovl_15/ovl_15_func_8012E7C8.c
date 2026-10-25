@@ -2,9 +2,9 @@
 #include "psyq/libsnd.h"
 #include "screen_fade.h"
 #include "scene_selection.h"
+#include "aux_sprite_display.h"
 
-/* This overlay imports the resident ClearVal8005E2CC by its address. */
-void ClearVal8005E2CC(void);
+/* Resident sprite-display disable at exe:8001B100. */
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 void func_8001FE00(s32);
@@ -27,7 +27,7 @@ void ovl_15_func_8012E7C8(void) {
     if (state->state == 0) {
         func_8002029C(0, 0, 0, 0, 0);
         SsUtAllKeyOff(0);
-        ClearVal8005E2CC();
+        DisableAuxSpriteDisplay();
         func_800226F0();
         ovl_15_func_8012E15C();
         D_80137584 = 0;

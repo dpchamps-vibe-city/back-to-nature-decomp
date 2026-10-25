@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "cd_loader.h"
 
 /* CD/script state globals reached GP-relatively by this TU (tentative
  * definitions, merged via -fcommon with func_80022964.c / func_80022DF8.c). */
@@ -9,7 +10,6 @@ s32 D_8005E5CC;
 
 /* Callee prototypes as this caller TU saw them. */
 s16 func_80022AF0(void);
-u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
 s32 func_80022794(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 *arg6, s32 arg7, s32 arg8);
 void func_80022FE0(s32 *arg0);
 void func_800179E8(void);
@@ -21,7 +21,7 @@ s32 func_800229F4(void) {
     s32 s1;
     s8 v0;
 
-    s0 = func_80014CBC(func_80022AF0(), D_8005E5A8 << 13, 0x2000, (u8 *)&D_8006C910, 0, 0);
+    s0 = CdReadArchiveBytes(func_80022AF0(), D_8005E5A8 << 13, 0x2000, (u8 *)&D_8006C910, 0, 0);
     s1 = func_80022794(gActiveRenderContext->field_D8 + 8, 0, 0x1A, 0xA4, 0x10B, 0x3E, &D_8005E5CC, 0xC, 1);
     if (s0 != 0) {
         func_80022FE0((s32 *)s0);

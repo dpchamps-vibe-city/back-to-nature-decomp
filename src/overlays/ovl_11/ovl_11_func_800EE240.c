@@ -1,9 +1,9 @@
 #include "common.h"
+#include "screen_primitives.h"
 
 /* Overlay import of u32 Rand(s32), at 0x80012A34. */
 u32 Rand(s32 arg0);
 s32 func_8001FABC(s16 arg0);
-void func_800151B4(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6, u8 arg7);
 
 s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
     struct Ovl11ColorTriple colors = D_800B9E38;
@@ -58,7 +58,7 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
             blue = *(u8 *)&D_80129560[index];
             index2 = arg1 + 2;
             green = *(u16 *)&D_80129560[index2];
-            func_800151B4(packet, 0, 0, 320, 240,
+            DrawScreenFlatRectWithBlendMode(packet, 0, 0, 320, 240,
                 blue | (green << 8) | (*(u8 *)&D_80129560[next] << 16), 1, 1);
             for (i = 1; i < 4; i++) {
                 D_80129560[arg1 + i] -= 15;

@@ -1,6 +1,7 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "psyq/libsnd.h"
+#include "cd_loader.h"
 
 /* Tentative definitions — this TU owns these GP-relative globals
  * (every one of them is accessed via %gp_rel in the target). */
@@ -19,7 +20,6 @@ s32 D_8005E57C;
  * is the D_8006BF28 store value, not a call argument.  func_80021604 is void
  * (its definition TU declares void); the delay-slot `sw v0,0(v1)` after the
  * call stores head (still in v0), not a return value. */
-s32 func_80014988(s32, s32, s32, s32, s32);
 void func_800214FC(s16);
 void func_800215EC(s32, s32, s32);
 void func_80021604(s32);
@@ -85,7 +85,7 @@ s32 func_80020E58(void) {
     case 0x1E:
         value = (&D_8006BF48)[D_8005E554];
 
-        if (func_80014988(9, D_80049370[value],
+        if (CdReadArchiveSectors(9, D_80049370[value],
                           D_80049370[value + 1] - D_80049370[value],
                           D_8005E54C, 0) == 1) {
             D_8005E538 = 0xA;
@@ -95,7 +95,7 @@ s32 func_80020E58(void) {
     case 0x32:
         value = (&D_8006BF48)[D_8005E554];
 
-        if (func_80014988(9, D_80049370[value],
+        if (CdReadArchiveSectors(9, D_80049370[value],
                           D_80049370[value + 2] - D_80049370[value],
                           D_8005E54C, 0) == 1) {
             D_8005E538 = 0x28;

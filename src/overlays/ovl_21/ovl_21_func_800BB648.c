@@ -4,8 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
 
-u8 *func_80014CBC(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s32 arg5);
 void func_8001719C(u8 *arg0);
 /* The initializer reads only out and header; its trailing parameters are unused. */
 void func_80015704();
@@ -19,9 +19,9 @@ void ovl_21_func_800BB648(void) {
 
     DrawSync(0);
     ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
-    func_80014CBC(0x16, 0, 0x16188, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
+    CdReadArchiveBytes(0x16, 0, 0x16188, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
     do {
-    } while (func_80014CBC(0x16, 0, 0x16188, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
+    } while (CdReadArchiveBytes(0x16, 0, 0x16188, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
     func_8001719C((u8 *)(D_8005E3B0 + 0x65CC));
     memcpy(D_800BE108, (u8 *)(D_8005E3B0 + 0x4290), 0x233C);
     header = (SpriteDataHeader *)(D_800BE108 + D_800BCCDC[0]);

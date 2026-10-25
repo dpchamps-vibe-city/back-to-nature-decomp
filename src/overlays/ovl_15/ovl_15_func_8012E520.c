@@ -2,8 +2,8 @@
 #include "psyq/libsnd.h"
 #include "screen_fade.h"
 #include "scene_selection.h"
+#include "aux_sprite_display.h"
 
-void ClearVal8005E2CC(void);
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 void func_8001FE00(s32);
@@ -26,7 +26,7 @@ void ovl_15_func_8012E520(void) {
     if (state->state == 0) {
         func_8002029C(0, 0, 0, 0, 0);
         SsUtAllKeyOff(0);
-        ClearVal8005E2CC();
+        DisableAuxSpriteDisplay();
         func_800226F0();
         ovl_15_func_8012E15C();
         D_80137584 = 0;

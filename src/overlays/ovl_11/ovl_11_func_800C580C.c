@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "screen_fade.h"
+#include "pad_actuator_sequences.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 func_8001FABC (s16 arg0);
@@ -17,7 +18,6 @@ void ovl_11_func_800C4A2C (Ovl11C4A2CObject *arg0);
 void ovl_11_func_800C6770 (Ovl11C6770Object *arg0);
 void ovl_11_func_800C70CC (Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8001B2CC (s32 arg0, s32 arg1);
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670 (s16 arg0);
@@ -206,7 +206,7 @@ state_done:
             ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x3CU, 0, D_80122F78 * 0xA);
             arg0->unk6C |= 0x40000000;
             ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x58, 0, D_80122F78 * 0xA);
-            func_8001B2CC(0, 3);
+            RequestPadActuatorSequence(0, 3);
             return 0;
         case 0x58:
             ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x57, 1, D_80122F78 * 0xA);
@@ -521,7 +521,7 @@ tool_done:
                 }
             }
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
-            func_8001B2CC(0, 2);
+            RequestPadActuatorSequence(0, 2);
             goto advance_action;
         case 0x1F:
             if (ovl_11_func_800C4C94((Ovl11C7010Object *) arg0) == 1) {
@@ -544,13 +544,13 @@ tool_done:
         case 0x1D:
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
             ovl_11_func_800C541C((Ovl11CD5BCObject *) arg0);
-            func_8001B2CC(0, 2);
+            RequestPadActuatorSequence(0, 2);
             applyCost = 1;
             goto finish_action;
         case 0x1B:
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
             ovl_11_func_800C523C((Ovl11CD5BCObject *) arg0);
-            func_8001B2CC(0, 2);
+            RequestPadActuatorSequence(0, 2);
             applyCost = 1;
             goto finish_action;
         case 0x39:

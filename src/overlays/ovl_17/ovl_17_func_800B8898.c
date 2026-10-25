@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "pad_actuator_sequences.h"
 
 /* 8001FAD0 forwards the s32 voice result returned by func_800212A8. */
 s32 func_8001FABC(s16 arg0);
-void func_8001B2CC(s32 arg0, s32 arg1);
 s32 func_800207E4(s16 arg0, s16 arg1, s16 arg2);
 void ovl_17_func_800B91B8(void);
 void ovl_17_func_800B92B0(void);
@@ -68,7 +68,7 @@ block_6:
         u8 *work;
         work = D_800BD848;
         (*(s32 *) (work + 0xD0)) = 1;
-        func_8001B2CC(0, 0);
+        RequestPadActuatorSequence(0, 0);
         (*(s16 *) (work + 0x2C8)) = func_8001FABC(0x3D);
     }
     var_s0 = D_800BD848;

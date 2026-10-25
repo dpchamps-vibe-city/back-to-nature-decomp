@@ -1,8 +1,6 @@
 #include "common.h"
+#include "screen_primitives.h"
 
-void func_80014F0C(u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
-void func_80015074(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
-void func_80014FAC(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s16 arg9);
 void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void ovl_11_func_800F7094(s32 arg0, s16 arg1, s16 arg2, s32 arg3);
 
@@ -46,19 +44,19 @@ void ovl_11_func_800FD968(s32 *arg0, s16 arg1) {
         if (var_s1 % 3 != 0) {
             var_v0_2 = temp_s2;
         }
-        func_80014F0C(temp_s4, var_a1, y0, var_a3, var_v0_2, 0xE0B888, 0);
+        DrawScreenLine(temp_s4, var_a1, y0, var_a3, var_v0_2, 0xE0B888, 0);
         var_s1 += 1;
     } while (var_s1 < 4);
     temp_v0_2 = arg1 + 1;
-    func_80015074((s32 *)temp_s4, 0x29, temp_v0_2, 0x80, 7, 0xC8A060, 0);
-    func_80014F0C(temp_s6, 0x68, arg1, 0x68, temp_s2, 0xE0B888, 0);
+    DrawScreenFlatRect((s32 *)temp_s4, 0x29, temp_v0_2, 0x80, 7, 0xC8A060, 0);
+    DrawScreenLine(temp_s6, 0x68, arg1, 0x68, temp_s2, 0xE0B888, 0);
     var_a3 = ((arg0[1] % 10000) * 64) / 10000;
-    func_80014FAC((s32 *)temp_s6, 0x69 - var_a3, temp_v0_2, var_a3, 7, 0xE8A0B8, 0xD14070, 0xE8A0B8, 0xD14070, 0);
+    DrawScreenGradientRect((s32 *)temp_s6, 0x69 - var_a3, temp_v0_2, var_a3, 7, 0xE8A0B8, 0xD14070, 0xE8A0B8, 0xD14070, 0);
     if (arg0[1] / 10000 != 0) {
         func_80015EE8(temp_s5, (s32)D_8012CE88, 0xA, 0, 0x28, arg1 - 0x18);
         ovl_11_func_800F7094(temp_s5, 0x40, arg1 - 0x20, arg0[1] / 10000 - (arg0[1] / 1000000) * 100);
     }
-    func_80014FAC((s32 *)temp_s6, 0x69, temp_v0_2, ((arg0[0] % 10000) * 64) / 10000, 7, 0x4D70A0, 0xA6B8D0, 0x4D70A0, 0xA6B8D0, 0);
+    DrawScreenGradientRect((s32 *)temp_s6, 0x69, temp_v0_2, ((arg0[0] % 10000) * 64) / 10000, 7, 0x4D70A0, 0xA6B8D0, 0x4D70A0, 0xA6B8D0, 0);
     if (arg0[0] / 10000 != 0) {
         func_80015EE8(temp_s5, (s32)D_8012CE88, 0xA, 0, 0x68, arg1 - 0x18);
         ovl_11_func_800F7094(temp_s5, 0x80, arg1 - 0x20, arg0[0] / 10000 - (arg0[0] / 1000000) * 100);

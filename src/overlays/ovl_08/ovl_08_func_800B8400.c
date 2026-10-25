@@ -3,9 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-
-void func_8001B2CC(s32 arg0, s32 arg1);
-void func_8001B3CC(s32 arg0);
+#include "pad_actuator_sequences.h"
 
 extern char D_800B8008[];
 extern s32 D_800B8608;
@@ -21,10 +19,10 @@ void ovl_08_func_800B8400(void) {
         D_800B8608 = (D_800B8608 >= 0) ? D_800B8608 : 0xA;
     }
     if (((SomeStruct *)gPad0Input)->field_0x8 & 0x40) {
-        func_8001B2CC(0, D_800B8608);
+        RequestPadActuatorSequence(0, D_800B8608);
     }
     if (((SomeStruct *)gPad0Input)->field_0x8 & 0x80) {
-        func_8001B3CC(0);
+        StopPadActuatorSequence(0);
     }
     FntPrint(D_800B8008, D_800B8608);
 }

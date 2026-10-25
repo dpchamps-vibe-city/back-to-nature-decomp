@@ -799,17 +799,6 @@ typedef struct {
     Verts_1E4C0 *verts;
 } DriverArg_1E4C0;
 
-/* 8-byte entry in the D_80049170 table (indexed by arg1 in func_8001B2CC).
- * field_0 is read as a byte; field_4 as a u32 (a pointer into the same
- * 0x80049xxx region). */
-typedef struct {
-    /* 0x00 */ u8  field_0;
-    /* 0x01 */ u8  field_1;
-    /* 0x02 */ u8  field_2;
-    /* 0x03 */ u8  field_3;
-    /* 0x04 */ s32 field_4;
-} Struct80049170;
-
 /* 0x60-byte record copied out of the zero-init global D_8012D548 and passed
  * by value to ovl_11_func_8011D98C. That callee returns data[index]: the
  * s16 table sits at 0x28 and the s16 selector at 0x5C. The first 16 bytes

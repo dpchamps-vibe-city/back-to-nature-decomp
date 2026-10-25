@@ -1,10 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "pad_actuator_sequences.h"
 
 u32 Rand(s32 arg0);
 void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001B2CC(s32 arg0, s32 arg1);
-void func_8001B3CC(s32 arg0);
 s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800CD3C4(s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
@@ -43,11 +42,11 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
             state[2] = -1;
             obj->phase = 3;
             func_80015840(&obj->animation, (u8)(obj->direction + 4));
-            func_8001B3CC(0);
+            StopPadActuatorSequence(0);
             func_8001FABC(15);
         } else {
             D_8012DB80 = 0;
-            func_8001B2CC(0, 6);
+            RequestPadActuatorSequence(0, 6);
         }
         break;
     case 0:
@@ -64,7 +63,7 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
                 if ((s32)Rand(100) < threshold) {
                     obj->phase = 1;
                     func_80015840(&obj->animation, (u8)(obj->direction + 9));
-                    func_8001B2CC(0, 0);
+                    RequestPadActuatorSequence(0, 0);
                     return 0;
                 }
                 state[1] = ovl_11_func_80120358((Ovl11SelectArg *)state);
@@ -97,12 +96,12 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
         if (!(flags & 0x80)) {
             obj->phase = 3;
             func_80015840(&obj->animation, (u8)(obj->direction + 4));
-            func_8001B3CC(0);
+            StopPadActuatorSequence(0);
             func_8001FABC(15);
         } else if (state[0] == 0) {
             obj->phase = 0;
             state[1] = ovl_11_func_80120358((Ovl11SelectArg *)state);
-            func_8001B3CC(0);
+            StopPadActuatorSequence(0);
         } else {
             state[0]--;
             ovl_11_func_80120850(1);

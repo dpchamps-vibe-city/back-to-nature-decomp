@@ -6,6 +6,8 @@
 #include "psyq/libcd.h"
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
+#include "cd_loader.h"
+#include "pad_actuator_sequences.h"
 
 typedef struct {
                char pad0[0x38];
@@ -65,12 +67,10 @@ void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 u32 Rand (s32 arg0);
 s32 func_80022014 (s32 arg0, s16 arg1);
 void func_8001AF70 (u16 arg0, u16 arg1);
-void func_80014BCC (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8001719C (u8 *arg0);
 void SetVal8005E2E8 (s32 arg0);
 s32 func_8001E38C (void);
 void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001B2CC (s32 arg0, s32 arg1);
 u32 func_8001589C (SpriteSourceData *src);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);

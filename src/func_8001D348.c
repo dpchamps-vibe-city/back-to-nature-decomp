@@ -35,14 +35,14 @@ void func_8001D348(VECTOR *arg0, VECTOR *arg1) {
         matrix = &matrices[i];
         row = matrix->m[i / 2];
         gte_SetRotMatrix(matrix);
-        gte_ldclmv((s16 *)&D_80061E08);
+        gte_ldclmv((s16 *)&gCameraViewMatrix);
         gte_mvmva_core(0x4A49E012);
         gte_stclmv(matrix);
-        gte_ldclmv((s16 *)&D_80061E08 + 1);
+        gte_ldclmv((s16 *)&gCameraViewMatrix + 1);
         gte_mvmva_core(0x4A49E012);
         *out++ = *row++;
         gte_stclmv(&matrix->m[0][1]);
-        gte_ldclmv((s16 *)&D_80061E08 + 2);
+        gte_ldclmv((s16 *)&gCameraViewMatrix + 2);
         gte_mvmva_core(0x4A49E012);
         *out++ = *row++;
         gte_stclmv(&matrix->m[0][2]);

@@ -4,11 +4,10 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
+#include "pad_actuator_sequences.h"
 
 u32 Rand(s32);
 s32 func_8001FABC(s16);
-void func_8001B2CC(s32, s32);
-void func_8001B3CC(s32);
 void func_8001AF70(u16, u16);
 void ovl_30_func_80133454(Ovl30ValueMenuEntry *, s32);
 u16 *ovl_11_func_800CE744(s32, s32);
@@ -49,11 +48,11 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
         }
         switch (D_80134B10) {
         case 0:
-            func_8001B2CC(0, D_80134AFC);
+            RequestPadActuatorSequence(0, D_80134AFC);
             D_80134B10 = -1;
             break;
         case 1:
-            func_8001B3CC(0);
+            StopPadActuatorSequence(0);
             D_80134B10 = -1;
             break;
         case 2: id = 0x162; goto spawn;

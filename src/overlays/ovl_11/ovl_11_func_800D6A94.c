@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "cd_loader.h"
 
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800D6730 (s16 value, s16 row);
 s32 ovl_11_func_800D688C (s16 arg0);
-void func_80014BCC (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80015704 ();
 s32 ovl_11_func_800D678C (s16 arg0);
 s32 ovl_11_func_800D67F4 (s16 arg0);
@@ -55,7 +55,7 @@ s32 ovl_11_func_800D6A94(s16 arg0) {
         }
         temp_v0 = ovl_11_func_800D688C(arg0);
         if (temp_v0 == 0) {
-            func_80014BCC(0, (arg0 << 0xB) + 0x03C19000, 0x800, 0, (s32) &D_8006C910);
+            CdReadDiscSectorsBlocking(0, (arg0 << 0xB) + 0x03C19000, 0x800, 0, (s32) &D_8006C910);
             func_80015704(&sp28, (SpriteDataHeader *) &D_8006C910);
             sprite = &sp28;
         } else {
