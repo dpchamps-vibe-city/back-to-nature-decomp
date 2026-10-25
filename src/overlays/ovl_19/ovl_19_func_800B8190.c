@@ -3,13 +3,13 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libsnd.h"
+#include "screen_fade.h"
 
 
 void SsSeqClose (short);
 void SsSeqSetVol (short, short, short);
 void SsVabClose (short);
 void ovl_19_func_800BA770 (void);
-s32 func_80013394 (void);
 s32 func_8001FE6C (void);
 void func_8001FAE8 (s32 arg0);
 s32 func_8001FBBC (s16 arg0);
@@ -28,7 +28,7 @@ void ovl_19_func_800B8190(void) {
 
     ovl_19_func_800BA770();
     var_s0 = 0;
-    if (func_80013394() == 1) {
+    if (IsScreenFadeComplete() == 1) {
         var_s0++;
     }
     if (func_8001FE6C() == 0) {

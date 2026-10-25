@@ -1,6 +1,6 @@
 #include "common.h"
+#include "screen_fade.h"
 
-s32 func_80013394(void);
 void ovl_11_func_80102A10(void);
 void ovl_11_func_80102B6C(u16 arg0, s16 arg1);
 void func_80021B90(s32 arg0);
@@ -17,7 +17,7 @@ void ovl_11_func_8010289C(void) {
     s16 index;
     s16 selection;
 
-    if (func_80013394() != 0) {
+    if (IsScreenFadeComplete() != 0) {
         index = D_801273E6;
         Ovl11_D_801273E7 = 0;
         ovl_11_func_80102A10();

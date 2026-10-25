@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 func_80013394(void);
+#include "screen_fade.h"
 
 void func_8001AF70(u16 arg0, u16 arg1);
 
@@ -18,7 +17,7 @@ s32 ovl_11_func_800E7660(s32 arg0, s32 arg1, s32 arg2) {
     if (var_a0 == -1) {
         if (var_t0 == 6) {
             if (((struct struct_8006C838_time *)D_8006C838)->field_44C2 == 0) {
-                if (func_80013394() == 0) {
+                if (IsScreenFadeComplete() == 0) {
                     return 1;
                 }
             }

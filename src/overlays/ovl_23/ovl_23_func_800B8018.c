@@ -1,8 +1,8 @@
 #include "common.h"
+#include "screen_fade.h"
 
 void ovl_23_func_800B823C(void);
 void ovl_23_func_800B9310(void);
-s32 func_80013394(void);
 s32 func_8001FE6C(void);
 
 void ovl_23_func_800B8018(void) {
@@ -11,7 +11,7 @@ void ovl_23_func_800B8018(void) {
 
     ovl_23_func_800B823C();
     ovl_23_func_800B9310();
-    var_s0 = func_80013394() == 1;
+    var_s0 = IsScreenFadeComplete() == 1;
     if (func_8001FE6C() == 0) {
         var_s0++;
     }

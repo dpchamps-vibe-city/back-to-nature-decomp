@@ -1,4 +1,5 @@
 #include "common.h"
+#include "screen_fade.h"
 
 void func_80017A38(s16 arg0, s16 arg1);
 s32 func_800226B0(void);
@@ -10,7 +11,6 @@ void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_8011EC54(void);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 
 void ovl_11_func_8011EA0C(void) {
     s32 direction;
@@ -76,7 +76,7 @@ void ovl_11_func_8011EA0C(void) {
         } else if (pressed & 0x800) {
             if (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476 == 1) {
                 func_8001FABC(0);
-                func_800132F0(10, 0, 2);
+                BeginScreenFadeIncrease(10, 0, 2);
                 D_80128420 = 11;
             } else {
                 func_8001FABC(2);

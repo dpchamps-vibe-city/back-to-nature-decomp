@@ -3,8 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "screen_fade.h"
 
-s32 func_80013394(void);
 void ovl_30_func_80133454(Ovl30ValueMenuEntry *arg0, s32 arg1);
 void ovl_30_func_80133974(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
@@ -36,7 +36,7 @@ s32 ovl_30_func_80130C20(s32 arg0) {
     };
     s32 buttons;
 
-    if (func_80013394() != 0) {
+    if (IsScreenFadeComplete() != 0) {
         KanjiFntPrint(D_8012E9B8, D_801349A4);
         D_80134014 = arg0;
         ovl_30_func_80133454(entries, 23);

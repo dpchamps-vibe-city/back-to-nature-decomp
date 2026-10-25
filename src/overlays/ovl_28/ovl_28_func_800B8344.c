@@ -1,6 +1,6 @@
 #include "common.h"
+#include "screen_fade.h"
 
-s32 func_80013394(void);
 s32 func_8001FE6C(void);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020818(void);
@@ -11,7 +11,7 @@ s32 ovl_28_func_800B8344(void) {
     u8 x;
     s32 ret;
 
-    x = (func_80013394() ^ 1) == 0;
+    x = (IsScreenFadeComplete() ^ 1) == 0;
     if (func_8001FE6C() == 0) {
         x = (x + 1) & 0xFF;
     }

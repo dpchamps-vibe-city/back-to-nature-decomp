@@ -3,10 +3,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "screen_fade.h"
 
 /* Game callees. */
 void func_80011EF0(s32 arg0);
-s32 func_80013394(void);
 
 /* Data owned by other translation units in this overlay (rodata). */
 extern s32 D_800B7F84;
@@ -48,7 +48,7 @@ void ovl_08_func_800B8134(void) {
 
     KanjiFntPrint(&D_800B7FE8);
 
-    if (func_80013394() != 0) {
+    if (IsScreenFadeComplete() != 0) {
         ctrl = (SomeStruct *)D_8005E3A8;
         if (ctrl->field_0x0 & 0x1000) {
             D_800B8504 -= 1;

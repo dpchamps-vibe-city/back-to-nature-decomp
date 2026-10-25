@@ -1,12 +1,10 @@
 #include "common.h"
+#include "screen_fade.h"
 
 void func_80011EF0(s32 arg0);
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
 void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
-void func_80013328(s16 arg0);
-s32 func_80013394(void);
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 s32 func_8001FABC(s16 arg0);
@@ -31,11 +29,11 @@ void ovl_11_func_800BBCB8(void) {
     switch (WORK->state) {
     case 26:
         WORK->state = 27;
-        func_800132F0(10, 0, 2);
+        BeginScreenFadeIncrease(10, 0, 2);
         func_8001FE34(10);
         break;
     case 27:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             func_80011EF0(13);
         }
         break;
@@ -79,7 +77,7 @@ void ovl_11_func_800BBCB8(void) {
         break;
     case 3:
         ovl_11_func_800CB4E0();
-        func_80013328(20);
+        BeginScreenFadeFeedback(20);
         ovl_11_func_800F4E84();
         D_801287EC = 0;
         if (D_801287F0->unkA != 99) {
@@ -110,7 +108,7 @@ void ovl_11_func_800BBCB8(void) {
         break;
     case 13:
     case 30:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             WORK->state = 0;
         }
         break;
@@ -135,7 +133,7 @@ void ovl_11_func_800BBCB8(void) {
         STATUS->flags &= ~0x10000000;
     case 12:
     case 31:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             if (STATUS->mode == 2) {
                 ovl_11_func_800DBAB0();
             }
@@ -216,13 +214,13 @@ void ovl_11_func_800BBCB8(void) {
         }
         break;
     case 23:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             WORK->pendingMode = 3;
             WORK->state = 0;
         }
         break;
     case 6:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             WORK->state = 0;
             func_80011EF0(17);
         }

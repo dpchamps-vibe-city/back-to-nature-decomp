@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "screen_fade.h"
 
 
-void func_8001316C (u32 arg0, u32 arg1, u32 arg2);
 void func_80017A38 (s16 arg0, s16 arg1);
 void ovl_11_func_800FED0C (void);
 s32 GetVal8005E5B4 (void);
@@ -24,7 +24,7 @@ s32 func_8001FABC (s16 arg0);
 
 void ovl_11_func_800FECB8(void) {
     if (D_801273B0 != 0) {
-        func_8001316C(0xA000U, 0xA000U, 0xA000U);
+        DrawScreenSubtractOverlay(0xA000U, 0xA000U, 0xA000U);
         func_80017A38(0, 2);
         ovl_11_func_800FED0C();
         func_80017A38(0, 0);

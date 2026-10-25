@@ -9,6 +9,7 @@
 #include "psyq/libcd.h"
 #include "psyq/libmcrd.h"
 #include "psyq/libmcx.h"
+#include "screen_fade.h"
 
 /* Callees not in functions.h */
 void func_8001FEA4(void);
@@ -33,7 +34,6 @@ void func_800120C8(void);
 void func_80012298(s32 arg0);
 void func_800128DC(s32 arg0, s32 arg1);
 void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void func_800139FC(void);
 void func_80013A24(void);
 /* func_800145F0 ends with `addu $v0,$zero,$zero` before `jr $ra` — it
@@ -367,7 +367,7 @@ void func_80011370(void) {
                     D_80070CC0 = 4;
                 } else {
                     func_8001FE00(0xA);
-                    func_800132B8(0xA, 0, 2);
+                    BeginScreenFadeDecrease(0xA, 0, 2);
                     far_base = (char *)&D_8007AFF0;
                     *(s32 *)(far_base + 0x254A0) = 0;
                 }

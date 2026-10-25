@@ -3,10 +3,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "screen_fade.h"
 
 
 void ovl_28_func_800B7E80 (void);
-void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 void ovl_28_func_800B8B0C (void);
 void func_800226F0 (void);
 s32 func_80022DF8 (void);
@@ -17,7 +17,7 @@ void ovl_28_func_800B7F30(void) {
     s32 *base;
 
     ovl_28_func_800B7E80();
-    func_800132F0(0, 0, 2);
+    BeginScreenFadeIncrease(0, 0, 2);
     ovl_28_func_800B8B0C();
     func_800226F0();
     base = (s32 *)&D_8006C838;

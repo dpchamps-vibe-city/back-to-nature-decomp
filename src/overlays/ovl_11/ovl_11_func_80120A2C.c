@@ -1,10 +1,8 @@
 #include "common.h"
+#include "screen_fade.h"
 
 void ovl_11_func_800BDA20(void);
 void ovl_11_func_80121134(void);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80013394(void);
 void ovl_11_func_800DB7F0(void);
 void ovl_11_func_800D78D0(void);
 
@@ -25,7 +23,7 @@ void ovl_11_func_80120A2C(void) {
     case 1:
         ovl_11_func_800BDA20();
         ovl_11_func_80121134();
-        func_800132B8(10, 0, 2);
+        BeginScreenFadeDecrease(10, 0, 2);
         ((Ovl11MapCameraState *)&D_8012DB58)->unk0++;
         ((struct struct_8006C838_view *)D_8006C838)->field_0C &= ~0x800000;
         return;
@@ -61,14 +59,14 @@ void ovl_11_func_80120A2C(void) {
         ((struct Ovl11MapCameraWork *)&D_8007AFF0)->field_253B4 = ((Ovl11MapCameraState *)&D_8012DB58)->unkC;
         ((struct Ovl11MapCameraWork *)&D_8007AFF0)->field_253B8 = ((Ovl11MapCameraState *)&D_8012DB58)->unk14;
         if (((u32 *)D_8005E3A8)[2] & 0x20) {
-            func_800132F0(10, 0, 2);
+            BeginScreenFadeIncrease(10, 0, 2);
             ((Ovl11MapCameraState *)&D_8012DB58)->unk0 = 3;
             return;
         }
         return;
     case 3:
-        if (func_80013394() == 1) {
-            func_800132B8(10, 0, 2);
+        if (IsScreenFadeComplete() == 1) {
+            BeginScreenFadeDecrease(10, 0, 2);
             ovl_11_func_800DB7F0();
             ovl_11_func_800D78D0();
             ((struct Ovl11MapCameraWork *)&D_8007AFF0)->field_2548C = 0;

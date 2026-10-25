@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "screen_fade.h"
 
-s32 func_80013394(void);
 s32 func_8001AF44(u32 arg0);
 s32 ovl_11_func_800C0F84(void);
 void ovl_11_func_800CA6C4(void *arg0);
@@ -28,7 +28,7 @@ void ovl_11_func_800C0A4C(void) {
 
     STATE->flags &= 0xBDEFFFFF;
     if (D_80128B50 == 0) {
-        if (func_80013394() == 0 || func_8001AF44(3U) == 1 ||
+        if (IsScreenFadeComplete() == 0 || func_8001AF44(3U) == 1 ||
             (STATE->flags & 0x08000000) || ovl_11_func_800C0F84() == 1) {
             return;
         }

@@ -8,6 +8,7 @@
 #include "psyq/libapi.h"
 #include "psyq/libsnd.h"
 #include "asset_scratch.h"
+#include "screen_fade.h"
 
 typedef struct {
                s16 unk0;
@@ -53,7 +54,6 @@ void func_8001B530 (void);
 void ClearVal8005E2CC (void);
 s32 func_80020818 (void);
 void func_8001FE00 (s32 arg0);
-void func_800132B8 (s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800C1C90 (void);
@@ -72,7 +72,6 @@ void func_800121D4 (void);
 s32 ovl_11_func_800E3978 (s32 arg0);
 s32 ovl_11_func_800EEBC8 (void);
 void ovl_11_func_800E54C8 (void);
-s32 func_80013394 (void);
 s32 ovl_11_func_800E4AEC (s32 arg0);
 s32 ovl_11_func_800E4C30 (s32 arg0);
 s32 ovl_11_func_800E4C84 (s32 arg0);

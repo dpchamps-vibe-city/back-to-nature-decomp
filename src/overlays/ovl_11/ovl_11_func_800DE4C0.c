@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "screen_fade.h"
 
 void ovl_11_func_800BFE3C(void);
 s32 func_8001AF44(u32 arg0);
@@ -8,7 +9,6 @@ void func_80011EF0(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE00(s32 arg0);
 /* Overlay import of the matched Rand definition at 80012A34. */
 u32 Rand(s32 arg0);
@@ -49,7 +49,7 @@ void ovl_11_func_800DE4C0(void) {
         }
         work = (struct Ovl11UpdateWork *)&D_8007AFF0;
         if (((struct Ovl11SelectionResetMode *)work)->mode != 0x18 && ((struct Ovl11SelectionResetMode *)work)->mode != 0x19) {
-            func_800132B8(0x2D, 0, 2);
+            BeginScreenFadeDecrease(0x2D, 0, 2);
             func_8001FE00(0xA);
         }
         base = (char *)D_8006C838;

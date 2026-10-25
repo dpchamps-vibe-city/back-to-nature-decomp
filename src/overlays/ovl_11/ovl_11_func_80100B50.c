@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "packet_work.h"
+#include "screen_fade.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
@@ -30,7 +31,6 @@ s32 func_8001FABC (s16 arg0);
 s32 GetVal8005E5B4 (void);
 s32 GetVal8005E5B8 (void);
 void ovl_11_func_80100F9C (s32 arg0);
-void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 s32 pow_int (s32 arg0, s32 arg1);
 
 

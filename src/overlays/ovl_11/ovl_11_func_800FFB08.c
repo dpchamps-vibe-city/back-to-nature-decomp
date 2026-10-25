@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "screen_fade.h"
 
 #define SELECTION (*(u16 *)&D_801273D8)
 
-void func_8001316C(u32, u32, u32);
 void SetVal8005E334(s32);
 void SetVal8005E2BC(s32);
 s32 func_8002261C(s32, s32);
@@ -16,7 +16,6 @@ void func_800248B0(s32, s16, s16);
 void func_80022738(void);
 void func_8001AF70(u16, u16);
 void ovl_11_func_800CE210(Ovl11C7010Object *);
-void func_800132F0(s32, s32, s32);
 void func_8001FE34(s32);
 
 s32 ovl_11_func_800FFB08(void) {
@@ -24,7 +23,7 @@ s32 ovl_11_func_800FFB08(void) {
     s32 buttons;
     s16 row;
 
-    func_8001316C(0x40000, 0x40000, 0x40000);
+    DrawScreenSubtractOverlay(0x40000, 0x40000, 0x40000);
     SetVal8005E334(0);
     SetVal8005E2BC(0);
     func_8002261C(3, 0x1B7);
@@ -74,7 +73,7 @@ s32 ovl_11_func_800FFB08(void) {
                     ((Ovl11TriggerWorkView *)&D_8007AFF0)->field_254A0 = 0x11;
                 }
                 D_80070CC4 = 0;
-                func_800132F0(0xA, 0, 2);
+                BeginScreenFadeIncrease(0xA, 0, 2);
                 func_8001FE34(0xA);
                 break;
             }

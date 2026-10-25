@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
 #include "psyq/libgpu.h"
+#include "screen_fade.h"
 
 typedef struct {
                s16 field_0;
@@ -146,7 +147,6 @@ void SetVal8005E2E8 (s32 arg0);
 s32 func_8001E38C (void);
 void func_8001FAE8 (s32 arg0);
 s32 ovl_11_func_800C0824 (void);
-s32 func_80013394 (void);
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 s32 func_8001AF44 (u32 arg0);
 void func_8001AF70 (u16 arg0, u16 arg1);
@@ -164,7 +164,6 @@ s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8001B2CC (s32 arg0, s32 arg1);
-void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE34 (s32 arg0);
 void ovl_11_func_800CF314 (u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
@@ -228,7 +227,6 @@ s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 func_80020818 (void);
 s32 func_8001FB30 (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-void func_800132B8 (s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800C08E8 (s32 arg0);
 void func_8001FE00 (s32 arg0);

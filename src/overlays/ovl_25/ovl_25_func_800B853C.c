@@ -1,10 +1,10 @@
 #include "common.h"
+#include "screen_fade.h"
 
 extern s16 D_800BFE44[];
 extern void (*D_800BCBF8[])(void);
 
 void ovl_25_func_800B93E4(void);
-s32 func_80013394(void);
 
 void ovl_25_func_800B853C(void) {
     s32 temp_v0;
@@ -13,7 +13,7 @@ void ovl_25_func_800B853C(void) {
 
     ovl_25_func_800B93E4();
     if (D_800BFE44[1] == 6) {
-        temp_v0 = func_80013394();
+        temp_v0 = IsScreenFadeComplete();
         if (temp_v0 == 1) {
             D_800BFE44[1] = 0;
             D_800BFE44[0] = (s16) temp_v0;

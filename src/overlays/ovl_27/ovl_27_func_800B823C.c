@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libsnd.h"
 #include "psyq/libgpu.h"
+#include "screen_fade.h"
 
 
 short SsSeqOpen (unsigned long *, short);
@@ -12,7 +13,6 @@ void SsSetStereo (void);
 void SsStart (void);
 void SsUtReverbOn (void);
 void ovl_27_func_800B9324 (void);
-s32 func_80013394 (void);
 void ovl_27_func_800BA5BC (void);
 s32 ovl_27_func_800BA620 (void);
 void ovl_27_func_800BA750 (void);
@@ -21,7 +21,6 @@ void ovl_27_func_800BA514 (void);
 s32 ovl_27_func_800BA578 (void);
 void ovl_27_func_800BA80C (void);
 s32 ovl_27_func_800BA814 (void);
-void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 void ovl_27_func_800BA4C4 (void);
 void func_8001FD10 (void);
 s32 func_8001FD74 (void);
@@ -49,7 +48,7 @@ void ovl_27_func_800B823C(void) {
     }
     switch (D_800C4A18) {
     case 0:
-        temp_v0 = func_80013394();
+        temp_v0 = IsScreenFadeComplete();
         if (temp_v0 == 1) {
             D_800C4A18 = (s16) temp_v0;
             return;
@@ -97,7 +96,7 @@ void ovl_27_func_800B823C(void) {
         }
         break;
     case 7:
-        func_800132F0(0x1E, 0, 2);
+        BeginScreenFadeIncrease(0x1E, 0, 2);
         ovl_27_func_800BA4C4();
         D_800C4A18 = 8;
         return;
@@ -116,7 +115,7 @@ void ovl_27_func_800B823C(void) {
         }
         break;
     case 12:
-        temp_v0_2 = func_80013394();
+        temp_v0_2 = IsScreenFadeComplete();
         if (temp_v0_2 == 1) {
             D_800C4A18 = 0;
             func_80020818();

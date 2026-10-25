@@ -3,11 +3,11 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "screen_fade.h"
 
 
 void ovl_11_func_800C02B0 (void);
 s32 ovl_11_func_800C0834 (s16 arg0);
-void func_8001316C (u32 arg0, u32 arg1, u32 arg2);
 void ovl_11_func_800C009C (u8 *arg0);
 
 void ovl_11_func_800BFD1C(void) {

@@ -3,9 +3,9 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libsnd.h"
+#include "screen_fade.h"
 
 void ovl_25_func_800B93E4 (void);
-s32 func_80013394 (void);
 s32 func_8001FE6C (void);
 void func_8001FAE8 (s32 arg0);
 s32 func_8001FBBC (s16 arg0);
@@ -18,7 +18,7 @@ void ovl_25_func_800B81F4(void) {
     u8 *base;
 
     ovl_25_func_800B93E4();
-    var_s0 = func_80013394() == 1;
+    var_s0 = IsScreenFadeComplete() == 1;
     if (func_8001FE6C() == 0) {
         var_s0 = (var_s0 + 1) & 0xFF;
     }

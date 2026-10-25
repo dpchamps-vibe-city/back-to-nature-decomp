@@ -5285,9 +5285,10 @@ TU. func_80013328 (m, 2026-08) defines the same shared six-global GP-relative
 cluster (plus D_8005E28C, matching func_80012D30's set), uses the same
 constant-through-reused-`t` idiom as func_8001328C, and calls SetVal8005E278 /
 SetVal8005E27C directly, so it is a member of the game-state init cluster;
-func_800132F0 remains a stub. GetFlag8005E274 and func_80012A68 are matched
-leaf helpers in the same address span but with no cluster evidence, membership
-unverified.
+The old stub status for func_800132F0 is superseded: it is matched C and is
+now BeginScreenFadeIncrease in the reconstructed screen_fade module below.
+GetFlag8005E274 and func_80012A68 are matched leaf helpers with no cluster
+ownership evidence; calling them does not establish membership.
 
 Members (address order):
 - func_80012D30 (m) — render-context transition helper: game-state mode/counter
@@ -5297,7 +5298,7 @@ Members (address order):
   u32 color args (>>12 each); immediate successor of func_80012D30
 - func_800132B8 (m) — game-state initializer (sets mode, counters, sizes)
 - func_8001328C (m) — game-state initializer, constant-argument twin of func_800132B8 (mode=1, counter limit 0x3C, resets counters)
-- func_800132F0 (s)(?) — stub; intermediate
+- func_800132F0 (m) — increasing fade initializer; now BeginScreenFadeIncrease
 - func_80013328 (m, 2026-08) — game-state initializer: mode 3, clamps target
   D_8005E3CE to 0x1F (arg0+1 capped via local `t`), resets counters, sets
   D_8005E28C/D_8005E298, resets display via SetVal8005E278/SetVal8005E27C,
@@ -6123,37 +6124,77 @@ Member: func_80018B98 (suspended at user request, 2026-10-21 — improved
   bounded 877-partition closure and the remaining two sites. No new
   translation-unit membership claim follows from these source experiments.
 
-## fade/option-dim state machine — 0x8001328C–0x80013400 (confidence: medium)
+## Screen-fade renderer and controls — 0x80012D30–0x80013438 (confidence: medium)
 
-Shared gp-rel cluster D_8005E294 / D_8005E298 / D_8005E2A0 / D_8005E3CC /
-D_8005E3CE / D_8005E3D0, plus a peripheral D_8005E3C8 in the same short
-run. func_80012D30 is the mode driver: D_8005E294 selects mode 1/2/3
-(rising / waiting / falling), D_8005E3CC is the animation counter that
-paces toward the target D_8005E3CE, D_8005E298 is a tick/step flag,
-D_8005E2A0 a delta and D_8005E3D0 a boolean that gates a fast path
-(`0xFF000 / D_8005E3CE`). All members *define* the six globals as
-tentative definitions (GP-relative), the strongest same-TU signal; the
-(short,short) pair D_8005E3CC/D_8005E3CE is adjacent in memory.
+Reconstructed as `src/modules/screen_fade.c`, with eight matched functions in
+original order. This is a coherent module hypothesis, not a recovered original
+file boundary. The driver, four initializers and two queries share the same
+GP-relative mode/counter cluster. More than adjacency supports it: the
+80011C24 frame loop calls the driver, and overlay state machines pair the
+start calls with completion polls (e.g. ovl_27:800B845C and ovl_28:800B8124).
+The adjacent color emitter uses the same 320x240 semitransparent POLY_F4 /
+DR_MODE operation, a parallel double-buffered packet pair at D_8005E930 /
+D_8005E960 beside the driver's D_8005E8E0 / D_8005E910, and the same active
+render context. Its ovl_11 screen_color_ramp client corroborates its Q12 RGB
+interface. That supports including the complementary emitter, though its
+original same-file provenance is weaker than the shared-state controls'.
 
-Members (address order):
-- func_80012AB0 (s)(?) — adjacent; membership unproven, no cluster touches
-- func_80012D30 (s) — mode driver; long switch over D_8005E294, paces
-  D_8005E3CC toward D_8005E3CE, uses D_8005E298, D_8005E3D0, D_8005E2A0;
-  also D_8005E3C8 before the pair
-- func_8001316C (m) — full-screen POLY_F4/DR_MODE pair into D_8005E930/D_8005E960;
-  same-TU evidence as func_80012D30 (exact successor, same idiom) — see the
-  game-state init and query group above
-- func_8001328C (s) — init: D_8005E294=1, D_8005E3CE=0x3C, D_8005E3CC=0,
-  D_8005E298=0, D_8005E2A0=2, D_8005E3D0=0
-- func_800132B8 (s) — init: D_8005E294=1, D_8005E3CE=(s16)arg0,
-  D_8005E3CC=(s16)arg0-1, D_8005E298=0, D_8005E2A0=arg2,
-  D_8005E3D0=(s16)arg1
-- func_800132F0 (m, 2026-08-21) — init: D_8005E294=2, D_8005E3CC=0,
-  D_8005E3CE=(s16)arg0+1, D_8005E298=0, D_8005E2A0=arg2,
-  D_8005E3D0=(s16)arg1
-- func_80013394 (s) — state query: booleans from D_8005E294/D_8005E3CC
-  vs D_8005E3CE+offsets
-- func_80013400 (s) — switch over D_8005E294
+Members and canonical identities (all EXE addresses):
+- 80012D30 UpdateAndDrawScreenFade — advance the shared effect and link its
+  gray overlay; formerly func_80012D30.
+- 8001316C DrawScreenSubtractOverlay — independent RGB Q12 subtractive overlay;
+  formerly func_8001316C. Does not advance the shared fade.
+- 8001328C ResetScreenFade — completed decreasing-mode state, counter 0,
+  denominator 60, subtractive blend, frame OT; formerly func_8001328C.
+- 800132B8 BeginScreenFadeDecrease — counter starts at steps-1, divisor steps;
+  formerly func_800132B8.
+- 800132F0 BeginScreenFadeIncrease — counter 0, divisor steps+1;
+  formerly func_800132F0 (old stub annotations are superseded).
+- 80013328 BeginScreenFadeFeedback — first-update skip, divisor min(steps,30)+1,
+  fixed subtraction while retaining the framebuffer; formerly func_80013328.
+- 80013394 IsScreenFadeComplete — mode-specific predicates and idle fallback;
+  formerly func_80013394.
+- 80013400 GetScreenFadeRampMode — returns 1/2, otherwise 0 even for feedback;
+  formerly func_80013400. The 80013430 label remains its internal epilogue.
+
+The earlier rising/waiting/falling description was incorrect: modes 1 and 2
+**decrease/increase the overlay intensity**. Whether that means fade-in/out
+depends on GPU blending. D_8005E2A0 is an ABR selector, not a delta;
+D_8005E3D0 chooses an OT, not a division fast path. The six state names now are
+`gScreenFadeMode` (8005E294), `gScreenFadeSkipUpdate` (8005E298),
+`gScreenFadeBlendMode` (8005E2A0), `gScreenFadeCounter` (8005E3CC),
+`gScreenFadeDenominator` (8005E3CE), and `gScreenFadeOtSelector` (8005E3D0).
+Their original halfword/word widths, addresses and tentative-definition
+ownership are unchanged; no new struct, static linkage or storage was added.
+The wider draw-latch/display handshake and cadence symbols retain their
+address names. Feedback disables background clearing, enables drawing in the
+displayed area, and restores those flags and clears both screen buffers when
+its counter reaches the target. Its query's exact target+3 equality is kept;
+the normal driver also completes by switching to idle, not by rewriting that
+predicate into a generic threshold.
+
+`include/screen_fade.h` publishes the existing ABI, update-count rather than
+wall-clock units, s16 argument narrowing, unchecked-input constraints, OT
+selection, and Q12 color truncation. Canonical function names in exe.txt were
+propagated with canonicalNames; interfaceAudit publishes this header to all
+callers, including overlays, and contextExport regenerates the function
+contexts. Module locals now describe packet/color/counter roles. SDK packet
+macros, signed rounding and source control flow retain their original behavior.
+
+Boundaries: 80012AB0 and the 80012CB4 VSync-time predicate have no shared fade
+state and stay outside. The 80013438/80013444 draw-latch accessors have broader
+external consumers and stay outside this reconstruction, as do the following
+mode predicates and display/UI helpers. No boundary is claimed solely from a
+flag or RAM adjacency; the larger game-state/render family remains a hypothesis.
+
+Flags and verification: the checked mechanical fold first matched **all eight
+members at baseline -O2/-G8**, and the linked EXE again matched after naming,
+header publication and local readability edits. No member has a flag override;
+no override or source-policy exception was added or retired. Final acceptance
+uses `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`, covering
+all executable/overlay bytes, canonical names, published interfaces, source
+policy, ownership and configuration convergence. Shared data layouts and all
+external linkages are preserved.
 
 ## `exe` sprite-load wrapper cluster — 0x800171CC–0x80017284 (confidence: low)
 

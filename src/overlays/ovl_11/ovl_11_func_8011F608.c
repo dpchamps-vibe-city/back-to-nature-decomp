@@ -1,9 +1,6 @@
 #include "common.h"
+#include "screen_fade.h"
 
-void func_8001328C(void);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80013394(void);
 void func_80015114(u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
 void func_80017A08(s32 arg0, s32 arg1);
 s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
@@ -26,12 +23,12 @@ void ovl_11_func_8011F608(void) {
     switch (D_80128540) {
     case 1:
         func_8001FBBC(0);
-        func_800132F0(30, 1, 2);
+        BeginScreenFadeIncrease(30, 1, 2);
         func_8001FE34(30);
         D_80128540 = 2;
         break;
     case 2:
-        if (func_80013394() == 1 && func_8001FE6C() == 0) {
+        if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
             D_80128540 = 3;
             ovl_11_func_8011F9EC(Ovl11_D_80128544);
             func_8001FE00(1);
@@ -53,12 +50,12 @@ void ovl_11_func_8011F608(void) {
             if (D_80128556 == 0x10A) {
                 func_8001FB30(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
                 ovl_11_func_800BC9AC();
-                func_800132B8(10, 1, 2);
+                BeginScreenFadeDecrease(10, 1, 2);
                 func_8001FE00(10);
                 D_80128540 = 8;
             } else {
                 func_80015114((u32 *)D_8005E3C0->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
-                func_800132F0(10, 0, 1);
+                BeginScreenFadeIncrease(10, 0, 1);
                 func_8001FE00(10);
                 D_80128540 = 5;
             }
@@ -66,7 +63,7 @@ void ovl_11_func_8011F608(void) {
         break;
     case 5:
         func_80015114((u32 *)D_8005E3C0->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
-        if (func_80013394() == 1 && func_8001FE6C() == 0) {
+        if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
             func_80021B90(25);
             D_80128540 = 6;
         }
@@ -79,7 +76,7 @@ void ovl_11_func_8011F608(void) {
         break;
     case 7:
         if (--D_80128558 <= 0) {
-            func_800132B8(10, 0, 1);
+            BeginScreenFadeDecrease(10, 0, 1);
             func_8001FB30(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
             ovl_11_func_800BC9AC();
             func_8001FE00(10);
@@ -87,8 +84,8 @@ void ovl_11_func_8011F608(void) {
         }
         break;
     case 8:
-        if (func_80013394() == 1 && func_8001FE6C() == 0) {
-            func_8001328C();
+        if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
+            ResetScreenFade();
             D_80128540 = 9;
         }
         break;

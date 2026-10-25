@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "screen_fade.h"
 
-s32 func_80013394(void);
 s32 func_8001DFD4(s32 *arg0, SVECTOR *arg1);
 void func_80015C50(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
 void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
@@ -36,7 +36,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
     D_80128BA0[0] = (*(u16 *) ((u8 *) arg0 + 0x24)) + 0x96;
     D_80128BA0[1] = ((*(u16 *) ((u8 *) arg0 + 0x28)) + (*(u16 *) ((u8 *) arg0 + 0xC))) - 0x64;
     D_80128BA0[2] = (*(u16 *) ((u8 *) arg0 + 0x2C)) - 0x96;
-    if (!(D_8006C844 & 0x08000000) && func_80013394() == 1) {
+    if (!(D_8006C844 & 0x08000000) && IsScreenFadeComplete() == 1) {
             temp_v1 = arg0->unk6;
             switch (temp_v1) {
             default:

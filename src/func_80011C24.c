@@ -3,6 +3,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/libetc.h"
+#include "screen_fade.h"
 
 /* GP-relative globals this TU defines (target accesses all via %gp_rel).
  * Tentative definitions so cc1 keeps them inside the -G8 small-data range. */
@@ -31,7 +32,6 @@ void func_80013B04(void);
 void func_8001FD10(void);
 void func_800129F4(void);
 void func_800120C8(void);
-void func_80012D30(void);
 void func_800134C4(void);
 
 s32 GetVal8005E2CC(void);
@@ -78,7 +78,7 @@ void func_80011C24(void) {
                 }
                 D_8005E3B4 = toggle_ptr;
                 func_800120C8();
-                func_80012D30();
+                UpdateAndDrawScreenFade();
                 func_800134C4();
                 D_8005E384();
                 ((struct_8006C838_view_8 *)&D_8006C838)->field_008 += 1;

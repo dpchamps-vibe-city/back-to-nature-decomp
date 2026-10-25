@@ -1,9 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "screen_fade.h"
 
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80013394(void);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 GetVal8005E5B4(void);
@@ -102,21 +100,21 @@ s32 ovl_11_func_80115FE0(void) {
         }
         break;
     case 10:
-        func_800132F0(20, 1, 2);
+        BeginScreenFadeIncrease(20, 1, 2);
         ovl_11_func_8011D084(11, 0);
         break;
     case 11:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             func_8002261C(2, 0xE9);
             ovl_11_func_8011D084(0x18, 12);
         }
         break;
     case 12:
-        func_800132B8(20, 1, 2);
+        BeginScreenFadeDecrease(20, 1, 2);
         ovl_11_func_8011D084(13, 0);
         break;
     case 13:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             func_8002261C(2, 0xEA);
             ovl_11_func_8011D084(0x18, 14);
         }

@@ -1,8 +1,8 @@
 #include "common.h"
+#include "screen_fade.h"
 
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-void func_80013328(s16 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800CD670(s16 arg0);
 void ovl_11_func_80112D10(void);
@@ -26,7 +26,7 @@ void ovl_11_func_80113818(void) {
         if (result == 1) {
             work = (Ovl11TriggerWorkView *)&D_8007AFF0;
             work->field_254A0 = 5;
-            func_80013328(0xA);
+            BeginScreenFadeFeedback(0xA);
             if (((Ovl11GridState *)D_8012D110)->flags & 0x8000) {
                 work->field_25480++;
                 (*(u16 *)D_8012D110)++;

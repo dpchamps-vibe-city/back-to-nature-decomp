@@ -1,10 +1,10 @@
 #include "common.h"
+#include "screen_fade.h"
 
 
 void SsSeqClose(short);
 void SsSeqSetVol(short, short, short);
 void SsVabClose(short);
-s32 func_80013394(void);
 s32 func_8001FE6C(void);
 void func_8001FAE8(s32 arg0);
 s32 func_8001FBBC(s16 arg0);
@@ -17,7 +17,7 @@ void ovl_23_func_800B8104(void) {
     s32 *base;
     s32 var_s0;
 
-    var_s0 = func_80013394() == 1;
+    var_s0 = IsScreenFadeComplete() == 1;
     if (func_8001FE6C() == 0) {
         var_s0 = (var_s0 + 1) & 0xFF;
     }

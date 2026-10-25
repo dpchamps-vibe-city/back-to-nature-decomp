@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "screen_fade.h"
 
 void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800BAFDC(void);
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
-s32 func_80013394(void);
 s32 func_8001FE6C(void);
 
 void ovl_17_func_800B7F90(void) {
@@ -19,7 +19,7 @@ void ovl_17_func_800B7F90(void) {
         ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *) var_s1, 0x40000);
         var_s1 += 0x50;
     }
-    var_s0_2 = func_80013394() == 1;
+    var_s0_2 = IsScreenFadeComplete() == 1;
     if (func_8001FE6C() == 0) {
         var_s0_2 = (var_s0_2 + 1) & 0xFF;
     }

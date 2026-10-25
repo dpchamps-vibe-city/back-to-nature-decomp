@@ -1,12 +1,10 @@
 #include "common.h"
 #include "psyq/libsnd.h"
+#include "screen_fade.h"
 
 /* This overlay imports the resident ClearVal8005E2CC by its address. */
 void ClearVal8005E2CC(void);
 void func_80011EF0(s32);
-void func_800132B8(s32, s32, s32);
-void func_800132F0(s32, s32, s32);
-s32 func_80013394(void);
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 void func_8001FE00(s32);
@@ -34,13 +32,13 @@ void ovl_15_func_8012E7C8(void) {
         ovl_15_func_8012E15C();
         D_80137584 = 0;
         ovl_15_func_801372A0(1);
-        func_800132B8(0x3C, 0, 2);
+        BeginScreenFadeDecrease(0x3C, 0, 2);
         func_8001FE00(0x3C);
         func_8002495C(-1);
         state->state = 1;
     } else if (state->state == 1) {
         func_8002238C(sprite);
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             state->state = 2;
         }
     } else if (state->state == 2) {
@@ -62,18 +60,18 @@ void ovl_15_func_8012E7C8(void) {
             break;
         case -1:
             ((Ovl21MainStateView *)D_8006C838)->state = 4;
-            func_800132F0(0xA, 0, 2);
+            BeginScreenFadeIncrease(0xA, 0, 2);
             func_8001FE34(0xA);
             break;
         case 1:
             ((Ovl21MainStateView *)D_8006C838)->state = 3;
-            func_800132F0(0xA, 0, 2);
+            BeginScreenFadeIncrease(0xA, 0, 2);
             func_8001FE34(0xA);
             break;
         }
     } else if ((unsigned)(state->state - 3) < 2) {
         func_8002238C(sprite);
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             func_8002029C(0, 0, 0, 0x50, 0xA);
             state->state = state->state == 3 ? 3 : 4;
             func_80011EF0(0x13);

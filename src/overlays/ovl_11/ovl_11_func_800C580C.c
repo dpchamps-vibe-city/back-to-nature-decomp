@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "screen_fade.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 func_8001FABC (s16 arg0);
@@ -20,7 +21,6 @@ void func_8001B2CC (s32 arg0, s32 arg1);
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670 (s16 arg0);
-void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE34 (s32 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 s32 func_8002261C (s32 arg0, s32 arg1);
@@ -241,7 +241,7 @@ state_done:
             temp_v1 = arg0->phase;
             if (temp_v1 == 3) {
                 ((struct Ovl11C580CWork *)&D_8007AFF0)->mode = 0xC;
-                func_800132F0(0x1E, 0, 2);
+                BeginScreenFadeIncrease(0x1E, 0, 2);
                 func_8001FE34(0x1E);
                 arg0->unk6C |= 0x400;
                 func_8001AF70(0x47U, 1U);

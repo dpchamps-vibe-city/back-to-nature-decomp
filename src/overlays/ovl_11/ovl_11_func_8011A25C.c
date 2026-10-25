@@ -1,8 +1,6 @@
 #include "common.h"
+#include "screen_fade.h"
 
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80013394(void);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 GetVal8005E5B4(void);
@@ -131,16 +129,16 @@ s32 ovl_11_func_8011A25C(void) {
     case 10:
         ovl_11_func_800E6EE0(item, 1, 0, 1);
         ovl_11_func_800E6EE0(group, 0, 0, 1);
-        func_800132F0(20, 0, 2);
+        BeginScreenFadeIncrease(20, 0, 2);
         ovl_11_func_8011D084(9, 0);
     case 9:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             ovl_11_func_800E5E98(32, 0, 0, 0);
             ((Ovl11A25CState *)D_8006C838)->x = 1000;
             ((Ovl11A25CState *)D_8006C838)->z = -2800;
             ((Ovl11A25CState *)D_8006C838)->y = 0;
             ovl_11_func_800E9284(3, 0, 0, 0);
-            func_800132B8(20, 0, 2);
+            BeginScreenFadeDecrease(20, 0, 2);
             ovl_11_func_8011D084(8, 0);
         }
         break;
@@ -149,7 +147,7 @@ s32 ovl_11_func_8011A25C(void) {
         ovl_11_func_8011D084(1, 7);
         break;
     case 8:
-        if (func_80013394() != 1) {
+        if (IsScreenFadeComplete() != 1) {
             break;
         }
         ovl_11_func_800E9B68(4, 0, 0, 0);

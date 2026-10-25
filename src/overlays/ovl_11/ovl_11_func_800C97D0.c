@@ -1,14 +1,13 @@
 #include "common.h"
 #include "game_types.h"
-
-s32 func_80013394(void);
+#include "screen_fade.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800C97D0(Recon_ovl_11_func_800C97D0_A0View *arg0) {
     s32 callRet3;
     if ((D_8006C844 & 0x8000000) == 0) {
-        callRet3 = func_80013394();
+        callRet3 = IsScreenFadeComplete();
         if (callRet3 == 0) {
             return 0;
         } else {

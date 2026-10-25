@@ -1,10 +1,10 @@
 #include "common.h"
 #include "psyq/libspu.h"
+#include "screen_fade.h"
 
 void ovl_21_func_800BA4C0(void);
 s32 GetVal8005E5B4(void);
 void func_80022738(void);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 void ovl_21_func_800B9798(s16 arg0, s16 arg1);
 void SetVal8005E2BC(s32 arg0);
 void SetVal8005E334(s32 arg0);
@@ -21,7 +21,7 @@ void ovl_21_func_800B9178(void) {
             func_80022738();
             *(s16 *)(base + 0x988) = 0;
             if (*(s16 *)(base + 2) == 0) {
-                func_800132F0(0xA, 0, 2);
+                BeginScreenFadeIncrease(0xA, 0, 2);
                 D_800C0448[0] = 0x10;
             } else {
                 D_800C0448[0] = 0x11;

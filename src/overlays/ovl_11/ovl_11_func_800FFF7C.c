@@ -1,4 +1,5 @@
 #include "common.h"
+#include "screen_fade.h"
 
 void func_8002238C(s32 arg0);
 s32 func_800226B0(void);
@@ -6,7 +7,6 @@ s32 ovl_11_func_800F77A8(s16 arg0);
 void func_80022738(void);
 void func_800223B0(s32 arg0);
 s32 func_80021B64(void);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void func_80017A38(s16 arg0, s16 arg1);
@@ -38,7 +38,7 @@ void ovl_11_func_800FFF7C(void) {
             if (D_801273E4 == 8) {
                 if (func_80021B64() == 0) {
                     D_801273E4 = 3;
-                    func_800132B8(0xA, 0, 2);
+                    BeginScreenFadeDecrease(0xA, 0, 2);
                 }
             } else {
                 if (D_801273E0 != D_801273DC) {

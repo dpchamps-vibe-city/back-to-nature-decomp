@@ -1,11 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "screen_fade.h"
 
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001AF44 (u32 arg0);
-s32 func_80013394 (void);
-s32 func_80013400 (void);
-void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
 s16 ovl_11_func_800BF8B8 (void);
@@ -78,17 +76,17 @@ s32 ovl_11_func_800DDDFC(void) {
             break;
         }
         if (func_8001AF44(0x47) == 0) {
-            if (func_80013394() != 1) {
+            if (IsScreenFadeComplete() != 1) {
                 break;
             }
-            if (func_80013400() != 2) {
-                func_800132F0(0x2D, 0, 2);
+            if (GetScreenFadeRampMode() != 2) {
+                BeginScreenFadeIncrease(0x2D, 0, 2);
             }
         }
         phase0->phase++;
         break;
     case 1:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             ((Ovl11DDDFCState *)D_8006C838)->phase++;
             ((Ovl11DDDFCState *)D_8006C838)->flags |= 0x800000;
         }
@@ -105,7 +103,7 @@ s32 ovl_11_func_800DDDFC(void) {
         ((Ovl11DDDFCState *)D_8006C838)->phase++;
         break;
     case 4:
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             ovl_11_func_800CCCC0();
             ovl_11_func_80106DE8();
             ovl_11_func_80111F88();

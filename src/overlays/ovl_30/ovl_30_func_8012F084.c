@@ -3,14 +3,12 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "screen_fade.h"
 
 void ovl_30_func_8012F030(s32 arg0);
 void ovl_30_func_8012FE94(void);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE00(s32 arg0);
 s32 func_8001FABC(s16 arg0);
-s32 func_80013394(void);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE34(s32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 void func_80011EF0(s32 arg0);
@@ -57,7 +55,7 @@ void ovl_30_func_8012F084(void) {
         KanjiFntOpen(8, 0x10, 0x140, 0xF0, 0x1C0, 0, 0x140, 0xFF, 0, 0xFF);
         FntFlush(-1);
         ovl_30_func_8012FE94();
-        func_800132B8(0xA, 0, 2);
+        BeginScreenFadeDecrease(0xA, 0, 2);
         func_8001FE00(0xA);
         break;
     case 3:
@@ -78,11 +76,11 @@ void ovl_30_func_8012F084(void) {
         temp_v0_2 = D_80133FC0[D_80134ADC];
         D_80134B18 = temp_v0_2;
         D_80134AE0 = temp_v0_2(D_80134AE0);
-        temp_v0_3 = func_80013394();
+        temp_v0_3 = IsScreenFadeComplete();
         if (temp_v0_3 == 1) {
             if (D_80134AD8 == temp_v0_3) {
                 if ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x800) {
-                    func_800132F0(0xA, 0, 2);
+                    BeginScreenFadeIncrease(0xA, 0, 2);
                     func_8001FE34(0xA);
                     D_80134AD8 = 0;
                 }
@@ -113,7 +111,7 @@ void ovl_30_func_8012F084(void) {
             D_8005E32C = *index;
         }
         D_80134B0C = 0;
-        func_800132B8(0xA, 0, 2);
+        BeginScreenFadeDecrease(0xA, 0, 2);
         func_8001FE00(0xA);
         ((struct struct_8006C838_view *)D_8006C838)->field_0C &= 0xF7FFFFFF;
         func_80011EF0(2);

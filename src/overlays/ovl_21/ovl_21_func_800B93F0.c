@@ -1,9 +1,9 @@
 #include "common.h"
 #include "psyq/libspu.h"
+#include "screen_fade.h"
 
 void ovl_21_func_800BA4C0(void);
 void func_80022738(void);
-void func_800132F0(s32 arg0, s32 arg1, s32 arg2);
 s32 GetVal8005E5B4(void);
 s32 func_8001FABC(s16 arg0);
 
@@ -21,7 +21,7 @@ void ovl_21_func_800B93F0(void) {
         if (status == 0 || *(s16 *)(base + 0x988) >= 0x96) {
             func_80022738();
             *(s16 *)(base + 0x988) = 0;
-            func_800132F0(0xA, 0, 2);
+            BeginScreenFadeIncrease(0xA, 0, 2);
             D_800C0448[0] = 0xD;
             return;
         }

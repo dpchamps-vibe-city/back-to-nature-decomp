@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "screen_fade.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
@@ -14,7 +15,6 @@ void ovl_11_func_800BC868(void);
 void ClearVal8005E2CC(void);
 s32 func_80020818(void);
 void func_8001FE00(s32 arg0);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800CD0C0(s32 *arg0);
 s32 func_8001AF44(u32 arg0);
 void ovl_11_func_800CCC5C(void);
@@ -97,7 +97,7 @@ void ovl_11_func_800BC3E0(void) {
         }
         ((Ovl11AreaInitView *)D_8006C838)->field_4450 &= ~0x4000;
         if (((Ovl11FarInitView *)&D_8007AFF0)->field_254A0 != 0x19) {
-            func_800132B8(10, 0, 2);
+            BeginScreenFadeDecrease(10, 0, 2);
         }
         ((Ovl11AreaInitView *)D_8006C838)->field_4488++;
         if (((Ovl11FarInitView *)&D_8007AFF0)->field_254A0 == 0xC) {

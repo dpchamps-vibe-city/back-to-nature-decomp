@@ -1,8 +1,6 @@
 #include "common.h"
+#include "screen_fade.h"
 
-void func_800132B8(s32, s32, s32);
-void func_800132F0(s32, s32, s32);
-s32 func_80013394(void);
 s32 func_8001FABC(s16);
 void func_8001FE34(s32);
 s32 func_8001FE6C(void);
@@ -33,12 +31,12 @@ void ovl_27_func_800B845C(void) {
     switch (D_800C4A24) {
     case 0:
         ((void (*)(void))D_800C4A14)();
-        func_800132B8(10, 0, 2);
+        BeginScreenFadeDecrease(10, 0, 2);
         D_800C4A24 = 1;
         break;
     case 1:
         ((void (*)(void))D_800C4A14)();
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             D_800C4A20 = 0;
             D_800C4A24 = 2;
         }
@@ -48,7 +46,7 @@ void ovl_27_func_800B845C(void) {
         ((void (*)(void))D_800C4A14)();
         if (((s32 *)D_8005E3A8)[2] & 0x840) {
             func_8001FABC(0);
-            func_800132F0(10, 0, 2);
+            BeginScreenFadeIncrease(10, 0, 2);
             D_800C4A24 = 3;
         } else if (D_800C4A20 >= 1800) {
             D_800C4A26 = 1;
@@ -57,19 +55,19 @@ void ovl_27_func_800B845C(void) {
         break;
     case 3:
         ((void (*)(void))D_800C4A14)();
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             ovl_27_func_800B7F7C();
             D_800C4A24 = 4;
         }
         break;
     case 4:
         ovl_27_func_800B928C();
-        func_800132B8(10, 0, 2);
+        BeginScreenFadeDecrease(10, 0, 2);
         D_800C4A24 = 5;
         break;
     case 5:
         ovl_27_func_800B928C();
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             D_800C4A1C = 0;
             D_800C4A24 = 6;
         }
@@ -97,7 +95,7 @@ void ovl_27_func_800B845C(void) {
             if (D_800C4A1A == 0) {
                 D_800C4A24 = 8;
             } else {
-                func_800132F0(10, 0, 2);
+                BeginScreenFadeIncrease(10, 0, 2);
                 func_8001FE34(10);
                 D_800C4A24 = 9;
             }
@@ -109,7 +107,7 @@ void ovl_27_func_800B845C(void) {
         break;
     case 9:
         ovl_27_func_800B9224();
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             D_800C4A24 = 10;
         }
         break;
@@ -242,7 +240,7 @@ void ovl_27_func_800B845C(void) {
         ovl_27_func_800B9124();
         if (GetVal8005E5B4() == 2) {
             if ((s16)GetVal8005E5B8() == 1) {
-                func_800132F0(10, 0, 2);
+                BeginScreenFadeIncrease(10, 0, 2);
                 func_8001FE34(10);
                 D_800C4A24 = 27;
             } else {
@@ -252,7 +250,7 @@ void ovl_27_func_800B845C(void) {
         break;
     case 27:
         ovl_27_func_800B92E4();
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             D_800C4A24 = 28;
         }
         break;
@@ -274,13 +272,13 @@ void ovl_27_func_800B845C(void) {
         break;
     case 33:
         ((void (*)(void))D_800C4A14)();
-        func_800132F0(10, 0, 2);
+        BeginScreenFadeIncrease(10, 0, 2);
         func_8001FE34(10);
         D_800C4A24 = 34;
         break;
     case 34:
         ((void (*)(void))D_800C4A14)();
-        if (func_80013394() == 1) {
+        if (IsScreenFadeComplete() == 1) {
             D_800C4A24 = 35;
         }
         break;

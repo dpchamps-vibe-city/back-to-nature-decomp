@@ -1,10 +1,10 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "screen_fade.h"
 
 u32 Rand(s32 arg0);
 s32 ovl_27_func_800BA230(void);
 void ovl_27_func_800B9324(void);
-void func_800132B8(s32 arg0, s32 arg1, s32 arg2);
 
 void ovl_27_func_800B80B0(void) {
     env_struct_0x134 *second;
@@ -28,7 +28,7 @@ void ovl_27_func_800B80B0(void) {
             D_8005E5E8->unk18 = 1;
             D_8005E5E8[1].unk18 = 1;
             ovl_27_func_800B9324();
-            func_800132B8(0x1E, 0, 2);
+            BeginScreenFadeDecrease(0x1E, 0, 2);
             D_800C4A18 = 0;
             state2 = (Ovl27StateCounterView *)D_8006C838;
             state2->counter++;

@@ -10,6 +10,7 @@
 #include "psyq/libmcx.h"
 #include "psyq/libgpu.h"
 #include "packet_work.h"
+#include "screen_fade.h"
 
 typedef void (*M2C_a048f66bc407_SpriteCallback)(s32, SpriteSourceData *, s16, s32, s32);
 
@@ -46,14 +47,11 @@ s32 func_8002029C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void ClearVal8005E2CC (void);
 void func_800226F0 (void);
 void ovl_15_func_8012E15C (void);
-void func_800132B8 (s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE00 (s32 arg0);
 void func_8002495C (s16 arg0);
 void func_8002238C (s32 arg0);
-s32 func_80013394 (void);
 void func_80017A08 (s32 arg0, s32 arg1);
 void func_80017A38 (s16 arg0, s16 arg1);
-void func_800132F0 (s32 arg0, s32 arg1, s32 arg2);
 void func_8001FE34 (s32 arg0);
 void func_80011EF0 (s32 arg0);
 void ovl_15_func_8012ED18 (void);

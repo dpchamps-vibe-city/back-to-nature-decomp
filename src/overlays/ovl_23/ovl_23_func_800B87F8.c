@@ -1,4 +1,5 @@
 #include "common.h"
+#include "screen_fade.h"
 
 void ovl_23_func_800BB0E8(void);
 s32 func_8001FABC(s16 arg0);
@@ -7,9 +8,7 @@ void ovl_23_func_800B92E8(void);
 void ovl_23_func_800B8B94(void);
 void ovl_23_func_800B8C18(void);
 void ovl_23_func_800B8FA4(void);
-void func_80013328(s16 arg0);
 void func_8001FE34(s32 arg0);
-s32 func_80013394(void);
 s32 func_8001FE6C(void);
 void func_8001FAE8(s32 arg0);
 s32 func_8001FBBC(s16 arg0);
@@ -84,10 +83,10 @@ void ovl_23_func_800B87F8(void) {
                     ((((struct Ovl23ActorDecisionView *)state)->unk39C + 0x37) << 12)) {
                     if (state->unkC == 0) {
                         state->unkC = 1;
-                        func_80013328(10);
+                        BeginScreenFadeFeedback(10);
                         func_8001FE34(10);
                     } else {
-                        result = func_80013394();
+                        result = IsScreenFadeComplete();
                         if (result == 1) {
                             readyCount += 1;
                         }

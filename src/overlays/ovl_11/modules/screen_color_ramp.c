@@ -2,7 +2,7 @@
  * Persistent screen-color interpolation in ovl_11.
  *
  * This complementary draw/step and target-setting pair shares one RGB/delta/
- * counter layout. The renderer func_8001316C shifts each channel by 12 before
+ * counter layout. DrawScreenSubtractOverlay shifts each channel by 12 before
  * building a full-screen semitransparent quad, establishing the fixed-point
  * units. The caller selects targets from a table and decides when to update;
  * those game-state decisions remain outside this small reconstructed module.
@@ -15,8 +15,7 @@
 
 #include "common.h"
 #include "screen_color_ramp.h"
-
-void func_8001316C(u32 redQ12, u32 greenQ12, u32 blueQ12);
+#include "screen_fade.h"
 
 /* ovl_11:0x800BFF74 */
 void Ovl11DrawAndStepScreenColorRamp(void) {
@@ -24,7 +23,7 @@ void Ovl11DrawAndStepScreenColorRamp(void) {
 
     /* The original tests the sum, not whether any individual channel is set. */
     if ((ramp->rgbQ12[0] + ramp->rgbQ12[1] + ramp->rgbQ12[2]) != 0) {
-        func_8001316C(ramp->rgbQ12[0], ramp->rgbQ12[1], ramp->rgbQ12[2]);
+        DrawScreenSubtractOverlay(ramp->rgbQ12[0], ramp->rgbQ12[1], ramp->rgbQ12[2]);
     }
     if (ramp->durationUpdates > ramp->elapsedUpdates) {
         ramp->elapsedUpdates = ramp->elapsedUpdates + 1;

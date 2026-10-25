@@ -3,8 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "screen_fade.h"
 
-s32 func_80013394(void);
 u32 Rand(s32);
 s32 func_8001FABC(s16);
 void func_8001B2CC(s32, s32);
@@ -36,7 +36,7 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
     s32 first;
     s32 second;
 
-    if (func_80013394() != 0) {
+    if (IsScreenFadeComplete() != 0) {
         if (D_80134B10 < 0) {
             KanjiFntPrint(D_8012E48C);
             D_80134014 = arg0;

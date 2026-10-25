@@ -1,8 +1,8 @@
 #include "common.h"
+#include "screen_fade.h"
 
 void ovl_17_func_800B91B8(void);
 void ovl_17_func_800BA808(s32 arg0);
-void func_8001316C(u32 arg0, u32 arg1, u32 arg2);
 void func_80017A08(s32 arg0, s32 arg1);
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -31,7 +31,7 @@ void ovl_17_func_800B8D88(void) {
     }
     ovl_17_func_800B91B8();
     ovl_17_func_800BA808(0x800000);
-    func_8001316C(0x40, 0x40, 0x40);
+    DrawScreenSubtractOverlay(0x40, 0x40, 0x40);
     func_80017A08(0, (s32)&D_800BB528[mode * 2]);
     func_80022580(boxes, 1, 0x28, 0x30, 0xF4, 0x72);
     func_80017B3C(text, (s32)D_800BB482, 0x3D, 0x32);

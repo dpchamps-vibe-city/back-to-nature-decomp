@@ -15,6 +15,14 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* exe:80012D30/8001328C-80013400 share these GP-relative fade controls. */
+extern s16 gScreenFadeMode;          /* 8005E294: mode 0/1/2/3. */
+extern s32 gScreenFadeSkipUpdate;    /* 8005E298: skip one driver call. */
+extern s16 gScreenFadeBlendMode;     /* 8005E2A0: low two bits select GPU ABR. */
+extern s16 gScreenFadeCounter;       /* 8005E3CC: current update step. */
+extern s16 gScreenFadeDenominator;   /* 8005E3CE: intensity divisor/target. */
+extern s32 gScreenFadeOtSelector;    /* 8005E3D0: frame OT if zero, else scene. */
+
 /* 800BE118: four pairs of 0x1C-byte X/Z bounds, halfword tags and exit X/Z. */
 typedef struct {
     s32 minX;
@@ -2808,15 +2816,16 @@ typedef struct {
 
 extern env_struct_0x134 D_8005E5E8[2];
 
-/* D_8005E644 — array of 0x134-stride render contexts (func_80012D30).
- * Not owned by func_80012D30's TU (absolute lui/addiu base in target); the
- * element stride 0x134 lets &D_8005E644[idx] produce the target's idx*0x134
- * address for PutDispEnv. Also declared char D_8005E3A4 is owned elsewhere
- * (func_80011370 / func_800120C8) and read absolutely here. */
+/* D_8005E644 — array of 0x134-stride render contexts (UpdateAndDrawScreenFade).
+ * Not owned by screen_fade (absolute lui/addiu base in target); the element
+ * stride 0x134 lets &D_8005E644[idx] produce the target's idx*0x134 address
+ * for PutDispEnv. D_8005E3A4 is owned elsewhere (func_80011370 /
+ * func_800120C8) and read absolutely here. */
 extern env_struct_0x134 D_8005E644[];
 extern s32 D_8005E3A4;
 
-/* D_8005E8E0 / D_8005E910 — packet arrays indexed by D_8005E3A4 (func_80012D30).
+/* D_8005E8E0 / D_8005E910 — packet arrays for UpdateAndDrawScreenFade,
+ * indexed by D_8005E3A4.
  * Element strides 0x18 and 0xC. Declared as sized struct arrays so
  * get_inner_reference builds the element address base-first (the target's
  * lui(base) ... addu base+offset order); the .c casts elements to POLY_F4* /
@@ -2831,7 +2840,7 @@ extern packet_0x18 D_8005E8E0[];
 extern packet_0x0C D_8005E910[];
 
 /* D_8005E930 / D_8005E960 — packet arrays indexed by D_8005E3A4
- * (func_8001316C). Same shape as the D_8005E8E0 / D_8005E910 pair:
+ * (DrawScreenSubtractOverlay). Same shape as the D_8005E8E0 / D_8005E910 pair:
  * element strides 0x18 and 0xC; absolute-addressed (lui/addiu base in
  * the target; this TU does not define either symbol). */
 extern packet_0x18 D_8005E930[];
