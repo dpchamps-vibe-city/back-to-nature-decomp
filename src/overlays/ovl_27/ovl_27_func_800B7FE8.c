@@ -3,13 +3,13 @@
 #include "message_window.h"
 #include "random.h"
 #include "state_memory_init.h"
+#include "ovl27_backdrop_sprite_pool.h"
 
 void ovl_27_func_800B7F2C(void);
 void ovl_27_func_800BA914(s32 arg0);
 void ovl_27_func_800BAA34(void);
 void ovl_27_func_800BABD4(void);
 void ovl_27_func_800BAC14(void);
-void ovl_27_func_800BA1CC(void);
 
 void ovl_27_func_800B7FE8(void) {
     u8 *base;
@@ -32,7 +32,7 @@ void ovl_27_func_800B7FE8(void) {
     }
     BeginScreenFadeIncrease(0, 0, 2);
     ResetMessageWindow();
-    ovl_27_func_800BA1CC();
+    Ovl27BeginBackdropStageLoad();
     *(s32 *)(base + 0xC) &= -0x1001;
     *(s32 *)(base + 0x4488) += 1;
 }

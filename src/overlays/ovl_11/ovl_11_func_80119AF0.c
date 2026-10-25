@@ -1,14 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 s16 ovl_11_func_8011D98C(StructD548 arg0);
 
 s32 ovl_11_func_80119AF0(void) {
@@ -27,17 +26,17 @@ s32 ovl_11_func_80119AF0(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
     switch (gOvl11InteractionStep) {
     case 0:
-        ovl_11_func_8011D084(7, 0);
+        Ovl11SetInteractionSteps(7, 0);
         break;
     case 1:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 2:
         params.unk4 = 2;
         params.unk6 = 0xB5;
-        ovl_11_func_8011D084(7, 0);
+        Ovl11SetInteractionSteps(7, 0);
     case 7:
     case 8:
     case 9:
@@ -53,22 +52,22 @@ s32 ovl_11_func_80119AF0(void) {
                 ovl_11_func_800F2354(-ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xB4);
-                ovl_11_func_8011D084(1, 4);
+                Ovl11SetInteractionSteps(1, 4);
             } else {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(1, 2);
+                Ovl11SetInteractionSteps(1, 2);
             }
             break;
         case 3:
-            ovl_11_func_8011D084(3, 0);
+            Ovl11SetInteractionSteps(3, 0);
             break;
         }
         break;
     case 4:
     case 5:
         if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 4, ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) {
-            ovl_11_func_8011D084(3, 0);
+            Ovl11SetInteractionSteps(3, 0);
         }
         break;
     case 3:

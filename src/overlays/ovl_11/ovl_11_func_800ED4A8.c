@@ -25,6 +25,7 @@
 #include "game_flags.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_grouped_value_mapping.h"
+#include "point_projection.h"
 
 typedef struct {
                s16 field_0;
@@ -232,7 +233,6 @@ s32 ovl_11_func_801136D0 (s32 *arg0, u16 *arg1, u16 *arg2);
 void ovl_11_func_8011F52C (void);
 s16 ovl_11_func_80120358 (M2C_93d07a715929_Ovl11SelectArg *arg0);
 void ovl_11_func_80120850 (s32 arg0);
-s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 
 s32 ovl_11_func_800ED4A8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;

@@ -7,12 +7,12 @@
 #include "ovl19_scene_camera_geometry.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "point_projection.h"
 
 
 void ovl_19_func_800BADF8 (s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
 void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
-s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 void func_800248E8 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void ovl_19_func_800BA834(s16 *arg0) {

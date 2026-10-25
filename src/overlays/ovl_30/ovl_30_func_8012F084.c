@@ -62,13 +62,13 @@ void ovl_30_func_8012F084(void) {
         if (temp_v1 & 2) {
             index = &D_80134ADC;
             D_80134AE0 = 0;
-            D_80134B10 = -1;
+            gOvl30RecordMenuSelectedId = -1;
             *index = clamp_selection(*index += 1);
             PlaySoundEffect(4);
         } else if (temp_v1 & 1) {
             temp_v1_2 = --D_80134ADC;
             D_80134AE0 = 0;
-            D_80134B10 = -1;
+            gOvl30RecordMenuSelectedId = -1;
             D_80134ADC = clamp_nonnegative(temp_v1_2);
             PlaySoundEffect(4);
         }

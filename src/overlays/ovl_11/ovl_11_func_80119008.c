@@ -1,5 +1,6 @@
 #include "common.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -9,8 +10,6 @@ s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B784(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 
 s32 ovl_11_func_80119008(void) {
     s32 result;
@@ -24,39 +23,39 @@ s32 ovl_11_func_80119008(void) {
     switch (gOvl11InteractionStep) {
     case 0:
         D_8012D51C = ((struct Ovl11E8C14State *)D_8006C838)->value;
-        ovl_11_func_8011D084(1, 0);
+        Ovl11SetInteractionSteps(1, 0);
     case 1:
         if (((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 & 0x10000000) {
             if (D_8012D51C == 0xA4) {
                 RequestMessageWindow(2, 0xBC);
-                ovl_11_func_8011D084(2, 4);
+                Ovl11SetInteractionSteps(2, 4);
             } else if (ovl_11_func_800D6090((u16)D_8012D51C) == 1) {
                 RequestMessageWindow(2, 0xB6);
                 SetMessagePortraitEnabled(0);
-                ovl_11_func_8011D084(3, 5);
+                Ovl11SetInteractionSteps(3, 5);
             } else {
                 RequestMessageWindow(2, 0xB9);
-                ovl_11_func_8011D084(2, 4);
+                Ovl11SetInteractionSteps(2, 4);
             }
         } else {
             RequestMessageWindow(2, 0xB8);
-            ovl_11_func_8011D084(2, 4);
+            Ovl11SetInteractionSteps(2, 4);
         }
         break;
     case 2:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 3:
         if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 5:
         gOvl11InteractionDrawMode = 2;
-        ovl_11_func_8011D084(6, 0);
+        Ovl11SetInteractionSteps(6, 0);
         ovl_11_func_80118B84(0, -1, 0);
     case 6:
         switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
@@ -66,17 +65,17 @@ s32 ovl_11_func_80119008(void) {
             if (ovl_11_func_8011D06C(price) == 1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xBB);
-                ovl_11_func_8011D084(2, 7);
+                Ovl11SetInteractionSteps(2, 7);
             } else {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(2, 4);
+                Ovl11SetInteractionSteps(2, 4);
             }
             break;
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(2, 0xB7);
-            ovl_11_func_8011D084(2, 4);
+            Ovl11SetInteractionSteps(2, 4);
             break;
         }
         break;
@@ -84,17 +83,17 @@ s32 ovl_11_func_80119008(void) {
         gOvl11InteractionDrawMode = 0;
         ovl_11_func_800F2354(-price, 1);
         ovl_11_func_800E6EE0(D_8012D51C, 1, 0, 1);
-        ovl_11_func_8011D084(8, 4);
+        Ovl11SetInteractionSteps(8, 4);
         break;
     case 8:
         if (((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 & 0x4000000) {
-            ovl_11_func_8011D084(10, 0);
+            Ovl11SetInteractionSteps(10, 0);
         }
         break;
     case 10:
     case 11:
         if (ovl_11_func_8011B784(&gOvl11InteractionStep, 10, D_8012D51C)) {
-            ovl_11_func_8011D084(4, 0);
+            Ovl11SetInteractionSteps(4, 0);
         }
         break;
     case 4:

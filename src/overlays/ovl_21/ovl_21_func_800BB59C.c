@@ -34,6 +34,7 @@
 #include "ovl11_coordinate_clamp.h"
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
+#include "message_buffer_access.h"
 
 typedef struct {
                s16 unk0;
@@ -59,10 +60,8 @@ void SystemError (char, long);
 void *memmove (unsigned char *, const unsigned char *, int);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-s32 *func_80021FE4 (void);
 s16 GetMessageWindowArchiveId (void);
 void func_800179E8 (void);
-void func_80022008 (void);
 void ovl_11_func_800BD160 (void);
 void ovl_11_func_800BD168 (void);
 void ovl_11_func_800CD0C0 (s32 *arg0);
@@ -75,7 +74,7 @@ s32 ovl_11_func_800E39B8 (s32 *arg0, u32 arg1);
 void ovl_11_func_800E5230 (void);
 void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800E3978 (s32 arg0);
-s32 ovl_11_func_800EEBC8 (void);
+s32 ovl_11_func_800EEBC8(s32 unused0, s32 unused1, s32 unused2, s32 unused3);
 void ovl_11_func_800E54C8 (void);
 s32 ovl_11_func_800E4AEC (s32 arg0);
 s32 ovl_11_func_800E4C30 (s32 arg0);

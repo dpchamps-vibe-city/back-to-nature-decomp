@@ -1,6 +1,10 @@
 #include "common.h"
 #include "psyq/libapi.h"
 #include "cd_loader.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "message_buffer_access.h"
 
 /* GP-relative CD table state reached GP-relatively by this TU.
  * Tentative definitions merged via -fcommon with sibling definitions. */
@@ -8,11 +12,6 @@ u32 D_8005E440;
 u32 D_8005E45C;
 s16 D_8005E460;
 u32 D_8005E46C;
-
-/* Callee prototypes as the original caller TU saw them. func_80014CBC took
- * plain words for arg4/arg5 (sw into the outgoing area), the same ABI
- * placement as the 4-byte aggregate ReadFlag parameters in its definition. */
-s32 *func_80021FE4(void);
 
 void func_8001A018(s32 arg0, s32 arg1) {
     s32 slot;
@@ -30,7 +29,7 @@ void func_8001A018(s32 arg0, s32 arg1) {
     if (arg1 != 0 && D_8005E45C != 0) {
         goto retry;
     }
-    if (func_80021FE4() == NULL) {
+    if (GetAvailableMessageReadBuffer() == NULL) {
         SystemError(0x54, 0);
     }
     CdReadArchiveBytes(1, offset, 0x1800, (u8 *)&gMessageWindowReadBuffer, 1, 1);

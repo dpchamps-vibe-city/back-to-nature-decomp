@@ -9,13 +9,13 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "point_projection.h"
 
 s32 ovl_11_func_800F5888(u16 *position, s32 *screen);
 s32 ovl_11_func_800D2950(s32 objectId);
 void ovl_11_func_80107E2C(u8 *part, s32 ot, s16 x, s16 y);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
-s32 func_8001DFD4(s32 *screen, SVECTOR *position);
 s32 func_80015DD4(s32 *arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3,
                  s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 void ovl_11_func_800C9E90(s32 ot, s32 x, s32 y, s32 variant);
@@ -43,7 +43,7 @@ void Ovl11DrawObjectWithMarker(u8 *object) {
                 gOvl11ObjectDrawPosition[1] = -0x64;
                 gOvl11ObjectDrawPosition[2] = *(u16 *)(object + 0x40) - 0x96;
                 ot = gActiveRenderContext->field_120 +
-                    ((func_8001DFD4(gOvl11ObjectDrawMarkerScreen, (SVECTOR *)gOvl11ObjectDrawPosition) >> 2) * 4);
+                    ((ProjectPointToScreen(gOvl11ObjectDrawMarkerScreen, (SVECTOR *)gOvl11ObjectDrawPosition) >> 2) * 4);
             } else {
                 gOvl11ObjectDrawMarkerScreen[0] = screen[0];
                 gOvl11ObjectDrawMarkerScreen[1] = screen[1];
@@ -99,7 +99,7 @@ void Ovl11DrawObjectWithSourceOffsets(u8 *object, s32 textureBase, s32 sourceBia
                 gOvl11OffsetObjectDrawPosition[1] = -0x64;
                 gOvl11OffsetObjectDrawPosition[2] = *(u16 *)(object + 0x40) - 0x96;
                 ot = gActiveRenderContext->field_120 +
-                    ((func_8001DFD4(gOvl11OffsetObjectDrawMarkerScreen, (SVECTOR *)gOvl11OffsetObjectDrawPosition) >> 2) * 4);
+                    ((ProjectPointToScreen(gOvl11OffsetObjectDrawMarkerScreen, (SVECTOR *)gOvl11OffsetObjectDrawPosition) >> 2) * 4);
             } else {
                 gOvl11OffsetObjectDrawMarkerScreen[0] = screen[0];
                 gOvl11OffsetObjectDrawMarkerScreen[1] = screen[1];

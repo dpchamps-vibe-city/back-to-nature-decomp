@@ -178,9 +178,7 @@ segments:
       - [0xE4B0, c, func_8001DCB0]       # 0x8001DCB0 func_8001DCB0
       - [0xE64C, c, func_8001DE4C]       # 0x8001DE4C func_8001DE4C
       - [0xE7C8, c, GetVal8005E2E4]       # 0x8001DFC8 GetVal8005E2E4
-      - [0xE7D4, c, func_8001DFD4]       # 0x8001DFD4 func_8001DFD4
-      - [0xE84C, c, func_8001E04C]       # 0x8001E04C func_8001E04C
-      - [0xE888, c, func_8001E088]       # 0x8001E088 func_8001E088
+      - [0xE7D4, c, modules/point_projection]
       - [0xE8B8, c, modules/render_packet_pool]
       - [0xEA6C, c, func_8001E26C]       # 0x8001E26C func_8001E26C
       - [0xEB34, c, SetVal8005E51C]       # 0x8001E334 SetVal8005E51C
@@ -216,8 +214,7 @@ segments:
       - [0x125A0, c, func_80021DA0]       # 0x80021DA0 func_80021DA0
       - [0x125A8, c, modules/state_memory_init]
       - [0x127D0, c, func_80021FD0]       # 0x80021FD0 func_80021FD0
-      - [0x127E4, c, func_80021FE4]       # 0x80021FE4 func_80021FE4
-      - [0x12808, c, func_80022008]       # 0x80022008 func_80022008
+      - [0x127E4, c, modules/message_buffer_access]
       - [0x12814, c, modules/card_deal]
       - [0x12B8C, c, modules/sprite_grid]
       - [0x12D80, c, func_80022580]       # 0x80022580 func_80022580

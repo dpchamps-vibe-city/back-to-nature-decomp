@@ -1,5 +1,6 @@
 #include "common.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800CB850(s32 arg0);
@@ -8,8 +9,6 @@ s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s16 ovl_11_func_80115F38(void);
 s32 ovl_11_func_80115F80(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 
 s32 ovl_11_func_80115CAC(void) {
     s32 result;
@@ -22,12 +21,12 @@ s32 ovl_11_func_80115CAC(void) {
     id = ((struct Ovl11E8C14State *)D_8006C838)->value;
     switch (gOvl11InteractionStep) {
     case 0:
-        ovl_11_func_8011D084(1, 0);
+        Ovl11SetInteractionSteps(1, 0);
         break;
     case 1:
         if (id == 0x10A) {
             RequestMessageWindow(2, 0x5C);
-            ovl_11_func_8011D084(5, 7);
+            Ovl11SetInteractionSteps(5, 7);
         } else if (id == 0x109) {
             SetMessagePortraitEnabled(0);
             if (ovl_11_func_80115F80() == 1) {
@@ -35,7 +34,7 @@ s32 ovl_11_func_80115CAC(void) {
             } else {
                 RequestMessageWindow(2, 0x60);
             }
-            ovl_11_func_8011D084(6, 2);
+            Ovl11SetInteractionSteps(6, 2);
         }
         break;
     case 2:
@@ -51,33 +50,33 @@ s32 ovl_11_func_80115CAC(void) {
                 ovl_11_func_800F2354(500, 1);
             }
             ovl_11_func_800E2904((s32)((u8 *)&D_800742EC + ovl_11_func_80115F38() * 0xB4));
-            ovl_11_func_8011D084(5, 3);
+            Ovl11SetInteractionSteps(5, 3);
             break;
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(2, 0x5B);
-            ovl_11_func_8011D084(5, 7);
+            Ovl11SetInteractionSteps(5, 7);
             break;
         }
         break;
     case 3:
         ovl_11_func_800CB850(0);
-        ovl_11_func_8011D084(4, 0);
+        Ovl11SetInteractionSteps(4, 0);
         break;
     case 4:
         if (!(((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 & 0x10000)) {
-            ovl_11_func_8011D084(7, 0);
+            Ovl11SetInteractionSteps(7, 0);
         }
         break;
     case 5:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 6:
         if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 7:

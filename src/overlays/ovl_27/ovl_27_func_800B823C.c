@@ -10,6 +10,7 @@
 #include "sound_commands.h"
 #include "sprite_upload.h"
 #include "sprite_render.h"
+#include "ovl27_backdrop_sprite_pool.h"
 
 
 short SsSeqOpen (unsigned long *, short);
@@ -17,7 +18,6 @@ void SsSetMono (void);
 void SsSetStereo (void);
 void SsStart (void);
 void SsUtReverbOn (void);
-void ovl_27_func_800B9324 (void);
 void ovl_27_func_800BA5BC (void);
 s32 ovl_27_func_800BA620 (void);
 void ovl_27_func_800BA750 (void);
@@ -36,7 +36,7 @@ void ovl_27_func_800B823C(void) {
     Ovl27StateCounterView *state;
 
     if (!(D_800C4A28 & 0x4000)) {
-        ovl_27_func_800B9324();
+        Ovl27DrawBackdropAnim30();
     }
     switch (D_800C4A18) {
     case 0:

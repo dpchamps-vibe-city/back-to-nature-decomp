@@ -5,6 +5,7 @@
 
 #include "selected_threshold_interaction.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 Ovl11CanApplySelectedThreshold(StructD548 *arg0);
@@ -12,8 +13,6 @@ void Ovl11ApplySelectedThreshold(StructD548 *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 
 s32 Ovl11UpdateThresholdInteraction(void) {
     Ovl11D8012D7B8 params;
@@ -30,7 +29,7 @@ s32 Ovl11UpdateThresholdInteraction(void) {
     switch (gOvl11InteractionStep) {
     case 0:
         gOvl11InteractionDrawMode = 7;
-        ovl_11_func_8011D084(1, 0);
+        Ovl11SetInteractionSteps(1, 0);
         params.unk4 = -1;
         break;
     case 1:
@@ -45,15 +44,15 @@ s32 Ovl11UpdateThresholdInteraction(void) {
             break;
         case 3:
             RequestMessageWindow(1, 0x447);
-            ovl_11_func_8011D084(9, 11);
+            Ovl11SetInteractionSteps(9, 11);
             break;
         case 1:
             if (Ovl11CanApplySelectedThreshold((StructD548 *)gOvl11PrimarySelectionRecord) == 1) {
                 RequestMessageWindow(1, 0x449);
-                ovl_11_func_8011D084(10, 8);
+                Ovl11SetInteractionSteps(10, 8);
             } else {
                 RequestMessageWindow(1, 0x44A);
-                ovl_11_func_8011D084(9, 0);
+                Ovl11SetInteractionSteps(9, 0);
             }
             break;
         case 2:
@@ -72,19 +71,19 @@ s32 Ovl11UpdateThresholdInteraction(void) {
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(1, 0x447);
-            ovl_11_func_8011D084(9, 0);
+            Ovl11SetInteractionSteps(9, 0);
             break;
         }
         break;
     case 10:
         if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 9:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 11:
@@ -93,7 +92,7 @@ s32 Ovl11UpdateThresholdInteraction(void) {
     case 12:
     case 13:
         if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 12, ((StructD548 *)gOvl11PrimarySelectionRecord)->data[((StructD548 *)gOvl11PrimarySelectionRecord)->index])) {
-            ovl_11_func_8011D084(11, 0);
+            Ovl11SetInteractionSteps(11, 0);
         }
         break;
     }
@@ -126,11 +125,11 @@ void Ovl11ApplySelectedThreshold(StructD548 *record) {
     if (selection == 0) {
         ((Ovl11SelectedThresholdState *)D_8006C838)->flags |= 0x10;
         ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11SelectedThresholdState *)D_8006C838)->object, 0x67, 2);
-        ovl_11_func_8011D084(9, 0xB);
+        Ovl11SetInteractionSteps(9, 0xB);
     } else if (selection == 1) {
         ovl_11_func_800F3898(3, 0x1F4);
-        ovl_11_func_8011D084(9, 0xB);
+        Ovl11SetInteractionSteps(9, 0xB);
     } else {
-        ovl_11_func_8011D084(9, 0xC);
+        Ovl11SetInteractionSteps(9, 0xC);
     }
 }

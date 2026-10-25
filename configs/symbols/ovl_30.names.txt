@@ -26,3 +26,17 @@ gOvl30ItemLifeFormat = 0x8012EF54; // type:data size:0xC
 gOvl30ItemTiredFormat = 0x8012EF60; // type:data size:0xC
 gOvl30ToolIndexFormat = 0x8012EF90; // type:data size:0xC
 gOvl30ToolParameterFormat = 0x8012EF9C; // type:data size:0xC
+
+// Descriptor-driven value/flag widgets and their shared wrapping field editor.
+Ovl30DrawAndEditValueMenu = 0x80133454; // type:func
+Ovl30StepFieldValue = 0x80133974; // type:func
+Ovl30DrawAndEditFlagMenu = 0x80133A8C; // type:func
+gOvl30RecordMenuCursor = 0x80134014; // type:data size:0x4
+gOvl30RecordMenuSelectedId = 0x80134B10; // type:data size:0x4
+gOvl30RowKindMarkers = 0x8012EFB0; // type:data size:0x8
+gOvl30HeaderRowFormat = 0x8012EFB8; // type:data size:0x18
+gOvl30CursorRowMarker = 0x8012EFD0; // type:data size:0x4
+gOvl30IdleRowMarker = 0x8012EFD4; // type:data size:0x4
+gOvl30ValueRowFormat = 0x8012EFD8; // type:data size:0x10
+// Newline plus two unexplained original bytes; preserve the full word.
+gOvl30MenuBlankLine = 0x8012EFE8; // type:data size:0x4

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -9,8 +10,6 @@ void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 
 s32 ovl_11_func_80118CE4(void) {
     s32 result;
@@ -21,39 +20,39 @@ s32 ovl_11_func_80118CE4(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
     switch (gOvl11InteractionStep) {
     case 0:
-        ovl_11_func_8011D084(9, 0);
+        Ovl11SetInteractionSteps(9, 0);
         ovl_11_func_800F45A4(0x84, 0);
         break;
     case 9:
     case 10:
         if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 9, 0x6C)) {
-            ovl_11_func_8011D084(1, 0);
+            Ovl11SetInteractionSteps(1, 0);
         }
         break;
     case 1:
         if (((Ovl11FB908State *)D_8006C838)->field_4506 >= 999) {
             RequestMessageWindow(2, 0xD1);
-            ovl_11_func_8011D084(2, 7);
+            Ovl11SetInteractionSteps(2, 7);
         } else {
             RequestMessageWindow(2, 0xD0);
-            ovl_11_func_8011D084(2, 4);
+            Ovl11SetInteractionSteps(2, 4);
         }
         break;
     case 2:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 3:
         if (GetMessageWindowStatus() == 5) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 4:
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
-        ovl_11_func_8011D084(3, 5);
+        Ovl11SetInteractionSteps(3, 5);
         break;
     case 5:
         gOvl11InteractionDrawMode = 1;
@@ -65,27 +64,27 @@ s32 ovl_11_func_80118CE4(void) {
                 if (gOvl11QuantityPrompt.unk8 + ((Ovl11FB908State *)D_8006C838)->field_4506 >= 1000) {
                     CloseMessageWindow();
                     RequestMessageWindow(2, 0xD2);
-                    ovl_11_func_8011D084(2, 4);
+                    Ovl11SetInteractionSteps(2, 4);
                 } else {
                     CloseMessageWindow();
                     RequestMessageWindow(2, 0xD3);
-                    ovl_11_func_8011D084(2, 6);
+                    Ovl11SetInteractionSteps(2, 6);
                 }
             } else {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(2, 4);
+                Ovl11SetInteractionSteps(2, 4);
             }
             break;
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(2, 0x25B);
-            ovl_11_func_8011D084(2, 4);
+            Ovl11SetInteractionSteps(2, 4);
             break;
         case 3:
             CloseMessageWindow();
             RequestMessageWindow(2, 0xBA);
-            ovl_11_func_8011D084(2, 7);
+            Ovl11SetInteractionSteps(2, 7);
             break;
         }
         break;
@@ -95,7 +94,7 @@ s32 ovl_11_func_80118CE4(void) {
     case 7:
         ovl_11_func_800F45A4(0x84, 1);
         ovl_11_func_800E6EE0(0x6C, 1, 0, 1);
-        ovl_11_func_8011D084(8, 0);
+        Ovl11SetInteractionSteps(8, 0);
         break;
     case 8:
         ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 &= ~0x800000;

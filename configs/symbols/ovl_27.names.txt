@@ -1,0 +1,19 @@
+// Backdrop staging/pool and fixed animation draws, original ovl_27 identities.
+Ovl27DrawBackdropAnim30 = 0x800B9324; // type:func
+Ovl27DrawBackdropAnim32 = 0x800B9368; // type:func
+Ovl27DrawBackdropAnim31 = 0x800B93B4; // type:func
+Ovl27DrawBackdropAnim33 = 0x800B9400; // type:func
+Ovl27DrawTiledBackdrop = 0x800B944C; // type:func
+Ovl27UpdateEffectSlot0 = 0x800B998C; // type:func
+Ovl27UpdateEffectSlot1 = 0x800B9A8C; // type:func
+Ovl27UpdateEffectSlot2 = 0x800B9B98; // type:func
+Ovl27UpdateEffectSlots3To5 = 0x800B9C84; // type:func
+Ovl27UpdateEffectSlot3 = 0x800B9CB4; // type:func
+Ovl27UpdateEffectSlot4 = 0x800B9DBC; // type:func
+Ovl27UpdateEffectSlot5 = 0x800B9EEC; // type:func
+Ovl27DrawBackdropAnim36 = 0x800B9FF4; // type:func
+Ovl27DrawBackdropAnim34 = 0x800BA0A8; // type:func
+Ovl27DrawBackdropAnim35 = 0x800BA0EC; // type:func
+Ovl27DrawTextBankLabel = 0x800BA130; // type:func
+Ovl27BeginBackdropStageLoad = 0x800BA1CC; // type:func
+Ovl27PollBackdropSpritePoolLoad = 0x800BA230; // type:func

@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -9,8 +10,6 @@ s32 ovl_11_func_8011B2B0(void);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 s16 ovl_11_func_8011D98C(StructD548 arg0);
 s16 ovl_11_func_8011D9DC(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode);
@@ -44,17 +43,17 @@ s32 ovl_11_func_80119DF8(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
     switch (gOvl11InteractionStep) {
     case 0:
-        ovl_11_func_8011D084(6, 0);
+        Ovl11SetInteractionSteps(6, 0);
         break;
     case 1:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 2:
         first.unk4 = -1;
         first.unk6 = 0xB5;
-        ovl_11_func_8011D084(6, 0);
+        Ovl11SetInteractionSteps(6, 0);
     case 6:
     case 7:
     case 8:
@@ -69,32 +68,32 @@ s32 ovl_11_func_80119DF8(void) {
             switch (((StructD548 *)gOvl11PrimarySelectionRecord)->index) {
             case 0:
                 RequestMessageWindow(2, 0x87);
-                ovl_11_func_8011D084(1, 2);
+                Ovl11SetInteractionSteps(1, 2);
                 break;
             case 1:
             case 2:
             case 3:
             case 4:
-                ovl_11_func_8011D084(20, 0);
+                Ovl11SetInteractionSteps(20, 0);
                 break;
             case 5:
                 if (flags & 0x1C0000) {
-                    ovl_11_func_8011D084(13, 0);
+                    Ovl11SetInteractionSteps(13, 0);
                 } else {
                     RequestMessageWindow(2, 0xAD);
-                    ovl_11_func_8011D084(1, 2);
+                    Ovl11SetInteractionSteps(1, 2);
                 }
                 break;
             }
             break;
         case 3:
-            ovl_11_func_8011D084(4, 0);
+            Ovl11SetInteractionSteps(4, 0);
             break;
         }
         break;
     case 3:
         RequestMessageWindow(2, 0xAF);
-        ovl_11_func_8011D084(1, 13);
+        Ovl11SetInteractionSteps(1, 13);
         break;
     case 13:
     case 14:
@@ -110,20 +109,20 @@ s32 ovl_11_func_80119DF8(void) {
             if (ovl_11_func_8011D9DC(item, 1) == 0) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
-                ovl_11_func_8011D084(1, 3);
+                Ovl11SetInteractionSteps(1, 3);
             } else if (ovl_11_func_8011D06C(price) == 1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xAE);
-                ovl_11_func_8011D084(1, 5);
+                Ovl11SetInteractionSteps(1, 5);
             } else {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(1, 3);
+                Ovl11SetInteractionSteps(1, 3);
             }
             break;
         case 3:
             gOvl11InteractionDrawMode = 4;
-            ovl_11_func_8011D084(2, 0);
+            Ovl11SetInteractionSteps(2, 0);
             break;
         }
         break;
@@ -152,12 +151,12 @@ s32 ovl_11_func_80119DF8(void) {
         case 0:
             break;
         case 1:
-            ovl_11_func_8011D084(4, 0);
+            Ovl11SetInteractionSteps(4, 0);
             break;
         case 3:
             gOvl11InteractionDrawMode = 4;
             RequestMessageWindow(2, 0x91);
-            ovl_11_func_8011D084(1, 2);
+            Ovl11SetInteractionSteps(1, 2);
             break;
         }
         break;
@@ -168,7 +167,7 @@ s32 ovl_11_func_80119DF8(void) {
         ovl_11_func_8011B2B0();
         gOvl11InteractionDrawMode = 4;
         RequestMessageWindow(2, 0x91);
-        ovl_11_func_8011D084(1, 2);
+        Ovl11SetInteractionSteps(1, 2);
         break;
     case 4:
         ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 &= ~0x800000;

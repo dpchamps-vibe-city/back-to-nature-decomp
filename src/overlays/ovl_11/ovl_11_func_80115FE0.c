@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "screen_fade.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -11,8 +12,6 @@ s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 s16 ovl_11_func_8011D98C(StructD548 x);
 
 s32 ovl_11_func_80115FE0(void) {
@@ -40,11 +39,11 @@ s32 ovl_11_func_80115FE0(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
     switch (gOvl11InteractionStep) {
     case 0:
-        ovl_11_func_8011D084(2, 0);
+        Ovl11SetInteractionSteps(2, 0);
         break;
     case 1:
         first.unk4 = -1;
-        ovl_11_func_8011D084(2, 0);
+        Ovl11SetInteractionSteps(2, 0);
     case 2:
     case 3:
     case 4:
@@ -56,17 +55,17 @@ s32 ovl_11_func_80115FE0(void) {
         case 0:
             break;
         case 3:
-            ovl_11_func_8011D084(0x1A, 0);
+            Ovl11SetInteractionSteps(0x1A, 0);
             break;
         case 1:
             switch (((StructD548 *)gOvl11PrimarySelectionRecord)->index) {
             case 0:
                 SetMessagePortraitEnabled(0);
                 RequestMessageWindow(2, 0xE5);
-                ovl_11_func_8011D084(0x19, 9);
+                Ovl11SetInteractionSteps(0x19, 9);
                 break;
             case 1:
-                ovl_11_func_8011D084(0x10, 0);
+                Ovl11SetInteractionSteps(0x10, 0);
                 break;
             }
             break;
@@ -83,46 +82,46 @@ s32 ovl_11_func_80115FE0(void) {
             if (ovl_11_func_8011D06C(10) == 1) {
                 ovl_11_func_800F2354(-10, 1);
                 RequestMessageWindow(2, 0xE7);
-                ovl_11_func_8011D084(0x18, 10);
+                Ovl11SetInteractionSteps(0x18, 10);
             } else {
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(0x18, 1);
+                Ovl11SetInteractionSteps(0x18, 1);
             }
             break;
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(2, 0xE8);
-            ovl_11_func_8011D084(0x18, 1);
+            Ovl11SetInteractionSteps(0x18, 1);
             break;
         }
         break;
     case 10:
         BeginScreenFadeIncrease(20, 1, 2);
-        ovl_11_func_8011D084(11, 0);
+        Ovl11SetInteractionSteps(11, 0);
         break;
     case 11:
         if (IsScreenFadeComplete() == 1) {
             RequestMessageWindow(2, 0xE9);
-            ovl_11_func_8011D084(0x18, 12);
+            Ovl11SetInteractionSteps(0x18, 12);
         }
         break;
     case 12:
         BeginScreenFadeDecrease(20, 1, 2);
-        ovl_11_func_8011D084(13, 0);
+        Ovl11SetInteractionSteps(13, 0);
         break;
     case 13:
         if (IsScreenFadeComplete() == 1) {
             RequestMessageWindow(2, 0xEA);
-            ovl_11_func_8011D084(0x18, 14);
+            Ovl11SetInteractionSteps(0x18, 14);
         }
         break;
     case 14:
         RequestMessageWindow(2, ovl_11_func_801164F8());
-        ovl_11_func_8011D084(0x18, 0x1A);
+        Ovl11SetInteractionSteps(0x18, 0x1A);
         break;
     case 15:
         second.unk4 = -1;
-        ovl_11_func_8011D084(0x10, 0);
+        Ovl11SetInteractionSteps(0x10, 0);
     case 16:
     case 17:
     case 18:
@@ -135,16 +134,16 @@ s32 ovl_11_func_80115FE0(void) {
             break;
         case 3:
             second.unk8 = -1;
-            ovl_11_func_8011D084(1, 0);
+            Ovl11SetInteractionSteps(1, 0);
             break;
         case 1:
             if (ovl_11_func_8011D06C(price) == 1) {
                 ovl_11_func_800F2354(-price, 1);
                 RequestMessageWindow(2, 0xFB);
-                ovl_11_func_8011D084(0x18, 0x1B);
+                Ovl11SetInteractionSteps(0x18, 0x1B);
             } else {
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(0x18, 0x17);
+                Ovl11SetInteractionSteps(0x18, 0x17);
             }
             break;
         case 2:
@@ -153,17 +152,17 @@ s32 ovl_11_func_80115FE0(void) {
         break;
     case 23:
         RequestMessageWindow(2, 0xFC);
-        ovl_11_func_8011D084(0x18, 1);
+        Ovl11SetInteractionSteps(0x18, 1);
         break;
     case 25:
         if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 24:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 26:
@@ -172,7 +171,7 @@ s32 ovl_11_func_80115FE0(void) {
     case 27:
     case 28:
         if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 27, ((StructD548 *)gOvl11SecondarySelectionRecord)->data[((StructD548 *)gOvl11SecondarySelectionRecord)->index])) {
-            ovl_11_func_8011D084(26, 0);
+            Ovl11SetInteractionSteps(26, 0);
         }
         break;
     }

@@ -6,8 +6,7 @@
 #include "gte_transform.h"
 #include "projected_primitives.h"
 #include "ovl11_vertex_blend.h"
-
-s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
+#include "point_projection.h"
 
 void ovl_11_func_800DCC5C(void) {
     MATRIX matrix;
@@ -33,7 +32,7 @@ void ovl_11_func_800DCC5C(void) {
             PushMatrix();
             CaptureGteTransform();
             matrix = GsIDMATRIX;
-            if (((*(u16 *) ((u8 *) var_s0 + 0x28)) & 0x80) || ((D_80128DF8[0] = (s16) (*(u16 *) ((u8 *) var_s0 + 8)), D_80128DF8[1] = (s16) (*(u16 *) ((u8 *) var_s0 + 0xA)), D_80128DF8[2] = (s16) (*(u16 *) ((u8 *) var_s0 + 0xC)), func_8001DFD4(D_80128E00, (SVECTOR *)D_80128DF8), (((u32) (D_80128E00[0] + 0x64) < 0x209U) != 0)) && (D_80128E00[1] < 0x155) && (D_80128E00[1] >= -0x64))) {
+            if (((*(u16 *) ((u8 *) var_s0 + 0x28)) & 0x80) || ((D_80128DF8[0] = (s16) (*(u16 *) ((u8 *) var_s0 + 8)), D_80128DF8[1] = (s16) (*(u16 *) ((u8 *) var_s0 + 0xA)), D_80128DF8[2] = (s16) (*(u16 *) ((u8 *) var_s0 + 0xC)), ProjectPointToScreen(D_80128E00, (SVECTOR *)D_80128DF8), (((u32) (D_80128E00[0] + 0x64) < 0x209U) != 0)) && (D_80128E00[1] < 0x155) && (D_80128E00[1] >= -0x64))) {
                 translation.vx = (s16) (*(u16 *) ((u8 *) var_s0 + 8));
                 translation.vy = (s16) (*(u16 *) ((u8 *) var_s0 + 0xA));
                 translation.vz = (s16) (*(u16 *) ((u8 *) var_s0 + 0xC));

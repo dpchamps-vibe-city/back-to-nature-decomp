@@ -6,12 +6,11 @@
 #include "psyq/libcd.h"
 #include "psyq/memory.h"
 #include "sprite_render.h"
+#include "point_projection.h"
 
 extern s16 D_8012DB18;
 extern SVECTOR D_8012DB20;
 extern s32 D_8012DB28[4];
-
-s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 
 void ovl_11_func_80120850(s32 arg0) {
     s32 temp_v1;
@@ -39,7 +38,7 @@ void ovl_11_func_80120850(s32 arg0) {
     D_8012DB20.vx = D_8012DB78.x + 0x96;
     D_8012DB20.vy = D_8012DB78.y - 0x64;
     D_8012DB20.vz = D_8012DB78.z - 0x96;
-    temp_v0 = func_8001DFD4(&D_8012DB28[0], &D_8012DB20);
+    temp_v0 = ProjectPointToScreen(&D_8012DB28[0], &D_8012DB20);
     if (temp_v0 != 0) {
         if (arg0 != 0) {
             D_8012DB88 += 1;

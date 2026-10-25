@@ -5,6 +5,7 @@
 #include "psyq/libgpu.h"
 #include "packet_work.h"
 #include "vblank_timer.h"
+#include "message_buffer_access.h"
 
 /* Callee prototypes (project convention: local declarations). */
 u16 *func_800191B4(u16 *, u16, s32, s32);
@@ -25,7 +26,6 @@ s32 func_8001A284(s32);
 void func_8001A11C(void);
 void func_8001A19C(void);
 void func_80017ACC(void);
-void func_80022008(void);
 
 /* TU-owned globals (GP-relative — tentative definitions). */
 s32 D_8005E2BC;
@@ -165,7 +165,7 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
         }
         goto mainbody;
     case 2:
-        func_80022008();
+        ClearMessageReadBufferBusy();
         if (input8 & 0x60) {
             status = 5;
             if (D_8005E44E == 2) {

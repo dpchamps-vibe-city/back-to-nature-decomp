@@ -23,6 +23,7 @@
 #include "sprite_upload.h"
 #include "sprite_render.h"
 #include "game_flags.h"
+#include "message_buffer_access.h"
 
 /* Tentative definitions retain the original $gp ownership. The saved flag-3
  * word is stored whole but only its low halfword is restored. The archive
@@ -50,7 +51,6 @@ s32 AnimateMessageWindowRect(s32 packet, s32 unused, s16 x, s16 y,
 void SetVal8005E2BC(s32 value);
 void func_80022580(u32 *packet, s32 style, s32 x, s32 y, s16 width, s16 height);
 void func_800179E8(void);
-void func_80022008(void);
 void func_80017A38(s16 x, s16 y);
 u32 func_80017A64(void);
 void func_80017A48(u32 mode);
@@ -269,7 +269,7 @@ s32 PollMessageWindowRead(void) {
         ((u8 *)&gMessageWindowReadBuffer)[-0xC] = nextPhase;
         InitSpriteSourceData((SpriteSourceData *)&gMessagePortraitSource,
             (SpriteDataHeader *)&gSharedSpriteData);
-        func_80022008();
+        ClearMessageReadBufferBusy();
     }
     return 0;
 }

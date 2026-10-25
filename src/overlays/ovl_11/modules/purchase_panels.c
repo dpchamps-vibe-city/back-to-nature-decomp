@@ -20,6 +20,7 @@
 #include "message_window.h"
 #include "ovl11_purchase_panels.h"
 #include "game_flags.h"
+#include "ovl11_interaction_steps.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
 
@@ -493,8 +494,6 @@ s32 Ovl11FindFirstUnsetResourceOption(void) {
 }
 
 s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1);
-void ovl_11_func_8011D098(s32 arg0, s32 arg1, s32 arg2);
-void ovl_11_func_8011D0B4(void);
 s16 ovl_11_func_8011D98C(StructD548 x);
 s16 ovl_11_func_8011D9B4(StructD548 x);
 void ovl_11_func_8011DD48(ovl_11_DD48_arg0 *arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4);
@@ -515,16 +514,16 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
     result = 0;
     switch (*step - baseStep) {
     case 0:
-        ovl_11_func_8011D098(3, 0, baseStep);
+        Ovl11SetInteractionStepsOffset(3, 0, baseStep);
         break;
     case 1:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 2:
         if (GetMessageWindowStatus() == 5) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 3:
@@ -534,7 +533,7 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
         ovl_11_func_8011DD48(prompt, (s32)(D_80051DBE + gTextBankOffsets[1]), 1,
             (s16)ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*record)), 0);
         gOvl11InteractionDrawMode = drawMode;
-        ovl_11_func_8011D098(2, 4, baseStep);
+        Ovl11SetInteractionStepsOffset(2, 4, baseStep);
         break;
     case 4:
         switch (ovl_11_func_8011CF40(0x3E7, (u16 *)&prompt->field_8)) {
@@ -547,12 +546,12 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(2, ovl_11_func_8011D9B4(*record));
-            ovl_11_func_8011D098(1, 3, baseStep);
+            Ovl11SetInteractionStepsOffset(1, 3, baseStep);
             break;
         case 3:
             CloseMessageWindow();
             RequestMessageWindow(descriptor.field_C, descriptor.field_E);
-            ovl_11_func_8011D098(1, 5, baseStep);
+            Ovl11SetInteractionStepsOffset(1, 5, baseStep);
             break;
         }
         break;

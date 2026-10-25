@@ -4,17 +4,16 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
-
-void ovl_30_func_80133A8C(Ovl30FlagMenuEntry *arg0, s32 arg1);
+#include "ovl30_record_menus.h"
 
 s32 ovl_30_func_80132660(s32 arg0) {
     s32 result;
 
     if (IsScreenFadeComplete() != 0) {
         KanjiFntPrint(D_8012EEB8);
-        D_80134014 = arg0;
-        ovl_30_func_80133A8C(&D_801349B8, 0xC);
-        result = D_80134014;
+        gOvl30RecordMenuCursor = arg0;
+        Ovl30DrawAndEditFlagMenu(&D_801349B8, 0xC);
+        result = gOvl30RecordMenuCursor;
     } else {
         result = arg0;
     }

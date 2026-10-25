@@ -5,8 +5,8 @@
 #include "screen_fade.h"
 #include "psyq/libgpu.h"
 #include "sprite_render.h"
+#include "point_projection.h"
 
-s32 func_8001DFD4(s32 *arg0, SVECTOR *arg1);
 unsigned long long ovl_11_func_800BF450(void);
 s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0);
 s32 ovl_11_func_800CBE2C(Ovl11CC4E0Object *arg0);
@@ -89,7 +89,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
             }
     }
 
-        depth = func_8001DFD4(D_80128B98, (SVECTOR *)D_80128BA0);
+        depth = ProjectPointToScreen(D_80128B98, (SVECTOR *)D_80128BA0);
         if (depth != 0) {
             temp_v1_2 = gActiveRenderContext->field_120 + ((depth >> 2) * 4);
             if ((u32) (arg0->unk6 - 3) < 2U) {
@@ -113,7 +113,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
                 D_80128BA0[0] = (*(u16 *) ((u8 *) arg0 + 0x24)) + 0x96;
                 D_80128BA0[1] = (u16) (*(s32 *) ((u8 *) arg0 + 0x10)) - 0x64;
                 D_80128BA0[2] = (*(u16 *) ((u8 *) arg0 + 0x2C)) - 0x96;
-                depth = func_8001DFD4(D_80128B98, (SVECTOR *)D_80128BA0);
+                depth = ProjectPointToScreen(D_80128B98, (SVECTOR *)D_80128BA0);
                 if (depth != 0) {
                     ovl_11_func_800C9E90(gActiveRenderContext->field_120 + ((depth >> 2) * 4), D_80128B98[0], *(s32 *) ((u8 *) D_80128B98 + 4), 0);
                 }

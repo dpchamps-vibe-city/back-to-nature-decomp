@@ -4,9 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
-
-void ovl_30_func_80133454(Ovl30ValueMenuEntry *arg0, s32 arg1);
-void ovl_30_func_80133974(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+#include "ovl30_record_menus.h"
 
 s32 ovl_30_func_801306F4(s32 arg0) {
     Ovl30ValueMenuEntry entries[25] = {
@@ -40,16 +38,16 @@ s32 ovl_30_func_801306F4(s32 arg0) {
 
     if (IsScreenFadeComplete() != 0) {
         KanjiFntPrint(D_8012E994, D_801349A0);
-        D_80134014 = arg0;
-        ovl_30_func_80133454(entries, 25);
-        arg0 = D_80134014;
+        gOvl30RecordMenuCursor = arg0;
+        Ovl30DrawAndEditValueMenu(entries, 25);
+        arg0 = gOvl30RecordMenuCursor;
         buttons = *(s32 *)gPad0Input;
         if (buttons & 4) {
-            ovl_30_func_80133974((u8 *)&D_801349A0, 4, 0x13, 0, -1);
+            Ovl30StepFieldValue((u8 *)&D_801349A0, 4, 0x13, 0, -1);
             return arg0;
         }
         if (buttons & 8) {
-            ovl_30_func_80133974((u8 *)&D_801349A0, 4, 0x13, 0, 1);
+            Ovl30StepFieldValue((u8 *)&D_801349A0, 4, 0x13, 0, 1);
         }
     }
     return arg0;

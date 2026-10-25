@@ -1,7 +1,7 @@
 #include "common.h"
-void ovl_11_func_8011CBC8(void);
+#include "ovl11_value_panels.h"
 
 s32 ovl_11_func_8011A784(void) {
-    ovl_11_func_8011CBC8();
+    Ovl11DrawCompactValuePanel();
     return 0;
 }

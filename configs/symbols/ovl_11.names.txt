@@ -536,3 +536,28 @@ Ovl11HasRowTypeTwo = 0x8011D438; // type:func
 Ovl11DrawSelectionListPanel = 0x8011D474; // type:func
 // 0x18-halfword formatter buffer; the independent name record begins at 8012D638.
 gOvl11TextFormatScratch = 0x8012D608; // type:data size:0x30
+
+// Value panels, quantity rows and runtime text-bank label callbacks.
+Ovl11DrawCompactValuePanel = 0x8011CBC8; // type:func
+Ovl11DrawWideValuePanel = 0x8011CBE8; // type:func
+Ovl11DrawValuePanelVariant = 0x8011CC08; // type:func
+Ovl11DrawQuantityPromptRows = 0x8011CD2C; // type:func
+Ovl11CopyPrimaryValueLabel = 0x8011CEE0; // type:func
+Ovl11CopySecondaryValueLabel = 0x8011CF10; // type:func
+
+// Paired current/resume interaction-step operations.
+Ovl11SetInteractionSteps = 0x8011D084; // type:func
+Ovl11SetInteractionStepsOffset = 0x8011D098; // type:func
+Ovl11ResumeInteractionStep = 0x8011D0B4; // type:func
+
+// Four object-load/program callbacks; table order is selector order 0..3.
+Ovl11StartObjectArchiveLoad = 0x800E3DC8; // type:func
+Ovl11RunObjectRecordProgram = 0x800E40CC; // type:func
+Ovl11ReleaseObjectLoad = 0x800E4280; // type:func
+Ovl11PollObjectArchiveLoad = 0x800E4330; // type:func
+gOvl11ObjectArchiveOffsets = 0x801240D8; // type:data size:0x710
+gOvl11ObjectProgramBase = 0x801291B0; // type:data size:0x4
+// Retain the extracted 12-byte extent; only the first word is named by C.
+gOvl11ObjectProgramIndex = 0x80129224; // type:data size:0xC
+gOvl11ObjectOpcodeHandlers = 0x800B975C; // type:data size:0x1C4
+gOvl11ObjectLoadHandlers = 0x800B9920; // type:data size:0x10

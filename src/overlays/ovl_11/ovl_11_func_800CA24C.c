@@ -4,9 +4,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_render.h"
+#include "point_projection.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
-s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 u32 ovl_11_func_800CDEEC (u8 *arg0);
 void ovl_11_func_800C9F20 (Ovl11C7010Object *arg0, s32 arg1, s32 *arg2);
 void ovl_11_func_800CA044 (Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32 *arg2);
@@ -28,7 +28,7 @@ void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0) {
         D_80128B80[0] = arg0->field_0 + 0x96;
         D_80128B80[1] = arg0->field_4 - 0x64;
         D_80128B80[2] = arg0->field_8 - 0x96;
-        var_s3 = func_8001DFD4(D_80128B88, (SVECTOR *) D_80128B80);
+        var_s3 = ProjectPointToScreen(D_80128B88, (SVECTOR *) D_80128B80);
         if ((*(s16 *) (object + 0x32)) != 0) {
             ovl_11_func_800CDEEC(object);
         }
@@ -61,7 +61,7 @@ void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0) {
                 D_80128B80[0] = arg0->field_0 + 0x96;
                 D_80128B80[1] = -0x64;
                 D_80128B80[2] = arg0->field_8 - 0x96;
-                var_s3 = func_8001DFD4(D_80128B88, (SVECTOR *) D_80128B80);
+                var_s3 = ProjectPointToScreen(D_80128B88, (SVECTOR *) D_80128B80);
                 if (var_s3 == 0) {
                     return;
                 }

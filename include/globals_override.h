@@ -481,7 +481,7 @@ extern s32 (*D_80133FC0[18])();
 /* ovl_30 8012EFEC clears this word and 8012F084 tests it. */
 extern s32 D_80134008;
 /* 80133A8C divides this signed menu-selection word by nine and updates it with sw. */
-extern s32 D_80134014;
+extern s32 gOvl30RecordMenuCursor;
 /* 8012FEEC prints this NUL-terminated Shift-JIS rodata heading. */
 extern char D_8012E11C[];
 /* 8012FEEC passes this 20-byte record base to 80133454 with count 22. */
@@ -499,13 +499,13 @@ extern char D_8012EEB8[];
 /* 80132660 passes this 20-byte menu-record base to 80133A8C with count 12. */
 extern struct Ovl30FlagMenuEntry D_801349B8;
 /* 80133A8C copies the two string pointers in this rodata table to its local array. */
-extern char *D_8012EFB0[2];
+extern char *gOvl30RowKindMarkers[2];
 /* 80133A8C passes these rodata formats and selection markers to KanjiFntPrint. */
-extern char D_8012EFB8[];
-extern char D_8012EFD0[];
-extern char D_8012EFD4[];
-extern char D_8012EFD8[];
-extern char D_8012EFE8[];
+extern char gOvl30HeaderRowFormat[];
+extern char gOvl30CursorRowMarker[];
+extern char gOvl30IdleRowMarker[];
+extern char gOvl30ValueRowFormat[];
+extern char gOvl30MenuBlankLine[];
 
 /* 80130C20 indexes stride-B4 records; menu widths witness halfwords and words. */
 typedef struct Ovl30AnimalRecord {
@@ -661,7 +661,7 @@ extern s32 D_80134AE0;
 /* ovl_30 8012F084 dispatches on this word-sized state. */
 extern s32 D_80134B0C;
 /* ovl_30 8012F084 resets this word to -1 on a selection change. */
-extern s32 D_80134B10;
+extern s32 gOvl30RecordMenuSelectedId;
 /* ovl_30 8012F084 compares and copies this word-sized setting. */
 extern s32 D_80134B14;
 /* ovl_30 8012F084 publishes the callback loaded from D_80133FC0. */
@@ -2834,6 +2834,10 @@ extern s32 gMessagePortraitEnabled;
 extern s32 (*gMessageWindowHandlers[7])(void *);
 /* 80022AF0 bounds the archive-table index to 0..4. */
 extern s16 gMessageWindowArchiveIds[5];
+/* 80021FE4 tests state+0xCD and 80022008 clears it. Retain the existing
+ * nine-byte storage view; only its first byte has an established meaning. */
+extern s8 _gMessageReadBufferBusy[9] __asm__("gMessageReadBufferBusy");
+#define gMessageReadBufferBusy (*((s8*)_gMessageReadBufferBusy))
 /* Retain existing partial word views; 800229F4 reads 0x2000 bytes into the
  * shared work area, and initializes the portrait's SpriteSourceData there. */
 extern s32 _gMessageWindowReadBuffer[3] __asm__("gMessageWindowReadBuffer");
@@ -3190,6 +3194,10 @@ extern s32 gTextBankOffsets[4];
  * the SPLIT two-insn form (lui %hi / addiu %lo as separate defs), which
  * cc1 only emits for a symbol classified >small data. */
 extern s32 D_8005175C[4];
+/* 8011CEE0/8011CF10 add these address anchors to D_80054BC0[0] before
+ * copying the primary/secondary value label; neither loads the anchor word. */
+extern s32 gPrimaryValueLabelTextAnchor;
+extern s32 gSecondaryValueLabelTextAnchor;
 extern s32 D_80051768;
 
 /* D_800517E0 / D_800517EE - two table bases 0x0E bytes apart in the
@@ -5953,14 +5961,14 @@ extern Ovl11E910Entry _D_8006E910[] __asm__("D_8006E910");
 extern u8 D_801240BC[];
 
 /* 800E4330 indexes consecutive lw offsets by the current object's signed id. */
-extern s32 D_801240D8[];
+extern s32 gOvl11ObjectArchiveOffsets[];
 /* 800E4330 initializes both cursors to the D_8006E910 record-array base. */
-extern Ovl11E910Entry *D_801291B0;
+extern Ovl11E910Entry *gOvl11ObjectProgramBase;
 extern Ovl11E910Entry *Ovl11RecordCursor __asm__("D_801291B4");
 /* 800E4330 clears this word before initializing the scene. */
-extern s32 D_80129224;
+extern s32 gOvl11ObjectProgramIndex;
 /* 800E40CC dispatches this 113-entry table with lh +4/+6 and lw +8/+C arguments. */
-extern s32 (*D_800B975C[0x71])(s16, s16, s32, s32);
+extern s32 (*gOvl11ObjectOpcodeHandlers[0x71])(s16, s16, s32, s32);
 
 /* Ovl19SetActorSpritePauseMode applies flag bit 4 at three 0x40-stride
  * actor sprites and two 0x48-stride auxiliary sprites. These incomplete
@@ -6140,7 +6148,7 @@ typedef struct {
 /* ovl_11 four-entry state dispatch table. The original rodata entries point
  * to ovl_11_func_800E3DC8/800E40CC/800E4280/800E4330; the dispatcher
  * preserves the selected handler's return value across its final flag clear. */
-extern s32 (*D_800B9920[4])(void);
+extern s32 (*gOvl11ObjectLoadHandlers[4])(void);
 
 /* First 20-entry stride-4 queue: D_8006C838 + 0x49E4. The full-queue
  * path in ovl_11_func_800F27B0 shifts 0x4C bytes within this 0x50-byte span. */
@@ -6278,6 +6286,11 @@ typedef struct {
  * unsigned to increment and signed to threshold-test; absolute-addressed
  * (overlay build is -G0). */
 extern s16 D_800C4A2C;
+/* 800B9A8C/9CB4/9DBC/9EEC advance the other four ovl_27 effect counters. */
+extern s16 D_800C4A2E;
+extern s16 D_800C4A32;
+extern s16 D_800C4A34;
+extern s16 D_800C4A36;
 /* ovl_27_func_800B9B98 increments with lhu/sh and threshold-tests with lh. */
 extern s16 D_800C4A30;
 

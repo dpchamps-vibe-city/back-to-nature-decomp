@@ -6,8 +6,8 @@
 #include "psyq/libgs.h"
 #include "ovl19_scene_camera_geometry.h"
 #include "sprite_render.h"
+#include "point_projection.h"
 
-s32 func_8001DFD4(s32 *arg0, SVECTOR *arg1);
 void func_800248E8(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void ovl_19_func_800BADF8(s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3) {
@@ -22,7 +22,7 @@ void ovl_19_func_800BADF8(s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3)
     D_800BD080[0] = arg2[0];
     D_800BD080[1] = arg2[1];
     D_800BD080[2] = arg2[2];
-    temp_a2 = func_8001DFD4(D_800BD048, (SVECTOR *) D_800BD080);
+    temp_a2 = ProjectPointToScreen(D_800BD048, (SVECTOR *) D_800BD080);
     D_800BD048[1] += arg3;
     temp_v1 = (temp_a2 >> 3) * 4;
     temp_a1 = gActiveRenderContext->field_120;

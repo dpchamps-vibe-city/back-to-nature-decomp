@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "screen_fade.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -14,8 +15,6 @@ s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_80111E68(s16 arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D098(s32 arg0, s32 arg1, s32 arg2);
-void ovl_11_func_8011D0B4(void);
 s16 ovl_11_func_8011D98C(StructD548 x);
 
 s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
@@ -61,34 +60,34 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
                 if (ovl_11_func_8011D06C(ovl_11_func_800D6014(item)) == 1) {
                     SetMessagePortraitEnabled(0);
                     RequestMessageWindow(messages[0][0], messages[0][1]);
-                    ovl_11_func_8011D098(2, 4, arg1);
+                    Ovl11SetInteractionStepsOffset(2, 4, arg1);
                 } else {
                     RequestMessageWindow(messages[1][0], messages[1][1]);
-                    ovl_11_func_8011D098(1, 3, arg1);
+                    Ovl11SetInteractionStepsOffset(1, 3, arg1);
                 }
             } else {
                 RequestMessageWindow(messages[2][0], messages[2][1]);
-                ovl_11_func_8011D098(1, 3, arg1);
+                Ovl11SetInteractionStepsOffset(1, 3, arg1);
             }
             break;
         case 1:
             if (GetMessageWindowStatus() == 2) {
-                ovl_11_func_8011D0B4();
+                Ovl11ResumeInteractionStep();
             }
             break;
         case 2:
             if (GetMessageWindowStatus() == 5) {
                 SetVal8005E2BC(0);
-                ovl_11_func_8011D0B4();
+                Ovl11ResumeInteractionStep();
             }
             break;
         case 13:
             if (D_80071A6C & 0x10000000) {
-                ovl_11_func_8011D0B4();
+                Ovl11ResumeInteractionStep();
             }
             break;
         case 4:
-            ovl_11_func_8011D098(5, 0, arg1);
+            Ovl11SetInteractionStepsOffset(5, 0, arg1);
             ovl_11_func_80118B84(0, -1, 0);
         case 5:
             switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
@@ -98,17 +97,17 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
                 CloseMessageWindow();
                 SetMessagePortraitEnabled(0);
                 RequestMessageWindow(messages[3][0], messages[3][1]);
-                ovl_11_func_8011D098(2, 6, arg1);
+                Ovl11SetInteractionStepsOffset(2, 6, arg1);
                 break;
             case 2:
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x93);
-                ovl_11_func_8011D098(1, 3, arg1);
+                Ovl11SetInteractionStepsOffset(1, 3, arg1);
                 break;
             }
             break;
         case 6:
-            ovl_11_func_8011D098(7, 0, arg1);
+            Ovl11SetInteractionStepsOffset(7, 0, arg1);
             ovl_11_func_80118B84(0, -1, 0);
         case 7:
             switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
@@ -116,12 +115,12 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
                 break;
             case 1:
                 CloseMessageWindow();
-                ovl_11_func_8011D098(8, 0, arg1);
+                Ovl11SetInteractionStepsOffset(8, 0, arg1);
                 break;
             case 2:
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x93);
-                ovl_11_func_8011D098(1, 3, arg1);
+                Ovl11SetInteractionStepsOffset(1, 3, arg1);
                 break;
             }
             break;
@@ -129,19 +128,19 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
             gOvl11InteractionDrawMode = 0;
             ovl_11_func_800E6EE0(mode, 1, 1, 1);
             ovl_11_func_800E6F34(mode, 0, 0, 0);
-            ovl_11_func_8011D098(13, 14, arg1);
+            Ovl11SetInteractionStepsOffset(13, 14, arg1);
             break;
         case 14:
             ovl_11_func_800F2354(-ovl_11_func_800D6014(item), 1);
             ovl_11_func_80111E68(item);
             CloseMessageWindow();
             RequestMessageWindow(2, 0x9F);
-            ovl_11_func_8011D098(1, 12, arg1);
+            Ovl11SetInteractionStepsOffset(1, 12, arg1);
             break;
         case 12:
             ovl_11_func_800E6EE0(mode, 1, 0, 1);
             BeginScreenFadeIncrease(20, 0, 2);
-            ovl_11_func_8011D098(10, 0, arg1);
+            Ovl11SetInteractionStepsOffset(10, 0, arg1);
         case 10:
             if (IsScreenFadeComplete() == 1) {
                 ovl_11_func_800E5E98(32, 0, 0, 0);
@@ -150,14 +149,14 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
                 ((Ovl11A25CState *)D_8006C838)->y = 0;
                 ovl_11_func_800E9284(3, 0, 0, 0);
                 BeginScreenFadeDecrease(20, 0, 2);
-                ovl_11_func_8011D098(11, 0, arg1);
+                Ovl11SetInteractionStepsOffset(11, 0, arg1);
             }
             break;
         case 11:
             if (IsScreenFadeComplete() != 1) {
                 break;
             }
-            ovl_11_func_8011D098(9, 0, arg1);
+            Ovl11SetInteractionStepsOffset(9, 0, arg1);
         case 9:
             ovl_11_func_800E9B68(4, 0, 0, 0);
             result = 1;

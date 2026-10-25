@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "text_entry.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
@@ -17,8 +18,6 @@ s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 s16 ovl_11_func_8011D98C(StructD548 x);
 s16 ovl_11_func_8011D9DC(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode);
@@ -47,13 +46,13 @@ s32 ovl_11_func_80115308(void) {
     resident->field_5234 |= 0x800000;
     switch (gOvl11InteractionStep) {
     case 0:
-        ovl_11_func_8011D084(2, 0);
+        Ovl11SetInteractionSteps(2, 0);
         break;
     case 1:
         ovl_11_func_80113FF0();
         gOvl11InteractionDrawMode = 4;
         params.unk4 = -1;
-        ovl_11_func_8011D084(2, 0);
+        Ovl11SetInteractionSteps(2, 0);
     case 2:
     case 3:
     case 4:
@@ -66,56 +65,56 @@ s32 ovl_11_func_80115308(void) {
         case 2:
             break;
         case 3:
-            ovl_11_func_8011D084(24, 0);
+            Ovl11SetInteractionSteps(24, 0);
             break;
         case 1:
             switch (((StructD548 *)gOvl11PrimarySelectionRecord)->index) {
             case 0:
                 if (((Ovl11FeedGlobals *)D_8006C838)->amount >= 1000) {
                     RequestMessageWindow(2, 0x4C);
-                    ovl_11_func_8011D084(22, 1);
+                    Ovl11SetInteractionSteps(22, 1);
                 } else {
                     RequestMessageWindow(2, 0x4B);
-                    ovl_11_func_8011D084(22, 9);
+                    Ovl11SetInteractionSteps(22, 9);
                 }
                 break;
             case 1:
                 if (ovl_11_func_800D0CD8() == 0) {
                     RequestMessageWindow(2, 0x55);
-                    ovl_11_func_8011D084(22, 21);
+                    Ovl11SetInteractionSteps(22, 21);
                 } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
                     RequestMessageWindow(2, 0x4F);
-                    ovl_11_func_8011D084(22, 21);
+                    Ovl11SetInteractionSteps(22, 21);
                 } else {
                     RequestMessageWindow(2, 0x56);
-                    ovl_11_func_8011D084(22, 16);
+                    Ovl11SetInteractionSteps(22, 16);
                 }
                 break;
             case 2:
                 if (ovl_11_func_80117178(0, 0, -1) == 0) {
                     RequestMessageWindow(2, 0x59);
-                    ovl_11_func_8011D084(22, 21);
+                    Ovl11SetInteractionSteps(22, 21);
                 } else {
                     RequestMessageWindow(2, 0x58);
                     gOvl11InteractionDrawMode = 0;
                     ovl_11_func_80116980(0, 0, -1);
-                    ovl_11_func_8011D084(22, 18);
+                    Ovl11SetInteractionSteps(22, 18);
                 }
                 break;
             case 3:
                 if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
                     if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
-                        ovl_11_func_8011D084(22, 21);
+                        Ovl11SetInteractionSteps(22, 21);
                     } else {
                         ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
                         ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x51);
-                        ovl_11_func_8011D084(22, 21);
+                        Ovl11SetInteractionSteps(22, 21);
                     }
                 } else {
                     RequestMessageWindow(2, 0x4F);
-                    ovl_11_func_8011D084(22, 21);
+                    Ovl11SetInteractionSteps(22, 21);
                 }
                 break;
             }
@@ -126,7 +125,7 @@ s32 ovl_11_func_80115308(void) {
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
-        ovl_11_func_8011D084(23, 10);
+        Ovl11SetInteractionSteps(23, 10);
         break;
     case 10:
     case 11:
@@ -140,22 +139,22 @@ s32 ovl_11_func_80115308(void) {
         case 2:
             break;
         case 3:
-            ovl_11_func_8011D084(22, 21);
+            Ovl11SetInteractionSteps(22, 21);
             break;
         case 1:
             CloseMessageWindow();
             if (ovl_11_func_8011D06C(state->unk8 * state->unkA) == 1) {
                 if (state->unk8 + ((Ovl11FeedGlobals *)D_8006C838)->amount >= 1000) {
                     RequestMessageWindow(2, 0x4C);
-                    ovl_11_func_8011D084(22, 9);
+                    Ovl11SetInteractionSteps(22, 9);
                 } else {
                     ovl_11_func_80115C60(state);
                     RequestMessageWindow(2, 0x52);
-                    ovl_11_func_8011D084(22, 21);
+                    Ovl11SetInteractionSteps(22, 21);
                 }
             } else {
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(22, 9);
+                Ovl11SetInteractionSteps(22, 9);
             }
             break;
         }
@@ -164,13 +163,13 @@ s32 ovl_11_func_80115308(void) {
         ResetTextEntry();
         BeginTextEntry(D_8012D6EC);
         gOvl11InteractionDrawMode = 0;
-        ovl_11_func_8011D084(17, 0);
+        Ovl11SetInteractionSteps(17, 0);
         break;
     case 17:
         switch (UpdateTextEntry()) {
         case -1:
             RequestMessageWindow(2, 0x4E);
-            ovl_11_func_8011D084(22, 21);
+            Ovl11SetInteractionSteps(22, 21);
             break;
         case 1:
             dest = ovl_11_func_800CE744(0x109, -1) + 2;
@@ -179,7 +178,7 @@ s32 ovl_11_func_80115308(void) {
             }
             ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x57);
-            ovl_11_func_8011D084(22, 21);
+            Ovl11SetInteractionSteps(22, 21);
             break;
         }
         break;
@@ -187,14 +186,14 @@ s32 ovl_11_func_80115308(void) {
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x5A);
-        ovl_11_func_8011D084(23, 19);
+        Ovl11SetInteractionSteps(23, 19);
         break;
     case 19:
         selected = ovl_11_func_80116980(0, 0, 0);
         if (selected == -2) {
             CloseMessageWindow();
             RequestMessageWindow(2, 0x5B);
-            ovl_11_func_8011D084(22, 21);
+            Ovl11SetInteractionSteps(22, 21);
         } else if (selected != -1) {
             CloseMessageWindow();
             SetMessagePortraitEnabled(0);
@@ -203,7 +202,7 @@ s32 ovl_11_func_80115308(void) {
             } else {
                 RequestMessageWindow(2, 0x60);
             }
-            ovl_11_func_8011D084(23, 20);
+            Ovl11SetInteractionSteps(23, 20);
         }
         break;
     case 20:
@@ -220,22 +219,22 @@ s32 ovl_11_func_80115308(void) {
                 ovl_11_func_800F2354(500, 1);
             }
             ovl_11_func_800E2904((s32)((u8 *)&D_800742EC + selected * 0xB4));
-            ovl_11_func_8011D084(22, 21);
+            Ovl11SetInteractionSteps(22, 21);
             break;
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(2, 0x5B);
-            ovl_11_func_8011D084(22, 21);
+            Ovl11SetInteractionSteps(22, 21);
             break;
         }
         break;
     case 21:
         RequestMessageWindow(2, 0x53);
-        ovl_11_func_8011D084(22, 1);
+        Ovl11SetInteractionSteps(22, 1);
         break;
     case 22:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 23:
@@ -244,7 +243,7 @@ s32 ovl_11_func_80115308(void) {
         }
         if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 24:

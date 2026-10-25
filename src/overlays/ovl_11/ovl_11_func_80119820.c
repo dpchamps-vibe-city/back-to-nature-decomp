@@ -1,6 +1,7 @@
 #include "common.h"
 #include "message_window.h"
 #include "two_choice_prompt.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -8,8 +9,6 @@ s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
-void ovl_11_func_8011D084(s32 arg0, s32 arg1);
-void ovl_11_func_8011D0B4(void);
 s16 ovl_11_func_8011D9DC(s16 arg0, s32 arg1);
 
 s32 ovl_11_func_80119820(void) {
@@ -26,28 +25,28 @@ s32 ovl_11_func_80119820(void) {
     result = 0;
     switch (gOvl11InteractionStep) {
     case 0:
-        ovl_11_func_8011D084(11, 0);
+        Ovl11SetInteractionSteps(11, 0);
         break;
     case 11:
     case 12:
         RequestMessageWindow(2, 0xDC);
         SetMessagePortraitEnabled(0);
-        ovl_11_func_8011D084(3, 4);
+        Ovl11SetInteractionSteps(3, 4);
         break;
     case 2:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 3:
         if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 4:
         gOvl11InteractionDrawMode = 3;
-        ovl_11_func_8011D084(8, 0);
+        Ovl11SetInteractionSteps(8, 0);
         Ovl11UpdateWideChoicePrompt(0, -1, 0);
     case 8:
         switch (Ovl11UpdateWideChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
@@ -57,21 +56,21 @@ s32 ovl_11_func_80119820(void) {
             if (ovl_11_func_8011D9DC(0x21, 1) == 0) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
-                ovl_11_func_8011D084(2, 7);
+                Ovl11SetInteractionSteps(2, 7);
             } else if (ovl_11_func_8011D06C(price) == 1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xBB);
-                ovl_11_func_8011D084(2, 6);
+                Ovl11SetInteractionSteps(2, 6);
             } else {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x4F);
-                ovl_11_func_8011D084(2, 7);
+                Ovl11SetInteractionSteps(2, 7);
             }
             break;
         case 2:
             CloseMessageWindow();
             RequestMessageWindow(2, 0xBA);
-            ovl_11_func_8011D084(2, 7);
+            Ovl11SetInteractionSteps(2, 7);
             break;
         }
         break;

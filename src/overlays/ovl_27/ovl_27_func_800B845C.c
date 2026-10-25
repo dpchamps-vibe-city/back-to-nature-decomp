@@ -4,13 +4,13 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "text_entry.h"
+#include "ovl27_backdrop_sprite_pool.h"
 
 void ovl_27_func_800B7F7C(void);
 void ovl_27_func_800B9124(void);
 void ovl_27_func_800B9224(void);
 void ovl_27_func_800B928C(void);
 void ovl_27_func_800B92E4(void);
-void ovl_27_func_800BA130(s16);
 
 void ovl_27_func_800B845C(void) {
     s32 *base;
@@ -136,7 +136,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 15:
-        ovl_27_func_800BA130(0);
+        Ovl27DrawTextBankLabel(0);
         ovl_27_func_800B92E4();
         if (UpdateTextEntry() == 1) {
             D_800C4A24 = 16;
@@ -156,7 +156,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 18:
-        ovl_27_func_800BA130(1);
+        Ovl27DrawTextBankLabel(1);
         ovl_27_func_800B92E4();
         switch (UpdateIndexedSelection()) {
         case -1:
@@ -181,7 +181,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 21:
-        ovl_27_func_800BA130(2);
+        Ovl27DrawTextBankLabel(2);
         ovl_27_func_800B92E4();
         switch (UpdateTextEntry()) {
         case -1:
@@ -206,7 +206,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 24:
-        ovl_27_func_800BA130(3);
+        Ovl27DrawTextBankLabel(3);
         ovl_27_func_800B92E4();
         switch (UpdateTextEntry()) {
         case -1:

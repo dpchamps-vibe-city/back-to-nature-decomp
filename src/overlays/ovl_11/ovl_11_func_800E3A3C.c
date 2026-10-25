@@ -10,7 +10,7 @@ s32 ovl_11_func_800E3A3C(void) {
     *(s32 *)(base + 0x522C) = 0;
     *(s32 *)(base + 0x5230) = 0;
     idx = *(s32 *)(base + 0x7A74);
-    pp = &D_800B9920[idx];
+    pp = &gOvl11ObjectLoadHandlers[idx];
     result = (*pp)();
     *(s32 *)(base + 0x4450) &= ~0x20;
     return result;

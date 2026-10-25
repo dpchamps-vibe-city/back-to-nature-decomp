@@ -18,6 +18,7 @@
 #include "game_flags.h"
 #include "psyq/abs.h"
 #include "ovl11_object_event_script.h"
+#include "point_projection.h"
 
 typedef struct {
                s16 unk0;
@@ -149,7 +150,6 @@ s32 ovl_11_func_800D2E20 (void);
 s32 ovl_11_func_800F5888 ();
 s32 ovl_11_func_800D2950 (s32 arg0);
 void func_80016054 ();
-s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 s32 Ovl11SubmitObjectMarker (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_80015DD4 ();
 void ovl_11_func_800C9E90 (s32 arg0, s32 arg1, s32 arg2, s32 arg3);

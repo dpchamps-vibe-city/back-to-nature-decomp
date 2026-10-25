@@ -1,10 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
+#include "ovl11_interaction_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
-void ovl_11_func_8011D098(s32 arg0, s32 arg1, s32 arg2);
-void ovl_11_func_8011D0B4(void);
 s32 ovl_11_func_8011D734(Ovl11D548Arg *arg0);
 s16 ovl_11_func_8011D9B4(StructD548 x);
 
@@ -31,19 +30,19 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2) {
     case 0:
         if (startKind != -1) {
             RequestMessageWindow(startKind, startId);
-            ovl_11_func_8011D098(1, 3, arg1);
+            Ovl11SetInteractionStepsOffset(1, 3, arg1);
         } else {
-            ovl_11_func_8011D098(3, 0, arg1);
+            Ovl11SetInteractionStepsOffset(3, 0, arg1);
         }
         break;
     case 1:
         if (GetMessageWindowStatus() == 2) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 2:
         if (GetMessageWindowStatus() == 5) {
-            ovl_11_func_8011D0B4();
+            Ovl11ResumeInteractionStep();
         }
         break;
     case 3:
@@ -52,12 +51,12 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2) {
         if (gOvl11InteractionDrawMode == 7) {
             gOvl11InteractionDrawMode = state;
             if (RequestMessageWindow(2, 0x5F) == 0) {
-                ovl_11_func_8011D098(2, 4, arg1);
+                Ovl11SetInteractionStepsOffset(2, 4, arg1);
             }
         } else {
             gOvl11InteractionDrawMode = state;
             if (RequestMessageWindow(2, 0x46) == 0) {
-                ovl_11_func_8011D098(2, 4, arg1);
+                Ovl11SetInteractionStepsOffset(2, 4, arg1);
             }
         }
         break;
@@ -73,13 +72,13 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2) {
             if (ovl_11_func_8011D9B4(*record) != -1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, ovl_11_func_8011D9B4(*record));
-                ovl_11_func_8011D098(1, 3, arg1);
+                Ovl11SetInteractionStepsOffset(1, 3, arg1);
             }
             break;
         case 3:
             CloseMessageWindow();
             RequestMessageWindow(cancelKind, cancelId);
-            ovl_11_func_8011D098(1, 5, arg1);
+            Ovl11SetInteractionStepsOffset(1, 5, arg1);
             break;
         }
         break;
