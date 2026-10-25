@@ -7,7 +7,7 @@
 
 extern s32 *D_80125528[];
 extern u8 D_800957F8[];
-extern SpriteSourceData D_80070400;
+extern SpriteSourceData gSpriteSourceBankBase;
 
 void ovl_11_func_800DA588(s32 arg0) {
     SpriteSourceData *out;
@@ -16,7 +16,7 @@ void ovl_11_func_800DA588(s32 arg0) {
     s32 off;
 
     n = *D_80125528[arg0];
-    out = &D_80070400;
+    out = &gSpriteSourceBankBase;
     if (n >= 0x2D) {
         n = 0x2C;
     }

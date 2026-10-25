@@ -2,7 +2,7 @@
 #include "message_window.h"
 
 /* ovl_19 bss state base, referenced with absolute addressing (lui + %lo). */
-extern s16 D_800BF4C0[];
+extern s16 gOvl19SceneWork[];
 
 void ovl_19_func_800B93B0(void) {
     s32 temp_s0;
@@ -12,12 +12,12 @@ void ovl_19_func_800B93B0(void) {
     temp_s0 = GetMessageWindowStatus();
     if (temp_s0 == 2) {
         temp_v0 = GetMessageWindowChoice();
-        D_800BF4C0[3] = 0;
+        gOvl19SceneWork[3] = 0;
         if (temp_v0 == 1) {
-            D_800BF4C0[0x100] = 0;
-            D_800BF4C0[2] = 3;
+            gOvl19SceneWork[0x100] = 0;
+            gOvl19SceneWork[2] = 3;
         } else if (temp_v0 == temp_s0) {
-            D_800BF4C0[2] = temp_v0;
+            gOvl19SceneWork[2] = temp_v0;
         }
     }
 }

@@ -512,11 +512,74 @@ members' `D_800B7Exx`/`D_800B7Fxx` string externs are written as literals.
 
 ## `ovl_11` farm-object clear/update run — 0x801212C4–0x80121780 (confidence: medium)
 
+**Reconstructed `src/overlays/ovl_11/modules/sprite_effect_pool.c`**, all
+six entries in original order, not allocator/update slices. Names:
+Ovl11UpdateSpriteEffects, Ovl11ClearSpriteEffects, Ovl11SpawnSpriteEffect,
+Ovl11DrawAndStepSpriteEffect, Ovl11ReleaseSpriteEffect,
+Ovl11InitSpriteEffect. The first two visit the same 25 records at 8012DB90;
+Spawn selects a free +14 sprite slot and calls Init; Update calls Draw/Step,
+which releases through the same leaf when its animation ends. This closed
+pool lifecycle and exclusive pool storage join every member independently
+of mere adjacency. The initializer's source-bank lookup borrows the common
+80070400 sprite bank; it does not make that bank pool-private.
+
+Boundaries: immediate predecessor 80121204 is a date-threshold classifier
+using 801287CC, with no effect-pool access or member call. Right 80121780
+begins overlay data (the scene handler table), not another C function.
+The left cut is evidence-limited, not a GP contradiction; overlay -G0
+supplies none. There is no supported lifecycle extension past either end,
+and no flag/mechanical limit motivated this cut.
+
+The earlier ABI obstacle below is resolved: both allocator and initializer
+now accept SDK VECTOR by value, including its unused fourth word. The
+800DAC08 caller already supplies exactly that aggregate. The other three
+callers forward the contiguous 16-byte view at their record's +8, not five
+unprototyped arguments. The checked whole-unit baseline fold proved all six
+member bytes and the overlay before naming. Full linked verification then
+proved those caller changes too. Ovl11SpriteEffect unifies the initializer's
+word stores and renderer's low unsigned-halfword reads using explicit casts;
+no coordinate storage or signedness was silently changed. The artificial
+four-byte aggregate parameter type and competing renderer struct were
+removed. The pool's asm-name alias was replaced by its canonical byte-array
+extern, gOvl11SpriteEffects (25*0x18); shared bank base is
+EXE:gSpriteSourceBankBase with the existing 0x30-byte scalar view retained.
+
+The header publishes only Update/Clear/Spawn, with pool capacity, by-value
+position ABI, tick units, pause behavior, projection offsets, raw truncation,
+reserved-word preservation and the non-obvious successful-but-still-free
+initializer path documented. Helper linkage stays external. Function/data
+names propagated through canonicalNames; interfaceAudit published headers
+without changing reconciled callers' objects. Public headers explicitly
+include the SDK that defines VECTOR. No flag override or exception was
+added, transferred or retired, and no shared tool needed changing.
+
+Batch acceptance with daily_conditions: tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json passes every integrity gate at **608 folded,
+83/83 valid modules**: EXE/all overlays, associated data/callbacks/tables and
+placement, canonical interfaces, policy, convergence and exception non-growth.
+The run began at 596 folded because pre-existing overlay15/19 changes were
+already present; those changes were preserved.
+
+Historical candidate and ABI investigation follows:
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`), supported by
 shared `D_8012DB90` effect records and internal calls agreeing with gapless
 link order. The allocator-to-initializer edge supports including `80121500`;
 original TU boundaries remain unproven.
 Evidence and limits: [grouping research](research/ovl_11_func_80121500-grouping.md).
+
+Module-campaign read-only follow-up: the six-entry pool closure remains
+supported, but its public allocator contract needs reconciliation before a
+finished module can publish it. 800DAC08 passes an SDK VECTOR by value
+(16 bytes), whereas the matched allocator declares four separate four-byte
+payloads after the ID. The other three callers pass those payloads as four
+scalar words. These can describe the SAME five-word machine interface; the
+source-level 2-versus-5 arity finding is not evidence of a caller bug or an
+eight-byte vector. The initializer's unused fourth payload also must remain
+accounted for. Next useful whole-source experiment is a corroborated shared
+position/ABI view plus the existing signed/unsigned record views, tested by
+the checked whole-six baseline fold. The current split build is retained;
+no disputed ABI or scope/type change was silently introduced here.
 
 Members (address order):
 - ovl_11_func_801212C4 (m) — guarded bulk update of the `D_8012DB90` effect pool.
@@ -992,7 +1055,47 @@ Members (address order):
 
 ---
 
-## `ovl_11` {u16,u16} local-pair counter run — 0x800BF8B8–0x800BFC20+ (confidence: low)
+## `ovl_11` daily-condition date run — 0x800BF8B8–0x800BFD1C (confidence: medium)
+
+**Reconstructed `src/overlays/ovl_11/modules/daily_conditions.c`**, six
+members in original order: Ovl11ChooseNextDayCondition (BF8B8),
+Ovl11AdvanceConditionDate (BFADC), Ovl11ApplyCurrentDayCondition (BFB28),
+Ovl11IsConditionExcludedDate (BFC20), Ovl11PublishDayConditionFlags (BFCA4)
+and Ovl11SetCurrentDayCondition (BFD04). The two drivers share the exact
+season/day lookahead protocol and date-exclusion helper, not just the main
+work buffer. The chooser produces +E4CA; the applier consumes it into +E4C8
+and calls the publisher; the setter writes that same current halfword.
+The exclusion helper alone reads five signed record indices at 80122E74.
+The day-transition callers at 800DDDFC and 801044E4 apply then choose.
+This closed producer/consumer/helper chain supports the entire six-member
+run, extending the historical four-member hypothesis below. Overlay -G0
+provides no GP ownership proof.
+
+Boundaries: immediate predecessor BF844 fills a 25-by-45 cell grid through
+800D8320 and has no condition/date protocol or local helper calls. Immediate
+successor BFD1C services screen-color ramps using clock-hour classification,
++E768 state and 80128A80 colors, not current/next condition selection.
+Both are evidence-limited cuts around distinct protocols, not claims that
+absolute accesses prove different original TUs. The distant C056C condition
+consumer is not a private helper and supplies no extension across the ramp
+and clock families. No flag or mechanical limit determines these cuts.
+
+The public header documents apply-before-choose ordering, shared RNG/state,
+0..4 neutral condition codes, date exclusions, the original zero-based
+lookahead rollover and the raw setter's lack of flag publication. Weather
+labels are deliberately not inferred from seasonal probabilities alone.
+Ovl11ConditionDate reconciles the old incompatible local/shared pair types;
+its signed widths and the work view's unsigned storage remain unchanged.
+The private index table and work-view fields have behavior-based names.
+Its extern moved from C to globals_override.h; overlay-only header naming
+was reconciled explicitly after canonicalNames propagated live C references.
+Helpers retain external linkage. The checked baseline -O2/-G0 fold verified
+all six members and overlay bytes; no override or exception was involved.
+The daily_conditions/sprite_effect_pool batch subsequently passed the complete
+campaign gate at 608 folded functions / 83 valid modules, including caller
+bytes, canonical/public interfaces, policy and exception non-growth.
+
+Historical discovery evidence follows:
 
 Candidate same-TU run of three gapless link-order functions sharing one
 4-byte {u16,u16} struct passed by address, seeded from the same `D_8006C838`
@@ -7926,6 +8029,19 @@ and data ownership; both TUs tentatively define E49C/E49E. Members:
 
 ## table-slot CD-loader cluster — 0x80017BC8 / 0x800183E0 / 0x80019FC4–0x8001A11C / 0x8001AD6C (confidence: medium)
 
+Module-campaign research: the GP-connected text/slot family extends across
+these historical subgroups; do not fold A284..AF70 as a separate TU merely
+because it currently has no override. The shared E444/E4A8 and slot-state
+accesses and internal helpers remain positive evidence joining the spans.
+The existing 183E0/18B98 no-GCSE settings conflict with standing regional
+baseline witnesses (including A8D0/A970/A018). That is a compiler-setting
+or source/context problem to resolve over the proposed whole TU, not proof
+of a historical boundary. The broad text engine is left in its matching
+split organization; no override or exception was changed. Useful next
+experiment: compile the complete reconciled TU at baseline, then assess
+its residual and minimal setting against the flag-review evidence, rather
+than adopting two command-line-defined slices.
+
 Slot-based table loading: a 16-bit "slot" selects a 0x1800-byte region read
 from CD into D_8006C910 via func_80014CBC; per-slot state lives in a small
 gp-rel cluster. Fingerprints:
@@ -7954,10 +8070,11 @@ Members (address order):
 - func_800183E0 (m, byte-exact, -fno-gcse) — u16-table consumer over the
   loaded buffer (0xFFFF-sentinel scan); reaches D_8005E4B0, D_8005E4A8,
   D_8005E444, D_8005E45C, D_8005E46C GP-relatively; calls func_8001A018.
-  Its -fno-gcse is a TU flag fact (evidence in configs/flag_overrides.mk).
-  func_80018B98 carries the same flag on independent evidence, and the only
-  function between them, ClearVal8005E4B0, clears D_8005E4B0: the three are
-  very likely one original TU, so expect -fno-gcse on its other members
+  Its current reconstruction carries -fno-gcse (evidence in
+  configs/flag_overrides.mk), not an established original compiler command.
+  func_80018B98 carries the same setting; between them ClearVal8005E4B0
+  clears D_8005E4B0. That state relationship supports membership, but does
+  not license applying the setting to every other member
   ([verified source](../src/func_800183E0.c),
   [research](research/func_800183E0.md)).
 - func_80019FC4 (s) — per-slot consumer: when D_8005E468 == slot and
@@ -13478,6 +13595,44 @@ Members (link order):
 
 ## `ovl_15` two-digit text-number run — 0x80134770 / 0x80134890 / 0x801349C8 (confidence: medium)
 
+**Reconstructed `src/overlays/ovl_15/modules/save_card_title.c`,
+80134770–80134A34 exclusive, all three members.** Names in original order:
+`Ovl15BuildSaveCardTitle`, `Ovl15FormatTitleDigits`, `Ovl15FormatTitleSeason`.
+The builder is the only caller of both formatting helpers. Their private
+prefix/year/space/zero-glyph fragments, season-pointer table and two scratch
+buffers close one title-formatting protocol, corroborated by link order.
+All seven data objects now have scoped `gOvl15CardTitle*` identities in
+ovl_15.names.txt; original Shift-JIS bytes and table pointers remain in data,
+not substituted with C string literals. The four seasonal strings and digit
+encoding are independently visible in the original bytes (zero = 82 4F,
+fullwidth space = 81 40); the formatter adds to the glyph's second byte.
+
+Boundaries: preceding 80134724 resets the selection/record state, with none
+of these fragments or formatting buffers; following 80134A34 constructs a
+save-summary record and transfer image. Sharing that public save-record
+array is not a private formatting-state relationship. Neither neighbor
+calls a private formatter. These are evidence-limited boundaries, not GP
+proofs (-G0), and no flag conflict determined either cut.
+
+`ovl15_save_card_title.h` publishes only the builder. It documents slot/year
+biases, the clamped season, 64-byte title output, non-reentrancy, unchecked
+numeric ranges/capacity and the returned START pointer. The two helpers keep
+external linkage without being needlessly published. Season formatting
+clears its output first; it is not an append-to-existing-string operation.
+The old local McHeader and duplicate record extern were replaced by the
+canonical Ovl15CardHeader and Ovl15SaveHeader identities. An eight-byte
+halfword date view in game_types.h preserves every original load and leaves
+the two unused fields neutral. Missing externs moved to globals_override.h
+with evidence; the char/u8 spelling disagreement for the space fragment was
+reconciled before folding. No global definition or storage was added.
+
+Baseline checked fold proved all three and ovl_15 bytes; there was no member
+override. Canonical naming and interface publication preserved callers.
+The final campaign gate passes all eight checks and every EXE/13-overlay
+byte, including card-header data and pointer tables. With the actor and
+scene-resource work this run reaches 596 folded functions, 81/81 valid
+modules, with no exception growth. Historical address evidence follows.
+
 Evidence: gapless link order in `configs/splat/ovl_15.yaml` agreeing with the call graph
 and a shared string-global cluster. `ovl_15_func_80134770` (0x120 bytes at 0x80134770)
 ends exactly where `ovl_15_func_80134890` (0x138 bytes) begins, which ends exactly where
@@ -14056,8 +14211,18 @@ Historical evidence:
 
 ## `ovl_19` D_8007AFF0 far-buffer state reader run — 0x800BB358–0x800BB4D4 (confidence: medium)
 
-**Reconstructed module: `src/overlays/ovl_19/modules/scene_camera_geometry.c`,
-800BB318–800BB5D4 (exclusive), all five entries.** BB318 resets the exact
+**Expanded/renamed module: `src/overlays/ovl_19/modules/scene_resources.c`,
+800BB318–800BBD14 exclusive, all ten entries.** It absorbs the former
+five-member scene_camera_geometry module and the five ordered resource-load
+steps below, in original order. The common descriptor's loader BBB48 now
+lives with its draw and surface-query consumers. The sole setup dispatcher
+800B7F34 runs the five load/queue steps in order, waits for sound transfer,
+and then calls the camera reset; that lifecycle corroborates the descriptor
+relationship. The sprite loaders retain the two private data blobs and bind
+headers using their six-offset table. There is no slice inside this supported
+setup/render family and no flag-based boundary.
+
+The original camera-core membership evidence remains valid: BB318 resets the exact
 camera distance/height/yaw/target slots BB358 rotates and BB470 installs;
 BB4D4 constructs the identical eye/target for geometry culling. Both frame
 controllers 800B8064/800B80E8 invoke update/apply/draw in that order. BB548
@@ -14065,15 +14230,16 @@ joins through the same geometry descriptor as BB4D4 and its surface-query
 protocol, not through adjacency alone. This is private state/protocol and
 call-sequence evidence; -G0 supplies no GP ownership proof.
 
-The complete supported reader/query family is folded, not the four-reader
-slice. Left neighbor BB108's nested helper pair draws the separate BF660
-sprite object; it neither consumes this camera block nor calls these helpers.
-Right neighbor BB5D4 starts sprite/CD setup, not the camera/query protocol.
-Later BBB48 loads this geometry descriptor, so descriptor sharing alone does
-not prove a boundary before setup or require merging the whole setup run;
-there is currently no additional compiler/linkage evidence joining those
-families. These endpoints delimit the evidence-supported family, not proven
-original object boundaries. No known connected camera reader was left out.
+Boundaries now enclose the complete setup/render protocol. Left BB108's
+nested table-display helper pair uses the broadly shared UI sprite but not
+this camera block or geometry/query protocol; it has its own private label
+pool and captured caller-frame relationship. The common UI sprite alone is
+not enough to absorb that family. Right BBD14 is an exit-time persistent-
+record updater called by 8190, not one of the setup state steps; it uses
+none of the private sprite blobs, disc table or descriptor. These are
+negative/evidence-limited outer cuts, not proven original-object boundaries.
+The earlier BB5D4 cut was a responsibility split, not a proven TU boundary;
+it is withdrawn now that the entire setup/lifecycle is reconstructed.
 
 Names preserve the overlay/address identity: BB318 `Ovl19InitSceneCamera`,
 BB358 `Ovl19UpdateSceneCameraOffset`, BB470 `Ovl19ApplySceneCamera`, BB4D4
@@ -14093,10 +14259,23 @@ The scoped override-header extern was renamed explicitly: canonicalNames
 rewrites overlay source references but does not resolve this shared header's
 unqualified overlay data identity automatically.
 
-All five members passed the merged baseline fold oracle (-O2/-G0); no member
-has an override and no flag exception was introduced. The full campaign gate
-passes: 267 folded functions, 32/32 valid modules, canonical/interfaces,
-linked EXE and all overlays including data, policy and no exception growth.
+The five loading entries are now `Ovl19LoadSceneSpriteArchive` (BB5D4),
+`Ovl19UploadSceneSpriteChunk` (BB848), `Ovl19LoadUiAndActorSprites` (BB8F4),
+`Ovl19LoadSceneGeometry` (BBB48), `Ovl19QueueSceneSound` (BBCCC).
+`ovl19_scene_resources.h` publishes them with CD busy-poll/scratch/OT side
+effects and sequencing, while the existing camera header retains its frame
+interfaces. Canonical names cover both sprite-data blobs, the six offsets,
+scene disc positions and the two sprite-source headers. Extern types,
+existing byte-aligned aggregate copy and the geometry loader's existing
+empty compiler barrier are retained; no assembly or definition was added.
+
+The checked whole-ten fold passed baseline -O2/-G0 and ovl_19 bytes. No member
+has an override and none was added/retired. Interface publication preserved
+the setup caller's object. The final campaign gate passes all eight integrity
+checks, every EXE/13-overlay byte including data/callbacks/tables/placement,
+canonical/public interfaces, policy, convergence and exception non-growth:
+**596 folded functions, 81/81 valid modules**. Five previously folded camera
+members stayed folded while five more joined; no shared tool was changed.
 
 Historical evidence:
 
@@ -14130,6 +14309,12 @@ Related same-TU candidate ([shared descriptor and gapless adjacency](research/ov
 - ovl_19_func_800BB548 (m, byte-exact) — collision-height adjustment using the same `D_800BF700` descriptor as its immediate predecessor, ovl_19_func_800BB4D4.
 
 ## `ovl_19` D_800BCEE4 display-setup state-handler run — 0x800BB5D4–0x800BBD14 (confidence: medium)
+
+All five entries are now part of the whole `scene_resources.c` unit above,
+joined to the existing camera/draw/surface-query family through the geometry
+loader/descriptor and ordered initialization lifecycle. This heading records
+a subfamily, not an active TU boundary. BBD14 remains outside: it is the
+scene-exit persistent-record update, not one of these setup steps.
 
 Evidence: the dispatcher `ovl_19_func_800B7F34` (s) selects on the state byte
 `D_800BCEE4` via `jtbl_800B7E24` and, from consecutive jump-table branches, calls
@@ -14847,6 +15032,10 @@ none was added. No matching exception or new framework was added.
 
 ## `ovl_11` D_8006C838+0x8000 work-area +0x64C8 halfword pair — 0x800BFCA4 / 0x800BFD04 (confidence: medium)
 
+Both entries now belong to the complete daily_conditions module beginning
+800BF8B8 above, not a separate accessor slice. The applier/publisher call and
+shared current/next-code lifecycle connect them to its date helpers.
+
 Pair of `ovl_11` functions sharing one work-area halfword and the container's
 `D_8006C838+0x8000` base fingerprint.
 
@@ -15145,14 +15334,72 @@ Members (link order):
 
 ## `ovl_19` D_800BF4D0 overlay-local s16-state consumer cluster — 0x800B8064 … 0x800BA834 (confidence: medium)
 
+**Reconstructed closed state-handler unit: `src/overlays/ovl_19/modules/
+actor_behavior_states.c`, 800B998C–800BA25C exclusive, all eleven entries.**
+The larger cluster below is a subsystem relationship, not proof that every
+consumer of the widely shared scene work array was one file. This narrower
+unit has an explicit closure: 998C dispatches states 3..11 to the nine
+consecutive handlers, and they alone call the final A0A0 position stepper.
+The only outside calls into the run target 998C (from 87C4/89C8). The
+private BCF58 direction-weight table belongs to 9AB0, and the two ordered
+jump tables are pooled unchanged. The three identical states 6/7/8 remain
+three definitions/entry identities, not collapsed source aliases.
+
+Boundaries: left 95D4 is a separately called interaction/obstacle predicate
+with its own helper graph; right A25C is a separately called pair predicate.
+Both share general scene/actor state with the run, but neither consumes the
+private weights or calls a state handler/stepper. Broad scene work and the
+actor_controls API are subsystem interfaces, not alone TU-membership proof.
+The cuts are evidence-limited (-G0 supplies no GP ownership distinction);
+no flag or exception forced them. All eleven are ordinary compiled C.
+
+Names in original order: `Ovl19UpdateActorBehaviors`,
+`Ovl19UpdateDirectionChoice`, `Ovl19ActorState4NoOp`,
+`Ovl19StepUntilCountdownEnds`, `Ovl19ActorState6Step`,
+`Ovl19ActorState7Step`, `Ovl19ActorState8Step`,
+`Ovl19StepAfterDoubleThreshold`, `Ovl19StepWithTimedSound`,
+`Ovl19StepWhileValueBelowLimit`, `Ovl19StepActorPosition`.
+`ovl19_actor_behavior_states.h` publishes only the dispatcher and explains
+its two 0x48-byte slots, pre-decrement handler countdown, positive-only
+post-handler tick, state/position/sound/RNG effects and initialization
+requirements. The motion/countdown/limit views now have role names and
+fields, preserving all widths, signedness, offsets and the signed versus
+unsigned state views. Position units and the state-11 +12 value stay neutral.
+
+Canonical data names distinguish `gOvl19SceneWork`, its pair-state anchor,
+the direction weights, base step and two countdown thresholds. The original
+interior anchors remain separate labels, not new allocations; broad work
+extents were not enlarged to cover every indexed field. Naming propagated
+through all scene-work consumers, including existing modules. Scoped externs
+were explicitly reconciled in globals_override.h: canonicalNames cannot
+assign an unqualified shared-header overlay address to a container itself.
+
+The fold exposed real contracts: A054 forwarded three unread registers to
+A0A0, whose body and other callers establish one pointer/void; both now use
+that contract without added argument setup. State 4 keeps its empty body and
+accepts the pointer the original dispatcher passes. Outside the unit,
+800BA564 returned SquareRoot0 in v0 to TWO consuming callers but had a void
+C definition. It is now `Ovl19ActorPlanarDistance`, with an explicit signed
+32-bit result and a shared signed-position view/header. The original words
+and both callers corroborate the return; this is not a guessed API change.
+The first gate exposed the overlay generator changing its per-function stem
+to the canonical name and creating a stub; moving the existing implementation
+to that generated stem removed it. No stub or policy permission remains added.
+
+Baseline fold proved all eleven and ovl_19 bytes. The full campaign gate then
+proved the named/type/interface changes, the corrected distance utility and
+all callers/data/tables across every container. Final state: 596 folded,
+81/81 modules valid, all eight integrity gates PASS, no override or exception
+growth. No shared tooling change was needed. Historical evidence follows.
+
 Membership extension: [ordered outer callbacks and shared update chain](research/ovl_19_func_800B8064-grouping.md).
 
 Evidence: seven `ovl_19` functions build the absolute base
 `lui/addiu %hi/%lo(D_800BF4D0)` (0x800BF4D0, a 16-byte label that begins a larger
 overlay-local s16 state array in `3F54.data.s`; the `D_800BF4C0` label
 immediately precedes it and `D_800BF4E0` follows). The symbol lives in the
-overlay's own data segment, so sharing it is same-TU private-data evidence, not
-shared-RAM noise. The call graph agrees inside the cluster:
+overlay's own data segment, so sharing it is a private subsystem relation,
+not shared-RAM noise; without GP evidence it does not alone settle TU cuts. The call graph agrees inside the cluster:
 `ovl_19_func_800B89C8` calls `800B95D4`/`800B998C`/`800BA770`,
 `ovl_19_func_800B998C` calls `800B9AB0`, `ovl_19_func_800BA770` calls
 `800BA834`, and `ovl_19_func_800B95D4` calls `800BA2D4` and consumes its

@@ -6,12 +6,12 @@
 #include "sound_driver.h"
 #include "ovl11_clock_calendar.h"
 #include "ovl11_vertex_blend.h"
+#include "ovl11_daily_conditions.h"
 
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001AF44 (u32 arg0);
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
-s16 ovl_11_func_800BF8B8 (void);
 void ovl_11_func_800CCCC0 (void);
 void ovl_11_func_80111F88 (void);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
@@ -48,7 +48,6 @@ void ovl_11_func_800D9064 (void);
 void ovl_11_func_800C05F8 (void);
 void ovl_11_func_800DE4C0 (void);
 void ovl_11_func_800BD3C4(s32 arg0);                /* static */
-s16 ovl_11_func_800BFB28();                         /* static */
 void ovl_11_func_801129EC();                        /* static */
 void ovl_11_func_800F4BB4(void);
 
@@ -92,8 +91,8 @@ s32 ovl_11_func_800DDDFC(void) {
         func_8001AF70(0x73, ((Ovl11DDDFCState *)D_8006C838)->mode == 3);
         ovl_11_func_800D7B8C();
         ovl_11_func_800CECB0();
-        ovl_11_func_800BFB28();
-        ovl_11_func_800BF8B8();
+        Ovl11ApplyCurrentDayCondition();
+        Ovl11ChooseNextDayCondition();
         ((Ovl11DDDFCState *)D_8006C838)->phase++;
         break;
     case 3:

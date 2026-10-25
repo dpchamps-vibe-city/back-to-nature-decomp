@@ -695,7 +695,8 @@ extern void (*Ovl11_D_801273DC)(void) __asm__("D_801273DC");
 extern s32 D_8006C848;
 
 /* 8012135C scans 25 effect records at stride 0x18; named view preserves existing pool types. */
-extern u8 Ovl11_D_8012DB90[] __asm__("D_8012DB90");
+/* 801212C4/80121318 visit 25 effects at 0x18-byte stride; +14 is the free marker. */
+extern u8 gOvl11SpriteEffects[0x258];
 
 /* 800C3138 indexes four original signed heading words with an unsigned halfword selector. */
 extern s32 D_80122F8C[4];
@@ -1717,19 +1718,22 @@ typedef struct {
 /* ovl_11_func_800D93C8 selects these five-argument handlers; each writes three s32 outputs. */
 extern s32 (*D_80128DA8)(u16, u8, s32 *, s32 *, s32 *);
 
-/* ovl_11_func_800BF8B8 reads the date pair and comparison pair, then updates u16 at +0xE4CA. */
+/* 800BFC20 reads five signed halfword record indices at overlay 11:80122E74. */
+extern s16 gOvl11ConditionDateRecordIndices[];
+
+/* 800BF8B8/800BFB28 choose and apply the next/current condition code.
+ * Mixed signed/unsigned reads are intentional; retain the stored halfwords. */
 typedef struct {
     u8 pad_0[0x44BA];
-    u16 field_44BA;
-    u16 field_44BC;
+    u16 season;
+    u16 day;
     u8 pad_44BE[0x548A - 0x44BE];
-    s16 field_548A;
-    s16 field_548C;
-    /* 800BFB28 copies +E4CA to +E4C8, then adjusts and returns that u16. */
+    s16 excludedSeason;
+    s16 excludedDay;
     u8 pad_548E[0xE4C8 - 0x548E];
-    u16 field_E4C8;
-    u16 field_E4CA;
-} Ovl11BF8B8View;
+    u16 currentCondition;
+    u16 nextCondition;
+} Ovl11DayConditionWorkView;
 
 /* ovl_11:800C090C fills 0xC8 bytes with -1; 800C0EA4/0EFC enqueue and
  * shift fifty signed event IDs. Absolute-addressed overlay state. */
@@ -3131,7 +3135,7 @@ extern struct SpriteSourceData D_80128D00;
  * Walked as a contiguous array by ovl_11_func_800DA588 and indexed by
  * ovl_11_func_800F5BC0 as &D_80070400 + index. Same incomplete-type forward
  * declaration class as D_80128D00 above. */
-extern struct SpriteSourceData D_80070400;
+extern struct SpriteSourceData gSpriteSourceBankBase;
 
 /* InitCameraOffsetState computes a three-word offset, zeros its origin, and
  * copies the offset into a backup. Retain the existing array-backed lvalue
@@ -5457,11 +5461,10 @@ extern u8 gOvl19SceneGeometry[];
 /* ovl_19_func_800B7F34 selects and advances this state with lbu/sb. */
 extern u8 D_800BCEE4;
 
-/* D_800BCB74 - ovl_19 s32 {start,end} CD-position pair table. ovl_19
- * func_800BBB48 reads [0], [1] and [2] and passes [1]-[0] and [2]-[1] as
- * the sector counts of two func_80014BCC transfers. Defined in the overlay
- * data segment, so only an extern declaration belongs here. */
-extern s32 D_800BCB74[];
+/* ovl_19:800BCB74 - disc positions. Ovl19LoadSceneGeometry reads the first
+ * three and transfers the two intervening byte ranges. Overlay data remains
+ * externally defined; this is not a new allocation or tentative definition. */
+extern s32 gOvl19SceneDiscPositions[];
 
 /* D_800BC894 - ovl_21 s32 {start,end} CD-position pair table. ovl_21
  * func_800BB8B8 reads [0], [1] and [2] and passes [1]-[0] and [2]-[1] as
@@ -5855,7 +5858,7 @@ extern u16 gOvl19ValueLabelText[0x96];
 extern u16 D_800BCD68[0x96];
 /* 800B8C74 indexes this byte table with the signed selection at state +0x8. */
 extern u8 D_800BCF24[];
-extern s16 D_800BF4C0[];
+extern s16 gOvl19SceneWork[];
 /* ovl_19 800B89C8 loads/stores this selection as a signed halfword. */
 extern s16 D_800BD070;
 /* 800B8C74: state at +4, signed selection at +8, byte flag at +C,
@@ -5874,7 +5877,7 @@ typedef struct {
 /* ovl_19 800B9124 increments/resets this signed word and tests its remainder modulo 30. */
 extern s32 D_800BD078;
 /* ovl_19 800B95D4 anchors its two 0x48-byte signed-halfword records here. */
-extern s16 D_800BF4D0[];
+extern s16 gOvl19ActorPairState[];
 /* ovl_19 800BA770 walks three 0x40-byte halfword records through 800BAB4C. */
 extern s16 D_800BF560[];
 /* ovl_19 800BA770 passes positions at this base, stepping by six halfwords. */
@@ -5900,16 +5903,16 @@ extern s16 D_800BF5A0[];
 /* D_800BF630 - ovl_19 s16 state halfword. ovl_19_func_800BA0A0 reads it
  * directly (lui + %lo, then lh) as one of the switch-1 rate sources; the
  * object lives in overlay RAM, so only an extern declaration belongs here. */
-extern s16 D_800BF630;
+extern s16 gOvl19BaseActorStep;
 /* D_800BF64E - ovl_19 s16 state halfword. ovl_19_func_800B9E14 loads it
  * directly (lui + %lo, then lh) and compares it against the +0x6 state field
  * of its record argument. Absolute-addressed (overlay build is -G0). */
-extern s16 D_800BF64E;
+extern s16 gOvl19StepStartTicks;
 /* D_800BF650 - ovl_19 s16 state halfword. ovl_19_func_800B9F40 loads it
  * directly (lui 0x800c + %lo, then lh) and compares it, less 0x1E and 0x3C,
  * against the +0x6 state field of its record argument. Absolute-addressed
  * (overlay build is -G0). */
-extern s16 D_800BF650;
+extern s16 gOvl19DoubleThresholdTicks;
 /* ovl_19 800BA834 loads this signed halfword for the case-10 thresholds. */
 extern s16 D_800BF652;
 extern u16 D_800BCEF0[];
@@ -5918,7 +5921,7 @@ extern s16 D_800BCF0C[];
 extern s16 Ovl19_D_800BCFF0[] __asm__("D_800BCFF0");
 extern u16 D_800BCF28[];
 /* ovl_19 800B9AB0 indexes byte weights by flag * 16 + direction * 4 + choice. */
-extern u8 D_800BCF58[];
+extern u8 gOvl19DirectionWeights[];
 extern u16 D_800BCEE8[];
 extern s16 D_800BCEFC[];
 
@@ -5963,19 +5966,19 @@ extern s16 D_800BD080[4];
 extern s32 D_800BD050[2];
 /* ovl_19_func_800BAFAC fills three halfwords of this eight-byte GTE vector. */
 extern s16 D_800BD088[4];
-/* ovl_19_func_800BB8F4 reads six word offsets for sprite headers. */
-extern s32 D_800BD058[6];
-/* ovl_19_func_800BB8F4 copies a 0x104C-byte sprite-data blob here. */
+/* Ovl19LoadUiAndActorSprites reads six word offsets for sprite headers. */
+extern s32 gOvl19UiSpriteOffsets[6];
+/* The same loader copies this complete blob, retaining its byte alignment. */
 typedef struct {
     u8 bytes[0x104C];
 } Ovl19SpriteBlob;
-extern u8 D_800BE470[0x104C];
-/* ovl_19_func_800BB5D4 copies 0x13DC bytes of sprite-header data here. */
-extern u8 D_800BD090[0x13DC];
-/* ovl_19_func_800BB5D4 initializes this sprite from D_800BD090. */
-extern struct SpriteSourceData D_800BF690;
-/* ovl_19_func_800BB8F4 initializes this sprite from offset table entry 5. */
-extern struct SpriteSourceData D_800BF6D0;
+extern u8 gOvl19UiSpriteData[0x104C];
+/* Ovl19LoadSceneSpriteArchive retains and mirrors 0x13DC bytes here. */
+extern u8 gOvl19SceneSpriteData[0x13DC];
+/* The scene archive loader binds this header to its retained sprite data. */
+extern struct SpriteSourceData gOvl19SceneSpriteSource;
+/* UI/actor loading binds this header to sprite-offset table entry 5. */
+extern struct SpriteSourceData gOvl19AuxSceneSpriteSource;
 /* 800BAC9C stores its set/clear operation here before applying mask 4. */
 extern void (*gOvl19ActorSpriteFlagOperation)(u16 *flags, s32 mask);
 
@@ -6950,6 +6953,17 @@ typedef struct {
     Ovl15IconPalette palette;
 } Ovl15CardHeaderBlock;
 extern Ovl15CardHeaderBlock Ovl15CardHeader __asm__("D_80140F10");
+/* 80134770 concatenates these Shift-JIS title prefix/year/space fragments. */
+extern char gOvl15CardTitlePrefix[];
+extern char gOvl15CardTitleYearLabel[];
+extern char gOvl15CardTitleSpace[];
+/* 80134890 copies the Shift-JIS zero glyph and adds to its second byte. */
+extern u8 gOvl15CardTitleZeroGlyph[];
+/* 80134770 and its two helpers use these non-reentrant string buffers. */
+extern char gOvl15CardTitlePart[];
+extern u8 gOvl15CardTitleGlyphScratch[];
+/* 801349C8 clamps the season to 0..3 before indexing these four strings. */
+extern char *gOvl15CardTitleSeasonNames[];
 /* 8012FAE0 adds the shared text-bank offset before func_8001AC10. */
 extern u8 D_8005346A[];
 

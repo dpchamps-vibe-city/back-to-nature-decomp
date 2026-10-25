@@ -111,7 +111,7 @@ void ovl_11_func_800D9F1C(void) {
                     continue;
                 }
                 DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
-                    (s32)(&D_80070400 + texture), (u8)sprite, 0,
+                    (s32)(&gSpriteSourceBankBase + texture), (u8)sprite, 0,
                     (s16)projected[0], (s16)projected[1]);
             }
         }

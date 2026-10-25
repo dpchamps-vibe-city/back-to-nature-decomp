@@ -1,5 +1,23 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// The complete 25-entry projected sprite-effect pool lifecycle.
+Ovl11UpdateSpriteEffects = 0x801212C4; // type:func
+Ovl11ClearSpriteEffects = 0x80121318; // type:func
+Ovl11SpawnSpriteEffect = 0x8012135C; // type:func
+Ovl11DrawAndStepSpriteEffect = 0x801213D8; // type:func
+Ovl11ReleaseSpriteEffect = 0x801214F8; // type:func
+Ovl11InitSpriteEffect = 0x80121500; // type:func
+gOvl11SpriteEffects = 0x8012DB90; // type:data size:0x258
+
+// Calendar-dependent current/next condition selection and its private date list.
+Ovl11ChooseNextDayCondition = 0x800BF8B8; // type:func
+Ovl11AdvanceConditionDate = 0x800BFADC; // type:func
+Ovl11ApplyCurrentDayCondition = 0x800BFB28; // type:func
+Ovl11IsConditionExcludedDate = 0x800BFC20; // type:func
+Ovl11PublishDayConditionFlags = 0x800BFCA4; // type:func
+Ovl11SetCurrentDayCondition = 0x800BFD04; // type:func
+gOvl11ConditionDateRecordIndices = 0x80122E74; // type:data size:0xA
+
 // Two-choice panel variants, pressed-input service and wide prompt state.
 Ovl11DrawCompactChoicePrompt = 0x8011D0C8; // type:func
 Ovl11DrawWideChoicePrompt = 0x8011D10C; // type:func

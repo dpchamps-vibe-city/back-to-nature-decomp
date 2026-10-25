@@ -11,6 +11,8 @@
 #include "ovl11_vertex_blend.h"
 #include "message_window.h"
 #include "ovl11_choice_messages.h"
+#include "ovl11_daily_conditions.h"
+#include "ovl11_sprite_effect_pool.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -39,17 +41,14 @@ void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_8010C6A0 (void);
 s32 *ovl_11_func_80111E38 (void);
 void ovl_11_func_800F2508 (void);
-void ovl_11_func_80121318 (void);
 void ovl_11_func_80104898 (void);
 void ovl_11_func_800FFA28 (void);
 void ovl_11_func_801128B4 (void);
 void ovl_11_func_800BD668 (void);
 void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_80104A58 (void);
-s16 ovl_11_func_800BF8B8 (void);
 void ovl_11_func_80104A88 (void);
 u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
-s16 ovl_11_func_800BFB28(void);
 void ovl_11_func_800DB9A4(void);
 void ovl_11_func_8010476C(void);
 void ovl_11_func_80112D10(void);
@@ -97,7 +96,7 @@ void ovl_11_func_801044E4(void) {
     ResetMessageWindow();
     ovl_11_func_80111E38();
     ovl_11_func_800F2508();
-    ovl_11_func_80121318();
+    Ovl11ClearSpriteEffects();
     ovl_11_func_80104898();
     ovl_11_func_800FFA28();
     ovl_11_func_8010476C();
@@ -110,8 +109,8 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_80112D10();
     ovl_11_func_80104A58();
     DealCardGameTable();
-    ovl_11_func_800BFB28();
-    ovl_11_func_800BF8B8();
+    Ovl11ApplyCurrentDayCondition();
+    Ovl11ChooseNextDayCondition();
     ovl_11_func_80104A88();
     if (base->flags & 0x8000) {
         ovl_11_func_800CE744(0x162, -1);

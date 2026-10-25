@@ -6,6 +6,7 @@
 #include "message_window.h"
 #include "ovl11_choice_messages.h"
 #include "state_memory_init.h"
+#include "ovl11_sprite_effect_pool.h"
 
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800D6628(void);
@@ -24,7 +25,6 @@ void ovl_11_func_800F6630(void);
 void ovl_11_func_800F42A8(u16 arg0, s32 arg1);
 void ovl_11_func_800CBEF8(void);
 void ovl_11_func_80111EF0(void);
-void ovl_11_func_80121318(void);
 void ovl_11_func_800FFA28(void);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE76C(void);
@@ -81,7 +81,7 @@ void ovl_11_func_80104A90(void) {
     Ovl11ResetSelectionMessage();
     ResetMessageWindow();
     ovl_11_func_80111EF0();
-    ovl_11_func_80121318();
+    Ovl11ClearSpriteEffects();
     ovl_11_func_800FFA28();
     ovl_11_func_800CFD9C();
     ovl_11_func_800DE76C();

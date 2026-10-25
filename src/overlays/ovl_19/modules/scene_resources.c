@@ -1,11 +1,12 @@
 /*
- * Overlay-19 camera orbit and scene geometry queries.
- *
- * The reset/update/apply path shares a compact state block in the secondary
- * work area. Drawing and surface adjustment use the scene descriptor loaded
- * by the overlay's setup code. See ovl19_scene_camera_geometry.h for ordering
- * and units, and notes/file-groupings.md for membership/boundary evidence.
+ * Overlay-19 scene resources, original 800BB318-800BBD14.
+ * Sprite/archive and queued sound setup precede the camera/render lifecycle.
+ * The geometry loader, camera-driven draw path and surface queries share
+ * one descriptor; they now live together rather than in separate modules.
+ * See ovl19_scene_resources.h and ovl19_scene_camera_geometry.h for sequencing,
+ * state changes, units and loading prerequisites.
  */
+
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
@@ -15,6 +16,13 @@
 #include "gte_scene_state.h"
 #include "projected_primitives.h"
 #include "ovl19_scene_camera_geometry.h"
+#include "ovl19_scene_resources.h"
+#include "psyq/memory.h"
+#include "cd_loader.h"
+#include "sprite_source.h"
+#include "sprite_upload.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 /* Offsets from D_8007AFF0, not independent globals. The distance, height and
  * yaw slots are reset as words but consumed as low halfwords. Keep those
@@ -120,4 +128,73 @@ void Ovl19AdjustPositionToSurface(s16 *position) {
     position[1] = query[1];
     position[2] = query[2];
     position[3] = query[3];
+}
+
+void Ovl19LoadSceneSpriteArchive(void) {
+    DrawSync(0);
+    ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
+    CdReadArchiveBytes(0, 0x25000, 0x5800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
+    do {
+    } while (CdReadArchiveBytes(0, 0x25000, 0x5800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x566C));
+    memcpy(gOvl19SceneSpriteData, (void *)(gGraphicsHeapBase + 0x4290), 0x13DC);
+    memcpy(&gSharedSpriteData, (void *)(gGraphicsHeapBase + 0x4290), 0x13DC);
+    InitSpriteSourceData(&gOvl19SceneSpriteSource, (SpriteDataHeader *)gOvl19SceneSpriteData);
+}
+
+void Ovl19UploadSceneSpriteChunk(void) {
+    DrawSync(0);
+    ClearOTagR(gActiveRenderContext->field_120, 0x800);
+    CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
+    do {
+    } while (CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
+}
+
+void Ovl19LoadUiAndActorSprites(void) {
+    s32 i;
+
+    DrawSync(0);
+    ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
+    CdReadArchiveBytes(0x14, 0, 0x1AE04, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
+    do {
+    } while (CdReadArchiveBytes(0x14, 0, 0x1AE04, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x52DC));
+    *(Ovl19SpriteBlob *)gOvl19UiSpriteData = *(Ovl19SpriteBlob *)(gGraphicsHeapBase + 0x4290);
+    InitSpriteSourceData((SpriteSourceData *)gOvl19UiSprite, (SpriteDataHeader *)(gOvl19UiSpriteData + gOvl19UiSpriteOffsets[0]));
+    for (i = 0; i < 3; i++) {
+        InitSpriteSourceData((SpriteSourceData *)(gOvl19UiSprite + i * 0x40 - 0xF0), (SpriteDataHeader *)(gOvl19UiSpriteData + gOvl19UiSpriteOffsets[i + 2]));
+    }
+    for (i = 0; i < 2; i++) {
+        InitSpriteSourceData((SpriteSourceData *)(gOvl19AuxActorSprites + i * 0x48), (SpriteDataHeader *)(gOvl19UiSpriteData + gOvl19UiSpriteOffsets[1]));
+    }
+    InitSpriteSourceData(&gOvl19AuxSceneSpriteSource, (SpriteDataHeader *)(gOvl19UiSpriteData + gOvl19UiSpriteOffsets[5]));
+}
+
+void func_8001E340(void **arg0);
+void SetVal8005E51C(s32 arg0);
+
+/* Keep the descriptor address live across the copy. The existing compiler
+ * barrier preserves publication after the complete asset-data transfer. */
+void Ovl19LoadSceneGeometry(void) {
+    s32 *discPositions;
+    u8 *geometry;
+
+    discPositions = gOvl19SceneDiscPositions;
+    CdReadDiscSectorsBlocking(0, discPositions[0], discPositions[1] - discPositions[0], 0, D_8007AFF0);
+    CdReadDiscSectorsBlocking(0, discPositions[1], discPositions[2] - discPositions[1], 0, gGraphicsHeapBase + 0x4290);
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
+    memcpy(&D_8009F78C, (void *)D_8007AFF0, 0xBDC);
+    geometry = &gOvl19SceneGeometry;
+    __asm__("" : : : "memory");
+    InitProjectedPrimitiveSource(geometry, (void *)(D_8007AFF0 + 0x2000));
+    func_8001E340((void **)geometry);
+    SetVal8005E51C(0xC8);
+}
+
+void Ovl19QueueSceneSound(void) {
+    RewindSoundLoadSlots(2, 0);
+    RewindSoundLoadSlots(1, 0);
+    QueueSoundLoadCommand(0x3E7, 0);
+    QueueSoundLoadCommand(0xF, 1);
 }

@@ -1489,6 +1489,9 @@ gCameraOffsetBackup = 0x80049280; // size:0xC
 gAgedItemCells = 0x80075854; // size:0x18C
 gAgedItemLastAddCount = 0x80070D3C; // size:0x2
 
+// Base header of the 0x30-stride sprite-source bank used by ovl_11.
+gSpriteSourceBankBase = 0x80070400; // size:0x30
+
 // Persistent calendar/clock halfwords, advanced by ovl_11:800C0A4C.
 gCalendarYear = 0x80070CF0; // size:0x2
 gCalendarSeason = 0x80070CF2; // size:0x2

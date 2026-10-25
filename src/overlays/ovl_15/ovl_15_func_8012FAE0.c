@@ -3,13 +3,13 @@
 #include "game_types.h"
 #include "psyq/memory.h"
 #include "psyq/strings.h"
+#include "ovl15_save_card_title.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 void ovl_15_func_80134A34(s16 arg0);
 void ovl_15_func_80134C48(void);
 void ovl_15_func_801359FC(void);
 void ovl_15_func_80137544(char *arg0, s32 arg1);
-s8 *ovl_15_func_80134770(s16 arg0);
 
 void ovl_15_func_8012FAE0(void) {
     s32 temp_a1;
@@ -28,7 +28,7 @@ void ovl_15_func_8012FAE0(void) {
     memcpy(&Ovl15CardHeader, D_8012DEBC, 3);
     Ovl15CardHeader.type = 0x13;
     Ovl15CardHeader.blocks = 4;
-    ovl_15_func_80134770(D_8013758E);
+    Ovl15BuildSaveCardTitle(D_8013758E);
     memset(Ovl15CardHeader.reserved, 0, sizeof(Ovl15CardHeader.reserved));
     paletteOffset = icons[0] + 0x14;
     Ovl15CardHeader.palette = *(Ovl15IconPalette *)(D_80137828 + paletteOffset);

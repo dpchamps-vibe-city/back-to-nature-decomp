@@ -12,6 +12,7 @@
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
 #include "ovl11_choice_messages.h"
+#include "ovl11_sprite_effect_pool.h"
 
 void ovl_11_func_800C3D70 (void);
 void ovl_11_func_800BFD1C (void);
@@ -34,7 +35,6 @@ void ovl_11_func_8010C7F0 (void);
 void ovl_11_func_800CE834 (void);
 s32 ovl_11_func_801189C8 (void);
 void ovl_11_func_800F3FB4 (void);
-void ovl_11_func_801212C4 (void);
 void ovl_11_func_800F2400 (void);
 void ovl_11_func_800DE46C (void);
 
@@ -91,7 +91,7 @@ void ovl_11_func_800C162C(void) {
     ovl_11_func_800CE834();
     ovl_11_func_801189C8();
     ovl_11_func_800F3FB4();
-    ovl_11_func_801212C4();
+    Ovl11UpdateSpriteEffects();
     ovl_11_func_800F2400();
     UpdateMessageWindow();
     ovl_11_func_800DE46C();

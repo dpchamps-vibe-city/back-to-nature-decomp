@@ -8,10 +8,10 @@ void ovl_19_func_800B86DC(void) {
     s32 result;
 
     ovl_19_func_800BA770();
-    switch (D_800BF4C0[4]) {
+    switch (gOvl19SceneWork[4]) {
     case 0:
-        D_800BF4C0[2] = 2;
-        D_800BF4C0[3] = 0;
+        gOvl19SceneWork[2] = 2;
+        gOvl19SceneWork[3] = 0;
         return;
     case 1:
         RequestMessageWindow(4, 0xF);
@@ -24,11 +24,11 @@ void ovl_19_func_800B86DC(void) {
     if (status == 2) {
         result = GetMessageWindowChoice();
         if (result == 1) {
-            D_800BF4C0[0x100] = 0;
-            D_800BF4C0[2] = 3;
+            gOvl19SceneWork[0x100] = 0;
+            gOvl19SceneWork[2] = 3;
         } else if (result == status) {
-            D_800BF4C0[2] = result;
-            D_800BF4C0[3] = 0;
+            gOvl19SceneWork[2] = result;
+            gOvl19SceneWork[3] = 0;
         }
     }
 }

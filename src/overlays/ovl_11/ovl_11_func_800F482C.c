@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_sprite_effect_pool.h"
 
 s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
@@ -7,8 +8,6 @@ s32 ovl_11_func_800D5E00(u16 a, u16 b);
 s32 ovl_11_func_800D5E64(u16 a, u16 b);
 s32 ovl_11_func_800D5ED4(u16 a, u16 b);
 void ovl_11_func_800F3898(u16 arg0, u16 arg1);
-/* Forward the aligned payload words as in the matched 800F474C caller. */
-s32 ovl_11_func_8012135C();
 
 s32 ovl_11_func_800F482C(Ovl11SpawnEffectRecord *arg0, s16 arg1, s16 arg2) {
     s32 flags;
@@ -44,7 +43,7 @@ s32 ovl_11_func_800F482C(Ovl11SpawnEffectRecord *arg0, s16 arg1, s16 arg2) {
                 default:
                     break;
                 }
-                ovl_11_func_8012135C(arg0->unk2, arg0->unk8, arg0->unkC, arg0->unk10, arg0->unk14);
+                Ovl11SpawnSpriteEffect(arg0->unk2, *(VECTOR *)&arg0->unk8);
                 result = 1;
             }
         }

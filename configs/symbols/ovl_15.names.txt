@@ -9,3 +9,15 @@ Ovl15PlaceRowXSlot = 0x80132A8C;
 Ovl15PlaceRowZSlot = 0x80132B44;
 gOvl15RowXPlacementTable = 0x801375D8; // type:data size:0x20
 gOvl15RowZPlacementTable = 0x801375F8; // type:data size:0x60
+
+// Save-title builder and its two private Shift-JIS formatting helpers.
+Ovl15BuildSaveCardTitle = 0x80134770; // type:func
+Ovl15FormatTitleDigits = 0x80134890; // type:func
+Ovl15FormatTitleSeason = 0x801349C8; // type:func
+gOvl15CardTitlePrefix = 0x8012E014; // type:data size:0x24
+gOvl15CardTitleYearLabel = 0x8012E038; // type:data size:0x8
+gOvl15CardTitleSpace = 0x8012E040; // type:data size:0x4
+gOvl15CardTitleZeroGlyph = 0x8012E044; // type:data size:0x4
+gOvl15CardTitlePart = 0x801376B0; // type:data size:0x18
+gOvl15CardTitleGlyphScratch = 0x801376C8; // type:data size:0x8
+gOvl15CardTitleSeasonNames = 0x8013765C; // type:data size:0x10

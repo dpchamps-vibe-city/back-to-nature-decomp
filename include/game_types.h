@@ -358,11 +358,11 @@ typedef struct {
     s32 field_1C;
 } Ovl11CollisionQuery;
 
-/* ovl_11_func_800BFADC advances signed halfwords at +0/+2 of this by-reference pair. */
+/* Daily-condition lookahead date; signed halfwords, no year component. */
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-} Ovl11CounterPair;
+    s16 season;
+    s16 day;
+} Ovl11ConditionDate;
 
 /* 8010B264 updates the u16 counters at +16/+AC, compares lh at +1A/+1C/+1E
  * and +30, and passes the leading tag/flags view to 8010B830. */
@@ -777,24 +777,27 @@ typedef struct {
     u16 unkAC;
 } M2C_90bbdd1382f9_Struct_8010D0EC;
 
-/* 80121500 initializes this 0x18-byte effect: sh at 0/2, sw at 4/8/C,
- * sprite pointer at 14. The neighbouring update/clear routines use +14. */
+/* Low-halfword view of the two words at the start of an Ovl15SaveHeader.
+ * The title builder reads year and season; the remaining date fields stay
+ * neutral. The underlying record keeps its canonical 0x3C-byte word view. */
 typedef struct {
-    s16 unk0;
-    u16 unk2;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-    SpriteSourceData *unk14;
-} Ovl11SpriteEffect;
+    s16 year;
+    s16 season;
+    s16 field4;
+    s16 field6;
+} Ovl15SaveTitleDate;
 
-/* 80121500 homes each four-byte coordinate in its incoming argument slot.
- * This byte-aligned by-value view preserves that memory residence; the
- * original field interpretation is unknown, and the payload is copied whole. */
+/* 0x18-byte projected effect. Initialization stores full coordinate words;
+ * drawing deliberately projects only their low unsigned halfwords. */
 typedef struct {
-    u8 bytes[4];
-} Ovl11EffectCoordinate;
+    s16 animation;
+    u16 tick;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 reserved;
+    SpriteSourceData *sprite;
+} Ovl11SpriteEffect;
 
 /* 800F46A4 reads s16 at 2, clears bit 0 at 4, and forwards words at 8/C/10/14. */
 typedef struct {
@@ -1437,32 +1440,41 @@ typedef struct {
     u8 field_25;                                 /* 0x25 */
 } Recon_ovl_17_func_800BAD9C_A0View;
 
+/* Ovl19ActorPlanarDistance reads only the two signed position halfwords. */
+typedef struct {
+    char pad_0[0x10];
+    s16 position0;
+    char pad_12[0x2];
+    s16 position1;
+} Ovl19ActorPlanarPosition;
+
+/* Partial views of the ovl_19 actor records. Keep their different original
+ * access widths/signedness instead of imposing one speculative full layout. */
 typedef struct {
     char pad_0[0x4];
-    s16 unk4;
-    s16 unk6;
-} Recon_ovl_19_func_800B9DD0_A0View;
+    s16 direction;
+    s16 countdown;
+} Ovl19ActorCountdownView;
 
 typedef struct {
     char pad_0[0x4];
-    s16 unk4;
-    s16 unk6;
+    s16 direction;
+    s16 countdown;
     char pad_8[0xA];
-    s16 unk12;
-} Recon_ovl_19_func_800BA054_A0View;
+    s16 value12;             /* Compared with -10 in state 11. */
+} Ovl19ActorLimitView;
 
-/* ovl_19_func_800BA0A0 arg0: state record whose +0x2 halfword selects the
- * rate table entry, +0x4 selects the direction, and +0x10/+0x14 are the
- * quantities the function advances. */
+/* State selects the rate; direction selects which signed position changes.
+ * Stores explicitly wrap the advanced positions through their low halfwords. */
 typedef struct {
     char pad_0[0x2];
-    u16 unk2;
-    s16 unk4;
+    u16 state;
+    s16 direction;
     char pad_6[0xA];
-    s16 unk10;
+    s16 position0;
     char pad_12[0x2];
-    s16 unk14;
-} Recon_ovl_19_func_800BA0A0_A0View;
+    s16 position1;
+} Ovl19ActorMotionView;
 
 /* ovl_11_func_800CADBC arg0: array of three-s16 records; the function moves
  * each later non-empty record into the first empty slot and zeroes its source. */

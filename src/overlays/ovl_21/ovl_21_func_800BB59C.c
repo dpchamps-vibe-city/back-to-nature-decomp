@@ -26,6 +26,7 @@
 #include "debug_break.h"
 #include "render_packet_pool.h"
 #include "ovl11_choice_messages.h"
+#include "ovl11_sprite_effect_pool.h"
 
 typedef struct {
                s16 unk0;
@@ -63,7 +64,6 @@ void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800C1C90 (void);
 void ovl_11_func_800F4114 (void);
-void ovl_11_func_80121318 (void);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800F1038 (u16 arg0, s32 arg1);
 s32 ovl_11_func_800C2884 (s16 key, u32 *table);

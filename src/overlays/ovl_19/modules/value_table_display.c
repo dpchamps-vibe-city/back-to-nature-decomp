@@ -84,7 +84,7 @@ void Ovl19DrawValueTable(void) {
         row = 0;
     } while (moreColumns);
     func_80017A48(savedTextSetting);
-    counts = (u8 *)D_800BF4C0;
+    counts = (u8 *)gOvl19SceneWork;
     if (((s16 *)counts)[4] > 0) {
         Ovl19DrawValueTableSpriteState(1, 0);
         Ovl19DrawValueTableSpriteState(4, 0);

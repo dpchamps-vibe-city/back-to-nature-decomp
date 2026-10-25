@@ -70,7 +70,7 @@ void ovl_19_func_800B95D4(void) {
 
     i = 0;
     one = 1;
-    actors = D_800BF4C0 + 8;
+    actors = gOvl19SceneWork + 8;
     view = actors - 8;
     do {
         Ovl19ActorRecord *actor = (Ovl19ActorRecord *)actors + i;
@@ -89,7 +89,7 @@ void ovl_19_func_800B95D4(void) {
             continue;
         }
         if (actor->command == 4) {
-            state = D_800BF4C0;
+            state = gOvl19SceneWork;
             if (actor->timer != actor->timer / state[0xBB] * state[0xBB]) {
                 continue;
             }
@@ -147,7 +147,7 @@ void ovl_19_func_800B95D4(void) {
                     }
                     break;
             }
-            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)actor, command, angle, D_800BF4C0[0xBC]);
+            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)actor, command, angle, gOvl19SceneWork[0xBC]);
         }
     } while (view += 36, ++i < 2);
 }

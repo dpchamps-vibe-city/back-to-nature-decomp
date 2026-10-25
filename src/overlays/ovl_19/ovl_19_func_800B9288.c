@@ -14,9 +14,9 @@ void ovl_19_func_800B9288(void) {
     SetVal8005E2BC(0);
     SetMessagePortraitEnabled(0);
     RequestMessageWindow(4, 0xD);
-    if (D_800BF4C0[9] == 4) {
-        if (D_800BF4C0[0xB] < 2) {
-            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 5, 3, 0x3C);
+    if (gOvl19SceneWork[9] == 4) {
+        if (gOvl19SceneWork[0xB] < 2) {
+            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[8], 5, 3, 0x3C);
         }
     }
     if (ovl_19_func_800BA25C() == 1) {
@@ -26,13 +26,13 @@ void ovl_19_func_800B9288(void) {
         }
         if (GetMessageWindowStatus() == 2) {
             ovl_19_func_800B843C();
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 0, 0);
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 0, 0);
-            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 1, 1, 0);
-            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x2C], 1, 3, 0);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x50], 0, 0);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x70], 0, 0);
+            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[8], 1, 1, 0);
+            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x2C], 1, 3, 0);
             CloseMessageWindow();
-            D_800BF4C0[7] = 0;
-            D_800BF4C0[3] = 6;
+            gOvl19SceneWork[7] = 0;
+            gOvl19SceneWork[3] = 6;
         }
     }
 }

@@ -1,10 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_sprite_effect_pool.h"
 
 s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *arg0);
 s32 ovl_11_func_800D5D38(u16 a, u16 b);
-/* Pass the four coordinate payloads as words, as 8012135C does for 80121500. */
-s32 ovl_11_func_8012135C();
 
 s32 ovl_11_func_800F46A4(Ovl11SpawnEffectRecord *arg0) {
     s32 result;
@@ -22,7 +21,7 @@ s32 ovl_11_func_800F46A4(Ovl11SpawnEffectRecord *arg0) {
     }
     if (ovl_11_func_800D5D38((u16) arg0->unk2, 0) == 1) {
         arg0->unk4 &= 0xFFFE;
-        ovl_11_func_8012135C(arg0->unk2, arg0->unk8, arg0->unkC, arg0->unk10, arg0->unk14);
+        Ovl11SpawnSpriteEffect(arg0->unk2, *(VECTOR *)&arg0->unk8);
         result = 1;
     }
     return result;

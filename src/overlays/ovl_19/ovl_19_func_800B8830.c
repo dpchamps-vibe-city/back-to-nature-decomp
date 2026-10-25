@@ -13,16 +13,16 @@ void ovl_19_func_800B8830(void) {
     ovl_19_func_800BA770();
     SetVal8005E2BC(0);
     SetMessagePortraitEnabled(0);
-    RequestMessageWindow(4, Ovl19_D_800BCFF0[D_800BF4C0[4]]);
+    RequestMessageWindow(4, Ovl19_D_800BCFF0[gOvl19SceneWork[4]]);
     if (GetMessageWindowStatus() == 5) {
-        D_800BF4C0[0x100]++;
-        if (D_800BF4C0[0x100] >= 60) {
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 1, 0);
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 1, 0);
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x90], 4, 0);
+        gOvl19SceneWork[0x100]++;
+        if (gOvl19SceneWork[0x100] >= 60) {
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x50], 1, 0);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x70], 1, 0);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x90], 4, 0);
             CloseMessageWindow();
-            D_800BF4C0[0x100] = 0;
-            D_800BF4C0[2] = 4;
+            gOvl19SceneWork[0x100] = 0;
+            gOvl19SceneWork[2] = 4;
         }
     }
 }

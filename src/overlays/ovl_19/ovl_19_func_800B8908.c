@@ -16,14 +16,14 @@ void ovl_19_func_800B8908(void) {
     RequestMessageWindow(4, 0x12);
     state = GetMessageWindowStatus();
     if (state == 5) {
-        D_800BF4C0[0x100]++;
-        if (D_800BF4C0[0x100] >= 45) {
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 1, 0);
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 1, 0);
-            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x90], 0, 0);
+        gOvl19SceneWork[0x100]++;
+        if (gOvl19SceneWork[0x100] >= 45) {
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x50], 1, 0);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x70], 1, 0);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x90], 0, 0);
             CloseMessageWindow();
-            D_800BF4C0[0x100] = 0;
-            D_800BF4C0[2] = state;
+            gOvl19SceneWork[0x100] = 0;
+            gOvl19SceneWork[2] = state;
         }
     }
 }

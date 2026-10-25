@@ -12,6 +12,7 @@
 #include "sound_commands.h"
 #include "beveled_panel.h"
 #include "random.h"
+#include "ovl15_save_card_title.h"
 
 
 int McxCardType (int);
@@ -47,7 +48,6 @@ void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_15_func_80136558 (s16 arg0, s16 arg1);
 void ovl_15_func_801359FC (void);
 void ovl_15_func_80137544 (char *arg0, s32 arg1);
-s8 *ovl_15_func_80134770 (s16 arg0);
 void ovl_15_func_801305D4 (void);
 s32 ovl_15_func_801307D8 (void);
 s32 ovl_15_func_80130848 (void);
@@ -78,8 +78,8 @@ void ovl_15_func_80132520 (void);
 void ovl_15_func_801325AC (void);
 s32 ovl_15_func_801328C4 (void);
 void ovl_15_func_80134724 (void);
-s8 *ovl_15_func_80134890 (s16 arg0, s8 *arg1, s16 arg2);
-void ovl_15_func_801349C8 (s16 arg0, char *arg1);
+s8 *Ovl15FormatTitleDigits (s16 arg0, s8 *arg1, s16 arg2);
+void Ovl15FormatTitleSeason (s16 arg0, char *arg1);
 void func_80017A08 (s32 arg0, s32 arg1);
 void ovl_15_func_8013703C (s16 arg0, s16 *arg1, s32 arg2);
 u16 *func_8001AA7C (s32 arg0, u16 *arg1);

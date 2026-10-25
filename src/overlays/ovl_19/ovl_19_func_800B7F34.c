@@ -9,12 +9,8 @@
 #include "psyq/libgs.h"
 #include "ovl19_scene_camera_geometry.h"
 #include "message_window.h"
+#include "ovl19_scene_resources.h"
 
-void ovl_19_func_800BB5D4(void);
-void ovl_19_func_800BB848(void);
-void ovl_19_func_800BB8F4(void);
-void ovl_19_func_800BBB48(void);
-void ovl_19_func_800BBCCC(void);
 void ovl_19_func_800B82B8(void);
 
 void ovl_19_func_800B7F34(void) {
@@ -22,23 +18,23 @@ void ovl_19_func_800B7F34(void) {
 
     switch (D_800BCEE4) {
     case 0:
-        ovl_19_func_800BB5D4();
+        Ovl19LoadSceneSpriteArchive();
         D_800BCEE4++;
         break;
     case 1:
-        ovl_19_func_800BB848();
+        Ovl19UploadSceneSpriteChunk();
         D_800BCEE4++;
         break;
     case 2:
-        ovl_19_func_800BB8F4();
+        Ovl19LoadUiAndActorSprites();
         D_800BCEE4++;
         break;
     case 3:
-        ovl_19_func_800BBB48();
+        Ovl19LoadSceneGeometry();
         D_800BCEE4++;
         break;
     case 4:
-        ovl_19_func_800BBCCC();
+        Ovl19QueueSceneSound();
         D_800BCEE4++;
         break;
     case 5:

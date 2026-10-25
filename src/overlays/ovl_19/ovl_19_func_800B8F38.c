@@ -17,19 +17,19 @@ void ovl_19_func_800B8F38(void) {
     n = D_800BD074 + 1;
     D_800BD074 = n;
     if (n % 30 == 0) {
-        D_800BF4C0[0x101] = PlaySoundEffect(0x3A);
+        gOvl19SceneWork[0x101] = PlaySoundEffect(0x3A);
     }
     RequestMessageWindow(4, 0xA);
     if (GetMessageWindowStatus() == 2) {
-        Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 0x1E);
-        Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 1, 0);
-        Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 4, 0, 0x1E);
-        Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x2C], 7, 0, 0x5A);
-        D_800BF4C0[0x101] = PlaySoundEffect(0x3B);
-        D_800BF4C0[0x101] = PlaySoundEffect(0x3C);
-        D_800BF4C0[0x101] = PlaySoundEffect(0x44);
+        Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x50], 2, 0x1E);
+        Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x70], 1, 0);
+        Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[8], 4, 0, 0x1E);
+        Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x2C], 7, 0, 0x5A);
+        gOvl19SceneWork[0x101] = PlaySoundEffect(0x3B);
+        gOvl19SceneWork[0x101] = PlaySoundEffect(0x3C);
+        gOvl19SceneWork[0x101] = PlaySoundEffect(0x44);
         D_800BD074 = 0;
-        D_800BF4C0[7] = 0;
-        D_800BF4C0[3] = 3;
+        gOvl19SceneWork[7] = 0;
+        gOvl19SceneWork[3] = 3;
     }
 }

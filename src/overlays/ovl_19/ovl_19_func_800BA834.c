@@ -32,8 +32,8 @@ void ovl_19_func_800BA834(s16 *arg0) {
     s16 var_s4;
     u16 temp_v1_3;
 
-    var_s2 = D_800BF4D0;
-    if (arg0 == D_800BF4D0) {
+    var_s2 = gOvl19ActorPairState;
+    if (arg0 == gOvl19ActorPairState) {
         var_s2 = arg0 + 0x24;
     }
     var_s3 = 0;
@@ -66,7 +66,7 @@ void ovl_19_func_800BA834(s16 *arg0) {
         var_a1 = (*(u16 *) ((u8 *) arg0 + 4)) + 0x11;
         break;
     case 6:
-        if ((D_800BF64E - 0x1E) < arg0[3]) {
+        if ((gOvl19StepStartTicks - 0x1E) < arg0[3]) {
             var_s3 = -0xA;
             var_a1 = (*(u16 *) ((u8 *) arg0 + 4)) + 0x11;
         } else {
@@ -75,7 +75,7 @@ void ovl_19_func_800BA834(s16 *arg0) {
         break;
     case 7:
     case 8:
-        if ((D_800BF64E - 0x1E) >= arg0[3]) {
+        if ((gOvl19StepStartTicks - 0x1E) >= arg0[3]) {
             temp_v1_3 = *(u16 *) ((u8 *) var_s2 + 4);
             var_a1 = temp_v1_3 + 1;
             arg0[2] = temp_v1_3;
@@ -86,10 +86,10 @@ void ovl_19_func_800BA834(s16 *arg0) {
         break;
     case 9:
         temp_v1_4 = arg0[3];
-        if (temp_v1_4 >= (D_800BF650 - 0x1E)) {
+        if (temp_v1_4 >= (gOvl19DoubleThresholdTicks - 0x1E)) {
             var_s3 = -0xA;
             var_a1 = (*(u16 *) ((u8 *) arg0 + 4)) + 0x11;
-        } else if (temp_v1_4 >= (D_800BF650 - 0x3C)) {
+        } else if (temp_v1_4 >= (gOvl19DoubleThresholdTicks - 0x3C)) {
             var_s3 = -0xA;
             var_a1 = (*(u16 *) ((u8 *) arg0 + 4)) + 0x11;
         } else {
@@ -127,7 +127,7 @@ void ovl_19_func_800BA834(s16 *arg0) {
     }
     ovl_19_func_800BADF8(gActiveRenderContext->field_120, (SpriteSourceData *) var_s0, (arg0 + 8), var_s3);
     if (var_s4 == 1) {
-        var_a1_2 = D_800BF4C0;
+        var_a1_2 = gOvl19SceneWork;
         if ((*(u8 *) ((u8 *) var_a1_2 + 0x1D4)) != 0x24) {
             SelectSpriteAnimation((ObjectState *) (var_a1_2 + 0xE8), 0x24);
         }

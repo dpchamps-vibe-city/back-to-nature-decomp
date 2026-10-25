@@ -2,8 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
-
-s32 ovl_11_func_8012135C();
+#include "ovl11_sprite_effect_pool.h"
 
 s32 ovl_11_func_800DAC08(u16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     VECTOR position;
@@ -28,5 +27,5 @@ s32 ovl_11_func_800DAC08(u16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     position.vz = origin;
     __asm__ volatile("" : : : "memory");
     id = (s16)id;
-    return ovl_11_func_8012135C(id, position);
+    return Ovl11SpawnSpriteEffect(id, position);
 }

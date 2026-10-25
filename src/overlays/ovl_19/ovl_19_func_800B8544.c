@@ -20,7 +20,7 @@ void ovl_19_func_800B8544(void) {
     i = 0;
     src = (Ovl19Rec8 *)D_800BCF0C;
     do {
-        dst = D_800BF4C0 + i * 0x20;
+        dst = gOvl19SceneWork + i * 0x20;
         dst[0x50] = i;
         dst[0x51] = 0;
         dst[0x52] = 0;
@@ -28,7 +28,7 @@ void ovl_19_func_800B8544(void) {
         src++;
         i++;
     } while (i < 3);
-    d = D_800BF4C0;
+    d = gOvl19SceneWork;
     e = D_800BCEF0;
     idx = d[4] * 2;
     base = (char *)D_8006C838;

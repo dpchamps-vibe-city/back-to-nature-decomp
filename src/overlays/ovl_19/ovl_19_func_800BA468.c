@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl19_actor_geometry.h"
 
 typedef struct {
     char pad_0[0x4];
@@ -16,7 +17,6 @@ typedef struct {
     s16 unk14;
 } ReconA1View;
 
-s32 ovl_19_func_800BA564(ReconA0View *arg0, ReconA1View *arg1);
 s32 ovl_19_func_800BA628(ReconA0View *arg0, ReconA1View *arg1);
 
 s32 ovl_19_func_800BA468(ReconA0View *arg0, ReconA1View *arg1) {
@@ -24,8 +24,9 @@ s32 ovl_19_func_800BA468(ReconA0View *arg0, ReconA1View *arg1) {
     s32 temp;
     s16 *base;
 
-    temp = ovl_19_func_800BA564(arg0, arg1);
-    base = D_800BF4C0;
+    temp = Ovl19ActorPlanarDistance((Ovl19ActorPlanarPosition *)arg0,
+                                   (Ovl19ActorPlanarPosition *)arg1);
+    base = gOvl19SceneWork;
     if (base[0xBA] < temp) {
         return 0;
     }

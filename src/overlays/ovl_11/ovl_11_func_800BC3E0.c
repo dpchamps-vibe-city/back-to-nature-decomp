@@ -7,6 +7,7 @@
 #include "sound_driver.h"
 #include "random.h"
 #include "render_packet_pool.h"
+#include "ovl11_sprite_effect_pool.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
@@ -23,7 +24,6 @@ void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800CF428(void);
 void ovl_11_func_800C1C90(void);
 void ovl_11_func_800F4114(void);
-void ovl_11_func_80121318(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
@@ -118,7 +118,7 @@ void ovl_11_func_800BC3E0(void) {
         ovl_11_func_800CF428();
         ovl_11_func_800C1C90();
         ovl_11_func_800F4114();
-        ovl_11_func_80121318();
+        Ovl11ClearSpriteEffects();
         if (((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x40) {
             ((Ovl11AreaInitView *)D_8006C838)->field_4450 &= ~0x40;
             if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {

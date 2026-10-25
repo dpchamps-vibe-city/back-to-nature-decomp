@@ -21,7 +21,7 @@ void ovl_19_func_800B847C(void) {
     two = 2;
     src = (Ovl19Rec8 *)D_800BCEFC;
     do {
-        dst = D_800BF4C0 + i * 0x24;
+        dst = gOvl19SceneWork + i * 0x24;
         dst[8] = i;
         dst[9] = two;
         dst[0xB] = 0;
@@ -30,7 +30,7 @@ void ovl_19_func_800B847C(void) {
         src++;
         i++;
     } while (i < 2);
-    d = D_800BF4C0;
+    d = gOvl19SceneWork;
     d[0xA] = 0;
     d[0x2E] = 2;
     base = (char *)D_8006C838;
