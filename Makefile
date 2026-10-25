@@ -150,7 +150,7 @@ split: split-sdk-libs
 	SPIMDISASM_ARCHLEVEL=1 splat split configs/splat/exe.yaml
 	npx tsx tools/build/patchLinkerBss.ts --write
 	npx tsx tools/build/patchLibBss.ts --write
-	@printf 'INCLUDE "build/undefined_funcs_auto.txt"\nINCLUDE "build/undefined_syms_auto.txt"\n' >> $(LD_SCRIPT)
+	@printf 'INCLUDE "build/undefined_funcs_auto.txt"\nINCLUDE "build/undefined_syms_auto.txt"\nINCLUDE "build/named_overlay_imports.ld"\n' >> $(LD_SCRIPT)
 	@if [ -f build/dep_syms.txt ]; then printf 'INCLUDE "build/dep_syms.txt"\n' >> $(LD_SCRIPT); fi
 	@if [ -f build/lib_bss_syms.txt ]; then printf 'INCLUDE "build/lib_bss_syms.txt"\n' >> $(LD_SCRIPT); fi
 	npx tsx tools/build/classifyGlobals.ts --write
@@ -193,12 +193,17 @@ $(BUILD_DIR)/asm/%.s.o: $(BUILD_DIR)/asm/%.s $(BUILD_DIR)/toolchain-inputs.stamp
 	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) $< -o $@
 
+# Named callbacks loaded from overlays remain container-owned absolute imports.
+# Generate before linking, independently of the engine-export/overlay-split cycle.
+$(BUILD_DIR)/named_overlay_imports.ld: FORCE_BUILD_INPUTS tools/build/exportNamedOverlayImports.ts $(wildcard configs/symbols/*.names.txt)
+	npx tsx tools/build/exportNamedOverlayImports.ts
+
 # Link. The game-rodata subsegment block of splat.yaml is derived, never
 # hand-maintained: attribution iff the owning function is compiled C, extent
 # = the owner's .o .rodata size. Objects exist here, so this is the earliest
 # point the derivation can run; on drift (a jump-table function flipped
 # stub<->C) it rederives, re-splits, and rebuilds once.
-$(BUILT_ELF): $(ALL_OBJS) $(LD_SCRIPT) $(BUILD_DIR)/toolchain-inputs.stamp $(wildcard $(BUILD_DIR)/dep_syms.txt $(BUILD_DIR)/lib_bss_syms.txt $(BUILD_DIR)/undefined_funcs_auto.txt $(BUILD_DIR)/undefined_syms_auto.txt) | split-sdk-libs
+$(BUILT_ELF): $(ALL_OBJS) $(LD_SCRIPT) $(BUILD_DIR)/named_overlay_imports.ld $(BUILD_DIR)/toolchain-inputs.stamp $(wildcard $(BUILD_DIR)/dep_syms.txt $(BUILD_DIR)/lib_bss_syms.txt $(BUILD_DIR)/undefined_funcs_auto.txt $(BUILD_DIR)/undefined_syms_auto.txt) | split-sdk-libs
 	@if npx tsx tools/build/deriveRodataSplits.ts; then \
 		$(LD) -EL -T $(LD_SCRIPT) -Map $(BUILD_DIR)/$(BASENAME).map -o $@; \
 	elif [ -z "$$DERIVE_RODATA_RETRY" ]; then \

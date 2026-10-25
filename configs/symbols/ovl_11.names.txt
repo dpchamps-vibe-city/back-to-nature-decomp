@@ -29,3 +29,11 @@ Ovl11UpdateSpriteRotations = 0x8010726C;
 Ovl11GetSpriteRotationState = 0x8010734C;
 gOvl11RotationHoldAngles = 0x801274DC; // type:data size:0x10
 gOvl11SpriteRotations = 0x8012CF48; // type:data size:0xF0
+
+// Background RGB ping-pong cycle; private direction/index and two RGB triplets.
+Ovl11ResetBackgroundColorCycle = 0x800DDB64;
+Ovl11StepBackgroundColorCycle = 0x800DDBA0;
+gOvl11BackgroundCycleDescending = 0x80123E54; // type:data size:0x2
+gOvl11BackgroundCycleIndex = 0x80123E56; // type:data size:0x2
+gOvl11BackgroundCycleLowRgb = 0x80123E58; // type:data size:0xC
+gOvl11BackgroundCycleHighRgb = 0x80123E64; // type:data size:0xC

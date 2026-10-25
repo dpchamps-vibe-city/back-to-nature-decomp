@@ -9,8 +9,8 @@ void func_8001719C(u8 *arg0);
 void ovl_19_func_800BB848(void) {
     DrawSync(0);
     ClearOTagR(gActiveRenderContext->field_120, 0x800);
-    CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
+    CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
     do {
-    } while (CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
-    func_8001719C((u8 *)(D_8005E3B0 + 0x4290));
+    } while (CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290));
 }

@@ -103,7 +103,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_8010476C();
     ovl_11_func_801128B4();
     ovl_11_func_800BD668();
-    ovl_11_func_800F1F48(D_8005E3B0 + 0x4290);
+    ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
     far = (Ovl11FarInitView *)&D_8007AFF0;
     far->field_25498 = -1;
     base->field_4438 = -1;

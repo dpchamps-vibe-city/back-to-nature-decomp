@@ -19,11 +19,11 @@ void ovl_21_func_800BB648(void) {
 
     DrawSync(0);
     ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
-    CdReadArchiveBytes(0x16, 0, 0x16188, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
+    CdReadArchiveBytes(0x16, 0, 0x16188, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
     do {
-    } while (CdReadArchiveBytes(0x16, 0, 0x16188, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
-    func_8001719C((u8 *)(D_8005E3B0 + 0x65CC));
-    memcpy(D_800BE108, (u8 *)(D_8005E3B0 + 0x4290), 0x233C);
+    } while (CdReadArchiveBytes(0x16, 0, 0x16188, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    func_8001719C((u8 *)(gGraphicsHeapBase + 0x65CC));
+    memcpy(D_800BE108, (u8 *)(gGraphicsHeapBase + 0x4290), 0x233C);
     header = (SpriteDataHeader *)(D_800BE108 + D_800BCCDC[0]);
     func_80015704(&D_800C0B2C, header);
     func_80015704(&D_800C0B2C - 1, (SpriteDataHeader *)(D_800BE108 + D_800BCCDC[1]));

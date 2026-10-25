@@ -1,11 +1,11 @@
 #include "common.h"
 #include "cd_audio.h"
+#include "ovl11_background_color_cycle.h"
 
 void ovl_11_func_800D93C8(void);
 void ovl_11_func_80111D94(void);
 void ovl_11_func_80111B74(void);
 void ovl_11_func_800D9F1C(void);
-void ovl_11_func_800DDBA0(void);
 void ovl_11_func_800DD4D8(void);
 void ovl_11_func_800DD6F0(void);
 void ovl_11_func_800DD904(void);
@@ -56,7 +56,7 @@ void ovl_11_func_800DC148(void) {
         ovl_11_func_800D9F1C();
         break;
     case 43:
-        ovl_11_func_800DDBA0();
+        Ovl11StepBackgroundColorCycle();
         break;
     }
     if (STATE->mode == 0xC && !(STATE->flags & 0x40000)) {

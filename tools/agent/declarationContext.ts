@@ -166,9 +166,12 @@ export function globalViews(source: string, origin: string): { views: GlobalView
     if (node.type !== "preproc_def") return true;
     const name = field(node, "name")?.text;
     const expression = field(node, "value")?.text;
-    if (!name?.startsWith("D_") || !expression) return false;
+    if (!name || !expression) return false;
     const parsed = parseC(`void view(void) { ${expression}; }`);
     try {
+    /* Semantic global aliases retain the same backing-object evidence as
+       D_ aliases. Ignore unrelated constants/guards, not renamed views. */
+    if (!name.startsWith("D_") && !parsed.rootNode.descendantsOfType("identifier").some((n) => objects.has(n.text))) return false;
     const statement = parsed.rootNode.descendantsOfType("expression_statement")[0];
     const exposed = unparen(statement ? namedChildren(statement)[0] : null);
     let cast: Node | undefined;
@@ -186,6 +189,23 @@ export function globalViews(source: string, origin: string): { views: GlobalView
         tree.delete();
         views.push({ symbol: name, backing, expression, declaration, origin, baseOffset: 0 });
         return false;
+      }
+      /* *array exposes its first element without an explicit cast. Only a
+         witnessed one-dimensional array is reduced here, not an arbitrary
+         pointer expression or a multi-dimensional array's row type. */
+      if (backing && exposed?.type === "pointer_expression" && field(exposed, "operator")?.text === "*" &&
+          field(exposed, "argument")?.text === backing) {
+        const original = objects.get(backing)!;
+        const tree = parseC(original);
+        try {
+          const object = namedChildren(tree.rootNode)[0];
+          const declarator = object ? field(object, "declarator") : null;
+          if (declarator?.type === "array_declarator" && field(declarator, "declarator")?.type === "identifier") {
+            const declaration = original.slice(0, declarator.startIndex) + name + ";";
+            views.push({ symbol: name, backing, expression, declaration, origin, baseOffset: 0 });
+            return false;
+          }
+        } finally { tree.delete(); }
       }
     }
     const descriptor = cast ? field(cast, "type") : null;

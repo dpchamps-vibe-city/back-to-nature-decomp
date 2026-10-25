@@ -5,7 +5,7 @@
 /* Requires common.h typedefs (s8, s16, s32, u8, u16, u32) */
 #include "globals_override.h"
 
-/* 17 symbol(s) supplied by overrides or translation-unit-specific declarations */
+/* 75 symbol(s) supplied by overrides or translation-unit-specific declarations */
 
 /* GP-relative symbols (within $gp ± 0x7FF0) */
 extern u16 D_8005E2BA;
@@ -44,8 +44,14 @@ extern s32 _D_8005393A[3] __asm__("D_8005393A");
 #define D_8005393A (*((s32*)_D_8005393A))
 extern s32 _D_80053946[3] __asm__("D_80053946");
 #define D_80053946 (*((s32*)_D_80053946))
+extern s32 _gCameraMatrixOverrideAddress[3] __asm__("gCameraMatrixOverrideAddress");
+#define gCameraMatrixOverrideAddress (*((s32*)_gCameraMatrixOverrideAddress))
 extern s32 _D_80061ED8[3] __asm__("D_80061ED8");
 #define D_80061ED8 (*((s32*)_D_80061ED8))
+extern s32 _gMasterVolumeRampStateView[3] __asm__("gMasterVolumeRampStateView");
+#define gMasterVolumeRampStateView (*((s32*)_gMasterVolumeRampStateView))
+extern s32 _gSoundTransferCompleteView[3] __asm__("gSoundTransferCompleteView");
+#define gSoundTransferCompleteView (*((s32*)_gSoundTransferCompleteView))
 extern s32 _D_8006C188[3] __asm__("D_8006C188");
 #define D_8006C188 (*((s32*)_D_8006C188))
 extern s32 _D_8006C398[3] __asm__("D_8006C398");
@@ -58,8 +64,8 @@ extern s8 _D_8006C905[9] __asm__("D_8006C905");
 #define D_8006C905 (*((s8*)_D_8006C905))
 extern s32 _D_8006C910[3] __asm__("D_8006C910");
 #define D_8006C910 (*((s32*)_D_8006C910))
-extern s32 _D_80070CC0[3] __asm__("D_80070CC0");
-#define D_80070CC0 (*((s32*)_D_80070CC0))
+extern s32 _gScenePhase[3] __asm__("gScenePhase");
+#define gScenePhase (*((s32*)_gScenePhase))
 extern s32 _D_80070CC4[3] __asm__("D_80070CC4");
 #define D_80070CC4 (*((s32*)_D_80070CC4))
 extern s32 _D_80070D18[3] __asm__("D_80070D18");

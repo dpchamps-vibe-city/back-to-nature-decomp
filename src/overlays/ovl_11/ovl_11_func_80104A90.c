@@ -87,7 +87,7 @@ void ovl_11_func_80104A90(void) {
     ovl_11_func_800DE76C();
     ovl_11_func_80109310((s32 *) &D_800759E4);
     ovl_11_func_800BD668();
-    ovl_11_func_800F1F48(D_8005E3B0 + 0x4290);
+    ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
     base->field_4488 = 1;
     D_801287F4 = 0xA;
     far->field_2548C = 0;

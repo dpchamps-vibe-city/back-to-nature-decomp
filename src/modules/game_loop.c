@@ -46,6 +46,8 @@
 #include "camera_offset.h"
 #include "master_volume.h"
 #include "sound_driver.h"
+#include "ovl08_scene_select_menu.h"
+#include "ovl28_sprite_sequence_scene.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -229,7 +231,7 @@ int main(void) {
             case 0:
                 SceneEntryHook(1);
                 CdLoadArchiveRangeBlocking(8, 9, D_80010098, D_80010098);
-                D_8005E384 = (void (*)(void))&D_800B8014;
+                D_8005E384 = Ovl08UpdateSceneSelectMenu;
                 D_8005E288 = 0;
                 break;
 
@@ -280,7 +282,7 @@ int main(void) {
                     D_8005E288 = 1;
                 }
                 SetVal8005E278(1);
-                D_80070CC0 = 4;
+                gScenePhase = 4;
                 D_8005E384 = (void (*)(void))&D_800BBC34;
                 break;
 
@@ -341,7 +343,7 @@ int main(void) {
                     CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
                 }
-                D_80070CC0 = 5;
+                gScenePhase = 5;
                 D_8005E384 = (void (*)(void))&D_800BBC34;
                 break;
 
@@ -351,7 +353,7 @@ int main(void) {
                     CdLoadArchiveRangeBlocking(0xB, 0xC, D_8001009C, D_8001009C);
                     D_8005E288 = 1;
                 }
-                D_80070CC0 = 6;
+                gScenePhase = 6;
                 D_8005E384 = (void (*)(void))&D_800BBC34;
                 break;
 
@@ -360,7 +362,7 @@ int main(void) {
                 CdLoadArchiveRangeBlocking(0x1C, 0x1D, D_80010098, D_80010098);
                 func_80021FD0();
                 D_8005E288 = 0;
-                D_8005E384 = (void (*)(void))&D_800B7E24;
+                D_8005E384 = Ovl28UpdateSpriteSequenceScene;
                 break;
 
             case 17:
@@ -388,7 +390,7 @@ int main(void) {
                     SceneEntryHook(0);
                     CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
-                    D_80070CC0 = 4;
+                    gScenePhase = 4;
                 } else {
                     BeginMasterVolumeFadeIn(0xA);
                     BeginScreenFadeDecrease(0xA, 0, 2);
@@ -403,7 +405,7 @@ int main(void) {
                 CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                 D_8005E288 = 1;
                 func_80021FD0();
-                D_80070CC0 = 7;
+                gScenePhase = 7;
                 D_8005E384 = (void (*)(void))&D_800BBC34;
                 break;
             }
@@ -602,7 +604,7 @@ INCLUDE_ASM("build/asm/nonmatchings/modules/game_loop", GetFixedScratchCapacity)
 
 /* The graphics-heap initializers set this end boundary; the tentative
  * definition gives the original GP-relative accesses. */
-s32 D_8005E3B0;
+s32 gGraphicsHeapBase;
 
 s32 GetAssetScratchCapacity(void) {
     s32 reservationAdjustment;
@@ -613,17 +615,17 @@ s32 GetAssetScratchCapacity(void) {
      * Keep the staged differences around D_8001009C: algebraically cancelling
      * that reference changes the original load/arithmetic sequence. */
     reservationAdjustment = -0x49000;
-    remainingBytes = D_8005E3B0 - D_8001009C;
+    remainingBytes = gGraphicsHeapBase - D_8001009C;
     remainingBytes = (remainingBytes + reservationAdjustment) - D_8005E328;
     return remainingBytes - (D_8007AFF4 - D_8001009C);
 }
 
 s32 GetAssetScratchStart(void) {
-    return D_8005E3B0 - GetAssetScratchCapacity();
+    return gGraphicsHeapBase - GetAssetScratchCapacity();
 }
 
 s32 GetAssetScratchEnd(void) {
-    return D_8005E3B0;
+    return gGraphicsHeapBase;
 }
 
 /* Globals accessed GP-relatively (this TU defines them) */
@@ -635,7 +637,7 @@ void ResetActiveRenderContext(void) {
     {
         s32 temp = gActiveRenderContextIndex * 0x3000;
         temp += 0x38E50;
-        D_8005E3BC = D_8005E3B0 + temp;
+        D_8005E3BC = gGraphicsHeapBase + temp;
     }
     ClearOTagR(gFrameOrderingTable, 2);
 
@@ -770,7 +772,7 @@ void InitGraphicsHeapCompact(void) {
     __asm__("ori %0, %0, 0xE1B0" : "+r"(rA0));
     __asm__("lui %0, 0x3" : "=r"(temp_a2));
     __asm__("ori %0, %0, 0xEE50" : "+r"(temp_a2));
-    D_8005E3B0 = s7;
+    gGraphicsHeapBase = s7;
     memset((void *)rA0, 0, temp_a2);
     rV1 = GFX_HEAP_END(GFX_HEAP_WORK_SMALL_SIZE);
     s5 = 1;
@@ -1009,7 +1011,7 @@ void InitGraphicsHeap(void) {
     s32 temp_s3;
 
     s7 = GFX_HEAP_BASE;
-    D_8005E3B0 = s7;
+    gGraphicsHeapBase = s7;
     memset((void *)GFX_HEAP_BASE, 0, GFX_HEAP_CLEAR_SIZE);
     rV1 = GFX_HEAP_END(GFX_HEAP_WORK_LARGE_SIZE);
     s5 = 1;
@@ -1140,7 +1142,7 @@ void InitGraphicsHeap(void) {
         s1 += 0x134;
     } while (s8 >= 0);
 
-    temp_s3 = D_8005E3B0;
+    temp_s3 = gGraphicsHeapBase;
     j = 0;
     s2 = (GFX_HEAP_PRIM_SIZE - 1);
     do {

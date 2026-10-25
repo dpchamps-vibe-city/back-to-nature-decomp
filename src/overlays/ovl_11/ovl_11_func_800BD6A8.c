@@ -52,7 +52,7 @@ block_12:
             wordOffset = *temp_v1;
             temp_s0 = temp_v1[wordOffset + 1];
             temp_s2 = &D_80122810[var_s0];
-            temp_s1 = D_8005E3B0 + 0x4290;
+            temp_s1 = gGraphicsHeapBase + 0x4290;
             if (arg1 != 0) {
                 DrawSync(0);
             }

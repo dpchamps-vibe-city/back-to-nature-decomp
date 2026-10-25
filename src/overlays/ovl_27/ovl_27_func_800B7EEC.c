@@ -11,5 +11,5 @@
 void ovl_27_func_800B7EEC(void) {
     s32 *base = D_800C49F8;
 
-    ((void (*)(s32 *))base[D_80070CC0])(base);
+    ((void (*)(s32 *))base[gScenePhase])(base);
 }

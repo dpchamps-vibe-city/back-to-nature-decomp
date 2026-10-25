@@ -131,7 +131,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800CCC5C();
             ovl_11_func_800EEECC();
             ovl_11_func_800BD668();
-            ovl_11_func_800F1F48(D_8005E3B0 + 0x4290);
+            ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
             ovl_11_func_800C19B0();
             ovl_11_func_800C1BE0();
             ovl_11_func_800BFEA4();

@@ -56,7 +56,7 @@ s32 ovl_11_func_800F7230(s16 arg0, s16 arg1) {
 
     first = arg0;
     if (CdReadArchiveBytes(0, (arg0 << 11) + 0x03C19000, 0x28000,
-            (u8 *)D_8005E3B0 + 0x4290, 1, 0) != 0) {
+            (u8 *)gGraphicsHeapBase + 0x4290, 1, 0) != 0) {
         if (arg1 >= 0) {
             mode = 3;
             if ((u16)arg1 < 4U) {
@@ -91,7 +91,7 @@ selected:
             }
             tex = NULL;
             piece = NULL;
-            func_80015704(&sprite, (SpriteDataHeader *)((u8 *)D_8005E3B0
+            func_80015704(&sprite, (SpriteDataHeader *)((u8 *)gGraphicsHeapBase
                 + (((id - first) << 11) + 0x4290)));
             do { } while (0);
             src = &sprite;
@@ -144,7 +144,7 @@ selected:
             D_80129648_textures[i].clutX = (i % 4) * 16 + ((i / 24) * 64 + 0x140);
             D_80129648_textures[i].clutY = (row = (i % 24) / 4) + 0xC0;
             uploadY = row - 0x3E;
-            func_80017200((u8 *)D_8005E3B0 + (((id - first) << 11) + 0x4390),
+            func_80017200((u8 *)gGraphicsHeapBase + (((id - first) << 11) + 0x4390),
                 (s16)((u16)D_80129648_textures[i].x - 0x140),
                 D_80129648_textures[i].y,
                 (s16)(D_80129648_textures[i].clutX - 0x140), uploadY);

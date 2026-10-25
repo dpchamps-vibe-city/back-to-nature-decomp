@@ -19,11 +19,11 @@ void ovl_11_func_8011EE98(s16 arg0) {
     ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
     arg0 = arg0 < 0 ? 0 : (arg0 > 3 ? 3 : arg0);
     temp_s0 = (arg0 * 0xE800) + 0x03D17000;
-    CdReadArchiveBytes(0, temp_s0, 0xE800, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
+    CdReadArchiveBytes(0, temp_s0, 0xE800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
     do {
-    } while (CdReadArchiveBytes(0, temp_s0, 0xE800, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);
-    func_8001719C((u8 *)(D_8005E3B0 + 0x4690));
-    D_8012D810 = *(Ov11SpriteDataBlock *)(D_8005E3B0 + 0x4290);
+    } while (CdReadArchiveBytes(0, temp_s0, 0xE800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4690));
+    D_8012D810 = *(Ov11SpriteDataBlock *)(gGraphicsHeapBase + 0x4290);
     func_80015704((SpriteSourceData *)D_8012DA80, (SpriteDataHeader *)&D_8012D810);
     temp_s3 = D_8012DA80 + 1;
     func_80015704((SpriteSourceData *)temp_s3, (SpriteDataHeader *)&D_8012D810);

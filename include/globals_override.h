@@ -3193,22 +3193,28 @@ extern u16 gCardValueAttributes[80];
  * nonmatching data file, not classified in globals.h. */
 extern u16 gCardColumnPositionRanges[24];
 
-/* D_800B8500 - kanji-font init counter (ovl_08). ovl_08_func_800B8054 and
- * ovl_08_func_800B80FC increment it, ovl_08_func_800B8014 indexes a table with
- * it. Absolute-addressed (ovl_08 data, -G0): declared extern (8-byte s32)
- * here, never tentatively defined, so cc1 emits lui+sw/lw %lo. */
-extern s32 D_800B8500;
+/* ovl_08: 800B8500 phase indexes the three callbacks at 800B7E24. */
+extern s32 gOvl08SceneSelectPhase;
+/* ovl_08: 800B8504 selects one of the 32 rows at 800B8508. */
+extern s32 gOvl08SceneSelectCursor;
+/* ovl_08: original callback words, passed as an address-as-s32 table. */
+extern s32 gOvl08SceneSelectHandlers;
+/* ovl_08 KanjiFntPrint arguments; retain the original scalar address views. */
+extern s32 gOvl08SceneSelectHeading;
+extern s32 gOvl08SceneSelectSubheading;
+extern s32 gOvl08SceneSelectRowFormat;
+extern s32 gOvl08SceneSelectCursorMarker;
+extern s32 gOvl08SceneSelectBlankMarker;
+extern s32 gOvl08SceneSelectEmptyRow;
+extern s32 gOvl08SceneSelectInstructions;
 
-/* D_800B8508 - Kanji font page table: 8-byte entries {glyph pointer, kanji
- * code}. ovl_08_func_800B8134 draws the six-entry page at entry D_800B8504/6*6
- * (walking .field_4, 1 entry per character) and reads .field_0 of the entry at
- * D_800B8504 when confirming a selection. Absolute-addressed (ovl_08 data,
- * -G0), owned by the nonmatching data file, not classified in globals.h. */
+/* ovl_08: rows hold a scene ID (-1 disables selection) and a Shift-JIS
+ * string address passed to KanjiFntPrint's %s. Original storage is retained. */
 typedef struct {
-    /* 0x00 */ s32 field_0;
-    /* 0x04 */ s32 field_4;
-} struct_800B8508;
-extern struct_800B8508 D_800B8508[];
+    /* 0x00 */ s32 sceneId;
+    /* 0x04 */ s32 labelAddress;
+} Ovl08SceneSelectEntry;
+extern Ovl08SceneSelectEntry gOvl08SceneSelectEntries[32];
 
 /* D_800B7EE8..D_800BB990 - ovl_10 memory-card editor globals
  * (Obj\gf_mcard.bin), used by ovl_10_func_800B95F0 and its matched siblings
@@ -3897,25 +3903,20 @@ struct struct_8005E340_target {
 };
 extern struct struct_8005E340_target *D_8005E340;
 
-/* D_800B9626 - ovl_28 state halfword tested by ovl_28_func_800B935C. */
-extern s16 D_800B9626;
-
-/* D_800B9628 - four-halfword record initialised by ovl_28_func_800B9328
- * (a0, a1, 0x50, 0x50 at +0/+2/+4/+6). */
+/* ovl_28: 800B9626 is 0=idle, 1=decrease, 2=increase; 800BAB0C is 0..255. */
+extern s16 gOvl28SpriteColorRampMode;
+extern s16 gOvl28SpriteColorRampLevel;
+/* ovl_28: 800B9628 is the pixel rectangle shared by both ramp starters. */
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-} Ovl28B9628View;
-extern Ovl28B9628View D_800B9628;
-
-/* D_800BAB0C - ovl_28 state halfword cleared by ovl_28_func_800B9328. */
-extern s16 D_800BAB0C;
-/* 800B9074 initializes a POLY_F4 and accesses its 24-byte packet here. */
-extern u32 D_800BAB10[6];
-/* 800B9074 initializes a DR_MODE and links its three-word packet here. */
-extern u32 D_800BAB30[3];
+    s16 x;
+    s16 y;
+    s16 width;
+    s16 height;
+} Ovl28SpriteColorRampRect;
+extern Ovl28SpriteColorRampRect gOvl28SpriteColorRampRect;
+/* ovl_28: existing POLY_F4 (800BAB10) and DR_MODE (800BAB30) packet storage. */
+extern u32 gOvl28SpriteColorRampPoly[6];
+extern u32 gOvl28SpriteColorRampDrawMode[3];
 
 /* VWD0 - PSY-Q libgs vertical display resolution (libgs.h). Forward-declared
  * here because libgs.h is not self-contained. */
@@ -3925,81 +3926,46 @@ extern long VWD0;
  * here because libgs.h is not self-contained. */
 extern long HWD0;
 
-/* D_800B9630 - 20-record (0xC stride) initialised by ovl_28_func_800B895C:
- * s32@+0 = 0, s16@+4 = 0, s32@+8 = VWD0 << 12. */
+/* ovl_28: twenty 12-byte records at 800B9630; allocation starts at VWD0<<12,
+ * drawing divides y by 4096, and stepping retires entries at y <= -14<<12. */
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s16 unk4;
+    /* 0x00 */ s32 active;
+    /* 0x04 */ s16 frameIndex;
     /* 0x06 */ char pad_6[0x2];
-    /* 0x08 */ s32 unk8;
-} Ovl28B9630Record;
-extern Ovl28B9630Record D_800B9630[];
-
-/* D_800B9720 - zeroed object immediately after the D_800B9630 table
- * (0x800B9630 + 20*0xC); passed by address to func_80015EE8 by
- * ovl_28_func_800B8A20. */
-extern u8 D_800B9720[];
-
-/* D_800B9750 - 0x670-byte sprite-header scratch buffer immediately after
- * D_800B9720 (0x800B9750..0x800B9DC0). Filled from D_8005E3B0 + 0x4290 by
- * ovl_28_func_800B8B70 and passed as a SpriteDataHeader to func_80015704. */
-extern u8 D_800B9750[];
-
-/* D_800B9DC0 - 0x30-byte scratch object immediately after D_800B9750
- * (0x800B9DC0..0x800B9DF0); passed as a SpriteSourceData to func_80015704
- * and func_80015840 by ovl_28_func_800B8D48. */
-extern u8 D_800B9DC0[];
-
-/* D_800B9DF0 - 0xD1C-byte sprite-header scratch buffer immediately after
- * D_800B9DC0 (0x800B9DF0..0x800BAB0C). Filled from D_8005E3B0 + 0x4290 by
- * ovl_28_func_800B8D48 and passed as a SpriteDataHeader to func_80015704. */
-extern u8 D_800B9DF0[];
-
-/* D_800B936C: 66-byte command stream, indexed with lbu by ovl_28_func_800B8478. */
-extern u8 D_800B936C[66];
-
-/* D_800B93B4 - s32 frame-time delta set to 0x800 by ovl_28_func_800B8414 and
- * subtracted from a record's unk8 by ovl_28_func_800B8AA8. */
-extern s32 D_800B93B4;
-
-/* D_800B93AE/D_800B93B0/D_800B93B2 - ovl_28 halfword state cleared by
- * ovl_28_func_800B8414. Absolute-addressed (the TU only declares them), so
- * they are not defined here. */
-extern s16 D_800B93AE;
-extern s16 D_800B93B0;
-extern s16 D_800B93B2;
-
-/* D_800B93B8/D_800B93BC - ovl_28 word state set by ovl_28_func_800B8414
- * (1 and 0 respectively). */
-extern s32 D_800B93B8;
-extern s32 D_800B93BC;
-
-/* D_800B9614 - ovl_28 callback slot installed by ovl_28_func_800B8414 with
- * the address of ovl_28_func_800B8478. */
-extern void (*D_800B9614)(void);
-
-/* D_800B9618 - ovl_28 callback slot installed by ovl_28_func_800B865C with
- * the address of ovl_28_func_800B86D8 (same array as D_800B9614). */
-extern void (*D_800B9618)(void);
-
-/* D_800B961C/D_800B9620/D_800B9624 - ovl_28 halfword/word state seeded by
- * ovl_28_func_800B7E80 (halfword, word, halfword). Absolute-addressed (the
- * TU only declares them). */
-extern s16 D_800B961C;
-extern s32 D_800B9620;
-extern s16 D_800B9624;
-
-/* D_800B93C0..D_800B93CE - ovl_28 halfword/word state cleared and seeded by
- * ovl_28_func_800B865C. Absolute-addressed (declared externally here). */
-extern s32 D_800B93C0;
-extern s16 D_800B93C4;
-extern s16 D_800B93C6;
-extern s16 D_800B93C8;
-extern s16 D_800B93CA;
-extern s16 D_800B93CC;
-extern s16 D_800B93CE;
-/* 800B86D8 selects unsigned halfwords with row*25 + column in the original table. */
-extern u16 D_800B93D0[][25];
+    /* 0x08 */ s32 yQ12;
+} Ovl28ScrollingSprite;
+extern Ovl28ScrollingSprite gOvl28ScrollingSprites[20];
+/* ovl_28: sprite source/header pairs, populated by the two archive loaders.
+ * Original addresses: 9720/9750 and 9DC0/9DF0; no new C storage. */
+extern u8 gOvl28ScrollingSpriteSource[];
+extern u8 gOvl28ScrollingSpriteHeader[];
+extern u8 gOvl28BackdropSpriteSource[];
+extern u8 gOvl28BackdropSpriteHeader[];
+/* ovl_28: 66-byte command stream at 800B936C and its 93AE..93BC state. */
+extern u8 gOvl28SpriteCommands[66];
+extern s16 gOvl28SpriteCommandIndex;
+extern s16 gOvl28SpriteCommandTicks;
+extern s16 gOvl28SpriteCommandDelay;
+extern s32 gOvl28SpriteScrollStepQ12;
+extern s32 gOvl28SpriteScrollEnabled;
+extern s32 gOvl28SpriteSequenceComplete;
+/* ovl_28: original seven-word phase table at 95F8; mutable slots at 9614/18. */
+extern s32 gOvl28SpriteSceneHandlers;
+extern void (*gOvl28ScrollingSpriteHandler)(void);
+extern void (*gOvl28PresentationHandler)(void);
+/* ovl_28: asset/display phases and modulo-108000 tick at 961C/9624/9620. */
+extern s16 gOvl28SpriteAssetLoadPhase;
+extern s32 gOvl28SpriteSceneTick;
+extern s16 gOvl28SpriteSceneDisplayPhase;
+/* ovl_28: presentation state at 93C0..93CE, selected from 25-ID rows at 93D0. */
+extern s32 gOvl28PresentationEnabled;
+extern s16 gOvl28PresentationPhase;
+extern s16 gOvl28PresentationId;
+extern s16 gOvl28PresentationX;
+extern s16 gOvl28PresentationY;
+extern s16 gOvl28PresentationSetIndex;
+extern s16 gOvl28PresentationEntryIndex;
+extern u16 gOvl28PresentationIds[][25];
 
 /* D_80070CF2 - s16 global used in overlay 11 button-check functions */
 extern s16 D_80070CF2;
@@ -4139,7 +4105,7 @@ typedef struct {
 } Recon_ovl_11_func_800F6118_D80126E18Entry;
 extern Recon_ovl_11_func_800F6118_D80126E18Entry D_80126E18[];
 
-extern s32 D_8005E3B0;
+extern s32 gGraphicsHeapBase;
 
 extern s16 D_80128800;
 
@@ -5728,6 +5694,15 @@ extern s32 D_80126F80;
 /* ovl_11_func_800F9FF4 loads/stores this menu selection as a signed word. */
 extern s32 D_80126F84;
 extern s32 D_80126F88;
+
+/* ovl_11: 123E54/56 are the background-cycle direction and 0..511 index. */
+extern s16 gOvl11BackgroundCycleDescending;
+extern s16 gOvl11BackgroundCycleIndex;
+/* ovl_11: 123E58/64 begin consecutive s32 RGB triplets (0,99,127) and
+ * (0,165,213). Retain the original scalar address views used to pass each
+ * triplet to the three-component interpolator; no storage is defined here. */
+extern s32 gOvl11BackgroundCycleLowRgb;
+extern s32 gOvl11BackgroundCycleHighRgb;
 
 /* D_801287F8 - ovl_11 pointer slot written by ovl_11_func_800BD938, which
  * stores D_8005E3B0 + 0x4290 into it (absolute lui + sw %lo). Defined in the

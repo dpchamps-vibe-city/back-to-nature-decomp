@@ -28,7 +28,7 @@ void ovl_11_func_8011E5B0(void) {
         }
     } else if (D_80128420 == 3) {
         if (D_8006C844 & 0x800000) {
-            StoreImage((RECT *)D_80128524, (u_long *)(D_8005E3B0 + 0x12A90));
+            StoreImage((RECT *)D_80128524, (u_long *)(gGraphicsHeapBase + 0x12A90));
             DrawSync(0);
             D_80128420 = 4;
         }
@@ -53,7 +53,7 @@ void ovl_11_func_8011E5B0(void) {
         func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
         func_80015BF0(gActiveRenderContext->field_D8 + 0x64, (SpriteSourceData *)D_8012DA80, (s16)(HWD0 / 2), (s16)(VWD0 / 2));
         if (IsScreenFadeComplete() == 1) {
-            LoadImage((RECT *)D_80128524, (u_long *)(D_8005E3B0 + 0x12A90));
+            LoadImage((RECT *)D_80128524, (u_long *)(gGraphicsHeapBase + 0x12A90));
             DrawSync(0);
             ((struct struct_8006C838_view *)D_8006C838)->field_0C |= 0x40000;
             BeginScreenFadeDecrease(10, 0, 2);

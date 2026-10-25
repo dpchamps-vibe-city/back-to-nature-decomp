@@ -27,15 +27,15 @@ void ovl_11_func_800BD238(s32 arg0) {
         var_s1 = 0xA20;
         p = &D_80122804[arg0];
         temp_a1 = p[0];
-        CdReadDiscSectorsBlocking(0, temp_a1, p[1] - temp_a1, 0, D_8005E3B0 + 0x4290);
+        CdReadDiscSectorsBlocking(0, temp_a1, p[1] - temp_a1, 0, gGraphicsHeapBase + 0x4290);
         if (arg0 != 0) {
             var_s1 = 0x838;
         }
-        memcpy(base + 8, (void *)(D_8005E3B0 + 0x4290), var_s1);
+        memcpy(base + 8, (void *)(gGraphicsHeapBase + 0x4290), var_s1);
         if (*(s16 *)(state + 0x5476) == 3) {
-            func_80017200((u8 *)(D_8005E3B0 + 0x4290 + var_s1), -0x100, 0, 0, 0);
+            func_80017200((u8 *)(gGraphicsHeapBase + 0x4290 + var_s1), -0x100, 0, 0, 0);
             return;
         }
-        func_8001719C((u8 *)(D_8005E3B0 + 0x4290 + var_s1));
+        func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290 + var_s1));
     }
 }

@@ -353,7 +353,8 @@ for (const container of containers) {
   const names = existsSync(namesPath) ? readFileSync(namesPath, "utf-8") : "";
   const functions = applyOverlayFunctionNames(recovered, names);
   const dataSymbols = overlayDataSymbols(names,
-    container.loadAddr + layout.dataStart, container.loadAddr + layout.fileEnd, functions);
+    container.loadAddr + layout.dataStart, container.loadAddr + layout.fileEnd, functions,
+    { start: container.loadAddr + layout.rodataStart, end: container.loadAddr + layout.textStart });
   for (const fn of functions.filter((f) => f.size !== undefined)) {
     console.log(`  ${fn.name}: local fragments recovered into size ${hex(fn.size!)}`);
   }

@@ -157,7 +157,7 @@ bootstrap-era tools are idempotent or no-op when configs exist.
 | 7 | `fixCrossFileRefs.ts` | Fixes symbols referenced across `.s` files without global visibility (adds `type:func` entries so next split emits `glabel`). |
 | 8 | `patchLinkerBss.ts` | Adds library `.bss` entries to the generated linker script. Wraps `extractBssSymAddrs.ts`. |
 | 9 | `patchLibBss.ts` | Patches library `.o` files: converts BSS symbols to `SHN_ABS` absolute addresses (PSYLINK placed BSS symbols independently; GNU ld would pack them). |
-| 10 | `classifyGlobals.ts` | Generates `include/globals.h` — the `D_XXXXXXXX` extern declarations with correct GP-relative vs absolute addressing. **Never edit `globals.h` by hand.** |
+| 10 | `classifyGlobals.ts` | Generates `include/globals.h` — anonymous and explicitly sized, configured semantic data declarations with correct GP-relative vs absolute addressing. Renames retain the inferred type/addressing template; override objects, backed views and witnessed linker bindings suppress duplicate declarations regardless of spelling. **Never edit `globals.h` by hand.** |
 | 11 | `agent/contextExport.ts --all` | (see agent group) |
 | 12 | `genProjectProfile.ts` | Generates `configs/project-profile.md`, the prompt-facing source for concrete target/toolchain facts, from machine-readable sources: EXE header + `splat.yaml` via psxExeInfo, compiler/flags/assembler version from the Makefile, SDK detection, and a byte-identity hash check. Human facts live in `configs/project-info.json`. |
 | — | `genDisasmSymbols.ts` | Generates `build/disassembler_symbol_addrs.txt` from `symbol_addrs.txt` (+ `__start` fallback) before every disassembly — a pure derived artifact, hence in `build/`, never committed. Rich symbols give spimdisasm entry points into indirectly-called library code: real names, correct function starts, no phantom blobs. Called by `disassemble.sh` and `bootstrap.ts`. |
@@ -177,14 +177,28 @@ hand-maintained `configs/symbols/<container>.names.txt`, not the generated
 `<container>.txt`. The bootstrap applies these labels after independent boundary
 recovery, rejecting unknown/interior entries and duplicate names or addresses.
 The same names file accepts `Name = 0xADDRESS; // type:data size:0xSIZE` for
-writable data. The generator requires a positive extent wholly inside the
-independently recovered data window and rejects overlapping labels and name
+read-only or writable data. The generator requires a positive extent wholly
+inside one independently recovered non-code window (rodata or writable data)
+and rejects overlapping labels and name
 collisions; it labels existing storage, never allocates it or seeds code entries.
 Then use `canonicalNames.ts --write` for active function and data references and regenerate
-context headers with `contextExport.ts --all`. A complete context publication
+context headers with `contextExport.ts --all`. Canonicalization reads authored overlay
+function names before the next split, so stale generated anonymous entries cannot
+block propagation as if they were independent public aliases. Shared
+`agent/declarationContext.ts` retains semantic macro views only with a witnessed
+backing object, including the scalar element view of a one-dimensional array;
+unrelated constants and arbitrary pointer dereferences do not become globals.
+A complete context publication
 rebuilds its signatures from configured units, withdrawing obsolete names rather
 than appending to yesterday's header. Each names file is scoped to its container,
 not to other overlays sharing its RAM slot.
+
+`exportNamedOverlayImports.ts` supplies the reverse direction for the EXE's
+named overlay callbacks. Before the EXE link, it validates semantic function
+names against each overlay's original entry inventory and emits container-owned
+absolute `PROVIDE` definitions to `build/named_overlay_imports.ld`. It refuses
+cross-container name collisions, does not import anonymous RAM-slot aliases or
+overlay data, and does not depend on linking/splitting an overlay first.
 
 The engine exporter also carries explicitly named persistent data from the EXE's
 symbol configuration when no EXE object references it (and hence no ELF symbol

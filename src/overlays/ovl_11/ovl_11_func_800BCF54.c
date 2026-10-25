@@ -31,10 +31,10 @@ void ovl_11_func_800BCF54(s32 arg0, s32 arg1) {
         ovl_11_func_800BD938();
     }
     start1 = record[1];
-    CdReadDiscSectorsBlocking(0, start1, record[2] - start1, 0, D_8005E3B0 + 0x4290);
-    func_8001719C((u8 *)(D_8005E3B0 + 0x4290));
+    CdReadDiscSectorsBlocking(0, start1, record[2] - start1, 0, gGraphicsHeapBase + 0x4290);
+    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290));
     start2 = record[2];
-    CdReadDiscSectorsBlocking(0, start2, record[4] - start2, 0, D_8005E3B0 + 0x4290);
-    ovl_11_func_800F0E00((void *)(D_8005E3B0 + 0x4290));
-    ovl_11_func_800E3CDC((u8 *)D_8005E3B0 + ((record[3] - record[2]) + 0x4290));
+    CdReadDiscSectorsBlocking(0, start2, record[4] - start2, 0, gGraphicsHeapBase + 0x4290);
+    ovl_11_func_800F0E00((void *)(gGraphicsHeapBase + 0x4290));
+    ovl_11_func_800E3CDC((u8 *)gGraphicsHeapBase + ((record[3] - record[2]) + 0x4290));
 }

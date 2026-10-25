@@ -94,7 +94,7 @@ void ovl_30_func_8012F084(void) {
     void copy_display(s32 arg0) {
         u_long *src;
 
-        src = (u_long *)(D_8005E3B0 + 0x4290);
+        src = (u_long *)(gGraphicsHeapBase + 0x4290);
         if (arg0 == 0) {
             StoreImage((RECT *)Ovl30_DisplayRect, src);
         } else {

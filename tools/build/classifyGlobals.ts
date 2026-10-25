@@ -19,6 +19,7 @@ import { PREAMBLE_TYPES } from "../agent/sdkTypes.js";
 import { readFileSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 import { exeSplatYamlPath } from "../lib/psxExeInfo.js";
+import { containerPath, requireContainer } from "../lib/container.js";
 import { writeIfChanged } from "../lib/contentCache.js";
 import { field, namedChildren, parseC } from "../agent/residual-source-search/tree-sitter-c.js";
 
@@ -57,6 +58,12 @@ function readSymbols(gpValue: number): SymbolInfo[] {
   const gpHi = gpValue + 0x7fef;
 
   const lines = readFileSync(symsPath, "utf-8").split("\n");
+  /* A data rename must retain the anonymous symbol's inferred declaration
+     and addressing template. Named functions/SDK imports are not data. */
+  const namedData = new Set(readFileSync(containerPath(requireContainer("exe"), "symbolAddrs"), "utf-8").split("\n").flatMap((line) => {
+    const row = line.match(/^\s*(\w+)\s*=\s*0x[0-9a-fA-F]+\s*;(.*)$/);
+    return row && /\bsize:/.test(row[2]!) && !/\btype:(?:func|label)\b/.test(row[2]!) ? [row[1]!] : [];
+  }));
   const symbols: SymbolInfo[] = [];
 
   for (const line of lines) {
@@ -66,8 +73,8 @@ function readSymbols(gpValue: number): SymbolInfo[] {
     const name = m[1];
     const addr = parseInt(m[2], 16);
 
-    // Only process D_ data symbols — skip functions and named symbols
-    if (!name.startsWith("D_")) continue;
+    // Include explicitly configured named data; never infer data from a function name.
+    if (!name.startsWith("D_") && !namedData.has(name)) continue;
 
     const inGpRange = addr >= gpLo && addr <= gpHi;
     symbols.push({ name, addr, inGpRange, cType: "s32" }); // default type
@@ -327,7 +334,6 @@ function readOverrideSymbols(): Set<string> {
   const sourceTypes = new Map<string, Set<string>>();
   for (const path of sourceFiles(join(ROOT, "src"))) {
     for (const [name, type] of fileScopeDeclarations(readFileSync(path, "utf8"))) {
-      if (!/^D_[0-9a-fA-F]{8}$/.test(name)) continue;
       const types = sourceTypes.get(name) ?? new Set<string>();
       types.add(type); sourceTypes.set(name, types);
     }
@@ -345,7 +351,17 @@ export function overrideSymbolsFrom(content: string): Set<string> {
   for (const view of globalViews(content, "include/globals_override.h").views) overridden.add(view.symbol);
   const model = emptyDeclarationIndex();
   indexDeclarations(model, content, "include/globals_override.h", "public", "public-header");
-  for (const declaration of model.declarations) if (declaration.kind === "object" && /^D_[0-9a-fA-F]{8}$/.test(declaration.name)) overridden.add(declaration.name);
+  for (const declaration of model.declarations) if (declaration.kind === "object") overridden.add(declaration.name);
+  /* A backing declaration bound to a linker symbol supplies that symbol too,
+     even when its public macro is not a cast-shaped globalViews projection. */
+  const tree = parseC(content);
+  for (const node of namedChildren(tree.rootNode)) {
+    if (node.type !== "declaration") continue;
+    const binding = namedChildren(node).find((child) => child.type === "gnu_asm_expression");
+    const literal = binding?.descendantsOfType("string_literal")[0];
+    if (literal) overridden.add(literal.text.slice(1, -1));
+  }
+  tree.delete();
   return overridden;
 }
 

@@ -155,11 +155,15 @@ export function resolveAlias(name: string, from: string, table: NameTable): Reso
 /** `type:func` rows of a container's symbol table: the record of established names. */
 function establishedFunctions(container: Container): Map<number, string> {
   const result = new Map<number, string>();
-  const path = join(ROOT, container.paths.symbolAddrs);
-  if (!existsSync(path)) return result;
-  for (const line of readFileSync(path, "utf-8").split("\n")) {
-    const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;.*\btype:func\b/);
-    if (match) result.set(Number(match[2]), match[1]!);
+  const paths = [container.paths.symbolAddrs, ...(container.kind === "overlay" ? [container.paths.symbolAddrs.replace(/\.txt$/, ".names.txt")] : [])];
+  for (const path of paths) {
+    if (!existsSync(join(ROOT, path))) continue;
+    for (const line of readFileSync(join(ROOT, path), "utf-8").split("\n")) {
+      const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;(.*)$/);
+      if (!match) continue;
+      const kind = match[3]!.match(/\btype:(\w+)/)?.[1];
+      if (kind === "func" || (path.endsWith(".names.txt") && kind === undefined)) result.set(Number(match[2]), match[1]!);
+    }
   }
   return result;
 }
@@ -218,7 +222,12 @@ export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
        and undefined references; neither is evidence of a second definition. */
     const own = assignments(container.paths.symbolAddrs)
       .filter(({ address }) => container.kind === "exe" || containsVram(container, address));
-    defined.set(container.id, new Set(own.map(({ name }) => name)));
+    /* An overlay's generated anonymous name predates an authored rename
+       until the next split. It is not evidence of a second public alias. */
+    defined.set(container.id, new Set(own.filter(({ name, address }) =>
+      container.kind !== "overlay" || !decodeAlias(name) ||
+      !functions.get(container.id)?.has(address) || functions.get(container.id)?.get(address) === name
+    ).map(({ name }) => name)));
   }
   const sourceDefinitions = new Map<string, Set<string>>(containers.map((c) => [c.id, new Set<string>()]));
   const definitionsIn = new Map<string, Set<string>>();

@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "projected_primitives.h"
+#include "ovl11_background_color_cycle.h"
 
 void ovl_11_func_800BCF54(s32 arg0, s32 arg1);
 void ovl_11_func_800DB00C(Ovl11SceneCoordinates *arg0, Ovl11SceneCoordinates *arg1);
@@ -8,7 +9,6 @@ void func_8001E340(Ovl11SceneGrid **arg0);
 void ovl_11_func_800DC114(s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_80111D48(void);
 void ovl_11_func_80111A60(void);
-void ovl_11_func_800DDB64(void);
 
 void ovl_11_func_800DBFEC(u16 arg0, u16 arg1, s32 arg2) {
     u8 *base = (u8 *)&D_8007AFF0;
@@ -36,7 +36,7 @@ void ovl_11_func_800DBFEC(u16 arg0, u16 arg1, s32 arg2) {
         ovl_11_func_80111A60();
         return;
     case 44:
-        ovl_11_func_800DDB64();
+        Ovl11ResetBackgroundColorCycle();
         return;
     }
 }

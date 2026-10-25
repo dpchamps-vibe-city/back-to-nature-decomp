@@ -40,7 +40,7 @@ void ovl_11_func_800E3AA4(void) {
             env2->unk1B = 0;
             DrawSync(0);
             ClearActiveOrderingTables();
-            SetSoundCommandReadBuffer(0, D_8005E3B0 + 0x4290);
+            SetSoundCommandReadBuffer(0, gGraphicsHeapBase + 0x4290);
             StopSoundSequence(0);
             RewindSoundLoadSlots(2, 0);
             *(s32 *)(far + 0x25498) = (s32)((Unk0E *)(*(u8 **)(far + 0x25388)))->unkE;

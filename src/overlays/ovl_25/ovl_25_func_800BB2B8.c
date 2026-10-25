@@ -19,8 +19,8 @@ void ovl_25_func_800BB2B8(void) {
 
     p = D_800BBED0;
     CdReadDiscSectorsBlocking(0, p[0], p[1] - p[0], 0, D_8007AFF0);
-    CdReadDiscSectorsBlocking(0, p[1], p[2] - p[1], 0, D_8005E3B0 + 0x4290);
-    func_8001719C((u8 *)(D_8005E3B0 + 0x4290));
+    CdReadDiscSectorsBlocking(0, p[1], p[2] - p[1], 0, gGraphicsHeapBase + 0x4290);
+    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290));
     memcpy(&D_8009F78C, (void *)D_8007AFF0, 0xBDC);
     dst = &D_800C0454;
     __asm__("" : : : "memory");

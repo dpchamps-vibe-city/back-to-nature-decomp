@@ -7258,6 +7258,51 @@ Members (address order):
 
 ## `ovl_08` menu/kanji state dispatcher — 0x800B8014–0x800B8400 (confidence: medium)
 
+**Module: `src/overlays/ovl_08/modules/scene_select_menu.c`**, four entries
+at 800B8014/8054/80FC/8134, ending at 800B8400. Membership is the private
+three-handler table at 800B7E24 and phase word at 800B8500: the dispatcher
+indexes that table; initialization and the sound-transfer waiter advance the
+same phase into the page renderer. The renderer consumes the adjacent cursor
+and 32-row scene/string table (8504/8508). Original table words name exactly
+these three handlers; pooled Shift-JIS labels precede the renderer's heading,
+row format and instructions. The heading says DEBUG MODE. The table's second
+word is a string address used by `%s`, not a character code. This is a
+connected state machine, not a grouping based solely on the overlay slot.
+
+Left boundary: 800B8014 is the independently recovered start of this overlay's
+text; the preceding bytes are its read-only tables/literals, not another code
+member. Right boundary: 800B8400 has only its own 800B8608 actuator-sequence
+selection counter and PADNO format string, and neither consumes the menu state
+nor appears in its callback table. No positive same-TU edge to it was found;
+it stays outside on **absence of membership evidence**, not a proven original
+compiler boundary. All overlay code uses -G0, so there is no GP ownership test
+here. A common original TU containing the actuator test remains possible.
+
+Names: Ovl08UpdateSceneSelectMenu, Ovl08InitSceneSelectMenu,
+Ovl08WaitSceneSelectSoundTransfer and Ovl08DrawSceneSelectMenu. The public
+header `ovl08_scene_select_menu.h` publishes only the per-frame callback;
+handler linkage remains external. The EXE's scene-1 dispatcher now installs
+that named callback. Container-local names cover the phase, cursor, row table,
+callback table and seven formatting objects. The row fields are sceneId and
+labelAddress, with original signed-word representations preserved. The header
+documents paging, wrap vs clamp, the fade guard, flag effects and the otherwise
+surprising card-table initialization. No original data was moved into C.
+
+The checked fold matched all four functions at baseline -O2/-G0. No flag
+exception was involved or added. Naming exposed two concrete generator/link
+limits: read-only overlay labels were rejected, and the EXE had no definitions
+for named overlay callbacks. The generator now validates read-only labels
+against its independently recovered rodata window (without admitting code),
+and the EXE imports explicitly named overlay function entries via generated
+PROVIDE assignments, refusing cross-container name collisions. These are
+build support, not source matching workarounds. After naming and interface
+publication, `tuProgress.ts --verify --no-cache --baseline
+build/tu-campaign/baseline.json` passed every gate: 217 folded functions,
+24 valid modules, full EXE/13-overlay/data byte identity, canonical/interfaces,
+source policy, configuration convergence and exception non-growth.
+
+Historical discovery notes follow; the fifth entry is not a module member.
+
 A small overlay that runs a state-machine menu/system initializer. The four
 handlers share one dispatch table and one counter in the same overlay:
 `D_800B7E24` (rodata, 3 function pointers) and `D_800B8500` (data segment
@@ -10828,8 +10873,8 @@ Members (link order):
   unk0 == 1, subtracts `D_800B93B4` from unk8 and clears unk0 when the result
   underflows below `-0xE000`
 
-Only two members are matched; the rest are read off original asm, hence medium
-confidence. `ovl_28_func_800B8AA8`'s read of `D_800B93B4` places the record-table
+Historical status (all are now in sprite_sequence_scene; see its section below):
+`ovl_28_func_800B8AA8`'s read of `D_800B93B4` places the record-table
 run in the same TU as the `D_800B93B4` setup/consumer pair `ovl_28_func_800B8414`
 (writes 0x800) and `ovl_28_func_800B8478` (divides 0x10000 by it).
 
@@ -11798,8 +11843,8 @@ Members (link order):
   a u16 at `D_8006C838+0x8000+0x67A0` against 10, calling
   `func_80011EF0(0xD)` on `>= 10` and `func_80011EF0(0x14)` otherwise
 
-Six members are matched; the rest are read off original asm, hence medium
-confidence.
+Historical status: all these members are now compiled C in the whole
+sprite_sequence_scene unit described below.
 
 ## `ovl_28` D_800B95F8 handler-pointer table run — 0x800B7F30 … 0x800B83C0 / 0x800B8414 / 0x800B8478 / 0x800B865C / 0x800B86D8 (confidence: medium)
 
@@ -11833,6 +11878,77 @@ Members (slot order):
 - ovl_28_func_800B86D8 (m, byte-exact) — [slot 8 state-machine handler](research/ovl_28_func_800B86D8-grouping.md): advances shared selection/timing state
 
 ## `ovl_28` code-segment-head dispatch cluster — 0x800B7E24 / 0x800B7E80 (confidence: medium)
+
+**Module: `src/overlays/ovl_28/modules/sprite_sequence_scene.c`**, the complete
+27-function overlay, 800B7E24..800B936C. The earlier counter, callback-slot,
+record-pool, display-loader and color-ramp sections describe parts of this
+same unit, not separate module proposals. Every member now has compiled C.
+
+Membership was checked over the implementations and original data words:
+- The seven words at 95F8 name the seven phase handlers 7F30/7F80/7FD4/8124/
+  8304/8344/83C0; the entry at 7E24 indexes them using the shared scene phase.
+  Reset 7E80 initializes both mutable callbacks at 9614/9618 and their private
+  state. The phase runner 8124 calls both callbacks and reads the scrolling
+  path's completion word to start its exit fade.
+- Callback 8414 installs 8478 and initializes the 20-slot, 12-byte pool at
+  9630 through 895C. Command reader 8478 calls allocator 8994, renderer 8A20
+  and stepper 8AA8; those four share exactly that pool and its source at 9720.
+  Reset/command/stepper share the Q12 scroll step at 93B4. This joins the pool
+  to the scene rather than leaving it as a four-function slice.
+- Callback 865C installs 86D8 and initializes the presentation state at
+  93C0..93CE. 8478 enables/disables it through 93C0. 86D8 consumes the private
+  25-column ID table, calls gradient drawer 8E9C, color-ramp driver 9074,
+  both ramp starters 92F0/9328 and completion query 935C. Those four share
+  the rectangle/mode/level and existing GPU packets, joining the tail.
+- Phase handlers call loaders 8B0C/8B70 and 8CE4/8D48 and sound loader 8C94.
+  The loaders populate the two source/header pairs used by the scrolling
+  renderer and phase runner; the private producer/consumer links are direct.
+  Their common EXE heap scratch address alone would not prove membership.
+
+Both boundaries are independently recovered **section edges**: four bytes
+of rodata precede 7E24, and writable command data begins at 936C immediately
+after 935C. There is no neighboring code member in this container to omit or
+an invented internal boundary. Different overlays sharing the RAM slot are
+not members. -G0 supplies no GP ownership fingerprint here; the private
+callback/state/asset graph, not shared flags or adjacency alone, supports the
+whole-unit reconstruction.
+
+The public `ovl28_sprite_sequence_scene.h` exposes only the per-frame entry,
+Ovl28UpdateSpriteSequenceScene, now installed by EXE scene 16. Internal entry
+names remain externally linked; no static linkage was inferred. The authored
+names file preserves every original address, all 27 function names and 31
+private data identities. Pool fields are active/frameIndex/yQ12; ramp fields
+are x/y/width/height. Widths, signedness, data storage and table layout did not
+change. All local parameter names in the queue/gradient/ramp helpers now
+explain their units and roles. The code documents dropped pool requests,
+control-byte chaining (even FF marks completion without returning), active-
+call timing, 64-call color ramps and the negative presentation phases. No
+unproved gameplay name is assigned to the progression-indexed ID table.
+
+Two shared EXE data identities also acquired names through the canonicalizer:
+`gGraphicsHeapBase` (5E3B0, set by the heap carvers and read by asset loaders)
+and `gScenePhase` (70CC0, indexed/advanced by scene dispatchers). References
+were propagated across all affected containers. The latter revealed a concrete
+name-only generator bug: classifyGlobals ignored semantic data names and the
+first scalar replacement changed main's addressing. That replacement was
+withdrawn. The generator now preserves the existing inferred declaration
+and addressing template for explicitly named data, recognizes named overrides
+and their witnessed assembler-bound storage, and projects named backed views
+into context. No declaration was widened, no source workaround copied, and
+no flag added to recover the match. canonicalNames now also consumes authored
+overlay function names before a split, rather than requiring stale generated
+names to be refreshed first.
+
+The complete 27-member checked fold was exact at baseline -O2/-G0 before
+readability edits. There were no member overrides. After names, documentation,
+shared-header propagation and the generator fixes,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passed:
+244 folded functions, 25 valid modules, all EXE/13-overlay bytes and data,
+canonical/public interfaces, source policy, configuration convergence and
+exception non-growth. Existing project-wide interface disputes are unchanged;
+none belongs to a newly published interface.
+
+Historical discovery evidence follows:
 
 Evidence: the ovl_28 code-segment head `ovl_28_func_800B7E24` (0x800B7E24,
 0x5C) dispatches `((void (*)(s32 *))D_800B95F8[D_80070CC0])(&D_800B95F8)` —
@@ -13304,6 +13420,18 @@ original container/address identities remain in the symbol map and API docs.
 
 ## `ovl_15` MemCard save-file SDK cluster — 0x80135C20 … 0x801367F8 (confidence: medium)
 
+Whole-unit module attempt: the checked fold helper refused all eight members
+before editing or compiling because their jump-table attributions are separated
+by `[0x2B8, rodata]`. The original four bytes there are the wildcard string
+`"*"` used by 80135FF0 between the 35C20 and 36288 tables. This is a concrete
+literal-ownership/rodata-fold tooling limit, **not an original TU boundary**;
+no partial module or flag exception was created. Next useful experiment:
+recover that literal into its consuming C function and teach attribution/folding
+to preserve member-owned literals interleaved with tables. Signed counter views
+and the existing assembler-bound filename/retry aliases will also need canonical
+reconciliation before a merged source can be accepted. The live split unit was
+left untouched.
+
 A gapless link-order run of eight functions in `configs/splat/ovl_15.yaml`
 (`[0x7E38]`–`[0x8A10]`). Every member references the halfword
 `D_80137598` and calls `MemCardSync`, each with a different PSY-Q card
@@ -14273,36 +14401,60 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_80123E54/D_80123E56 state-pair run — 0x800DDB64 / 0x800DDBA0 (confidence: medium)
+## `ovl_11` background-color cycle — 0x800DDB64–0x800DDC64 (reconstructed; original TU boundaries not proven)
 
-Candidate same-TU pair of `ovl_11` (`Obj\GF_FARM.bin`): two adjacent functions
-that both drive the same s16 state pair and hand the result to the same
-packet writer.
+Folded the complete reset/update pair into
+`src/overlays/ovl_11/modules/background_color_cycle.c`. Its public interface,
+`include/ovl11_background_color_cycle.h`, is used by the scene-kind-44 setup
+and update dispatchers at 0x800DBFEC and 0x800DC148. Function and data names
+are authored in `configs/symbols/ovl_11.names.txt`; no linkage was privatized.
 
-Fingerprints:
-- **gapless link-order adjacency**: `configs/splat/ovl_11.yaml` lists
-  0x800DDB64 (0x3C) then 0x800DDBA0 (0xC4), the second starting exactly where
-  the first ends. The pair also sits directly after the documented
-  D_80129194–D_801291A0 mirror-pair run that terminates at 0x800DDB64.
-- **shared global cluster**: `D_80123E54` (s16, mode/flag) and `D_80123E56`
-  (s16, index) are touched by both members and by no other matched source in
-  the container (grep over `src/`). Both correct them as `s16`; both are
-  `extern` here (absolute `lui`+`%lo`, never gp-relative), so the defining TU
-  is elsewhere.
-- **shared callee / idiom**: both members call `ovl_11_func_800DC114`
-  (the 0x19/0x1A/0x1B two-record packet write) as the last effect before
-  updating the pair; `ovl_11_func_800DDBA0` additionally interpolates through
-  `func_8001F278` into a 3-word stack buffer, the same engine call shape as
-  `ovl_11_func_80111D94`.
+Membership evidence:
+- Both members access the otherwise private signed-halfword direction/index
+  pair at 0x80123E54/56, now `gOvl11BackgroundCycleDescending` and
+  `gOvl11BackgroundCycleIndex`. The updater also reads the original RGB
+  triplets at 0x80123E58/64, now `gOvl11BackgroundCycleLowRgb` and
+  `gOvl11BackgroundCycleHighRgb`. No other matched source uses these four
+  objects. The scene-kind-44 dispatchers select the reset and step together.
+- Original link order corroborates that private-state relationship:
+  0x800DDB64 (0x3C) ends at 0x800DDBA0 (0xC4), which ends at 0x800DDC64.
+- Both call `ovl_11_func_800DC114`, which enables background clearing and
+  writes RGB bytes in **both render contexts**, not a GPU packet submission.
+  That writer has other callers, so it is an external dependency, not evidence
+  for extending the unit. `func_8001F278` supplies the three-component integer
+  interpolation into a stack buffer.
 
-Members (address order):
-- ovl_11_func_800DDB64 (m) — initializer: zeroes `D_80123E54`, sets
-  `D_80123E56 = 0x1FF`, then calls `ovl_11_func_800DC114(0, 0xA5, 0xD5)`.
-- ovl_11_func_800DDBA0 (m, verified byte-exact this session) — cyclic
-  updater: interpolates `D_80123E56` through `func_8001F278` and writes the
-  three results via `ovl_11_func_800DC114`, then increments (clamp to 0x1FF
-  with `D_80123E54 = 1`) or decrements (underflow to 0 with `D_80123E54 = 0`)
-  the pair.
+Boundaries:
+- **Left, 0x800DDB64:** the preceding mirror-cell family, including
+  0x800DDA08/800DDA60/800DDB4C, operates on D_80129194–D_801291A0 and the
+  0x30-stride D_80128E08 record table, not the color-cycle state or endpoints.
+  No private-state or internal-call edge connects it to this pair.
+- **Right, 0x800DDC64:** the following 800DDC64/800DDD18 pair operates on
+  D_801291A8's two pointer slots and the same record table, again with no
+  color-cycle state or internal-call edge. Neither neighbor has affirmative
+  same-unit evidence with the cycle; they remain outside on that basis,
+  not because adjacency proves an original object boundary.
+- The overlay uses baseline `-G0`. Absolute addressing and current `extern`
+  declarations do **not** establish that another TU defined these objects;
+  the earlier ownership inference from absence of `$gp` was invalid here.
+
+Members, behavior and names (original address order):
+- **Ovl11ResetBackgroundColorCycle**, 0x800DDB64: clear descending, set index
+  511, and write high RGB (0,165,213).
+- **Ovl11StepBackgroundColorCycle**, 0x800DDBA0: write
+  `(low-high)*(511-index)/511 + high`, componentwise with signed integer
+  division, then increment/decrement the index with clamps at 0 and 511.
+  Original endpoint data is low=(0,99,127), high=(0,165,213). Updating after
+  writing and clamping on reversal writes each endpoint twice. Preserve this
+  order and signed arithmetic rather than algebraically reversing the lerp.
+
+The fold passed at baseline `-O2 -G0` before naming/readability edits. Original
+s16 state and scalar address declarations for the triplets were retained;
+no declaration enlargement, flag override or source-policy exception was added.
+Canonical names and the public header were propagated to both callers. Full
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passed with
+246 folded functions in 26 valid modules, including EXE/all-overlay code and
+data identity, interfaces, source policy, convergence and exception non-growth.
 
 
 ## ovl_11 D_8006C838+44D2 status readers (confidence: low)

@@ -25,6 +25,7 @@ tools/build/*
 !tools/build/bootstrapOverlay.ts
 !tools/build/disassemble.ts
 !tools/build/exportEngineSymbols.ts
+!tools/build/exportNamedOverlayImports.ts
 !tools/build/genDisasmSymbols.ts
 tools/vendor/old-gcc/build-gcc-*/
 tools/vendor/homebrew-psyq/

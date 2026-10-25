@@ -164,16 +164,19 @@ export function applyOverlayFunctionNames(functions: readonly OverlayFunction[],
   });
 }
 
-/** Named data must fit the independently recovered writable-data window.
+/** Named data must fit one independently recovered non-code window.
  * It only labels existing bytes; it never creates storage or seeds code entries. */
-export function overlayDataSymbols(text: string, dataStart: number, dataEnd: number, functions: readonly OverlayFunction[]): string {
+export function overlayDataSymbols(text: string, dataStart: number, dataEnd: number, functions: readonly OverlayFunction[], rodata?: { start: number; end: number }): string {
   const entries = overlayNames(text).filter((entry) => entry.kind === "data").sort((a, b) => a.address - b.address);
   const functionNames = new Set(functions.map((fn) => fn.name));
-  let end = dataStart;
+  let end = -Infinity;
   for (const entry of entries) {
+    const limit = entry.address + (entry.size ?? 0);
+    const inData = entry.address >= dataStart && limit <= dataEnd;
+    const inRodata = rodata !== undefined && entry.address >= rodata.start && limit <= rodata.end;
     if (entry.size === undefined || !Number.isSafeInteger(entry.size) || entry.size <= 0 ||
-        !Number.isSafeInteger(entry.address + entry.size) || entry.address < end || entry.address + entry.size > dataEnd) {
-      throw new Error(`overlay data ${entry.name} needs a positive, non-overlapping extent inside writable data`);
+        !Number.isSafeInteger(limit) || entry.address < end || (!inData && !inRodata)) {
+      throw new Error(`overlay data ${entry.name} needs a positive, non-overlapping extent inside ${rodata ? "read-only or writable data" : "writable data"}`);
     }
     if (functionNames.has(entry.name)) throw new Error(`overlay data name collides with a function: ${entry.name}`);
     end = entry.address + entry.size;

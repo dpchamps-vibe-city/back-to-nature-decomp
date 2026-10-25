@@ -3,7 +3,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 
-extern s32 D_8005E3B0;
+extern s32 gGraphicsHeapBase;
 
 void func_8001E160(void) {
     s32 base;
@@ -12,7 +12,7 @@ void func_8001E160(void) {
     s8 *ptr;
     s32 j;
 
-    base = D_8005E3B0;
+    base = gGraphicsHeapBase;
 
     for (i = 0; i < 2; i++) {
         entry = (s32 *)((s8 *)&gRenderContexts + i * 0x134);

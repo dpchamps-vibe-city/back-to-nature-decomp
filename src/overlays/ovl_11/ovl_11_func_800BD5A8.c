@@ -18,10 +18,10 @@ void ovl_11_func_800BD5A8(s32 arg0) {
         p = &D_801227CC[arg0];
         q = D_80125528[arg0];
         n = *(s32 *)((u8 *)q + (*q * 4) + 4);
-        CdReadDiscSectorsBlocking(0, p[0], p[1] - p[0], 0, D_8005E3B0 + 0x4290);
-        memcpy(&D_800957F8, (void *)(D_8005E3B0 + 0x4290), n);
+        CdReadDiscSectorsBlocking(0, p[0], p[1] - p[0], 0, gGraphicsHeapBase + 0x4290);
+        memcpy(&D_800957F8, (void *)(gGraphicsHeapBase + 0x4290), n);
         n = n + 0x4290;
-        func_8001719C((u8 *)(D_8005E3B0 + n));
+        func_8001719C((u8 *)(gGraphicsHeapBase + n));
         ovl_11_func_800DA588(arg0);
     }
 }

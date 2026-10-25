@@ -5,6 +5,11 @@ gUpdateTimingMode = 0x8005E274; // size:0x1
 // Raw shared actuator-enable word; zero suppresses both pad output buffers.
 gPadActuatorsEnabled = 0x8005E3EC; // type:s32 size:0x4
 
+// Graphics-heap initializers store the pool base; overlay loaders reuse its scratch area.
+gGraphicsHeapBase = 0x8005E3B0; // size:0x4
+// Shared scene phase: overlay dispatchers index their handlers with this word.
+gScenePhase = 0x80070CC0; // size:0x4
+
 // Scene dispatch IDs and update-loop control; existing boot-family words.
 gPreviousSceneId = 0x8005E394; // type:s32 size:0x4
 gCurrentSceneId = 0x8005E39C; // type:s32 size:0x4

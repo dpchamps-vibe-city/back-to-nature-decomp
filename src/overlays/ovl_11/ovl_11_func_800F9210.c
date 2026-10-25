@@ -61,13 +61,13 @@ void ovl_11_func_800F9210(s32 arg0, s32 arg1, s32 arg2) {
         } else {
             imageRect.x += 0x340;
         }
-        StoreImage(&imageRect, (u_long *)(D_8005E3B0 + 0x4290));
+        StoreImage(&imageRect, (u_long *)(gGraphicsHeapBase + 0x4290));
         DrawSync(0);
         imageRect.w = 0x10;
         imageRect.h = 1;
         imageRect.x = records[oldRow][slot].unk18;
         imageRect.y = records[oldRow][slot].unk1A;
-        StoreImage(&imageRect, (u_long *)(D_8005E3B0 + 0x4A90));
+        StoreImage(&imageRect, (u_long *)(gGraphicsHeapBase + 0x4A90));
         DrawSync(0);
         backup.active = 1;
         backup.id = arg0;
@@ -150,7 +150,7 @@ void ovl_11_func_800F9210(s32 arg0, s32 arg1, s32 arg2) {
         imageRect.y = backup.y;
         imageRect.w = 8;
         imageRect.h = oldRow == 0 ? 0x20 : 0x40;
-        LoadImage(&imageRect, (u_long *)(D_8005E3B0 + 0x4290));
+        LoadImage(&imageRect, (u_long *)(gGraphicsHeapBase + 0x4290));
         DrawSync(0);
         clutColumn = index / 4;
         clutPage = index / 24;
@@ -160,7 +160,7 @@ void ovl_11_func_800F9210(s32 arg0, s32 arg1, s32 arg2) {
         imageRect.y = backup.clutY;
         imageRect.w = 0x10;
         imageRect.h = 1;
-        LoadImage(&imageRect, (u_long *)(D_8005E3B0 + 0x4A90));
+        LoadImage(&imageRect, (u_long *)(gGraphicsHeapBase + 0x4A90));
         DrawSync(0);
         cache[index].id = arg0;
         cacheImage(index) = *(Ovl11A04B8Entry *)&backup;
