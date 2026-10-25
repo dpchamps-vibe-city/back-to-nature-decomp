@@ -5,6 +5,7 @@
 #include "psyq/libetc.h"
 #include "screen_fade.h"
 #include "wide_screen_fade.h"
+#include "update_timing.h"
 
 /* GP-relative globals this TU defines (target accesses all via %gp_rel).
  * Tentative definitions so cc1 keeps them inside the -G8 small-data range. */
@@ -38,8 +39,6 @@ s32 GetVal8005E2CC(void);
 
 u32 Rand(s32 arg0);
 
-void SetFlag8005E274(u8 arg0);
-
 void func_80011C24(void) {
     char *scene_ptr;
     s32 tmp;
@@ -49,7 +48,7 @@ void func_80011C24(void) {
     D_8005E390 = 0;
     D_8005E38C = 0;
     gSceneUpdateLoopActive = 1;
-    SetFlag8005E274(2);
+    SetUpdateTimingMode(2);
     do {
     } while (DrawSync(1) != 0);
     if (gSceneUpdateLoopActive == 1) {

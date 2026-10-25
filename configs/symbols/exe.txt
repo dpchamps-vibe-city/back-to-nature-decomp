@@ -1,4 +1,7 @@
 
+// Raw timing-mode byte shared by input repeat, CD-volume decay and feedback fade.
+gUpdateTimingMode = 0x8005E274; // size:0x1
+
 // Scene dispatch IDs and update-loop control; existing boot-family words.
 gPreviousSceneId = 0x8005E394; // type:s32 size:0x4
 gCurrentSceneId = 0x8005E39C; // type:s32 size:0x4
@@ -37,8 +40,8 @@ RequestSceneChange = 0x80011EF0; // type:func
 GetPreviousSceneId = 0x80011F08; // type:func
 GetCurrentSceneId = 0x80011F14; // type:func
 SetVal8005E280 = 0x80011F20; // type:func
-SetFlag8005E274 = 0x80011F2C; // type:func
-GetFlag8005E274 = 0x80011F38; // type:func
+SetUpdateTimingMode = 0x80011F2C; // type:func
+GetUpdateTimingMode = 0x80011F38; // type:func
 SetVal8005E278 = 0x80011F44; // type:func
 SetVal8005E27C = 0x80011F50; // type:func
 ReservePacketWorkBytes = 0x80011F5C; // type:func

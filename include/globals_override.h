@@ -241,6 +241,9 @@ extern u8 D_80123BD4;
  * Storage remains in the overlay's original data section, not in the C module. */
 extern s32 gOvl11CollisionQueryCount;
 
+/* exe:80011F2C/80011F38 store/load this byte with sb/lbu; .sdata initially holds 2. */
+extern u8 gUpdateTimingMode;
+
 /* Rand defines this u32 seed; ovl_11 801044E4 stores 1 with sw. */
 extern u32 D_8005E290;
 

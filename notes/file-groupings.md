@@ -5222,6 +5222,47 @@ and overlay link inputs were regenerated through the supported tools. The
 full TU campaign gate verifies all linked containers, interfaces, ownership,
 source policy and exception non-growth against its baseline.
 
+Reconstructed update-timing slice: `src/modules/update_timing.c` now holds
+**exe:0x80011F2C–0x80011F44**, in original order: `SetUpdateTimingMode`
+(formerly SetFlag8005E274) and `GetUpdateTimingMode` (formerly
+GetFlag8005E274). This is a narrow reconstructed interface within the boot
+family, **not proof of an original file boundary**. Beyond adjacency, the
+setter's `sb` and getter's `lbu` reach exactly the same GP-relative byte at
+8005E274; these are its only C storage accesses. The update loop 80011C24
+sets it to 2 on entry, agreeing with the original .sdata value. Its consumers
+establish a shared timing selector rather than a boolean flag: input-repeat
+80013CD0 divides delay/interval settings by 2 or 3 for those modes (otherwise
+1), CD-volume decay 8002194C subtracts the same mapped step on eligible
+updates, and feedback fade 80012D30 uses alternating 0/1 steps for zero and
+one step for every nonzero value. These are distinct interpretations, not
+evidence of a common elapsed-time unit or hardware refresh-rate control.
+
+`include/update_timing.h` publishes the unchanged u8 ABI, raw/unvalidated
+storage behavior, initial/re-entry value, and consumer-specific effects.
+Setting does not wait, call the SDK or reset consumer counters; querying has
+no side effects. `gUpdateTimingMode` is named at its original EXE address in
+the symbol configuration, with its canonical u8 extern in globals_override.h.
+The module retains one tentative definition for GP-relative addressing and
+leaves the original initialized byte and its padding in .sdata. No linkage
+was narrowed or storage relocated. The unused legacy variables.h declaration
+now forwards to common.h instead of providing a competing data declaration.
+No macros, private helpers or file-scope collisions are introduced. The
+adjacent 80011F20/80011F44/80011F50 setters touch different state and are not
+included merely because they are nearby; the main loop and the three timing
+consumers remain outside the slice.
+
+The checked fold first passed at baseline -O2/-G8. Neither member has an
+existing flag override, so no exception was needed or retired. The existing
+semantic-but-address-derived function names were explicitly renamed at their
+recorded identities and all four callers; the canonical-name tool checks the
+result, while interfaceAudit publishes the header with unchanged caller
+objects. Generated context, engine exports and overlay inputs are regenerated
+through the supported path. Acceptance uses the full TU campaign gate against
+its baseline: all linked container bytes (including data/tables), canonical
+names, published interfaces, ownership and source policy must pass with no
+exception growth. Historical names in frozen benchmark inputs/test fixtures
+are not live linker aliases; their original-address provenance is retained.
+
 Reconstructed query slice: `src/modules/asset_scratch.c` now holds the
 three functions at **exe:0x8001205C–0x800120C8**, in original order:
 `GetAssetScratchCapacity` (formerly func_8001205C),
@@ -5333,8 +5374,9 @@ constant-through-reused-`t` idiom as func_8001328C, and calls SetVal8005E278 /
 SetVal8005E27C directly, so it is a member of the game-state init cluster;
 The old stub status for func_800132F0 is superseded: it is matched C and is
 now BeginScreenFadeIncrease in the reconstructed screen_fade module below.
-GetFlag8005E274 and func_80012A68 are matched leaf helpers with no cluster
-ownership evidence; calling them does not establish membership.
+GetFlag8005E274 (now GetUpdateTimingMode in the paired update_timing slice)
+and func_80012A68 are matched helpers with no ownership of this game-state
+cluster; calling them does not establish membership.
 
 Members (address order):
 - func_80012D30 (m) — render-context transition helper: game-state mode/counter

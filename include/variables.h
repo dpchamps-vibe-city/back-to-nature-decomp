@@ -1,6 +1,7 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
-extern char D_8005E274;
+/* Legacy include path; canonical data declarations come through common.h. */
+#include "common.h"
 
 #endif

@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "update_timing.h"
 
 s32 func_80013FC0(s32 arg0);
 s32 func_80014250(s32 arg0);
 void func_80014494(s32 arg0, s32 arg1, s32 arg2);
-u8 GetFlag8005E274(void);
 
 void func_80013CD0(void *arg0, s32 arg1) {
     Struct80013F90 *p = (Struct80013F90 *)arg0;
@@ -56,7 +56,7 @@ void func_80013CD0(void *arg0, s32 arg1) {
     p->field_0x08 = temp_a0_2;
 
     if (temp_v1 == temp_v0) {
-        temp_v0_2 = GetFlag8005E274();
+        temp_v0_2 = GetUpdateTimingMode();
         var_a1 = 1;
         if ((u32)((temp_v0_2 - 2) & 0xFFFF) < 2U) {
             var_a1 = temp_v0_2;

@@ -2,6 +2,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libcd.h"
 #include "psyq/libsnd.h"
+#include "update_timing.h"
 
 s32 func_80021CD8(s32 arg0);
 void func_80021B20(void);
@@ -14,8 +15,6 @@ s32 D_8005E584;
 s32 D_8005E58C;
 s32 D_8005E590;
 
-u8 GetFlag8005E274(void);
-
 void func_8002194C(void) {
     u8 buf[8];
     s32 flag;
@@ -25,7 +24,7 @@ void func_8002194C(void) {
     s32 pos;
 
     if (D_8005E324 != 0) {
-        flag = GetFlag8005E274();
+        flag = GetUpdateTimingMode();
         switch (flag) {
         case 0:
         case 1:

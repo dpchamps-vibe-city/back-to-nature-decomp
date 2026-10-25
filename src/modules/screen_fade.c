@@ -14,10 +14,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "update_timing.h"
 
 void SetVal8005E29C(s32 arg0);
 void SetVal8005E27C(s32 arg0);
-u8 GetFlag8005E274(void);
 void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6);
 void SetVal8005E278(s32 arg0);
 
@@ -60,7 +60,7 @@ void UpdateAndDrawScreenFade(void) {
         } else if (gScreenFadeMode == 3) {
             SetVal8005E27C(0);
             if (gScreenFadeDenominator > gScreenFadeCounter) {
-                if (GetFlag8005E274() == 0)
+                if (GetUpdateTimingMode() == 0)
                     gScreenFadeCounter = gScreenFadeCounter + D_8005E3C8;
                 else
                     gScreenFadeCounter = gScreenFadeCounter + 1;
