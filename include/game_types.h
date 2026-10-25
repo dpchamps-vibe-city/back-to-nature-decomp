@@ -2230,13 +2230,15 @@ typedef struct Ovl11RotationState {
     Ovl11RotationSource *source;
 } Ovl11RotationState;
 
-/* 80107480 reads two u8 selectors, two u16 payloads and a u16 result. */
+/* Action-guard record: both predicates are evaluated in order. The result
+ * code is selected when the first returns 1 and the second is absent (FF)
+ * or also returns 1. Widths/layout witnessed at ovl_11:80107480. */
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
+    u8 firstKind;
+    u8 secondKind;
+    u16 firstValue;
+    u16 secondValue;
+    u16 result;
 } Ovl11GuardRecord;
 
 /* ovl_11_func_800F5BC0 reads these halfwords while walking 0x18-byte records. */
@@ -2519,7 +2521,9 @@ typedef struct {
     s32 unk34;
 } Ovl11D55F8Object;
 
-/* 8010EEE4: movement flags/index +B8/+BA and retained point +BE/+C0/+C2. */
+/* Object-mode transition handler (ovl_11:8010EEE4): flags/index +B8/+BA
+ * and retained action-state halfwords +BE/+C0/+C2. Prefix is also accessed
+ * through the established Ovl11D55F8Object/Ovl11SetFieldsView layouts. */
 typedef struct {
     char pad0[0xB8];
     u16 flags;
@@ -2528,7 +2532,7 @@ typedef struct {
     u16 saved26;
     u16 saved28;
     u16 saved2A;
-} Ovl11EEE4Object;
+} Ovl11ModeTransitionObject;
 
 /* 80110118's matched parameter view, also passed by 8010F6C0. */
 typedef struct {

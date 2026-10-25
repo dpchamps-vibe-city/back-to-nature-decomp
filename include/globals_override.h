@@ -1128,10 +1128,19 @@ extern Ovl11D050Entry D_8012D050[3];
 /* D_8012D044 - farm-state dispatcher word (ovl_11, -G0 absolute).
  * ovl_11_func_80107F58 switches on it and ovl_11_func_80108104 clears it. */
 extern s32 D_8012D044;
-/* 80107888 stores its u32 selector here when the selected guard returns one. */
-extern u32 D_8012D038;
-/* 80107390 scans 31 pointers and reads each record's signed halfword ID. */
-extern s16 *D_80127814[31];
+/* Action guards share this selector; state guards update it only on result 1. */
+extern u32 gOvl11ActionGuardSelector;
+/* Ovl11FindActionGuardResult scans 31 pointers to {s16 id,count; records*}. */
+extern s16 *gOvl11ActionGuardLists[31];
+/* 80107BE4: three pointers to area/room-keyed ID lists (lh/lw at +0/+2/+4/+8).
+ * The pointed-to records and lists are private to the action-guard evaluator. */
+typedef struct {
+    s16 area;
+    s16 room;
+    s32 count;
+    s16 *ids;
+} Ovl11GuardAreaException;
+extern Ovl11GuardAreaException *gOvl11ActionGuardAreaExceptions[3];
 /* The halfword view used by ovl_11_func_801082B0 has no witnessed full extent. */
 extern s16 D_8012D050_halfwords[] __asm__("D_8012D050");
 
@@ -1514,7 +1523,8 @@ typedef struct {
     s32 state;
 } Ovl21MainStateView;
 
-/* 8011F1D0: lh mode at +0x44BA, lhu threshold at +0xB384 and byte states at +0xE7AC. */
+/* Selection-message inputs: lh mode at +0x44BA, lhu threshold at +0xB384
+ * and byte variants at +0xE7AC. This overlaps gSelectionMessageStates. */
 struct Ovl11StateSelection {
     u8 pad_0[0x44BA];
     s16 mode;
@@ -1530,16 +1540,16 @@ struct Ovl11StateBytes {
     u8 first;
     u8 second;
 };
-extern struct Ovl11StateBytes D_8007AFE4;
+extern struct Ovl11StateBytes gSelectionMessageStates;
 struct Ovl11StateCounters {
     u8 first;
     u8 second;
 };
-extern struct Ovl11StateCounters D_8007AFEE;
+extern struct Ovl11StateCounters gSelectionMessageRepeatCounters;
 /* 8011F1D0 separately addresses the byte at 0x8007AFEF. */
 extern u8 D_8007AFEF;
-/* 8011F1D0 indexes this signed-halfword base-value table with its state index. */
-extern s16 D_8012852C[10];
+/* Ovl11AdvanceSelectionMessageVariant adds a category's signed message base. */
+extern s16 gOvl11SelectionMessageBases[10];
 
 /* ovl_11's pool scans 99 four-byte cells; ages select IDs A3/A2/A1 at 10/20. */
 typedef struct {
@@ -6429,9 +6439,10 @@ struct Ovl11SpriteSelectors {
     char padE778[4];
     s16 variant;
 };
-/* ovl_11_func_8011F114: lw/sw state and lw selection in the adjacent word pair. */
-extern s32 D_8012DB10;
-extern s32 D_8012DB14;
+/* Selection-message request: lw/sw phase and latched category, private to
+ * selection_message.c; absolute-addressed in the -G0 overlay. */
+extern s32 gOvl11SelectionMessagePhase;
+extern s32 gOvl11SelectionMessageCategory;
 
 /* 800DBFEC passes these halfword triplets to the matched 800DB00C. */
 extern struct Ovl11SceneCoordinates D_800A00C4;

@@ -8,6 +8,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "ovl11_scene_camera_lighting.h"
+#include "ovl11_selection_message.h"
 
 void ovl_11_func_800C06B0 (void);
 void ovl_11_func_800C0688 (void);
@@ -17,7 +18,6 @@ void ovl_11_func_800F65B8 (void);
 void ovl_11_func_80113818 (void);
 void ovl_11_func_800C401C (void);
 void ovl_11_func_80107F58 (void);
-void ovl_11_func_8011F114 (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
 void ovl_11_func_800DB5CC (void);
@@ -52,7 +52,7 @@ void ovl_11_func_800C162C(void) {
     Ovl11UpdateSceneCameraOffset();
     ovl_11_func_800C401C();
     ovl_11_func_80107F58();
-    ovl_11_func_8011F114();
+    Ovl11UpdateSelectionMessage();
     if (((struct Ovl11FrameWork *) &D_8007AFF0)->mode == 0) {
         D_80128B60 = ovl_11_func_800CD9A0((Ovl11C7010Object *) &D_80071A00);
     }

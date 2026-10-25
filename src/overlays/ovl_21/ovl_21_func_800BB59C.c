@@ -16,6 +16,7 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl11_selection_message.h"
 
 typedef struct {
                s16 unk0;
@@ -111,7 +112,6 @@ void ovl_11_func_800DCECC (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_80107F18 (void);
-void ovl_11_func_8011F0C4 (void);
 void func_800226F0 (void);
 s32 *ovl_11_func_80111E38 (void);
 void ovl_11_func_800F2508 (void);

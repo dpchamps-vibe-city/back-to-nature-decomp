@@ -87,3 +87,34 @@ Ovl11ClearSceneCameraVectors = 0x800DB978;
 gOvl11SceneGeometry = 0x80128818; // type:data size:0x8
 // Three private 16-byte light records installed by 800DB824.
 gOvl11SceneLights = 0x80128DB8; // type:data size:0x30
+
+// Latched category -> state-dependent message code -> text-completion wait.
+Ovl11ResetSelectionMessage = 0x8011F0C4;
+Ovl11RequestSelectionMessage = 0x8011F0D8;
+Ovl11UpdateSelectionMessage = 0x8011F114;
+Ovl11AdvanceSelectionMessageVariant = 0x8011F1D0;
+Ovl11CountSelectionMessageItems = 0x8011F4F4;
+gOvl11SelectionMessagePhase = 0x8012DB10; // type:data size:0x4
+gOvl11SelectionMessageCategory = 0x8012DB14; // type:data size:0x4
+gOvl11SelectionMessageBases = 0x8012852C; // type:data size:0x14
+
+// Nested transition resolver and its enclosing mode-1/4/5 object handler.
+Ovl11ResolveObjectModeTransition = 0x8010EE5C;
+Ovl11UpdateObjectModeTransition = 0x8010EEE4;
+
+// ID-keyed paired guard evaluation and its private selector/exception lists.
+Ovl11FindActionGuardResult = 0x80107390;
+Ovl11EvaluateActionGuardList = 0x80107418;
+Ovl11EvaluateActionGuardRecord = 0x80107480;
+Ovl11EvaluateActionGuard = 0x80107528;
+Ovl11TestRecordFieldGuard = 0x801075C0;
+Ovl11TestRecordRangeGuard = 0x80107604;
+Ovl11TestSelectorRangeGuard = 0x8010775C;
+Ovl11TestAreaFlagGuard = 0x8010780C;
+Ovl11TestStateGuard = 0x80107888;
+Ovl11IsOutsideGuardInterval = 0x80107B54;
+Ovl11IsActionGuardAreaBlocked = 0x80107B84;
+Ovl11HasActionGuardAreaException = 0x80107BE4;
+gOvl11ActionGuardSelector = 0x8012D038; // type:data size:0x4
+gOvl11ActionGuardLists = 0x80127814; // type:data size:0x7C
+gOvl11ActionGuardAreaExceptions = 0x801278D8; // type:data size:0xC

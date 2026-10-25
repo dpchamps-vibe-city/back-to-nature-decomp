@@ -6,6 +6,7 @@
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
 #include "card_deal.h"
+#include "ovl11_selection_message.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -34,7 +35,6 @@ void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
 void ovl_11_func_800CE96C (void);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_80107F18 (void);
-void ovl_11_func_8011F0C4 (void);
 void ovl_11_func_8010C6A0 (void);
 void func_800226F0 (void);
 s32 *ovl_11_func_80111E38 (void);
@@ -92,7 +92,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800CBEF8();
     ovl_11_func_80107F18();
     ovl_11_func_800F6630();
-    ovl_11_func_8011F0C4();
+    Ovl11ResetSelectionMessage();
     ovl_11_func_8010C6A0();
     func_800226F0();
     ovl_11_func_80111E38();

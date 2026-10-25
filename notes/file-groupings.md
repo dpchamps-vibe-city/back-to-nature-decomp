@@ -1146,9 +1146,51 @@ below, tying the table's head to that idiom/table cluster.
 
 [Static-chain and gapless-link evidence; wider-TU limits](research/ovl_11_func_8010EE5C-grouping.md).
 
+**Module: `src/overlays/ovl_11/modules/object_mode_transition.c`**, both original
+entries through exclusive end 8010F324. The original parent seeds the helper's
+static chain from its frame; the helper dereferences that chain to recover the
+parent's object argument. Thus their same-TU membership is proved under the
+established GCC nested-function interpretation, beyond an ordinary call edge.
+The source retains the real nested definition, not a register-capture shim.
+The old comment-only helper carrier is removed by the fold.
+
+Boundaries: preceding 8010ECC0 and following 8010F324 are separate object-action
+handlers. They share general engine views/callees but neither accesses the
+captured caller frame or invokes this parent/helper. Their own per-object state
+is not a private object shared with this pair. The D_800BAABC handler table
+contains this callback alongside many other handlers; table membership alone
+cannot establish a shared file. No static-chain or private-data evidence extends
+the unit beyond the pair. These are evidence-limited outer cuts, not claims
+that the original TU could contain no other handlers.
+
+Names: Ovl11ResolveObjectModeTransition (8010EE5C, nested only) and
+Ovl11UpdateObjectModeTransition (8010EEE4, public callback). The public header
+explains modes 1/4/5, pending states -1..-4, side effects, and 0-active/1-released
+return values. Ovl11ModeTransitionObject names the established tail view without
+altering its fields' widths/offsets; the parent argument and prefix local now
+have distinct transition/object names. Unknown flag meanings and the two
+external counters remain neutral rather than receiving speculative animal names.
+
+Interface reconciliation found an inherited s16 return declaration for
+80110944; its matched definition returns s32 (-1 or choices 0..21). Merely
+casting its results preserves a false narrowing assumption and changes code.
+Using the true s32 declaration and a full-width selected-result local removes
+the conflict and preserves all bytes. No return semantics or callee changed.
+The generated callback word at 800BAAE4 now names the canonical parent.
+An obsolete, unconfigured build/ovl_11/asm/data/2BB0.rodata.s and its object
+shadowed the current 2BC4 split in the name scan; only those ignored stale
+outputs were removed. No generator/tool edit or workaround was needed.
+
+Baseline -O2/-G0 fold: both entries and ovl_11 exact. No flag override was
+present, added or retired. After naming, type/interface reconciliation and
+readability edits, tuProgress --verify --no-cache --baseline
+build/tu-campaign/baseline.json passed every integrity gate: 287 folded,
+37 valid modules, all container/data/placement bytes, canonical interfaces,
+policy, ownership, convergence and exception non-growth.
+
 Members (link order):
-- ovl_11_func_8010EE5C (m) — nested state/flag helper capturing 8010EEE4's object argument.
-- ovl_11_func_8010EEE4 (s) — enclosing object-mode handler calling 8010EE5C.
+- ovl_11_func_8010EE5C (m; now Ovl11ResolveObjectModeTransition) — nested state/flag helper capturing 8010EEE4's object argument.
+- ovl_11_func_8010EEE4 (m; now Ovl11UpdateObjectModeTransition) — enclosing object-mode handler calling 8010EE5C.
 
 ---
 
@@ -1179,8 +1221,60 @@ Members (link order):
 
 ## `ovl_11` 0x80107390 gapless run (button/state guards) — 0x80107390–0x80107B54 (confidence: medium)
 
-Candidate same-TU guard family; neither outer file boundary is established.
-High-confidence membership applies only to `8010780C`/`80107888`.
+**Module: `src/overlays/ovl_11/modules/action_guards.c`**, the whole twelve-entry
+run from 80107390 through exclusive end 80107C80, absorbing the keyed-table
+lookup run below as well. Membership rests on the 7390 -> 7418 -> 7480 -> 7528
+call chain, the private D038 selector shared by 7390/7480/7888, and the dispatch
+edges from 7528 into 75C0/7604/775C/7888. The nested 780C/7888 pair has the
+strongest same-TU evidence (the established nested-function/compiler-state
+fingerprint). The two range predicates call 7B54; 7390 also calls 7B84, whose
+sole lookup callee 7BE4 walks three private area/room-keyed exception lists.
+These are connected evaluator/helpers, not adjacency-only additions. The 31
+ID-keyed list pointers at 80127814, selector at 8012D038 and three exception
+pointers at 801278D8 now have canonical names. Absolute -G0 accesses provide
+no GP-based original-TU proof for the broader group.
+
+Boundaries: preceding 8010734C queries the sprite-rotation record pool, with
+no guard-list/selector/exception use. Following 80107C80 is a client: it calls
+the public lookup, then advances its separate action state and invokes action
+helpers. It does not directly touch the private guard tables or selector.
+The following D044/D050 state-machine family is likewise distinct from D038's
+record-evaluation lifetime. Thus neither end has positive extension evidence;
+these cuts do not assert a proved original file boundary. No flag boundary is
+being protected. High-confidence membership applies only to the nested pair.
+
+The public header publishes Ovl11FindActionGuardResult. Names of all twelve
+entries live in ovl_11.names.txt; internal helpers retain their original
+linkage. Ovl11GuardRecord fields name both kinds/payloads and the result without
+changing layout. The area/room-list type and extern moved from C to the
+canonical override header. The interval helper reuses the existing signed
+halfword identity rather than redeclaring the engine global locally. Unknown
+selector meanings and interval units remain neutral. Documentation calls out
+the mutable selector, exact-1 tests, both predicates being evaluated even when
+the first fails, -1 no-result, 0x1CD area override and outside=1 polarity.
+The nested helper's established asm-name binding is renamed, not a new
+assembly/register workaround.
+
+The fold initially refused raw rodata at 2944/296C between this unit's tables.
+Both are four zero bytes in the original, following the old objects' exact
+rodata extents and preceding cc1 .align 3 table directives. The narrowly scoped
+foldTranslationUnit.ts fix admits only this witnessed alignment case, not
+interleaved tables or arbitrary raw data. The merged object reproduces both
+words and all three table positions naturally. No C padding object or matching
+workaround was added. The fold helper was unexpectedly ignored by the generic
+tools/build/* rule; .gitignore now exposes this existing tool so the required
+fix is deliverable, not a local-only dependency. The tool and .gitignore
+changes are outside the integration roots, required by the helper's concrete
+refusal and its otherwise ignored source. No tests were added.
+
+Baseline -O2/-G0 fold: all twelve members and ovl_11 exact. No member flag
+override existed; none was added or retired. After naming/interface/type and
+readability edits, tuProgress --verify --baseline build/tu-campaign/baseline.json
+passed every integrity gate: 299 folded, 38 valid modules, complete linked
+EXE/overlay/data/placement identity, canonical interfaces, ownership, policy,
+configuration convergence and exception non-growth.
+
+Earlier evidence references (address identities retained below):
 See [lookup-entry membership evidence](research/ovl_11_func_80107390-grouping.md),
 [list-evaluator membership evidence](research/ovl_11_func_80107418-grouping.md),
 [record-evaluator membership evidence](research/ovl_11_func_80107480-grouping.md),
@@ -1202,12 +1296,12 @@ Members (address order):
 
 ## `ovl_11` keyed-table lookup run — 0x80107B54–0x80107BE4 (confidence: low)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) at the tail of the
-gapless 0x80107B54–0x80108104 map run whose other end is the D_8012D0xx
-cluster head below. Evidence is zero-gap link-order adjacency plus a
-caller/callee pair the call graph confirms; as elsewhere in this
-absolute-addressed (-G0) overlay the data tie is a shared-private-cluster
-tie, not the ASPSX definer/declarer rule.
+**Absorbed whole into `modules/action_guards.c`**, described above. The local
+three-function run is connected to the evaluator by 7604/775C -> 7B54 and
+7390 -> 7B84 -> 7BE4, not merely by lying between it and the later D044 state
+family. The historical evidence below remains useful address provenance.
+As elsewhere in this absolute-addressed (-G0) overlay, the private-data tie
+is not the ASPSX definer/declarer rule.
 
 Fingerprints:
 - zero-gap link-order contiguity (map): 0x80107B54 (0x30) → 0x80107B84
@@ -3998,10 +4092,45 @@ row refreshers, it stages nothing into `D_8012A028`.
 
 ## `ovl_11` D_8012DB10 / D_8012DB14 s32-pair run — 0x8011F0C4–0x8011F4F4 (confidence: medium)
 
-Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`): the first three members
-share the s32 pair; `8011F1D0` and `8011F4F4` are lower-confidence extensions
-supported by direct caller/callee adjacency, not access to that pair.
+**Module: `src/overlays/ovl_11/modules/selection_message.c`**, the complete
+five-member run through exclusive end 8011F52C. The first three members reset,
+latch and service the private DB10/DB14 phase/category pair. The dispatcher
+passes the latched category to its immediately following selector, which adds
+one of ten signed bases at 8012852C to a state-dependent variant. Its immediate
+count helper is used only by that selector's category-3 occupancy gate. This
+private-state core plus the two gapless caller/callee edges supports one unit;
+absolute addressing in this -G0 overlay supplies no GP-based same-TU proof.
 See [grouping evidence and limits](research/ovl_11_func_8011F1D0-grouping.md).
+
+Boundary evidence: preceding 8011EE98 loads a sprite bank and initializes the
+three records at 8012DA80 from 8012D810; it touches none of the request pair,
+variant bytes, message bases or count-helper protocol. Following 8011F52C
+initializes the separate 80128540/44/50/56/5A record family. Its data being near
+the message bases does not tie the code to this unit. Neither neighbor has a
+call edge to this run. These are evidence-limited cuts, not proven original
+file boundaries. The distant aged-item module uses the same 99-cell pool but
+has its own count copy; this selector's sole-caller local copy is retained.
+
+Names: Ovl11ResetSelectionMessage (8011F0C4),
+Ovl11RequestSelectionMessage (8011F0D8), Ovl11UpdateSelectionMessage (8011F114),
+Ovl11AdvanceSelectionMessageVariant (8011F1D0),
+Ovl11CountSelectionMessageItems (8011F4F4). The public header publishes only
+reset/request/service. interfaceAudit moved all five declaring callers, including
+the ovl_21 caller, to that header. Helpers keep external linkage without being
+published. Private phase/category and the ten message bases have overlay-local
+canonical names. The EXE identities 8007AFE4/8007AFEE name the persistent state
+bytes and the overlapping repeat-counter anchor; existing widths/views remain.
+The work-area view aliases those bytes, so the returned variant intentionally
+may differ from the byte just stored. Category gameplay meanings and the
+threshold's units remain unknown; names do not assert them.
+
+The baseline -O2/-G0 fold checked all five members and ovl_11 exactly. No member
+had a flag override; none was added or retired. After naming, documented
+interfaces and local readability edits, tuProgress --verify --baseline
+build/tu-campaign/baseline.json passed every integrity gate: 285 folded,
+36 valid modules, EXE/all overlays and data/placement exact, canonical interfaces,
+configuration convergence, policy, ownership and exception non-growth.
+The old member list below preserves original address identities.
 
 Members (address order):
 - ovl_11_func_8011F0C4 (m) — resets both words of the s32 pair.

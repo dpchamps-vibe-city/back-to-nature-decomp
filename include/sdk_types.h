@@ -2941,16 +2941,6 @@ typedef struct {
 } Ovl11E6E8Object;
 
 typedef struct {
-    char pad0[0xB8];
-    u16 flags;
-    s16 index;
-    u16 unkBC;
-    u16 saved26;
-    u16 saved28;
-    u16 saved2A;
-} Ovl11EEE4Object;
-
-typedef struct {
     u8 bytes[4];
 } Ovl11EffectCoordinate;
 
@@ -3055,11 +3045,11 @@ typedef struct {
 } Ovl11FuncDCF10Entry;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
+    u8 firstKind;
+    u8 secondKind;
+    u16 firstValue;
+    u16 secondValue;
+    u16 result;
 } Ovl11GuardRecord;
 
 typedef struct {
@@ -3088,6 +3078,16 @@ typedef struct {
     s16 unk2;
     u16 unk4;
 } Ovl11ItemCollisionObject;
+
+typedef struct {
+    char pad0[0xB8];
+    u16 flags;
+    s16 index;
+    u16 unkBC;
+    u16 saved26;
+    u16 saved28;
+    u16 saved2A;
+} Ovl11ModeTransitionObject;
 
 typedef struct {
     char pad[0x16];

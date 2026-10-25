@@ -5,6 +5,7 @@
 #include "psyq/memory.h"
 #include "aged_item_pool.h"
 #include "sound_commands.h"
+#include "ovl11_selection_message.h"
 
 void *ovl_11_func_800BDE84 (u8 *arg0, s16 *arg1);
 s32 ovl_11_func_800CB4E0 (void);
@@ -31,7 +32,6 @@ void ovl_11_func_800C8334 ();
 void ovl_11_func_800C83FC (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void ovl_11_func_800C838C (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 s32 ovl_11_func_800F3AC4 (u16 arg0);
-void ovl_11_func_8011F0D8 (s32 arg0);
 s32 ovl_11_func_800C8808 (Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2);
 void ovl_11_func_800CE034 (Ovl11CE034Object *arg0, VECTOR *arg1, s32 arg2);
 u16 ovl_11_func_800BF2F4 (s16 *arg0, s16 *arg1);
@@ -316,7 +316,7 @@ block_28:
                 }
                 return 0xA;
             case 35:
-                ovl_11_func_8011F0D8((s32) (*(s16 *) ((u8 *) temp_v0 + 4)));
+                Ovl11RequestSelectionMessage((s32) (*(s16 *) ((u8 *) temp_v0 + 4)));
                 return 0x23;
             case 36:
                 coord[0] = *(u16 *) ((u8 *) temp_v0 + 0x1A);

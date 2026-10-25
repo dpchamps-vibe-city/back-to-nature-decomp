@@ -1411,6 +1411,10 @@ gPadActuatorBuffers = 0x8005EA18; // size:0x10
 // Persistent screen-color ramp; ovl_11 helpers and ovl_15's 0x24-byte save block.
 gScreenColorRamp = 0x8007AF80; // size:0x24
 
+// Ten selection-message state bytes, followed by two repeat counters.
+gSelectionMessageStates = 0x8007AFE4; // size:0xC
+gSelectionMessageRepeatCounters = 0x8007AFEE; // size:0x2
+
 // Cylindrical camera-offset state; 0x8001F1E0 establishes radius/height/yaw.
 gCameraOffsetState = 0x8005E2EC; // size:0x1
 gCameraOffsetInitialized = 0x8005E2ED; // size:0x1
