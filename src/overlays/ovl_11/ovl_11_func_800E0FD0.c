@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_types.h"
 
-extern u16 D_80070CF8;
 
 u32 Rand(s32 arg0);
 s32 ovl_11_func_800E0C24(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
@@ -11,7 +10,7 @@ s32 ovl_11_func_800E0FD0(Recon_ovl_11_func_8010CE80_A0View *arg0) {
     s32 var_a1;
     s32 temp_v0;
 
-    if ((u32)(D_80070CF8 - 6) >= 0xF) {
+    if ((u32)(D_80070CF8_halfword - 6) >= 0xF) {
         var_a1 = 0xF;
     } else {
         if (arg0->unk26 == 0xF) {

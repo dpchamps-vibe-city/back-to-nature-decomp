@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 ovl_11_func_800C0834(s16 arg0);
+#include "ovl11_clock_calendar.h"
 
 s32 ovl_11_func_800BCB5C(void) {
     s16 status;
@@ -41,12 +40,12 @@ s32 ovl_11_func_800BCB5C(void) {
         return ((struct Ovl11BCB5CState *) D_8006C838)->field44BA + 1;
     }
     if (status == 0x18) {
-        if (ovl_11_func_800C0834(((struct Ovl11BCB5CState *) D_8006C838)->field44C0) == 3) {
+        if (Ovl11ClassifyClockHour(((struct Ovl11BCB5CState *) D_8006C838)->field44C0) == 3) {
             return 0x18;
         }
         return 0x19;
     }
-    if (ovl_11_func_800C0834(((struct Ovl11BCB5CState *) D_8006C838)->field44C0) == 3) {
+    if (Ovl11ClassifyClockHour(((struct Ovl11BCB5CState *) D_8006C838)->field44C0) == 3) {
         return 0x1C;
     }
     if (((struct Ovl11SpriteWork *) &D_8007AFF0)->header[7] == 0x3E7) {

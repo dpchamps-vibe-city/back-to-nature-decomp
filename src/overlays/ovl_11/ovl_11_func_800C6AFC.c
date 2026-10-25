@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "ovl11_position_transition.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80015840(ObjectState *obj, u8 arg1);
@@ -8,7 +9,6 @@ s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 
 /* 800C6C64 explicitly supplies an unused fourth argument. */
 s32 ovl_11_func_800D622C();
 void ovl_11_func_800C6A24(Ovl11C7010Object *arg0);
-s32 ovl_11_func_800CE37C(Ovl11CE37CArg0 *arg0);
 
 s32 ovl_11_func_800C6AFC(Ovl11C7010Object *arg0) {
     s32 var_v0;
@@ -43,7 +43,7 @@ s32 ovl_11_func_800C6AFC(Ovl11C7010Object *arg0) {
             goto block_9;
         case 0x57:
             if (pressed & 0x40) {
-                ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x58, 0, D_80122F78 * 0xA);
+                ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x58, 0, gOvl11ClockMinutePeriodTwice * 0xA);
             }
 block_9:
             if (D_8006C844 & 0x100000) {
@@ -98,7 +98,7 @@ block_18:
         case 0x4A:
             temp_s1 = arg0->sprite.field_4;
             if (temp_s1 == 1) {
-                var_v0 = ovl_11_func_800CE37C((Ovl11CE37CArg0 *) arg0);
+                var_v0 = Ovl11StepPositionTransition((Ovl11PositionTransitionObject *) arg0);
                 if (var_v0 == temp_s1) {
                     var_v0 = -2;
                 } else {

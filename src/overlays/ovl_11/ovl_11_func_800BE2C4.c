@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
+#include "ovl11_clock_calendar.h"
 
 s32 ovl_11_func_800BE2C4(s32 **arg0, u16 *arg1) {
     ItemData *temp_a2;
@@ -23,7 +22,7 @@ s32 ovl_11_func_800BE2C4(s32 **arg0, u16 *arg1) {
     temp_s2 = (s16) *arg1;
     if ((*(s16 *) ((u8 *) arg1 + 0x30)) == (*(Ovl11ItemCollisionObject **) ((u8 *) arg0 + 4))->unk2) {
         if ((*(u16 **) ((u8 *) arg0 + 0xC)) != arg1) {
-            if (!((*(s32 *) ((u8 *) arg1 + 0x34)) & 0x02020400) || ((*arg1 == 0x106) && (ovl_11_func_800C1224(((struct struct_8006C838_button *) D_8006C838)->field_44BA, (s16) ((struct Ovl11MenuDateView *) D_8006C838)->field_44BC) != 8))) {
+            if (!((*(s32 *) ((u8 *) arg1 + 0x34)) & 0x02020400) || ((*arg1 == 0x106) && (Ovl11FindCalendarDate(((struct struct_8006C838_button *) D_8006C838)->field_44BA, (s16) ((struct Ovl11MenuDateView *) D_8006C838)->field_44BC) != 8))) {
                 temp_v1 = *(s16 *) ((u8 *) arg1 + 0x38);
                 item_base = D_8006C858;
                 temp_a2 = (ItemData *) (temp_s2 * sizeof(ItemData) + (u32) item_base);

@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_types.h"
 
-extern u16 D_80070CF8;
 extern s32 (*D_800BAABC[14])(void *);
 
 s32 ovl_11_func_8010D250(Recon_ovl_11_func_8010D250_A0View *arg0);
@@ -18,7 +17,7 @@ s32 ovl_11_func_8010CD80(Recon_ovl_11_func_8010D250_A0View *arg0) {
         ovl_11_func_8010D250(arg0);
         arg0->unk2C = 0;
     }
-    if ((arg0->unk30 != 0x28) && ((u32) (D_80070CF8 - 6) >= 0xFU) && (arg0->unk26 != 0xC) && ((*(u16 *) ((u8 *) arg0 + 0xB6)) == 0)) {
+    if ((arg0->unk30 != 0x28) && ((u32) (D_80070CF8_halfword - 6) >= 0xFU) && (arg0->unk26 != 0xC) && ((*(u16 *) ((u8 *) arg0 + 0xB6)) == 0)) {
         arg0->unkBE = 0;
         (*(u16 *) ((u8 *) arg0 + 0xB8)) = (u16) ((*(u16 *) ((u8 *) arg0 + 0xB8)) | 0x40);
         (*(s32 *) ((u8 *) arg0 + 0x34)) = (s32) ((*(s32 *) ((u8 *) arg0 + 0x34)) & ~0x800);

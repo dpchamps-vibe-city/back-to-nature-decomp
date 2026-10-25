@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s16 D_80070CF0;
+extern s16 gCalendarYear;
 extern s16 D_800BF4C8;
 extern u16 D_800BCFE4[];
 
@@ -11,7 +11,7 @@ s32 ovl_19_func_800B85F4(void) {
     s16 s1;
     s32 v;
 
-    s0 = D_80070CF0;
+    s0 = gCalendarYear;
     s1 = D_800BF4C8;
     if (s0 >= 2) {
         s0 = 1;

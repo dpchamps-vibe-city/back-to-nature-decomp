@@ -5,40 +5,15 @@
 #include "psyq/libgs.h"
 #include "gte_transform.h"
 #include "projected_primitives.h"
+#include "ovl11_vertex_blend.h"
 
-typedef struct {
-    u8 pad0[0xC];
-    s32 unkC;
-    s32 unk10;
-} M2C_74497bb9f79c_DCFECRef;
-
-typedef struct {
-    u16 vx;
-    u16 vy;
-    u16 vz;
-    u16 pad;
-} M2C_74497bb9f79c_DCFECVec;
-
-typedef struct {
-    M2C_74497bb9f79c_DCFECRef *unk0;
-    u8 pad4[4];
-    M2C_74497bb9f79c_DCFECRef *unk8;
-    u8 padC[4];
-    M2C_74497bb9f79c_DCFECRef *unk10;
-    u8 pad14[0xC];
-    M2C_74497bb9f79c_DCFECVec *unk20;
-    M2C_74497bb9f79c_DCFECVec *unk24;
-    M2C_74497bb9f79c_DCFECVec *unk28;
-} M2C_74497bb9f79c_DCFECArg;
-
-void ovl_11_func_800DCFEC (M2C_74497bb9f79c_DCFECArg *arg0);
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 
 void ovl_11_func_800DCC5C(void) {
     MATRIX matrix;
     VECTOR translation;
     SVECTOR rotation;
-    M2C_74497bb9f79c_DCFECArg *temp_a0;
+    Ovl11VertexBlend *temp_a0;
     s32 var_s4;
     u16 temp_v1;
     u8 *var_s0;
@@ -51,9 +26,9 @@ void ovl_11_func_800DCC5C(void) {
           if (!(temp_v1 & 0x1000)) {
             var_s3 = var_s0;
             if (temp_v1 & 0x4000) {
-                temp_a0 = *(M2C_74497bb9f79c_DCFECArg **) ((u8 *) var_s0 + 0x2C);
+                temp_a0 = *(Ovl11VertexBlend **) ((u8 *) var_s0 + 0x2C);
                 var_s3 = (u8 *) ((u8 *) temp_a0 + 0x10);
-                ovl_11_func_800DCFEC(temp_a0);
+                Ovl11UpdateVertexBlend(temp_a0);
             }
             PushMatrix();
             CaptureGteTransform();

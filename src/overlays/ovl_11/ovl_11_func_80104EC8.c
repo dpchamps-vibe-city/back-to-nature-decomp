@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_clock_calendar.h"
 
 s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4);
@@ -10,7 +11,6 @@ s32 ovl_11_func_800EF0E8(s16 arg0);
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount);
 s32 ovl_11_func_800CFB20(s32 arg0, s32 arg1);
 s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 s32 func_80017F30(u16 *arg0, u16 *arg1, u16 *arg2);
 
 s32 ovl_11_func_80104EC8(s16 arg0) {
@@ -803,7 +803,7 @@ block_258:
         return var_v0;
     case 0x53:
         var_s1 = 0;
-        temp_a1_2 = (s16) D_80070CF0 % 9;
+        temp_a1_2 = (s16) gCalendarYear % 9;
         var_s0_2 = 0;
         switch (temp_a1_2) {
         case 0:
@@ -1040,7 +1040,7 @@ no_date:
             return 0;
         }
     case 0x72:
-        if (ovl_11_func_800C1224(((Ovl11ConditionState *) D_8006C838)->date[1], ((Ovl11ConditionState *) D_8006C838)->date[2]) != 0) {
+        if (Ovl11FindCalendarDate(((Ovl11ConditionState *) D_8006C838)->date[1], ((Ovl11ConditionState *) D_8006C838)->date[2]) != 0) {
             var_v0 = 0;
             if (((Ovl11ConditionState *) D_8006C838)->field_E772 != 0) {
                 if (((Ovl11ConditionState *) D_8006C838)->date[1] != 0) {

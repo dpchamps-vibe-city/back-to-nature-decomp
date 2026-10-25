@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_clock_calendar.h"
 
 void ovl_11_func_800BFADC(Ovl11CounterPair *arg0);
 s32 ovl_11_func_800BFC20(s16 *arg0);
-s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 /* Executable Rand at 0x80012A34; overlay symbol spelling. */
 u32 Rand(s32 arg0);
 
@@ -21,7 +21,7 @@ s16 ovl_11_func_800BF8B8(void) {
     after.unk0 = next.unk0;
     after.unk2 = next.unk2;
     ovl_11_func_800BFADC(&after);
-    if (ovl_11_func_800C1224(next.unk0, next.unk2) == 0 &&
+    if (Ovl11FindCalendarDate(next.unk0, next.unk2) == 0 &&
         (next.unk2 != *(s16 *)(base + 0x548C) ||
          next.unk0 != *(s16 *)(base + 0x548A)) &&
         ovl_11_func_800BFC20((s16 *)&next) != 1) {
@@ -54,7 +54,7 @@ s16 ovl_11_func_800BF8B8(void) {
             }
             break;
         }
-        if (ovl_11_func_800C1224(after.unk0, after.unk2) != 0 &&
+        if (Ovl11FindCalendarDate(after.unk0, after.unk2) != 0 &&
             (s16)((Ovl11BF8B8View *)D_8006C838)->field_E4CA >= 3) {
             ((Ovl11BF8B8View *)D_8006C838)->field_E4CA -= 2;
         }

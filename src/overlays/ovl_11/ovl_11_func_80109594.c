@@ -11,7 +11,6 @@ typedef struct {
     s32 unk34;
 } Ovl11HandlerObj;
 
-extern u16 D_80070CF8;
 
 u32 Rand(s32 arg0);
 s32 ovl_11_func_801098B0(Ovl11HandlerObj *arg0);
@@ -25,7 +24,7 @@ s32 ovl_11_func_80109594(Ovl11HandlerObj *arg0) {
 
     if (ovl_11_func_801098B0(arg0) == 1) {
         var_a1 = 6;
-    } else if ((u32)(D_80070CF8 - 6) >= 0xF) {
+    } else if ((u32)(D_80070CF8_halfword - 6) >= 0xF) {
         var_a1 = 2;
     } else {
         if (arg0->unk26 == 0xF) {

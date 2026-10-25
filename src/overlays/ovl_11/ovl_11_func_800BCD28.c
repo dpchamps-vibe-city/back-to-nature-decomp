@@ -5,11 +5,11 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "ovl11_scene_camera_lighting.h"
+#include "ovl11_vertex_blend.h"
 
 void ovl_11_func_800DB0E4 (void);
 void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
-void ovl_11_func_800DCECC (void);
 void ovl_11_func_800DC990 (void);
 void ovl_11_func_800DCA60 (void);
 void ovl_11_func_80107F18 (void);
@@ -42,7 +42,7 @@ void ovl_11_func_800BCD28(void) {
         ovl_11_func_800DC560(1, D_801217A0);
     }
     ovl_11_func_800C9D38();
-    ovl_11_func_800DCECC();
+    Ovl11ResetVertexBlendPool();
     ovl_11_func_800DC990();
     ovl_11_func_800DCA60();
     ovl_11_func_80107F18();

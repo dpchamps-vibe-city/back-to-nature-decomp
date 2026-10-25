@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "screen_fade.h"
 #include "sound_commands.h"
+#include "ovl11_clock_calendar.h"
 
-s32 ovl_11_func_800C0824 (void);
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 s32 func_8001AF44 (u32 arg0);
@@ -35,7 +35,7 @@ void ovl_11_func_800C401C(void) {
             StopSoundEffectVoice((s32) D_80128C70);
             D_80128C70 = -1;
         }
-    } else if ((ovl_11_func_800C0824() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (ovl_11_func_800DD1D0(obj->collision) == 0)) {
+    } else if ((Ovl11IsClockAdvanceActive() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (ovl_11_func_800DD1D0(obj->collision) == 0)) {
         if (obj->flags & 0x2000) {
             ovl_11_func_800CCF58((Ovl11C7010Object *) obj);
             obj->flags = (s32) (obj->flags & ~0x2000);

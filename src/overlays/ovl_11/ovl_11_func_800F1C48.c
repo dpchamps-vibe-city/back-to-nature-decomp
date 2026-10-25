@@ -1,11 +1,11 @@
 #include "common.h"
 
-extern s16 D_80070CF6;
+extern s16 gCalendarWeekday;
 
 s32 ovl_11_func_800F1C48(s32 arg0) {
     s32 mask = 0;
 
-    switch (D_80070CF6) {
+    switch (gCalendarWeekday) {
     case 0:
         mask = 0x4000000;
         break;

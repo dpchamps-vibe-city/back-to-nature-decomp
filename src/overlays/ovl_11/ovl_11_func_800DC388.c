@@ -1,16 +1,16 @@
 #include "common.h"
+#include "ovl11_clock_calendar.h"
 
 s32 ovl_11_func_800E3D88(void);
 s32 ovl_11_func_800DD274(void);
 s32 func_8001AF44(u32 arg0);
-s16 ovl_11_func_800C141C(s16 arg0);
 
 s32 ovl_11_func_800DC388(s32 arg0) {
     s32 id;
 
     id = arg0;
     if (ovl_11_func_800E3D88() == 0x12D) {
-        return D_80070CF2 + 0xBC;
+        return gCalendarSeason + 0xBC;
     }
     if (id == 0) {
         id = ovl_11_func_800DD274();
@@ -27,19 +27,19 @@ s32 ovl_11_func_800DC388(s32 arg0) {
     }
     if (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[0] == 0x43) {
         if ((func_8001AF44(0x44U) == 0) && (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[1] == 0x44)) {
-            id = D_80070CF2 + 0x48;
+            id = gCalendarSeason + 0x48;
         }
         if (func_8001AF44(0x42U) == 1) {
-            id = D_80070CF2 + 0x48;
+            id = gCalendarSeason + 0x48;
         }
     }
     if (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[0] == 0x37) {
         if ((func_8001AF44(0x44U) == 0) && (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[1] == 0x38)) {
-            id = D_80070CF2 + 0x44;
+            id = gCalendarSeason + 0x44;
         }
         if (func_8001AF44(0x43U) == 1) {
-            id = D_80070CF2 + 0x44;
+            id = gCalendarSeason + 0x44;
         }
     }
-    return ovl_11_func_800C141C((s16)id);
+    return Ovl11RemapCalendarValue((s16)id);
 }

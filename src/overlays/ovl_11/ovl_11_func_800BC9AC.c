@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
     s16 unk0;
@@ -22,8 +23,6 @@ typedef struct {
     s16 field_2549C;
 } Ovl11BC9ACFarView;
 
-s32 ovl_11_func_800C0834(s16 arg0);
-
 void ovl_11_func_800BC9AC(void) {
     s16 temp_v1;
     s32 temp_a2;
@@ -33,7 +32,7 @@ void ovl_11_func_800BC9AC(void) {
         StopSoundSequence(0);
     }
     var_s1 = 0x64;
-    temp_a2 = ovl_11_func_800C0834(((struct struct_8006C838_time *) D_8006C838)->field_44C0);
+    temp_a2 = Ovl11ClassifyClockHour(((struct struct_8006C838_time *) D_8006C838)->field_44C0);
     if (((Ovl11BC9ACFarView *) &D_8007AFF0)->ptr->unk8 & 0x1000) {
         var_s1 = 0x50;
     }

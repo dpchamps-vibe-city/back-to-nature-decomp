@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s16 D_80070CF2;
+extern s16 gCalendarSeason;
 
 typedef struct {
     char pad0[2];
@@ -19,7 +19,7 @@ s16 ovl_11_func_800F4240(ReconA0View *arg0) {
         return 0;
     }
     temp_a1 = arg0->unk2;
-    if (D_80070CF2 != 2) {
+    if (gCalendarSeason != 2) {
         return temp_a1;
     }
     if (temp_a1 == 0x40) {

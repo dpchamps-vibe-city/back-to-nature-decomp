@@ -598,7 +598,54 @@ non-growth. Folded membership rose 122 → 130; all sixteen modules are valid.
 
 ---
 
-## `ovl_11` `D_801290D8` 0x34-stride entry-table init/accessor cluster — 0x800DCE98, 0x800DCECC, 0x800DCF10 (confidence: low)
+## `ovl_11` `D_801290D8` 0x34-stride entry-table init/accessor cluster — 0x800DCE98, 0x800DCECC, 0x800DCF10 (confidence: medium)
+
+**Module: `src/overlays/ovl_11/modules/vertex_blend.c`**, the whole five-member
+run through **800DD1D0 exclusive**, including the descriptor/interpolator pair
+below. The three-slot pool at 801290D8 is referenced only by the reset/allocator
+in this run. The allocator's three eight-byte projected-source descriptors,
+position words, flag and +2E/+30 ratio form exactly the record whose +20/+24/+28
+vertex pointers the two following functions resolve and interpolate. That
+layout joins the formerly separate ledger groups, with reset->allocator and
+update->interpolator call edges and no intervening member. Shared pool/layout
+and link order support membership; -G0 supplies no GP-based proof.
+
+Boundary evidence: preceding 800DCC5C renders the distinct fifteen-record
+scene pool, drawing either the record's own source or the blend's output
+source and calling this unit's update interface. It does not access the
+three-slot pool or implement its allocation/interpolation; its other accesses
+and helpers concern rendering, culling, matrices and per-record rotation.
+Following 800DD1D0 compares two halfwords of a current-scene header, with no
+blend state, pool or interpolation access. These are evidence-limited cuts,
+not proven original file boundaries. A renderer calling the service, or
+later animation modules changing its ratio, does not by itself establish
+common original compilation. No supported descriptor member was left out.
+
+Names: Ovl11ResetVertexBlend (800DCE98), Ovl11ResetVertexBlendPool (800DCECC),
+Ovl11AllocVertexBlend (800DCF10), Ovl11UpdateVertexBlend (800DCFEC),
+Ovl11InterpolateVertexBlend (800DD060), and gOvl11VertexBlendPool (801290D8).
+`include/ovl11_vertex_blend.h` publishes only reset-pool/allocate/update and
+documents lifetime, pool exhaustion, ratio/count requirements, delta wrapping,
+division and untouched vertex padding. Helper linkage is unchanged.
+
+One shared Ovl11VertexBlend in game_types.h replaces the allocator's partial
+entry and both mutually incompatible local interpolation-descriptor views.
+Its Ovl11BlendVertex/Block types name the witnessed pointer/offset/count and
+ratio fields without changing widths or layout. The caller/renderer now use
+that identity. The reset leaf accepts its actual descriptor pointer rather
+than s32; all bytes are unchanged. globals_override.h retains byte storage
+and the shared entry view is explicit. No storage or ownership was added.
+interfaceAudit publishes the header to eight declaring callers, including
+the ovl_21 declaration, and removes the obsolete local prototypes.
+
+The checked baseline -O2/-G0 fold matches all five functions and the overlay.
+No override was present, needed or added. After names, documentation and
+interface cleanup, `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes every gate: **329 folded, 41 valid
+modules**, all EXE/overlay bytes, associated data and placement unchanged,
+canonical interfaces, convergence, source policy and exception non-growth.
+
+Historical evidence (original identities):
 
 Leaf `ovl_11_func_800DCE98` (matched this session, 0x34, byte-exact) is the
 table's entry-init leaf: `memset(arg0, 0, 0x34)` then `u16@+0x2C = 0x8000`
@@ -619,6 +666,12 @@ plus call edges plus link order agree. Members:
 ---
 
 ## `ovl_11` interpolation-descriptor caller/callee pair — 0x800DCFEC / 0x800DD060 (confidence: medium)
+
+Now part of the whole five-member `modules/vertex_blend.c` above, not an
+independent two-function unit. Its three-source descriptor is the allocator's
+0x34-byte pool entry; that identity, including the ratio and resolved vertex
+pointers, is reconciled in Ovl11VertexBlend. See the preceding section for
+both exterior boundaries and verification.
 
 Candidate same-TU pair of `ovl_11` (`Obj\GF_FARM.bin`): the gapless
 predecessor prepares the callee's interpolation descriptor in place and
@@ -1650,6 +1703,78 @@ Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence:
 
 ## `ovl_11` D_80128B50 / D_80128B5C input-state run — 0x800C0688–0x800C0EFC (confidence: medium)
 
+**Module: `src/overlays/ovl_11/modules/clock_calendar.c`**, the complete
+22-function run **800C0688–800C14A0 exclusive**, incorporating the date-table
+run below, not separate input-state/calendar slices. The implementation
+establishes this as clock/calendar state, not controller input. Members
+0688/06B0/0824/087C/08E8/090C/09D0/0A28/0A40/0A4C/0D9C/0DB4/0EA4/0EFC
+share the minute-advance words and fifty-ID queue, with the queue reset and
+normal/forced ticking protocol bridging both halves. 0834 classifies the
+same hour field for external consumers. Tick calls 0F84's scene gate, then
+0FC0/11C4's weekday/day/season flag publishers and 1224's date lookup.
+090C initializes that same date and calls the same publishers/lookup.
+1280 searches an extended prefix of the identical date table; 141C uses its
+third halfword and calls 1224. The intervening, unreferenced 12DC publishes
+saved-date equality flags from the identical year/season/day fields: it is
+retained as part of that calendar flag protocol, not used as an artificial
+boundary. The ten event rules, eighteen date records, queue and four advance
+words form a coherent private protocol; external callback handlers and broad
+persistent-state consumers are interfaces, not automatic membership. Overlay
+-G0 addressing supplies no GP-based original-TU proof.
+
+Boundary evidence: preceding 800C05F8 randomly clears a different +44D4
+latch and invokes object/reset helpers; it has no edge to this run and touches
+none of its queue, advance words, event rules or date table. Following
+800C14A0 begins the frame dispatch/render service, testing frame/work modes
+and driving camera, sound and geometry helpers. It does not access this
+private protocol. Later frame code invokes its public clock service, not
+its private state. These are evidence-limited cuts, not proven historical
+file boundaries; neither adjacency nor the broad D_8006C838 work area extends
+the unit. No supported internal group was cut to avoid a flag or stub.
+
+The functions now have Ovl11 clock/calendar names at their original overlay
+identities. `include/ovl11_clock_calendar.h` publishes fourteen externally
+used services/queries; internal helpers retain external linkage without
+being exposed there. interfaceAudit carried it to all declaring callers,
+including ovl_21 and the previously folded action_guards unit. Locals and
+initializer fields describe dates, periods, rule tests and queue slots.
+The queue is a real fifty-s32 array rather than scalar-base pointer arithmetic.
+The private advance words, rule/date tables, callback table and twice-minute
+period have canonical overlay data names. Persistent year/season/day/weekday
+and hour/minute have EXE names at 80070CF0..80070CFA, propagated through all
+consumers, including save/header and word/unsigned load views. Those explicit
+assembler-bound views retain their original widths: the word at the hour
+anchor includes the minute and is NOT silently narrowed to a halfword.
+
+Declaration reconciliation: the same date table had incompatible local
+14-record, 18-record and flat-s16 declarations. Its canonical storage is
+54 halfwords, with a shared six-byte {season,day,value} view for searchers.
+Both original search bounds are retained. The remapper retains flat halfword
+indexing; converting it to record-member indexing shortened its code by one
+word. No source flag or allocation workaround was introduced. Source-local
+global externs were removed; globals_override.h owns their declarations.
+No linkage or small-data ownership changed. The public header documents
+06:00 date rollover, minute units, suspension on queued events, replacement
+requests, sentinel/bounds behavior and lookup results.
+
+All 22 baseline -O2/-G0 members and the linked overlay matched in the checked
+fold; no active flag override or flag hypothesis was involved. After naming,
+type/view reconciliation and readability work, `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes every gate: 324 folded,
+40 valid modules, all EXE/overlay bytes and data/placement exact, interfaces,
+converged generation, source policy and exception non-growth.
+
+Integration tooling fix (outside source/header/config roots): the canonical
+name gate scanned an obsolete F4.rodata.s left behind when the preceding jump
+table was attributed to C. The actual 134.rodata.s callback-table input was
+already correctly named. canonicalNames.ts now selects standalone assembly
+from the generated linker script instead of scanning every old data file;
+INCLUDE_ASM dependencies are still scanned from the source AST. This restores
+the gate's intended active-input scope without deleting or editing generated
+artifacts. Its five existing tests pass; no tests were added.
+
+Historical evidence (original address identities):
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing two adjacent
 file-scope s32 globals. Same shared-global-cluster fingerprint as the
 documented D_80128810 counter cluster / D_80123754 setter-getter run:
@@ -1746,6 +1871,12 @@ see [evidence and limits](research/ovl_11_func_800C0FC0-grouping.md)):
 ---
 
 ## `ovl_11` D_80122F0C 3×s16 lookup-table run — 0x800C1224–0x800C141C (confidence: medium)
+
+Now the calendar tail of `modules/clock_calendar.c`, not a separate unit.
+The reset/tick callers, date flag publication and common eighteen-row table
+connect it to the preceding clock/event run; see that section for whole-unit
+membership, both exterior boundaries, interface and verification evidence.
+The table is gOvl11CalendarDates, still searched over 14 or 18 rows as before.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): one unbroken
 link run whose members reference the single shared 6-byte {s16,s16,s16}
@@ -2668,6 +2799,50 @@ Candidate handler-tail extension (confidence: low; [evidence and limits](researc
 ---
 
 ## `ovl_11` D_80128CD0 coord-set run — 0x800CE210–0x800CE37C (confidence: medium)
+
+**Module: `src/overlays/ovl_11/modules/position_transition.c`**, all three
+members through exclusive end 800CE514. The two endpoints and step word are
+referenced only within this run; the selector's three X/Z pairs at 801232BC
+also have no other source consumer. Begin calls the selector and captures the
+start, Step consumes exactly those endpoints and the reset step. This private
+protocol plus gapless link order supports the unit, without claiming GP proof
+in a -G0 overlay. The selector's jump table is pooled with the module.
+
+Boundary evidence: preceding 800CE0F0 projects/draws sprite positions and
+advances sprite animation, using 80128D00 rather than these endpoints; it
+neither calls this run nor accesses its state/table. Following 800CE514 is a
+stateless 0xED..0xF2 range predicate; it and its fold/range siblings use none
+of the transition protocol. These are evidence-limited cuts: nothing found
+joins either neighbor, not proof of original file boundaries. The distant
+800C79F8's adjacent 80128CF0 word and shared general work pointer do not
+extend this unit: it never accesses an endpoint, step or target table.
+
+Names: Ovl11BeginPositionTransition (800CE210),
+Ovl11SelectPositionTransitionTarget (800CE2EC), Ovl11StepPositionTransition
+(800CE37C), and gOvl11PositionTransition{Target,Start,Step,Targets} at the
+original data addresses. Endpoint fields are x/y/z; locals describe the
+linear sample versus the object's deliberately different cumulative Y path.
+The public position-only object view and stack sample are now named
+Ovl11PositionTransitionObject/Sample with x/y/z fields. Their sizes, offsets,
+load/store widths and caller casts are unchanged; the final full-convergence
+329-function/41-module gate verifies these type/readability edits too.
+`include/ovl11_position_transition.h` publishes Begin/Step, their coordinate
+units, index range, work/object side effects and single-transition constraint.
+Both declaring callers adopt it via interfaceAudit. No linkage was narrowed.
+The selector is void: its sole original caller used a void call cast; removing
+that cast while retaining the inferred s32 return changed two caller words.
+A void definition without the unused return matches the entire overlay,
+removing the inconsistent call type rather than preserving a workaround.
+Its three writes, signed loads and table selection remain unchanged.
+Global externs and the formerly source-local table declaration are canonical
+in globals_override.h; no ownership/storage changes were made.
+
+The baseline -O2/-G0 fold checked all three members and the overlay. No active
+flag override was involved or added. After names/interfaces/readability edits,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes all
+gates: 302 folded, 39 valid modules; EXE/all overlays and data/placement exact,
+canonical interfaces, converged generation, policy and exception non-growth.
+The historical evidence below retains the original address identities.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing the adjacent
 main-RAM globals `D_80128CD0` / `D_80128CE0` / `D_80128CEC` (0x80128CD0,

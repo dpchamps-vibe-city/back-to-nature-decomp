@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -27,7 +28,6 @@ typedef struct {
 } D8006C838_52C8View;
 
 u32 Rand(s32 arg0);
-s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80109188(Struct_80109A70 *arg0, s32 arg1);
 
@@ -52,7 +52,7 @@ s32 ovl_11_func_80109A70(Struct_80109A70 *arg0) {
         return -1;
     }
     if (arg0->unk34 & 0x400) {
-        if (ovl_11_func_800C1224(((D8006C838ButtonView *) D_8006C838)->field_44BA,
+        if (Ovl11FindCalendarDate(((D8006C838ButtonView *) D_8006C838)->field_44BA,
                                  ((D8006C838ButtonView *) D_8006C838)->field_44BC) == 8) {
             return -1;
         }

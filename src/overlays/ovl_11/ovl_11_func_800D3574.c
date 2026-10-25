@@ -35,7 +35,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
     case 0x10B:
     case 0x10C:
         var_s1 = &D_80098BF8;
-        switch (D_80070CF2) {
+        switch (gCalendarSeason) {
         case 0:
             var_s0 = D_80124FD4[3];
             break;
@@ -52,7 +52,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x10D:
         var_s1 = &D_80098BF8;
-        switch (D_80070CF2) {
+        switch (gCalendarSeason) {
         case 0:
             var_s0 = D_80124FD4[1];
             break;
@@ -69,7 +69,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x10E:
         var_s1 = &D_80098BF8;
-        switch (D_80070CF2) {
+        switch (gCalendarSeason) {
         case 0:
             SystemError(0x45, 2);
             break;
@@ -86,7 +86,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x10F:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 3) {
+        if (gCalendarSeason == 3) {
             var_s0 = D_80124FE0[2];
         } else {
             SystemError(0x45, 4);
@@ -94,7 +94,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x110:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 0) {
+        if (gCalendarSeason == 0) {
             var_s0 = D_80124FD4[2];
         } else {
             SystemError(0x45, 5);
@@ -102,7 +102,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x114:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 1) {
+        if (gCalendarSeason == 1) {
             var_s0 = D_80124FD8[3];
         } else {
             SystemError(0x45, 6);
@@ -110,7 +110,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x115:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 1) {
+        if (gCalendarSeason == 1) {
             var_s0 = D_80124FD8[4];
         } else {
             SystemError(0x45, 7);
@@ -118,7 +118,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x116:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 1) {
+        if (gCalendarSeason == 1) {
             var_s0 = D_80124FD8[5];
         } else {
             SystemError(0x45, 8);
@@ -126,7 +126,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x117:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 2) {
+        if (gCalendarSeason == 2) {
             var_s0 = D_80124FDC[5];
         } else {
             SystemError(0x45, 9);
@@ -134,7 +134,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x118:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 2) {
+        if (gCalendarSeason == 2) {
             var_s0 = D_80124FDC[4];
         } else {
             SystemError(0x45, 8);
@@ -142,7 +142,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x11A:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 0) {
+        if (gCalendarSeason == 0) {
             var_s0 = D_80124FD4[5];
         } else {
             SystemError(0x45, 0xB);
@@ -150,7 +150,7 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         break;
     case 0x119:
         var_s1 = &D_80098BF8;
-        if (D_80070CF2 == 0) {
+        if (gCalendarSeason == 0) {
             var_s0 = D_80124FD4[4];
         } else {
             SystemError(0x45, 0xC);

@@ -4,10 +4,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "screen_fade.h"
+#include "ovl11_clock_calendar.h"
 
 
 void ovl_11_func_800C02B0 (void);
-s32 ovl_11_func_800C0834 (s16 arg0);
 void ovl_11_func_800C009C (u8 *arg0);
 
 void ovl_11_func_800BFD1C(void) {
@@ -25,7 +25,7 @@ void ovl_11_func_800BFD1C(void) {
         base = (u8 *) D_8006C838;
         if ((*(s32 *) (base + 0xC)) & 0x02000000) {
             work = base + 0x8000;
-            temp_v0 = ovl_11_func_800C0834(*(s16 *) (base + 0x44C0));
+            temp_v0 = Ovl11ClassifyClockHour(*(s16 *) (base + 0x44C0));
             if ((*(s32 *) (work + 0x6768)) != temp_v0) {
                 Ovl11SetScreenColorRampTarget(0x100, &D_80128A80[temp_v0 * 3]);
                 (*(s32 *) (work + 0x6768)) = temp_v0;

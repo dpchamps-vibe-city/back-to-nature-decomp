@@ -10,7 +10,6 @@ typedef struct {
     /* 0xAE */ u16 unkAE;
 } Struct_800E2AF0;
 
-extern u16 D_80070CF8;
 
 u32 Rand(s32 arg0);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
@@ -22,7 +21,7 @@ s32 ovl_11_func_800E2AF0(Struct_800E2AF0 *arg0) {
 
     if ((arg0->unkAE != 0) && (arg0->unk0 == 0x109)) {
         var_a1 = 0x13;
-    } else if ((u32)(D_80070CF8 - 6) >= 0xF) {
+    } else if ((u32)(D_80070CF8_halfword - 6) >= 0xF) {
         var_a1 = 0xF;
     } else {
         if (arg0->unk26 == 0xF) {

@@ -5,6 +5,7 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "projected_primitives.h"
+#include "ovl11_vertex_blend.h"
 
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
@@ -14,7 +15,6 @@ void ovl_11_func_800CBEF8(void);
 void ovl_11_func_800DB00C(Ovl11SceneCoordinates *arg0, Ovl11SceneCoordinates *arg1);
 void func_8001E340(Ovl11SceneGrid **arg0);
 void ovl_11_func_800DB0E4(void);
-void ovl_11_func_800DCECC(void);
 void ovl_11_func_800DC990(void);
 void ovl_11_func_800DCA60(void);
 void ovl_11_func_800DB2AC(void *arg0);
@@ -41,7 +41,7 @@ void ovl_11_func_80104CB8(void) {
     ovl_11_func_800DB00C(&D_800A00C4, &D_800A00CC);
     func_8001E340((Ovl11SceneGrid **)gOvl11SceneGeometry);
     ovl_11_func_800DB0E4();
-    ovl_11_func_800DCECC();
+    Ovl11ResetVertexBlendPool();
     ovl_11_func_800DC990();
     ovl_11_func_800DCA60();
     ovl_11_func_800DB2AC(D_8009F78C);

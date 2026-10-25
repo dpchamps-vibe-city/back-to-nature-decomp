@@ -1,11 +1,10 @@
 #include "common.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
     /* 0x00 */ char pad00[0x16];
     /* 0x16 */ s16 unk16;
 } UnkStruct800CD4E4;
-
-s32 ovl_11_func_800C087C(s32 arg0);
 
 s32 ovl_11_func_800CD4E4(UnkStruct800CD4E4 *arg0);
 
@@ -21,5 +20,5 @@ void ovl_11_func_800CD624(void) {
     }
     p = base - 0x51C8;
     *(u16 *)(p + 0x51F4) = *(u16 *)(p + 0x44CA);
-    ovl_11_func_800C087C(temp);
+    Ovl11RequestClockAdvanceToSix(temp);
 }

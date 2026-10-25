@@ -643,23 +643,6 @@ typedef struct {
 } M2C_2bc7a43223fd_CoordTri;
 
 typedef struct {
-               u16 vx;
-               u16 vy;
-               u16 vz;
-               u16 pad;
-} M2C_2be19369143b_Ovl11FuncDD060Vec;
-
-typedef struct {
-               u8 pad0[0x20];
-               M2C_2be19369143b_Ovl11FuncDD060Vec *unk20;
-               M2C_2be19369143b_Ovl11FuncDD060Vec *unk24;
-               M2C_2be19369143b_Ovl11FuncDD060Vec *unk28;
-               u8 pad2C[0x2];
-               s16 unk2E;
-               s16 unk30;
-} M2C_2be19369143b_Ovl11FuncDD060Arg;
-
-typedef struct {
                char pad_00[0x26];
                s16 unk26;
                s16 unk28;
@@ -1289,31 +1272,6 @@ typedef struct {
                s16 unk0;
                s16 unk2;
 } M2C_729a6ccf4038_UnkStruct80107DE0;
-
-typedef struct {
-    u8 pad0[0xC];
-    s32 unkC;
-    s32 unk10;
-} M2C_74497bb9f79c_DCFECRef;
-
-typedef struct {
-    u16 vx;
-    u16 vy;
-    u16 vz;
-    u16 pad;
-} M2C_74497bb9f79c_DCFECVec;
-
-typedef struct {
-    M2C_74497bb9f79c_DCFECRef *unk0;
-    u8 pad4[4];
-    M2C_74497bb9f79c_DCFECRef *unk8;
-    u8 padC[4];
-    M2C_74497bb9f79c_DCFECRef *unk10;
-    u8 pad14[0xC];
-    M2C_74497bb9f79c_DCFECVec *unk20;
-    M2C_74497bb9f79c_DCFECVec *unk24;
-    M2C_74497bb9f79c_DCFECVec *unk28;
-} M2C_74497bb9f79c_DCFECArg;
 
 typedef struct {
     char pad_00[0x24];
@@ -2513,6 +2471,19 @@ typedef struct {
 } Ovl11BAFCParams;
 
 typedef struct {
+    u16 x;
+    u16 y;
+    u16 z;
+    u16 pad;
+} Ovl11BlendVertex;
+
+typedef struct {
+    u8 pad0[0xC];
+    s32 vertexOffset;
+    s32 vertexCount;
+} Ovl11BlendVertexBlock;
+
+typedef struct {
     u8 pad0[6];
     u16 unk6;
     u8 pad8[4];
@@ -2721,13 +2692,6 @@ typedef struct {
     s32 unk104;
     s32 unk108;
 } Ovl11CE034Object;
-
-typedef struct {
-               char pad_00[0x100];
-                s32 unk100;
-                s32 unk104;
-                s32 unk108;
-} Ovl11CE37CArg0;
 
 typedef struct {
     char pad0[0x2E];
@@ -3035,16 +2999,6 @@ typedef struct {
 } Ovl11Func80116F4CArg;
 
 typedef struct {
-    u8 pad0[0x18];
-    u16 unk18;
-    u16 unk1A;
-    u16 unk1C;
-    u8 pad1[0x0E];
-    u16 unk2C;
-    u8 pad2[0x6];
-} Ovl11FuncDCF10Entry;
-
-typedef struct {
     u8 firstKind;
     u8 secondKind;
     u16 firstValue;
@@ -3121,6 +3075,13 @@ typedef struct {
     s32 field_8;
     u8 pad_C[4];
 } Ovl11PaddedVec3;
+
+typedef struct {
+               char pad_00[0x100];
+                s32 x;
+                s32 y;
+                s32 z;
+} Ovl11PositionTransitionObject;
 
 typedef struct {
                char pad_00[0x38];
@@ -3225,6 +3186,26 @@ struct Ovl11TextureCoordinates {
     u8 u3, v3;
     u16 clut;
 };
+
+typedef struct {
+               Ovl11BlendVertexBlock *sourceA;
+    u8 pad04[4];
+               Ovl11BlendVertexBlock *sourceB;
+    u8 pad0C[4];
+               Ovl11BlendVertexBlock *output;
+    u8 pad14[4];
+               u16 x;
+               u16 y;
+               u16 z;
+    u8 pad1E[2];
+               Ovl11BlendVertex *verticesA;
+               Ovl11BlendVertex *verticesB;
+               Ovl11BlendVertex *verticesOut;
+               u16 flags;
+               s16 numerator;
+               s16 denominator;
+    u8 pad32[2];
+} Ovl11VertexBlend;
 
 typedef struct {
                s16 unk0;

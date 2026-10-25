@@ -2,10 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_clock_calendar.h"
 
 
 s32 ovl_11_func_8010CAD4 (u8 *arg0);
-s32 ovl_11_func_800C0824 (void);
 s32 ovl_11_func_8010D314 (u8 *arg0);
 
 void ovl_11_func_8010C95C(void) {

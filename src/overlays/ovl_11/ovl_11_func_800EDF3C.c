@@ -37,7 +37,7 @@ s32 ovl_11_func_800EDF3C(s16 arg0, s32 arg1) {
     if (var_a0 == 0x14) {
         temp_v0 = func_8001AF44(0x25U);
         if (temp_v0 == 1) {
-            if (D_80070CF2 == temp_v0) {
+            if (gCalendarSeason == temp_v0) {
                 goto ret1;
             }
             goto block_7;

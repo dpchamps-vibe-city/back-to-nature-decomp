@@ -6,7 +6,7 @@ s32 ovl_11_func_800F6118(s32 arg0, s32 *arg1, s32 *arg2) {
     Recon_ovl_11_func_800F6118_D80126E18Entry *temp_v1;
 
     var_a3 = 1;
-    state = D_80070CF2;
+    state = gCalendarSeason;
     *arg1 = 0;
     *arg2 = 0;
     if ((u32) state >= 4U) {

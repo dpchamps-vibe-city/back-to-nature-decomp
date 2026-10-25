@@ -84,7 +84,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
                     var_v0 = 0;
                     if ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
                         var_v0 = 0;
-                        if (D_80070CF2 != 3) {
+                        if (gCalendarSeason != 3) {
                             temp_v0_2 = Ovl11TakeAgedItem();
                             if (temp_v0_2 != 0) {
                                 request[0] = temp_v0_2;

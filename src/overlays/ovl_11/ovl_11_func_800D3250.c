@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 ovl_11_func_800C0824(void);
+#include "ovl11_clock_calendar.h"
 
 /* The callee masks its only read incoming argument to u16. */
 s32 ovl_11_func_800D3D60(u16 arg0);
@@ -16,7 +15,7 @@ s32 ovl_11_func_800D3250(u16 *arg0) {
     if (*arg0 != 0x15B) {
         return -1;
     }
-    if (ovl_11_func_800C0824() == 1) {
+    if (Ovl11IsClockAdvanceActive() == 1) {
         state = (u8 *)D_8006C838;
         if (*(s32 *)(state + 0x44F8) & 0x01000000) {
             if (*(s16 *)(state + 0x44C0) >= 7) {

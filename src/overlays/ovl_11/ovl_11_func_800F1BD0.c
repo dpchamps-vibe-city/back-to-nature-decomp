@@ -3,7 +3,7 @@
 s32 ovl_11_func_800F1BD0(s32 arg0) {
     s32 mask = 0;
 
-    switch (D_80070CF2) {
+    switch (gCalendarSeason) {
     case 0:
         mask = 0x40000000;
         break;

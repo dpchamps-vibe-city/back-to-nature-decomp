@@ -5,7 +5,7 @@ u32 Rand(s32 arg0);
 void ovl_11_func_800DA3AC(Ovl11D124Entry *arg0) {
     s16 temp;
 
-    switch (D_80070CF2) {
+    switch (gCalendarSeason) {
     case 1:
         temp = 0x40;
         break;

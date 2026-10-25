@@ -118,3 +118,53 @@ Ovl11HasActionGuardAreaException = 0x80107BE4;
 gOvl11ActionGuardSelector = 0x8012D038; // type:data size:0x4
 gOvl11ActionGuardLists = 0x80127814; // type:data size:0x7C
 gOvl11ActionGuardAreaExceptions = 0x801278D8; // type:data size:0xC
+
+// Position-transition endpoints, step and script-selected X/Z destination pairs.
+Ovl11BeginPositionTransition = 0x800CE210;
+Ovl11SelectPositionTransitionTarget = 0x800CE2EC;
+Ovl11StepPositionTransition = 0x800CE37C;
+gOvl11PositionTransitionTarget = 0x80128CD0; // type:data size:0xC
+gOvl11PositionTransitionStart = 0x80128CE0; // type:data size:0xC
+gOvl11PositionTransitionStep = 0x80128CEC; // type:data size:0x4
+gOvl11PositionTransitionTargets = 0x801232BC; // type:data size:0xC
+
+// Clock, batched minute advance, event queue and calendar flags (800C0688..141C).
+Ovl11UpdateClockAndEvents = 0x800C0688;
+Ovl11RunClockAdvance = 0x800C06B0;
+Ovl11IsClockAdvanceActive = 0x800C0824;
+Ovl11ClassifyClockHour = 0x800C0834;
+Ovl11RequestClockAdvanceToSix = 0x800C087C;
+Ovl11RequestClockAdvance = 0x800C08E8;
+Ovl11InitClockAndCalendar = 0x800C090C;
+Ovl11ResetClockEvents = 0x800C09D0;
+Ovl11HasQueuedClockEvent = 0x800C0A28;
+Ovl11SetClockAdvanceRefresh = 0x800C0A40;
+Ovl11TickClock = 0x800C0A4C;
+Ovl11SetClockAdvanceMinutes = 0x800C0D9C;
+Ovl11MatchClockEvent = 0x800C0DB4;
+Ovl11QueueClockEvent = 0x800C0EA4;
+Ovl11ServiceClockEvent = 0x800C0EFC;
+Ovl11IsSceneClockBlocked = 0x800C0F84;
+Ovl11RefreshCalendarDayFlags = 0x800C0FC0;
+Ovl11RefreshCalendarSeasonFlags = 0x800C11C4;
+Ovl11FindCalendarDate = 0x800C1224;
+Ovl11FindCalendarDateExtended = 0x800C1280;
+Ovl11RefreshSavedDateFlags = 0x800C12DC;
+Ovl11RemapCalendarValue = 0x800C141C;
+gOvl11ClockEventQueue = 0x80128A88; // type:data size:0xC8
+gOvl11ClockAdvanceActive = 0x80128B50; // type:data size:0x4
+gOvl11ClockAdvanceTickEnabled = 0x80128B54; // type:data size:0x4
+gOvl11ClockAdvanceMinutesRemaining = 0x80128B58; // type:data size:0x4
+gOvl11ClockAdvanceRefreshRequested = 0x80128B5C; // type:data size:0x4
+gOvl11ClockEventRules = 0x80122E80; // type:data size:0x8C
+gOvl11CalendarDates = 0x80122F0C; // type:data size:0x6C
+gOvl11ClockMinutePeriodTwice = 0x80122F78; // type:data size:0x4
+gOvl11ClockEventHandlers = 0x800B7F54; // type:data size:0x28
+
+// Three descriptors blending source vertex arrays into writable output arrays.
+Ovl11ResetVertexBlend = 0x800DCE98;
+Ovl11ResetVertexBlendPool = 0x800DCECC;
+Ovl11AllocVertexBlend = 0x800DCF10;
+Ovl11UpdateVertexBlend = 0x800DCFEC;
+Ovl11InterpolateVertexBlend = 0x800DD060;
+gOvl11VertexBlendPool = 0x801290D8; // type:data size:0x9C

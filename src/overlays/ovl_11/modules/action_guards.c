@@ -11,6 +11,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_action_guards.h"
+#include "ovl11_clock_calendar.h"
 
 s32 Ovl11IsActionGuardAreaBlocked(s32 id);
 s32 Ovl11EvaluateActionGuardList(s16 *header);
@@ -23,7 +24,6 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit);
 s32 Ovl11IsOutsideGuardInterval(s32 lower, s32 upper);
 s32 Ovl11HasActionGuardAreaException(s32 id, s16 area, s16 room);
 s32 ovl_11_func_800C3548(s32 index);
-s32 ovl_11_func_800C1224(s16 area, s16 room);
 s32 func_8001AF44(u32 flag);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
@@ -284,7 +284,7 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
         result = func_8001AF44(0x26);
         break;
     case 5:
-        result = D_80070CF6 == 0;
+        result = gCalendarWeekday == 0;
         break;
     case 6:
         result = func_8001AF44(0x20);
@@ -372,8 +372,8 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
         result = 0;
         flagResult = func_8001AF44(0x19BU);
         if (flagResult == 1) {
-            if (D_80070CF6 != flagResult) {
-                result = D_80070CF6 != 3;
+            if (gCalendarWeekday != flagResult) {
+                result = gCalendarWeekday != 3;
             }
         }
         break;
@@ -410,7 +410,7 @@ s32 Ovl11IsActionGuardAreaBlocked(s32 id) {
     if (Ovl11HasActionGuardAreaException(id, area, room) == 1) {
         return 0;
     }
-    return ovl_11_func_800C1224(area, room) != 0;
+    return Ovl11FindCalendarDate(area, room) != 0;
 }
 
 s32 Ovl11HasActionGuardAreaException(s32 id, s16 area, s16 room) {

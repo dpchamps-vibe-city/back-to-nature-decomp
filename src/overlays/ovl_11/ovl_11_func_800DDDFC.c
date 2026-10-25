@@ -4,6 +4,8 @@
 #include "sprite_rotation.h"
 #include "master_volume.h"
 #include "sound_driver.h"
+#include "ovl11_clock_calendar.h"
+#include "ovl11_vertex_blend.h"
 
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001AF44 (u32 arg0);
@@ -17,7 +19,6 @@ void ovl_11_func_800C1D68 (void);
 void ovl_11_func_800BD5A8 (s32 arg0);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_800DB0E4 (void);
-void ovl_11_func_800DCECC (void);
 void ovl_11_func_800DC990 (void);
 void ovl_11_func_800DCA60 (void);
 void ovl_11_func_800DB2AC (Ovl11SetupHeader *arg0);
@@ -45,8 +46,6 @@ void ovl_11_func_800BF844 (void);
 void ovl_11_func_800D8FC8 (s32 arg0);
 void ovl_11_func_800D9064 (void);
 void ovl_11_func_800C05F8 (void);
-s32 ovl_11_func_800C0824 (void);
-void ovl_11_func_800C0A40 (s32 arg0);
 void ovl_11_func_800DE4C0 (void);
 void ovl_11_func_800BD3C4(s32 arg0);                /* static */
 s16 ovl_11_func_800BFB28();                         /* static */
@@ -117,7 +116,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800BD6A8(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xC), 0);
             ovl_11_func_800BD3C4(0);
             ovl_11_func_800DB0E4();
-            ovl_11_func_800DCECC();
+            Ovl11ResetVertexBlendPool();
             ovl_11_func_800DC990();
             ovl_11_func_800DCA60();
             ovl_11_func_800BD5A8(((Ovl11SetupWorkView *)&D_8007AFF0)->music);
@@ -174,11 +173,11 @@ s32 ovl_11_func_800DDDFC(void) {
             break;
         }
         ((Ovl11DDDFCState *)D_8006C838)->phase++;
-        if (ovl_11_func_800C0824() == 0) {
-            ovl_11_func_800C0A40(0);
+        if (Ovl11IsClockAdvanceActive() == 0) {
+            Ovl11SetClockAdvanceRefresh(0);
             ovl_11_func_800DE4C0();
         } else {
-            ovl_11_func_800C0A40(1);
+            Ovl11SetClockAdvanceRefresh(1);
         }
         break;
     case 6:

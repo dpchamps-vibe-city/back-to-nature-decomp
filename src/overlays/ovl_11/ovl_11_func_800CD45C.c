@@ -6,7 +6,6 @@ typedef struct {
     char pad;
 } Cd45cEntry;
 
-extern s16 D_80070CF8;
 extern Cd45cEntry D_801232A4[4];
 
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);

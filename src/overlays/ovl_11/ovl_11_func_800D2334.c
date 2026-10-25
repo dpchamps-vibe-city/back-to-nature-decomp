@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_clock_calendar.h"
 
-s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 s32 ovl_11_func_801090A4(Ovl11HandlerObjectView *arg0);
 s32 ovl_11_func_8010B4D8(u16 *arg0);
 void ovl_11_func_80107DD0(s16 *arg0);
@@ -25,7 +25,7 @@ void ovl_11_func_800D2334(void) {
         far_base = D_8009AFF0;
         if (var_s1 == 0) {
             var_s0 = &D_800759E4;
-            if ((D_800759E4.f00 != 0) && (!(D_800759E4.f34 & 0x400) || (ovl_11_func_800C1224(*(s16 *) (base + 0x44BA), *(s16 *) (base + 0x44BC)) != 8))) {
+            if ((D_800759E4.f00 != 0) && (!(D_800759E4.f34 & 0x400) || (Ovl11FindCalendarDate(*(s16 *) (base + 0x44BA), *(s16 *) (base + 0x44BC)) != 8))) {
                 ovl_11_func_801090A4((Ovl11HandlerObjectView *) &D_800759E4);
                 goto block_9;
             }

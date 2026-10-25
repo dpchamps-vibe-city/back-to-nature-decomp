@@ -17,6 +17,8 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "ovl11_selection_message.h"
+#include "ovl11_clock_calendar.h"
+#include "ovl11_vertex_blend.h"
 
 typedef struct {
                s16 unk0;
@@ -64,7 +66,6 @@ void ovl_11_func_800F0FB0 (s32 arg0);
 u32 Rand (s32 arg0);
 void ovl_11_func_800F1038 (u16 arg0, s32 arg1);
 void func_80015894 (SomeStruct *arg0, s32 arg1);
-void ovl_11_func_800C0D9C (s32 arg0);
 s32 ovl_11_func_800C2884 (s16 key, u32 *table);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800E39B8 (s32 *arg0, u32 arg1);
@@ -85,7 +86,6 @@ void func_80015868 (Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg
 void ovl_11_func_800F4390 (M2C_5b7450153aff_Ov11_4390struct *arg0, s32 arg1);
 s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_80107DD0 (s16 *arg0);
-void ovl_11_func_800C08E8 (s32 arg0);
 void func_80017200 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 s32 ovl_11_func_80112A84 (void);
 s32 ovl_11_func_800FEB14 (void);
@@ -108,7 +108,6 @@ void ovl_11_func_800BD358 (void);
 void ovl_11_func_800BD5A0 (void);
 void ovl_11_func_800BD538 (void);
 void ovl_11_func_800DC990 (void);
-void ovl_11_func_800DCECC (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_80107F18 (void);

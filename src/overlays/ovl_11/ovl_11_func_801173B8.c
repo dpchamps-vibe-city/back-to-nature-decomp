@@ -19,7 +19,7 @@ s32 ovl_11_func_801173B8(void) {
         func_80022738();
         return 1;
     case 1:
-        if (D_80070CF6 == 6) {
+        if (gCalendarWeekday == 6) {
             if (D_8012D798 != -1) {
                 message = 0x11B;
                 goto beginSelection;

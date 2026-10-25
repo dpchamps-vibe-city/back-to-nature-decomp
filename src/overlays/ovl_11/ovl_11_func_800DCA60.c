@@ -7,10 +7,9 @@
 #include "ovl11_scene_rotation_ramps.h"
 #include "ovl11_scene_animation_pair.h"
 #include "ovl11_scene_animation_cycle.h"
+#include "ovl11_vertex_blend.h"
 
 Ovl11FuncC9D4Entry *ovl_11_func_800DC9D4 (void);
-Ovl11FuncDCF10Entry *ovl_11_func_800DCF10 (void *arg0, void *arg1, void *arg2, u8 *arg3);
-void ovl_11_func_800DCE98 (s32 arg0);
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001AF44 (u32 arg0);
 
@@ -30,7 +29,7 @@ typedef struct {
 
 void ovl_11_func_800DCA60(void) {
     Ovl11FuncC9D4Entry *temp_v0;
-    Ovl11FuncDCF10Entry *temp_v0_3;
+    Ovl11VertexBlend *temp_v0_3;
     u8 *temp_s3;
     s32 var_s4;
     u16 temp_v0_2;
@@ -53,10 +52,10 @@ void ovl_11_func_800DCA60(void) {
                 temp_v0_2 = (u16) var_s1->flags;
                 temp_v0->unk28 = temp_v0_2;
                 if (temp_v0_2 & 0x4000) {
-                    temp_v0_3 = ovl_11_func_800DCF10(temp_s3 + var_s1->offset4, temp_s3 + var_s1->offset8, temp_s3 + var_s1->offsetC, &temp_v0->pad[8]);
-                    (*(Ovl11FuncDCF10Entry **) ((u8 *) temp_v0 + 0x2C)) = temp_v0_3;
+                    temp_v0_3 = Ovl11AllocVertexBlend(temp_s3 + var_s1->offset4, temp_s3 + var_s1->offset8, temp_s3 + var_s1->offsetC, &temp_v0->pad[8]);
+                    (*(Ovl11VertexBlend **) ((u8 *) temp_v0 + 0x2C)) = temp_v0_3;
                     (*(s16 *) ((u8 *) temp_v0_3 + 0x2E)) = 0;
-                    (*(u16 *) ((u8 *) (*(Ovl11FuncDCF10Entry **) ((u8 *) temp_v0 + 0x2C)) + 0x30)) = var_s1->duration;
+                    (*(u16 *) ((u8 *) (*(Ovl11VertexBlend **) ((u8 *) temp_v0 + 0x2C)) + 0x30)) = var_s1->duration;
                 }
             }
         }

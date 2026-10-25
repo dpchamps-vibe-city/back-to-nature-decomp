@@ -704,15 +704,26 @@ function filesUnder(dir: string, suffix: string): string[] {
   return found;
 }
 
+/** Standalone assembly objects actually selected by this container's link.
+ * A missing script means there is no generated link input to inspect yet. */
+function linkedAssembly(container: Container): string[] {
+  const script = join(ROOT, container.paths.ldScript);
+  if (!existsSync(script)) return [];
+  const text = readFileSync(script, "utf8");
+  return [...new Set([...text.matchAll(/(?:^|\s)([\w./-]+\.s)\.o(?=[\s(])/g)].map((match) => match[1]!))];
+}
+
 /**
  * Anonymous aliases that regeneration wrote where a name is established: the
  * engine export, every container's undefined tables, the assembly its link
  * consumes, and the generated function headers. A missing build artifact is
  * skipped, not failed.
  *
- * Only assembly the build reads is scanned. splat writes `nonmatchings/` only
- * for an `INCLUDE_ASM` stub and never deletes one, so a function that has since
- * become C leaves its old file behind under whatever names it had then.
+ * Only assembly the build reads is scanned. splat never deletes old output:
+ * both retired `nonmatchings/` stubs and data files superseded by a pooled
+ * .rodata attribution can remain under their former names. The generated
+ * linker script identifies standalone assembly inputs; C stubs identify their
+ * own included assembly. Neither is established by directory membership.
  */
 export function staleGeneratedNames(table: NameTable, sources: ReadonlyMap<string, string>): StaleName[] {
   const stale: StaleName[] = [];
@@ -753,7 +764,7 @@ export function staleGeneratedNames(table: NameTable, sources: ReadonlyMap<strin
     const files = [
       container.paths.undefinedFuncs,
       container.paths.undefinedSyms,
-      ...filesUnder(container.paths.asmDir, ".s").filter((file) => !file.includes("/nonmatchings/")),
+      ...linkedAssembly(container),
       ...(included.get(container.id) ?? []),
     ];
     for (const file of files) if (existsSync(join(ROOT, file))) scan(file, container.id);

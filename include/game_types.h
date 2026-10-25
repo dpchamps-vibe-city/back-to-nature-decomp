@@ -121,16 +121,41 @@ typedef struct {
     u8 pad2[0x6];
 } Ovl11FuncC9D4Entry;
 
-/* 800DCF10 returns 0x34-byte entries; 800DCA60 writes +0x2E/+0x30. */
+/* ovl_11:800DCFEC/800DD060 locate and blend eight-byte vertex records. */
 typedef struct {
-    u8 pad0[0x18];
-    u16 unk18;
-    u16 unk1A;
-    u16 unk1C;
-    u8 pad1[0x0E];
-    u16 unk2C;
-    u8 pad2[0x6];
-} Ovl11FuncDCF10Entry;
+    u16 x;
+    u16 y;
+    u16 z;
+    u16 pad;
+} Ovl11BlendVertex;
+
+typedef struct {
+    u8 pad0[0xC];
+    s32 vertexOffset;
+    s32 vertexCount;
+} Ovl11BlendVertexBlock;
+
+/* Three eight-byte projected-source descriptors, then blend state.
+ * 800DCF10 allocates three 0x34-byte slots; 800DCA60 sets ratio/duration. */
+typedef struct {
+    /* 0x00 */ Ovl11BlendVertexBlock *sourceA;
+    u8 pad04[4];
+    /* 0x08 */ Ovl11BlendVertexBlock *sourceB;
+    u8 pad0C[4];
+    /* 0x10 */ Ovl11BlendVertexBlock *output;
+    u8 pad14[4];
+    /* 0x18 */ u16 x;
+    /* 0x1A */ u16 y;
+    /* 0x1C */ u16 z;
+    u8 pad1E[2];
+    /* 0x20 */ Ovl11BlendVertex *verticesA;
+    /* 0x24 */ Ovl11BlendVertex *verticesB;
+    /* 0x28 */ Ovl11BlendVertex *verticesOut;
+    /* 0x2C */ u16 flags;
+    /* 0x2E */ s16 numerator;
+    /* 0x30 */ s16 denominator;
+    u8 pad32[2];
+} Ovl11VertexBlend;
 
 /* 800FA1CC: lh at +0/+2/+6; lhu at +4 narrowed before signed modulo. */
 typedef struct {
@@ -2159,21 +2184,20 @@ typedef struct {
     /* 0x34 */ s32 unk34;
 } Ovl11Func80116F4CArg;
 
-/* ovl_11_func_800CE37C parameter view: the coordinate words written at
- * +0x100, +0x104 and +0x108. */
+/* ovl_11:800CE37C parameter view: full-word object position at +100. */
 typedef struct {
     /* 0x00 */ char pad_00[0x100];
-    /* 0x100 */ s32 unk100;
-    /* 0x104 */ s32 unk104;
-    /* 0x108 */ s32 unk108;
-} Ovl11CE37CArg0;
+    /* 0x100 */ s32 x;
+    /* 0x104 */ s32 y;
+    /* 0x108 */ s32 z;
+} Ovl11PositionTransitionObject;
 
-/* ovl_11_func_800CE37C stack result of func_8001F278: three s32 words. */
+/* ovl_11:800CE37C stack result of the three-component interpolator. */
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-} Ovl11CE37CSample;
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11PositionTransitionSample;
 
 /* ovl_11_func_80109188 argument: signed state fields and flags at +0x34. */
 typedef struct {

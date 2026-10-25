@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -23,7 +24,6 @@ typedef struct {
     s16 field_44BC;
 } D8006C838ButtonView;
 
-s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
 extern s32 (*D_800BA848[])(Ovl11D04D4Obj *);
@@ -37,7 +37,7 @@ s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1) {
     var_s1 = arg1;
     var_s3 = 0;
     if (arg0->unk34 & 0x400) {
-        if (ovl_11_func_800C1224(
+        if (Ovl11FindCalendarDate(
                 ((D8006C838ButtonView *) D_8006C838)->field_44BA,
                 ((D8006C838ButtonView *) D_8006C838)->field_44BC) == 8) {
             return -1;

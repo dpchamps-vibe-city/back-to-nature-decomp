@@ -1430,3 +1430,11 @@ gCameraOffsetBackup = 0x80049280; // size:0xC
 // ovl_11's 99 four-byte {id, age} cells and the occupancy saved after an add.
 gAgedItemCells = 0x80075854; // size:0x18C
 gAgedItemLastAddCount = 0x80070D3C; // size:0x2
+
+// Persistent calendar/clock halfwords, advanced by ovl_11:800C0A4C.
+gCalendarYear = 0x80070CF0; // size:0x2
+gCalendarSeason = 0x80070CF2; // size:0x2
+gCalendarDay = 0x80070CF4; // size:0x2
+gCalendarWeekday = 0x80070CF6; // size:0x2
+gClockHour = 0x80070CF8; // size:0x2
+gClockMinute = 0x80070CFA; // size:0x2

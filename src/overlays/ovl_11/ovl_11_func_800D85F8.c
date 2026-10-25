@@ -56,11 +56,11 @@ u16 ovl_11_func_800D85F8(Recon_ovl_11_func_800D85F8_A0View *arg0) {
         arg0->u0.unk0 = arg0->unk2;
     }
 
-    if (D_80070CF2 == 2) {
+    if (gCalendarSeason == 2) {
         if (ret == 0x40) {
             ret = 0x13A;
         }
-    } else if (D_80070CF2 == 3) {
+    } else if (gCalendarSeason == 3) {
         if (ret == 0x3A) {
             ret = 0x13B;
         } else if (ret == 0x3E) {

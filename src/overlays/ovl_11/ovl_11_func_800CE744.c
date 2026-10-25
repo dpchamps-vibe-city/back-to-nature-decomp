@@ -10,6 +10,7 @@
 #include "packet_work.h"
 #include "aged_item_pool.h"
 #include "cd_audio.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
                s16 unk0;
@@ -161,7 +162,6 @@ void ovl_11_func_80107DD0 (s16 *arg0);
 s32 ovl_11_func_800E276C (s16 *arg0);
 void ovl_11_func_800E1F70 (s32 arg0);
 void ovl_11_func_800D2F1C (s32 arg0);
-s32 ovl_11_func_800C1224 (s16 arg0, s16 arg1);
 void ovl_11_func_800D266C (M2C_d59586abe320_Ov11D266CFields *arg0, u16 *arg1, s32 arg2);
 void ovl_11_func_80108CA4 (s32 arg0);
 void ovl_11_func_8010B198 (s32 arg0);

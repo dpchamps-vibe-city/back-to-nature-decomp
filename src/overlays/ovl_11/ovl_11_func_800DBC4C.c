@@ -1,6 +1,6 @@
 #include "common.h"
+#include "ovl11_clock_calendar.h"
 
-s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 s32 ovl_11_func_800EF0E8(s16 arg0);
 
 void ovl_11_func_800DBC4C(void) {
@@ -12,7 +12,7 @@ void ovl_11_func_800DBC4C(void) {
             D_8007AE78[i] = D_8007AE78[i] >= 0x79 ? 0x78 : D_8007AE78[i];
         }
     }
-    if (ovl_11_func_800C1224(
+    if (Ovl11FindCalendarDate(
             ((struct Ovl11TimerState *) D_8006C838)->field_44BA,
             ((struct Ovl11TimerState *) D_8006C838)->field_44BC) != 0) {
         return;

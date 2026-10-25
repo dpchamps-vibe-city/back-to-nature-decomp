@@ -3,6 +3,7 @@
 #include "screen_fade.h"
 #include "master_volume.h"
 #include "sound_commands.h"
+#include "ovl11_position_transition.h"
 
 #define SELECTION (*(u16 *)&D_801273D8)
 
@@ -16,7 +17,6 @@ s32 func_800226B0(void);
 void func_800248B0(s32, s16, s16);
 void func_80022738(void);
 void func_8001AF70(u16, u16);
-void ovl_11_func_800CE210(Ovl11C7010Object *);
 
 s32 ovl_11_func_800FFB08(void) {
     s32 ready;
@@ -64,7 +64,7 @@ s32 ovl_11_func_800FFB08(void) {
             case 1:
                 func_8001AF70(0x48, 1);
             case 0:
-                ovl_11_func_800CE210((Ovl11C7010Object *)&D_80071A00);
+                Ovl11BeginPositionTransition((Ovl11C7010Object *)&D_80071A00);
                 break;
             case 2:
                 ((Ovl11TriggerWorkView *)&D_8007AFF0)->field_254A0 = 0xF;

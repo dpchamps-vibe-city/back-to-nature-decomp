@@ -56,7 +56,7 @@ void ovl_11_func_800C19B0(void) {
                     var_v1 = time - (var_s0->entries[value].unk0 + var_s0->offset);
                 }
                 if (var_v1 >= 0) {
-                    ovl_11_func_800C2CE8((Ovl11C3B78Arg0 *) var_s0, D_80122F78 * var_v1 / 2);
+                    ovl_11_func_800C2CE8((Ovl11C3B78Arg0 *) var_s0, gOvl11ClockMinutePeriodTwice * var_v1 / 2);
                 } else {
                     var_s0->flags &= 0xFEFF;
                 }

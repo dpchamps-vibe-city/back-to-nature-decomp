@@ -202,13 +202,13 @@ state_done:
             arg0->unk6C |= 0x1800;
             arg0->attributes |= 0x100;
             arg0->unk6C &= ~0x40000000;
-            ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x3CU, 0, D_80122F78 * 0xA);
+            ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x3CU, 0, gOvl11ClockMinutePeriodTwice * 0xA);
             arg0->unk6C |= 0x40000000;
-            ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x58, 0, D_80122F78 * 0xA);
+            ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x58, 0, gOvl11ClockMinutePeriodTwice * 0xA);
             RequestPadActuatorSequence(0, 3);
             return 0;
         case 0x58:
-            ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x57, 1, D_80122F78 * 0xA);
+            ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x57, 1, gOvl11ClockMinutePeriodTwice * 0xA);
             return 0;
         case 0x45:
             arg0->unk6C = (arg0->unk6C | 0x10) & 0xDFFFFFFF;

@@ -7,6 +7,7 @@
 #include "sprite_rotation.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
     s16 field_0;
@@ -67,7 +68,6 @@ s32 func_8001E878 (M2C_2bc7a43223fd_CoordTri *p0, M2C_2bc7a43223fd_CoordTri *p1,
 void SetVal8005E2E8 (s32 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800BD358 (void);
-s32 ovl_11_func_800C1224 (s16 arg0, s16 arg1);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
 s32 ovl_11_func_800D7504 (s16 arg0);
 void func_80015840(ObjectState *obj, u8 arg1);
@@ -102,7 +102,6 @@ s32 ovl_11_func_800D5CE4 (s16 arg0);
 s32 ovl_11_func_800D5C90 (s16 arg0);
 s32 pow_int (s32 arg0, s32 arg1);
 s32 func_8001AF44 (u32 arg0);
-s32 ovl_11_func_800C0A28 (void);
 void ovl_11_func_800F4360 (M2C_701317280b4c_Ov11_4360struct *arg0, s16 arg1, s16 arg2, Vec3 vec);
 s32 Ovl11IsActionGuardAreaBlocked (s32 arg0);
 s32 Ovl11TestRecordFieldGuard (s32 arg0, s32 arg1);

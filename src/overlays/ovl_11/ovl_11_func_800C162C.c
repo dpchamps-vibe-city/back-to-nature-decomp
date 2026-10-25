@@ -9,9 +9,8 @@
 #include "psyq/libgs.h"
 #include "ovl11_scene_camera_lighting.h"
 #include "ovl11_selection_message.h"
+#include "ovl11_clock_calendar.h"
 
-void ovl_11_func_800C06B0 (void);
-void ovl_11_func_800C0688 (void);
 void ovl_11_func_800C3D70 (void);
 void ovl_11_func_800BFD1C (void);
 void ovl_11_func_800F65B8 (void);
@@ -41,8 +40,8 @@ void ovl_11_func_800DE46C (void);
 
 void ovl_11_func_800C162C(void) {
     D_80128B60 = 2;
-    ovl_11_func_800C06B0();
-    ovl_11_func_800C0688();
+    Ovl11RunClockAdvance();
+    Ovl11UpdateClockAndEvents();
     ovl_11_func_800C3D70();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
     Ovl11ResetCollisionQueryCount();

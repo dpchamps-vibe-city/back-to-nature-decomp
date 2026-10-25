@@ -18,7 +18,7 @@ s32 ovl_11_func_80120CC4(Ovl11TextureCoordinates *arg0, s32 arg1) {
     s32 v_top;
     s32 v_top_coord;
     u32 clut_shift;
-    s32 season = D_80070CF2;
+    s32 season = gCalendarSeason;
 
     switch (arg1) {
     case 0x26:

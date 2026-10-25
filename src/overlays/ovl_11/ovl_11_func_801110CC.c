@@ -37,8 +37,8 @@ void ovl_11_func_801110CC(Struct_801110CC *arg0) {
     if (temp_a0 == *(s16 *)(far_base + 0x25476)) {
         switch (temp_a0) {
         case 1:
-            var_s0 = local.entries[D_80070CF2].unk0;
-            var_a2 = local.entries[D_80070CF2].unk4((s16)temp_t3);
+            var_s0 = local.entries[gCalendarSeason].unk0;
+            var_a2 = local.entries[gCalendarSeason].unk4((s16)temp_t3);
             break;
         case 4:
         case 5:

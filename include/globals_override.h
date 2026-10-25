@@ -1644,7 +1644,7 @@ typedef struct {
     s16 index_A;
 } Ovl11EF488Record;
 /* 800EF488 uses lhu at +0/+2/+4/+6 of this input state. */
-extern u16 D_80070CF0_halfwords[4] __asm__("D_80070CF0");
+extern u16 D_80070CF0_halfwords[4] __asm__("gCalendarYear");
 /* 800EF488 selects this single record for arg0 == -1; named view preserves existing local types. */
 extern Ovl11EF488Record D_80071CC0_record __asm__("D_80071CC0");
 /* 800EF488 indexes these records at stride 0xC; named view preserves existing local types. */
@@ -1729,14 +1729,18 @@ typedef struct {
     u16 field_E4CA;
 } Ovl11BF8B8View;
 
-/* ovl_11_func_800C090C fills 0xC8 bytes here; matched queue users access s32 slots from this base. */
-extern s32 D_80128A88;
-/* ovl_11_func_800C090C clears these three absolute-addressed 32-bit state words. */
-extern s32 D_80128B50;
-extern s32 D_80128B54;
-extern s32 D_80128B58;
-/* 800C06B0 reads and clears this word; 800C0A40 stores its argument here. */
-extern s32 D_80128B5C;
+/* ovl_11:800C090C fills 0xC8 bytes with -1; 800C0EA4/0EFC enqueue and
+ * shift fifty signed event IDs. Absolute-addressed overlay state. */
+extern s32 gOvl11ClockEventQueue[50];
+extern s32 gOvl11ClockAdvanceActive;
+extern s32 gOvl11ClockAdvanceTickEnabled;
+extern s32 gOvl11ClockAdvanceMinutesRemaining;
+/* 800C06B0 tests exactly 1 before the deferred refresh; 800C0A40 sets it. */
+extern s32 gOvl11ClockAdvanceRefreshRequested;
+/* ovl_11:800C0EFC indexes ten resident callbacks; nonzero dequeues the ID. */
+extern s32 (*gOvl11ClockEventHandlers[10])(void);
+/* ovl_11:800C0EFC clears this halfword when the queued callback completes. */
+extern s16 D_8006C908;
 
 /* ovl_11_func_80117178 scans ten 0xB4-byte records at +0x7AB4, reading u16 at +0 and flag bit 18 at +0x34. */
 struct Ovl11Scan109Record {
@@ -1754,7 +1758,15 @@ struct Ovl11Scan109Globals {
 /* ovl_11_func_800BE94C indexes four original-data halfwords by the +0x44BA selector. */
 extern u16 D_80122E6C[4];
 /* 800C0A4C walks ten 0xE-byte records; 800C0DB4 reads seven signed halfwords. */
-extern s16 D_80122E80[10][7];
+extern s16 gOvl11ClockEventRules[10][7];
+/* 800C1224/800C1280 search 14/18 entries; 800C141C reads the third halfword.
+ * The bounds differ, not the identity or layout of the shared date table. */
+typedef struct {
+    s16 season;
+    s16 day;
+    s16 value;
+} Ovl11CalendarDateEntry;
+extern s16 gOvl11CalendarDates[18 * 3];
 /* 800C0A4C: signed date/time pairs, flag words and elapsed halfword through the resident state. */
 struct Ovl11ClockPair {
     s16 hour;
@@ -1828,19 +1840,20 @@ struct Ovl11UpdateWork {
     s16 field_25476;
 };
 
-/* ovl_11_func_800C090C resets these halfword/word fields through one D_8006C838 base. */
+/* ovl_11:800C090C initializes these fields; 800C0A4C establishes the
+ * date/time units and 06:00 day boundary. Widths and unknown fields retained. */
 struct Ovl11StateInitView {
     u8 pad_0[0xD0];
     s16 field_D0;
     u8 pad_D2[2];
     s32 field_D4;
     u8 pad_D8[0x44B8 - 0xD8];
-    s16 field_44B8;
-    s16 field_44BA;
-    s16 field_44BC;
-    s16 field_44BE;
-    s16 field_44C0;
-    s16 field_44C2;
+    s16 year;
+    s16 season;
+    s16 day;
+    s16 weekday;
+    s16 hour;
+    s16 minute;
     u8 pad_44C4[4];
     s16 field_44C8;
     s16 field_44CA;
@@ -3778,7 +3791,7 @@ extern u8 D_80051BF0[];
 extern u8 D_80051B90[];
 extern u8 D_80051BE6[];
 /* ovl_11_func_8011775C reads D_80070CF8 with lhu; retain a distinct typed view. */
-extern u16 D_80070CF8_halfword __asm__("D_80070CF8");
+extern u16 D_80070CF8_halfword __asm__("gClockHour");
 
 /* D_800535E6 - base of a data table in the PS-X EXE, indexed by
  * D_80054BBC[0] and passed to func_80017B3C by ovl_11_func_800FC998.
@@ -3977,11 +3990,13 @@ extern s16 gOvl28PresentationEntryIndex;
 extern u16 gOvl28PresentationIds[][25];
 
 /* D_80070CF2 - s16 global used in overlay 11 button-check functions */
-extern s16 D_80070CF2;
+extern s16 gCalendarSeason;
 /* 800C0DB4 compares signed record halfwords against these lh-loaded globals. */
-extern s16 D_80070CF4;
-extern s16 D_80070CF8_signedHalfword __asm__("D_80070CF8");
-extern s16 D_80070CFA;
+extern s16 gCalendarDay;
+extern s16 gClockHour;
+/* Preserve signed/unsigned halfword and combined hour/minute word views. */
+extern s16 D_80070CF8_signedHalfword __asm__("gClockHour");
+extern s16 gClockMinute;
 
 /* D_800BAC04 - ovl_11 four-entry {s32 id, handler} dispatch table. The records
  * are {0, ovl_11_func_80111258}, {1, ovl_11_func_80111400}, {2,
@@ -4577,7 +4592,7 @@ extern s32 D_8012D794;
 /* ovl_11 801173B8 loads this signed id, comparing it with -1. */
 extern s32 D_8012D798;
 /* ovl_11 801173B8 tests this signed halfword against 6. */
-extern s16 D_80070CF6;
+extern s16 gCalendarWeekday;
 /* ovl_11 801173B8 tests this signed word against 10. */
 extern s32 D_80071A5C;
 
@@ -5657,7 +5672,7 @@ struct Ovl15SaveHeaderSource {
     u8 pad_3A[0xD10 - 0x3A];
     struct Ovl15SaveName name_D10;
 };
-extern struct Ovl15SaveHeaderSource D_80070CF0_headerSource __asm__("D_80070CF0");
+extern struct Ovl15SaveHeaderSource D_80070CF0_headerSource __asm__("gCalendarYear");
 
 /* ovl_15 transfer buffer and its metadata view (+0x200), not two allocations.
  * Ovl15WriteSaveChecksums (0x80135AE0) covers records 5..255 at 0x80 stride;
@@ -5739,10 +5754,9 @@ extern s32 gOvl11SceneZRotationRampState;
 extern Ovl11SceneRecordRotationView *gOvl11SceneYRotationRecord;
 extern s32 gOvl11SceneYRotationRampState;
 
-/* D_801290D8 - three 0x34-byte overlay entries walked by ovl_11 
-   func_800DCECC and ovl_11_func_800DCF10. Byte storage keeps the existing 
-   partial views compatible; each client casts to its witnessed layout. */
-extern u8 D_801290D8[3 * 0x34];
+/* ovl_11:800DCECC/800DCF10 walk three 0x34-byte vertex-blend descriptors.
+ * Ovl11VertexBlend in game_types.h is the shared entry view. */
+extern u8 gOvl11VertexBlendPool[3 * 0x34];
 
 /* ovl_11:80129178 / 80129184: 800DD374 indexes three scene records;
  * 800DD4D8 and its nested helper step their blends and transfer visibility. */
@@ -6340,19 +6354,18 @@ extern u16 D_80070D0A;
 /* 800D0FB4 reads this absolute-addressed status halfword with lhu. */
 extern u16 D_80070D0C;
 
-/* D_80128CD0 / D_80128CE0 / D_80128CEC - main-RAM coordinate pair and its
- * count. ovl_11_func_800CE2EC fills D_80128CD0 +0/+4/+8 from a 3-entry table;
- * ovl_11_func_800CE37C hands both triples to func_8001F278 as the two s32*
- * outputs and reads D_80128CE0 +0x4, while D_80128CEC gates its state steps.
- * Absolute-addressed from the -G0 overlay. */
+/* ovl_11:800CE210/800CE37C capture and interpolate these position endpoints.
+ * Absolute-addressed overlay state, not small-data definitions. */
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ s32 z;
 } Ovl11CoordTriple;
-extern Ovl11CoordTriple D_80128CD0;
-extern Ovl11CoordTriple D_80128CE0;
-extern s32 D_80128CEC;
+extern Ovl11CoordTriple gOvl11PositionTransitionTarget;
+extern Ovl11CoordTriple gOvl11PositionTransitionStart;
+extern s32 gOvl11PositionTransitionStep;
+/* ovl_11:800CE2EC selects one of three signed X/Z pairs by script code. */
+extern s16 gOvl11PositionTransitionTargets[3][2];
 
 /* D_801231F4 / D_801231F8 - ovl_11 parallel 16-bit flag words read,
  * masked with 0xFFFF0FFF and nibble-rotated by ovl_11_func_800C47F0;
@@ -6364,7 +6377,7 @@ extern u32 D_80123150;
 extern s32 D_801231F4;
 extern s32 D_801231F8;
 /* 800C6C24 loads this word and scales it by ten for the state timer. */
-extern s32 D_80122F78;
+extern s32 gOvl11ClockMinutePeriodTwice;
 
 /* D_80128CF8 - ovl_11 word tested non-zero by ovl_11_func_800C47F0 to make
  * the flag-word rotation run. Absolute-addressed from the -G0 overlay. */
@@ -6399,7 +6412,7 @@ extern s32 *D_80124FDC;
 extern s32 *D_80124FE0;
 extern s32 *D_80124FE4;
 /* ovl_11_func_800D3574 reads the engine mode with lw, unlike halfword users. */
-extern s32 D_80070CF8_word __asm__("D_80070CF8");
+extern s32 D_80070CF8_word __asm__("gClockHour");
 
 /* D_8009CBF8: ovl_11_func_800C2884 reads counted words; other users copy bytes. */
 extern s32 D_8009CBF8;
@@ -7146,7 +7159,7 @@ typedef struct {
 /* 80104EC8 passes two seven-halfword strings at byte offsets 0 and 0xE. */
 extern u16 D_80051F26[];
 /* Signed declarations are witnessed by matched 800B85F4 (ovl_19) and 800F19C8 (ovl_11). */
-extern s16 D_80070CF0;
+extern s16 gCalendarYear;
 extern s16 D_80071A22;
 /* 80104EC8, 800CD0C0 and 800EC490 read this unsigned state halfword. */
 extern u16 D_80070D06;

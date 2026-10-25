@@ -12,6 +12,7 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
                s16 field_0;
@@ -149,7 +150,6 @@ void SetPadActuatorSequenceAddress (s32 arg0, s32 arg1);
 void ResetPadActuatorSequence (s32 arg0);
 void SetVal8005E2E8 (s32 arg0);
 s32 func_8001E38C (void);
-s32 ovl_11_func_800C0824 (void);
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 s32 func_8001AF44 (u32 arg0);
 void func_8001AF70 (u16 arg0, u16 arg1);
@@ -223,7 +223,6 @@ s32 ovl_11_func_800E6D2C (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800CD0C0 (s32 *arg0);
-void ovl_11_func_800C08E8 (s32 arg0);
 s32 ovl_11_func_800E8960 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_801000D4 (s16 arg0);
 s32 ovl_11_func_800E5ADC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "sound_commands.h"
 
-extern s16 D_80070CF4;
+extern s16 gCalendarDay;
 extern s32 D_80126F7C;
 extern s32 D_80126F84;
 extern s32 D_80126F88;
@@ -21,5 +21,5 @@ void ovl_11_func_800F9D5C(void) {
     ovl_11_func_800F6638();
     PlaySoundEffect(3);
     D_80126F7C = 1;
-    D_80126F84 = D_80070CF4;
+    D_80126F84 = gCalendarDay;
 }

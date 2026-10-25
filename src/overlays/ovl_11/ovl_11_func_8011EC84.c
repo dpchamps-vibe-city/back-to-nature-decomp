@@ -10,5 +10,5 @@ void ovl_11_func_8011EC84(void) {
     PlaySoundEffect(3);
     ovl_11_func_8011E574();
     D_80128420 = 6;
-    ovl_11_func_8011EE98(D_80070CF2);
+    ovl_11_func_8011EE98(gCalendarSeason);
 }

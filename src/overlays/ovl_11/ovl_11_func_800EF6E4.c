@@ -10,6 +10,7 @@
 #include "pad_actuator_sequences.h"
 #include "card_deal.h"
 #include "sound_commands.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
     s16 unk0;
@@ -114,13 +115,11 @@ s32 ovl_11_func_800EFDA0 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800EFE34 (s32 *ptr, s32 arg1, s32 arg2);
 s32 pow_int (s32 arg0, s32 arg1);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800C1280 (s16 arg0, s16 arg1);
 void ovl_11_func_80112904 (s16 arg0);
 s32 func_800231E8 (void);
 void func_80023170 (u16 *arg0);
 void ovl_11_func_800D0DBC (M2C_d453384c461b_UnkStruct800D0DBC *arg0);
 void ovl_11_func_800D079C (s32 arg0);
-s32 ovl_11_func_800C0A28 (void);
 s32 ovl_11_func_800F14D8 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800F144C (u16 arg0, u16 arg1, s16 *arg2);
 s32 ovl_11_func_800F15B4 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
@@ -144,7 +143,6 @@ void ovl_11_func_801037EC (void);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800DADB0 (s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4);
 s32 ovl_11_func_800EC354 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800C1224 (s16 arg0, s16 arg1);
 void ovl_11_func_80111F10 (void);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800DBAB0 (void);

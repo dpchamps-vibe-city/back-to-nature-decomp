@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl11_clock_calendar.h"
 
 typedef struct {
     /* 0x000 */ char pad_000[0x0C];
@@ -9,8 +10,6 @@ typedef struct {
 
 s32 func_8001AF44(u32 arg0);
 
-s32 ovl_11_func_800C0824(void);
-
 void ovl_11_func_800FB608(void);
 
 void ovl_11_func_800FB628(void);
@@ -19,7 +18,7 @@ void ovl_11_func_800C188C(void) {
     char *far_base;
     s32 temp;
 
-    if (ovl_11_func_800C0824() == 1) {
+    if (Ovl11IsClockAdvanceActive() == 1) {
         ovl_11_func_800FB628();
         return;
     }

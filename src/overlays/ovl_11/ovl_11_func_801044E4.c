@@ -7,12 +7,13 @@
 #include "psyq/memory.h"
 #include "card_deal.h"
 #include "ovl11_selection_message.h"
+#include "ovl11_clock_calendar.h"
+#include "ovl11_vertex_blend.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);
 void ovl_11_func_800D6628 (void);
-void ovl_11_func_800C090C (void);
 void ovl_11_func_800C9C60 (void);
 void ovl_11_func_800C1C08 (void);
 void ovl_11_func_800C1BA0 (void);
@@ -29,7 +30,6 @@ void ovl_11_func_800BD538 (void);
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 void ovl_11_func_800BD488 (s32 arg0);
 void ovl_11_func_800DC990 (void);
-void ovl_11_func_800DCECC (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
 void ovl_11_func_800CE96C (void);
@@ -68,7 +68,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_801047FC();
     ovl_11_func_800D6628();
     ovl_11_func_800DB9A4();
-    ovl_11_func_800C090C();
+    Ovl11InitClockAndCalendar();
     ovl_11_func_800C9C60();
     ovl_11_func_800C1C08();
     ovl_11_func_800C1BA0();
@@ -85,7 +85,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800CDE3C(base->field_51C8);
     ovl_11_func_800BD488((s32) base->field_44BA);
     ovl_11_func_800DC990();
-    ovl_11_func_800DCECC();
+    Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
     ovl_11_func_800F42A8((u16) base->field_44BA, 0);
     ovl_11_func_800CE96C();

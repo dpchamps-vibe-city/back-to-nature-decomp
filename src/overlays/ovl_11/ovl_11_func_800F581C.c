@@ -1,9 +1,9 @@
 #include "common.h"
 
-extern s16 D_80070CF2;
+extern s16 gCalendarSeason;
 
 s32 ovl_11_func_800F581C(void) {
-    switch (D_80070CF2) {
+    switch (gCalendarSeason) {
     case 0:
     default:
         return 2;

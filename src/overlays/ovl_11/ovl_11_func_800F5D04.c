@@ -8,38 +8,38 @@ s32 ovl_11_func_800F5D04(s32 arg0, s32 *arg1, s32 *arg2) {
     *arg2 = 0;
     switch (arg0) {
     case 0x3A:
-        if (D_80070CF2 == 3) {
+        if (gCalendarSeason == 3) {
             *arg1 = 2;
         }
         *arg2 = 0;
         break;
     case 0x3B:
-        if (D_80070CF2 == 3) {
+        if (gCalendarSeason == 3) {
             *arg1 = 2;
         }
         *arg2 = 1;
         break;
     case 0x3C:
-        if (D_80070CF2 == 3) {
+        if (gCalendarSeason == 3) {
             *arg1 = 2;
         }
         *arg2 = 2;
         break;
     case 0x3D:
-        if (D_80070CF2 == 3) {
+        if (gCalendarSeason == 3) {
             *arg1 = 2;
         }
         *arg2 = 3;
         break;
     case 0x3E:
-        if (D_80070CF2 == 3) {
+        if (gCalendarSeason == 3) {
             *arg1 = 2;
         }
         *arg2 = 4;
         break;
     case 0x40:
-        if (D_80070CF2 == 2) {
-            *arg1 = (s32) D_80070CF2;
+        if (gCalendarSeason == 2) {
+            *arg1 = (s32) gCalendarSeason;
         }
         *arg2 = 5;
         break;
