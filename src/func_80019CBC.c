@@ -16,7 +16,7 @@ s32 func_80019CBC(s16 arg0, s16 arg1, u16 *arg2, s16 arg3) {
     s32 var_a0;
 
     result = 0;
-    unk = (SomeStruct *)D_8005E3A8;
+    unk = (SomeStruct *)gPad0Input;
     if (unk->field_0x0 & 0x4000) {
         func_8001FABC(5);
         var_a0 = 0;

@@ -25,7 +25,7 @@ void ovl_10_func_800B8A5C(char *arg0) {
     s32 temp_s0;
     s32 temp_v0;
 
-    temp_s0 = ((GfxObj *)D_8005E3A8)->field_8;
+    temp_s0 = ((GfxObj *)gPad0Input)->field_8;
     ovl_10_func_800B9108(0, temp_s0);
     if (D_800BB8CC == 0) {
         if (temp_s0 & 1) {

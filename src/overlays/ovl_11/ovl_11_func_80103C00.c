@@ -21,7 +21,7 @@ s32 ovl_11_func_80103C00(void) {
     }
     var_s0 = 0;
     temp_s1 = &D_8012CF10[D_8012742C];
-    temp_a2 = *(s32 *) ((u8 *) D_8005E3A8 + 0);
+    temp_a2 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_a2 & 0x1000) {
         var_s0 = 0xA;
     } else if (temp_a2 & 0x4000) {
@@ -35,7 +35,7 @@ s32 ovl_11_func_80103C00(void) {
         func_8001FABC(5);
         ovl_11_func_80104418(var_s0, temp_s1);
     }
-    temp_a1 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+    temp_a1 = *(s32 *) ((u8 *) gPad0Input + 8);
     if (temp_a1 & 0x800) {
         if (ovl_11_func_80104394() == 1) {
             func_8001FABC(1);

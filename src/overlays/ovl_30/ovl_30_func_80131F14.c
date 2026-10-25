@@ -12,28 +12,28 @@ s32 ovl_30_func_80131F14(void) {
     u32 var_s0;
     struct_80076220 *rec;
 
-    if (*(s32 *)D_8005E3A8 & 4) {
+    if (*(s32 *)gPad0Input & 4) {
         temp_v0 = D_801349B0 - 5;
         D_801349B0 = temp_v0;
         if (temp_v0 <= 0) {
             D_801349B0 = 0x24;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 8) {
+    if (*(s32 *)gPad0Input & 8) {
         temp_v0_2 = D_801349B0 + 5;
         D_801349B0 = temp_v0_2;
         if (temp_v0_2 >= 0x25) {
             D_801349B0 = 0;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x1000) {
+    if (*(s32 *)gPad0Input & 0x1000) {
         temp_v0_3 = D_801349B0 - 1;
         D_801349B0 = temp_v0_3;
         if (temp_v0_3 <= 0) {
             D_801349B0 = 0x24;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x4000) {
+    if (*(s32 *)gPad0Input & 0x4000) {
         temp_v0_4 = D_801349B0 + 1;
         D_801349B0 = temp_v0_4;
         if (temp_v0_4 >= 0x25) {

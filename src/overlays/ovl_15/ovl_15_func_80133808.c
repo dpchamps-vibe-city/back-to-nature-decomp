@@ -55,7 +55,7 @@ s32 ovl_15_func_80133808(s16 arg0) {
     func_8002470C(0);
     func_80024810(temp_s2, 0x20, 0x18);
     func_80024860(temp_s2, 0x108, 0x18);
-    temp_v1 = *(s32 *) ((u8 *) D_8005E3A8 + 0);
+    temp_v1 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v1 & 0x2000) {
         func_8001FABC(5);
         D_8013759E++;

@@ -10,9 +10,9 @@ void ovl_11_func_800F9FF4(void) {
     s16 date;
 
     if ((D_80126F80 == 0xFF) && (func_800226B0() != 0)) {
-        if (*(s32 *) D_8005E3A8 & 0xF000) {
+        if (*(s32 *) gPad0Input & 0xF000) {
             func_8001FABC(5);
-            buttons = *(s32 *) D_8005E3A8;
+            buttons = *(s32 *) gPad0Input;
             if (buttons & 0x1000) {
                 D_80126F84 -= 7;
                 if (D_80126F84 < 0) {

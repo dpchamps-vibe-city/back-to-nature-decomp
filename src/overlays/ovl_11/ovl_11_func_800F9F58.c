@@ -10,7 +10,7 @@ void ovl_11_func_800F9F58(void) {
     s32 flags;
 
     if (func_800226B0() != 0) {
-        flags = ((GfxObj *)D_8005E3A8)->field_8;
+        flags = ((GfxObj *)gPad0Input)->field_8;
         if (flags & 0x50) {
             func_80022738();
             func_8001FABC(0);

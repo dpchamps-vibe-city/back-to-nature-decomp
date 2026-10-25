@@ -44,7 +44,7 @@ void ovl_27_func_800B845C(void) {
     case 2:
         D_800C4A20++;
         ((void (*)(void))D_800C4A14)();
-        if (((s32 *)D_8005E3A8)[2] & 0x840) {
+        if (((s32 *)gPad0Input)[2] & 0x840) {
             func_8001FABC(0);
             BeginScreenFadeIncrease(10, 0, 2);
             D_800C4A24 = 3;
@@ -78,7 +78,7 @@ void ovl_27_func_800B845C(void) {
             D_800C4A26 = 1;
             D_800C4A24 = 33;
         }
-        if (((s32 *)D_8005E3A8)[2] & 0x800) {
+        if (((s32 *)gPad0Input)[2] & 0x800) {
             func_8001FABC(0);
             ovl_27_func_800B7F7C();
             D_800C4A24 = 7;
@@ -86,11 +86,11 @@ void ovl_27_func_800B845C(void) {
         break;
     case 7:
         ovl_27_func_800B9224();
-        if (((s32 *)D_8005E3A8)[2] & 0x5100) {
+        if (((s32 *)gPad0Input)[2] & 0x5100) {
             func_8001FABC(5);
             D_800C4A1A++;
             D_800C4A1A -= (D_800C4A1A / 2) * 2;
-        } else if (((s32 *)D_8005E3A8)[2] & 0x840) {
+        } else if (((s32 *)gPad0Input)[2] & 0x840) {
             func_8001FABC(0);
             if (D_800C4A1A == 0) {
                 D_800C4A24 = 8;
@@ -265,7 +265,7 @@ void ovl_27_func_800B845C(void) {
         }
         break;
     case 29:
-        if (((s32 *)D_8005E3A8)[2] & 0x800) {
+        if (((s32 *)gPad0Input)[2] & 0x800) {
             ovl_27_func_800B7F7C();
             D_800C4A24 = 4;
         }

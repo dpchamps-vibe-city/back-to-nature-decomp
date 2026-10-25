@@ -14,7 +14,7 @@ s32 ovl_11_func_80103D44(void) {
 
     if (func_800226B0() != 0) {
         var_s0 = 0;
-        temp_a0 = *(s32 *) ((u8 *) D_8005E3A8 + 0);
+        temp_a0 = *(s32 *) ((u8 *) gPad0Input + 0);
         if (temp_a0 & 0x1000) {
             var_s0 = -1;
         } else if (temp_a0 & 0x4000) {
@@ -31,7 +31,7 @@ s32 ovl_11_func_80103D44(void) {
                 D_8012742C = 0;
             }
         }
-        temp_a0_2 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+        temp_a0_2 = *(s32 *) ((u8 *) gPad0Input + 8);
         if (temp_a0_2 & 0x800) {
             if (ovl_11_func_80104394() == 1) {
                 goto block_18;

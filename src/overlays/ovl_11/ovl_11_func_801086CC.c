@@ -4,7 +4,7 @@
 extern s32 D_8012D040;
 
 s32 ovl_11_func_801086CC(void) {
-    s32 mode = ((GfxObj *)D_8005E3A8)->field_8 & 0xF020;
+    s32 mode = ((GfxObj *)gPad0Input)->field_8 & 0xF020;
 
     if (mode == 0x1000) {
         D_8012D040 = 0;

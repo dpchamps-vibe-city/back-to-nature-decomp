@@ -396,7 +396,9 @@ typedef struct {
     /* 0x1C */ s32 field_0x1C;
 } SomeStruct;
 
-/* Graphics/drawing object used by D_8005E3A8 and D_8005E3AC arrays */
+/* Legacy partial signed-word view of pad input, not a graphics object.
+ * The complete layout is PadInputState below; retained here for existing
+ * consumers of the held/pressed button words. */
 typedef struct {
     /* 0x00 */ char pad_00[0x4];
     /* 0x04 */ s32 field_4;
@@ -500,28 +502,30 @@ typedef struct {
     s32 unk8;
 } Ovl11SelectArg;
 
-/* Per-pad input/auto-repeat state object (0x38 bytes, 4 ports at D_8005E870).
- * Cleared restfully by func_80013F90; func_80013CD0 (per-pad processing
- * driver) drives the hold/edge/auto-repeat state machine, reading threshold
- * fields 0x18/0x1C and 0x2C/0x30 that func_80013F90 leaves alone. */
-typedef struct {
+/* Per-pad input/auto-repeat state (0x38 bytes). Boot points the two input
+ * pointers at D_8005E870 and D_8005E870 + 0x38. func_80013CD0 processes
+ * independent repeat outputs at +0x00 and +0x24 using the two timing pairs;
+ * func_80013F90 clears transient state but preserves those timings.
+ * Timing fields are signed words; their units/constraints are documented
+ * in pad_input_setup.h. Other fields retain neutral names here. */
+typedef struct PadInputState {
     /* 0x00 */ s32 field_0x00;
     /* 0x04 */ s32 field_0x04;
     /* 0x08 */ s32 field_0x08;
     /* 0x0C */ s32 field_0x0C;
     /* 0x10 */ s32 field_0x10;
     /* 0x14 */ s32 field_0x14;
-    /* 0x18 */ s32 field_0x18;
-    /* 0x1C */ s32 field_0x1C;
+    /* 0x18 */ s32 repeatDelay;
+    /* 0x1C */ s32 repeatInterval;
     /* 0x20 */ s32 field_0x20;
     /* 0x24 */ s32 field_0x24;
     /* 0x28 */ s32 field_0x28;
-    /* 0x2C */ s32 field_0x2C;
-    /* 0x30 */ s32 field_0x30;
+    /* 0x2C */ s32 secondaryRepeatDelay;
+    /* 0x30 */ s32 secondaryRepeatInterval;
     /* 0x34 */ s16 field_0x34;
     /* 0x36 */ u8 field_0x36;
     /* 0x37 */ u8 field_0x37;
-} Struct80013F90;
+} PadInputState;
 
 /* D_8006C838 view for func_80013CD0: s32 flag word at 0xC (bit 16 = pad
  * mutes actuator sync) and a pointer at 0x1C (the actuator object written by

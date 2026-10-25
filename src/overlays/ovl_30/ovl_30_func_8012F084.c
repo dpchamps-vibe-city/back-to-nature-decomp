@@ -59,7 +59,7 @@ void ovl_30_func_8012F084(void) {
         func_8001FE00(0xA);
         break;
     case 3:
-        temp_v1 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+        temp_v1 = *(s32 *) ((u8 *) gPad0Input + 8);
         if (temp_v1 & 2) {
             index = &D_80134ADC;
             D_80134AE0 = 0;
@@ -79,7 +79,7 @@ void ovl_30_func_8012F084(void) {
         temp_v0_3 = IsScreenFadeComplete();
         if (temp_v0_3 == 1) {
             if (D_80134AD8 == temp_v0_3) {
-                if ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x800) {
+                if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x800) {
                     BeginScreenFadeIncrease(0xA, 0, 2);
                     func_8001FE34(0xA);
                     D_80134AD8 = 0;

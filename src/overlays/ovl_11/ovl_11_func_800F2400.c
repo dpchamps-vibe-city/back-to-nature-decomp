@@ -21,7 +21,7 @@ void ovl_11_func_800F2400(void) {
                     D_80126C90 = 0;
                 }
             }
-        } else if (((GfxObj *)D_8005E3A8)->field_8 & 0x20) {
+        } else if (((GfxObj *)gPad0Input)->field_8 & 0x20) {
             D_80126C90 = 0;
             func_80022738();
         }

@@ -36,7 +36,7 @@ void ovl_17_func_800B8898(void) {
     s32 displacement;
 
     ovl_17_func_800B91B8();
-    if ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x800) {
+    if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x800) {
         var_s0 = D_800BD848;
         temp_v0 = (*(s32 *) (var_s0 + 0)) != 1;
         (*(s32 *) (var_s0 + 0)) = temp_v0;
@@ -64,7 +64,7 @@ block_6:
         (*(s16 *) (var_s0 + var_s1 * 0x50 + 0x2C)) = temp_v0_2;
         (*(s16 *) (var_s0 + var_s1 * 0x50 + 0x2E)) = temp_v0_2;
     }
-    if ((((Ovl17ModeView *)D_8006C838)->mode == 3) && ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x40)) {
+    if ((((Ovl17ModeView *)D_8006C838)->mode == 3) && ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x40)) {
         u8 *work;
         work = D_800BD848;
         (*(s32 *) (work + 0xD0)) = 1;

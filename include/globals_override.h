@@ -874,8 +874,8 @@ extern char D_800B8870[32];
 /* ovl_31 data allocates 32 bytes for the second sprintf/rename path buffer. */
 extern char D_800B8890[32];
 
-/* Forward declaration - defined in game_types.h */
-struct GfxObj;
+/* Complete per-pad input layout is in game_types.h. */
+struct PadInputState;
 
 /* ovl_11_func_800D2710 reads the pending mode with lh and resets it with sh to -1. */
 extern s16 D_80128D68;
@@ -1175,11 +1175,10 @@ extern s16 D_80061E08[16];
 extern s16 D_80061E0E[3];
 extern s16 D_80061E14[3];
 
-/* D_8005E3A8 and D_8005E3AC - graphics display object pointers
- * Target uses GP-relative sw (4-byte scalar, within -G8 threshold).
- * func_80011370 stores pointers here and reads them back. */
-extern struct GfxObj *D_8005E3A8;
-extern struct GfxObj *D_8005E3AC;
+/* Boot's pointers to the two 0x38-byte pad-input records at D_8005E870
+ * and +0x38. Boot owns these GP-relative words; setup/consumers use externs. */
+extern struct PadInputState *gPad0Input;
+extern struct PadInputState *gPad1Input;
 
 /* 8012F454 accesses flag words at +0xC and +0x10 through this shared base. */
 struct Ovl30DebugFlags {
@@ -2768,19 +2767,17 @@ extern char D_80010088[];
 extern s32 _D_800100A0[3] __asm__("D_800100A0");
 #define D_800100A0 ((char*)_D_800100A0)
 
-/* D_8005E9C8 - pad state buffer (2 records of 0x22 bytes, 0x44 total).
- * Its aggregate declaration is wider than -G8, preserving split address
- * formation in func_80014064. func_80014250 selects a record by arg0 and
- * indexes raw bytes; 2D byte-array typing matches the direct-index idiom
- * and -fno-cse-skip-blocks handling of the sibling D_8005EA18 in this TU. */
-extern u8 _D_8005E9C8[2][0x22] __asm__("D_8005E9C8");
-#define D_8005E9C8 (_D_8005E9C8)
+/* Raw SDK read buffers: PadInitDirect binds two 0x22-byte records in
+ * func_80014064; func_80014250 selects a port and reads bytes directly.
+ * Preserve the aggregate size and existing lvalue wrapper: initialization
+ * takes its address, while decoding uses direct 2D indexing. */
+extern u8 _gPadReadBuffers[2][0x22] __asm__("gPadReadBuffers");
+#define gPadReadBuffers (_gPadReadBuffers)
 
-/* Two eight-byte PadSetAct actuator tables: func_80014064 hands &D_8005EA18
- * to port 0 and &D_8005EA18 + 8 to port 0x10, and func_80014494 indexes them
- * by port. The 16-byte aggregate is wider than -G8, so it is addressed
- * absolutely (lui + %lo) rather than GP-relatively. */
-extern u8 D_8005EA18[2][8];
+/* Two eight-byte PadSetAct tables: func_80014064 binds them to SDK ports
+ * 0 and 0x10; func_80014494 updates them by zero-based port index.
+ * Keep the 16-byte aggregate and existing absolute addressing. */
+extern u8 gPadActuatorBuffers[2][8];
 
 /* Pad port IDs copied by func_800140C8. The incomplete aggregate type keeps
  * the object out of small data and preserves the two-byte object copy. */
@@ -7080,7 +7077,7 @@ typedef struct {
     Ovl11PlayerUpdate player;
 } Ovl11UpdateState;
 
-/* 800C401C reads these two words through the D_8005E3A8 pointer. */
+/* 800C401C reads these two words through the gPad0Input pointer. */
 typedef struct {
     s32 pad0;
     s32 held;

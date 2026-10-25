@@ -41,7 +41,7 @@ s32 ovl_30_func_80131100(s32 arg0) {
         D_80134014 = arg0;
         ovl_30_func_80133454(entries, 23);
         arg0 = D_80134014;
-        buttons = *(s32 *)D_8005E3A8;
+        buttons = *(s32 *)gPad0Input;
         if (buttons & 4) {
             ovl_30_func_80133974((u8 *)&D_801349A8, 4, 2, 0, -1);
             return arg0;

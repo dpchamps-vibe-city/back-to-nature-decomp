@@ -20,7 +20,7 @@ s32 func_8001FD74(void);
 s32 func_8001FB30(s16, s16, s16, s16);
 
 #define DEBUG_FLAGS ((struct Ovl30DebugFlags *)D_8006C838)
-#define INPUT ((SomeStruct *)D_8005E3A8)
+#define INPUT ((SomeStruct *)gPad0Input)
 
 s32 ovl_30_func_8012F454(s32 state) {
     s32 flags[15];

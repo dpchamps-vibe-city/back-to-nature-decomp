@@ -17,7 +17,7 @@ void ovl_11_func_800F84F0(s32 arg0) {
     delta.halves[0] = 0;
     delta.halves[1] = 0;
     if (func_800226B0() != 0) {
-        buttons = *(s32 *)D_8005E3A8;
+        buttons = *(s32 *)gPad0Input;
         if (buttons & 0xF000) {
             if (buttons & 0x1000) {
                 direction = delta.value;
@@ -40,7 +40,7 @@ void ovl_11_func_800F84F0(s32 arg0) {
             }
         }
         if (D_80126E4E == 255) {
-            pageButtons = *(s32 *)D_8005E3A8;
+            pageButtons = *(s32 *)gPad0Input;
             if (pageButtons & 5) {
                 func_8001FABC(5);
                 previous = delta.value - 1;

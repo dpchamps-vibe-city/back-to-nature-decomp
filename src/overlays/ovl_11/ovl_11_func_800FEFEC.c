@@ -32,7 +32,7 @@ void ovl_11_func_800FEFEC(void) {
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) ((void *) ((u8 *) &D_80053B22 + *D_80054BBC)), 0x20, 0x3B);
     func_80017A38(0, 0);
     if ((D_801273B0 == 0x10) && (func_800226B0() == 1)) {
-        if ((*(s32 *) ((u8 *) D_8005E3A8 + 0)) & 0xA000) {
+        if ((*(s32 *) ((u8 *) gPad0Input + 0)) & 0xA000) {
             D_801273B6 = (D_801273B6 + 1) % 2;
             func_8001FABC(5);
         }
@@ -43,7 +43,7 @@ void ovl_11_func_800FEFEC(void) {
                 D_801273B8_selection[0] = (u16) D_801273B8_selection[0] - 1;
             }
         }
-        temp_v0 = *(s32 *) ((u8 *) D_8005E3A8 + 0);
+        temp_v0 = *(s32 *) ((u8 *) gPad0Input + 0);
         if (temp_v0 & 0x5000) {
             s16 *selection = &D_801273B8_selection[0];
             *selection++ = D_801273B8_selection[0]
@@ -51,7 +51,7 @@ void ovl_11_func_800FEFEC(void) {
             func_8001FABC(5);
         }
         remainder = D_801273B8_selection[0] % var_s0;
-        temp_a0 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+        temp_a0 = *(s32 *) ((u8 *) gPad0Input + 8);
         D_801273B8_selection[0] = remainder;
         if (temp_a0 & 0x20) {
             func_8001FABC(1);

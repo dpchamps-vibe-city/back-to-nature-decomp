@@ -23,11 +23,11 @@ void ovl_11_func_800FF324(void) {
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053CB8 + D_80054BBC[0]), 0x3E, 0x22);
     func_80017A38(0, 0);
     if (D_801273B0 == 0x20 && func_800226B0() == 1) {
-        if (((u32 *)D_8005E3A8)[0] & 0x5000) {
+        if (((u32 *)gPad0Input)[0] & 0x5000) {
             if (D_801273BA >= 2 && D_801273BC == 0) {
                 D_801273BA = 1;
             }
-            D_801273BC += (((u32 *)D_8005E3A8)[0] & 0x4000) ? 1 : 3;
+            D_801273BC += (((u32 *)gPad0Input)[0] & 0x4000) ? 1 : 3;
             func_8001FABC(5);
         }
         D_801273BC %= 4;
@@ -36,14 +36,14 @@ void ovl_11_func_800FF324(void) {
             remainder = 3;
         }
         count = remainder;
-        buttons = ((u32 *)D_8005E3A8)[0];
+        buttons = ((u32 *)gPad0Input)[0];
         if (buttons & 0xA000) {
             s16 *selection = &D_801273BA;
             *selection++ = D_801273BA + ((buttons & 0x2000) ? 1 : count - 1);
             func_8001FABC(5);
         }
         remainder = D_801273BA % count;
-        buttons = ((u32 *)D_8005E3A8)[2];
+        buttons = ((u32 *)gPad0Input)[2];
         D_801273BA = remainder;
         if (buttons & 0x20) {
             func_80022738();

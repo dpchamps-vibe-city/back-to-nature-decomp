@@ -57,7 +57,7 @@ void ovl_11_func_800C401C(void) {
             D_801231F8 = ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230;
             goto block_22;
         }
-        input = (Ovl11UpdateInput *)D_8005E3A8;
+        input = (Ovl11UpdateInput *)gPad0Input;
         D_801231F4 = input->held;
         D_801231F8 = input->pressed;
         if (ovl_11_func_800CE654() == 0) {

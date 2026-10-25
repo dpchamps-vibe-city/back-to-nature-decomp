@@ -10,7 +10,7 @@ void ovl_11_func_8010860C(void) {
     s32 mode;
     s32 var_v1;
 
-    mode = ((GfxObj *)D_8005E3A8)->field_8 & 0xF020;
+    mode = ((GfxObj *)gPad0Input)->field_8 & 0xF020;
     if (mode == 0) {
         return;
     }

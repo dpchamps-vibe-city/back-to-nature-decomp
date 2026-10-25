@@ -20,11 +20,11 @@ void ovl_25_func_800B8848(void) {
     if (D_800BFE54.unk2 != 8) {
         temp_v0 = ovl_25_func_800B9758((Ovl25StateSelectorView *) &D_800BFE54);
         if (temp_v0 == 1) {
-            if ((*(s32 *) ((u8 *) D_8005E3A8 + 4)) & 0x10) {
+            if ((*(s32 *) ((u8 *) gPad0Input + 4)) & 0x10) {
                 (*(s16 *) ((u8 *) &D_800BFE54 + -2)) = 0;
                 ovl_25_func_800B9B00(&D_800BFE54.unk0, 5, 1);
             } else {
-                if ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x40) {
+                if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x40) {
                     temp_s1 = (u8 *) &D_800BFE54 - 0x10;
                     *(s16 *)(temp_s1 + 0xE) = 0;
                     if ((*(s32 *) ((u8 *) &D_800BFE54 + 0xC)) <= 0x9FFF) {
@@ -50,7 +50,7 @@ void ovl_25_func_800B8848(void) {
         }
         state = &D_800BFE44_view;
         if (state->unk4CC != 0) {
-            if ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x50) {
+            if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x50) {
                 state->unk4CC = 0;
                 return;
             }

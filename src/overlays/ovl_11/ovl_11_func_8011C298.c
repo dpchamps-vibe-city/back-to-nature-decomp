@@ -65,7 +65,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         }
         break;
     case 11:
-        if (((GfxObj *)D_8005E3A8)->field_8 & 0x60) {
+        if (((GfxObj *)gPad0Input)->field_8 & 0x60) {
             SetVal8005E334(0);
             ovl_11_func_8011D084(4, 4);
         }

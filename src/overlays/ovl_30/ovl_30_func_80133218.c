@@ -10,25 +10,25 @@ s32 ovl_30_func_80133218(s32 arg0) {
     s32 i;
     s32 value;
 
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x2000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x2000) {
         D_80134ABC++;
         if (D_80134ABC >= 5) {
             D_80134ABC = 0;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x8000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x8000) {
         D_80134ABC--;
         if (D_80134ABC < 0) {
             D_80134ABC = 4;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x1000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x1000) {
         D_80134AC0--;
         if (D_80134AC0 < 0) {
             D_80134AC0 = 4;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x4000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x4000) {
         D_80134AC0++;
         if (D_80134AC0 >= 5) {
             D_80134AC0 = 0;

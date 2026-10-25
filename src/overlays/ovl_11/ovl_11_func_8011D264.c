@@ -9,7 +9,7 @@ s32 ovl_11_func_8011D264(u16 *arg0) {
     u16 var_v1;
 
     var_s1 = 0;
-    temp_v1 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+    temp_v1 = *(s32 *) ((u8 *) gPad0Input + 8);
     if (temp_v1 & 0x1000) {
         --*arg0;
         func_8001FABC(5);

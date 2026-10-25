@@ -33,7 +33,7 @@ s32 ovl_11_func_800FFB08(void) {
     func_80017A38(0, 0);
     ready = func_800226B0();
     if (ready) {
-        buttons = *(s32 *)D_8005E3A8;
+        buttons = *(s32 *)gPad0Input;
         if (buttons & 0x4000) {
             func_8001FABC(5);
             SELECTION++;
@@ -52,7 +52,7 @@ s32 ovl_11_func_800FFB08(void) {
     }
     func_800248B0(gActiveRenderContext->field_D8 + 0x50, 0x16, (s16)(row * 14 + 0x18));
     if (ready) {
-        buttons = *(s32 *)((u8 *)D_8005E3A8 + 8);
+        buttons = *(s32 *)((u8 *)gPad0Input + 8);
         if (buttons & 0x820) {
             func_8001FABC(1);
             func_80022738();

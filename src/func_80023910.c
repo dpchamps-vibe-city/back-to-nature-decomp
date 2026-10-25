@@ -12,7 +12,7 @@ typedef struct {
     /* 0x4 */ u16 unk4;
 } cursor_table_entry;
 
-/* Pointee of D_8005E3A8 for the +0/+8 command-word dispatch. */
+/* Pad-input view for the +0 repeat / +8 pressed-button dispatch. */
 typedef struct {
     /* 0x0 */ s32 field_0;
     /* 0x4 */ char pad_4[0x4];
@@ -32,7 +32,7 @@ void func_80023910(void) {
 
     func_80024108(0x3A7, D_8005E33C);
     if (func_800226B0() != 0) {
-        gfx = (command_word *)D_8005E3A8;
+        gfx = (command_word *)gPad0Input;
         temp_v1 = gfx->field_8;
         if (temp_v1 == 0x40) {
             if (D_8005E33C == 0) {

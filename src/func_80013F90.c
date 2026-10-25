@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 
-void func_80013F90(Struct80013F90 *arg0) {
+void func_80013F90(PadInputState *arg0) {
     arg0->field_0x04 = 0;
     arg0->field_0x08 = 0;
     arg0->field_0x34 = -1;

@@ -37,7 +37,7 @@ void func_80023600(void) {
         } else {
             return;
         }
-        cmd = ((SomeStruct *)D_8005E3A8)->field_0x8;
+        cmd = ((SomeStruct *)gPad0Input)->field_0x8;
         if (cmd == 0x40) {
             var_a3();
             func_8001FABC(0);

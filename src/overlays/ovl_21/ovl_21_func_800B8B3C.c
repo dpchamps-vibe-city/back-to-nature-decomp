@@ -22,7 +22,7 @@ void ovl_21_func_800B8B3C(void) {
     s32 temp;
     s32 text;
 
-    if (*(u32 *)((u8 *)D_8005E3A8 + 8) & 0x800) {
+    if (*(u32 *)((u8 *)gPad0Input + 8) & 0x800) {
         temp = ((Ovl21C0448View *)D_800C0448)->unk4 != 1;
         ((Ovl21C0448View *)D_800C0448)->unk4 = temp;
         if (temp == 1) {
@@ -38,7 +38,7 @@ void ovl_21_func_800B8B3C(void) {
         return;
     }
     if (((UnkStruct800C0448 *)D_800C0448)->unk14 == 1) {
-        switch (*(u32 *)((u8 *)D_8005E3A8 + 8)) {
+        switch (*(u32 *)((u8 *)gPad0Input + 8)) {
         case 0x8000:
             ((UnkStruct800C0448 *)D_800C0448)->unk2C--;
             break;
@@ -67,7 +67,7 @@ void ovl_21_func_800B8B3C(void) {
             ((UnkStruct800C0448 *)D_800C0448)->unk2C = 3;
         }
     } else if (((Ovl21C0448View *)D_800C0448)->unk988 == 0 &&
-               (*(u32 *)((u8 *)D_8005E3A8 + 8) & 0xA050)) {
+               (*(u32 *)((u8 *)gPad0Input + 8) & 0xA050)) {
         ((Ovl21C0448View *)D_800C0448)->unk984 = func_8001FABC(2);
         *(void **)((u8 *)D_800C0448 + 0xC) = D_800BCA78;
         ((Ovl21C0448View *)D_800C0448)->unk988 = 1;

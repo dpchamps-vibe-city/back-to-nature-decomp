@@ -24,12 +24,12 @@ void ovl_31_func_800B7FCC(void) {
     FntPrint(D_800B7E48);
     if (D_800B886C == -1) {
         FntPrint(D_800B7E4C);
-        if (((GfxObj *) D_8005E3A8)->field_8) D_800B886C = 0;
+        if (((GfxObj *) gPad0Input)->field_8) D_800B886C = 0;
         return;
     }
     if (D_800B886C == 1) {
         FntPrint(D_800B7E64);
-        if (((GfxObj *) D_8005E3A8)->field_8) D_800B886C = 0;
+        if (((GfxObj *) gPad0Input)->field_8) D_800B886C = 0;
         return;
     }
     if (D_800B886C == 2) {
@@ -40,7 +40,7 @@ void ovl_31_func_800B7FCC(void) {
             FntPrint(D_800B7E48);
         }
         FntPrint(D_800B7E78, D_800B8B10);
-        if (((GfxObj *) D_8005E3A8)->field_8 != 0) {
+        if (((GfxObj *) gPad0Input)->field_8 != 0) {
             D_800B886C = 0;
         }
         return;
@@ -69,11 +69,11 @@ void ovl_31_func_800B7FCC(void) {
             FntPrint(D_800B7EC8);
             break;
         }
-        if ((((GfxObj *) D_8005E3A8)->field_8) != 0) {
+        if ((((GfxObj *) gPad0Input)->field_8) != 0) {
             D_800B886C = 0;
         }
     } else {
-        buttons = ((GfxObj *) D_8005E3A8)->field_8;
+        buttons = ((GfxObj *) gPad0Input)->field_8;
         result = 0;
         switch (buttons) {
         case 0x800:

@@ -24,7 +24,7 @@ void func_80023DBC(void) {
 
     var_s1 = -1;
     if ((D_8005E344 != 2) && (func_800226B0() != 0)) {
-        gfx = (SomeStruct *)D_8005E3A8;
+        gfx = (SomeStruct *)gPad0Input;
         switch ((u32)gfx->field_0x8) {
         case 0x800:
             var_s1 = 2;
@@ -86,7 +86,7 @@ void func_80023DBC(void) {
         }
         default:
             temp_s0 = D_8005E356;
-            temp_v0 = func_800241EC((s32)temp_s0, *(u16 *)D_8005E3A8, (u32)D_8005E358);
+            temp_v0 = func_800241EC((s32)temp_s0, *(u16 *)gPad0Input, (u32)D_8005E358);
             D_8005E356 = temp_v0;
             if (temp_s0 != (s16)temp_v0) {
                 var_s1 = 5;

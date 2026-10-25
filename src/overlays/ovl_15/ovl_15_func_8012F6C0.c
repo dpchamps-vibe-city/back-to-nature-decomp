@@ -20,7 +20,7 @@ void ovl_15_func_8012F6C0(void) {
     case 0:
         temp_a1 = gActiveRenderContext->field_D8;
         func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80053114);
-        if (*(s32 *)((u8 *)D_8005E3A8 + 8) & 0x40) {
+        if (*(s32 *)((u8 *)gPad0Input + 8) & 0x40) {
             func_8001FABC(0);
             D_8013759C = 1;
         }

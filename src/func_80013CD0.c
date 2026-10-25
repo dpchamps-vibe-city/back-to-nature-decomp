@@ -7,7 +7,7 @@ s32 func_80014250(s32 arg0);
 void func_80014494(s32 arg0, s32 arg1, s32 arg2);
 
 void func_80013CD0(void *arg0, s32 arg1) {
-    Struct80013F90 *p = (Struct80013F90 *)arg0;
+    PadInputState *p = (PadInputState *)arg0;
     s32 temp_a0_2;
     s32 temp_s0;
     s32 temp_v0;
@@ -31,7 +31,7 @@ void func_80013CD0(void *arg0, s32 arg1) {
     p->field_0x04 = ~func_80013FC0(temp_s0) & 0xFFFF;
     p->field_0x34 = func_80014250(temp_s0);
 
-    if ((((D8006C838View *)&D_8006C838)->field_0C & 0x10000) && (arg0 == D_8005E3A8)) {
+    if ((((D8006C838View *)&D_8006C838)->field_0C & 0x10000) && (arg0 == gPad0Input)) {
         if (p->field_0x04 & 0x800) {
             ((D8006C838View *)&D_8006C838)->field_1C->field_0 = 0x800;
         } else {
@@ -61,8 +61,8 @@ void func_80013CD0(void *arg0, s32 arg1) {
         if ((u32)((temp_v0_2 - 2) & 0xFFFF) < 2U) {
             var_a1 = temp_v0_2;
         }
-        temp_18 = (u32)((s32)p->field_0x18 / (s32)var_a1);
-        var_a0 = (s32)p->field_0x1C / (s32)var_a1;
+        temp_18 = (u32)((s32)p->repeatDelay / (s32)var_a1);
+        var_a0 = (s32)p->repeatInterval / (s32)var_a1;
         if (var_a0 <= 0) {
             var_a0 = 1;
         }
@@ -83,8 +83,8 @@ void func_80013CD0(void *arg0, s32 arg1) {
                 p->field_0x00 = 0;
             }
         }
-        temp_2C = (u32)((s32)p->field_0x2C / (s32)var_a1);
-        var_a0_2 = (s32)p->field_0x30 / (s32)var_a1;
+        temp_2C = (u32)((s32)p->secondaryRepeatDelay / (s32)var_a1);
+        var_a0_2 = (s32)p->secondaryRepeatInterval / (s32)var_a1;
         if (var_a0_2 <= 0) {
             var_a0_2 = 1;
         }

@@ -4,9 +4,9 @@
 s32 D_8005E3EC;
 
 void func_80014064(void) {
-    PadInitDirect((unsigned char *)&D_8005E9C8, (unsigned char *)&D_8005E9C8 + 0x22);
-    PadSetAct(0, (unsigned char *)&D_8005EA18, 8);
-    PadSetAct(0x10, (unsigned char *)&D_8005EA18 + 8, 8);
+    PadInitDirect((unsigned char *)&gPadReadBuffers, (unsigned char *)&gPadReadBuffers + 0x22);
+    PadSetAct(0, (unsigned char *)&gPadActuatorBuffers, 8);
+    PadSetAct(0x10, (unsigned char *)&gPadActuatorBuffers + 8, 8);
     PadStartCom();
     D_8005E3EC = 1;
 }

@@ -108,9 +108,7 @@ segments:
       - [0x3C50, c, modules/wide_screen_fade]
       - [0x3ED4, c, func_800136D4]       # 0x800136D4 func_800136D4
       - [0x41FC, c, func_800139FC]       # 0x800139FC func_800139FC
-      - [0x4224, c, func_80013A24]       # 0x80013A24 func_80013A24
-      - [0x42A4, c, SetGfxOffset]       # 0x80013AA4 SetGfxOffset
-      - [0x42C8, c, SetGfxClip]       # 0x80013AC8 SetGfxClip
+      - [0x4224, c, modules/pad_input_setup]
       - [0x42EC, c, SetVal8005E3EC]       # 0x80013AEC SetVal8005E3EC
       - [0x42F8, c, GetVal8005E3EC]       # 0x80013AF8 GetVal8005E3EC
       - [0x4304, c, func_80013B04]       # 0x80013B04 func_80013B04

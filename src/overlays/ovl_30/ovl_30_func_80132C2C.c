@@ -9,51 +9,51 @@ s32 ovl_30_func_80132C2C(s32 arg0) {
     u32 index;
     struct Ovl30NValues *data;
 
-    if (*(s32 *)D_8005E3A8 & 0x2000) {
+    if (*(s32 *)gPad0Input & 0x2000) {
         D_80134AB0 += 10;
         if (D_80134AB0 >= 0x80) {
             D_80134AB0 = 0;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x8000) {
+    if (*(s32 *)gPad0Input & 0x8000) {
         D_80134AB0 -= 10;
         if (D_80134AB0 <= 0) {
             D_80134AB0 = 0x7F;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x4000) {
+    if (*(s32 *)gPad0Input & 0x4000) {
         D_80134AB0++;
         if (D_80134AB0 >= 0x80) {
             D_80134AB0 = 0;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x1000) {
+    if (*(s32 *)gPad0Input & 0x1000) {
         if (D_80134AB0 <= 0) {
             D_80134AB0 = 0x7F;
         } else {
             D_80134AB0--;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x20) {
+    if (*(s32 *)gPad0Input & 0x20) {
         ((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0]++;
         if (((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] >= 0xFF) {
             ((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] = 0;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x40) {
+    if (*(s32 *)gPad0Input & 0x40) {
         if (((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] == 0) {
             ((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] = 0xFF;
         } else {
             ((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0]--;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x10) {
+    if (*(s32 *)gPad0Input & 0x10) {
         ((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] += 10;
         if (((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] >= 0xFF) {
             ((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] = 0;
         }
     }
-    if (*(s32 *)D_8005E3A8 & 0x80) {
+    if (*(s32 *)gPad0Input & 0x80) {
         if (((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] == 0) {
             ((struct Ovl30NValues *)D_8006C838)->values[D_80134AB0] = 0xFF;
         } else {

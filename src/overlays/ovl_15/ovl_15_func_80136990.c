@@ -15,7 +15,7 @@ s8 ovl_15_func_80136990(void) {
 
     func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x18), 1, 0x4E, 0x48, 0xA3, 0x22);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((u8 *) D_80051D18 + D_80054BBC[0]), 0x5F, 0x4C);
-    temp_v0 = *(s32 *) ((u8 *) D_8005E3A8 + 0);
+    temp_v0 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v0 & 0x4000) {
         func_8001FABC(5);
         D_80137587 = (u8) D_80137587 + 1;
@@ -30,7 +30,7 @@ s8 ovl_15_func_80136990(void) {
         D_80137587 = 0;
     }
     func_800248B0(gActiveRenderContext->field_D8 + 4, 0x5C, (D_80137587 * 0xD) + 0x52);
-    temp_v0_2 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+    temp_v0_2 = *(s32 *) ((u8 *) gPad0Input + 8);
     if (temp_v0_2 & 0x40) {
         func_8001FABC(0);
         return D_80137587;

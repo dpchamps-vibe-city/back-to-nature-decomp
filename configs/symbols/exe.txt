@@ -94,9 +94,9 @@ UpdateAndDrawWideScreenFade = 0x800134C4; // type:func
 SetWideScreenEnvironments = 0x80013668; // type:func
 func_800136D4 = 0x800136D4; // type:func
 func_800139FC = 0x800139FC; // type:func
-func_80013A24 = 0x80013A24; // type:func
-SetGfxOffset = 0x80013AA4; // type:func
-SetGfxClip = 0x80013AC8; // type:func
+ResetPadInputState = 0x80013A24; // type:func
+SetPadRepeatTiming = 0x80013AA4; // type:func
+SetPadSecondaryRepeatTiming = 0x80013AC8; // type:func
 SetVal8005E3EC = 0x80013AEC; // type:func
 GetVal8005E3EC = 0x80013AF8; // type:func
 func_80013B04 = 0x80013B04; // type:func
@@ -1256,6 +1256,12 @@ GsIDMATRIX = 0x800A4008;
 GsIDMATRIX2 = 0x800A4028;
 GsOUT_PACKET_P = 0x800A4060;
 _padRestPeriod = 0x800B7E18;
+
+// Pad input: boot assigns the two records; SDK initialization binds the buffers.
+gPad0Input = 0x8005E3A8; // size:0x4
+gPad1Input = 0x8005E3AC; // size:0x4
+gPadReadBuffers = 0x8005E9C8; // size:0x44
+gPadActuatorBuffers = 0x8005EA18; // size:0x10
 
 // Persistent screen-color ramp; ovl_11 helpers and ovl_15's 0x24-byte save block.
 gScreenColorRamp = 0x8007AF80; // size:0x24

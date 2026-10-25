@@ -65,9 +65,9 @@ s32 ovl_11_func_800DDDFC(void) {
     func_8001AF70(3, 1);
     result = 0;
     ((Ovl11DDDFCState *)D_8006C838)->flags |= 0x08000000;
-    ((s32 *)D_8005E3A8)[2] = 0;
-    ((s32 *)D_8005E3A8)[1] = 0;
-    ((s32 *)D_8005E3A8)[0] = 0;
+    ((s32 *)gPad0Input)[2] = 0;
+    ((s32 *)gPad0Input)[1] = 0;
+    ((s32 *)gPad0Input)[0] = 0;
     switch (((Ovl11DDDFCState *)D_8006C838)->phase) {
     case 0:
         phase0 = (Ovl11DDDFCState *)D_8006C838;

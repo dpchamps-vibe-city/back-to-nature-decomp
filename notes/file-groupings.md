@@ -4906,7 +4906,7 @@ idiom cluster (same-TU evidence). Members:
   member of the mod-30 quartet, filling the 0x800247C0 gap between
   func_80024770 and func_80024810)
 
-## pad initialization and state — 0x80013B04–0x80014554 (confidence: high)
+## pad initialization and state — 0x80013A24–0x80014554 (confidence: high)
 
 Pad setup, per-port state polling, decoded controller input, analog-stick
 normalization, and pad-helper sequence.
@@ -4931,11 +4931,62 @@ func_80014388 (s) — input decoder called by func_8001413C; func_80014494 (m) �
 writes one port's PadSetAct actuator table, matched under an allowlisted
 -fno-cse-skip-blocks override.
 
-Per-TU flag: func_80014494 needs `-fno-cse-skip-blocks`. Expect it on the
-group's other members — all six matched members (func_80013B04, func_80013F90,
-func_80014064, func_800140C8, func_800142D8, func_80014554) were re-checked
-with the flag applied on 2026-08-09 and still match byte-for-byte, so it is
-consistent with the whole group rather than a single-file workaround.
+Historical flag compatibility: func_80014494 currently carries
+`-fno-cse-skip-blocks`. Six relatives (func_80013B04, func_80013F90,
+func_80014064, func_800140C8, func_800142D8, func_80014554) were checked
+with it on 2026-08-09 and remained exact. That establishes compatibility,
+not affirmative evidence for the flag or a shared original compiler command.
+The setup slice below matches at baseline; no claim about 80014494's
+remaining flag requirement is made by this reconstruction.
+
+Reconstructed setup slice: `src/modules/pad_input_setup.c` now holds
+**exe:0x80013A24–0x80013AEC**, in original order:
+`ResetPadInputState` (formerly func_80013A24), `SetPadRepeatTiming`
+(80013AA4, formerly SetGfxOffset), and `SetPadSecondaryRepeatTiming`
+(80013AC8, formerly SetGfxClip). Beyond adjacency, reset calls both setters
+and clears precisely their two input records plus the read/actuator buffers
+bound by PadInitDirect/PadSetAct in 80014064. Boot assigns the input pointers
+to D_8005E870 and +0x38, calls reset after starting pad communication, and
+reapplies both (20, 7) timing pairs at scene dispatch. The consumer 80013CD0
+proves these are two independent auto-repeat delay/interval pairs at
++18/+1C and +2C/+30, driving outputs at +00 and +24. They are not drawing
+offsets or clip coordinates, and the two records are pads, not render buffers.
+This is a coherent reconstructed interface within the broader pad family,
+**not proof that an original TU ended here**. Hardware startup at 800139FC,
+actuator-enable accessors at 80013AEC/AF8, polling, decoding and normalization
+remain outside; no boundary was chosen to preserve the 80014494 override.
+
+`include/pad_input_setup.h` publishes the unchanged void/s32 ABI and describes
+reset effects, valid bound-record prerequisites, base update-count units,
+mode-2/3 timing division, the strict delay threshold, interval clamp, and
+retained counters when changing timings. No elapsed-millisecond, graphics or
+speculative gameplay interpretation is assigned. The complete existing
+0x38-byte layout is now `PadInputState`, with four timing fields named and
+all widths/signedness/offsets preserved; the processor and transient-state
+clearer use that same type. The old `GfxObj` remains only as a documented
+legacy partial signed-word view for existing button consumers, not an alias
+for a different data symbol. Canonical input-pointer declarations now name
+the actual tagged PadInputState rather than an unrelated incomplete tag.
+The pointer words are `gPad0Input`/`gPad1Input`, still tentatively defined
+only by boot for its GP accesses; setup retains absolute extern accesses.
+`gPadReadBuffers` and `gPadActuatorBuffers` retain their original sizes,
+array shapes and storage. No private linkage, new storage or collisions were
+introduced. Original EXE addresses remain recorded in the symbol table.
+
+The checked fold first passed at baseline -O2/-G8. No member has an active
+override, none was needed, and the stale scheduling-off comment was removed.
+A separate full-container gate verified the type/field readability step
+before symbol renaming. Canonicalization propagated the four data names
+through the executable and overlays; its flagged macro use and the existing
+SDK-buffer lvalue/assembler-label wrapper were updated explicitly, without
+changing their constructions. The two former semantic function names were
+changed explicitly at their recorded identities and caller, while the
+address-derived reset name used canonicalization. The interface audit
+published the header to boot with unchanged caller code; context, engine
+exports and overlay link inputs are regenerated through supported tools.
+Acceptance uses the full TU campaign gate against its baseline, including
+all EXE/overlay bytes, data/tables, ownership, source policy, canonical-name
+and interface checks, with no exception growth.
 
 References: notes/research/func_800140C8-aggregate-copy.md;
 notes/retros/2026-08-07-func_800140C8-retro.md;

@@ -32,7 +32,7 @@ void ovl_23_func_800B87F8(void) {
     s16 *recordState;
 
     if (state->unkC == 0) {
-        if (*(s32 *)((u8 *)D_8005E3A8 + 8) & 0x800) {
+        if (*(s32 *)((u8 *)gPad0Input + 8) & 0x800) {
             paused = state->unk4 != 1;
             state->unk4 = paused;
             if (paused == 1) {

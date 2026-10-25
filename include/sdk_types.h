@@ -46,6 +46,10 @@ struct Ovl30ValueMenuEntry;
 
 typedef struct Ovl30ValueMenuEntry Ovl30ValueMenuEntry;
 
+struct PadInputState;
+
+typedef struct PadInputState PadInputState;
+
 typedef signed int s32;
 
 typedef struct {
@@ -3456,6 +3460,25 @@ typedef struct {
  u_char u3, v3; u_short pad2;
 } POLY_FT4;
 
+struct PadInputState {
+               s32 field_0x00;
+               s32 field_0x04;
+               s32 field_0x08;
+               s32 field_0x0C;
+               s32 field_0x10;
+               s32 field_0x14;
+               s32 repeatDelay;
+               s32 repeatInterval;
+               s32 field_0x20;
+               s32 field_0x24;
+               s32 field_0x28;
+               s32 secondaryRepeatDelay;
+               s32 secondaryRepeatInterval;
+               s16 field_0x34;
+               u8 field_0x36;
+               u8 field_0x37;
+};
+
 typedef struct {
     s32 field_0;
     s32 field_4;
@@ -3698,25 +3721,6 @@ typedef struct {
                s32 offset_anim;
                s32 offset_frame;
 } SpriteDataHeader;
-
-typedef struct {
-               s32 field_0x00;
-               s32 field_0x04;
-               s32 field_0x08;
-               s32 field_0x0C;
-               s32 field_0x10;
-               s32 field_0x14;
-               s32 field_0x18;
-               s32 field_0x1C;
-               s32 field_0x20;
-               s32 field_0x24;
-               s32 field_0x28;
-               s32 field_0x2C;
-               s32 field_0x30;
-               s16 field_0x34;
-               u8 field_0x36;
-               u8 field_0x37;
-} Struct80013F90;
 
 typedef struct {
                s8 field_0;

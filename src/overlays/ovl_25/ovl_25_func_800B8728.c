@@ -15,7 +15,7 @@ void ovl_25_func_800B8728(void) {
     s32 q;
     s32 decrement;
 
-    if ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x800) {
+    if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x800) {
         temp_v0 = D_800BFE44_view.unk4 != 1;
         D_800BFE44_view.unk4 = temp_v0;
         if (temp_v0 == 1) {

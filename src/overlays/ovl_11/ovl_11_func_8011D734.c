@@ -12,8 +12,8 @@ s32 ovl_11_func_8011D734(Ovl11D548Arg *arg0) {
 
     var_s1 = 0;
     dst = &arg0->index;
-    temp_a0 = ((SomeStruct *) D_8005E3A8)->field_0x0;
-    temp_v1 = ((SomeStruct *) D_8005E3A8)->field_0x8;
+    temp_a0 = ((SomeStruct *) gPad0Input)->field_0x0;
+    temp_v1 = ((SomeStruct *) gPad0Input)->field_0x8;
     if (temp_a0 & 0x1000) {
         *dst = ovl_11_func_8011D890(*arg0, 0);
         func_8001FABC(5);

@@ -10,8 +10,8 @@ s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1) {
     u16 var_v0;
 
     var_s1 = 0;
-    temp_a1 = ((SomeStruct *)D_8005E3A8)->field_0x0;
-    temp_v1 = ((SomeStruct *)D_8005E3A8)->field_0x8;
+    temp_a1 = ((SomeStruct *)gPad0Input)->field_0x0;
+    temp_v1 = ((SomeStruct *)gPad0Input)->field_0x8;
     if (temp_a1 & 0x2000) {
         var_v0 = *arg1 + 1;
         *arg1 = var_v0;

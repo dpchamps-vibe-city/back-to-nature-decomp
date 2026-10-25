@@ -135,8 +135,8 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
     status = 0;
     savedState = func_80017AA0();
     if (D_8005E2BC != 0) {
-        input4 = ((GfxObj *)D_8005E3A8)->field_4;
-        input8 = ((GfxObj *)D_8005E3A8)->field_8;
+        input4 = ((GfxObj *)gPad0Input)->field_4;
+        input8 = ((GfxObj *)gPad0Input)->field_8;
     } else {
         input4 = 0;
         input8 = 0;

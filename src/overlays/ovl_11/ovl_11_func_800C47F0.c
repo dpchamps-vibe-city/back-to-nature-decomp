@@ -12,7 +12,7 @@ void ovl_11_func_800C47F0(void) {
 
     var_a2 = 0;
     if (((struct struct_8006C838_800C47F0 *) D_8006C838)->field_E4CC == 3) {
-        if ((*(s16 *) ((u8 *) D_8005E3A8 + 0x34)) >= 0x56) {
+        if ((*(s16 *) ((u8 *) gPad0Input + 0x34)) >= 0x56) {
             D_801231F4 |= 0x20;
         }
     }

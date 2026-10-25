@@ -51,7 +51,7 @@ void ovl_30_func_80133A8C(Ovl30FlagMenuEntry *arg0, s32 arg1) {
             KanjiFntPrint(D_8012EFE8);
         }
     }
-    buttons = *(s32 *)D_8005E3A8;
+    buttons = *(s32 *)gPad0Input;
     if (buttons & 0x1000) {
         D_80134014--;
         if (D_80134014 < 0) {
@@ -80,7 +80,7 @@ void ovl_30_func_80133A8C(Ovl30FlagMenuEntry *arg0, s32 arg1) {
 
 edit_entry:
     {
-        if (((s32 *)D_8005E3A8)[2] & 0x100) {
+        if (((s32 *)gPad0Input)[2] & 0x100) {
             D_80134B10 = arg0[D_80134014].id;
             return;
         }

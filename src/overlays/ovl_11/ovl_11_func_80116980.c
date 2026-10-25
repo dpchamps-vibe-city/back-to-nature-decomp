@@ -78,7 +78,7 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
     func_80017B3C(header_ot, (s32) &(D_800535C6 + 0x3E)[*D_80054BBC], 0xC8, 0x1A);
     count = ovl_11_func_80117178(kind, arg1, -1);
     if (input_mode == 0) {
-        repeat_buttons = *(s32 *) ((u8 *) D_8005E3A8 + 0);
+        repeat_buttons = *(s32 *) ((u8 *) gPad0Input + 0);
         if (repeat_buttons & 0x1000) {
             func_8001FABC(5);
             D_8012D518--;
@@ -130,7 +130,7 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
         ovl_11_func_80116F4C(record, row_ot, 0x58, row_y);
     }
     if (input_mode == 0) {
-        pressed_buttons = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+        pressed_buttons = *(s32 *) ((u8 *) gPad0Input + 8);
         if (pressed_buttons & 0x20) {
             func_8001FABC(1);
             result = -2;

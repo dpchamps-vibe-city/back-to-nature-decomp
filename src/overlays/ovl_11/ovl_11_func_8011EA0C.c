@@ -19,7 +19,7 @@ void ovl_11_func_8011EA0C(void) {
     func_80017A38(0, 2);
     direction = 0;
     if (D_80128420 != 7 && func_800226B0()) {
-        buttons = ((u32 *)D_8005E3A8)[0] & 0xF000;
+        buttons = ((u32 *)gPad0Input)[0] & 0xF000;
         if (buttons) {
             s32 offset;
             u8 *entry;
@@ -63,7 +63,7 @@ void ovl_11_func_8011EA0C(void) {
     if (D_80128420 != 7 && func_800226B0()) {
         u32 pressed;
 
-        pressed = ((u32 *)D_8005E3A8)[2];
+        pressed = ((u32 *)gPad0Input)[2];
         if (pressed & 0x120) {
             if (func_800226B0()) {
                 ovl_11_func_8011EC54();

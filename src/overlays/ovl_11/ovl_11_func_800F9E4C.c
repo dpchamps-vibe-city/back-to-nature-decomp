@@ -19,7 +19,7 @@ void ovl_11_func_800F9E4C(void) {
     Ovl11FA1CCArg *entry;
     s32 object;
 
-    if (func_800226B0() && (((GfxObj *)D_8005E3A8)->field_8 & 0x800)) {
+    if (func_800226B0() && (((GfxObj *)gPad0Input)->field_8 & 0x800)) {
         if (D_80126F88 == 1) {
             ovl_11_func_800F6640();
         }

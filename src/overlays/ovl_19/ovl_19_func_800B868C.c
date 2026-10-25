@@ -23,7 +23,7 @@ void ovl_19_func_800BB108();                        /* static */
 void ovl_19_func_800B868C(void) {
     ovl_19_func_800BA770();
     ovl_19_func_800BB108();
-    if ((*(s32 *) ((u8 *) D_8005E3A8 + 8)) & 0x60) {
+    if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x60) {
         D_800BF4C4 = 1;
     }
 }

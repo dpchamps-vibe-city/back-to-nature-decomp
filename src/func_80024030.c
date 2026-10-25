@@ -19,7 +19,7 @@ void func_80024030(void) {
 
     func_80024108(0x3A6, D_8005E354);
     if (func_800226B0() != 0) {
-        gfx = (SomeStruct *)D_8005E3A8;
+        gfx = (SomeStruct *)gPad0Input;
         temp_v1 = gfx->field_0x8;
         if (temp_v1 == 0x40) {
             if (D_8005E354 == 0) {

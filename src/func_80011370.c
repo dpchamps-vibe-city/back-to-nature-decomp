@@ -10,6 +10,7 @@
 #include "psyq/libmcrd.h"
 #include "psyq/libmcx.h"
 #include "screen_fade.h"
+#include "pad_input_setup.h"
 
 /* Callees not in functions.h */
 void func_8001FEA4(void);
@@ -22,8 +23,6 @@ void func_8001FEA4(void);
 void func_80011EE8(s32 arg0);
 
 /* SDK callees declared in functions.h (not included to avoid type conflicts) */
-void SetGfxOffset(s32 arg0, s32 arg1);
-void SetGfxClip(s32 arg0, s32 arg1);
 void SetVal8005E278(s32 arg0);
 void ClearVal8005E2CC(void);
 
@@ -35,7 +34,6 @@ void func_80012298(s32 arg0);
 void func_800128DC(s32 arg0, s32 arg1);
 void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6);
 void func_800139FC(void);
-void func_80013A24(void);
 /* func_800145F0 ends with `addu $v0,$zero,$zero` before `jr $ra` — it
    returns 0, and the target's callers keep $v0 out of post-call temporaries. */
 s32 func_800145F0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -77,8 +75,8 @@ s32 D_8005E388;
 s32 D_8005E398;
 s32 gCurrentSceneId;
 s32 gActiveRenderContextIndex;
-struct GfxObj *D_8005E3A8;
-struct GfxObj *D_8005E3AC;
+struct PadInputState *gPad0Input;
+struct PadInputState *gPad1Input;
 s32 *gFrameOrderingTable;
 struct_8005E3C0 *gActiveRenderContext;
 
@@ -113,8 +111,8 @@ void func_80011370(void) {
     s32 *temp_s2;
 
     func_80011270();
-    D_8005E3A8 = (struct GfxObj *)&D_8005E870;
-    D_8005E3AC = (struct GfxObj *)((char *)&D_8005E870 + 0x38);
+    gPad0Input = (struct PadInputState *)&D_8005E870;
+    gPad1Input = (struct PadInputState *)((char *)&D_8005E870 + 0x38);
     D_8005E388 = 0;
     ResetCallback();
     CdInit();
@@ -167,7 +165,7 @@ void func_80011370(void) {
     MemCardStart();
     McxStartCom();
     func_800139FC();
-    func_80013A24();
+    ResetPadInputState();
     func_80012A68(0, 0, 0x3FF, 0x1FF, 0xFF, 0xFF, 0xFF);
     VSyncCallback((void (*)(void))&D_80011334);
     buf = (char *)&D_8005E5D8;
@@ -196,8 +194,8 @@ void func_80011370(void) {
         if (D_8005E27C == 1) {
             func_80012A68(0, 0, 0x140, 0x1E0, 0, 0, 0);
         }
-        SetGfxOffset(0x14, 7);
-        SetGfxClip(0x14, 7);
+        SetPadRepeatTiming(0x14, 7);
+        SetPadSecondaryRepeatTiming(0x14, 7);
         D_8005E284 = 1;
 
         /* Dispatch bounds are unsigned even though the selection API uses s32. */

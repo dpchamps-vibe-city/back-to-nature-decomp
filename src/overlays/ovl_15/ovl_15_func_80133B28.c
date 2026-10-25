@@ -39,7 +39,7 @@ s32 ovl_15_func_80133B28(s16 arg0) {
     temp_s7 = temp_a1 + 0x14;
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_s7, (s32) &D_800520A0[*D_80054BBC]);
     temp_s4 = ovl_15_func_801344E8(var_s3, -1);
-    temp_v1 = *(s32 *) ((u8 *) D_8005E3A8 + 0);
+    temp_v1 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v1 & 0x1000) {
         func_8001FABC(5);
         D_801375A2 -= 1;
@@ -83,7 +83,7 @@ s32 ovl_15_func_80133B28(s16 arg0) {
             func_80024924(temp_s7, 0x20, temp_v0);
         }
     }
-    temp_a0 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+    temp_a0 = *(s32 *) ((u8 *) gPad0Input + 8);
     if (temp_a0 & 0x20) {
         func_8001FABC(1);
         sp18 = -1;

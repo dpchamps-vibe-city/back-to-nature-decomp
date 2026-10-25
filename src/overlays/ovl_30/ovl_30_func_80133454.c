@@ -52,7 +52,7 @@ void ovl_30_func_80133454(Ovl30ValueMenuEntry *arg0, s32 arg1) {
             KanjiFntPrint(D_8012EFE8);
         }
     }
-    buttons = *(s32 *)D_8005E3A8;
+    buttons = *(s32 *)gPad0Input;
     if (buttons & 0x1000) {
         D_80134014--;
         if (D_80134014 < 0) {
@@ -80,7 +80,7 @@ void ovl_30_func_80133454(Ovl30ValueMenuEntry *arg0, s32 arg1) {
     return;
 
 edit_entry:
-    if (((s32 *)D_8005E3A8)[2] & 0x100) {
+    if (((s32 *)gPad0Input)[2] & 0x100) {
         D_80134B10 = arg0[D_80134014].id;
         return;
     }
@@ -91,17 +91,17 @@ edit_entry:
         } else if (buttons & 0x40) {
             ovl_30_func_80133974(selected->value, selected->width, selected->upper, selected->lower, -1);
         } else if (buttons & 0x10) {
-            if (((s32 *)D_8005E3A8)[1] & 0x100) {
+            if (((s32 *)gPad0Input)[1] & 0x100) {
                 ovl_30_func_80133974(selected->value, selected->width, selected->upper, selected->lower, 100);
-            } else if (((s32 *)D_8005E3AC)[1] & 8) {
+            } else if (((s32 *)gPad1Input)[1] & 8) {
                 ovl_30_func_80133974(selected->value, selected->width, selected->upper, selected->lower, 1000);
             } else {
                 ovl_30_func_80133974(selected->value, selected->width, selected->upper, selected->lower, 10);
             }
         } else if (buttons & 0x80) {
-            if (((s32 *)D_8005E3A8)[1] & 0x100) {
+            if (((s32 *)gPad0Input)[1] & 0x100) {
                 ovl_30_func_80133974(selected->value, selected->width, selected->upper, selected->lower, -100);
-            } else if (((s32 *)D_8005E3AC)[1] & 8) {
+            } else if (((s32 *)gPad1Input)[1] & 8) {
                 ovl_30_func_80133974(selected->value, selected->width, selected->upper, selected->lower, -1000);
             } else {
                 ovl_30_func_80133974(selected->value, selected->width, selected->upper, selected->lower, -10);

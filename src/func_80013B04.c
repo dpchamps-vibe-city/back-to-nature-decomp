@@ -14,7 +14,7 @@
 s32 D_8005E2A4[2];
 s16 D_8005E3E8[2];
 
-void func_80013F90(Struct80013F90 *arg0);
+void func_80013F90(PadInputState *arg0);
 s32 func_800140C8(s32 arg0);
 void func_80013CD0(void *arg0, s32 arg1);
 
@@ -36,14 +36,14 @@ void func_80013B04(void) {
                     if (!(D_8006C844 & 0x10000)) {
                         D_8005E3E8[port] = 0;
                         D_8005E2A4[port] = 1;
-                        func_80013F90((Struct80013F90 *)((char *)&D_8005E870 + (((port << 3) - port) << 3)));
+                        func_80013F90((PadInputState *)((char *)&D_8005E870 + (((port << 3) - port) << 3)));
                         retry = 0;
                         continue;
                     }
                     break;
                 case 4:
                 case 5:
-                    func_80013F90((Struct80013F90 *)((char *)&D_8005E870 + (((port << 3) - port) << 3)));
+                    func_80013F90((PadInputState *)((char *)&D_8005E870 + (((port << 3) - port) << 3)));
                     retry = 0;
                     continue;
                 case 6:
@@ -51,7 +51,7 @@ void func_80013B04(void) {
                         D_8005E3E8[port] = PadInfoMode(((u8 *)&ports)[port], 2, 0);
                         if (func_800140C8(port) != 0) {
                             D_8005E2A4[port] = 0;
-                            func_80013F90((Struct80013F90 *)((char *)&D_8005E870 + (((port << 3) - port) << 3)));
+                            func_80013F90((PadInputState *)((char *)&D_8005E870 + (((port << 3) - port) << 3)));
                             continue;
                         }
                     }

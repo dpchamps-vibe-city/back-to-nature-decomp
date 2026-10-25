@@ -28,28 +28,28 @@ void ovl_11_func_80120A2C(void) {
         ((struct struct_8006C838_view *)D_8006C838)->field_0C &= ~0x800000;
         return;
     case 2:
-        if (((u32 *)D_8005E3A8)[1] & 0x1000) {
+        if (((u32 *)gPad0Input)[1] & 0x1000) {
             upOffset = ((Ovl11MapCameraState *)&D_8012DB58)->unk14;
             if (upOffset < 400) {
                 upOffset += 200;
             }
             ((Ovl11MapCameraState *)&D_8012DB58)->unk14 = upOffset;
         }
-        if (((u32 *)D_8005E3A8)[1] & 0x4000) {
+        if (((u32 *)gPad0Input)[1] & 0x4000) {
             downOffset = ((Ovl11MapCameraState *)&D_8012DB58)->unk14;
             if (downOffset > -7200) {
                 downOffset -= 200;
             }
             ((Ovl11MapCameraState *)&D_8012DB58)->unk14 = downOffset;
         }
-        if (((u32 *)D_8005E3A8)[1] & 0x8000) {
+        if (((u32 *)gPad0Input)[1] & 0x8000) {
             leftOffset = ((Ovl11MapCameraState *)&D_8012DB58)->unkC;
             if (leftOffset > -800) {
                 leftOffset -= 200;
             }
             ((Ovl11MapCameraState *)&D_8012DB58)->unkC = leftOffset;
         }
-        if (((u32 *)D_8005E3A8)[1] & 0x2000) {
+        if (((u32 *)gPad0Input)[1] & 0x2000) {
             rightOffset = ((Ovl11MapCameraState *)&D_8012DB58)->unkC;
             if (rightOffset < 10000) {
                 rightOffset += 200;
@@ -58,7 +58,7 @@ void ovl_11_func_80120A2C(void) {
         }
         ((struct Ovl11MapCameraWork *)&D_8007AFF0)->field_253B4 = ((Ovl11MapCameraState *)&D_8012DB58)->unkC;
         ((struct Ovl11MapCameraWork *)&D_8007AFF0)->field_253B8 = ((Ovl11MapCameraState *)&D_8012DB58)->unk14;
-        if (((u32 *)D_8005E3A8)[2] & 0x20) {
+        if (((u32 *)gPad0Input)[2] & 0x20) {
             BeginScreenFadeIncrease(10, 0, 2);
             ((Ovl11MapCameraState *)&D_8012DB58)->unk0 = 3;
             return;

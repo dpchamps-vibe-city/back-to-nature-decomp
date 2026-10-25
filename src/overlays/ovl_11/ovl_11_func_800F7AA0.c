@@ -16,7 +16,7 @@ s32 ovl_11_func_800F7AA0(void) {
 
     temp_s0 = D_80126E4E;
     if ((temp_s0 == 0xFF) && (func_800226B0() != 0)) {
-        temp_v1 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
+        temp_v1 = *(s32 *) ((u8 *) gPad0Input + 8);
         if (temp_v1 & 0x10) {
             if (*ovl_11_func_800F82FC((s32) D_80126E44, (s32) D_80126E4A) != 0) {
                 func_80022738();

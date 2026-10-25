@@ -57,7 +57,7 @@ void ovl_11_func_800FAC0C(void) {
     SetVal8005E2BC(0);
     func_8002261C(3, 0x3AC);
     if (func_800226B0()) {
-        buttons = ((u32 *)D_8005E3A8)[2];
+        buttons = ((u32 *)gPad0Input)[2];
         if (buttons & 0x10) {
             if (D_80126FE0 == state) {
                 if (*(s16 *)ovl_11_func_800FB4B0(D_80126FE4)) {
@@ -100,7 +100,7 @@ void ovl_11_func_800FAC0C(void) {
             func_8001FABC(3);
             D_80126FE0 = 3;
         } else {
-            movement = ((u32 *)D_8005E3A8)[0] & 0xF000;
+            movement = ((u32 *)gPad0Input)[0] & 0xF000;
             if (movement) {
                 switch (movement) {
                 case 0x1000:

@@ -9,37 +9,37 @@ s32 ovl_30_func_80132EE0(s32 arg0);
 s32 ovl_30_func_80132F18(s32 arg0) {
     ItemData *temp_s0;
 
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 8) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 8) {
         D_80134AB4 += 10;
         if (D_80134AB4 >= 0x17B) {
             D_80134AB4 = 0;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 4) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 4) {
         D_80134AB4 -= 10;
         if (D_80134AB4 <= 0) {
             D_80134AB4 = 0x17A;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x2000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x2000) {
         D_80134AB4++;
         if (D_80134AB4 >= 0x17B) {
             D_80134AB4 = 0;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x8000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x8000) {
         D_80134AB4--;
         if (D_80134AB4 <= 0) {
             D_80134AB4 = 0x17A;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x1000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x1000) {
         D_80134AB8--;
         if (D_80134AB8 < 0) {
             D_80134AB8 = 3;
         }
     }
-    if (((SomeStruct *)D_8005E3A8)->field_0x0 & 0x4000) {
+    if (((SomeStruct *)gPad0Input)->field_0x0 & 0x4000) {
         D_80134AB8++;
         if (D_80134AB8 >= 4) {
             D_80134AB8 = 0;

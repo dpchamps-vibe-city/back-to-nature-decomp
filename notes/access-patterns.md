@@ -166,7 +166,7 @@ Access type breakdown (by symbol count):
 
 ## Global Summary
 
-Total symbols scanned: 1124
+Total symbols scanned: 1128
 
 | Inferred section | Regions |
 |-----------------|---------|

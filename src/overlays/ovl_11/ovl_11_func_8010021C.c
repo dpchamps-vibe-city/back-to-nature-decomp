@@ -24,7 +24,7 @@ void ovl_11_func_8010021C(void) {
     func_8002261C(3, 0x3B8);
     ovl_11_func_80100898(Ovl11_D_801273E8);
     if (func_800226B0()) {
-        switch ((u32)((GfxObj *)D_8005E3A8)->field_8 & 0x870) {
+        switch ((u32)((GfxObj *)gPad0Input)->field_8 & 0x870) {
         case 0x800:
             func_80022738();
             Ovl11_D_801273DC = ovl_11_func_80103714;
@@ -59,7 +59,7 @@ void ovl_11_func_8010021C(void) {
             }
             break;
         }
-        switch (*(u32 *)D_8005E3A8 & 0xF000) {
+        switch (*(u32 *)gPad0Input & 0xF000) {
         case 0x1000:
             func_8001FABC(5);
             Ovl11_D_801273E7--;

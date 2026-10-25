@@ -58,7 +58,7 @@ void ovl_11_func_80101B9C(void) {
         SetVal8005E2BC(0);
         func_8002261C(3, 0x3BE);
         if (func_800226B0()) {
-            switch (((u32 *)D_8005E3A8)[0]) {
+            switch (((u32 *)gPad0Input)[0]) {
             case 0x1000:
             case 0x4000:
                 Ovl11_D_801273E7 = Ovl11_D_801273E7 >= 4 ?
@@ -86,11 +86,11 @@ void ovl_11_func_80101B9C(void) {
                 func_8001FABC(5);
                 break;
             }
-            if (((u32 *)D_8005E3A8)[0] & 0xA) {
+            if (((u32 *)gPad0Input)[0] & 0xA) {
                 D_801273EA_table++;
                 func_8001FABC(5);
             }
-            if (((u32 *)D_8005E3A8)[0] & 5) {
+            if (((u32 *)gPad0Input)[0] & 5) {
                 D_801273EA_table--;
                 func_8001FABC(5);
             }
@@ -105,7 +105,7 @@ void ovl_11_func_80101B9C(void) {
                      (Ovl11_D_801273E7 - Ovl11_D_801273E7 / 4 * 4) * 34 + 0x87,
                      Ovl11_D_801273E7 / 4 * 34 + 0x67);
         if (func_800226B0()) {
-            if (((u32 *)D_8005E3A8)[2] & 0x800) {
+            if (((u32 *)gPad0Input)[2] & 0x800) {
                 for (i = 0; i < 8; i++) {
                     if (D_8012CF00_ids[i] != 0) {
                         func_80022738();
@@ -115,7 +115,7 @@ void ovl_11_func_80101B9C(void) {
                     }
                 }
                 func_8001FABC(2);
-            } else if (((u32 *)D_8005E3A8)[2] & 0x10) {
+            } else if (((u32 *)gPad0Input)[2] & 0x10) {
                 if (*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7) != 0) {
                     func_80022738();
                     func_8001FABC(0);
@@ -123,7 +123,7 @@ void ovl_11_func_80101B9C(void) {
                 } else {
                     func_8001FABC(2);
                 }
-            } else if (((u32 *)D_8005E3A8)[2] & 0x20) {
+            } else if (((u32 *)gPad0Input)[2] & 0x20) {
                 func_8001FABC(1);
                 if (*(u16 *)&D_801273F0 != 0) {
                     for (i = 0; i < 8; i++) {
@@ -133,7 +133,7 @@ void ovl_11_func_80101B9C(void) {
                     func_80022738();
                     Ovl11_D_801273DC = ovl_11_func_80100FFC;
                 }
-            } else if (((u32 *)D_8005E3A8)[2] & 0x40) {
+            } else if (((u32 *)gPad0Input)[2] & 0x40) {
                 if (*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7) == 0) {
                     func_8001FABC(2);
                     return;

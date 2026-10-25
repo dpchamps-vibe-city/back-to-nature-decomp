@@ -15,7 +15,7 @@ void ovl_23_func_800B8B94(void) {
     s32 temp_v1;
     s32 var_a1;
 
-    temp_v1 = *(s32 *) ((u8 *) D_8005E3A8 + 4);
+    temp_v1 = *(s32 *) ((u8 *) gPad0Input + 4);
     var_a1 = 2;
     if (temp_v1 & 0x20) {
         var_a1 = 3;

@@ -18,7 +18,7 @@ void ovl_11_func_801014F8(void) {
     func_8002261C(3, 0x3BD);
     func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x5C), 1, 0xA6, 0x58, 0x68, 0x48);
     if (func_800226B0()) {
-        switch (((u32 *)D_8005E3A8)[0]) {
+        switch (((u32 *)gPad0Input)[0]) {
         case 0x1000:
         case 0x8000:
             D_801273E9_selection += 4;
@@ -34,11 +34,11 @@ void ovl_11_func_801014F8(void) {
     }
     func_800248B0(gActiveRenderContext->field_D8 + 0x54, 0xAF, D_801273E9_selection * 14 + 0x5D);
     if (func_800226B0()) {
-        if (((u32 *)D_8005E3A8)[2] & 0x20) {
+        if (((u32 *)gPad0Input)[2] & 0x20) {
             func_80022738();
             func_8001FABC(1);
             D_801273E4_state = 3;
-        } else if (((u32 *)D_8005E3A8)[2] & 0x40) {
+        } else if (((u32 *)gPad0Input)[2] & 0x40) {
             D_801273EE_flags ^= 1 << (D_801273E9_selection + 7);
             if ((D_801273EE_flags >> (D_801273E9_selection + 7)) & 1) {
                 func_8001FABC(0);

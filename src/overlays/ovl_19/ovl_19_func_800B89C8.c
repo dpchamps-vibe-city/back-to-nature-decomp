@@ -21,7 +21,7 @@ void ovl_19_func_800B89C8(void) {
     s16 quotient;
     Ovl19Func800BAC40Arg *other;
 
-    if (((s32 *)D_8005E3A8)[2] & 0x800) {
+    if (((s32 *)gPad0Input)[2] & 0x800) {
         *(s32 *)D_800BF4C0 = *(s32 *)D_800BF4C0 != 1;
         if (*(s32 *)D_800BF4C0 == 1) {
             ovl_19_func_800BAC5C();
@@ -62,7 +62,7 @@ void ovl_19_func_800B89C8(void) {
         } else {
             D_800BD070 = -1;
             if (D_800BF4C0[0x51] == 1) {
-                if (((s32 *)D_8005E3A8)[2] & 0x40) {
+                if (((s32 *)gPad0Input)[2] & 0x40) {
                     ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 30);
                 }
             } else {

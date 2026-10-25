@@ -30,7 +30,7 @@ void ovl_11_func_800F787C(void) {
     s32 *display;
 
     func_80017A38(0, 2);
-    if (func_800226B0() && (*(s32 *)((u8 *)D_8005E3A8 + 8) & 0x800)) {
+    if (func_800226B0() && (*(s32 *)((u8 *)gPad0Input + 8) & 0x800)) {
         D_80126E40 = 0xFE;
         func_80022738();
         func_8001FABC(3);

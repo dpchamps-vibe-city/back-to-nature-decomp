@@ -19,7 +19,7 @@ void ovl_11_func_80100644(void) {
     func_8002261C(3, 0x3B9);
     ovl_11_func_80100B50((u8)D_801273EC, 0);
     if (func_800226B0() != 0) {
-        buttons = ((GfxObj *)D_8005E3A8)->field_8;
+        buttons = ((GfxObj *)gPad0Input)->field_8;
         if (buttons & 0x800) {
             func_80022738();
             Ovl11_D_801273DC = ovl_11_func_80103714;
