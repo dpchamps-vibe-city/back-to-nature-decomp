@@ -2779,6 +2779,9 @@ extern u8 _gPadReadBuffers[2][0x22] __asm__("gPadReadBuffers");
  * Keep the 16-byte aggregate and existing absolute addressing. */
 extern u8 gPadActuatorBuffers[2][8];
 
+/* Pad startup sets 1; exe:80014494 clears both actuator tables when zero. */
+extern s32 gPadActuatorsEnabled;
+
 /* Pad port IDs copied by func_800140C8. The incomplete aggregate type keeps
  * the object out of small data and preserves the two-byte object copy. */
 typedef struct PadPortPair {

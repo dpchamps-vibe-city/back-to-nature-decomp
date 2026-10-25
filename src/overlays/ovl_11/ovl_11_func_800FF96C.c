@@ -1,6 +1,6 @@
 #include "common.h"
+#include "pad_actuator_gate.h"
 
-void SetVal8005E3EC(s32 arg0);
 void func_80020A40(void);
 void func_80020A14(void);
 void ovl_11_func_800FB608(void);
@@ -13,9 +13,9 @@ void ovl_11_func_800FF96C(void) {
 
     p = (s16 *)D_8006C838;
     if (p[0x7267]) {
-        SetVal8005E3EC(1);
+        SetPadActuatorsEnabled(1);
     } else {
-        SetVal8005E3EC(0);
+        SetPadActuatorsEnabled(0);
     }
     base1 = (char *)&D_8006C838;
     base1 += 0x8000;

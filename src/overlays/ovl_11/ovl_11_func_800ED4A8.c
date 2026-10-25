@@ -5,6 +5,7 @@
 #include "psyq/memory.h"
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
+#include "pad_actuator_gate.h"
 
 typedef struct {
                s16 field_0;
@@ -138,7 +139,6 @@ int MoveImage2 (RECT *rect, int x, int y);
 int csin (int a);
 s32 ovl_11_func_800C3548 (s32 arg0);
 void ovl_11_func_800EFABC (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 GetVal8005E3EC (void);
 void func_8001B4D0 (s32 arg0, s32 arg1);
 void func_8001B4E4 (s32 arg0);
 s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);

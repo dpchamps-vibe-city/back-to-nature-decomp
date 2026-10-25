@@ -3,7 +3,7 @@
 
 /* Tentative definitions for GP-relative globals owned by this TU. */
 s16 D_8005E3E8[2];
-s32 D_8005E3EC;
+s32 gPadActuatorsEnabled;
 
 void func_80014494(s32 arg0, s32 arg1, s32 arg2) {
     u8 act0;
@@ -24,7 +24,7 @@ void func_80014494(s32 arg0, s32 arg1, s32 arg2) {
         gPadActuatorBuffers[arg2][2] = act1;
     }
 
-    if (D_8005E3EC == 0) {
+    if (gPadActuatorsEnabled == 0) {
         memset(gPadActuatorBuffers, 0, 0x10);
     }
 }

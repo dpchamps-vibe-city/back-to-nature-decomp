@@ -109,8 +109,7 @@ segments:
       - [0x3ED4, c, func_800136D4]       # 0x800136D4 func_800136D4
       - [0x41FC, c, func_800139FC]       # 0x800139FC func_800139FC
       - [0x4224, c, modules/pad_input_setup]
-      - [0x42EC, c, SetVal8005E3EC]       # 0x80013AEC SetVal8005E3EC
-      - [0x42F8, c, GetVal8005E3EC]       # 0x80013AF8 GetVal8005E3EC
+      - [0x42EC, c, modules/pad_actuator_gate]
       - [0x4304, c, func_80013B04]       # 0x80013B04 func_80013B04
       - [0x44D0, c, func_80013CD0]       # 0x80013CD0 func_80013CD0
       - [0x4790, c, func_80013F90]       # 0x80013F90 func_80013F90

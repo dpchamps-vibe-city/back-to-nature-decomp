@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "pad_actuator_gate.h"
 
 /* Game callee (signature from include/functions.h; declared locally per
  * project convention — common.h does not pull functions.h). */
@@ -11,10 +12,8 @@ s16 D_8005E4C4;
 s32 D_8005E4C8;
 s16 D_8005E4D0;
 
-s32 GetVal8005E3EC(void);
-
 void func_8001B2CC(s32 arg0, s32 arg1) {
-    if ((D_8006C844 & 0x10000) || GetVal8005E3EC() == 0) {
+    if ((D_8006C844 & 0x10000) || GetPadActuatorsEnabled() == 0) {
         return;
     }
     {

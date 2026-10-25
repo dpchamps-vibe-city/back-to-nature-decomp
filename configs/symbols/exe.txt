@@ -2,6 +2,9 @@
 // Raw timing-mode byte shared by input repeat, CD-volume decay and feedback fade.
 gUpdateTimingMode = 0x8005E274; // size:0x1
 
+// Raw shared actuator-enable word; zero suppresses both pad output buffers.
+gPadActuatorsEnabled = 0x8005E3EC; // type:s32 size:0x4
+
 // Scene dispatch IDs and update-loop control; existing boot-family words.
 gPreviousSceneId = 0x8005E394; // type:s32 size:0x4
 gCurrentSceneId = 0x8005E39C; // type:s32 size:0x4
@@ -97,8 +100,8 @@ func_800139FC = 0x800139FC; // type:func
 ResetPadInputState = 0x80013A24; // type:func
 SetPadRepeatTiming = 0x80013AA4; // type:func
 SetPadSecondaryRepeatTiming = 0x80013AC8; // type:func
-SetVal8005E3EC = 0x80013AEC; // type:func
-GetVal8005E3EC = 0x80013AF8; // type:func
+SetPadActuatorsEnabled = 0x80013AEC; // type:func
+GetPadActuatorsEnabled = 0x80013AF8; // type:func
 func_80013B04 = 0x80013B04; // type:func
 func_80013CD0 = 0x80013CD0; // type:func
 func_80013F90 = 0x80013F90; // type:func
