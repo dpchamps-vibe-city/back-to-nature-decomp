@@ -176,9 +176,31 @@ For overlay function renames, author `Name = 0xADDRESS;` lines in the optional
 hand-maintained `configs/symbols/<container>.names.txt`, not the generated
 `<container>.txt`. The bootstrap applies these labels after independent boundary
 recovery, rejecting unknown/interior entries and duplicate names or addresses.
-Then use `canonicalNames.ts --write` for active references and regenerate context
-headers with `contextExport.ts --all`. Each names file is scoped to its container,
+The same names file accepts `Name = 0xADDRESS; // type:data size:0xSIZE` for
+writable data. The generator requires a positive extent wholly inside the
+independently recovered data window and rejects overlapping labels and name
+collisions; it labels existing storage, never allocates it or seeds code entries.
+Then use `canonicalNames.ts --write` for active function references and regenerate
+context headers with `contextExport.ts --all`. A complete context publication
+rebuilds its signatures from configured units, withdrawing obsolete names rather
+than appending to yesterday's header. Each names file is scoped to its container,
 not to other overlays sharing its RAM slot.
+
+The engine exporter also carries explicitly named persistent data from the EXE's
+symbol configuration when no EXE object references it (and hence no ELF symbol
+exists). This supports state used only by overlays without adding an artificial
+EXE reference. A same-name address disagreement with the linked ELF is refused;
+overlay-slot exclusions still apply. The engine export depends on both the EXE
+symbol configuration and its exporter, not only the linked ELF. Diagnostics
+resolve semantic function names through the container-qualified original-function
+inventory as well as anonymous overlay prefixes, so renamed module members keep
+their overlay source paths and compiler flags.
+
+The shared toolchain assembly resolver prefers the section-aware `functions/overlay/<name>.s` archive over
+legacy flat copies, so a new semantic name works without a stale cached alias.
+Triage scopes frame/inline-assembly inspection to the requested `.ent`/`.end`
+region; triage and inventory disassemble that symbol alone, not every function
+in a merged object.
 
 ### Library-detection internals (called by the above, not run directly)
 

@@ -111,23 +111,49 @@ export function overlayFunctionsFromContext(
   return functions;
 }
 
-/**
- * Optional, hand-maintained <container>.names.txt labels. Apply only AFTER
- * independent boundary recovery: a name must never seed or invent an entry.
- * The owning file scopes addresses to this overlay, not its RAM-slot mates.
- */
-export function applyOverlayFunctionNames(functions: readonly OverlayFunction[], text: string): OverlayFunction[] {
-  const byAddress = new Map(functions.map((fn) => [fn.address, fn]));
-  const names = new Map<number, string>();
+interface OverlayName {
+  name: string;
+  address: number;
+  kind: "func" | "data";
+  size?: number;
+}
+
+/** Labels are container-local; data requires an explicit kind and byte extent. */
+function overlayNames(text: string): OverlayName[] {
+  const entries: OverlayName[] = [];
+  const addresses = new Set<number>();
+  const names = new Set<string>();
   for (const [index, raw] of text.split(/\r?\n/).entries()) {
     const line = raw.replace(/\/\/.*$/, "").trim();
     if (!line) continue;
     const match = line.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;$/);
     if (!match) throw new Error(`invalid overlay name at line ${index + 1}: ${raw}`);
     const address = Number(match[2]);
-    if (!byAddress.has(address)) throw new Error(`overlay name ${match[1]} is not a recovered function entry: ${match[2]}`);
-    if (names.has(address)) throw new Error(`duplicate overlay name address: ${match[2]}`);
-    names.set(address, match[1]!);
+    const kind = raw.match(/\/\/.*\btype:(\w+)/)?.[1] ?? "func";
+    if (kind !== "func" && kind !== "data") throw new Error(`unsupported overlay name type: ${kind}`);
+    const size = raw.match(/\/\/.*\bsize:(0x[0-9A-Fa-f]+|[0-9]+)\b/)?.[1];
+    if (!Number.isSafeInteger(address)) throw new Error(`invalid overlay name address: ${match[2]}`);
+    if (addresses.has(address)) throw new Error(`duplicate overlay name address: ${match[2]}`);
+    if (names.has(match[1]!)) throw new Error(`duplicate overlay ${kind === "func" ? "function " : ""}name: ${match[1]}`);
+    addresses.add(address);
+    names.add(match[1]!);
+    entries.push({ name: match[1]!, address, kind, ...(size === undefined ? {} : { size: Number(size) }) });
+  }
+  return entries;
+}
+
+/**
+ * Optional, hand-maintained <container>.names.txt labels. Apply only AFTER
+ * independent boundary recovery: a name must never seed or invent an entry.
+ * The owning file scopes addresses to this overlay, not its RAM-slot mates.
+ * Explicit type:data entries are validated separately by overlayDataSymbols.
+ */
+export function applyOverlayFunctionNames(functions: readonly OverlayFunction[], text: string): OverlayFunction[] {
+  const byAddress = new Map(functions.map((fn) => [fn.address, fn]));
+  const names = new Map<number, string>();
+  for (const entry of overlayNames(text).filter((entry) => entry.kind === "func")) {
+    if (!byAddress.has(entry.address)) throw new Error(`overlay name ${entry.name} is not a recovered function entry: 0x${entry.address.toString(16)}`);
+    names.set(entry.address, entry.name);
   }
   const used = new Set<string>();
   return functions.map((fn) => {
@@ -136,6 +162,23 @@ export function applyOverlayFunctionNames(functions: readonly OverlayFunction[],
     used.add(name);
     return { ...fn, name };
   });
+}
+
+/** Named data must fit the independently recovered writable-data window.
+ * It only labels existing bytes; it never creates storage or seeds code entries. */
+export function overlayDataSymbols(text: string, dataStart: number, dataEnd: number, functions: readonly OverlayFunction[]): string {
+  const entries = overlayNames(text).filter((entry) => entry.kind === "data").sort((a, b) => a.address - b.address);
+  const functionNames = new Set(functions.map((fn) => fn.name));
+  let end = dataStart;
+  for (const entry of entries) {
+    if (entry.size === undefined || !Number.isSafeInteger(entry.size) || entry.size <= 0 ||
+        !Number.isSafeInteger(entry.address + entry.size) || entry.address < end || entry.address + entry.size > dataEnd) {
+      throw new Error(`overlay data ${entry.name} needs a positive, non-overlapping extent inside writable data`);
+    }
+    if (functionNames.has(entry.name)) throw new Error(`overlay data name collides with a function: ${entry.name}`);
+    end = entry.address + entry.size;
+  }
+  return entries.map((entry) => `${entry.name} = 0x${entry.address.toString(16).toUpperCase()}; // size:0x${entry.size!.toString(16)}\n`).join("");
 }
 
 /** The same explicit extent must reach both spimdisasm and splat. */

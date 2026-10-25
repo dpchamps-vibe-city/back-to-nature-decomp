@@ -46,6 +46,7 @@ import { parseCSV } from "./analyzeLayout.js";
 import {
   applyOverlayFunctionNames,
   overlayDirectCalls,
+  overlayDataSymbols,
   overlayFunctionSymbols,
   overlayFunctionsFromContext,
   overlaySectionSplits,
@@ -81,7 +82,7 @@ function ensureDir(path: string): void {
  * than as a bare address; the overlay's own functions go in so they carry the
  * container prefix that makes `(container, vram)` one token.
  */
-function writeDisasmSymbols(container: Container, ownFunctions: readonly OverlayFunction[]): void {
+function writeDisasmSymbols(container: Container, ownFunctions: readonly OverlayFunction[], dataSymbols = ""): void {
   const enginePath = join(ROOT, ENGINE_EXPORT_PATH);
   const engineLines: string[] = [];
   if (existsSync(enginePath)) {
@@ -92,7 +93,7 @@ function writeDisasmSymbols(container: Container, ownFunctions: readonly Overlay
   }
   const path = containerPath(container, "disasmSymbolAddrs");
   ensureDir(path);
-  writeFileSync(path, engineLines.join("\n") + "\n" + overlayFunctionSymbols(ownFunctions));
+  writeFileSync(path, engineLines.join("\n") + "\n" + overlayFunctionSymbols(ownFunctions) + dataSymbols);
 }
 
 function runSpimdisasm(
@@ -349,8 +350,10 @@ for (const container of containers) {
   /* The generated symbol table is output, not the place to author renames.
      Its optional sibling names file supplies labels, never boundaries. */
   const namesPath = containerPath(container, "symbolAddrs").replace(/\.txt$/, ".names.txt");
-  const functions = applyOverlayFunctionNames(recovered,
-    existsSync(namesPath) ? readFileSync(namesPath, "utf-8") : "");
+  const names = existsSync(namesPath) ? readFileSync(namesPath, "utf-8") : "";
+  const functions = applyOverlayFunctionNames(recovered, names);
+  const dataSymbols = overlayDataSymbols(names,
+    container.loadAddr + layout.dataStart, container.loadAddr + layout.fileEnd, functions);
   for (const fn of functions.filter((f) => f.size !== undefined)) {
     console.log(`  ${fn.name}: local fragments recovered into size ${hex(fn.size!)}`);
   }
@@ -359,7 +362,7 @@ for (const container of containers) {
 
   /* Second pass, now with the container's own names, plus the pass without
      --disasm-unknown that boundary analysis downstream reads. */
-  writeDisasmSymbols(container, functions);
+  writeDisasmSymbols(container, functions, dataSymbols);
   runSpimdisasm(container, layout, container.paths.disasmDir, {
     unknown: true,
     csv: container.paths.functionsCsv,
@@ -398,7 +401,7 @@ for (const container of containers) {
   ensureDir(symbolsPath);
   writeFileSync(
     symbolsPath,
-    overlayFunctionSymbols(functions)
+    overlayFunctionSymbols(functions) + dataSymbols
   );
 
   const splatPath = containerPath(container, "splat");

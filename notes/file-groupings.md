@@ -778,33 +778,60 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_80128810 counter cluster — 0x800BE208–0x800BE2C4 (confidence: medium)
+## `ovl_11` collision-query budget (formerly D_80128810 counter cluster) — 0x800BE208–0x800BE2C4 (confidence: medium)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing a single
-file-scope s32 global counter. Same shared-global-cluster fingerprint as the
-documented D_80123754 / D_80070D0E runs: absolute-addressed main-RAM global
-(no gp-rel in this container) threaded through a contiguous text span — here
-with all three members of the run mutating the global.
+Reconstructed as `src/overlays/ovl_11/modules/collision_query_budget.c`, with
+public interface `include/ovl11_collision_query_budget.h`. This is a narrow
+shared-state module hypothesis, not proof of the complete original TU boundary.
 
-Fingerprints:
-- shared s32 global `D_80128810` (main RAM 0x80128810, absolute `lui`+`%lo`
-  in every site): read+increment+store by `ovl_11_func_800BE208` and
-  `ovl_11_func_800BE26C`, cleared to 0 by `ovl_11_func_800BE2B8`;
-- zero-gap link-order contiguity (map): 0x800BE208 (0x64) → 0x800BE26C (0x4C)
-  → 0x800BE2B8 (0xC), each starting exactly where the previous ends, the span
-  0x800BE208–0x800BE2C4 contiguous with no unrelated code between;
-- call-graph tie: both counter-increment members call the same
-  `ovl_11_func_800BEB28` on their increment path — a shared sub-handler the
-  three-line clear does not need.
+Membership evidence:
+- These three functions are the only C users of the signed counter at
+  `ovl_11:0x80128810`, now `gOvl11CollisionQueryCount`. Both query wrappers
+  increment it before calling the same collision dispatcher, `800BEB28`.
+- `800C162C`, the frame-update driver, resets the count before object updates.
+  Budgeted callers include the position-reset scan `800D0FB4` and movement
+  probes in `800D12B8`/`800D196C`; unbudgeted calls in `800BDB88` use the same
+  engine while still consuming the common count. This is a query count, not a
+  collision-hit count or a generic animation timer.
+- Original link order is gapless: 0x800BE208 (0x64), 0x800BE26C (0x4C),
+  0x800BE2B8 (0xC). All three mutate the private counter; adjacency alone is
+  not the basis for grouping them. Preceding `800BDF98` builds a query directly
+  without this counter, and following `800BE2C4` is a record-specific probe;
+  both, and the larger dispatcher, remain outside this deliberately small fold.
 
-Members (address order):
-- ovl_11_func_800BE208 (s) — increments D_80128810 only while it stays < 0x32,
-  then calls ovl_11_func_800BEB28; the run's guarded counter
-- ovl_11_func_800BE26C (s) — unconditionally increments and stores, then calls
-  ovl_11_func_800BEB28 — same counter, no guard
-- ovl_11_func_800BE2B8 (m, matched this session) — leaf clear:
-  `D_80128810 = 0` (single `sw $zero`, delay-slot scheduled); byte-exact clean
-  C, baseline flags; the run's reset
+Members (original identity retained; address order):
+- ovl_11_func_800BE208 (m) → `Ovl11QueryCollisionBudgeted`: delegates while
+  count < 50; at exhaustion returns 1 (blocked), clears `*hitFlags`, leaves the
+  hit-object output untouched and does not increment. The exhausted path
+  unconditionally dereferences hitFlags, including for callers that otherwise
+  pass null outputs. No new null check or behavior change was introduced.
+- ovl_11_func_800BE26C (m) → `Ovl11QueryCollisionUnbudgeted`: always increments
+  and delegates, even past 50; this can exhaust the budget of the other entry.
+- ovl_11_func_800BE2B8 (m) → `Ovl11ResetCollisionQueryCount`: clears only the
+  count, not collision records or outputs.
+
+Interface/ownership: all functions keep external linkage. The count stays in
+its original overlay data section, declared only in `globals_override.h`, not
+new C storage. Both wrappers retain the two unused ABI slots and their existing
+u16 versus s32 parameter types. The by-value four-byte `Ovl11CollisionTag` is
+retained; the separate dispatcher definition still spells its packed argument
+as s32 and interprets its home slot as that tag. This inherited representation
+edge remains explicit (the interface audit calls it undetermined); no disputed
+type was changed as part of naming. All 15 callers use the public header.
+
+Verification: the checked fold first matched all three at baseline overlay
+flags (-G0), as did the split-file control. Renaming, documentation and header
+reconciliation retained exact member bytes and caller instruction streams.
+No member had a flag override; none was added or needed. Overlay-local names
+now survive regeneration, including a bounded, explicitly sized data label;
+context `--all` rebuilds its signatures rather than retaining renamed aliases.
+The shared type header's prematurely closed include guard was moved to its end
+so the public header can coexist with callers' existing game-types includes.
+The terminal TU verification passed all integrity gates: the executable and all
+13 overlays match, `split-all` changes no source/config/header, source policy
+passes, and no exception grew against the campaign receipt. Folded inventory
+increased from 9 to 12 with the three existing modules unchanged. The existing
+38 overlay-boundary/context-export tests also pass; no tests were added.
 
 ---
 
@@ -12957,11 +12984,13 @@ private `D_8013766C` offset table.
 
 ## `ovl_11` D_8007AF80 interpolation-state pair — 0x800BFF74–0x800C0010 (confidence: medium)
 
-Evidence: one shared absolute-addressed global `D_8007AF80`, declared
-`extern u8 D_8007AF80[]` in both TUs (it is absent from `include/globals.h`),
-and indexed as an `s32` array with the same layout in both: p[0..2] a
-3-vector, p[3..5] its per-tick delta, p[6] an elapsed counter, p[7] the
-count/target limit. Zero-gap link-order contiguity corroborates the tie:
+Evidence: one shared absolute-addressed state block at `0x8007AF80`
+(originally `D_8007AF80`, now `gScreenColorRamp`), with the same layout in
+both helpers: three signed RGB channels, three signed per-update deltas,
+an elapsed counter and a duration. `func_8001316C` shifts the channels by
+12 before setRGB0 on a full-screen semitransparent quad, establishing the
+fixed-point units without assuming a particular time-of-day/gameplay meaning.
+Zero-gap link-order contiguity corroborates the tie:
 ovl_11_func_800BFF74 is 0x9C and ends exactly at 0x800C0010 where
 ovl_11_func_800C0010 begins, and the call graph agrees (0x800BFE3C calls
 0x800C0010; 0x800BFEA4 sits 0x58 before the pair in link order).
@@ -12971,9 +13000,37 @@ Members (address order):
   stepper: if p[0]+p[1]+p[2] != 0 it calls `func_8001316C(p[0], p[1], p[2])`,
   then while the counter p[6] is below the limit p[7] increments p[6] and
   adds the delta p[3..5] to the vector p[0..2].
-- ovl_11_func_800C0010 (m, already matched) — initialiser for the same state:
-  sets p[6] = 0, p[7] = arg0 and p[3..5] = (v[i] - p[i]) / arg0 for target
-  vector `v`, returning p[5].
+- ovl_11_func_800C0010 (m, already matched) — target setter for the same state:
+  clears elapsed updates, stores the duration and computes the three signed
+  `(target - current) / duration` steps. Neither caller consumes the final
+  quotient left in v0; a void definition reproduces every original byte.
+
+Reconstructed as `src/overlays/ovl_11/modules/screen_color_ramp.c`, preserving
+address order. `include/screen_color_ramp.h` publishes
+`Ovl11DrawAndStepScreenColorRamp` (ovl_11:0x800BFF74) and
+`Ovl11SetScreenColorRampTarget` (ovl_11:0x800C0010). Both callers now use that
+single void setter contract and a pointer to three Q12 components rather than
+an integer-address parameter. The setter and both callers remain exact. The
+old mixed void/s32 declarations were not retained as an interface workaround.
+The 800BFD1C caller sets 256-update ramps on table-selection changes and gates
+drawing/advancement; 800BFE3C requests a one-update transition. Thus the units
+are update calls, not unconditional frames. Drawing precedes advancement,
+the draw gate tests the channel SUM, and integer division discards remainders:
+there is no final snap or clamp. The caller must provide a positive duration.
+
+The persistent state has a canonical named struct in `globals_override.h`.
+ovl_15_func_80134C48/80135380 save/restore 0x24 bytes at save-buffer +0x6308,
+including the untouched trailing four bytes (purpose unknown). That evidence
+fixes the extent, not private ownership: storage remains external EXE RAM,
+absolutely addressed, and save/restore callers were propagated and verified.
+The engine exporter now includes configured overlay-only data absent from the
+EXE's ELF; no artificial reference or storage definition was added.
+
+The shared layout, complementary operations and common caller support this
+small module hypothesis. The preceding table setup and broader state dispatcher
+remain outside; their exact original TU relationship is unresolved. Both
+members and their merge match under baseline overlay flags (`-O2 -G0`), with
+no member override, new exception or matching workaround.
 
 ## `ovl_11` D_801285xx–D_801287xx table-selection run — 0x8011F52C–0x80120414 (confidence: medium)
 

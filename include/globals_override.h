@@ -213,8 +213,9 @@ extern s32 D_80128D58;
 /* 800D4314 passes this six-word keyframe table to 800D04D4. */
 extern u8 D_80123BD4;
 
-/* 800BE26C increments this word; 800BE2B8 clears it. */
-extern s32 D_80128810;
+/* ovl_11:0x80128810: counted collision queries since the last frame-driver reset.
+ * Storage remains in the overlay's original data section, not in the C module. */
+extern s32 gOvl11CollisionQueryCount;
 
 /* Rand defines this u32 seed; ovl_11 801044E4 stores 1 with sw. */
 extern u32 D_8005E290;
@@ -6437,7 +6438,17 @@ extern u8 D_800520A0[];
 extern u8 *D_801376D0;
 /* 80135380 restores these word-aligned save blocks (0x4C/0x24/0x34/0x18 bytes). */
 extern s32 D_8007AD00[0x13];
-extern u8 D_8007AF80[0x24];
+/* ovl_11:800BFF74/800C0010 use eight s32 fields; the screen renderer shifts
+ * RGB by 12. ovl_15 save/restore copies 0x24 bytes at save offset 0x6308,
+ * establishing a trailing word whose purpose is not yet known. */
+struct ScreenColorRampState {
+    s32 rgbQ12[3];
+    s32 stepQ12[3];
+    s32 elapsedUpdates;
+    s32 durationUpdates;
+    u8 unknown_20[4];
+};
+extern struct ScreenColorRampState gScreenColorRamp;
 extern s32 D_8007AFA4[13];
 extern s32 D_8007AFD8[6];
 /* 80135380 selects this save buffer and reads through byte offset 0x6377. */
