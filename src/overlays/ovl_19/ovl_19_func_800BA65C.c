@@ -10,7 +10,7 @@ s32 ovl_19_func_800BA65C(Ovl19Func800BAC40Arg *arg0) {
     SVECTOR pos;
 
     pos = *(SVECTOR *) ((u8 *) arg0 + 0x10);
-    switch (arg0->unk4) {
+    switch (arg0->parameter) {
     case 0:
         pos.vz -= 200;
         break;

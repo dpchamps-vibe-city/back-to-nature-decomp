@@ -1,3 +1,14 @@
+// Shared actor-control prefix writers and embedded-sprite pause service.
+Ovl19SetActorControl = 0x800BAC40;
+Ovl19SetActorState = 0x800BAC50;
+Ovl19PauseActorSprites = 0x800BAC5C;
+Ovl19ResumeActorSprites = 0x800BAC7C;
+Ovl19SetActorSpritePauseMode = 0x800BAC9C;
+gOvl19ActorSpriteFlagOperation = 0x800BD07C; // type:data size:0x4
+// Storage labels, not the extents of the strided actor groups.
+gOvl19ActorSprites = 0x800BF570; // type:data size:0x30
+gOvl19AuxActorSprites = 0x800BF4E8; // type:data size:0x78
+
 // Camera/geometry family, preserving overlay-19 entry identities.
 Ovl19InitSceneCamera = 0x800BB318;
 Ovl19UpdateSceneCameraOffset = 0x800BB358;

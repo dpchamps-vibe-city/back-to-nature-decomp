@@ -24,7 +24,7 @@ void ovl_19_func_800BB8F4(void) {
         func_80015704((SpriteSourceData *)(gOvl19UiSprite + i * 0x40 - 0xF0), (SpriteDataHeader *)(D_800BE470 + D_800BD058[i + 2]));
     }
     for (i = 0; i < 2; i++) {
-        func_80015704((SpriteSourceData *)(D_800BF4E8 + i * 0x48), (SpriteDataHeader *)(D_800BE470 + D_800BD058[1]));
+        func_80015704((SpriteSourceData *)(gOvl19AuxActorSprites + i * 0x48), (SpriteDataHeader *)(D_800BE470 + D_800BD058[1]));
     }
     func_80015704(&D_800BF6D0, (SpriteDataHeader *)(D_800BE470 + D_800BD058[5]));
 }

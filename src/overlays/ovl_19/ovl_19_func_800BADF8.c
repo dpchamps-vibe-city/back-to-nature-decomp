@@ -28,14 +28,14 @@ void ovl_19_func_800BADF8(s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3)
     temp_a1 = gActiveRenderContext->field_120;
     var_a0 = arg0 + temp_v1;
     var_s3 = temp_a1 + temp_v1;
-    if ((arg1 == (SpriteSourceData *) D_800BF570) ||
-        (arg1 == (SpriteSourceData *) (D_800BF570 + 0x40)) ||
-        (arg1 == (SpriteSourceData *) (D_800BF570 + 0x80))) {
+    if ((arg1 == (SpriteSourceData *) gOvl19ActorSprites) ||
+        (arg1 == (SpriteSourceData *) (gOvl19ActorSprites + 0x40)) ||
+        (arg1 == (SpriteSourceData *) (gOvl19ActorSprites + 0x80))) {
         func_80015BF0(var_a0, arg1, (s16) D_800BD048[0], (s16) D_800BD048[1]);
         func_800248E8(var_s3, (s16) D_800BD048[0], (s16) D_800BD048[1], 0);
         return;
     }
-    if (arg1 == (SpriteSourceData *) (D_800BF570 + 0x120)) {
+    if (arg1 == (SpriteSourceData *) (gOvl19ActorSprites + 0x120)) {
         func_80015BF0(arg0, arg1, (s16) D_800BD048[0], (s16) D_800BD048[1]);
         return;
     }

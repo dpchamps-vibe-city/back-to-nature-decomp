@@ -895,12 +895,14 @@ typedef struct {
     SpriteSourceData sprite;
 } Ovl19Func800BAB4CArg;
 
-/* Shared by ovl_19_func_800BAC40 and ovl_19_func_800BAC50. */
+/* Shared control prefix used by overlay 19's two state writers.
+ * Parameter meanings differ by actor format (e.g. direction or countdown),
+ * so this partial view deliberately does not impose one full actor layout. */
 typedef struct {
     /* 0x00 */ char pad_0[0x2];
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 unk6;
+    /* 0x02 */ s16 state;
+    /* 0x04 */ s16 parameter;
+    /* 0x06 */ s16 extra;
 } Ovl19Func800BAC40Arg;
 
 /* Shared by ovl_23_func_800BB0C8 and ovl_23_func_800BB0D8. */

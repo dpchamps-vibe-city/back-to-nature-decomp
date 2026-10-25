@@ -2,12 +2,10 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "ovl19_actor_controls.h"
 
-void ovl_19_func_800BAC5C(void);
-void ovl_19_func_800BAC7C(void);
 void ovl_19_func_800B942C(void);
 s32 ovl_19_func_800BA25C(void);
-void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
 void ovl_19_func_800B998C(void);
 void ovl_19_func_800B9454(void);
 void ovl_19_func_800B95D4(void);
@@ -22,10 +20,10 @@ void ovl_19_func_800B89C8(void) {
     if (((s32 *)gPad0Input)[2] & 0x800) {
         *(s32 *)D_800BF4C0 = *(s32 *)D_800BF4C0 != 1;
         if (*(s32 *)D_800BF4C0 == 1) {
-            ovl_19_func_800BAC5C();
+            Ovl19PauseActorSprites();
             D_800BF4C0[0x101] = PlaySoundEffect(0x36);
         } else {
-            ovl_19_func_800BAC7C();
+            Ovl19ResumeActorSprites();
         }
     }
     if (*(s32 *)D_800BF4C0 == 1) {
@@ -41,13 +39,13 @@ void ovl_19_func_800B89C8(void) {
                 D_800BD070 = selection;
                 RequestMessageWindow(4, 0x15);
                 D_800BF4C0[0x102] = PlaySoundEffect(0x43);
-                ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50 + selection * 0x20], 3, 0);
+                Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50 + selection * 0x20], 3, 0);
                 other = (Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50];
                 if (selection == 0) {
                     other = (Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70];
                 }
-                ovl_19_func_800BAC50(other, 0, 0);
-                ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x90], 4, 0);
+                Ovl19SetActorState(other, 0, 0);
+                Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x90], 4, 0);
             }
             if (GetMessageWindowStatus() == 2) {
                 StopSoundEffectVoice(D_800BF4C0[0x102]);
@@ -61,12 +59,12 @@ void ovl_19_func_800B89C8(void) {
             D_800BD070 = -1;
             if (D_800BF4C0[0x51] == 1) {
                 if (((s32 *)gPad0Input)[2] & 0x40) {
-                    ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 30);
+                    Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 30);
                 }
             } else {
                 D_800BF4C0[0x52]--;
                 if (D_800BF4C0[0x52] <= 0) {
-                    ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 1, 0);
+                    Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 1, 0);
                 }
             }
             ovl_19_func_800B9454();

@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_80015828(u16 *arg0, u16 arg1);
+void func_80015828(u16 *arg0, s32 mask);
 
 extern u16 D_800C013C;
 extern u16 D_800C024C;

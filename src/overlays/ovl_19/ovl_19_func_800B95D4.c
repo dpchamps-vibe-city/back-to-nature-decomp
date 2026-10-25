@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "ovl19_actor_controls.h"
 
 /* Overlay alias for Rand; signature from its matched definition. */
 u32 Rand(s32 arg0);
@@ -36,7 +37,6 @@ s32 ovl_19_func_800BA468(ReconA0View *arg0, ReconA1View *arg1);
 s32 ovl_19_func_800BA5B4(ReconA0View *arg0, ReconA1View *arg1);
 s32 ovl_19_func_800BA73C(Ovl19Func800BA73CArg *arg0);
 s32 ovl_19_func_800BA750(Recon800BA750A0View *arg0);
-void ovl_19_func_800BAC40(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 /* One 0x48-byte actor record in the D_800BF4D0 pair. */
 typedef struct {
@@ -84,7 +84,7 @@ void ovl_19_func_800B95D4(void) {
         status = ovl_19_func_800BA73C((Ovl19Func800BA73CArg *)actor);
         record = actors - 8;
         if (status == one && record[i * 32 + 0x51] == 2) {
-            ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)actor, 4, actor->angle, 30);
+            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)actor, 4, actor->angle, 30);
             record[0x101] = PlaySoundEffect(0x3B);
             record[0x101] = PlaySoundEffect(0x44);
             continue;
@@ -105,25 +105,25 @@ void ovl_19_func_800B95D4(void) {
                         opponent = state + 0x2C;
                     }
                     angle = (s16)(record[2] + ovl_19_func_800BA5B4((ReconA0View *)record, (ReconA1View *)opponent));
-                    ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)record, 9, (s16)(angle % 4), state[0xC8]);
+                    Ovl19SetActorControl((Ovl19Func800BAC40Arg *)record, 9, (s16)(angle % 4), state[0xC8]);
                     *(s32 *)(record + 6) = one;
-                    ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)opponent, 10, opponent[2], state[0xC9]);
+                    Ovl19SetActorControl((Ovl19Func800BAC40Arg *)opponent, 10, opponent[2], state[0xC9]);
                     *(s32 *)(opponent + 6) = 0;
                     continue;
                 }
             } else {
                 if (ovl_19_func_800BA468((ReconA0View *)actor, (ReconA1View *)opponent) == one) {
                     angle = (s16)(actor->angle + ovl_19_func_800BA5B4((ReconA0View *)actor, (ReconA1View *)opponent));
-                    ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)actor, 6, (s16)(angle % 4), state[0xC7]);
+                    Ovl19SetActorControl((Ovl19Func800BAC40Arg *)actor, 6, (s16)(angle % 4), state[0xC7]);
                     actor->flag = one;
                     command = 7;
                     if (ovl_19_func_800BA73C((Ovl19Func800BA73CArg *)opponent) == one) {
                         command = 8;
                     }
-                    ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)opponent, command, opponent[2], state[0xC7]);
+                    Ovl19SetActorControl((Ovl19Func800BAC40Arg *)opponent, command, opponent[2], state[0xC7]);
                     state[0x101] = PlaySoundEffect(0x3C);
                 } else {
-                    ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)actor, 5, actor->angle, state[0xC6]);
+                    Ovl19SetActorControl((Ovl19Func800BAC40Arg *)actor, 5, actor->angle, state[0xC6]);
                     actor->flag = 0;
                 }
                 continue;
@@ -148,7 +148,7 @@ void ovl_19_func_800B95D4(void) {
                     }
                     break;
             }
-            ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)actor, command, angle, D_800BF4C0[0xBC]);
+            Ovl19SetActorControl((Ovl19Func800BAC40Arg *)actor, command, angle, D_800BF4C0[0xBC]);
         }
     } while (view += 36, ++i < 2);
 }

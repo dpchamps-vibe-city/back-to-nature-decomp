@@ -5939,14 +5939,12 @@ extern s32 D_80129224;
 /* 800E40CC dispatches this 113-entry table with lh +4/+6 and lw +8/+C arguments. */
 extern s32 (*D_800B975C[0x71])(s16, s16, s32, s32);
 
-/* ovl_19_func_800BAC9C slot-programming globals. The function installs a
- * set/clear callback into D_800BD07C and walks two ovl_19 data arrays
- * (D_800BF570 with stride 0x40, D_800BF4E8 with stride 0x48), applying the
- * callback to the u16 at each slot. All three live in overlay RAM and are
- * absolute-addressed (overlay build is -G0), so only extern declarations
- * belong here. */
-extern u8 D_800BF570[];
-extern u8 D_800BF4E8[];
+/* Ovl19SetActorSpritePauseMode applies flag bit 4 at three 0x40-stride
+ * actor sprites and two 0x48-stride auxiliary sprites. These incomplete
+ * byte views preserve the embedded sprite bases, not full actor layouts.
+ * Overlay -G0: storage remains external, with no tentative definitions. */
+extern u8 gOvl19ActorSprites[];
+extern u8 gOvl19AuxActorSprites[];
 /* ovl_19_func_800BADF8 passes this two-word output to func_8001DFD4. */
 extern s32 D_800BD048[2];
 /* ovl_19_func_800BADF8 fills three halfwords of this eight-byte GTE vector. */
@@ -5968,7 +5966,8 @@ extern u8 D_800BD090[0x13DC];
 extern struct SpriteSourceData D_800BF690;
 /* ovl_19_func_800BB8F4 initializes this sprite from offset table entry 5. */
 extern struct SpriteSourceData D_800BF6D0;
-extern void (*D_800BD07C)(u16 *arg0, s32 arg1);
+/* 800BAC9C stores its set/clear operation here before applying mask 4. */
+extern void (*gOvl19ActorSpriteFlagOperation)(u16 *flags, s32 mask);
 
 /* 800D3250 reads u16 at +0x1086 and updates +index*0xB8 through this base. */
 struct Ovl11D3250FirstView {
@@ -6978,6 +6977,18 @@ extern s32 D_80128D88;
 extern s32 D_80128D8C;
 /* 800D79E8 passes this position to 800BDB88 and steps words +0/+8. */
 extern s32 D_80128D98[4];
+
+/* 8011DD90 reads signed item IDs; 8011DEBC indexes u16 threshold/price tables. */
+typedef struct {
+    u8 pad0[0x524C];
+    s16 selectedItemId;
+    s16 selectedAux;
+    u8 pad5250[2];
+    s16 materialItemId;
+    s16 materialAux;
+} Ovl11UpgradeSelectionView;
+extern u16 gOvl11UpgradeThresholds[];
+extern u16 gOvl11UpgradePrices[];
 
 /* 8011DF4C uses signed word counters for a seven-by-seven scan. */
 extern s32 D_8012D7F0;

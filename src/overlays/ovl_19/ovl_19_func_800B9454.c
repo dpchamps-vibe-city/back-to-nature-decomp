@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl19_actor_controls.h"
 
 u32 Rand(s32 arg0);
 s32 ovl_19_func_800BA73C(Ovl19Func800BA73CArg *arg0);
 s32 ovl_19_func_800BA468(void *, void *);
 s32 ovl_19_func_800BA544(s32 arg0, s32 arg1);
-void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
 
 void ovl_19_func_800B9454(void) {
     s16 *s2;
@@ -26,7 +26,7 @@ void ovl_19_func_800B9454(void) {
         *(u16 *)&s2[2] = *(u16 *)&s2[2] - 1;
         if ((s16)*(u16 *)&s2[2] <= 0) {
             s2[2] = 0;
-            ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)s2, 1, 0);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)s2, 1, 0);
         }
     } else {
         s1 = s2 - 0x70;
@@ -61,7 +61,7 @@ void ovl_19_func_800B9454(void) {
             }
         }
         if (s4 != 0) {
-            ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)s2, 2, 0x1E);
+            Ovl19SetActorState((Ovl19Func800BAC40Arg *)s2, 2, 0x1E);
         }
     }
 }

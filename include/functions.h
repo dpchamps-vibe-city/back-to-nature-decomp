@@ -104,7 +104,7 @@ void func_800136D4(u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_80014494(s32 arg0, s32 arg1, s32 arg2);
 void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80015814(u16 *arg0, s32 arg1);
-void func_80015828(u16 *arg0, u16 arg1);
+void func_80015828(u16 *flags, s32 mask);
 void func_80015840(ObjectState *obj, u8 arg1);
 void func_8001585C(ObjectState *obj, u8 arg1);
 void func_80015868(Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);

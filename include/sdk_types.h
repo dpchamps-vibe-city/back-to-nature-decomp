@@ -3242,9 +3242,9 @@ typedef struct {
 
 typedef struct {
                char pad_0[0x2];
-               s16 unk2;
-               s16 unk4;
-               s16 unk6;
+               s16 state;
+               s16 parameter;
+               s16 extra;
 } Ovl19Func800BAC40Arg;
 
 typedef struct {

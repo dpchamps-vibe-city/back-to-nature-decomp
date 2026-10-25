@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_80015828(u16 *arg0, u16 arg1);
+void func_80015828(u16 *arg0, s32 mask);
 
 void ovl_23_func_800BB150(void) {
     u8 *p;

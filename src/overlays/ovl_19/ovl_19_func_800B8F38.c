@@ -2,13 +2,11 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "ovl19_actor_controls.h"
 
 /* ovl_19 overlay-local state counter; absolute-addressed (lui + %lo) from this
  * TU. Incremented once per call and reset when the handler runs. */
 extern s32 D_800BD074;
-
-void ovl_19_func_800BAC40(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
 
 /* State handler on the shared ovl_19 D_800BF4C0 s16 state array. The compiler
  * materialises the D_800BF560 label (D_800BF4C0 + 0xA0) and folds the +0xA0/
@@ -23,10 +21,10 @@ void ovl_19_func_800B8F38(void) {
     }
     RequestMessageWindow(4, 0xA);
     if (GetMessageWindowStatus() == 2) {
-        ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 0x1E);
-        ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 1, 0);
-        ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 4, 0, 0x1E);
-        ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x2C], 7, 0, 0x5A);
+        Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 0x1E);
+        Ovl19SetActorState((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 1, 0);
+        Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 4, 0, 0x1E);
+        Ovl19SetActorControl((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x2C], 7, 0, 0x5A);
         D_800BF4C0[0x101] = PlaySoundEffect(0x3B);
         D_800BF4C0[0x101] = PlaySoundEffect(0x3C);
         D_800BF4C0[0x101] = PlaySoundEffect(0x44);

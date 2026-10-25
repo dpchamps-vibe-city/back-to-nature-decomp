@@ -2,7 +2,7 @@
 #include "game_types.h"
 
 extern void func_80015814(u16 *arg0, s32 arg1);
-extern void func_80015828(u16 *arg0, u16 arg1);
+extern void func_80015828(u16 *arg0, s32 mask);
 
 void ovl_21_func_800BAA38(s32 arg0) {
     s32 i;

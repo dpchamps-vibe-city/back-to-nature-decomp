@@ -1,5 +1,13 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Five-tier upgrade checks and the private threshold/price pair.
+Ovl11CheckTierUpgrade = 0x8011DD90;
+Ovl11GetItemTier = 0x8011DE70;
+Ovl11GetUpgradeValue = 0x8011DEBC;
+Ovl11GetUpgradeTierForItem = 0x8011DF04;
+gOvl11UpgradeThresholds = 0x801282E4; // type:data size:0xC
+gOvl11UpgradePrices = 0x801282F0; // type:data size:0xC
+
 // Catalog/resource panels share selection records and message-driven phases.
 Ovl11InitTimeDependentCatalog = 0x8011775C;
 Ovl11InitFixedCatalog = 0x80117A40;

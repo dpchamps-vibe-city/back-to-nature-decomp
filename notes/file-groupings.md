@@ -8713,6 +8713,60 @@ shared GP-relative bytes with B5DC prove the join to that whole unit. See its
 
 ## `ovl_19` shared arg-record setters and slot-programmer run — 0x800BAC40–0x800BAC9C (confidence: medium)
 
+**Module: `src/overlays/ovl_19/modules/actor_controls.c`**, all five entries
+through exclusive end **800BAD50**, not separate setter/pause slices.
+The setters update the same control prefixes used by the actors whose
+embedded sprites the pause worker visits: the two 0x48-stride actors start
+at BF4D0/BF518, with sprite bases +0x18 at BF4E8/BF530; the three 0x40-stride
+actors start at BF560/BF5A0/BF5E0, with sprite bases +0x10 at BF570/BF5B0/BF5F0.
+800B89C8 uses both setters on these actor records and invokes the two pause
+wrappers on its pause-toggle paths. Both wrappers call the single worker,
+which installs the shared callback slot. This record/subobject relationship,
+complementary control operations and closed wrapper graph corroborate the
+gapless link order; adjacency or common overlay flags alone are not used.
+Overlay -G0 supplies no GP-based historical-TU proof.
+
+Names: Ovl19SetActorControl (BAC40), Ovl19SetActorState (BAC50),
+Ovl19PauseActorSprites (BAC5C), Ovl19ResumeActorSprites (BAC7C), and
+Ovl19SetActorSpritePauseMode (BAC9C). gOvl19ActorSprites/AuxActorSprites name
+the existing embedded sprite base views, not newly allocated arrays or full
+actor layouts. Their configured 0x30/0x78 data-label extents are unchanged;
+strided accesses continue across the existing interior labels. The callback
+word is gOvl19ActorSpriteFlagOperation. No storage ownership or linkage changed.
+The canonical partial control view names state/parameter/extra; parameter
+meaning differs across actors (direction versus countdown), so it deliberately
+retains a partial identity rather than asserting one full actor type.
+The header documents truncation, untouched fields, raw-state writes and the
+zero-pause/nonzero-resume convention. Engine 158E4's flag-4 guard establishes
+animation pause, not a global scene freeze. Twenty declaring caller units now
+use the public header; globals_override.h owns the renamed data externs.
+
+Boundary evidence: preceding BAB4C consumes the control prefix as a renderer,
+selecting sprite animation and forwarding to BADF8; it implements neither
+state assignment nor the pause callback/group traversal. Following BAD50 is
+a fixed-frame drawer of the separate gOvl19UiSprite, with no control writes,
+actor-group walk or callback-slot access. These are evidence-limited service
+boundaries, not proven original object boundaries; the wider actor update and
+rendering family remains uncertain. No flag or dead stub dictated a cut.
+
+Interface reconciliation exposed the old s32/u16 disagreement on engine
+15828's flag-mask argument. A word-mask interface with a separate low-halfword
+normalization statement preserves the callee's original ANDI and six words,
+while agreeing with the installed callback's type. Folding normalization into
+the final store would drop the ANDI; the explicit normalization boundary is
+therefore retained. The input's upper bits remain irrelevant. All direct
+callers pass mask 4, and interfaceAudit verified their canonical word-mask
+declarations across overlays 21/23/25. No incompatible callback cast or false
+prototype is retained, and no type/layout/flag exception was added.
+
+The mechanical whole fold first passed baseline -O2/-G0. No member override
+exists or was added/retired. After naming, caller-header publication, field
+readability and mask-interface reconciliation, tuProgress --verify --baseline
+build/tu-campaign/baseline.json passes every integrity gate: **444 folded /
+51 valid modules**, all EXE/overlay bytes and data/placement, convergence,
+canonical interfaces, source policy and exception non-growth.
+
+Historical identities:
 - ovl_19_func_800BAC40 (m, matched via automatic reconstruction, byte-exact) —
   stores three s32 args into s16 fields +2/+4/+6 of its pointer argument.
 - ovl_19_func_800BAC50 (m, matched via automatic reconstruction, byte-exact) —
@@ -15791,8 +15845,52 @@ draw path (`D_8012CDC8` via `func_80017B3C`); it stages nothing into
   dispatch-table row builder drawing five stored-value rows.
 
 
-## `ovl_11` s16 range-map / store-view run — 0x8011DD48–0x8011DF4C (confidence: high)
+## `ovl_11` s16 range-map / store-view run — 0x8011DD48–0x8011DF4C (confidence: medium for four-member core)
 
+**Module: `src/overlays/ovl_11/modules/tier_upgrade_rules.c`**, the complete
+four-member protocol at **8011DD90–8011DF4C exclusive**. DD90 checks selected
+IDs, deriving category/tier from the 25-ID five-tier encoding. DE70 exposes
+the identical encoding to the common interaction caller 8011A25C. DEBC reads
+the two six-halfword storage labels at 801282E4/F0 (five valid tier rows),
+while DF04 maps material IDs to the requested tier. DD90 calls both latter
+helpers; 8011A25C uses all four for validation, price, message selection and
+replacement-ID calculation. The shared encoding, private table pair and
+closed helper protocol support membership, not adjacency alone. Overlay -G0
+provides no GP-based same-TU proof.
+
+The old six-member claim below is withdrawn at both ends. DD48 initializes
+a text/prompt descriptor through the shared text-bank base, not this encoding
+or either lookup table; no call/data edge joins it to the rules. DF4C is no
+longer a stub: it builds a 7x7 collision-pointer grid with separate counters
+and position scratch at 8012D7F0/F4/800, using 800BDB88/GetVal8005E524, not
+these selected-ID tests or tables. These responsibility/protocol separations
+are evidence-limited cuts, not proven original object boundaries. The broad
+D_8006C838 work area does not establish a larger unit.
+
+Names: Ovl11CheckTierUpgrade, Ovl11GetItemTier, Ovl11GetUpgradeValue and
+Ovl11GetUpgradeTierForItem at their original overlay identities. The private
+tables are gOvl11UpgradeThresholds/Prices; globals_override.h owns their
+externs and the signed selection view. The header publishes all four because
+the external interaction service uses each, with exact status codes, index
+bounds, table-selector semantics and no-state-change guarantee. No commodity
+or tool identity is asserted. Locals describe category/tier/progress rather
+than machine temporaries. No linkage or storage ownership changed.
+
+The former s16/u16 lookup declarations conflicted. Original DEBC zero-extends
+its halfword load; DD90 immediately uses its word return in signed slt.
+A canonical s32 return with u16 table storage preserves both facts and all
+callers. Narrowing the return explicitly adds two instructions; declaring
+u16 instead changes that comparison to sltu. The word-return interface was
+verified, not an unchecked signedness cleanup. All four helpers and the
+interaction caller share the header now; no contradictory prototype remains.
+
+The whole fold first passed baseline -O2/-G0. No override or exception was
+added or retired. After names/interfaces/readability, tuProgress --verify
+--baseline build/tu-campaign/baseline.json passes every integrity gate:
+**439 folded / 50 valid modules**, all EXE/overlay bytes, data/placement,
+canonical interfaces, convergence, source policy and exception non-growth.
+
+Historical candidate (superseded membership interpretation):
 Zero-gap link-order run of six `ovl_11` functions, no unrelated code between
 them: 8011DD48 (0x48) → 8011DD90 (0xE0) → 8011DE70 (0x4C) → 8011DEBC (0x48)
 → 8011DF04 (0x48) → 8011DF4C. The middle member calls the two that follow it

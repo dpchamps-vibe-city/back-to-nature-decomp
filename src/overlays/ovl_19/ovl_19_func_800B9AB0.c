@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "ovl19_actor_controls.h"
 
 /* The overlay's symbol for Rand, whose matched definition returns u32. */
 u32 Rand(s32 arg0);
 s32 ovl_19_func_800BA564(s16 *arg0, s16 *arg1);
 s32 ovl_19_func_800BA5B4(s16 *arg0, s16 *arg1);
 s32 ovl_19_func_800BA65C(Ovl19Func800BAC40Arg *arg0);
-void ovl_19_func_800BAC40(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800BA0A0(Recon_ovl_19_func_800BA0A0_A0View *arg0);
 
 void ovl_19_func_800B9AB0(s16 *arg0) {
@@ -39,7 +39,7 @@ void ovl_19_func_800B9AB0(s16 *arg0) {
             if (sum >= limit) {
                 direction = (s16)(arg0[2] + i);
                 direction %= 4;
-                ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)arg0, arg0[1], direction, arg0[3]);
+                Ovl19SetActorControl((Ovl19Func800BAC40Arg *)arg0, arg0[1], direction, arg0[3]);
                 break;
             }
         }
@@ -48,16 +48,16 @@ void ovl_19_func_800B9AB0(s16 *arg0) {
         if (ovl_19_func_800BA5B4(arg0, other) == 0 && ovl_19_func_800BA564(arg0, other) < 201) {
             if (arg0[4] >= 240 && Rand(128) >= 111U) {
                 D_800BF4C0[0x101] = PlaySoundEffect(0x3B);
-                ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)arg0, 4, arg0[2], 30);
+                Ovl19SetActorControl((Ovl19Func800BAC40Arg *)arg0, 4, arg0[2], 30);
             } else {
-                ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)arg0, 2, arg0[2], arg0[3]);
+                Ovl19SetActorControl((Ovl19Func800BAC40Arg *)arg0, 2, arg0[2], arg0[3]);
             }
         } else if (ovl_19_func_800BA65C((Ovl19Func800BAC40Arg *)arg0) == 1) {
             if ((s32)Rand(128) < arg0[4]) {
                 direction = (s16)(arg0[2] + ovl_19_func_800BA5B4(arg0, other));
-                ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)arg0, 2, (s16)(direction % 4), arg0[3]);
+                Ovl19SetActorControl((Ovl19Func800BAC40Arg *)arg0, 2, (s16)(direction % 4), arg0[3]);
             } else if (Rand(128) < 111U) {
-                ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)arg0, 2, arg0[2], arg0[3]);
+                Ovl19SetActorControl((Ovl19Func800BAC40Arg *)arg0, 2, arg0[2], arg0[3]);
             }
         }
         if (arg0[1] == 3) {

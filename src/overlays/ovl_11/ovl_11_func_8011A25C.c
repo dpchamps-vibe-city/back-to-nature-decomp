@@ -1,6 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "message_window.h"
+#include "ovl11_tier_upgrade_rules.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -13,10 +14,6 @@ s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 void ovl_11_func_8011D084(s32 arg0, s32 arg1);
 void ovl_11_func_8011D0B4(void);
-s32 ovl_11_func_8011DD90(void);
-s32 ovl_11_func_8011DE70(s16 arg0);
-u16 ovl_11_func_8011DEBC(s16 arg0, s32 arg1);
-s32 ovl_11_func_8011DF04(s16 arg0);
 
 s32 ovl_11_func_8011A25C(void) {
     s32 result;
@@ -33,8 +30,8 @@ s32 ovl_11_func_8011A25C(void) {
     ((Ovl11A25CState *)D_8006C838)->field_522C = 0;
     ((Ovl11A25CState *)D_8006C838)->field_5230 = 0;
     ((Ovl11A25CState *)D_8006C838)->field_5234 |= 0x800000;
-    row = (s16)ovl_11_func_8011DF04(item);
-    price = ovl_11_func_8011DEBC(row, 1);
+    row = (s16)Ovl11GetUpgradeTierForItem(item);
+    price = Ovl11GetUpgradeValue(row, 1);
     switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(3, 0);
@@ -56,14 +53,14 @@ s32 ovl_11_func_8011A25C(void) {
         }
         break;
     case 3:
-        message = ovl_11_func_8011DD90();
+        message = Ovl11CheckTierUpgrade();
         if (message != 0) {
             RequestMessageWindow(2, D_801282D0[message - 1]);
             ovl_11_func_8011D084(1, 4);
         } else {
             gOvl11InteractionDrawMode = 2;
             SetMessagePortraitEnabled(0);
-            RequestMessageWindow(2, ovl_11_func_8011DE70(ovl_11_func_8011DF04(item)) + 0x9A);
+            RequestMessageWindow(2, Ovl11GetItemTier(Ovl11GetUpgradeTierForItem(item)) + 0x9A);
             ovl_11_func_8011D084(2, 5);
         }
         break;
@@ -114,7 +111,7 @@ s32 ovl_11_func_8011A25C(void) {
         gOvl11InteractionDrawMode = 0;
     case 12:
         ovl_11_func_800F2354(-price, 1);
-        index = ovl_11_func_8011DF04(item) + 1;
+        index = Ovl11GetUpgradeTierForItem(item) + 1;
         row = (group - 1) / 5 * 4;
         row += (group - 1) / 5;
         row += index;
