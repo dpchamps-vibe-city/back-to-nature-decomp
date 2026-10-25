@@ -22,8 +22,9 @@
 /* Frame-loop service: advance counters, then link a 320x240 gray quad and draw
  * mode packet if needed. Feedback temporarily disables background clears and
  * enables drawing in the displayed area; completion restores those flags and
- * clears the 320x480 framebuffer. The external draw latch may keep a completed
- * overlay drawing. Original identity: exe:0x80012D30. */
+ * clears the 320x480 framebuffer. Enters when the effect is incomplete OR the
+ * draw latch equals 1, and sets the latch to 1 before any skip/zero-intensity
+ * return. Servicing a completed effect need not emit a quad. exe:0x80012D30. */
 void UpdateAndDrawScreenFade(void);
 
 /* Draw only, using a separate packet pair and the active context's +0xDC OT.
@@ -33,7 +34,7 @@ void UpdateAndDrawScreenFade(void);
 void DrawScreenSubtractOverlay(u32 redQ12, u32 greenQ12, u32 blueQ12);
 
 /* Completed mode-1 state: counter 0, denominator 60, blend 2, frame OT.
- * Does not clear the external draw latch. Original identity: exe:0x8001328C. */
+ * Does not clear the draw latch. Original identity: exe:0x8001328C. */
 void ResetScreenFade(void);
 
 /* Counter starts at stepCount-1 and decreases toward zero; denominator is
@@ -60,5 +61,17 @@ s32 IsScreenFadeComplete(void);
 /* 1 decreasing, 2 increasing, 0 otherwise (including feedback, not just idle).
  * This is not the completion query. Original identity: exe:0x80013400. */
 s32 GetScreenFadeRampMode(void);
+
+/* Store the raw s32 latch (no Boolean normalization). Only value 1 keeps the
+ * driver eligible after completion. Setting 0 does not stop an incomplete
+ * effect: the next service re-latches it. To stop completed-effect servicing,
+ * release the latch after completion. No counters, mode, packets or display
+ * state are changed here; reset/start routines also leave the latch intact.
+ * Original identity: exe:0x80013438. */
+void SetScreenFadeDrawLatch(s32 latchValue);
+
+/* Return the stored latch word unchanged; this is neither a completion query
+ * nor a guarantee that a quad was drawn. Original identity: exe:0x80013444. */
+s32 GetScreenFadeDrawLatch(void);
 
 #endif

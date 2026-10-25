@@ -8,12 +8,20 @@ gCurrentSceneId = 0x8005E39C; // type:s32 size:0x4
 gSceneUpdateLoopActive = 0x8005E3A0; // type:s32 size:0x4
 
 // Screen-fade state: existing GP-relative halfwords/words, not new storage.
+gScreenFadeFeedbackDispEnvPending = 0x8005E28C; // type:s32 size:0x4
 gScreenFadeMode = 0x8005E294; // type:s16 size:0x2
 gScreenFadeSkipUpdate = 0x8005E298; // type:s32 size:0x4
+gScreenFadeDrawLatch = 0x8005E29C; // type:s32 size:0x4
+gScreenFadeFeedbackPhase = 0x8005E3C8; // type:s32 size:0x4
 gScreenFadeBlendMode = 0x8005E2A0; // type:s16 size:0x2
 gScreenFadeCounter = 0x8005E3CC; // type:s16 size:0x2
 gScreenFadeDenominator = 0x8005E3CE; // type:s16 size:0x2
 gScreenFadeOtSelector = 0x8005E3D0; // type:s32 size:0x4
+// Two packet slots per effect, selected by the active render-context index.
+gScreenFadeQuadStorage = 0x8005E8E0; // size:0x30
+gScreenFadeDrawModeStorage = 0x8005E910; // size:0x18
+gScreenSubtractQuadStorage = 0x8005E930; // size:0x30
+gScreenSubtractDrawModeStorage = 0x8005E960; // size:0x18
 
 // 640x480 subtractive fade: countdown, intensity step, mode and draw skip.
 gWideScreenFadeUpdatesRemaining = 0x8005E3D4; // type:s32 size:0x4
@@ -24,7 +32,8 @@ gWideScreenFadeSkipDraw = 0x8005E3E0; // type:s32 size:0x4
 gWideScreenFadeQuadStorage = 0x8005E980; // size:0x30
 gWideScreenFadeDrawModeStorage = 0x8005E9B0; // size:0x18
 
-// Shared boot/render state, consumed absolutely by the wide-screen fade.
+// Shared boot/render state, consumed absolutely by the fade modules.
+gActiveRenderContextIndex = 0x8005E3A4; // type:s32 size:0x4
 gFrameOrderingTable = 0x8005E3B4; // size:0x4
 gActiveRenderContext = 0x8005E3C0; // size:0x4
 gRenderContexts = 0x8005E5E8; // size:0x268
@@ -76,8 +85,8 @@ _800133E8 = 0x800133E8; // type:label
 GetScreenFadeRampMode = 0x80013400; // size:0x38 type:func
 _80013428 = 0x80013428; // type:label
 _80013430 = 0x80013430; // type:label
-SetVal8005E29C = 0x80013438; // type:func
-GetVal8005E29C = 0x80013444; // type:func
+SetScreenFadeDrawLatch = 0x80013438; // type:func
+GetScreenFadeDrawLatch = 0x80013444; // type:func
 BeginWideScreenFadeFeedback = 0x80013450; // type:func
 BeginWideScreenFadeIncrease = 0x80013488; // type:func
 IsWideScreenFadeComplete = 0x800134B8; // type:func

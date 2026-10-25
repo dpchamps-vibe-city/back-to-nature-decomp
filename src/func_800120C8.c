@@ -6,7 +6,7 @@
 #include "psyq/libgs.h"
 
 /* Globals accessed GP-relatively (this TU defines them) */
-s32 D_8005E3A4;
+s32 gActiveRenderContextIndex;
 s32 D_8005E3B0;
 s32 *gFrameOrderingTable;
 s32 D_8005E3BC;
@@ -16,7 +16,7 @@ void func_800120C8(void) {
     GsSetWorkBase((PACKET *)gActiveRenderContext->packetWorkBase);
     __asm__ volatile("" ::: "memory");
     {
-        s32 temp = D_8005E3A4 * 0x3000;
+        s32 temp = gActiveRenderContextIndex * 0x3000;
         temp += 0x38E50;
         D_8005E3BC = D_8005E3B0 + temp;
     }

@@ -76,7 +76,7 @@ s32 *D_8005E384;
 s32 D_8005E388;
 s32 D_8005E398;
 s32 gCurrentSceneId;
-s32 D_8005E3A4;
+s32 gActiveRenderContextIndex;
 struct GfxObj *D_8005E3A8;
 struct GfxObj *D_8005E3AC;
 s32 *gFrameOrderingTable;
@@ -172,7 +172,7 @@ void func_80011370(void) {
     VSyncCallback((void (*)(void))&D_80011334);
     buf = (char *)&D_8005E5D8;
     gActiveRenderContext = (struct_8005E3C0 *)temp_s2;
-    D_8005E3A4 = (char *)temp_s2 != env_base;
+    gActiveRenderContextIndex = (char *)temp_s2 != env_base;
     if (gFrameOrderingTable == (s32 *)buf) {
         buf += 8;
     }

@@ -6255,9 +6255,9 @@ Member: func_80018B98 (suspended at user request, 2026-10-21 — improved
   bounded 877-partition closure and the remaining two sites. No new
   translation-unit membership claim follows from these source experiments.
 
-## Screen-fade renderer and controls — 0x80012D30–0x80013438 (confidence: medium)
+## Screen-fade renderer and controls — 0x80012D30–0x80013450 (confidence: medium)
 
-Reconstructed as `src/modules/screen_fade.c`, with eight matched functions in
+Reconstructed as `src/modules/screen_fade.c`, with ten matched functions in
 original order. This is a coherent module hypothesis, not a recovered original
 file boundary. The driver, four initializers and two queries share the same
 GP-relative mode/counter cluster. More than adjacency supports it: the
@@ -6287,6 +6287,8 @@ Members and canonical identities (all EXE addresses):
   formerly func_80013394.
 - 80013400 GetScreenFadeRampMode — returns 1/2, otherwise 0 even for feedback;
   formerly func_80013400. The 80013430 label remains its internal epilogue.
+- 80013438 SetScreenFadeDrawLatch — raw s32 store, formerly SetVal8005E29C.
+- 80013444 GetScreenFadeDrawLatch — raw s32 query, formerly GetVal8005E29C.
 
 The earlier rising/waiting/falling description was incorrect: modes 1 and 2
 **decrease/increase the overlay intensity**. Whether that means fade-in/out
@@ -6297,8 +6299,17 @@ D_8005E3D0 chooses an OT, not a division fast path. The six state names now are
 `gScreenFadeDenominator` (8005E3CE), and `gScreenFadeOtSelector` (8005E3D0).
 Their original halfword/word widths, addresses and tentative-definition
 ownership are unchanged; no new struct, static linkage or storage was added.
-The wider draw-latch/display handshake and cadence symbols retain their
-address names. Feedback disables background clearing, enables drawing in the
+The extension names the latch word `gScreenFadeDrawLatch` (8005E29C), the
+one-shot display-environment request `gScreenFadeFeedbackDispEnvPending`
+(8005E28C), and the retained half-rate phase `gScreenFadeFeedbackPhase`
+(8005E3C8). The two packet pairs are `gScreenFadeQuadStorage` /
+`gScreenFadeDrawModeStorage` and `gScreenSubtractQuadStorage` /
+`gScreenSubtractDrawModeStorage`, retaining their existing 0x18/0xC-stride
+views. `gActiveRenderContextIndex` (8005E3A4) is corroborated by 80011C24 and
+8001B118 selecting context 0/1; canonicalization carries that shared name to
+boot/render code and both overlay consumers without adding them to this TU.
+The remaining display/cadence controls are outside this reconstruction.
+Feedback disables background clearing, enables drawing in the
 displayed area, and restores those flags and clears both screen buffers when
 its counter reaches the target. Its query's exact target+3 equality is kept;
 the normal driver also completes by switching to idle, not by rewriting that
@@ -6312,20 +6323,35 @@ callers, including overlays, and contextExport regenerates the function
 contexts. Module locals now describe packet/color/counter roles. SDK packet
 macros, signed rounding and source control flow retain their original behavior.
 
-Boundaries: 80012AB0 and the 80012CB4 VSync-time predicate have no shared fade
-state and stay outside. The 80013438/80013444 draw-latch accessors have broader
-external consumers and stay outside this reconstruction, as do the following
-mode predicates and display/UI helpers. No boundary is claimed solely from a
-flag or RAM adjacency; the larger game-state/render family remains a hypothesis.
+The extension includes the draw-latch pair because both define the exact
+GP-relative word the driver reads, and the driver calls the setter before its
+skip test. The earlier assertion of broader external accessor consumers is
+not supported by the current active-source scan: the setter's only caller is
+the driver, and no retail caller of the getter was found. External linkage is
+nevertheless retained. Exactly latch == 1 bypasses completion gating; all
+entered services set it to 1, even a skipped update. Clearing it cannot stop
+an incomplete effect; zero intensity may still emit nothing. Reset/start calls
+do not release it. The header now documents the raw, non-normalized value and
+release-after-completion protocol, not an invented Boolean enable contract.
 
-Flags and verification: the checked mechanical fold first matched **all eight
-members at baseline -O2/-G8**, and the linked EXE again matched after naming,
-header publication and local readability edits. No member has a flag override;
-no override or source-policy exception was added or retired. Final acceptance
-uses `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`, covering
-all executable/overlay bytes, canonical names, published interfaces, source
-policy, ownership and configuration convergence. Shared data layouts and all
-external linkages are preserved.
+Boundaries: 80012AB0 and the 80012CB4 VSync-time predicate have no shared fade
+state and stay outside. The following wide_screen_fade has its own state,
+640x480 packets and timing contract; display/UI helpers also remain outside.
+No boundary is claimed solely from a flag or RAM adjacency; the larger
+render-family TU extent remains a hypothesis. The extension introduces no
+static linkage, storage, macro, layout, signature or declaration conflict;
+identical tentative latch definitions are folded once, not made extern-only.
+
+Flags and verification: the checked mechanical extension first matched **all
+ten members at baseline -O2/-G8** and the linked EXE. Naming, header publication
+and documentation preserve the existing control flow and arithmetic. No member
+has a flag override; no override or source-policy exception was added or retired.
+After regenerating globals and function context, the full campaign gate
+(`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`) passes:
+**37 folded functions, up from 35; all ten module TUs valid**, no regressions or
+exception growth, and byte identity across the EXE and all 13 overlays.
+Canonical names, published interfaces, source policy, ownership and config
+convergence pass. Shared data layouts and all external linkages are preserved.
 
 ## `exe` sprite-load wrapper cluster — 0x800171CC–0x80017284 (confidence: low)
 

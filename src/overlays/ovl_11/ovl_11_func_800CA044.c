@@ -40,7 +40,7 @@ void ovl_11_func_800CA044(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32
             }
         }
     }
-    func_80016C08((s32 *) temp_a3, (POLY_FT4 *) gActiveRenderContext->field_118, (SpriteSourceData *) ((u8 *) arg0 + 0x260), *(s16 *) ((u8 *) arg2 + 0), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), 0x40U, D_8005E3BC, (s32) ((void *) ((u8 *) &D_80122F9C + (D_8005E3A4 * 0x78))), (s16) (s32) var_t2, (s16) (s32) var_t4, (s16) (s32) var_t5);
+    func_80016C08((s32 *) temp_a3, (POLY_FT4 *) gActiveRenderContext->field_118, (SpriteSourceData *) ((u8 *) arg0 + 0x260), *(s16 *) ((u8 *) arg2 + 0), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), 0x40U, D_8005E3BC, (s32) ((void *) ((u8 *) &D_80122F9C + (gActiveRenderContextIndex * 0x78))), (s16) (s32) var_t2, (s16) (s32) var_t4, (s16) (s32) var_t5);
     if (!(((struct struct_8006C838_view *) D_8006C838)->field_0C & 0x08000000)) {
         func_800158E4((SpriteSourceData *) ((u8 *) D_8006C838 + 0x5428));
     }

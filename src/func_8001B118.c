@@ -13,7 +13,7 @@ s32 D_8005E2CC;
 s32 D_8005E2D0;
 
 /* Absolute lui/lw in target -> extern only (defined in func_80011370.c). */
-extern s32 D_8005E3A4;
+extern s32 gActiveRenderContextIndex;
 
 void func_8001B118(void) {
     char *ot;
@@ -28,7 +28,7 @@ void func_8001B118(void) {
         D_8005E2D0 = 1;
         DrawSync(0);
         func_800129F4();
-        DrawOTag((unsigned long *)(ot + (D_8005E3A4 << 7) + 0x7C));
+        DrawOTag((unsigned long *)(ot + (gActiveRenderContextIndex << 7) + 0x7C));
 
         env_base = (struct_8005E3C0 *)&gRenderContexts;
         env = env_base;
@@ -36,13 +36,13 @@ void func_8001B118(void) {
             env = (struct_8005E3C0 *)((char *)env_base + 0x134);
         }
         gActiveRenderContext = env;
-        D_8005E3A4 = (env != env_base);
+        gActiveRenderContextIndex = (env != env_base);
         PutDispEnv((void *)((char *)env + 0x5C));
         PutDrawEnv((void *)gActiveRenderContext);
 
-        page = ot + (D_8005E3A4 << 7);
-        sp18 = (D_8005E3A4 * 0x280) + 0x100 + ot;
-        sp1C = (D_8005E3A4 * 0x180) + 0x600 + ot;
+        page = ot + (gActiveRenderContextIndex << 7);
+        sp18 = (gActiveRenderContextIndex * 0x280) + 0x100 + ot;
+        sp1C = (gActiveRenderContextIndex * 0x180) + 0x600 + ot;
         ClearOTagR((unsigned long *)page, 0x20);
         func_80015D1C((s32)page, (s32)&sp18, (s32)&sp1C,
                       (SpriteSourceData *)&D_8005F2B8, 0xA0, 0x78);

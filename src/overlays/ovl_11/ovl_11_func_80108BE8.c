@@ -22,6 +22,6 @@ void ovl_11_func_80108BE8(u8 *arg0) {
             func_8001585C((ObjectState *)(arg0 + 0x78), (u8)subAnimation);
         }
         SetVal8005E43C(0);
-        ovl_11_func_800D0198(arg0, (s32)(arg0 + 0xE0 + D_8005E3A4 * 8), 0x2800);
+        ovl_11_func_800D0198(arg0, (s32)(arg0 + 0xE0 + gActiveRenderContextIndex * 8), 0x2800);
     }
 }

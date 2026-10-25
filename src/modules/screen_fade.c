@@ -6,7 +6,9 @@
  * Ramp modes scale a gray overlay by counter/denominator. Feedback mode instead
  * subtracts a fixed gray step while retaining the previous framebuffer image.
  * The frame loop calls UpdateAndDrawScreenFade; overlay code starts effects
- * and polls IsScreenFadeComplete. See screen_fade.h for timing and input limits.
+ * and polls IsScreenFadeComplete. The shared draw latch keeps the driver
+ * eligible after completion; it is not an enable/disable switch for an active
+ * effect. See screen_fade.h for timing, latch semantics and input limits.
  */
 
 #include "common.h"
@@ -16,19 +18,18 @@
 #include "psyq/libgpu.h"
 #include "update_timing.h"
 
-void SetVal8005E29C(s32 arg0);
 void SetVal8005E27C(s32 arg0);
 void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6);
 void SetVal8005E278(s32 arg0);
 
 /* Tentative definitions retain the original GP-relative accesses. These names
  * label existing storage; no state is made static or moved into a new struct. */
-s32 D_8005E28C;                  /* Install feedback display environment once. */
+s32 gScreenFadeFeedbackDispEnvPending;
 s16 gScreenFadeMode;             /* 0 idle, 1 decrease, 2 increase, 3 feedback. */
 s32 gScreenFadeSkipUpdate;
-s32 D_8005E29C;                  /* External latch allows continued drawing. */
+s32 gScreenFadeDrawLatch;        /* Exactly 1 keeps completed effects serviced. */
 s16 gScreenFadeBlendMode;        /* GPU ABR bits, used only by ramp modes. */
-s32 D_8005E3C8;                  /* Alternating 0/1 feedback pacing phase. */
+s32 gScreenFadeFeedbackPhase;    /* Retained 0/1 phase for half-rate feedback. */
 s16 gScreenFadeCounter;
 s16 gScreenFadeDenominator;
 s32 gScreenFadeOtSelector;
@@ -44,9 +45,10 @@ void UpdateAndDrawScreenFade(void) {
     s32 product;
 
     intensityStepQ12 = 0;
-    if (IsScreenFadeComplete() != 1 || D_8005E29C == 1) {
-        SetVal8005E29C(1);
-        D_8005E3C8 = (u32)D_8005E3C8 < 1;
+    if (IsScreenFadeComplete() != 1 || gScreenFadeDrawLatch == 1) {
+        /* Latch even a skipped update; completion alone does not release it. */
+        SetScreenFadeDrawLatch(1);
+        gScreenFadeFeedbackPhase = (u32)gScreenFadeFeedbackPhase < 1;
         if (gScreenFadeSkipUpdate == 1) {
             gScreenFadeSkipUpdate = 0;
             return;
@@ -61,7 +63,7 @@ void UpdateAndDrawScreenFade(void) {
             SetVal8005E27C(0);
             if (gScreenFadeDenominator > gScreenFadeCounter) {
                 if (GetUpdateTimingMode() == 0)
-                    gScreenFadeCounter = gScreenFadeCounter + D_8005E3C8;
+                    gScreenFadeCounter = gScreenFadeCounter + gScreenFadeFeedbackPhase;
                 else
                     gScreenFadeCounter = gScreenFadeCounter + 1;
             }
@@ -115,12 +117,12 @@ emit_level:
             ot = (s32 *)(gActiveRenderContext->field_D8 + 0x14);
         if (intensity == 0)
             return;
-        fadeQuad = (POLY_F4 *)&D_8005E8E0[D_8005E3A4];
-        drawMode = (DR_MODE *)&D_8005E910[D_8005E3A4];
+        fadeQuad = (POLY_F4 *)&gScreenFadeQuadStorage[gActiveRenderContextIndex];
+        drawMode = (DR_MODE *)&gScreenFadeDrawModeStorage[gActiveRenderContextIndex];
         if (gScreenFadeMode == 3) {
-            if (D_8005E28C == 1) {
-                D_8005E28C = 0;
-                PutDispEnv((DISPENV *)&gRenderDisplayEnvView[D_8005E3A4]);
+            if (gScreenFadeFeedbackDispEnvPending == 1) {
+                gScreenFadeFeedbackDispEnvPending = 0;
+                PutDispEnv((DISPENV *)&gRenderDisplayEnvView[gActiveRenderContextIndex]);
             }
             /* Preserve the framebuffer instead of clearing it between steps;
              * enable drawing into the displayed area for the feedback effect. */
@@ -151,8 +153,8 @@ void DrawScreenSubtractOverlay(u32 redQ12, u32 greenQ12, u32 blueQ12) {
     POLY_F4 *poly;
     DR_MODE *dr;
 
-    poly = (POLY_F4 *)&D_8005E930[D_8005E3A4];
-    dr = (DR_MODE *)&D_8005E960[D_8005E3A4];
+    poly = (POLY_F4 *)&gScreenSubtractQuadStorage[gActiveRenderContextIndex];
+    dr = (DR_MODE *)&gScreenSubtractDrawModeStorage[gActiveRenderContextIndex];
 
     setPolyF4(poly);
     setRGB0(poly, redQ12 >> 12, greenQ12 >> 12, blueQ12 >> 12);
@@ -225,7 +227,7 @@ void BeginScreenFadeFeedback(s16 stepCount) {
     }
     denominator = stepCount + 1;
     gScreenFadeDenominator = denominator;
-    D_8005E28C = 1;
+    gScreenFadeFeedbackDispEnvPending = 1;
     gScreenFadeSkipUpdate = 1;
     SetVal8005E278(0);
     SetVal8005E27C(0);
@@ -258,4 +260,12 @@ s32 GetScreenFadeRampMode(void) {
     default:
         return 0;
     }
+}
+
+void SetScreenFadeDrawLatch(s32 latchValue) {
+    gScreenFadeDrawLatch = latchValue;
+}
+
+s32 GetScreenFadeDrawLatch(void) {
+    return gScreenFadeDrawLatch;
 }

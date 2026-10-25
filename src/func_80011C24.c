@@ -14,7 +14,7 @@ s32 D_8005E388;
 s32 D_8005E38C;
 s32 D_8005E390;
 s32 gSceneUpdateLoopActive;
-s32 D_8005E3A4;
+s32 gActiveRenderContextIndex;
 s32 *gFrameOrderingTable;
 struct_8005E3C0 *gActiveRenderContext;
 
@@ -70,7 +70,7 @@ void func_80011C24(void) {
                     scene_ptr += 0x134;
                 }
                 gActiveRenderContext = (struct_8005E3C0 *)scene_ptr;
-                D_8005E3A4 = (s32)((s32)scene_ptr != saved);
+                gActiveRenderContextIndex = (s32)((s32)scene_ptr != saved);
                 toggle_ptr = (s32 *)&D_8005E5D8;
                 if (gFrameOrderingTable == &D_8005E5D8) {
                     toggle_ptr = (s32 *)((char *)&D_8005E5D8 + 8);

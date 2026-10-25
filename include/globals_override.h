@@ -21,6 +21,12 @@ extern s32 gCurrentSceneId;
 /* exe:80011C24 runs callbacks while this is 1; 80011EF0 clears it to exit. */
 extern s32 gSceneUpdateLoopActive;
 
+/* exe:80013328 requests a one-shot PutDispEnv; 80012D30 consumes it. */
+extern s32 gScreenFadeFeedbackDispEnvPending;
+/* exe:80013438/80013444 store/query this word; 80012D30 latches and tests 1. */
+extern s32 gScreenFadeDrawLatch;
+/* exe:80012D30 toggles this phase, used for half-rate feedback increments. */
+extern s32 gScreenFadeFeedbackPhase;
 /* exe:80012D30/8001328C-80013400 share these GP-relative fade controls. */
 extern s16 gScreenFadeMode;          /* 8005E294: mode 0/1/2/3. */
 extern s32 gScreenFadeSkipUpdate;    /* 8005E298: skip one driver call. */
@@ -2835,16 +2841,15 @@ typedef struct {
 
 extern env_struct_0x134 gRenderContexts[2];
 
-/* D_8005E644 — array of 0x134-stride render contexts (UpdateAndDrawScreenFade).
- * Not owned by screen_fade (absolute lui/addiu base in target); the element
- * stride 0x134 lets &D_8005E644[idx] produce the target's idx*0x134 address
- * for PutDispEnv. D_8005E3A4 is owned elsewhere (func_80011370 /
- * func_800120C8) and read absolutely here. */
+/* 8005E644: interior DISPENV view with the render contexts' 0x134 stride.
+ * Not owned by screen_fade (absolute lui/addiu base in target). */
 extern env_struct_0x134 gRenderDisplayEnvView[];
-extern s32 D_8005E3A4;
+/* 80011C24/8001B118 select context 0/1 and store its index at 8005E3A4.
+ * Owned by boot/render code, read absolutely by screen_fade. */
+extern s32 gActiveRenderContextIndex;
 
-/* D_8005E8E0 / D_8005E910 — packet arrays for UpdateAndDrawScreenFade,
- * indexed by D_8005E3A4.
+/* 8005E8E0 / 8005E910: packet arrays for UpdateAndDrawScreenFade,
+ * indexed by gActiveRenderContextIndex.
  * Element strides 0x18 and 0xC. Declared as sized struct arrays so
  * get_inner_reference builds the element address base-first (the target's
  * lui(base) ... addu base+offset order); the .c casts elements to POLY_F4* /
@@ -2855,15 +2860,15 @@ typedef struct {
 typedef struct {
     char pad[0x0C];
 } packet_0x0C;
-extern packet_0x18 D_8005E8E0[];
-extern packet_0x0C D_8005E910[];
+extern packet_0x18 gScreenFadeQuadStorage[];
+extern packet_0x0C gScreenFadeDrawModeStorage[];
 
-/* D_8005E930 / D_8005E960 — packet arrays indexed by D_8005E3A4
- * (DrawScreenSubtractOverlay). Same shape as the D_8005E8E0 / D_8005E910 pair:
+/* 8005E930 / 8005E960: DrawScreenSubtractOverlay packet arrays indexed by
+ * gActiveRenderContextIndex. Same shape as the fade packet pair:
  * element strides 0x18 and 0xC; absolute-addressed (lui/addiu base in
  * the target; this TU does not define either symbol). */
-extern packet_0x18 D_8005E930[];
-extern packet_0x0C D_8005E960[];
+extern packet_0x18 gScreenSubtractQuadStorage[];
+extern packet_0x0C gScreenSubtractDrawModeStorage[];
 
 /* D_8005E5D8 — pointer toggled between two buffer bases (func_80011370).
  * Target uses absolute lui/lw addressing. Array size forces >8 bytes. */
