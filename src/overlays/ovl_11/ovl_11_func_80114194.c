@@ -14,7 +14,7 @@ s32 ovl_11_func_80114194(void) {
 
     ovl_11_func_80111F10();
     flags = D_800719F8;
-    p = D_8012D548;
+    p = gOvl11PrimarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p);
     *(s8 *) (p + 0x5A) = 0xD;
     *(s8 *) (p + 0x5B) = 0xD;
@@ -36,7 +36,7 @@ s32 ovl_11_func_80114194(void) {
     *c = 1;
     *b = 0xE0;
 
-    p2 = D_8012D5A8;
+    p2 = gOvl11SecondarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p2);
     *(s8 *) (p2 + 0x5A) = 0xD;
     *(s8 *) (p2 + 0x5B) = 0x14;
@@ -74,6 +74,6 @@ s32 ovl_11_func_80114194(void) {
     *a = 0x9E;
     *c = 0;
     *b = 0xE4;
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     return 1;
 }

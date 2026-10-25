@@ -49,13 +49,13 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2) {
     case 3:
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        if (D_8012D52C == 7) {
-            D_8012D52C = state;
+        if (gOvl11InteractionDrawMode == 7) {
+            gOvl11InteractionDrawMode = state;
             if (RequestMessageWindow(2, 0x5F) == 0) {
                 ovl_11_func_8011D098(2, 4, arg1);
             }
         } else {
-            D_8012D52C = state;
+            gOvl11InteractionDrawMode = state;
             if (RequestMessageWindow(2, 0x46) == 0) {
                 ovl_11_func_8011D098(2, 4, arg1);
             }

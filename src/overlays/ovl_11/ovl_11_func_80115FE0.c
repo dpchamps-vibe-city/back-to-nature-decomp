@@ -26,19 +26,19 @@ s32 ovl_11_func_80115FE0(void) {
     first.unk8 = 2;
     first.unkA = 0xDE;
     first.unk10 = 4;
-    first.unk0 = D_8012D548;
+    first.unk0 = gOvl11PrimarySelectionRecord;
     second.unk4 = 2;
     second.unk6 = 0xE6;
     second.unk8 = 2;
     second.unkA = 0xFC;
     second.unk10 = 6;
-    second.unk0 = D_8012D5A8;
-    price = ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)D_8012D5A8));
+    second.unk0 = gOvl11SecondarySelectionRecord;
+    price = ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)gOvl11SecondarySelectionRecord));
     result = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(2, 0);
         break;
@@ -52,14 +52,14 @@ s32 ovl_11_func_80115FE0(void) {
     case 6:
     case 7:
     case 8:
-        switch (ovl_11_func_8011B840(&D_8012D524, 2, first)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 2, first)) {
         case 0:
             break;
         case 3:
             ovl_11_func_8011D084(0x1A, 0);
             break;
         case 1:
-            switch (((StructD548 *)D_8012D548)->index) {
+            switch (((StructD548 *)gOvl11PrimarySelectionRecord)->index) {
             case 0:
                 SetMessagePortraitEnabled(0);
                 RequestMessageWindow(2, 0xE5);
@@ -130,7 +130,7 @@ s32 ovl_11_func_80115FE0(void) {
     case 20:
     case 21:
     case 22:
-        switch (ovl_11_func_8011B840(&D_8012D524, 0x10, second)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 0x10, second)) {
         case 0:
             break;
         case 3:
@@ -171,7 +171,7 @@ s32 ovl_11_func_80115FE0(void) {
         break;
     case 27:
     case 28:
-        if (ovl_11_func_8011B6C4(&D_8012D524, 27, ((StructD548 *)D_8012D5A8)->data[((StructD548 *)D_8012D5A8)->index])) {
+        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 27, ((StructD548 *)gOvl11SecondarySelectionRecord)->data[((StructD548 *)gOvl11SecondarySelectionRecord)->index])) {
             ovl_11_func_8011D084(26, 0);
         }
         break;

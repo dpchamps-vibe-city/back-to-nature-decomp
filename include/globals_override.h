@@ -432,7 +432,8 @@ extern s16 D_80128294;
 extern u8 D_801281F0[];
 
 /* ovl_11 800F77F0 uses lh for this state threshold and sh for updates. */
-extern s16 D_80126E2C;
+/* 800F77F0: first sprite ID plus 0x400 while a batch read is pending. */
+extern s16 gOvl11TextureStreamCursor;
 
 /* ovl_11 80116878 loads this word with lw for a signed threshold comparison. */
 extern s32 D_80071A60;
@@ -2573,12 +2574,14 @@ typedef struct {
     u8 pad_1F;
     u16 id;
 } Ovl11TextureRecord;
-extern Ovl11TextureRecord D_80129648_textures[] __asm__("D_80129648");
+/* Shared 72-record cache; resetters and stream/draw users share this view. */
+extern Ovl11TextureRecord gOvl11TextureCache[] __asm__("gOvl11TextureCacheStorage");
 /* 800F9210 passes this four-halfword scratch rectangle to the image routines. */
 extern s16 D_80129638[4];
-/* 800F7230 reads lh counts, lhu overflow IDs, and writes stride-0x22 piece fields. */
-extern s16 D_80126F74[];
-extern u16 D_80126E30[];
+/* 800F7230 reads four lh counts and eight lhu overflow IDs. The fourth
+ * retail count is 0x0D36; only request modes 0..2 have bounded list storage. */
+extern s16 gOvl11TextureRequestCounts[];
+extern u16 gOvl11ExtraTextureRequests[];
 extern u16 D_8012965C[][17];
 extern u16 D_8012965E[][17];
 /* 800F7230 reads three stride-six request lists at +450A/+468A/+480A. */
@@ -4416,7 +4419,8 @@ extern u8 D_8012CE58[];
 
 extern u8 D_8012CEB8[];
 
-extern u8 D_8012D548[];
+/* Shared 0x60-byte selection record; panels reuse its parallel arrays. */
+extern u8 gOvl11PrimarySelectionRecord[];
 /* 80115308 copies nine halfwords from the record at D6E8+4. */
 typedef struct {
     s32 header;
@@ -4459,7 +4463,7 @@ extern u8 D_80051D34[];
 
 /* D_80128264 - ovl_11 s32 table indexed by the ovl_11_func_80117F70
  * sub-state (lw at base + index*4). Absolute-addressed. */
-extern s32 D_80128264[];
+extern s32 gOvl11ResourceOptionTextOffsets[];
 
 /* 80116980 reads/writes these two-byte menu indices with lh/lhu/sh. */
 extern s16 D_8012D518;
@@ -4490,12 +4494,12 @@ typedef struct {
     /* 0x08 */ s16 unk8;
     /* 0x0A */ s16 unkA;
 } Ovl11D8012D538;
-extern Ovl11D8012D538 D_8012D538;
+extern Ovl11D8012D538 gOvl11QuantityPrompt;
 
 /* D_8012D5A8 - 0x60-byte ovl_11 record of the D_8012D548 family (s16 fields
  * at +0x28/+0x46/+0x5C and s8 at +0x3C), reset through
  * ovl_11_func_8011D400 by ovl_11_func_80117F70. Absolute-addressed. */
-extern u8 D_8012D5A8[];
+extern u8 gOvl11SecondarySelectionRecord[];
 
 /* D_8012D7D8 - 0x18-byte ovl_11 state block initialized by
  * ovl_11_func_80117F70 (pointer at +0, six s16 fields at +4..+E, s32 at
@@ -4510,28 +4514,29 @@ typedef struct {
     /* 0x0E */ s16 unkE;
     /* 0x10 */ s32 unk10;
 } Ovl11D8012D7D8;
-extern Ovl11D8012D7D8 D_8012D7D8;
+extern Ovl11D8012D7D8 gOvl11ResourcePanelDescriptor;
 
 /* D_8012D7CC / D_8012D7D0 / D_8012D7D4 - ovl_11 s32 state words written by
  * ovl_11_func_80117F70. Absolute-addressed. */
-extern s32 D_8012D7CC;
-extern s32 D_8012D7D0;
-extern s32 D_8012D7D4;
+extern s32 gOvl11ResourcePanelState;
+extern s32 gOvl11ResourcePanelResumeState;
+extern s32 gOvl11ResourceOptionIndex;
 /* 80119008 stores the selected ID with sh and reads it with lh/lhu. */
 extern s16 D_8012D51C;
 /* 801180F0 passes this state word by address and clears the adjacent word. */
-extern s32 D_8012D524;
-extern s32 D_8012D528;
+extern s32 gOvl11InteractionStep;
+extern s32 gOvl11InteractionResumeStep;
 /* 8011C6CC reads the mode with lw and stores the selected count with sh. */
 extern s32 D_8012D520;
 /* 80118A68 indexes this stride-4 no-argument handler table; matched entries return s32. */
 extern s32 (*D_800BB2BC[])(void);
-extern s16 D_8012D540;
+/* Independently addressed signed halfword at QuantityPrompt +8. */
+extern s16 gOvl11QuantityPromptCount;
 /* 801180F0 reads signed halfword pairs with a four-byte table stride. */
-extern s16 D_80128278[][2];
+extern s16 gOvl11ResourceOptionCosts[][2]; /* money, resource units */
 /* 801180F0 stores the next message id and next state as signed words. */
-extern s32 D_8012828C;
-extern s32 D_80128290;
+extern s32 gOvl11ResourceResultMessage;
+extern s32 gOvl11ResourceResultResumeState;
 /* 801180F0 reads and updates the unsigned halfword at work-area +0x4500. */
 typedef struct {
     u8 pad0[0x4500];
@@ -4551,21 +4556,21 @@ typedef struct {
     /* 0x0E */ s16 unkE; /* 8011977C initializes this message pair with sh. */
     /* 0x10 */ s32 unk10;
 } Ovl11D8012D7B8;
-extern Ovl11D8012D7B8 D_8012D7B8;
+extern Ovl11D8012D7B8 gOvl11CatalogPanelDescriptor;
 
 /* D_8012D7A8 - 8-entry s16 table of ovl_11 record indices written by
  * ovl_11_func_80117A40 and read by ovl_11_func_80117F14/80117BB4. */
-extern s16 D_8012D7A8[];
+extern s16 gOvl11CatalogPanelMessages[];
 
 /* D_8012D79C - s32 ovl_11 state/case word written by ovl_11_func_80117A40
  * and read by ovl_11_func_80117BB4. Address taken (lui/addiu). */
-extern s32 D_8012D79C;
+extern s32 gOvl11CatalogPanelState;
 /* 80117BB4 stores a selected id with sw, then reloads it with lw/lhu. */
-extern s32 D_80128260;
+extern s32 gOvl11CatalogSelectedId;
 
 /* D_8012D7A0 - s32 ovl_11 state word written by ovl_11_func_80117A40 and
  * read by ovl_11_func_80117BB4. */
-extern s32 D_8012D7A0;
+extern s32 gOvl11CatalogPanelResumeState;
 
 /* D_80051C36 - base of a table in the D_80051xxx region; the s32 read from
  * D_80054BC0[0] is added to its address (plus offsets 0x12/0x2C/0x38/-0x50)
@@ -4633,7 +4638,7 @@ extern s32 D_80051A90;
 
 /* D_8012D52C - container-wide s32 busy/finished state flag of ovl_11, reset
  * by the 0x80114184 reset-stub family (see notes/file-groupings.md). */
-extern s32 D_8012D52C;
+extern s32 gOvl11InteractionDrawMode;
 /* ovl_11 801173B8 dispatches and stores this signed word state. */
 extern s32 D_8012D794;
 /* ovl_11 801173B8 loads this signed id, comparing it with -1. */

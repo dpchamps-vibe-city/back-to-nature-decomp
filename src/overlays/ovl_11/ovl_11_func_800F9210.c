@@ -14,7 +14,7 @@ s32 ovl_11_func_800D67F4(s16 arg0);
 #define imageRect (*(RECT *)D_80129638)
 #define slots (((Ovl11FarSlotTableView *)&D_8007AFF0)->slots)
 #define records (((Ovl11FarRecordTableView *)&D_8007AFF0)->records)
-#define cache D_80129648_textures
+#define cache gOvl11TextureCache
 #define cacheImage(i) (*(Ovl11A04B8Entry *)&cache[i])
 
 void ovl_11_func_800F9210(s32 arg0, s32 arg1, s32 arg2) {

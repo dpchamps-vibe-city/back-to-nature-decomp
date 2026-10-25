@@ -25,7 +25,7 @@ s32 ovl_11_func_8011D734(Ovl11D548Arg *arg0) {
             var_s1 = 1;
             PlaySoundEffect(0);
         } else if (temp_v1 & 0x10) {
-            if (D_8012D52C != 7) {
+            if (gOvl11InteractionDrawMode != 7) {
                 var_s1 = 2;
                 PlaySoundEffect(0);
             }

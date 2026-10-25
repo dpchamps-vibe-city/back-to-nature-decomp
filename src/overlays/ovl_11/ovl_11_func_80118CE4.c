@@ -19,14 +19,14 @@ s32 ovl_11_func_80118CE4(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(9, 0);
         ovl_11_func_800F45A4(0x84, 0);
         break;
     case 9:
     case 10:
-        if (ovl_11_func_8011B6C4(&D_8012D524, 9, 0x6C)) {
+        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 9, 0x6C)) {
             ovl_11_func_8011D084(1, 0);
         }
         break;
@@ -56,13 +56,13 @@ s32 ovl_11_func_80118CE4(void) {
         ovl_11_func_8011D084(3, 5);
         break;
     case 5:
-        D_8012D52C = 1;
-        switch (ovl_11_func_8011CF40(999, (u16 *)&D_8012D538.unk8)) {
+        gOvl11InteractionDrawMode = 1;
+        switch (ovl_11_func_8011CF40(999, (u16 *)&gOvl11QuantityPrompt.unk8)) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D06C(D_8012D538.unk8 * D_8012D538.unkA) == 1) {
-                if (D_8012D538.unk8 + ((Ovl11FB908State *)D_8006C838)->field_4506 >= 1000) {
+            if (ovl_11_func_8011D06C(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA) == 1) {
+                if (gOvl11QuantityPrompt.unk8 + ((Ovl11FB908State *)D_8006C838)->field_4506 >= 1000) {
                     CloseMessageWindow();
                     RequestMessageWindow(2, 0xD2);
                     ovl_11_func_8011D084(2, 4);
@@ -90,8 +90,8 @@ s32 ovl_11_func_80118CE4(void) {
         }
         break;
     case 6:
-        ovl_11_func_800F3A44(1, (u16)D_8012D538.unk8);
-        ovl_11_func_800F2354(-(D_8012D538.unk8 * D_8012D538.unkA), 1);
+        ovl_11_func_800F3A44(1, (u16)gOvl11QuantityPrompt.unk8);
+        ovl_11_func_800F2354(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
     case 7:
         ovl_11_func_800F45A4(0x84, 1);
         ovl_11_func_800E6EE0(0x6C, 1, 0, 1);

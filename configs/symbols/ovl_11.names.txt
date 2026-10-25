@@ -1,4 +1,48 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
+
+// Catalog/resource panels share selection records and message-driven phases.
+Ovl11InitTimeDependentCatalog = 0x8011775C;
+Ovl11InitFixedCatalog = 0x80117A40;
+Ovl11UpdateCatalogPurchasePanel = 0x80117BB4;
+Ovl11RequestCatalogPanelMessage = 0x80117F14;
+Ovl11InitResourcePurchasePanel = 0x80117F70;
+Ovl11UpdateResourcePurchasePanel = 0x801180F0;
+Ovl11FindFirstUnsetResourceOption = 0x801186FC;
+Ovl11UpdateResourceQuantitySelection = 0x80118744;
+gOvl11CatalogSelectedId = 0x80128260; // type:data size:0x4
+gOvl11ResourceOptionTextOffsets = 0x80128264; // type:data size:0x14
+gOvl11ResourceOptionCosts = 0x80128278; // type:data size:0x14
+gOvl11ResourceResultMessage = 0x8012828C; // type:data size:0x4
+gOvl11ResourceResultResumeState = 0x80128290; // type:data size:0x4
+gOvl11CatalogPanelState = 0x8012D79C; // type:data size:0x4
+gOvl11CatalogPanelResumeState = 0x8012D7A0; // type:data size:0x4
+gOvl11CatalogPanelMessages = 0x8012D7A8; // type:data size:0x10
+gOvl11CatalogPanelDescriptor = 0x8012D7B8; // type:data size:0x14
+gOvl11ResourcePanelState = 0x8012D7CC; // type:data size:0x4
+gOvl11ResourcePanelResumeState = 0x8012D7D0; // type:data size:0x4
+gOvl11ResourceOptionIndex = 0x8012D7D4; // type:data size:0x4
+gOvl11ResourcePanelDescriptor = 0x8012D7D8; // type:data size:0x18
+// Shared interaction scratch, also used by the other callback-driven panels.
+gOvl11InteractionStep = 0x8012D524; // type:data size:0x4
+gOvl11InteractionResumeStep = 0x8012D528; // type:data size:0x4
+gOvl11InteractionDrawMode = 0x8012D52C; // type:data size:0x4
+// The C view spans 0xC bytes; the first storage label stops at the
+// separately addressed +8 halfword, preserving non-overlapping data labels.
+gOvl11QuantityPrompt = 0x8012D538; // type:data size:0x8
+// Separately addressed halfword view inside the quantity prompt.
+gOvl11QuantityPromptCount = 0x8012D540; // type:data size:0x2
+gOvl11PrimarySelectionRecord = 0x8012D548; // type:data size:0x60
+gOvl11SecondarySelectionRecord = 0x8012D5A8; // type:data size:0x60
+
+// Indexed sprite texture batches: 0x50 sectors per read, encoded start/poll cursor.
+Ovl11StartTextureBatchRead = 0x800F71DC;
+Ovl11InstallTextureBatch = 0x800F7230;
+Ovl11ServiceTextureStream = 0x800F77A8;
+Ovl11StepTextureStream = 0x800F77F0;
+gOvl11TextureStreamCursor = 0x80126E2C; // type:data size:0x2
+gOvl11ExtraTextureRequests = 0x80126E30; // type:data size:0x10
+gOvl11TextureRequestCounts = 0x80126F74; // type:data size:0x8
+gOvl11TextureCacheStorage = 0x80129648; // type:data size:0x990
 Ovl11QueryCollisionBudgeted = 0x800BE208;
 Ovl11QueryCollisionUnbudgeted = 0x800BE26C;
 Ovl11ResetCollisionQueryCount = 0x800BE2B8;

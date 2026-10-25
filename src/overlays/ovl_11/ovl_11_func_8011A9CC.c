@@ -1,8 +1,8 @@
 #include "common.h"
 
-extern s32 D_8012D52C;
+extern s32 gOvl11InteractionDrawMode;
 
 s32 ovl_11_func_8011A9CC(void) {
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     return 1;
 }

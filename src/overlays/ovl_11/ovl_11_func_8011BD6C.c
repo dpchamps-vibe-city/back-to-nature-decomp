@@ -126,7 +126,7 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
             }
             break;
         case 8:
-            D_8012D52C = 0;
+            gOvl11InteractionDrawMode = 0;
             ovl_11_func_800E6EE0(mode, 1, 1, 1);
             ovl_11_func_800E6F34(mode, 0, 0, 0);
             ovl_11_func_8011D098(13, 14, arg1);

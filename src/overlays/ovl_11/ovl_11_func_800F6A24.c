@@ -20,7 +20,7 @@ void ovl_11_func_800F6A24(u16 arg0) {
 
     id = arg0 & 0xFFFF;
     for (i = 0; i < 0x48; i++) {
-        if (D_80129648_textures[i].id == 0) {
+        if (gOvl11TextureCache[i].id == 0) {
             break;
         }
     }
@@ -33,18 +33,18 @@ void ovl_11_func_800F6A24(u16 arg0) {
         entry = (SpriteFramePiece *)(src->field_24 + ref->offset);
         entry = (SpriteFramePiece *)((u8 *)entry + offset);
         tex = (SpriteTextureRect *)src->field_1C + entry->index;
-        D_80129648_textures[i].id = id;
-        D_80129648_textures[i].width = tex->width * 4;
-        D_80129648_textures[i].height = tex->height;
-        D_80129648_textures[i].x = (i % 8) * 8 + (baseX = (i / 24) * 64 + 0x140);
-        D_80129648_textures[i].y = ((i % 24) / 8) * 64;
-        D_80129648_textures[i].clutX = (i % 4) * 16 + baseX;
-        D_80129648_textures[i].clutY = (row = (i % 24) / 4) + 0xC0;
+        gOvl11TextureCache[i].id = id;
+        gOvl11TextureCache[i].width = tex->width * 4;
+        gOvl11TextureCache[i].height = tex->height;
+        gOvl11TextureCache[i].x = (i % 8) * 8 + (baseX = (i / 24) * 64 + 0x140);
+        gOvl11TextureCache[i].y = ((i % 24) / 8) * 64;
+        gOvl11TextureCache[i].clutX = (i % 4) * 16 + baseX;
+        gOvl11TextureCache[i].clutY = (row = (i % 24) / 4) + 0xC0;
         uploadY = row - 0x3E;
         func_80017200((u8 *)&gMessageWindowReadBuffer + 0x100,
-            (s16)((u16)D_80129648_textures[i].x - 0x140),
-            D_80129648_textures[i].y,
-            (s16)(D_80129648_textures[i].clutX - 0x140),
+            (s16)((u16)gOvl11TextureCache[i].x - 0x140),
+            gOvl11TextureCache[i].y,
+            (s16)(gOvl11TextureCache[i].clutX - 0x140),
             uploadY);
     }
 }

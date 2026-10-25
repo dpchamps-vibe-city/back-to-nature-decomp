@@ -20,7 +20,7 @@ s32 ovl_11_func_80115CAC(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
     id = ((struct Ovl11E8C14State *)D_8006C838)->value;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(1, 0);
         break;

@@ -41,7 +41,7 @@ s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3,
         RequestMessageWindow(2, 0x4D);
         ovl_11_func_8011DD48(arg8, 0, 0,
             (s16)ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*record)), 0);
-        D_8012D52C = arg2;
+        gOvl11InteractionDrawMode = arg2;
         ovl_11_func_8011D098(2, 4, arg1);
         break;
     case 4:

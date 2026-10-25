@@ -3,9 +3,10 @@
 #include "sound_commands.h"
 #include "ovl11_scene_rotation_ramps.h"
 #include "message_window.h"
+#include "psyq/memory.h"
+#include "ovl11_texture_stream.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800F77F0(s32 arg0);
 void ovl_11_func_800BCF28(void);
 void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800F69FC(void);
@@ -52,7 +53,7 @@ void ovl_11_func_800F67E0(void) {
                     next = 1;
                 }
                 if (IsMessageWindowStatusFinal()) {
-                    if (ovl_11_func_800F77F0(id) == 0) {
+                    if (Ovl11StepTextureStream(id) == 0) {
                         CloseMessageWindow();
                         D_80126E40 = next;
                     }

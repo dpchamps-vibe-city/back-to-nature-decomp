@@ -4,7 +4,7 @@ extern s32 D_800BB228;
 extern s32 D_800BB248;
 extern s32 D_800BB2C0;
 extern s32 D_8012D520;
-extern s32 D_8012D52C;
+extern s32 gOvl11InteractionDrawMode;
 
 s32 ovl_11_func_801189C8(void) {
     s32 (*fn)(void);
@@ -24,7 +24,7 @@ s32 ovl_11_func_801189C8(void) {
             }
         }
         base = &D_800BB228;
-        fn = (s32 (*)(void)) base[D_8012D52C];
+        fn = (s32 (*)(void)) base[gOvl11InteractionDrawMode];
         if (fn != 0) {
             ((void (*)(s32 *)) fn)(base);
         }

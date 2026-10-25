@@ -41,17 +41,17 @@ s32 ovl_11_func_80114604(void) {
     params.unkC = 2;
     params.unkE = 0x6E;
     params.unk10 = 4;
-    params.unk0 = D_8012D548;
+    params.unk0 = gOvl11PrimarySelectionRecord;
     resident->field_522C = 0;
     resident->field_5230 = 0;
     resident->field_5234 |= 0x800000;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(2, 0);
         break;
     case 1:
         ovl_11_func_80113CD0();
-        D_8012D52C = 4;
+        gOvl11InteractionDrawMode = 4;
         params.unk4 = -1;
         ovl_11_func_8011D084(2, 0);
     case 2:
@@ -61,7 +61,7 @@ s32 ovl_11_func_80114604(void) {
     case 6:
     case 7:
     case 8:
-        switch (ovl_11_func_8011B840(&D_8012D524, 2, params)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 2, params)) {
         case 0:
         case 2:
             break;
@@ -69,7 +69,7 @@ s32 ovl_11_func_80114604(void) {
             ovl_11_func_8011D084(27, 0);
             break;
         case 1:
-            switch (((StructD548 *)D_8012D548)->index) {
+            switch (((StructD548 *)gOvl11PrimarySelectionRecord)->index) {
             case 0:
                 if (((Ovl11SaleGlobals *)D_8006C838)->amount >= 1000) {
                     RequestMessageWindow(2, 0x6D);
@@ -83,13 +83,13 @@ s32 ovl_11_func_80114604(void) {
             case 2:
             case 7:
             case 8:
-                if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) == 1) {
-                    if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1) == 0) {
+                if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                    if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
                         ovl_11_func_8011D084(25, 24);
                     } else {
-                        ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1, 1);
-                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
+                        ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
+                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x84);
                         ovl_11_func_8011D084(25, 24);
                     }
@@ -103,7 +103,7 @@ s32 ovl_11_func_80114604(void) {
                 if (ovl_11_func_800D0C34() == 0) {
                     RequestMessageWindow(2, 0x72);
                     ovl_11_func_8011D084(25, 24);
-                } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) != 1) {
+                } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
                     RequestMessageWindow(2, 0x4F);
                     ovl_11_func_8011D084(25, 24);
                 } else {
@@ -117,7 +117,7 @@ s32 ovl_11_func_80114604(void) {
                     ovl_11_func_8011D084(25, 24);
                 } else {
                     RequestMessageWindow(2, 0x75);
-                    D_8012D52C = 0;
+                    gOvl11InteractionDrawMode = 0;
                     ovl_11_func_80116980(0, 0, -1);
                     ovl_11_func_8011D084(25, 18);
                 }
@@ -128,7 +128,7 @@ s32 ovl_11_func_80114604(void) {
                     ovl_11_func_8011D084(25, 24);
                 } else {
                     RequestMessageWindow(2, 0x77);
-                    D_8012D52C = 0;
+                    gOvl11InteractionDrawMode = 0;
                     ovl_11_func_80116980(0, 0, -1);
                     ovl_11_func_8011D084(25, 21);
                 }
@@ -149,8 +149,8 @@ s32 ovl_11_func_80114604(void) {
     case 13:
     case 14:
     case 15:
-        state = &D_8012D538;
-        switch (ovl_11_func_8011BAFC(&D_8012D524, 10, 5, *(Ovl11BAFCParams *)&params, (ovl_11_DD48_arg0 *)state)) {
+        state = &gOvl11QuantityPrompt;
+        switch (ovl_11_func_8011BAFC(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (ovl_11_DD48_arg0 *)state)) {
         case 0:
         case 2:
             break;
@@ -178,7 +178,7 @@ s32 ovl_11_func_80114604(void) {
     case 16:
         ResetTextEntry();
         BeginTextEntry(D_8012D63C);
-        D_8012D52C = 0;
+        gOvl11InteractionDrawMode = 0;
         ovl_11_func_8011D084(17, 0);
         break;
     case 17:
@@ -188,11 +188,11 @@ s32 ovl_11_func_80114604(void) {
             ovl_11_func_8011D084(25, 24);
             break;
         case 1:
-            dest = ovl_11_func_800CE744(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), -1) + 2;
+            dest = ovl_11_func_800CE744(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
             for (i = 0; i < 9; i++) {
                 dest[i] = D_8012D638.values[i];
             }
-            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
+            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x74);
             ovl_11_func_8011D084(25, 24);
             break;
@@ -316,10 +316,10 @@ s32 ovl_11_func_80114604(void) {
         }
         break;
     case 26:
-        if (D_8012D528 == 20) {
+        if (gOvl11InteractionResumeStep == 20) {
             ovl_11_func_80116980(1, 0, 1);
         }
-        if (D_8012D528 == 23) {
+        if (gOvl11InteractionResumeStep == 23) {
             ovl_11_func_80116980(2, 0, 1);
         }
         if (GetMessageWindowStatus() == 5) {

@@ -13,8 +13,8 @@ void ovl_11_func_800F6C78(s32 *arg0, u16 arg1, s16 arg2, s16 arg3) {
         return;
     }
     for (i = 0; i < 0x48; i++) {
-        if (D_80129648_textures[i].id == id) {
-            D_80129648_textures[i].active = 1;
+        if (gOvl11TextureCache[i].id == id) {
+            gOvl11TextureCache[i].active = 1;
             ovl_11_func_800F8CF8(arg0, i, arg2, arg3);
             return;
         }

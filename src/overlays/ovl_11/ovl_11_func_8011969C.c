@@ -22,7 +22,7 @@ s32 ovl_11_func_8011969C(void) {
     params.unkC = 2;
     params.unkE = 0xBA;
     params.unk10 = 4;
-    params.unk0 = D_8012D548;
+    params.unk0 = gOvl11PrimarySelectionRecord;
     if (((Ovl11FB908State *)D_8006C838)->field_44D4 == 0) {
         if (((struct struct_8006C838_button *)D_8006C838)->field_44BA != 2) {
             return 1;

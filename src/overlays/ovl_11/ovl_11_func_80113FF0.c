@@ -17,14 +17,14 @@ s32 ovl_11_func_80113FF0(void) {
     s16 *b;
 
     ovl_11_func_80111F10();
-    D_8012D538.unk0 = (s32) ((void *) ((u8 *) &D_80051E26 + gTextBankOffsets[1]));
-    *(s32 *) ((u8 *) &D_8012D538 + 4) = (s32) D_80051E26 - 0x60C + gTextBankOffsets[1];
+    gOvl11QuantityPrompt.unk0 = (s32) ((void *) ((u8 *) &D_80051E26 + gTextBankOffsets[1]));
+    *(s32 *) ((u8 *) &gOvl11QuantityPrompt + 4) = (s32) D_80051E26 - 0x60C + gTextBankOffsets[1];
     temp_s3 = D_800719F8;
-    D_8012D538.unkA = ovl_11_func_800D6014(0x69U);
-    D_8012D538.unk8 = 1;
-    ovl_11_func_8011D400((s32 *) D_8012D548);
+    gOvl11QuantityPrompt.unkA = ovl_11_func_800D6014(0x69U);
+    gOvl11QuantityPrompt.unk8 = 1;
+    ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
 
-    p = D_8012D548;
+    p = gOvl11PrimarySelectionRecord;
     *(s8 *) (p + 0x5A) = 0xF;
     *(s8 *) (p + 0x5B) = 0x15;
     *(s16 *) (p + 0x5C) = 0;
@@ -58,6 +58,6 @@ s32 ovl_11_func_80113FF0(void) {
     *a = 0x1E;
     *c = 0;
     *b = 0x48;
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     return 1;
 }

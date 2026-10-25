@@ -16,15 +16,15 @@ s32 ovl_11_func_80113CD0(void) {
     s16 *b;
 
     ovl_11_func_80111F10();
-    header = &D_8012D538;
+    header = &gOvl11QuantityPrompt;
     header->unk0 = (s32) D_80051E92 + gTextBankOffsets[1];
     *(s32 *) ((u8 *) header + 4) = (s32) D_80051E92 - 0x678 + gTextBankOffsets[1];
     flags = D_800719F8;
     header->unkA = ovl_11_func_800D6014(0x68U);
     header->unk8 = 1;
-    ovl_11_func_8011D400((s32 *) D_8012D548);
+    ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
 
-    p = D_8012D548;
+    p = gOvl11PrimarySelectionRecord;
     *(s8 *) (p + 0x5A) = 0xF;
     *(s8 *) (p + 0x5B) = 0x15;
     *(s16 *) (p + 0x5C) = 0;
@@ -91,6 +91,6 @@ s32 ovl_11_func_80113CD0(void) {
     *a = 0x1D;
     *c = 0;
     *b = 0x281;
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     return 1;
 }

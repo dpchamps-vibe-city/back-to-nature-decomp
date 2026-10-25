@@ -34,7 +34,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
     nextId = arg1[1];
     cancelKind = arg2[0];
     cancelId = arg2[1];
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(4, 0);
         break;
@@ -50,16 +50,16 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
     case 8:
     case 9:
     case 10:
-        switch (ovl_11_func_8011B840(&D_8012D524, 4, arg3)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 4, arg3)) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 0) == 0) {
+            if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 0) == 0) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
                 ovl_11_func_8011D084(1, 2);
             } else {
-                D_8012D540 = 1;
+                gOvl11QuantityPromptCount = 1;
                 RequestMessageWindow(startKind, startId);
                 ovl_11_func_8011D084(1, 11);
             }
@@ -75,18 +75,18 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
     case 14:
     case 15:
     case 16:
-        recordState = &D_8012D538;
-        switch (ovl_11_func_8011BAFC(&D_8012D524, 11, 5, *(Ovl11BAFCParams *)&arg3, (ovl_11_DD48_arg0 *)recordState)) {
+        recordState = &gOvl11QuantityPrompt;
+        switch (ovl_11_func_8011BAFC(&gOvl11InteractionStep, 11, 5, *(Ovl11BAFCParams *)&arg3, (ovl_11_DD48_arg0 *)recordState)) {
         case 0:
             break;
         case 1:
             if (ovl_11_func_8011D06C(recordState->unk8 * recordState->unkA) == 1) {
-                if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 0) < recordState->unk8) {
+                if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 0) < recordState->unk8) {
                     RequestMessageWindow(2, 0xC1);
                     ovl_11_func_8011D084(1, 11);
                 } else {
-                    secondState = &D_8012D538;
-                    if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1) < secondState->unk8) {
+                    secondState = &gOvl11QuantityPrompt;
+                    if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) < secondState->unk8) {
                         message = 0x207;
                         if (D_8012D520 == 14) {
                             message = 0x261;
@@ -94,12 +94,12 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
                         RequestMessageWindow(3, message);
                         ovl_11_func_8011D084(1, 3);
                     } else {
-                        D_8012D52C = 4;
+                        gOvl11InteractionDrawMode = 4;
                         RequestMessageWindow(nextKind, nextId);
                         ovl_11_func_8011D084(1, 7);
                     }
-                    ovl_11_func_800F2354(-(D_8012D538.unk8 * D_8012D538.unkA), 1);
-                    ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), D_8012D538.unk8, 0);
+                    ovl_11_func_800F2354(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
+                    ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), gOvl11QuantityPrompt.unk8, 0);
                 }
             } else {
                 RequestMessageWindow(2, 0x4F);
@@ -107,7 +107,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
             }
             break;
         case 3:
-            D_8012D52C = 4;
+            gOvl11InteractionDrawMode = 4;
             RequestMessageWindow(cancelKind, cancelId);
             ovl_11_func_8011D084(1, 7);
             break;

@@ -12,7 +12,7 @@ s32 ovl_11_func_80114398(void) {
     s16 *b;
 
     ovl_11_func_80111F10();
-    p = D_8012D548;
+    p = gOvl11PrimarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p);
     *(s8 *) (p + 0x5A) = 0xC;
     *(s8 *) (p + 0x5B) = 0x17;
@@ -22,7 +22,7 @@ s32 ovl_11_func_80114398(void) {
         *(s16 *) (p + 0x5C) = 0;
     }
 
-    q = (void **) D_8012D548;
+    q = (void **) gOvl11PrimarySelectionRecord;
     a = (s16 *) ((u8 *) q + 0x28);
     c = (s8 *) ((u8 *) q + 0x3C);
     b = (s16 *) ((u8 *) q + 0x46);
@@ -44,7 +44,7 @@ s32 ovl_11_func_80114398(void) {
     *a++ = 0x185;
     *c++ = 2;
     *b++ = -1;
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     *q++ = (void *) ((s32) D_80051C7A + gTextBankOffsets[1]);
     *a++ = 0xF7;
     *c++ = 2;

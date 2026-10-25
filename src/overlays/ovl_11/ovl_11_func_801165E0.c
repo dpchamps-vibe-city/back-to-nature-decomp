@@ -19,13 +19,13 @@ s32 ovl_11_func_801165E0(void) {
     params.unk4 = -1;
     params.unk8 = -1;
     params.unk10 = 7;
-    params.unk0 = D_8012D548;
+    params.unk0 = gOvl11PrimarySelectionRecord;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
-        D_8012D52C = 7;
+        gOvl11InteractionDrawMode = 7;
         ovl_11_func_8011D084(1, 0);
         params.unk4 = -1;
         break;
@@ -36,7 +36,7 @@ s32 ovl_11_func_801165E0(void) {
     case 5:
     case 6:
     case 7:
-        switch (ovl_11_func_8011B840(&D_8012D524, 1, params)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 1, params)) {
         case 0:
             break;
         case 3:
@@ -44,7 +44,7 @@ s32 ovl_11_func_801165E0(void) {
             ovl_11_func_8011D084(9, 11);
             break;
         case 1:
-            if (ovl_11_func_80116878((StructD548 *)D_8012D548) == 1) {
+            if (ovl_11_func_80116878((StructD548 *)gOvl11PrimarySelectionRecord) == 1) {
                 RequestMessageWindow(1, 0x449);
                 ovl_11_func_8011D084(10, 8);
             } else {
@@ -63,7 +63,7 @@ s32 ovl_11_func_801165E0(void) {
         case 1:
             CloseMessageWindow();
             RequestMessageWindow(1, 0x448);
-            ovl_11_func_801168C0((StructD548 *)D_8012D548);
+            ovl_11_func_801168C0((StructD548 *)gOvl11PrimarySelectionRecord);
             break;
         case 2:
             CloseMessageWindow();
@@ -88,7 +88,7 @@ s32 ovl_11_func_801165E0(void) {
         break;
     case 12:
     case 13:
-        if (ovl_11_func_8011B6C4(&D_8012D524, 12, ((StructD548 *)D_8012D548)->data[((StructD548 *)D_8012D548)->index])) {
+        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 12, ((StructD548 *)gOvl11PrimarySelectionRecord)->data[((StructD548 *)gOvl11PrimarySelectionRecord)->index])) {
             ovl_11_func_8011D084(11, 0);
         }
         break;

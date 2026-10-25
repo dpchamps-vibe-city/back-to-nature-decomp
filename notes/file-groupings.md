@@ -10894,6 +10894,22 @@ Members (link order):
 - ovl_30_func_8012F084 (m) — debug-menu lifecycle, callback dispatch and edited-setting application.
 - ovl_30_func_8012FDEC (m) — input-driven editor of D_80134B14 shared with 8012F084/8012F454 (wider-TU membership uncertain).
 
+Whole-overlay module experiment after the texture_stream/purchase_panels folds:
+a read-only baseline plan for all 34 compiled entries at 8012EFEC..80133F70
+as `debug_editor` was refused: the jump tables attributed to 8012F454
+(offset 0x154) and 8012FFB4 (0x6E4) have the standalone nonzero rodata run
+beginning 0x17C between them. Today's C still names that literal pool as
+extern objects, so one compiled module's adjacent jump tables cannot occupy
+the original positions. This is a **mechanical representation limit**, not a
+TU boundary at F454 or FFB4; no partial editor module, source change or flag
+was retained. The callback menu, shared cursor/selected-action protocol,
+size-selected writer and diagnostic editor tables support investigating the
+whole family, but not asserting historical one-TU provenance from overlay
+membership alone. Next useful experiment: establish per-member ownership and
+sharing of the intervening strings, restore their literal/initializer source
+through the compiler, then repeat the whole-module plan. Merely skipping the
+rodata refusal would lose the original pool/table layout and is not a fix.
+
 ## `ovl_30` debug menu and mirror-helper run — 0x8012F3D4–0x8012F454 (confidence: medium)
 
 [Common-caller and gapless-link evidence; membership limits](research/ovl_30_func_8012F454-grouping.md).
@@ -13851,6 +13867,52 @@ Members (link order):
 - ovl_11_func_800F77A8 (m) — reset load progress or invoke the mode-1 progress step.
 - ovl_11_func_800F77F0 (m) — advance shared-state CD-load start/poll progress.
 
+**Reconstructed module: `src/overlays/ovl_11/modules/texture_stream.c`**,
+all four entries at 800F71DC..800F787C exclusive. 71DC/7230 are the start
+and completion halves of the identical archive-0 range (+03C19000, 80 records
+of 2048 bytes) and scratch destination (+4290). 77F0 directly calls both;
+77A8 resets the same encoded halfword or calls 77F0 with request mode 1.
+The private count/overflow tables used by 7230 corroborate the protocol.
+This takes the full connected four-entry run, not a start/poll-only slice.
+-G0 supplies no original small-data ownership witness.
+
+Boundary evidence: predecessor 7094 draws a shared-sprite two-digit number;
+it accesses neither batch cursor, request tables nor CD range. Successor
+787C is the item-panel renderer/message/input path around E40/E44/E4A/E4E;
+it likewise uses none of the batch protocol. These changes in state and
+operation, with no positive immediate extension, bound this supported group;
+they are not proven historical file boundaries. Distant initializer 6680
+also clears the cursor among many UI fields, but otherwise implements that
+UI's reset protocol. The cache's synchronous single-ID loader, eviction and
+drawing users have a separate per-slot API, not this encoded batch state.
+Shared cache storage alone does not absorb the intervening sprite drawers.
+
+Names at the original overlay identities: Ovl11StartTextureBatchRead,
+Ovl11InstallTextureBatch, Ovl11ServiceTextureStream and
+Ovl11StepTextureStream, respectively. The public header publishes only the
+last two; interfaceAudit supplied it to the four declaring callers with
+unchanged objects. Locals describe request mode/index, first ID and cache
+slot. Canonical data names identify the cursor, eight extra IDs, four request
+counts, and 72x0x22 cache storage. Its pre-existing typed assembler view is
+now gOvl11TextureCache; all reset/load/draw users and the asm-label binding
+were propagated. Both resetters now use this canonical record instead of
+two different local FarmCell definitions, preserving loop direction, stride,
+field offsets and access widths. No storage, linkage or ownership was invented.
+
+The header documents the shared CD/scratch exclusion, request modes, partial
+installation on exhaustion, non-latched completion, and reset not cancelling
+a transfer. The fourth retail count is 0x0D36, not a safe bounded request
+list: the public contract restricts modes to 0..2 rather than silently fixing
+it. Original control/loop shapes remain, with a short explanation of the
+necessary empty loop and declaration order instead of an experiment log.
+
+The checked fold matched all four under baseline -O2/-G0; no override was
+present, applied or retired. After naming/readability/interface changes,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes
+every integrity gate: **427 folded / 48 valid modules**, all linked EXE and
+overlay bytes/data/placement, affected callers, policy, canonical interfaces,
+generation convergence and exception non-growth. No tool or test changes.
+
 ---
 
 ## `ovl_11` D_80126F7C/80/84/88 menu-state run — 0x800F9D3C–0x800F9FF4 (confidence: medium)
@@ -14132,6 +14194,76 @@ Further candidate members (tail extension, confidence: low;
 - ovl_11_func_801180F0 (s, candidate same TU) — record-driven state controller using the 80117F70 initializer's state/descriptor cluster and invoking 80118744.
 - ovl_11_func_801186FC (m, candidate same TU) — five-id scan helper called by the 80117F70 initializer.
 - ovl_11_func_80118744 (m, candidate same TU) — six-state record interaction handler called by 801180F0.
+
+**Reconstructed whole run: `src/overlays/ovl_11/modules/purchase_panels.c`**,
+eight compiled functions from 8011775C to 801189C8 exclusive. The two catalog
+initializers share the private D79C/D7A0 state/resume pair, D7A8 message IDs,
+and D7B8 descriptor consumed by 17BB4; its message helper 17F14 is internal
+to that controller. The resource initializer/controller at 17F70/180F0 share
+D7CC/D7D0/D7D4/D7D8 and the result message/resume pair 12828C/90. The
+initializer's five-flag scan is 186FC; its controller's six-step quantity
+helper is 18744. Both halves build and consume the SAME primary selection
+record and descriptor-by-value protocol. This includes the complete supported
+tail, rather than leaving a table-only or initializer-only slice. The three
+jump tables pool in member order, with two original/compiler-witnessed
+four-byte alignment gaps. This corroborates the fold; -G0 supplies no GP
+ownership proof.
+
+Boundary evidence: predecessor 176BC is an immediate-payment helper for a
+separate nine-ID table and eight enable-byte cells at work +E7A2, with no
+access to either panel's state, descriptor, messages or local helpers.
+Successor 189C8 is the generic callback dispatcher indexed by D520/D52C and
+three handler tables. Its tables include these panels AND many others; it
+does not use the private catalog/resource protocol. The later 18B84
+confirmation cursor likewise serves the earlier 173B8 panel as well as this
+resource controller. Those are generic interfaces, not private helper
+membership. These state/protocol changes and absence of positive immediate
+extensions bound the supported run, not proven original source extents.
+Shared selection scratch alone does not absorb the other interaction UIs.
+
+Names: Ovl11InitTimeDependentCatalog (1775C), Ovl11InitFixedCatalog (17A40),
+Ovl11UpdateCatalogPurchasePanel (17BB4), Ovl11RequestCatalogPanelMessage
+(17F14), Ovl11InitResourcePurchasePanel (17F70),
+Ovl11UpdateResourcePurchasePanel (180F0), Ovl11FindFirstUnsetResourceOption
+(186FC), Ovl11UpdateResourceQuantitySelection (18744).
+include/ovl11_purchase_panels.h publishes five initializer/update callbacks;
+the generic tables retain their exact function-pointer values and order.
+interfaceAudit found no declaring C callers needing changes, and no published
+interface failures. All helpers retain external linkage, with no invented
+static ownership. Existing descriptor/record types, by-value sizes, load
+signedness and mixed raw/typed views are retained rather than disputed types
+being changed during a rename.
+
+Canonical data names describe both panel states/resume states, descriptors,
+catalog messages/selected ID, resource option text offsets and {money,units}
+cost pairs, and result message/resume state. Shared selection records,
+interaction step/resume step/draw mode and quantity prompt are named across
+all their users (51 source files were canonicalized). The separately addressed
+prompt +8 count remains its own named symbol: the prompt's base storage label
+ends there, while its existing C view still spans 0xC bytes. This preserves
+non-overlapping data configuration AND the independent addressing in two
+other callers. No access expression, layout or storage was widened to force
+matching. Initializer locals now identify text/ID/attribute/message arrays;
+the quantity helper names its step window, descriptor, prompt and draw mode.
+The header documents tick/results, shared scratch exclusion, daytime hours,
+999-unit cap and the dual-cost transaction without guessing the commodity.
+
+The baseline -O2/-G0 fold matched all eight and the overlay. No member had an
+override; none was added, transferred or retired. After documentation, names,
+interior-label reconciliation and readability, `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes all gates at **435 folded /
+49 valid modules**: complete EXE/overlay bytes/data/callbacks/tables/placement,
+canonical interfaces, policy, generation convergence and exception non-growth.
+
+Necessary tooling repair, outside the source integration roots:
+bootstrapOverlay.ts now writes its first, unseeded recovery pass to
+bootstrap_functions.csv, not the published functions.csv. The invalid initial
+interior-label extent exposed the bug: refusal left anonymous names in the
+published table, which blocked the engine-import prerequisite needed for a
+retry. Staging that provisional pass preserves the last published inventory;
+the corrected extents regenerated through the generator and full gate. The
+14 existing overlay-boundary/TU-progress tests pass after rebuilding the tree;
+none was added. No matching exception or new framework was added.
 
 ---
 

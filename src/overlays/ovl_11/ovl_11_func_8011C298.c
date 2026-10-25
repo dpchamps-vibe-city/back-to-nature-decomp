@@ -36,7 +36,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         message = 0xD8;
     }
     result = 0;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         if (arg3 != 0) {
             ovl_11_func_800F45A4(arg0, 0);
@@ -45,7 +45,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         break;
     case 12:
     case 13:
-        if (ovl_11_func_8011B6C4(&D_8012D524, 12, arg0)) {
+        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 12, arg0)) {
             RequestMessageWindow(arg1, arg2);
             ovl_11_func_8011D084(3, 11);
         }
@@ -68,7 +68,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         }
         break;
     case 4:
-        D_8012D52C = 3;
+        gOvl11InteractionDrawMode = 3;
         ovl_11_func_8011D084(8, 0);
         ovl_11_func_80118B84(0, -1, 0);
     case 8:

@@ -16,7 +16,7 @@ s32 ovl_11_func_8011B2B0(void) {
     s16 *b;
 
     flags = D_800719F8;
-    p = D_8012D548;
+    p = gOvl11PrimarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p);
     *(s8 *) (p + 0x5A) = 0xD;
     *(s8 *) (p + 0x5B) = 0xD;
@@ -71,7 +71,7 @@ s32 ovl_11_func_8011B2B0(void) {
     *c = 1;
     *b = 0x8C;
 
-    p2 = D_8012D5A8;
+    p2 = gOvl11SecondarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p2);
     *(s8 *) (p2 + 0x5A) = 0;
     *(s8 *) (p2 + 0x5B) = 0;
@@ -92,7 +92,7 @@ s32 ovl_11_func_8011B2B0(void) {
     *c++ = 0;
     *b++ = 0xAA;
     if (flags & 0x80000) {
-        r = D_8012D5A8;
+        r = gOvl11SecondarySelectionRecord;
         *(s8 *) (r + 0x5A) = 6;
         *(s8 *) (r + 0x5B) = 12;
         *q = (void *) ((s32) D_80051B56 + gTextBankOffsets[1]);
@@ -107,7 +107,7 @@ s32 ovl_11_func_8011B2B0(void) {
         u8 *entry;
 
         *q = (void *) ((s32) D_80051B64 + gTextBankOffsets[1]);
-        entry = D_8012D5A8;
+        entry = gOvl11SecondarySelectionRecord;
         *(s8 *) (entry + 0x5A) = 8;
         *(s8 *) (entry + 0x5B) = 14;
     } else {
@@ -120,10 +120,10 @@ s32 ovl_11_func_8011B2B0(void) {
         s16 selected;
         u8 *record;
 
-        selected = ovl_11_func_8011D890(*(Ovl11D548Arg *) D_8012D5A8, 1);
-        record = D_8012D5A8;
+        selected = ovl_11_func_8011D890(*(Ovl11D548Arg *) gOvl11SecondarySelectionRecord, 1);
+        record = gOvl11SecondarySelectionRecord;
         *(s16 *) (record + 0x5C) = selected;
     }
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     return 1;
 }

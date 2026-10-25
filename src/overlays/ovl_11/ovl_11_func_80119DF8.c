@@ -29,20 +29,20 @@ s32 ovl_11_func_80119DF8(void) {
     first.unk8 = 2;
     first.unkA = 0x86;
     first.unk10 = 4;
-    first.unk0 = D_8012D548;
+    first.unk0 = gOvl11PrimarySelectionRecord;
     second.unk4 = -1;
     second.unk6 = 0;
     second.unk8 = 2;
     second.unkA = 0x91;
     second.unk10 = 6;
-    second.unk0 = D_8012D5A8;
-    item = ovl_11_func_8011D98C(*(StructD548 *)D_8012D5A8);
+    second.unk0 = gOvl11SecondarySelectionRecord;
+    item = ovl_11_func_8011D98C(*(StructD548 *)gOvl11SecondarySelectionRecord);
     price = ovl_11_func_800D6014(item);
     result = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(6, 0);
         break;
@@ -62,11 +62,11 @@ s32 ovl_11_func_80119DF8(void) {
     case 10:
     case 11:
     case 12:
-        switch (ovl_11_func_8011B840(&D_8012D524, 6, first)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 6, first)) {
         case 0:
             break;
         case 1:
-            switch (((StructD548 *)D_8012D548)->index) {
+            switch (((StructD548 *)gOvl11PrimarySelectionRecord)->index) {
             case 0:
                 RequestMessageWindow(2, 0x87);
                 ovl_11_func_8011D084(1, 2);
@@ -103,7 +103,7 @@ s32 ovl_11_func_80119DF8(void) {
     case 17:
     case 18:
     case 19:
-        switch (ovl_11_func_8011B840(&D_8012D524, 13, second)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 13, second)) {
         case 0:
             break;
         case 1:
@@ -122,7 +122,7 @@ s32 ovl_11_func_80119DF8(void) {
             }
             break;
         case 3:
-            D_8012D52C = 4;
+            gOvl11InteractionDrawMode = 4;
             ovl_11_func_8011D084(2, 0);
             break;
         }
@@ -148,14 +148,14 @@ s32 ovl_11_func_80119DF8(void) {
     case 38:
     case 39:
     case 40:
-        switch (ovl_11_func_8011BD6C(&D_8012D524, 20, (StructD548 **)&first)) {
+        switch (ovl_11_func_8011BD6C(&gOvl11InteractionStep, 20, (StructD548 **)&first)) {
         case 0:
             break;
         case 1:
             ovl_11_func_8011D084(4, 0);
             break;
         case 3:
-            D_8012D52C = 4;
+            gOvl11InteractionDrawMode = 4;
             RequestMessageWindow(2, 0x91);
             ovl_11_func_8011D084(1, 2);
             break;
@@ -166,7 +166,7 @@ s32 ovl_11_func_80119DF8(void) {
         ovl_11_func_8011DAD4(item, 1, 1);
         ovl_11_func_80111F10();
         ovl_11_func_8011B2B0();
-        D_8012D52C = 4;
+        gOvl11InteractionDrawMode = 4;
         RequestMessageWindow(2, 0x91);
         ovl_11_func_8011D084(1, 2);
         break;

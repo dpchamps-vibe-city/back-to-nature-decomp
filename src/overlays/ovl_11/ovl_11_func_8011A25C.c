@@ -35,7 +35,7 @@ s32 ovl_11_func_8011A25C(void) {
     ((Ovl11A25CState *)D_8006C838)->field_5234 |= 0x800000;
     row = (s16)ovl_11_func_8011DF04(item);
     price = ovl_11_func_8011DEBC(row, 1);
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(3, 0);
         break;
@@ -61,7 +61,7 @@ s32 ovl_11_func_8011A25C(void) {
             RequestMessageWindow(2, D_801282D0[message - 1]);
             ovl_11_func_8011D084(1, 4);
         } else {
-            D_8012D52C = 2;
+            gOvl11InteractionDrawMode = 2;
             SetMessagePortraitEnabled(0);
             RequestMessageWindow(2, ovl_11_func_8011DE70(ovl_11_func_8011DF04(item)) + 0x9A);
             ovl_11_func_8011D084(2, 5);
@@ -111,7 +111,7 @@ s32 ovl_11_func_8011A25C(void) {
         }
         break;
     case 11:
-        D_8012D52C = 0;
+        gOvl11InteractionDrawMode = 0;
     case 12:
         ovl_11_func_800F2354(-price, 1);
         index = ovl_11_func_8011DF04(item) + 1;

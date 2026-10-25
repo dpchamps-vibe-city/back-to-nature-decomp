@@ -334,14 +334,18 @@ for (const container of containers) {
      rows are switch labels and names their owner. Keep that evidence before
      the second pass seeds the recovered functions and their explicit sizes. */
   const contextPath = join(container.paths.disasmDir, "bootstrap_context.csv");
+  /* Boundary recovery is provisional. In particular, a refused data-name
+     extent must not replace the published, named function inventory: the
+     engine's overlay-import prerequisite reads it before a split can retry. */
+  const recoveryCsv = join(container.paths.disasmDir, "bootstrap_functions.csv");
   writeDisasmSymbols(container, []);
   runSpimdisasm(container, layout, container.paths.disasmDir, {
     unknown: true,
-    csv: container.paths.functionsCsv,
+    csv: recoveryCsv,
     context: contextPath,
   });
 
-  const entries = parseCSV(containerPath(container, "functionsCsv"));
+  const entries = parseCSV(join(ROOT, recoveryCsv));
   const recovered = overlayFunctionsFromContext(
     entries, readFileSync(join(ROOT, contextPath), "utf-8"), symbolPrefix(container),
     container.loadAddr + layout.textStart, container.loadAddr + layout.dataStart,

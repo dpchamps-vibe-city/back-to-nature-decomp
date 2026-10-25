@@ -22,6 +22,6 @@ s32 ovl_11_func_8011977C(void) {
     params.unkC = 2;
     params.unkE = 0x16F;
     params.unk10 = 4;
-    params.unk0 = D_8012D548;
+    params.unk0 = gOvl11PrimarySelectionRecord;
     return ovl_11_func_8011C6CC(start, next, cancel, params);
 }

@@ -3,8 +3,9 @@
 #include "cd_audio.h"
 #include "sprite_grid.h"
 #include "message_window.h"
+#include "psyq/memory.h"
+#include "ovl11_texture_stream.h"
 
-s32 ovl_11_func_800F77A8(s16 arg0);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void func_80017A38(s16 arg0, s16 arg1);
@@ -27,7 +28,7 @@ void ovl_11_func_800FFF7C(void) {
     if (D_801273E4 != 0) {
         if (D_801273E4 == 1) {
             DrawScrollingSpriteGrid(temp_a0);
-            if ((IsMessageWindowStatusFinal() != 0) && (ovl_11_func_800F77A8(0) == 0)) {
+            if ((IsMessageWindowStatusFinal() != 0) && (Ovl11ServiceTextureStream(0) == 0)) {
                 CloseMessageWindow();
                 D_801273E4 = 3;
             }

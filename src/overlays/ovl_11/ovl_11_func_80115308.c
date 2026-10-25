@@ -41,17 +41,17 @@ s32 ovl_11_func_80115308(void) {
     params.unkC = 2;
     params.unkE = 0x4E;
     params.unk10 = 4;
-    params.unk0 = D_8012D548;
+    params.unk0 = gOvl11PrimarySelectionRecord;
     resident->field_522C = 0;
     resident->field_5230 = 0;
     resident->field_5234 |= 0x800000;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(2, 0);
         break;
     case 1:
         ovl_11_func_80113FF0();
-        D_8012D52C = 4;
+        gOvl11InteractionDrawMode = 4;
         params.unk4 = -1;
         ovl_11_func_8011D084(2, 0);
     case 2:
@@ -61,7 +61,7 @@ s32 ovl_11_func_80115308(void) {
     case 6:
     case 7:
     case 8:
-        switch (ovl_11_func_8011B840(&D_8012D524, 2, params)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 2, params)) {
         case 0:
         case 2:
             break;
@@ -69,7 +69,7 @@ s32 ovl_11_func_80115308(void) {
             ovl_11_func_8011D084(24, 0);
             break;
         case 1:
-            switch (((StructD548 *)D_8012D548)->index) {
+            switch (((StructD548 *)gOvl11PrimarySelectionRecord)->index) {
             case 0:
                 if (((Ovl11FeedGlobals *)D_8006C838)->amount >= 1000) {
                     RequestMessageWindow(2, 0x4C);
@@ -83,7 +83,7 @@ s32 ovl_11_func_80115308(void) {
                 if (ovl_11_func_800D0CD8() == 0) {
                     RequestMessageWindow(2, 0x55);
                     ovl_11_func_8011D084(22, 21);
-                } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) != 1) {
+                } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
                     RequestMessageWindow(2, 0x4F);
                     ovl_11_func_8011D084(22, 21);
                 } else {
@@ -97,19 +97,19 @@ s32 ovl_11_func_80115308(void) {
                     ovl_11_func_8011D084(22, 21);
                 } else {
                     RequestMessageWindow(2, 0x58);
-                    D_8012D52C = 0;
+                    gOvl11InteractionDrawMode = 0;
                     ovl_11_func_80116980(0, 0, -1);
                     ovl_11_func_8011D084(22, 18);
                 }
                 break;
             case 3:
-                if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) == 1) {
-                    if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1) == 0) {
+                if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                    if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
                         ovl_11_func_8011D084(22, 21);
                     } else {
-                        ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1, 1);
-                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
+                        ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
+                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x51);
                         ovl_11_func_8011D084(22, 21);
                     }
@@ -134,8 +134,8 @@ s32 ovl_11_func_80115308(void) {
     case 13:
     case 14:
     case 15:
-        state = &D_8012D538;
-        switch (ovl_11_func_8011BAFC(&D_8012D524, 10, 5, *(Ovl11BAFCParams *)&params, (ovl_11_DD48_arg0 *)state)) {
+        state = &gOvl11QuantityPrompt;
+        switch (ovl_11_func_8011BAFC(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (ovl_11_DD48_arg0 *)state)) {
         case 0:
         case 2:
             break;
@@ -163,7 +163,7 @@ s32 ovl_11_func_80115308(void) {
     case 16:
         ResetTextEntry();
         BeginTextEntry(D_8012D6EC);
-        D_8012D52C = 0;
+        gOvl11InteractionDrawMode = 0;
         ovl_11_func_8011D084(17, 0);
         break;
     case 17:
@@ -177,7 +177,7 @@ s32 ovl_11_func_80115308(void) {
             for (i = 0; i < 9; i++) {
                 dest[i] = D_8012D6E8.values[i];
             }
-            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
+            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x57);
             ovl_11_func_8011D084(22, 21);
             break;
@@ -239,7 +239,7 @@ s32 ovl_11_func_80115308(void) {
         }
         break;
     case 23:
-        if (D_8012D528 == 20) {
+        if (gOvl11InteractionResumeStep == 20) {
             ovl_11_func_80116980(0, 0, 1);
         }
         if (GetMessageWindowStatus() == 5) {

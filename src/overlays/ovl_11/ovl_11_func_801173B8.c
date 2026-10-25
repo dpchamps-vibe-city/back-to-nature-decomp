@@ -13,7 +13,7 @@ s32 ovl_11_func_801173B8(void) {
     switch (D_8012D794) {
     case 0:
     default:
-        D_8012D52C = 0;
+        gOvl11InteractionDrawMode = 0;
         CloseMessageWindow();
         return 1;
     case 1:
@@ -33,7 +33,7 @@ s32 ovl_11_func_801173B8(void) {
     beginSelection:
         D_8012D794 = 2;
         ovl_11_func_8011764C();
-        D_8012D52C = 3;
+        gOvl11InteractionDrawMode = 3;
     display:
         RequestMessageWindow(2, message);
         return 0;

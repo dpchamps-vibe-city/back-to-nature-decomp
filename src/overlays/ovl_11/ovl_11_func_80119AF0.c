@@ -21,11 +21,11 @@ s32 ovl_11_func_80119AF0(void) {
     params.unk8 = 2;
     params.unkA = 0xB1;
     params.unk10 = 4;
-    params.unk0 = D_8012D548;
+    params.unk0 = gOvl11PrimarySelectionRecord;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         ovl_11_func_8011D084(7, 0);
         break;
@@ -45,12 +45,12 @@ s32 ovl_11_func_80119AF0(void) {
     case 11:
     case 12:
     case 13:
-        switch (ovl_11_func_8011B840(&D_8012D524, 7, params)) {
+        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 7, params)) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D06C(ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) == 1) {
-                ovl_11_func_800F2354(-ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
+            if (ovl_11_func_8011D06C(ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                ovl_11_func_800F2354(-ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xB4);
                 ovl_11_func_8011D084(1, 4);
@@ -67,7 +67,7 @@ s32 ovl_11_func_80119AF0(void) {
         break;
     case 4:
     case 5:
-        if (ovl_11_func_8011B6C4(&D_8012D524, 4, ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) {
+        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 4, ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) {
             ovl_11_func_8011D084(3, 0);
         }
         break;

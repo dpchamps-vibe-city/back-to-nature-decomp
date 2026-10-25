@@ -10,7 +10,7 @@ void ovl_11_func_801168C0(StructD548 *arg0) {
     s16 selection;
     s16 threshold;
 
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     threshold = ovl_11_func_800D740C((u16)arg0->data[arg0->index]);
     ((Ovl11SelectedThresholdState *)D_8006C838)->value -= threshold;
     selection = arg0->index;

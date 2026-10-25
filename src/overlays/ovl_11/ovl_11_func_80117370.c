@@ -1,5 +1,5 @@
 #include "common.h"
-extern s32 D_8012D52C;
+extern s32 gOvl11InteractionDrawMode;
 
 extern s32 D_8012D794;
 
@@ -14,7 +14,7 @@ s32 ovl_11_func_80117370(void) {
     D_8012D794 = 1;
     callRet2 = ovl_11_func_8011760C();
     D_8012D798 = callRet2;
-    D_8012D52C = 0;
+    gOvl11InteractionDrawMode = 0;
     ovl_11_func_80118B84(0, -1, 0);
     return 1;
 }

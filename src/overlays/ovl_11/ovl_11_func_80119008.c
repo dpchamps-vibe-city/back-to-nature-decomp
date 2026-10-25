@@ -21,7 +21,7 @@ s32 ovl_11_func_80119008(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
     price = ovl_11_func_800D6014(0xA4);
     result = 0;
-    switch (D_8012D524) {
+    switch (gOvl11InteractionStep) {
     case 0:
         D_8012D51C = ((struct Ovl11E8C14State *)D_8006C838)->value;
         ovl_11_func_8011D084(1, 0);
@@ -55,7 +55,7 @@ s32 ovl_11_func_80119008(void) {
         }
         break;
     case 5:
-        D_8012D52C = 2;
+        gOvl11InteractionDrawMode = 2;
         ovl_11_func_8011D084(6, 0);
         ovl_11_func_80118B84(0, -1, 0);
     case 6:
@@ -81,7 +81,7 @@ s32 ovl_11_func_80119008(void) {
         }
         break;
     case 7:
-        D_8012D52C = 0;
+        gOvl11InteractionDrawMode = 0;
         ovl_11_func_800F2354(-price, 1);
         ovl_11_func_800E6EE0(D_8012D51C, 1, 0, 1);
         ovl_11_func_8011D084(8, 4);
@@ -93,7 +93,7 @@ s32 ovl_11_func_80119008(void) {
         break;
     case 10:
     case 11:
-        if (ovl_11_func_8011B784(&D_8012D524, 10, D_8012D51C)) {
+        if (ovl_11_func_8011B784(&gOvl11InteractionStep, 10, D_8012D51C)) {
             ovl_11_func_8011D084(4, 0);
         }
         break;
