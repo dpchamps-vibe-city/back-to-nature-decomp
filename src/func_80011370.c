@@ -111,8 +111,8 @@ void func_80011370(void) {
     s32 *temp_s2;
 
     func_80011270();
-    gPad0Input = (struct PadInputState *)&D_8005E870;
-    gPad1Input = (struct PadInputState *)((char *)&D_8005E870 + 0x38);
+    gPad0Input = (struct PadInputState *)&gPadInputStateStorage;
+    gPad1Input = (struct PadInputState *)((char *)&gPadInputStateStorage + 0x38);
     D_8005E388 = 0;
     ResetCallback();
     CdInit();

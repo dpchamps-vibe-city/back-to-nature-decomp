@@ -2,7 +2,7 @@
 #include "psyq/memory.h"
 
 /* Tentative definitions for GP-relative globals owned by this TU. */
-s16 D_8005E3E8[2];
+s16 gPadExtendedModeIds[2];
 s32 gPadActuatorsEnabled;
 
 void func_80014494(s32 arg0, s32 arg1, s32 arg2) {
@@ -12,7 +12,7 @@ void func_80014494(s32 arg0, s32 arg1, s32 arg2) {
     act0 = arg0 & 0xFF;
     act1 = arg1 & 0xFF;
 
-    if (D_8005E3E8[arg2] == 0) {
+    if (gPadExtendedModeIds[arg2] == 0) {
         gPadActuatorBuffers[arg2][0] = 0x40;
         gPadActuatorBuffers[arg2][1] = (act0 > 0);
         if (act1 != 0) {

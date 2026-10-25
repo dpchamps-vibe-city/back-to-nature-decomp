@@ -6,6 +6,7 @@
 #include "screen_fade.h"
 #include "wide_screen_fade.h"
 #include "update_timing.h"
+#include "pad_input_update.h"
 
 /* GP-relative globals this TU defines (target accesses all via %gp_rel).
  * Tentative definitions so cc1 keeps them inside the -G8 small-data range. */
@@ -30,7 +31,6 @@ extern void func_80011DB0(void);
  * would make cc1 emit call_value_internal1 (a $v0 set) for each void call,
  * stealing $v0 from the loads that follow them. */
 void func_8001B258(void);
-void func_80013B04(void);
 void func_8001FD10(void);
 void func_800129F4(void);
 void func_800120C8(void);
@@ -55,7 +55,7 @@ void func_80011C24(void) {
         do {
             Rand(0xFFFF);
             func_8001B258();
-            func_80013B04();
+            PollPadInputs();
             func_8001FD10();
             if (GetVal8005E2CC() == 1) {
                 D_8005E384();

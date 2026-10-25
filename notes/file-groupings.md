@@ -5031,6 +5031,66 @@ build/tu-campaign/baseline.json` passed all integrity gates, including every
 linked container's bytes/data/tables, source policy and exception non-growth;
 folded membership rose from 40 to 42 without regressing existing modules.
 
+Reconstructed polling/update slice: `src/modules/pad_input_update.c` holds
+**exe:0x80013B04–0x80013FC0**, in original order: `PollPadInputs`
+(80013B04), `UpdatePadInputRecord` (80013CD0), and
+`ClearPadInputTransientState` (80013F90). The former address-derived names
+remain recoverable from these identities. Beyond link order, polling is the
+sole caller of both record helpers: connection/command transitions use the
+clearer, while the normal path passes the same per-port record to the updater.
+The latter maintains exactly the transient fields the clearer resets, leaving
+both timing pairs and actuator-request bytes intact. Main-loop 80011C24 and
+overlay 10's 800B889C call polling. This supports a coherent record-processing
+interface, **not proof that an original TU ended at 80013FC0**. Setup, raw
+button/stick decoding, hardware communication/alignment, actuator formatting
+and request sequencing remain outside; their broader pad-family relationship
+is unchanged. No boundary is inferred from the formatter's flag exception.
+
+`include/pad_input_update.h` publishes only `PollPadInputs`, with initialization
+prerequisites, record/output effects, update-count timing units, connection
+handling and external-button-source constraints. Interface reconciliation
+replaced both callers' local declarations with this header without changing
+their objects. The two support functions keep external linkage and their
+original pointer/void ABI; neither is made static merely by co-location.
+`PadInputState` now names held/new/previous masks, both repeat outputs,
+counters and active flags, stick magnitude, and the actuator request bytes.
+All types, widths, offsets and signedness are unchanged. A held-mask change
+(including a release) restarts BOTH repeat streams but emits only new presses;
+unchanged input must exceed the delay before entering repeat mode, which
+itself emits nothing. Mode 2/3 divides timings; effective intervals clamp to
+one. The pad-0 external-source path swaps 0x20/0x40 and reports Start instead
+of substituting when held; no speculative gameplay/recording meaning is named.
+
+Data names are `gPadAlignmentPending` (8005E2A4, two s32 flags cleared after
+successful PadSetActAlign), `gPadPortIds` (8005E2AC, the SDK port pair),
+`gPadExtendedModeIds` (8005E3E8, two s16 InfoModeCurExID results), and
+`gPadInputStateStorage` (8005E870, two 0x38-byte records). Symbol configuration
+and canonicalization carry them through boot, alignment, output formatting and
+request sequencers. The pre-existing array-backed first-record lvalue/asm-label
+binding was explicitly renamed, not replaced; its partial byte-store view is
+now `PadInputActuatorView`. Existing tentative definitions and absolute/GP
+addressing remain unchanged. There is no new storage, private linkage or
+scope collision. The wider external-input context retains its neutral names.
+
+The mechanical fold first matched at baseline -O2/-G8; none of these members
+has an override, and none was added or retired. The flag-review report's
+historically unresolved 80014494 no-skip setting is left unchanged; compatible
+neighbors are not treated as affirmative flag evidence. The first fold exposed
+a concrete generator defect and rolled back: `patchSplatForLibs.ts` accepted
+only word-shaped C rodata owners, stranding `modules/pad_input_update`'s switch
+table after SDK rodata. Its two owner parsers now accept slash-bearing TU stems,
+as the existing merge tool does. This small shared-tool change is necessary
+for the module's pooled table and lies outside the source integration roots.
+
+The readability step and subsequent canonical-name/header integration each
+passed `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`:
+all integrity gates PASS, every EXE/overlay byte (including data and tables)
+unchanged, generated configuration converged, source policy and exception
+non-growth passed. Canonical-name check is clean; the published interface has
+no failing callers. Folded membership rose **42 → 45**, all 13 modules valid,
+without regressing an existing module. Exit 1 denotes the still-incomplete
+project-wide TU campaign (2578 functions remain), not an integrity failure.
+
 References: notes/research/func_800140C8-aggregate-copy.md;
 notes/retros/2026-08-07-func_800140C8-retro.md;
 notes/retros/2026-08-09-func_800142D8-retro.md;

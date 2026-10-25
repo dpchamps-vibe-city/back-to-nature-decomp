@@ -502,34 +502,40 @@ typedef struct {
     s32 unk8;
 } Ovl11SelectArg;
 
-/* Per-pad input/auto-repeat state (0x38 bytes). Boot points the two input
- * pointers at D_8005E870 and D_8005E870 + 0x38. func_80013CD0 processes
+/* Per-pad input/auto-repeat state (0x38 bytes). Boot binds gPad0Input and
+ * gPad1Input to gPadInputStateStorage and +0x38. UpdatePadInputRecord processes
  * independent repeat outputs at +0x00 and +0x24 using the two timing pairs;
- * func_80013F90 clears transient state but preserves those timings.
+ * ClearPadInputTransientState preserves timings and actuator requests.
  * Timing fields are signed words; their units/constraints are documented
- * in pad_input_setup.h. Other fields retain neutral names here. */
+ * in pad_input_setup.h. Button masks are active-high; repeat outputs include
+ * new presses as well as subsequent repeats. Counters and active flags are
+ * independent for the two streams. stickMagnitude is -1 when unavailable,
+ * otherwise the decoder's dead-zone/clamped 0..90 value (not an angle).
+ * The final bytes feed the actuator formatter without being cleared by
+ * transient input reset. All original widths and signedness are retained. */
 typedef struct PadInputState {
-    /* 0x00 */ s32 field_0x00;
-    /* 0x04 */ s32 field_0x04;
-    /* 0x08 */ s32 field_0x08;
-    /* 0x0C */ s32 field_0x0C;
-    /* 0x10 */ s32 field_0x10;
-    /* 0x14 */ s32 field_0x14;
+    /* 0x00 */ s32 repeatButtons;
+    /* 0x04 */ s32 heldButtons;
+    /* 0x08 */ s32 pressedButtons;
+    /* 0x0C */ s32 previousHeldButtons;
+    /* 0x10 */ s32 repeatCounter;
+    /* 0x14 */ s32 repeatActive;
     /* 0x18 */ s32 repeatDelay;
     /* 0x1C */ s32 repeatInterval;
-    /* 0x20 */ s32 field_0x20;
-    /* 0x24 */ s32 field_0x24;
-    /* 0x28 */ s32 field_0x28;
+    /* 0x20 */ s32 secondaryRepeatActive;
+    /* 0x24 */ s32 secondaryRepeatButtons;
+    /* 0x28 */ s32 secondaryRepeatCounter;
     /* 0x2C */ s32 secondaryRepeatDelay;
     /* 0x30 */ s32 secondaryRepeatInterval;
-    /* 0x34 */ s16 field_0x34;
-    /* 0x36 */ u8 field_0x36;
-    /* 0x37 */ u8 field_0x37;
+    /* 0x34 */ s16 stickMagnitude;
+    /* 0x36 */ u8 actuatorRequest0;
+    /* 0x37 */ u8 actuatorRequest1;
 } PadInputState;
 
-/* D_8006C838 view for func_80013CD0: s32 flag word at 0xC (bit 16 = pad
- * mutes actuator sync) and a pointer at 0x1C (the actuator object written by
- * func_80021DA8) whose store base has an s32 at 0 and a u16 at 4. */
+/* D_8006C838 view for UpdatePadInputRecord: the flag at +0xC (bit 16) enables
+ * pad-0 input substitution. The pointer at +0x1C supplies a u16 button mask
+ * at +4 and receives a Start report (0x800) at +0; keep the wider object's
+ * meaning neutral. func_80021DA8 also writes this pointer. */
 typedef struct {
     /* 0x00 */ s32 field_0;
     /* 0x04 */ u16 field_4;

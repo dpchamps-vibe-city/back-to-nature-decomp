@@ -102,9 +102,9 @@ SetPadRepeatTiming = 0x80013AA4; // type:func
 SetPadSecondaryRepeatTiming = 0x80013AC8; // type:func
 SetPadActuatorsEnabled = 0x80013AEC; // type:func
 GetPadActuatorsEnabled = 0x80013AF8; // type:func
-func_80013B04 = 0x80013B04; // type:func
-func_80013CD0 = 0x80013CD0; // type:func
-func_80013F90 = 0x80013F90; // type:func
+PollPadInputs = 0x80013B04; // type:func
+UpdatePadInputRecord = 0x80013CD0; // type:func
+ClearPadInputTransientState = 0x80013F90; // type:func
 func_80013FC0 = 0x80013FC0; // type:func
 func_80014064 = 0x80014064; // type:func
 func_800140C8 = 0x800140C8; // type:func
@@ -1261,8 +1261,12 @@ GsOUT_PACKET_P = 0x800A4060;
 _padRestPeriod = 0x800B7E18;
 
 // Pad input: boot assigns the two records; SDK initialization binds the buffers.
+gPadAlignmentPending = 0x8005E2A4; // size:0x8
+gPadPortIds = 0x8005E2AC; // size:0x2
 gPad0Input = 0x8005E3A8; // size:0x4
 gPad1Input = 0x8005E3AC; // size:0x4
+gPadExtendedModeIds = 0x8005E3E8; // size:0x4
+gPadInputStateStorage = 0x8005E870; // size:0x70
 gPadReadBuffers = 0x8005E9C8; // size:0x44
 gPadActuatorBuffers = 0x8005EA18; // size:0x10
 

@@ -4,6 +4,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/libetc.h"
 #include "scene_selection.h"
+#include "pad_input_update.h"
 
 /* The four environment structures are fields of one local so they pack at
    4-alignment (DRAWENV 0x5C, DISPENV 0x14), matching the target frame
@@ -16,8 +17,6 @@ typedef struct {
     DISPENV disp1;
 } EnvSet;
 
-/* Callees not declared in functions.h, declared locally. */
-void func_80013B04(void);
 /* ovl_10_func_800B8A5C is matched as void(void), but this call site passes
    &D_800BBB7C which the callee ignores; declared with an argument here so
    the call site emits the address load. */
@@ -59,7 +58,7 @@ s32 ovl_10_func_800B889C(void) {
     if (D_800BB7C4 == 0) {
         do {
             cur = (cur == &env.draw0) ? &env.draw1 : &env.draw0;
-            func_80013B04();
+            PollPadInputs();
             ovl_10_func_800B8A5C(D_800BBB7C);
             ovl_10_func_800B8C14();
             FntFlush(-1);

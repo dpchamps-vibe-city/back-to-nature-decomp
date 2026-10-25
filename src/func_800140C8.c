@@ -6,7 +6,7 @@ s32 func_800140C8(s32 arg0) {
     u8 *port;
     s32 result;
 
-    ports = D_8005E2AC[0];
+    ports = gPadPortIds[0];
     port = (u8 *)&ports + arg0;
     result = 0;
     if (PadGetState(*port) == PadStateStable) {

@@ -38,7 +38,7 @@ segments:
     subsegments:
       - [0x800, rodata]
       - [0x808, .rodata, func_80011370]
-      - [0x85C, .rodata, func_80013B04]
+      - [0x85C, .rodata, modules/pad_input_update]
       - [0x878, rodata]
       - [0x8B4, .rodata, func_800183E0]
       - [0x8DC, .rodata, func_8001A284]
@@ -110,9 +110,7 @@ segments:
       - [0x41FC, c, func_800139FC]       # 0x800139FC func_800139FC
       - [0x4224, c, modules/pad_input_setup]
       - [0x42EC, c, modules/pad_actuator_gate]
-      - [0x4304, c, func_80013B04]       # 0x80013B04 func_80013B04
-      - [0x44D0, c, func_80013CD0]       # 0x80013CD0 func_80013CD0
-      - [0x4790, c, func_80013F90]       # 0x80013F90 func_80013F90
+      - [0x4304, c, modules/pad_input_update]
       - [0x47C0, c, func_80013FC0]       # 0x80013FC0 func_80013FC0
       - [0x4864, c, func_80014064]       # 0x80014064 func_80014064
       - [0x48C8, c, func_800140C8]       # 0x800140C8 func_800140C8

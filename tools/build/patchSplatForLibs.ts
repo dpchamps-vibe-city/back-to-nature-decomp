@@ -193,7 +193,8 @@ function stripNonTextPatches(lines: string[], dataRomStart: number, sdataRomStar
    * so drop the incoming copies here or they appear twice — once in place and
    * once stranded after the library block, which splat rejects as out of
    * order. The continuation segment that follows each one goes with it. */
-  const ownedRodataRe = /^\s+- \[\s*0x[0-9A-Fa-f]+\s*,\s*\.rodata\s*,\s*\w+\s*\]/;
+  /* Owners are translation-unit stems, including modules/<name>. */
+  const ownedRodataRe = /^\s+- \[\s*0x[0-9A-Fa-f]+\s*,\s*\.rodata\s*,\s*[\w/]+\s*\]/;
   const skip = new Set<number>();
   lines.forEach((line, index) => {
     if (!ownedRodataRe.test(line)) return;
@@ -454,7 +455,7 @@ function main() {
   const ownedRodata: SectionEntry[] = [];
   const yamlLines = rawYaml.split("\n");
   yamlLines.forEach((line, index) => {
-    const owned = line.match(/^\s+- \[\s*0x([0-9A-Fa-f]+)\s*,\s*\.rodata\s*,\s*(\w+)\s*\]/);
+    const owned = line.match(/^\s+- \[\s*0x([0-9A-Fa-f]+)\s*,\s*\.rodata\s*,\s*([\w/]+)\s*\]/);
     if (!owned) return;
     const rom = parseInt(owned[1], 16);
     /* The extent comes from whatever follows. Usually a plain rodata

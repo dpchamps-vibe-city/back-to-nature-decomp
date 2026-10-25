@@ -1175,7 +1175,7 @@ extern s16 D_80061E08[16];
 extern s16 D_80061E0E[3];
 extern s16 D_80061E14[3];
 
-/* Boot's pointers to the two 0x38-byte pad-input records at D_8005E870
+/* Boot's pointers to the two 0x38-byte pad-input records at gPadInputStateStorage
  * and +0x38. Boot owns these GP-relative words; setup/consumers use externs. */
 extern struct PadInputState *gPad0Input;
 extern struct PadInputState *gPad1Input;
@@ -2389,14 +2389,17 @@ extern s32 D_800559C4[3];
 
 
 
-/* D_8005E870 - struct accessed with sb at offsets 0x36 and 0x37 */
+/* Boot and PollPadInputs address two consecutive 0x38-byte input records
+ * here (exe:8005E870). Retain the existing partial first-record lvalue view
+ * for actuator sequencers' byte stores; PadInputState is the full layout.
+ * The array-backed binding preserves the existing absolute addressing. */
 typedef struct {
     char pad[0x36];     /* 0x00-0x35 */
-    u8 field_36;        /* 0x36 */
-    u8 field_37;        /* 0x37 */
-} struct_8005E870;
-extern struct_8005E870 _D_8005E870[1] __asm__("D_8005E870");
-#define D_8005E870 (*((struct_8005E870*)_D_8005E870))
+    u8 request0;       /* 0x36 */
+    u8 request1;       /* 0x37 */
+} PadInputActuatorView;
+extern PadInputActuatorView _gPadInputStateStorage[1] __asm__("gPadInputStateStorage");
+#define gPadInputStateStorage (*((PadInputActuatorView*)_gPadInputStateStorage))
 
 /* D_80061F08 - struct used by func_8001FD84, func_8001FD10, func_8001FE00
  * Fields at 0x04, 0x08, 0x0C, 0x10, 0x14 for absolute addressing */
@@ -2782,13 +2785,13 @@ extern u8 gPadActuatorBuffers[2][8];
 /* Pad startup sets 1; exe:80014494 clears both actuator tables when zero. */
 extern s32 gPadActuatorsEnabled;
 
-/* Pad port IDs copied by func_800140C8. The incomplete aggregate type keeps
- * the object out of small data and preserves the two-byte object copy. */
+/* SDK port IDs (0 and 0x10), copied by PollPadInputs and exe:800140C8.
+ * Retain the incomplete aggregate and existing two-byte object copy. */
 typedef struct PadPortPair {
     s8 port0;
     s8 port1;
 } PadPortPair;
-extern PadPortPair D_8005E2AC[];
+extern PadPortPair gPadPortIds[];
 
 /* Pad actuator alignment data passed to PadSetActAlign. */
 extern u8 D_80048B14[];
@@ -2807,13 +2810,13 @@ extern s16 D_800495CC[78 * 7];
  * Absolute-addressed (lui+addiu). Array size 4 ensures >8 bytes. */
 extern s32 D_80049A70[4];
 
-/* D_8005E2A4 — GP-relative s32, per-port state flags (func_80013B04)
- * Size 2 keeps declaration <= 8 bytes for GP-relative addressing under -G8. */
-extern s32 D_8005E2A4[2];
+/* PollPadInputs sets 1 after disconnect/find-pad, clears after successful
+ * PadSetActAlign (exe:800140C8). Keep the existing eight-byte GP object. */
+extern s32 gPadAlignmentPending[2];
 
-/* D_8005E3E8 — GP-relative s16, per-port actuator data (func_80013B04)
- * Size 2 keeps declaration <= 8 bytes for GP-relative addressing under -G8. */
-extern s16 D_8005E3E8[2];
+/* PollPadInputs stores PadInfoMode(InfoModeCurExID) per port. The actuator
+ * formatter (exe:80014494) distinguishes zero from nonzero; four-byte GP object. */
+extern s16 gPadExtendedModeIds[2];
 
 /* D_8005E5E8 — double-buffered DRAWENV/DISPENV pair (func_80011370).
  * Accessed at offsets 0x0..0x19A via absolute lui/addiu base (2*0x134 bytes

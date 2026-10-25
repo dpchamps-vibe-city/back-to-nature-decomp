@@ -3461,22 +3461,22 @@ typedef struct {
 } POLY_FT4;
 
 struct PadInputState {
-               s32 field_0x00;
-               s32 field_0x04;
-               s32 field_0x08;
-               s32 field_0x0C;
-               s32 field_0x10;
-               s32 field_0x14;
+               s32 repeatButtons;
+               s32 heldButtons;
+               s32 pressedButtons;
+               s32 previousHeldButtons;
+               s32 repeatCounter;
+               s32 repeatActive;
                s32 repeatDelay;
                s32 repeatInterval;
-               s32 field_0x20;
-               s32 field_0x24;
-               s32 field_0x28;
+               s32 secondaryRepeatActive;
+               s32 secondaryRepeatButtons;
+               s32 secondaryRepeatCounter;
                s32 secondaryRepeatDelay;
                s32 secondaryRepeatInterval;
-               s16 field_0x34;
-               u8 field_0x36;
-               u8 field_0x37;
+               s16 stickMagnitude;
+               u8 actuatorRequest0;
+               u8 actuatorRequest1;
 };
 
 typedef struct {

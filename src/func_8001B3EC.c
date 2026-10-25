@@ -13,7 +13,7 @@ void func_8001B3EC(s32 arg0) {
     s32 count;
     s32 threshold;
 
-    flags = (u8 *)&D_8005E870;
+    flags = (u8 *)&gPadInputStateStorage;
     base = (u8 *)D_8005E4C8[arg0];
     if (base) {
         count = D_8005E4C0[arg0];
