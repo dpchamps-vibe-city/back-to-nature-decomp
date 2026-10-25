@@ -8,6 +8,7 @@ import { runResidualObjective, type ResidualReading } from "../../shared/gates.t
 import { runCommand } from "../../shared/process.ts";
 import { allowlistKeys, sourceConstructFindings } from "../../shared/source-policy.ts";
 import type { CallGraphEntry, PolicyFinding } from "../../shared/types.ts";
+import { contentIds } from "../../shared/workspace.ts";
 import { best, readLedger, variantText, type LedgerEntry } from "../../../../tools/agent/experimentLedger.ts";
 import { describe as describeEntry } from "./best-attempt.ts";
 import { commitRepairAttempt, commitRepairedFunction } from "./commit.ts";
@@ -557,7 +558,7 @@ export interface RepairLoopOptions {
 
 /** Work the repair queue: one function per clean context, committing each result. */
 export async function runRepairLoop(input: LoopDeps, options: RepairLoopOptions = {}, oracles: RepairOracles = DEFAULT_REPAIR_ORACLES): Promise<FunctionOutcome[]> {
-  const deps: LoopDeps = { ...input, baseline: new Set(input.baseline) };
+  const deps: LoopDeps = { ...input, baseline: new Map(input.baseline) };
   mkdirSync(deps.config.runtimeDir, { recursive: true });
   const savedModel = deps.ctx.model;
   const savedThinking = deps.pi.getThinkingLevel();
@@ -622,7 +623,7 @@ export async function runRepairLoop(input: LoopDeps, options: RepairLoopOptions 
         else if (commit.failed) notify(deps, `Repair note for ${target.name} not committed — ${commit.detail}`, "warning");
       }
       /* Whatever could not be committed pre-dates the next function. */
-      for (const file of (await loopChangedFiles(ctx)).changedFiles) deps.baseline.add(file);
+      for (const [file, id] of await contentIds(deps.projectRoot, (await loopChangedFiles(ctx)).changedFiles, { write: true })) deps.baseline.set(file, id);
     }
   } finally {
     writeState(deps.config, state);

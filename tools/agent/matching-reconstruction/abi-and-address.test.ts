@@ -224,7 +224,7 @@ test("an expansion with an additive term is not spelled as a scale", () => {
 projectTest("a dereferenced call result becomes a typed local, not a refusal", () => {
   const result = reconstructFunction({ functionName: "ovl_11_func_800BF3D0", notify: () => {} });
   assert.equal(result.state, "exact-candidate", result.unresolved?.detail);
-  assert.match(result.winner!.source, /void \*func_8001EF98\(void\);/, "the callee returns a pointer and is declared as one");
+  assert.match(result.winner!.source, /void \*GetVal8005E524\(void\);/, "the callee returns a pointer and is declared as one");
 });
 
 projectTest("a member array at a constant offset reaches a compiling draft", () => {

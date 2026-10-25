@@ -10,7 +10,8 @@ import type { AutodecompConfig, CallGraphEntry, DiffResult, GateResult, PolicyFi
 import {
   changedFilesBetweenTrees,
   createTreeFromWorktree,
-  filterNewChanges,
+  newChangesSince,
+  type DirtSnapshot,
   treePatch,
   workspaceChangedFiles,
 } from "../../shared/workspace.ts";
@@ -43,8 +44,8 @@ export interface FinalizeVerdict {
 
 export interface OracleContext {
   projectRoot: string;
-  /** Files already dirty when the loop started; never charged to the loop. */
-  baseline: Set<string>;
+  /** Files already dirty when the loop started, with their content then; never charged to the loop while unchanged. */
+  baseline: DirtSnapshot;
   state: LoopState;
   signal?: AbortSignal;
 }
@@ -78,7 +79,7 @@ export async function loopChangedFiles(ctx: OracleContext): Promise<{ changedFil
       ...(await workspaceChangedFiles(ctx.projectRoot, ctx.signal)),
     ]),
   ].sort();
-  return { changedFiles: filterNewChanges(all, ctx.baseline).newFiles, patch };
+  return { changedFiles: (await newChangesSince(ctx.projectRoot, all, ctx.baseline, ctx.signal)).newFiles, patch };
 }
 
 /**

@@ -74,22 +74,68 @@ export async function workspaceChangedFiles(workspace: string, signal?: AbortSig
 }
 
 /**
+ * Dirty files and the content each had when the snapshot was taken: a git blob
+ * id, or null for a path that was absent. The blobs are written to the object
+ * database, so a snapshot can also put a file back as it was.
+ */
+export type DirtSnapshot = Map<string, string | null>;
+
+/** Blob ids of these paths as they stand now; null for a path that is absent. */
+export async function contentIds(projectRoot: string, paths: readonly string[], options: { write?: boolean; signal?: AbortSignal } = {}): Promise<Map<string, string | null>> {
+  const ids = new Map<string, string | null>();
+  const present = paths.filter((path) => {
+    const stat = lstatSync(join(projectRoot, path), { throwIfNoEntry: false });
+    if (!stat?.isFile()) ids.set(path, null);
+    return !!stat?.isFile();
+  });
+  for (let start = 0; start < present.length; start += 200) {
+    const chunk = present.slice(start, start + 200);
+    const output = await git(projectRoot, ["hash-object", ...(options.write ? ["-w"] : []), "--", ...chunk], projectRoot, undefined, 120_000, options.signal);
+    output.split("\n").forEach((id, index) => ids.set(chunk[index]!, id.trim()));
+  }
+  return ids;
+}
+
+/** Every dirty file with the content it has now. */
+export async function snapshotDirt(projectRoot: string, signal?: AbortSignal): Promise<DirtSnapshot> {
+  return contentIds(projectRoot, await workspaceChangedFiles(projectRoot, signal), { write: true, ...(signal ? { signal } : {}) });
+}
+
+/**
  * Split a changed-file list into files that were already dirty when a
  * baseline was captured (preExisting) and files dirtied afterwards (newFiles).
  * Used by the finalize scope gate so pre-existing workspace dirt (user WIP,
  * local vendor patches) cannot block finalization of an unrelated function.
+ *
+ * Given a snapshot and the current content ids, a file is pre-existing only
+ * while its content is still what the snapshot recorded: an edit on top of
+ * old dirt belongs to whoever made it. A path list alone matches by name.
  */
 export function filterNewChanges(
   changedFiles: string[],
-  baseline: Iterable<string>,
+  baseline: Iterable<string> | ReadonlyMap<string, string | null>,
+  current?: ReadonlyMap<string, string | null>,
 ): { newFiles: string[]; preExisting: string[] } {
-  const baselineSet = baseline instanceof Set ? baseline : new Set(baseline);
+  const snapshot = baseline instanceof Map ? baseline as ReadonlyMap<string, string | null> : undefined;
+  const baselineSet = snapshot ? new Set(snapshot.keys()) : baseline instanceof Set ? baseline : new Set(baseline as Iterable<string>);
   const newFiles: string[] = [];
   const preExisting: string[] = [];
   for (const file of changedFiles) {
-    (baselineSet.has(file) ? preExisting : newFiles).push(file);
+    const unchanged = baselineSet.has(file) && (!snapshot || !current || snapshot.get(file) === current.get(file));
+    (unchanged ? preExisting : newFiles).push(file);
   }
   return { newFiles, preExisting };
+}
+
+/** filterNewChanges against a snapshot, reading the current content of the files it names. */
+export async function newChangesSince(
+  projectRoot: string,
+  changedFiles: string[],
+  baseline: DirtSnapshot,
+  signal?: AbortSignal,
+): Promise<{ newFiles: string[]; preExisting: string[] }> {
+  const current = await contentIds(projectRoot, changedFiles.filter((file) => baseline.has(file)), signal ? { signal } : {});
+  return filterNewChanges(changedFiles, baseline, current);
 }
 
 export function patchHash(patch: string): string {

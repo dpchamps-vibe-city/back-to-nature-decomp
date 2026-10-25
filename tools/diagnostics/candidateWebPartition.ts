@@ -83,10 +83,19 @@ function quotedString(s: S): string | null {
   return null;
 }
 
-export function extractCandidatePartition(observed: WebPartition, dumps: DumpInputs, symbols: ReadonlyMap<string, number> = new Map()): CandidatePartition {
-  const names = [dumps.rtl, dumps.lreg, dumps.greg].map(d => /^;; Function (\S+)/m.exec(d)?.[1]);
-  if (names.some(n => !n)) throw new Error("Unknown RTL dump format: missing Function header");
-  if (names.some(n => n !== observed.functionName)) throw new Error("RTL dumps do not belong to the observed function");
+/** One function's section of a pass dump: a unit dumps every function it compiles, static inline helpers and module siblings included. */
+function functionSection(dump: string, name: string): string | null {
+  const headers = [...dump.matchAll(/^;; Function (\S+)/gm)];
+  const index = headers.findIndex(header => header[1] === name);
+  if (index < 0) return null;
+  return dump.slice(headers[index]!.index, headers[index + 1]?.index ?? dump.length);
+}
+
+export function extractCandidatePartition(observed: WebPartition, unitDumps: DumpInputs, symbols: ReadonlyMap<string, number> = new Map()): CandidatePartition {
+  if ([unitDumps.rtl, unitDumps.lreg, unitDumps.greg].some(d => !/^;; Function \S+/m.test(d))) throw new Error("Unknown RTL dump format: missing Function header");
+  const [rtlDump, lregDump, gregDump] = [unitDumps.rtl, unitDumps.lreg, unitDumps.greg].map(d => functionSection(d, observed.functionName));
+  if (rtlDump == null || lregDump == null || gregDump == null) throw new Error("RTL dumps do not belong to the observed function");
+  const dumps: DumpInputs = { ...unitDumps, rtl: rtlDump, lreg: lregDump, greg: gregDump };
   const lreg = parseRtlInstructions(dumps.lreg, "lreg"), rtl = parseRtlInstructions(dumps.rtl, "rtl");
   const allocation = analyzeAllocation(dumps.lreg, dumps.greg, lreg);
   const defs = new Map<number, Array<{ source: S; uid: number; order: number; block: number | undefined }>>();

@@ -1,5 +1,6 @@
 import { prepareAttempt, attemptStaticFinalization, buildInputs, documentCompletion, sameInputs, inputIdentity, type Completion } from "../tools/prepared-attempt.ts";
 import { mkdirSync } from "node:fs";
+import { contentIds, type DirtSnapshot } from "../../shared/workspace.ts";
 import { packetOpening } from "../../../../tools/agent/campaign/packet.ts";
 import { PREP_TOOLS, prepHandoffMessage, prepMessage, prepNudge, prepStatus, setPrepHandoffToolActive, type PrepSink } from "./prep.ts";
 import type { ExtensionAPI, ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
@@ -92,8 +93,8 @@ export interface LoopDeps {
   config: LoopConfig;
   sink: LoopSinks;
   flag: AbortFlag;
-  /** Workspace dirt that pre-dates the loop and is never charged to it. */
-  baseline: Set<string>;
+  /** Workspace dirt that pre-dates the loop, with its content then; never charged to it while unchanged. */
+  baseline: DirtSnapshot;
 }
 
 export function notify(deps: LoopDeps, message: string, level: "info" | "warning" | "error" = "info"): void {
@@ -834,7 +835,7 @@ async function closeOut(
 
   const remaining = (await loopChangedFiles(ctx)).changedFiles;
   if (remaining.length === 0) return;
-  for (const file of remaining) deps.baseline.add(file);
+  for (const [file, id] of await contentIds(deps.projectRoot, remaining, { write: true })) deps.baseline.set(file, id);
   notify(
     deps,
     `Not charging the next function for what ${outcome.functionName} left behind: ${remaining.join(", ")}`,
@@ -846,7 +847,7 @@ export async function runLoop(input: LoopDeps, options: LoopOptions = {}): Promi
   /* The loop forgives its own leftovers as it goes, and it does so on its own
    * copy: what it stops charging to the next function is not thereby forgiven
    * for every other tool sharing the session's baseline. */
-  const deps: LoopDeps = { ...input, baseline: new Set(input.baseline) };
+  const deps: LoopDeps = { ...input, baseline: new Map(input.baseline) };
   mkdirSync(deps.config.runtimeDir, { recursive: true });
   const savedModel = deps.ctx.model;
   const savedThinking = deps.pi.getThinkingLevel();

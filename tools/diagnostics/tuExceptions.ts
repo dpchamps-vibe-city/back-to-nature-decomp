@@ -44,7 +44,8 @@ export interface ExceptionSets {
 }
 
 export interface CampaignReceipt {
-  schemaVersion: 1;
+  /** 2: exceptions keyed by function identity (`<container>:0xVRAM`), not name. */
+  schemaVersion: 2;
   createdAt: string;
   head: string | null;
   /** Content hash of every configured source, splat config, hand header and policy input. */
@@ -87,7 +88,7 @@ function gitTree(treeish: string): TreeView {
   const blobs = new Map<string, string>();
   for (const line of git(["ls-tree", "-r", treeish, "--", "src", "configs", ".pi/autoloop.json"]).toString("utf8").split("\n")) {
     const match = line.match(/^\d+ blob ([0-9a-f]+)\t(.+)$/);
-    if (match && (/\.(c|yaml|mk|json)$/.test(match[2]!))) blobs.set(match[2]!, match[1]!);
+    if (match && (/\.(c|yaml|mk|json|txt)$/.test(match[2]!))) blobs.set(match[2]!, match[1]!);
   }
   const paths = [...blobs.keys()];
   const contents = new Map<string, string>();
@@ -113,18 +114,66 @@ function gitTree(treeish: string): TreeView {
   return { read, units };
 }
 
-/** `key:kind` for every allowlist grant, lowercased as the config loader keys them. */
-function allowlistSet(text: string | null): string[] {
-  if (!text) return [];
-  const allowlist = (JSON.parse(text) as { sourcePolicy?: { allowlist?: Record<string, string[]> } }).sourcePolicy?.allowlist ?? {};
-  return Object.entries(allowlist).flatMap(([key, kinds]) => kinds.map((kind) => `${key.toLowerCase()}:${kind}`)).sort();
+/**
+ * Function identity as `<container>:0xVRAM`, from each container's symbol
+ * table in the same tree.
+ *
+ * Exceptions are keyed by what a function *is*, not what it is called: a
+ * module reconstruction renames functions, and a renamed function's
+ * allowlist entry, flag override or pin is the same exception, not a new one.
+ * A name no table resolves (a module key, a typo) keeps its spelling.
+ */
+interface Identities {
+  /** Exact name -> identity, for names one container defines. */
+  byName: Map<string, string>;
+  /** Lowercased name -> identity, as the allowlist keys names. */
+  byLowerName: Map<string, string>;
+  /** Per container: exact name -> identity. */
+  inContainer: Map<string, Map<string, string>>;
 }
 
-function flagOverrideSet(text: string | null): string[] {
+function identity(container: string, address: number): string {
+  return `${container}:0x${address.toString(16).toUpperCase().padStart(8, "0")}`;
+}
+
+function identities(view: TreeView): Identities {
+  const byName = new Map<string, string>(), byLowerName = new Map<string, string>(), inContainer = new Map<string, Map<string, string>>();
+  const ambiguous = new Set<string>();
+  for (const container of loadContainers()) {
+    const own = new Map<string, string>();
+    for (const line of (view.read(container.paths.symbolAddrs) ?? "").split("\n")) {
+      const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_.]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;.*\btype:func\b/);
+      if (!match) continue;
+      const id = identity(container.id, Number(match[2]));
+      own.set(match[1]!, id);
+      for (const [map, key] of [[byName, match[1]!], [byLowerName, match[1]!.toLowerCase()]] as const) {
+        if (map.has(key) && map.get(key) !== id) ambiguous.add(key);
+        map.set(key, id);
+      }
+    }
+    inContainer.set(container.id, own);
+  }
+  for (const key of ambiguous) { byName.delete(key); byLowerName.delete(key); }
+  return { byName, byLowerName, inContainer };
+}
+
+/** `identity:kind` for every allowlist grant; name, bare and qualified address keys of one function coincide. */
+function allowlistSet(text: string | null, ids: Identities): string[] {
+  if (!text) return [];
+  const allowlist = (JSON.parse(text) as { sourcePolicy?: { allowlist?: Record<string, string[]> } }).sourcePolicy?.allowlist ?? {};
+  const normalize = (key: string): string => {
+    const address = key.match(/^(?:([A-Za-z0-9_]+):)?(0x[0-9A-Fa-f]+)$/);
+    if (address) return identity(address[1] ?? "exe", Number(address[2]));
+    return ids.byLowerName.get(key.toLowerCase()) ?? key.toLowerCase();
+  };
+  return [...new Set(Object.entries(allowlist).flatMap(([key, kinds]) => kinds.map((kind) => `${normalize(key)}:${kind}`)))].sort();
+}
+
+function flagOverrideSet(text: string | null, ids: Identities): string[] {
   if (!text) return [];
   return text.split("\n").flatMap((line) => {
     const match = line.match(/^CC1FLAGS_(\S+?)\s*:?=\s*(.*)$/);
-    return match ? [`${match[1]}=${match[2]!.trim().split(/\s+/).join(" ")}`] : [];
+    return match ? [`${ids.byName.get(match[1]!) ?? match[1]}=${match[2]!.trim().split(/\s+/).join(" ")}`] : [];
   }).sort();
 }
 
@@ -137,6 +186,8 @@ function flagOverrideSet(text: string | null): string[] {
  */
 export function exceptionSets(view: TreeView, config: AutodecompConfig): ExceptionSets {
   const unrestricted: AutodecompConfig = { ...config, sourcePolicy: { ...config.sourcePolicy, allowlist: {} } };
+  const ids = identities(view);
+  const of = (container: string, name: string) => ids.inContainer.get(container)?.get(name) ?? `${container}:${name}`;
   const constructs = new Set<string>();
   const includeAsm = new Set<string>();
   const moduleScope = new Set<string>();
@@ -147,7 +198,7 @@ export function exceptionSets(view: TreeView, config: AutodecompConfig): Excepti
     const facts = sourceFacts(source);
     for (const finding of sourceConstructFindings(source, unrestricted, {})) {
       if (finding.kind === "include-asm") {
-        if (finding.text) includeAsm.add(`${unit.container}:${finding.text}`);
+        if (finding.text) includeAsm.add(of(unit.container, finding.text));
         continue;
       }
       if (finding.kind !== "register-asm" && finding.kind !== "embedded-asm") continue;
@@ -156,13 +207,13 @@ export function exceptionSets(view: TreeView, config: AutodecompConfig): Excepti
          a per-function file's own function, or a module's module scope. */
       const enclosing = finding.line !== undefined ? enclosingDefinition(facts.definitions, finding.line)?.name : undefined;
       const owner = enclosing ?? (module ? undefined : unit.members[0] ?? unit.segmentName);
-      if (owner) constructs.add(`${unit.container}:${owner}:${finding.kind}`);
+      if (owner) constructs.add(`${of(unit.container, owner)}:${finding.kind}`);
       else moduleScope.add(`${unit.container}:${unit.sourcePath}:${finding.kind}`);
     }
   }
   return {
-    allowlist: allowlistSet(view.read(".pi/autoloop.json")),
-    flagOverrides: flagOverrideSet(view.read("configs/flag_overrides.mk")),
+    allowlist: allowlistSet(view.read(".pi/autoloop.json"), ids),
+    flagOverrides: flagOverrideSet(view.read("configs/flag_overrides.mk"), ids),
     constructs: [...constructs].sort(),
     includeAsm: [...includeAsm].sort(),
     moduleScope: [...moduleScope].sort(),
@@ -211,7 +262,7 @@ function headCommit(): string | null {
 
 export function captureReceipt(path = DEFAULT_RECEIPT): CampaignReceipt {
   const receipt: CampaignReceipt = {
-    schemaVersion: 1,
+    schemaVersion: 2,
     createdAt: new Date().toISOString(),
     head: headCommit(),
     inputs: inputsDigest(),
@@ -232,7 +283,9 @@ export function loadBaseline(reference: string): { label: string; exceptions: Ex
   if (existsSync(asFile) || existsSync(reference)) {
     const text = readFileSync(existsSync(asFile) ? asFile : reference, "utf8");
     const receipt = JSON.parse(text) as CampaignReceipt;
-    if (receipt.schemaVersion !== 1 || !receipt.exceptions) throw new Error(`${reference} is not a schemaVersion 1 campaign receipt`);
+    if ((receipt.schemaVersion as number) !== 2 || !receipt.exceptions) {
+      throw new Error(`${reference} is not a schemaVersion 2 campaign receipt — recapture it with --write-baseline, or pass the commit it was taken on`);
+    }
     return { label: `receipt ${reference} (${receipt.head?.slice(0, 12) ?? "no commit"}, ${receipt.createdAt})`, exceptions: receipt.exceptions };
   }
   try {

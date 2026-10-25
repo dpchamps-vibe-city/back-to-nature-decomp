@@ -3,7 +3,7 @@ import { Type } from "typebox";
 import { loadConfig } from "../../shared/config.ts";
 import { finalizeWorkspace } from "./finalization.ts";
 import { loadCallGraph } from "../../shared/call-graph.ts";
-import { createTreeFromWorktree, changedFilesBetweenTrees, filterNewChanges, treePatch, workspaceChangedFiles } from "../../shared/workspace.ts";
+import { createTreeFromWorktree, changedFilesBetweenTrees, newChangesSince, treePatch, workspaceChangedFiles } from "../../shared/workspace.ts";
 import { getSessionBaseline } from "./session-baseline.ts";
 import { validateFunctionName } from "./shared.ts";
 
@@ -30,7 +30,7 @@ export function registerFinalizeFunctionTool(pi: ExtensionAPI,
         ...await workspaceChangedFiles(ctx.cwd),
       ])].sort();
       const baseline = await getSessionBaseline(ctx.cwd);
-      const { newFiles: changedFiles, preExisting } = filterNewChanges(allChangedFiles, baseline);
+      const { newFiles: changedFiles, preExisting } = await newChangesSince(ctx.cwd, allChangedFiles, baseline);
       /* The graph places the function; the gate needs it placed. Without the
          container and the source path the policy scan looks for an overlay's
          translation unit under `src/`, finds nothing, and reports a clean
@@ -40,7 +40,7 @@ export function registerFinalizeFunctionTool(pi: ExtensionAPI,
         ? `\nScope gate ignored ${preExisting.length} pre-existing workspace change(s): ${preExisting.join(", ")}`
         : "";
       if (gate.pass) {
-        const after = filterNewChanges(await workspaceChangedFiles(ctx.cwd), baseline).newFiles;
+        const after = (await newChangesSince(ctx.cwd, await workspaceChangedFiles(ctx.cwd), baseline)).newFiles;
         onPassed?.(params.functionName, [...new Set([...changedFiles, ...after])].sort(), ctx);
       }
       const text = gate.pass

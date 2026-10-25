@@ -21,6 +21,7 @@ import { prepareBundle, renderBundle } from "./bundle.js";
 import { applyTransaction, planIntegration } from "./integration.js";
 import { reconstructFunction } from "../matching-reconstruction/engine.js";
 import { loadContainers, requireContainer } from "../../lib/container.js";
+import { loadFunctionSpans } from "../../lib/symbolIndex.js";
 import { transferFromDonor } from "../family-transfer/transfer.js";
 import { publishRecovered, retractRecovered } from "./artifact-overlay.js";
 
@@ -75,8 +76,12 @@ projectTest("a global half the container reads is not a dependency between its r
 /* ---- the campaign -------------------------------------------------------------- */
 
 projectTest("a bounded campaign settles what it can and keeps everything at the stop", () => {
+  /* Seeded explicitly: the budget and the bookkeeping are the subject, and a
+     project with nothing left unmatched would otherwise give it no work. */
+  const seeds = loadFunctionSpans(requireContainer("ovl_11")).slice(0, 16).map((span) => span.name);
   const report = runCampaign({
     containers: overlay(),
+    functions: seeds,
     maxAttempts: 12,
     maxRounds: 2,
     notify: () => {},

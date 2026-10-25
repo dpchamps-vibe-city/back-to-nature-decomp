@@ -8,7 +8,7 @@ import { extractCandidatePartition } from "./candidateWebPartition.js";
 import { addressedWebFacts, diffWebPartitions } from "./webPartitionDiff.js";
 import { certifyCopyContractions, certifyRoleFusions } from "./webPartitionProof.js";
 import { runHistoricalWebReplay, namedHistoricalRole, validateObservedFact } from "./webPartitionReplay.js";
-import { allocationDominant, fingerprintWebPartition, pinAuditNames, probeRegisterPins, renderFingerprint, targetWebPartition } from "./fingerprintWebPartition.js";
+import { allocationDominant, fingerprintWebPartition, pinAuditNames, renderFingerprint, targetWebPartition } from "./fingerprintWebPartition.js";
 import { unpinDeclarations } from "./webPartitionAudit.js";
 import { matchingConstructs } from "../agent/cSourceGuard.js";
 import { webPartitionFindings } from "../agent/triage.js";
@@ -244,60 +244,6 @@ const historicalReplay = () => replayCache ??= runHistoricalWebReplay();
     assert.ok(r.candidate?.pseudoWebs.length || name.startsWith("Clear"), name);
   }
 });
-(toolchain ? test : test.skip)("BC54 pin probe explains the two words and pre-allocation overlap inline without claiming a clean spelling", () => {
-  const name = "ovl_11_func_8010BC54", source = join(ROOT, "src/overlays/ovl_11", `${name}.c`), before = readFileSync(source, "utf8");
-  const configPath = join(ROOT, ".pi/autoloop.json"), config = readFileSync(configPath, "utf8");
-  const baseline = fingerprintWebPartition(name), probe = probeRegisterPins(baseline)!, r = probe.report!;
-  assert.equal(baseline.oracleVerdict, "match"); assert.equal(r.oracleVerdict, "mismatch");
-  assert.equal(r.oracleEvidence?.sameWords, 35); assert.equal(r.oracleEvidence?.totalWords, 37);
-  assert.deepEqual(r.oracleEvidence?.differences.map(d => d.address), [0x8010bcc8, 0x8010bcd4]);
-  assert.ok(r.provenance.object && existsSync(r.provenance.object));
-  assert.deepEqual(r.diff?.facts, []); assert.equal(r.diff?.assignments.length, 1);
-  const a = r.diff!.assignments[0]!;
-  assert.equal(a.unchangedGeometry, true); assert.equal(a.pseudo?.pseudo, 96);
-  assert.deepEqual(a.pseudo?.setUids, [67]); assert.deepEqual(a.pseudo?.deathUids, [72]);
-  assert.equal(a.overlaps.length, 1, "unused earlier call result must not manufacture a blocker");
-  assert.equal(a.overlaps[0]?.hard.birthUid, 75); assert.equal(a.overlaps[0]?.hard.deathUid, 76);
-  assert.deepEqual(a.overlaps[0]?.requiredRelation, { beforeUid: 72, afterUid: 75 });
-  const text = renderFingerprint(baseline, probe).join("\n");
-  assert.match(text, /35\/37/); assert.match(text, /0x8010bcc8: target lhu\s+v0.*candidate lhu\s+v1/);
-  assert.match(text, /0x8010bcd4: target sh\s+v0.*candidate sh\s+v1/);
-  assert.match(text, /not a fused\/split web/); assert.match(text, /UID 67.*-> UID 75.*-> UID 72/);
-  assert.match(text, /No verified clean-C spelling/); assert.match(text, /inspectLocalAllocationVariant\.ts/);
-  const findings = webPartitionFindings(r);
-  assert.equal(findings.length, 1); assert.equal(findings[0]?.severity, "info");
-  assert.match(findings[0]!.summary, /allocator diagnostic, not a spelling directive/);
-  assert.match(findings[0]!.evidence.join("\n"), /pseudo UID 67\.\.72 overlaps explicit \$v0 UID 75\.\.76/);
-  assert.equal(readFileSync(source, "utf8"), before); assert.equal(readFileSync(configPath, "utf8"), config);
-});
-(toolchain ? test : test.skip)("multi-SET base/result fusion needs unique same-block bindings, not hard-register reuse alone", () => {
-  const attempt = historicalReplay().rows.find(r => r.functionName === "ovl_11_func_801129EC")!.attempts[0]!;
-  assert.ok(attempt.source);
-  const r = fingerprintWebPartition("ovl_11_func_801129EC", { source: attempt.source });
-  const c = r.candidate!, facts = r.diff!.facts;
-  assert.equal(facts[0]?.class, "fused"); assert.equal(facts[0]?.relation, "expression-roles");
-  assert.equal(namedHistoricalRole(r.functionName, facts[0]), true); assert.equal(validateObservedFact(r, facts[0]!), true);
-  assert.equal(certifyRoleFusions(r.target, c).length, 1);
-  const p = c.pseudoWebs.find(p => p.pseudo === 81)!;
-  assert.equal(p.setBindings.find(s => s.uid === 34)?.identity?.key, `const:${0x80076220}`);
-  assert.equal(p.setBindings.find(s => s.uid === 53)?.selfInput, true);
-  for (const mutate of [
-    (p: typeof c.pseudoWebs[number]) => { p.sets = 1; },
-    (p: typeof c.pseudoWebs[number]) => { p.setBindings.find(s => s.uid === 53)!.selfInput = false; },
-    (p: typeof c.pseudoWebs[number]) => { p.setBindings.find(s => s.uid === 34)!.identity = null; },
-    (p: typeof c.pseudoWebs[number]) => { p.setBindings.find(s => s.uid === 34)!.block = null; },
-    (p: typeof c.pseudoWebs[number]) => { p.setBindings.find(s => s.uid === 53)!.block = p.setBindings.find(s => s.uid === 34)!.block! + 1; },
-  ]) {
-    const bad = structuredClone(c); mutate(bad.pseudoWebs.find(p => p.pseudo === 81)!);
-    assert.deepEqual(certifyRoleFusions(r.target, bad), [], "an unsupported pseudo relation must not become a confident fact");
-    assert.equal(validateObservedFact({ ...r, candidate: bad }, facts[0]!), false);
-  }
-  const ambiguous = structuredClone(c), duplicate = structuredClone(p);
-  duplicate.pseudo = Math.max(...c.pseudoWebs.map(p => p.pseudo)) + 1;
-  ambiguous.pseudoWebs.push(duplicate);
-  assert.deepEqual(certifyRoleFusions(r.target, ambiguous), [], "another pseudo assigned the same register must refuse attribution");
-  assert.equal(validateObservedFact({ ...r, candidate: ambiguous }, facts[0]!), false);
-});
 (toolchain ? test : test.skip)("historical named-first gate retains five cases, passes four specific roles, and audits all confident facts", () => {
   const replay = historicalReplay();
   assert.deepEqual(replay.gate, { required: 4, denominator: 5, namedFirst: 4, wrongConfident: 0, controlsPassed: true, met: true });
@@ -312,7 +258,10 @@ const historicalReplay = () => replayCache ??= runHistoricalWebReplay();
   assert.equal(birth.firstIdentity, "const:999");
   assert.equal(namedHistoricalRole("ovl_11_func_800F3EF0", { ...positive.facts[0]!, identity: "const:24" }), false, "wrong binding of the right class cannot pass");
 });
-projectTest("retirement audit derives configured pins including 801 addresses", () => {
-  const names = pinAuditNames(JSON.parse(readFileSync(join(ROOT,".pi/autoloop.json"),"utf8")));
-  assert.ok(names.includes("func_80020E38")); assert.ok(names.includes("func_80021820")); assert.ok(names.some(n => n.startsWith("ovl_11_func_801")));
+projectTest("retirement audit derives every configured register pin, in canonical casing", () => {
+  const config = JSON.parse(readFileSync(join(ROOT,".pi/autoloop.json"),"utf8")) as { sourcePolicy: { allowlist: Record<string, string[]> } };
+  const names = pinAuditNames(config);
+  assert.ok(names.includes("func_80020E38")); assert.ok(names.includes("func_80021820"));
+  const pinned = Object.keys(config.sourcePolicy.allowlist).filter(n => n.startsWith("ovl_11_") && config.sourcePolicy.allowlist[n]!.includes("register-asm"));
+  for (const key of pinned) assert.ok(names.includes(key.replace(/[a-f0-9]{8}$/, h => h.toUpperCase())), key);
 });

@@ -39,7 +39,8 @@
  *   npx tsx tools/diagnostics/interfaceAudit.ts --callee Rand          # every site for one callee
  *   npx tsx tools/diagnostics/interfaceAudit.ts --detail               # every site for every callee
  *   npx tsx tools/diagnostics/interfaceAudit.ts --check                # exit 1 when a published interface fails
- *   npx tsx tools/diagnostics/interfaceAudit.ts --write --callee Rand  # reconcile Rand's callers with its definition
+ *   npx tsx tools/diagnostics/interfaceAudit.ts --write --callee Rand  # reconcile Rand's callers with its definition,
+ *                                                                      # flagged or not: publishes a new module header
  *   npx tsx tools/diagnostics/interfaceAudit.ts --write                # reconcile every published interface's callers
  */
 
@@ -1226,7 +1227,10 @@ export function reconcileProject(
   for (let pass = 1; pass <= maxPasses; pass++) {
     const flagged = new Set(auditInterfaces({ sources: current, sdk, published: publishedInterfaces(current) }).findings
       .filter((f) => f.kind === "conflict" || f.kind === "implicit" || f.kind === "arity").map((f) => f.callee));
-    const names = (only.length > 0 ? only : [...flagged]).filter((n) => flagged.has(n)).sort();
+    /* A callee named explicitly is reconciled even when nothing flags it:
+       that is how a new module header reaches callers that declared the
+       function themselves. */
+    const names = (only.length > 0 ? [...only] : [...flagged].filter((n) => flagged.has(n))).sort();
     let progress = 0;
     disputes.clear();
     for (const flaggedName of names) {

@@ -176,6 +176,8 @@ export interface FoldRecord {
   head?: string;
   /** Project-relative files the dispatch changed, for an interrupted fold's recovery. */
   changedFiles?: string[];
+  /** Of those, the ones already dirty before the dispatch, with the blob each held then (null: absent); a restore puts that back, not HEAD. */
+  preexisting?: Record<string, string | null>;
   /** Why a fold failed, or how an interrupted one was settled. */
   detail?: string;
   commit?: string;

@@ -34,8 +34,15 @@
  *   npx tsx tools/diagnostics/tuProgress.ts --container ovl_11
  *   npx tsx tools/diagnostics/tuProgress.ts --json
  *   npx tsx tools/diagnostics/tuProgress.ts --check-complete      # read-only, structural
- *   npx tsx tools/diagnostics/tuProgress.ts --verify [--baseline <receipt|tree-ish>]
+ *   npx tsx tools/diagnostics/tuProgress.ts --verify [--baseline <receipt|tree-ish>] [--full-convergence] [--no-cache]
  *   npx tsx tools/diagnostics/tuProgress.ts --write-baseline [<path>]   # campaign receipt
+ *
+ * --verify judges the working tree as it stands, so its report is cached under
+ * build/tu-campaign/ by the tree object of that state (tracked and untracked
+ * files, ignored ones excepted), HEAD, the index and the options; asking again
+ * about an unchanged tree returns the same verdict at once. Its convergence
+ * step re-splits only what changed since the last tree that converged
+ * (tools/lib/splitScope.ts); --full-convergence re-splits every container.
  *
  * Exit status — the same for every mode:
  *   0  every eligible function is folded and every requested gate passes;
@@ -46,13 +53,14 @@
 
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { availableParallelism } from "node:os";
-import { join, relative } from "node:path";
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { availableParallelism, tmpdir } from "node:os";
+import { dirname, join, relative } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { containerPath, loadContainers, requireContainer, unresolvedCodeMembers, type Container } from "../lib/container.js";
 import { loadOriginalFunctionInventory, loadSubsegments } from "../lib/symbolIndex.js";
-import { translationUnitOf, type TranslationUnit } from "../lib/translationUnits.js";
+import { loadTranslationUnits, translationUnitOf, type TranslationUnit } from "../lib/translationUnits.js";
+import { splitScope, splitToolClosure, type SplitScope } from "../lib/splitScope.js";
 import { auditContainer, loadFlagOverrideKeys, type ContainerAudit, type SourceFacts, type UnitAudit } from "../lib/translationUnitAudit.js";
 import { computeLiveness } from "../lib/liveness.js";
 import { detectMacroIdentities } from "./macroIdentity.js";
@@ -60,7 +68,7 @@ import { macroRouteSummary } from "./macroTiler.js";
 import { loadConfig } from "../../.pi/extensions/shared/config.ts";
 import { moduleConstructFindings } from "../../.pi/extensions/shared/source-policy.ts";
 import { activeSources } from "./canonicalNames.js";
-import { auditInterfaces, publishedInterfaces, type Finding } from "./interfaceAudit.js";
+import { auditInterfaces, publishedInterfaces, unitFacts, type Finding } from "./interfaceAudit.js";
 import { sdkPrototypes } from "../agent/calleeTruth.js";
 import { deriveOwnership, witnessDisagreements } from "../build/deriveTuOwnedGlobals.js";
 import { captureReceipt, currentExceptionSets, DEFAULT_RECEIPT, exceptionGrowth, inputsDigest, loadBaseline, type ExceptionGrowth } from "./tuExceptions.js";
@@ -115,6 +123,9 @@ export interface TuProgressReport {
   /** Exception growth against the baseline, when one was given. */
   exceptionGrowth: ExceptionGrowth[];
   baseline: string | null;
+  /** For --verify: the working-tree object judged, and when, if this verdict was reused rather than recomputed. */
+  verifiedTree?: string;
+  cachedFrom?: string;
 }
 
 interface Options {
@@ -126,6 +137,8 @@ interface Options {
   baseline?: string | undefined;
   writeBaseline?: string | undefined;
   limit: number;
+  fullConvergence: boolean;
+  noCache: boolean;
 }
 
 function parseOptions(argv: string[]): Options {
@@ -143,6 +156,8 @@ function parseOptions(argv: string[]): Options {
     baseline: value("--baseline"),
     writeBaseline: writeIndex >= 0 ? value("--write-baseline") ?? DEFAULT_RECEIPT : undefined,
     limit: Number(value("--limit") ?? 25),
+    fullConvergence: argv.includes("--full-convergence"),
+    noCache: argv.includes("--no-cache"),
   };
 }
 
@@ -154,19 +169,57 @@ function hex(value: number): string {
 const FAILING_INTERFACE = new Set(["conflict", "arity", "implicit", "restated"]);
 
 /**
+ * The interface findings the audit makes in these module files.
+ *
+ * A finding in a file depends on that file and on the definitions of the
+ * names it declares or calls, so the audit reads those and nothing else: the
+ * TU index places a function in the inventory, and a text search finds any
+ * other definer. Memoised on the files it read, because --verify asks twice
+ * of a tree that has not changed.
+ */
+let interfaceMemo: { key: string; findings: Finding[] } | undefined;
+export function moduleInterfaceFindings(modulePaths: readonly string[]): Finding[] {
+  if (modulePaths.length === 0) return [];
+  const all = activeSources();
+  const subset = new Map<string, string>();
+  const names = new Set<string>();
+  for (const path of modulePaths) {
+    const text = all.get(path);
+    if (text === undefined) continue;
+    subset.set(path, text);
+    const facts = unitFacts(text, path);
+    for (const declared of facts.declarations) names.add(declared.prototype.name);
+    for (const call of facts.calls) names.add(call.callee);
+    for (const label of facts.labels.values()) names.add(label);
+  }
+  const containers = loadContainers();
+  const sources = [...all.keys()].filter((path) => path.endsWith(".c"));
+  for (const name of names) {
+    const units = containers.map((container) => translationUnitOf(container, name)).filter((unit): unit is TranslationUnit => !!unit);
+    if (units.length > 0) {
+      for (const unit of units) if (all.has(unit.sourcePath)) subset.set(unit.sourcePath, all.get(unit.sourcePath)!);
+      continue;
+    }
+    /* C identifiers carry no regular-expression metacharacters. */
+    const word = new RegExp(`\\b${name}\\b`);
+    for (const path of sources) if (!subset.has(path) && all.get(path)!.includes(name) && word.test(all.get(path)!)) subset.set(path, all.get(path)!);
+  }
+  const key = createHash("sha256").update(JSON.stringify([...modulePaths].sort())).update(JSON.stringify([...subset].sort())).digest("hex");
+  if (interfaceMemo?.key !== key) {
+    const findings = auditInterfaces({ sources: subset, sdk: sdkPrototypes(), published: publishedInterfaces(subset) }).findings;
+    interfaceMemo = { key, findings: findings.filter((finding) => modulePaths.includes(finding.file)) };
+  }
+  return interfaceMemo.findings;
+}
+
+/**
  * Module findings beyond membership: policy charged per member, interface
  * findings in the module file, and TU-owned global agreement for its members.
  */
-function moduleFindingsHook(): (unit: TranslationUnit, source: string, facts: SourceFacts) => string[] {
+function moduleFindingsHook(modulePaths: readonly string[]): (unit: TranslationUnit, source: string, facts: SourceFacts) => string[] {
   const config = loadConfig(ROOT);
   let interfaces: Finding[] | undefined;
-  const interfaceFindings = (): Finding[] => {
-    if (!interfaces) {
-      const sources = activeSources();
-      interfaces = auditInterfaces({ sources, sdk: sdkPrototypes(), published: publishedInterfaces(sources) }).findings;
-    }
-    return interfaces;
-  };
+  const interfaceFindings = (): Finding[] => interfaces ??= moduleInterfaceFindings(modulePaths);
   return (unit, source) => {
     const findings: string[] = [];
     const members = unit.members.map((member) => ({ name: member.name, vram: hex(member.vram), container: member.container }));
@@ -215,10 +268,25 @@ export function structuralReport(options: { container?: string | undefined; limi
 
   const liveness = computeLiveness();
   /* The rule progress.ts applies: a "Handwritten function" dump is assembly
-     only when the macro census measured no COP2 instruction in it. */
-  const macro = detectMacroIdentities({ containers });
-  const cop2 = new Map(macro.functions.map((fn) => [fn.name, macroRouteSummary(fn).cop2Count]));
-  const hook = moduleFindingsHook();
+     only when the macro census measured no COP2 instruction in it. Only those
+     dumps need the census, so it measures only them. */
+  const dumpOf = (container: Container, unit: TranslationUnit, name: string): string | undefined => {
+    const asmDir = join(containerPath(container, "asmDir"), "nonmatchings");
+    return [join(asmDir, unit.segmentName, `${name}.s`), join(asmDir, name, `${name}.s`)].find((path) => existsSync(path));
+  };
+  const handwrittenDumps = new Set<string>();
+  for (const container of containers) {
+    for (const fn of loadOriginalFunctionInventory(container).functions) {
+      const unit = fn.origin === "game" ? translationUnitOf(container, fn.name) : null;
+      const dump = unit ? dumpOf(container, unit, fn.name) : undefined;
+      if (dump && readFileSync(dump, "utf8").includes("Handwritten function")) handwrittenDumps.add(`${container.id}:${fn.name}`);
+    }
+  }
+  const candidates = [...handwrittenDumps].map((key) => key.slice(key.indexOf(":") + 1));
+  const macro = candidates.length > 0 ? detectMacroIdentities({ containers, functionNames: candidates }).functions : [];
+  const cop2 = new Map(macro.map((fn) => [fn.name, macroRouteSummary(fn).cop2Count]));
+  const modulePaths = containers.flatMap((container) => loadTranslationUnits(container).filter((unit) => unit.foldedModule).map((unit) => unit.sourcePath));
+  const hook = moduleFindingsHook(modulePaths);
   const flagKeys = loadFlagOverrideKeys();
 
   const states: FunctionState[] = [];
@@ -241,7 +309,6 @@ export function structuralReport(options: { container?: string | undefined; limi
     const libraries = inventory.functions.filter((fn) => fn.origin === "library").length;
     if (libraries > 0) exclude("library", libraries);
 
-    const asmDir = join(containerPath(container, "asmDir"), "nonmatchings");
     for (const fn of inventory.functions) {
       if (fn.origin !== "game") continue;
       const unit = translationUnitOf(container, fn.name);
@@ -252,8 +319,7 @@ export function structuralReport(options: { container?: string | undefined; limi
         continue;
       }
       const entry = byUnit.get(unit.segmentName)!;
-      const dump = [join(asmDir, unit.segmentName, `${fn.name}.s`), join(asmDir, fn.name, `${fn.name}.s`)].find((path) => existsSync(path));
-      const handwritten = dump !== undefined && readFileSync(dump, "utf8").includes("Handwritten function") && cop2.get(fn.name) === 0;
+      const handwritten = handwrittenDumps.has(`${container.id}:${fn.name}`) && cop2.get(fn.name) === 0;
       if (handwritten) {
         states.push({ ...base, state: "excluded", exclusion: "handwritten-asm" });
         exclude("handwritten-asm");
@@ -388,11 +454,160 @@ function restore(paths: readonly string[], saved: ReadonlyMap<string, Buffer | n
   }
 }
 
+/** The tree object of the working tree as it stands — tracked and untracked files, ignored ones excepted — or of the index. */
+function treeOf(source: "worktree" | "index"): string | null {
+  const directory = mkdtempSync(join(tmpdir(), "tu-tree-"));
+  try {
+    const index = join(directory, "index");
+    const gitIndex = spawnSync("git", ["rev-parse", "--git-path", "index"], { cwd: ROOT, encoding: "utf8" }).stdout.trim();
+    if (gitIndex && existsSync(join(ROOT, gitIndex))) copyFileSync(join(ROOT, gitIndex), index);
+    const env = { ...process.env, GIT_INDEX_FILE: index };
+    if (source === "worktree" && spawnSync("git", ["add", "-A", "--", "."], { cwd: ROOT, env, encoding: "utf8" }).status !== 0) return null;
+    const tree = spawnSync("git", ["write-tree"], { cwd: ROOT, env, encoding: "utf8" });
+    return tree.status === 0 ? tree.stdout.trim() : null;
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+}
+
+function gitLine(args: string[]): string | null {
+  const result = spawnSync("git", args, { cwd: ROOT, encoding: "utf8" });
+  return result.status === 0 ? result.stdout.trim() : null;
+}
+
+function fileDigest(path: string): string | null {
+  const absolute = join(ROOT, path);
+  return existsSync(absolute) ? createHash("sha256").update(readFileSync(absolute)).digest("hex") : null;
+}
+
+// --- convergence ---------------------------------------------------------------
+
+/** The last tree a convergence step passed on, and the engine export the overlays were split against then. */
+const CONVERGENCE_RECEIPT = "build/tu-campaign/convergence.json";
+const ENGINE_EXPORT = "build/engine_syms.txt";
+
+interface ConvergenceReceipt { tree: string; engineExport: string | null; at: string }
+
+function readJson<T>(path: string): T | null {
+  try { return JSON.parse(readFileSync(join(ROOT, path), "utf8")) as T; } catch { return null; }
+}
+
+function writeJson(path: string, value: unknown): void {
+  mkdirSync(dirname(join(ROOT, path)), { recursive: true });
+  writeFileSync(join(ROOT, path), JSON.stringify(value, null, 2) + "\n");
+}
+
+/** The re-splits this tree needs, against the last tree that converged; null for every container. */
+function convergenceScope(tree: string | null, full: boolean): { scope: SplitScope | null; why: string } {
+  if (full) return { scope: null, why: "--full-convergence" };
+  const receipt = readJson<ConvergenceReceipt>(CONVERGENCE_RECEIPT);
+  if (!tree || !receipt || gitLine(["cat-file", "-t", receipt.tree]) !== "tree") return { scope: null, why: "no converged tree on record" };
+  const changed = gitLine(["diff", "--name-only", "--no-renames", receipt.tree, tree]);
+  if (changed === null) return { scope: null, why: "the converged tree cannot be compared" };
+  const overlays = loadContainers().filter((container) => container.kind === "overlay").map((container) => container.id);
+  const scope = splitScope(changed ? changed.split("\n") : [], overlays, splitToolClosure(ROOT));
+  return scope.full ? { scope: null, why: scope.reasons.slice(0, 2).join("; ") } : { scope, why: `since ${receipt.tree.slice(0, 12)}` };
+}
+
+/**
+ * Config generation reaches a fixed point: a re-split changes nothing. Only the
+ * splits this tree's changes can reach are re-run; any drift they find is
+ * confirmed by re-splitting everything before it fails the gate.
+ */
+function convergence(tree: string | null, full: boolean): { state: GateState; detail: string; receipt?: ConvergenceReceipt } {
+  const roots = ["configs", "include", "src"];
+  const pre = snapshot(roots);
+  const saved = saveContents(pre.keys());
+  const steps: string[] = [];
+  const step = (command: string, args: string[]): boolean => {
+    const result = run(command, args);
+    steps.push(args.at(-1) === "--write" || args.at(-1) === "--all" ? args.slice(1, 2).join(" ").replace(/^tools\/[^/]+\//, "") : args.join(" "));
+    if (result.code !== 0) failure ??= `${[command, ...args].join(" ")} exited ${result.code}:\n${tail(result.output, 6)}`;
+    return result.code === 0;
+  };
+  let failure: string | undefined;
+
+  const { scope, why } = convergenceScope(tree, full);
+  const receipt = readJson<ConvergenceReceipt>(CONVERGENCE_RECEIPT);
+  if (scope === null) step("make", ["split-all"]);
+  else {
+    let overlays = scope.overlays;
+    if (scope.exe) {
+      step("make", ["split"]);
+      step("make", ["--no-print-directory", ENGINE_EXPORT]);
+      /* The overlays name their external calls from the engine export. */
+      if (fileDigest(ENGINE_EXPORT) !== receipt?.engineExport) overlays = loadContainers().filter((c) => c.kind === "overlay").map((c) => c.id);
+    }
+    for (const overlay of overlays) step("make", [`split-${overlay}`]);
+    if (!scope.exe && scope.tail) {
+      /* The EXE split's cross-container tail, which reads every source and header. */
+      step("npx", ["tsx", "tools/agent/contextExport.ts", "--all"]);
+      step("npx", ["tsx", "tools/build/classifyGlobals.ts", "--write"]);
+      step("npx", ["tsx", "tools/build/genProjectProfile.ts", "--write"]);
+    }
+  }
+  let drift = differences(pre, snapshot(roots));
+  let ran = scope === null ? `make split-all (${why})` : steps.length ? `${steps.join(", ")} (${why})` : `no split input changed ${why}`;
+  if (drift.length > 0 && scope !== null) {
+    /* A narrow re-split can read stale build products; only the full one decides. */
+    failure = undefined;
+    step("make", ["split-all"]);
+    drift = differences(pre, snapshot(roots));
+    ran += "; drift confirmed by make split-all";
+  }
+  if (drift.length > 0) {
+    /* Put back exactly what the gate found, so verification is not an edit. */
+    restore(drift, saved);
+    return { state: "fail", detail: `${ran} changed ${drift.length} file(s): ${drift.slice(0, 6).join(", ")}${drift.length > 6 ? ", …" : ""} (restored)` };
+  }
+  if (failure) return { state: "fail", detail: failure };
+  return {
+    state: "pass",
+    detail: `${ran} changed no config, header or source`,
+    ...(tree ? { receipt: { tree, engineExport: fileDigest(ENGINE_EXPORT), at: new Date().toISOString() } } : {}),
+  };
+}
+
+// --- the verdict cache -----------------------------------------------------------
+
+const VERIFY_CACHE = "build/tu-campaign/verify-cache.json";
+const VERIFY_CACHE_ENTRIES = 16;
+
+interface CachedVerdict { key: string; tree: string; at: string; report: TuProgressReport }
+
+/**
+ * What a verdict depends on besides the tree: HEAD and the index (git diff
+ * --check), the scope and the baseline. Not --limit: a reused verdict lists the
+ * remaining functions as the run that reached it did.
+ */
+function verdictKey(options: Options, tree: string): string | null {
+  const head = gitLine(["rev-parse", "HEAD"]);
+  const index = treeOf("index");
+  if (!index) return null;
+  const baseline = options.baseline === undefined ? null
+    : existsSync(join(ROOT, options.baseline)) ? fileDigest(options.baseline) : gitLine(["rev-parse", "--verify", `${options.baseline}^{commit}`]);
+  return createHash("sha256").update(JSON.stringify({
+    version: 1, tree, head, index, container: options.container ?? null,
+    baseline: options.baseline === undefined ? null : [options.baseline, baseline], fullConvergence: options.fullConvergence,
+  })).digest("hex");
+}
+
 /**
  * The terminal gate, in order. Every step runs; a failure is recorded and the
- * remaining steps still report, so one run names every broken invariant.
+ * remaining steps still report, so one run names every broken invariant. A
+ * tree already judged under the same HEAD, index, options and baseline gets
+ * the same verdict back without re-running anything.
  */
 export function verify(options: Options): TuProgressReport {
+  const tree = treeOf("worktree");
+  const key = tree ? verdictKey(options, tree) : null;
+  const cache = readJson<CachedVerdict[]>(VERIFY_CACHE) ?? [];
+  const hit = key ? cache.find((entry) => entry.key === key) : undefined;
+  if (hit && !options.noCache) {
+    console.error(`tuProgress: this tree (${hit.tree.slice(0, 12)}) was verified at ${hit.at}; reusing that verdict (--no-cache re-runs it)`);
+    return { ...hit.report, verifiedTree: hit.tree, cachedFrom: hit.at };
+  }
+
   const gates: TuProgressReport["gates"] = [];
   const record = (gate: string, state: GateState, detail: string) => gates.push({ gate, state, detail });
   const startInputs = inputsDigest();
@@ -419,28 +634,19 @@ export function verify(options: Options): TuProgressReport {
   record("inventory (objects)", structural.integrity.inventory === "pass" ? "pass" : "fail",
     structural.integrity.inventory === "pass" ? `${structural.modules.length} module unit(s) valid` : structural.failures.slice(0, 3).join("; ") || "invalid modules");
 
-  /* 5. Config generation reaches a fixed point: a re-split changes nothing. */
-  const roots = ["configs", "include", "src"];
-  const pre = snapshot(roots);
-  const saved = saveContents(pre.keys());
-  const split = run("make", ["split-all"]);
-  const post = snapshot(roots);
-  const drift = differences(pre, post);
-  if (drift.length > 0) {
-    /* Put back exactly what the gate found, so verification is not an edit. */
-    restore(drift, saved);
-    record("config convergence", "fail", `make split-all changed ${drift.length} file(s): ${drift.slice(0, 6).join(", ")}${drift.length > 6 ? ", …" : ""} (restored)`);
-  } else {
-    record("config convergence", split.code === 0 ? "pass" : "fail", split.code === 0 ? "make split-all changed no config, header or source" : tail(split.output, 6));
-  }
+  /* 5. Config generation reaches a fixed point. */
+  const converged = convergence(tree, options.fullConvergence);
+  record("config convergence", converged.state, converged.detail);
 
   /* 6. No whitespace damage in the working-tree diff. */
   const whitespace = run("git", ["diff", "--check"]);
   record("git diff --check", whitespace.code === 0 ? "pass" : "fail", whitespace.code === 0 ? "clean" : tail(whitespace.output, 6));
 
-  /* 7. Inputs did not change while verifying. */
-  const endInputs = inputsDigest();
-  record("input stability", endInputs === startInputs ? "pass" : "fail", endInputs === startInputs ? "inputs unchanged during verification" : "sources or configuration changed during verification — rerun");
+  /* 7. Inputs did not change while verifying. Any other edit leaves the verdict
+     standing but unattributable to one tree, so it is not cached. */
+  const stable = inputsDigest() === startInputs;
+  record("input stability", stable ? "pass" : "fail", stable ? "inputs unchanged during verification" : "sources or configuration changed during verification — rerun");
+  const sameTree = stable && tree !== null && treeOf("worktree") === tree;
 
   let growth: ExceptionGrowth[] = [];
   let baselineLabel: string | null = null;
@@ -464,7 +670,12 @@ export function verify(options: Options): TuProgressReport {
     exceptions: options.baseline ? state("exception growth") : "not-run",
   };
   const allPass = gates.every((g) => g.state === "pass");
-  return { ...structural, integrity, gates, exceptionGrowth: growth, baseline: baselineLabel, complete: structural.complete && allPass };
+  const report: TuProgressReport = { ...structural, integrity, gates, exceptionGrowth: growth, baseline: baselineLabel, complete: structural.complete && allPass };
+  if (sameTree) {
+    if (converged.receipt) writeJson(CONVERGENCE_RECEIPT, converged.receipt);
+    if (key) writeJson(VERIFY_CACHE, [{ key, tree: tree!, at: new Date().toISOString(), report }, ...cache.filter((entry) => entry.key !== key)].slice(0, VERIFY_CACHE_ENTRIES));
+  }
+  return { ...report, ...(tree ? { verifiedTree: tree } : {}) };
 }
 
 // --- reporting -------------------------------------------------------------------
