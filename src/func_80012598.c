@@ -52,7 +52,8 @@ s32 D_8005E3BC;
  *          0x120 OT base, 0x124 prim base      (all four also written by the
  *                                               matched sibling func_8001E160)
  *   0x128  work-area length 0x5EDC, 0x12C work-area base
- *          (func_800120C8: GsSetWorkBase(...->field_12C))
+ *          (packetWorkCapacityBytes / packetWorkBase in the shared view;
+ *           func_800120C8: GsSetWorkBase(...->packetWorkBase))
  *   0x130  VRAM staging base (func_800128DC memcpy target)
  *
  * Every pool is carved out of the single 0x3EE50-byte block at 0x801BE1B0 that

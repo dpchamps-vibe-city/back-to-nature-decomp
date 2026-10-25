@@ -2,10 +2,9 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "packet_work.h"
 
 void ovl_11_func_800F7010(s32 arg0, s16 arg1, s16 arg2);
-s32 func_80011F5C(s32 arg0);
-void func_80011FD8(s32 arg0);
 
 void ovl_11_func_800F8CF8(s32 *arg0, s16 arg1, s16 arg2, s16 arg3) {
     SPRT *p;
@@ -19,7 +18,7 @@ void ovl_11_func_800F8CF8(s32 *arg0, s16 arg1, s16 arg2, s16 arg3) {
     if (D_80129648_textures[arg1].height < 32) {
         arg3 += (32 - D_80129648_textures[arg1].height) / 2;
     }
-    p = (SPRT *) func_80011F5C(0);
+    p = (SPRT *) ReservePacketWorkBytes(0);
     setSprt(p);
     p->clut = GetClut(*(s16 *) &D_80129648_textures[arg1].clutX,
                      *(s16 *) &D_80129648_textures[arg1].clutY);
@@ -35,5 +34,5 @@ void ovl_11_func_800F8CF8(s32 *arg0, s16 arg1, s16 arg2, s16 arg3) {
          textureX = D_80129648_textures[arg1].x,
          getTPage(0, 0, textureX & 0x3C0, textureY)));
     addPrim(arg0, p);
-    func_80011FD8((s32) ((DR_MODE *) p + 1));
+    SetPacketWorkCursor((s32) ((DR_MODE *) p + 1));
 }

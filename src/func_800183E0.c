@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "packet_work.h"
 
 /* Callee prototypes (project convention: local declarations). */
 u16 *func_800191B4(u16 *, u16, s32, s32);
@@ -13,7 +14,6 @@ void func_80019564(s32, s32, s32, s32);
 s32 func_80019CBC(s16, s16, u16 *, s16);
 s32 func_80019E50(s32);
 void func_80019E80(u_long *, s16, s16, s16);
-s32 func_80011F5C(s32);
 s32 func_80012CB4(s32, s32 *, s32);
 void func_80017A70(u32);
 s32 func_80017AA0(void);
@@ -321,8 +321,8 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
             D_8005E4B4 = 0;
             func_80017ACC();
         }
-        area1 = (DR_AREA *)func_80011F5C(0xC);
-        area2 = (DR_AREA *)func_80011F5C(0xC);
+        area1 = (DR_AREA *)ReservePacketWorkBytes(0xC);
+        area2 = (DR_AREA *)ReservePacketWorkBytes(0xC);
         rect.x = arg2;
         rect.y = arg3 + (s16)D_8005E3C0->field_2;
         rect.w = 0x140 - arg2;

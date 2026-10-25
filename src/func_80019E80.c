@@ -2,8 +2,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-
-s32 func_80011F5C(s32);
+#include "packet_work.h"
 
 /* GPU primitive initializer: allocate and chain an SPRT sprite with a
  * DR_TPAGE drawing-mode primitive.  When cond == -1 the function is a
@@ -22,8 +21,8 @@ void func_80019E80(u_long *ot, s16 x0, s16 y0, s16 cond) {
     DR_TPAGE *v0;
 
     if (cond != -1) {
-        s0 = (SPRT *)func_80011F5C(0x14);
-        v0 = (DR_TPAGE *)func_80011F5C(8);
+        s0 = (SPRT *)ReservePacketWorkBytes(0x14);
+        v0 = (DR_TPAGE *)ReservePacketWorkBytes(8);
         setSprt(s0);
         s0->clut = 0x7A80;
         setRGB0(s0, 0x80, 0x80, 0x80);

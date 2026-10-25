@@ -2,11 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "packet_work.h"
 
 
 void ovl_19_func_800BA770 (void);
-s32 func_80011F5C (s32 arg0);
-void func_80011FD8 (s32 arg0);
 void ovl_19_func_800BA834 (s16 *arg0);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
 void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);

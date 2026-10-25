@@ -13,7 +13,7 @@ s32 D_8005E3BC;
 struct_8005E3C0 *D_8005E3C0;
 
 void func_800120C8(void) {
-    GsSetWorkBase((PACKET *)D_8005E3C0->field_12C);
+    GsSetWorkBase((PACKET *)D_8005E3C0->packetWorkBase);
     __asm__ volatile("" ::: "memory");
     {
         s32 temp = D_8005E3A4 * 0x3000;

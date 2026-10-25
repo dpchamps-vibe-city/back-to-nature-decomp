@@ -7,6 +7,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/memory.h"
 #include "psyq/libapi.h"
+#include "packet_work.h"
 
 typedef struct {
                s16 unk0;
@@ -136,8 +137,6 @@ void ovl_11_func_800D2D54 (void *arg0);
 s32 func_800129E8 (void);
 void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
 POLY_FT4 *func_80016C08 (s32 *ot, POLY_FT4 *poly, M2C_d4baf9e5b2ba_SpriteSourceData *src, s16 ox, s16 oy, u16 flags, s32 total, s32 texBase, s16 subst, s16 substFrom, s16 substTo);
-s32 func_80011F5C (s32 arg0);
-void func_80011FD8 (s32 arg0);
 POLY_FT4 *func_800165D8 (u_long *arg0, POLY_FT4 *arg1, M2C_ab2039654fca_SourceData *arg2, u8 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, s32 arg9, u16 arg10, s16 arg11, s16 arg12, s16 arg13, s16 arg14);
 s32 func_8001AF44 (u32 arg0);
 void func_80021B20 ();

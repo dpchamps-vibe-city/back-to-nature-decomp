@@ -7,6 +7,7 @@
 #include "psyq/memory.h"
 #include "psyq/strings.h"
 #include "psyq/libmcx.h"
+#include "packet_work.h"
 
 
 int McxCardType (int);
@@ -21,8 +22,6 @@ long MemCardWriteFile (long chan, char *file, unsigned long *adrs, long ofs, lon
 int bcmp (const unsigned char *, const unsigned char *, int);
 void *memmove (unsigned char *, const unsigned char *, int);
 char *strcpy ();
-s32 func_80011F5C (s32 arg0);
-void func_80011FD8 (s32 arg0);
 u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);

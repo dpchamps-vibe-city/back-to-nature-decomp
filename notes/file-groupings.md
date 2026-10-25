@@ -5206,6 +5206,41 @@ canonical-name tool, and published through the interface audit and generated
 context. Acceptance uses the full TU campaign gate against its baseline,
 including regenerated executable/overlay builds, interfaces and source policy.
 
+Reconstructed packet-cursor slice: `src/modules/packet_work.c` holds
+**exe:0x80011F5C–0x8001202C** in original order:
+`ReservePacketWorkBytes` (formerly func_80011F5C) and
+`SetPacketWorkCursor` (formerly func_80011FD8). This is a narrow module
+hypothesis within the boot/render family, not a recovered original file
+boundary. Beyond link order and the shared GP-relative context pointer,
+both compute the same limit (base at +0x12C plus byte capacity at +0x128),
+update the libgs work cursor, and use the same 800129E8 overflow assertion loop. Callers
+corroborate the paired protocol: 80019E80 reserves 0x14 and 8 bytes for SPRT
+and DR_TPAGE packets; 80017D9C queries with zero then commits the end returned
+by 80018B98; ovl_11:800F8CF8 similarly commits the end of SPRT/DR_MODE output.
+The heap carve and frame reset independently establish byte capacity/base,
+now named `packetWorkCapacityBytes` and `packetWorkBase` in the existing
+shared context view, with their s32 types and offsets unchanged.
+
+`include/packet_work.h` publishes the unchanged s32-address ABI, byte units,
+initialization/reset constraints, and lack of lower-bound, alignment and wrap
+checks. Equality with the end is accepted; overflow loops on the existing
+breakpoint helper, not a recoverable allocation failure. Only the reservation
+function has the subsequent SystemError(0x50, 0) path. The module uses the
+SDK declarations instead of hand-written libgs/SystemError prototypes;
+canonical names retain their EXE addresses and were propagated through the
+canonical-name tool, interface audit and generated context. The shared
+D_8005E3C0 name/ownership and all external linkages remain unchanged; moving
+these helpers does not make active render state private. The adjacent state
+accessors, scratch query module, heap initialization and assertion helper
+remain outside this slice. No macro/static collision or new data storage is
+introduced. The checked fold passed first at baseline -O2/-G8, with no member
+flag overrides to reconcile or new exceptions. After regeneration of the
+engine export and overlay link inputs, `make check-all` confirms the executable
+and all 13 overlays, including their data and tables, remain byte-identical;
+canonical-name and published-interface checks are clean. Acceptance also uses
+the full TU campaign gate (policy, ownership and configuration convergence),
+not a claim that the historical TU ended here.
+
 Technique and per-function detail for this group live in
 `notes/sprite-renderer-family-campaign.md`; the frame-size/arity diagnostic
 these wrappers illustrate is in

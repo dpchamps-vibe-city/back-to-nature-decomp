@@ -9,6 +9,7 @@
 #include "psyq/strings.h"
 #include "psyq/libmcx.h"
 #include "psyq/libgpu.h"
+#include "packet_work.h"
 
 typedef void (*M2C_a048f66bc407_SpriteCallback)(s32, SpriteSourceData *, s16, s32, s32);
 
@@ -29,8 +30,6 @@ void ovl_15_func_801372F8 (void);
 s32 ovl_15_func_80137300 (void);
 void ovl_15_func_80137398 (void);
 void ovl_15_func_801373A0 (void);
-s32 func_80011F5C (s32 arg0);
-void func_80011FD8 (s32 arg0);
 u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);

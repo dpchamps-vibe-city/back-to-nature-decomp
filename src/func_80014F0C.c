@@ -1,9 +1,8 @@
 #include "common.h"
-
-s32 func_80011F5C(s32 arg0);
+#include "packet_work.h"
 
 void *func_8001530C(void *, u32 *, s16 x0, s16 y0, s16 x1, s16 y1, s32 color, s16 cond);
 
 void func_80014F0C(u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6) {
-    func_8001530C(func_80011F5C(0x10), arg0, arg1, arg2, (s16) (s32) arg3, (s16) (s32) arg4, arg5, (s16) (s32) arg6);
+    func_8001530C(ReservePacketWorkBytes(0x10), arg0, arg1, arg2, (s16) (s32) arg3, (s16) (s32) arg4, arg5, (s16) (s32) arg6);
 }

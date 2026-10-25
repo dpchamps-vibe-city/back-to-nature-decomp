@@ -5,8 +5,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
-
-s32 func_80011F5C(s32 arg0);
+#include "packet_work.h"
 
 void ovl_11_func_800E559C(void *arg0, s16 arg1, s16 arg2) {
     SPRT *sprt;
@@ -14,8 +13,8 @@ void ovl_11_func_800E559C(void *arg0, s16 arg1, s16 arg2) {
     u16 tpage_bits;
     u16 tpage_x;
 
-    sprt = (SPRT *)func_80011F5C(0x14);
-    tpage = (DR_TPAGE *)func_80011F5C(0xC);
+    sprt = (SPRT *)ReservePacketWorkBytes(0x14);
+    tpage = (DR_TPAGE *)ReservePacketWorkBytes(0xC);
     setSprt(sprt);
     sprt->clut = GetClut(D_80070C92.unk18, D_80070C92.unk1A);
     setRGB0(sprt, 0x80, 0x80, 0x80);

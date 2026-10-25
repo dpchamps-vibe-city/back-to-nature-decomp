@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "packet_work.h"
 
 
 s32 ovl_11_func_8011D438 (u8 *arg0);
@@ -15,8 +16,6 @@ void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_80014E90 (u32 *arg0, s16 arg1, s16 arg2, s32 arg3, s16 arg4);
 void func_80014F0C (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s16 arg6);
 void func_80014FAC (s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s16 arg9);
-s32 func_80011F5C (s32 arg0);
-void func_80011FD8 (s32 arg0);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800F3898 (u16 arg0, u16 arg1);
