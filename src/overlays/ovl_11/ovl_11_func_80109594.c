@@ -1,4 +1,5 @@
 #include "common.h"
+#include "random.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -12,7 +13,6 @@ typedef struct {
 } Ovl11HandlerObj;
 
 
-u32 Rand(s32 arg0);
 s32 ovl_11_func_801098B0(Ovl11HandlerObj *arg0);
 s32 ovl_11_func_80109188(Ovl11HandlerObj *arg0, s32 arg1);
 

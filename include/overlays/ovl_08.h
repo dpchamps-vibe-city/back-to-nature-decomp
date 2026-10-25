@@ -2,8 +2,8 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-void ovl_08_func_800B8400(void);
 void Ovl08DrawSceneSelectMenu(void);
 void Ovl08InitSceneSelectMenu(void);
+void Ovl08UpdateActuatorTestMenu(void);
 void Ovl08UpdateSceneSelectMenu(void);
 void Ovl08WaitSceneSelectSoundTransfer(void);

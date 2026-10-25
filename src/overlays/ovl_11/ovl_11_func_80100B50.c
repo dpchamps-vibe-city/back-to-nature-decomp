@@ -7,6 +7,10 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "beveled_panel.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
@@ -16,15 +20,10 @@ s32 ovl_11_func_80100E68 (u16 arg0);
 void ovl_11_func_800F6F7C (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F7010 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80100EB8 (s32 arg0);
-void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void SetVal8005E2BC (s32 arg0);
 void ovl_11_func_800F8CF8 (s32 *arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F6A24 (u16 arg0);
 void ovl_11_func_800F6C78 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
-void func_80015F80 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7, u16 arg8);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void ovl_11_func_80100F9C (s32 arg0);
 s32 pow_int (s32 arg0, s32 arg1);
 

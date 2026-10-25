@@ -16,6 +16,9 @@
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
 #include "ovl11_item_transfer_menu.h"
+#include "sprite_source.h"
+#include "random.h"
+#include "sprite_upload.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -109,14 +112,12 @@ s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void ovl_11_func_80107DD0 (s16 *arg0);
 s32 func_800129E8 (void);
-void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
-void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
+void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
+void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 func_8001AF44 (u32 arg0);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
 s32 ovl_11_func_800D7504 (s16 arg0);
 s32 ovl_11_func_800BE5A0 (M2C_f90dacf3c1c7_Ovl11CheckArg *arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
-u32 func_8001589C (SpriteSourceData *src);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -136,8 +137,6 @@ void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 void ovl_11_func_800D7328 (s16 *arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80015894 (SomeStruct *arg0, s32 arg1);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
@@ -148,13 +147,11 @@ s32 ovl_11_func_800D688C (s16 arg0);
 s32 ovl_11_func_800D678C (s16 arg0);
 s32 ovl_11_func_800D67F4 (s16 arg0);
 void ovl_11_func_800D6944 (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-void func_80017200 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 Ovl11D124Entry *ovl_11_func_800DAF60 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_800D5868 (s16 arg0);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800D5CE4 (s16 arg0);
 s32 ovl_11_func_800D5C90 (s16 arg0);
-u32 Rand (s32 arg0);
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 ovl_11_func_800D603C (s32 arg0);
 s32 ovl_11_func_800F3C9C (u16 arg0);

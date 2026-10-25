@@ -1,7 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-/* Overlay alias of the matched Rand definition at 0x80012A34. */
-u32 Rand(s32 arg0);
 void ovl_11_func_800D7B24(void);
 void ovl_11_func_800D0FB4(void);
 void ovl_11_func_800F4CEC(void);

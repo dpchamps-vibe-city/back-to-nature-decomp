@@ -1,9 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 s32 ovl_11_func_800D9EFC(s32 arg0, s32 arg1, s32 arg2, s32 *arg3, s32 *arg4);
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
 void ovl_11_func_800D9F1C(void) {
     s16 pos[4];
@@ -107,7 +110,7 @@ void ovl_11_func_800D9F1C(void) {
                 default:
                     continue;
                 }
-                func_80015EE8(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
+                DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
                     (s32)(&D_80070400 + texture), (u8)sprite, 0,
                     (s16)projected[0], (s16)projected[1]);
             }

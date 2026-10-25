@@ -1,11 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
 s32 ovl_11_func_800E109C(UnkStruct800E109C *arg0);
 s32 ovl_11_func_800D0D7C(u8 *arg0);
 void ovl_11_func_80107DD0(s16 *arg0);
-/* Overlay import of Rand at 0x80012A34; type from src/Rand.c. */
-u32 Rand(s32 arg0);
 
 s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
     s32 i;

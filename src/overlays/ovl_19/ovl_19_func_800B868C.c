@@ -4,15 +4,15 @@
 #include "psyq/libgte.h"
 #include "packet_work.h"
 #include "ovl19_value_table_display.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 
 void ovl_19_func_800BA770 (void);
 void ovl_19_func_800BA834 (s16 *arg0);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
 void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 s32 ovl_19_func_800BADAC (s16 arg0);

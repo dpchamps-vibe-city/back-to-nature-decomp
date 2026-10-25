@@ -4,11 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "cd_loader.h"
-
-void func_8001719C(u8 *arg0);
-void func_80015704();
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
+#include "sprite_source.h"
+#include "sprite_upload.h"
 
 void ovl_11_func_8011EE98(s16 arg0) {
     s32 temp_s0;
@@ -22,15 +19,15 @@ void ovl_11_func_8011EE98(s16 arg0) {
     CdReadArchiveBytes(0, temp_s0, 0xE800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
     do {
     } while (CdReadArchiveBytes(0, temp_s0, 0xE800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
-    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4690));
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4690));
     D_8012D810 = *(Ov11SpriteDataBlock *)(gGraphicsHeapBase + 0x4290);
-    func_80015704((SpriteSourceData *)D_8012DA80, (SpriteDataHeader *)&D_8012D810);
+    InitSpriteSourceData((SpriteSourceData *)D_8012DA80, (SpriteDataHeader *)&D_8012D810);
     temp_s3 = D_8012DA80 + 1;
-    func_80015704((SpriteSourceData *)temp_s3, (SpriteDataHeader *)&D_8012D810);
+    InitSpriteSourceData((SpriteSourceData *)temp_s3, (SpriteDataHeader *)&D_8012D810);
     temp_s2 = D_8012DA80 + 2;
-    func_80015704((SpriteSourceData *)temp_s2, (SpriteDataHeader *)&D_8012D810);
-    func_80015840((ObjectState *)D_8012DA80, 0);
-    func_80015840((ObjectState *)temp_s3, 1);
-    func_80015840((ObjectState *)temp_s2, 2);
-    func_8001585C((ObjectState *)temp_s2, 1);
+    InitSpriteSourceData((SpriteSourceData *)temp_s2, (SpriteDataHeader *)&D_8012D810);
+    SelectSpriteAnimation((ObjectState *)D_8012DA80, 0);
+    SelectSpriteAnimation((ObjectState *)temp_s3, 1);
+    SelectSpriteAnimation((ObjectState *)temp_s2, 2);
+    SelectSpriteAnimationFrame((ObjectState *)temp_s2, 1);
 }

@@ -1,12 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "random.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800D425C(u16 *arg0);
 s32 ovl_11_func_800D3D60(u16 arg0);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
-u32 Rand(s32 arg0);
 
 s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
     Ovl11PaddedVec3 position;

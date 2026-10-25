@@ -2,9 +2,8 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "ovl19_actor_controls.h"
+#include "random.h"
 
-/* Overlay alias for Rand; signature from its matched definition. */
-u32 Rand(s32 arg0);
 s32 ovl_19_func_800BA2D4(void);
 s32 ovl_19_func_800BA33C(u8 *arg0);
 

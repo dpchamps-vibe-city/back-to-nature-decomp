@@ -1,5 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0);
 /* No complete prototype: this call supplies only the object and zero.
@@ -7,7 +11,6 @@ s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0);
  * transitive arity bound also includes FntPrint's variadic argument saves. */
 void ovl_11_func_800CCFF8();
 /* The callee stores only the low byte of the animation selector. */
-void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_11_func_800C7650(void);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800D7348(u16 *dst, u16 *src);
@@ -19,7 +22,7 @@ s32 ovl_11_func_800C7524(Ovl11C7010Object *arg0, u16 *arg1) {
     case 0x39:
         ovl_11_func_800CDD7C(arg0);
         ovl_11_func_800CCFF8((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
-        func_80015840((ObjectState *) &arg0->sprite, (u8) arg0->unk38);
+        SelectSpriteAnimation((ObjectState *) &arg0->sprite, (u8) arg0->unk38);
         return 1;
     case 0x21:
         ovl_11_func_800C70CC(arg0, 0x32, 0x47, 0xA);

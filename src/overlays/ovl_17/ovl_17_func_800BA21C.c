@@ -3,10 +3,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "cd_loader.h"
-
-/* Callee prototypes as the original caller TU saw them. func_80014CBC took
- * plain words for arg4/arg5 (sw into the outgoing area). */
-void func_8001719C(u8 *arg0);
+#include "sprite_upload.h"
 
 void ovl_17_func_800BA21C(void) {
     DrawSync(0);
@@ -15,5 +12,5 @@ void ovl_17_func_800BA21C(void) {
     do {
 
     } while (CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
-    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290));
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
 }

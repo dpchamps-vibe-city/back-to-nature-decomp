@@ -2,9 +2,8 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "ovl19_actor_controls.h"
+#include "random.h"
 
-/* The overlay's symbol for Rand, whose matched definition returns u32. */
-u32 Rand(s32 arg0);
 s32 ovl_19_func_800BA564(s16 *arg0, s16 *arg1);
 s32 ovl_19_func_800BA5B4(s16 *arg0, s16 *arg1);
 s32 ovl_19_func_800BA65C(Ovl19Func800BAC40Arg *arg0);

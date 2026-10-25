@@ -22,6 +22,7 @@
 #include "include_asm.h"
 #include "cd_loader.h"
 #include "game_types.h"
+#include "random.h"
 
 void InitSoundOutputAndCdFiles(void) {
     SetSoundStereo();
@@ -558,8 +559,6 @@ s32 StepSoundLoad(void) {
 
 /* Keep the first VSync sample for the key-on guard and the second for
  * voice age: a frame boundary can fall between them. */
-
-u32 Rand(s32 arg0);
 
 s32 FindIdleSoundVoice(s32 arg0, s32 arg1, s32 arg2, u8 *arg3);
 

@@ -3,15 +3,15 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "packet_work.h"
+#include "beveled_panel.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 
 void func_80022580 ();
 void ovl_11_func_800F8A3C (s32 arg0);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
 void ovl_11_func_800F8C1C(u32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     func_80022580(arg0, 1, 0x19, 0x10, 0x69, 0x4A);

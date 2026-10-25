@@ -2,6 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 s32 func_80015DD4(s32 *arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
@@ -9,7 +11,6 @@ s32 ovl_11_func_800D2950(s32 arg0);
 void ovl_11_func_80107E2C(u8 *arg0, s32 arg1, s16 arg2, s16 arg3);
 s32 func_8001DFD4(s32 *arg0, SVECTOR *arg1);
 s32 ovl_11_func_800D037C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800158E4(SpriteSourceData *src);
 
 void ovl_11_func_800D0198(u8 *arg0, s32 arg1, s32 arg2) {
     s32 screen[4];
@@ -38,7 +39,7 @@ void ovl_11_func_800D0198(u8 *arg0, s32 arg1, s32 arg2) {
                 D_80128D48[0], D_80128D48[1]);
         }
         if (!(((struct struct_8006C838_view *)D_8006C838)->field_0C & 0x08000000)) {
-            func_800158E4((SpriteSourceData *)(arg0 + 0x78));
+            UpdateSpriteAnimation((SpriteSourceData *)(arg0 + 0x78));
         }
     }
 }

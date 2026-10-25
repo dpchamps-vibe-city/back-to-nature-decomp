@@ -2,6 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 
 void ovl_11_func_800F6D14 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
@@ -9,9 +12,6 @@ void ovl_11_func_800F7010 (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F8CF8 (s32 *arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F6A24 (u16 arg0);
 void ovl_11_func_800F6C78 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
 void ovl_11_func_80101814(void) {
     u16 var_s0;

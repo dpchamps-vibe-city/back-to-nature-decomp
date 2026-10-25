@@ -5,6 +5,7 @@
 #include "aux_sprite_display.h"
 #include "master_volume.h"
 #include "sound_driver.h"
+#include "random.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
@@ -26,7 +27,6 @@ void ovl_11_func_80121318(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
-u32 Rand(s32 arg0);
 /* The callee stores argument 1 as a halfword; no caller-side narrowing. */
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800F1038(u16 arg0, s32 arg1);

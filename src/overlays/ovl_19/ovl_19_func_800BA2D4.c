@@ -1,8 +1,7 @@
 #include "common.h"
+#include "random.h"
 
 extern s16 D_800BF4D0[];
-
-u32 Rand(s32 arg0);
 
 s32 ovl_19_func_800BA2D4(void) {
     s32 var_s0;

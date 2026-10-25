@@ -48,6 +48,7 @@
 #include "sound_driver.h"
 #include "ovl08_scene_select_menu.h"
 #include "ovl28_sprite_sequence_scene.h"
+#include "random.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -433,8 +434,6 @@ extern void PresentFrame(void);
  * would make cc1 emit call_value_internal1 (a $v0 set) for each void call,
  * stealing $v0 from the loads that follow them. */
 void func_800129F4(void);
-
-u32 Rand(s32 arg0);
 
 void RunSceneUpdateLoop(void) {
     char *scene_ptr;

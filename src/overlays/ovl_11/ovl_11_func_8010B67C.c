@@ -1,9 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void ovl_11_func_800BD238(s32 arg0);
-void func_80015704();
-void func_80015868(Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 void ovl_11_func_8010B67C(void) {
     char *base;
@@ -27,11 +29,11 @@ void ovl_11_func_8010B67C(void) {
         var_a0 = 0;
 block_8:
         ovl_11_func_800BD238(var_a0);
-        func_80015704((SpriteSourceData *)(base + 0x78), (SpriteDataHeader *)&D_8007AFF8);
+        InitSpriteSourceData((SpriteSourceData *)(base + 0x78), (SpriteDataHeader *)&D_8007AFF8);
         far1 = (char *)&D_8007AFF8;
         state = far1 + 0x1FFF8;
         if (*(s16 *)(state + 0x5476) == 3) {
-            func_80015868((Struct_800154CC *)(base + 0x78), -0x100, 0, 0, 0);
+            SetSpriteSourceTextureOffsets((Struct_800154CC *)(base + 0x78), -0x100, 0, 0, 0);
         }
         return;
     default:

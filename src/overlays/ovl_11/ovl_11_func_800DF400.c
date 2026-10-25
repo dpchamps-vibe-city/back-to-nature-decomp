@@ -1,8 +1,8 @@
 #include "common.h"
 
 #include "game_types.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 s32 ovl_11_func_800DF010(void *arg0, s32 arg1);
 
 s32 ovl_11_func_800DF400(UnkStruct800DF4F0 *arg0) {

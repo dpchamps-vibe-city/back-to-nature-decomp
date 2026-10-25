@@ -1,7 +1,9 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80015840(ObjectState *obj, u8 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void ovl_17_func_800BAEF0(void) {
     u8 *base;
@@ -20,6 +22,6 @@ void ovl_17_func_800BAEF0(void) {
     }
     obj = D_800BD848;
     if (*(u8 *)(obj + 0x290) != mode) {
-        func_80015840((ObjectState *)(obj + 0x28C), (s8)mode);
+        SelectSpriteAnimation((ObjectState *)(obj + 0x28C), (s8)mode);
     }
 }

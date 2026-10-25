@@ -1,10 +1,13 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 extern s32 *D_80124FE4;
 extern s32 D_8009A3F8;
 
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 s32 ovl_11_func_800E2718(void *arg0);
 
 s32 ovl_11_func_800E2A30(s16 *arg0) {
@@ -23,7 +26,7 @@ s32 ovl_11_func_800E2A30(s16 *arg0) {
         *arg0 = temp_v0;
         index = 2;
     }
-    func_80015704((SpriteSourceData *)((char *)arg0 + 0x78),
+    InitSpriteSourceData((SpriteSourceData *)((char *)arg0 + 0x78),
                   (SpriteDataHeader *)(D_80124FE4[index] + (s32)&D_8009A3F8));
     var_v0 = 0;
     return var_v0;

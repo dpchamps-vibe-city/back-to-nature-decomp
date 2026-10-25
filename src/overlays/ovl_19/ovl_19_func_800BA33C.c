@@ -1,6 +1,5 @@
 #include "common.h"
-
-u32 Rand(s32 arg0);
+#include "random.h"
 
 s32 ovl_19_func_800BA33C(u8 *arg0) {
     s32 result;

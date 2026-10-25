@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
-/* Legacy overlay name for Rand; prototype witnessed by src/Rand.c. */
-u32 Rand(s32 arg0);
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void ovl_11_func_80110E28(u8 *arg0);
 void ovl_11_func_80110E34(Ovl11MotionState *arg0);

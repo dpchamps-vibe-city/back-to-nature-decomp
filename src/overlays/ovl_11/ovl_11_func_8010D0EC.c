@@ -1,5 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 typedef struct {
     /* 0x00 */ s16 field_0;
@@ -10,9 +14,6 @@ typedef struct {
     /* 0xA8 */ char pad_A8[0xAC - 0xA8];
     /* 0xAC */ u16 unkAC;
 } Struct_8010D0EC;
-
-void func_80015704();
-void func_80015868(Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 extern s32 *D_80124FCC;
 extern s32 D_8008F7F8;
@@ -64,8 +65,8 @@ s16 ovl_11_func_8010D0EC(Struct_8010D0EC *arg0) {
     if (header != (SpriteDataHeader *) arg0->sprite.field_14) {
         far_base2 = (char *) &D_8007AFF0;
         if (*(s16 *) (far_base2 + 0x25476) == arg0->unk30) {
-            func_80015704(&arg0->sprite, header);
-            func_80015868((Struct_800154CC *) &arg0->sprite, 0, 0, 0, D_80127CA4[arg0->unkAC]);
+            InitSpriteSourceData(&arg0->sprite, header);
+            SetSpriteSourceTextureOffsets((Struct_800154CC *) &arg0->sprite, 0, 0, 0, D_80127CA4[arg0->unkAC]);
         }
     }
     arg0->field_0 = 0x176;

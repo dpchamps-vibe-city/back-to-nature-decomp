@@ -62,7 +62,7 @@ void ovl_11_func_801044E4(void) {
     base = (Ovl11StartupView *)D_8006C838;
     if (base->flags & 0x8000) {
         *base->reset = 0;
-        D_8005E290 = 1;
+        gRandomState = 1;
     }
     ovl_11_func_80104A80();
     ovl_11_func_801047FC();

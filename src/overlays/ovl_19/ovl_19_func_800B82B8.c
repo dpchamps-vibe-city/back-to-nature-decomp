@@ -1,6 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 void ovl_19_func_800B843C(void);
 
 void ovl_19_func_800B82B8(void) {

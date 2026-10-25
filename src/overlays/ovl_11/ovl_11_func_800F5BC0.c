@@ -1,5 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 /* The 0x18-byte work record this routine walks. Only the witnessed fields
  * are named; unk0 is compared against a far s16, unk4 is the selection flag
@@ -19,7 +23,6 @@ typedef struct {
 
 s32 ovl_11_func_800F581C(void);
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
 void ovl_11_func_800F5BC0(s32 arg0, Ovl11Func5BC0Entry *arg1, s32 (*arg2)(u16, u8 *, s32 *)) {
     u16 sp18[3];
@@ -43,7 +46,7 @@ void ovl_11_func_800F5BC0(s32 arg0, Ovl11Func5BC0Entry *arg1, s32 (*arg2)(u16, u
                 sp18[2] = arg1->unk10 - 0x96;
                 if (ovl_11_func_800F5888(sp18, sp20) != 0) {
                     if (cb(arg1->unk2, &sp30, &sp34) != 0) {
-                        func_80015EE8(gActiveRenderContext->field_120 + ((sp20[2] >> 2) * 4), (s32) (&D_80070400 + sp34), (s32) sp30, 0, (s16) sp20[0], (s16) sp20[1]);
+                        DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((sp20[2] >> 2) * 4), (s32) (&D_80070400 + sp34), (s32) sp30, 0, (s16) sp20[0], (s16) sp20[1]);
                     }
                 }
             }

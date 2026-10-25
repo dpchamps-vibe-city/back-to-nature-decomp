@@ -1,12 +1,14 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 extern s16 D_800C4A32;
 extern u8 D_800C4B10[];
-
-u32 Rand(s32 arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 
 void ovl_27_func_800B9CB4(void) {
     s32 var;
@@ -17,11 +19,11 @@ void ovl_27_func_800B9CB4(void) {
     q = (s16)var / 1800;
     D_800C4A32 = var - q * 1800;
     arg0 = gActiveRenderContext->field_D8 + 0x8C;
-    func_80015BF0(arg0, (SpriteSourceData *)D_800C4B10, 0x127, 0xCD);
-    func_80015BF0(arg0, (SpriteSourceData *)D_800C4B10, 0x102, 0x8A);
-    func_80015BF0(arg0, (SpriteSourceData *)D_800C4B10, 0x118, 0x79);
+    DrawSpriteAnimationQuadsAndUpdate(arg0, (SpriteSourceData *)D_800C4B10, 0x127, 0xCD);
+    DrawSpriteAnimationQuadsAndUpdate(arg0, (SpriteSourceData *)D_800C4B10, 0x102, 0x8A);
+    DrawSpriteAnimationQuadsAndUpdate(arg0, (SpriteSourceData *)D_800C4B10, 0x118, 0x79);
     if (D_800C4A32 >= 0xF) {
         D_800C4A32 = 0;
-        func_80015840((ObjectState *)D_800C4B10, Rand(2) + 0x16);
+        SelectSpriteAnimation((ObjectState *)D_800C4B10, Rand(2) + 0x16);
     }
 }

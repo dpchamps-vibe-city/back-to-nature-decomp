@@ -1,7 +1,6 @@
 #include "common.h"
 #include "sound_commands.h"
-
-u32 Rand(s32 arg0);
+#include "random.h"
 
 void ovl_17_func_800B946C(void) {
     u8 *base;

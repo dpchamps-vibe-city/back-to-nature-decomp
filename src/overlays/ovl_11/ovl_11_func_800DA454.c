@@ -1,6 +1,5 @@
 #include "common.h"
-
-u32 Rand(s32 arg0);
+#include "random.h"
 
 void ovl_11_func_800DA454(u16 *arg0, s32 arg1) {
     if (arg1 != 0) {

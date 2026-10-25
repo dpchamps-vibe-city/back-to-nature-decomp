@@ -1,8 +1,11 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 void ovl_11_func_800D92FC(s32 *arg0);
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 s32 ovl_11_func_800D95EC(s32 arg0, s32 arg1, s32 *, s32 *, s32 *);
 s32 ovl_11_func_800D981C(s32 arg0, s32 arg1, s32 *, s32 *, s32 *);
 s32 ovl_11_func_800D9B14(s32 arg0, s32 arg1, s32 *, s32 *, s32 *);
@@ -38,7 +41,7 @@ void ovl_11_func_800D93C8(void) {
                     D_80128DA8(((Ovl11D93C8MapView *)D_8006C838)->cells[y][x].kind,
                         ((Ovl11D93C8MapView *)D_8006C838)->cells[y][x].value,
                         &sprite, &texture, &yOffset) != 0) {
-                    func_80015EE8(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
+                    DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
                         (s32)((u8 *)D_8006C838 + 0x3BC8 + texture * 0x30),
                         (u8)sprite, 0, (s16)projected[0], (s16)(projected[1] + yOffset));
                 }

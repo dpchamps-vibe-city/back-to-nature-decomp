@@ -1,27 +1,28 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 void ovl_11_func_800F7094(s32 arg0, s16 arg1, s16 arg2, s32 arg3) {
     s32 var_s1;
 
-    func_80015840((ObjectState *)&gSharedSpriteSource, 0xA);
+    SelectSpriteAnimation((ObjectState *)&gSharedSpriteSource, 0xA);
     arg1 += 2;
     arg2 += 0x16;
-    func_8001585C((ObjectState *)&gSharedSpriteSource, 0xA);
-    func_80015EE8(arg0, (s32)&gSharedSpriteSource, (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 4), (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 5), arg1, arg2);
+    SelectSpriteAnimationFrame((ObjectState *)&gSharedSpriteSource, 0xA);
+    DrawSpriteFrameRects(arg0, (s32)&gSharedSpriteSource, (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 4), (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 5), arg1, arg2);
 
     arg1 += 0xA;
     var_s1 = arg3 / 10;
     if (var_s1 != 0) {
-        func_8001585C((ObjectState *)&gSharedSpriteSource, var_s1 & 0xFF);
-        func_80015EE8(arg0, (s32)&gSharedSpriteSource, (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 4), (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 5), arg1, arg2);
+        SelectSpriteAnimationFrame((ObjectState *)&gSharedSpriteSource, var_s1 & 0xFF);
+        DrawSpriteFrameRects(arg0, (s32)&gSharedSpriteSource, (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 4), (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 5), arg1, arg2);
     }
 
     arg1 += 0xA;
-    func_8001585C((ObjectState *)&gSharedSpriteSource, (arg3 % 10) & 0xFF);
-    func_80015EE8(arg0, (s32)&gSharedSpriteSource, (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 4), (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 5), arg1, arg2);
+    SelectSpriteAnimationFrame((ObjectState *)&gSharedSpriteSource, (arg3 % 10) & 0xFF);
+    DrawSpriteFrameRects(arg0, (s32)&gSharedSpriteSource, (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 4), (s32)*(u8 *)((u8 *)&gSharedSpriteSource + 5), arg1, arg2);
 }

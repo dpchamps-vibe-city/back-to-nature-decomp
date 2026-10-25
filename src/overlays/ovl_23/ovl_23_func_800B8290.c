@@ -1,6 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 extern u16 D_800BBA7C[];
 extern u16 D_800BBA88[];
 extern u8 D_800BF87C[];

@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
-/* Overlay import of Rand; return signedness is established by src/Rand.c. */
-u32 Rand(s32 arg0);
 s32 ovl_11_func_800E2934(void *arg0);
 s32 ovl_11_func_800E2A30(s16 *arg0);
 void ovl_11_func_800E2BE8(s32 arg0);

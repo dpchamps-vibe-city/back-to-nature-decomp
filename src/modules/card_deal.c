@@ -11,8 +11,7 @@
 #include "common.h"
 #include "card_deal.h"
 #include "psyq/memory.h"
-
-u32 Rand(s32 limit);
+#include "random.h"
 
 s32 CardTableContainsValue(s32 tableAddress, s16 value) {
     u32 row;

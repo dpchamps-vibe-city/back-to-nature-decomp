@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "packet_work.h"
 #include "screen_primitives.h"
+#include "beveled_panel.h"
 
 
 s32 ovl_11_func_8011D438 (u8 *arg0);
@@ -13,7 +14,6 @@ s32 ovl_11_func_800D6014 (u16 arg0);
 s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 void ovl_11_func_8011CEE0 (u16 *dst);
 void ovl_11_func_8011CF10 (u16 *dst);
-void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800F3898 (u16 arg0, u16 arg1);
@@ -101,5 +101,5 @@ void ovl_11_func_8011D474(s32 *arg0, s16 arg1, s16 arg2) {
         var_s2 = (s32 *) ((u8 *) var_s2 + 2);
         var_s4 = (s32 *) ((u8 *) var_s4 + 1);
     } while (var_a0 < 10);
-    func_800136D4((u32 *) temp_s6, arg1, arg2, ((*(u8 *) ((u8 *) arg0 + 0x5B)) * 8) + 0xF, (s16) (s32) (s16) ((var_s3 * 0xE) + 6));
+    DrawBeveledPanel((u32 *) temp_s6, arg1, arg2, ((*(u8 *) ((u8 *) arg0 + 0x5B)) * 8) + 0xF, (s16) (s32) (s16) ((var_s3 * 0xE) + 6));
 }

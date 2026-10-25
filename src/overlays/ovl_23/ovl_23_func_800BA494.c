@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 extern u8 D_800BF87C[];
 extern u8 D_800BBA9C[];
 

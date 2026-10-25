@@ -8,6 +8,9 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "random.h"
 
 typedef struct {
     s16 field_0;
@@ -70,8 +73,6 @@ void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800BD358 (void);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
 s32 ovl_11_func_800D7504 (s16 arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
-u32 func_8001589C (SpriteSourceData *src);
 void ovl_11_func_800CCFF8 ();
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -82,8 +83,6 @@ void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053
 void ovl_11_func_800D666C (s16 arg0);
 void ovl_11_func_800D7328 (s16 *arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
-void func_80015704 ();
-void func_80015894 (SomeStruct *arg0, s32 arg1);
 s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void ovl_11_func_80107DD0 (s16 *arg0);
@@ -93,7 +92,6 @@ void ovl_11_func_800D3200 (s32 arg0);
 s32 func_80012CB4 (s32 arg0, s32 *arg1, s32 arg2);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D1C18 (s32 arg0, s32 arg1, s32 arg2);
-u32 Rand (s32 arg0);
 s32 ovl_11_func_800D1CD0 (s32 arg0, s32 arg1);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800D5868 (s16 arg0);

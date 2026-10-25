@@ -694,41 +694,6 @@ typedef struct {
 } M2C_326bb2a0f3cc_Ovl11D04D4Obj;
 
 typedef struct {
-    s16 field_00;
-    u16 field_02;
-} M2C_326f4e635d1e_Group;
-
-typedef struct {
-    u16 field_00;
-    u16 field_02;
-    s16 field_04;
-    s16 field_06;
-} M2C_326f4e635d1e_Vertex;
-
-typedef unsigned int u32;
-
-typedef struct {
-    u16 field_00;
-    u16 field_02;
-    u16 field_04;
-    u16 field_06;
-    u16 field_08;
-    u16 field_0A;
-    u16 field_0C;
-    u16 field_0E;
-    s16 field_10;
-    u16 field_12;
-    u32 padding_14;
-    u32 padding_18;
-    M2C_326f4e635d1e_Vertex *field_1C;
-    M2C_326f4e635d1e_Group *field_20;
-    u8 *field_24;
-    M2C_326f4e635d1e_Group *field_28;
-    u8 *field_2C;
-    s32 field_30;
-} M2C_326f4e635d1e_SourceData;
-
-typedef struct {
     char pad_0[0x2];
     s16 unk2;
 } M2C_32ba532776b0_ReconA0View;
@@ -1580,39 +1545,6 @@ typedef struct {
 } M2C_a731097cefbc_Ovl11D8010BD6CObj;
 
 typedef struct {
-    s16 field_00;
-    u16 field_02;
-} M2C_ab2039654fca_Group;
-
-typedef struct {
-    s16 field_00;
-    s16 field_02;
-    s16 field_04;
-    s16 field_06;
-} M2C_ab2039654fca_Vertex;
-
-typedef struct {
-    u16 field_00;
-    u16 field_02;
-    u16 field_04;
-    u16 field_06;
-    u16 field_08;
-    u16 field_0A;
-    s16 field_0C;
-    s16 field_0E;
-    s16 field_10;
-    s16 field_12;
-    u32 pad_14;
-    u32 pad_18;
-    M2C_ab2039654fca_Vertex *field_1C;
-    M2C_ab2039654fca_Group *field_20;
-    u8 *field_24;
-    M2C_ab2039654fca_Group *field_28;
-    u8 *field_2C;
-    s32 field_30;
-} M2C_ab2039654fca_SourceData;
-
-typedef struct {
                u16 unk0;
                u16 unk2;
                u8 unk4;
@@ -1791,6 +1723,8 @@ typedef struct {
     u16 unk14;
 } M2C_bf20b0042153_Ovl11DB354Arg0;
 
+typedef unsigned int u32;
+
 typedef struct {
                char pad_00[0x16];
                u16 unk16;
@@ -1947,32 +1881,6 @@ typedef struct {
                s16 unk0;
                s16 unk2;
 } M2C_d453384c461b_UnkStruct800D0DBC;
-
-typedef struct {
-               s16 unk0;
-               u16 unk2;
-} M2C_d4baf9e5b2ba_SpriteRef;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 unk6;
-} M2C_d4baf9e5b2ba_SpriteTex;
-
-typedef struct {
-               u16 unk0;
-               u16 unk2;
-               u8 unk4;
-               u8 unk5;
-               u16 unk6;
-               u8 pad8[0x14];
-               M2C_d4baf9e5b2ba_SpriteTex *unk1C;
-               M2C_d4baf9e5b2ba_SpriteRef *unk20;
-               u8 *unk24;
-               M2C_d4baf9e5b2ba_SpriteRef *unk28;
-               u8 *unk2C;
-} M2C_d4baf9e5b2ba_SpriteSourceData;
 
 typedef struct {
     char pad_00[0x26];
@@ -3635,7 +3543,92 @@ typedef struct {
                s32 offset_frame;
 } SpriteDataHeader;
 
+typedef struct {
+    s16 unk0;
+    u16 unk2;
+} SpriteEntryRef;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+} SpriteEntryTexture;
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u8 unk4;
+    u8 unk5;
+    u16 unk6;
+    u8 pad8[0x14];
+    SpriteEntryTexture *unk1C;
+    SpriteEntryRef *unk20;
+    u8 *unk24;
+    SpriteEntryRef *unk28;
+    u8 *unk2C;
+} SpriteEntrySourceView;
+
 typedef void (*SpriteGridCallback)(s32, SpriteSourceData *, s16, s32, s32);
+
+typedef struct {
+    s16 field_00;
+    s16 field_02;
+    s16 field_04;
+    s16 field_06;
+} SpriteQuadVertex;
+
+typedef struct {
+    s16 field_00;
+    u16 field_02;
+} SpriteRenderGroup;
+
+typedef struct {
+    u16 field_00;
+    u16 field_02;
+    u16 field_04;
+    u16 field_06;
+    u16 field_08;
+    u16 field_0A;
+    s16 field_0C;
+    s16 field_0E;
+    s16 field_10;
+    s16 field_12;
+    u32 pad_14;
+    u32 pad_18;
+    SpriteQuadVertex *field_1C;
+    SpriteRenderGroup *field_20;
+    u8 *field_24;
+    SpriteRenderGroup *field_28;
+    u8 *field_2C;
+} SpriteQuadSourceView;
+
+typedef struct {
+    u16 field_00;
+    u16 field_02;
+    s16 field_04;
+    s16 field_06;
+} SpriteRectVertex;
+
+typedef struct {
+    u16 field_00;
+    u16 field_02;
+    u16 field_04;
+    u16 field_06;
+    u16 field_08;
+    u16 field_0A;
+    u16 field_0C;
+    u16 field_0E;
+    s16 field_10;
+    u16 field_12;
+    u32 padding_14;
+    u32 padding_18;
+    SpriteRectVertex *field_1C;
+    SpriteRenderGroup *field_20;
+    u8 *field_24;
+    SpriteRenderGroup *field_28;
+    u8 *field_2C;
+} SpriteRectSourceView;
 
 typedef struct {
                s8 field_0;

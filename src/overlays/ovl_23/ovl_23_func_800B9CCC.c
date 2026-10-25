@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 s32 ovl_23_func_800BA1E0(Ovl23Func800BA1E0Arg *arg0);
 /* The original call promotes direction unchanged and narrows only distance. */
 s32 ovl_23_func_800B9E04();

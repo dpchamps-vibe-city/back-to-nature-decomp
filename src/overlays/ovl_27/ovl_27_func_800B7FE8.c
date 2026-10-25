@@ -1,10 +1,10 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "message_window.h"
+#include "random.h"
 
 void ovl_27_func_800B7F2C(void);
 void func_80021DA8(void);
-u32 Rand(s32 arg0);
 void ovl_27_func_800BA914(s32 arg0);
 void ovl_27_func_800BAA34(void);
 void ovl_27_func_800BABD4(void);

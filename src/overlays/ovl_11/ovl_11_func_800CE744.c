@@ -11,6 +11,9 @@
 #include "aged_item_pool.h"
 #include "cd_audio.h"
 #include "ovl11_clock_calendar.h"
+#include "sprite_render.h"
+#include "sprite_source.h"
+#include "random.h"
 
 typedef struct {
                s16 unk0;
@@ -137,21 +140,16 @@ struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
 u16 *ovl_11_func_8010B1C4 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
 s32 func_800129E8 (void);
-void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
-POLY_FT4 *func_80016C08 (s32 *ot, POLY_FT4 *poly, M2C_d4baf9e5b2ba_SpriteSourceData *src, s16 ox, s16 oy, u16 flags, s32 total, s32 texBase, s16 subst, s16 substFrom, s16 substTo);
-POLY_FT4 *func_800165D8 (u_long *arg0, POLY_FT4 *arg1, M2C_ab2039654fca_SourceData *arg2, u8 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, s32 arg9, u16 arg10, s16 arg11, s16 arg12, s16 arg13, s16 arg14);
+void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800C2884 (s16 key, u32 *table);
-void func_80015704 ();
 void ovl_11_func_800CFD9C (void);
 s32 ovl_11_func_800D2E20 (void);
-u32 Rand (s32 arg0);
 s32 ovl_11_func_800F5888 ();
 s32 ovl_11_func_800D2950 (s32 arg0);
 void func_80016054 ();
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 s32 ovl_11_func_800D037C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800158E4 (SpriteSourceData *src);
 s32 func_80015DD4 ();
 void ovl_11_func_800C9E90 (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800E2904 (s32 arg0);
@@ -170,9 +168,6 @@ s32 ovl_11_func_800CBDFC (void);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3424 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
-void SetVal8005E43C (s32 arg0);
 void ovl_11_func_800D03B4 (M2C_057dca34f681_Struct_800D03B4 *arg0, M2C_057dca34f681_Struct_800D03B4 *arg1, s32 arg2);
 s32 ovl_11_func_800D3468 (u16 *arg0);
 s32 ovl_11_func_800D3C04 (void *arg0);
@@ -184,7 +179,6 @@ s32 ovl_11_func_800DF3BC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_800DF4F0 (M2C_a5df3a0a31de_UnkStruct800DF4F0 *arg0);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s16 ovl_11_func_800DEEE0(Recon_ovl_11_func_800DEEE0_A0View *arg0);
-void func_80015868 (Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 s32 ovl_11_func_800E0F8C (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_800E109C (M2C_1023b6857e0a_UnkStruct800E109C *arg0);
 s32 ovl_11_func_800E0FD0 (Recon_ovl_11_func_8010CE80_A0View *arg0);
@@ -194,8 +188,6 @@ s32 ovl_11_func_800E2A30 (s16 *arg0);
 s32 ovl_11_func_800E2AF0 (M2C_bd4797768b62_Struct_800E2AF0 *arg0);
 void ovl_11_func_8010B64C (s32 arg0);
 s32 ovl_11_func_800F5868 (s32 arg0, s32 arg1);
-u16 func_80015A18 (SpriteSourceData *arg0, s32 arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 s32 ovl_11_func_80109550 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_801098B0 (Ovl11Func801098B0Arg *arg0);
 s32 ovl_11_func_801097F4 (Ovl11Func801097F4Arg x);

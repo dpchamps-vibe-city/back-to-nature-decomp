@@ -267,7 +267,7 @@ extern s32 gOvl11CollisionQueryCount;
 extern u8 gUpdateTimingMode;
 
 /* Rand defines this u32 seed; ovl_11 801044E4 stores 1 with sw. */
-extern u32 D_8005E290;
+extern u32 gRandomState;
 
 /* 801044E4: word flags/pointer at +C/+1C and signed state halfwords. */
 typedef struct {
@@ -2362,7 +2362,7 @@ extern s32 gCdArchiveFirstByteOffset[4];
 extern u16 D_80049050[5];
 
 /* D_8005E43C - GP-relative update flag */
-extern s32 D_8005E43C;
+extern s32 gSpriteAnimationUpdateLatch;
 
 /* D_8005E500..D_8005E528 - GP-relative scalars used by func_8001E878
  * D_8005E500, D_8005E504, D_8005E508: cross-product results (sw gp_rel)
@@ -2804,7 +2804,7 @@ extern u16 _gTextEntryPreviewBuffer[0x10] __asm__("gTextEntryPreviewBuffer");
 extern s32 *gFrameOrderingTable;
 
 /* D_8005E438 - GP-relative u16, sprite tile/entry ID storage */
-extern u16 D_8005E438;
+extern u16 gSpriteEntryTextureId;
 
 /* Message-window request/status words: lw/sw through $gp in 8002261C..22DF8. */
 extern s32 gMessageWindowEntry;
@@ -3238,6 +3238,11 @@ extern u16 gCardValueAttributes[80];
  * [4k..4k+3] as (lo, hi, lo, hi). Absolute-addressed, owned by the
  * nonmatching data file, not classified in globals.h. */
 extern u16 gCardColumnPositionRanges[24];
+
+/* ovl_08: 800B8400 prints the original nine-byte "PADNO=%d" format. */
+extern char gOvl08ActuatorTestFormat[9];
+/* ovl_08: 800B8400 wraps this retained sequence-preset word in 0..10. */
+extern s32 gOvl08ActuatorTestSequenceIndex;
 
 /* ovl_08: 800B8500 phase indexes the three callbacks at 800B7E24. */
 extern s32 gOvl08SceneSelectPhase;

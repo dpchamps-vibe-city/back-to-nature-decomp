@@ -1,6 +1,8 @@
 #include "common.h"
-
-void func_80015828(u16 *arg0, s32 mask);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void ovl_23_func_800BB150(void) {
     u8 *p;
@@ -12,8 +14,8 @@ void ovl_23_func_800BB150(void) {
     q = (u8 *)(base - 0x1D4);
     p = (u8 *)base;
     for (i = 5; i >= 0; i--) {
-        func_80015828((u16 *)p, 4);
-        func_80015828((u16 *)q, 4);
+        ClearSpriteSourceFlags((u16 *)p, 4);
+        ClearSpriteSourceFlags((u16 *)q, 4);
         q += 0x50;
         p += 0x44;
     }

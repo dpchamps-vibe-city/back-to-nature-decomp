@@ -6,9 +6,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl19_actor_controls.h"
-
-void func_80015814(u16 *flags, s32 mask);
-void func_80015828(u16 *flags, s32 mask);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void Ovl19SetActorControl(Ovl19Func800BAC40Arg *control, s32 state, s32 parameter, s32 extra) {
     control->state = state;
@@ -35,7 +36,7 @@ void Ovl19SetActorSpritePauseMode(s32 resume) {
 
     /* Install the operation before walking the groups and read it anew for
      * each sprite. The word view retains the original callback-slot access. */
-    *(u32 *)&gOvl19ActorSpriteFlagOperation = (u32)(resume == 0 ? func_80015814 : func_80015828);
+    *(u32 *)&gOvl19ActorSpriteFlagOperation = (u32)(resume == 0 ? AddSpriteSourceFlags : ClearSpriteSourceFlags);
 
     sprite = gOvl19ActorSprites;
     for (remaining = 2; remaining >= 0; remaining--) {

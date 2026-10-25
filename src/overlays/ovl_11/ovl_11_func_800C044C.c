@@ -1,5 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 extern u8 D_80128820;
 extern s32 D_80125EB8;
@@ -7,7 +11,6 @@ extern SpriteSourceData D_80128A50;
 extern s32 *D_80128A80;
 
 void ovl_11_func_800BFF00(void);
-void func_80015704();
 void ovl_11_func_800C034C(u8 *arg0);
 
 void ovl_11_func_800C044C(s16 arg0) {
@@ -29,7 +32,7 @@ void ovl_11_func_800C044C(s16 arg0) {
         }
         D_80128A80 = &D_80125EB8;
         ovl_11_func_800BFF00();
-        func_80015704(&D_80128A50, (SpriteDataHeader *) &gSharedSpriteData);
+        InitSpriteSourceData(&D_80128A50, (SpriteDataHeader *) &gSharedSpriteData);
         var_s0 = &D_80128820;
         var_s1 = 0;
         do {

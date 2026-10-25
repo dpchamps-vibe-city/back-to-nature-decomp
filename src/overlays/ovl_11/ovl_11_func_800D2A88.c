@@ -1,6 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 extern s32 D_80123A8C[][4];
 
 struct ovl_11_800D2A88_data {

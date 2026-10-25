@@ -1,7 +1,7 @@
 #include "common.h"
 #include "ovl11_entity_pool_access.h"
+#include "random.h"
 
-u32 Rand(s32);
 s32 ovl_11_func_800E5870(s16, s16, s32, s16);
 s32 ovl_11_func_800E58DC(s16, s16, s32, s32);
 s32 ovl_11_func_800E5ADC(s16, s16, s32, s32);

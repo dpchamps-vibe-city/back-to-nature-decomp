@@ -9,10 +9,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl19_value_table_display.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
-void func_80015840(ObjectState *sprite, u8 animation);
-void func_8001585C(ObjectState *sprite, u8 frame);
-void func_80015EE8(s32 orderingTable, s32 sprite, s32 animation, s32 frame, s16 x, s16 y);
 u32 func_80017A64(void);
 void func_80017A48(u32 setting);
 s32 ovl_19_func_800BADAC(s16 value);
@@ -22,10 +24,10 @@ void Ovl19DrawValueTable(void) {
     void Ovl19DrawValueTableSpriteState(s32 animation, s32 frame) {
         u8 *display;
 
-        func_80015840((ObjectState *)&gOvl19UiSprite, animation & 0xFF);
-        func_8001585C((ObjectState *)&gOvl19UiSprite, frame & 0xFF);
+        SelectSpriteAnimation((ObjectState *)&gOvl19UiSprite, animation & 0xFF);
+        SelectSpriteAnimationFrame((ObjectState *)&gOvl19UiSprite, frame & 0xFF);
         display = gOvl19UiSprite - 0x1A0;
-        func_80015EE8(gActiveRenderContext->field_D8 + 0x14, (s32)&gOvl19UiSprite,
+        DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x14, (s32)&gOvl19UiSprite,
                       display[0x1A4], display[0x1A5], 0, 0);
     }
     u32 savedTextSetting;
@@ -48,11 +50,11 @@ void Ovl19DrawValueTable(void) {
     u8 *counts;
     s32 column;
 
-    func_80015840((ObjectState *)display, 0);
+    SelectSpriteAnimation((ObjectState *)display, 0);
     sprite = display;
     display -= 0x1A0;
     displayAddress = (s32)display;
-    func_80015EE8(gActiveRenderContext->field_D8 + 0x18, (s32)sprite, display[0x1A4], display[0x1A5], 0, 0);
+    DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x18, (s32)sprite, display[0x1A4], display[0x1A5], 0, 0);
     column = 0;
     row = 0;
     savedTextSetting = func_80017A64();

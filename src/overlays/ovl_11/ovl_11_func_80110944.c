@@ -1,7 +1,7 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 s32 ovl_11_func_800F44B4(u16 arg0, s32 *position, s16 *area, s32 index);
 
 s32 ovl_11_func_80110944(s16 area, u16 mode) {

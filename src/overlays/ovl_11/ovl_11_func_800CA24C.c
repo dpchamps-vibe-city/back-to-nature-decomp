@@ -2,11 +2,12 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 u32 ovl_11_func_800CDEEC (u8 *arg0);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void ovl_11_func_800C9F20 (Ovl11C7010Object *arg0, s32 arg1, s32 *arg2);
 void ovl_11_func_800CA044 (Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32 *arg2);
 void ovl_11_func_800C9E90 (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -33,7 +34,7 @@ void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0) {
         }
         if (var_s3 != 0) {
             if ((*(u16 *) (object + 0x36)) & 4) {
-                func_80015EE8(gActiveRenderContext->field_120 + 0xA0, (s32) &gSharedSpriteSource, 0xE, ((u32) (*(u32 *) (object + -0x51C0)) >> 2) & 1, (s16) (s32) (*(s16 *) ((u8 *) D_80128B88 + 0)), (s16) (s32) (s16) ((*(u16 *) ((u8 *) D_80128B88 + 4)) - 0x32));
+                DrawSpriteFrameRects(gActiveRenderContext->field_120 + 0xA0, (s32) &gSharedSpriteSource, 0xE, ((u32) (*(u32 *) (object + -0x51C0)) >> 2) & 1, (s16) (s32) (*(s16 *) ((u8 *) D_80128B88 + 0)), (s16) (s32) (s16) ((*(u16 *) ((u8 *) D_80128B88 + 4)) - 0x32));
             }
             ovl_11_func_80107E2C((s16 *) (object + 0x2CC), gActiveRenderContext->field_120 + ((var_s3 >> 2) * 4), *(s16 *) ((u8 *) D_80128B88 + 0), (s16) ((*(u16 *) ((u8 *) D_80128B88 + 4)) - 0x28));
             if ((*(u16 *) (object + 0x38) == 0) ||

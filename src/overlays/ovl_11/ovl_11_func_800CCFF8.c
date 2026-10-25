@@ -1,11 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 extern u16 D_801231FC[];
 
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80015894(SomeStruct *arg0, s32 arg1);
-void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_11_func_800BD8DC(s16 arg0);
 
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -17,7 +18,7 @@ void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32
         ovl_11_func_800BD8DC(temp_v0);
     }
     temp_s1 = (SpriteSourceData *) ((u8 *) arg0 + 0x260);
-    func_80015704(temp_s1, (SpriteDataHeader *) D_8007BFF8);
-    func_80015894((SomeStruct *) temp_s1, (s32) &D_8007BFF8[D_801231FC[temp_v0]]);
-    func_80015840((ObjectState *) temp_s1, 0);
+    InitSpriteSourceData(temp_s1, (SpriteDataHeader *) D_8007BFF8);
+    SetSpriteSourceRecordAddress((SomeStruct *) temp_s1, (s32) &D_8007BFF8[D_801231FC[temp_v0]]);
+    SelectSpriteAnimation((ObjectState *) temp_s1, 0);
 }

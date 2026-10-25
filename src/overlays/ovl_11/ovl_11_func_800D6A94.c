@@ -2,15 +2,17 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "cd_loader.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_upload.h"
 
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800D6730 (s16 value, s16 row);
 s32 ovl_11_func_800D688C (s16 arg0);
-void func_80015704 ();
 s32 ovl_11_func_800D678C (s16 arg0);
 s32 ovl_11_func_800D67F4 (s16 arg0);
 void ovl_11_func_800D6944 (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-void func_80017200 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 s32 ovl_11_func_800D6A94(s16 arg0) {
     s16 origin[4];
@@ -56,11 +58,11 @@ s32 ovl_11_func_800D6A94(s16 arg0) {
         temp_v0 = ovl_11_func_800D688C(arg0);
         if (temp_v0 == 0) {
             CdReadDiscSectorsBlocking(0, (arg0 << 0xB) + 0x03C19000, 0x800, 0, (s32) &gMessageWindowReadBuffer);
-            func_80015704(&sp28, (SpriteDataHeader *) &gMessageWindowReadBuffer);
+            InitSpriteSourceData(&sp28, (SpriteDataHeader *) &gMessageWindowReadBuffer);
             sprite = &sp28;
         } else {
             sp58 = 1;
-            func_80015704(&sp28, (SpriteDataHeader *) temp_v0);
+            InitSpriteSourceData(&sp28, (SpriteDataHeader *) temp_v0);
             sprite = &sp28;
         }
         var_s5 = NULL;
@@ -145,7 +147,7 @@ s32 ovl_11_func_800D6A94(s16 arg0) {
             }
             goto block_32;
         }
-        func_80017200(D_8006CA10, origin[0] + (u16) temp_s0->unk0, origin[1] + (u16) temp_s0->unk2, (u16) temp_s0->unk18 - 0x140, (u16) temp_s0->unk1A - 0xFE);
+        UploadSpriteImagesAtOffsets(D_8006CA10, origin[0] + (u16) temp_s0->unk0, origin[1] + (u16) temp_s0->unk2, (u16) temp_s0->unk18 - 0x140, (u16) temp_s0->unk1A - 0xFE);
 block_32:
         return 1;
 }

@@ -1,10 +1,13 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5,
                    s16 arg6, s32 arg7, s32 arg8, u16 arg9);
-void func_800158E4(SpriteSourceData *src);
 
 void ovl_11_func_800CE0F0(Ovl11SpritePositionView *position, u8 *object,
                           s32 mode, u32 index) {
@@ -42,7 +45,7 @@ void ovl_11_func_800CE0F0(Ovl11SpritePositionView *position, u8 *object,
     if (mode == 0) {
         work = 0x08000000;
         if (!(D_8006C844 & work)) {
-            func_800158E4(source);
+            UpdateSpriteAnimation(source);
         }
     }
 }

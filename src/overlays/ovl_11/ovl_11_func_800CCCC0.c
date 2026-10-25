@@ -2,6 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
@@ -18,7 +20,6 @@ s32 ovl_11_func_800CDF4C (u8 *arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800BD168 (void);
 void ovl_11_func_800DE3A0 (void);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 
 void ovl_11_func_800CCCC0(void) {
     struct Ovl11CCCC0State *temp_s0;

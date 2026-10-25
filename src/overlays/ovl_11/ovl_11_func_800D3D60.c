@@ -1,8 +1,6 @@
 #include "common.h"
 #include "psyq/memory.h"
-
-/* Overlay import of matched u32 Rand(s32). */
-u32 Rand(s32 arg0);
+#include "random.h"
 
 s32 ovl_11_func_800D3D60(u16 arg0) {
     u8 buf[20];

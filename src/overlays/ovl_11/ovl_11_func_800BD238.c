@@ -7,10 +7,7 @@
 #include "psyq/libcd.h"
 #include "psyq/libetc.h"
 #include "cd_loader.h"
-
-void func_8001719C(u8 *arg0);
-
-void func_80017200(u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+#include "sprite_upload.h"
 
 void ovl_11_func_800BD238(s32 arg0) {
     s32 *p;
@@ -33,9 +30,9 @@ void ovl_11_func_800BD238(s32 arg0) {
         }
         memcpy(base + 8, (void *)(gGraphicsHeapBase + 0x4290), var_s1);
         if (*(s16 *)(state + 0x5476) == 3) {
-            func_80017200((u8 *)(gGraphicsHeapBase + 0x4290 + var_s1), -0x100, 0, 0, 0);
+            UploadSpriteImagesAtOffsets((u8 *)(gGraphicsHeapBase + 0x4290 + var_s1), -0x100, 0, 0, 0);
             return;
         }
-        func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290 + var_s1));
+        UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290 + var_s1));
     }
 }

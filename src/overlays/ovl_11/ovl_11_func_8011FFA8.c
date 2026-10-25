@@ -2,9 +2,12 @@
 #include "game_types.h"
 #include "pad_actuator_sequences.h"
 #include "sound_commands.h"
+#include "random.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
-u32 Rand(s32 arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
 s32 ovl_11_func_800CD3C4(s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
@@ -41,7 +44,7 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
         if (D_8012DB80 == 0) {
             state[2] = -1;
             obj->phase = 3;
-            func_80015840(&obj->animation, (u8)(obj->direction + 4));
+            SelectSpriteAnimation(&obj->animation, (u8)(obj->direction + 4));
             StopPadActuatorSequence(0);
             PlaySoundEffect(15);
         } else {
@@ -53,7 +56,7 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
         if (obj->flags & 0x40) return 0;
         if (!(flags & 0x80)) {
             obj->phase = 2;
-            func_80015840(&obj->animation, (u8)(obj->direction + 4));
+            SelectSpriteAnimation(&obj->animation, (u8)(obj->direction + 4));
             PlaySoundEffect(15);
         } else {
             if (state[1] == 0) {
@@ -62,7 +65,7 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
                 threshold = chance * 2;
                 if ((s32)Rand(100) < threshold) {
                     obj->phase = 1;
-                    func_80015840(&obj->animation, (u8)(obj->direction + 9));
+                    SelectSpriteAnimation(&obj->animation, (u8)(obj->direction + 9));
                     RequestPadActuatorSequence(0, 0);
                     return 0;
                 }
@@ -70,7 +73,7 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
             } else if (state[2] != -1) {
                 state[1]--;
             }
-            func_80015840(&obj->animation, 8);
+            SelectSpriteAnimation(&obj->animation, 8);
             obj->animation.field_5 = obj->direction;
             ovl_11_func_80120850(0);
         }
@@ -95,7 +98,7 @@ s32 ovl_11_func_8011FFA8(Ovl11SelectionObject *obj) {
     case 1:
         if (!(flags & 0x80)) {
             obj->phase = 3;
-            func_80015840(&obj->animation, (u8)(obj->direction + 4));
+            SelectSpriteAnimation(&obj->animation, (u8)(obj->direction + 4));
             StopPadActuatorSequence(0);
             PlaySoundEffect(15);
         } else if (state[0] == 0) {

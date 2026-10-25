@@ -1,7 +1,7 @@
 #include "common.h"
 #include "scene_selection.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 void ovl_27_func_800BA914(s32 arg0);
 
 extern s16 D_800C4A26;

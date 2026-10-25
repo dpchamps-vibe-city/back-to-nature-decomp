@@ -47,7 +47,7 @@
     "register-asm",
     "embedded-asm"
    ],
-   "func_80016280": [
+   "buildspriterectpackets": [
     "register-asm",
     "embedded-asm"
    ],

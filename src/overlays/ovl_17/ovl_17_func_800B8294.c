@@ -1,7 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
-void func_80015704();
 void ovl_17_func_800B90F8(void);
 void ovl_17_func_800BA704(void);
 
@@ -42,7 +45,7 @@ void ovl_17_func_800B8294(void) {
     } else {
         var_a1_3 = D_800BD750;
     }
-    func_80015704((SpriteSourceData *)D_800BD930, (SpriteDataHeader *) var_a1_3);
+    InitSpriteSourceData((SpriteSourceData *)D_800BD930, (SpriteDataHeader *) var_a1_3);
     (*(s16 *) (D_800BD930 + 0x1E4)) = -1;
     ovl_17_func_800B90F8();
 }

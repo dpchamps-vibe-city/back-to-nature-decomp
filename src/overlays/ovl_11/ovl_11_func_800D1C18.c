@@ -1,6 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 extern u8 D_801232D4[];
 
 s32 ovl_11_func_800D1C18(s32 arg0, s32 arg1, s32 arg2) {

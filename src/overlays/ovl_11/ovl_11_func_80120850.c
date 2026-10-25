@@ -5,13 +5,13 @@
 #include "psyq/libgpu.h"
 #include "psyq/libcd.h"
 #include "psyq/memory.h"
+#include "sprite_render.h"
 
 extern s16 D_8012DB18;
 extern SVECTOR D_8012DB20;
 extern s32 D_8012DB28[4];
 
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
 void ovl_11_func_80120850(s32 arg0) {
     s32 temp_v1;
@@ -44,6 +44,6 @@ void ovl_11_func_80120850(s32 arg0) {
         if (arg0 != 0) {
             D_8012DB88 += 1;
         }
-        func_80015EE8(gActiveRenderContext->field_120 + ((temp_v0 >> 2) * 4), (s32) &gSharedSpriteSource, (s32) (u8) D_8012DB84, 0, (s16) (*(s16 *) ((u8 *) D_8012DB28 + 0)), (s16) (var_s1 + ((*(u16 *) ((u8 *) D_8012DB28 + 4)) + ((u16) D_8012DB88 & 3))));
+        DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((temp_v0 >> 2) * 4), (s32) &gSharedSpriteSource, (s32) (u8) D_8012DB84, 0, (s16) (*(s16 *) ((u8 *) D_8012DB28 + 0)), (s16) (var_s1 + ((*(u16 *) ((u8 *) D_8012DB28 + 4)) + ((u16) D_8012DB88 & 3))));
     }
 }

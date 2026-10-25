@@ -1,10 +1,9 @@
 #include "common.h"
+#include "random.h"
 
 extern s16 gCalendarYear;
 extern s16 D_800BF4C8;
 extern u16 D_800BCFE4[];
-
-u32 Rand(s32 arg0);
 
 s32 ovl_19_func_800B85F4(void) {
     s16 s0;

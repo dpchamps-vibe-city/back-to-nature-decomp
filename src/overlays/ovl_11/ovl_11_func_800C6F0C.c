@@ -1,7 +1,9 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80015840(ObjectState *obj, u8 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void ovl_11_func_800C6F0C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1) {
     switch (arg0->unk3C) {
@@ -13,5 +15,5 @@ void ovl_11_func_800C6F0C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_
         arg1->unk0.unk0_w = arg0->unk38 + 0xAC;
         break;
     }
-    func_80015840((ObjectState *)((u8 *)arg0 + 0x260), arg1->unk0.unk0_b);
+    SelectSpriteAnimation((ObjectState *)((u8 *)arg0 + 0x260), arg1->unk0.unk0_b);
 }

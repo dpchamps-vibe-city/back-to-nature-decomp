@@ -16,6 +16,12 @@
 #include "game_types.h"
 #include "cd_loader.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_upload.h"
+#include "sprite_render.h"
 
 /* Tentative definitions retain the original $gp ownership. The saved flag-3
  * word is stored whole but only its low halfword is restored. The archive
@@ -45,16 +51,12 @@ void func_80022580(u32 *packet, s32 style, s32 x, s32 y, s16 width, s16 height);
 s32 func_8001AF44(u32 slot);
 void func_8001AF70(u16 slot, u16 value);
 void func_800179E8(void);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80022008(void);
 void func_80017A38(s16 x, s16 y);
 u32 func_80017A64(void);
 void func_80017A48(u32 mode);
 s32 func_80017BC8(s32 *packet, u16 *text, s16 x, s16 y, s16 width, s16 height);
-void func_80015840(ObjectState *obj, u8 state);
-void func_80015C50(s32 packet, SpriteSourceData *source, s16 x, s16 y);
 s16 func_80017B30(void);
-void func_8001719C(u8 *data);
 void func_80017C3C(s32 slot);
 
 s32 GetMessageWindowChoice(void) {
@@ -266,7 +268,7 @@ s32 PollMessageWindowRead(void) {
             nextPhase = 4;
         }
         ((u8 *)&gMessageWindowReadBuffer)[-0xC] = nextPhase;
-        func_80015704((SpriteSourceData *)&gMessagePortraitSource,
+        InitSpriteSourceData((SpriteSourceData *)&gMessagePortraitSource,
             (SpriteDataHeader *)&gSharedSpriteData);
         func_80022008();
     }
@@ -395,9 +397,9 @@ void DrawMessagePortrait(void) {
         bucket = GetMessagePortraitValueBucket(selector);
     }
     if ((u8)_gMessagePortraitSource[1] != bucket) {
-        func_80015840((ObjectState *)&gMessagePortraitSource, bucket & 0xFF);
+        SelectSpriteAnimation((ObjectState *)&gMessagePortraitSource, bucket & 0xFF);
     }
-    func_80015C50(gActiveRenderContext->field_D8 + 4,
+    DrawSpriteAnimationRectsAndUpdate(gActiveRenderContext->field_D8 + 4,
         (SpriteSourceData *)&gMessagePortraitSource, 0x11D, 0xD9);
 }
 
@@ -441,7 +443,7 @@ void LoadMessageWindowSprite(s32 *record) {
 
     textSlot = *record;
     if (textSlot != -1) {
-        func_8001719C((u8 *)record + 4);
+        UploadSpriteImages((u8 *)record + 4);
         func_80017C3C(textSlot);
     }
 }

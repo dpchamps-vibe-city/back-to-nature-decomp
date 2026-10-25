@@ -3,12 +3,13 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "packet_work.h"
+#include "random.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 
 void ovl_11_func_800C034C (u8 *arg0);
 s32 ovl_11_func_800F5868 (s32 arg0, s32 arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-u32 Rand (s32 arg0);
 
 void ovl_11_func_800C009C(u8 *arg0) {
     s32 temp_v0_3;
@@ -92,7 +93,7 @@ block_25:
         temp_v0_3 = (u16) (*(s16 *) ((u8 *) arg0 + 2)) + D_800A0384.unk16;
         (*(s16 *) ((u8 *) arg0 + 2)) = temp_v0_3;
         if (ovl_11_func_800F5868((s32) (s16) temp_a0_2, (s32) (s16) temp_v0_3) != 0) {
-            func_80015EE8(gActiveRenderContext->field_120, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) arg0 + 4)), (s32) (u8) (*(s16 *) ((u8 *) arg0 + 6)), (s16) (s32) (s16) (*(u16 *) ((u8 *) arg0 + 0)), (s16) (s32) (*(s16 *) ((u8 *) arg0 + 2)));
+            DrawSpriteFrameRects(gActiveRenderContext->field_120, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) arg0 + 4)), (s32) (u8) (*(s16 *) ((u8 *) arg0 + 6)), (s16) (s32) (s16) (*(u16 *) ((u8 *) arg0 + 0)), (s16) (s32) (*(s16 *) ((u8 *) arg0 + 2)));
         }
     }
 }

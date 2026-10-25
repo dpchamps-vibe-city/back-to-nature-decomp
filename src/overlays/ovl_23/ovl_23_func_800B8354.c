@@ -1,8 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-/* EXE Rand import: configs/symbols/exe.txt places Rand at 0x80012A34. */
-u32 Rand(s32 arg0);
+#include "random.h"
 
 void ovl_23_func_800B8354(void) {
     s32 i;

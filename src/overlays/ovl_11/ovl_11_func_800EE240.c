@@ -1,9 +1,7 @@
 #include "common.h"
 #include "screen_primitives.h"
 #include "sound_commands.h"
-
-/* Overlay import of u32 Rand(s32), at 0x80012A34. */
-u32 Rand(s32 arg0);
+#include "random.h"
 
 s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
     struct Ovl11ColorTriple colors = D_800B9E38;

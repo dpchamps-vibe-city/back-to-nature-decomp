@@ -12,14 +12,12 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
+#include "sprite_source.h"
+#include "sprite_upload.h"
+#include "sprite_render.h"
 
 void func_80012A14(void);
 void func_800129F4(void);
-void func_8001719C(u8 *data);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80015840(ObjectState *obj, u8 bits);
-void func_80015D1C(s32 ot, s32 polygonCursor, s32 spriteCursor,
-                   SpriteSourceData *source, s16 x, s16 y);
 void InitAuxSpriteDisplaySource(s32, s32, s32, s32, s32, s32);
 
 /* Tentative definitions retain this unit's original GP-relative accesses. */
@@ -44,12 +42,12 @@ void InitAuxSpriteDisplaySource(s32 unused0, s32 unused1, s32 unused2,
 
     func_80012A14();
     header = (SpriteDataHeader *)&gAuxSpriteHeader;
-    func_8001719C((u8 *)(*(s32 *)((char *)header - 4) + (s32)header));
+    UploadSpriteImages((u8 *)(*(s32 *)((char *)header - 4) + (s32)header));
     source = (SpriteSourceData *)&gAuxSpriteSource;
-    func_80015704(source, header);
+    InitSpriteSourceData(source, header);
     ClearOTagR(ot, 0x20);
     ClearOTagR(ot + 0x20, 0x20);
-    func_80015840((ObjectState *)source, 0);
+    SelectSpriteAnimation((ObjectState *)source, 0);
     gAuxSpriteDisplayEnabled = 1;
 }
 
@@ -90,7 +88,7 @@ void PresentAuxSpriteDisplay(void) {
         polygonCursor = (gActiveRenderContextIndex * 0x280) + 0x100 + tables;
         spriteCursor = (gActiveRenderContextIndex * 0x180) + 0x600 + tables;
         ClearOTagR((unsigned long *)ot, 0x20);
-        func_80015D1C((s32)ot, (s32)&polygonCursor, (s32)&spriteCursor,
+        BuildSpriteAnimationRectsAndUpdate((s32)ot, (s32)&polygonCursor, (s32)&spriteCursor,
                       (SpriteSourceData *)&gAuxSpriteSource, 0xA0, 0x78);
         gAuxSpriteDisplayRendering = 0;
     }

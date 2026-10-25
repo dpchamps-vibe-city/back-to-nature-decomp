@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/abs.h"
-
-void func_80015840(ObjectState *obj, u8 arg1);
-/* The original caller masks the promoted frame byte before this legacy call. */
-void func_8001585C();
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 /* Draws the two marker strips (12 entries at +0x5CC, 54 at +0x418): every
  * live entry within half a screen of the camera gets its sprite frame and is
@@ -73,9 +73,9 @@ void ovl_23_func_800B954C(void) {
             if (!distance) {
                 distance = (position | cam) < 0;
                 x = HWD0 / 2 - delta + (distance >> 1);
-                func_80015840(sprite, 4);
-                func_8001585C(sprite, frame & 0xFF);
-                func_80015BF0(gActiveRenderContext->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk5CC[0].unk4);
+                SelectSpriteAnimation(sprite, 4);
+                SelectSpriteAnimationFrame(sprite, frame & 0xFF);
+                DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk5CC[0].unk4);
             }
         }
         walk = (Ovl23D87CView *)((u8 *)walk + 8);
@@ -111,9 +111,9 @@ void ovl_23_func_800B954C(void) {
             if (!distance) {
                 distance = (position | cam) < 0;
                 x = HWD0 / 2 - delta + (distance >> 1);
-                func_80015840(sprite, 3);
-                func_8001585C(sprite, frame & 0xFF);
-                func_80015BF0(gActiveRenderContext->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk418[0].unk4);
+                SelectSpriteAnimation(sprite, 3);
+                SelectSpriteAnimationFrame(sprite, frame & 0xFF);
+                DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk418[0].unk4);
             }
         }
         walk = (Ovl23D87CView *)((u8 *)walk + 8);

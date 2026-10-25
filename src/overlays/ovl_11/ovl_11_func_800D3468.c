@@ -1,5 +1,6 @@
 #include "common.h"
 #include "psyq/libapi.h"
+#include "random.h"
 
 typedef struct Unk800D3468 {
     /* 0x00 */ u16 unk0;
@@ -7,7 +8,6 @@ typedef struct Unk800D3468 {
     /* 0xAC */ s16 unkAC;
 } Unk800D3468;
 
-u32 Rand(s32 arg0);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3C04(void *arg0);
 s32 ovl_11_func_800D3C54(void *arg0);

@@ -1,11 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_clock_calendar.h"
+#include "random.h"
 
 void ovl_11_func_800BFADC(Ovl11CounterPair *arg0);
 s32 ovl_11_func_800BFC20(s16 *arg0);
-/* Executable Rand at 0x80012A34; overlay symbol spelling. */
-u32 Rand(s32 arg0);
 
 s16 ovl_11_func_800BF8B8(void) {
     Ovl11CounterPair next;

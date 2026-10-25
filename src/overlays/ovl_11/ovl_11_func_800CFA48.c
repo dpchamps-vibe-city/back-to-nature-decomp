@@ -1,7 +1,7 @@
 #include "common.h"
+#include "random.h"
 
 s32 ovl_11_func_800D3230(u16 arg0);
-u32 Rand(s32 arg0);
 
 void ovl_11_func_800CFA48(void) {
     char *base;

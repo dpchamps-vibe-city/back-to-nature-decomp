@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
-/* Overlay import of Rand, whose matched definition returns u32. */
-u32 Rand(s32 arg0);
 void ovl_11_func_800C32C8(Ovl11AnimationObject *obj, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_80107DE0(Ovl11C35ECStatePair *arg0, s16 arg1, s16 arg2);
 

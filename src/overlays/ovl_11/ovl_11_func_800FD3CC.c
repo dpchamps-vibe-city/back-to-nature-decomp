@@ -1,10 +1,13 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 void ovl_11_func_800FE558 (s16 arg0, s16 arg1, s16 arg2);
 /* The original passes the signed row index; the callee masks it to a byte. */
 void ovl_11_func_800FC7F0 (s32 arg0, s32 arg1, u8 arg2, s32 arg3, s32 arg4, s16 arg5, s16 arg6);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
@@ -22,7 +25,7 @@ void ovl_11_func_800FD3CC(s16 arg0, s16 arg1) {
     ovl_11_func_800FE558((s16) (arg0 + 1), 0x18, (s16) (arg1 + 4));
     ovl_11_func_800FC7F0((s32) (s16) (((s16) *(u16 *) (temp_s2 + 0x16)) / 25), 0, 7U, arg0, (s32) ((void *) ((u8 *) temp_s2 + 4)), 0x28, (s16) (s32) arg1);
     if (*(u16 *) (temp_s2 + 0xB8) & 0x20) {
-        func_80015EE8(temp_s4, (s32) D_8012CDF8, 8, 0, 0x96, (s16) (s32) arg1);
+        DrawSpriteFrameRects(temp_s4, (s32) D_8012CDF8, 8, 0, 0x96, (s16) (s32) arg1);
     }
     temp_v1 = *(u16 *) (temp_s2 + 0xB8);
     var_a2 = 0xD;
@@ -37,7 +40,7 @@ void ovl_11_func_800FD3CC(s16 arg0, s16 arg1) {
     }
     if (var_a2 >= 0) {
         var_s1 = (u16 *) ((u8 *) &D_80053618 + *gTextBankOffsets);
-        func_80015EE8(temp_s4, (s32) D_8012CE88, var_a2 & 0xFF, 0, 0x96, (s16) (s32) arg1);
+        DrawSpriteFrameRects(temp_s4, (s32) D_8012CE88, var_a2 & 0xFF, 0, 0x96, (s16) (s32) arg1);
         var_a1 = func_8001A970((s32) *(u16 *) (temp_s2 + 0xB4), &D_8012A028, 2);
         *var_a1 = 0xFFD;
         var_a1++;

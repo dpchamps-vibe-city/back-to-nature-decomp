@@ -5,18 +5,8 @@
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
-
-/* ovl_15 sprite-data loader.
- *
- * Waits for the display to drain, clears the ordering table, loads the
- * 0x8E90-byte ovl_15 sprite-data blob into D_80137830 (polling
- * func_80014CBC until the transfer completes), runs func_8001719C over the
- * blob's tail, then copies the 0x2D74-byte blob body ending at D_8013A5A4
- * into D_801428F0. Finally it initializes the five 0x30-byte
- * SpriteSourceData records at D_80145670 from the D_801428F0 blob, using the
- * D_8013766C offset table to locate each sprite-data header. */
-void func_8001719C(u8 *arg0);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
+#include "sprite_source.h"
+#include "sprite_upload.h"
 
 void ovl_15_func_801373A0(void) {
     u32 i;
@@ -27,9 +17,9 @@ void ovl_15_func_801373A0(void) {
     do {
 
     } while (CdReadArchiveBytes(0xE, 0, 0x8E90, D_80137830, 1, 0) == 0);
-    func_8001719C(D_8013A5A4);
+    UploadSpriteImages(D_8013A5A4);
     memcpy(D_801428F0, &D_8013A5A4[-0x2D74], 0x2D74);
     for (i = 0; i < 5; i++) {
-        func_80015704(&D_80145670[i], (SpriteDataHeader *) &D_801428F0[D_8013766C[i]]);
+        InitSpriteSourceData(&D_80145670[i], (SpriteDataHeader *) &D_801428F0[D_8013766C[i]]);
     }
 }

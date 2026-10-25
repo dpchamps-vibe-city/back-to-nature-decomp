@@ -1,7 +1,9 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 void ovl_17_func_800B91B8(void) {
     s16 y;
@@ -21,7 +23,7 @@ void ovl_17_func_800B91B8(void) {
             screenX = 0xA0 -
                 (((Ovl17QueueView *)base)->entries[i].word -
                  *(s32 *)(base + 0x24)) / 0x1000;
-            func_80015EE8(gActiveRenderContext->field_D8 + 0x54,
+            DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x54,
                          (s32)(base + 0x22C), 3, mirror, (s16)screenX, y);
         }
         i++;

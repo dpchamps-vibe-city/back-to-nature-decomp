@@ -6,8 +6,8 @@
 #include "screen_fade.h"
 #include "pad_actuator_sequences.h"
 #include "sound_commands.h"
+#include "random.h"
 
-u32 Rand(s32);
 void func_8001AF70(u16, u16);
 void ovl_30_func_80133454(Ovl30ValueMenuEntry *, s32);
 u16 *ovl_11_func_800CE744(s32, s32);

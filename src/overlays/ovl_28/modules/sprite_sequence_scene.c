@@ -28,6 +28,10 @@
 #include "cd_loader.h"
 #include "packet_work.h"
 #include "message_window.h"
+#include "sprite_source.h"
+#include "random.h"
+#include "sprite_upload.h"
+#include "sprite_render.h"
 
 void func_80017A48(u32 arg0);
 u32 func_80017A64(void);
@@ -86,9 +90,6 @@ void Ovl28BeginSpriteSequenceScene(void) {
 }
 
 s32 Ovl28PollSequenceSpriteRead (void);
-void func_8001719C (u8 *arg0);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80015840(ObjectState *obj, u8 arg1);
 
 void Ovl28PollInitialSpriteAssets(void) {
     s32 *base;
@@ -148,12 +149,10 @@ void Ovl28PrepareSpriteSequenceScene(void) {
     }
 }
 
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-
 void Ovl28RunSpriteSequenceScene(void) {
     s32 *base;
 
-    func_80015EE8(gActiveRenderContext->field_D8 + 0x18, (s32) gOvl28BackdropSpriteSource, 0x1F, 0, 0, -7);
+    DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x18, (s32) gOvl28BackdropSpriteSource, 0x1F, 0, 0, -7);
     DrawScreenTileRect((u32 *)(gActiveRenderContext->field_D8 + 0x14), 0, 0, *(s16 *)&HWD0, 0x8C, 0, 1);
     gOvl28SpriteSceneTick = (gOvl28SpriteSceneTick + 1) % 108000;
     switch (gOvl28SpriteSceneDisplayPhase) {
@@ -332,8 +331,6 @@ void Ovl28InitSpritePresentation(void) {
     }
 }
 
-/* Overlay import of matched u32 Rand(s32) at 0x80012A34. */
-u32 Rand(s32 arg0);
 s32 func_8001AD6C(s32 arg0);
 void func_8001ADD8(u32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void Ovl28DrawSequenceGradientRect(u_long *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s16 arg9, u8 arg10);
@@ -435,7 +432,7 @@ void Ovl28DrawScrollingSprites(void) {
     for (i = 0; i < 20; i++) {
         sprite = sprites + i;
         if (sprite->active == 1) {
-            func_80015EE8(gActiveRenderContext->field_D8 + 8, (s32)gOvl28ScrollingSpriteSource, 0,
+            DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 8, (s32)gOvl28ScrollingSpriteSource, 0,
                           (u8)sprite->frameIndex, 0, (s16)(sprite->yQ12 / 4096));
         }
     }
@@ -473,10 +470,10 @@ void Ovl28StartSequenceSpriteRead(void) {
 
 s32 Ovl28PollSequenceSpriteRead(void) {
     if (CdReadArchiveBytes(0, 0x03D77000, 0x6000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) != 0) {
-        func_8001719C((u8 *)(gGraphicsHeapBase + 0x4900));
+        UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4900));
         memcpy(&gOvl28ScrollingSpriteHeader, (void *)(gGraphicsHeapBase + 0x4290), 0x670);
-        func_80015704((SpriteSourceData *)gOvl28ScrollingSpriteSource, (SpriteDataHeader *)&gOvl28ScrollingSpriteHeader);
-        func_80015840((ObjectState *)gOvl28ScrollingSpriteSource, 0);
+        InitSpriteSourceData((SpriteSourceData *)gOvl28ScrollingSpriteSource, (SpriteDataHeader *)&gOvl28ScrollingSpriteHeader);
+        SelectSpriteAnimation((ObjectState *)gOvl28ScrollingSpriteSource, 0);
         return 1;
     }
     return 0;
@@ -499,10 +496,10 @@ void Ovl28StartBackdropSpriteRead(void) {
 
 s32 Ovl28PollBackdropSpriteRead(void) {
     if (CdReadArchiveBytes(0, 0x2000, 0x23000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) != 0) {
-        func_8001719C((u8 *)(gGraphicsHeapBase + 0x4FAC));
+        UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4FAC));
         memcpy(&gOvl28BackdropSpriteHeader, (void *)(gGraphicsHeapBase + 0x4290), 0xD1C);
-        func_80015704((SpriteSourceData *)&gOvl28BackdropSpriteSource, (SpriteDataHeader *)&gOvl28BackdropSpriteHeader);
-        func_80015840((ObjectState *)&gOvl28BackdropSpriteSource, 0x1F);
+        InitSpriteSourceData((SpriteSourceData *)&gOvl28BackdropSpriteSource, (SpriteDataHeader *)&gOvl28BackdropSpriteHeader);
+        SelectSpriteAnimation((ObjectState *)&gOvl28BackdropSpriteSource, 0x1F);
         return 1;
     }
     return 0;

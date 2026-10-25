@@ -1,6 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 void ovl_11_func_8011FD2C(s16 arg0);
 void ovl_11_func_8011FD7C(s32 arg0);
 void ovl_11_func_8011FDCC(s16 arg0);

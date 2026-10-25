@@ -644,8 +644,9 @@ typedef struct {
  *
  * func_800158E4 advances animation: field_4 indexes the animation table
  * (field_28), field_5 indexes frames within the selected animation,
- * field_6 is a frame-counter/timer, and field_2 holds loop/pause flags
- * (0x100 = loop, 0x200 = pause/hold).
+ * field_6 is a frame-counter/timer, and field_2 holds result bits:
+ * 0x100 marks a step/terminal hold, 0x200 a control-selected frame. These
+ * are cleared on the next unpaused update; controls do not change field_4.
  *
  * func_80016C08 reads field_24 (entry data), field_20 (sprite refs),
  * field_1C (texture cels), field_28 (animation index table), and
@@ -653,7 +654,7 @@ typedef struct {
  * primitives. */
 typedef struct SpriteSourceData {
     /* 0x00 */ u16 field_0;     /* bit-flags (bit 2 = pause guard in func_800158E4) */
-    /* 0x02 */ u16 field_2;     /* loop/pause flags (0x100 = loop, 0x200 = pause) */
+    /* 0x02 */ u16 field_2;     /* result flags: step/hold 0x100, frame selection 0x200 */
     /* 0x04 */ u8  field_4;     /* current animation index */
     /* 0x05 */ u8  field_5;     /* current frame index within animation */
     /* 0x06 */ u16 field_6;     /* frame counter / timer */
@@ -670,6 +671,96 @@ typedef struct SpriteSourceData {
     /* 0x28 */ s32 field_28;    /* header + offset_anim (animation index table) */
     /* 0x2C */ s32 field_2C;    /* header + offset_frame (frame data / control bytes) */
 } SpriteSourceData;
+
+/* Renderer views of the same SpriteSourceData storage. Keep the observed
+ * signed/unsigned halfword views distinct: the SPRT and POLY_FT4 paths use
+ * different load signedness. All source views cover the same 0x30 bytes;
+ * the unused field_30 of the former local drafts is deliberately omitted. */
+typedef struct {
+    s16 field_00;
+    u16 field_02;
+} SpriteRenderGroup;
+
+typedef struct {
+    u16 field_00;
+    u16 field_02;
+    s16 field_04;
+    s16 field_06;
+} SpriteRectVertex;
+
+typedef struct {
+    u16 field_00;
+    u16 field_02;
+    u16 field_04;
+    u16 field_06;
+    u16 field_08;
+    u16 field_0A;
+    u16 field_0C;
+    u16 field_0E;
+    s16 field_10;
+    u16 field_12;
+    u32 padding_14;
+    u32 padding_18;
+    SpriteRectVertex *field_1C;
+    SpriteRenderGroup *field_20;
+    u8 *field_24;
+    SpriteRenderGroup *field_28;
+    u8 *field_2C;
+} SpriteRectSourceView;
+
+typedef struct {
+    s16 field_00;
+    s16 field_02;
+    s16 field_04;
+    s16 field_06;
+} SpriteQuadVertex;
+
+typedef struct {
+    u16 field_00;
+    u16 field_02;
+    u16 field_04;
+    u16 field_06;
+    u16 field_08;
+    u16 field_0A;
+    s16 field_0C;
+    s16 field_0E;
+    s16 field_10;
+    s16 field_12;
+    u32 pad_14;
+    u32 pad_18;
+    SpriteQuadVertex *field_1C;
+    SpriteRenderGroup *field_20;
+    u8 *field_24;
+    SpriteRenderGroup *field_28;
+    u8 *field_2C;
+} SpriteQuadSourceView;
+
+/* Entry-upload renderer's pointer-bearing view of the same 0x30 bytes. */
+typedef struct {
+    s16 unk0;
+    u16 unk2;
+} SpriteEntryRef;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+} SpriteEntryTexture;
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u8 unk4;
+    u8 unk5;
+    u16 unk6;
+    u8 pad8[0x14];
+    SpriteEntryTexture *unk1C;
+    SpriteEntryRef *unk20;
+    u8 *unk24;
+    SpriteEntryRef *unk28;
+    u8 *unk2C;
+} SpriteEntrySourceView;
 
 /* Scrolling-grid visitor: ordering-table address, source, sprite index,
  * x/y in pixels. Coordinates are narrowed to s16 by the renderer callbacks. */

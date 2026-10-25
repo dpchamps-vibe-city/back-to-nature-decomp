@@ -1,9 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800C2884(s16 key, u32 *table);
-/* The initializer's trailing parameters are unused on its normal path. */
-void func_80015704();
 
 s32 ovl_11_func_800C28CC(s16 arg0, SpriteSourceData *arg1) {
     s32 group;
@@ -43,6 +45,6 @@ s32 ovl_11_func_800C28CC(s16 arg0, SpriteSourceData *arg1) {
         group = ((struct Ovl11SpriteSelectors *) D_8006C838)->season * 3 + 35;
         group += ((struct Ovl11SpriteSelectors *) D_8006C838)->variant;
     }
-    func_80015704(arg1, (SpriteDataHeader *) ((u8 *) table + D_80125DC0[group][index + 1]));
+    InitSpriteSourceData(arg1, (SpriteDataHeader *) ((u8 *) table + D_80125DC0[group][index + 1]));
     return 1;
 }

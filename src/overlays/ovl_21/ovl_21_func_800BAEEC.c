@@ -1,7 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
-void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_21_func_800BAFFC();
 
 void ovl_21_func_800BAEEC(s16 arg0) {
@@ -11,7 +14,7 @@ void ovl_21_func_800BAEEC(s16 arg0) {
 
     base = (u8 *) D_800C0448;
     if (base[0x688] != 0xE) {
-        func_80015840((ObjectState *) (base + 0x684), 0xE);
+        SelectSpriteAnimation((ObjectState *) (base + 0x684), 0xE);
     }
     temp_a3 = D_800BCC48[arg0].unk0;
     vec[1] = -0x1F4;

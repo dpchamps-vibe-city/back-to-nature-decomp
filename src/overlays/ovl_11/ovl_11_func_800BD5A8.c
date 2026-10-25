@@ -1,8 +1,11 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_upload.h"
 
-void func_8001719C(u8 *arg0);
 void ovl_11_func_800DA588(s32 arg0);
 
 extern s32 D_801227CC[];
@@ -21,7 +24,7 @@ void ovl_11_func_800BD5A8(s32 arg0) {
         CdReadDiscSectorsBlocking(0, p[0], p[1] - p[0], 0, gGraphicsHeapBase + 0x4290);
         memcpy(&D_800957F8, (void *)(gGraphicsHeapBase + 0x4290), n);
         n = n + 0x4290;
-        func_8001719C((u8 *)(gGraphicsHeapBase + n));
+        UploadSpriteImages((u8 *)(gGraphicsHeapBase + n));
         ovl_11_func_800DA588(arg0);
     }
 }

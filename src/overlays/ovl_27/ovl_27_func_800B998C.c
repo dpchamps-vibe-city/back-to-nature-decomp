@@ -1,9 +1,11 @@
 #include "common.h"
 #include "game_types.h"
-
-u32 Rand(s32 arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
+#include "random.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 void ovl_27_func_800B998C(void) {
     s32 var;
@@ -13,7 +15,7 @@ void ovl_27_func_800B998C(void) {
     var = (u16)D_800C4A2C + 1;
     q = (s16)var / 1800;
     D_800C4A2C = var - q * 1800;
-    func_80015BF0(gActiveRenderContext->field_D8 + 0x8C, (SpriteSourceData *)D_800C4A80, 0x11A, 0xAD);
+    DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x8C, (SpriteSourceData *)D_800C4A80, 0x11A, 0xAD);
     if (D_800C4A2C >= 0x5A) {
         D_800C4A2C = 0;
         r = Rand(0xA);
@@ -23,6 +25,6 @@ void ovl_27_func_800B998C(void) {
         if (r < 0) {
             r = 0;
         }
-        func_80015840((ObjectState *)D_800C4A80, r);
+        SelectSpriteAnimation((ObjectState *)D_800C4A80, r);
     }
 }

@@ -1,8 +1,7 @@
 #include "common.h"
+#include "random.h"
 
 void ovl_21_func_800BA4C0(void);
-/* Legacy overlay import of matched Rand. */
-u32 Rand(s32 arg0);
 
 void ovl_21_func_800B96B0(void) {
     u8 *state;

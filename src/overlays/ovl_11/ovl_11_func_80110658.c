@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
 typedef struct {
     char pad_0000[0x44D4];
@@ -8,7 +9,6 @@ typedef struct {
     Ovl11D124Entry table[1];
 } D8006C838SearchView;
 
-u32 Rand(s32 arg0);
 s32 ovl_11_func_80110790(Ovl11D124Entry *arg0);
 s32 ovl_11_func_80110838(Ovl11D124Entry *arg0);
 s32 ovl_11_func_80110890(Ovl11D124Entry *arg0);

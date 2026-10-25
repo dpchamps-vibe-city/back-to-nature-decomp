@@ -2,8 +2,9 @@
 #include "psyq/memory.h"
 #include "cd_loader.h"
 #include "projected_primitives.h"
+#include "psyq/libgpu.h"
+#include "sprite_upload.h"
 
-void func_8001719C(u8 *arg0);
 void func_8001E340(void **arg0);
 void SetVal8005E51C(s32 arg0);
 
@@ -18,7 +19,7 @@ void ovl_21_func_800BB8B8(void) {
     p = D_800BC894;
     CdReadDiscSectorsBlocking(0, p[0], p[1] - p[0], 0, D_8007AFF0);
     CdReadDiscSectorsBlocking(0, p[1], p[2] - p[1], 0, gGraphicsHeapBase + 0x4290);
-    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290));
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
     memcpy(&D_8009F78C, (void *)D_8007AFF0, 0xBDC);
     dst = &gOvl21SceneGeometry;
     __asm__("" : : : "memory");

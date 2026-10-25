@@ -1,12 +1,14 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80015840(ObjectState *obj, u8 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_17_func_800BB020(Recon_ovl_17_func_800BB020_A0View *arg0) {
     if (arg0->unk24 == 0) {
         return arg0->unk24;
     } else {
-        func_80015840(((void *)(((s32)arg0) + 0x20)), 0);
+        SelectSpriteAnimation(((void *)(((s32)arg0) + 0x20)), 0);
     }
 }

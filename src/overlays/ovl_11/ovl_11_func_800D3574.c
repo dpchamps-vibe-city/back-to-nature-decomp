@@ -1,10 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/libapi.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800C28CC(s16 arg0, SpriteSourceData *arg1);
-/* The matched initializer does not read its trailing argument slots. */
-void func_80015704();
 
 void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
     SpriteSourceData sp10;
@@ -176,40 +178,40 @@ void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
         if (D_80070CF8_word == 6 || ovl_11_func_800C28CC(0x28, &sp10) == 0) {
             *arg0 = 0;
         } else if (sp10.field_14 != *(s32 *) ((u8 *) arg0 + 0x8C)) {
-            func_80015704((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
+            InitSpriteSourceData((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
         }
         break;
     case 0x165:
         if (D_80070CF8_word == 6 || ovl_11_func_800C28CC(0x29, &sp10) == 0) {
             *arg0 = 0;
         } else if (sp10.field_14 != *(s32 *) ((u8 *) arg0 + 0x8C)) {
-            func_80015704((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
+            InitSpriteSourceData((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
         }
         break;
     case 0x108:
         if (D_80070CF8_word == 6 || ovl_11_func_800C28CC(0x2B, &sp10) == 0) {
             *arg0 = 0;
         } else if (sp10.field_14 != *(s32 *) ((u8 *) arg0 + 0x8C)) {
-            func_80015704((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
+            InitSpriteSourceData((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
         }
         break;
     case 0x17A:
         if (D_80070CF8_word == 6 || ovl_11_func_800C28CC(0x2A, &sp10) == 0) {
             *arg0 = 0;
         } else if (sp10.field_14 != *(s32 *) ((u8 *) arg0 + 0x8C)) {
-            func_80015704((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
+            InitSpriteSourceData((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
         }
         break;
     case 0x17B:
         if (D_80070CF8_word == 6 || ovl_11_func_800C28CC(0x2C, &sp10) == 0) {
             *arg0 = 0;
         } else if (sp10.field_14 != *(s32 *) ((u8 *) arg0 + 0x8C)) {
-            func_80015704((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
+            InitSpriteSourceData((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) sp10.field_14);
         }
         break;
     default:
         if (*(s32 *) ((u8 *) arg0 + 0x8C) == 0) {
-            func_80015704((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) ((u8 *) var_s1 + var_s0));
+            InitSpriteSourceData((SpriteSourceData *) ((u8 *) arg0 + 0x78), (SpriteDataHeader *) ((u8 *) var_s1 + var_s0));
         }
         break;
     }

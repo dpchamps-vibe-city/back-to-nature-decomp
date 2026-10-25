@@ -18,6 +18,10 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "beveled_panel.h"
+#include "sprite_source.h"
+#include "random.h"
+#include "sprite_upload.h"
 
 int McxCardType (int);
 int McxSync (int, long *, long *);
@@ -40,7 +44,6 @@ u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 s32 FinishMessageWindow (void);
 void SetVal8005E2BC (s32 arg0);
 void func_80024A4C (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
@@ -119,14 +122,11 @@ void ovl_15_func_801329D0 (void);
 void ovl_15_func_801329F8 (void);
 s8 *ovl_15_func_80134890 (s16 arg0, s8 *arg1, s16 arg2);
 void ovl_15_func_801349C8 (s16 arg0, char *arg1);
-u32 Rand (s32 arg0);
 void ovl_15_func_8013703C (s16 arg0, s16 *arg1, s32 arg2);
 u16 *func_8001AA7C (s32 arg0, u16 *arg1);
 s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 void func_8001ABF0 (u16 *dst, u16 *src);
 void func_800249C0 (s32 arg0, s16 arg1, s16 arg2);
-void func_8001719C (u8 *arg0);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 
 void ovl_15_func_801372A0(s16 arg0) {
     ovl_15_func_801372F0();

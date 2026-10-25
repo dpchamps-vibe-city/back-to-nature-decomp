@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 void ovl_11_func_8011D400(s32 *arg0);
 s16 ovl_11_func_8011D890(Ovl11D548Arg x, s32 mode);
 

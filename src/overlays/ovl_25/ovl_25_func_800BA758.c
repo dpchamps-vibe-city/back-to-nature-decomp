@@ -1,11 +1,14 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 extern s16 D_800BCD60[4];
 extern s16 D_800BCDCC[4];
 
 s32 func_8001DFD4(s32 *arg0, s16 *arg1);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 
 void ovl_25_func_800BA758(SpriteSourceData *arg0, u16 *arg1) {
     s32 ret;
@@ -19,5 +22,5 @@ void ovl_25_func_800BA758(SpriteSourceData *arg0, u16 *arg1) {
     ret = func_8001DFD4((s32 *)D_800BCD60, (s16 *)D_800BCDCC);
     off = ret + 0x400;
     base = gActiveRenderContext->field_120;
-    func_80015BF0(base + (off >> 2) * 4, arg0, D_800BCD60[0], D_800BCD60[2]);
+    DrawSpriteAnimationQuadsAndUpdate(base + (off >> 2) * 4, arg0, D_800BCD60[0], D_800BCD60[2]);
 }

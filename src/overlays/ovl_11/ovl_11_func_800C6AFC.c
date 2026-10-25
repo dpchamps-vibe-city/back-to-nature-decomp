@@ -2,9 +2,12 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "ovl11_position_transition.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_80015840(ObjectState *obj, u8 arg1);
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 /* 800C6C64 explicitly supplies an unused fourth argument. */
 s32 ovl_11_func_800D622C();
@@ -33,7 +36,7 @@ s32 ovl_11_func_800C6AFC(Ovl11C7010Object *arg0) {
                 arg0->unk6C = (arg0->unk6C | 0x1800) & 0xBFFFFFFF;
                 ovl_11_func_800C70CC(arg0, 0x4BU, 0, 0x2D);
                 arg0->unk38 = 0;
-                func_80015840((ObjectState *) &arg0->sprite, 4);
+                SelectSpriteAnimation((ObjectState *) &arg0->sprite, 4);
                 (*(s32 *) ((u8 *) arg0 + 0x114)) = -0xFA;
                 arg0->sprite.field_5 = (u8) (*(u16 *) ((u8 *) arg0 + 0x38));
                 arg0->unk6C = (arg0->unk6C | 0x40000000) & ~1;

@@ -16,6 +16,9 @@
 #include "message_window.h"
 #include "ovl11_entity_pool_access.h"
 #include "ovl11_item_transfer_menu.h"
+#include "sprite_source.h"
+#include "random.h"
+#include "sprite_render.h"
 
 typedef struct {
                s16 field_0;
@@ -180,8 +183,6 @@ void ovl_11_func_800C9D98 (void);
 s32 ovl_11_func_800CE514 (s16 arg0);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 s16 ovl_11_func_800CB020 (s16 arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
-u32 func_8001589C (SpriteSourceData *src);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -202,8 +203,6 @@ s32 ovl_11_func_800C9938 (M2C_1052de249052_Ovl119938View *arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 void ovl_11_func_800BD8DC (s16 arg0);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80015894 (SomeStruct *arg0, s32 arg1);
 void ovl_11_func_800BD168 (void);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
@@ -216,7 +215,6 @@ s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5704 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 u8 *ovl_11_func_800EFF04 (s32 arg0, s32 arg1, s32 *arg2);
-void func_8001585C(ObjectState *obj, u8 arg1);
 s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6D2C (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -224,7 +222,6 @@ s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 s32 ovl_11_func_801000D4 (s16 arg0);
 s32 ovl_11_func_800E5ADC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-u32 Rand (s32 arg0);
 s32 ovl_11_func_800E6B18 (s16 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800E58DC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5870(s16 arg0, s16 arg1, s32 arg2, s16 arg3);
@@ -240,7 +237,6 @@ void ovl_11_func_8011F52C (void);
 s16 ovl_11_func_80120358 (M2C_93d07a715929_Ovl11SelectArg *arg0);
 void ovl_11_func_80120850 (s32 arg0);
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
 s32 ovl_11_func_800ED4A8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;

@@ -1,6 +1,5 @@
 #include "common.h"
-
-u32 Rand(s32 arg0);
+#include "random.h"
 
 void ovl_11_func_800DA3AC(Ovl11D124Entry *arg0) {
     s16 temp;

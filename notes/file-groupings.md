@@ -6367,27 +6367,82 @@ Reference: `notes/research/func_800154CC-polyf4-diamond-crossjump.md`.
 
 ## sprite data, animation, and renderers — 0x80015704–0x80016C08
 
-Family confidence: high. Exact TU boundary confidence: medium. The current
-best split is after func_800161AC: source-data initialization, animation
-helpers, dispatchers, and renderer wrappers at 0x80015704–0x800161AC, then
-the two renderers and entry driver at 0x80016280–0x80016C08. This supersedes
-the earlier assumption that the whole family was one TU. See
-`notes/sprite-renderer-family-campaign.md` for per-function detail.
+**Reconstructed module: `src/modules/sprite_animation.c` (2026-10-25),
+exe:80015704–800179E8 exclusive**, all 40 original functions through 8001782C:
+37 compiled members and the existing dead stubs at 15CA0/15D6C/17284, in
+original order. Family confidence high; exact original outer edges medium.
+The earlier split at 161AC was based on withdrawn renderer flags, not a
+current boundary. The fingerprints and historical roster below are retained
+for provenance; their obsolete flag claims do not describe this module.
 
-Module-campaign update: the historical flag-based boundary below is NOT a
-current proof. Both renderer overrides were withdrawn for declaration/
-assembler-ownership reasons (ADR-0001), and there is no active override in
-the full 15704..1782C family. A checked whole-family baseline fold of all
-40 functions (including three existing dead stubs) was attempted, not a
-pre-render slice. It rolled back at context publication: SourceData, used
-by the two renderer signatures, was only defined locally and could not be
-published from the merged source. Compilation/byte checking was therefore
-not reached. Next useful experiment is to reconcile the renderer views,
-SpriteSourceData identity and caller prototypes through game_types.h before
-repeating the whole fold. No new flag, exception or artificial internal
-boundary was retained. The split build remains exact. The shared state,
-source-table protocol and wrapper/loader call graph support investigating
-this whole family; they do not independently prove every original boundary.
+Membership is a connected source-table and call protocol, not adjacency
+alone: 15704 initializes the exact five table pointers used by animation,
+entry lookup and both direct renderers. Its state/flag/frame/offset accessors
+operate on the initialized record. 158E4 feeds the 15BF0..15D6C dispatchers;
+15DD4..161AC bind packet cursors and invoke the three render paths.
+16280/165D8 consume the same frame/group/entry layout. 16C08's sole EXE
+caller is 15DD4; it calls 16B7C, which resolves a record with 15B24 and uploads
+it with 1782C. 17284 also bridges 15AAC/15B24 to 1782C. 1719C/171CC/17200/
+17240 supply the modes/offsets to their common 17300 decoder. The empty
+1588C and dead wrappers are retained, not treated as boundaries. The GP
+set is exactly 8005E43C (setter and animation service) and 8005E438 (entry
+renderer); each remains tentatively defined once. Shared render context and
+all table/image/scratch storage remain external. GP evidence alone does
+not prove all 40 were one original file.
+
+Outer edges: before 15704, screen_primitives is the closed wrapper/builder
+packet API described above; it owns neither sprite record state nor this
+source-table/animation/upload protocol. There is no positive membership
+edge joining that preceding unit. After 1782C, 179E8 resets text state via
+18B8C and 17A08 selects a text-source slot; neither shares this family's
+private helpers or record protocol. These are conservative edges on absence
+of a same-unit witness, not claimed GP-proven original boundaries. No
+internal slice is retained solely for mechanics.
+
+The previous whole fold stopped at publication of local SourceData types.
+This run reconciled that concrete context limit: game_types.h now supplies
+0x30-byte SpriteRectSourceView/SpriteQuadSourceView/SpriteEntrySourceView
+views of the canonical SpriteSourceData record. Signedness differences
+remain explicit (e.g. rect +12 is unsigned, quad +12 signed), not silently
+unified. The unused +30 fields were dropped, never added to the canonical
+record or its embedded 0x30 strides. Local Header/Entry names were scoped
+by renderer to avoid collisions. The remaining 1782C first-argument
+prototype conflict was reconciled to its matched u8* definition. The next
+checked fold passed all 37 members and the complete EXE at baseline -O2/-G8.
+No active member override exists; none was added or retired. Stale source
+claims that renderer flags were still required were removed.
+
+Names describe demonstrated operations: InitSpriteSourceData, flag edits,
+SelectSpriteAnimation/Frame, texture/palette offsets, frame control/count,
+UpdateSpriteAnimation, BuildSpriteRect/Quad/EntryPackets and the image-upload
+facades/core. Preferred submission wrappers are DrawSpriteFrameRects/Quads,
+DrawSpriteAnimationRects/QuadsAndUpdate and
+BuildSpriteAnimationRectsAndUpdate; BuildSpriteRectPacketsFromAddresses
+retains the raw-word wrapper ABI. Their parameters/locals now describe
+packet cursors, source addresses, frame indices and coordinates. In the
+Rect path the same cursor is intentionally passed for both packet kinds,
+interleaving SPRT and DR_MODE; the header distinguishes draw-only calls from
+those that draw THEN update. All six named wrapper interfaces were published
+to their callers with unchanged objects and passed the full gate again.
+Entry-index getters remain neutral about index meaning.
+8005E43C is gSpriteAnimationUpdateLatch (set even without a frame change),
+8005E438 gSpriteEntryTextureId. The historical setter's non-address alias was
+updated explicitly at all callers; other names and the existing renderer
+policy key were propagated by canonicalNames. No permission was added.
+The three public headers are sprite_source.h, sprite_render.h and
+sprite_upload.h. They preserve ABIs, unchecked table/index constraints,
+packet lifetime, shared scratch/non-reentrancy and upload effects. In
+particular controls change the frame, NOT the animation index; upload mode 1
+leaves pixel 0 unmasked and has no mask stores on the width-one column path.
+Final batch acceptance: `npx tsx tools/diagnostics/tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passed every integrity gate,
+including named callers, all linked EXE/overlay bytes and data, source policy,
+configuration convergence, whitespace, ownership and exception non-growth.
+The batch's four modules (sprite_animation, random, beveled_panel and the
+ovl_08 actuator_test_menu) raise folded membership **444 → 484**, with all
+55 module TUs valid and 2141 eligible functions still outside modules.
+The gate's exit 1 denotes that remaining campaign work, not a failed check.
+No shared tool was changed; no flag, pin, asm permission or stub was added.
 
 Fingerprints:
 - internal call graph: func_80015E3C and func_80015EE8 call func_80016280;
@@ -6570,9 +6625,25 @@ members. Membership is the shared $gp cluster above. A relocation scan of
 every EXE object (GPREL16 vs HI16/LO16) finds no member that reaches
 absolutely a symbol another member reaches through $gp. The first such
 conflict past the end is func_80012AB0, which reaches gPad0Input absolutely
-while `main` declares it. 800129E8..80012A68 carry no small-data signal
-either way and stay outside. Two dead functions' `INCLUDE_ASM` stubs sit
-between members and are carried inside the module.
+while `main` declares it. 800129E8..80012A68 carry no shared boot-cluster
+small-data signal either way and stay outside. Rand alone owns 8005E290 as
+described below. Two dead functions' `INCLUDE_ASM` stubs sit between members
+and are carried inside the module.
+
+**Random source (2026-10-25):** `src/modules/random.c` contains Rand at
+80012A34, with the public `random.h` contract. Its sole persistent word is
+now gRandomState (8005E290): original lw/sw 28(gp) establish this unit's
+definition; ovl_11 800C14A0/801044E4 write 1 absolutely to reseed it. The
+surrounding display-mask, image-clear and debug functions neither touch that
+state nor call Rand. No positive evidence joins them to this file, so the
+minimal unit is retained. This is not proof of a one-function original TU;
+a proposed six-function support group based on address order and absence of
+conflicts was not accepted. The left 12A14 display-disable wrapper and right
+12A68 ClearImage/DrawSync wrapper stay outside on absence of membership
+evidence, not a GP-proven cut. State ownership, unsigned arithmetic and ABI
+are unchanged. The header now accurately documents low-16-bit limit
+truncation, zero-limit state advancement and direct reseeding. The checked
+fold passed baseline -O2/-G8; no flag override or exception was involved.
 
 Names given at the merge: `main` (80011370), `RunSceneUpdateLoop` (80011C24),
 `PresentFrame` (80011DB0, stub), `SceneEntryHook` (80011EE8, empty),
@@ -6855,6 +6926,28 @@ Boundaries: the preceding 320x240 screen_fade and draw-latch accessors remain
 outside, as does 800136D4's beveled-panel drawer. The latter has no shared fade
 state, uses the 80014E90 drawer trio, and is called by 80022580; its old
 adjacency/domain-only membership suggestion is still unproved.
+
+**Panel reconstruction (2026-10-25):** `src/modules/beveled_panel.c` carries
+exe:800136D4 alone as `DrawBeveledPanel`, with `include/beveled_panel.h`
+published to its EXE and overlay callers. Its complete implementation is six
+opaque point packets, eight opaque border lines and a gradient quad; caller
+8011D150 supplies text-width-derived pixel dimensions, while 8011CC08 and
+8011CD2C supply menu rectangle dimensions. This establishes panel drawing,
+not a speculative dialog or inventory responsibility. Parameters and locals
+now describe pixel geometry; no ABI, integer truncation or statement-order
+change was intended. The unused duplicate right-edge local was removed.
+
+This is the smallest evidenced unit, **not proof of a one-function original
+file**. The preceding wide fade's state/packet storage and environment helper
+form their own closed service, and this function touches none of them. There
+is no ownership/helper evidence joining the panel to that group. Following
+800139FC begins pad startup and the GP-connected pad cluster; it neither
+calls nor shares private state with the panel. The panel instead calls the
+stateless screen_primitives API across the intervening pad/CD units, as do
+other outside consumers. These boundaries mean no membership evidence, not
+GP-proven separation. No larger panel unit is established. There are no flag
+overrides or storage/linkage changes; the checked fold passed baseline
+-O2/-G8 and the complete batch gate checks the named interface and callers.
 
 The checked mechanical fold matched all five members and the linked EXE first
 at baseline -O2/-G8. There were no member flag overrides to reconcile; none was
@@ -7967,6 +8060,25 @@ nor appears in its callback table. No positive same-TU edge to it was found;
 it stays outside on **absence of membership evidence**, not a proven original
 compiler boundary. All overlay code uses -G0, so there is no GP ownership test
 here. A common original TU containing the actuator test remains possible.
+
+**Actuator page reconstruction (2026-10-25):** the remaining 800B8400 entry
+is now `Ovl08UpdateActuatorTestMenu` in `modules/actuator_test_menu.c`, with
+`ovl08_actuator_test_menu.h`. This is the minimal independently evidenced
+service, not a newly proved original one-function file. The left edge rests
+on the absence of membership in the scene-selector's table/phase protocol
+above; the right edge is the overlay's end of text (800B8500, then data),
+not an omitted neighbor. Original bytes at 800B8008 spell `PADNO=%d` (not the
+old comment's PANDO); the value is demonstrably a sequence preset 0..10,
+not a controller port. Every request goes to software slot 0. Named storage
+is gOvl08ActuatorTestSequenceIndex and gOvl08ActuatorTestFormat, still
+external overlay data. Their declarations moved out of C into the canonical
+override header with evidence comments. The implementation now uses the
+established PadInputState.pressedButtons view, preserving repeated input
+loads and independent increment/decrement/request/stop tests. No retail
+caller or scene-menu-table entry was found. Header documents retained state,
+request-before-stop order, initialization and font flush obligations.
+The checked fold passed baseline -O2/-G0; no override or new exception was
+needed. Full batch verification includes overlay data and named imports.
 
 Names: Ovl08UpdateSceneSelectMenu, Ovl08InitSceneSelectMenu,
 Ovl08WaitSceneSelectSoundTransfer and Ovl08DrawSceneSelectMenu. The public

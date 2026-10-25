@@ -1,6 +1,5 @@
 #include "common.h"
-
-u32 Rand(s32 arg0);
+#include "random.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;

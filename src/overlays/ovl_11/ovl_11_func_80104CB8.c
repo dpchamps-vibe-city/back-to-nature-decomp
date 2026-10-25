@@ -6,6 +6,7 @@
 #include "sound_driver.h"
 #include "projected_primitives.h"
 #include "ovl11_vertex_blend.h"
+#include "random.h"
 
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
@@ -24,7 +25,6 @@ void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
 s32 func_8001AF44(u32 arg0);
-u32 Rand(s32 arg0);
 void ovl_11_func_800CBB9C();
 void func_8001AF70(u16 arg0, u16 arg1);
 

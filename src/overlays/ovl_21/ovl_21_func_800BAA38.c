@@ -1,8 +1,9 @@
 #include "common.h"
 #include "game_types.h"
-
-extern void func_80015814(u16 *arg0, s32 arg1);
-extern void func_80015828(u16 *arg0, s32 mask);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void ovl_21_func_800BAA38(s32 arg0) {
     s32 i;
@@ -12,9 +13,9 @@ void ovl_21_func_800BAA38(s32 arg0) {
     void (*updateFlags)(u16 *, s32);
 
     if (arg0 != 0) {
-        updateFlags = func_80015814;
+        updateFlags = AddSpriteSourceFlags;
     } else {
-        updateFlags = func_80015828;
+        updateFlags = ClearSpriteSourceFlags;
     }
     updateFlags(&D_800C0ACC.field_0, 4);
     updateFlags(&(&D_800C0ACC)[1].field_0, 4);

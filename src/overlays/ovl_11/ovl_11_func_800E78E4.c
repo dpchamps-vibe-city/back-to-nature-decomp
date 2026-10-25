@@ -1,6 +1,5 @@
 #include "common.h"
-
-u32 Rand(s32 arg0);
+#include "random.h"
 
 s32 ovl_11_func_800EFDA0(s32 arg0, s32 arg1, s32 arg2);
 

@@ -13,6 +13,11 @@
 #include "sound_commands.h"
 #include "screen_fade.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 /* Engine text/sprite services; their original pointer-as-word ABI is kept. */
 u32 func_80017A64(void);
@@ -20,9 +25,6 @@ void func_80017A48(u32 style);
 void func_80017A38(s16 x, s16 y);
 void SetVal8005E2BC(s32 value);
 void func_800248B0(s32 ot, s16 x, s16 y);
-void func_80015840(ObjectState *source, u8 animation);
-void func_8001585C(ObjectState *source, u8 frame);
-void func_80015EE8(s32 ot, s32 source, s32 animation, s32 frame, s16 x, s16 y);
 s16 *func_8001A970(s32 value, s16 *text, s32 digits);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 void func_80024A10(s32 ot, s16 x, s16 y, s16 frame);
@@ -307,11 +309,11 @@ void Ovl11DrawCalendarMarker(s32 style, s32 ot, s16 day, s16 firstWeekday) {
     Ovl11CalendarMarkerStyle *marker;
 
     marker = &gOvl11CalendarMarkerStyles[style];
-    func_80015840((ObjectState *)&gSharedSpriteSource, marker->animation);
-    func_8001585C((ObjectState *)&gSharedSpriteSource, marker->frame);
+    SelectSpriteAnimation((ObjectState *)&gSharedSpriteSource, marker->animation);
+    SelectSpriteAnimationFrame((ObjectState *)&gSharedSpriteSource, marker->frame);
     Ovl11GetCalendarCellPosition(day, firstWeekday, &x, &y);
     x = (u16)x + marker->xOffset;
-    func_80015EE8(ot, (s32)&gSharedSpriteSource,
+    DrawSpriteFrameRects(ot, (s32)&gSharedSpriteSource,
         (s32)(*(u8 *)((u8 *)&gSharedSpriteSource + 4)),
         (s32)(*(u8 *)((u8 *)&gSharedSpriteSource + 5)), x, y);
 }

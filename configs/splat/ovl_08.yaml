@@ -33,6 +33,6 @@ segments:
     subsegments:
       - [0x0, rodata]
       - [0x1F4, c, modules/scene_select_menu]
-      - [0x5E0, c, ovl_08_func_800B8400]
+      - [0x5E0, c, modules/actuator_test_menu]
       - [0x6E0, data]
   - [0x800]

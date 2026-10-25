@@ -3,10 +3,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "screen_fade.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 s32 func_8001DFD4(s32 *arg0, SVECTOR *arg1);
-void func_80015C50(s32 arg0, SpriteSourceData *arg1, s16 arg2, s16 arg3);
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 unsigned long long ovl_11_func_800BF450(void);
 s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0);
 s32 ovl_11_func_800CBE2C(Ovl11CC4E0Object *arg0);
@@ -93,12 +93,12 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
         if (depth != 0) {
             temp_v1_2 = gActiveRenderContext->field_120 + ((depth >> 2) * 4);
             if ((u32) (arg0->unk6 - 3) < 2U) {
-                func_80015C50(temp_v1_2, &D_80128C80, *(s16 *) ((u8 *) D_80128B98 + 0), *(s16 *) ((u8 *) D_80128B98 + 4));
+                DrawSpriteAnimationRectsAndUpdate(temp_v1_2, &D_80128C80, *(s16 *) ((u8 *) D_80128B98 + 0), *(s16 *) ((u8 *) D_80128B98 + 4));
                 return;
             }
             temp_a0 = arg0->unk2;
             if (temp_a0 == 0x186) {
-                func_80015EE8(temp_v1_2, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) &D_8012DB84 + 0)), 0, (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 0)), (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 4)));
+                DrawSpriteFrameRects(temp_v1_2, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) &D_8012DB84 + 0)), 0, (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 0)), (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 4)));
             } else {
                 ovl_11_func_800D6F78(temp_a0, arg0->unk0, (s32 *) temp_v1_2, *(s16 *) ((u8 *) D_80128B98 + 0), (s16) (s32) (*(s16 *) ((u8 *) D_80128B98 + 4)), 2);
             }

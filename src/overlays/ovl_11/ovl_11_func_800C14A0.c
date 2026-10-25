@@ -16,7 +16,7 @@ void ovl_11_func_800DCC5C(void);
 
 void ovl_11_func_800C14A0(void) {
     if (((struct Ovl11FrameState *) D_8006C838)->flags & 0x18000) {
-        D_8005E290 = 1;
+        gRandomState = 1;
     }
     switch (((struct Ovl11FrameWork *) &D_8007AFF0)->dispatch) {
     case 0:

@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
-/* Overlay import of matched u32 Rand(s32). */
-u32 Rand(s32 arg0);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
 s32 ovl_11_func_8010B8DC(Recon_ovl_11_func_8010CE80_A0View *arg0) {

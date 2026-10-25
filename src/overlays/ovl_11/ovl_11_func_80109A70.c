@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
+#include "random.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -27,7 +28,6 @@ typedef struct {
     /* 0x52D4 */ s32 field_52D4;
 } D8006C838_52C8View;
 
-u32 Rand(s32 arg0);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80109188(Struct_80109A70 *arg0, s32 arg1);
 

@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
-/* Overlay symbol for the executable's Rand. */
-u32 Rand(s32 arg0);
 s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800DADB0(s16 *, s16 *, s32, Ovl11D124Entry *, s32);
 u16 ovl_11_func_800D85F8(Recon_ovl_11_func_800D85F8_A0View *);

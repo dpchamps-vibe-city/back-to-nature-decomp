@@ -11,8 +11,7 @@
 
 #include "common.h"
 #include "aged_item_pool.h"
-
-u32 Rand(s32 limit);
+#include "random.h"
 
 /* These support entries retain external linkage and original entry addresses. */
 void Ovl11InitItemAge(Ovl11ItemCell *cell, s32 id);

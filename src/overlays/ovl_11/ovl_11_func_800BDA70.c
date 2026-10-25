@@ -4,8 +4,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
-
-void func_8001719C(u8 *arg0);
+#include "sprite_upload.h"
 
 extern s32 D_8009CBF8;
 
@@ -20,5 +19,5 @@ void ovl_11_func_800BDA70(void) {
     }
     CdReadDiscSectorsBlocking(0, 0x7F000, 0x4800, 0, s0);
     memcpy(&D_8009CBF8, (void *)s0, 0x770);
-    func_8001719C((u8 *)s0 + 0x770);
+    UploadSpriteImages((u8 *)s0 + 0x770);
 }

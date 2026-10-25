@@ -1,8 +1,8 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "screen_fade.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 s32 ovl_27_func_800BA230(void);
 void ovl_27_func_800B9324(void);
 

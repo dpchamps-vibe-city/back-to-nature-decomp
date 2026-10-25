@@ -1,7 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-/* Overlay symbol for Rand at 0x80012A34. */
-u32 Rand(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800CF748(void);
 void ovl_11_func_800CF848(void);

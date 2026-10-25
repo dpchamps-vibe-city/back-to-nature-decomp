@@ -3,10 +3,15 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "sprite_render.h"
+#include "sprite_source.h"
+
+POLY_FT4 *BuildSpriteEntryPackets(s32 *ot, POLY_FT4 *packets,
+                       SpriteEntrySourceView *source, s16 x, s16 y,
+                       u16 flags, s32 total, s32 textureBase,
+                       s16 substitute, s16 substituteFrom, s16 substituteTo);
 
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
-void func_800158E4(SpriteSourceData *src);
-POLY_FT4 *func_80016C08(s32 *ot, POLY_FT4 *poly, SpriteSourceData *src, s16 ox, s16 oy, u16 flags, s32 total, s32 texBase, s16 subst, s16 substFrom, s16 substTo);
 
 void ovl_11_func_800CA044(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32 *arg2) {
     SpriteSourceData *temp_s0;
@@ -20,7 +25,7 @@ void ovl_11_func_800CA044(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32
     if (arg0->unk6C & 0x100000) {
         temp_s0 = (SpriteSourceData *) ((u8 *) arg0 + 0x290);
         func_80016054(temp_a3, gActiveRenderContext->field_118, (s32) temp_s0, (s32) (*(u8 *) ((u8 *) arg0 + 0x294)), (u8) (s32) (*(u8 *) ((u8 *) arg0 + 0x295)), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 0)), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), *(s32 *) ((u8 *) arg0 + 0x298), 0, 0x40U);
-        func_800158E4(temp_s0);
+        UpdateSpriteAnimation(temp_s0);
         return;
     }
     var_t2 = -1;
@@ -40,8 +45,8 @@ void ovl_11_func_800CA044(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32
             }
         }
     }
-    func_80016C08((s32 *) temp_a3, (POLY_FT4 *) gActiveRenderContext->field_118, (SpriteSourceData *) ((u8 *) arg0 + 0x260), *(s16 *) ((u8 *) arg2 + 0), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), 0x40U, D_8005E3BC, (s32) ((void *) ((u8 *) &D_80122F9C + (gActiveRenderContextIndex * 0x78))), (s16) (s32) var_t2, (s16) (s32) var_t4, (s16) (s32) var_t5);
+    BuildSpriteEntryPackets((s32 *) temp_a3, (POLY_FT4 *) gActiveRenderContext->field_118, (SpriteSourceData *) ((u8 *) arg0 + 0x260), *(s16 *) ((u8 *) arg2 + 0), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), 0x40U, D_8005E3BC, (s32) ((void *) ((u8 *) &D_80122F9C + (gActiveRenderContextIndex * 0x78))), (s16) (s32) var_t2, (s16) (s32) var_t4, (s16) (s32) var_t5);
     if (!(((struct struct_8006C838_view *) D_8006C838)->field_0C & 0x08000000)) {
-        func_800158E4((SpriteSourceData *) ((u8 *) D_8006C838 + 0x5428));
+        UpdateSpriteAnimation((SpriteSourceData *) ((u8 *) D_8006C838 + 0x5428));
     }
 }

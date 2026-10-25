@@ -10,14 +10,14 @@
 #include "common.h"
 #include "game_types.h"
 #include "sprite_grid.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 /* Original-byte GP access identifies this unit as the tick's owner. */
 s32 gSpriteGridTick;
-
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80015EE8(s32 ot, s32 source, s32 animation, s32 frame, s16 x, s16 y);
-void func_80015E3C(s32 ot, s32 sprites, s32 modes, s32 source,
-                   u8 animation, u8 frame, s16 x, s16 y);
 
 /* Helpers retain external linkage; only the three grid entrypoints are
  * published. */
@@ -41,7 +41,7 @@ void VisitScrollingSpriteGrid(s32 orderingTable, SpriteGridCallback visitor) {
     s32 columnX;
     s32 frameSlot;
 
-    func_80015704((SpriteSourceData *)&gSharedSpriteSource,
+    InitSpriteSourceData((SpriteSourceData *)&gSharedSpriteSource,
                   (SpriteDataHeader *)&gSharedSpriteData);
 
     nextTick = (u32)gSpriteGridTick + 1;
@@ -69,11 +69,11 @@ void VisitScrollingSpriteGrid(s32 orderingTable, SpriteGridCallback visitor) {
 }
 
 void DrawSpriteGridCell(s32 ot, SpriteSourceData *source, s16 frame, s32 x, s32 y) {
-    func_80015EE8(ot, (s32)source, 29, frame & 0xFF, (s16)x, (s16)y);
+    DrawSpriteFrameRects(ot, (s32)source, 29, frame & 0xFF, (s16)x, (s16)y);
 }
 
 void DrawSpriteGridCellInContext(s32 ot, SpriteSourceData *source, s16 frame, s32 x, s32 y) {
-    func_80015E3C(ot, (s32)&gActiveRenderContext->field_118,
+    BuildSpriteRectPacketsFromAddresses(ot, (s32)&gActiveRenderContext->field_118,
                    (s32)&gActiveRenderContext->field_118, (s32)source,
                    29, frame & 0xFF, (s16)x, (s16)y);
 }

@@ -1,5 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 typedef struct {
     char pad[4];
@@ -13,8 +17,6 @@ typedef struct {
 
 extern s32 D_8009A3F8;
 extern M2C_D80124FCC D_80124FCC;
-
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 
 s32 ovl_11_func_800CDE3C(u8 *arg0) {
     s32 temp_s2;
@@ -38,7 +40,7 @@ s32 ovl_11_func_800CDE3C(u8 *arg0) {
     var_s0 = arg0 + 0x2D4;
     temp_s2 = D_80124FCC.unk18->unk4;
     do {
-        func_80015704((SpriteSourceData *) var_s0, (SpriteDataHeader *) (temp_s2 + (s32) var_s3));
+        InitSpriteSourceData((SpriteSourceData *) var_s0, (SpriteDataHeader *) (temp_s2 + (s32) var_s3));
         var_s1 += 1;
         var_s0 += 0x34;
     } while (var_s1 < 5U);

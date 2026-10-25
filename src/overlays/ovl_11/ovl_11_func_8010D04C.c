@@ -1,7 +1,7 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 void ovl_11_func_80107DD0(s16 *arg0);
 
 typedef struct __attribute__((packed)) {

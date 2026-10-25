@@ -1,8 +1,9 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 /* D_8006C838 view for this function: the s32 flag word at +0x5234 (bit
  * 0x100000), the pointer at +0x5214 and the u16 at +0x51FE. Reached as
@@ -46,7 +47,7 @@ s32 ovl_11_func_800E9104(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         ((Ov11View800E9104 *) &D_8006C838)->field_5234 |= 0x100000;
         if (tmp == 0) {
             if ((u8) obj->field_4 != arg1) {
-                func_80015840(obj, arg1 & 0xFF);
+                SelectSpriteAnimation(obj, arg1 & 0xFF);
                 return 0;
             }
             if ((obj->field_2 & 0x300) != 0) {
@@ -57,9 +58,9 @@ s32 ovl_11_func_800E9104(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             return 0;
         }
         if ((u8) obj->field_4 != arg1) {
-            func_80015840(obj, arg1 & 0xFF);
+            SelectSpriteAnimation(obj, arg1 & 0xFF);
         }
-        func_8001585C(obj, var_s1 & 0xFF);
+        SelectSpriteAnimationFrame(obj, var_s1 & 0xFF);
         return 1;
     }
     ((Ov11View800E9104 *) &D_8006C838)->field_5214 = D_801248BC;

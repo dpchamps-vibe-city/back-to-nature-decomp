@@ -13,9 +13,11 @@
 #include "psyq/memory.h"
 #include "cd_loader.h"
 #include "ovl11_texture_stream.h"
-
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80017200(u8 *, s16, s16, s16, s16);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_upload.h"
 
 /* Internal helpers retain their existing linkage and ABI. The start result is
  * the loader's buffer pointer returned as a word; the stream ignores it.
@@ -90,7 +92,7 @@ selected:
             }
             tex = NULL;
             piece = NULL;
-            func_80015704(&sprite, (SpriteDataHeader *)((u8 *)gGraphicsHeapBase
+            InitSpriteSourceData(&sprite, (SpriteDataHeader *)((u8 *)gGraphicsHeapBase
                 + (((id - first) << 11) + 0x4290)));
             do { } while (0);
             src = &sprite;
@@ -143,7 +145,7 @@ selected:
             gOvl11TextureCache[slot].clutX = (slot % 4) * 16 + ((slot / 24) * 64 + 0x140);
             gOvl11TextureCache[slot].clutY = (row = (slot % 24) / 4) + 0xC0;
             uploadY = row - 0x3E;
-            func_80017200((u8 *)gGraphicsHeapBase + (((id - first) << 11) + 0x4390),
+            UploadSpriteImagesAtOffsets((u8 *)gGraphicsHeapBase + (((id - first) << 11) + 0x4390),
                 (s16)((u16)gOvl11TextureCache[slot].x - 0x140),
                 gOvl11TextureCache[slot].y,
                 (s16)(gOvl11TextureCache[slot].clutX - 0x140), uploadY);

@@ -1,5 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 /* Minimal view of the 0x18-byte position record whose +8/+0xC/+0x10
  * halfwords are the box centre. Only the witnessed fields are named. */
@@ -17,7 +21,6 @@ typedef struct {
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5,
                    s16 arg6, s32 arg7, s32 arg8, u16 arg9);
-void func_800158E4(SpriteSourceData *src);
 
 void ovl_11_func_800E48CC(Recon_ovl_11_func_800E48CC_A0View *arg0,
                           SpriteSourceData *arg1) {
@@ -34,6 +37,6 @@ void ovl_11_func_800E48CC(Recon_ovl_11_func_800E48CC_A0View *arg0,
                       (s16) sp28[1], arg1->field_8, 0, 0x40);
     }
     if (!(D_8006C844 & 0x08000000)) {
-        func_800158E4(arg1);
+        UpdateSpriteAnimation(arg1);
     }
 }

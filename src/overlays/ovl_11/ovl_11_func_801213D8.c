@@ -1,5 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 typedef struct {
     /* 0x00 */ s16 id;
@@ -13,9 +18,7 @@ typedef struct {
     /* 0x14 */ SpriteSourceData *sprite;
 } Struct_801213D8;
 
-u16 func_80015A18(SpriteSourceData *arg0, s32 arg1);
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void ovl_11_func_801214F8(Struct_801213D8 *arg0);
 
 /* Advances and draws one sprite effect from the 0x18-byte records at
@@ -41,7 +44,7 @@ void ovl_11_func_801213D8(Struct_801213D8 *arg0) {
     u16 tick;
 
     if (arg0->sprite != 0) {
-        frames = func_80015A18(arg0->sprite, arg0->id);
+        frames = GetSpriteAnimationFrameCount(arg0->sprite, arg0->id);
         tick = arg0->tick;
         frame = (s16) tick / 3;
         if (D_8006C844 & 0x08000000) {
@@ -55,7 +58,7 @@ void ovl_11_func_801213D8(Struct_801213D8 *arg0) {
             pos[1] = arg0->y - 0x64;
             pos[2] = arg0->z - 0x96;
             if (ovl_11_func_800F5888(pos, screen) != 0) {
-                func_80015EE8(gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4), (s32) arg0->sprite,
+                DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4), (s32) arg0->sprite,
                               (u8) arg0->id, frame & 0xFF, screen[0], screen[1]);
             }
         } else {

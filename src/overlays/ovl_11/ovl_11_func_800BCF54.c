@@ -1,10 +1,13 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_upload.h"
 
 s32 func_8001AF44(u32 arg0);
 void ovl_11_func_800BD938(void);
-void func_8001719C(u8 *arg0);
 void ovl_11_func_800F0E00(void *arg0);
 void ovl_11_func_800E3CDC(u8 *arg0);
 
@@ -32,7 +35,7 @@ void ovl_11_func_800BCF54(s32 arg0, s32 arg1) {
     }
     start1 = record[1];
     CdReadDiscSectorsBlocking(0, start1, record[2] - start1, 0, gGraphicsHeapBase + 0x4290);
-    func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290));
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
     start2 = record[2];
     CdReadDiscSectorsBlocking(0, start2, record[4] - start2, 0, gGraphicsHeapBase + 0x4290);
     ovl_11_func_800F0E00((void *)(gGraphicsHeapBase + 0x4290));

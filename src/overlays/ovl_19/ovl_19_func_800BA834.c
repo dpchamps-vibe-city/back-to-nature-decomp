@@ -5,16 +5,14 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "ovl19_scene_camera_geometry.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 
-void func_80015868 (Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-void func_80015840 (ObjectState *obj, u8 arg1);
-void func_8001585C (ObjectState *obj, u8 arg1);
 void ovl_19_func_800BADF8 (s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
 void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
-void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 void func_800248E8 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void ovl_19_func_800BA834(s16 *arg0) {
@@ -42,11 +40,11 @@ void ovl_19_func_800BA834(s16 *arg0) {
     temp_v1 = *arg0;
     var_s4 = 0;
     if (temp_v1 == 0) {
-        func_80015868((Struct_800154CC *) (arg0 + 0xC), 0, 0, 0x20, 1);
+        SetSpriteSourceTextureOffsets((Struct_800154CC *) (arg0 + 0xC), 0, 0, 0x20, 1);
         var_a1 = 0;
     } else {
         if (temp_v1 == 1) {
-            func_80015868((Struct_800154CC *) (arg0 + 0xC), 0, 0, *(s16 *) ((u8 *) arg0 + 0xA), 0);
+            SetSpriteSourceTextureOffsets((Struct_800154CC *) (arg0 + 0xC), 0, 0, *(s16 *) ((u8 *) arg0 + 0xA), 0);
         }
         var_a1 = 0;
     }
@@ -122,16 +120,16 @@ void ovl_19_func_800BA834(s16 *arg0) {
     }
     var_s0 = arg0 + 0xC;
     if ((*(u8 *) ((u8 *) arg0 + 0x1C)) != var_a1) {
-        func_80015840((ObjectState *) var_s0, var_a1 & 0xFF);
+        SelectSpriteAnimation((ObjectState *) var_s0, var_a1 & 0xFF);
     }
     if (var_s5 != -1) {
-        func_8001585C((ObjectState *) var_s0, var_s5 & 0xFF);
+        SelectSpriteAnimationFrame((ObjectState *) var_s0, var_s5 & 0xFF);
     }
     ovl_19_func_800BADF8(gActiveRenderContext->field_120, (SpriteSourceData *) var_s0, (arg0 + 8), var_s3);
     if (var_s4 == 1) {
         var_a1_2 = D_800BF4C0;
         if ((*(u8 *) ((u8 *) var_a1_2 + 0x1D4)) != 0x24) {
-            func_80015840((ObjectState *) (var_a1_2 + 0xE8), 0x24);
+            SelectSpriteAnimation((ObjectState *) (var_a1_2 + 0xE8), 0x24);
         }
         sp18 = *(SVECTOR *) (arg0 + 8);
         ovl_19_func_800BADF8(gActiveRenderContext->field_D8 + 8, (SpriteSourceData *) (var_a1_2 + 0xE8), (s16 *) &sp18, -0x18);

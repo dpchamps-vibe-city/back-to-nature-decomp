@@ -2,9 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 
-void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_25_func_800BA5BC (SpriteSourceData *arg0, u16 *arg1);
 
 void ovl_25_func_800B9D4C(void) {
@@ -24,7 +25,7 @@ void ovl_25_func_800B9D4C(void) {
     } else {
         var_a1 = 4;
     }
-    func_80015840((ObjectState *) D_800C02DC, var_a1);
+    SelectSpriteAnimation((ObjectState *) D_800C02DC, var_a1);
     temp_a0 = (ObjectState *) D_800C02DC - 0x93;
     sp10[0] = (*(u16 *) ((u8 *) temp_a0 + 0x20)) - 0x64;
     sp10[1] = (*(u16 *) ((u8 *) temp_a0 + 0x22)) - 0xDC;

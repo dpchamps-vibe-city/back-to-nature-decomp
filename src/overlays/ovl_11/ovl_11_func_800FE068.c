@@ -1,7 +1,9 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
 void ovl_11_func_800FE068(u16 arg0, s32 arg1, s32 arg2) {
     s16 var_a1;
@@ -20,7 +22,7 @@ void ovl_11_func_800FE068(u16 arg0, s32 arg1, s32 arg2) {
     do {
         var_s0 = var_a2 + 1;
         if ((u32) (arg0 & 0xFFFF) >= (u16) p[var_s0]) {
-            func_80015EE8(gActiveRenderContext->field_D8 + 0x68, (s32) D_8012CEB8, var_a2 & 0xFF, 0, (s16) (s32) var_a1, var_s2);
+            DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x68, (s32) D_8012CEB8, var_a2 & 0xFF, 0, (s16) (s32) var_a1, var_s2);
             temp_v1 = var_s1 >> 0x10;
             var_s1 += 0x80000;
             var_a1 = (s16) temp_v1;

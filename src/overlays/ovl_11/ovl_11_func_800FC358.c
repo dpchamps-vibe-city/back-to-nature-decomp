@@ -1,7 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_render.h"
 
-void func_80015EE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 void ovl_11_func_800FC544(s32 arg0, s16 arg1, s32 arg2, s32 arg3, s16 arg4);
@@ -15,7 +18,7 @@ void ovl_11_func_800FE7FC(s16 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800FC358(void) {
     s32 value;
 
-    func_80015EE8(gActiveRenderContext->field_D8 + 0x68, (s32) D_8012CDF8, 0, 0, 0x18, 0x30);
+    DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x68, (s32) D_8012CDF8, 0, 0, 0x18, 0x30);
     ovl_11_func_800FE7FC(((struct struct_8006C838_800FC358 *) D_8006C838)->field_4A84, 0x78, 0x3C);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) &((struct struct_8006C838_800FC358 *) D_8006C838)->field_51C8, 0x30, 0x32);
     ovl_11_func_800FE614((u16 *) func_8001A970(D_8012CDE6, &D_8012A028, 3), 0x1E74);

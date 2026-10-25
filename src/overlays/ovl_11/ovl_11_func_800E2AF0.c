@@ -1,4 +1,5 @@
 #include "common.h"
+#include "random.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -11,7 +12,6 @@ typedef struct {
 } Struct_800E2AF0;
 
 
-u32 Rand(s32 arg0);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
 
 s32 ovl_11_func_800E2AF0(Struct_800E2AF0 *arg0) {

@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl19_actor_controls.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 s32 ovl_19_func_800BA73C(Ovl19Func800BA73CArg *arg0);
 s32 ovl_19_func_800BA468(void *, void *);
 s32 ovl_19_func_800BA544(s32 arg0, s32 arg1);

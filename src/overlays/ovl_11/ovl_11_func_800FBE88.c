@@ -6,11 +6,10 @@
 #include "psyq/memory.h"
 #include "cd_loader.h"
 #include "sound_commands.h"
+#include "sprite_source.h"
+#include "sprite_upload.h"
 
 void ovl_11_func_800FB908(void);
-void func_8001719C(u8 *arg0);
-/* The initializer does not read its trailing parameters. */
-void func_80015704();
 
 void ovl_11_func_800FBE88(void) {
     u32 i;
@@ -23,10 +22,10 @@ void ovl_11_func_800FBE88(void) {
     CdReadArchiveBytes(0xE, 0, 0x8E90, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
     do {
     } while (CdReadArchiveBytes(0xE, 0, 0x8E90, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
-    func_8001719C((u8 *)(gGraphicsHeapBase + 0x7004));
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x7004));
     memcpy(D_8012A048, (u8 *)(gGraphicsHeapBase + 0x4290), 0x2D74);
     for (i = 0; i < 5; i++) {
-        func_80015704((SpriteSourceData *)(D_8012CDF8 + i * 0x30),
+        InitSpriteSourceData((SpriteSourceData *)(D_8012CDF8 + i * 0x30),
                       (SpriteDataHeader *)(D_8012A048 + D_801272F4[i]));
     }
 }

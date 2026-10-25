@@ -1,7 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-/* Rand at 0x80012A34; use the overlay link's imported symbol name. */
-u32 Rand(s32 arg0);
 s32 func_8001AF44(u32 arg0);
 s32 ovl_11_func_800EFA1C(s16 arg0);
 s32 ovl_11_func_800EDF3C();

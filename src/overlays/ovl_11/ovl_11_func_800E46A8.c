@@ -1,16 +1,18 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 s32 func_8001AF44(u32 arg0);
-/* Resident SetVal8005E43C, named by its overlay-visible address. */
-void SetVal8005E43C(s32 arg0);
+/* Engine update-latch setter, exe:0x800158D8. */
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 void ovl_11_func_80107E2C(u8 *arg0, s32 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800C9E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_800158E4(SpriteSourceData *src);
 
 void ovl_11_func_800E46A8(u8 *arg0) {
     s32 screen[4];
@@ -36,7 +38,7 @@ void ovl_11_func_800E46A8(u8 *arg0) {
         if (func_8001AF44(0x72) && *(s16 *)arg0 == ((Ovl11E46A8State *)D_8006C838)->selectedId) {
             ot -= 0x14;
         }
-        SetVal8005E43C(0);
+        SetSpriteAnimationUpdateLatch(0);
         func_80016054(ot, gActiveRenderContext->field_118, (s32)(arg0 + 0xB0),
                       arg0[0xB4], arg0[0xB5], (s16)screen[0], (s16)screen[1],
                       *(s32 *)(arg0 + 0xB8), 0, 0x40);
@@ -52,6 +54,6 @@ void ovl_11_func_800E46A8(u8 *arg0) {
         ((Ovl11E46A8State *)D_8006C838)->current[1] == 0x1BD ||
         ((Ovl11E46A8State *)D_8006C838)->current[1] == 0x1BE ||
         ((Ovl11E46A8State *)D_8006C838)->current[1] == 0x1BF) {
-        func_800158E4((SpriteSourceData *)(arg0 + 0xB0));
+        UpdateSpriteAnimation((SpriteSourceData *)(arg0 + 0xB0));
     }
 }

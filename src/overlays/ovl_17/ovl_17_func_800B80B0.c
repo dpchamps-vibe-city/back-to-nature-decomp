@@ -8,6 +8,9 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
+#include "sprite_render.h"
 
 
 void SsSeqClose (short);
@@ -16,10 +19,6 @@ void SsVabClose (short);
 void ovl_17_func_800BA808 (s32 arg0);
 void ovl_17_func_800BB394 (s16 arg0);
 void ovl_17_func_800BB3F4 (s16 arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
-void func_8001585C(ObjectState *obj, u8 arg1);
-void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-void func_80015F80 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7, u16 arg8);
 
 void ovl_17_func_800B80B0(void) {
     u8 var_s0 = 0;

@@ -3,12 +3,14 @@
 #include "aged_item_pool.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800BF3F4(void);
 /* This caller supplies two arguments; the callee's trailing debug arguments
  * do not participate in sprite initialization. */
-void func_80015704();
-void func_80015840(ObjectState *obj, u8 arg1);
 void func_8001AF70(u16 arg0, u16 arg1);
 s32 ovl_11_func_800C79F8(Vec3 *arg0);
 s32 ovl_11_func_800D7504(s16 arg0);
@@ -23,8 +25,8 @@ s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
 
     temp_v0 = ovl_11_func_800BF3F4();
     if (temp_v0 != 0) {
-        func_80015704(&D_80128C80, (SpriteDataHeader *) &gSharedSpriteData);
-        func_80015840((ObjectState *) &D_80128C80, 0x17);
+        InitSpriteSourceData(&D_80128C80, (SpriteDataHeader *) &gSharedSpriteData);
+        SelectSpriteAnimation((ObjectState *) &D_80128C80, 0x17);
         PlaySoundEffect(0x10);
         arg0->unk6 = 3;
         arg0->unkC = 0;

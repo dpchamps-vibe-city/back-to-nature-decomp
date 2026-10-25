@@ -1,8 +1,10 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
-
-void func_8001719C(u8 *arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_upload.h"
 
 void ovl_11_func_800BD3C4(s32 arg0) {
     s32 *range;
@@ -16,5 +18,5 @@ void ovl_11_func_800BD3C4(s32 arg0) {
     size = *table;
     size = table[size + 1];
     memcpy(D_8008F7F8_words, (void *)(gGraphicsHeapBase + 0x4290), size);
-    func_8001719C((u8 *)gGraphicsHeapBase + 0x4290 + size);
+    UploadSpriteImages((u8 *)gGraphicsHeapBase + 0x4290 + size);
 }

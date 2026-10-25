@@ -1,6 +1,5 @@
 #include "common.h"
-
-u32 Rand(s32 arg0);
+#include "random.h"
 
 void ovl_11_func_800C034C(u8 *arg0) {
     u16 flags;

@@ -1,11 +1,14 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 s32 ovl_11_func_800CB730(Ovl11CE034Object *arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 /* This caller zero-extends the byte; the callee stores only its low byte. */
-void func_80015840(ObjectState *obj, u8 arg1);
 s32 ovl_11_func_800D736C(s16 *arg0);
 
 s32 ovl_11_func_800CB850(s32 arg0) {
@@ -95,7 +98,7 @@ common_action:
     if (obj->itemIndex == 0x64) {
         obj->unk6C |= 0x1800;
         ovl_11_func_800C70CC(obj, 0x46, 0, -2);
-        func_80015840((ObjectState *)&obj->sprite, (u8)obj->unk38);
+        SelectSpriteAnimation((ObjectState *)&obj->sprite, (u8)obj->unk38);
         obj->unk6C |= 0x4000;
         return 1;
     }

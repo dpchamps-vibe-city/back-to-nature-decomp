@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "random.h"
 
 typedef struct {
     u16 field_0;
@@ -11,7 +12,6 @@ typedef struct {
     s32 field_34;
 } Ovl11B994Object;
 
-u32 Rand(s32 arg0);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 void ovl_11_func_800D12A0(s16 arg0);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);

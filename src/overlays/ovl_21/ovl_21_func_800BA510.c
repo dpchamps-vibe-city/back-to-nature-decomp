@@ -1,8 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 
 void ovl_21_func_800BAE20(s32 *arg0);
-void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_21_func_800BAFFC(SpriteSourceData *arg0, u16 *arg1);
 
 void ovl_21_func_800BA510(void) {
@@ -24,7 +27,7 @@ void ovl_21_func_800BA510(void) {
             sp10[0] = rec->unk1A;
             sp10[1] = rec->unk1C - 0x15E;
             sp10[2] = rec->unk1E;
-            func_80015840((ObjectState *)spr, 0);
+            SelectSpriteAnimation((ObjectState *)spr, 0);
             ovl_21_func_800BAFFC(spr, sp10);
         }
         rec = (UnkStruct800C0448 *)((u8 *)rec + 0x108);

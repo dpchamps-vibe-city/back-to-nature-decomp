@@ -1,6 +1,6 @@
 #include "common.h"
+#include "random.h"
 
-u32 Rand(s32 arg0);
 s32 ovl_11_func_800D5868(s16 arg0);
 
 typedef struct {

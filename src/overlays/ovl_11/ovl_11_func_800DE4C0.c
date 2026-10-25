@@ -3,6 +3,7 @@
 #include "screen_fade.h"
 #include "scene_selection.h"
 #include "master_volume.h"
+#include "random.h"
 
 void ovl_11_func_800BFE3C(void);
 s32 func_8001AF44(u32 arg0);
@@ -10,8 +11,6 @@ void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
-/* Overlay import of the matched Rand definition at 80012A34. */
-u32 Rand(s32 arg0);
 /* 800CBB9C consumes argument 1 with sh; its upper bits are immaterial. */
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 

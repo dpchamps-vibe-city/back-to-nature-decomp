@@ -4,9 +4,9 @@
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
+#include "sprite_upload.h"
 
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_8001719C(u8 *arg0);
 
 void ovl_11_func_800BD6A8(s16 arg0, s16 arg1) {
     s16 var_s0;
@@ -63,12 +63,12 @@ block_12:
             } else {
                 memcpy(&D_8009CBF8, (void *) temp_s1, temp_s0);
             }
-            func_8001719C((u8 *) (temp_s1 + temp_s0));
+            UploadSpriteImages((u8 *) (temp_s1 + temp_s0));
             if (var_s3 == 2) {
                 temp_v1 = D_80125DC0[var_s0];
                 wordOffset = *temp_v1;
                 temp_s0 = temp_v1[wordOffset + 2];
-                func_8001719C((u8 *) (temp_s1 + temp_s0));
+                UploadSpriteImages((u8 *) (temp_s1 + temp_s0));
             }
         }
     }

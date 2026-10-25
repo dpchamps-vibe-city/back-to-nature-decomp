@@ -1,8 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-/* Legacy overlay import of matched Rand at 0x80012A34. */
-u32 Rand(s32 arg0);
+#include "random.h"
 
 s16 ovl_21_func_800BA944(s16 arg0) {
     s16 buf[4];

@@ -12,6 +12,9 @@
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
 #include "text_entry.h"
+#include "sprite_source.h"
+#include "random.h"
+#include "sprite_upload.h"
 
 typedef struct {
                char pad0[0x38];
@@ -66,14 +69,10 @@ int CdReadSync (int mode, u_char *result);
 int CdSync (int mode, u_char *result);
 void *memmove (unsigned char *, const unsigned char *, int);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
-void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-u32 Rand (s32 arg0);
+void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 void func_8001AF70 (u16 arg0, u16 arg1);
-void func_8001719C (u8 *arg0);
 void SetVal8005E2E8 (s32 arg0);
 s32 func_8001E38C (void);
-void func_80015840(ObjectState *obj, u8 arg1);
-u32 func_8001589C (SpriteSourceData *src);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -83,8 +82,6 @@ void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053
 void ovl_11_func_800D666C (s16 arg0);
 void ovl_11_func_800D7328 (s16 *arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
-void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
-void func_80015894 (SomeStruct *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CF258 (s32 arg0);
@@ -99,7 +96,6 @@ s32 ovl_11_func_80118C6C (void);
 s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800DBEF8(s32 arg0);
 s32 ovl_11_func_800DBE30 (s32 arg0);
-void func_8001585C(ObjectState *obj, u8 arg1);
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
 s32 ovl_11_func_800EFA1C (s16 arg0);

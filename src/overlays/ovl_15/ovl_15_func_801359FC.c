@@ -1,11 +1,10 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "random.h"
 
 extern u8 D_80137AB0[];
 extern u8 *D_801376D0;
 extern u8 D_80137830[];
-
-u32 Rand(s32 arg0);
 
 void ovl_15_func_801359FC(void) {
     u8 *base;

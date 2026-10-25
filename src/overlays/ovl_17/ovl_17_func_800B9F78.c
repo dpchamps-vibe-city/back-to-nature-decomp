@@ -1,5 +1,5 @@
 #include "common.h"
-u32 Rand(s32 arg0);
+#include "random.h"
 
 s32 ovl_17_func_800B9F78(s16 arg0) {
     s32 callRet2;
