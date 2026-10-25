@@ -3,10 +3,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/libapi.h"
+#include "asset_scratch.h"
 
 void func_8001AF70(u16 arg0, u16 arg1);
-s32 func_8001205C(void);
-s32 func_80012098(void);
 void func_800121D4(void);
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
 u8 *func_80014CBC(s32, s32, s32, u8 *, s32, s32);
@@ -49,11 +48,11 @@ s32 ovl_11_func_800E3DC8(void) {
     }
     useAsync = 0;
     if (needsRead != 0) {
-        if ((size < func_8001205C()) && (((Ovl11FarInitView *)&D_8007AFF0)->field_254A0 != 0xF)) {
+        if ((size < GetAssetScratchCapacity()) && (((Ovl11FarInitView *)&D_8007AFF0)->field_254A0 != 0xF)) {
             useAsync = id != 0x12D;
         }
         if (useAsync != 0) {
-            func_80014CBC(0xC, offset, size, (u8 *)func_80012098(), 0, 1);
+            func_80014CBC(0xC, offset, size, (u8 *)GetAssetScratchStart(), 0, 1);
             ((struct Ovl11E4280State *)D_8006C838)->selector = 3;
             return 0;
         }

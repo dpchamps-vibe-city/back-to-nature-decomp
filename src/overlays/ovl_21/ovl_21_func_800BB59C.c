@@ -7,6 +7,7 @@
 #include "psyq/memory.h"
 #include "psyq/libapi.h"
 #include "psyq/libsnd.h"
+#include "asset_scratch.h"
 
 typedef struct {
                s16 unk0;
@@ -31,7 +32,6 @@ int StoreImage (RECT *rect, u_long *p);
 void SystemError (char, long);
 void *memmove (unsigned char *, const unsigned char *, int);
 void func_8001719C (u8 *arg0);
-s32 func_8001205C (void);
 void func_80021B20 ();
 s32 func_800129E8 (void);
 void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
@@ -68,14 +68,12 @@ s32 ovl_11_func_800C2884 (s16 key, u32 *table);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800E39B8 (s32 *arg0, u32 arg1);
 void ovl_11_func_800E5230 (void);
-s32 func_80012098 (void);
 void func_800121D4 (void);
 s32 ovl_11_func_800E3978 (s32 arg0);
 s32 ovl_11_func_800EEBC8 (void);
 void ovl_11_func_800E54C8 (void);
 s32 func_80013394 (void);
 s32 ovl_11_func_800E4AEC (s32 arg0);
-s32 GetVal8005E3B0 (void);
 s32 ovl_11_func_800E4C30 (s32 arg0);
 s32 ovl_11_func_800E4C84 (s32 arg0);
 s32 ovl_11_func_800E4B6C (s32 arg0, s32 arg1);

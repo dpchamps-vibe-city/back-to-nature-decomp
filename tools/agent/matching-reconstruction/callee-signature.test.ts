@@ -20,9 +20,9 @@ function makeArgSnapshot(
 }
 
 test("a matched callee resolves to its real arity and return type from the header", { skip: !exe }, () => {
-  /* func_8001205C is matched (real C in src/func_8001205C.c) and declared in
-   * include/functions.h as `s32 func_8001205C(void);`. */
-  const result = resolveSignature("func_8001205C", 0x8001205c, exe!);
+  /* GetAssetScratchCapacity (exe:0x8001205C) is compiled in
+   * src/modules/asset_scratch.c and exported as s32 (void). */
+  const result = resolveSignature("GetAssetScratchCapacity", 0x8001205c, exe!);
   assert.ok(!("unknown" in result), JSON.stringify(result));
   if ("unknown" in result) return;
   assert.equal(result.arity, 0);

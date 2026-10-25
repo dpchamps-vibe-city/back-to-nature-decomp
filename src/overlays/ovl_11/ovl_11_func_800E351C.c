@@ -3,10 +3,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
-
-s32 GetVal8005E3B0(void);
-
-s32 func_8001205C(void);
+#include "asset_scratch.h"
 
 s32 func_8001AF44(u32 arg0);
 
@@ -42,9 +39,9 @@ s32 ovl_11_func_800E351C(u8 *arg0, s16 arg1, s16 arg2) {
 
     end = arg0 + _D_801247E8[50] - _D_801247E8[0];
     diff = end - acc;
-    if (func_8001205C() >= diff) {
+    if (GetAssetScratchCapacity() >= diff) {
         p = &D_801294E8;
-        *p = GetVal8005E3B0() - diff;
+        *p = GetAssetScratchEnd() - diff;
         size = *p;
         if (size & 3) {
             size -= size & 3;

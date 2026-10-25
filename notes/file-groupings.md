@@ -5176,6 +5176,36 @@ reaches that way. Non-members must not. See
 `plans/toolchain-native-small-data-addressing.md` for how that is expressed in
 source.
 
+Reconstructed query slice: `src/modules/asset_scratch.c` now holds the
+three functions at **exe:0x8001205C–0x800120C8**, in original order:
+`GetAssetScratchCapacity` (formerly func_8001205C),
+`GetAssetScratchStart` (formerly func_80012098), and
+`GetAssetScratchEnd` (0x800120BC, formerly GetVal8005E3B0).
+This is a useful module boundary, **not evidence of an original file boundary**
+inside the larger boot/main-loop family. Beyond adjacency, Start calls Capacity,
+all three share the GP-relative end boundary D_8005E3B0, and ovl_11's
+800E3DC8 tests capacity before starting a read into Start, with 800E4330
+polling that read at the same address; 800E351C and 800E499C instead place
+copied data below End. The graphics-heap initializers
+set End; 80021DA8 sets D_8007AFF4 and the fixed 0x49000 reservation, while
+ovl_11:800BCF54 records the loaded byte count in D_8005E328. Thus Start is
+D_8007AFF4 + 0x49000 + D_8005E328 and Capacity is End - Start.
+The queries change no state or allocation cursor. Their public contract in
+`include/asset_scratch.h` keeps the existing s32 address ABI and documents
+initialization, byte units, unchecked capacity, and coordinated reuse.
+D_8005E3B0 retains its canonical name and shared ownership: this slice does
+not make the broader boot/render state private. Packet-work-base helpers
+before it and render-context reset/heap initializers after it stay outside;
+the dead 8001202C stub is not claimed as a member. No linkage was narrowed,
+and no data declaration or layout was changed. The staged D_8001009C
+subtractions remain because simplifying their cancellation changes codegen.
+The checked mechanical fold first passed under baseline -O2/-G8; none of
+these members has a flag override, and none was added. Semantic names are
+recorded at their original EXE addresses, propagated to callers through the
+canonical-name tool, and published through the interface audit and generated
+context. Acceptance uses the full TU campaign gate against its baseline,
+including regenerated executable/overlay builds, interfaces and source policy.
+
 Technique and per-function detail for this group live in
 `notes/sprite-renderer-family-campaign.md`; the frame-size/arity diagnostic
 these wrappers illustrate is in

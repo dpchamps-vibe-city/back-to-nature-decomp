@@ -1,8 +1,8 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "asset_scratch.h"
 
 void func_80021E60(s32 arg0);
-s32 GetVal8005E3B0(void);
 
 void func_80021DA8(void) {
     u32 diff;
@@ -22,5 +22,5 @@ void func_80021DA8(void) {
     ptr = D_80010098 + aligned;
     ((s32 *)&D_8007AFF0)[1] = ptr;
     D_8007AFF0 = ptr + 0x49000;
-    *(s32 *)((char *)D_8006C838 + 0x1C) = GetVal8005E3B0() - 0x1008;
+    *(s32 *)((char *)D_8006C838 + 0x1C) = GetAssetScratchEnd() - 0x1008;
 }

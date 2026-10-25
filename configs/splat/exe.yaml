@@ -94,9 +94,7 @@ segments:
       - [0x275C, c, func_80011F5C]       # 0x80011F5C func_80011F5C
       - [0x27D8, c, func_80011FD8]       # 0x80011FD8 func_80011FD8
       - [0x282C, c, func_8001202C]       # 0x8001202C func_8001202C
-      - [0x285C, c, func_8001205C]       # 0x8001205C func_8001205C
-      - [0x2898, c, func_80012098]       # 0x80012098 func_80012098
-      - [0x28BC, c, GetVal8005E3B0]       # 0x800120BC GetVal8005E3B0
+      - [0x285C, c, modules/asset_scratch]
       - [0x28C8, c, func_800120C8]       # 0x800120C8 func_800120C8
       - [0x29D4, c, func_800121D4]       # 0x800121D4 func_800121D4
       - [0x2A98, c, func_80012298]       # 0x80012298 func_80012298

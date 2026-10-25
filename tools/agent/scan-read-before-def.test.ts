@@ -59,9 +59,9 @@ test("function assembly falls back to the disassembler dump when splat has no st
 
   /* build/asm/nonmatchings only holds functions still stubbed with INCLUDE_ASM,
    * so an already-matched function resolves only through build/functions. */
-  const dumped = join(ROOT, "build/functions/func_8001205C.s");
-  const stub = join(ROOT, "build/asm/nonmatchings/func_8001205C/func_8001205C.s");
+  const dumped = join(ROOT, "build/functions/GetAssetScratchCapacity.s");
+  const stub = join(ROOT, "build/asm/nonmatchings/modules/asset_scratch/GetAssetScratchCapacity.s");
   if (existsSync(dumped) && !existsSync(stub)) {
-    assert.equal(resolveFunctionAsm("func_8001205C"), dumped);
+    assert.equal(resolveFunctionAsm("GetAssetScratchCapacity"), dumped);
   }
 });

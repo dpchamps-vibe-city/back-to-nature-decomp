@@ -135,7 +135,7 @@
       "stratum": "exe/calls/writes/loops/medium"
     },
     {
-      "name": "func_80012098",
+      "name": "GetAssetScratchStart",
       "stratum": "exe/calls/writes/loops/small"
     },
     {
