@@ -435,15 +435,42 @@ export function assembleCompilerOutput(
   object: string,
   kind: "exe" | "overlay" = "exe",
 ): string {
-  runTool("python3", [
-    MASPSX,
-    ...configuredMaspsxFlags(),
-    "--gnu-as-path", AS,
-    "-o", object,
-    ...configuredAsFlagsForContainer(kind),
-    assembly,
-  ]);
+  runTool("python3", maspsxArguments(assembly, object, kind));
   return object;
+}
+
+/** What `python3` runs to assemble one unit's compiler output; from ROOT, whose include paths it names. */
+function maspsxArguments(assembly: string, object: string, kind: "exe" | "overlay"): string[] {
+  return [MASPSX, ...configuredMaspsxFlags(), "--gnu-as-path", AS, "-o", object, ...configuredAsFlagsForContainer(kind), assembly];
+}
+
+/** cc1's flags for one unit: its container's, then the unit's own overrides. */
+function unitCc1Flags(absoluteSource: string, stem: string, kind: "exe" | "overlay", useOverrides = true): string[] {
+  const overrides = useOverrides ? loadFlagOverrides().get(flagOverrideKeyForCompile(absoluteSource, stem)) || [] : [];
+  return [...configuredCc1FlagsForContainer(kind), ...overrides];
+}
+
+/**
+ * The commands `compileSource` runs on a unit already preprocessed into
+ * `outputDir/<stem>.i`, as argument lists, for a caller that runs many
+ * compiles from a process of its own: from a large one such as a project
+ * audit, spawning costs more than compiling.
+ */
+export function compileCommands(source: string, outputDir: string, stem: string, kind: "exe" | "overlay"): {
+  preprocessed: string; assembly: string; object: string;
+  cc1: { cwd: string; command: string; args: string[] };
+  assemble: { cwd: string; command: string; args: string[] };
+} {
+  const absoluteSource = isAbsolute(source) ? source : join(ROOT, source);
+  const absoluteOutput = isAbsolute(outputDir) ? outputDir : join(ROOT, outputDir);
+  const preprocessed = join(absoluteOutput, `${stem}.i`);
+  const assembly = join(absoluteOutput, `${stem}.s`);
+  const object = join(absoluteOutput, `${stem}.c.o`);
+  return {
+    preprocessed, assembly, object,
+    cc1: { cwd: absoluteOutput, command: CC, args: [...unitCc1Flags(absoluteSource, stem, kind), basename(preprocessed), "-o", basename(assembly)] },
+    assemble: { cwd: ROOT, command: "python3", args: maspsxArguments(assembly, object, kind) },
+  };
 }
 
 export function parseImplicitDeclarationWarnings(stderr: string): string[] {
@@ -563,11 +590,8 @@ export function compileSource(
   if (options.preprocessedText !== undefined) writeFileSync(preprocessed, options.preprocessedText);
   else runTool(CPP, [...CPP_FLAGS, absoluteSource, "-o", preprocessed]);
 
-  const overrides = options.useOverrides === false
-    ? []
-    : (loadFlagOverrides().get(flagOverrideKeyForCompile(absoluteSource, stem)) || []);
   const kind = options.containerKind ?? containerKindForSymbol(stem);
-  const cc1Flags = [...configuredCc1FlagsForContainer(kind), ...overrides, ...(options.extraCc1Flags || [])];
+  const cc1Flags = [...unitCc1Flags(absoluteSource, stem, kind, options.useOverrides !== false), ...(options.extraCc1Flags || [])];
   if (options.dumps) cc1Flags.push("-da");
   if (options.emissionAttribution) cc1Flags.push("-dp");
 
@@ -608,18 +632,12 @@ export async function compileSourceAsync(
   const assembly = join(absoluteOutput, `${stem}.s`);
   const object = join(absoluteOutput, `${stem}.c.o`);
   await runToolAsync(CPP, [...CPP_FLAGS, absoluteSource, "-o", preprocessed], ROOT, options.signal);
-  const overrides = options.useOverrides === false ? [] : (loadFlagOverrides().get(flagOverrideKeyForCompile(absoluteSource, stem)) || []);
   const kind = options.containerKind ?? containerKindForSymbol(stem);
-  const cc1Flags = [...configuredCc1FlagsForContainer(kind), ...overrides];
+  const cc1Flags = unitCc1Flags(absoluteSource, stem, kind, options.useOverrides !== false);
   if (options.dumps) cc1Flags.push("-da");
   const diagnostics = await runToolAsyncCapturingStderr(
     CC, [...cc1Flags, basename(preprocessed), "-o", basename(assembly)], absoluteOutput, options.signal);
-  if (options.assemble) {
-    await runToolAsync("python3", [
-      MASPSX, ...configuredMaspsxFlags(),
-      "--gnu-as-path", AS, "-o", object, ...configuredAsFlagsForContainer(kind), assembly,
-    ], ROOT, options.signal);
-  }
+  if (options.assemble) await runToolAsync("python3", maspsxArguments(assembly, object, kind), ROOT, options.signal);
   const result: CompileArtifacts = {
     source: absoluteSource, preprocessed, assembly, outputDir: absoluteOutput, stem, cc1Flags, diagnostics,
   };

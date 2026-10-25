@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { isAbsolute, resolve } from "node:path";
-import type { LoopConfig, LoopTier, ThinkingLevel } from "./types.ts";
+import type { LoopConfig, LoopTier, SubagentConfig, ThinkingLevel } from "./types.ts";
 
 const THINKING_LEVELS: ThinkingLevel[] = ["off", "minimal", "low", "medium", "high", "xhigh"];
 export const DEFAULT_CHECKPOINT_AT_TOKENS = 350_000;
@@ -66,41 +66,57 @@ function threshold(value: unknown, fallback: number, field: string): number {
 export function parseLadder(value: unknown): LoopTier[] {
   if (value === undefined) return DEFAULT_LADDER;
   if (!Array.isArray(value) || value.length === 0) throw new Error("ladder must be a non-empty array");
-  return value.map((raw, index) => {
-    const tier = object(raw);
-    rejectUnknown(tier, ["provider", "model", "thinking", "label", "role", "checkpointAtTokens"], `ladder[${index}]`);
-    const provider = tier.provider;
-    const model = tier.model;
-    if (typeof provider !== "string" || !provider) throw new Error(`ladder[${index}].provider must be a non-empty string`);
-    if (typeof model !== "string" || !model) throw new Error(`ladder[${index}].model must be a non-empty string`);
-    const thinking = tier.thinking ?? "high";
-    if (!THINKING_LEVELS.includes(thinking as ThinkingLevel)) {
-      throw new Error(`ladder[${index}].thinking must be one of ${THINKING_LEVELS.join(", ")}`);
-    }
-    if (tier.label !== undefined && typeof tier.label !== "string") {
-      throw new Error(`ladder[${index}].label must be a string`);
-    }
-    if (tier.role !== undefined && tier.role !== "prep") {
-      throw new Error(`ladder[${index}].role must be "prep" or omitted`);
-    }
-    const checkpointAtTokens = threshold(tier.checkpointAtTokens, DEFAULT_CHECKPOINT_AT_TOKENS, `ladder[${index}].checkpointAtTokens`);
-    if (!Number.isSafeInteger(checkpointAtTokens + Math.ceil(checkpointAtTokens / 10))) {
-      throw new Error(`ladder[${index}].checkpointAtTokens must fit a safe integer including its 10% grace`);
-    }
-    return {
-      provider,
-      model,
-      checkpointAtTokens,
-      thinking: thinking as ThinkingLevel,
-      label: (tier.label as string) ?? model,
-      ...(tier.role === "prep" ? { role: "prep" as const } : {}),
-    };
-  });
+  return value.map((raw, index) => parseTier(raw, `ladder[${index}]`, true));
+}
+
+/** One provider/model entry, as a ladder rung or the subagents' model. */
+function parseTier(raw: unknown, field: string, roles: boolean): LoopTier {
+  const tier = object(raw);
+  rejectUnknown(tier, ["provider", "model", "thinking", "label", ...(roles ? ["role"] : []), "checkpointAtTokens"], field);
+  const provider = tier.provider;
+  const model = tier.model;
+  if (typeof provider !== "string" || !provider) throw new Error(`${field}.provider must be a non-empty string`);
+  if (typeof model !== "string" || !model) throw new Error(`${field}.model must be a non-empty string`);
+  const thinking = tier.thinking ?? "high";
+  if (!THINKING_LEVELS.includes(thinking as ThinkingLevel)) {
+    throw new Error(`${field}.thinking must be one of ${THINKING_LEVELS.join(", ")}`);
+  }
+  if (tier.label !== undefined && typeof tier.label !== "string") {
+    throw new Error(`${field}.label must be a string`);
+  }
+  if (tier.role !== undefined && tier.role !== "prep") {
+    throw new Error(`${field}.role must be "prep" or omitted`);
+  }
+  const checkpointAtTokens = threshold(tier.checkpointAtTokens, DEFAULT_CHECKPOINT_AT_TOKENS, `${field}.checkpointAtTokens`);
+  if (!Number.isSafeInteger(checkpointAtTokens + Math.ceil(checkpointAtTokens / 10))) {
+    throw new Error(`${field}.checkpointAtTokens must fit a safe integer including its 10% grace`);
+  }
+  return {
+    provider,
+    model,
+    checkpointAtTokens,
+    thinking: thinking as ThinkingLevel,
+    label: (tier.label as string) ?? model,
+    ...(tier.role === "prep" ? { role: "prep" as const } : {}),
+  };
+}
+
+/** `subagents`: how many research children the driver may run at once, and on which model. */
+export function parseSubagents(value: unknown): SubagentConfig | undefined {
+  if (value === undefined) return undefined;
+  const raw = object(value);
+  rejectUnknown(raw, ["quantity", "model"], "subagents");
+  if (raw.model === undefined) throw new Error("subagents.model is required");
+  return {
+    quantity: positiveInteger(raw.quantity, 1, "subagents.quantity"),
+    model: parseTier(raw.model, "subagents.model", false),
+  };
 }
 
 /** Both the loop and its shared gates read this configuration file. */
 export const LOOP_CONFIG_FIELDS = [
   "ladder",
+  "subagents",
   "returnsPerTier",
   "maxReturnsPerTier",
   "tierMinutes",
@@ -156,8 +172,11 @@ export function loadLoopConfig(projectRoot: string): LoopConfig {
     throw new Error("autoloop config: maxReturnsPerTier must be at least returnsPerTier");
   }
 
+  const subagents = parseSubagents(raw.subagents);
+
   return {
     ladder,
+    ...(subagents ? { subagents } : {}),
     singleTier,
     returnsPerTier,
     maxReturnsPerTier,

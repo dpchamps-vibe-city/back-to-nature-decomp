@@ -44,15 +44,16 @@
  *   npx tsx tools/diagnostics/interfaceAudit.ts --write                # reconcile every published interface's callers
  */
 
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync, spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { availableParallelism } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { prototypesIn, scopeFromPreprocessed, sdkPrototypes, type Prototype } from "../agent/calleeTruth.js";
 import { applyCSourceEdits, walkActiveC, type CSourceEdit } from "../agent/cSourceGuard.js";
-import { CPP_FLAGS, compileSource } from "../agent/decompToolchain.js";
+import { CPP_FLAGS, compileCommands, compileSource } from "../agent/decompToolchain.js";
 import { preprocessingTools } from "../agent/preprocessedCache.js";
 import { declaratorName, field, namedChildren, parseC, type Node } from "../agent/residual-source-search/tree-sitter-c.js";
 import {
@@ -296,8 +297,32 @@ function enclosingCall(node: Node): boolean {
 
 const ASM_LABEL = /__asm__\s*\(\s*"\s*([A-Za-z_][A-Za-z0-9_]*)\s*"\s*\)/;
 
+/**
+ * Facts by unit path and text. A unit's facts also read the headers it sees,
+ * so they are forgotten with the header facts.
+ */
+const unitFactsCache = new Map<string, UnitFacts>();
+
+/** Forget what was read from headers, after a write that may have changed them. */
+function forgetHeaders(): void {
+  headerCache.clear();
+  headerDeclarations.clear();
+  plannedUnits.clear();
+  unitFactsCache.clear();
+  preprocessedByText.clear();
+}
+
 /** Declarations, definitions, calls and values of one unit, from its own text. */
 export function unitFacts(source: string, path: string): UnitFacts {
+  const id = `${path}\0${createHash("sha256").update(source).digest("hex")}`;
+  const known = unitFactsCache.get(id);
+  if (known) return known;
+  const facts = computeUnitFacts(source, path);
+  unitFactsCache.set(id, facts);
+  return facts;
+}
+
+function computeUnitFacts(source: string, path: string): UnitFacts {
   const tree = parseC(source);
   const declarations: Declared[] = [];
   const definitions: Prototype[] = [];
@@ -524,11 +549,18 @@ export function auditInterfaces(input: AuditInput): AuditResult {
   return { findings, publishedFailures, units: units.size };
 }
 
+/** The functions a unit's text defines, by path and text: a unit reads no header for them. */
+const definedNames = new Map<string, string[]>();
+
 /** Functions an active source defines, as hand-maintained headers declare them. */
 export function publishedInterfaces(sources: ReadonlyMap<string, string>): Map<string, Published> {
   const defined = new Set<string>();
   for (const [path, text] of sources) {
-    if (path.endsWith(".c")) for (const p of prototypesIn(text, path)) if (p.kind === "definition") defined.add(p.name);
+    if (!path.endsWith(".c")) continue;
+    const id = `${path}\0${createHash("sha256").update(text).digest("hex")}`;
+    let names = definedNames.get(id);
+    if (!names) definedNames.set(id, names = prototypesIn(text, path).filter((p) => p.kind === "definition").map((p) => p.name));
+    for (const name of names) defined.add(name);
   }
   const result = new Map<string, Published>();
   for (const header of handHeaders()) {
@@ -584,25 +616,37 @@ function parameterTexts(declarator: Node): string[] | null {
 }
 
 /** Where a declaration of `name` sits in a header, if it has one. */
-function declarationIn(header: string, name: string): { node: { text: string; parameters: string[] | null }; lines: Set<number> } | undefined {
-  const tree = parseC(readFileSync(join(ROOT, header), "utf-8"));
-  try {
-    let found: { node: { text: string; parameters: string[] | null }; lines: Set<number> } | undefined;
-    walkActiveC(tree.rootNode, (node) => {
-      if (found || node.type === "comment" || node.type === "function_definition") return false;
-      if (node.type !== "declaration") return true;
-      const declarator = functionDeclarator(node, name);
-      if (declarator) {
-        const lines = new Set<number>();
-        for (let line = node.startPosition.row + 1; line <= node.endPosition.row + 1; line++) lines.add(line);
-        found = { node: { text: node.text, parameters: parameterTexts(declarator) }, lines };
-      }
-      return false;
-    });
-    return found;
-  } finally {
-    tree.delete();
+type HeaderDeclaration = { node: { text: string; parameters: string[] | null }; lines: Set<number> };
+
+/** Each header's first declaration of every function it declares, read once per header. */
+const headerDeclarations = new Map<string, Map<string, HeaderDeclaration>>();
+
+function declarationIn(header: string, name: string): HeaderDeclaration | undefined {
+  let byName = headerDeclarations.get(header);
+  if (!byName) {
+    byName = new Map();
+    const found = byName;
+    const tree = parseC(readFileSync(join(ROOT, header), "utf-8"));
+    try {
+      walkActiveC(tree.rootNode, (node) => {
+        if (node.type === "comment" || node.type === "function_definition") return false;
+        if (node.type !== "declaration") return true;
+        for (const d of declarators(node)) {
+          const declared = declaratorName(d)?.text;
+          const declarator = declared && !found.has(declared) ? functionDeclarator(node, declared) : undefined;
+          if (!declared || !declarator) continue;
+          const lines = new Set<number>();
+          for (let line = node.startPosition.row + 1; line <= node.endPosition.row + 1; line++) lines.add(line);
+          found.set(declared, { node: { text: node.text, parameters: parameterTexts(declarator) }, lines });
+        }
+        return false;
+      });
+    } finally {
+      tree.delete();
+    }
+    headerDeclarations.set(header, byName);
   }
+  return byName.get(name);
 }
 
 /**
@@ -774,15 +818,40 @@ export function reconciledDeclaration(
  * the declaration, everything else in place.
  */
 function preprocess(text: string, without?: Contract["published"]): string {
-  /* Resolved once: outside a preprocessor request, every lookup re-runs `which` and hashes the compiler. */
-  cppPath ??= preprocessingTools().tools.cpp;
-  const result = spawnSync(cppPath, [...CPP_FLAGS, "-"], {
+  const id = preprocessedId(text, without);
+  const known = preprocessedByText.get(id);
+  if (known !== undefined) return known;
+  const result = spawnSync(cppTool(), [...CPP_FLAGS, "-"], {
     cwd: ROOT, input: text, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024,
   });
   if (result.status !== 0) throw new Error(`cpp failed: ${result.stderr}`);
-  if (!without) return result.stdout;
-  const { lineOf } = scopeFromPreprocessed(result.stdout);
-  return result.stdout.split("\n").map((line, row) => {
+  const output = blankPublished(result.stdout, without);
+  preprocessedByText.set(id, output);
+  return output;
+}
+
+/**
+ * Preprocessed text by unit text. Units are preprocessed from stdin, so the
+ * output depends only on the text and the headers, and no header changes
+ * while one audit runs; `--write` clears it with the header facts.
+ */
+const preprocessedByText = new Map<string, string>();
+
+function preprocessedId(text: string, without?: Contract["published"]): string {
+  return createHash("sha256").update(JSON.stringify([text, without?.header ?? null, [...(without?.lines ?? [])]])).digest("hex");
+}
+
+/** Resolved once: outside a preprocessor request, every lookup re-runs `which` and hashes the compiler. */
+function cppTool(): string {
+  cppPath ??= preprocessingTools().tools.cpp;
+  return cppPath;
+}
+
+/** The header's lines for `without` blanked out of preprocessed text. */
+function blankPublished(preprocessed: string, without?: Contract["published"]): string {
+  if (!without) return preprocessed;
+  const { lineOf } = scopeFromPreprocessed(preprocessed);
+  return preprocessed.split("\n").map((line, row) => {
     if (line.startsWith("#")) return line;
     const origin = lineOf(row);
     return origin.file === without.header && without.lines.has(origin.line) ? "" : line;
@@ -822,44 +891,157 @@ function signatureCache(): NonNullable<typeof signatures> {
   return signatures;
 }
 
-/** A digest of every section's bytes and every relocation of the unit's object, or the compile error. */
-function objectSignature(text: string, path: string, without?: Contract["published"]): Signature {
-  const container = sourceContainer(path);
-  const stem = basename(path, ".c");
-  const kind = container === "exe" ? "exe" : "overlay";
-  /* The first diagnostic, not the "In function"/"In file included from" context lines. */
-  const failed = (error: unknown): Signature => {
-    const lines = (error as Error).message.split("\n").map((l) => l.replace(/^.*cc1 failed: /, "").trim());
-    const diagnostic = lines.find((l) => l && !/In function|In file included from|^from /.test(l));
-    return { error: diagnostic?.replace(/^<stdin>:/, "line ") ?? "compile failed" };
-  };
-  let preprocessed: string;
-  try {
-    preprocessed = preprocess(text, without);
-  } catch (error) {
-    return failed(error);
-  }
+/** The first diagnostic, not the "In function"/"In file included from" context lines. */
+function compileFailure(error: unknown): Signature {
+  const lines = (error as Error).message.split("\n").map((l) => l.replace(/^.*cc1 failed: /, "").trim());
+  const diagnostic = lines.find((l) => l && !/In function|In file included from|^from /.test(l));
+  return { error: diagnostic?.replace(/^<stdin>:/, "line ") ?? "compile failed" };
+}
+
+function signatureKey(path: string, preprocessed: string): string {
+  const kind = sourceContainer(path) === "exe" ? "exe" : "overlay";
+  return createHash("sha256").update(JSON.stringify([1, signatureCache().salt, path, kind, preprocessed])).digest("hex");
+}
+
+function cachedSignature(key: string): Signature | undefined {
   const cache = signatureCache();
-  const key = createHash("sha256").update(JSON.stringify([1, cache.salt, path, kind, preprocessed])).digest("hex");
   const known = cache.entries.get(key);
   if (known) {
     /* Most recently used last, so the bound drops the stalest. */
     cache.entries.delete(key);
     cache.entries.set(key, known);
-    return known;
   }
+  return known;
+}
+
+/** The objdump lines that describe the object's contents, not its path. */
+function dumpDigest(dump: string, object: string): string {
+  return createHash("sha256").update(dump.split("\n").filter((line) => !line.includes(object)).join("\n")).digest("hex");
+}
+
+/** A digest of every section's bytes and every relocation of the unit's object, or the compile error. */
+function objectSignature(text: string, path: string, without?: Contract["published"]): Signature {
+  const container = sourceContainer(path);
+  let preprocessed: string;
+  try {
+    preprocessed = preprocess(text, without);
+  } catch (error) {
+    return compileFailure(error);
+  }
+  const key = signatureKey(path, preprocessed);
+  const known = cachedSignature(key);
+  if (known) return known;
   let result: Signature;
   try {
-    const artifacts = compileSource(join(ROOT, path), join(ROOT, WORK_DIR, container), stem, {
-      assemble: true, preprocessedText: preprocessed, containerKind: kind,
+    const artifacts = compileSource(join(ROOT, path), join(ROOT, WORK_DIR, container), basename(path, ".c"), {
+      assemble: true, preprocessedText: preprocessed, containerKind: container === "exe" ? "exe" : "overlay",
     });
     const dump = execFileSync("mips-linux-gnu-objdump", ["-s", "-r", artifacts.object!], { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
-    result = { signature: createHash("sha256").update(dump.split("\n").filter((line) => !line.includes(artifacts.object!)).join("\n")).digest("hex") };
+    result = { signature: dumpDigest(dump, artifacts.object!) };
   } catch (error) {
-    result = failed(error);
+    result = compileFailure(error);
   }
-  cache.entries.set(key, result);
+  signatureCache().entries.set(key, result);
   return result;
+}
+
+/** One unit text whose object signature a reconciliation will ask for. */
+interface SignatureRequest { text: string; path: string; without?: Contract["published"] }
+
+/**
+ * Compute signatures ahead of the reconciliation that asks for them, many at
+ * once: every unit text preprocessed, then every object nothing has compiled
+ * yet. Each job has its own directory, and the object's path is left out of
+ * its digest, so a job's result is the one `objectSignature` would compute.
+ * Only the caches change: every decision is still taken by the sequential pass
+ * that reads them, which also reports any failure to preprocess.
+ */
+async function prefetchSignatures(requests: readonly SignatureRequest[]): Promise<void> {
+  if (requests.length === 0) return;
+  mkdirSync(join(ROOT, WORK_DIR), { recursive: true });
+  const batch = mkdtempSync(join(ROOT, WORK_DIR, "batch-"));
+  try {
+    const unpreprocessed = new Map<string, SignatureRequest>();
+    for (const request of requests) {
+      const id = preprocessedId(request.text, request.without);
+      if (!preprocessedByText.has(id)) unpreprocessed.set(id, request);
+    }
+    const preprocessing = [...unpreprocessed].map(([id, request], index) => {
+      const dir = join(batch, `p${index}`);
+      mkdirSync(dir);
+      writeFileSync(join(dir, "in.c"), request.text);
+      writeFileSync(join(dir, "run.sh"), `cd ${shellWord(ROOT)} && ${shellWords([cppTool(), ...CPP_FLAGS, "-"])} ` +
+        `< ${shellWord(join(dir, "in.c"))} > ${shellWord(join(dir, "out.i"))} 2> /dev/null || echo cpp > ${shellWord(join(dir, "failed"))}\n`);
+      return { id, request, dir };
+    });
+    await runScripts(preprocessing.map((job) => join(job.dir, "run.sh")));
+    for (const { id, request, dir } of preprocessing) {
+      if (!existsSync(join(dir, "failed"))) preprocessedByText.set(id, blankPublished(readFileSync(join(dir, "out.i"), "utf8"), request.without));
+    }
+
+    const objects = new Map<string, { path: string; preprocessed: string }>();
+    for (const request of requests) {
+      const preprocessed = preprocessedByText.get(preprocessedId(request.text, request.without));
+      if (preprocessed === undefined) continue;
+      const key = signatureKey(request.path, preprocessed);
+      if (!objects.has(key) && !signatureCache().entries.has(key)) objects.set(key, { path: request.path, preprocessed });
+    }
+    const compiles = [...objects].map(([key, { path, preprocessed }], index) => {
+      const dir = join(batch, `c${index}`);
+      mkdirSync(dir);
+      const commands = compileCommands(join(ROOT, path), dir, basename(path, ".c"), sourceContainer(path) === "exe" ? "exe" : "overlay");
+      writeFileSync(commands.preprocessed, preprocessed);
+      const fail = (step: string): string => `{ echo ${step} > ${shellWord(join(dir, "failed"))}; exit 0; }`;
+      writeFileSync(join(dir, "run.sh"), [
+        `cd ${shellWord(commands.cc1.cwd)} && ${shellWords([commands.cc1.command, ...commands.cc1.args])} > /dev/null 2> ${shellWord(join(dir, "cc1.err"))} || ${fail("cc1")}`,
+        `cd ${shellWord(commands.assemble.cwd)} && ${shellWords([commands.assemble.command, ...commands.assemble.args])} < /dev/null > /dev/null 2> ${shellWord(join(dir, "as.err"))} || ${fail("as")}`,
+        `mips-linux-gnu-objdump -s -r ${shellWord(commands.object)} > ${shellWord(join(dir, "dump.txt"))} 2> /dev/null || ${fail("objdump")}`,
+      ].join("\n") + "\n");
+      return { key, dir, commands };
+    });
+    await runScripts(compiles.map((job) => join(job.dir, "run.sh")));
+    for (const { key, dir, commands } of compiles) {
+      const failed = existsSync(join(dir, "failed")) ? readFileSync(join(dir, "failed"), "utf8").trim() : undefined;
+      /* Failures in the words `objectSignature` gets from its own tools. */
+      const said = (file: string): string => (existsSync(join(dir, file)) ? readFileSync(join(dir, file), "utf8").trim() : "");
+      const message = failed === "cc1" ? `${commands.cc1.command} failed: ${said("cc1.err")}`
+        : failed === "as" ? `${commands.assemble.command} failed: ${said("as.err")}`
+        : "mips-linux-gnu-objdump failed";
+      signatureCache().entries.set(key, failed === undefined
+        ? { signature: dumpDigest(readFileSync(join(dir, "dump.txt"), "utf8"), commands.object) }
+        : compileFailure(new Error(message)));
+    }
+  } finally {
+    rmSync(batch, { recursive: true, force: true });
+  }
+}
+
+/** Jobs that run at once: one per core, short of the machine's last. */
+const COMPILE_SLOTS = Math.max(1, Math.min(16, availableParallelism() - 1));
+
+function shellWord(word: string): string {
+  return `'${word.replace(/'/g, `'\\''`)}'`;
+}
+
+function shellWords(words: readonly string[]): string {
+  return words.map(shellWord).join(" ");
+}
+
+/**
+ * Run every script, COMPILE_SLOTS at a time, from one `xargs`. A spawn from
+ * this process, whose heap holds the whole project's parse, costs about what
+ * the compile it starts does, and spawns are not concurrent.
+ */
+function runScripts(scripts: readonly string[]): Promise<void> {
+  if (scripts.length === 0) return Promise.resolve();
+  return new Promise((resolvePromise, reject) => {
+    const child = spawn("xargs", ["-0", "-n", "1", "-P", String(COMPILE_SLOTS), "sh"], { cwd: ROOT, stdio: ["pipe", "ignore", "pipe"] });
+    const stderr: Buffer[] = [];
+    child.stderr.on("data", (chunk: Buffer) => stderr.push(chunk));
+    child.on("error", reject);
+    child.on("close", (code) => (code === 0 ? resolvePromise() : reject(new Error(`xargs failed: ${Buffer.concat(stderr).toString("utf8")}`))));
+    child.stdin.end(scripts.map((script) => `${script}\0`).join(""));
+  });
 }
 
 /** Arguments of a call, comments excluded. */
@@ -980,14 +1162,106 @@ export function reconcileCallers(
   sources: ReadonlyMap<string, string>,
   contract: Contract
 ): { results: ReconcileResult[]; texts: Map<string, string> } {
-  const { name } = contract;
   const texts = new Map<string, string>();
   const results: ReconcileResult[] = [];
-  const shape = shapeOf(contract.prototype);
+  for (const plan of planCallers(sources, contract)) {
+    const { path, text, change, casts, blank } = plan;
+    const result: ReconcileResult = { file: path, callee: contract.name, outcome: "refused", change, casts: [], ...(plan.declared ? { declared: plan.declared } : {}) };
+    results.push(result);
+    if (plan.refusal) {
+      result.detail = plan.refusal;
+      continue;
+    }
+    const render = (kept: Cast[]): string => renderPlan(plan, kept);
+    try {
+      render(casts);
+    } catch (error) {
+      result.detail = (error as Error).message;
+      continue;
+    }
+    const baseline = objectSignature(text, path, blank);
+    if (!baseline.signature) {
+      result.detail = `does not compile as it stands: ${baseline.error}`;
+      continue;
+    }
+    const attempt = objectSignature(render(casts), path);
+    if (attempt.signature !== baseline.signature) {
+      result.detail = attempt.signature ? "the object changes even with every cast in place" : `does not compile reconciled: ${attempt.error}`;
+      continue;
+    }
+    /* Usually no cast is needed at all; only when one is does each go on trial. */
+    let kept = casts;
+    if (casts.length > 0 && objectSignature(render([]), path).signature === baseline.signature) kept = [];
+    else {
+      for (const cast of casts) {
+        const without = kept.filter((c) => c !== cast);
+        if (objectSignature(render(without), path).signature === baseline.signature) kept = without;
+      }
+    }
+    texts.set(path, render(kept));
+    result.outcome = "written";
+    result.casts = kept.map((c) => `${c.line}: (${c.type})`);
+  }
+  return { results, texts };
+}
 
+/** One caller's reconciliation before any compile: its edits and candidate casts, or why it is refused. */
+interface CallerPlan {
+  path: string;
+  text: string;
+  change: ReconcileResult["change"];
+  edits: CSourceEdit[];
+  casts: Cast[];
+  refusal?: string;
+  /** The published header lines the unit compiled without, before it saw them. */
+  blank?: Contract["published"];
+  declared?: Prototype;
+}
+
+/** The unit's text with the plan's edits and the given casts; throws when edits collide. */
+function renderPlan(plan: CallerPlan, kept: readonly Cast[]): string {
+  return applyCSourceEdits(plan.text, [...plan.edits, ...kept.flatMap((c) => c.edits)]);
+}
+
+/** The compiles settling these plans asks for first: as it stands, reconciled with every cast, and with none. */
+function planRequests(plans: readonly CallerPlan[]): SignatureRequest[] {
+  return plans.flatMap((plan): SignatureRequest[] => {
+    if (plan.refusal) return [];
+    try {
+      return [
+        { text: plan.text, path: plan.path, ...(plan.blank ? { without: plan.blank } : {}) },
+        { text: renderPlan(plan, plan.casts), path: plan.path },
+        ...(plan.casts.length > 0 ? [{ text: renderPlan(plan, []), path: plan.path }] : []),
+      ];
+    } catch {
+      return [];
+    }
+  });
+}
+
+/** What reconciling each unit that declares or calls the contract's function would edit. Pure. */
+function planCallers(sources: ReadonlyMap<string, string>, contract: Contract): CallerPlan[] {
+  const plans: CallerPlan[] = [];
+  const contractId = JSON.stringify({ ...contract, published: contract.published && { ...contract.published, lines: [...contract.published.lines] } });
   for (const path of [...sources.keys()].filter((p) => p.endsWith(".c")).sort()) {
     const text = sources.get(path)!;
-    if (!text.includes(name)) continue;
+    if (!text.includes(contract.name)) continue;
+    /* A plan reads only the unit, the contract and headers, which hold still for a run. */
+    const id = createHash("sha256").update(JSON.stringify([contractId, path, text])).digest("hex");
+    if (!plannedUnits.has(id)) plannedUnits.set(id, planUnit(path, text, contract));
+    const plan = plannedUnits.get(id);
+    if (plan) plans.push(plan);
+  }
+  return plans;
+}
+
+/** Plans by contract, unit path and text; `undefined` for a unit with nothing to reconcile. */
+const plannedUnits = new Map<string, CallerPlan | undefined>();
+
+function planUnit(path: string, text: string, contract: Contract): CallerPlan | undefined {
+  const { name } = contract;
+  const shape = shapeOf(contract.prototype);
+  {
     const tree = parseC(text);
     let edits: CSourceEdit[] = [];
     let change: ReconcileResult["change"] = "replaced";
@@ -1010,7 +1284,7 @@ export function reconcileCallers(
         }
         return true;
       });
-      if (defines) continue;
+      if (defines) return undefined;
       const bound = new Set([name, ...labelled.keys()]);
       const declarations: Array<{ node: Node; local: string }> = [];
       const calls: Node[] = [];
@@ -1025,7 +1299,7 @@ export function reconcileCallers(
         }
         return true;
       });
-      if (declarations.length === 0 && calls.length === 0) continue;
+      if (declarations.length === 0 && calls.length === 0) return undefined;
 
       const visible = visibleHeaders(includesOf(tree.rootNode, path));
       const headerDeclares = visible.some((h) => headerFacts(h).functions.has(name));
@@ -1045,7 +1319,7 @@ export function reconcileCallers(
       const plain = declarations.filter(({ local }) => local === name).map(({ node }) => node);
 
       if (labelled.size > 0) {
-        if (olds.every(agrees)) continue;
+        if (olds.every(agrees)) return undefined;
         const rendered = declarations.map(({ node, local }, i) =>
           reconciledDeclaration(contract, olds[i], unitSpeller(tree.rootNode, visible, node.startIndex), local));
         if (rendered.some((r) => r === undefined)) refusal = `the unit cannot spell ${contract.text}`;
@@ -1060,7 +1334,7 @@ export function reconcileCallers(
         change = "replaced";
         casts = castsFor(calls, old?.prototype, false, contract.prototype, unitSpeller(tree.rootNode, visible));
       } else if (headerDeclares) {
-        if (plain.length === 0) continue;
+        if (plain.length === 0) return undefined;
         edits = declarationRemovals(text, plain);
         change = "removed";
         if (contract.published && visible.includes(contract.published.header)) blank = contract.published;
@@ -1108,7 +1382,7 @@ export function reconcileCallers(
         change = "added";
         casts = castsFor(calls, undefined, true, contract.prototype, spell);
       } else {
-        if (olds.every(agrees)) continue;
+        if (olds.every(agrees)) return undefined;
         const rendered = plain.map((node, i) => reconciledDeclaration(contract, olds[i], unitSpeller(tree.rootNode, visible, node.startIndex)));
         if (rendered.some((r) => r === undefined)) refusal = `the unit cannot spell ${contract.text}`;
         else edits = plain.map((d, i) => ({ start: d.startIndex, end: d.endIndex, text: `${/^extern\b/.test(d.text) ? "extern " : ""}${rendered[i]}` }));
@@ -1118,41 +1392,11 @@ export function reconcileCallers(
     } finally {
       tree.delete();
     }
-
-    const result: ReconcileResult = { file: path, callee: name, outcome: "refused", change, casts: [], ...result0 };
-    results.push(result);
-    if (refusal) {
-      result.detail = refusal;
-      continue;
-    }
-    let render: (kept: Cast[]) => string;
-    try {
-      render = (kept) => applyCSourceEdits(text, [...edits, ...kept.flatMap((c) => c.edits)]);
-      render(casts);
-    } catch (error) {
-      result.detail = (error as Error).message;
-      continue;
-    }
-    const baseline = objectSignature(text, path, blank);
-    if (!baseline.signature) {
-      result.detail = `does not compile as it stands: ${baseline.error}`;
-      continue;
-    }
-    const attempt = objectSignature(render(casts), path);
-    if (attempt.signature !== baseline.signature) {
-      result.detail = attempt.signature ? "the object changes even with every cast in place" : `does not compile reconciled: ${attempt.error}`;
-      continue;
-    }
-    let kept = casts;
-    for (const cast of casts) {
-      const without = kept.filter((c) => c !== cast);
-      if (objectSignature(render(without), path).signature === baseline.signature) kept = without;
-    }
-    texts.set(path, render(kept));
-    result.outcome = "written";
-    result.casts = kept.map((c) => `${c.line}: (${c.type})`);
+    return {
+      path, text, change, edits, casts,
+      ...(refusal ? { refusal } : {}), ...(blank ? { blank } : {}), ...(result0.declared ? { declared: result0.declared } : {}),
+    };
   }
-  return { results, texts };
 }
 
 /**
@@ -1186,6 +1430,20 @@ export function adoptCallerSignature(
   wanted: Prototype,
   mode: "signature" | "arity" = "signature"
 ): { path: string; text: string } | undefined {
+  const candidate = adoptionCandidate(sources, contract, wanted, mode);
+  if (!candidate) return undefined;
+  const { path, before, after } = candidate;
+  const was = objectSignature(before, path), is = objectSignature(after, path);
+  return was.signature && was.signature === is.signature ? { path, text: after } : undefined;
+}
+
+/** The definition's text before and after taking the caller's signature, before any compile. Pure. */
+function adoptionCandidate(
+  sources: ReadonlyMap<string, string>,
+  contract: Contract,
+  wanted: Prototype,
+  mode: "signature" | "arity"
+): { path: string; before: string; after: string } | undefined {
   if (contract.source !== "definition") return undefined;
   const mine = contract.prototype;
   if (wanted.variadic !== mine.variadic) return undefined;
@@ -1234,9 +1492,7 @@ export function adoptCallerSignature(
   } finally {
     tree.delete();
   }
-  const adopted = applyCSourceEdits(text, edits);
-  const before = objectSignature(text, path), after = objectSignature(adopted, path);
-  return before.signature && before.signature === after.signature ? { path, text: adopted } : undefined;
+  return { path, before: text, after: applyCSourceEdits(text, edits) };
 }
 
 /** The symbol an `__asm__` label binds `local` to, in any unit that declares it so. */
@@ -1272,16 +1528,18 @@ export interface ProjectReconciliation {
  * is settled (a header include that used to collide), hence the passes. Pure
  * over `sources`.
  */
-export function reconcileProject(
+export async function reconcileProject(
   sources: ReadonlyMap<string, string>,
   sdk: ReadonlyMap<string, Prototype>,
   only: readonly string[] = [],
   log: (line: string) => void = () => undefined,
   maxPasses = Infinity
-): ProjectReconciliation {
+): Promise<ProjectReconciliation> {
   const current = new Map(sources);
   const texts = new Map<string, string>();
   const disputes = new Map<string, ReconcileResult[]>();
+  /* Bumped by every change to `current`, so a pass knows when what it planned still holds. */
+  let version = 0;
   for (let pass = 1; pass <= maxPasses; pass++) {
     const flagged = new Set(auditInterfaces({ sources: current, sdk, published: publishedInterfaces(current) }).findings
       .filter((f) => f.kind === "conflict" || f.kind === "implicit" || f.kind === "arity").map((f) => f.callee));
@@ -1289,12 +1547,41 @@ export function reconcileProject(
        that is how a new module header reaches callers that declared the
        function themselves. */
     const names = (only.length > 0 ? [...only] : [...flagged].filter((n) => flagged.has(n))).sort();
-    let progress = 0;
-    disputes.clear();
+    /* Plan every callee against the pass's starting sources and compile what
+       the plans ask for, all at once. The sequential pass below still decides
+       everything; where an earlier callee changed a unit, it plans again and
+       compiles what it misses. */
+    const planned = new Map<string, { name: string; contract: Contract | string }>();
     for (const flaggedName of names) {
       /* A local name an __asm__ label binds is reconciled as the symbol it names. */
       const name = labelTarget(flaggedName, current) ?? flaggedName;
-      const contract = contractFor(name, current, sdk);
+      planned.set(flaggedName, { name, contract: contractFor(name, current, sdk) });
+    }
+    await prefetchSignatures([...planned.values()].flatMap(({ contract }) => typeof contract === "string" ? [] : planRequests(planCallers(current, contract))));
+    /* Then what a refused caller makes the pass try: the definition adopting
+       its signature, and the callers again against that. */
+    const adoptions: SignatureRequest[] = [];
+    for (const { name, contract } of planned.values()) {
+      if (typeof contract === "string") continue;
+      const disputed = reconcileCallers(current, contract).results.filter((r) => r.outcome === "refused");
+      for (const wanted of disputed.length > 0 ? callerSignatures(disputed) : []) {
+        for (const mode of ["signature", "arity"] as const) {
+          const candidate = adoptionCandidate(current, contract, wanted, mode);
+          if (!candidate) continue;
+          adoptions.push({ text: candidate.before, path: candidate.path }, { text: candidate.after, path: candidate.path });
+          const revised = contractFor(name, new Map(current).set(candidate.path, candidate.after), sdk);
+          if (typeof revised !== "string") adoptions.push(...planRequests(planCallers(new Map(current).set(candidate.path, candidate.after), revised)));
+        }
+      }
+    }
+    await prefetchSignatures(adoptions);
+    const plannedAt = version;
+    let progress = 0;
+    disputes.clear();
+    for (const flaggedName of names) {
+      const fresh = version === plannedAt ? planned.get(flaggedName)! : undefined;
+      const name = fresh?.name ?? labelTarget(flaggedName, current) ?? flaggedName;
+      const contract = fresh?.contract ?? contractFor(name, current, sdk);
       if (typeof contract === "string") {
         disputes.set(name, [{ file: "-", callee: name, outcome: "refused", change: "replaced", casts: [], detail: contract }]);
         continue;
@@ -1315,6 +1602,7 @@ export function reconcileProject(
         log(`  ${adopted.path}  ${name}: definition adopts its callers' ${(revised as Contract).text}`);
         current.set(adopted.path, adopted.text);
         texts.set(adopted.path, adopted.text);
+        version++;
         progress++;
         ({ results, texts: changed } = retry);
         break;
@@ -1322,6 +1610,7 @@ export function reconcileProject(
       for (const [path, text] of changed) {
         current.set(path, text);
         texts.set(path, text);
+        version++;
       }
       progress += changed.size;
       const refused = results.filter((r) => r.outcome === "refused");
@@ -1357,7 +1646,7 @@ const HEADINGS: Record<FindingKind, string> = {
   unknown: "Unknown contracts (no matched definition and no SDK declaration)",
 };
 
-function main(): void {
+async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const check = args.includes("--check");
   const detail = args.includes("--detail");
@@ -1365,11 +1654,11 @@ function main(): void {
   const only = callees.length === 1 ? callees[0] : undefined;
 
   if (args.includes("--write")) {
-    const outcome = reconcileProject(activeSources(), sdkPrototypes(), callees, (line) => console.log(line));
+    const outcome = await reconcileProject(activeSources(), sdkPrototypes(), callees, (line) => console.log(line));
     for (const [path, text] of outcome.texts) writeFileSync(join(ROOT, path), text);
     console.log(`Reconciled ${outcome.texts.size} unit(s).`);
     reportDisputes(outcome.disputes);
-    headerCache.clear();
+    forgetHeaders();
   }
 
   const sources = activeSources();
@@ -1411,7 +1700,7 @@ function main(): void {
       console.error(`  ${failure.kind}: ${failure.callee} at ${failure.file}:${failure.line}${failure.differences ? ` [${failure.differences.join(", ")}]` : ""}`);
     }
     /* Interfaces are at their fixed point when reconciling would change nothing. */
-    const pending = reconcileProject(sources, sdkPrototypes(), callees, () => undefined, 1);
+    const pending = await reconcileProject(sources, sdkPrototypes(), callees, () => undefined, 1);
     for (const path of [...pending.texts.keys()].sort()) console.error(`  not reconciled: ${path}`);
     if (pending.texts.size > 0) console.error(`interfaces: ${pending.texts.size} unit(s) are not reconciled — run: npx tsx tools/diagnostics/interfaceAudit.ts --write`);
     console.log(`interfaces: ${[...pending.disputes.values()].flat().length} disputed unit(s) across ${pending.disputes.size} callee(s) (--write lists them)`);
@@ -1419,4 +1708,9 @@ function main(): void {
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.stack ?? error.message : error);
+    process.exitCode = 1;
+  });
+}

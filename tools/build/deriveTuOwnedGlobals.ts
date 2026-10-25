@@ -30,7 +30,6 @@
 import { existsSync, readFileSync } from "fs";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
-import { execFileSync } from "child_process";
 import { loadPsxExeInfo, vramToRom } from "../lib/psxExeInfo.js";
 import {
   type FunctionSpan,
@@ -41,6 +40,7 @@ import {
 } from "../lib/symbolIndex.js";
 import { functionObjectPath, functionSourcePath } from "../lib/translationUnits.js";
 import { objectFacts } from "../lib/translationUnitAudit.js";
+import { toolOutput } from "../lib/binutilsCache.js";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -122,10 +122,8 @@ export function objectGprelSymbols(objectPath: string, functionName?: string): S
     const own = objectFacts(objectPath)?.functions.find((fn) => fn.name === functionName);
     if (own) range = { start: own.offset, end: own.offset + own.size };
   }
-  const dump = execFileSync("mips-linux-gnu-objdump", ["-r", objectPath], {
-    encoding: "utf-8",
-    maxBuffer: 64 * 1024 * 1024,
-  });
+  /* By the object's bytes: a report reads every module's object, and most are unchanged since the last. */
+  const dump = toolOutput("mips-linux-gnu-objdump", ["-r"], objectPath);
   const symbols = new Set<string>();
   let inText = false;
   for (const line of dump.split("\n")) {

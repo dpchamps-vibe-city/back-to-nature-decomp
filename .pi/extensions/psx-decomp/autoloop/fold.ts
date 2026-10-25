@@ -257,6 +257,7 @@ export async function runFold(
     eligible: before.inventory.eligible,
     remaining: before.inventory.remaining,
     sample: before.remaining,
+    ...(deps.config.subagents ? { subagents: deps.config.subagents } : {}),
   };
   const foldedAt = new Date().toISOString();
   let record: FoldRecord = {

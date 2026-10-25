@@ -8,6 +8,16 @@
    "checkpointAtTokens": 300000
   }
  ],
+ "subagents": {
+  "quantity": 3,
+  "model": {
+   "provider": "runinfra",
+   "model": "deepseek-v4-1-flash-1017",
+   "thinking": "high",
+   "label": "deepseek-v4-1-flash-1017",
+   "checkpointAtTokens": 350000
+  }
+ },
  "singleTier": true,
  "returnsPerTier": 1,
  "maxFunctions": 1000,

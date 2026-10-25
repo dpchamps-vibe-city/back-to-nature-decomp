@@ -12,6 +12,7 @@ import { runFoldLoop } from "./fold.ts";
 import { loadCallGraph } from "../../shared/call-graph.ts";
 import { loadConfig } from "../../shared/config.ts";
 import { createTurnGate, registerTurnGate } from "./turn-gate.ts";
+import { registerResearchAgent } from "./subagents.ts";
 
 export const LOOP_COMMAND = "auto_decompilation_loop";
 
@@ -66,6 +67,7 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
   registerPrepHandoffTool(pi, sink.prep);
   registerTurnGate(pi, sink.gate);
   registerCheckpointMonitor(pi, sink.checkpoint!);
+  registerResearchAgent(pi, projectRoot);
 
   let active: AbortFlag | null = null;
   let running: Promise<unknown> | undefined;

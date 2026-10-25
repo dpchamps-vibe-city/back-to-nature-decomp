@@ -343,14 +343,18 @@ endef
 
 $(foreach overlay,$(OVERLAYS),$(eval $(call OverlayRules,$(overlay))))
 
+# Byte identity cannot see a stale alias that still resolves, or two units
+# that describe one function differently; these two guards can. Neither reads
+# a build product, so under -j they run beside the containers' builds.
+check-names:
+	@MAKEFLAGS= npx tsx tools/diagnostics/canonicalNames.ts --check
+check-interfaces:
+	@npx tsx tools/diagnostics/interfaceAudit.ts --check
+
 # Everything: the PS-X EXE plus every overlay container.
 check-all: SKIP_RODATA_CHECK = 1
-check-all: check $(addprefix check-,$(OVERLAYS))
+check-all: check-interfaces check-names check $(addprefix check-,$(OVERLAYS))
 	@npx tsx tools/build/deriveRodataSplits.ts --all
-	@# Byte identity cannot see a stale alias that still resolves, or two units
-	@# that describe one function differently; these two guards can.
-	@MAKEFLAGS= npx tsx tools/diagnostics/canonicalNames.ts --check
-	@npx tsx tools/diagnostics/interfaceAudit.ts --check
 	@echo "All $(words $(OVERLAYS)) overlay container(s) and the PS-X EXE match."
 
 split-all: split $(addprefix split-,$(OVERLAYS))
@@ -439,4 +443,4 @@ open('configs/splat/exe.yaml','w').writelines(lines[:idx+1])"
 	rm -rf $(BUILD_DIR)
 	@echo "Configs wiped. Run 'make split && make && make check' to rebuild from scratch."
 
-.PHONY: all disassemble split split-sdk-libs check check-exe check-all split-all setup progress complete tu-progress tu-complete tu-verify clean wipe FORCE_BUILD_INPUTS
+.PHONY: all disassemble split split-sdk-libs check check-exe check-all check-names check-interfaces split-all setup progress complete tu-progress tu-complete tu-verify clean wipe FORCE_BUILD_INPUTS

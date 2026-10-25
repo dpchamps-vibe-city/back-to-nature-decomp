@@ -134,8 +134,11 @@ The evolving source organization is the record of progress; do not create a
 separate discovery queue or tracking framework.
 
 Fold, name, document and verify as many units as you can finish in this run.
-Verify each before starting the next, so unfinished work never leaves the tree
-broken. Summarize what changed, why each module's functions belong together,
+Verify in batches, not per unit: the fold helper already proves each fold
+where it lands (it re-splits, builds and byte-checks the container, and rolls
+back on failure), so fold, name and document several units, reconcile their
+interfaces in one pass, and run the full verification once for the batch. Fix
+what it names before starting the next batch. Summarize what changed, why each module's functions belong together,
 the naming/interface discoveries, flag findings and verification results. If
 blocked, leave the live build intact and explain the concrete obstacle and next
 useful experiment. Do not commit.

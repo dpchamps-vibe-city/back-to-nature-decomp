@@ -72,6 +72,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+# Pi's project-local package installs (`pi install -l`); .pi/settings.json names them
+.pi/npm/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

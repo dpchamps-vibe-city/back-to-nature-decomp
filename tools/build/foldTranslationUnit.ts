@@ -46,6 +46,7 @@ import { dirname, join, posix } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { containerTargetPath, requireContainer, type Container } from "../lib/container.js";
 import { elf32SectionSizes } from "../lib/elfSections.js";
+import { failureLines } from "../lib/failureLines.js";
 import { loadOriginalFunctionInventory, loadSubsegments, type OriginalFunctionSpan } from "../lib/symbolIndex.js";
 import { flagOverrideKey, loadTranslationUnits, MODULE_DIR, moduleStemProblem, type TranslationUnit } from "../lib/translationUnits.js";
 import { auditContainer, loadFlagOverrideKeys } from "../lib/translationUnitAudit.js";
@@ -531,8 +532,9 @@ function checkTarget(container: Container): string {
  *
  * The container is re-split (that is what regenerates its linker script from
  * the new configuration), built and byte-checked; then each member is compared
- * on its own through the module's object. `make check-all` remains the
- * all-container authority and is the caller's next step.
+ * on its own through the module's object. That proves the fold where it
+ * lands; `tuProgress.ts --verify` remains the all-container authority, run once
+ * over a batch of folds.
  */
 export function applyFold(plan: FoldPlan, log: (line: string) => void = console.log): { ok: boolean; detail: string } {
   const touched = [plan.modulePath, plan.configPath, ...plan.removedSources];
@@ -556,7 +558,7 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
 
   log(`make ${splitTarget(plan.container)}`);
   const split = run("make", [splitTarget(plan.container)]);
-  if (split.code !== 0) return rollback(`make ${splitTarget(plan.container)} failed:\n${split.output.split("\n").slice(-8).join("\n")}`);
+  if (split.code !== 0) return rollback(`make ${splitTarget(plan.container)} failed:\n${failureLines(split.output, 8).join("\n")}`);
   const resplit = readFileSync(join(ROOT, plan.configPath), "utf8");
   if (resplit !== plan.configText) {
     const planned = new Set(plan.configText.split("\n")), produced = new Set(resplit.split("\n"));
@@ -571,7 +573,7 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
     const object = posix.join(plan.container.paths.objDir, `${plan.stem}.c.o`);
     log(`make ${object} (to read the module's cc1 labels)`);
     const compiled = run("make", [object]);
-    if (compiled.code !== 0) return rollback(`make ${object} failed:\n${compiled.output.split("\n").slice(-8).join("\n")}`);
+    if (compiled.code !== 0) return rollback(`make ${object} failed:\n${failureLines(compiled.output, 8).join("\n")}`);
     const asm = readFileSync(join(ROOT, object.replace(/\.c\.o$/, ".s")), "utf8");
     let text = plan.moduleText;
     try {
@@ -589,12 +591,9 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
   }
 
   log(`make ${checkTarget(plan.container)}`);
-  const check = run("make", [`-j${Math.min(8, availableParallelism())}`, checkTarget(plan.container)]);
-  if (check.code !== 0) {
-    /* The compiler's own diagnostics name the cause; make's tail only names the target. */
-    const errors = check.output.split("\n").filter((line) => /^\S+:\d+: (?!warning)/.test(line) || /undefined reference/.test(line));
-    return rollback(`make ${checkTarget(plan.container)} failed:\n${[...errors.slice(0, 8), ...check.output.split("\n").slice(-4)].join("\n")}`);
-  }
+  const check = run("make", [`-j${Math.max(1, availableParallelism() - 2)}`, checkTarget(plan.container)]);
+  /* The tools' own diagnostics name the cause; make's tail only names the target. */
+  if (check.code !== 0) return rollback(`make ${checkTarget(plan.container)} failed:\n${failureLines(check.output).join("\n")}`);
 
   /* A carried stub assembles the original disassembly; the container check covers it. */
   for (const member of plan.members.filter((m) => !plan.stubs.includes(m.name))) {
@@ -606,7 +605,7 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
     }
   }
   const carried = plan.stubs.length > 0 ? `, ${plan.stubs.length} dead stub(s) carried` : "";
-  return { ok: true, detail: `${plan.stem}: ${plan.members.length - plan.stubs.length} member(s) byte-identical${carried}; ${plan.container.id} matches — run make check-all` };
+  return { ok: true, detail: `${plan.stem}: ${plan.members.length - plan.stubs.length} member(s) byte-identical${carried}; ${plan.container.id} matches` };
 }
 
 function main(): void {

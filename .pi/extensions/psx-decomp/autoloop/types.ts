@@ -16,9 +16,19 @@ export interface LoopTier {
   checkpointAtTokens?: number;
 }
 
+/** Research subagents the driving agent may delegate to through pi-subagents. */
+export interface SubagentConfig {
+  /** Children the driver may run at once. */
+  quantity: number;
+  /** The model every child runs; its checkpointAtTokens is the context a child reports within. */
+  model: LoopTier;
+}
+
 export interface LoopConfig {
   /** Ordered escalation ladder, cheapest/most-local first. */
   ladder: LoopTier[];
+  /** Absent: the driver works alone. */
+  subagents?: SubagentConfig;
   /**
    * Non-matching yields a tier gets before the loop *may* escalate.
    *

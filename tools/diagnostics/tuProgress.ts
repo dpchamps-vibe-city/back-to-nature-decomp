@@ -57,16 +57,17 @@
  *      invariant failed or is undetermined.
  */
 
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { availableParallelism } from "node:os";
+import { closeSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, openSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { availableParallelism, tmpdir } from "node:os";
 import { dirname, join, relative } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { containerPath, loadContainers, requireContainer, unresolvedCodeMembers, type Container } from "../lib/container.js";
 import { loadOriginalFunctionInventory, loadSubsegments } from "../lib/symbolIndex.js";
 import { loadTranslationUnits, translationUnitOf, type TranslationUnit } from "../lib/translationUnits.js";
 import { splitScope, splitToolClosure, type SplitScope } from "../lib/splitScope.js";
+import { failureLines } from "../lib/failureLines.js";
 import { auditContainer, loadFlagOverrideKeys, type ContainerAudit, type SourceFacts, type UnitAudit } from "../lib/translationUnitAudit.js";
 import { computeLiveness } from "../lib/liveness.js";
 import { detectMacroIdentities } from "./macroIdentity.js";
@@ -415,6 +416,30 @@ function run(command: string, args: string[], timeoutMs = 60 * 60_000): { code: 
   return { code: result.status ?? 1, output: `${result.stdout ?? ""}${result.stderr ?? ""}` };
 }
 
+/**
+ * `run`, without waiting: gates that only read what convergence produced run
+ * side by side. Output goes to a file, not a pipe, so a child never blocks on
+ * a full pipe while this process computes a report of its own.
+ */
+function started(command: string, args: string[], timeoutMs = 60 * 60_000): Promise<{ code: number; output: string }> {
+  const dir = mkdtempSync(join(tmpdir(), "tu-gate-"));
+  const log = join(dir, "output");
+  const fd = openSync(log, "w");
+  return new Promise((resolvePromise) => {
+    const finish = (code: number, extra = ""): void => {
+      clearTimeout(timer);
+      const output = `${readFileSync(log, "utf8")}${extra}`;
+      rmSync(dir, { recursive: true, force: true });
+      resolvePromise({ code, output });
+    };
+    const child = spawn(command, args, { cwd: ROOT, stdio: ["ignore", fd, fd], env: { ...process.env, MAKEFLAGS: "" } });
+    closeSync(fd);
+    const timer = setTimeout(() => child.kill("SIGTERM"), timeoutMs);
+    child.on("error", (error) => finish(1, error.message));
+    child.on("close", (code) => finish(code ?? 1));
+  });
+}
+
 function tail(text: string, lines = 6): string {
   return text.trim().split("\n").slice(-lines).join("\n");
 }
@@ -595,7 +620,7 @@ function convergence(tree: string | null, full: boolean): { state: GateState; de
     if (failure) return;
     passes.at(-1)!.push(label);
     const result = run(command, args);
-    if (result.code !== 0) failure = `${label} exited ${result.code}:\n${tail(result.output, 6)}`;
+    if (result.code !== 0) failure = `${label} exited ${result.code}:\n${failureLines(result.output, 8).join("\n")}`;
   };
   const tool = (path: string, flag: string) => step(path.replace(/^tools\/[^/]+\//, ""), "npx", ["tsx", path, flag]);
   /* The export the overlays were last split against. */
@@ -693,7 +718,7 @@ function whitespaceGate(): { state: GateState; detail: string } {
  * tree already judged under the same HEAD, index, options and baseline gets
  * the same verdict back with only the whitespace gate re-run.
  */
-export function verify(options: Options): TuProgressReport {
+export async function verify(options: Options): Promise<TuProgressReport> {
   const tree = treeOf("worktree");
   const key = tree ? verdictKey(options, tree) : null;
   const cache = readJson<CachedVerdict[]>(VERIFY_CACHE) ?? [];
@@ -721,22 +746,27 @@ export function verify(options: Options): TuProgressReport {
   const judgedKey = judged === tree ? key : judged ? verdictKey(options, judged) : null;
   const startInputs = inputsDigest();
 
+  /* 2–5 read only what convergence produced, and none reads another's output,
+     so they run at once: the completeness and policy checks and the build as
+     processes, the source/config inventory here while they run. */
+  /* 3. The matching decompilation is still complete, read through units. */
+  const completing = started("npx", ["tsx", "tools/diagnostics/progress.ts", "--check-complete"]);
+  /* 4. Repository-wide source policy, attributed per function. */
+  const policing = started("npx", ["tsx", "tools/agent/sourcePolicy.ts", "--final"]);
+  /* 5. Every container's linked bytes, built from what the split produced. */
+  const building = started("make", [`-j${Math.max(1, availableParallelism() - 2)}`, "check-all"]);
+
   /* 2. Source/config structure, against the split it was just given. */
   const before = structuralReport({ container: options.container, limit: options.limit, objects: false });
   record("inventory (source/config)", before.integrity.inventory === "pass" ? "pass" : "fail",
     before.integrity.inventory === "pass" ? `${before.inventory.eligible} eligible, ${before.inventory.folded} folded` : before.failures.slice(0, 3).join("; ") || "invalid modules");
 
-  /* 3. The matching decompilation is still complete, read through units. */
-  const complete = run("npx", ["tsx", "tools/diagnostics/progress.ts", "--check-complete"]);
-  record("make complete", complete.code === 0 ? "pass" : "fail", complete.code === 0 ? "every live function is compiled C" : `progress --check-complete exited ${complete.code}`);
-
-  /* 4. Repository-wide source policy, attributed per function. */
-  const policy = run("npx", ["tsx", "tools/agent/sourcePolicy.ts", "--final"]);
+  const complete = await completing;
+  record("make complete", complete.code === 0 ? "pass" : "fail", complete.code === 0 ? "every live function is compiled C" : `progress --check-complete exited ${complete.code}:\n${tail(complete.output, 6)}`);
+  const policy = await policing;
   record("source policy", policy.code === 0 ? "pass" : "fail", policy.code === 0 ? verdict(policy.output, /^Source policy passed/) : tail(policy.output, 8));
-
-  /* 5. Every container's linked bytes, built from what the split produced. */
-  const build = run("make", [`-j${Math.min(8, availableParallelism())}`, "check-all"]);
-  record("make check-all", build.code === 0 ? "pass" : "fail", build.code === 0 ? verdict(build.output, /^All \d+ overlay container/) : tail(build.output, 10));
+  const build = await building;
+  record("make check-all", build.code === 0 ? "pass" : "fail", build.code === 0 ? verdict(build.output, /^All \d+ overlay container/) : failureLines(build.output).join("\n"));
 
   /* The object view is fresh only now. */
   const structural = structuralReport({ container: options.container, limit: options.limit });
@@ -847,7 +877,7 @@ function printReport(report: TuProgressReport, options: Options): void {
   }
 }
 
-function main(): void {
+async function main(): Promise<void> {
   const options = parseOptions(process.argv.slice(2));
   if (options.writeBaseline) {
     const receipt = captureReceipt(options.writeBaseline);
@@ -855,7 +885,7 @@ function main(): void {
     console.log(`Wrote ${options.writeBaseline}: ${counts} (inputs ${receipt.inputs.slice(0, 12)}, HEAD ${receipt.head?.slice(0, 12) ?? "none"})`);
     return;
   }
-  const report = options.verify ? verify(options) : structuralReport({ container: options.container, limit: options.limit });
+  const report = options.verify ? await verify(options) : structuralReport({ container: options.container, limit: options.limit });
   if (!options.verify && options.baseline) {
     const baseline = loadBaseline(options.baseline);
     report.baseline = baseline.label;
@@ -869,4 +899,9 @@ function main(): void {
   process.exitCode = code;
 }
 
-if (process.argv[1]?.endsWith("tuProgress.ts")) main();
+if (process.argv[1]?.endsWith("tuProgress.ts")) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.stack ?? error.message : error);
+    process.exitCode = 2;
+  });
+}

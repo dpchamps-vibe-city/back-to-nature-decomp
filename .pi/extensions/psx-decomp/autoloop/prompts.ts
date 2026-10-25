@@ -1,6 +1,7 @@
 import type { ResidualReading } from "../../shared/gates.ts";
 import type { DiffResult, GateResult, PolicyFinding } from "../../shared/types.ts";
-import type { HandoffSummary, PrepHandoffSummary } from "./types.ts";
+import type { HandoffSummary, PrepHandoffSummary, SubagentConfig } from "./types.ts";
+import { RESEARCH_AGENT } from "./subagents.ts";
 import { prepHandoffBlock } from "./prep.ts";
 import { measurements, readLedger, renderValley, valley } from "../../../../tools/agent/experimentLedger.ts";
 import { renderClosed } from "../../../../tools/agent/closedDirections.ts";
@@ -535,6 +536,27 @@ export interface FoldBrief {
   remaining: number;
   /** A bounded, address-ordered sample of unfolded functions — not a proposed group. */
   sample: Array<{ container: string; name: string; vram: string; source: string; neighbors: string[] }>;
+  /** Research subagents the driver may use, from autoloop.json; absent when it works alone. */
+  subagents?: SubagentConfig;
+}
+
+/** How the driver uses its research subagents: they find and argue units, it folds them. */
+function foldSubagents(brief: FoldBrief): string[] {
+  if (!brief.subagents) return [];
+  const { quantity, model } = brief.subagents;
+  return [
+    "",
+    "## Research subagents",
+    "",
+    `Finding units is where most of a run goes, and ranges are independent, so delegate it: keep up to ${quantity}`,
+    `\`${RESEARCH_AGENT}\` subagents (${model.label}) researching at once, each on its own address range or`,
+    "candidate group, while you fold what is already researched. Launch each as its own background run,",
+    `\`subagent({ agent: "${RESEARCH_AGENT}", task: "<container, range, what to establish>" })\`, and collect`,
+    "reports with `bg_wait`; if `subagent` is not among your tools, call `subagents_enable` first. They only",
+    "read. Folding, renaming, interface writes and verification stay with you, in sequence: they write shared",
+    "state. A report is a hypothesis: check its evidence against the source before you fold from it. When a",
+    "report comes back, start the next range so research is never what you wait on.",
+  ];
 }
 
 function foldSample(brief: FoldBrief): string[] {
@@ -559,6 +581,7 @@ export function foldOpeningMessage(brief: FoldBrief): string {
     `Campaign baseline: ${brief.baseline}. Folded so far: ${brief.folded} of ${brief.eligible} eligible functions.`,
     "",
     ...foldSample(brief),
+    ...foldSubagents(brief),
     "",
     "Measure with `npx tsx tools/diagnostics/tuProgress.ts` (`--remaining`, `--json`); it derives progress from",
     "source, configuration and objects, never from notes. `npx tsx tools/build/foldTranslationUnit.ts` performs",
@@ -580,13 +603,18 @@ export function foldOpeningMessage(brief: FoldBrief): string {
     "(`// type:data size:0xN` for data) — and then `npx tsx tools/diagnostics/canonicalNames.ts --write`",
     "rewrites every reference, including a global's definitions and its globals_override.h extern. Name the",
     "globals the module reads or writes wherever the evidence supports a name, however many files use them.",
-    "To publish a module header to callers that declare a member themselves, run",
-    "`npx tsx tools/diagnostics/interfaceAudit.ts --write --callee <name>`. Every source change comes from a",
-    "checked-in tool or a direct edit, never from a throwaway script.",
+    "To publish module headers to callers that declare members themselves, run",
+    "`npx tsx tools/diagnostics/interfaceAudit.ts --write --callee <a> --callee <b> ...` once, naming every",
+    "member the batch publishes. Every source change comes from a checked-in tool or a direct edit, never from",
+    "a throwaway script.",
     "",
-    `When a module is finished, run \`npx tsx tools/diagnostics/tuProgress.ts --verify --baseline ${brief.baseline}\``,
-    "and fix what it reports before starting the next. The loop reuses the verdict on an unchanged tree; edits",
-    "under notes/ leave it standing.",
+    "Verify in batches. The fold helper proves each fold where it lands, so fold, rename and document several",
+    "units, reconcile their interfaces in one pass, then run",
+    `\`npx tsx tools/diagnostics/tuProgress.ts --verify --baseline ${brief.baseline}\` once for the batch, with a`,
+    "bash timeout of at least 600 seconds (it takes one to three minutes; a killed run proves nothing and can",
+    "stop a split midway). Fix what it names before the next batch. A failure lists the compiler, linker,",
+    "mismatch or guard lines that caused it. The loop reuses the verdict on an unchanged tree; edits under",
+    "notes/ leave it standing.",
     "",
     "Scope: change a shared tool only when the fold helper, a check or the gate refuses a module because of",
     "it, or a generator would lose the change (a name it must preserve). Such a fix is part of this change and",
