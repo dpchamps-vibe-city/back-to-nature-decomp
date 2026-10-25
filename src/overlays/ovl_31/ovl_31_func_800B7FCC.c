@@ -4,14 +4,13 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/libapi.h"
+#include "scene_selection.h"
 
 s32 ovl_31_func_800B82E8(void);
 s32 ovl_31_func_800B8348(void);
 s32 ovl_31_func_800B83B8(void);
 s32 ovl_31_func_800B8490(void);
 s32 ovl_31_func_800B8600(void);
-
-void func_80011EF0(s32 arg0);
 
 void ovl_31_func_800B7FCC(void) {
     s32 index;
@@ -78,7 +77,7 @@ void ovl_31_func_800B7FCC(void) {
         result = 0;
         switch (buttons) {
         case 0x800:
-            func_80011EF0(0);
+            RequestSceneChange(0);
             break;
         case 0x10:
             result = ovl_31_func_800B8348();

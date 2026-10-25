@@ -3,6 +3,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/libetc.h"
+#include "scene_selection.h"
 
 /* The four environment structures are fields of one local so they pack at
    4-alignment (DRAWENV 0x5C, DISPENV 0x14), matching the target frame
@@ -17,7 +18,6 @@ typedef struct {
 
 /* Callees not declared in functions.h, declared locally. */
 void func_80013B04(void);
-void func_80011EF0(s32 arg0);
 /* ovl_10_func_800B8A5C is matched as void(void), but this call site passes
    &D_800BBB7C which the callee ignores; declared with an argument here so
    the call site emits the address load. */
@@ -70,6 +70,6 @@ s32 ovl_10_func_800B889C(void) {
         } while (D_800BB7C4 == 0);
     }
 
-    func_80011EF0(0);
+    RequestSceneChange(0);
     return 0;
 }

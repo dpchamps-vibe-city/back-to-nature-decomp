@@ -1,4 +1,9 @@
 
+// Scene dispatch IDs and update-loop control; existing boot-family words.
+gPreviousSceneId = 0x8005E394; // type:s32 size:0x4
+gCurrentSceneId = 0x8005E39C; // type:s32 size:0x4
+gSceneUpdateLoopActive = 0x8005E3A0; // type:s32 size:0x4
+
 // Screen-fade state: existing GP-relative halfwords/words, not new storage.
 gScreenFadeMode = 0x8005E294; // type:s16 size:0x2
 gScreenFadeSkipUpdate = 0x8005E298; // type:s32 size:0x4
@@ -12,9 +17,9 @@ func_80011278 = 0x80011278; // type:func
 func_80011370 = 0x80011370; // type:func
 func_80011DB0 = 0x80011DB0; // type:func
 func_80011EE8 = 0x80011EE8; // type:func
-func_80011EF0 = 0x80011EF0; // type:func
-GetVal8005E394 = 0x80011F08; // type:func
-GetVal8005E39C = 0x80011F14; // type:func
+RequestSceneChange = 0x80011EF0; // type:func
+GetPreviousSceneId = 0x80011F08; // type:func
+GetCurrentSceneId = 0x80011F14; // type:func
 SetVal8005E280 = 0x80011F20; // type:func
 SetFlag8005E274 = 0x80011F2C; // type:func
 GetFlag8005E274 = 0x80011F38; // type:func

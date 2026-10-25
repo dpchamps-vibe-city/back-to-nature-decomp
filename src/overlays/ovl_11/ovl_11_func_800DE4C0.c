@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
 void ovl_11_func_800BFE3C(void);
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_80011EF0(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
@@ -23,11 +23,11 @@ void ovl_11_func_800DE4C0(void) {
     if (func_8001AF44(0x48) == 1) {
         func_8001AF70(0x48, 0);
         func_8001AF70(0x47, 0);
-        func_80011EF0(7);
+        RequestSceneChange(7);
     } else if (func_8001AF44(0x9D) == 1) {
         func_8001AF70(0x47, 0);
         func_8001AF70(0x9D, 0);
-        func_80011EF0(0x10);
+        RequestSceneChange(0x10);
     } else if (func_8001AF44(0x48) != 1) {
         func_8001AF70(0x47, 0);
         if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {

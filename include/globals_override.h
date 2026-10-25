@@ -15,6 +15,12 @@
 #ifndef GLOBALS_OVERRIDE_H
 #define GLOBALS_OVERRIDE_H
 
+/* exe:80011EF0 saves/sets these s32 dispatch IDs; 80011F08/80011F14 query them. */
+extern s32 gPreviousSceneId;
+extern s32 gCurrentSceneId;
+/* exe:80011C24 runs callbacks while this is 1; 80011EF0 clears it to exit. */
+extern s32 gSceneUpdateLoopActive;
+
 /* exe:80012D30/8001328C-80013400 share these GP-relative fade controls. */
 extern s16 gScreenFadeMode;          /* 8005E294: mode 0/1/2/3. */
 extern s32 gScreenFadeSkipUpdate;    /* 8005E298: skip one driver call. */

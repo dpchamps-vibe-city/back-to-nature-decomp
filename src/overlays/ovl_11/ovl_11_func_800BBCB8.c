@@ -1,7 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
-void func_80011EF0(s32 arg0);
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
 void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
@@ -34,7 +34,7 @@ void ovl_11_func_800BBCB8(void) {
         break;
     case 27:
         if (IsScreenFadeComplete() == 1) {
-            func_80011EF0(13);
+            RequestSceneChange(13);
         }
         break;
     case 0:
@@ -142,35 +142,35 @@ void ovl_11_func_800BBCB8(void) {
             STATUS->flags &= ~0x800000;
             switch (WORK->state) {
             case 28:
-                func_80011EF0(16);
+                RequestSceneChange(16);
                 break;
             case 14:
-                func_80011EF0(7);
+                RequestSceneChange(7);
                 break;
             case 15:
-                func_80011EF0(8);
+                RequestSceneChange(8);
                 break;
             case 16:
-                func_80011EF0(9);
+                RequestSceneChange(9);
                 break;
             case 17:
-                func_80011EF0(10);
+                RequestSceneChange(10);
                 break;
             case 18:
-                func_80011EF0(3);
+                RequestSceneChange(3);
                 func_8001FBBC(0);
                 break;
             case 19:
-                func_80011EF0(4);
+                RequestSceneChange(4);
                 break;
             case 20:
-                func_80011EF0(5);
+                RequestSceneChange(5);
                 break;
             case 21:
-                func_80011EF0(11);
+                RequestSceneChange(11);
                 break;
             case 22:
-                func_80011EF0(12);
+                RequestSceneChange(12);
                 break;
             case 12:
             case 31:
@@ -222,7 +222,7 @@ void ovl_11_func_800BBCB8(void) {
     case 6:
         if (IsScreenFadeComplete() == 1) {
             WORK->state = 0;
-            func_80011EF0(17);
+            RequestSceneChange(17);
         }
         break;
     }

@@ -75,7 +75,7 @@ s32 D_8005E288;
 s32 *D_8005E384;
 s32 D_8005E388;
 s32 D_8005E398;
-u32 D_8005E39C;
+s32 gCurrentSceneId;
 s32 D_8005E3A4;
 struct GfxObj *D_8005E3A8;
 struct GfxObj *D_8005E3AC;
@@ -92,7 +92,7 @@ extern s32 jtbl_80010008[0x15];
  * func_80011370 — game entry / main loop (557 target instructions)
  *
  * The function is the game's main entry: initialization followed by an
- * infinite loop with a 0x15-entry switch on D_8005E39C (game mode / scene).
+ * infinite loop with a 0x15-entry switch on gCurrentSceneId (scene selector).
  * Each case calls func_800145F0 (scene transition) and sets D_8005E384 (scene
  * data pointer); some also set D_8005E288 (one-shot flag) or D_80070CC0.
  * The D_8005E3B4 pointer toggles between D_8005E5D8 and D_8005E5D8 + 8.
@@ -136,7 +136,7 @@ void func_80011370(void) {
     func_8001FEA4();
     SetVideoMode(0);
     ResetGraph(0);
-    D_8005E39C = 0xD;
+    gCurrentSceneId = 0xD;
     func_800147BC();
     env_base = (char *)&D_8005E5E8;
     SetDefDrawEnv((DRAWENV *)env_base, 0, 0, 0x140, 0xF0);
@@ -200,8 +200,9 @@ void func_80011370(void) {
         SetGfxClip(0x14, 7);
         D_8005E284 = 1;
 
-        if (D_8005E39C < 0x15) {
-            switch (D_8005E39C) {
+        /* Dispatch bounds are unsigned even though the selection API uses s32. */
+        if ((u32)gCurrentSceneId < 0x15) {
+            switch ((u32)gCurrentSceneId) {
             case 0:
                 func_80011EE8(1);
                 func_800145F0(8, 9, D_80010098, D_80010098);

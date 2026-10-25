@@ -11,7 +11,7 @@ void (*D_8005E384)(void);
 s32 D_8005E388;
 s32 D_8005E38C;
 s32 D_8005E390;
-s32 D_8005E3A0;
+s32 gSceneUpdateLoopActive;
 s32 D_8005E3A4;
 s32 *D_8005E3B4;
 struct_8005E3C0 *D_8005E3C0;
@@ -48,11 +48,11 @@ void func_80011C24(void) {
 
     D_8005E390 = 0;
     D_8005E38C = 0;
-    D_8005E3A0 = 1;
+    gSceneUpdateLoopActive = 1;
     SetFlag8005E274(2);
     do {
     } while (DrawSync(1) != 0);
-    if (D_8005E3A0 == 1) {
+    if (gSceneUpdateLoopActive == 1) {
         do {
             Rand(0xFFFF);
             func_8001B258();
@@ -88,6 +88,6 @@ void func_80011C24(void) {
                 D_8005E388 = (s32)func_80011DB0;
                 VSync(2);
             }
-        } while (D_8005E3A0 == 1);
+        } while (gSceneUpdateLoopActive == 1);
     }
 }

@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libsnd.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
 
 void SsSeqClose (short);
@@ -14,7 +15,6 @@ s32 func_8001FE6C (void);
 void func_8001FAE8 (s32 arg0);
 s32 func_8001FBBC (s16 arg0);
 s32 func_80020B80 (s32 arg0, s32 arg1);
-void func_80011EF0 (s32 arg0);
 void ovl_19_func_800BBD14 (s16 arg0);
 s32 func_80021484 (s32 arg0);
 s32 func_80020414 (s32 arg0, s32 arg1);
@@ -43,7 +43,7 @@ void ovl_19_func_800B8190(void) {
         func_80020B80(1, 0);
         base = (u8 *)D_8006C838;
         *(s32 *)(base + 0x448C) = 0xFF;
-        func_80011EF0(6);
+        RequestSceneChange(6);
         *(s32 *)(base + 0xC) |= 0x80000;
         if (*(s32 *)(base + 0xE624) == 1) {
             ovl_19_func_800BBD14(1);

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
 void ovl_23_func_800BB0E8(void);
 s32 func_8001FABC(s16 arg0);
@@ -13,7 +14,6 @@ s32 func_8001FE6C(void);
 void func_8001FAE8(s32 arg0);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020B80(s32 arg0, s32 arg1);
-void func_80011EF0(s32 arg0);
 void ovl_23_func_800BB7A0(s16 arg0);
 void ovl_23_func_800BB800(s16 arg0);
 void ovl_23_func_800B9310(void);
@@ -102,7 +102,7 @@ void ovl_23_func_800B87F8(void) {
                             func_80020B80(2, 0);
                             func_80020B80(1, 0);
                             *(s32 *)(systemData + 0x448C) = 0xFF;
-                            func_80011EF0(6);
+                            RequestSceneChange(6);
                             *(s32 *)(systemData + 0xC) |= 0x80000;
                             if (*(s32 *)(save + 0x6630) == 1) {
                                 ovl_23_func_800BB7A0(1);

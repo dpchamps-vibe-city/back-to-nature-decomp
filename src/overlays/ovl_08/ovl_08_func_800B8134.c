@@ -4,9 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
-
-/* Game callees. */
-void func_80011EF0(s32 arg0);
+#include "scene_selection.h"
 
 /* Data owned by other translation units in this overlay (rodata). */
 extern s32 D_800B7F84;
@@ -73,7 +71,7 @@ void ovl_08_func_800B8134(void) {
         } else if (ctrl->field_0x8 & 0x20) {
             s32 sel = D_800B8508[D_800B8504].field_0;
             if (sel != -1) {
-                func_80011EF0(sel);
+                RequestSceneChange(sel);
                 switch (D_800B8504) {
                 case 13:
                     ((D8006C838Flag10View *)&D_8006C838)->field_10 |= 0x80000;

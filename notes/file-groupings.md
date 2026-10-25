@@ -5116,7 +5116,7 @@ D_8005E3A4, D_8005E3A8, D_8005E3AC, D_8005E3B0, D_8005E3B4, D_8005E3BC and D_800
 - func_80011C24 (m) — draw-sync / VSync cadence loop (waits on DrawSync, then per-frame Rand + scene update); toggles the double-buffer scene pointer D_8005E3C0 / D_8005E3B4 between bases at D_8005E5E8/D_8005E5D8 (+0x134, +8) and calls the D_8005E384() scene callback two ways. Reaches D_8005E384/88/8C/90/A0/A4/B4/C0 all GP-relative (must declare them as small data). Sole GP-relative accessor of D_8005E38C and D_8005E390 (owns them outright); shares D_8005E3A0 GP-relatively with func_80011EF0. Called at the bottom of the main loop every iteration (0x80011C14).
 - func_80011DB0 (s), func_80011F5C (s), func_80011FD8 (s) — share D_8005E3C0
   and D_8005E3B4
-- func_80011EF0 (m) — tiny 8-byte stub: saves the previous D_8005E39C into
+- func_80011EF0 (m; now RequestSceneChange) — 0x18-byte state update: saves the previous D_8005E39C into
   D_8005E394, clears D_8005E3A0, then stores its argument into D_8005E39C.
   Reaches D_8005E394/D_8005E39C/D_8005E3A0 GP-relatively, so it shares the
   cluster with func_80011C24 / the boot TU rather than touching the cluster
@@ -5175,6 +5175,52 @@ the target is a membership signal, and a member must *declare* the symbols it
 reaches that way. Non-members must not. See
 `plans/toolchain-native-small-data-addressing.md` for how that is expressed in
 source.
+
+Reconstructed scene-selection slice: `src/modules/scene_selection.c` holds
+**exe:0x80011EF0–0x80011F20** in original order: `RequestSceneChange`
+(formerly func_80011EF0), `GetPreviousSceneId` (0x80011F08, formerly
+GetVal8005E394), and `GetCurrentSceneId` (0x80011F14, formerly
+GetVal8005E39C). This is a narrow reconstructed interface within the larger
+boot/main-loop family, **not proof of an original file boundary**. Beyond
+adjacency and common GP access, the setter writes exactly the state the two
+queries expose. It snapshots the current selector, clears the update-loop
+run flag, then installs the requested selector and the snapshot. 80011370
+initializes the current selector to 13 and dispatches IDs 0..20; 80011C24
+sets the run flag to 1 and invokes callbacks until a request clears it.
+Overlay callers (including ovl_08:800B8134's table-driven selection and
+ovl_11:800BBCB8's explicit selections) corroborate the dispatch-ID contract.
+ovl_11:801048A0 reads the previous selector to distinguish arrivals from
+3/4/5/11/12; it does not ask for an overlay number or an update counter.
+
+The state is now `gPreviousSceneId` (8005E394), `gCurrentSceneId` (8005E39C),
+and `gSceneUpdateLoopActive` (8005E3A0), named in the EXE symbol configuration.
+`include/scene_selection.h` publishes the unchanged s32 function ABI and the
+immediate state effects versus deferred dispatch. Requests do not validate
+IDs, abort callbacks, or queue transitions: repeated requests overwrite the
+current/previous pair, including same-ID requests. Previous is established
+by a request, not by boot's direct initial selection. Querying changes nothing.
+The update loop re-arms its run flag on entry. No scene-specific gameplay names
+or ID enum are inferred. Parameter/local names describe the ID and snapshot.
+
+All three words have canonical s32 externs in globals_override.h. The entry
+loop's former u32 current-ID definition was reconciled separately to s32 with
+explicit u32 casts on its range test and switch, preserving rejection of
+negative IDs; the full campaign gate verified this declaration-only step
+before renaming. Tentative definitions remain in the slice and in the two
+broader-family owners that need GP access. No linkage was narrowed, storage
+added, or shared state made private; no scope collisions were introduced.
+The adjacent empty 80011EE8 hook, unrelated flag accessors from 80011F20,
+entry dispatcher, and frame/update loop remain outside this slice.
+
+The mechanical fold first verified all three members and the EXE at baseline
+-O2/-G8. None carries an override, so there was no existing flag hypothesis
+to reconcile and no matrix or exception was added. Canonicalization propagated
+the address-derived function/data names, the existing getter names were changed
+at their recorded identities and sole caller, and the interface audit published
+the header to callers with unchanged objects. Generated context/engine exports
+and overlay link inputs were regenerated through the supported tools. The
+full TU campaign gate verifies all linked containers, interfaces, ownership,
+source policy and exception non-growth against its baseline.
 
 Reconstructed query slice: `src/modules/asset_scratch.c` now holds the
 three functions at **exe:0x8001205C–0x800120C8**, in original order:

@@ -1,10 +1,10 @@
 #include "common.h"
 #include "psyq/libsnd.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
 /* This overlay imports the resident ClearVal8005E2CC by its address. */
 void ClearVal8005E2CC(void);
-void func_80011EF0(s32);
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 void func_8001FE00(s32);
@@ -74,7 +74,7 @@ void ovl_15_func_8012E7C8(void) {
         if (IsScreenFadeComplete() == 1) {
             func_8002029C(0, 0, 0, 0x50, 0xA);
             state->state = state->state == 3 ? 3 : 4;
-            func_80011EF0(0x13);
+            RequestSceneChange(0x13);
         }
     }
 }

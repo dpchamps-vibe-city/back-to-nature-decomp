@@ -1,6 +1,6 @@
 #include "common.h"
+#include "scene_selection.h"
 
-s32 GetVal8005E394(void);
 void func_8001FBF0(s16 arg0, s16 arg1);
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800BFEA4(void);
@@ -57,23 +57,23 @@ void ovl_11_func_801048A0(void) {
     func_8001FBF0(1000, 0);
 
     base->field_4450 &= ~0xF80;
-    if (GetVal8005E394() == 3) {
+    if (GetPreviousSceneId() == 3) {
         base->field_4450 |= 0x80;
         ovl_11_func_800BFE3C();
     }
-    if (GetVal8005E394() == 4) {
+    if (GetPreviousSceneId() == 4) {
         base->field_4450 |= 0x100;
         ovl_11_func_800BFE3C();
     }
-    if (GetVal8005E394() == 5) {
+    if (GetPreviousSceneId() == 5) {
         base->field_4450 |= 0x200;
         ovl_11_func_800BFE3C();
     }
-    if (GetVal8005E394() == 0xB) {
+    if (GetPreviousSceneId() == 0xB) {
         base->field_4450 |= 0x400;
         ovl_11_func_800BFE3C();
     }
-    if (GetVal8005E394() == 0xC) {
+    if (GetPreviousSceneId() == 0xC) {
         base->field_4450 |= 0x800;
         ovl_11_func_800BFE3C();
     }

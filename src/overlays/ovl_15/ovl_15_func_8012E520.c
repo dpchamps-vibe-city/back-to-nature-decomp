@@ -1,9 +1,9 @@
 #include "common.h"
 #include "psyq/libsnd.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
 void ClearVal8005E2CC(void);
-void func_80011EF0(s32);
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 void func_8001FE00(s32);
@@ -75,15 +75,15 @@ void ovl_15_func_8012E520(void) {
             state->state = state->state == 3 ? 3 : 4;
             if (state->state == 4) {
                 if (state->flags & 0x4000) {
-                    func_80011EF0(0xD);
+                    RequestSceneChange(0xD);
                 } else {
-                    func_80011EF0(0x13);
+                    RequestSceneChange(0x13);
                 }
             } else {
                 if (state->flags & 0x4000) {
                     state->flags &= ~0x4000;
                 }
-                func_80011EF0(0xE);
+                RequestSceneChange(0xE);
             }
         }
     }

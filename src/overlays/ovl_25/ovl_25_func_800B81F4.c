@@ -4,13 +4,13 @@
 #include "psyq/libgte.h"
 #include "psyq/libsnd.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
 void ovl_25_func_800B93E4 (void);
 s32 func_8001FE6C (void);
 void func_8001FAE8 (s32 arg0);
 s32 func_8001FBBC (s16 arg0);
 s32 func_80020B80 (s32 arg0, s32 arg1);
-void func_80011EF0 (s32 arg0);
 void ovl_25_func_800BBA30 (s16 arg0, s16 arg1, s16 arg2);
 
 void ovl_25_func_800B81F4(void) {
@@ -31,7 +31,7 @@ void ovl_25_func_800B81F4(void) {
         func_80020B80(1, 0);
         base = (u8 *)D_8006C838;
         *(s32 *)(base + 0x448C) = 0xFF;
-        func_80011EF0(6);
+        RequestSceneChange(6);
         *(s32 *)(base + 0xC) |= 0x80000;
         ovl_25_func_800BBA30(0, 0, 0);
     }

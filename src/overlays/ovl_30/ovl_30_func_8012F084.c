@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
+#include "scene_selection.h"
 
 void ovl_30_func_8012F030(s32 arg0);
 void ovl_30_func_8012FE94(void);
@@ -11,7 +12,6 @@ void func_8001FE00(s32 arg0);
 s32 func_8001FABC(s16 arg0);
 void func_8001FE34(s32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_80011EF0(s32 arg0);
 void func_8002194C(void);
 
 #define clamp_selection(expression) \
@@ -114,7 +114,7 @@ void ovl_30_func_8012F084(void) {
         BeginScreenFadeDecrease(0xA, 0, 2);
         func_8001FE00(0xA);
         ((struct struct_8006C838_view *)D_8006C838)->field_0C &= 0xF7FFFFFF;
-        func_80011EF0(2);
+        RequestSceneChange(2);
         func_8001AF70(0x9BU, 0U);
         if (D_80134008 != 0) {
             func_8001AF70(0x9BU, 1U);

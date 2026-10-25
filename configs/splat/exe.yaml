@@ -83,9 +83,7 @@ segments:
       - [0x2424, c, func_80011C24]       # 0x80011C24 func_80011C24
       - [0x25B0, c, func_80011DB0]       # 0x80011DB0 func_80011DB0
       - [0x26E8, c, func_80011EE8]       # 0x80011EE8 func_80011EE8
-      - [0x26F0, c, func_80011EF0]       # 0x80011EF0 func_80011EF0
-      - [0x2708, c, GetVal8005E394]       # 0x80011F08 GetVal8005E394
-      - [0x2714, c, GetVal8005E39C]       # 0x80011F14 GetVal8005E39C
+      - [0x26F0, c, modules/scene_selection]
       - [0x2720, c, SetVal8005E280]       # 0x80011F20 SetVal8005E280
       - [0x272C, c, SetFlag8005E274]       # 0x80011F2C SetFlag8005E274
       - [0x2738, c, GetFlag8005E274]       # 0x80011F38 GetFlag8005E274
