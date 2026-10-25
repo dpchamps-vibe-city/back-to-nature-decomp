@@ -19,7 +19,7 @@ void ovl_15_func_8012F6C0(void) {
     switch (temp_s0) {
     case 0:
         temp_a1 = gActiveRenderContext->field_D8;
-        func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80053114);
+        func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053114);
         if (*(s32 *)((u8 *)gPad0Input + 8) & 0x40) {
             PlaySoundEffect(0);
             D_8013759C = 1;
@@ -27,7 +27,7 @@ void ovl_15_func_8012F6C0(void) {
         break;
     case 1:
         temp_a1_2 = gActiveRenderContext->field_D8;
-        func_8001AC10((void *)(temp_a1_2 + 0x18), temp_a1_2 + 0x14, D_80054BBC[0] + (s32)D_80051FA8);
+        func_8001AC10((void *)(temp_a1_2 + 0x18), temp_a1_2 + 0x14, gTextBankOffsets[0] + (s32)D_80051FA8);
         temp_v0 = ovl_15_func_801370B4();
         if (temp_v0 != 0) {
             if (temp_v0 <= 0 ? temp_v0 == -1 : temp_v0 == temp_s0) {

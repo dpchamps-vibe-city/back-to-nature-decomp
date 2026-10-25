@@ -1,10 +1,7 @@
 #include "common.h"
+#include "message_window.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-void func_80022738(void);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -33,17 +30,17 @@ s32 ovl_11_func_80119820(void) {
         break;
     case 11:
     case 12:
-        func_8002261C(2, 0xDC);
-        SetVal8005E334(0);
+        RequestMessageWindow(2, 0xDC);
+        SetMessagePortraitEnabled(0);
         ovl_11_func_8011D084(3, 4);
         break;
     case 2:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 3:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
@@ -58,22 +55,22 @@ s32 ovl_11_func_80119820(void) {
             break;
         case 1:
             if (ovl_11_func_8011D9DC(0x21, 1) == 0) {
-                func_80022738();
-                func_8002261C(2, 0x54);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0x54);
                 ovl_11_func_8011D084(2, 7);
             } else if (ovl_11_func_8011D06C(price) == 1) {
-                func_80022738();
-                func_8002261C(2, 0xBB);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0xBB);
                 ovl_11_func_8011D084(2, 6);
             } else {
-                func_80022738();
-                func_8002261C(2, 0x4F);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(2, 7);
             }
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0xBA);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0xBA);
             ovl_11_func_8011D084(2, 7);
             break;
         }

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
-s32 func_8002261C(s32 arg0, s32 arg1);
 s32 ovl_11_func_800D60F0(s16 arg0, s16 arg1);
 
 s32 ovl_11_func_8010DE68(Ovl11DE68Object *arg0) {
@@ -105,7 +105,7 @@ s32 ovl_11_func_8010DE68(Ovl11DE68Object *arg0) {
     }
     arg0->unk16 = clamped;
     if (message != 0) {
-        func_8002261C(0, message);
+        RequestMessageWindow(0, message);
         if (marked == 1) {
             arg0->unkB8 |= 0x810;
         }

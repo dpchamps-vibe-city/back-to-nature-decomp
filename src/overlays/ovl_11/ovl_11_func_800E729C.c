@@ -1,16 +1,13 @@
 #include "common.h"
 #include "game_types.h"
-
-s32 func_800231E8(void);
-void func_80023170(u16 *arg0);
-void func_800231AC(u16 *arg0);
+#include "text_entry.h"
 
 s32 ovl_11_func_800E729C(s16 arg0, s16 arg1, s32 arg2) {
     s32 result;
     s32 temp;
 
     result = 0;
-    temp = func_800231E8();
+    temp = UpdateTextEntry();
     switch (temp) {
     case -1:
         if (arg2 != temp) {
@@ -36,15 +33,15 @@ s32 ovl_11_func_800E729C(s16 arg0, s16 arg1, s32 arg2) {
         switch (arg0) {
         case 0:
         case 4:
-            func_80023170((u16 *)&D_801295D0);
+            BeginRequiredTextEntry((u16 *)&D_801295D0);
             break;
         case 1:
         case 2:
         case 3:
             if (arg1 == 0) {
-                func_800231AC((u16 *)&D_801295D0);
+                BeginTextEntry((u16 *)&D_801295D0);
             } else {
-                func_80023170((u16 *)&D_801295D0);
+                BeginRequiredTextEntry((u16 *)&D_801295D0);
             }
             break;
         }

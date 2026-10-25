@@ -1,12 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
-void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 func_800226B0(void);
-void func_80022738(void);
 void ovl_11_func_80100898(u8 arg0);
 s32 ovl_11_func_80100A8C(s32 arg0);
 void ovl_11_func_80103714(void);
@@ -19,24 +16,24 @@ void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_8010021C(void) {
     s8 column;
 
-    SetVal8005E334(0);
+    SetMessagePortraitEnabled(0);
     SetVal8005E2BC(0);
-    func_8002261C(3, 0x3B8);
+    RequestMessageWindow(3, 0x3B8);
     ovl_11_func_80100898(Ovl11_D_801273E8);
-    if (func_800226B0()) {
+    if (IsMessageWindowStatusFinal()) {
         switch ((u32)((GfxObj *)gPad0Input)->field_8 & 0x870) {
         case 0x800:
-            func_80022738();
+            CloseMessageWindow();
             Ovl11_D_801273DC = ovl_11_func_80103714;
             return;
         case 0x20:
-            func_80022738();
+            CloseMessageWindow();
             PlaySoundEffect(1);
             Ovl11_D_801273DC = ovl_11_func_80100194;
             return;
         case 0x10:
             if (((Ovl11SelectionRecords *)&D_8006C838)->records[Ovl11_D_801273E8 * 20 + Ovl11_D_801273E7][0] != 0) {
-                func_80022738();
+                CloseMessageWindow();
                 PlaySoundEffect(0);
                 Ovl11_D_801273DC = ovl_11_func_80100644;
                 return;
@@ -47,12 +44,12 @@ void ovl_11_func_8010021C(void) {
             if (((Ovl11SelectionRecords *)&D_8006C838)->records[Ovl11_D_801273E8 * 20 + Ovl11_D_801273E7][0] == 0) {
                 PlaySoundEffect(2);
             } else if (ovl_11_func_80100A8C((u8)(Ovl11_D_801273E8 * 20 + Ovl11_D_801273E7)) == 0) {
-                func_80022738();
+                CloseMessageWindow();
                 PlaySoundEffect(2);
                 Ovl11_D_801273DC = ovl_11_func_801006F8;
                 return;
             } else {
-                func_80022738();
+                CloseMessageWindow();
                 PlaySoundEffect(0);
                 Ovl11_D_801273DC = ovl_11_func_801007AC;
                 return;

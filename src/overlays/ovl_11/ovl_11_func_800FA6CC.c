@@ -12,7 +12,7 @@ void ovl_11_func_800FA6CC(s32 arg0, s16 arg1, s16 arg2) {
     var_s2 = arg2;
     *(u16 *) func_8001A970(arg1 + 1, &D_80129FF0, 2) = 0xFFFF;
     func_80017B3C(arg0, (s32) &D_80129FF0, 0x1F, 0x34);
-    func_80017B3C(arg0, (s32) ((void *) ((u8 *) &D_80051B9A + *D_80054BBC)), 0x39, 0x34);
+    func_80017B3C(arg0, (s32) ((void *) ((u8 *) &D_80051B9A + *gTextBankOffsets)), 0x39, 0x34);
     if (var_s2 >= 0) {
         var_a0 = (var_s2 < 4) ? var_s2 : 3;
     } else {

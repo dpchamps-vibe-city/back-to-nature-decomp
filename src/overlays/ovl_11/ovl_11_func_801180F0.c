@@ -1,13 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-void func_80022738(void);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_80111EE0(void);
 s32 ovl_11_func_80118744(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
@@ -23,7 +20,7 @@ s32 ovl_11_func_801180F0(void) {
     case 0:
         D_8012D7CC = 8;
         D_8012D7D0 = 1;
-        func_8002261C(2, 0x132);
+        RequestMessageWindow(2, 0x132);
         return 0;
     case 1:
         D_8012D7CC = 2;
@@ -56,7 +53,7 @@ s32 ovl_11_func_801180F0(void) {
                 D_8012828C = D_8012D7D4 + 0x13C;
                 D_80128290 = 5;
             }
-            func_80022738();
+            CloseMessageWindow();
             break;
         case 2:
             break;
@@ -94,7 +91,7 @@ s32 ovl_11_func_801180F0(void) {
                 D_8012828C = 0x4F;
                 D_80128290 = 3;
             }
-            func_80022738();
+            CloseMessageWindow();
             break;
         case 2:
             break;
@@ -106,13 +103,13 @@ s32 ovl_11_func_801180F0(void) {
         return 0;
     case 5:
         ovl_11_func_80118B84(0, -1, 0);
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        func_8002261C(2, 0x5F);
+        RequestMessageWindow(2, 0x5F);
         D_8012D7CC = 6;
         return 0;
     case 6:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             D_8012D7CC = 7;
         }
         return 0;
@@ -145,10 +142,10 @@ s32 ovl_11_func_801180F0(void) {
                 D_8012D7D0 = 9;
                 D_80128290 = 1;
             }
-            func_80022738();
+            CloseMessageWindow();
             break;
         case 2:
-            func_80022738();
+            CloseMessageWindow();
             D_8012828C = 0x141;
             D_8012D7CC = 8;
             D_8012D7D0 = 9;
@@ -157,13 +154,13 @@ s32 ovl_11_func_801180F0(void) {
         }
         return 0;
     case 8:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             D_8012D7CC = D_8012D7D0;
         }
         return 0;
     case 9:
         if (D_8012828C != -1) {
-            func_8002261C(2, D_8012828C);
+            RequestMessageWindow(2, D_8012828C);
         }
         D_8012D7CC = 8;
         D_8012D7D0 = D_80128290;

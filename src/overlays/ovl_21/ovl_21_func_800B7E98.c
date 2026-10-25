@@ -8,6 +8,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "ovl21_scene_camera_geometry.h"
+#include "message_window.h"
 
 void ovl_21_func_800BB328(void);
 void ovl_21_func_800BB59C(void);
@@ -15,7 +16,6 @@ void ovl_21_func_800BB648(void);
 void ovl_21_func_800BB8B8(void);
 void ovl_21_func_800BBA3C(void);
 void ovl_21_func_800B8228(void);
-void func_800226F0(void);
 
 void ovl_21_func_800B7E98(void) {
     s32 *base;
@@ -52,7 +52,7 @@ void ovl_21_func_800B7E98(void) {
     if (D_800BCBB8 == 6) {
         ovl_21_func_800B8228();
         Ovl21InitSceneCamera();
-        func_800226F0();
+        ResetMessageWindow();
         BeginScreenFadeDecrease(0xA, 0, 2);
         BeginMasterVolumeFadeIn(0xA);
         D_800BCBB8 = 0;

@@ -1,11 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-void func_80022738(void);
 void ovl_11_func_8011D098(s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_8011D0B4(void);
 s32 ovl_11_func_8011D734(Ovl11D548Arg *arg0);
@@ -33,33 +30,33 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2) {
     switch (*arg0 - arg1) {
     case 0:
         if (startKind != -1) {
-            func_8002261C(startKind, startId);
+            RequestMessageWindow(startKind, startId);
             ovl_11_func_8011D098(1, 3, arg1);
         } else {
             ovl_11_func_8011D098(3, 0, arg1);
         }
         break;
     case 1:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 2:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 3:
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         if (D_8012D52C == 7) {
             D_8012D52C = state;
-            if (func_8002261C(2, 0x5F) == 0) {
+            if (RequestMessageWindow(2, 0x5F) == 0) {
                 ovl_11_func_8011D098(2, 4, arg1);
             }
         } else {
             D_8012D52C = state;
-            if (func_8002261C(2, 0x46) == 0) {
+            if (RequestMessageWindow(2, 0x46) == 0) {
                 ovl_11_func_8011D098(2, 4, arg1);
             }
         }
@@ -70,18 +67,18 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2) {
             break;
         case 1:
             result = 1;
-            func_80022738();
+            CloseMessageWindow();
             break;
         case 2:
             if (ovl_11_func_8011D9B4(*record) != -1) {
-                func_80022738();
-                func_8002261C(2, ovl_11_func_8011D9B4(*record));
+                CloseMessageWindow();
+                RequestMessageWindow(2, ovl_11_func_8011D9B4(*record));
                 ovl_11_func_8011D098(1, 3, arg1);
             }
             break;
         case 3:
-            func_80022738();
-            func_8002261C(cancelKind, cancelId);
+            CloseMessageWindow();
+            RequestMessageWindow(cancelKind, cancelId);
             ovl_11_func_8011D098(1, 5, arg1);
             break;
         }

@@ -1,9 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/memory.h"
-
-void func_80022738(void);
-s32 func_8002261C(s32 arg0, s32 arg1);
+#include "message_window.h"
 
 extern s32 D_80126C94;
 
@@ -12,8 +10,8 @@ s32 ovl_11_func_800F2724(void) {
 
     base = (char *)D_8006C838;
     if (*(s8 *)(base + 0x49E6) != -1) {
-        func_80022738();
-        if (func_8002261C((s32)(*(s8 *)(base + 0x49E6)), (s32)(*(s16 *)(base + 0x49E4))) == 0) {
+        CloseMessageWindow();
+        if (RequestMessageWindow((s32)(*(s8 *)(base + 0x49E6)), (s32)(*(s16 *)(base + 0x49E4))) == 0) {
             if ((*(s16 *)(base + 0x49E4)) == 0x19B) {
                 D_80126C94 = 1;
             }

@@ -2,13 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "message_window.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-void func_80022738(void);
 void ovl_11_func_800C4FDC(Ovl11C7010Object *arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -49,24 +46,24 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     case 12:
     case 13:
         if (ovl_11_func_8011B6C4(&D_8012D524, 12, arg0)) {
-            func_8002261C(arg1, arg2);
+            RequestMessageWindow(arg1, arg2);
             ovl_11_func_8011D084(3, 11);
         }
         break;
     case 2:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 3:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
         break;
     case 11:
         if (((GfxObj *)gPad0Input)->field_8 & 0x60) {
-            SetVal8005E334(0);
+            SetMessagePortraitEnabled(0);
             ovl_11_func_8011D084(4, 4);
         }
         break;
@@ -80,18 +77,18 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
             break;
         case 1:
             if (ovl_11_func_8011D06C(price) == 1) {
-                func_80022738();
-                func_8002261C(2, 0xBB);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0xBB);
                 ovl_11_func_8011D084(2, 6);
             } else {
-                func_80022738();
-                func_8002261C(2, 0x4F);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(2, 7);
             }
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, message);
+            CloseMessageWindow();
+            RequestMessageWindow(2, message);
             ovl_11_func_8011D084(2, 7);
             break;
         }

@@ -1,14 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
+#include "text_entry.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-void func_80022738(void);
-void func_80023100(void);
-void func_800231AC(u16 *arg0);
-s32 func_800231E8(void);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 s32 *ovl_11_func_800D0C34(void);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -77,10 +72,10 @@ s32 ovl_11_func_80114604(void) {
             switch (((StructD548 *)D_8012D548)->index) {
             case 0:
                 if (((Ovl11SaleGlobals *)D_8006C838)->amount >= 1000) {
-                    func_8002261C(2, 0x6D);
+                    RequestMessageWindow(2, 0x6D);
                     ovl_11_func_8011D084(25, 1);
                 } else {
-                    func_8002261C(2, 0x6C);
+                    RequestMessageWindow(2, 0x6C);
                     ovl_11_func_8011D084(25, 9);
                 }
                 break;
@@ -90,38 +85,38 @@ s32 ovl_11_func_80114604(void) {
             case 8:
                 if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) == 1) {
                     if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1) == 0) {
-                        func_8002261C(2, 0x54);
+                        RequestMessageWindow(2, 0x54);
                         ovl_11_func_8011D084(25, 24);
                     } else {
                         ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1, 1);
                         ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
-                        func_8002261C(2, 0x84);
+                        RequestMessageWindow(2, 0x84);
                         ovl_11_func_8011D084(25, 24);
                     }
                 } else {
-                    func_8002261C(2, 0x4F);
+                    RequestMessageWindow(2, 0x4F);
                     ovl_11_func_8011D084(25, 24);
                 }
                 break;
             case 3:
             case 4:
                 if (ovl_11_func_800D0C34() == 0) {
-                    func_8002261C(2, 0x72);
+                    RequestMessageWindow(2, 0x72);
                     ovl_11_func_8011D084(25, 24);
                 } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) != 1) {
-                    func_8002261C(2, 0x4F);
+                    RequestMessageWindow(2, 0x4F);
                     ovl_11_func_8011D084(25, 24);
                 } else {
-                    func_8002261C(2, 0x73);
+                    RequestMessageWindow(2, 0x73);
                     ovl_11_func_8011D084(25, 16);
                 }
                 break;
             case 5:
                 if (ovl_11_func_80117178(1, 0, -1) == 0) {
-                    func_8002261C(2, 0x76);
+                    RequestMessageWindow(2, 0x76);
                     ovl_11_func_8011D084(25, 24);
                 } else {
-                    func_8002261C(2, 0x75);
+                    RequestMessageWindow(2, 0x75);
                     D_8012D52C = 0;
                     ovl_11_func_80116980(0, 0, -1);
                     ovl_11_func_8011D084(25, 18);
@@ -129,10 +124,10 @@ s32 ovl_11_func_80114604(void) {
                 break;
             case 6:
                 if (ovl_11_func_80117178(2, 0, -1) == 0) {
-                    func_8002261C(2, 0x78);
+                    RequestMessageWindow(2, 0x78);
                     ovl_11_func_8011D084(25, 24);
                 } else {
-                    func_8002261C(2, 0x77);
+                    RequestMessageWindow(2, 0x77);
                     D_8012D52C = 0;
                     ovl_11_func_80116980(0, 0, -1);
                     ovl_11_func_8011D084(25, 21);
@@ -143,9 +138,9 @@ s32 ovl_11_func_80114604(void) {
         }
         break;
     case 9:
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        func_8002261C(2, 0x4D);
+        RequestMessageWindow(2, 0x4D);
         ovl_11_func_8011D084(26, 10);
         break;
     case 10:
@@ -163,33 +158,33 @@ s32 ovl_11_func_80114604(void) {
             ovl_11_func_8011D084(25, 24);
             break;
         case 1:
-            func_80022738();
+            CloseMessageWindow();
             if (ovl_11_func_8011D06C(state->unk8 * state->unkA) == 1) {
                 if (state->unk8 + ((Ovl11SaleGlobals *)D_8006C838)->amount >= 1000) {
-                    func_8002261C(2, 0x6D);
+                    RequestMessageWindow(2, 0x6D);
                     ovl_11_func_8011D084(25, 9);
                 } else {
                     ovl_11_func_801152BC(state);
-                    func_8002261C(2, 0x70);
+                    RequestMessageWindow(2, 0x70);
                     ovl_11_func_8011D084(25, 24);
                 }
             } else {
-                func_8002261C(2, 0x4F);
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(25, 9);
             }
             break;
         }
         break;
     case 16:
-        func_80023100();
-        func_800231AC(D_8012D63C);
+        ResetTextEntry();
+        BeginTextEntry(D_8012D63C);
         D_8012D52C = 0;
         ovl_11_func_8011D084(17, 0);
         break;
     case 17:
-        switch (func_800231E8()) {
+        switch (UpdateTextEntry()) {
         case -1:
-            func_8002261C(2, 0x6E);
+            RequestMessageWindow(2, 0x6E);
             ovl_11_func_8011D084(25, 24);
             break;
         case 1:
@@ -198,34 +193,34 @@ s32 ovl_11_func_80114604(void) {
                 dest[i] = D_8012D638.values[i];
             }
             ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
-            func_8002261C(2, 0x74);
+            RequestMessageWindow(2, 0x74);
             ovl_11_func_8011D084(25, 24);
             break;
         }
         break;
     case 18:
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        func_8002261C(2, 0x5A);
+        RequestMessageWindow(2, 0x5A);
         ovl_11_func_8011D084(26, 19);
         break;
     case 19:
         selected = ovl_11_func_80116980(1, 0, 0);
         if (selected == -2) {
-            func_80022738();
-            func_8002261C(2, 0x79);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x79);
             ovl_11_func_8011D084(25, 24);
         } else if (selected != -1) {
-            func_80022738();
-            SetVal8005E334(0);
+            CloseMessageWindow();
+            SetMessagePortraitEnabled(0);
             if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].flags & 0x40) {
-                func_8002261C(2, 0x82);
+                RequestMessageWindow(2, 0x82);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 100) {
-                func_8002261C(2, 0x7D);
+                RequestMessageWindow(2, 0x7D);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 200) {
-                func_8002261C(2, 0x7F);
+                RequestMessageWindow(2, 0x7F);
             } else {
-                func_8002261C(2, 0x80);
+                RequestMessageWindow(2, 0x80);
             }
             ovl_11_func_8011D084(26, 20);
         }
@@ -236,8 +231,8 @@ s32 ovl_11_func_80114604(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
-            func_8002261C(2, 0x83);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x83);
             if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].flags & 0x40) {
                 ovl_11_func_800F2354(8000, 1);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 100) {
@@ -251,35 +246,35 @@ s32 ovl_11_func_80114604(void) {
             ovl_11_func_8011D084(25, 24);
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0x79);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x79);
             ovl_11_func_8011D084(25, 24);
             break;
         }
         break;
     case 21:
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        func_8002261C(2, 0x5A);
+        RequestMessageWindow(2, 0x5A);
         ovl_11_func_8011D084(26, 22);
         break;
     case 22:
         selected = ovl_11_func_80116980(2, 0, 0);
         if (selected == -2) {
-            func_80022738();
-            func_8002261C(2, 0x79);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x79);
             ovl_11_func_8011D084(25, 24);
         } else if (selected != -1) {
-            func_80022738();
-            SetVal8005E334(0);
+            CloseMessageWindow();
+            SetMessagePortraitEnabled(0);
             if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].flags & 0x40) {
-                func_8002261C(2, 0x81);
+                RequestMessageWindow(2, 0x81);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 100) {
-                func_8002261C(2, 0x7C);
+                RequestMessageWindow(2, 0x7C);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 200) {
-                func_8002261C(2, 0x7D);
+                RequestMessageWindow(2, 0x7D);
             } else {
-                func_8002261C(2, 0x7E);
+                RequestMessageWindow(2, 0x7E);
             }
             ovl_11_func_8011D084(26, 23);
         }
@@ -290,8 +285,8 @@ s32 ovl_11_func_80114604(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
-            func_8002261C(2, 0x83);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x83);
             if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].flags & 0x40) {
                 ovl_11_func_800F2354(6000, 1);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 100) {
@@ -305,18 +300,18 @@ s32 ovl_11_func_80114604(void) {
             ovl_11_func_8011D084(25, 24);
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0x79);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x79);
             ovl_11_func_8011D084(25, 24);
             break;
         }
         break;
     case 24:
-        func_8002261C(2, 0x71);
+        RequestMessageWindow(2, 0x71);
         ovl_11_func_8011D084(25, 1);
         break;
     case 25:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
@@ -327,7 +322,7 @@ s32 ovl_11_func_80114604(void) {
         if (D_8012D528 == 23) {
             ovl_11_func_80116980(2, 0, 1);
         }
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }

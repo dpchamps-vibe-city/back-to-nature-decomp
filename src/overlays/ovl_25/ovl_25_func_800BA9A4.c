@@ -1,14 +1,12 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
 extern s16 D_800BFE46;
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-
 void ovl_25_func_800BA9A4(void) {
-    func_8002261C(4, 0x34);
-    if (GetVal8005E5B4() == 2) {
+    RequestMessageWindow(4, 0x34);
+    if (GetMessageWindowStatus() == 2) {
         BeginScreenFadeIncrease(0xA, 0, 2);
         D_800BFE46 = 5;
     }

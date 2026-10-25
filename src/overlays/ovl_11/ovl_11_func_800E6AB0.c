@@ -5,7 +5,7 @@ s32 ovl_11_func_800E6AB0(s32 arg0, s32 arg1, s32 arg2) {
     s32 var_s0;
 
     arg0 = (s16)arg0;
-    if (D_8006C904 != 0) {
+    if (gMessageWindowPhase != 0) {
         return 1;
     }
     var_s0 = 0;

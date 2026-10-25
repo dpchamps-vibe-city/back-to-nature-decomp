@@ -6,11 +6,11 @@
 #include "sprite_grid.h"
 #include "master_volume.h"
 #include "sound_driver.h"
+#include "message_window.h"
 
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 /* The original callers supply an additional, unread fade-time argument. */
-void func_800226F0(void);
 void func_8002495C(s16);
 void ovl_15_func_8012E15C(void);
 void ovl_15_func_801301A0(void);
@@ -26,7 +26,7 @@ void ovl_15_func_8012E520(void) {
         SetSoundSequenceSlotVolume(0, 0, 0, 0, 0);
         SsUtAllKeyOff(0);
         DisableAuxSpriteDisplay();
-        func_800226F0();
+        ResetMessageWindow();
         ovl_15_func_8012E15C();
         D_80137584 = 0;
         ovl_15_func_801372A0(0);

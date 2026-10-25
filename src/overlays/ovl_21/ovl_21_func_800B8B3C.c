@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_21_func_800BA9F8(void);
 void ovl_21_func_800BAA18(void);
@@ -14,7 +15,6 @@ void ovl_21_func_800B9F3C(void);
 void ovl_21_func_800B990C(void);
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 s32 ovl_21_func_800BA7F0(s16 arg0);
-void func_80022738(void);
 void ovl_21_func_800BA300(void);
 
 void ovl_21_func_800B8B3C(void) {
@@ -117,7 +117,7 @@ void ovl_21_func_800B8B3C(void) {
     if (((Ovl21C0448View *)D_800C0448)->unk8 <= 0 ||
         ovl_21_func_800BA7F0(0) == 0 || ovl_21_func_800BA7F0(1) == 0) {
         ((Ovl21C0448View *)D_800C0448)->unk986 = PlaySoundEffect(0x39);
-        func_80022738();
+        CloseMessageWindow();
         D_800C0448[0] = 8;
         ((Ovl21C0448View *)D_800C0448)->unk988 = 0;
     }

@@ -17,6 +17,7 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 int McxCardType (int);
 int McxSync (int, long *, long *);
@@ -40,12 +41,10 @@ void func_80017A48 (u32 arg0);
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-s32 func_80022DF8 (void);
+s32 FinishMessageWindow (void);
 void SetVal8005E2BC (s32 arg0);
-void SetVal8005E334 (s32 arg0);
 void func_80024A4C (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
 void ovl_15_func_8013468C (void);
-void func_800226F0 (void);
 void ovl_15_func_8012E15C (void);
 void func_8002495C (s16 arg0);
 void func_80017A08 (s32 arg0, s32 arg1);

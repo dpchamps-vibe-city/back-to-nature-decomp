@@ -25,9 +25,9 @@ void ovl_11_func_800F6A24(u16 arg0) {
         }
     }
     if (i != 0x48) {
-        CdReadDiscSectorsBlocking(0, (id << 11) + 0x03C19000, 0x800, 0, (s32)&D_8006C910);
+        CdReadDiscSectorsBlocking(0, (id << 11) + 0x03C19000, 0x800, 0, (s32)&gMessageWindowReadBuffer);
         src = &sprite;
-        func_80015704(src, (SpriteDataHeader *)&D_8006C910);
+        func_80015704(src, (SpriteDataHeader *)&gMessageWindowReadBuffer);
         ref = (SpriteTableRef *)src->field_20 + *(u16 *)(src->field_2C + ((SpriteTableRef *)src->field_28)->offset);
         offset = ref->count * 12 - 12;
         entry = (SpriteFramePiece *)(src->field_24 + ref->offset);
@@ -41,7 +41,7 @@ void ovl_11_func_800F6A24(u16 arg0) {
         D_80129648_textures[i].clutX = (i % 4) * 16 + baseX;
         D_80129648_textures[i].clutY = (row = (i % 24) / 4) + 0xC0;
         uploadY = row - 0x3E;
-        func_80017200((u8 *)&D_8006C910 + 0x100,
+        func_80017200((u8 *)&gMessageWindowReadBuffer + 0x100,
             (s16)((u16)D_80129648_textures[i].x - 0x140),
             D_80129648_textures[i].y,
             (s16)(D_80129648_textures[i].clutX - 0x140),

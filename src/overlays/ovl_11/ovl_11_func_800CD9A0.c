@@ -2,10 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "pad_actuator_sequences.h"
+#include "message_window.h"
 
 void *ovl_11_func_800BDCE8(u8 *arg0, Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
-s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_800CD670(s16 arg0);
 s32 ovl_11_func_800CB4E0(void);
 s32 func_8001AF44(u32 arg0);
@@ -67,7 +67,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                     if ((lookupCode != 0x63) && (ovl_11_func_80107C80(lookupCode, (u16) D_801287F0->unk8, &messages[0], 0) != 1)) {
                         if (messages[0] != -1) {
                             arg0->unk38 = (u16) D_801287F0->unk8;
-                            func_8002261C(2, messages[0]);
+                            RequestMessageWindow(2, messages[0]);
                             ovl_11_func_800CD670(0x14);
                             ovl_11_func_800CB4E0();
                         }
@@ -133,7 +133,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                     return 1;
                 }
                 if (messages[1] != -1) {
-                    func_8002261C(2, messages[1]);
+                    RequestMessageWindow(2, messages[1]);
                 }
                 ovl_11_func_800CD670(5);
                 ovl_11_func_800CB4E0();

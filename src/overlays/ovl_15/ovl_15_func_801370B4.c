@@ -9,7 +9,7 @@ s8 ovl_15_func_801370B4(void) {
     s32 temp_v1;
     s32 temp_v1_2;
 
-    func_80017B3C(gActiveRenderContext->field_D8 + 8, (s32) (D_80051D80 + D_80054BBC[0]), 0x2B, 0xC4);
+    func_80017B3C(gActiveRenderContext->field_D8 + 8, (s32) (D_80051D80 + gTextBankOffsets[0]), 0x2B, 0xC4);
     temp_v1 = *(s32 *) ((u8 *) gPad0Input + 8);
     if (temp_v1 & 0x40) {
         if (D_80137588 == 0) {

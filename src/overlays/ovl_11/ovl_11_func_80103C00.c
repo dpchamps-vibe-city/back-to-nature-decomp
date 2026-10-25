@@ -4,9 +4,9 @@
 #include "psyq/libgte.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 
-s32 func_800226B0 (void);
 void ovl_11_func_80104418 (s16 arg0, s16 *arg1);
 s32 ovl_11_func_80104394 (void);
 
@@ -16,7 +16,7 @@ s32 ovl_11_func_80103C00(void) {
     s32 temp_a1;
     s32 temp_a2;
 
-    if (func_800226B0() == 0) {
+    if (IsMessageWindowStatusFinal() == 0) {
         return 0;
     }
     var_s0 = 0;

@@ -1,10 +1,7 @@
 #include "common.h"
+#include "message_window.h"
 
 extern s16 D_800BFE44;
-
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-s32 GetVal8005E5B8(void);
 
 void ovl_25_func_800BA908(void) {
     char *base;
@@ -18,9 +15,9 @@ void ovl_25_func_800BA908(void) {
     value = *(s16 *)(p + 0x53B4);
     if (value <= *(s16 *)(ref + 0x20)) {
         *(u16 *)(p + 0x53B4) = *(u16 *)(ref + 0x20);
-        func_8002261C(4, 0x33);
-        if (GetVal8005E5B4() == 2) {
-            if (GetVal8005E5B8() == 1) {
+        RequestMessageWindow(4, 0x33);
+        if (GetMessageWindowStatus() == 2) {
+            if (GetMessageWindowChoice() == 1) {
                 *(s16 *)(ref + 2) = 4;
             } else {
                 *(s16 *)(ref + 2) = 0;

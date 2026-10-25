@@ -1,9 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
-s32 GetVal8005E5B4(void);
-s32 func_8002261C(s32 arg0, s32 arg1);
-void func_80022738(void);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_80111F10(void);
@@ -49,7 +47,7 @@ s32 ovl_11_func_80119DF8(void) {
         ovl_11_func_8011D084(6, 0);
         break;
     case 1:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
@@ -70,7 +68,7 @@ s32 ovl_11_func_80119DF8(void) {
         case 1:
             switch (((StructD548 *)D_8012D548)->index) {
             case 0:
-                func_8002261C(2, 0x87);
+                RequestMessageWindow(2, 0x87);
                 ovl_11_func_8011D084(1, 2);
                 break;
             case 1:
@@ -83,7 +81,7 @@ s32 ovl_11_func_80119DF8(void) {
                 if (flags & 0x1C0000) {
                     ovl_11_func_8011D084(13, 0);
                 } else {
-                    func_8002261C(2, 0xAD);
+                    RequestMessageWindow(2, 0xAD);
                     ovl_11_func_8011D084(1, 2);
                 }
                 break;
@@ -95,7 +93,7 @@ s32 ovl_11_func_80119DF8(void) {
         }
         break;
     case 3:
-        func_8002261C(2, 0xAF);
+        RequestMessageWindow(2, 0xAF);
         ovl_11_func_8011D084(1, 13);
         break;
     case 13:
@@ -110,16 +108,16 @@ s32 ovl_11_func_80119DF8(void) {
             break;
         case 1:
             if (ovl_11_func_8011D9DC(item, 1) == 0) {
-                func_80022738();
-                func_8002261C(2, 0x54);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0x54);
                 ovl_11_func_8011D084(1, 3);
             } else if (ovl_11_func_8011D06C(price) == 1) {
-                func_80022738();
-                func_8002261C(2, 0xAE);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0xAE);
                 ovl_11_func_8011D084(1, 5);
             } else {
-                func_80022738();
-                func_8002261C(2, 0x4F);
+                CloseMessageWindow();
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(1, 3);
             }
             break;
@@ -158,7 +156,7 @@ s32 ovl_11_func_80119DF8(void) {
             break;
         case 3:
             D_8012D52C = 4;
-            func_8002261C(2, 0x91);
+            RequestMessageWindow(2, 0x91);
             ovl_11_func_8011D084(1, 2);
             break;
         }
@@ -169,7 +167,7 @@ s32 ovl_11_func_80119DF8(void) {
         ovl_11_func_80111F10();
         ovl_11_func_8011B2B0();
         D_8012D52C = 4;
-        func_8002261C(2, 0x91);
+        RequestMessageWindow(2, 0x91);
         ovl_11_func_8011D084(1, 2);
         break;
     case 4:

@@ -4,18 +4,15 @@
 #include "master_volume.h"
 #include "sound_commands.h"
 #include "ovl11_position_transition.h"
+#include "message_window.h"
 
 #define SELECTION (*(u16 *)&D_801273D8)
 
-void SetVal8005E334(s32);
 void SetVal8005E2BC(s32);
-s32 func_8002261C(s32, s32);
 void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
-s32 func_800226B0(void);
 void func_800248B0(s32, s16, s16);
-void func_80022738(void);
 void func_8001AF70(u16, u16);
 
 s32 ovl_11_func_800FFB08(void) {
@@ -24,14 +21,14 @@ s32 ovl_11_func_800FFB08(void) {
     s16 row;
 
     DrawScreenSubtractOverlay(0x40000, 0x40000, 0x40000);
-    SetVal8005E334(0);
+    SetMessagePortraitEnabled(0);
     SetVal8005E2BC(0);
-    func_8002261C(3, 0x1B7);
+    RequestMessageWindow(3, 0x1B7);
     func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x10, 0x10, 0xAC, 0x58);
     func_80017A38(0, 2);
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053A22 + D_80054BBC[0]), 0x12, 0x12);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053A22 + gTextBankOffsets[0]), 0x12, 0x12);
     func_80017A38(0, 0);
-    ready = func_800226B0();
+    ready = IsMessageWindowStatusFinal();
     if (ready) {
         buttons = *(s32 *)gPad0Input;
         if (buttons & 0x4000) {
@@ -55,11 +52,11 @@ s32 ovl_11_func_800FFB08(void) {
         buttons = *(s32 *)((u8 *)gPad0Input + 8);
         if (buttons & 0x820) {
             PlaySoundEffect(1);
-            func_80022738();
+            CloseMessageWindow();
             return -1;
         } else if (buttons & 0x40) {
             PlaySoundEffect(0);
-            func_80022738();
+            CloseMessageWindow();
             switch (SELECTION) {
             case 1:
                 func_8001AF70(0x48, 1);

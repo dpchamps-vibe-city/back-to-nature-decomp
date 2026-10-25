@@ -1,12 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-void func_80022738(void);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 u16 ovl_11_func_801164F8(void);
@@ -64,8 +61,8 @@ s32 ovl_11_func_80115FE0(void) {
         case 1:
             switch (((StructD548 *)D_8012D548)->index) {
             case 0:
-                SetVal8005E334(0);
-                func_8002261C(2, 0xE5);
+                SetMessagePortraitEnabled(0);
+                RequestMessageWindow(2, 0xE5);
                 ovl_11_func_8011D084(0x19, 9);
                 break;
             case 1:
@@ -82,19 +79,19 @@ s32 ovl_11_func_80115FE0(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
+            CloseMessageWindow();
             if (ovl_11_func_8011D06C(10) == 1) {
                 ovl_11_func_800F2354(-10, 1);
-                func_8002261C(2, 0xE7);
+                RequestMessageWindow(2, 0xE7);
                 ovl_11_func_8011D084(0x18, 10);
             } else {
-                func_8002261C(2, 0x4F);
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(0x18, 1);
             }
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0xE8);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0xE8);
             ovl_11_func_8011D084(0x18, 1);
             break;
         }
@@ -105,7 +102,7 @@ s32 ovl_11_func_80115FE0(void) {
         break;
     case 11:
         if (IsScreenFadeComplete() == 1) {
-            func_8002261C(2, 0xE9);
+            RequestMessageWindow(2, 0xE9);
             ovl_11_func_8011D084(0x18, 12);
         }
         break;
@@ -115,12 +112,12 @@ s32 ovl_11_func_80115FE0(void) {
         break;
     case 13:
         if (IsScreenFadeComplete() == 1) {
-            func_8002261C(2, 0xEA);
+            RequestMessageWindow(2, 0xEA);
             ovl_11_func_8011D084(0x18, 14);
         }
         break;
     case 14:
-        func_8002261C(2, ovl_11_func_801164F8());
+        RequestMessageWindow(2, ovl_11_func_801164F8());
         ovl_11_func_8011D084(0x18, 0x1A);
         break;
     case 15:
@@ -143,10 +140,10 @@ s32 ovl_11_func_80115FE0(void) {
         case 1:
             if (ovl_11_func_8011D06C(price) == 1) {
                 ovl_11_func_800F2354(-price, 1);
-                func_8002261C(2, 0xFB);
+                RequestMessageWindow(2, 0xFB);
                 ovl_11_func_8011D084(0x18, 0x1B);
             } else {
-                func_8002261C(2, 0x4F);
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(0x18, 0x17);
             }
             break;
@@ -155,17 +152,17 @@ s32 ovl_11_func_80115FE0(void) {
         }
         break;
     case 23:
-        func_8002261C(2, 0xFC);
+        RequestMessageWindow(2, 0xFC);
         ovl_11_func_8011D084(0x18, 1);
         break;
     case 25:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
         break;
     case 24:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;

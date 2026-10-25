@@ -1,11 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-s32 GetVal8005E5B4(void);
-
-s32 func_8002261C(s32 arg0, s32 arg1);
-
-void func_80022738(void);
+#include "message_window.h"
 
 void ovl_11_func_800FA410(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
     Recon_ovl_11_func_800FA31C_D80126F8CEntry *p;
@@ -30,9 +25,9 @@ void ovl_11_func_800FA410(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
         ((Ovl11Status5488View *)D_8006C838)->field_548C == arg4) {
         var = 0x3DD;
     }
-    func_8002261C(3, var);
-    if (GetVal8005E5B4() == 2) {
+    RequestMessageWindow(3, var);
+    if (GetMessageWindowStatus() == 2) {
         D_80126F80 = 0xFF;
-        func_80022738();
+        CloseMessageWindow();
     }
 }

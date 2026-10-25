@@ -1,9 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
 void ovl_19_func_800BAC5C(void);
 void ovl_19_func_800BAC7C(void);
 void ovl_19_func_800B942C(void);
@@ -40,7 +39,7 @@ void ovl_19_func_800B89C8(void) {
         if (selection != -1) {
             if (D_800BD070 == -1) {
                 D_800BD070 = selection;
-                func_8002261C(4, 0x15);
+                RequestMessageWindow(4, 0x15);
                 D_800BF4C0[0x102] = PlaySoundEffect(0x43);
                 ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50 + selection * 0x20], 3, 0);
                 other = (Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50];
@@ -50,7 +49,7 @@ void ovl_19_func_800B89C8(void) {
                 ovl_19_func_800BAC50(other, 0, 0);
                 ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x90], 4, 0);
             }
-            if (GetVal8005E5B4() == 2) {
+            if (GetMessageWindowStatus() == 2) {
                 StopSoundEffectVoice(D_800BF4C0[0x102]);
                 D_800BF4C0[2] = 6;
                 D_800BF4C0[6] = D_800BD070;

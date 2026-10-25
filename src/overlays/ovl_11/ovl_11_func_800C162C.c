@@ -10,6 +10,7 @@
 #include "ovl11_scene_camera_lighting.h"
 #include "ovl11_selection_message.h"
 #include "ovl11_clock_calendar.h"
+#include "message_window.h"
 
 void ovl_11_func_800C3D70 (void);
 void ovl_11_func_800BFD1C (void);
@@ -35,7 +36,6 @@ s32 ovl_11_func_801189C8 (void);
 void ovl_11_func_800F3FB4 (void);
 void ovl_11_func_801212C4 (void);
 void ovl_11_func_800F2400 (void);
-s32 func_800225C4 (void);
 void ovl_11_func_800DE46C (void);
 
 void ovl_11_func_800C162C(void) {
@@ -93,7 +93,7 @@ void ovl_11_func_800C162C(void) {
     ovl_11_func_800F3FB4();
     ovl_11_func_801212C4();
     ovl_11_func_800F2400();
-    func_800225C4();
+    UpdateMessageWindow();
     ovl_11_func_800DE46C();
     SCRATCH_STACK_END();
 }

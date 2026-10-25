@@ -10,7 +10,7 @@ void ovl_15_func_8012F4F4(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14,
-                 (s32) &D_80052FC4[D_80054BBC[0]]);
+                 (s32) &D_80052FC4[gTextBankOffsets[0]]);
     if (D_8013759A >= 2) {
         status = ovl_15_func_80135C20(D_8013758C);
         if (status == 1) {

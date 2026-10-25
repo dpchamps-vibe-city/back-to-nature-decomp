@@ -19,6 +19,7 @@
 #include "ovl11_selection_message.h"
 #include "ovl11_clock_calendar.h"
 #include "ovl11_vertex_blend.h"
+#include "message_window.h"
 
 typedef struct {
                s16 unk0;
@@ -49,8 +50,7 @@ void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 *func_80021FE4 (void);
 s32 func_8001AF44 (u32 arg0);
 void func_8001AF70 (u16 arg0, u16 arg1);
-s16 func_80022AF0 (void);
-void func_80022FE0 (s32 *arg0);
+s16 GetMessageWindowArchiveId (void);
 void func_800179E8 (void);
 void func_80015704 ();
 void func_80022008 (void);
@@ -111,7 +111,6 @@ void ovl_11_func_800DC990 (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_80107F18 (void);
-void func_800226F0 (void);
 s32 *ovl_11_func_80111E38 (void);
 void ovl_11_func_800F2508 (void);
 void ovl_11_func_80104898 (void);

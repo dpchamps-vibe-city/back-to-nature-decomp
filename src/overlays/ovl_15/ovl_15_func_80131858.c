@@ -14,7 +14,7 @@ void ovl_15_func_80131858(void) {
 
     slot = 0;
     text = gActiveRenderContext->field_D8;
-    func_8001AC10((u32 *) (text + 0x18), text + 0x14, D_80054BBC[0] + (s32) D_80052FC4);
+    func_8001AC10((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) D_80052FC4);
     cardStates = D_80137594;
     for (; slot < 3; slot++) {
         D_80137820[slot] = 2;

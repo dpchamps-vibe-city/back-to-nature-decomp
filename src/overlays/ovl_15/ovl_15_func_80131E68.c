@@ -12,7 +12,7 @@ s32 ovl_15_func_80131E68(void) {
     s32 ret;
 
     p = &D_80137584;
-    func_8001AC10((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, D_80054BBC[0] + (s32)D_80052F4E);
+    func_8001AC10((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052F4E);
     ret = ovl_15_func_80137228(0x1E, 0);
     *p = ret;
     if (D_8013759A >= 0x5B) {

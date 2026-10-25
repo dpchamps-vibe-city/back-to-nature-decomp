@@ -1,10 +1,9 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_19_func_800BA770(void);
 void func_80017A08(s32 arg0, s32 arg1);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
 s32 ovl_19_func_800BADAC(s16 arg0);
 void ovl_19_func_800B843C(void);
 
@@ -15,14 +14,14 @@ void ovl_19_func_800B8C74(void) {
     flag = ((Ovl19SelectionState *)D_800BF4C0)->flag;
     if (flag == 0) {
         func_80017A08(0, ((Ovl19CompletionCounterView *)D_8006C838)->text);
-        func_8002261C(4, 0x16);
+        RequestMessageWindow(4, 0x16);
     } else {
         func_80017A08(0, (s32)((u8 *)gOvl19ValueLabelText +
             ovl_19_func_800BADAC(((Ovl19SelectionState *)D_800BF4C0)->values[
                 D_800BCF24[((Ovl19SelectionState *)D_800BF4C0)->selection]])));
-        func_8002261C(4, 0x17);
+        RequestMessageWindow(4, 0x17);
     }
-    if (GetVal8005E5B4() == 2) {
+    if (GetMessageWindowStatus() == 2) {
         ((Ovl19SelectionState *)D_800BF4C0)->selection++;
         StopSoundEffectVoice(((Ovl19SelectionState *)D_800BF4C0)->handle);
         if (flag == 0) {

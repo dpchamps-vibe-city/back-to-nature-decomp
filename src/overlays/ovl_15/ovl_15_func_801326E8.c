@@ -17,7 +17,7 @@ void ovl_15_func_801326E8(void) {
     var_s0 = 0;
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
-                 (s32)&D_80051FEA[D_80054BBC[0]]);
+                 (s32)&D_80051FEA[gTextBankOffsets[0]]);
     do {
         ovl_15_func_80136C70(var_s0, 0);
         var_s0 += 1;

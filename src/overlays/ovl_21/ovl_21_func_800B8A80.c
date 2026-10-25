@@ -1,10 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_21_func_800BA4C0(void);
-s32 GetVal8005E5B4(void);
-void func_80022738(void);
 
 void ovl_21_func_800B8A80(void) {
     u8 *base;
@@ -17,13 +16,13 @@ void ovl_21_func_800B8A80(void) {
         ((UnkStruct800C0448 *)D_800C0448)[i].unk18 = fill;
     }
     ovl_21_func_800BA4C0();
-    if (GetVal8005E5B4() == 5) {
+    if (GetMessageWindowStatus() == 5) {
         base = (u8 *)D_800C0448;
         tmp = *(u16 *)(base + 0x988);
         tmp++;
         *(s16 *)(base + 0x988) = tmp;
         if ((s16)tmp >= 0x3D) {
-            func_80022738();
+            CloseMessageWindow();
             tmp = PlaySoundEffect(0x39);
             *(s16 *)(base + 0x984) = tmp;
             *(s16 *)(base + 0x988) = 0;

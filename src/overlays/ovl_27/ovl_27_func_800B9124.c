@@ -20,7 +20,7 @@ void ovl_27_func_800B9124(void) {
     temp_s2 = gActiveRenderContext->field_D8 + 0x80;
     func_80017A38(0, 1);
     func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x84), 1, 0x48, 0x38, 0xB0, 0x5A);
-    func_80017B3C(temp_s2, (s32) ((u8 *) D_80051AF6 + *D_80054BBC), 0x4C, 0x3C);
+    func_80017B3C(temp_s2, (s32) ((u8 *) D_80051AF6 + *gTextBankOffsets), 0x4C, 0x3C);
     func_80017A38(0, 0);
     base = (u8 *) D_8006C838;
     func_80024A10(temp_s2, 0xAC, 0x48, *(s16 *) (base + 0x5246));

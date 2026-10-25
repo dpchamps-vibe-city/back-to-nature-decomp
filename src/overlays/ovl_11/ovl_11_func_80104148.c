@@ -46,7 +46,7 @@ void ovl_11_func_80104148(s32 arg0) {
     }
     func_80017B3C(temp_s6, (s32) var_a1, x, (s32) temp_v0);
     x += 0x51;
-    func_80017B3C(temp_s6, (s32) (D_80051BF4 + *D_80054BBC), x, (s32) temp_v0);
+    func_80017B3C(temp_s6, (s32) (D_80051BF4 + *gTextBankOffsets), x, (s32) temp_v0);
     x += 0x24;
     buffer = &D_8012CF30_glyph.glyph;
     *(u16 *)func_8001A970((s32) temp_s2, buffer, 2) = 0xFFFF;
@@ -55,5 +55,5 @@ void ovl_11_func_80104148(s32 arg0) {
     *(u16 *)func_8001A970((s32) temp_s7, buffer, 2) = 0xFFFF;
     func_80017B3C(temp_s6, (s32) buffer, x, (s32) temp_v0);
     x += 0x12;
-    func_80017B3C(temp_s6, (s32) (D_80051BF4 + 0xA + *D_80054BBC), x, (s32) temp_v0);
+    func_80017B3C(temp_s6, (s32) (D_80051BF4 + 0xA + *gTextBankOffsets), x, (s32) temp_v0);
 }

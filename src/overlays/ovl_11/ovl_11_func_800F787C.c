@@ -1,14 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void func_80017A38(s16 arg0, s16 arg1);
-s32 func_800226B0(void);
-void func_80022738(void);
 s32 pow_int(s32 arg0, s32 arg1);
-void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_800F8C1C(u32 *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F8B4C(s32 arg0, s32 arg1);
 s32 ovl_11_func_800F7AA0(void);
@@ -30,9 +27,9 @@ void ovl_11_func_800F787C(void) {
     s32 *display;
 
     func_80017A38(0, 2);
-    if (func_800226B0() && (*(s32 *)((u8 *)gPad0Input + 8) & 0x800)) {
+    if (IsMessageWindowStatusFinal() && (*(s32 *)((u8 *)gPad0Input + 8) & 0x800)) {
         D_80126E40 = 0xFE;
-        func_80022738();
+        CloseMessageWindow();
         PlaySoundEffect(3);
         return;
     }
@@ -61,8 +58,8 @@ void ovl_11_func_800F787C(void) {
     } else {
         return;
     }
-    firstText = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + firstText));
-    secondText = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + secondText));
+    firstText = (s32)((u8 *)D_8005175C + (gTextBankOffsets[0] + firstText));
+    secondText = (s32)((u8 *)D_8005175C + (gTextBankOffsets[0] + secondText));
     object = gActiveRenderContext->field_D8;
     panel = (u32 *)(object + 0x68);
     text = object + 0x64;
@@ -77,8 +74,8 @@ void ovl_11_func_800F787C(void) {
     ovl_11_func_800F882C(display, 9, 8, (s16 *)items);
     ovl_11_func_800F87AC(text, (s32)panel, D_80126E44, D_80126E4A);
     if (D_80126E4E == 0xFF) {
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        func_8002261C(3, message);
+        RequestMessageWindow(3, message);
     }
 }

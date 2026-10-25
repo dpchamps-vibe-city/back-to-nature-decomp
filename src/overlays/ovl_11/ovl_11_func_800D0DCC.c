@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 void func_80017A08(s32 arg0, s32 arg1);
-s32 func_8002261C(s32 arg0, s32 arg1);
 
 s32 ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0) {
     s16 temp_a0;
@@ -41,5 +41,5 @@ s32 ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0) {
             }
         }
     }
-    return func_8002261C(0, var_a1);
+    return RequestMessageWindow(0, var_a1);
 }

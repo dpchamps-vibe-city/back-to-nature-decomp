@@ -7,6 +7,7 @@
 #include "cd_audio.h"
 #include "master_volume.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 
 u32 func_80017A64 (void);
@@ -14,9 +15,6 @@ void func_80017A48 (u32 arg0);
 void ovl_11_func_8011F608 (void);
 void ovl_11_func_8011F9EC (s32 *arg0);
 void func_80017A08 (s32 arg0, s32 arg1);
-s32 func_8002261C (s32 arg0, s32 arg1);
-s32 GetVal8005E5B4 (void);
-s32 GetVal8005E5B8 (void);
 s32 ovl_11_func_8011FB80 (s16 arg0);
 void ovl_11_func_800BC9AC (void);
 void ovl_11_func_8011F958 (void);

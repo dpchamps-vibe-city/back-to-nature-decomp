@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
-s32 GetVal8005E5B4(void);
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -78,7 +78,7 @@ s32 ovl_11_func_80117BB4(void) {
         D_8012D7A0 = 6;
         return 0;
     case 5:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             D_8012D79C = D_8012D7A0;
         }
         return 0;

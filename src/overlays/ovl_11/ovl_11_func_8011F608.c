@@ -4,12 +4,10 @@
 #include "cd_audio.h"
 #include "master_volume.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void func_80017A08(s32 arg0, s32 arg1);
-/* Overlay imports of GetVal8005E5B8 and GetVal8005E5B4. */
-s32 GetVal8005E5B8(void);
-s32 GetVal8005E5B4(void);
-s32 func_8002261C(s32 arg0, s32 arg1);
+/* Overlay imports of GetMessageWindowChoice and GetMessageWindowStatus. */
 void ovl_11_func_800BC9AC(void);
 void ovl_11_func_8011F958(void);
 void ovl_11_func_8011F9EC(s32 *arg0);
@@ -34,15 +32,15 @@ void ovl_11_func_8011F608(void) {
         func_80017A08(0, Ovl11_D_80128544[0]);
         func_80017A08(1, Ovl11_D_80128544[1]);
         func_80017A08(2, Ovl11_D_80128544[2]);
-        func_8002261C(2, 0xFD);
-        if (GetVal8005E5B4() == 2) {
-            D_80128556 = ovl_11_func_8011FB80((s16)GetVal8005E5B8());
+        RequestMessageWindow(2, 0xFD);
+        if (GetMessageWindowStatus() == 2) {
+            D_80128556 = ovl_11_func_8011FB80((s16)GetMessageWindowChoice());
             D_80128540 = 4;
         }
         break;
     case 4:
-        func_8002261C(2, D_80128556);
-        if (GetVal8005E5B4() == 2) {
+        RequestMessageWindow(2, D_80128556);
+        if (GetMessageWindowStatus() == 2) {
             if (D_80128556 == 0x10A) {
                 PlaySoundSequenceWithReverb(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
                 ovl_11_func_800BC9AC();

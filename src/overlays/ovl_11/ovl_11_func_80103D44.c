@@ -1,7 +1,6 @@
 #include "common.h"
 #include "sound_commands.h"
-
-s32 func_800226B0(void);
+#include "message_window.h"
 
 s32 ovl_11_func_80104394(void);
 
@@ -11,7 +10,7 @@ s32 ovl_11_func_80103D44(void) {
     s32 temp_v0;
     s32 var_s0;
 
-    if (func_800226B0() != 0) {
+    if (IsMessageWindowStatusFinal() != 0) {
         var_s0 = 0;
         temp_a0 = *(s32 *) ((u8 *) gPad0Input + 0);
         if (temp_a0 & 0x1000) {

@@ -10,7 +10,7 @@ void ovl_11_func_800FC998(void) {
     s16 temp_s0;
     s32 var_s3;
 
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) ((u8 *) D_800535E6 + D_80054BBC[0]), 0xBA, 0x14);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) ((u8 *) D_800535E6 + gTextBankOffsets[0]), 0xBA, 0x14);
     var_s3 = 0;
     do {
         temp_s2 = (Ovl11D80127274Entry *) ((u8 *) D_80127274 + (var_s3 * 6));

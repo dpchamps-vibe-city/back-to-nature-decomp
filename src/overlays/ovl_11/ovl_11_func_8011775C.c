@@ -20,7 +20,7 @@ s32 ovl_11_func_8011775C(void) {
     if (!special) {
         *(s8 *) ((u8 *) q + 0x5A) = 15;
         *(s8 *) ((u8 *) q + 0x5B) = 20;
-        *q = (void *) ((D_80051BF0 + 2) + D_80054BBC[1]);
+        *q = (void *) ((D_80051BF0 + 2) + gTextBankOffsets[1]);
         *(s16 *) ((u8 *) q + 0x28) = 0xA9;
         *(s8 *) ((u8 *) q + 0x3C) = 0;
         *(s16 *) ((u8 *) q + 0x46) = 0x112;
@@ -28,18 +28,18 @@ s32 ovl_11_func_8011775C(void) {
         a++;
         c++;
         b++;
-        *q++ = (void *) ((D_80051BF0 + 0x1C) + D_80054BBC[1]);
+        *q++ = (void *) ((D_80051BF0 + 0x1C) + gTextBankOffsets[1]);
         *a++ = 0x134;
         *c++ = 0;
         *b++ = 0x113;
-        *q++ = (void *) ((D_80051BF0 + 0x3C) + D_80054BBC[1]);
+        *q++ = (void *) ((D_80051BF0 + 0x3C) + gTextBankOffsets[1]);
         *a++ = 0xAA;
         *c++ = 0;
         *b++ = 0x114;
     } else {
         *(s8 *) ((u8 *) q + 0x5A) = 10;
         *(s8 *) ((u8 *) q + 0x5B) = 15;
-        *q = (void *) (D_80051B90 + D_80054BBC[1]);
+        *q = (void *) (D_80051B90 + gTextBankOffsets[1]);
         *(s16 *) ((u8 *) q + 0x28) = 0xA8;
         *(s8 *) ((u8 *) q + 0x3C) = 0;
         *(s16 *) ((u8 *) q + 0x46) = 0x10D;
@@ -47,19 +47,19 @@ s32 ovl_11_func_8011775C(void) {
         a++;
         c++;
         b++;
-        *q++ = (void *) ((D_80051B90 + 0x12) + D_80054BBC[1]);
+        *q++ = (void *) ((D_80051B90 + 0x12) + gTextBankOffsets[1]);
         *a++ = 0x130;
         *c++ = 0;
         *b++ = 0x10E;
-        *q++ = (void *) ((D_80051B90 + 0x1E) + D_80054BBC[1]);
+        *q++ = (void *) ((D_80051B90 + 0x1E) + gTextBankOffsets[1]);
         *a++ = 0x131;
         *c++ = 0;
         *b++ = 0x10F;
-        *q++ = (void *) ((D_80051B90 + 0x32) + D_80054BBC[1]);
+        *q++ = (void *) ((D_80051B90 + 0x32) + gTextBankOffsets[1]);
         *a++ = 0x132;
         *c++ = 0;
         *b++ = 0x110;
-        *q++ = (void *) ((D_80051B90 + 0x48) + D_80054BBC[1]);
+        *q++ = (void *) ((D_80051B90 + 0x48) + gTextBankOffsets[1]);
         *a++ = 0x133;
         *c++ = 0;
         *b++ = 0x111;
@@ -71,7 +71,7 @@ s32 ovl_11_func_8011775C(void) {
     D_8012D7B8.unkA = 0x116;
     D_8012D7B8.unk10 = 4;
     D_8012D7B8.unk0 = D_8012D548;
-    *q = (void *) (D_80051BE6 + D_80054BBC[1]);
+    *q = (void *) (D_80051BE6 + gTextBankOffsets[1]);
     *a = 0xAB;
     *c = 0;
     *b = 0x115;

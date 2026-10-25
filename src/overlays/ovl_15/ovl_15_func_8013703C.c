@@ -16,5 +16,5 @@ void ovl_15_func_8013703C(s16 arg0, s16 *arg1, s32 arg2) {
         offset = 0x24;
     }
     func_8001ABF0((u16 *)func_8001A970(arg0, arg1, arg2),
-                  (u16 *)(D_80054BBC[0] + offset + (s32)D_8005175C));
+                  (u16 *)(gTextBankOffsets[0] + offset + (s32)D_8005175C));
 }

@@ -11,9 +11,8 @@
 
 #include "common.h"
 #include "ovl11_selection_message.h"
+#include "message_window.h"
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
 s32 func_8001AF44(u32 arg0);
 s32 Ovl11AdvanceSelectionMessageVariant(s32 category);
 s32 Ovl11CountSelectionMessageItems(void);
@@ -45,11 +44,11 @@ void Ovl11UpdateSelectionMessage(void) {
         case 0:
             return;
         case 1:
-            func_8002261C(2, Ovl11AdvanceSelectionMessageVariant(gOvl11SelectionMessageCategory));
+            RequestMessageWindow(2, Ovl11AdvanceSelectionMessageVariant(gOvl11SelectionMessageCategory));
             gOvl11SelectionMessagePhase = 2;
             break;
         case 2:
-            if (GetVal8005E5B4() == 2) {
+            if (GetMessageWindowStatus() == 2) {
                 gOvl11SelectionMessagePhase = 3;
             }
             break;

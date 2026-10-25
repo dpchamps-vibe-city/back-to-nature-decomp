@@ -1,13 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
-s32 func_800226B0(void);
-void func_80022738(void);
-/* Overlay aliases of SetVal8005E334 and SetVal8005E2BC. */
-void SetVal8005E334(s32 arg0);
+/* Overlay aliases of SetMessagePortraitEnabled and SetVal8005E2BC. */
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_800F6640(void);
 void ovl_11_func_800FA1CC(Ovl11FA1CCArg *arg0);
 void ovl_11_func_800F9FF4(void);
@@ -19,11 +16,11 @@ void ovl_11_func_800F9E4C(void) {
     Ovl11FA1CCArg *entry;
     s32 object;
 
-    if (func_800226B0() && (((GfxObj *)gPad0Input)->field_8 & 0x800)) {
+    if (IsMessageWindowStatusFinal() && (((GfxObj *)gPad0Input)->field_8 & 0x800)) {
         if (D_80126F88 == 1) {
             ovl_11_func_800F6640();
         }
-        func_80022738();
+        CloseMessageWindow();
         D_80126F7C = 2;
         PlaySoundEffect(3);
     } else {
@@ -31,9 +28,9 @@ void ovl_11_func_800F9E4C(void) {
         ovl_11_func_800FA1CC(entry);
         ovl_11_func_800F9FF4();
         if (D_80126F80 == 0xFF) {
-            SetVal8005E334(0);
+            SetMessagePortraitEnabled(0);
             SetVal8005E2BC(0);
-            func_8002261C(3, 0x3B4);
+            RequestMessageWindow(3, 0x3B4);
         } else {
             object = gActiveRenderContext->field_D8;
             state = (struct Ovl11B264StateView *)((char *)entry - 0x44B8);

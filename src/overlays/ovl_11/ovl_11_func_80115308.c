@@ -1,14 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
+#include "text_entry.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-void func_80022738(void);
-void func_80023100(void);
-void func_800231AC(u16 *arg0);
-s32 func_800231E8(void);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 s32 *ovl_11_func_800D0CD8(void);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -77,31 +72,31 @@ s32 ovl_11_func_80115308(void) {
             switch (((StructD548 *)D_8012D548)->index) {
             case 0:
                 if (((Ovl11FeedGlobals *)D_8006C838)->amount >= 1000) {
-                    func_8002261C(2, 0x4C);
+                    RequestMessageWindow(2, 0x4C);
                     ovl_11_func_8011D084(22, 1);
                 } else {
-                    func_8002261C(2, 0x4B);
+                    RequestMessageWindow(2, 0x4B);
                     ovl_11_func_8011D084(22, 9);
                 }
                 break;
             case 1:
                 if (ovl_11_func_800D0CD8() == 0) {
-                    func_8002261C(2, 0x55);
+                    RequestMessageWindow(2, 0x55);
                     ovl_11_func_8011D084(22, 21);
                 } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) != 1) {
-                    func_8002261C(2, 0x4F);
+                    RequestMessageWindow(2, 0x4F);
                     ovl_11_func_8011D084(22, 21);
                 } else {
-                    func_8002261C(2, 0x56);
+                    RequestMessageWindow(2, 0x56);
                     ovl_11_func_8011D084(22, 16);
                 }
                 break;
             case 2:
                 if (ovl_11_func_80117178(0, 0, -1) == 0) {
-                    func_8002261C(2, 0x59);
+                    RequestMessageWindow(2, 0x59);
                     ovl_11_func_8011D084(22, 21);
                 } else {
-                    func_8002261C(2, 0x58);
+                    RequestMessageWindow(2, 0x58);
                     D_8012D52C = 0;
                     ovl_11_func_80116980(0, 0, -1);
                     ovl_11_func_8011D084(22, 18);
@@ -110,16 +105,16 @@ s32 ovl_11_func_80115308(void) {
             case 3:
                 if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548))) == 1) {
                     if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1) == 0) {
-                        func_8002261C(2, 0x54);
+                        RequestMessageWindow(2, 0x54);
                         ovl_11_func_8011D084(22, 21);
                     } else {
                         ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)D_8012D548), 1, 1);
                         ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
-                        func_8002261C(2, 0x51);
+                        RequestMessageWindow(2, 0x51);
                         ovl_11_func_8011D084(22, 21);
                     }
                 } else {
-                    func_8002261C(2, 0x4F);
+                    RequestMessageWindow(2, 0x4F);
                     ovl_11_func_8011D084(22, 21);
                 }
                 break;
@@ -128,9 +123,9 @@ s32 ovl_11_func_80115308(void) {
         }
         break;
     case 9:
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        func_8002261C(2, 0x4D);
+        RequestMessageWindow(2, 0x4D);
         ovl_11_func_8011D084(23, 10);
         break;
     case 10:
@@ -148,33 +143,33 @@ s32 ovl_11_func_80115308(void) {
             ovl_11_func_8011D084(22, 21);
             break;
         case 1:
-            func_80022738();
+            CloseMessageWindow();
             if (ovl_11_func_8011D06C(state->unk8 * state->unkA) == 1) {
                 if (state->unk8 + ((Ovl11FeedGlobals *)D_8006C838)->amount >= 1000) {
-                    func_8002261C(2, 0x4C);
+                    RequestMessageWindow(2, 0x4C);
                     ovl_11_func_8011D084(22, 9);
                 } else {
                     ovl_11_func_80115C60(state);
-                    func_8002261C(2, 0x52);
+                    RequestMessageWindow(2, 0x52);
                     ovl_11_func_8011D084(22, 21);
                 }
             } else {
-                func_8002261C(2, 0x4F);
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(22, 9);
             }
             break;
         }
         break;
     case 16:
-        func_80023100();
-        func_800231AC(D_8012D6EC);
+        ResetTextEntry();
+        BeginTextEntry(D_8012D6EC);
         D_8012D52C = 0;
         ovl_11_func_8011D084(17, 0);
         break;
     case 17:
-        switch (func_800231E8()) {
+        switch (UpdateTextEntry()) {
         case -1:
-            func_8002261C(2, 0x4E);
+            RequestMessageWindow(2, 0x4E);
             ovl_11_func_8011D084(22, 21);
             break;
         case 1:
@@ -183,30 +178,30 @@ s32 ovl_11_func_80115308(void) {
                 dest[i] = D_8012D6E8.values[i];
             }
             ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)D_8012D548)), 1);
-            func_8002261C(2, 0x57);
+            RequestMessageWindow(2, 0x57);
             ovl_11_func_8011D084(22, 21);
             break;
         }
         break;
     case 18:
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
-        func_8002261C(2, 0x5A);
+        RequestMessageWindow(2, 0x5A);
         ovl_11_func_8011D084(23, 19);
         break;
     case 19:
         selected = ovl_11_func_80116980(0, 0, 0);
         if (selected == -2) {
-            func_80022738();
-            func_8002261C(2, 0x5B);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x5B);
             ovl_11_func_8011D084(22, 21);
         } else if (selected != -1) {
-            func_80022738();
-            SetVal8005E334(0);
+            CloseMessageWindow();
+            SetMessagePortraitEnabled(0);
             if (((struct Ovl11Scan109Globals *)D_8006C838)->records[selected].flags & 0x40) {
-                func_8002261C(2, 0x61);
+                RequestMessageWindow(2, 0x61);
             } else {
-                func_8002261C(2, 0x60);
+                RequestMessageWindow(2, 0x60);
             }
             ovl_11_func_8011D084(23, 20);
         }
@@ -217,8 +212,8 @@ s32 ovl_11_func_80115308(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
-            func_8002261C(2, 0x5E);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x5E);
             if (((struct Ovl11Scan109Globals *)D_8006C838)->records[selected].flags & 0x40) {
                 ovl_11_func_800F2354(2000, 1);
             } else {
@@ -228,18 +223,18 @@ s32 ovl_11_func_80115308(void) {
             ovl_11_func_8011D084(22, 21);
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0x5B);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x5B);
             ovl_11_func_8011D084(22, 21);
             break;
         }
         break;
     case 21:
-        func_8002261C(2, 0x53);
+        RequestMessageWindow(2, 0x53);
         ovl_11_func_8011D084(22, 1);
         break;
     case 22:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
@@ -247,7 +242,7 @@ s32 ovl_11_func_80115308(void) {
         if (D_8012D528 == 20) {
             ovl_11_func_80116980(0, 0, 1);
         }
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }

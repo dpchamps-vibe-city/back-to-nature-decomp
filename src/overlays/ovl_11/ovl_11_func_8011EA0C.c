@@ -1,15 +1,11 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void func_80017A38(s16 arg0, s16 arg1);
-s32 func_800226B0(void);
 void ovl_11_func_8011ECC4(void);
-s32 GetVal8005E5B4(void);
-void func_80022738(void);
-void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_11_func_8011EC54(void);
 
 void ovl_11_func_8011EA0C(void) {
@@ -18,7 +14,7 @@ void ovl_11_func_8011EA0C(void) {
 
     func_80017A38(0, 2);
     direction = 0;
-    if (D_80128420 != 7 && func_800226B0()) {
+    if (D_80128420 != 7 && IsMessageWindowStatusFinal()) {
         buttons = ((u32 *)gPad0Input)[0] & 0xF000;
         if (buttons) {
             s32 offset;
@@ -47,32 +43,32 @@ void ovl_11_func_8011EA0C(void) {
     }
     ovl_11_func_8011ECC4();
     if (D_80128420 == 7) {
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             D_80128420 = 6;
-            func_80022738();
+            CloseMessageWindow();
         }
     } else {
-        SetVal8005E334(0);
+        SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         if (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476 == 1) {
-            func_8002261C(3, 0x3AB);
+            RequestMessageWindow(3, 0x3AB);
         } else {
-            func_8002261C(3, 0x3B1);
+            RequestMessageWindow(3, 0x3B1);
         }
     }
-    if (D_80128420 != 7 && func_800226B0()) {
+    if (D_80128420 != 7 && IsMessageWindowStatusFinal()) {
         u32 pressed;
 
         pressed = ((u32 *)gPad0Input)[2];
         if (pressed & 0x120) {
-            if (func_800226B0()) {
+            if (IsMessageWindowStatusFinal()) {
                 ovl_11_func_8011EC54();
             }
         } else if (pressed & 0x50) {
             PlaySoundEffect(0);
             D_80128420 = 7;
-            func_80022738();
-            func_8002261C(3, D_80128422 + 0x385);
+            CloseMessageWindow();
+            RequestMessageWindow(3, D_80128422 + 0x385);
         } else if (pressed & 0x800) {
             if (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476 == 1) {
                 PlaySoundEffect(0);

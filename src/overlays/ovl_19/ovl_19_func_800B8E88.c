@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 /* ovl_19 bss state base, referenced with absolute addressing (lui + %lo).
  * The two command records live at +0x10 and +0x58 (s16 index 8 and 0x2C);
@@ -8,8 +9,6 @@
  * (index 0x101) are written by this handler. */
 extern s16 D_800BF4C0[];
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
 void ovl_19_func_800BAC40(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
 
@@ -21,8 +20,8 @@ void ovl_19_func_800B8E88(void) {
     s32 temp_s0;
     CAPTURE_PREV_RET(phantom);
 
-    func_8002261C(4, 9);
-    temp_s0 = GetVal8005E5B4();
+    RequestMessageWindow(4, 9);
+    temp_s0 = GetMessageWindowStatus();
     if (temp_s0 == 2) {
         ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 1, 0);
         ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 1, 0);

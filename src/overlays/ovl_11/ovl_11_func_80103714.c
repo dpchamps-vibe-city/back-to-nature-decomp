@@ -1,10 +1,10 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 extern s8 D_801273E4;
 
 void ovl_11_func_800BCF28(void);
-void func_800226F0(void);
 
 void ovl_11_func_80103714(void) {
     char *base;
@@ -15,5 +15,5 @@ void ovl_11_func_80103714(void) {
     ovl_11_func_800BCF28();
     PlaySoundEffect(3);
     *(s32 *)(base + 0x5234) |= 0x2000;
-    func_800226F0();
+    ResetMessageWindow();
 }

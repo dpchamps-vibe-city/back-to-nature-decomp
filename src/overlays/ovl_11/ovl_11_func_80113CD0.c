@@ -17,8 +17,8 @@ s32 ovl_11_func_80113CD0(void) {
 
     ovl_11_func_80111F10();
     header = &D_8012D538;
-    header->unk0 = (s32) D_80051E92 + D_80054BBC[1];
-    *(s32 *) ((u8 *) header + 4) = (s32) D_80051E92 - 0x678 + D_80054BBC[1];
+    header->unk0 = (s32) D_80051E92 + gTextBankOffsets[1];
+    *(s32 *) ((u8 *) header + 4) = (s32) D_80051E92 - 0x678 + gTextBankOffsets[1];
     flags = D_800719F8;
     header->unkA = ovl_11_func_800D6014(0x68U);
     header->unk8 = 1;
@@ -32,7 +32,7 @@ s32 ovl_11_func_80113CD0(void) {
     a = (s16 *) ((u8 *) q + 0x28);
     c = (s8 *) ((u8 *) q + 0x3C);
     b = (s16 *) ((u8 *) q + 0x46);
-    *q = (void *) ((s32) D_80051E92 + D_80054BBC[1]);
+    *q = (void *) ((s32) D_80051E92 + gTextBankOffsets[1]);
     *(s16 *) ((u8 *) q + 0x28) = 0x68;
     *(s8 *) ((u8 *) q + 0x3C) = 0;
     *(s16 *) ((u8 *) q + 0x46) = 0x63;
@@ -41,7 +41,7 @@ s32 ovl_11_func_80113CD0(void) {
     c++;
     b++;
     if (flags & 0x200000) {
-        *q = (void *) ((s32) D_80051E92 + 0xE + D_80054BBC[1]);
+        *q = (void *) ((s32) D_80051E92 + 0xE + gTextBankOffsets[1]);
     } else {
         *q = NULL;
     }
@@ -50,7 +50,7 @@ s32 ovl_11_func_80113CD0(void) {
     *c++ = 0;
     *b++ = 0x65;
     if (flags & 0x400000) {
-        *q = (void *) ((s32) D_80051EB8 + D_80054BBC[1]);
+        *q = (void *) ((s32) D_80051EB8 + gTextBankOffsets[1]);
     } else {
         *q = NULL;
     }
@@ -58,24 +58,24 @@ s32 ovl_11_func_80113CD0(void) {
     *a++ = 0x20;
     *c++ = 0;
     *b++ = 0x66;
-    *q++ = (void *) ((s32) D_80051ED0 + D_80054BBC[1]);
+    *q++ = (void *) ((s32) D_80051ED0 + gTextBankOffsets[1]);
     *a++ = 0x161;
     *c++ = 0;
     *b++ = 0x67;
-    *q++ = (void *) ((s32) D_80051ED0 + 0x10 + D_80054BBC[1]);
+    *q++ = (void *) ((s32) D_80051ED0 + 0x10 + gTextBankOffsets[1]);
     *a++ = 0x165;
     *c++ = 0;
     *b++ = 0x68;
-    *q++ = (void *) ((s32) D_80051ED0 + 0x24 + D_80054BBC[1]);
+    *q++ = (void *) ((s32) D_80051ED0 + 0x24 + gTextBankOffsets[1]);
     *a++ = 0;
     *c++ = 3;
     *b++ = 0x69;
-    *q++ = (void *) ((s32) D_80051ED0 + 0x36 + D_80054BBC[1]);
+    *q++ = (void *) ((s32) D_80051ED0 + 0x36 + gTextBankOffsets[1]);
     *a++ = 0;
     *c++ = 3;
     *b++ = 0x6A;
     if (flags & 0x4000) {
-        *q = (void *) ((s32) D_80051ED0 - 0x5E + D_80054BBC[1]);
+        *q = (void *) ((s32) D_80051ED0 - 0x5E + gTextBankOffsets[1]);
     } else {
         *q = NULL;
     }
@@ -84,7 +84,7 @@ s32 ovl_11_func_80113CD0(void) {
     *c++ = 0;
     *b++ = 0x64;
     if (ovl_11_func_800E6EE0(0x1D, 0, 2, 0) != 1) {
-        *q = (void *) ((s32) D_80051F1C + D_80054BBC[1]);
+        *q = (void *) ((s32) D_80051F1C + gTextBankOffsets[1]);
     } else {
         *q = NULL;
     }

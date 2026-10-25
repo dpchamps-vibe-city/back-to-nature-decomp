@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 unsigned long long ovl_11_func_800BF450(void);
@@ -13,7 +14,6 @@ s32 ovl_11_func_800CB540(u16 *arg0);
 s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1);
 Ovl11CC7CCSpawn *ovl_11_func_800F4994(Vec3 *arg0);
 s32 ovl_11_func_800F3E44(s16 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
 s32 ovl_11_func_800BF3D0(void);
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
@@ -81,7 +81,7 @@ s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0) {
             if (spawn != NULL) {
                 spawn->flags |= 0x100;
                 if (D_8006C858[arg0->unk2].field_12 != 0 && ovl_11_func_800F3E44(arg0->unk2) != 0) {
-                    func_8002261C(3, 0x383);
+                    RequestMessageWindow(3, 0x383);
                 }
 remove:
                 ovl_11_func_800CCBE8((Ovl11CC4E0Object *)arg0);

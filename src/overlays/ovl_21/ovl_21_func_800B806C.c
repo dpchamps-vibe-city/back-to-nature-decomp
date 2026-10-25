@@ -5,11 +5,10 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "ovl21_scene_camera_geometry.h"
-
-s32 func_800225C4(void);
+#include "message_window.h"
 
 void ovl_21_func_800B806C(void) {
-    func_800225C4();
+    UpdateMessageWindow();
     Ovl21UpdateSceneCameraOffset();
     Ovl21ApplySceneCamera();
     ApplyGteSceneState();

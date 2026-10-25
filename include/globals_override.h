@@ -2313,7 +2313,7 @@ extern s16 D_8005F0A8[10];
 
 /* D_80055988 - s16 array accessed with absolute addressing (lui+addiu+lh)
  * Index: (s16)arg. Array size of 5 ensures >8 byte declaration for absolute addressing */
-extern s16 D_80055988[5];
+extern s16 gMessagePortraitValueIndices[5];
 
 /* D_80049044 - u16 array accessed with lhu at index*2 (func_80019070)
  * Array size of 6 ensures >8 byte declaration for absolute addressing (lui+addiu) */
@@ -2454,9 +2454,9 @@ extern s32 D_8005F0C8[4096];
  * D_800559C4 - array of s32 function pointers.
  * All absolute-addressed (lui+addiu). Array size 3 ensures >8 bytes
  * to avoid GP-relative small-data addressing. */
-extern s32 D_80055994[3];
-extern s32 D_800559BC[3];
-extern s32 D_800559C4[3];
+extern s32 gTextEntryColumnBounds[3];
+extern s32 gTextEntryRowBounds[3];
+extern s32 gTextEntryColumnHandlers[3];
 
 
 
@@ -2534,12 +2534,9 @@ typedef struct {
 } struct_8005E3C0;
 extern struct_8005E3C0 *gActiveRenderContext;
 
-/* D_800A3FB0 / D_800A3FB4 - s16 font/geometry offsets passed to func_80015114 by
-   func_80023060 / func_800231E8. Small scalars: the target's self-clobbering
-   lui/lh pairs are the unsplit load cc1 emits for a <=8-byte extern, byte-exact
-   under baseline flags (the generated s16[5] view needed -mno-split-addresses). */
-extern s16 D_800A3FB0;
-extern s16 D_800A3FB4;
+/* 800A3FB0/800A3FB4 are libgs HWD0/VWD0, declared below as SDK longs.
+ * The text-entry backdrop reads their low s16 halves, not separate offsets.
+ * Those explicit reads preserve the original unsplit lui/lh loads. */
 
 /* 800CFE40: three position halfwords and two projected screen words. */
 extern s16 D_80128D38[4];
@@ -2793,8 +2790,8 @@ typedef struct {
  * keeps it out of the -G8 small-data range so it stays lui/lo_sum
  * addressed. Declared as an array so the target's array-index store
  * (base register + 30 displacement) is reachable. */
-extern u16 _D_800A0708[0x10] __asm__("D_800A0708");
-#define D_800A0708 (*(u16 (*)[0x10])_D_800A0708)
+extern u16 _gTextEntryPreviewBuffer[0x10] __asm__("gTextEntryPreviewBuffer");
+#define gTextEntryPreviewBuffer (*(u16 (*)[0x10])_gTextEntryPreviewBuffer)
 
 /* D_8005E3B4 — pointer to s32, absolute addressing (func_800134C4 loads with
  * lui/lw self-clobber, then dereferences the loaded pointer). */
@@ -2803,9 +2800,30 @@ extern s32 *gFrameOrderingTable;
 /* D_8005E438 - GP-relative u16, sprite tile/entry ID storage */
 extern u16 D_8005E438;
 
-/* D_8005E5B4, D_8005E5CC - GP-relative s32 scalars (func_80022738) */
-extern s32 D_8005E5B4;
-extern s32 D_8005E5CC;
+/* Message-window request/status words: lw/sw through $gp in 8002261C..22DF8. */
+extern s32 gMessageWindowEntry;
+extern s32 gMessageWindowArchive;
+extern s32 *gMessageWindowText;
+extern s32 gMessageWindowStatus;
+extern s32 gMessageWindowChoice;
+/* 80022964 stores a word; 80022DF8 restores its low halfword to flag slot 3. */
+extern s32 gMessageWindowSavedFlag3;
+extern s32 gMessageWindowSavedWorkFlags;
+extern s32 gMessageWindowQueuedArchive;
+extern s32 gMessageWindowQueuedEntry;
+extern s32 gMessageWindowAnimationStep;
+/* 80022B98 draws the portrait only when this raw word equals one. */
+extern s32 gMessagePortraitEnabled;
+/* 800225C4 indexes the seven-entry phase dispatch table. */
+extern s32 (*gMessageWindowHandlers[7])(void *);
+/* 80022AF0 bounds the archive-table index to 0..4. */
+extern s16 gMessageWindowArchiveIds[5];
+/* Retain existing partial word views; 800229F4 reads 0x2000 bytes into the
+ * shared work area, and initializes the portrait's SpriteSourceData there. */
+extern s32 _gMessageWindowReadBuffer[3] __asm__("gMessageWindowReadBuffer");
+#define gMessageWindowReadBuffer (*((s32*)_gMessageWindowReadBuffer))
+extern s32 _gMessagePortraitSource[3] __asm__("gMessagePortraitSource");
+#define gMessagePortraitSource (*((s32*)_gMessagePortraitSource))
 
 /* D_8005E70C - absolute s32 scalar (ovl_11_func_800E3C4C). Loaded 4 bytes
  * at +0 with an unsplit lui/lw pair, then passed both as the two arguments
@@ -3147,7 +3165,7 @@ extern s32 D_80054BC0[3];
  * base register != load destination). Declared array size 16 bytes (> -G8)
  * so cc1 emits the split two-register form rather than the <=-G8
  * self-clobber macro pair. Not classified in globals.h. */
-extern s32 D_80054BBC[4];
+extern s32 gTextBankOffsets[4];
 
 /* D_8005175C / D_80051768 - s32 scalars whose addresses func_8001A284
  * materializes with the unsplit `la` form (expanded by ASPSX to a
@@ -3917,13 +3935,34 @@ struct ProjectedRotationScaleRatios {
 };
 extern struct ProjectedRotationScaleRatios gProjectedRotationScale;
 
-/* D_8005E340 - gp-relative pointer to a record whose u16 at +2 is cached
- * into D_8005E33A by func_80023774. */
-struct struct_8005E340_target {
+/* Indexed-selection record's existing partial view. Category is the u16
+ * at +2; callers also use a signed +2 view and an index at +4. */
+struct IndexedSelectionRecord {
     /* 0x00 */ char pad_0[0x2];
-    /* 0x02 */ u16 unk2;
+    /* 0x02 */ u16 category;
 };
-extern struct struct_8005E340_target *D_8005E340;
+extern struct IndexedSelectionRecord *gIndexedSelectionRecord;
+/* GP-owned selection/editor state: reset/install and cursor consumers at
+ * 8002301C..80024030 establish these widths; cursor is deliberately signed. */
+extern u16 gIndexedSelectionState;
+extern s16 gIndexedSelectionCursor;
+extern u16 gIndexedSelectionConfirmation;
+extern u16 gTextEntryState;
+extern s32 gTextEntryAllowCancel;
+extern s16 gTextEntryAuxState;
+extern u16 gTextEntryLength;
+extern s32 gTextEntryHasCharacter;
+extern u16 gTextEntryConfirmation;
+extern u16 gTextEntryCursor;
+extern s16 gTextEntryCharacterSet;
+extern s32 gTextEntryAlternateLayout;
+extern u16 *gTextEntryBuffer;
+/* Two code-mapping callbacks at 559CC; 245C8 indexes the 28-halfword table. */
+extern s32 gTextEntryCodeHandlers[];
+extern u16 gTextEntryCodeTableSet1[28];
+/* 80023D08 adds the text-bank byte offset to this second grid-label anchor;
+ * only its address is used, retaining the prior word-shaped label view. */
+extern s32 D_80053888;
 
 /* ovl_28: 800B9626 is 0=idle, 1=decrease, 2=increase; 800BAB0C is 0..255. */
 extern s16 gOvl28SpriteColorRampMode;
@@ -5306,8 +5345,8 @@ extern s16 *Ovl11CurrentObjectId __asm__("D_8006C868");
  * ovl_11_func_800E6AB0 as a plain zero/non-zero test. The original read is
  * `lbu`, so the byte is unsigned: the generated scalar default is s8 and
  * would emit `lb`. Absolute-addressed (lui + %lo). */
-extern u8 _D_8006C904[9] __asm__("D_8006C904");
-#define D_8006C904 (*((u8*)_D_8006C904))
+extern u8 _gMessageWindowPhase[9] __asm__("gMessageWindowPhase");
+#define gMessageWindowPhase (*((u8*)_gMessageWindowPhase))
 
 /* ovl_11:80123A00 - row-major 3x3 order codes (equal/less/greater ranks),
  * plus the existing trailing zero halfword. Keep the incomplete extern's

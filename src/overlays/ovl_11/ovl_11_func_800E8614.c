@@ -33,7 +33,7 @@ s32 ovl_11_func_800E8614(s32 arg0) {
             temp_v0 = ovl_11_func_800CE744(0x109, -1);
             if (temp_v0 != NULL) {
                 *(s32 *)((u8 *)temp_v0 + 0x34) |= 0x40000;
-                temp_v1 = (u8 *)D_8005175C + (D_80054BBC[1] + D_8012490C[i]);
+                temp_v1 = (u8 *)D_8005175C + (gTextBankOffsets[1] + D_8012490C[i]);
                 *(Ovl11Rec800E8614 *)((u8 *)temp_v0 + 4) = *(Ovl11Rec800E8614 *)temp_v1;
             }
         }

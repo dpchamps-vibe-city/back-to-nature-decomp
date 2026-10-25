@@ -3,6 +3,7 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_25_func_800BAC9C(void);
 void ovl_25_func_800BAF20(void);
@@ -13,7 +14,6 @@ void ovl_25_func_800BB4B4(void);
 void ovl_25_func_800BB510(s32 arg0);
 void ovl_25_func_800B82B4(void);
 void ovl_25_func_800BAA5C(void);
-void func_800226F0(void);
 
 void ovl_25_func_800B7F3C(void) {
     char *far_base;
@@ -56,7 +56,7 @@ void ovl_25_func_800B7F3C(void) {
         ovl_25_func_800BB510((s32)D_8009F78C);
         ovl_25_func_800B82B4();
         ovl_25_func_800BAA5C();
-        func_800226F0();
+        ResetMessageWindow();
         BeginScreenFadeDecrease(0xA, 0, 2);
         BeginMasterVolumeFadeIn(0xA);
         *(u8 *)D_800BCD20 = 0;

@@ -33,12 +33,12 @@ void func_8001A018(s32 arg0, s32 arg1) {
     if (func_80021FE4() == NULL) {
         SystemError(0x54, 0);
     }
-    CdReadArchiveBytes(1, offset, 0x1800, (u8 *)&D_8006C910, 1, 1);
+    CdReadArchiveBytes(1, offset, 0x1800, (u8 *)&gMessageWindowReadBuffer, 1, 1);
     D_8005E45C = 1;
     D_8005E440 = slot;
 retry:
     while (1) {
-        buf = CdReadArchiveBytes(1, offset, 0x1800, (u8 *)&D_8006C910, 1, 0);
+        buf = CdReadArchiveBytes(1, offset, 0x1800, (u8 *)&gMessageWindowReadBuffer, 1, 0);
         D_8005E46C = (u32) buf;
         if (buf != NULL) {
             D_8005E460 = *(u16 *)&D_8005E440;

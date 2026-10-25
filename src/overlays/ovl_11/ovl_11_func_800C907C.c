@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
@@ -10,7 +11,6 @@ s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (Ovl11InteractionRecord *arg0);
 s16 ovl_11_func_800F4240(Ovl11InteractionRecord *arg0);
 s32 func_8001AF44 (u32 arg0);
-s32 func_8002261C (s32 arg0, s32 arg1);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
@@ -96,7 +96,7 @@ s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
                 break;
             }
             if (var_s0 != -1) {
-                func_8002261C(2, var_s0);
+                RequestMessageWindow(2, var_s0);
                 return 1;
             }
         }

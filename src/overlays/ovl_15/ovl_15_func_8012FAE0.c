@@ -19,7 +19,7 @@ void ovl_15_func_8012FAE0(void) {
     temp_a1 = gActiveRenderContext->field_D8;
     icons = D_801375B4[D_8013758E];
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
-                 (s32)(D_8005346A + D_80054BBC[0]));
+                 (s32)(D_8005346A + gTextBankOffsets[0]));
     ovl_15_func_80134A34(D_8013758E);
     ovl_15_func_80134C48();
     ovl_15_func_801359FC();

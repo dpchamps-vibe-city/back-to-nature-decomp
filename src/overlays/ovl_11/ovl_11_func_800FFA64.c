@@ -1,8 +1,7 @@
 #include "common.h"
+#include "message_window.h"
 
 s32 ovl_11_func_800FFB08(void);
-s32 func_800226B0(void);
-void func_800226F0(void);
 void ovl_11_func_800BCF28(void);
 
 void ovl_11_func_800FFA64(void) {
@@ -15,9 +14,9 @@ void ovl_11_func_800FFA64(void) {
             D_801273DA = 0xFE;
         }
     } else if (D_801273DA == 0xFE) {
-        if (func_800226B0() != 0) {
+        if (IsMessageWindowStatusFinal() != 0) {
             D_801273DA = 0xFF;
-            func_800226F0();
+            ResetMessageWindow();
             if (D_8012CEF8 == -1 || D_8012CEF8 == 3 ||
                 D_8012CEF8 == 2 || D_8012CEF8 == 1) {
                 ovl_11_func_800BCF28();

@@ -1,18 +1,16 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-/* Executable imports GetVal8005E5B4 and GetVal8005E5B8. */
-s32 GetVal8005E5B4(void);
-s32 GetVal8005E5B8(void);
+/* Executable imports GetMessageWindowStatus and GetMessageWindowChoice. */
 void ovl_11_func_801035C0(void);
 void ovl_11_func_80103714(void);
 
 void ovl_11_func_801034D0(void) {
     if (IsScreenFadeComplete() != 0) {
-        func_8002261C(3, 0x3C3);
-        if (GetVal8005E5B4() == 2) {
-            if ((s16)GetVal8005E5B8() == 1) {
+        RequestMessageWindow(3, 0x3C3);
+        if (GetMessageWindowStatus() == 2) {
+            if ((s16)GetMessageWindowChoice() == 1) {
                 ovl_11_func_801035C0();
             }
             Ovl11_D_801273DC = ovl_11_func_80103714;

@@ -3,13 +3,13 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_17_func_800B9FA8(void);
 void ovl_17_func_800BA21C(void);
 void ovl_17_func_800BA2C8(void);
 void ovl_17_func_800BA504(void);
 void ovl_17_func_800BA54C(void);
-void func_800226F0(void);
 
 void ovl_17_func_800B7E78(void) {
     switch (D_800BB524) {
@@ -40,7 +40,7 @@ void ovl_17_func_800B7E78(void) {
     if (D_800BB524 == 5) {
         D_800BD84C = 0;
         ovl_17_func_800BA54C();
-        func_800226F0();
+        ResetMessageWindow();
         BeginScreenFadeDecrease(0xA, 0, 2);
         BeginMasterVolumeFadeIn(0xA);
         D_800BB524 = 0;

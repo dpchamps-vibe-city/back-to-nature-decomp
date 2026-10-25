@@ -1,11 +1,8 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-void func_80022738(void);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -43,12 +40,12 @@ s32 ovl_11_func_8011A25C(void) {
         ovl_11_func_8011D084(3, 0);
         break;
     case 1:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 2:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
@@ -61,12 +58,12 @@ s32 ovl_11_func_8011A25C(void) {
     case 3:
         message = ovl_11_func_8011DD90();
         if (message != 0) {
-            func_8002261C(2, D_801282D0[message - 1]);
+            RequestMessageWindow(2, D_801282D0[message - 1]);
             ovl_11_func_8011D084(1, 4);
         } else {
             D_8012D52C = 2;
-            SetVal8005E334(0);
-            func_8002261C(2, ovl_11_func_8011DE70(ovl_11_func_8011DF04(item)) + 0x9A);
+            SetMessagePortraitEnabled(0);
+            RequestMessageWindow(2, ovl_11_func_8011DE70(ovl_11_func_8011DF04(item)) + 0x9A);
             ovl_11_func_8011D084(2, 5);
         }
         break;
@@ -78,19 +75,19 @@ s32 ovl_11_func_8011A25C(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
+            CloseMessageWindow();
             if (ovl_11_func_8011D06C(price) == 1) {
-                SetVal8005E334(0);
-                func_8002261C(2, 0x9E);
+                SetMessagePortraitEnabled(0);
+                RequestMessageWindow(2, 0x9E);
                 ovl_11_func_8011D084(2, 13);
             } else {
-                func_8002261C(2, 0x4F);
+                RequestMessageWindow(2, 0x4F);
                 ovl_11_func_8011D084(1, 4);
             }
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0x93);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x93);
             ovl_11_func_8011D084(1, 4);
             break;
         }
@@ -103,12 +100,12 @@ s32 ovl_11_func_8011A25C(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
+            CloseMessageWindow();
             ovl_11_func_8011D084(11, 0);
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0x93);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x93);
             ovl_11_func_8011D084(1, 4);
             break;
         }
@@ -122,8 +119,8 @@ s32 ovl_11_func_8011A25C(void) {
         row += (group - 1) / 5;
         row += index;
         ovl_11_func_80111E68(row);
-        func_80022738();
-        func_8002261C(2, 0x9F);
+        CloseMessageWindow();
+        RequestMessageWindow(2, 0x9F);
         ovl_11_func_8011D084(1, 10);
         break;
     case 10:
@@ -143,7 +140,7 @@ s32 ovl_11_func_8011A25C(void) {
         }
         break;
     case 4:
-        func_8002261C(2, 0x87);
+        RequestMessageWindow(2, 0x87);
         ovl_11_func_8011D084(1, 7);
         break;
     case 8:

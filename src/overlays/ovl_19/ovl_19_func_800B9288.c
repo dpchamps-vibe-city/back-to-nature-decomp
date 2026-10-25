@@ -1,10 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-void func_80022738(void);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_19_func_800BA25C(void);
 void ovl_19_func_800B843C(void);
@@ -16,25 +13,25 @@ void ovl_19_func_800BAC50(Ovl19Func800BAC40Arg *arg0, s32 arg1, s32 arg2);
  * +0xE0 command records and the -0x90/-0x48 records as displacements from it. */
 void ovl_19_func_800B9288(void) {
     SetVal8005E2BC(0);
-    SetVal8005E334(0);
-    func_8002261C(4, 0xD);
+    SetMessagePortraitEnabled(0);
+    RequestMessageWindow(4, 0xD);
     if (D_800BF4C0[9] == 4) {
         if (D_800BF4C0[0xB] < 2) {
             ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 5, 3, 0x3C);
         }
     }
     if (ovl_19_func_800BA25C() == 1) {
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(1);
-            SetVal8005E334(1);
+            SetMessagePortraitEnabled(1);
         }
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_19_func_800B843C();
             ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 0, 0);
             ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x70], 0, 0);
             ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 1, 1, 0);
             ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x2C], 1, 3, 0);
-            func_80022738();
+            CloseMessageWindow();
             D_800BF4C0[7] = 0;
             D_800BF4C0[3] = 6;
         }

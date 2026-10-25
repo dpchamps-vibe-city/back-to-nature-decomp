@@ -1,5 +1,6 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
 void ovl_17_func_800B91B8(void);
 void ovl_17_func_800BA808(s32 arg0);
@@ -7,9 +8,6 @@ void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s16 ovl_17_func_800B9940(s32 arg0);
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
-s32 func_8002261C(s32 arg0, s32 arg1);
-/* GetVal8005E5B4, named by its original overlay import. */
-s32 GetVal8005E5B4(void);
 
 void ovl_17_func_800B8F28(void) {
     u32 *boxes;
@@ -42,8 +40,8 @@ void ovl_17_func_800B8F28(void) {
         work->enabled = 0;
     }
     ((Ovl17SummaryResultView *)D_8006C838)->total = total;
-    func_8002261C(4, 8);
-    if (GetVal8005E5B4() == 2) {
+    RequestMessageWindow(4, 8);
+    if (GetMessageWindowStatus() == 2) {
         ((Ovl17SummaryResultView *)D_8006C838)->state++;
     }
 }

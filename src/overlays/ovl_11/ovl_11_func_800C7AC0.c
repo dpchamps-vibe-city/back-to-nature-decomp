@@ -6,6 +6,7 @@
 #include "aged_item_pool.h"
 #include "sound_commands.h"
 #include "ovl11_selection_message.h"
+#include "message_window.h"
 
 void *ovl_11_func_800BDE84 (u8 *arg0, s16 *arg1);
 s32 ovl_11_func_800CB4E0 (void);
@@ -22,7 +23,6 @@ void ovl_11_func_800FFEF0 (void);
 s32 ovl_11_func_800F4B5C (s16 arg0);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F66F0 (void);
-s32 func_8002261C (s32 arg0, s32 arg1);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800C893C (Recon_ovl_11_func_800C7270_A0View *arg0);
 void ovl_11_func_800C846C (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
@@ -221,7 +221,7 @@ block_28:
                     if (func_8001AF44(0x1FU) == 1) {
                         var_s0 = 0x1B1;
                     }
-                    func_8002261C(2, var_s0);
+                    RequestMessageWindow(2, var_s0);
                     return 0x10;
                 }
                 /* Duplicate return node #102. Try simplifying control flow for better match */
@@ -229,7 +229,7 @@ block_28:
             case 16:
                 temp_v1_3 = *(s16 *) ((u8 *) temp_v0 + 8);
                 if ((temp_v1_3 == (*(u16 *) ((u8 *) arg0 + 0x38))) || (var_v0 = 0, (temp_v1_3 == 5))) {
-                    func_8002261C(2, *(s16 *) ((u8 *) temp_v0 + 4));
+                    RequestMessageWindow(2, *(s16 *) ((u8 *) temp_v0 + 4));
                     return 0x10;
                 }
                 /* Duplicate return node #102. Try simplifying control flow for better match */
@@ -342,7 +342,7 @@ block_78:
                 return 0x25;
             case 31:
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    func_8002261C(2, ovl_11_func_80121204());
+                    RequestMessageWindow(2, ovl_11_func_80121204());
                 }
                 return 0x1F;
             case 32:

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
-s32 func_800226B0(void);
 void ovl_11_func_800FA4F4(s32 arg0, s16 arg1, s16 arg2);
 
 void ovl_11_func_800F9FF4(void) {
@@ -9,7 +9,7 @@ void ovl_11_func_800F9FF4(void) {
     s32 weekday;
     s16 date;
 
-    if ((D_80126F80 == 0xFF) && (func_800226B0() != 0)) {
+    if ((D_80126F80 == 0xFF) && (IsMessageWindowStatusFinal() != 0)) {
         if (*(s32 *) gPad0Input & 0xF000) {
             PlaySoundEffect(5);
             buttons = *(s32 *) gPad0Input;

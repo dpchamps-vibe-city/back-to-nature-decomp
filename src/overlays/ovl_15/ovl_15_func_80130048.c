@@ -12,7 +12,7 @@ void ovl_15_func_80130048(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80051DCC);
+    func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80051DCC);
     temp_v0 = ovl_15_func_801370B4();
     switch (temp_v0) {
     case 0:

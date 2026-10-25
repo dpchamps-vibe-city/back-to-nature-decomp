@@ -3,13 +3,13 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_23_func_800BB214 (void);
 void ovl_23_func_800BB488 (void);
 void ovl_23_func_800BB534 (void);
 void ovl_23_func_800BB758 (void);
 void ovl_23_func_800B81AC (void);
-void func_800226F0 (void);
 
 void ovl_23_func_800B7F00(void) {
     s32 *base;
@@ -41,7 +41,7 @@ void ovl_23_func_800B7F00(void) {
     }
     if (*(u8 *)&D_800BBA3C == 5) {
         ovl_23_func_800B81AC();
-        func_800226F0();
+        ResetMessageWindow();
         BeginScreenFadeDecrease(0xA, 0, 2);
         BeginMasterVolumeFadeIn(0xA);
         *(u8 *)&D_800BBA3C = 0;

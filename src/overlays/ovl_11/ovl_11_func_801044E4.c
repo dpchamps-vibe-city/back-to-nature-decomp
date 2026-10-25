@@ -9,6 +9,7 @@
 #include "ovl11_selection_message.h"
 #include "ovl11_clock_calendar.h"
 #include "ovl11_vertex_blend.h"
+#include "message_window.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -36,7 +37,6 @@ void ovl_11_func_800CE96C (void);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_80107F18 (void);
 void ovl_11_func_8010C6A0 (void);
-void func_800226F0 (void);
 s32 *ovl_11_func_80111E38 (void);
 void ovl_11_func_800F2508 (void);
 void ovl_11_func_80121318 (void);
@@ -94,7 +94,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800F6630();
     Ovl11ResetSelectionMessage();
     ovl_11_func_8010C6A0();
-    func_800226F0();
+    ResetMessageWindow();
     ovl_11_func_80111E38();
     ovl_11_func_800F2508();
     ovl_11_func_80121318();

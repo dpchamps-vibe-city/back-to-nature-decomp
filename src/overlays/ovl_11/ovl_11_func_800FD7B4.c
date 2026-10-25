@@ -37,9 +37,9 @@ void ovl_11_func_800FD7B4(s16 arg0, s16 arg1) {
     test = ((struct Ovl11PairedValues *) D_8006C838)->pairs[arg0][0];
     if (test == 0 &&
         ((struct Ovl11PairedValues *) D_8006C838)->pairs[arg0][1] == 0) {
-        var_a1 = D_80053770 + D_80054BBC[0];
+        var_a1 = D_80053770 + gTextBankOffsets[0];
     } else {
-        var_a1 = (u8 *) D_8005175C + (D_80054BBC[0] + D_8012735C[var_a3_2][var_a0]);
+        var_a1 = (u8 *) D_8005175C + (gTextBankOffsets[0] + D_8012735C[var_a3_2][var_a0]);
     }
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) var_a1, 0xAC, (s32) arg1);
 }

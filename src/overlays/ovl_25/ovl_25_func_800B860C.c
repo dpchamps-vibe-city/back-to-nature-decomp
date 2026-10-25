@@ -1,15 +1,13 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 extern s16 D_800BFE44;
 extern u8 D_800BCD21;
 extern s16 D_800BCD48[4];
 
 void ovl_25_func_800B93E4(void);
-void func_80022738(void);
-void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
 void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 void ovl_25_func_800B8340(void);
 
@@ -21,17 +19,17 @@ void ovl_25_func_800B860C(void) {
     ovl_25_func_800B93E4();
     ref = (char *)&D_800BFE44;
     if (*(s16 *)(ref + 0x4CC) == 0) {
-        func_80022738();
+        CloseMessageWindow();
         SetVal8005E2BC(0);
-        SetVal8005E334(0);
-        func_8002261C(4, 0x35);
+        SetMessagePortraitEnabled(0);
+        RequestMessageWindow(4, 0x35);
         ovl_25_func_800B9B00((s16 *)(ref + 0x2E0), 9, 0x3B);
     }
     *(u16 *)(ref + 0x4CC) = *(u16 *)(ref + 0x4CC) + 1;
     if (*(s16 *)(ref + 0x4CC) >= 0x3C) {
         ovl_25_func_800B8340();
         *(s16 *)(ref + 0x4C8) = PlaySoundEffect(0x38);
-        func_80022738();
+        CloseMessageWindow();
         base = (char *)&D_8007AFF0;
         p = base + 0x20000;
         D_800BFE44 = 2;

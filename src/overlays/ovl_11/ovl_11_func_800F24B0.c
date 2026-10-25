@@ -1,9 +1,8 @@
 #include "common.h"
+#include "message_window.h"
 extern s32 D_80126C90;
 
 s32 ovl_11_func_800F2724(void);
-
-s32 func_8002261C(s32 arg0, s32 arg1);
 
 s32 ovl_11_func_800F24B0(void) {
     s32 callRet2;
@@ -13,7 +12,7 @@ s32 ovl_11_func_800F24B0(void) {
             D_80126C90 = callRet2;
             return 1;
         } else {
-            func_8002261C(2, 0x221);
+            RequestMessageWindow(2, 0x221);
             return 0;
         }
     } else {

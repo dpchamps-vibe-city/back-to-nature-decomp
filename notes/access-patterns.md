@@ -7,14 +7,14 @@ GP value: 0x8005E274 (range: 0x80056274–0x80066273)
 
 | # | Start | End | Size | Inferred | Confidence | Symbols |
 |---|-------|-----|------|----------|------------|---------|
-| 2 | 0x80010224 | 0x80011270 | 0x104C | **.data** | low (all 1 symbols ambiguous) | 1 |
+| 2 | 0x80010378 | 0x80011270 | 0xEF8 | **.data** | low (all 1 symbols ambiguous) | 1 |
 | 4 | 0x80049044 | 0x80049170 | 0x12C | **.data** | low (all 9 symbols ambiguous) | 9 |
 | 6 | 0x800491F0 | 0x80049268 | 0x78 | **.data** | low (all 2 symbols ambiguous) | 2 |
 | 8 | 0x80049298 | 0x800492E0 | 0x48 | **.data** | low (no refs, outside GP range) | 0 |
 
 ## Region Details
 
-### Region 2: 0x80010224–0x80011270 (0x104C) → **.data**
+### Region 2: 0x80010378–0x80011270 (0xEF8) → **.data**
 
 Confidence: low (all 1 symbols ambiguous)
 
@@ -26,7 +26,7 @@ Access type breakdown (by symbol count):
 
 | Symbol | Access types | Per-symbol inference | Refs |
 |--------|-------------|---------------------|------|
-| func_80010224 | addr_taken | ambiguous | 2 |
+| func_80010378 | addr_taken | ambiguous | 1 |
 
 ### Region 4: 0x80049044–0x80049170 (0x12C) → **.data**
 
@@ -73,7 +73,7 @@ No referenced symbols in this region.
 
 ## Global Summary
 
-Total symbols scanned: 1269
+Total symbols scanned: 1318
 
 | Inferred section | Regions |
 |-----------------|---------|

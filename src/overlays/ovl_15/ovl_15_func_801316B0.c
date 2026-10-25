@@ -7,7 +7,7 @@ void ovl_15_func_801316B0(void) {
     s32 text;
 
     text = gActiveRenderContext->field_D8;
-    func_8001AC10((u32 *) (text + 0x18), text + 0x14, (s32) &D_80052FC4[D_80054BBC[0]]);
+    func_8001AC10((u32 *) (text + 0x18), text + 0x14, (s32) &D_80052FC4[gTextBankOffsets[0]]);
     if (D_8013759A >= 2) {
         switch (ovl_15_func_80135C20(D_8013758C)) {
         case 4:

@@ -20,11 +20,11 @@ void ovl_11_func_800FE3A0(s32 input_level, u32 input_value, s32 input_x, s32 inp
     arg3 = input_y;
     temp_t0 = arg1 & 0xFFFF;
     if (arg0 < 0) {
-        var_a1 = (s16 *) ((u8 *) D_8005378C + *D_80054BBC);
+        var_a1 = (s16 *) ((u8 *) D_8005378C + *gTextBankOffsets);
     } else {
         var_a3 = 1;
         if (arg0 == 5) {
-            var_a1 = (s16 *) ((u8 *) D_800537A2 + *D_80054BBC);
+            var_a1 = (s16 *) ((u8 *) D_800537A2 + *gTextBankOffsets);
         } else {
             for (; var_a3 < 5 && temp_t0 >= D_80127214[var_a3]; var_a3++) {
             }
@@ -34,7 +34,7 @@ void ovl_11_func_800FE3A0(s32 input_level, u32 input_value, s32 input_x, s32 inp
                                           (var_a3 - arg0) * 100) &
                                             0xFFFF,
                                         &D_8012A028, 4),
-                          (u16 *) ((u8 *) D_800535D0 + *D_80054BBC));
+                          (u16 *) ((u8 *) D_800535D0 + *gTextBankOffsets));
             var_a1 = &D_8012A028;
         }
     }

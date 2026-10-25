@@ -1,10 +1,8 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
 void ovl_11_func_80100B50(u8 arg0, u8 arg1);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-s32 GetVal8005E5B8(void);
 void ovl_11_func_80100F9C(s32 arg0);
 void ovl_11_func_8010289C(void);
 void ovl_11_func_80100FFC(void);
@@ -16,10 +14,10 @@ void ovl_11_func_801007AC(void) {
     s16 choice;
 
     ovl_11_func_80100B50((u8)D_801273EC, 0);
-    func_8002261C(3, 0x3BB);
-    state = GetVal8005E5B4();
+    RequestMessageWindow(3, 0x3BB);
+    state = GetMessageWindowStatus();
     if (state == 2) {
-        choice = GetVal8005E5B8();
+        choice = GetMessageWindowChoice();
         if (choice == 1) {
             D_801273E6 = D_801273EC;
             ovl_11_func_80100F9C((u8)D_801273EC);

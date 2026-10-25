@@ -27,6 +27,7 @@
 #include "psyq/memory.h"
 #include "cd_loader.h"
 #include "packet_work.h"
+#include "message_window.h"
 
 void func_80017A48(u32 arg0);
 u32 func_80017A64(void);
@@ -72,7 +73,6 @@ void Ovl28ResetSpriteSequenceScene(void) {
 
 void Ovl28ResetSpriteSequenceScene (void);
 void Ovl28StartSequenceSpriteRead (void);
-void func_800226F0 (void);
 
 void Ovl28BeginSpriteSequenceScene(void) {
     s32 *base;
@@ -80,7 +80,7 @@ void Ovl28BeginSpriteSequenceScene(void) {
     Ovl28ResetSpriteSequenceScene();
     BeginScreenFadeIncrease(0, 0, 2);
     Ovl28StartSequenceSpriteRead();
-    func_800226F0();
+    ResetMessageWindow();
     base = (s32 *)&D_8006C838;
     base[0x1122] = base[0x1122] + 1;
 }

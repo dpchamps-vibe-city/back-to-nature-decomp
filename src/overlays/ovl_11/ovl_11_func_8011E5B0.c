@@ -4,10 +4,10 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
-s32 GetVal8005E5B4(void);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void ovl_11_func_8011EC84(void);
@@ -45,7 +45,7 @@ void ovl_11_func_8011E5B0(void) {
     } else if (D_80128420 == 8) {
         func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
         func_80015BF0(gActiveRenderContext->field_D8 + 0x64, (SpriteSourceData *)D_8012DA80, (s16)(HWD0 / 2), (s16)(VWD0 / 2));
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             BeginScreenFadeIncrease(10, 0, 2);
             D_80128420 = 9;
         }

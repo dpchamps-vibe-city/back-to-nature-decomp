@@ -1,22 +1,19 @@
 #include "common.h"
+#include "message_window.h"
 
 extern s32 D_801273DC;
 extern void ovl_11_func_8010021C(void);
 extern void ovl_11_func_80100FFC(void);
 extern void ovl_11_func_80103714(void);
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-s32 GetVal8005E5B8(void);
-
 void ovl_11_func_80100194(void) {
     s32 var;
     s16 val;
 
-    func_8002261C(3, 0x3B7);
-    var = GetVal8005E5B4();
+    RequestMessageWindow(3, 0x3B7);
+    var = GetMessageWindowStatus();
     if (var == 2) {
-        val = GetVal8005E5B8();
+        val = GetMessageWindowChoice();
         if (val == 1) {
             D_801273DC = (s32)ovl_11_func_8010021C;
         } else if (val == 2) {

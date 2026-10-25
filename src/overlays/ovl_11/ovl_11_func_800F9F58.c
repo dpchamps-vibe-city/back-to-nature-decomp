@@ -1,18 +1,17 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
-s32 func_800226B0(void);
-void func_80022738(void);
 void ovl_11_func_800F6640(void);
 
 void ovl_11_func_800F9F58(void) {
     s32 flags;
 
-    if (func_800226B0() != 0) {
+    if (IsMessageWindowStatusFinal() != 0) {
         flags = ((GfxObj *)gPad0Input)->field_8;
         if (flags & 0x50) {
-            func_80022738();
+            CloseMessageWindow();
             PlaySoundEffect(0);
             D_80126F80 = 0;
             return;
@@ -21,7 +20,7 @@ void ovl_11_func_800F9F58(void) {
             if (D_80126F88 == 1) {
                 ovl_11_func_800F6640();
             }
-            func_80022738();
+            CloseMessageWindow();
             D_80126F7C = 2;
             PlaySoundEffect(3);
         }

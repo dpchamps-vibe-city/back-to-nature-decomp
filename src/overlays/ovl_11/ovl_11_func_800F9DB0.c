@@ -1,9 +1,7 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "message_window.h"
 
-/* Overlay name for GetVal8005E5B4, the signed state-word getter. */
-s32 GetVal8005E5B4(void);
-void func_800226F0(void);
 void ovl_11_func_800BCF28(void);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
@@ -15,8 +13,8 @@ void ovl_11_func_800F9DB0(void) {
     if (D_80126F7C != 0) {
         DrawScreenSubtractOverlay(0x40000, 0x40000, 0x40000);
         if (D_80126F7C == 2) {
-            if (GetVal8005E5B4() == 2) {
-                func_800226F0();
+            if (GetMessageWindowStatus() == 2) {
+                ResetMessageWindow();
                 D_80126F7C = 0;
                 ovl_11_func_800BCF28();
             }

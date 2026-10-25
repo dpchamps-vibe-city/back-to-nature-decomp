@@ -58,7 +58,7 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
         prefix_value = ((Ovl11MenuGlobals *)D_8006C838)->text[i];
         terminator = prefix_value;
         if (terminator == 0xFFFF) {
-            name = &D_800535C6[*D_80054BBC];
+            name = &D_800535C6[*gTextBankOffsets];
             (&D_8012D608)[i] = ((u16 *)name)[0];
             text_index1 = i + 1;
             (&D_8012D608)[text_index1] = ((u16 *)name)[1];
@@ -75,7 +75,7 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
     }
     func_80017B3C(header_ot, (s32) &D_8012D608, 0x52, 0x1A);
     D_8012823C[kind](header_ot, 0xB0, 0x12);
-    func_80017B3C(header_ot, (s32) &(D_800535C6 + 0x3E)[*D_80054BBC], 0xC8, 0x1A);
+    func_80017B3C(header_ot, (s32) &(D_800535C6 + 0x3E)[*gTextBankOffsets], 0xC8, 0x1A);
     count = ovl_11_func_80117178(kind, arg1, -1);
     if (input_mode == 0) {
         repeat_buttons = *(s32 *) ((u8 *) gPad0Input + 0);

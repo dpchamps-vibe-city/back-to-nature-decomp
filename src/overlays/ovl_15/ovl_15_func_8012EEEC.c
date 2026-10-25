@@ -13,7 +13,7 @@ void ovl_15_func_8012EEEC(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80053530);
+    func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053530);
     temp_v0 = ovl_15_func_80136990();
     if (temp_v0 < 2) {
         if (temp_v0 < 0) {

@@ -11,6 +11,7 @@
 #include "card_deal.h"
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
+#include "text_entry.h"
 
 typedef struct {
                char pad0[0x38];
@@ -118,8 +119,6 @@ s32 ovl_11_func_800EFE34 (s32 *ptr, s32 arg1, s32 arg2);
 s32 pow_int (s32 arg0, s32 arg1);
 void ovl_11_func_80112904 (s16 arg0);
 void ovl_11_func_800EF870 (s16 arg0);
-s32 func_800231E8 (void);
-void func_80023170 (u16 *arg0);
 void ovl_11_func_800D0DBC (M2C_d453384c461b_UnkStruct800D0DBC *arg0);
 void ovl_11_func_800D079C (s32 arg0);
 s32 ovl_11_func_800F14D8 (s32 arg0, s32 arg1, s32 arg2);

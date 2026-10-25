@@ -14,7 +14,7 @@ s8 ovl_15_func_80136990(void) {
     s32 temp_v0_2;
 
     func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x18), 1, 0x4E, 0x48, 0xA3, 0x22);
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((u8 *) D_80051D18 + D_80054BBC[0]), 0x5F, 0x4C);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((u8 *) D_80051D18 + gTextBankOffsets[0]), 0x5F, 0x4C);
     temp_v0 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v0 & 0x4000) {
         PlaySoundEffect(5);

@@ -1,8 +1,6 @@
 #include "common.h"
+#include "message_window.h"
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void func_80022738(void);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_8011764C(void);
 s32 ovl_11_func_80117674(void);
@@ -16,7 +14,7 @@ s32 ovl_11_func_801173B8(void) {
     case 0:
     default:
         D_8012D52C = 0;
-        func_80022738();
+        CloseMessageWindow();
         return 1;
     case 1:
         if (gCalendarWeekday == 6) {
@@ -37,10 +35,10 @@ s32 ovl_11_func_801173B8(void) {
         ovl_11_func_8011764C();
         D_8012D52C = 3;
     display:
-        func_8002261C(2, message);
+        RequestMessageWindow(2, message);
         return 0;
     case 2:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             D_8012D794 = 3;
         }
         break;
@@ -55,7 +53,7 @@ s32 ovl_11_func_801173B8(void) {
                 D_8012D794 = 8;
                 message = 0x4F;
             }
-            func_80022738();
+            CloseMessageWindow();
             goto display;
         case 2:
             D_8012D794 = 0;
@@ -63,7 +61,7 @@ s32 ovl_11_func_801173B8(void) {
         }
         break;
     case 4:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             D_8012D794 = 5;
         }
         break;
@@ -73,7 +71,7 @@ s32 ovl_11_func_801173B8(void) {
         ovl_11_func_8011764C();
         goto display;
     case 6:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             D_8012D794 = 7;
         }
         break;
@@ -86,17 +84,17 @@ s32 ovl_11_func_801173B8(void) {
                 message = 0x126;
             }
             D_8012D794 = 8;
-            func_80022738();
+            CloseMessageWindow();
             goto display;
         case 2:
             D_8012D794 = 8;
-            func_80022738();
-            func_8002261C(2, 0x127);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x127);
             break;
         }
         break;
     case 8:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             D_8012D794 = 0;
         }
         break;

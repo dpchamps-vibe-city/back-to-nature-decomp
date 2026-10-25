@@ -37,7 +37,7 @@ void ovl_11_func_80100898(u8 arg0) {
             if (temp_a0 == 0) {
                 break;
             }
-            func_80017B3C(base, (s32) ((void *) ((u8 *) D_8005175C + (*D_80054BBC + ovl_11_func_80100A34(temp_a0)))), var_s5, var_s1);
+            func_80017B3C(base, (s32) ((void *) ((u8 *) D_8005175C + (*gTextBankOffsets + ovl_11_func_80100A34(temp_a0)))), var_s5, var_s1);
             var_s1 = (s32) (s16) (var_s1 + 0xE);
         }
         var_s5 = (s32) (s16) (var_s5 + 0x90);

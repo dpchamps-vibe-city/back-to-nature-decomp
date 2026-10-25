@@ -1,7 +1,7 @@
 #include "common.h"
 #include "gte_scene_state.h"
+#include "message_window.h"
 
-s32 func_800225C4(void);
 void ovl_25_func_800BAAAC(void);
 void ovl_25_func_800BABC4(void);
 void ovl_25_func_800BAC28(void);
@@ -9,7 +9,7 @@ void ovl_25_func_800BB580(void);
 void ovl_25_func_800BBA7C(void);
 
 void ovl_25_func_800B813C(void) {
-    func_800225C4();
+    UpdateMessageWindow();
     ovl_25_func_800BAAAC();
     ovl_25_func_800BABC4();
     ApplyGteSceneState();

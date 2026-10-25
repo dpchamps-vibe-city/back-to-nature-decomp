@@ -1,4 +1,5 @@
 #include "common.h"
+#include "message_window.h"
 
 /* Overlay-local halfword table at 0x80127D04, indexed by the entity's
  * 0xAC field. The array is 8 halfwords (build/ovl_11/asm/data/69960.data.s). */
@@ -13,8 +14,6 @@ typedef struct {
     /* 0x5234 */ s32 field_5234;
 } Ov11View8010DDC8;
 
-s32 func_8002261C(s32 arg0, s32 arg1);
-
 s32 ovl_11_func_8010DDC8(u8 *arg0) {
     s32 ret;
     u16 v;
@@ -27,7 +26,7 @@ s32 ovl_11_func_8010DDC8(u8 *arg0) {
     } else {
         *(s16 *)(arg0 + 0x22) = v - 2;
     }
-    func_8002261C(0, D_80127D04[*(u16 *)(arg0 + 0xAC)]);
+    RequestMessageWindow(0, D_80127D04[*(u16 *)(arg0 + 0xAC)]);
     if (ret == -1) {
         ((Ov11View8010DDC8 *)&D_8006C838)->field_5234 &= ~0x400;
     }

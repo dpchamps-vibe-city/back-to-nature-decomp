@@ -5407,8 +5407,87 @@ interfaces and readability edits the campaign gate passed every container,
 configuration, ownership, interface, source-policy and non-growth check:
 141 folded functions, 18 valid modules, 48 pending stubs (two fewer).
 
-## unknown group B — around 0x800225C4–0x80022F1C (confidence: medium)
+## message-window service — 0x800225B8–0x8002301C (confidence: high for state core)
 
+**Reconstructed: `src/modules/message_window.c`, 21 functions in original
+order, all at baseline settings.** This supersedes the old partial membership
+and signature/flag claims below. The entire supported run is folded, including
+both leading status/choice accessors, the portrait gate pair, the saved-flags
+setter, animation and portrait helpers, and the trailing record-sprite loader.
+There is no internal boundary, new stub, assembly, pin or private linkage.
+
+Membership: the original-byte GP census connects 2261C/226F0/22738/22964/
+229F4/22AF0/22B20/22B98/22D70/22DF8 through the E5A8..E5CC words; the
+leading getters and E334 gate pair access those same owned words. The
+original seven-pointer table at 80010358 dispatches to 22964, 229F4, 22B20,
+22B98, 22D70 and 22DF8, corroborating the entire lifecycle, not just adjacent
+functions. 22794 is called by three of those workers, sharing their step
+word and exact rectangle. 22EA4 is 22B98's portrait renderer; 22F1C is its
+sole value-bucket helper. 22FE0 consumes the optional sprite prefix returned
+by 229F4's read (also published to the overlay-21 client). Those call/data
+relations, not adjacency alone, include the non-GP helpers. The member's
+single switch table remains pooled in original rodata order.
+
+Boundaries are evidence-limited cuts, not proven GP contradictions. On the
+left, 22580 is the generic beveled-panel drawer, used independently by the
+text editor and overlays 15/17/27; it owns none of the message state and has
+no private helper/table relationship with this group. No evidence extends
+this TU into that shared drawing utility. On the right, 2301C resets the
+separate E338/E33A/E33C editor state, followed by its E340 install and
+callback family. Those clients use the message service through calls but
+share none of its GP-owned request/status words. There is no affirmative
+same-TU signal across either cut; a larger original utility TU is not
+excluded. No flag was used to invent a boundary.
+
+Canonical names (EXE addresses): 225B8 GetMessageWindowChoice; 225C4
+UpdateMessageWindow; 2261C RequestMessageWindow; 226A4 GetMessageWindowStatus;
+226B0 IsMessageWindowStatusFinal; 226D8/226E4 Set/GetMessagePortraitEnabled;
+226F0 ResetMessageWindow; 22738 CloseMessageWindow; 22788
+SetMessageWindowSavedWorkFlags; 22794 AnimateMessageWindowRect; 22964
+BeginMessageWindowRead; 229F4 PollMessageWindowRead; 22AF0
+GetMessageWindowArchiveId; 22B20 OpenMessageWindow; 22B98
+ProcessMessageWindowText; 22D70 ShrinkMessageWindow; 22DF8 FinishMessageWindow;
+22EA4 DrawMessagePortrait; 22F1C GetMessagePortraitValueBucket; 22FE0
+LoadMessageWindowSprite. All retain external linkage. Public names propagate
+through all callers/overlays and generated contexts; `message_window.h`
+publishes the externally used subset rather than every worker.
+
+The eleven owned words now describe entry/archive/text/status/choice,
+queued archive/entry, animation step, portrait enable and saved flags. The
+phase byte at work+CC is gMessageWindowPhase, distinct from the text-engine
+status. Tables are gMessageWindowHandlers, gMessageWindowArchiveIds and
+gMessagePortraitValueIndices; the shared record area and portrait source
+also have canonical names, retaining their pre-existing partial lvalue views
+and assembler-label bindings. No gameplay meaning is asserted for the
+portrait's threshold lookup. Original container/address identities remain
+in exe.txt. New externs are canonical in globals_override.h; no .c externs
+or generated headers are hand-maintained.
+
+Two split-file declaration disagreements were reconciled explicitly:
+E5AC has one s32 storage identity with the archive lookup still using a u32
+local (including the out-of-range-to-zero rule). E5BC is the word stored by
+22964, with an explicit u16 restoration at 22DF8 preserving its original
+halfword access. The checked merge verified both changes. Function ABIs,
+argument narrowing, data widths and global ownership otherwise stay intact.
+Locals now name their roles; animation retains its two-stage Q12 arithmetic,
+rounding and sub-three-pixel retry. Header documentation distinguishes
+phase/status/choice, one-deep queuing, 0x2000-byte entry units, reset/close
+side effects, raw portrait gate and shared non-reentrant work storage.
+
+Flag finding: plans/flag-review-report.md's baseline result for 22794 was
+reproduced by the **complete merged unit**. Its current source is clean C,
+not the hybrid described by the obsolete override comment. Retired only
+its -fno-rerun-cse-after-loop entry and matching flag allowlist permission;
+no module override was added. The dry run and checked --write fold verified
+all 21 members and the EXE at baseline. After naming, readability changes,
+canonical declarations and interfaceAudit header publication, the full
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` gate
+passes all eight integrity checks, all EXE/13-overlay bytes including data
+and tables, every module, canonical names and published interfaces. Folded
+count **329 -> 350**, 42/42 valid modules, no prior-member regression or
+exception growth. No shared-tool change was needed.
+
+Historical discovery evidence follows (names refer to original addresses):
 Game-state/flags readers and CD-script readers over the D_8006C838 struct
 array and the D_8005E5A8–E5CC state cluster.
 
@@ -5508,6 +5587,92 @@ References: notes/retros/2026-08-06-func_80022738-retro.md,
 notes/research/func_80022F1C-shift-fusion-and-address-legitimization.md.
 
 ## text-input install/fill state — around 0x80023100–0x800231E8 (confidence: low)
+
+**Reconstruction update: `src/modules/text_entry.c` holds the whole supported
+8002301C..800245F4 run**, 30 compiled functions and six existing dead stubs,
+in original order. It absorbs the install/fill, callback, preview/grid and
+code-mapping families described in the following sections; those headings are
+historical subfamilies, not current TU boundaries.
+
+Membership: the original GP census connects the selection state E338/E33A/
+E33C/E340 and the editor state E344..E360 across reset/install/update and
+input/confirmation functions. Shared preview storage at A0708, the preview
+call graph and common confirmation helper 24108 connect those two flows.
+The original data is particularly useful beyond the GP core: the two
+559C4 pointers name 2437C/24408 (column adjusters), and the two 559CC
+pointers name 24578/245C8 (code mappers). 241EC and 244FC consume those
+private callback tables; 245C8 consumes the adjacent 28-halfword code table.
+Their helper/data relationship, not table adjacency alone, includes every
+member through 245C8. Six undecompiled helpers in between are carried as
+the existing dead INCLUDE_ASM stubs, not treated as boundaries or replaced
+with new assembly.
+
+The left cut at 2301C separates the message-window service's request/status
+cluster from these two input lifecycles. The editor is a client through
+Request/Status/Close calls, not an owner of its state. On the right, 245F4
+begins the independent cached-sprite wrapper family; it uses its own frame
+counters and shared sprite-source cache, no editor GP word, preview buffer,
+bounds table or code-mapping table. Editor drawing calls those wrappers as
+utilities just as other overlays do. These are evidence-limited boundaries,
+not GP/absolute contradiction proofs. The former suggestion that consecutive
+tables and a renderer call alone made the wrapper family part of this TU is
+not sufficient membership evidence. No flag conflict determined either cut.
+
+Names preserve all EXE identities in exe.txt. Public header text_entry.h
+publishes Begin/Update/ResetIndexedSelection and Begin/Required/AlternateLayout/
+Update/ResetTextEntry, retaining the s32-address record ABI and u16-buffer
+ABI. Canonicalization and interfaceAudit propagate them through overlays 11
+and 27. The other helpers now name preview layout, input dispatch,
+confirmation, cursor movement, column/row adjustment and code mapping; the
+six original stubs were named from their original instructions, not guessed
+C. Their external linkage is unchanged. IndexedSelectionRecord retains the
+existing partial unsigned category view; local signed-category/header views
+preserve the different witnessed loads. No inferred static linkage or new
+storage was introduced.
+
+Owned globals now identify selection state/cursor/confirmation/record and
+editor state/cancel policy/length/nonblank-entry history/confirmation/cursor/
+character set/layout/buffer. E34C remains neutrally AuxState: only its reset
+is understood. Tables and preview storage have role names. Shared text-bank
+offsets were named project-wide, retaining the existing four-word C view;
+its base symbol has a FOUR-byte extent, not sixteen, so the separate BC0/BC8
+anchors remain defined. The first full gate caught that extent mistake;
+correcting symbol metadata restored those identities without a tooling patch.
+
+Interface discovery: A3FB0/A3FB4 are the established SDK HWD0/VWD0 longs,
+not private s16 font/geometry offsets. A first rename shadowed those SDK
+symbols, which the full overlay gate rejected. They now retain SDK names
+and long declarations; the backdrop explicitly reads their low signed
+halfwords, matching the original instructions under baseline flags. No
+competing aliases or disputed scalar types are left. This also corroborates
+the prior withdrawal of the split-address overrides without asserting that
+a different flag built the original TU.
+
+The first checked fold rolled back on split-file signedness disagreements.
+They were reconciled explicitly: selection/editor states and confirmation
+bits use u16, with zero-only setters unchanged; the selection cursor stays
+s16 for signed division/movement, with an explicit u16 read at 23710;
+E360 has one u16* identity, replacing the fill helper's integer-pointer view.
+The complete second fold verified all 30 compiled members and the EXE at
+baseline. No override, allowlist permission, assembly or pin was added.
+
+Source documentation now distinguishes the two lifecycle results, caller
+record mutation, two character sets, repeat/pressed-button streams and
+confirmation gates. The cursor code has role-named locals rather than
+register names. Buffer detail worth preserving: initialization fills nine
+halfwords, but the grid's confirm key writes buffer[length+1], requiring
+TEN reserved halfwords on the full-length path; it was not silently changed
+to a safer but different write. Backspace does not recompute the historical
+nonblank-character flag. Existing word-width pad views and callback ABIs
+are preserved rather than guessed during naming.
+
+After declaration, naming, interface and readability changes, the full
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` gate
+passes all eight integrity checks and every EXE/13-overlay byte, including
+callback tables, jump tables, SDK state, data and placement. Canonical names,
+published interfaces, source policy and exception non-growth pass. Folded
+membership **350 -> 380**, all **43/43** modules valid. No shared tooling
+change was necessary. Historical evidence below remains address provenance.
 
 Reset / install / fill trio at the head of the D_8005E344..D_8005E360 text-input
 state machine, immediately preceding the callback driver family. Evidence
@@ -5703,8 +5868,37 @@ func_800244FC (m) — frame-remainder dispatch through the D_800559CC pointer
 table; func_80024578 (m) — per-state offset scaled by arg1; func_800245C8
 (m) — D_800559D4 row lookup.
 
-## sprite render dispatch wrappers — 0x800245F4–0x80024AD4 (confidence: high)
+## sprite render dispatch wrappers — 0x800245F4–0x80024AE4 (confidence: high)
 
+Module-campaign baseline experiment: the complete current run has **17
+compiled functions**, including both clocks, all clock consumers and the
+shared-source dispatcher. The right boundary is hard link-order evidence:
+EXE offset 152E4 / VRAM 80024AE4 begins the libmath/adddf3 object. The left
+is the evidence-limited text_entry boundary documented above; no selection
+or editor state/table is read by this wrapper family.
+
+The complete 17-member `ui_sprites` dry run passed. A whole-unit baseline
+attempt then removed the two counter overrides and separated each counter's
+sentinel from its raw-byte temporary (`if (arg0 != -1)`; the remaining tv
+has only the increment assignment), testing the exact source concern in
+plans/flag-review-report.md rather than isolating the flagged functions.
+The checked --write attempt reached the linked EXE byte check and failed,
+then rolled back. It did not reach its per-member oracle, so this result is
+NOT attributed to a particular member or promoted to an impossibility proof.
+Both counter sources, both overrides and their original allowlist entries
+were restored; no partial module or flag-based slice remains. The final
+full campaign gate passes at 380 folded functions / 43 valid modules.
+
+This family is not ready to integrate under a single verified setting.
+The report already records that sched1-off changes the shared-counter
+consumers, so moving that setting wholesale is not justified either. The
+next useful experiment is to identify which single/multi-SET counter form
+preserves the sentinel position at baseline, then repeat the WHOLE 17-member
+fold; the simplest fresh-sentinel form above is now measured, not an open
+suggestion. Historical no-scheduler impossibility statements below concern
+older source forms, not a proof that this original unit needs split flags.
+
+Historical discovery evidence follows:
 14 thin wrappers plus one core dispatcher, all consecutive with no unrelated
 code between them. Every wrapper has the same body shape: sign-extend incoming
 `$a2`/`$a3` to s16, set `$a1` to a sprite-header id constant, and tail-call

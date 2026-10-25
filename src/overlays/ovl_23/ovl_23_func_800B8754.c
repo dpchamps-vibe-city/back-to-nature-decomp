@@ -1,25 +1,23 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_23_func_800B9310(void);
-void func_80022738(void);
-/* Executable imports: SetVal8005E2BC and SetVal8005E334. */
+/* Executable imports: SetVal8005E2BC and SetMessagePortraitEnabled. */
 void SetVal8005E2BC(s32 arg0);
-void SetVal8005E334(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
 
 void ovl_23_func_800B8754(void) {
     ovl_23_func_800B9310();
     if (Ovl23_D_800BF87C_header.unk416 == 0) {
-        func_80022738();
+        CloseMessageWindow();
         SetVal8005E2BC(0);
-        SetVal8005E334(0);
-        func_8002261C(4, 0x2E);
+        SetMessagePortraitEnabled(0);
+        RequestMessageWindow(4, 0x2E);
     }
     Ovl23_D_800BF87C_header.unk416++;
     if (Ovl23_D_800BF87C_header.unk416 >= 60) {
         Ovl23_D_800BF87C_header.unk414 = PlaySoundEffect(0x38);
-        func_80022738();
+        CloseMessageWindow();
         Ovl23_D_800BF87C_header.unk0 = 6;
         Ovl23_D_800BF87C_header.unk416 = 0;
     }

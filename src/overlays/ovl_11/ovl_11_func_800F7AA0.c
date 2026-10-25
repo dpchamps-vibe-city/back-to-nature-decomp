@@ -1,9 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
-s32 func_800226B0(void);
-void func_80022738(void);
 void ovl_11_func_800F9BE4(void);
 s32 ovl_11_func_800F7D34(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F8224(s16 *arg0, s16 arg1);
@@ -15,11 +14,11 @@ s32 ovl_11_func_800F7AA0(void) {
     s32 temp_v1;
 
     temp_s0 = D_80126E4E;
-    if ((temp_s0 == 0xFF) && (func_800226B0() != 0)) {
+    if ((temp_s0 == 0xFF) && (IsMessageWindowStatusFinal() != 0)) {
         temp_v1 = *(s32 *) ((u8 *) gPad0Input + 8);
         if (temp_v1 & 0x10) {
             if (*ovl_11_func_800F82FC((s32) D_80126E44, (s32) D_80126E4A) != 0) {
-                func_80022738();
+                CloseMessageWindow();
                 PlaySoundEffect(0);
                 D_80126E4E = 0;
                 goto block_32;
@@ -29,7 +28,7 @@ s32 ovl_11_func_800F7AA0(void) {
         }
         if (temp_v1 & 0x20) {
             if (D_80126E48 == temp_s0) {
-                func_80022738();
+                CloseMessageWindow();
                 D_80126E40 = 0xFE;
                 PlaySoundEffect(3);
                 return 0;

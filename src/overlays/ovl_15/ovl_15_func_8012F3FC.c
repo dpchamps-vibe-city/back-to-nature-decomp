@@ -11,7 +11,7 @@ void ovl_15_func_8012F3FC(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80051FEA);
+    func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80051FEA);
     for (var_s0 = 0; var_s0 < 3; var_s0++) {
         ovl_15_func_80136C70((s16)var_s0, 1);
     }

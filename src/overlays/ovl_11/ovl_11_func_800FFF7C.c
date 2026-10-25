@@ -2,10 +2,9 @@
 #include "screen_fade.h"
 #include "cd_audio.h"
 #include "sprite_grid.h"
+#include "message_window.h"
 
-s32 func_800226B0(void);
 s32 ovl_11_func_800F77A8(s16 arg0);
-void func_80022738(void);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void func_80017A38(s16 arg0, s16 arg1);
@@ -28,8 +27,8 @@ void ovl_11_func_800FFF7C(void) {
     if (D_801273E4 != 0) {
         if (D_801273E4 == 1) {
             DrawScrollingSpriteGrid(temp_a0);
-            if ((func_800226B0() != 0) && (ovl_11_func_800F77A8(0) == 0)) {
-                func_80022738();
+            if ((IsMessageWindowStatusFinal() != 0) && (ovl_11_func_800F77A8(0) == 0)) {
+                CloseMessageWindow();
                 D_801273E4 = 3;
             }
         } else {

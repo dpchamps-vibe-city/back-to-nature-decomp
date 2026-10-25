@@ -6,6 +6,7 @@
 #include "screen_fade.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
@@ -17,7 +18,6 @@ void ovl_11_func_800F7010 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80100EB8 (s32 arg0);
 void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void SetVal8005E2BC (s32 arg0);
-void SetVal8005E334 (s32 arg0);
 void ovl_11_func_800F8CF8 (s32 *arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F6A24 (u16 arg0);
 void ovl_11_func_800F6C78 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
@@ -25,11 +25,6 @@ void func_80015840(ObjectState *obj, u8 arg1);
 void func_8001585C(ObjectState *obj, u8 arg1);
 void func_80015F80 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7, u16 arg8);
 void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-s32 func_8002261C (s32 arg0, s32 arg1);
-s32 func_800226B0 (void);
-void func_80022738 (void);
-s32 GetVal8005E5B4 (void);
-s32 GetVal8005E5B8 (void);
 void ovl_11_func_80100F9C (s32 arg0);
 s32 pow_int (s32 arg0, s32 arg1);
 
@@ -65,8 +60,8 @@ void ovl_11_func_80100B50(u8 arg0, u8 arg1) {
     var_s5 = 0x14;
     var_s7 = 1;
     func_80022580(temp_s0, 1, 0x16, 0x5A, 0x10E, 0x4A);
-    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) &D_8005396A + *D_80054BBC)), 0x21, 0x20);
-    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_8005396A + 0x12)) + *D_80054BBC)), 0x21, 0x6A);
+    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) &D_8005396A + *gTextBankOffsets)), 0x21, 0x20);
+    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_8005396A + 0x12)) + *gTextBankOffsets)), 0x21, 0x6A);
     var_s2 = D_801273F4;
     for (; var_s6 < 7; var_s6++) {
         if (*(u16 *)(temp_fp + 4) & var_s7) {

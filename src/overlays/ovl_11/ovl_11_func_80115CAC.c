@@ -1,10 +1,7 @@
 #include "common.h"
+#include "message_window.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void SetVal8005E334(s32 arg0);
-void func_80022738(void);
 s32 ovl_11_func_800CB850(s32 arg0);
 void ovl_11_func_800E2904(s32 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -29,14 +26,14 @@ s32 ovl_11_func_80115CAC(void) {
         break;
     case 1:
         if (id == 0x10A) {
-            func_8002261C(2, 0x5C);
+            RequestMessageWindow(2, 0x5C);
             ovl_11_func_8011D084(5, 7);
         } else if (id == 0x109) {
-            SetVal8005E334(0);
+            SetMessagePortraitEnabled(0);
             if (ovl_11_func_80115F80() == 1) {
-                func_8002261C(2, 0x61);
+                RequestMessageWindow(2, 0x61);
             } else {
-                func_8002261C(2, 0x60);
+                RequestMessageWindow(2, 0x60);
             }
             ovl_11_func_8011D084(6, 2);
         }
@@ -46,8 +43,8 @@ s32 ovl_11_func_80115CAC(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
-            func_8002261C(2, 0x51);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x51);
             if (ovl_11_func_80115F80() == 1) {
                 ovl_11_func_800F2354(2000, 1);
             } else {
@@ -57,8 +54,8 @@ s32 ovl_11_func_80115CAC(void) {
             ovl_11_func_8011D084(5, 3);
             break;
         case 2:
-            func_80022738();
-            func_8002261C(2, 0x5B);
+            CloseMessageWindow();
+            RequestMessageWindow(2, 0x5B);
             ovl_11_func_8011D084(5, 7);
             break;
         }
@@ -73,12 +70,12 @@ s32 ovl_11_func_80115CAC(void) {
         }
         break;
     case 5:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;
     case 6:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }

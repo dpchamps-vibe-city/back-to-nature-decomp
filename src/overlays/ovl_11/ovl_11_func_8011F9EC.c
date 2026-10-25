@@ -37,9 +37,9 @@ void ovl_11_func_8011F9EC(s32 *arg0) {
         }
     }
     sel = Rand(0x13);
-    arg0[0] = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + D_8012855C[max_i].unk0));
-    arg0[1] = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + D_8012855C[sec_i].unk0));
-    arg0[2] = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + D_80128580[sel].unk0));
+    arg0[0] = (s32)((u8 *)D_8005175C + (gTextBankOffsets[0] + D_8012855C[max_i].unk0));
+    arg0[1] = (s32)((u8 *)D_8005175C + (gTextBankOffsets[0] + D_8012855C[sec_i].unk0));
+    arg0[2] = (s32)((u8 *)D_8005175C + (gTextBankOffsets[0] + D_80128580[sel].unk0));
     D_80128550.unk0 = max_i;
     D_80128550.unk2 = sec_i;
     D_80128550.unk4 = sel;

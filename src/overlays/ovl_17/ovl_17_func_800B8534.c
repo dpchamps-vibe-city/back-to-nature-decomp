@@ -1,12 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800BA704(void);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-s32 GetVal8005E5B8(void);
 
 void ovl_17_func_800B8534(void) {
     s32 i;
@@ -32,10 +30,10 @@ void ovl_17_func_800B8534(void) {
     base = D_800BD910;
     ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *)base, 0x40000);
     ovl_17_func_800BA808(0x40000);
-    func_8002261C(4, 1);
-    state = GetVal8005E5B4();
+    RequestMessageWindow(4, 1);
+    state = GetMessageWindowStatus();
     if (state == 2) {
-        result = GetVal8005E5B8();
+        result = GetMessageWindowChoice();
         if (result == 1) {
             base[-0xC4] = 4;
         } else if (result == state) {

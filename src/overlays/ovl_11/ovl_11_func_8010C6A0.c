@@ -43,7 +43,7 @@ void ovl_11_func_8010C6A0(void) {
     rec = (Ovl11Rec8010C6A0 *)base;
     for (i = 0; i < 7; i++, rec++) {
         ovl_11_func_8010D04C((s32)rec);
-        off = D_80054BBC[1];
+        off = gTextBankOffsets[1];
         p5175c = (s32)D_8005175C;
         src = (char *)(off + D_80127CD0[i]) + p5175c;
         rec->src = *(Ovl11PackedSrc8010C6A0 *)src;

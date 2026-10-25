@@ -6,6 +6,7 @@
 #include "pad_actuator_sequences.h"
 #include "master_volume.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -23,7 +24,6 @@ void func_8001AF70 (u16 arg0, u16 arg1);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670 (s16 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
-s32 func_8002261C (s32 arg0, s32 arg1);
 void ovl_11_func_800CBD78 (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800CF044 (s16 arg0, Ovl25SetupStatePair *arg1, VECTOR *arg2);
 void ovl_11_func_800CF314 (u8 *arg0, C580C_b6c4596908ca_Ovl11CF314Arg1 *arg1, C580C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
@@ -266,7 +266,7 @@ state_done:
             ((struct Ovl11C580CState *)D_8006C838)->record->flags |= 0x100;
             D_80129634 = 3;
             if (ovl_11_func_800F3E44(arg0->item) != 0) {
-                func_8002261C(3, 0x383);
+                RequestMessageWindow(3, 0x383);
             }
             arg0->unk6C &= 0xE7FF3FFF;
             ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);

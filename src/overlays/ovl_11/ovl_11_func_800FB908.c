@@ -40,7 +40,7 @@ void ovl_11_func_800FB908(void) {
             D_8012CDC8[var_s0] = temp_a0;
         } else {
             D_8012CDC8[var_s0++] = 0xFFD;
-            text_position = (s32) &text[*D_80054BBC];
+            text_position = (s32) &text[*gTextBankOffsets];
             for (; var_s0 < 14; text_position += 2, var_s0++) {
                 D_8012CDC8[var_s0] = *(u16 *) text_position;
                 if (D_8012CDC8[var_s0] == 0xFFFF) {

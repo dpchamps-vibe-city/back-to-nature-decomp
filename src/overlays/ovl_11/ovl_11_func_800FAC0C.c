@@ -1,15 +1,12 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void func_80017A38(s16, s16);
 void SetVal8005E2BC(s32);
 void func_80017B3C(s32, s32, s32, s32);
 s32 pow_int(s32, s32);
 void func_80022580(u32 *, s32, s32, s32, s16, s16);
-s32 func_8002261C(s32, s32);
-s32 func_800226B0(void);
-void SetVal8005E334(s32);
-void func_80022738(void);
 void func_800248B0(s32, s16, s16);
 void ovl_11_func_800F6F7C(s32, s16, s16);
 void ovl_11_func_800FB0C4(s16 *);
@@ -34,8 +31,8 @@ void ovl_11_func_800FAC0C(void) {
         func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1,
             D_801271E8[i][0], D_801271E8[i][1], D_801271E8[i][2], D_801271E8[i][3]);
     }
-    func_80017B3C(text, (s32)(D_80051B7C + D_80054BBC[0]), 0x1D, 0x14);
-    func_80017B3C(text, (s32)(D_80051B7C + 0xC + D_80054BBC[0]), 0x1D, 0x5E);
+    func_80017B3C(text, (s32)(D_80051B7C + gTextBankOffsets[0]), 0x1D, 0x14);
+    func_80017B3C(text, (s32)(D_80051B7C + 0xC + gTextBankOffsets[0]), 0x1D, 0x5E);
     ovl_11_func_800FB510(items, 0, (s16 *)((u8 *)D_8006C838 + 0x524C));
     ovl_11_func_800FB510(items, 9, (s16 *)((u8 *)D_8006C838 + 0x5252));
     for (i = 0; i < pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1); i++) {
@@ -53,16 +50,16 @@ void ovl_11_func_800FAC0C(void) {
         ovl_11_func_800FB0C4((s16 *)ovl_11_func_800FB4B0(D_80126FE4));
         return;
     }
-    SetVal8005E334(0);
+    SetMessagePortraitEnabled(0);
     SetVal8005E2BC(0);
-    func_8002261C(3, 0x3AC);
-    if (func_800226B0()) {
+    RequestMessageWindow(3, 0x3AC);
+    if (IsMessageWindowStatusFinal()) {
         buttons = ((u32 *)gPad0Input)[2];
         if (buttons & 0x10) {
             if (D_80126FE0 == state) {
                 if (*(s16 *)ovl_11_func_800FB4B0(D_80126FE4)) {
                     PlaySoundEffect(0);
-                    func_80022738();
+                    CloseMessageWindow();
                     D_80126FE0 = 2;
                 } else {
                     PlaySoundEffect(2);
@@ -70,7 +67,7 @@ void ovl_11_func_800FAC0C(void) {
             }
         } else if (buttons & 0x20) {
             if (D_80126FEC == 0xFF) {
-                func_80022738();
+                CloseMessageWindow();
                 D_80126FE0 = 3;
                 PlaySoundEffect(3);
                 return;
@@ -96,7 +93,7 @@ void ovl_11_func_800FAC0C(void) {
                 }
             }
         } else if (buttons & 0x800) {
-            func_80022738();
+            CloseMessageWindow();
             PlaySoundEffect(3);
             D_80126FE0 = 3;
         } else {

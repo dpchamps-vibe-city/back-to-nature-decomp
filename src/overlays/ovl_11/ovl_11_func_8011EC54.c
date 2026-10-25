@@ -1,10 +1,9 @@
 #include "common.h"
 #include "sound_commands.h"
-
-void func_80022738(void);
+#include "message_window.h"
 
 void ovl_11_func_8011EC54(void) {
-    func_80022738();
+    CloseMessageWindow();
     PlaySoundEffect(3);
     D_80128420 = 8;
 }

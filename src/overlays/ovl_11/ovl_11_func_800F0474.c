@@ -1,9 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-/* Callee prototypes as this caller TU saw them. */
-s32 func_800231E8(void);
-void func_80023170(u16 *arg0);
+#include "text_entry.h"
 
 s32 ovl_11_func_800F0474(s16 arg0) {
     Ovl11Status801295D0 *dst;
@@ -23,7 +20,7 @@ s32 ovl_11_func_800F0474(s16 arg0) {
     }
 
     result = 0;
-    temp = func_800231E8();
+    temp = UpdateTextEntry();
     if (temp != 0) {
         if (temp > 0) {
             if (temp == 1) {
@@ -32,7 +29,7 @@ s32 ovl_11_func_800F0474(s16 arg0) {
             }
         }
     } else {
-        func_80023170((u16 *)&D_801295D0);
+        BeginRequiredTextEntry((u16 *)&D_801295D0);
     }
     return result;
 }

@@ -5,21 +5,17 @@
 #include "packet_work.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017A38 (s16 arg0, s16 arg1);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 func_800226B0 (void);
-void func_80022738 (void);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800FF27C (s16 arg0, s16 arg1);
 void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void SetVal8005E2BC (s32 arg0);
-void SetVal8005E334 (s32 arg0);
 void func_80024A4C (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
-s32 func_8002261C (s32 arg0, s32 arg1);
-s32 GetVal8005E5B4 (void);
 
 void ovl_11_func_800FEFEC(void) {
     s32 temp_a0;
@@ -29,9 +25,9 @@ void ovl_11_func_800FEFEC(void) {
 
     func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x58), 1, 0x14, 0x37, 0x118, 0x69);
     func_80017A38(0, 2);
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) ((void *) ((u8 *) &D_80053B22 + *D_80054BBC)), 0x20, 0x3B);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) ((void *) ((u8 *) &D_80053B22 + *gTextBankOffsets)), 0x20, 0x3B);
     func_80017A38(0, 0);
-    if ((D_801273B0 == 0x10) && (func_800226B0() == 1)) {
+    if ((D_801273B0 == 0x10) && (IsMessageWindowStatusFinal() == 1)) {
         if ((*(s32 *) ((u8 *) gPad0Input + 0)) & 0xA000) {
             D_801273B6 = (D_801273B6 + 1) % 2;
             PlaySoundEffect(5);
@@ -55,12 +51,12 @@ void ovl_11_func_800FEFEC(void) {
         D_801273B8_selection[0] = remainder;
         if (temp_a0 & 0x20) {
             PlaySoundEffect(1);
-            func_80022738();
+            CloseMessageWindow();
             D_801273B0 = 1;
         } else if (temp_a0 & 0x40) {
             PlaySoundEffect(0);
             if (D_801273B0 == 0x10) {
-                func_80022738();
+                CloseMessageWindow();
                 D_801273B0 = 0x11;
             } else {
                 D_801273B0 = 0x10;

@@ -1,7 +1,6 @@
 #include "common.h"
+#include "message_window.h"
 
-s32 GetVal8005E5B4(void);
-void func_80022738(void);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_80108104(void);
 void ovl_11_func_80108118(void);
@@ -42,24 +41,24 @@ void ovl_11_func_80107F58(void) {
         D_8012D044 = v;
         break;
     case 2:
-        s0 = GetVal8005E5B4();
+        s0 = GetMessageWindowStatus();
         if (s0 == 5) {
             if (ovl_11_func_801086CC() == 1) {
-                func_80022738();
+                CloseMessageWindow();
             }
         } else if (s0 == 2) {
             D_8012D044 = 3;
         }
         break;
     case 3:
-        func_80022738();
+        CloseMessageWindow();
         ovl_11_func_801088E4();
         ovl_11_func_80108828();
         v = 4;
         D_8012D044 = v;
         break;
     case 4:
-        s0 = GetVal8005E5B4();
+        s0 = GetMessageWindowStatus();
         if (s0 == 5) {
             ovl_11_func_80108B8C();
         }
@@ -77,7 +76,7 @@ void ovl_11_func_80107F58(void) {
         ovl_11_func_800BCF28();
         break;
     case 6:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             v = 5;
             D_8012D044 = v;
         }

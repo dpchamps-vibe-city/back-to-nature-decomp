@@ -14,8 +14,8 @@ void ovl_11_func_800FD5E8(void) {
 
     temp_s3 = gActiveRenderContext->field_D8 + 0x54;
     ((struct Ovl11NumberTextHeader *) &D_8012A028)->marker = 0xFFD;
-    func_80017B3C(temp_s3, (s32) (D_80053636 + D_80054BBC[0]), 0xB2, 0x14);
-    func_80017B3C(temp_s3, (s32) (D_80053636 + 0x28 + D_80054BBC[0]), 0x20, 0x40);
+    func_80017B3C(temp_s3, (s32) (D_80053636 + gTextBankOffsets[0]), 0xB2, 0x14);
+    func_80017B3C(temp_s3, (s32) (D_80053636 + 0x28 + gTextBankOffsets[0]), 0x20, 0x40);
     value = ((struct Ovl11PairedValues *) D_8006C838)->pairs[0][0];
     if (value >= -9999999) {
         var_a0 = value;

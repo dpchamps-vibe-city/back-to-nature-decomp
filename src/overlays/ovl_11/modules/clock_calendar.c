@@ -41,7 +41,7 @@ void Ovl11RunClockAdvance(void) {
     if (gOvl11ClockAdvanceActive != 0) {
         gOvl11ClockAdvanceTickEnabled = 0;
         if (Ovl11HasQueuedClockEvent() == 0) {
-            anchor = (struct Ovl11ClockAnchor *)&D_8006C904;
+            anchor = (struct Ovl11ClockAnchor *)&gMessageWindowPhase;
             while (gOvl11ClockAdvanceMinutesRemaining > 0) {
                 anchor->counter = gOvl11ClockMinutePeriodTwice;
                 gOvl11ClockAdvanceTickEnabled = 1;
@@ -183,7 +183,7 @@ void Ovl11TickClock(void) {
         return;
     }
     {
-        anchor = (struct Ovl11ClockAnchor *)&D_8006C904;
+        anchor = (struct Ovl11ClockAnchor *)&gMessageWindowPhase;
         state = (struct Ovl11ClockState *)((u8 *)anchor - 0xCC);
         date = (struct Ovl11ClockDate *)((u8 *)anchor + 0x43EC);
         time = (struct Ovl11ClockPair *)((u8 *)anchor + 0x43F4);

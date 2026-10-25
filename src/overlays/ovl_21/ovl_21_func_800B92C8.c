@@ -1,13 +1,11 @@
 #include "common.h"
 #include "psyq/libspu.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
 void ovl_21_func_800BA4C0(void);
-s32 GetVal8005E5B4(void);
-void func_80022738(void);
 void ovl_21_func_800B9798(s16 arg0, s16 arg1);
 void SetVal8005E2BC(s32 arg0);
-void SetVal8005E334(s32 arg0);
 
 void ovl_21_func_800B92C8(void) {
     u8 *base;
@@ -17,8 +15,8 @@ void ovl_21_func_800B92C8(void) {
     ovl_21_func_800BA4C0();
     base = (u8 *)D_800C0448;
     if (*(s16 *)(base + 0x988) == -1) {
-        if (GetVal8005E5B4() == 2) {
-            func_80022738();
+        if (GetMessageWindowStatus() == 2) {
+            CloseMessageWindow();
             *(s16 *)(base + 0x988) = 0;
             D_800C0448[0] = 0x12;
             return;
@@ -33,13 +31,13 @@ void ovl_21_func_800B92C8(void) {
         if (status == 0 || *(s16 *)(p + 0x988) >= 0x96) {
             ovl_21_func_800B9798(1, 0);
             SetVal8005E2BC(1);
-            SetVal8005E334(1);
+            SetMessagePortraitEnabled(1);
             *(s16 *)(p + 0x988) = -1;
         }
     }
     q = (u8 *)D_800C0448;
     if (*(s16 *)(q + 0x988) == 0) {
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             *(s16 *)(q + 0x986) = PlaySoundEffect(0x45);
             ovl_21_func_800B9798(1, 0xB);
             *(s16 *)(q + 0x988) = 1;

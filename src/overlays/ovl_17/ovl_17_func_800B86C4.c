@@ -1,13 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
 void func_80017A08(s32 arg0, s32 arg1);
 void ovl_17_func_800BAFDC(void);
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-/* GetVal8005E5B4, named by its original overlay import. */
-s32 GetVal8005E5B4(void);
 
 void ovl_17_func_800B86C4(void) {
     s32 i = 0;
@@ -28,8 +26,8 @@ void ovl_17_func_800B86C4(void) {
         work += 0x50;
     }
     ovl_17_func_800BA808(0x40000);
-    func_8002261C(4, 4);
-    if (GetVal8005E5B4() == 2) {
+    RequestMessageWindow(4, 4);
+    if (GetMessageWindowStatus() == 2) {
         state = D_800BD848;
         *(s16 *)(state + 0x2CE) = 0;
         state[4] = i;

@@ -1,10 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 func_8002261C(s32 arg0, s32 arg1);
-s32 GetVal8005E5B4(void);
-void func_80022738(void);
 s32 ovl_11_func_80116878(StructD548 *arg0);
 void ovl_11_func_801168C0(StructD548 *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
@@ -42,15 +40,15 @@ s32 ovl_11_func_801165E0(void) {
         case 0:
             break;
         case 3:
-            func_8002261C(1, 0x447);
+            RequestMessageWindow(1, 0x447);
             ovl_11_func_8011D084(9, 11);
             break;
         case 1:
             if (ovl_11_func_80116878((StructD548 *)D_8012D548) == 1) {
-                func_8002261C(1, 0x449);
+                RequestMessageWindow(1, 0x449);
                 ovl_11_func_8011D084(10, 8);
             } else {
-                func_8002261C(1, 0x44A);
+                RequestMessageWindow(1, 0x44A);
                 ovl_11_func_8011D084(9, 0);
             }
             break;
@@ -63,25 +61,25 @@ s32 ovl_11_func_801165E0(void) {
         case 0:
             break;
         case 1:
-            func_80022738();
-            func_8002261C(1, 0x448);
+            CloseMessageWindow();
+            RequestMessageWindow(1, 0x448);
             ovl_11_func_801168C0((StructD548 *)D_8012D548);
             break;
         case 2:
-            func_80022738();
-            func_8002261C(1, 0x447);
+            CloseMessageWindow();
+            RequestMessageWindow(1, 0x447);
             ovl_11_func_8011D084(9, 0);
             break;
         }
         break;
     case 10:
-        if (GetVal8005E5B4() == 5) {
+        if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);
             ovl_11_func_8011D0B4();
         }
         break;
     case 9:
-        if (GetVal8005E5B4() == 2) {
+        if (GetMessageWindowStatus() == 2) {
             ovl_11_func_8011D0B4();
         }
         break;

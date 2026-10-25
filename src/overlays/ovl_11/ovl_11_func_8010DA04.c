@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "message_window.h"
 
 s32 ovl_11_func_8010DE68(Ovl11DE68Object *arg0);
 s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
-s32 func_8002261C(s32 arg0, s32 arg1);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
 void ovl_11_func_80110E98(Ovl11DE68Object *arg0, s32 *arg1, s32 *arg2);
 
@@ -73,7 +73,7 @@ s32 ovl_11_func_8010DA04(Ovl11DE68Object *arg0) {
     if (var_s5 == 1) {
         ovl_11_func_80110E98(arg0, &sp1C, &sp20);
     }
-    func_8002261C(sp1C, sp20);
+    RequestMessageWindow(sp1C, sp20);
     temp_v1 = arg0->unkB8;
     if (temp_v1 & 8) {
         if ((s16) (*(u16 *) ((u8 *) arg0 + 0xBC)) < 4) {

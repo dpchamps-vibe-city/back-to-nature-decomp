@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-void func_80022738(void);
+#include "message_window.h"
 
 extern s32 D_8012D040;
 extern s32 D_8012D044;
@@ -16,7 +15,7 @@ void ovl_11_func_8010860C(void) {
     }
     if (mode == 0x20) {
         D_8012D044 = 6;
-        func_80022738();
+        CloseMessageWindow();
         return;
     }
     if (mode == 0x1000) {
@@ -32,7 +31,7 @@ void ovl_11_func_8010860C(void) {
     }
     if (D_8012D040 != var_v1) {
         D_8012D040 = var_v1;
-        func_80022738();
+        CloseMessageWindow();
         D_8012D044 = 2;
     }
 }

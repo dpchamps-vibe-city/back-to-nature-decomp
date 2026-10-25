@@ -1,7 +1,7 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "message_window.h"
 
-s32 func_800226B0(void);
 s32 ovl_11_func_800F8404(s32 arg0);
 void ovl_11_func_800F6F7C(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F6F40(s32 arg0, s16 arg1, s16 arg2);
@@ -16,7 +16,7 @@ void ovl_11_func_800F84F0(s32 arg0) {
 
     delta.halves[0] = 0;
     delta.halves[1] = 0;
-    if (func_800226B0() != 0) {
+    if (IsMessageWindowStatusFinal() != 0) {
         buttons = *(s32 *)gPad0Input;
         if (buttons & 0xF000) {
             if (buttons & 0x1000) {

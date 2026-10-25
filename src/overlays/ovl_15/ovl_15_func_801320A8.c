@@ -33,7 +33,7 @@ void ovl_15_func_801320A8(void) {
     s16 *temp_a1_2;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) ((void *) ((u8 *) &D_800520A0 + *D_80054BBC)));
+    func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) ((void *) ((u8 *) &D_800520A0 + *gTextBankOffsets)));
     for (var_t1 = 0; var_t1 < 2; var_t1++) {
         sp10[var_t1] = sp18[var_t1] = sp20[var_t1] = 0;
         for (var_t1_2 = 0; var_t1_2 < 5; var_t1_2++) {

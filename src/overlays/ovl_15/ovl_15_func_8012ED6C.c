@@ -11,7 +11,7 @@ void ovl_15_func_8012ED6C(void) {
 
     text = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(text + 0x18), text + 0x14,
-                 (s32) &D_80052FC4[D_80054BBC[0]]);
+                 (s32) &D_80052FC4[gTextBankOffsets[0]]);
     if (D_8013759A >= 2) {
         for (i = 0; i < 2; i++) {
             states = &D_80137594[i];
