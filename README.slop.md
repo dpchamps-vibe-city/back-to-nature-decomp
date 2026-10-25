@@ -1103,9 +1103,12 @@ allowed.
 
 `foldTranslationUnit.ts` is the checked mechanical fold, not a grouping
 oracle; membership evidence comes from callers, private state, link order and
-`notes/file-groupings.md`. `/auto_decompilation_loop fold` dispatches
-`plans/tu-prompt.md` repeatedly and accepts a module only on a passing
-`--verify` of the tree as it stands. `--verify` caches its verdict by the
+`notes/file-groupings.md`. It also merges existing modules and carries dead
+functions' `INCLUDE_ASM` stubs, so a dead stub is never a module boundary.
+`/auto_decompilation_loop fold` dispatches `plans/tu-prompt.md` repeatedly;
+one dispatch may create, extend and merge several modules, and is accepted
+when more functions are folded (or modules were merged) with nothing lost, on
+a passing `--verify` of the tree as it stands. `--verify` caches its verdict by the
 working tree (notes and plans aside), so the loop reuses the run the agent
 made on an unchanged tree. Its convergence step re-splits only what changed
 since the last converged tree and keeps what that regenerates, re-running

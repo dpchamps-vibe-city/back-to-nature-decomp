@@ -25,7 +25,7 @@ s32 ovl_11_func_800CFB20 (s32 arg0, s32 arg1);
 void ovl_11_func_800CFC20 (void);
 u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
-void func_800121D4 (void);
+void ClearActiveOrderingTables (void);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EFDA0 (s32 arg0, s32 arg1, s32 arg2);
@@ -459,7 +459,7 @@ block_118:
         goto block_204;
     case 23:
         DrawSync(0);
-        func_800121D4();
+        ClearActiveOrderingTables();
         temp_a0_3 = ((E9Other *)&D_8007AFF0)->f25388->fC;
         if (temp_a0_3 != 0x3E7) {
             ovl_11_func_800BD6A8(temp_a0_3, 0);

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT } from "./psxExeInfo.js";
@@ -198,10 +198,10 @@ test("orphan modules and stale per-function sources fail", () => {
   assert.match(stale.units[1]!.findings.join("\n"), /f_b\.c remains beside .*widget\.c: a stale per-function source/);
 });
 
-test("a module that still hands a member to the assembler is a partial fold", () => {
-  const partial = audit(MODULE, { "src/overlays/ovl_t/f_a.c": A, "src/overlays/ovl_t/modules/widget.c": 'INCLUDE_ASM("asm", f_b);\n' + C });
-  assert.equal(partial.units[1]!.stubbed.has("f_b"), true);
-  assert.match(partial.units[1]!.findings.join("\n"), /partial fold/);
+test("a module may carry a member's stub: it is recorded as stubbed, not a membership finding", () => {
+  const carried = audit(MODULE, { "src/overlays/ovl_t/f_a.c": A, "src/overlays/ovl_t/modules/widget.c": 'INCLUDE_ASM("asm", f_b);\n' + C });
+  assert.equal(carried.units[1]!.stubbed.has("f_b"), true);
+  assert.doesNotMatch(carried.units[1]!.findings.join("\n"), /f_b/);
 });
 
 test("a member's flag override blocks the module instead of silently not applying", () => {
@@ -292,7 +292,9 @@ test("context export reads every definition inside a module", async (t) => {
   for (const container of loadContainers()) {
     for (const unit of loadTranslationUnits(container).filter((u) => u.foldedModule)) {
       const published = new Set(extractSignaturePairs(join(ROOT, unit.sourcePath)).map((pair) => pair.name));
-      for (const member of unit.members) assert.ok(published.has(member.name), `${member.name} in ${unit.sourcePath}`);
+      /* A carried stub is not a definition. */
+      const stubs = new Set(sourceFacts(readFileSync(join(ROOT, unit.sourcePath), "utf8")).includeAsm);
+      for (const member of unit.members) if (!stubs.has(member.name)) assert.ok(published.has(member.name), `${member.name} in ${unit.sourcePath}`);
     }
   }
 });

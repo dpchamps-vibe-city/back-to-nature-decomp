@@ -6,7 +6,7 @@
 #include "asset_scratch.h"
 
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_800121D4(void);
+void ClearActiveOrderingTables(void);
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
 u8 *func_80014CBC(s32, s32, s32, u8 *, s32, s32);
 void ovl_11_func_800E5230(void);
@@ -61,7 +61,7 @@ s32 ovl_11_func_800E3DC8(void) {
             ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
             data = (u8 *)gRenderContexts[0].field_124;
             if (gRenderContexts[0].field_11C * 2 < size) {
-                func_800121D4();
+                ClearActiveOrderingTables();
             }
         } else if ((void *)gActiveRenderContext == (void *)gRenderContexts) {
             data = (u8 *)gRenderContexts[1].field_124;

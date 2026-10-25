@@ -72,7 +72,7 @@ test("planning refuses what the mechanics cannot do soundly", () => {
   assert.match(refusal(["ovl_31_func_800B82E8", "ovl_31_func_800B83B8"]), /not contiguous/);
   assert.match(refusal(["ovl_31_func_800B82E8"], "func_800B82E8"), /encodes an address/);
   assert.match(refusal(["func_80011270"]), /not an original game function of ovl_31/);
-  assert.match(planFold({ container: "exe", module: "flag_accessors", members: ["SetFlag8005E274", "GetFlag8005E274"] }).moduleText, /^u8 D_8005E274;$/m);
+  assert.match(planFold({ container: "exe", module: "value_accessors", members: ["SetVal8005E2BC", "GetVal8005E2BC"] }).moduleText, /^s32 D_8005E2BC;$/m);
   assert.match((() => { try { planFold({ container: "exe", module: "entry", members: ["func_80011278"] }); return ""; } catch (error) { return (error as Error).message; } })(),
     /INCLUDE_ASM stub/);
 });

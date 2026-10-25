@@ -41,14 +41,16 @@ export function contextSourceReader(root: string) {
         path: n.childForFieldName("path")?.text.slice(1, -1) ?? "", line: n.startPosition.row + 1,
       }));
     } finally { tree.delete(); }
-    /* Keep the exporter's existing conservative stub exclusion, including a
-       disabled parked body; actual symbols are read by the AST guard. */
+    /* A stub's own function is never published, nor a disabled parked body
+       beside it; actual symbols are read by the AST guard. A module that
+       carries a dead function's stub still publishes its other members. */
     const hasIncludeAsmText = source.includes("INCLUDE_ASM(");
-    const signatures = hasIncludeAsmText ? [] : extractSignaturesFromSource(source);
+    const stubSymbols = hasIncludeAsmText ? analyzeCSource(source).includeAsm.map((s) => s.symbol) : [];
+    const signatures = extractSignaturesFromSource(source).filter((s) => !stubSymbols.includes(s.name));
     const typedefs = new Map<string, string>();
     if (signatures.length) collectTypedefs(source, typedefs);
     const facts: ContextSourceFacts = { signatures, prototypes: extractPrototypesFromSource(source), includes,
-      hasIncludeAsmText, stubSymbols: hasIncludeAsmText ? analyzeCSource(source).includeAsm.map((s) => s.symbol) : [],
+      hasIncludeAsmText, stubSymbols,
       hasLocalTypes: typedefs.size > 0 || source.includes("struct ") || source.includes("union ") || source.includes("enum ") };
     writeCache(cache, key, facts);
     return facts;

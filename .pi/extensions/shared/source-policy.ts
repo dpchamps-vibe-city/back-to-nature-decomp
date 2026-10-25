@@ -7,6 +7,7 @@ import { approvedSdkMacroDefinitions } from "./sdk-macros.ts";
 import { enclosingDefinition, sourceFacts } from "../../../tools/lib/translationUnitAudit.ts";
 import { flagOverrideKey, loadTranslationUnits } from "../../../tools/lib/translationUnits.ts";
 import { loadContainers } from "../../../tools/lib/container.ts";
+import { loadCallGraph } from "./call-graph.ts";
 
 interface PolicyOptions {
   projectRoot: string;
@@ -361,8 +362,8 @@ export function sourceConstructFindings(source: string, config: AutodecompConfig
   return findings;
 }
 
-/** One original function a module defines, as the allowlist keys it. */
-export interface MemberScope { name: string; vram?: string; container?: string }
+/** One original function a module defines, as the allowlist keys it; `dead` when nothing reaches it. */
+export interface MemberScope { name: string; vram?: string; container?: string; dead?: boolean }
 
 /**
  * Policy findings for a reconstructed module, each charged to the function it
@@ -375,7 +376,9 @@ export interface MemberScope { name: string; vram?: string; container?: string }
  * original function of its own; and a construct at module scope — a file-scope
  * pin, a top-level asm statement, a module-local macro that wraps assembly —
  * belongs to no member and cannot borrow any member's exception. An
- * `INCLUDE_ASM` inside a module is a partial fold, whatever the allowlist says.
+ * `INCLUDE_ASM` inside a module is the stub of the member it names, held to
+ * the rule a per-function stub is: a dead function's stub is backlog, a live
+ * function's is unfinished decompilation unless the allowlist grants it.
  */
 export function moduleConstructFindings(
   source: string,
@@ -398,7 +401,11 @@ export function moduleConstructFindings(
   const findings: Array<Omit<PolicyFinding, "file">> = [];
   for (const finding of raw) {
     if (finding.kind === "include-asm") {
-      findings.push({ ...finding, message: "An INCLUDE_ASM stub inside a module is a partial fold: every member must be compiled C" });
+      const member = finding.text === undefined ? undefined : byName.get(finding.text);
+      if (!member) findings.push({ ...finding, message: `An INCLUDE_ASM stub inside a module must name one of its members; ${finding.text ?? "this one"} is not` });
+      else if (!member.dead && !allowlisted(config, member.name, member.vram, member.container, "include-asm")) {
+        findings.push({ ...finding, message: `An INCLUDE_ASM stub for live member ${member.name}: it must be compiled C` });
+      }
       continue;
     }
     if (finding.kind === "invalid-source" || finding.line === undefined) {
@@ -421,6 +428,15 @@ export function isModuleSourcePath(file: string): boolean {
   return /^src\/(?:overlays\/[^/]+\/)?modules\/[^/]+\.c$/.test(normalizedPath(file));
 }
 
+/** `<container>:<vram>` of every dead function, from the call graph; empty without one. Keyed by identity, so a rename since the graph was built does not matter. */
+function deadFunctions(projectRoot: string): Set<string> {
+  try {
+    return new Set(loadCallGraph(projectRoot).functions.filter((entry) => entry.dead).map((entry) => `${entry.container}:${parseInt(entry.vram, 16)}`));
+  } catch {
+    return new Set();
+  }
+}
+
 /**
  * The original functions a module source defines, from the translation-unit
  * index: every member of every configured unit whose source it is.
@@ -431,10 +447,12 @@ export function moduleMembers(projectRoot: string, file: string): MemberScope[] 
     for (const container of loadContainers()) {
       for (const unit of loadTranslationUnits(container)) {
         if (unit.sourcePath !== target) continue;
+        const dead = deadFunctions(projectRoot);
         return unit.members.map((member) => ({
           name: member.name,
           vram: `0x${member.vram.toString(16).toUpperCase().padStart(8, "0")}`,
           container: member.container,
+          dead: dead.has(`${member.container}:${member.vram}`),
         }));
       }
     }

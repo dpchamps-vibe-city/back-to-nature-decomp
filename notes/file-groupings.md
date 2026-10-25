@@ -4906,7 +4906,7 @@ idiom cluster (same-TU evidence). Members:
   member of the mod-30 quartet, filling the 0x800247C0 gap between
   func_80024770 and func_80024810)
 
-## pad initialization and state — 0x80013A24–0x80014554 (confidence: high)
+## pad initialization and state — 0x800139FC–0x80014554 (confidence: high)
 
 Pad setup, per-port state polling, decoded controller input, analog-stick
 normalization, and pad-helper sequence.
@@ -4936,10 +4936,39 @@ Historical flag compatibility: func_80014494 currently carries
 func_80014064, func_800140C8, func_800142D8, func_80014554) were checked
 with it on 2026-08-09 and remained exact. That establishes compatibility,
 not affirmative evidence for the flag or a shared original compiler command.
-The setup slice below matches at baseline; no claim about 80014494's
-remaining flag requirement is made by this reconstruction.
 
-Reconstructed setup slice: `src/modules/pad_input_setup.c` now holds
+**Module: `src/modules/pad.c` holds exe:0x800139FC–0x80014494** (16
+functions, 2026-10-24), merged from the three earlier slices
+`pad_input_setup`, `pad_actuator_gate` and `pad_input_update` plus the eight
+remaining per-function members. Membership evidence: the members share
+`gPadActuatorsEnabled` (8005E3EC), `gPadExtendedModeIds` (8005E3E8) and
+`gPadAlignmentPending` (8005E2A4) through $gp, which only a declaring unit
+can do, and no member reaches absolutely a symbol another member reaches
+through $gp (checked over every EXE object's GPREL16/HI16/LO16 relocations).
+The pad input pointers are reached absolutely here and through $gp only by
+game_loop's `main`, which declares them. 800139FC joins because it is the pad
+startup (`InitPads`: StartPadCommunication, then ChangeClearPAD(0)) and the
+preceding full-screen primitive group ends at 800139F8.
+
+Boundaries: the start rests on that group's end. The end at 80014494 is a
+**mechanical limit, not evidence**: 80014494 carries the per-function
+`-fno-cse-skip-blocks` override, and a module compiles under one command line.
+80014494 shares the gate word and mode IDs through $gp, and 80014554 follows
+it, so both belong to this unit. Folding them needs the module-wide flag
+decision in plans/flag-review-report.md. 800145F0 starts a different $gp
+cluster (8005E3F0/E404/E428/E430).
+
+Names given at the merge: `InitPads` (800139FC), `ReadPadRawButtons`
+(80013FC0, the active-low button word, 0xFF00FFFF without a usable pad),
+`StartPadCommunication` (80014064), `AlignPadActuators` (800140C8),
+`ReadPadDirectionByte` (8001413C, d-pad byte; an idle analog d-pad reports the
+stick's 90-degree sector), `ReadPadStickMagnitude` (80014250),
+`ComputeStickMagnitude` (800142D8) and `ComputeStickAngle` (80014388,
+degrees clockwise from up, -1 when centered). `ComputeStickMagnitude`'s
+embedded asm names a cc1 label, renumbered to the module's numbering by the
+fold helper ($L3 -> $L87). The slice headers stay as the public interface.
+
+Setup functions, now in `src/modules/pad.c`, at
 **exe:0x80013A24–0x80013AEC**, in original order:
 `ResetPadInputState` (formerly func_80013A24), `SetPadRepeatTiming`
 (80013AA4, formerly SetGfxOffset), and `SetPadSecondaryRepeatTiming`
@@ -4951,10 +4980,6 @@ reapplies both (20, 7) timing pairs at scene dispatch. The consumer 80013CD0
 proves these are two independent auto-repeat delay/interval pairs at
 +18/+1C and +2C/+30, driving outputs at +00 and +24. They are not drawing
 offsets or clip coordinates, and the two records are pads, not render buffers.
-This is a coherent reconstructed interface within the broader pad family,
-**not proof that an original TU ended here**. Hardware startup at 800139FC,
-actuator-enable accessors at 80013AEC/AF8, polling, decoding and normalization
-remain outside; no boundary was chosen to preserve the 80014494 override.
 
 `include/pad_input_setup.h` publishes the unchanged void/s32 ABI and describes
 reset effects, valid bound-record prerequisites, base update-count units,
@@ -4988,7 +5013,7 @@ Acceptance uses the full TU campaign gate against its baseline, including
 all EXE/overlay bytes, data/tables, ownership, source policy, canonical-name
 and interface checks, with no exception growth.
 
-Reconstructed actuator-gate slice: `src/modules/pad_actuator_gate.c` holds
+Actuator-gate functions, now in `src/modules/pad.c`, at
 **exe:0x80013AEC–0x80013B04**, in original order: `SetPadActuatorsEnabled`
 (formerly SetVal8005E3EC) and `GetPadActuatorsEnabled` (formerly
 GetVal8005E3EC). Beyond adjacency, their store/load expose exactly the same
@@ -5007,15 +5032,11 @@ the raw word. Setting changes no buffer or request; suppression happens at a
 subsequent output-service call, which clears BOTH ports. Re-enabling does
 not schedule or reset requests. Input reset leaves the gate unchanged.
 Only the setter parameter needed a local name (`enabled`); no types, widths,
-linkages or storage layouts changed. Tentative definitions remain in this
-slice, startup and the output service for their witnessed GP accesses. No
+linkages or storage layouts changed. Tentative definitions remain in the pad
+module and the output service for their witnessed GP accesses. No
 private linkage, macro or file-scope collision was introduced.
 
-This is a narrow reconstructed interface within the larger pad-family
-hypothesis, **not proof of an original TU boundary**. Setup, polling, decoding,
-request sequencing and output formatting remain separate; the boundary is
-not evidence for or against the formatter's existing flag exception. The
-checked fold first verified both members and the EXE at baseline -O2/-G8.
+The checked fold first verified both members and the EXE at baseline -O2/-G8.
 Neither member has an override; none was added or retired. Per the flag-review
 report, 80014494's no-skip setting remains mechanistically supported but
 historically unresolved, not established by compatible neighbors.
@@ -5031,7 +5052,7 @@ build/tu-campaign/baseline.json` passed all integrity gates, including every
 linked container's bytes/data/tables, source policy and exception non-growth;
 folded membership rose from 40 to 42 without regressing existing modules.
 
-Reconstructed polling/update slice: `src/modules/pad_input_update.c` holds
+Polling/update functions, now in `src/modules/pad.c`, at
 **exe:0x80013B04–0x80013FC0**, in original order: `PollPadInputs`
 (80013B04), `UpdatePadInputRecord` (80013CD0), and
 `ClearPadInputTransientState` (80013F90). The former address-derived names
@@ -5040,11 +5061,7 @@ sole caller of both record helpers: connection/command transitions use the
 clearer, while the normal path passes the same per-port record to the updater.
 The latter maintains exactly the transient fields the clearer resets, leaving
 both timing pairs and actuator-request bytes intact. Main-loop 80011C24 and
-overlay 10's 800B889C call polling. This supports a coherent record-processing
-interface, **not proof that an original TU ended at 80013FC0**. Setup, raw
-button/stick decoding, hardware communication/alignment, actuator formatting
-and request sequencing remain outside; their broader pad-family relationship
-is unchanged. No boundary is inferred from the formatter's flag exception.
+overlay 10's 800B889C call polling.
 
 `include/pad_input_update.h` publishes only `PollPadInputs`, with initialization
 prerequisites, record/output effects, update-count timing units, connection
@@ -5251,7 +5268,7 @@ Members:
   count-up loops reversed by check_dbra_loop (see
   notes/research/func_80017300-pre-placement-and-movable-order.md §11)
 
-## Boot / main-loop TU (0x80011370 – 0x800128DC)
+## Boot / main-loop TU (0x80011370 – 0x800129E8)
 
 Confidence: **high** — shared gp-relative cluster, the strongest signal this
 ledger recognises.
@@ -5330,13 +5347,43 @@ reaches that way. Non-members must not. See
 `plans/toolchain-native-small-data-addressing.md` for how that is expressed in
 source.
 
-Reconstructed scene-selection slice: `src/modules/scene_selection.c` holds
+**Module: `src/modules/game_loop.c` holds exe:0x80011370–0x800129E8** (24
+functions, 2026-10-24), merged from the four earlier slices `scene_selection`,
+`update_timing`, `packet_work` and `asset_scratch` plus the per-function
+members. Membership is the shared $gp cluster above. A relocation scan of
+every EXE object (GPREL16 vs HI16/LO16) finds no member that reaches
+absolutely a symbol another member reaches through $gp. The first such
+conflict past the end is func_80012AB0, which reaches gPad0Input absolutely
+while `main` declares it. 800129E8..80012A68 carry no small-data signal
+either way and stay outside. Two dead functions' `INCLUDE_ASM` stubs sit
+between members and are carried inside the module.
+
+Names given at the merge: `main` (80011370), `RunSceneUpdateLoop` (80011C24),
+`PresentFrame` (80011DB0, stub), `SceneEntryHook` (80011EE8, empty),
+`GetFixedScratchCapacity` (8001202C, stub), `ResetActiveRenderContext`
+(800120C8), `ClearActiveOrderingTables` (800121D4),
+`SelectRenderConfiguration` (80012298), `InitGraphicsHeapCompact` (8001231C,
+configuration 0), `InitGraphicsHeap` (80012598, configuration 1) and
+`CopyRenderContextBackup` (800128DC); `__main` is the empty function at
+80011270.
+
+- `main` is spelled `main`: cc1 emits a `jal __main` prologue for a function
+  of that name. Written as `int main(void)` without the explicit call it used
+  to carry, it compiles byte-identical.
+- The scene callback D_8005E384 is `void (*)(void)` in the merged unit. The
+  per-function sources disagreed (`s32 *` in main), and main's installs now
+  cast each scene entry address.
+- Liveness caveat: `PresentFrame` has no direct caller, so the call graph
+  classes it dead. But `RunSceneUpdateLoop` stores its address in D_8005E388
+  every frame, so it is probably reached through that pointer. The dead
+  classification is likely wrong for it, while `GetFixedScratchCapacity` is
+  genuinely unreferenced.
+
+Scene-selection functions, now in `src/modules/game_loop.c`, at
 **exe:0x80011EF0–0x80011F20** in original order: `RequestSceneChange`
 (formerly func_80011EF0), `GetPreviousSceneId` (0x80011F08, formerly
 GetVal8005E394), and `GetCurrentSceneId` (0x80011F14, formerly
-GetVal8005E39C). This is a narrow reconstructed interface within the larger
-boot/main-loop family, **not proof of an original file boundary**. Beyond
-adjacency and common GP access, the setter writes exactly the state the two
+GetVal8005E39C). Beyond adjacency and common GP access, the setter writes exactly the state the two
 queries expose. It snapshots the current selector, clears the update-loop
 run flag, then installs the requested selector and the snapshot. 80011370
 initializes the current selector to 13 and dispatches IDs 0..20; 80011C24
@@ -5376,11 +5423,10 @@ and overlay link inputs were regenerated through the supported tools. The
 full TU campaign gate verifies all linked containers, interfaces, ownership,
 source policy and exception non-growth against its baseline.
 
-Reconstructed update-timing slice: `src/modules/update_timing.c` now holds
+Update-timing functions, now in `src/modules/game_loop.c`, at
 **exe:0x80011F2C–0x80011F44**, in original order: `SetUpdateTimingMode`
 (formerly SetFlag8005E274) and `GetUpdateTimingMode` (formerly
-GetFlag8005E274). This is a narrow reconstructed interface within the boot
-family, **not proof of an original file boundary**. Beyond adjacency, the
+GetFlag8005E274). Beyond adjacency, the
 setter's `sb` and getter's `lbu` reach exactly the same GP-relative byte at
 8005E274; these are its only C storage accesses. The update loop 80011C24
 sets it to 2 on entry, agreeing with the original .sdata value. Its consumers
@@ -5400,10 +5446,7 @@ The module retains one tentative definition for GP-relative addressing and
 leaves the original initialized byte and its padding in .sdata. No linkage
 was narrowed or storage relocated. The unused legacy variables.h declaration
 now forwards to common.h instead of providing a competing data declaration.
-No macros, private helpers or file-scope collisions are introduced. The
-adjacent 80011F20/80011F44/80011F50 setters touch different state and are not
-included merely because they are nearby; the main loop and the three timing
-consumers remain outside the slice.
+No macros, private helpers or file-scope collisions are introduced.
 
 The checked fold first passed at baseline -O2/-G8. Neither member has an
 existing flag override, so no exception was needed or retired. The existing
@@ -5417,13 +5460,12 @@ names, published interfaces, ownership and source policy must pass with no
 exception growth. Historical names in frozen benchmark inputs/test fixtures
 are not live linker aliases; their original-address provenance is retained.
 
-Reconstructed query slice: `src/modules/asset_scratch.c` now holds the
-three functions at **exe:0x8001205C–0x800120C8**, in original order:
+Asset-scratch queries, now in `src/modules/game_loop.c`, at
+**exe:0x8001205C–0x800120C8**, in original order:
 `GetAssetScratchCapacity` (formerly func_8001205C),
 `GetAssetScratchStart` (formerly func_80012098), and
 `GetAssetScratchEnd` (0x800120BC, formerly GetVal8005E3B0).
-This is a useful module boundary, **not evidence of an original file boundary**
-inside the larger boot/main-loop family. Beyond adjacency, Start calls Capacity,
+Beyond adjacency, Start calls Capacity,
 all three share the GP-relative end boundary D_8005E3B0, and ovl_11's
 800E3DC8 tests capacity before starting a read into Start, with 800E4330
 polling that read at the same address; 800E351C and 800E499C instead place
@@ -5434,10 +5476,9 @@ D_8007AFF4 + 0x49000 + D_8005E328 and Capacity is End - Start.
 The queries change no state or allocation cursor. Their public contract in
 `include/asset_scratch.h` keeps the existing s32 address ABI and documents
 initialization, byte units, unchecked capacity, and coordinated reuse.
-D_8005E3B0 retains its canonical name and shared ownership: this slice does
-not make the broader boot/render state private. Packet-work-base helpers
-before it and render-context reset/heap initializers after it stay outside;
-the dead 8001202C stub is not claimed as a member. No linkage was narrowed,
+D_8005E3B0 retains its canonical name and shared ownership. The dead
+8001202C stub (`GetFixedScratchCapacity`) returns End - (D_8007AFF4 +
+0x83000). No linkage was narrowed,
 and no data declaration or layout was changed. The staged D_8001009C
 subtractions remain because simplifying their cancellation changes codegen.
 The checked mechanical fold first passed under baseline -O2/-G8; none of
@@ -5447,12 +5488,11 @@ canonical-name tool, and published through the interface audit and generated
 context. Acceptance uses the full TU campaign gate against its baseline,
 including regenerated executable/overlay builds, interfaces and source policy.
 
-Reconstructed packet-cursor slice: `src/modules/packet_work.c` holds
+Packet-cursor functions, now in `src/modules/game_loop.c`, at
 **exe:0x80011F5C–0x8001202C** in original order:
 `ReservePacketWorkBytes` (formerly func_80011F5C) and
-`SetPacketWorkCursor` (formerly func_80011FD8). This is a narrow module
-hypothesis within the boot/render family, not a recovered original file
-boundary. Beyond link order and the shared GP-relative context pointer,
+`SetPacketWorkCursor` (formerly func_80011FD8). Beyond link order and the
+shared GP-relative context pointer,
 both compute the same limit (base at +0x12C plus byte capacity at +0x128),
 update the libgs work cursor, and use the same 800129E8 overflow assertion loop. Callers
 corroborate the paired protocol: 80019E80 reserves 0x14 and 8 bytes for SPRT
@@ -5471,16 +5511,13 @@ SDK declarations instead of hand-written libgs/SystemError prototypes;
 canonical names retain their EXE addresses and were propagated through the
 canonical-name tool, interface audit and generated context. The shared
 D_8005E3C0 name/ownership and all external linkages remain unchanged; moving
-these helpers does not make active render state private. The adjacent state
-accessors, scratch query module, heap initialization and assertion helper
-remain outside this slice. No macro/static collision or new data storage is
-introduced. The checked fold passed first at baseline -O2/-G8, with no member
+these helpers does not make active render state private. No macro/static
+collision or new data storage is introduced. The checked fold passed first at baseline -O2/-G8, with no member
 flag overrides to reconcile or new exceptions. After regeneration of the
 engine export and overlay link inputs, `make check-all` confirms the executable
 and all 13 overlays, including their data and tables, remain byte-identical;
 canonical-name and published-interface checks are clean. Acceptance also uses
-the full TU campaign gate (policy, ownership and configuration convergence),
-not a claim that the historical TU ended here.
+the full TU campaign gate (policy, ownership and configuration convergence).
 
 Technique and per-function detail for this group live in
 `notes/sprite-renderer-family-campaign.md`; the frame-size/arity diagnostic

@@ -68,7 +68,7 @@ s32 ovl_11_func_800C2884 (s16 key, u32 *table);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800E39B8 (s32 *arg0, u32 arg1);
 void ovl_11_func_800E5230 (void);
-void func_800121D4 (void);
+void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800E3978 (s32 arg0);
 s32 ovl_11_func_800EEBC8 (void);
 void ovl_11_func_800E54C8 (void);

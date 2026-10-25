@@ -31,7 +31,7 @@ Access type breakdown (by symbol count):
 
 | Symbol | Access types | Per-symbol inference | Refs |
 |--------|-------------|---------------------|------|
-| func_80010000 | addr_taken | ambiguous | 1 |
+| func_80010000 | addr_taken | ambiguous | 2 |
 
 ### Region 3: 0x8004E7F0–0x80055A14 (0x7224) → **.rodata**
 
@@ -166,7 +166,7 @@ Access type breakdown (by symbol count):
 
 ## Global Summary
 
-Total symbols scanned: 1129
+Total symbols scanned: 1134
 
 | Inferred section | Regions |
 |-----------------|---------|

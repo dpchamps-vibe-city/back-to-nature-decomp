@@ -460,7 +460,9 @@ export function auditUnits(input: UnitAuditInput): ContainerAudit {
       const problem = moduleStemProblem(unit.segmentName);
       if (problem) unitFindings.push(problem);
       if (moduleNameIsGeneric(unit.segmentName)) unitWarnings.push(`${unit.segmentName}: generic module name — say what the unit is responsible for`);
-      if (stubbed.size > 0) unitFindings.push(`${unit.sourcePath} still hands ${[...stubbed].join(", ")} to the assembler: a module with INCLUDE_ASM is a partial fold`);
+      /* A member the module still hands to the assembler is undecompiled, not
+         folded: callers exclude it as they exclude any pending stub, and a
+         live one fails the completion checks. It is no boundary. */
       const moduleKey = flagOverrideKey(unit.sourcePath);
       if (flagKeys.has(moduleKey)) {
         unitFindings.push(`configs/flag_overrides.mk overrides ${moduleKey}: a module flag override needs the evidence review in plans/flag-review-report.md`);

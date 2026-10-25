@@ -357,7 +357,7 @@ test("module-scope constructs cannot borrow a member's exception", async () => {
   const { moduleConstructFindings } = await import("./source-policy.ts");
   const config = structuredClone(DEFAULT_CONFIG);
   config.sourcePolicy.allowlist["first"] = ["register-asm", "embedded-asm", "include-asm"];
-  config.sourcePolicy.allowlist["second"] = ["register-asm", "embedded-asm", "include-asm"];
+  config.sourcePolicy.allowlist["second"] = ["register-asm", "embedded-asm"];
   const source = [
     "register int pinned __asm__(\"s0\");",
     "#define WRAP() __asm__(\"nop\")",
@@ -368,7 +368,9 @@ test("module-scope constructs cannot borrow a member's exception", async () => {
   const findings = moduleConstructFindings(source, config, MEMBERS);
   assert.ok(findings.some((f) => f.kind === "register-asm" && f.line === 1 && /module scope/.test(f.message)), "file-scope pin");
   assert.ok(findings.some((f) => f.kind === "embedded-asm" && f.line === 2 && /module scope/.test(f.message)), "module-local asm macro");
-  assert.ok(findings.some((f) => f.kind === "include-asm" && /partial fold/.test(f.message)), "a stub inside a module, allowlisted or not");
+  assert.ok(findings.some((f) => f.kind === "include-asm" && /live member second/.test(f.message)), "a live member's stub inside a module");
+  const dead = MEMBERS.map((member) => member.name === "second" ? { ...member, dead: true } : member);
+  assert.ok(!moduleConstructFindings(source, config, dead).some((f) => f.kind === "include-asm"), "a dead member's stub is backlog, as in its own file");
 });
 
 test("a module source is scanned once with member scopes, and a module flag override is never allowlisted", () => {

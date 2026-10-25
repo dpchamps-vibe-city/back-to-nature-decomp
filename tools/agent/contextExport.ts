@@ -32,6 +32,7 @@ import { dirname, join, relative } from "path";
 import { prototypesIn } from "./calleeTruth.js";
 import { inspectType } from "./type-propagation/c-types.js";
 import { contextImplementation, contextSourceReader } from "./contextSourceFacts.js";
+import { analyzeCSource } from "./cSourceGuard.js";
 import {
   extractPrototypesFromSource,
   extractSignaturesFromSource,
@@ -137,7 +138,9 @@ export function extractSignaturePairs(cFilePath: string, read?: ReturnType<typeo
   if (!existsSync(cFilePath)) return [];
   if (read) return read(cFilePath).signatures;
   const source = readFileSync(cFilePath, "utf8");
-  return source.includes("INCLUDE_ASM(") ? [] : extractSignaturesFromSource(source);
+  /* Never a stub's own function (nor its disabled parked body); a module's other members still count. */
+  const stubs = source.includes("INCLUDE_ASM(") ? analyzeCSource(source).includeAsm.map((s) => s.symbol) : [];
+  return extractSignaturesFromSource(source).filter((s) => !stubs.includes(s.name));
 }
 
 /**

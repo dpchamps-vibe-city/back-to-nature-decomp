@@ -24,6 +24,8 @@
 import { readFileSync, writeFileSync, existsSync, unlinkSync, readdirSync, statSync } from "fs";
 import { join } from "path";
 import { loadPsxExeInfo, vramToRom, ROOT, exeSplatYamlPath, exeSymbolAddrsPath } from "../lib/psxExeInfo.ts";
+import { isModuleStem } from "../lib/translationUnits.ts";
+import { sourceFacts } from "../lib/translationUnitAudit.ts";
 
 const SRC_DIR = join(ROOT, "src");
 const SYMBOL_ADDRS = exeSymbolAddrsPath();
@@ -392,8 +394,11 @@ function syncSplatSubsegments(options: {
       }
       const sourcePath = join(SRC_DIR, `${name}.c`);
       const compiledPath = join(ROOT, "build/src", `${name}.s`);
-      const stillC = existsSync(sourcePath)
-        && !/INCLUDE_ASM/.test(readFileSync(sourcePath, "utf-8"));
+      /* A per-function source is a stub or C. A module may carry a dead
+         function's stub between members and still compiles the rest. */
+      const stillC = existsSync(sourcePath) && (isModuleStem(name)
+        ? sourceFacts(readFileSync(sourcePath, "utf-8")).definitions.length > 0
+        : !/INCLUDE_ASM/.test(readFileSync(sourcePath, "utf-8")));
       const emitsTable = objectEmitsJumpTable(sourcePath, compiledPath) !== false;
       if (stillC && emitsTable) merged.set(romStart, { romStart, romEnd, name });
       continue;

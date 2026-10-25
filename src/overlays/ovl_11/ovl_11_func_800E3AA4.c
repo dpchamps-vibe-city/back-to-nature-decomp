@@ -9,7 +9,7 @@ typedef struct {
 } Unk0E;
 
 s32 func_8001AF44(u32 arg0);
-void func_800121D4(void);
+void ClearActiveOrderingTables(void);
 void func_8001FBE4(s32 arg0, s32 arg1);
 s32 func_8001FBBC(s16 arg0);
 s32 func_80020B80(s32 arg0, s32 arg1);
@@ -42,7 +42,7 @@ void ovl_11_func_800E3AA4(void) {
             env2->unk1A = 0;
             env2->unk1B = 0;
             DrawSync(0);
-            func_800121D4();
+            ClearActiveOrderingTables();
             func_8001FBE4(0, D_8005E3B0 + 0x4290);
             func_8001FBBC(0);
             func_80020B80(2, 0);

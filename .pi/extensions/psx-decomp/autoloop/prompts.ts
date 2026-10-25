@@ -547,8 +547,8 @@ function foldSample(brief: FoldBrief): string[] {
 }
 
 /**
- * The opening of one module reconstruction: the task, the campaign's state,
- * and exactly how the loop will judge the result.
+ * The opening of one fold dispatch: the task, the campaign's state, and
+ * exactly how the loop will judge the result.
  */
 export function foldOpeningMessage(brief: FoldBrief): string {
   return [
@@ -563,9 +563,11 @@ export function foldOpeningMessage(brief: FoldBrief): string {
     "Measure with `npx tsx tools/diagnostics/tuProgress.ts` (`--remaining`, `--json`); it derives progress from",
     "source, configuration and objects, never from notes. `npx tsx tools/build/foldTranslationUnit.ts` performs",
     "the checked mechanical fold (dry run first; `--write` re-splits, builds and oracle-checks, and rolls back on",
-    "failure). The loop accepts the module only when the folded count rises, no previously folded function",
-    "regresses, one module carries the change, no exception (allowlist entry, flag override, pin, embedded asm,",
-    "INCLUDE_ASM) has been added since the baseline, and `tuProgress.ts --verify` passes.",
+    "failure). It folds whole units, so it also extends an existing module or merges several into one. One run",
+    "may create, extend and merge as many modules as the evidence supports. The loop accepts the run when the",
+    "folded count rises or existing modules were merged or reshaped, no previously folded function regresses,",
+    "every module the run creates or changes is valid, no exception (allowlist entry, flag override, pin,",
+    "embedded asm, INCLUDE_ASM) has been added since the baseline, and `tuProgress.ts --verify` passes.",
     "",
     "Every member already matches byte-for-byte. Do not run matching or diagnosis tools on them (triage,",
     "inventory, diffFunc, residual objective, flag probes). `foldTranslationUnit.ts --write` re-splits and checks",
@@ -582,25 +584,27 @@ export function foldOpeningMessage(brief: FoldBrief): string {
     "`npx tsx tools/diagnostics/interfaceAudit.ts --write --callee <name>`. Every source change comes from a",
     "checked-in tool or a direct edit, never from a throwaway script.",
     "",
-    `When the module is finished, run \`npx tsx tools/diagnostics/tuProgress.ts --verify --baseline ${brief.baseline}\``,
-    "and fix what it reports. The loop reuses the verdict on an unchanged tree; edits under notes/ leave it standing.",
+    `When a module is finished, run \`npx tsx tools/diagnostics/tuProgress.ts --verify --baseline ${brief.baseline}\``,
+    "and fix what it reports before starting the next. The loop reuses the verdict on an unchanged tree; edits",
+    "under notes/ leave it standing.",
     "",
-    "Scope: change a shared tool only when the fold helper, a check or the gate refuses the module because of",
+    "Scope: change a shared tool only when the fold helper, a check or the gate refuses a module because of",
     "it, or a generator would lose the change (a name it must preserve). Such a fix is part of this change and",
     "is committed with it, flagged if it lies outside the integration roots; name it in your summary. That is",
     "not a reason to stop and ask. Do not add tests.",
     "",
-    "You have no authority to commit; the loop commits an accepted module itself. Do not create a worktree.",
-    "Return when the module is folded, named, documented and verified, or when something genuinely needs a",
-    "human decision — then say which, briefly.",
+    "You have no authority to commit; the loop commits an accepted run itself. Do not create a worktree.",
+    "Keep going while the evidence supports another unit you can finish. Return when the modules are folded,",
+    "named, documented and verified and no further unit is ready, or when something genuinely needs a human",
+    "decision — then say which, briefly.",
   ].join("\n");
 }
 
 /** The report a fold dispatch gets back when its result is not yet acceptable. */
 export function foldNudgeMessage(lastReport: string): string {
   return [
-    "The module is not accepted yet. Continue from the tree as it stands; the measurement below is fresh.",
-    "Fix what it names, re-measure with tuProgress.ts, and return when the module is accepted-ready.",
+    "The change is not accepted yet. Continue from the tree as it stands; the measurement below is fresh.",
+    "Fix what it names, re-measure with tuProgress.ts, and return when the change is accepted-ready.",
     "",
     lastReport,
   ].join("\n");
@@ -613,13 +617,13 @@ export function foldEscalationMessage(brief: FoldBrief, tierLabel: string, lastR
     "",
     "## This run",
     "",
-    `The previous escalation tier did not finish this module; you are now ${tierLabel}. The tree holds its`,
+    `The previous escalation tier did not finish this run; you are now ${tierLabel}. The tree holds its`,
     "attempt; git HEAD holds the state the dispatch started from.",
     `Campaign baseline: ${brief.baseline}. Folded at dispatch start: ${brief.folded} of ${brief.eligible}.`,
     "",
     lastReport,
     ...(handoff ? ["", handoffBlock(handoff)] : []),
     "",
-    "You have no authority to commit. Return when the module is accepted-ready or genuinely needs a human.",
+    "You have no authority to commit. Return when the change is accepted-ready or genuinely needs a human.",
   ].join("\n");
 }

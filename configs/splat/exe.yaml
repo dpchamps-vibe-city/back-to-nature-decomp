@@ -37,8 +37,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x800, rodata]
-      - [0x808, .rodata, func_80011370]
-      - [0x85C, .rodata, modules/pad_input_update]
+      - [0x808, .rodata, modules/game_loop]
+      - [0x85C, .rodata, modules/pad]
       - [0x878, rodata]
       - [0x8B4, .rodata, func_800183E0]
       - [0x8DC, .rodata, func_8001A284]
@@ -79,24 +79,7 @@ segments:
       - [0x1A20, o, ../lib/libmcx/mcxcmd24, .rdata] # lib/libmcx/mcxcmd24.o
       - [0x1A70, c, func_80011270]       # 0x80011270 func_80011270
       - [0x1A78, c, __start]       # 0x80011278 __start
-      - [0x1B70, c, func_80011370]       # 0x80011370 func_80011370
-      - [0x2424, c, func_80011C24]       # 0x80011C24 func_80011C24
-      - [0x25B0, c, func_80011DB0]       # 0x80011DB0 func_80011DB0
-      - [0x26E8, c, func_80011EE8]       # 0x80011EE8 func_80011EE8
-      - [0x26F0, c, modules/scene_selection]
-      - [0x2720, c, SetVal8005E280]       # 0x80011F20 SetVal8005E280
-      - [0x272C, c, modules/update_timing]
-      - [0x2744, c, SetVal8005E278]       # 0x80011F44 SetVal8005E278
-      - [0x2750, c, SetVal8005E27C]       # 0x80011F50 SetVal8005E27C
-      - [0x275C, c, modules/packet_work]
-      - [0x282C, c, func_8001202C]       # 0x8001202C func_8001202C
-      - [0x285C, c, modules/asset_scratch]
-      - [0x28C8, c, func_800120C8]       # 0x800120C8 func_800120C8
-      - [0x29D4, c, func_800121D4]       # 0x800121D4 func_800121D4
-      - [0x2A98, c, func_80012298]       # 0x80012298 func_80012298
-      - [0x2B1C, c, func_8001231C]       # 0x8001231C func_8001231C
-      - [0x2D98, c, func_80012598]       # 0x80012598 func_80012598
-      - [0x30DC, c, func_800128DC]       # 0x800128DC func_800128DC
+      - [0x1B70, c, modules/game_loop]
       - [0x31E8, c, func_800129E8]       # 0x800129E8 func_800129E8
       - [0x31F4, c, func_800129F4]       # 0x800129F4 func_800129F4
       - [0x3214, c, func_80012A14]       # 0x80012A14 func_80012A14
@@ -107,17 +90,7 @@ segments:
       - [0x3530, c, modules/screen_fade]
       - [0x3C50, c, modules/wide_screen_fade]
       - [0x3ED4, c, func_800136D4]       # 0x800136D4 func_800136D4
-      - [0x41FC, c, func_800139FC]       # 0x800139FC func_800139FC
-      - [0x4224, c, modules/pad_input_setup]
-      - [0x42EC, c, modules/pad_actuator_gate]
-      - [0x4304, c, modules/pad_input_update]
-      - [0x47C0, c, func_80013FC0]       # 0x80013FC0 func_80013FC0
-      - [0x4864, c, func_80014064]       # 0x80014064 func_80014064
-      - [0x48C8, c, func_800140C8]       # 0x800140C8 func_800140C8
-      - [0x493C, c, func_8001413C]       # 0x8001413C func_8001413C
-      - [0x4A50, c, func_80014250]       # 0x80014250 func_80014250
-      - [0x4AD8, c, func_800142D8]       # 0x800142D8 func_800142D8
-      - [0x4B88, c, func_80014388]       # 0x80014388 func_80014388
+      - [0x41FC, c, modules/pad]
       - [0x4C94, c, func_80014494]       # 0x80014494 func_80014494
       - [0x4D54, c, func_80014554]       # 0x80014554 func_80014554
       - [0x4DF0, c, func_800145F0]       # 0x800145F0 func_800145F0

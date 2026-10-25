@@ -3,8 +3,9 @@
  * canonicalNames.ts — carry each established function or data name to every reference.
  *
  * A function keeps the address-derived name splat gave it until someone names
- * it. Naming it updates the defining container's symbol table and its own
- * source, but a reference written before the name existed still spells the
+ * it. Naming it updates the defining container's symbol table; its own
+ * definition, in the unit that owns its address, is renamed with its uses.
+ * A reference written before the name existed still spells the
  * alias — and an overlay is a separate link, so its alias resolves through
  * splat's generated tables for exactly as long as the engine export fails to
  * carry the real name. Nothing fails while that holds; one regeneration later
@@ -43,6 +44,8 @@ import { fileURLToPath } from "node:url";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { containsVram, loadContainers, type Container } from "../lib/container.js";
 import { ENGINE_EXPORT_PATH } from "../lib/symbolIndex.js";
+import { loadTranslationUnits } from "../lib/translationUnits.js";
+import { sourceFacts } from "../lib/translationUnitAudit.js";
 import { configuredCSources } from "../build/buildInputs.js";
 import { analyzeCSource, applyCSourceEdits, walkActiveC, type CSourceEdit } from "../agent/cSourceGuard.js";
 import { prototypesIn } from "../agent/calleeTruth.js";
@@ -79,6 +82,8 @@ export interface NameTable {
   defined: Map<string, Set<string>>;
   /** Container id -> function names an active source defines. */
   sourceDefinitions: Map<string, Set<string>>;
+  /** Container id -> aliases defined, or stubbed, by the translation unit that owns their address: the function itself. */
+  ownDefinitions?: Map<string, Set<string>>;
   /** Alias-shaped name -> the hand-maintained header that declares it. */
   headerDeclarations: Map<string, string>;
 }
@@ -134,6 +139,9 @@ export function resolveAlias(name: string, from: string, table: NameTable): Reso
   if (!canonical || canonical === name) return { kind: "current" };
   /* Both names are defined: a genuine public alias, not a stale spelling. */
   if (table.defined.get(target.id)?.has(name)) return { kind: "current" };
+  /* The unit that owns the address defines it under the alias: that is the
+     function itself, named since, and its definition is renamed with its uses. */
+  if (table.ownDefinitions?.get(target.id)?.has(name)) return { kind: "obsolete", container: target.id, address: decoded.address, canonical };
   if (table.sourceDefinitions.get(target.id)?.has(name)) {
     return { kind: "ambiguous", reason: `an active ${target.id} source defines ${name}, but its symbol table names ${hex(decoded.address)} ${canonical}` };
   }
@@ -213,6 +221,7 @@ export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
     defined.set(container.id, new Set(own.map(({ name }) => name)));
   }
   const sourceDefinitions = new Map<string, Set<string>>(containers.map((c) => [c.id, new Set<string>()]));
+  const definitionsIn = new Map<string, Set<string>>();
   const headerDeclarations = new Map<string, string>();
   for (const [path, text] of sources) {
     if (path.endsWith(".h")) {
@@ -221,9 +230,24 @@ export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
     }
     const into = sourceDefinitions.get(sourceContainer(path));
     if (!into) continue;
-    for (const prototype of prototypesIn(text, path)) if (prototype.kind === "definition") into.add(prototype.name);
+    const here = new Set<string>(sourceFacts(text).includeAsm);
+    for (const prototype of prototypesIn(text, path)) if (prototype.kind === "definition") { into.add(prototype.name); here.add(prototype.name); }
+    definitionsIn.set(path, here);
   }
-  return { containers, functions, data, defined, sourceDefinitions, headerDeclarations };
+  const ownDefinitions = new Map<string, Set<string>>();
+  for (const container of containers) {
+    const own = new Set<string>();
+    for (const unit of loadTranslationUnits(container)) {
+      const defined = definitionsIn.get(unit.sourcePath);
+      if (!defined) continue;
+      for (const member of unit.members) {
+        const alias = `${container.kind === "exe" ? "" : `${container.id}_`}func_${member.vram.toString(16).toUpperCase().padStart(8, "0")}`;
+        if (defined.has(alias)) own.add(alias);
+      }
+    }
+    ownDefinitions.set(container.id, own);
+  }
+  return { containers, functions, data, defined, sourceDefinitions, ownDefinitions, headerDeclarations };
 }
 
 /* ------------------------------------------------------------------ */
@@ -338,6 +362,12 @@ function insideAsmMacro(node: Node): boolean {
   return false;
 }
 
+/** The function an `INCLUDE_ASM` stub hands to the assembler: splat extracts its assembly under its configured name. */
+function stubbedFunction(node: Node): boolean {
+  const call = node.parent?.type === "argument_list" ? node.parent.parent : null;
+  return call?.type === "call_expression" && field(call, "function")?.text === "INCLUDE_ASM";
+}
+
 function insideAsmStatement(node: Node): boolean {
   for (let parent = node.parent; parent; parent = parent.parent) if (parent.type === "gnu_asm_expression") return true;
   return false;
@@ -410,7 +440,10 @@ export function aliasReferences(source: string, from: string, table: NameTable, 
       const resolution = resolveAlias(node.text, from, table);
       if (!resolution || resolution.kind === "current") return true;
       const parent = node.parent?.type ?? "";
-      const context: ReferenceContext = insideAsmMacro(node) ? "assembly"
+      /* A stub of the function itself is renamed with it; the next split
+         extracts its assembly under the new name. */
+      const ownStub = resolution.kind === "obsolete" && stubbedFunction(node) && !!table.ownDefinitions?.get(resolution.container)?.has(node.text);
+      const context: ReferenceContext = insideAsmMacro(node) && !ownStub ? "assembly"
         : parent === "preproc_def" || parent === "preproc_function_def" ? "macro" : "code";
       /* A same-named local is not the function, nor the global. */
       const data = (resolution as { data?: true }).data === true;
@@ -723,6 +756,47 @@ export function staleGeneratedNames(table: NameTable, sources: ReadonlyMap<strin
 }
 
 /* ------------------------------------------------------------------ */
+/* Source-policy allowlist                                             */
+/* ------------------------------------------------------------------ */
+
+const POLICY_CONFIG = ".pi/autoloop.json";
+
+/**
+ * Allowlist keys that still spell a renamed function's alias. A grant is
+ * keyed by the function's (lowercased) name, so a rename must carry the key,
+ * or the function's exception silently stops applying and every gate reads
+ * the same construct as a new one.
+ */
+export function staleAllowlistKeys(table: NameTable): Array<{ key: string; canonical: string }> {
+  const path = join(ROOT, POLICY_CONFIG);
+  if (!existsSync(path)) return [];
+  const config = JSON.parse(readFileSync(path, "utf-8")) as { sourcePolicy?: { allowlist?: Record<string, unknown> } };
+  const exe = table.containers.find((c) => c.kind === "exe")?.id ?? "exe";
+  const stale: Array<{ key: string; canonical: string }> = [];
+  for (const key of Object.keys(config.sourcePolicy?.allowlist ?? {})) {
+    const match = key.match(/^(?:(ovl_\d+)_)?func_([0-9a-f]{8})$/i);
+    if (!match) continue;
+    const alias = `${match[1] ? `${match[1]}_` : ""}func_${match[2]!.toUpperCase()}`;
+    const resolution = resolveAlias(alias, match[1] ?? exe, table);
+    if (resolution?.kind === "obsolete") stale.push({ key, canonical: resolution.canonical.toLowerCase() });
+  }
+  return stale;
+}
+
+/** Rename stale allowlist keys in place, leaving the file's layout as it is. */
+function renameAllowlistKeys(stale: ReadonlyArray<{ key: string; canonical: string }>): void {
+  if (stale.length === 0) return;
+  const path = join(ROOT, POLICY_CONFIG);
+  let text = readFileSync(path, "utf-8");
+  const start = text.indexOf('"allowlist"');
+  for (const { key, canonical } of stale) {
+    const at = text.indexOf(`"${key}":`, start);
+    if (at >= 0) text = `${text.slice(0, at)}"${canonical}":${text.slice(at + key.length + 3)}`;
+  }
+  writeFileSync(path, text);
+}
+
+/* ------------------------------------------------------------------ */
 /* CLI                                                                 */
 /* ------------------------------------------------------------------ */
 
@@ -773,6 +847,8 @@ function main(): void {
   const stale = write ? [] : staleGeneratedNames(table, sources);
   const renames = new Map<string, number>();
   for (const [, reference] of rewritable) renames.set(describe(reference), (renames.get(describe(reference)) ?? 0) + 1);
+  const grants = staleAllowlistKeys(table);
+  if (write) renameAllowlistKeys(grants);
 
   if (write) {
     console.log(`Rewrote ${rewritable.length} reference(s) in ${filesWritten} file(s):`);
@@ -780,6 +856,10 @@ function main(): void {
   } else if (rewritable.length > 0) {
     console.log(`Obsolete aliases in active sources: ${rewritable.length}`);
     for (const [path, reference] of rewritable) console.log(`  ${path}:${reference.line}  ${describe(reference)}`);
+  }
+  if (grants.length > 0) {
+    console.log(`${write ? "Renamed" : "Obsolete"} allowlist key(s) in ${POLICY_CONFIG}: ${grants.length}`);
+    for (const { key, canonical } of grants) console.log(`  ${key} -> ${canonical}`);
   }
   if (outstanding.length > 0) {
     console.log(`Outstanding — not rewritten automatically: ${outstanding.length}`);
@@ -793,8 +873,8 @@ function main(): void {
     for (const item of stale) console.log(`  ${item.file}${item.line ? `:${item.line}` : ""}  ${item.name}: ${item.detail}`);
   }
 
-  const failed = !write && (rewritable.length > 0 || stale.length > 0);
-  const summary = `names: ${write ? "rewritten" : `${rewritable.length} obsolete`}, ${outstanding.length} outstanding, ` +
+  const failed = !write && (rewritable.length > 0 || stale.length > 0 || grants.length > 0);
+  const summary = `names: ${write ? "rewritten" : `${rewritable.length + grants.length} obsolete`}, ${outstanding.length} outstanding, ` +
     `${write ? "generated output not checked" : `${stale.length} stale generated`} (${sources.size} sources)`;
   console.log(failed || outstanding.length > 0 ? summary : `names: clean (${sources.size} sources)`);
   if (check && failed) process.exit(1);

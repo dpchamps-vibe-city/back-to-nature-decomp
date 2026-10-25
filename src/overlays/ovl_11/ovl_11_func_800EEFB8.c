@@ -111,7 +111,7 @@ s32 ovl_11_func_800F0474 (s16 arg0);
 s32 ovl_11_func_800CFB20 (s32 arg0, s32 arg1);
 u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
-void func_800121D4 (void);
+void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800EFDA0 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800EFE34 (s32 *ptr, s32 arg1, s32 arg2);
 s32 pow_int (s32 arg0, s32 arg1);

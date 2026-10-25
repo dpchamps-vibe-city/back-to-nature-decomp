@@ -82,13 +82,14 @@ export function repairAttemptCommitMessage(functionName: string, tierLabel: stri
 
 /**
  * A fold reorganizes source without changing a byte, so it is spelled
- * `fold <module>`: history names the reconstructed unit and its members.
+ * `fold <module>[, <module>...]`: history names the reconstructed units and
+ * their members.
  */
 export function foldCommitMessage(moduleName: string, members: string[], tierLabel: string, beforeFolded: number, afterFolded: number, outsideRoots: string[] = [], preexisting: string[] = []): string {
   return [
     `fold ${moduleName}`,
     "",
-    `Reconstructed translation unit ${moduleName}: ${members.join(", ")}.`,
+    `Reconstructed translation unit${moduleName.includes(", ") ? "s" : ""} ${moduleName}: ${members.join(", ")}.`,
     `Folded ${beforeFolded} -> ${afterFolded} eligible functions; every container still byte-identical.`,
     `Accepted by /auto_decompilation_loop fold on ${tierLabel}.`,
     ...(outsideRoots.length ? ["", `Includes changes outside the integration roots: ${outsideRoots.join(", ")}.`] : []),

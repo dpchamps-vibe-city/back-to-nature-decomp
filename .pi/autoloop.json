@@ -41,7 +41,7 @@
     "register-asm",
     "embedded-asm"
    ],
-   "func_800142d8": [
+   "computestickmagnitude": [
     "embedded-asm"
    ],
    "func_80014494": [
@@ -68,11 +68,11 @@
    "ovl_11_func_8011aa64": [
     "flag-override"
    ],
-   "func_80012598": [
+   "initgraphicsheap": [
     "register-asm",
     "embedded-asm"
    ],
-   "func_8001231c": [
+   "initgraphicsheapcompact": [
     "register-asm",
     "embedded-asm"
    ],

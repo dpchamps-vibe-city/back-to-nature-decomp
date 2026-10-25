@@ -18,15 +18,15 @@ import type { FoldRecord, FunctionOutcome, HandoffSummary, LoopState } from "./t
  * `/auto_decompilation_loop fold` — reconstruct source modules until every
  * eligible function is folded into one.
  *
- * Each dispatch hands one agent `plans/tu-prompt.md`: find one evidence-backed
- * group, fold it into a semantic module, name and document it, keep every byte.
- * The loop never trusts the agent's account. Progress is re-derived from the
- * source tree, configuration and objects by `tools/diagnostics/tuProgress.ts`,
- * and a module is accepted only when
+ * Each dispatch hands one agent `plans/tu-prompt.md`: fold every unit the
+ * evidence supports into semantic modules — new, extended or merged — name and
+ * document them, keep every byte. The loop never trusts the agent's account.
+ * Progress is re-derived from the source tree, configuration and objects by
+ * `tools/diagnostics/tuProgress.ts`, and a dispatch is accepted only when
  *
- *  - the folded count strictly rises and no previously folded function regresses;
- *  - the new folded functions belong to one module, and no other module changes
- *    what it holds (another module may change: a rename reaches its callers);
+ *  - the folded count rises, or existing modules were merged or reshaped, and
+ *    no previously folded function regresses;
+ *  - every module the dispatch creates or changes is valid;
  *  - the terminal gate (`tuProgress.ts --verify`) passes, including no exception
  *    growth against the campaign's baseline receipt. Its verdict is cached by
  *    tree, so the agent's own run on an unchanged tree is reused; the gate that
@@ -98,43 +98,48 @@ const MODULE_SOURCE = /^src\/(?:overlays\/[^/]+\/)?modules\/[^/]+\.c$/;
 export interface FoldJudgement {
   ok: boolean;
   reasons: string[];
-  module?: TuProgressReport["modules"][number];
+  /** The modules the dispatch created or whose membership it changed, in report order. */
+  modules: TuProgressReport["modules"];
 }
 
 /**
- * Whether one dispatch's tree moved the campaign by exactly one coherent
- * module. Structure only; the terminal gate is run separately.
+ * Whether one dispatch's tree moved the campaign: more functions folded, or
+ * existing modules merged or reshaped, with nothing lost. Structure only; the
+ * terminal gate is run separately.
  */
 export function judgeFold(before: TuProgressReport, after: TuProgressReport, changedFiles: readonly string[]): FoldJudgement {
   const reasons: string[] = [];
   if (after.failures.length > 0 || after.integrity.inventory !== "pass") {
     reasons.push(`the inventory is ${after.integrity.inventory}: ${after.failures.slice(0, 3).join("; ") || "see tuProgress.ts"}`);
   }
-  if (after.inventory.folded <= before.inventory.folded) {
-    reasons.push(`the folded count did not rise (${before.inventory.folded} -> ${after.inventory.folded})`);
-  }
   const was = foldedIdentities(before), now = foldedIdentities(after);
   const lost = [...was].filter((identity) => !now.has(identity));
   if (lost.length > 0) reasons.push(`previously folded function(s) regressed: ${lost.slice(0, 6).join(", ")}`);
-  const gained = [...now].filter((identity) => !was.has(identity));
-  const owners = new Set(after.modules.filter((m) => m.status === "valid" && m.members.some((member) => gained.includes(`${m.container}:${member.vram}`))).map((m) => m.source));
-  if (owners.size > 1) reasons.push(`newly folded functions span ${owners.size} modules (${[...owners].join(", ")}); one dispatch reconstructs one module`);
-  /* Other modules may change — a rename reaches callers wherever they live —
-     but only the reconstructed one may change what it holds. */
-  const modules = new Set(changedFiles.filter((file) => MODULE_SOURCE.test(file)));
+  /* A module whose membership differs from before is the dispatch's work:
+     new, extended, or the survivor of a merge. A module a rename merely
+     reaches keeps its membership. */
   const membership = (report: TuProgressReport, source: string) =>
     report.modules.find((m) => m.source === source)?.members.map((member) => `${member.vram}`).sort().join(",") ?? "";
-  for (const source of modules) {
-    if (owners.has(source)) continue;
-    if (membership(before, source) !== membership(after, source)) {
-      reasons.push(`${source} changed which functions it holds; one dispatch reconstructs one module`);
-    }
+  const reshaped = after.modules.filter((m) => membership(before, m.source) !== membership(after, m.source));
+  const merged = before.modules.some((m) => !after.modules.some((other) => other.source === m.source));
+  if (after.inventory.folded <= before.inventory.folded && reshaped.length === 0 && !merged) {
+    reasons.push(`the folded count did not rise (${before.inventory.folded} -> ${after.inventory.folded}) and no module was merged or reshaped`);
   }
+  const touched = new Set([...changedFiles.filter((file) => MODULE_SOURCE.test(file)), ...reshaped.map((m) => m.source)]);
   for (const module of after.modules) {
-    if (module.status !== "valid" && modules.has(module.source)) reasons.push(`${module.source} is ${module.status}: ${module.findings.slice(0, 3).join("; ")}`);
+    if (module.status !== "valid" && touched.has(module.source)) reasons.push(`${module.source} is ${module.status}: ${module.findings.slice(0, 3).join("; ")}`);
   }
-  const module = owners.size === 1 ? after.modules.find((m) => m.source === [...owners][0]) : undefined;
-  return { ok: reasons.length === 0, reasons, ...(module ? { module } : {}) };
+  return { ok: reasons.length === 0, reasons, modules: reshaped };
+}
+
+/** The modules one record names: their names joined, their members in report order. */
+function describeModules(modules: TuProgressReport["modules"]): Pick<FoldRecord, "container" | "sourcePath" | "moduleName" | "members"> {
+  return {
+    container: [...new Set(modules.map((m) => m.container))].join(", "),
+    sourcePath: modules.map((m) => m.source).join(", "),
+    moduleName: modules.map((m) => moduleNameOf(m.source)).join(", "),
+    members: modules.flatMap((m) => m.members.map((member) => member.name)),
+  };
 }
 
 /** A gate reading as the report a dispatch needs: the gates that failed, then the structural failures. */
@@ -236,7 +241,7 @@ function moduleNameOf(source: string): string {
   return source.replace(/^.*\/modules\//, "").replace(/\.c$/, "");
 }
 
-/** One dispatch: one module reconstruction, accepted or restored. */
+/** One dispatch: its module reconstructions, accepted together or restored. */
 export async function runFold(
   deps: LoopDeps,
   state: LoopState,
@@ -263,8 +268,9 @@ export async function runFold(
 
   const interrupted = async (): Promise<{ state: LoopState; outcome: FunctionOutcome }> => {
     const { changedFiles } = await loopChangedFiles(oracleContext(deps, current));
-    const module = changedFiles.find((file) => MODULE_SOURCE.test(file));
-    record = { ...record, status: "interrupted", changedFiles, preexisting: preexistingOf(deps, changedFiles), ...(module ? { sourcePath: module, moduleName: moduleNameOf(module) } : {}) };
+    const modules = changedFiles.filter((file) => MODULE_SOURCE.test(file));
+    record = { ...record, status: "interrupted", changedFiles, preexisting: preexistingOf(deps, changedFiles),
+      ...(modules.length ? { sourcePath: modules.join(", "), moduleName: modules.map(moduleNameOf).join(", ") } : {}) };
     current = recordFold(deps.config, current, record);
     notify(deps, `Fold stopped; the tree is as the last return left it (${changedFiles.length} changed file(s)). The next fold run settles it.`, "warning");
     return { state: current, outcome: { kind: "aborted", functionName: record.moduleName || "fold" } };
@@ -295,21 +301,19 @@ export async function runFold(
       if (after.report) {
         const { changedFiles } = await loopChangedFiles(oracleContext(deps, current));
         const judgement = judgeFold(before, after.report, changedFiles);
-        if (judgement.ok && judgement.module) {
+        if (judgement.ok && judgement.modules.length > 0) {
           setStatus(deps, `◎ fold · ${tier.label} · terminal gate`);
           const gate = await oracles.verify(deps.projectRoot, baseline);
           const passed = gate.report !== null && gate.code !== 2 && gate.report.gates.every((g) => g.state === "pass");
           if (passed) {
-            const module = judgement.module;
             /* The gate keeps what its re-split regenerates (the headers a rename implies); the fold carries that too. */
             const { changedFiles: settled } = await loopChangedFiles(oracleContext(deps, current));
             record = {
-              ...record, status: "accepted", container: module.container, sourcePath: module.source,
-              moduleName: moduleNameOf(module.source), members: module.members.map((m) => m.name),
+              ...record, status: "accepted", ...describeModules(judgement.modules),
               afterFolded: after.report.inventory.folded, changedFiles: settled, preexisting: preexistingOf(deps, settled),
             };
             current = recordFold(deps.config, current, record);
-            notify(deps, `Accepted ${module.source}: ${module.members.length} member(s); folded ${before.inventory.folded} -> ${after.report.inventory.folded}`, "info");
+            notify(deps, `Accepted ${record.sourcePath}: ${record.members.length} member(s); folded ${before.inventory.folded} -> ${after.report.inventory.folded}`, "info");
             return { state: current, outcome: { kind: "folded", functionName: record.moduleName, members: record.members,
               moduleName: record.moduleName, tier: tier.label, changedFiles: settled } };
           }
@@ -350,10 +354,11 @@ export async function runFold(
 /**
  * Settle a dispatch the previous session left `interrupted`.
  *
- * If its module is reflected in the TU index and passes the terminal gate
+ * If its modules are reflected in the TU index (valid, and more functions
+ * folded or a module merged away) and the tree passes the terminal gate
  * against the commit it started from, it is accepted — the agent finished and
- * only the commit was missed. If the module is not reflected at all, the files
- * it changed are restored from HEAD. Anything else is restored and recorded as
+ * only the commit was missed. If they are not reflected at all, the files it
+ * changed are restored from HEAD. Anything else is restored and recorded as
  * failed. A tree whose HEAD has moved since is no longer the loop's to rewrite.
  */
 export async function recoverInterruptedFolds(deps: LoopDeps, state: LoopState, oracles: FoldOracles = DEFAULT_FOLD_ORACLES): Promise<LoopState> {
@@ -368,8 +373,11 @@ export async function recoverInterruptedFolds(deps: LoopDeps, state: LoopState, 
     const label = record.sourcePath || "an unnamed module";
     setStatus(deps, `◎ fold · settling the interrupted fold of ${label} · measuring`);
     const reading = await oracles.progress(deps.projectRoot);
-    const module = reading.report?.modules.find((m) => m.source === record.sourcePath);
-    const reflected = !!(module && module.status === "valid" && reading.report!.inventory.folded > record.beforeFolded);
+    const changedModules = (record.changedFiles ?? []).filter((file) => MODULE_SOURCE.test(file));
+    const modules = reading.report?.modules.filter((m) => changedModules.includes(m.source)) ?? [];
+    const mergedAway = changedModules.some((file) => !existsSync(join(deps.projectRoot, file)));
+    const reflected = !!(reading.report && modules.length > 0 && modules.every((m) => m.status === "valid")
+      && (reading.report.inventory.folded > record.beforeFolded || mergedAway));
     if (reflected) {
       /* The receipt the dispatch was judged against, as runFold would have: a
          verdict the agent already reached on this tree is then reused. */
@@ -379,8 +387,8 @@ export async function recoverInterruptedFolds(deps: LoopDeps, state: LoopState, 
       const dirt = await snapshotDirt(deps.projectRoot);
       const gate = await oracles.verify(deps.projectRoot, against);
       if (gate.report && gate.code !== 2 && gate.report.gates.every((g) => g.state === "pass")) {
-        const accepted: FoldRecord = { ...record, status: "accepted", container: module!.container, members: module!.members.map((m) => m.name),
-          afterFolded: reading.report!.inventory.folded, detail: "accepted on recovery: the module was complete when the loop stopped" };
+        const accepted: FoldRecord = { ...record, status: "accepted", ...describeModules(modules),
+          afterFolded: reading.report!.inventory.folded, detail: "accepted on recovery: the modules were complete when the loop stopped" };
         current = recordFold(deps.config, current, accepted);
         if (deps.config.commitOnMatch) {
           /* The gate keeps what its re-split regenerates; the fold carries that too. */
@@ -396,13 +404,13 @@ export async function recoverInterruptedFolds(deps: LoopDeps, state: LoopState, 
     }
     const restored = await restoreFiles(deps, record.changedFiles ?? [], new Date().toISOString(), record.preexisting ?? {});
     current = recordFold(deps.config, current, { ...record, status: "failed",
-      detail: reflected ? "the recovered module did not pass the terminal gate; restored from HEAD" : "the module was not reflected in the TU index; restored from HEAD" });
+      detail: reflected ? "the recovered modules did not pass the terminal gate; restored from HEAD" : "the modules were not reflected in the TU index; restored from HEAD" });
     notify(deps, `Restored ${record.changedFiles?.length ?? 0} file(s) from an interrupted fold` + (restored.patch ? `; change set at ${restored.patch}` : ""), "warning");
   }
   return current;
 }
 
-/** Work the campaign: one module per clean context, until the terminal gate passes. */
+/** Work the campaign: one dispatch per clean context, until the terminal gate passes. */
 export async function runFoldLoop(input: LoopDeps, oracles: FoldOracles = DEFAULT_FOLD_ORACLES): Promise<FunctionOutcome[]> {
   const deps: LoopDeps = { ...input, baseline: new Map(input.baseline) };
   mkdirSync(deps.config.runtimeDir, { recursive: true });

@@ -25,7 +25,9 @@
  *
  * Handwritten assembly, library members, pending `INCLUDE_ASM` stubs and
  * containers without a solved base are excluded from the denominator, and are
- * always reported. Nothing here reads a list of modules: the source tree and
+ * always reported. A module may carry a dead function's stub between its
+ * members: the stub is excluded like any other, and the module stays valid.
+ * Nothing here reads a list of modules: the source tree and
  * the configuration are the record, and progress is derived from them afresh.
  *
  * Usage:
@@ -96,7 +98,9 @@ export interface TuProgressReport {
     container: string;
     source: string;
     object: string;
+    /** The members it compiles; the stubs it still hands to the assembler are `pending`. */
     members: Array<{ name: string; vram: string }>;
+    pending: string[];
     status: "valid" | "invalid" | "undetermined";
     findings: string[];
     warnings: string[];
@@ -220,13 +224,13 @@ export function moduleInterfaceFindings(modulePaths: readonly string[]): Finding
  * Module findings beyond membership: policy charged per member, interface
  * findings in the module file, and TU-owned global agreement for its members.
  */
-function moduleFindingsHook(modulePaths: readonly string[]): (unit: TranslationUnit, source: string, facts: SourceFacts) => string[] {
+function moduleFindingsHook(modulePaths: readonly string[], dead: (container: string, vram: number) => boolean): (unit: TranslationUnit, source: string, facts: SourceFacts) => string[] {
   const config = loadConfig(ROOT);
   let interfaces: Finding[] | undefined;
   const interfaceFindings = (): Finding[] => interfaces ??= moduleInterfaceFindings(modulePaths);
   return (unit, source) => {
     const findings: string[] = [];
-    const members = unit.members.map((member) => ({ name: member.name, vram: hex(member.vram), container: member.container }));
+    const members = unit.members.map((member) => ({ name: member.name, vram: hex(member.vram), container: member.container, dead: dead(member.container, member.vram) }));
     for (const finding of moduleConstructFindings(source, config, members)) {
       findings.push(`policy: ${unit.sourcePath}${finding.line ? `:${finding.line}` : ""}: ${finding.kind}: ${finding.message}`);
     }
@@ -271,6 +275,9 @@ export function structuralReport(options: { container?: string | undefined; limi
   }
 
   const liveness = computeLiveness();
+  /* Overlay functions are live by construction: the member is loaded to run. */
+  const kinds = new Map(containers.map((container) => [container.id, container.kind]));
+  const isDead = (container: string, vram: number) => kinds.get(container) === "exe" && liveness.referenced.size > 0 && !liveness.referenced.has(vram);
   /* The rule progress.ts applies: a "Handwritten function" dump is assembly
      only when the macro census measured no COP2 instruction in it. Only those
      dumps need the census, so it measures only them. */
@@ -290,7 +297,7 @@ export function structuralReport(options: { container?: string | undefined; limi
   const macro = candidates.length > 0 ? detectMacroIdentities({ containers, functionNames: candidates }).functions : [];
   const cop2 = new Map(macro.map((fn) => [fn.name, macroRouteSummary(fn).cop2Count]));
   const modulePaths = containers.flatMap((container) => loadTranslationUnits(container).filter((unit) => unit.foldedModule).map((unit) => unit.sourcePath));
-  const hook = moduleFindingsHook(modulePaths);
+  const hook = moduleFindingsHook(modulePaths, isDead);
   const flagKeys = loadFlagOverrideKeys();
 
   const states: FunctionState[] = [];
@@ -329,8 +336,8 @@ export function structuralReport(options: { container?: string | undefined; limi
         exclude("handwritten-asm");
         continue;
       }
-      if (entry.stubbed.has(fn.name) && !unit.foldedModule) {
-        const dead = container.kind === "exe" && liveness.referenced.size > 0 && !liveness.referenced.has(fn.vram);
+      if (entry.stubbed.has(fn.name)) {
+        const dead = isDead(container.id, fn.vram);
         const reason = dead ? "pending-dead-stub" : "pending-live-stub";
         states.push({ ...base, state: "excluded", exclusion: reason });
         exclude(reason);
@@ -349,7 +356,8 @@ export function structuralReport(options: { container?: string | undefined; limi
         container: container.id,
         source: entry.unit.sourcePath,
         object: entry.unit.objectPath,
-        members: entry.unit.members.map((member) => ({ name: member.name, vram: hex(member.vram) })),
+        members: entry.unit.members.filter((member) => !entry.stubbed.has(member.name)).map((member) => ({ name: member.name, vram: hex(member.vram) })),
+        pending: entry.unit.members.filter((member) => entry.stubbed.has(member.name)).map((member) => member.name),
         status: entry.status,
         findings: [...entry.findings, ...entry.undetermined],
         warnings: entry.warnings,

@@ -70,9 +70,10 @@ const containers = onlyContainer ? [requireContainer(onlyContainer)] : loadConta
 const macroCensus = detectMacroIdentities({ containers });
 const macroReports = new Map(macroCensus.functions.map(f => [f.name, macroRouteSummary(f)]));
 
-/* A module that still hands a member to the assembler is a partial fold. Its
-   stub is excluded from the counts like any other only while the function is
-   dead, so the completion check names it separately. */
+/* A module may carry a dead function's stub between its members: like any dead
+   stub it is backlog, outside the counts. A module that still hands a live
+   member to the assembler is a partial fold, and the completion check names
+   it as well as counting it undecompiled. */
 const partialModules: string[] = [];
 
 function measure(container: Container): ContainerTotals {
@@ -82,9 +83,6 @@ function measure(container: Container): ContainerTotals {
      counting. The source AST decides — defined, or handed to the assembler. */
   const audit = auditContainer(container, { objects: false });
   const unitAudits = new Map(audit.units.map((entry) => [entry.unit.segmentName, entry]));
-  for (const entry of audit.units) {
-    if (entry.unit.foldedModule && entry.stubbed.size > 0) partialModules.push(`${entry.unit.sourcePath} (${[...entry.stubbed].join(", ")})`);
-  }
   const funcs: FuncInfo[] = [];
   let totalFuncs = 0;
   let decompFuncs = 0;
@@ -123,6 +121,7 @@ function measure(container: Container): ContainerTotals {
     const dead =
       container.kind === "exe" && liveness.referenced.size > 0 && !liveness.referenced.has(span.vram);
     const overlayOnly = container.kind === "exe" && isOverlayOnlyReference(liveness, span.vram);
+    if (unit?.foldedModule && !dead && unitAudits.get(unit.segmentName)?.stubbed.has(span.name)) partialModules.push(`${unit.sourcePath} (${span.name})`);
 
     if (handwritten === false && !dead) {
       totalFuncs++;
@@ -200,7 +199,7 @@ function reportContainer(totals: ContainerTotals): void {
 }
 
 console.log(`Liveness basis: ${liveness.basis}`);
-for (const module of partialModules) console.log(`PARTIAL FOLD: ${module} — a module may not hand a member to the assembler`);
+for (const module of partialModules) console.log(`PARTIAL FOLD: ${module} — a module may not hand a live member to the assembler`);
 if (!liveness.overlaysIncluded) {
   console.log("WARNING: overlay evidence unavailable, so this denominator omits the overlay-facing engine API.");
 }
