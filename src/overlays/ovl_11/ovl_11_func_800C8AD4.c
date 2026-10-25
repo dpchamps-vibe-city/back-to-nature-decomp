@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
-s32 ovl_11_func_800D7504 (s16 arg0);
+#include "ovl11_interaction_id_predicates.h"
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800D0F20(s32 arg0, s32 arg1);       /* static */
 
@@ -14,7 +14,7 @@ s32 ovl_11_func_800C8AD4(Recon_ovl_11_func_800C7270_A0View *arg0, s16 arg1, s16 
         RequestMessageWindow(2, 0x1E7);
         goto fail;
     }
-    if (ovl_11_func_800D7504(*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
+    if (Ovl11IsInteractionItemSetA(*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
 fail:
         return 0;
     }

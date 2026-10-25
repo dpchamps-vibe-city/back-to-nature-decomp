@@ -8,6 +8,7 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "game_flags.h"
+#include "ovl11_halfword_triplets.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -33,7 +34,6 @@ void ovl_11_func_800CE034 (C580C_ad72053e5aa9_StructOvl11CE034A *arg0, C580C_ad7
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800D666C (s16 arg0);
-void ovl_11_func_800D7328 (s16 *arg0);
 s32 ovl_11_func_800CB540 (u16 *arg0);
 void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
@@ -42,7 +42,6 @@ s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 C580C_f3fe4d9631b5_UnkStruct800CBF40 *ovl_11_func_800CBF70 (C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *arg0, u16 *arg1, s16 arg2);
 void ovl_11_func_800C55FC (Ovl11CE034Object *arg0);
 s32 ovl_11_func_800CE53C (s16 arg0);
-void ovl_11_func_800D7348 (u16 *dst, u16 *src);
 void ovl_11_func_800C9D98 (void);
 s32 ovl_11_func_800C6858 (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800CE514 (s16 arg0);
@@ -317,7 +316,7 @@ state_done:
             }
             arg0->unk6C &= 0xEFFF3FFF;
             ovl_11_func_800D666C(arg0->item);
-            ovl_11_func_800D7328((s16 *) ((u8 *) arg0 + 0x8A));
+            Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             if (arg0->state == 0x6A) {
                 SetGameFlag(0x45U, 1U);
                 temp_v0_2 = ((struct Ovl11C580CState *)D_8006C838)->count + 1;
@@ -382,7 +381,7 @@ state_done:
         case 0x33:
             ovl_11_func_800F2354((s32) (*(s16 *) ((u8 *) D_8006C858 + 0x1002)), 0);
             ovl_11_func_800D666C(arg0->item);
-            ovl_11_func_800D7328((s16 *) ((u8 *) arg0 + 0x8A));
+            Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;
             ovl_11_func_800CB4E0();
             goto advance_action;
@@ -393,7 +392,7 @@ state_done:
             }
             arg0->slot = (u16) *((u16 *) ((u8 *) &D_8012323C + (arg0->kind * 2)));
             ovl_11_func_800D666C(arg0->item);
-            ovl_11_func_800D7328((s16 *) ((u8 *) arg0 + 0x8A));
+            Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;
             ovl_11_func_800CB4E0();
             goto advance_action;
@@ -407,7 +406,7 @@ finish_action:
                 ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) D_80128C4C_dispatch, 0xD);
                 ovl_11_func_800CB4E0();
             }
-            ovl_11_func_800D7328((s16 *) ((u8 *) arg0 + 0xF0));
+            Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0xF0));
             arg0->unk6C &= 0xFFFF7FFF;
             goto finish_action;
         case 0xA:
@@ -417,7 +416,7 @@ finish_action:
             if (arg0->state == 0x15) {
                 arg0->unk6C &= 0xFFFF7FFF;
             }
-            ovl_11_func_800D7328((s16 *) ((u8 *) arg0 + 0xF0));
+            Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0xF0));
             ovl_11_func_800CB4E0();
             return 0;
         case 0x2F:
@@ -445,14 +444,14 @@ finish_action:
         case 0xC:
             if (ovl_11_func_800CE53C(arg0->item) == 0) {
                 temp_s0_6 = (u16 *) ((u8 *) arg0 + 0x8A);
-                ovl_11_func_800D7348((u16 *) ((u8 *) arg0 + (((s16) arg0->slot * 6) + 0xBA)), temp_s0_6);
+                Ovl11CopyHalfwordTriplet((u16 *) ((u8 *) arg0 + (((s16) arg0->slot * 6) + 0xBA)), temp_s0_6);
                 ovl_11_func_800C9D98();
                 var_a0_3 = temp_s0_6;
             } else {
                 ovl_11_func_800D666C(arg0->item);
                 var_a0_3 = (u16 *) ((u8 *) arg0 + 0x8A);
             }
-            ovl_11_func_800D7328((s16 *) var_a0_3);
+            Ovl11ClearHalfwordTriplet((s16 *) var_a0_3);
             arg0->unk6C &= 0xEFFFFFFF;
             ovl_11_func_800CB4E0();
             return 0;

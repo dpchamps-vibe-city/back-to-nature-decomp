@@ -15,6 +15,8 @@
 #include "ovl11_sprite_effect_pool.h"
 #include "psyq/abs.h"
 #include "ovl11_object_event_script.h"
+#include "psyq/memory.h"
+#include "ovl11_vram_animation_slots.h"
 
 void ovl_11_func_800C3D70 (void);
 void ovl_11_func_800BFD1C (void);
@@ -23,7 +25,6 @@ void ovl_11_func_80113818 (void);
 void ovl_11_func_800C401C (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
-void ovl_11_func_800DB5CC (void);
 void ovl_11_func_800C056C ();
 void ovl_11_func_801209D4 (void);
 void ovl_11_func_800DCC5C (void);
@@ -66,7 +67,7 @@ void ovl_11_func_800C162C(void) {
         ((struct Ovl11FrameWork *) &D_8007AFF0)->field_253A8 = 0;
         ((struct Ovl11FrameWork *) &D_8007AFF0)->field_253AA = 0;
     }
-    ovl_11_func_800DB5CC();
+    Ovl11UpdateVramAnimations();
     Ovl11UpdateSpriteRotations();
     ovl_11_func_800C056C(1);
     ovl_11_func_801209D4();

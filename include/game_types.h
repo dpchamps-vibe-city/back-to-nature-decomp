@@ -33,6 +33,12 @@ typedef struct {
     u16 unk10;
 } Ovl11SetupHeader;
 
+/* 800D72E8 changes only the signed tail at +4 of a six-byte record. */
+typedef struct {
+    u8 leading[4];
+    s16 tail;
+} Ovl11TripletTailView;
+
 /* 800CC7CC passes this halfword request to 800CB540: id +0, count +4. */
 typedef struct {
     u16 id;
@@ -114,12 +120,30 @@ typedef struct {
     s32 unkDC;
 } M2C_ececd3ff98bf_Struct_801110CC;
 
-/* 800DC9D4 returns 0x30-byte entries; 800DCA60 writes flags at +0x28. */
+/* 800DC9D4 returns 0x30-byte scene slots; flags+28 bit 8000 means free. */
 typedef struct {
-    u8 pad[0x28];
-    u16 unk28;
-    u8 pad2[0x6];
-} Ovl11FuncC9D4Entry;
+    u8 prefix[0x28];
+    u16 flags;
+    u8 tail[0x6];
+} Ovl11SceneRecordSlot;
+
+/* 800DCA10 resets these fields but deliberately preserves the +18 triple. */
+typedef struct {
+    char primitive[8];
+    s16 positionX;
+    s16 positionY;
+    s16 positionZ;
+    char reservedE[2];
+    s16 baseAngleX;
+    s16 baseAngleY;
+    s16 baseAngleZ;
+    char reserved16[0xA];
+    s16 offsetAngleX;
+    s16 offsetAngleY;
+    s16 offsetAngleZ;
+    char reserved26[2];
+    u16 flags;
+} Ovl11SceneRecordResetView;
 
 /* ovl_11:800DCFEC/800DD060 locate and blend eight-byte vertex records. */
 typedef struct {
@@ -172,20 +196,42 @@ typedef struct {
     s16 unk2;
 } UnkStruct800D0DBC;
 
-/* 800DB354/800DB4E0 consume these 0x16-byte slots; 800DB5CC walks eight. */
+/* Eight 0x16-byte VRAM animation slots, consumed by 800DB354/800DB4E0.
+ * key==0xFFFF is free; bit 0x8000 selects sequence rather than scroll.
+ * nextOrDelay and step have mode-dependent meanings, not different storage. */
 typedef struct {
-    u16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-    u16 unk10;
-    u16 unk12;
-    u16 unk14;
+    u16 key;
+    s16 duration;
+    s16 destX;
+    s16 destY;
+    u16 nextOrDelay;
+    u16 step;
+    u16 scrollTick;
+    u16 sourceX;
+    u16 sourceY;
+    u16 width;
+    u16 height;
 } Ovl11AnimationSlot;
+
+/* 800DB140/800DB354 copy these 0x12-byte descriptors at header+0x8A8. */
+typedef struct {
+    u16 key;
+    s16 duration;
+    u16 nextIndex;
+    u16 destX;
+    u16 destY;
+    u16 sourceX;
+    u16 sourceY;
+    u16 width;
+    u16 height;
+} Ovl11VramAnimationDescriptor;
+
+typedef struct {
+    u8 reserved0[4];
+    s32 kind;
+    u8 reserved8[0x8A8 - 8];
+    Ovl11VramAnimationDescriptor entries[1];
+} Ovl11VramAnimationTable;
 
 /* 800F8480/800F84D4 copy these three halfwords; 800F7E38 passes both records. */
 typedef struct {
@@ -1556,15 +1602,17 @@ typedef struct {
     /* 0x0C */ s32 unkC;
 } Ovl11CC4E0Object;
 
-/* 800DB00C copies the +0/+2/+4 coordinates and the +8/+A/+C triplet. */
+/* Two coordinate triples at +0 and +8; the +6 halfword is unused here.
+ * Coordinate clamp stores two corners in this view; its arguments use only
+ * the first triple. Preserve the 0xE-byte view, not a pair of padded vectors. */
 typedef struct Ovl11SceneCoordinates {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
+    s16 x;
+    s16 y;
+    s16 z;
     s16 pad6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
+    s16 secondX;
+    s16 secondY;
+    s16 secondZ;
 } Ovl11SceneCoordinates;
 
 /* func_8001E340's matched grid definition: count +8, 0x1C-byte cells. */

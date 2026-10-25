@@ -31,6 +31,9 @@
 #include "psyq/abs.h"
 #include "ovl11_object_event_script.h"
 #include "ovl11_object_event_pool.h"
+#include "ovl11_coordinate_clamp.h"
+#include "ovl11_vram_animation_slots.h"
+#include "ovl11_scene_record_pool.h"
 
 typedef struct {
                s16 unk0;
@@ -97,14 +100,11 @@ void ovl_11_func_800D6628 (void);
 void ovl_11_func_800BFEA4 (void);
 void ovl_11_func_800BFF00 (void);
 void ovl_11_func_800DBFA0 (void);
-void ovl_11_func_800DAFD4 (void);
-void ovl_11_func_800DB0E4 (void);
 void ovl_11_func_800DBFC4 (void);
 void ovl_11_func_800D7B24 (void);
 void ovl_11_func_800BD358 (void);
 void ovl_11_func_800BD5A0 (void);
 void ovl_11_func_800BD538 (void);
-void ovl_11_func_800DC990 (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800CBEF8 (void);
 s32 *ovl_11_func_80111E38 (void);

@@ -8,12 +8,12 @@
 #include "ovl11_vertex_blend.h"
 #include "ovl11_choice_messages.h"
 #include "game_flags.h"
+#include "psyq/memory.h"
+#include "ovl11_vram_animation_slots.h"
+#include "ovl11_scene_record_pool.h"
 
-void ovl_11_func_800DB0E4 (void);
 void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
-void ovl_11_func_800DC990 (void);
-void ovl_11_func_800DCA60 (void);
 s32 ovl_11_func_800D79E8 (s32 arg0);
 void ovl_11_func_800D78D0 (void);
 s32 ovl_11_func_8011DF4C (s32 arg0);
@@ -33,7 +33,7 @@ void ovl_11_func_800BCD28(void) {
     Ovl11SetSceneProjection();
     Ovl11InitSceneLighting();
     Ovl11ResetSceneCameraOrbit();
-    ovl_11_func_800DB0E4();
+    Ovl11InitVramAnimationSlots();
     Ovl11ResetSpriteRotations();
     Ovl11ClearSceneCameraVectors();
     if (D_801287F4 == 0xB) {
@@ -43,8 +43,8 @@ void ovl_11_func_800BCD28(void) {
     }
     ovl_11_func_800C9D38();
     Ovl11ResetVertexBlendPool();
-    ovl_11_func_800DC990();
-    ovl_11_func_800DCA60();
+    Ovl11ClearSceneRecords();
+    Ovl11InstallSceneRecords();
     Ovl11ResetChoiceMessages();
     if (((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25476 == 1) {
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);

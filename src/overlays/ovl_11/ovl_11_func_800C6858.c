@@ -1,11 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "ovl11_halfword_triplets.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800D5750(s16 arg0);
-void ovl_11_func_800D7348(u16 *dst, u16 *src);
-void ovl_11_func_800D7328(s16 *arg0);
 s32 ovl_11_func_800C69B8(Ovl11C7010Object *arg0);
 s32 ovl_11_func_800CB4E0(void);
 
@@ -30,8 +29,8 @@ s32 ovl_11_func_800C6858(Ovl11C7010Object *arg0) {
         index = 1;
     }
     item = (u16 *) ((u8 *) arg0 + 0xF0);
-    ovl_11_func_800D7348((u16 *) ((u8 *) arg0 + (index * 6 + 0x84)), item);
-    ovl_11_func_800D7328((s16 *) item);
+    Ovl11CopyHalfwordTriplet((u16 *) ((u8 *) arg0 + (index * 6 + 0x84)), item);
+    Ovl11ClearHalfwordTriplet((s16 *) item);
     arg0->unk6C |= 0x8000;
     if (arg0->itemIndex == 0x66) {
         PlaySoundEffect(8);

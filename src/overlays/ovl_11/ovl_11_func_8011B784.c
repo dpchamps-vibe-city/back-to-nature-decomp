@@ -1,6 +1,6 @@
 #include "common.h"
+#include "ovl11_halfword_triplets.h"
 
-void ovl_11_func_800D7338(s16 *arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800CB540(u16 *arg0);
 
 s32 ovl_11_func_8011B784(s32 *arg0, s32 arg1, s16 arg2) {
@@ -15,7 +15,7 @@ s32 ovl_11_func_8011B784(s32 *arg0, s32 arg1, s16 arg2) {
     }
     switch (var_a1) {
     case 0:
-        ovl_11_func_800D7338(sp10, 0xA4, arg2, 1);
+        Ovl11SetHalfwordTriplet(sp10, 0xA4, arg2, 1);
         ovl_11_func_800CB540((u16 *) sp10);
         var_a1++;
         break;

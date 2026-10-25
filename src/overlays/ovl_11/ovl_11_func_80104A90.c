@@ -8,6 +8,7 @@
 #include "state_memory_init.h"
 #include "ovl11_sprite_effect_pool.h"
 #include "game_flags.h"
+#include "ovl11_scene_record_pool.h"
 
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800D6628(void);
@@ -21,7 +22,6 @@ void ovl_11_func_800C9BB8(void);
 void ovl_11_func_800BD538(void);
 s32 ovl_11_func_800CDE3C(u8 *arg0);
 void ovl_11_func_800BD488(s32 arg0);
-void ovl_11_func_800DC990(void);
 void ovl_11_func_800F6630(void);
 void ovl_11_func_800F42A8(u16 arg0, s32 arg1);
 void ovl_11_func_800CBEF8(void);
@@ -70,7 +70,7 @@ void ovl_11_func_80104A90(void) {
     ovl_11_func_800BD538();
     ovl_11_func_800CDE3C(base->field_51C8);
     ovl_11_func_800BD488((s32) base->field_44BA);
-    ovl_11_func_800DC990();
+    Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
     ovl_11_func_800F42A8((u16) base->field_44BA, 1);

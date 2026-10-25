@@ -21,6 +21,8 @@
 #include "sprite_upload.h"
 #include "debug_break.h"
 #include "game_flags.h"
+#include "ovl11_interaction_id_predicates.h"
+#include "ovl11_halfword_triplets.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -116,7 +118,6 @@ void ovl_11_func_80107DD0 (s16 *arg0);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
-s32 ovl_11_func_800D7504 (s16 arg0);
 s32 ovl_11_func_800BE5A0 (M2C_f90dacf3c1c7_Ovl11CheckArg *arg0);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -129,13 +130,11 @@ s32 ovl_11_func_800FBE4C (void);
 s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800C9DC0 (void);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800D7348 (u16 *dst, u16 *src);
 void ovl_11_func_800F0FB0 (s32 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
-void ovl_11_func_800D7328 (s16 *arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);

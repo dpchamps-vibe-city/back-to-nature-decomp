@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_interaction_id_predicates.h"
 
 s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *arg0);
-s32 ovl_11_func_800D7504(s16 arg0);
 
 s32 ovl_11_func_800BE94C(s32 **arg0, Ovl11ItemCollisionObject *arg1) {
     s16 temp_s0;
@@ -48,7 +48,7 @@ s32 ovl_11_func_800BE94C(s32 **arg0, Ovl11ItemCollisionObject *arg1) {
                                 temp_v0 = *(s32 **) ((u8 *) arg0 + 0x10);
                                 *temp_v0 &= ~0x4000;
                             }
-                            if (ovl_11_func_800D7504(arg1->unk2) != 0) {
+                            if (Ovl11IsInteractionItemSetA(arg1->unk2) != 0) {
                                 temp_v0_2 = *(s32 **) ((u8 *) arg0 + 0x10);
                                 *temp_v0_2 &= ~0x4000;
                             }

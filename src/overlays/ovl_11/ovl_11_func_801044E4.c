@@ -14,6 +14,9 @@
 #include "ovl11_daily_conditions.h"
 #include "ovl11_sprite_effect_pool.h"
 #include "ovl11_object_event_pool.h"
+#include "ovl11_coordinate_clamp.h"
+#include "ovl11_vram_animation_slots.h"
+#include "ovl11_scene_record_pool.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -23,8 +26,6 @@ void ovl_11_func_800C9C60 (void);
 void ovl_11_func_800BFEA4 (void);
 void ovl_11_func_800BFF00 (void);
 void ovl_11_func_800DBFA0 (void);
-void ovl_11_func_800DAFD4 (void);
-void ovl_11_func_800DB0E4 (void);
 void ovl_11_func_800DBFC4 (void);
 void ovl_11_func_800D7B24 (void);
 void ovl_11_func_800BD358 (void);
@@ -32,7 +33,6 @@ void ovl_11_func_800BD5A0 (void);
 void ovl_11_func_800BD538 (void);
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 void ovl_11_func_800BD488 (s32 arg0);
-void ovl_11_func_800DC990 (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
 void ovl_11_func_800CE96C (void);
@@ -73,8 +73,8 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800BFEA4();
     ovl_11_func_800BFF00();
     ovl_11_func_800DBFA0();
-    ovl_11_func_800DAFD4();
-    ovl_11_func_800DB0E4();
+    Ovl11ResetCoordinateClamp();
+    Ovl11InitVramAnimationSlots();
     ovl_11_func_800DBFC4();
     ovl_11_func_800D7B24();
     ovl_11_func_800BD358();
@@ -82,7 +82,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800BD538();
     ovl_11_func_800CDE3C(base->field_51C8);
     ovl_11_func_800BD488((s32) base->field_44BA);
-    ovl_11_func_800DC990();
+    Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
     ovl_11_func_800F42A8((u16) base->field_44BA, 0);

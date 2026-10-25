@@ -58,6 +58,13 @@ gRenderContexts = 0x8005E5E8; // size:0x268
 // Interior DISPENV anchor, used with the same 0x134 context stride; not storage.
 gRenderDisplayEnvView = 0x8005E644; // size:0x14
 
+// Shared VRAM-animation storage views used by overlays 11 and 25.
+gVramAnimationStoragePrefix = 0x800A03AC; // size:0x4
+gVramAnimationSlotHead = 0x800A03B0; // size:0x2
+
+// 800E3C4C reads this address word as archive 0x1D's load/upload buffer.
+gSpriteBankArchiveBuffer = 0x8005E70C; // size:0x4
+
 // The empty function main's prologue calls: cc1 emits `jal __main` itself for `main`.
 __main = 0x80011270; // type:func
 func_80011278 = 0x80011278; // type:func

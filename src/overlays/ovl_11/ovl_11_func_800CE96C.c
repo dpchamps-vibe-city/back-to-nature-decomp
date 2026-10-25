@@ -64,9 +64,9 @@ void ovl_11_func_800CE96C(void) {
     ((struct Ovl11PoolResetView *) D_8006C838)->field_92A0 = 0xFFFF;
     ovl_11_func_800CFD9C();
     for (j = 0; j < 3U; j++) {
-        (&D_80128D60)[j] = 0x12C;
+        (&gOvl11Mode0DispatchCounter)[j] = 0x12C;
     }
-    D_80128D68 = -1;
+    gOvl11PendingStageMode = -1;
     for (i = 0; i < 4; i++) {
         ((struct Ovl11PoolResetView *) D_8006C838)->pairs_99C8[i][0] = -1;
         ((struct Ovl11PoolResetView *) D_8006C838)->pairs_99C8[i][1] = -1;

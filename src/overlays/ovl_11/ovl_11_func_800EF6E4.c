@@ -18,6 +18,7 @@
 #include "ovl11_state_field_access.h"
 #include "integer_power.h"
 #include "game_flags.h"
+#include "ovl11_halfword_triplets.h"
 
 typedef struct {
     s16 unk0;
@@ -79,7 +80,6 @@ void ovl_11_func_800C6F0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 void ovl_11_func_800D666C (s16 arg0);
-void ovl_11_func_800D7328 (s16 *arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);

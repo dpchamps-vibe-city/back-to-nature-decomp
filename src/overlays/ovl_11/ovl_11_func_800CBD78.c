@@ -2,11 +2,11 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_halfword_triplets.h"
 
 void ovl_11_func_800CE034(Ovl11CE034Object *arg0, Ovl11CE034Position *arg1, s32 arg2);
 s32 ovl_11_func_800CF044(s16 arg0, Ovl25SetupStatePair *arg1, VECTOR *arg2);
 void ovl_11_func_800D666C(s16 arg0);
-void ovl_11_func_800D7328(s16 *arg0);
 
 void ovl_11_func_800CBD78(Ovl11C7010Object *arg0) {
     VECTOR sp10;
@@ -18,5 +18,5 @@ void ovl_11_func_800CBD78(Ovl11C7010Object *arg0) {
         ovl_11_func_800CF044(temp_s0, (Ovl25SetupStatePair *) ((u8 *) arg0 + 0xFC), &sp10);
     }
     ovl_11_func_800D666C(temp_s0);
-    ovl_11_func_800D7328(&arg0->itemIndex);
+    Ovl11ClearHalfwordTriplet(&arg0->itemIndex);
 }

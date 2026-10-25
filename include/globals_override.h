@@ -423,7 +423,9 @@ struct Ovl11MapCameraWork {
 extern struct Ovl11TextureCoordinates D_8012DB38;
 
 /* 800DB140/800DB5CC: leading u16 of eight 0x16-byte slots at this base. */
-extern u16 D_800A03B0;
+/* 800DB0E4 clears a four-byte prefix plus eight 0x16-byte animation slots. */
+extern u8 gVramAnimationStoragePrefix[1];
+extern u16 gVramAnimationSlotHead;
 
 /* ovl_11 80118B84 loads this selection with lh and resets it with sh. */
 extern s16 gOvl11CompactChoiceSelection;
@@ -905,8 +907,8 @@ extern char D_800B8890[32];
 /* Complete per-pad input layout is in game_types.h. */
 struct PadInputState;
 
-/* ovl_11_func_800D2710 reads the pending mode with lh and resets it with sh to -1. */
-extern s16 D_80128D68;
+/* Ovl11ProcessPendingStageMode reads with lh and resets with sh to -1. */
+extern s16 gOvl11PendingStageMode;
 
 /* 800CC0F8 projects to two signed words, then reads their low halfwords. */
 extern s32 D_80128B98[2];
@@ -1718,7 +1720,8 @@ typedef struct {
     Ovl11D93C8Cell cells[49];
 } Ovl11D9F1CMapView;
 /* ovl_11_func_800D93C8 selects these five-argument handlers; each writes three s32 outputs. */
-extern s32 (*D_80128DA8)(u16, u8, s32 *, s32 *, s32 *);
+/* 800D93C8 installs four s32/s32 resolvers; cells supply lhu/lbu inputs. */
+extern s32 (*gOvl11CellSpriteResolver)(s32, s32, s32 *, s32 *, s32 *);
 
 /* 800BFC20 reads five signed halfword record indices at overlay 11:80122E74. */
 extern s16 gOvl11ConditionDateRecordIndices[];
@@ -2843,7 +2846,7 @@ extern s32 _gMessagePortraitSource[3] __asm__("gMessagePortraitSource");
  * of func_800145F0 and as the pointer argument of ovl_11_func_800E3CDC, so
  * it holds a pointer value; kept scalar so it stays within the -G8
  * threshold and the address stays unsplit. */
-extern s32 D_8005E70C;
+extern s32 gSpriteBankArchiveBuffer;
 
 /* D_80010098, D_8001009C, D_8005E328 - absolute s32 scalars (func_80011370 / func_8001205C)
  *
@@ -6465,7 +6468,7 @@ extern s32 D_801217A4;
  * ovl_11_func_800E54F8 loads it (lh) to pass to ovl_11_func_800E36CC.
  * Absolute-addressed from -G0 overlay code; the TU only declares it, so a
  * scalar extern keeps the base name. */
-extern s16 D_80129418;
+extern s16 gOvl11SpriteBankVramXOffset;
 
 /* ovl_11_func_800D3574 selects byte offsets into these sprite-data banks. */
 extern s32 D_80098BF8;
@@ -6591,10 +6594,12 @@ struct Ovl11D2764StageView {
     char pad_91DE[0x92CC - 0x91DE];
     s16 field_92CC;
 };
-/* ovl_11_func_800D2764 clears three absolute-addressed halfword result flags. */
-extern s16 D_80128D60;
-extern s16 D_80128D62;
-extern s16 D_80128D64;
+/* Ovl11DispatchStageMode clears these halfword counters; 800CE96C sets 300. */
+extern s16 gOvl11Mode0DispatchCounter;
+extern s16 gOvl11Mode1DispatchCounter;
+extern s16 gOvl11Mode2DispatchCounter;
+/* 800DAFD4/800DB00C/800DB054 write/copy/clamp six s16 coordinates, +6 unused. */
+extern struct Ovl11SceneCoordinates gOvl11CoordinateClampBounds;
 
 /* ovl_15_func_801335F8: byte-addressed text at base and base+0xE. */
 extern u8 D_80051CAE[];

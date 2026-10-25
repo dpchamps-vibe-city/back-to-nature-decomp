@@ -30,6 +30,10 @@ struct Ovl11RotationState;
 
 typedef struct Ovl11RotationState Ovl11RotationState;
 
+struct Ovl11SceneCoordinates;
+
+typedef struct Ovl11SceneCoordinates Ovl11SceneCoordinates;
+
 struct Ovl11TextureCoordinates;
 
 typedef struct Ovl11TextureCoordinates Ovl11TextureCoordinates;
@@ -193,11 +197,6 @@ typedef struct {
                u16 unk12;
                u16 unk14;
 } M2C_022d8b6d7e6d_SpriteDesc;
-
-typedef struct {
-               u8 unk0[4];
-               s16 unk4;
-} M2C_029d3dcb50b2_UnkStruct800D72E8;
 
 typedef struct {
     char pad_00[0x24];
@@ -432,23 +431,6 @@ typedef struct {
 } M2C_190b52b5a3be_ReconA1View;
 
 typedef struct {
-    char pad0[0x8];
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    char padE[0x2];
-    s16 unk10;
-    s16 unk12;
-    s16 unk14;
-    char pad16[0xA];
-    s16 unk20;
-    s16 unk22;
-    s16 unk24;
-    char pad26[0x2];
-    u16 unk28;
-} M2C_19c3a40395ce_ovl_11_func_800DCA10_t;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -482,12 +464,6 @@ typedef struct {
                char pad_32[0xA8 - 0x32];
                char unkA8[0];
 } M2C_1f564fb8910d_Struct_800DF51C;
-
-typedef struct {
-               u8 pad[0x28];
-               u16 unk28;
-               u8 pad2[0x6];
-} M2C_1fdb90a61b2c_Ovl11FuncC9D4Entry;
 
 typedef struct {
     char pad_00[0x24];
@@ -540,18 +516,6 @@ typedef struct {
                s32 field_04;
                s32 field_08;
 } M2C_2667c0b769b3_BoundsArgs4994;
-
-typedef struct {
-               u16 unk0;
-               s16 unk2;
-               u16 unk4;
-               u16 unk6;
-               u16 unk8;
-               u16 unkA;
-               u16 unkC;
-               u16 unkE;
-               u16 unk10;
-} M2C_267fa2417d8d_M2C_d1b1d801165c_M2C_b93e11a2_Arg0;
 
 typedef struct {
                char pad[0x22];
@@ -809,16 +773,6 @@ typedef struct {
                char pad_32[0xA8 - 0x32];
                char unkA8[0];
 } M2C_478bc32a9b2b_Struct_8010BCE8;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 pad6;
-               s16 unk8;
-               s16 unkA;
-               s16 unkC;
-} M2C_47a72bcd7f17_Ovl11DE8;
 
 typedef struct {
                char pad_00[0x16];
@@ -1198,11 +1152,6 @@ typedef struct {
 } M2C_7f05306168c5_Ovl11D04D4Obj;
 
 typedef struct {
-               u8 unk0[4];
-               s16 unk4;
-} M2C_7f0a9cc905ed_UnkStruct800D72E8;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -1569,20 +1518,6 @@ typedef struct {
                s16 unk2;
 } M2C_bed1260e6722_UnkStruct800D0DB0;
 
-typedef struct {
-    u16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-    u16 unk10;
-    u16 unk12;
-    u16 unk14;
-} M2C_bf20b0042153_Ovl11DB354Arg0;
-
 typedef unsigned int u32;
 
 typedef struct {
@@ -1696,18 +1631,6 @@ typedef struct {
     char pad_4[0x2];
     s16 unk6;
 } M2C_d030f1db9199_Recon800BA750A0View;
-
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-    u16 unk10;
-} M2C_d1b1d801165c_M2C_b93e11a2_Arg0;
 
 typedef struct {
                char pad_00[0x30];
@@ -1948,16 +1871,6 @@ typedef struct {
 } M2C_f90dacf3c1c7_Ovl11CheckArg;
 
 typedef struct {
-               s16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 pad6;
-               s16 unk8;
-               s16 unkA;
-               s16 unkC;
-} M2C_fa7bbe7fcb28_Ovl11DE8;
-
-typedef struct {
                u8 pad0[0x2E];
                s16 unk2E;
 } M2C_fbb2acdf64d3_Ovl11C3F6CArg0;
@@ -2110,17 +2023,17 @@ typedef struct {
 } Ovl11AnimationObject;
 
 typedef struct {
-    u16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-    u16 unk10;
-    u16 unk12;
-    u16 unk14;
+    u16 key;
+    s16 duration;
+    s16 destX;
+    s16 destY;
+    u16 nextOrDelay;
+    u16 step;
+    u16 scrollTick;
+    u16 sourceX;
+    u16 sourceY;
+    u16 width;
+    u16 height;
 } Ovl11AnimationSlot;
 
 typedef struct {
@@ -2819,6 +2732,39 @@ struct Ovl11RotationState {
     Ovl11RotationSource *source;
 };
 
+struct Ovl11SceneCoordinates {
+    s16 x;
+    s16 y;
+    s16 z;
+    s16 pad6;
+    s16 secondX;
+    s16 secondY;
+    s16 secondZ;
+};
+
+typedef struct {
+    char primitive[8];
+    s16 positionX;
+    s16 positionY;
+    s16 positionZ;
+    char reservedE[2];
+    s16 baseAngleX;
+    s16 baseAngleY;
+    s16 baseAngleZ;
+    char reserved16[0xA];
+    s16 offsetAngleX;
+    s16 offsetAngleY;
+    s16 offsetAngleZ;
+    char reserved26[2];
+    u16 flags;
+} Ovl11SceneRecordResetView;
+
+typedef struct {
+    u8 prefix[0x28];
+    u16 flags;
+    u8 tail[0x6];
+} Ovl11SceneRecordSlot;
+
 typedef struct {
     u8 pad0[0x38];
     u8 direction;
@@ -2842,6 +2788,18 @@ typedef struct {
     s32 field_5C;
     s32 field_60;
 } Ovl11SetFieldsView;
+
+typedef struct {
+    u16 unk0;
+    s16 unk2;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    u16 unk10;
+} Ovl11SetupHeader;
 
 typedef struct {
     u8 pad0[2];
@@ -2888,6 +2846,11 @@ struct Ovl11TextureCoordinates {
 };
 
 typedef struct {
+    u8 leading[4];
+    s16 tail;
+} Ovl11TripletTailView;
+
+typedef struct {
                Ovl11BlendVertexBlock *sourceA;
     u8 pad04[4];
                Ovl11BlendVertexBlock *sourceB;
@@ -2906,6 +2869,18 @@ typedef struct {
                s16 denominator;
     u8 pad32[2];
 } Ovl11VertexBlend;
+
+typedef struct {
+    u16 key;
+    s16 duration;
+    u16 nextIndex;
+    u16 destX;
+    u16 destY;
+    u16 sourceX;
+    u16 sourceY;
+    u16 width;
+    u16 height;
+} Ovl11VramAnimationDescriptor;
 
 typedef struct {
                s16 unk0;

@@ -77,7 +77,7 @@ segments:
       - [0x19D0, o, ../lib/libmcx/mcxcmd6, .rdata] # lib/libmcx/mcxcmd6.o
       - [0x19F0, o, ../lib/libmcx/mcxcmd8, .rdata] # lib/libmcx/mcxcmd8.o
       - [0x1A20, o, ../lib/libmcx/mcxcmd24, .rdata] # lib/libmcx/mcxcmd24.o
-      - [0x1A70, c, func_80011270]       # 0x80011270 func_80011270
+      - [0x1A70, c, modules/compiler_init]
       - [0x1A78, c, __start]       # 0x80011278 __start
       - [0x1B70, c, modules/game_loop]
       - [0x31E8, c, modules/debug_break]

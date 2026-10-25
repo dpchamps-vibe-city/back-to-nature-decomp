@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_halfword_triplets.h"
 
-void ovl_11_func_800D7328(s16 *arg0);
-void ovl_11_func_800D7348(u16 *dst, u16 *src);
 s32 ovl_11_func_800D6A94(s16 arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 
@@ -14,7 +13,7 @@ s32 ovl_11_func_800CB540(u16 *arg0) {
     u16 var_s5;
 
     temp_s2 = (s32 *) ((u8 *) obj + 0xF0);
-    ovl_11_func_800D7328((s16 *) temp_s2);
+    Ovl11ClearHalfwordTriplet((s16 *) temp_s2);
     var_s5 = 6;
     temp_s3 = (s32 *) ((u8 *) obj - 0x51C8);
     var_s1 = 0xB;
@@ -22,7 +21,7 @@ s32 ovl_11_func_800CB540(u16 *arg0) {
         var_s5 = 0xE;
         var_s1 = 0x25;
     }
-    ovl_11_func_800D7348((u16 *) temp_s2, arg0);
+    Ovl11CopyHalfwordTriplet((u16 *) temp_s2, arg0);
     ovl_11_func_800D6A94(*(s16 *) ((u8 *) obj + 0xF0));
     ovl_11_func_800C70CC(obj, var_s5, var_s1 + (*(u16 *) ((u8 *) temp_s3 + 0x5200)), -2);
     obj->unk6C |= 0x8004;

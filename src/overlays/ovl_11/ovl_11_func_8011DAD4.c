@@ -1,9 +1,9 @@
 #include "common.h"
 #include "integer_power.h"
+#include "ovl11_halfword_triplets.h"
 
 s16 ovl_11_func_8011D9DC(s16, s32);
 s32 ovl_11_func_800D6A94(s16);
-void ovl_11_func_800D7338(s16 *, s16, s16, s16);
 
 s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
     s32 i;
@@ -46,7 +46,7 @@ s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
                 if (fresh == 1) {
                     ovl_11_func_800D6A94(id);
                 }
-                ovl_11_func_800D7338(slot, id, 0, total);
+                Ovl11SetHalfwordTriplet(slot, id, 0, total);
             }
         }
         slot = (s16 *)&D_80071A90;
@@ -73,7 +73,7 @@ s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
                     if (fresh == 1) {
                         ovl_11_func_800D6A94(id);
                     }
-                    ovl_11_func_800D7338(slot, id, 0, total);
+                    Ovl11SetHalfwordTriplet(slot, id, 0, total);
                 }
             }
             if (amount <= 0) {
@@ -84,7 +84,7 @@ s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
         empty = (s16 *)&D_80070EC2;
         for (i = 0; i < 64; i++, empty += 3) {
             if (empty[0] == 0) {
-                ovl_11_func_800D7338(empty, id, 0, amount);
+                Ovl11SetHalfwordTriplet(empty, id, 0, amount);
                 amount = 0;
                 break;
             }

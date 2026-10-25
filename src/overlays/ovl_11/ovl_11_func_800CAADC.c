@@ -3,13 +3,13 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "pad_actuator_sequences.h"
+#include "ovl11_coordinate_clamp.h"
 
 void ovl_11_func_800CA708(void);
 s32 GetVal8005E524(void);
 void SetVal8005E51C(s32);
 s32 ovl_11_func_800BDB88(s32 *, s32);
 void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
-void ovl_11_func_800DB054(Ovl11SceneCoordinates *);
 s32 func_8001DFD4(s32 *, SVECTOR *);
 
 void ovl_11_func_800CAADC(void) {
@@ -73,7 +73,7 @@ void ovl_11_func_800CAADC(void) {
     player->velocity[0] = 0;
     player->velocity[2] = 0;
     if (state->flags10 & 0x08000000) {
-        ovl_11_func_800DB054((Ovl11SceneCoordinates *)D_800A03A4);
+        Ovl11ClampCoordinates((Ovl11SceneCoordinates *)D_800A03A4);
     }
     PushMatrix();
     screen = D_80128B90;

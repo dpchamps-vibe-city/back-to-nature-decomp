@@ -23,6 +23,7 @@
 #include "ovl11_interaction_volume_query.h"
 #include "integer_power.h"
 #include "game_flags.h"
+#include "ovl11_halfword_triplets.h"
 
 typedef struct {
                s16 field_0;
@@ -175,11 +176,9 @@ void ovl_11_func_800CF314 (u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_
 s32 ovl_11_func_800CDF4C (u8 *arg0);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 void ovl_11_func_800D666C (s16 arg0);
-void ovl_11_func_800D7328 (s16 *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 M2C_f3fe4d9631b5_UnkStruct800CBF40 *ovl_11_func_800CBF70 (M2C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *arg0, u16 *arg1, s16 arg2);
 s32 ovl_11_func_800CE53C (s16 arg0);
-void ovl_11_func_800D7348 (u16 *dst, u16 *src);
 void ovl_11_func_800C9D98 (void);
 s32 ovl_11_func_800CE514 (s16 arg0);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);

@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "integer_power.h"
+#include "ovl11_halfword_triplets.h"
 
 s32 ovl_11_func_800CB4E0(void);
 void ovl_11_func_800CBD78(Ovl11C7010Object *);
 void ovl_11_func_800D666C(s16);
-void ovl_11_func_800D7328(s16 *);
 
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
     s32 key;
@@ -74,15 +74,15 @@ s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
                             ovl_11_func_800CBD78((Ovl11C7010Object *)((u8 *)D_8006C838 + 0x51C8));
                         } else {
                             ovl_11_func_800D666C(slot->id);
-                            ovl_11_func_800D7328((s16 *)slot);
+                            Ovl11ClearHalfwordTriplet((s16 *)slot);
                         }
                     case 1:
                         ovl_11_func_800D666C(slot->id);
-                        ovl_11_func_800D7328((s16 *)slot);
+                        Ovl11ClearHalfwordTriplet((s16 *)slot);
                         break;
                     case 2:
                     case 3:
-                        ovl_11_func_800D7328((s16 *)slot);
+                        Ovl11ClearHalfwordTriplet((s16 *)slot);
                         break;
                     }
                     amount--;

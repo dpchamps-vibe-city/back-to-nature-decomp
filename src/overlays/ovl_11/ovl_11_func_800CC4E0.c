@@ -8,12 +8,12 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "game_flags.h"
+#include "ovl11_interaction_id_predicates.h"
 
 s32 ovl_11_func_800BF3F4(void);
 /* This caller supplies two arguments; the callee's trailing debug arguments
  * do not participate in sprite initialization. */
 s32 ovl_11_func_800C79F8(Vec3 *arg0);
-s32 ovl_11_func_800D7504(s16 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 
 s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
@@ -53,7 +53,7 @@ s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
         }
         switch (temp_v0_2) {
         case 38:
-            if (ovl_11_func_800D7504((s16) (*(u16 *) ((u8 *) arg0 + 2))) != 0) {
+            if (Ovl11IsInteractionItemSetA((s16) (*(u16 *) ((u8 *) arg0 + 2))) != 0) {
                 arg0->unk6 = 4;
             }
             break;

@@ -3,6 +3,10 @@
 #include "psyq/stddef.h"
 #include "sprite_rotation.h"
 #include "game_flags.h"
+#include "psyq/memory.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_vram_animation_slots.h"
 
 void ovl_11_func_80104A58 (void);
 s32 ovl_11_func_800DC388 (s32 arg0);
@@ -10,7 +14,6 @@ void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_80113B80 (void);
 void ovl_11_func_800BD5A8 (s32 arg0);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
-void ovl_11_func_800DB2AC (Ovl11SetupHeader *arg0);
 void ovl_11_func_8010B67C (void);
 void ovl_11_func_800C19B0 (void);
 void ovl_11_func_800BDA70 (void);
@@ -114,7 +117,7 @@ block_33:
         }
     }
     (((Ovl11SetupResidentView *) D_8006C838)->control) = (s32) ((((Ovl11SetupResidentView *) D_8006C838)->control) & ~0x2000);
-    ovl_11_func_800DB2AC((Ovl11SetupHeader *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
+    Ovl11RequestVramAnimations((Ovl11SetupHeader *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
     if ((((Ovl11SetupWorkView *) &D_8007AFF0)->current.field_0) == 0) {
         ovl_11_func_800BD3C4(0);
     }

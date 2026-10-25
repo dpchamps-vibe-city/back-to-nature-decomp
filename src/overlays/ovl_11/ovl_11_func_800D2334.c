@@ -41,7 +41,7 @@ block_9:
             } else if (!(var_s0->f34 & update_mask)) {
                 if (var_s1 == 0) {
                     if (!((*(s32 *) (base + 0xC)) & 0x08000000)) {
-                        ovl_11_func_800D266C((Ov11D266CFields *) var_s0, (u16 *) &D_80128D62, 0x11);
+                        ovl_11_func_800D266C((Ov11D266CFields *) var_s0, (u16 *) &gOvl11Mode1DispatchCounter, 0x11);
                         ovl_11_func_80108CA4((s32) var_s0);
                     }
                     ovl_11_func_80108BE8((u8 *) var_s0);
@@ -50,7 +50,7 @@ block_9:
                     base2 = (u8 *)D_8006C838;
                     if (!((*(s32 *) (base2 + 0x5234)) & 0x100)) {
                         if (!((*(s32 *) (base2 + 0xC)) & 0x08000000)) {
-                            ovl_11_func_800D266C((Ov11D266CFields *) var_s0, (u16 *) &D_80128D64, 0x11);
+                            ovl_11_func_800D266C((Ov11D266CFields *) var_s0, (u16 *) &gOvl11Mode2DispatchCounter, 0x11);
                             ovl_11_func_8010B198((s32) var_s0);
                         }
                         ovl_11_func_8010B0E8((u8 *) var_s0);

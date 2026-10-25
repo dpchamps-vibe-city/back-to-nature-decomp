@@ -1,5 +1,67 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Six-byte halfword record primitives and signed tail accumulation.
+Ovl11AddTripletTail = 0x800D72E8; // type:func
+Ovl11ClearHalfwordTriplet = 0x800D7328; // type:func
+Ovl11SetHalfwordTriplet = 0x800D7338; // type:func
+Ovl11CopyHalfwordTriplet = 0x800D7348; // type:func
+
+// Closed lifecycle of fifteen projected scene records.
+Ovl11ClearSceneRecords = 0x800DC990; // type:func
+Ovl11FindFreeSceneRecord = 0x800DC9D4; // type:func
+Ovl11ClearSceneRecord = 0x800DCA10; // type:func
+Ovl11InstallSceneRecords = 0x800DCA60; // type:func
+
+// Bounded and fixed-grid map-cell sprite rendering with private resolvers.
+Ovl11ComputeCellSpriteBounds = 0x800D92FC; // type:func
+Ovl11DrawVisibleCellSprites = 0x800D93C8; // type:func
+Ovl11ResolveCellSpriteMode0 = 0x800D95EC; // type:func
+Ovl11ResolveCellSpriteMode1 = 0x800D981C; // type:func
+Ovl11ResolveCellSpriteMode2 = 0x800D9B14; // type:func
+Ovl11ResolveCellSpriteFallback = 0x800D9E10; // type:func
+Ovl11SetCellSpriteIfNonzero = 0x800D9EFC; // type:func
+Ovl11DrawFixedCellSpriteGrid = 0x800D9F1C; // type:func
+gOvl11CellSpriteResolver = 0x80128DA8; // type:data size:0x4
+
+// Eight VRAM animation slots and their two MoveImage update modes.
+Ovl11InitVramAnimationSlots = 0x800DB0E4; // type:func
+Ovl11AcquireVramAnimationSlot = 0x800DB140; // type:func
+Ovl11ReleaseVramAnimationSlot = 0x800DB23C; // type:func
+Ovl11RequestVramAnimations = 0x800DB2AC; // type:func
+Ovl11StepVramAnimationSequence = 0x800DB354; // type:func
+Ovl11StepVramAnimationScroll = 0x800DB4E0; // type:func
+Ovl11UpdateVramAnimations = 0x800DB5CC; // type:func
+
+// Always-consuming clock-event callbacks, ordered as table slots 6..9.
+Ovl11ClockClearRecordGroup4 = 0x800DE6BC; // type:func
+Ovl11ClockClearRecordGroup1 = 0x800DE6E8; // type:func
+Ovl11ClockClearRecordGroup2 = 0x800DE714; // type:func
+Ovl11ClockClearRecordGroup0 = 0x800DE740; // type:func
+
+// Item-set predicates used by the three neighboring interaction-prompt paths.
+Ovl11IsInteractionItemSetA = 0x800D7504; // type:func
+Ovl11IsInteractionItemSetB = 0x800D753C; // type:func
+Ovl11IsInteractionItemSetC = 0x800D756C; // type:func
+
+// Private x/z clamp bounds; stored y limits are not applied by this clamp.
+Ovl11ResetCoordinateClamp = 0x800DAFD4; // type:func
+Ovl11SetCoordinateClamp = 0x800DB00C; // type:func
+Ovl11ClampCoordinates = 0x800DB054; // type:func
+gOvl11CoordinateClampBounds = 0x80128DE8; // type:data size:0xE
+
+// Guarded archive-backed sprite-bank upload, x offsets measured in VRAM words.
+Ovl11ReloadGuardedSpriteBank = 0x800E3C4C; // type:func
+Ovl11UploadGuardedSpriteBank = 0x800E3CDC; // type:func
+gOvl11SpriteBankVramXOffset = 0x80129418; // type:data size:0x2
+
+// Readiness-gated pending mode and stage-matched object handler dispatch.
+Ovl11ProcessPendingStageMode = 0x800D2710; // type:func
+Ovl11DispatchStageMode = 0x800D2764; // type:func
+gOvl11PendingStageMode = 0x80128D68; // type:data size:0x2
+gOvl11Mode0DispatchCounter = 0x80128D60; // type:data size:0x2
+gOvl11Mode1DispatchCounter = 0x80128D62; // type:data size:0x2
+gOvl11Mode2DispatchCounter = 0x80128D64; // type:data size:0x2
+
 // Fixed object-event slot lifecycle and counter maintenance.
 Ovl11AllocateAllEventSlots = 0x800C1BA0; // type:func
 Ovl11ClearEventSlotTimeOrigins = 0x800C1BE0; // type:func

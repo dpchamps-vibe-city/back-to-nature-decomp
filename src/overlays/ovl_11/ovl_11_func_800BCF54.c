@@ -6,10 +6,10 @@
 #include "psyq/libgpu.h"
 #include "sprite_upload.h"
 #include "game_flags.h"
+#include "ovl11_guarded_sprite_bank.h"
 
 void ovl_11_func_800BD938(void);
 void ovl_11_func_800F0E00(void *arg0);
-void ovl_11_func_800E3CDC(u8 *arg0);
 
 void ovl_11_func_800BCF54(s32 arg0, s32 arg1) {
     s32 *record;
@@ -39,5 +39,5 @@ void ovl_11_func_800BCF54(s32 arg0, s32 arg1) {
     start2 = record[2];
     CdReadDiscSectorsBlocking(0, start2, record[4] - start2, 0, gGraphicsHeapBase + 0x4290);
     ovl_11_func_800F0E00((void *)(gGraphicsHeapBase + 0x4290));
-    ovl_11_func_800E3CDC((u8 *)gGraphicsHeapBase + ((record[3] - record[2]) + 0x4290));
+    Ovl11UploadGuardedSpriteBank((u8 *)gGraphicsHeapBase + ((record[3] - record[2]) + 0x4290));
 }

@@ -5,11 +5,13 @@
 #include "ovl11_scene_rotation_ramps.h"
 #include "ovl11_scene_animation_pair.h"
 #include "ovl11_scene_animation_cycle.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_cell_sprite_dispatch.h"
 
-void ovl_11_func_800D93C8(void);
 void ovl_11_func_80111D94(void);
 void ovl_11_func_80111B74(void);
-void ovl_11_func_800D9F1C(void);
 
 #define STATE ((struct Ovl11EventDispatchState *)D_8006C838)
 #define HEADER ((struct Ovl11SceneHeader *)((Ovl11FarInitView *)&D_8007AFF0)->data)
@@ -37,7 +39,7 @@ void ovl_11_func_800DC148(void) {
                 StartCdAudioTrack(sound);
             }
         }
-        ovl_11_func_800D93C8();
+        Ovl11DrawVisibleCellSprites();
         break;
     case 1:
         if (!(STATE->flags & 0x10000)) {
@@ -52,7 +54,7 @@ void ovl_11_func_800DC148(void) {
         }
         break;
     case 5:
-        ovl_11_func_800D9F1C();
+        Ovl11DrawFixedCellSpriteGrid();
         break;
     case 43:
         Ovl11StepBackgroundColorCycle();

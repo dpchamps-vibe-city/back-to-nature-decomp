@@ -10,6 +10,11 @@
 #include "game_flags.h"
 #include "psyq/memory.h"
 #include "ovl11_object_event_pool.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_vram_animation_slots.h"
+#include "ovl11_scene_record_pool.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
@@ -18,10 +23,6 @@ void ovl_11_func_80111F88 (void);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_800BD5A8 (s32 arg0);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
-void ovl_11_func_800DB0E4 (void);
-void ovl_11_func_800DC990 (void);
-void ovl_11_func_800DCA60 (void);
-void ovl_11_func_800DB2AC (Ovl11SetupHeader *arg0);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_800CCC5C (void);
@@ -113,12 +114,12 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800BD5A8(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xA));
             ovl_11_func_800BD6A8(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xC), 0);
             ovl_11_func_800BD3C4(0);
-            ovl_11_func_800DB0E4();
+            Ovl11InitVramAnimationSlots();
             Ovl11ResetVertexBlendPool();
-            ovl_11_func_800DC990();
-            ovl_11_func_800DCA60();
+            Ovl11ClearSceneRecords();
+            Ovl11InstallSceneRecords();
             ovl_11_func_800BD5A8(((Ovl11SetupWorkView *)&D_8007AFF0)->music);
-            ovl_11_func_800DB2AC((Ovl11SetupHeader *)D_8009F78C);
+            Ovl11RequestVramAnimations((Ovl11SetupHeader *)D_8009F78C);
             ((Ovl11SetupWorkView *)&D_8007AFF0)->current = ((Ovl11SetupWorkView *)&D_8007AFF0)->previous;
             ((Ovl11SetupWorkView *)&D_8007AFF0)->header = D_8009F78C;
             Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);

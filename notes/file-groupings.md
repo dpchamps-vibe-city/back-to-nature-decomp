@@ -113,6 +113,29 @@ half of the guard and is not adjacent, so it is cited as callee, not member.
   from a sprite-bank state word and forwards its buffer to
   `ovl_11_func_800E351C`.
 
+**Reconstructed `modules/guarded_sprite_bank.c`:** both entries, now
+`Ovl11ReloadGuardedSpriteBank` and `Ovl11UploadGuardedSpriteBank`.
+The original upload adds its two selector arguments to RECT.x/y before
+LoadImage, establishing **VRAM-word x offset** rather than a bank index.
+`gOvl11SpriteBankVramXOffset` (80129418, s16) records 0 or 256 for the later
+800E54F8 read path; stage 27 forces 0 and stage 44 suppresses upload entirely.
+The absolute address word `gSpriteBankArchiveBuffer` (exe:8005E70C, retained
+s32 ABI) supplies the archive read and upload buffer. Neither is newly owned
+by the overlay. The public header `ovl11_guarded_sprite_bank.h` documents the
+exact guards, GPU wait/OT clear, range [0x1D,0x1E), and always-zero reload
+result. Unused SDK redeclarations/includes were removed; live SDK and CD
+interfaces come from their canonical headers.
+
+Both boundaries have protocol evidence: 800E3C04 initializes mode 2 and calls
+800E7798 with four zero arguments, touching different work fields; it neither
+loads this archive nor invokes the guarded uploader. 800E3D88 queries the
+flag-2-selected object's +2 halfword and uses the opposite flag polarity;
+it does not implement this upload gate or touch its offset/buffer. The distant
+800E351C uploader is shared by other callers and lacks this pair's work-bit
+guard, so its call edge alone does not absorb intervening code. These are
+supported reconstruction cuts under -G0, not compiler-proven object cuts.
+The complete two-member fold passed at baseline; no override applies.
+
 ---
 
 ## `ovl_11` s16 range-map helper pair — 0x800CB020–0x800CB110 (confidence: medium)
@@ -768,7 +791,7 @@ Members (address order):
 
 ---
 
-## `ovl_11` `D_80128E08` 0x30-stride entry-table walk — 0x800DC990 / 0x800DCA10 (confidence: low)
+## `ovl_11` scene-record pool lifecycle — 0x800DC990–0x800DCBDC exclusive (confidence: medium)
 
 Bulk walk `ovl_11_func_800DC990` (matched this session, byte-exact) walks the
 shared table global `D_80128E08` 15 times (count-down `i = 0xE .. 0`, `bgez`)
@@ -778,8 +801,40 @@ pointer in `$a0`. Structurally the third twin of the two 0x34-stride clusters
 distinct global, stride and callee. Members:
 - ovl_11_func_800DC990 (m, matched this session) — bulk walk over entries
   0–14 of `D_80128E08` (+0x30 stride)
-- ovl_11_func_800DCA10 (s) — per-entry callee at 0x800DCA10, +0x80 after the
-  walker; role unknown
+- ovl_11_func_800DCA10 (m) — clears the primitive header, position/base/offset
+  rotations and marks the record free; preserves the delta-angle triple.
+
+**Reconstructed `modules/scene_record_pool.c`:** the whole four-function
+lifecycle run, including intervening 800DC9D4 and final 800DCA60. Names are
+`Ovl11ClearSceneRecords`, `Ovl11FindFreeSceneRecord`,
+`Ovl11ClearSceneRecord`, `Ovl11InstallSceneRecords`. The clearer is called
+only by the bulk clear, and the free-slot finder only by the installer.
+Both helpers consume exactly the 0x8000 free marker the clearer establishes;
+the installer loads the three transform chunks and projected primitive source,
+optionally adding a vertex blend. These crossed private-helper call pairs and
+the closed free/find/install protocol, corroborated by gapless original order,
+join all four rather than taking the older two-member walk slice.
+
+The shared pool is **not private**: renderers, field writers and existing
+animation/visibility controls also use it. A common pool alone is not evidence
+to absorb those functions or intervening code. Left neighbor 800DC560 handles
+asset/work-buffer setup with no calls into this lifecycle group. Right
+neighbors 800DCBDC/800DCC1C are externally driven triple setters; they do not
+use either private lifecycle helper or free-marker protocol. The later renderer
+consumes records but does not manage free slots. These protocol/helper cuts
+bound the supported lifecycle unit, not GP-proven historical object files.
+
+The duplicate slot layout is now the canonical `Ovl11SceneRecordSlot`, and
+`Ovl11SceneRecordResetView` names the reset fields with their original signed
+halfword widths. Both are shared types; the installer retains its packed
+8-byte transform-copy contract rather than replacing it with an unrelated
+vector assignment. `ovl11_scene_record_pool.h` publishes bulk clear/install,
+including preserved delta angles/blend pointer, full-pool skipping, unchecked
+blend-allocation success requirement and unconditional reset of the five
+related controls. Helpers remain externally linked but are not public header
+entries. `gOvl11SceneRecords` keeps its existing canonical byte-block extern;
+no storage ownership or global rename is invented. The four-member checked
+fold passed at baseline, including all linked overlay bytes, without flags.
 
 ---
 
@@ -3232,7 +3287,7 @@ Evidence: matched initializer/helper C in `src/overlays/ovl_11/`; original
 
 ---
 
-## `ovl_11` 3-halfword vector setter/clear/copy family — 0x800D72E8–0x800D740C (confidence: medium)
+## `ovl_11` halfword-triplet family — 0x800D72E8–0x800D736C exclusive (confidence: medium)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): four tiny functions
 over one 6-byte struct of three u16 fields at +0/+2/+4, in a strict zero-gap
@@ -3277,9 +3332,72 @@ Members (address order):
   zero-gap adjacency alone, so if one TU holds the whole 0x800D72E8–0x800D740C
   span, that file mixes vector helpers with an item-table accessor.
 
+**Reconstructed `modules/halfword_triplets.c`:** the four functions before
+800D736C, named `Ovl11AddTripletTail`, `Ovl11ClearHalfwordTriplet`,
+`Ovl11SetHalfwordTriplet` and `Ovl11CopyHalfwordTriplet`. Their source callers
+use clear/copy consecutively on the same six-byte records (800C580C,
+800CB6C8), and 800CCF14 connects signed tail accumulation to clearing that
+same record. This common record-operation protocol corroborates link order;
+the leading words need not be geometric coordinates. The canonical
+`Ovl11TripletTailView` preserves four opaque leading bytes and s16 +4 rather
+than guessing their meaning, replacing the identical local type in the helper
+and its caller. Pointer signatures and signed/unsigned copy behavior remain.
+
+Left boundary: 800D7144 is a packet/OT sprite-drawing helper using placement
+records and GPU packets, not the six-byte leaf-operation protocol. Right
+boundary: 800D736C classifies one item-table ID and flag bits through a global
+table; it neither invokes these operations nor handles a three-halfword
+record. Its adjacency does not extend this unit, correcting the older broad
+range heading. These are protocol-supported cuts, not original-object proofs.
+There are no globals or data ownership claims in this unit.
+`ovl11_halfword_triplets.h` documents exact modulo-16-bit accumulation,
+post-truncation zero/sign tests, -1 storage, untouched leading bytes and
+forward-copy overlap semantics. Parameters now describe values/delta/source/
+destination rather than speculative vector axes. All four stay externally
+linked. The complete fold passed at baseline without any flag override.
+
+Final batch verification with `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes at **667/2625 folded**, up 38 this run,
+with **96/96 module units valid**, up ten. The executable and all 13 overlays
+remain byte-identical, including data, callback pointers, jump tables and
+placement. Original-function inventory, completeness, generation convergence,
+source policy, scope, whitespace, input stability and exception non-growth
+pass. Canonical names are clean; the interface check has 392 published
+interfaces with zero failing, leaving unrelated pre-existing disputes alone.
+Every new module was tested under its container's baseline settings. No
+compiler flags, policy exceptions or build/diagnostic tools changed.
+
 ---
 
-## `ovl_11` s16 range-check predicate trio — 0x800D7504 / 0x800D753C / 0x800D756C (confidence: low)
+## `ovl_11` clock record-flag callbacks — 0x800DE6BC–0x800DE76C exclusive (confidence: medium)
+
+**Reconstructed `modules/clock_record_flags.c`:** four members, in original
+order: `Ovl11ClockClearRecordGroup4` (800DE6BC), `...Group1` (800DE6E8),
+`...Group2` (800DE714), `...Group0` (800DE740). Original table words place
+these exact addresses in slots 6..9 of `gOvl11ClockEventHandlers` (800B7F54),
+in the same nonmonotonic group order 4,1,2,0 as their gapless text order.
+Each original body calls 800EC064(group,0,0,0) then returns 1, a distinctive
+closed callback protocol rather than adjacency alone. The dispatcher removes
+a queued clock event on a nonzero callback result.
+
+800EC064's operation 0 clears object flag 0x400: group 4 selects 800759E4,
+group 0 selects 80075AD4, and groups 1/2 both search the same 20-record pool
+for the first flagged entry. No entry still consumes the event. The header
+`ovl11_clock_record_flags.h` documents this externally table-used interface;
+the gameplay meaning of bit 0x400 remains unnamed. The callback table remains
+extracted data, regenerated with canonical names, not a new C initializer.
+No storage or linkage was changed.
+
+Left boundary: 800DE4C0 is a scene-change/fade/sound driver, not one of these
+four group-clear callbacks and does not call 800EC064. Right boundary:
+800DE76C copies work-area condition bits into flags and is absent from this
+callback-table tail. The earlier six table entries have different protocols
+and scattered text; a common dispatcher alone does not unite their intervening
+functions. These are protocol/table-supported reconstruction cuts under -G0,
+not GP-proven historical object boundaries. The whole four-member fold passed
+at baseline; no flags or policy exceptions apply.
+
+## `ovl_11` s16 range-check predicate trio — 0x800D7504 / 0x800D753C / 0x800D756C (confidence: medium)
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): three zero-gap
 link-contiguous range-check predicates, byte twins except for constants (the
@@ -3310,6 +3428,24 @@ Members (address order, all matched, baseline flags):
   (`sll`/`sra`/`addiu`/`sltiu`/`bnez`/`bne` shape)
 - ovl_11_func_800D756C (m, matched 2026) — `(u32)(arg0 - 0x91) < 3U
   || arg0 == 0xE7`, byte twin of 0x800D753C; the run's third member
+
+**Reconstructed `modules/interaction_id_predicates.c`:** the complete trio,
+now `Ovl11IsInteractionItemSetA/B/C`, with signed-halfword `itemId` parameters.
+The neighboring wrappers 800C83FC/800C846C/800C838C independently corroborate
+the set: each predicate is paired with action/message selectors
+5B/1A2, 59/1A3, 5A/1A4 respectively. This common interaction protocol adds
+evidence beyond machine-shape similarity and link order. Other callers use
+set A as the same item-ID predicate. The public header states the exact ID
+sets and 0/1/no-side-effect contract rather than inventing gameplay categories.
+No constants, signedness, range expression or linkage changed.
+
+Left boundary: 800D740C maps selected IDs to scalar values (67->3E9,
+185->61, etc.), without these predicates' prompt/caller protocol. Right
+boundary: 800D759C is a table-dispatched scene/packet worker, not a leaf item-ID
+membership test, and calls none of the trio. Neither uses a private table or
+helper of this set. These bound the supported reconstruction rather than
+prove a historical object cut. The full trio folded at baseline -O2/-G0;
+no override or policy exception applies.
 
 ---
 
@@ -7120,6 +7256,17 @@ configuration 0), `InitGraphicsHeap` (80012598, configuration 1) and
 `CopyRenderContextBackup` (800128DC); `__main` is the empty function at
 80011270.
 
+**Compiler initialization hook:** `src/modules/compiler_init.c` contains
+only `__main` (exe:80011270–80011278). Its compiler-recognized name and the
+implicit call emitted for `main` identify a constructor hook, not scene-loop
+logic. The original body is just return/nop; no constructor table or private
+state is used. The left boundary is the end of the configured libmcx object's
+rdata; the right boundary is the separately classified handwritten `__start`
+entry, not a C helper. These non-C segments preclude folding either neighbor
+with this C hook. No header is published: the sole call is compiler-generated,
+not a source-level interface. The checked fold passed under baseline settings;
+no flags, linkage or symbol identities changed.
+
 - `main` is spelled `main`: cc1 emits a `jal __main` prologue for a function
   of that name. Written as `int main(void)` without the explicit call it used
   to carry, it compiles byte-identical.
@@ -10088,6 +10235,27 @@ Members:
   into [D_80128DE8.unk0..unk8] / [unk4..unkC] with four min/max halfword
   clamps (leaf, 0x90, void).
 
+**Reconstructed `modules/coordinate_clamp.c`:** all three entries, now
+`Ovl11ResetCoordinateClamp`, `Ovl11SetCoordinateClamp` and
+`Ovl11ClampCoordinates`. The common storage is now
+`gOvl11CoordinateClampBounds` (80128DE8, unchanged 0xE-byte coordinate view).
+The identical local typedefs were reconciled to the already established
+`Ovl11SceneCoordinates` used by the actual callers, with meaningful coordinate
+field names and the +6 padding retained. Its extern moved to the override
+header; no private linkage, allocation or GP ownership was inferred.
+`ovl11_coordinate_clamp.h` publishes all three operations, their scene-coordinate
+units, default bounds, stored-but-unapplied y values, and the ordered behavior
+for inverted x/z bounds. No validation or conventional xyz clamp was invented.
+
+Left boundary: 800DAF60 selects a checked 8-byte grid-entry address from the
+large/small maps; it never reads or writes this private bounds object and
+calls none of the three operations. Right boundary: the following animation
+initializer clears an unrelated slot block and its work-area mirror. The
+three bounds-object users are the entire contiguous private-state family;
+no other source references that object. These state/protocol cuts support the
+reconstruction under -G0, but do not prove historical object boundaries.
+The complete three-member fold passed at baseline, without any override.
+
 Run boundary: the next gapless link successor is `ovl_11_func_800DB0E4`
 (0x800DB0E4, 0x5C, starts exactly where 800DB054 ends; matched byte-exact in
 this session). It is NOT a member — it touches no D_80128DE8 field, clearing
@@ -10140,6 +10308,41 @@ Members (link order):
   `D_8007AFF0`+0x25388 / 0x8A8 / 0x12 source records via the same remap.
 - ovl_11_func_800DB4E0 (s) — scrolling MoveImage handler for slots with bit 0x8000 clear.
 - ovl_11_func_800DB5CC (m, byte-exact) — gated update of the eight D_800A03B0 slots through the two preceding handlers.
+
+**Reconstructed `modules/vram_animation_slots.c`:** the whole seven-member
+run ends at 800DB674, before the existing camera/lighting unit. Canonical
+names identify initialization, acquisition, release, descriptor requests,
+sequence stepping, scroll stepping and the shared update. The allocator is
+called only by the requester; the two step helpers only by the updater.
+These private call relationships corroborate the exact 0x16-byte shared-slot
+protocol and link order. The retained release entry is carried even though
+unused. Correction to its earlier description: **its pointer never advances**;
+it tests the head repeatedly, not all eight records. The source now explains
+that behavior instead of silently repairing it.
+
+The left neighbor is the separate coordinate-clamp consumer of 80128DE8,
+with no slot or MoveImage protocol. The right neighbor 800DB674 initializes
+camera/orbit state and uses no slot storage or animation helper. Shared
+large work-area bases are not used as evidence to extend either boundary.
+These are supported protocol/private-helper cuts under -G0, not proven
+historical object boundaries.
+
+The existing `Ovl11AnimationSlot` now names key, duration, destination/source
+coordinates, width/height, scroll tick and the two mode-dependent words.
+`Ovl11VramAnimationDescriptor` and its table view replace duplicate local
+layouts; request callers retain the established `Ovl11SetupHeader` identity.
+The shared engine RAM views are named `gVramAnimationStoragePrefix`
+(800A03AC) and `gVramAnimationSlotHead` (800A03B0). The latter deliberately
+retains the canonical u16 head declaration: typed slot walks cast that
+address, without enlarging ownership or replacing the distinct mirror.
+The missing prefix extern moved to globals_override.h with its clear-span
+evidence. Overlay 25's references and shared-slot field use were propagated;
+its code identities remain separate and its bytes verified unchanged.
+`ovl11_vram_animation_slots.h` publishes only init/request/update, documenting
+capacity/duplicate behavior, gates, tick/VRAM units, mode-specific state and
+the distinct mirror. Other symbols keep external linkage, not public headers.
+The complete fold and subsequent readable typed source pass at baseline;
+no flag override was needed or retired.
 
 ## `ovl_11` D_8006C838 table-scan caller + exclusion-set leaf — 0x800F00E4 / 0x800F021C (confidence: low)
 
@@ -11517,7 +11720,7 @@ Members:
   D_8006C838+0x44B8 pair and D_8007AFF0+0x25476 halfword and dispatches tag
   0x157/0x15B through 800D3104.
 
-## `ovl_11` bounds / cell-sprite dispatch run — 0x800D92FC–0x800D9F1C (confidence: low)
+## `ovl_11` bounds / cell-sprite dispatch run — 0x800D92FC–0x800DA390 exclusive (confidence: medium)
 
 Suspected same TU: gapless bounds-helper → renderer → four selected handlers
 → shared output helper → fixed-grid renderer, with agreeing call/link
@@ -11539,6 +11742,45 @@ Members (link order):
 - ovl_11_func_800D9E10 (s) — fallback cell-to-sprite resolver, selected by 800D93C8.
 - ovl_11_func_800D9EFC (m) — conditionally writes two sprite outputs for 800D95EC/800D981C/800D9B14.
 - ovl_11_func_800D9F1C (m, byte-exact) — projects a fixed 7x7 cell grid and draws kind/value-selected sprites using 800D9EFC.
+
+**Reconstructed `modules/cell_sprite_dispatch.c`:** all eight functions in
+this run. Names are `Ovl11ComputeCellSpriteBounds`,
+`Ovl11DrawVisibleCellSprites`, `Ovl11ResolveCellSpriteMode0/1/2`,
+`Ovl11ResolveCellSpriteFallback`, `Ovl11SetCellSpriteIfNonzero`, and
+`Ovl11DrawFixedCellSpriteGrid`. The bounds helper's sole caller is the visible
+renderer; the four resolvers are installed only by that renderer through
+`gOvl11CellSpriteResolver` (80128DA8). Mode resolvers and the fixed-grid
+renderer share the conditional two-output helper, including the value==0
+no-write convention. The fixed-grid tail uses the same kind/value selection
+protocol but intentionally different texture indices; its shared helper and
+mapping ties support carrying it rather than stopping at the callback family.
+No private linkage is inferred from that use census.
+
+Left boundary: 800D9108 searches/mutates kind-36 map entries, first locally
+then globally, using the grid-coordinate/conversion/mutation helpers. It reads
+the **same shared map** as the renderer, so disjoint data is NOT the boundary
+argument. It neither uses the private resolver slot/output helper nor draws
+sprites; shared map access alone does not join those different protocols.
+Right boundary: 800DA390 is the general 8-byte map-entry reset to kind 167,
+with many mutation-path callers outside the group, no resolver/output-helper
+use and no draw protocol. These cuts delimit the supported rendering family,
+not compiler-proven object boundaries. Wider map management remains separate
+unless stronger evidence joins it.
+
+The callback declaration was explicitly reconciled to the implementation's
+two s32 inputs; the old u16/u8 callback prototype disagreed with three of its
+four definitions. Actual map fields still load with lhu/lbu, and fallback's
+unused value parameter now has the same signature. The checked fold proved
+all eight functions and the linked overlay unchanged after that reconciliation.
+`ovl11_cell_sprite_dispatch.h` publishes only the two renderers, describing
+400-unit spacing, bounded/fixed traversal, mode selection, projected-pixel y
+offsets and projection/unsupported-kind skips. Parameters, bounds variables
+and resolver outputs now have behavior-based names. All explicit per-mode
+mappings, zero-output initialization and conditional no-write behavior remain.
+The full batch gate passes for this module and vram_animation_slots, at
+659/2625 folded, 94/94 modules valid: executable/all 13 overlays byte-identical,
+including data/callback tables/placement; interfaces, canonical names,
+generation convergence, source policy, scope and exception non-growth pass.
 
 ## `ovl_11` D_8007AFF0 +0x253AC halfword-state consumer/writer run — 0x800DB674 / 0x800DB78C / 0x800DB7F0 / 0x800DB904 / 0x800DB978 (confidence: medium)
 
@@ -18245,10 +18487,36 @@ Evidence: gapless original link order (0x800D2710 + 0x54 = 0x800D2764;
 `configs/splat/ovl_11.yaml`, offsets 0x1A8F0 → 0x1A944) agrees with the
 predecessor's direct `jal` at 0x800D2744
 (`build/ovl_11/asm/nonmatchings/ovl_11_func_800D2710/ovl_11_func_800D2710.s`).
-Candidate same-TU pair; original translation-unit boundaries remain unproven.
+**Reconstructed `src/overlays/ovl_11/modules/pending_stage_dispatch.c`:**
+`Ovl11ProcessPendingStageMode` (800D2710) and `Ovl11DispatchStageMode`
+(800D2764), ending at 800D2950. The first is the second's only source caller;
+its signed pending value is exactly the helper's mode input, followed by
+unconditional request consumption. This private call/protocol pair, together
+with the unbroken original call/link order, supports the unit; there is no
+GP ownership proof in this -G0 overlay.
 
-- ovl_11_func_800D2710 (s) — readiness-gated caller that dispatches the pending mode in `D_80128D68`, then resets it to -1.
-- ovl_11_func_800D2764 (m) — stage-gated object-handler dispatcher that clears the selected result flag on a zero handler result.
+The left neighbor 800D266C advances a caller-supplied halfword counter up to
+300 and conditionally invokes 800D05D0. It shares downstream counter users
+with this unit, but neither consumes the pending mode nor calls the dispatcher;
+its parameterized counter-update protocol does not establish TU membership.
+The right neighbor 800D2950 is a pure object-ID-to-negative-offset lookup,
+using its own switch table and none of this pair's pending/counter state or
+handlers. These protocol/data cuts bound the supported reconstruction, not
+proven historical object cuts. The distant request setter 800CF308 and reset
+800CE96C share state, but no evidence joins their intervening functions into
+this unit. Neither is silently claimed private.
+
+The pending halfword is `gOvl11PendingStageMode` (80128D68); the three values
+at 80128D60/62/64 are **halfword counters**, not Boolean flags. The reset
+initializes all three to 300 and 800D2334/800D266C advance the latter two.
+Their canonical names are `gOvl11Mode0DispatchCounter` through
+`gOvl11Mode2DispatchCounter`. All four data types and all linkages are retained.
+The module clears a counter only on a zero handler result, and mode 0 keeps
+scanning its 20 slots. `ovl11_pending_stage_dispatch.h` publishes only the
+externally called processor, documenting -1, readiness, modes and consumption;
+the helper remains externally linked but is not a public header entry.
+Canonical renames preserve container/address identities and all callers.
+The checked whole-pair fold passed at baseline -O2/-G0; no override applies.
 
 ## `ovl_11` object-draw helper/dispatcher run — 0x800C9F20 / 0x800CA044 / 0x800CA24C (confidence: low)
 

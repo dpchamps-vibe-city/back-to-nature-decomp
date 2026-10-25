@@ -1,8 +1,6 @@
 #include "common.h"
 #include "psyq/memory.h"
 
-extern u16 D_800A03B0;
-
 typedef struct {
     u16 unk0;
     u16 unk2;
@@ -33,13 +31,13 @@ void ovl_25_func_800BB874(M2C_b93e11a2_Arg0 *arg0) {
     s32 i;
     M2C_b93e11a2_Entry *p;
 
-    p = (M2C_b93e11a2_Entry *) &D_800A03B0;
+    p = (M2C_b93e11a2_Entry *) &gVramAnimationSlotHead;
     for (i = 0; i < 8; i++, p++) {
         if (arg0->unk0 == p->unk0) {
             return;
         }
     }
-    p = (M2C_b93e11a2_Entry *) &D_800A03B0;
+    p = (M2C_b93e11a2_Entry *) &gVramAnimationSlotHead;
     for (i = 0; i < 8; i++, p++) {
         if (p->unk0 == 0xFFFF) {
             memset(p, 0, 0x16);

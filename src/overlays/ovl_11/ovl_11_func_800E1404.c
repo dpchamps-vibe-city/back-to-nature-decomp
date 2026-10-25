@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_halfword_triplets.h"
 
 s32 ovl_11_func_800E109C(UnkStruct800E109C *arg0);
-void ovl_11_func_800D7338(s16 *arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800CB540(u16 *arg0);
 void ovl_11_func_800D049C(Ovl11DF72CResetView *arg0);
 void ovl_11_func_800D12A0(s16 arg0);
@@ -45,7 +45,7 @@ s32 ovl_11_func_800E1404(UnkStruct800E109C *arg0) {
     if (*(s16 *)((u8 *)arg0 + 0xB6) == -1) {
         if (var_s1 != 0) {
             *(u16 *)((u8 *)arg0 + 0xB4) = 0;
-            ovl_11_func_800D7338(sp10, var_s1, 0, 1);
+            Ovl11SetHalfwordTriplet(sp10, var_s1, 0, 1);
             ovl_11_func_800CB540((u16 *)sp10);
             ovl_11_func_800D049C((Ovl11DF72CResetView *)arg0);
             goto block_19;
