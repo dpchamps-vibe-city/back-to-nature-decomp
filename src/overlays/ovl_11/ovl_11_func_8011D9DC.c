@@ -1,6 +1,6 @@
 #include "common.h"
+#include "integer_power.h"
 
-s32 pow_int(s32, s32);
 /* The original caller supplies two additional, unused zero arguments. */
 s32 ovl_11_func_800E6EAC();
 

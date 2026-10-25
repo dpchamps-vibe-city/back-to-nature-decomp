@@ -5,8 +5,8 @@
 #include "ovl11_vertex_blend.h"
 #include "message_window.h"
 #include "ovl11_choice_messages.h"
+#include "state_memory_init.h"
 
-void func_80021E60(s32 arg0);
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800D6628(void);
 void ovl_11_func_800BFEA4(void);
@@ -58,7 +58,7 @@ void ovl_11_func_80104A90(void) {
     far->field_2547C = base->field_44BA + value;
     memset(&D_800A0368, 0, 0x10);
     base->field_5214 = 0;
-    func_80021E60(1);
+    BindStateDataTables(1);
     ovl_11_func_800BD5A0();
     ovl_11_func_800D6628();
     ovl_11_func_800BFEA4();

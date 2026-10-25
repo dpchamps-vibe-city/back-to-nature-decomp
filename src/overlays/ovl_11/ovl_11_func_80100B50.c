@@ -12,6 +12,7 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "texture_sprite_draw.h"
+#include "integer_power.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
@@ -25,7 +26,6 @@ void SetVal8005E2BC (s32 arg0);
 void ovl_11_func_800F6A24 (u16 arg0);
 void ovl_11_func_800F6C78 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_80100F9C (s32 arg0);
-s32 pow_int (s32 arg0, s32 arg1);
 
 
 void ovl_11_func_80100B50(u8 arg0, u8 arg1) {

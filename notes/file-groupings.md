@@ -4587,6 +4587,14 @@ Members (address order):
 
 ## `ovl_10` debug/status string-table cluster — 0x800B814C–0x800B821C (confidence: low)
 
+Whole-overlay fold check (800B889C through 800BB728, all 22 C members): the helper's
+baseline dry run refuses pooling because `- [0x32C, rodata]` separates the
+members' jump tables. No source/config change was applied. This is a
+mechanical rodata-reconstruction limit, not evidence for a TU boundary
+inside the shared command/editor family. Next useful experiment is to
+reconstruct its original string/table emission together, rather than
+splitting the family merely to get around the pool check.
+
 Candidate same-TU family of memory-card manager (`Obj\gf_mcard.bin`)
 status/debug printers around 0x800B92AC–0x800BA2A0. Evidence is a contiguous
 rodata string table plus address adjacency; same-TU membership is unproven
@@ -4956,6 +4964,24 @@ stubs. `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`
 then passed every integrity gate, including EXE/all overlays, data/placement,
 canonical interfaces, source policy and exception non-growth. Folded eligible
 membership rose 108 → 113; all fourteen modules are valid.
+
+Integer-power utility immediately before this group: **`src/modules/
+integer_power.c`, exe:8001F250–8001F278**, one compiled function `pow_int`.
+Its entire scalar multiplication loop has no calls, data references or state
+ownership. The left neighbor F1E0 consumes camera radius/height/yaw and GTE
+trigonometry, and the right F278 consumes two three-word vectors and a
+fraction. Neither calls the power loop or shares a helper/data protocol
+with it. These are evidence-limited boundaries; a generic mathematical
+subject alone is not enough to join it to either neighbor. Its callers
+instead compute powers of two for variable record/slot counts in the text
+resolver and overlay 11. `integer_power.h` publishes the existing signed
+32-bit ABI and documents the nonpositive-exponent result (1) and unchecked
+overflow precondition. Locals now name base/exponent. The original name and
+identity remain unchanged, with no new linkage or storage. Baseline fold
+checked the function and EXE; no flag or policy exception was needed.
+Interface publication reconciled all declaring EXE/overlay callers without
+changing objects. The string/power batch's full campaign gate passes every
+integrity check and EXE/13-overlay bytes, with no exception growth.
 
 ## gradient-interpolation cluster — 0x8001F278–0x8001FABC (confidence: low)
 
@@ -5555,33 +5581,56 @@ Members (address order):
   and the denominator is >= 2; also called by the projected-clipping driver
   func_8001BFEC
 
-## u16 string library — 0x80017D9C–0x80017F88 (confidence: medium)
+## u16 string library — 0x80017E34–0x80017F88 (confidence: medium)
 
-Library-like family of 0xFFFF-terminated u16 string routines. Earlier members
-were recorded as unreferenced, but 80017F30 has two original calls from
-ovl_11_func_80104EC8, at 801050CC and 80105180. Reachability therefore does
-not support the earlier claim that this entire interval was pulled in unused.
+**Reconstructed `src/modules/u16_string.c`:** the four-entry halfword-string
+family, three compiled functions and the existing dead copy stub (17EA0).
+Membership rests on the common 0xFFFF string representation and paired
+append/copy and two-reference/ordinary comparison implementations. The
+append and copy share the same copy loop; neither comparison touches any
+renderer state. This gapless group has no calls or data ownership linking
+it to either neighbor. Small-data addressing supplies no proof here: none
+of the four has a GP access.
 
-Fingerprints:
-- shared idiom: all members operate on 0xFFFF-terminated u16 buffers;
-- func_80017E34 and func_80017EA0 share a byte-identical copy loop with
-  the same systematic allocation (loop load $v1, compare re-read $v0),
-  produced in both by one user variable shared between the pre-check
-  re-read and the loop store value (multi-block web -> global allocno,
-  conflicts with $v0 -> $v1);
-- address adjacency with no interleaved unrelated code.
+Boundaries are evidence-limited: left 17D9C is a packet-allocation/text-draw
+wrapper over 18B98, not a string routine; right 17F88 is a stateful text
+panel renderer, with E2B8/E2BA, pen coordinates and saved-position state.
+Neither is part of the string copy/compare protocol. Those positive roles
+and the lack of any joining state/helper/table, not adjacency or compiler
+flags, support leaving them outside; the exact historical object cuts
+remain uncertain. A later larger TU reconstruction may absorb this unit
+if new evidence joins it, rather than treating this fold as proof.
 
-Members (address order):
-- func_80017D9C (m) — wrapper, calls 80011F5C/80018B98/80011FD8; matched with the sibling's extern `func_80018B98` declaration and identical call shape
-- func_80017E34 (m) — u16 strcat (append)
-- func_80017EA0 (s) — u16 strcpy (copy); void return
-- func_80017EE4 (m) — u16 strcmp (compare); entry is a `j` over the
-  rotated loop tail (expand_end_loop rotation)
-- func_80017F30 (m, 0x58) — three-buffer comparison: advances when the first
-  element matches either other buffer, returns zero at its FFFF terminator,
-  otherwise compares first versus second. Gapless after 17EE4, with the same
-  u16/sentinel idiom. Two user-authorized raw/carry bindings preserve its
-  required copy; those bindings are not original-TU evidence.
+Append has EXE and overlay callers (1A808 and ovl_11:8011CD2C);
+17F30 has two original calls from ovl_11_func_80104EC8, at 801050CC and
+80105180. The old claim that all these routines were unreachable is
+withdrawn. Copy and ordinary compare remain unused.
+
+Members (address order, original identities):
+- `AppendU16String` (80017E34, m) — returns the new terminator's address,
+  not the destination start. One value local spans the initial copy and loop.
+- `CopyU16String` (80017EA0, s) — void return, existing dead stub carried.
+- `CompareU16String` (80017EE4, m) — lexicographic compare (-1/0/1),
+  retaining the tail increment after the terminator test for entry rotation.
+- `CompareU16StringAgainstPair` (80017F30, m) — accepts either reference's
+  value at each position; on mismatch orders the input against the FIRST
+  reference only. All three pointers advance together. The current source
+  is ordinary C: historical raw/carry bindings are no longer present and
+  are not TU evidence.
+
+`u16_string.h` publishes the three compiled operations with buffer/capacity,
+terminator, return and pair-comparison constraints; the unused copy need
+not be exposed. Parameters/locals describe their roles, while the original
+copy and rotated control shapes are retained. No type, linkage, global or
+storage ownership changed. Names are established at their EXE identities
+and canonicalization carries them through every caller; interfaceAudit
+replaced caller declarations with the public header and preserved objects.
+The baseline checked fold proved all three C members, the carried stub and
+EXE bytes. No override, assembly or pin was added. Full batch campaign
+verification passes all eight integrity gates, EXE/13-overlay bytes including
+associated data/tables, canonical names, published interfaces, source policy
+and exception non-growth. Progress after the string/power batch is 577
+folded functions and 79/79 valid modules (571/76 before this run).
 
 References: notes/research/func_80017E34-shared-web-global-allocno.md
 (apply the shared-variable shape to func_80017EA0 when decompiling it),
@@ -7631,15 +7680,46 @@ Members (address order):
   - ovl_11_func_800F9210 (s) — image/table transfer handler that drives the D_800A0494 row helpers.
   - ovl_11_func_800F9BE4 (m, matched 2026-10-09) — slot reconciler for D_800A0494 rows 0–1, also recorded in that data cluster.
 
-- func_80021DA8 (m) — buffer/address initializer: clears D_8006C838 and
-  D_8007AFF0, calls func_80021E60(0), computes 2048-byte-aligned addresses
-  from D_8001009C - D_80010098, stores results in D_8007AFF0[0..1].
-  Evidence for func_80021E60 neighborhood: address-adjacent (func_80021DA8
-  ends at 0x80021E60 where func_80021E60 begins), direct caller.
-  No shared gp-rel cluster verified yet; TU membership unconfirmed.
-- func_80021E60's pool-carving table neighborhood (19-entry pointer/count
-  parallel arrays over 0x18-byte elements) — func_80021DA8 is a confirmed
-  caller and address predecessor; shared gp-rel globals unverified.
+- **Reconstructed `src/modules/state_memory_init.c`, exe:80021DA8–80021FD0
+  exclusive:** `InitStateMemory` (80021DA8) and `BindStateDataTables`
+  (80021E60). Membership rests on a single clear/bind/layout protocol, not
+  use of the ubiquitous D_8006C838 alone: the first clears the two state
+  buffers then immediately calls the second with zero to restore the five
+  static pointers and 19 pool pointer/count pairs that clearing removed.
+  Main boot and ovl_27's restart call the full initializer; ovl_11's scene
+  setup calls just the binder with 1, preserving pool assignments. The
+  functions are consecutive in original link order. The original-byte GP
+  census finds no small-data accesses in either, so this is helper/state
+  lifecycle evidence, not a claimed GP-based proof.
+
+  Boundaries: left 21DA0 (and the preceding seven tiny empty entries) has no
+  state accesses or calls and no demonstrated role in this protocol; right
+  21FD0 clears only the independent +4488/+448C words, followed by the
+  message-availability accessor and latch clearer. None binds these tables,
+  pool arrays, or reservation addresses, or calls either initializer. These
+  are evidence-limited cuts: there is no positive extension evidence, and
+  no original compiler command or absolute/GP contradiction establishes the
+  exact historical cuts. No flag or mechanical limit determined them.
+
+  `state_memory_init.h` publishes both existing void/s32 interfaces and
+  documents the required scratch/heap layout, clear extents, 2048-byte span
+  rounding, 0x49000 reservation, and preserve-pools switch. No allocation,
+  bounds check or record-data clear is implied. Locals now describe byte
+  rounding/state anchors/records. The pool data is named
+  `gInitialPoolRecordData` at EXE:8004ED04; the new symbol metadata uses
+  its existing 0x124C partial C view, not an inferred 0x1278-byte extent
+  from the sum of the initial pool counts. Those counts total 197 records across all
+  19 pools, not 197 per pool (the old game_types.h comment was corrected).
+  Other table/state meanings remain neutral. External linkage and all
+  declarations/widths/storage are unchanged; no tentative definitions were
+  added. Baseline -O2/-G8 checked fold passed both members and EXE bytes;
+  no override or policy exception was needed. Interface publication replaced
+  all three callers' prototypes with the public header, preserving objects.
+  The full campaign gate passes every integrity check and EXE/13-overlay
+  bytes (data/tables/placement included), canonical identities, published
+  interfaces, source policy, convergence and exception non-growth. The
+  subsequent string/power batch also passes at 577 folded functions and
+  79/79 valid modules. No shared tooling change was needed.
 - ovl_11 0x800C14A0 / 0x800C162C frame-driver pair — low-confidence candidate same-TU membership ([evidence and limits](research/ovl_11_func_800C162C-grouping.md)).
   - ovl_11_func_800C14A0 (s) — mode-gated frame dispatcher and control-flag updater.
   - ovl_11_func_800C162C (m, byte-exact) — staged frame-update driver with scratchpad-stack call batches.

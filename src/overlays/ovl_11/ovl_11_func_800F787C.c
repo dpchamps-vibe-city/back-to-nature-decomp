@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "integer_power.h"
 
 void func_80017A38(s16 arg0, s16 arg1);
-s32 pow_int(s32 arg0, s32 arg1);
 void SetVal8005E2BC(s32 arg0);
 void ovl_11_func_800F8C1C(u32 *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F8B4C(s32 arg0, s32 arg1);

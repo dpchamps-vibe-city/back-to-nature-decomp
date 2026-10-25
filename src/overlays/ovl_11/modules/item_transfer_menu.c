@@ -13,13 +13,13 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "screen_primitives.h"
+#include "integer_power.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
 void func_80017A38(s16 x, s16 y);
 void SetVal8005E2BC(s32 value);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
-s32 pow_int(s32 base, s32 exponent);
 void func_80022580(u32 *ot, s32 style, s32 x, s32 y, s16 width, s16 height);
 void func_800248B0(s32 ot, s16 x, s16 y);
 void ovl_11_func_800BCF28(void);

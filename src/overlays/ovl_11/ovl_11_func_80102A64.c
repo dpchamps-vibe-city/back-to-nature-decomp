@@ -1,6 +1,6 @@
 #include "common.h"
+#include "integer_power.h"
 
-s32 pow_int(s32 arg0, s32 arg1);
 void ovl_11_func_800D666C(s16 arg0);
 
 extern u8 D_80071AC0;

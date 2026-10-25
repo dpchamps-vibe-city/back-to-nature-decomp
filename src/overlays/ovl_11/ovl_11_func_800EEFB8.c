@@ -16,6 +16,7 @@
 #include "random.h"
 #include "sprite_upload.h"
 #include "ovl11_state_field_access.h"
+#include "integer_power.h"
 
 typedef struct {
                char pad0[0x38];
@@ -112,7 +113,6 @@ u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
-s32 pow_int (s32 arg0, s32 arg1);
 void ovl_11_func_80112904 (s16 arg0);
 void ovl_11_func_800EF870 (s16 arg0);
 void ovl_11_func_800D0DBC (M2C_d453384c461b_UnkStruct800D0DBC *arg0);

@@ -2,9 +2,9 @@
 #include "screen_fade.h"
 #include "message_window.h"
 #include "random.h"
+#include "state_memory_init.h"
 
 void ovl_27_func_800B7F2C(void);
-void func_80021DA8(void);
 void ovl_27_func_800BA914(s32 arg0);
 void ovl_27_func_800BAA34(void);
 void ovl_27_func_800BABD4(void);
@@ -23,7 +23,7 @@ void ovl_27_func_800B7FE8(void) {
     *(s32 *)(base + 0xC) = flags & 0xFFFF7FFF;
     if (!(flags & 0x4000)) {
         sel = *(s32 *)(base + 0x18);
-        func_80021DA8();
+        InitStateMemory();
         *(s32 *)(base + 0x18) = sel;
         ovl_27_func_800BA914(Rand(3));
         ovl_27_func_800BAA34();

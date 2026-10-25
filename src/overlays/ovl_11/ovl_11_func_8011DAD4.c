@@ -1,6 +1,6 @@
 #include "common.h"
+#include "integer_power.h"
 
-s32 pow_int(s32, s32);
 s16 ovl_11_func_8011D9DC(s16, s32);
 s32 ovl_11_func_800D6A94(s16);
 void ovl_11_func_800D7338(s16 *, s16, s16, s16);

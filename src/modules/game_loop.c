@@ -53,6 +53,7 @@
 #include "display_mask.h"
 #include "debug_break.h"
 #include "render_packet_pool.h"
+#include "state_memory_init.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -76,7 +77,6 @@ void func_80017A48(u32 arg0);
 void func_80017A70(u32 arg0);
 /* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
    leave the delay slot empty — it takes no arguments. */
-void func_80021DA8(void);
 void func_80021FD0(void);
 
 /* Globals accessed by this function */
@@ -209,7 +209,7 @@ int main(void) {
     ResetActiveRenderContext();
     InitCameraOffsetState();
     InitRenderPacketPools();
-    func_80021DA8();
+    InitStateMemory();
     InitSoundOutputAndCdFiles();
     OpenSoundSequencesAndStart();
     func_80017A48(3);

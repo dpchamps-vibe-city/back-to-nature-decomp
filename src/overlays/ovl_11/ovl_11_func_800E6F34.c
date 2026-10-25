@@ -1,7 +1,6 @@
 #include "common.h"
+#include "integer_power.h"
 
-/* Overlay name for the matched pow_int at 0x8001F250. */
-s32 pow_int(s32 arg0, s32 arg1);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800D7338(s16 *arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800CB540(u16 *arg0);

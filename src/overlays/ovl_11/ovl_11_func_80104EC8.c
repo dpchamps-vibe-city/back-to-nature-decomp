@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_clock_calendar.h"
+#include "u16_string.h"
 
 s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4);
@@ -11,7 +12,6 @@ s32 ovl_11_func_800EF0E8(s16 arg0);
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount);
 s32 ovl_11_func_800CFB20(s32 arg0, s32 arg1);
 s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 func_80017F30(u16 *arg0, u16 *arg1, u16 *arg2);
 
 s32 ovl_11_func_80104EC8(s16 arg0) {
     Ovl11D124Entry record18;
@@ -150,7 +150,7 @@ enough_slots:
         if (var_a0_8 != 10) {
             if (((Ovl11ConditionState *) D_8006C838)->date[2] !=
                 ((Ovl11ConditionState *) D_8006C838)->items[var_a0_8].tile) {
-                return func_80017F30(((Ovl11ConditionState *) D_8006C838)->items[var_a0_8].name,
+                return CompareU16StringAgainstPair(((Ovl11ConditionState *) D_8006C838)->items[var_a0_8].name,
                     (u16 *) ((u8 *) D_80051F26 + *D_80054BC0),
                     (u16 *) ((u8 *) D_80051F26 + 0xE + *D_80054BC0)) != 0;
             }
@@ -169,7 +169,7 @@ enough_slots:
         if (var_a0_9 != 10) {
             if (((Ovl11ConditionState *) D_8006C838)->date[2] !=
                 ((Ovl11ConditionState *) D_8006C838)->items[var_a0_9].tile) {
-                return func_80017F30(((Ovl11ConditionState *) D_8006C838)->items[var_a0_9].name,
+                return CompareU16StringAgainstPair(((Ovl11ConditionState *) D_8006C838)->items[var_a0_9].name,
                     (u16 *) ((u8 *) D_80051F26 + *D_80054BC0),
                     (u16 *) ((u8 *) D_80051F26 + 0xE + *D_80054BC0)) == 0;
             }

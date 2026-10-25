@@ -1,6 +1,6 @@
 #include "common.h"
+#include "integer_power.h"
 
-s32 pow_int(s32 arg0, s32 arg1);
 void func_80024810(s32 arg0, s16 arg1, s16 arg2);
 void func_80024860(s32 arg0, s16 arg1, s16 arg2);
 s8 ovl_11_func_800D583C(s16 arg0);

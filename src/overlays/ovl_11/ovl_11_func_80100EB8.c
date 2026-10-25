@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 pow_int(s32 arg0, s32 arg1);
+#include "integer_power.h"
 
 /* 6-byte record: three s16 fields. Two stride-6 tables live in D_8006C838 at
  * 0x450A (0x40 entries, scanned by the second loop) and 0x5288 (scanned by the

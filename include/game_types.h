@@ -561,7 +561,7 @@ typedef struct PadInputState {
 /* D_8006C838 view for UpdatePadInputRecord: the flag at +0xC (bit 16) enables
  * pad-0 input substitution. The pointer at +0x1C supplies a u16 button mask
  * at +4 and receives a Start report (0x800) at +0; keep the wider object's
- * meaning neutral. func_80021DA8 also writes this pointer. */
+ * meaning neutral. InitStateMemory also writes this pointer. */
 typedef struct {
     /* 0x00 */ s32 field_0;
     /* 0x04 */ u16 field_4;
@@ -583,9 +583,9 @@ typedef struct {
 } D8006C838RecordTableView;
 
 /* One record of the 0x18-byte pools referenced by the pointer array at
- * D_8006C838+0xDD8C (built by func_80021E60 over D_8004ED04; 0xC5 records
- * per pool). func_800BF2F4 scans one pool for a record whose s16 at 0
- * matches a reference halfword and whose s32 at 8 / 0x10 lies inside a
+ * D_8006C838+0xDD8C (built by BindStateDataTables over
+ * gInitialPoolRecordData; 0xC5 records across all 19 initial pools).
+ * func_800BF2F4 scans one pool for a record whose s16 at 0 matches a reference halfword and whose s32 at 8 / 0x10 lies inside a
  * range box; the u16 at 2 is the record's id/return value. */
 typedef struct {
     /* 0x00 */ s16 unk0;

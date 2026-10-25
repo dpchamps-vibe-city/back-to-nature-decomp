@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "integer_power.h"
 
-s32 pow_int(s32, s32);
 s32 ovl_11_func_800CB4E0(void);
 void ovl_11_func_800CBD78(Ovl11C7010Object *);
 void ovl_11_func_800D666C(s16);

@@ -5,6 +5,7 @@
 #include "packet_work.h"
 #include "screen_primitives.h"
 #include "beveled_panel.h"
+#include "u16_string.h"
 
 
 s32 ovl_11_func_8011D438 (u8 *arg0);
@@ -23,7 +24,6 @@ s32 ovl_11_func_8011D934 (StructD548 x);
 void ovl_11_func_8011CD2C (Ovl11D8012D538 s, s16 arg3, s32 arg4, s16 arg5, s16 arg6);
 void ovl_11_func_8011CBE8 (void);
 void ovl_11_func_8011CC08 (s32 arg0);
-u16 *func_80017E34 (u16 *arg0, u16 *arg1);
 void func_80024810 (s32 arg0, s16 arg1, s16 arg2);
 void func_80024860 (s32 arg0, s16 arg1, s16 arg2);
 void func_8001ABF0 (u16 *dst, u16 *src);

@@ -1,7 +1,5 @@
 #include "common.h"
-
-/* Forward declaration for game-specific integer power function */
-s32 pow_int(s32 base, s32 exp);
+#include "integer_power.h"
 
 /* Scans three data arrays for an entry whose first s16 field is in [0x15, 0x1A).
  * Returns the s16 at offset 4 of the first matching entry, or 0 if none found.

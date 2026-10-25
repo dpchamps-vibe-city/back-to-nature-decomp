@@ -21,6 +21,7 @@
 #include "sprite_render.h"
 #include "ovl11_state_field_access.h"
 #include "ovl11_interaction_volume_query.h"
+#include "integer_power.h"
 
 typedef struct {
                s16 field_0;
@@ -228,7 +229,6 @@ s32 ovl_11_func_800E9AFC (s16 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800E99EC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6AB0 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800E8F78 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 pow_int (s32 arg0, s32 arg1);
 s32 Ovl11ClampStateField (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_801136D0 (s32 *arg0, u16 *arg1, u16 *arg2);
 void ovl_11_func_8011F52C (void);
