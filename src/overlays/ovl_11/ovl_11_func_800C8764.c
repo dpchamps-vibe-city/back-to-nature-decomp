@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 
@@ -20,6 +20,6 @@ void ovl_11_func_800C8764(Recon_ovl_11_func_800C8334_A0View *arg0) {
     }
     if (var_a2 != 0) {
         ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *)arg0, 0x61, arg0->unk38 + 0x17, -2);
-        func_8001FABC(9);
+        PlaySoundEffect(9);
     }
 }

@@ -3,13 +3,14 @@
 #include "screen_fade.h"
 #include "sprite_rotation.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "projected_primitives.h"
 
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
 void ovl_11_func_800C044C(s16 arg0);
 void ovl_11_func_800BFE3C(void);
 void ovl_11_func_800CBEF8(void);
-void func_8001BFA8(void *arg0, void *arg1);
 void ovl_11_func_800DB00C(Ovl11SceneCoordinates *arg0, Ovl11SceneCoordinates *arg1);
 void func_8001E340(Ovl11SceneGrid **arg0);
 void ovl_11_func_800DB0E4(void);
@@ -18,7 +19,6 @@ void ovl_11_func_800DC990(void);
 void ovl_11_func_800DCA60(void);
 void ovl_11_func_800DB2AC(void *arg0);
 void ovl_11_func_800BC868(void);
-s32 func_80020818(void);
 void ovl_11_func_800BC9AC(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
@@ -37,7 +37,7 @@ void ovl_11_func_80104CB8(void) {
     ovl_11_func_800CBEF8();
     ((Ovl11AreaInitView *)D_8006C838)->field_4488 = 2;
     ((Ovl11FarInitView *)&D_8007AFF0)->field_2548C = 0;
-    func_8001BFA8(D_80128818, (u8 *)D_8007AFF0 + 0x2000);
+    InitProjectedPrimitiveSource(D_80128818, (u8 *)D_8007AFF0 + 0x2000);
     ovl_11_func_800DB00C(&D_800A00C4, &D_800A00CC);
     func_8001E340((Ovl11SceneGrid **)D_80128818);
     ovl_11_func_800DB0E4();
@@ -50,7 +50,7 @@ void ovl_11_func_80104CB8(void) {
     while (IsSoundTransferComplete() == 0) {
         UpdateMasterVolumeAndSoundTransfer();
     }
-    func_80020818();
+    OpenSoundSequencesAndStart();
     ovl_11_func_800BC9AC();
     if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
         ovl_11_func_800F0FB0(8);

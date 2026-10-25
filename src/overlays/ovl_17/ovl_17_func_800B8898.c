@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "pad_actuator_sequences.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 /* 8001FAD0 forwards the s32 voice result returned by func_800212A8. */
-s32 func_8001FABC(s16 arg0);
-s32 func_800207E4(s16 arg0, s16 arg1, s16 arg2);
 void ovl_17_func_800B91B8(void);
 void ovl_17_func_800B92B0(void);
 void ovl_17_func_800B9324(void);
@@ -41,7 +41,7 @@ void ovl_17_func_800B8898(void) {
         temp_v0 = (*(s32 *) (var_s0 + 0)) != 1;
         (*(s32 *) (var_s0 + 0)) = temp_v0;
         if (temp_v0 == 1) {
-            (*(s16 *) (var_s0 + 0x2C8)) = func_8001FABC(0x36);
+            (*(s16 *) (var_s0 + 0x2C8)) = PlaySoundEffect(0x36);
             goto block_3;
         }
         goto block_6;
@@ -69,7 +69,7 @@ block_6:
         work = D_800BD848;
         (*(s32 *) (work + 0xD0)) = 1;
         RequestPadActuatorSequence(0, 0);
-        (*(s16 *) (work + 0x2C8)) = func_8001FABC(0x3D);
+        (*(s16 *) (work + 0x2C8)) = PlaySoundEffect(0x3D);
     }
     var_s0 = D_800BD848;
     if (*(u32 *) (var_s0 + 0x1C) == ((*(u32 *) (var_s0 + 0x1C) / (u32) (*(s16 *) (var_s0 + 6))) * (*(s16 *) (var_s0 + 6)))) {
@@ -99,7 +99,7 @@ block_6:
     threshold = D_800BD848;
     if ((((*(s16 *) (threshold + 0x2D0)) << 0x17) / 100) < (*(s32 *) (threshold + 0x24))) {
         if ((*(s16 *) (threshold + 0x2CC)) == -1) {
-            (*(s16 *) (threshold + 0x2CA)) = func_8001FABC(0x43);
+            (*(s16 *) (threshold + 0x2CA)) = PlaySoundEffect(0x43);
             (*(s16 *) (threshold + 0x2CC)) = 0;
         }
     }
@@ -114,7 +114,7 @@ block_6:
         if (var_a1_2 < 0x21) {
             var_a1_2 = 0x21;
         }
-        func_800207E4(*(s16 *) (var_a0_2 + 0x2CA), var_a1_2, var_a1_2);
+        SetSoundVoiceVolume(*(s16 *) (var_a0_2 + 0x2CA), var_a1_2, var_a1_2);
     }
     if (ovl_17_func_800B986C() == 1) {
         u8 *state;

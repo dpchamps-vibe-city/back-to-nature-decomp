@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "cd_audio.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_800E0C24(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
@@ -50,7 +50,7 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
             }
             if (*(u16 *) D_80128C4C_dispatch == 0x109) {
                 ovl_11_func_800E2824(D_80128C4C_dispatch, 4);
-                func_8001FABC(24);
+                PlaySoundEffect(24);
             }
         } else if (arg1 == 4) {
             ovl_11_func_800E2824(D_80128C4C_dispatch, 9);
@@ -60,7 +60,7 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
     if (D_80128C54 & 0x100) {
         if (arg1 == 0) {
             ovl_11_func_80109188(D_80128C4C_dispatch, 3);
-            func_8001FABC(26);
+            PlaySoundEffect(26);
         }
         return 1;
     }

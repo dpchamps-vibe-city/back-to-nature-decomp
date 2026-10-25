@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 extern u8 D_80051FA8[];
 extern u8 D_80053114[];
@@ -6,7 +7,6 @@ extern s8 D_80137584;
 extern s16 D_8013759C;
 
 void func_8001AC10(void *arg0, s32 arg1, s32 arg2);
-s32 func_8001FABC(s16 arg0);
 s8 ovl_15_func_801370B4(void);
 
 void ovl_15_func_8012F6C0(void) {
@@ -21,7 +21,7 @@ void ovl_15_func_8012F6C0(void) {
         temp_a1 = gActiveRenderContext->field_D8;
         func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80053114);
         if (*(s32 *)((u8 *)gPad0Input + 8) & 0x40) {
-            func_8001FABC(0);
+            PlaySoundEffect(0);
             D_8013759C = 1;
         }
         break;

@@ -6,6 +6,8 @@
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 short SsSeqOpen (unsigned long *, short);
@@ -23,15 +25,8 @@ s32 ovl_27_func_800BA578 (void);
 void ovl_27_func_800BA80C (void);
 s32 ovl_27_func_800BA814 (void);
 void ovl_27_func_800BA4C4 (void);
-s32 func_80020818 (void);
-s32 func_8001FB30 (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-s32 func_800201C4 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
-s32 func_80020E38 (void);
-s32 func_80020E58 (void);
 void StepMasterVolumeRamp (void);
 void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
-void func_8001FBE4 (s32 arg0, s32 arg1);
-void func_8001FBF0(s16 arg0, s16 arg1);
 void func_8001719C (u8 *arg0);
 
 void ovl_27_func_800B823C(void) {
@@ -115,8 +110,8 @@ void ovl_27_func_800B823C(void) {
         temp_v0_2 = IsScreenFadeComplete();
         if (temp_v0_2 == 1) {
             D_800C4A18 = 0;
-            func_80020818();
-            func_8001FB30(0, 0, 0x1A, 0x7F);
+            OpenSoundSequencesAndStart();
+            PlaySoundSequenceWithReverb(0, 0, 0x1A, 0x7F);
             gRenderContexts->unk19 = 0;
             gRenderContexts->unk1A = 0;
             gRenderContexts->unk1B = 0;

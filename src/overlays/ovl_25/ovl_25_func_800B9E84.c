@@ -2,10 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "sound_commands.h"
 
 void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_25_func_800BA5BC(SpriteSourceData *arg0, u16 *arg1);
-s32 func_8001FABC(s16 arg0);
 
 void ovl_25_func_800B9E84(void) {
     SVECTOR coords;
@@ -95,7 +95,7 @@ void ovl_25_func_800B9E84(void) {
         if (D_800BCD48[1] >= 0) {
             D_800BCD21 = 0;
             D_800BCD24 = 1;
-            func_8001FABC(0x4D);
+            PlaySoundEffect(0x4D);
             func_80015840((ObjectState *) D_800C021C, 0x17);
         }
         break;

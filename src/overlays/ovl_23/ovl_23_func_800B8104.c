@@ -2,16 +2,13 @@
 #include "screen_fade.h"
 #include "scene_selection.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 void SsSeqClose(short);
 void SsSeqSetVol(short, short, short);
 void SsVabClose(short);
-void func_8001FAE8(s32 arg0);
-s32 func_8001FBBC(s16 arg0);
-s32 func_80020B80(s32 arg0, s32 arg1);
-s32 func_80021484(s32 arg0);
-s32 func_80020414(s32 arg0, s32 arg1);
 
 void ovl_23_func_800B8104(void) {
     s32 *base;
@@ -23,11 +20,11 @@ void ovl_23_func_800B8104(void) {
     }
     if (var_s0 == 2) {
         if (D_800BFC90 != -1) {
-            func_8001FAE8((s32) D_800BFC90);
+            StopSoundEffectVoice((s32) D_800BFC90);
         }
-        func_8001FBBC(0);
-        func_80020B80(2, 0);
-        func_80020B80(1, 0);
+        StopSoundSequence(0);
+        RewindSoundLoadSlots(2, 0);
+        RewindSoundLoadSlots(1, 0);
         base = (s32 *)&D_8006C838;
         base[0x448C >> 2] = 0xFF;
         RequestSceneChange(6);

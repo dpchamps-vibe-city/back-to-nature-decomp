@@ -9,6 +9,7 @@
 #include "cd_loader.h"
 #include "pad_actuator_sequences.h"
 #include "card_deal.h"
+#include "sound_commands.h"
 
 typedef struct {
                char pad0[0x38];
@@ -142,7 +143,6 @@ s32 ovl_11_func_800F1C48 (s32 arg0);
 s32 ovl_11_func_800F1CC4 (s32 arg0);
 void ovl_11_func_800F27B0 (s16 kind, s16 value);
 void ovl_11_func_801037EC (void);
-s32 func_8001FABC (s16 arg0);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800EC354 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800C1224 (s16 arg0, s16 arg1);

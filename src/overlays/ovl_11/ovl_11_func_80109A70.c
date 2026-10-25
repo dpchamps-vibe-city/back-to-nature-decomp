@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -26,7 +27,6 @@ typedef struct {
 } D8006C838_52C8View;
 
 u32 Rand(s32 arg0);
-s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800C1224(s16 arg0, s16 arg1);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80109188(Struct_80109A70 *arg0, s32 arg1);
@@ -60,7 +60,7 @@ s32 ovl_11_func_80109A70(Struct_80109A70 *arg0) {
     if ((s32)Rand(0xC8) < arg0->unk16 + 0x32) {
         far_base2 = (char *) &D_8007AFF0;
         if (*(s16 *) (far_base2 + 0x25476) == arg0->unk30) {
-            func_8001FABC(0x19);
+            PlaySoundEffect(0x19);
         }
         base52 = (D8006C838_52C8View *) D_8006C838;
         ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, *(Ovl11PaddedVec3 *) &base52->field_52C8);

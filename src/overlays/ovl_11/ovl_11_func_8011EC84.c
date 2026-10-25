@@ -1,14 +1,13 @@
 #include "common.h"
 #include "game_types.h"
-
-s32 func_8001FABC(s16 arg0);
+#include "sound_commands.h"
 
 void ovl_11_func_8011E574(void);
 
 void ovl_11_func_8011EE98(s16 arg0);
 
 void ovl_11_func_8011EC84(void) {
-    func_8001FABC(3);
+    PlaySoundEffect(3);
     ovl_11_func_8011E574();
     D_80128420 = 6;
     ovl_11_func_8011EE98(D_80070CF2);

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 extern s32 D_801273DC;
 extern s8 D_801273E4;
@@ -8,7 +9,6 @@ void ovl_11_func_800FFDCC(void);
 void ovl_11_func_800F69D0(void);
 void ovl_11_func_80100128(void);
 s32 ovl_11_func_800F77A8(s16 arg0);
-s32 func_8001FABC(s16 arg0);
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
@@ -20,7 +20,7 @@ void ovl_11_func_800FFE64(void) {
     D_801273E4 = 1;
     D_801273E5 = 0;
     D_801273DC = (s32)ovl_11_func_80100128;
-    func_8001FABC(3);
+    PlaySoundEffect(3);
     ovl_11_func_800F77A8(-1);
     SetVal8005E334(0);
     SetVal8005E2BC(0);

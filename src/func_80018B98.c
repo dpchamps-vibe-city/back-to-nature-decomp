@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 /* TU-owned GP globals (tentative definitions -> .comm, so cc1 emits the
  * target's %gp_rel accesses). Types match include/globals.h where present. */
@@ -26,7 +27,6 @@ u16 D_8005E498;
 
 /* Game callees. */
 s32 func_80012CB4(s32 arg0, s32 *arg1, s32 arg2);
-s32 func_8001FABC(s16 arg0);
 s16 GetPairedTpage(s32 tpage);
 void func_80019FC4(s16 arg0);
 void *func_80019070(s32 *ordering_table, u8 *packet, u32 glyph, s32 x,
@@ -57,7 +57,7 @@ u8 *func_80018B98(s32 *arg0, u8 *arg1, u16 *arg2, s16 arg3, s16 arg4,
             if (D_8005E446 == 0) {
                 if (func_80012CB4(D_8005E44C, &D_8005E448, 1) == arg6) {
                     if (D_8005E48C != 0) {
-                        func_8001FABC(4);
+                        PlaySoundEffect(4);
                         D_8005E48C = 0;
                     } else {
                         D_8005E48C = arg6;

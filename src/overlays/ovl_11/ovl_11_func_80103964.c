@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 void ovl_11_func_80103EB8(void);
 void ovl_11_func_80103F8C(void);
@@ -12,7 +13,6 @@ s32 func_8002261C(s32 arg0, s32 arg1);
 s32 GetVal8005E5B4(void);
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
-s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_80103964(void) {
     s32 result;
@@ -60,7 +60,7 @@ void ovl_11_func_80103964(void) {
     } else if (D_80127428 == 5) {
         if (GetVal8005E5B4() == 2) {
             ovl_11_func_800BCF28();
-            func_8001FABC(3);
+            PlaySoundEffect(3);
             D_80127428 = 0;
         }
         return;

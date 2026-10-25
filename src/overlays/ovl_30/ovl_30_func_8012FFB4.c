@@ -5,9 +5,9 @@
 #include "psyq/libgpu.h"
 #include "screen_fade.h"
 #include "pad_actuator_sequences.h"
+#include "sound_commands.h"
 
 u32 Rand(s32);
-s32 func_8001FABC(s16);
 void func_8001AF70(u16, u16);
 void ovl_30_func_80133454(Ovl30ValueMenuEntry *, s32);
 u16 *ovl_11_func_800CE744(s32, s32);
@@ -43,7 +43,7 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             arg0 = D_80134014;
             KanjiFntPrint(D_8012E4AC, D_80134B10 < 0 ? D_8012E4C4 : D_8012E4C8);
             if (D_80134B10 > 0) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
             }
         }
         switch (D_80134B10) {

@@ -2,15 +2,15 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 extern s16 D_800BFE44[];
 
 void ovl_25_func_800B9B00 (s16 *arg0, s16 arg1, s16 arg2);
-s32 func_8001FABC (s16 arg0);
 void ovl_25_func_800BB970 (s16 arg0);
 void ovl_25_func_800BB9D0 (s16 arg0);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 
 void ovl_25_func_800B9208(void) {
     char *base;
@@ -29,7 +29,7 @@ void ovl_25_func_800B9208(void) {
                 ovl_25_func_800B9B00((s16 *) ((u8 *) &D_800BFE44 + 0x10 + var_s2 * 0x78), 8, 0x1E);
                 if (*(s32 *) ((u8 *) &D_800BFE44 + 8) == 0) {
                     *(s32 *) ((u8 *) &D_800BFE44 + 8) = 1;
-                    *(s16 *) ((u8 *) &D_800BFE44 + 0x4C8) = func_8001FABC(0x39);
+                    *(s16 *) ((u8 *) &D_800BFE44 + 0x4C8) = PlaySoundEffect(0x39);
                     ovl_25_func_800B9B00((s16 *) ((u8 *) &D_800BFE44 + 0x358), 0xC, 0x1E);
                     if (var_s2 == 0) {
                         *(s32 *) (base + 0x6638) = 1;

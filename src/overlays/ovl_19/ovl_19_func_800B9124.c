@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 GetVal8005E5B4(void);
 void SetVal8005E2BC(s32 arg0);
@@ -18,7 +18,7 @@ void ovl_19_func_800B9124(void) {
     n = D_800BD078 + 1;
     D_800BD078 = n;
     if (n % 30 == 0) {
-        D_800BF4C0[0x101] = func_8001FABC(0x3A);
+        D_800BF4C0[0x101] = PlaySoundEffect(0x3A);
     }
     if (D_800BF4C0[7] == 0) {
         SetVal8005E2BC(0);
@@ -32,8 +32,8 @@ void ovl_19_func_800B9124(void) {
         if (state == 5) {
             ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50], 2, 0x1E);
             ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)&D_800BF4C0[8], 4, 3, 0x1E);
-            D_800BF4C0[0x101] = func_8001FABC(0x3B);
-            D_800BF4C0[0x101] = func_8001FABC(0x44);
+            D_800BF4C0[0x101] = PlaySoundEffect(0x3B);
+            D_800BF4C0[0x101] = PlaySoundEffect(0x44);
             func_80022738();
             D_800BD078 = 0;
             D_800BF4C0[7] = 0;

@@ -45,7 +45,7 @@ segments:
       - [0x940, rodata]
       - [0x944, .rodata, func_8001A8D0]
       - [0xA1C, rodata]
-      - [0xA24, .rodata, func_80020E58]
+      - [0xA24, .rodata, modules/sound_driver]
       - [0xB18, rodata]
       - [0xB78, .rodata, func_80022B98]
       - [0xBB0, o, ../lib/libmath/sin00, .rdata] # lib/libmath/sin00.o
@@ -214,19 +214,7 @@ segments:
       - [0xB7E0, c, modules/aux_sprite_display]
       - [0xBA58, c, modules/pad_actuator_sequences]
       - [0xBD30, c, modules/gte_scene_state]
-      - [0xC7A8, c, func_8001BFA8]       # 0x8001BFA8 func_8001BFA8
-      - [0xC7E0, c, ClearPairS32]         # 0x8001BFE0 ClearPairS32
-      - [0xC7EC, c, func_8001BFEC]       # 0x8001BFEC func_8001BFEC
-      - [0xC8D4, c, func_8001C0D4]       # 0x8001C0D4 func_8001C0D4
-      - [0xC9C0, c, func_8001C1C0]       # 0x8001C1C0 func_8001C1C0
-      - [0xCB7C, c, func_8001C37C]       # 0x8001C37C func_8001C37C
-      - [0xDA1C, c, HasTriangleVertexXInBounds]       # 0x8001D21C HasTriangleVertexXInBounds
-      - [0xDAD8, c, func_8001D2D8]       # 0x8001D2D8 func_8001D2D8
-      - [0xDB48, c, func_8001D348]       # 0x8001D348 func_8001D348
-      - [0xDE48, c, func_8001D648]       # 0x8001D648 func_8001D648
-      - [0xDE78, c, func_8001D678]       # 0x8001D678 func_8001D678
-      - [0xDEAC, c, ClearVal8005E2D4]       # 0x8001D6AC ClearVal8005E2D4
-      - [0xDEB8, c, func_8001D6B8]       # 0x8001D6B8 func_8001D6B8
+      - [0xC7A8, c, modules/projected_primitives]
       - [0xE06C, c, func_8001D86C]       # 0x8001D86C func_8001D86C
       - [0xE0B8, c, func_8001D8B8]       # 0x8001D8B8 func_8001D8B8
       - [0xE3F0, c, func_8001DBF0]       # 0x8001DBF0 func_8001DBF0
@@ -270,64 +258,9 @@ segments:
       - [0x1020C, c, func_8001FA0C]       # 0x8001FA0C func_8001FA0C
       - [0x10298, c, func_8001FA98]       # 0x8001FA98 func_8001FA98
       - [0x102B4, c, func_8001FAB4]       # 0x8001FAB4 func_8001FAB4
-      - [0x102BC, c, func_8001FABC]       # 0x8001FABC func_8001FABC
-      - [0x102E8, c, func_8001FAE8]       # 0x8001FAE8 func_8001FAE8
-      - [0x10308, c, func_8001FB08]       # 0x8001FB08 func_8001FB08
-      - [0x10310, c, func_8001FB10]       # 0x8001FB10 func_8001FB10
-      - [0x10330, c, func_8001FB30]       # 0x8001FB30 func_8001FB30
-      - [0x103BC, c, func_8001FBBC]       # 0x8001FBBC func_8001FBBC
-      - [0x103E4, c, func_8001FBE4]       # 0x8001FBE4 func_8001FBE4
-      - [0x103F0, c, func_8001FBF0]       # 0x8001FBF0 func_8001FBF0
-      - [0x104DC, c, func_8001FCDC]       # 0x8001FCDC func_8001FCDC
+      - [0x102BC, c, modules/sound_commands]
       - [0x104E4, c, modules/master_volume]
-      - [0x1067C, c, func_8001FE7C]       # 0x8001FE7C func_8001FE7C
-      - [0x106A4, c, func_8001FEA4]       # 0x8001FEA4 func_8001FEA4
-      - [0x10770, c, func_8001FF70]       # 0x8001FF70 func_8001FF70
-      - [0x10798, c, func_8001FF98]       # 0x8001FF98 func_8001FF98
-      - [0x108E4, c, func_800200E4]       # 0x800200E4 func_800200E4
-      - [0x10948, c, func_80020148]       # 0x80020148 func_80020148
-      - [0x10974, c, func_80020174]       # 0x80020174 func_80020174
-      - [0x109C4, c, func_800201C4]       # 0x800201C4 func_800201C4
-      - [0x10A9C, c, func_8002029C]       # 0x8002029C func_8002029C
-      - [0x10AF8, c, func_800202F8]       # 0x800202F8 func_800202F8
-      - [0x10B9C, c, func_8002039C]       # 0x8002039C func_8002039C
-      - [0x10C0C, c, func_8002040C]       # 0x8002040C func_8002040C
-      - [0x10C14, c, func_80020414]       # 0x80020414 func_80020414
-      - [0x10C7C, c, func_8002047C]       # 0x8002047C func_8002047C
-      - [0x10CE0, c, func_800204E0]       # 0x800204E0 func_800204E0
-      - [0x10D40, c, func_80020540]       # 0x80020540 func_80020540
-      - [0x10D70, c, func_80020570]       # 0x80020570 func_80020570
-      - [0x10E6C, c, func_8002066C]       # 0x8002066C func_8002066C
-      - [0x10F68, c, func_80020768]       # 0x80020768 func_80020768
-      - [0x10F90, c, func_80020790]       # 0x80020790 func_80020790
-      - [0x10FDC, c, func_800207DC]       # 0x800207DC func_800207DC
-      - [0x10FE4, c, func_800207E4]       # 0x800207E4 func_800207E4
-      - [0x11018, c, func_80020818]       # 0x80020818 func_80020818
-      - [0x11100, c, func_80020900]       # 0x80020900 func_80020900
-      - [0x1113C, c, func_8002093C]       # 0x8002093C func_8002093C
-      - [0x11164, c, func_80020964]       # 0x80020964 func_80020964
-      - [0x1118C, c, func_8002098C]       # 0x8002098C func_8002098C
-      - [0x111B0, c, func_800209B0]       # 0x800209B0 func_800209B0
-      - [0x111D4, c, func_800209D4]       # 0x800209D4 func_800209D4
-      - [0x111F4, c, func_800209F4]       # 0x800209F4 func_800209F4
-      - [0x11214, c, func_80020A14]       # 0x80020A14 func_80020A14
-      - [0x11240, c, func_80020A40]       # 0x80020A40 func_80020A40
-      - [0x11270, c, GetVal8005E55C]       # 0x80020A70 GetVal8005E55C
-      - [0x1127C, c, GetVal8005E544]       # 0x80020A7C GetVal8005E544
-      - [0x11288, c, GetVal8005E548]       # 0x80020A88 GetVal8005E548
-      - [0x11294, c, func_80020A94]       # 0x80020A94 func_80020A94
-      - [0x11380, c, func_80020B80]       # 0x80020B80 func_80020B80
-      - [0x11638, c, func_80020E38]       # 0x80020E38 func_80020E38
-      - [0x11658, c, func_80020E58]       # 0x80020E58 func_80020E58
-      - [0x11AA8, c, func_800212A8]       # 0x800212A8 func_800212A8
-      - [0x11C84, c, func_80021484]       # 0x80021484 func_80021484
-      - [0x11CFC, c, func_800214FC]       # 0x800214FC func_800214FC
-      - [0x11DEC, c, func_800215EC]       # 0x800215EC func_800215EC
-      - [0x11E04, c, func_80021604]       # 0x80021604 func_80021604
-      - [0x11E68, c, func_80021668]       # 0x80021668 func_80021668
-      - [0x11FB0, c, func_800217B0]       # 0x800217B0 func_800217B0
-      - [0x12020, c, func_80021820]       # 0x80021820 func_80021820
-      - [0x120BC, c, func_800218BC]       # 0x800218BC func_800218BC
+      - [0x1067C, c, modules/sound_driver]
       - [0x120C4, c, modules/cd_audio]
       - [0x12564, c, func_80021D64]       # 0x80021D64 func_80021D64
       - [0x12570, c, func_80021D70]       # 0x80021D70 func_80021D70
@@ -817,10 +750,11 @@ segments:
       - [0x4E4C4, o, ../lib/libgpu/sys, .data] # lib/libgpu/sys.o
       - [0x4E664, o, ../lib/libgpu/kt01, .data] # lib/libgpu/kt01.o
       - [0x4E784, o, ../lib/libgpu/kt02, .data] # lib/libgpu/kt02.o
-      - [0x4E7D4, sdata]
+      - [0x4E7D4, o, ../lib/libmcrd/init, .data] # lib/libmcrd/init.o
+      - [0x4E7E4, o, ../lib/libcard/init, .data] # lib/libcard/init.o
       - [0x4E7F4, o, ../lib/libmcrd/libmcrd, .data] # lib/libmcrd/libmcrd.o
       - [0x4E814, o, ../lib/libmcrd/userfunc, .data] # lib/libmcrd/userfunc.o
-      - [0x4E824, sdata]
+      - [0x4E824, data]
       - [0x4E8B4, o, ../lib/libc/sprintf, .data] # lib/libc/sprintf.o
       - [0x4E8C4, o, ../lib/libapi/counter, .data] # lib/libapi/counter.o
       - [0x4E8E4, o, ../lib/libapi/pad, .data] # lib/libapi/pad.o
@@ -833,5 +767,6 @@ segments:
       - [0x4E9A4, o, ../lib/libpad/pdmaiini, .data] # lib/libpad/pdmaiini.o
       - [0x4E9B4, o, ../lib/libpad/pddirres, .data] # lib/libpad/pddirres.o
       - [0x4E9C4, o, ../lib/libpad/pdresres, .data] # lib/libpad/pdresres.o
-      - [0x4EA74, sdata]
+      - [0x4EA74, data]
+      - [0x4F000, sdata]
   - [0x4F000]  # End of file (0x800 header + 0x4E800 payload)

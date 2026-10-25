@@ -4,6 +4,7 @@
 #include "gte_scene_state.h"
 #include "aux_sprite_display.h"
 #include "master_volume.h"
+#include "sound_driver.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
@@ -13,7 +14,6 @@ void func_8001E160(void);
 void ovl_11_func_800BCD28(void);
 void ovl_11_func_800BC868(void);
 /* Resident sprite-display disable at exe:8001B100. */
-s32 func_80020818(void);
 void ovl_11_func_800CD0C0(s32 *arg0);
 s32 func_8001AF44(u32 arg0);
 void ovl_11_func_800CCC5C(void);
@@ -91,7 +91,7 @@ void ovl_11_func_800BC3E0(void) {
     case 15:
         DisableAuxSpriteDisplay();
         if (D_801217A4 && !(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x4000)) {
-            func_80020818();
+            OpenSoundSequencesAndStart();
             BeginMasterVolumeFadeIn(10);
         }
         ((Ovl11AreaInitView *)D_8006C838)->field_4450 &= ~0x4000;

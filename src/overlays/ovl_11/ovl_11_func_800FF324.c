@@ -1,12 +1,12 @@
 #include "common.h"
 #include "pad_actuator_gate.h"
 #include "pad_actuator_sequences.h"
+#include "sound_commands.h"
 
 void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 s32 func_800226B0(void);
-s32 func_8001FABC(s16);
 void func_80022738(void);
 void func_800248B0(s32, s16, s16);
 void func_80017D9C(s32 *, u16 *, s16, s16, s32);
@@ -28,7 +28,7 @@ void ovl_11_func_800FF324(void) {
                 D_801273BA = 1;
             }
             D_801273BC += (((u32 *)gPad0Input)[0] & 0x4000) ? 1 : 3;
-            func_8001FABC(5);
+            PlaySoundEffect(5);
         }
         D_801273BC %= 4;
         remainder = 2;
@@ -40,14 +40,14 @@ void ovl_11_func_800FF324(void) {
         if (buttons & 0xA000) {
             s16 *selection = &D_801273BA;
             *selection++ = D_801273BA + ((buttons & 0x2000) ? 1 : count - 1);
-            func_8001FABC(5);
+            PlaySoundEffect(5);
         }
         remainder = D_801273BA % count;
         buttons = ((u32 *)gPad0Input)[2];
         D_801273BA = remainder;
         if (buttons & 0x20) {
             func_80022738();
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             D_801273B0 = 1;
         } else if (buttons & 0x40) {
             switch (D_801273BC) {
@@ -70,9 +70,9 @@ void ovl_11_func_800FF324(void) {
                 D_8012CEE8_options[3] = D_801273BA != 1;
                 break;
             }
-            func_8001FABC(0);
+            PlaySoundEffect(0);
         } else if (buttons & 0x10) {
-            func_8001FABC(0);
+            PlaySoundEffect(0);
             if (D_801273B0 == 0x20) {
                 func_80022738();
                 D_801273B0 = 0x21;

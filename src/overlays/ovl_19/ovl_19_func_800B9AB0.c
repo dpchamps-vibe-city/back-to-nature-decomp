@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 /* The overlay's symbol for Rand, whose matched definition returns u32. */
 u32 Rand(s32 arg0);
-s32 func_8001FABC(s16 arg0);
 s32 ovl_19_func_800BA564(s16 *arg0, s16 *arg1);
 s32 ovl_19_func_800BA5B4(s16 *arg0, s16 *arg1);
 s32 ovl_19_func_800BA65C(Ovl19Func800BAC40Arg *arg0);
@@ -47,7 +47,7 @@ void ovl_19_func_800B9AB0(s16 *arg0) {
     if (arg0[3] == (arg0[3] / 2) * 2) {
         if (ovl_19_func_800BA5B4(arg0, other) == 0 && ovl_19_func_800BA564(arg0, other) < 201) {
             if (arg0[4] >= 240 && Rand(128) >= 111U) {
-                D_800BF4C0[0x101] = func_8001FABC(0x3B);
+                D_800BF4C0[0x101] = PlaySoundEffect(0x3B);
                 ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)arg0, 4, arg0[2], 30);
             } else {
                 ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)arg0, 2, arg0[2], arg0[3]);

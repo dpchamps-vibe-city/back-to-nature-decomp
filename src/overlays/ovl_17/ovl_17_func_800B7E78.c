@@ -1,13 +1,13 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 void ovl_17_func_800B9FA8(void);
 void ovl_17_func_800BA21C(void);
 void ovl_17_func_800BA2C8(void);
 void ovl_17_func_800BA504(void);
-s32 func_80020818(void);
-s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_17_func_800BA54C(void);
 void func_800226F0(void);
 
@@ -32,8 +32,8 @@ void ovl_17_func_800B7E78(void) {
     case 4:
         if (IsSoundTransferComplete() != 0) {
             D_800BB524 = 5;
-            func_80020818();
-            func_8001FB30(0, 0, 0x15, 0x7F);
+            OpenSoundSequencesAndStart();
+            PlaySoundSequenceWithReverb(0, 0, 0x15, 0x7F);
         }
         break;
     }

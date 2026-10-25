@@ -1162,23 +1162,24 @@ typedef struct {
 extern Ovl11FlatLight _D_80128DB8[3] __asm__("D_80128DB8");
 #define D_80128DB8 (_D_80128DB8)
 
-/* D_8006C7B8 - absolute-addressed struct. func_800215EC writes a Vec3 at offsets 0/4/8.
- * func_80021604 reads offset 0 as an index and writes offsets 0xC–0x1C. */
+/* exe:8006C7B8. The bank-body transfer uses fixed-size chunks. lastChunk
+ * is an inclusive quotient bound, so even an exact multiple gets a final
+ * iteration; keep that behavior rather than rounding the chunk count up. */
 typedef struct {
-    s32 unk0;       /* 0x00 - Vec3.x / table index */
-    s32 unk4;       /* 0x04 - Vec3.y */
-    s32 unk8;       /* 0x08 - Vec3.z */
-    s32 unkC;       /* 0x0C */
-    s32 unk10;      /* 0x10 */
-    s32 unk14;      /* 0x14 */
-    s32 unk18;      /* 0x18 */
-    s32 unk1C;      /* 0x1C */
-    s32 unk20;      /* 0x20 */
-    s32 unk24;      /* 0x24 */
-    s32 unk28;      /* 0x28 */
-} struct_8006C7B8;
-extern struct_8006C7B8 _D_8006C7B8[1] __asm__("D_8006C7B8");
-#define D_8006C7B8 (*((struct_8006C7B8*)_D_8006C7B8))
+    s32 archiveIndex; /* 0x00 - index into gSoundArchiveOffsets */
+    s32 readBuffer;   /* 0x04 - RAM address, retained signed-word ABI */
+    s32 chunkBytes;   /* 0x08 */
+    s32 lastChunk;    /* 0x0C */
+    s32 chunkIndex;   /* 0x10 */
+    s32 archiveByte;  /* 0x14 */
+    s32 vabId;        /* 0x18 */
+    s32 readPending;  /* 0x1C */
+    s32 reserved20;
+    s32 reserved24;
+    s32 reserved28;
+} SoundBankTransferState;
+extern SoundBankTransferState gSoundBankTransferStorage[1] __asm__("gSoundBankTransfer");
+#define gSoundBankTransfer (*((SoundBankTransferState*)gSoundBankTransferStorage))
 
 /* exe:80061DE8. The view builder subtracts eye from target, applies roll,
  * and skips rebuilding while the dead matrix-install API's address is nonzero. */
@@ -2390,11 +2391,11 @@ extern s32 D_8005E528;
 
 /* D_8005E540, D_8005E54C, D_8005E550, D_8005E554, D_8005E560 - GP-relative s32 scalars
  * Accessed by func_8001FF98 with sw %gp_rel; D_8005E54C by func_800214FC */
-extern s32 D_8005E540;
-extern s32 D_8005E54C;
-extern s32 D_8005E550;
-extern s32 D_8005E554;
-extern s32 D_8005E560;
+extern s32 gSoundBankSlotCursor;
+extern s32 gSoundReadBuffer;
+extern s32 gSoundLoadWriteIndex;
+extern s32 gSoundLoadReadIndex;
+extern s32 gSoundSequenceSlotCursor;
 
 /* D_8005E44C - GP-relative s16 scalar (loaded with lh by func_80017AA0) */
 extern s16 D_8005E44C;
@@ -2477,10 +2478,10 @@ extern char D_8004ED04[0x124C];
  * The [s][t] shape with t == 1 (SEQ-only) follows the libsnd SsSetTableSize
  * idiom; the true 2D type is required for func_8001FF98 to match (the nested
  * init loop over the second dimension must survive as a real loop). */
-extern s32 _D_8006C088[6][1] __asm__("D_8006C088");
-#define D_8006C088 (_D_8006C088)
-extern s32 _D_8006C0A8[6][1] __asm__("D_8006C0A8");
-#define D_8006C0A8 (_D_8006C0A8)
+extern s32 gSoundSequenceStatesStorage[6][1] __asm__("gSoundSequenceStates");
+#define gSoundSequenceStates (gSoundSequenceStatesStorage)
+extern s32 gSoundSequencePlayParametersStorage[6][1] __asm__("gSoundSequencePlayParameters");
+#define gSoundSequencePlayParameters (gSoundSequencePlayParametersStorage)
 
 /* D_8005E3C0 - pointer stored by func_80011370, accessed GP-relative.
    Scalar declaration (4 bytes) keeps it within -G8 threshold for %gp_rel. */
@@ -2524,8 +2525,8 @@ extern s32 D_80128D40[2];
 extern s32 D_80128D48[2];
 extern s16 D_80128D50[4];
 /* func_8001C37C caches the render context and increments the GP-relative polygon count. */
-extern struct_8005E3C0 *D_8005E4DC;
-extern s16 D_8005E4E8;
+extern struct_8005E3C0 *gProjectedPrimitiveContext;
+extern s16 gProjectedPrimitiveCount;
 
 /* 800F8F3C indexes 0x22-byte texture records: lh at 0/2/8/A, lhu at 18/1A. */
 typedef struct {
@@ -2844,12 +2845,12 @@ extern u8 D_80048B14[];
 
 /* D_80049370 - s32 array used by func_80021604, func_80020E58, and
  * func_800214FC. The aggregate size preserves split absolute address formation. */
-extern s32 D_80049370[3];
+extern s32 gSoundArchiveOffsets[3];
 
 /* D_800495CC - per-sound-id s16 parameter table, 78 entries of 7 s16 fields
  * (0x800495CC..0x80049A0E, ending where D_80049A10 begins). Absolute-addressed
  * (lui+addiu) by func_800212A8 and neighbours; read as signed halfwords. */
-extern s16 D_800495CC[78 * 7];
+extern s16 gSoundEffectToneParameters[78 * 7];
 
 /* D_80049A70 - array of 4 s32 pointers to CD filename strings (func_800218C4).
  * Values point to "\\STR\\01.XA;1" through "\\STR\\04.XA;1" in rodata.
@@ -2966,16 +2967,16 @@ extern s32 gCdAudioLastSector;
 extern s32 gCdAudioTrackIndex;
 
 /* D_8005E538 — GP-relative s32, sound system flag (func_8001FEA4 clears, func_80020E58/func_800214FC read/write). */
-extern s32 D_8005E538;
+extern s32 gSoundLoadPhase;
 
 /* D_8005E53C — GP-relative s32, sound initialization flag (func_80020818). */
-extern s32 D_8005E53C;
+extern s32 gSoundSequencerStarted;
 
 /* D_8005E558 — GP-relative s32, sound system flag (func_8001FEA4 clears, func_800200E4 reads/writes). */
-extern s32 D_8005E558;
+extern s32 gSoundBufferConfigurationCount;
 
 /* D_8005E55C — GP-relative s32, stereo/mono flag (func_80020818, func_80020A14, func_80020A40). */
-extern s32 D_8005E55C;
+extern s32 gSoundStereoEnabled;
 
 /* D_8006C368 — SpuCommonAttr global, absolute-addressed (func_8001FEA4 initializes fields
  * and passes to SpuSetCommonAttr). Override replaces s32[3] from globals.h. */
@@ -3015,18 +3016,18 @@ extern FuncPtr_80049078 _D_80049078[3] __asm__("D_80049078");
 extern u16 D_80049084[5];
 
 /* D_800491E0 — four signed rotation angles loaded by func_8001D348 at offsets 0, 4, 8 and 12. */
-extern s32 D_800491E0[4];
+extern s32 gProjectedClipAngles[4];
 
 /* D_80061EC8 — camera/reference position as s32[3], accessed with absolute
  * addressing (lui+lw). func_8001C1C0 reads all three elements. */
-extern s32 _D_80061EC8[3] __asm__("D_80061EC8");
-#define D_80061EC8 (_D_80061EC8)
+extern s32 gProjectedClipOriginStorage[3] __asm__("gProjectedClipOrigin");
+#define gProjectedClipOrigin (gProjectedClipOriginStorage)
 
 /* D_80061EA8 — array of plane coefficients (s16), accessed with absolute
  * addressing (lui+lh). func_8001C1C0 reads 12 elements (4 planes × 3 components).
  * Array size 12 ensures >8 bytes for absolute addressing under -G8. */
-extern s16 _D_80061EA8[12] __asm__("D_80061EA8");
-#define D_80061EA8 (_D_80061EA8)
+extern s16 gProjectedClipNormalsStorage[12] __asm__("gProjectedClipNormals");
+#define gProjectedClipNormals (gProjectedClipNormalsStorage)
 
 /* D_80061E88 — 0x20-byte GTE MATRIX (3x3 s16 rotation + 3 s32 translation).
  * func_8001BB88 reads the GTE rotation into it (gte_ReadRotMatrix), and
@@ -3106,12 +3107,12 @@ typedef struct {
 extern Coord3 *_D_80061EF8[3] __asm__("D_80061EF8");
 #define D_80061EF8 (_D_80061EF8)
 
-/* D_8005E850 — VAB transfer state struct, same layout as D_8006C7B8.
- * func_80021668 copies D_8006C7B8 fields to offsets 0..0x1C here.
+/* exe:8005E850 — snapshot of the last submitted VAB transfer chunk.
+ * StepSoundBankBodyTransfer copies fields 0..0x1C before advancing.
  * Array size 8 (32 bytes) forces >-G8 declaration for split absolute
  * addressing (lui/addiu with real register) matching the target. */
-extern struct_8006C7B8 _D_8005E850[1] __asm__("D_8005E850");
-#define D_8005E850 (*((struct_8006C7B8*)_D_8005E850))
+extern SoundBankTransferState gSoundPreviousBankTransferStorage[1] __asm__("gSoundPreviousBankTransfer");
+#define gSoundPreviousBankTransfer (*((SoundBankTransferState*)gSoundPreviousBankTransferStorage))
 
 /* D_80054BC0 - s32 triple read by func_8001A284 (case 15) with the split
  * two-register form `lui v0,%hi` / `lw a0,%lo(v0)`: declared size 12 bytes
@@ -3876,16 +3877,17 @@ typedef struct {
     D8006C838Pool10 *unk2C;
 } D8006C838Pools;
 
-/* D_800491C8 - six words written in two-argument triples by func_8001D648. */
-struct struct_800491C8 {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-    /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
+/* exe:800491C8. Signed numerator/denominator per rotation-matrix column.
+ * The uniform setter writes all three pairs; the unused variant can differ. */
+struct ProjectedRotationScaleRatios {
+    /* 0x00 */ s32 xNumerator;
+    /* 0x04 */ s32 xDenominator;
+    /* 0x08 */ s32 yNumerator;
+    /* 0x0C */ s32 yDenominator;
+    /* 0x10 */ s32 zNumerator;
+    /* 0x14 */ s32 zDenominator;
 };
-extern struct struct_800491C8 D_800491C8;
+extern struct ProjectedRotationScaleRatios gProjectedRotationScale;
 
 /* D_8005E340 - gp-relative pointer to a record whose u16 at +2 is cached
  * into D_8005E33A by func_80023774. */
@@ -5282,7 +5284,7 @@ extern s32 D_800BCD20[2];
  * addressing. Not classified in globals.h. */
 extern u8 D_800C0AFC[];
 
-/* D_800C0DD8 - ovl_21 FuncC0D4Args descriptor whose address
+/* D_800C0DD8 - ovl_21 ProjectedPrimitiveSource descriptor whose address
  * ovl_21_func_800BB2B4 hands to func_8001C0D4. Only its address is taken, so
  * an opaque byte object is enough; the overlay build is -G0, giving absolute
  * lui/addiu addressing. Not classified in globals.h. */
@@ -5394,13 +5396,13 @@ struct Ovl11C7F0NearState {
     s16 area;
 };
 
-/* D_80128818 - ovl_11 FuncC0D4Args descriptor whose address
+/* D_80128818 - ovl_11 ProjectedPrimitiveSource descriptor whose address
  * ovl_11_func_800DB904 hands to func_8001C0D4. Only its address is taken, so
  * an opaque byte object is enough; the overlay build is -G0, giving absolute
  * lui/addiu addressing. */
 extern u8 D_80128818[];
 
-/* D_800BF700 - ovl_19 FuncC0D4Args descriptor whose address
+/* D_800BF700 - ovl_19 ProjectedPrimitiveSource descriptor whose address
  * ovl_19_func_800BB4D4 hands to func_8001C0D4. Only its address is taken, so
  * an opaque byte object is enough; the overlay build is -G0, giving absolute
  * lui/addiu addressing. */
@@ -5439,7 +5441,7 @@ extern u8 D_8009F78C[];
 /* ovl_11 800BCF54/800BD374 use this word as the anchor for stride-0x10 records. */
 extern s32 D_801217A8;
 
-/* D_800C0454 - ovl_25 FuncC0D4Args descriptor whose address
+/* D_800C0454 - ovl_25 ProjectedPrimitiveSource descriptor whose address
  * ovl_25_func_800BAC28 hands to func_8001C0D4. Only its address is taken, so
  * an opaque byte object is enough; the overlay build is -G0, giving absolute
  * lui/addiu addressing. */
@@ -7306,6 +7308,57 @@ extern s16 D_80123E50[];
 
 /* 80110E98 indexes this signed-halfword table by the object's u16 field at +0xAC. */
 extern s16 D_80127F50[];
+
+/* Sound-driver cursors are single words/halfwords in the original GP window. */
+extern s32 gSoundSpuLoadAddress;
+extern s32 gSoundRamLoadCursor;
+extern s32 gSoundLastSequenceBytes;
+extern s16 gSoundLoadArchiveIndex;
+
+/* ResetSoundDriverSlots initializes six words per slot table and 24 per
+ * voice table. Retain scalar-lvalue views for the original &table indexing. */
+extern s32 gSoundBankSpuAddressesStorage[6] __asm__("gSoundBankSpuAddresses");
+#define gSoundBankSpuAddresses (*gSoundBankSpuAddressesStorage)
+extern s32 gSoundLoadIndicesStorage[6] __asm__("gSoundLoadIndices");
+#define gSoundLoadIndices (*gSoundLoadIndicesStorage)
+extern s32 gSoundLoadIsSequenceStorage[6] __asm__("gSoundLoadIsSequence");
+#define gSoundLoadIsSequence (*gSoundLoadIsSequenceStorage)
+extern s32 gSoundLoadBankSlotsStorage[6] __asm__("gSoundLoadBankSlots");
+#define gSoundLoadBankSlots (*gSoundLoadBankSlotsStorage)
+extern s32 gSoundVabIdsStorage[6] __asm__("gSoundVabIds");
+#define gSoundVabIds (*gSoundVabIdsStorage)
+extern s32 gSoundSequenceIdsStorage[6] __asm__("gSoundSequenceIds");
+#define gSoundSequenceIds (*gSoundSequenceIdsStorage)
+extern s32 gSoundBankRamStartsStorage[6] __asm__("gSoundBankRamStarts");
+#define gSoundBankRamStarts (*gSoundBankRamStartsStorage)
+extern s32 gSoundBankRamEndsStorage[6] __asm__("gSoundBankRamEnds");
+#define gSoundBankRamEnds (*gSoundBankRamEndsStorage)
+extern s32 gSoundSequenceDataStorage[6] __asm__("gSoundSequenceData");
+#define gSoundSequenceData (*gSoundSequenceDataStorage)
+extern s32 gSoundSequenceByteSizesStorage[6] __asm__("gSoundSequenceByteSizes");
+#define gSoundSequenceByteSizes (*gSoundSequenceByteSizesStorage)
+extern s32 gSoundSequenceVabIdsStorage[6] __asm__("gSoundSequenceVabIds");
+#define gSoundSequenceVabIds (*gSoundSequenceVabIdsStorage)
+extern s32 gSoundVoiceGroupsStorage[24] __asm__("gSoundVoiceGroups");
+#define gSoundVoiceGroups (*gSoundVoiceGroupsStorage)
+extern s32 gSoundVoiceLastUseFramesStorage[24] __asm__("gSoundVoiceLastUseFrames");
+#define gSoundVoiceLastUseFrames (*gSoundVoiceLastUseFramesStorage)
+/* ClearSoundVoiceKeyOnFrames clears all 24 words; the allocator indexes by SPU voice. */
+extern s32 gSoundVoiceKeyOnFrames[24];
+
+/* Sound command 0 tests/resets a GP halfword and uses the setter's GP buffer word. */
+extern s16 gSoundCommandResetGuard;
+extern s32 gSoundCommandReadBuffer;
+/* QueueSoundLoadCommand reads byte pairs; PlaySoundSequenceWithReverb reads
+ * {type, depth} halfword pairs. The command indices are unchecked. */
+extern u8 gSoundCommandLoadPairs[];
+extern s16 gSoundCommandReverbPresets[];
+/* Command 0 passes this address as destination RAM; its extent is not established. */
+extern s32 gSoundCommandLoadArea;
+
+/* Projected batch drivers test this GP flag; BFEC publishes the batch pointer. */
+extern s32 gProjectedRotationScaleEnabled;
+extern void *gProjectedPrimitiveBatch;
 
 #endif /* GLOBALS_OVERRIDE_H */
 

@@ -1,9 +1,9 @@
 #include "common.h"
 #include "screen_fade.h"
+#include "sound_commands.h"
 
 void func_80017A38(s16 arg0, s16 arg1);
 s32 func_800226B0(void);
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_8011ECC4(void);
 s32 GetVal8005E5B4(void);
 void func_80022738(void);
@@ -42,7 +42,7 @@ void ovl_11_func_8011EA0C(void) {
             entry = D_801284AC;
             entry -= -offset;
             D_80128422 = entry[4];
-            func_8001FABC(5);
+            PlaySoundEffect(5);
         }
     }
     ovl_11_func_8011ECC4();
@@ -69,17 +69,17 @@ void ovl_11_func_8011EA0C(void) {
                 ovl_11_func_8011EC54();
             }
         } else if (pressed & 0x50) {
-            func_8001FABC(0);
+            PlaySoundEffect(0);
             D_80128420 = 7;
             func_80022738();
             func_8002261C(3, D_80128422 + 0x385);
         } else if (pressed & 0x800) {
             if (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476 == 1) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 BeginScreenFadeIncrease(10, 0, 2);
                 D_80128420 = 11;
             } else {
-                func_8001FABC(2);
+                PlaySoundEffect(2);
             }
         }
     }

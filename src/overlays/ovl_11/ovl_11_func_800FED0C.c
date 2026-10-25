@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 s32 GetVal8005E5B4(void);
 s32 func_800226B0(void);
@@ -11,7 +12,6 @@ void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
-s32 func_8001FABC(s16 arg0);
 void func_80022738(void);
 
 void ovl_11_func_800FED0C(void) {
@@ -36,7 +36,7 @@ void ovl_11_func_800FED0C(void) {
     ready = func_800226B0();
     if (ready == 1 && (*(s32 *)((u8 *)gPad0Input + 8) & 0x800)) {
         D_801273B0 = 0x30;
-        func_8001FABC(3);
+        PlaySoundEffect(3);
         func_80022738();
         return;
     }
@@ -54,20 +54,20 @@ void ovl_11_func_800FED0C(void) {
             buttons = *(s32 *)((u8 *)gPad0Input + 8);
             if (buttons & 0x20) {
                 D_801273B0 = 0x30;
-                func_8001FABC(3);
+                PlaySoundEffect(3);
                 func_80022738();
             } else if (buttons & 0x40) {
                 func_80022738();
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 D_801273B0 = (D_801273B4_selection[0] + 1) << 4;
             } else {
                 buttons = *(s32 *)((u8 *)gPad0Input);
                 if (buttons & 0x4000) {
-                    func_8001FABC(5);
+                    PlaySoundEffect(5);
                     D_801273B4_selection[0]++;
                 } else if (buttons & 0x1000) {
                     D_801273B4_selection[0]++;
-                    func_8001FABC(5);
+                    PlaySoundEffect(5);
                 }
                 selection = D_801273B4_selection[0] / 2;
                 D_801273B4_selection[0] -= selection * 2;

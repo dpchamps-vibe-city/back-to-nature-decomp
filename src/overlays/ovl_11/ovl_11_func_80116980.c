@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_primitives.h"
+#include "sound_commands.h"
 
 void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 s32 ovl_11_func_80117178(s16, s16, s16);
-s32 func_8001FABC(s16);
 void func_80024770(s32, s16, s16);
 void func_800247C0(s32, s16, s16);
 void func_800248B0(s32, s16, s16);
@@ -80,10 +80,10 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
     if (input_mode == 0) {
         repeat_buttons = *(s32 *) ((u8 *) gPad0Input + 0);
         if (repeat_buttons & 0x1000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             D_8012D518--;
         } else if (repeat_buttons & 0x4000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             D_8012D518++;
         }
         last_index = count - 1;
@@ -132,10 +132,10 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
     if (input_mode == 0) {
         pressed_buttons = *(s32 *) ((u8 *) gPad0Input + 8);
         if (pressed_buttons & 0x20) {
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             result = -2;
         } else if (pressed_buttons & 0x40) {
-            func_8001FABC(0);
+            PlaySoundEffect(0);
             result = ovl_11_func_80117178(kind, arg1, (s16) (D_8012D518 + 1));
         }
     } else {

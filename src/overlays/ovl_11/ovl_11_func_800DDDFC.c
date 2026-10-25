@@ -3,6 +3,7 @@
 #include "screen_fade.h"
 #include "sprite_rotation.h"
 #include "master_volume.h"
+#include "sound_driver.h"
 
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001AF44 (u32 arg0);
@@ -32,7 +33,6 @@ void ovl_11_func_800BFEA4 (void);
 void ovl_11_func_800BFF00 (void);
 void ovl_11_func_800C044C (s16 arg0);
 void ovl_11_func_800BC868 (void);
-s32 func_80020818 (void);
 void ovl_11_func_800BC9AC (void);
 void ovl_11_func_800DBC4C (void);
 void ovl_11_func_8010C9B4 (void);
@@ -144,7 +144,7 @@ s32 ovl_11_func_800DDDFC(void) {
                 while (IsSoundTransferComplete() == 0) {
                     UpdateMasterVolumeAndSoundTransfer();
                 }
-                func_80020818();
+                OpenSoundSequencesAndStart();
                 ovl_11_func_800BC9AC();
             }
         }

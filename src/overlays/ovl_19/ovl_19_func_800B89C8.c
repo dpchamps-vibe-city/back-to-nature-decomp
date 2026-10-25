@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
-void func_8001FAE8(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 GetVal8005E5B4(void);
 void ovl_19_func_800BAC5C(void);
@@ -25,7 +24,7 @@ void ovl_19_func_800B89C8(void) {
         *(s32 *)D_800BF4C0 = *(s32 *)D_800BF4C0 != 1;
         if (*(s32 *)D_800BF4C0 == 1) {
             ovl_19_func_800BAC5C();
-            D_800BF4C0[0x101] = func_8001FABC(0x36);
+            D_800BF4C0[0x101] = PlaySoundEffect(0x36);
         } else {
             ovl_19_func_800BAC7C();
         }
@@ -42,7 +41,7 @@ void ovl_19_func_800B89C8(void) {
             if (D_800BD070 == -1) {
                 D_800BD070 = selection;
                 func_8002261C(4, 0x15);
-                D_800BF4C0[0x102] = func_8001FABC(0x43);
+                D_800BF4C0[0x102] = PlaySoundEffect(0x43);
                 ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50 + selection * 0x20], 3, 0);
                 other = (Ovl19Func800BAC40Arg *)&D_800BF4C0[0x50];
                 if (selection == 0) {
@@ -52,10 +51,10 @@ void ovl_19_func_800B89C8(void) {
                 ovl_19_func_800BAC50((Ovl19Func800BAC40Arg *)&D_800BF4C0[0x90], 4, 0);
             }
             if (GetVal8005E5B4() == 2) {
-                func_8001FAE8(D_800BF4C0[0x102]);
+                StopSoundEffectVoice(D_800BF4C0[0x102]);
                 D_800BF4C0[2] = 6;
                 D_800BF4C0[6] = D_800BD070;
-                D_800BF4C0[0x102] = func_8001FABC(0x43);
+                D_800BF4C0[0x102] = PlaySoundEffect(0x43);
             } else {
                 ovl_19_func_800B998C();
             }
@@ -77,7 +76,7 @@ void ovl_19_func_800B89C8(void) {
             if (ovl_19_func_800BA73C((Ovl19Func800BA73CArg *)&D_800BF4C0[8]) == 1) {
                 quotient = D_800BF4C0[5] / 30;
                 if (D_800BF4C0[5] == quotient * 30) {
-                    D_800BF4C0[0x101] = func_8001FABC(0x3A);
+                    D_800BF4C0[0x101] = PlaySoundEffect(0x3A);
                 }
             }
         }

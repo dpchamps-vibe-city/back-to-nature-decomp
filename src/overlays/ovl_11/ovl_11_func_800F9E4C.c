@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 s32 func_800226B0(void);
 void func_80022738(void);
-s32 func_8001FABC(s16 arg0);
 /* Overlay aliases of SetVal8005E334 and SetVal8005E2BC. */
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
@@ -25,7 +25,7 @@ void ovl_11_func_800F9E4C(void) {
         }
         func_80022738();
         D_80126F7C = 2;
-        func_8001FABC(3);
+        PlaySoundEffect(3);
     } else {
         entry = (Ovl11FA1CCArg *)D_80070CF0_halfwords;
         ovl_11_func_800FA1CC(entry);

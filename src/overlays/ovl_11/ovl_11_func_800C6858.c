@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800D5750(s16 arg0);
 void ovl_11_func_800D7348(u16 *dst, u16 *src);
 void ovl_11_func_800D7328(s16 *arg0);
@@ -21,7 +21,7 @@ s32 ovl_11_func_800C6858(Ovl11C7010Object *arg0) {
     arg0->unk6C &= 0xFFDFFFFF;
     if (arg0->unk3C == 0x30) {
         ovl_11_func_800C70CC(arg0, 0x31, 5, -2);
-        func_8001FABC(0x4A);
+        PlaySoundEffect(0x4A);
         arg0->unk6C |= 0x8000;
         return 1;
     }
@@ -34,7 +34,7 @@ s32 ovl_11_func_800C6858(Ovl11C7010Object *arg0) {
     ovl_11_func_800D7328((s16 *) item);
     arg0->unk6C |= 0x8000;
     if (arg0->itemIndex == 0x66) {
-        func_8001FABC(8);
+        PlaySoundEffect(8);
         arg0->unk6C &= 0xEFFF7FFF;
         ovl_11_func_800C70CC(arg0, 0x33, arg0->unk38 + 0x1D, -2);
         return 1;

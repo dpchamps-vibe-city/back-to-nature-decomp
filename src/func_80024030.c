@@ -1,13 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "globals_override.h"
+#include "sound_commands.h"
 
 void func_80024108(s32 arg0, s32 arg1); /* extern */
 
 u16 D_8005E344;
 u16 D_8005E354;
-
-s32 func_8001FABC(s16 arg0);
 
 s32 func_800226B0(void);
 
@@ -24,7 +23,7 @@ void func_80024030(void) {
         if (temp_v1 == 0x40) {
             if (D_8005E354 == 0) {
                 func_80022738();
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 D_8005E344 = 4;
                 return;
             }
@@ -33,12 +32,12 @@ void func_80024030(void) {
         if (temp_v1 == 0x20) {
 block_5:
             func_80022738();
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             D_8005E344 = 1;
             return;
         }
         if (gfx->field_0x0 & 0x5000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             D_8005E354 = (D_8005E354 + 1) & 1;
         }
     }

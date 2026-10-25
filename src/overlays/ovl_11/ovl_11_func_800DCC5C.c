@@ -4,6 +4,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "gte_transform.h"
+#include "projected_primitives.h"
 
 typedef struct {
     u8 pad0[0xC];
@@ -32,7 +33,6 @@ typedef struct {
 
 void ovl_11_func_800DCFEC (M2C_74497bb9f79c_DCFECArg *arg0);
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
-void func_8001BFEC (void **arg0);
 
 void ovl_11_func_800DCC5C(void) {
     MATRIX matrix;
@@ -68,7 +68,7 @@ void ovl_11_func_800DCC5C(void) {
                 rotation.vz = (*(u16 *) ((u8 *) var_s0 + 0x14)) + (*(u16 *) ((u8 *) var_s0 + 0x24));
                 RotMatrixZXY(&rotation, &matrix);
                 ComposeCapturedGteTransform(&matrix);
-                func_8001BFEC((void **) var_s3);
+                DrawProjectedPrimitiveBatch((void **) var_s3);
             }
             PopMatrix();
             if (!(D_8006C844 & 0x08000000) && ((*(u16 *) ((u8 *) var_s0 + 0x28)) & 0x2000)) {

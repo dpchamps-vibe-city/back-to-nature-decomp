@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 void ovl_11_func_80107DE0(Ovl11C35ECStatePair *arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
-s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800D04D4(Ovl11D04D4Obj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 
 s32 ovl_11_func_800D55F8(Ovl11D55F8Object *arg0) {
@@ -22,7 +22,7 @@ s32 ovl_11_func_800D55F8(Ovl11D55F8Object *arg0) {
         ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x18, 0x9010);
         far_base = (u8 *)&D_8007AFF0;
         if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-            func_8001FABC(0x1A);
+            PlaySoundEffect(0x1A);
         }
         break;
     case -1:

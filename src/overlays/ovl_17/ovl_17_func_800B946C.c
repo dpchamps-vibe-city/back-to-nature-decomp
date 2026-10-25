@@ -1,6 +1,6 @@
 #include "common.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 u32 Rand(s32 arg0);
 
 void ovl_17_func_800B946C(void) {
@@ -26,7 +26,7 @@ void ovl_17_func_800B946C(void) {
                 if (flag == 1) {
                     if (*(s16 *)(work + 0x6514) != 3) {
                         if (Rand(0x64) < 0x22) {
-                            *(u16 *)(base + 0x2C8) = func_8001FABC(0x3D);
+                            *(u16 *)(base + 0x2C8) = PlaySoundEffect(0x3D);
                         }
                     }
                     flag = 0;

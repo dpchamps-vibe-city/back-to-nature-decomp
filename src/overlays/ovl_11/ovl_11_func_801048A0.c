@@ -1,7 +1,7 @@
 #include "common.h"
 #include "scene_selection.h"
+#include "sound_commands.h"
 
-void func_8001FBF0(s16 arg0, s16 arg1);
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
@@ -54,7 +54,7 @@ void ovl_11_func_801048A0(void) {
     *(s32 *)(far + 0x25390) = 0;
     *(s32 *)(far + 0x2549C) = -1;
     base->field_4438 = -1;
-    func_8001FBF0(1000, 0);
+    QueueSoundLoadCommand(1000, 0);
 
     base->field_4450 &= ~0xF80;
     if (GetPreviousSceneId() == 3) {

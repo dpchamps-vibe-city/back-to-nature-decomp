@@ -3,17 +3,17 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "packet_work.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017A38 (s16 arg0, s16 arg1);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_800226B0 (void);
-s32 func_8001FABC (s16 arg0);
 void func_80022738 (void);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800FF27C (s16 arg0, s16 arg1);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void SetVal8005E2BC (s32 arg0);
 void SetVal8005E334 (s32 arg0);
@@ -34,7 +34,7 @@ void ovl_11_func_800FEFEC(void) {
     if ((D_801273B0 == 0x10) && (func_800226B0() == 1)) {
         if ((*(s32 *) ((u8 *) gPad0Input + 0)) & 0xA000) {
             D_801273B6 = (D_801273B6 + 1) % 2;
-            func_8001FABC(5);
+            PlaySoundEffect(5);
         }
         var_s0 = 6;
         if (D_801273B6 == 0) {
@@ -48,17 +48,17 @@ void ovl_11_func_800FEFEC(void) {
             s16 *selection = &D_801273B8_selection[0];
             *selection++ = D_801273B8_selection[0]
                 + ((temp_v0 & 0x4000) ? 1 : var_s0 - 1);
-            func_8001FABC(5);
+            PlaySoundEffect(5);
         }
         remainder = D_801273B8_selection[0] % var_s0;
         temp_a0 = *(s32 *) ((u8 *) gPad0Input + 8);
         D_801273B8_selection[0] = remainder;
         if (temp_a0 & 0x20) {
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             func_80022738();
             D_801273B0 = 1;
         } else if (temp_a0 & 0x40) {
-            func_8001FABC(0);
+            PlaySoundEffect(0);
             if (D_801273B0 == 0x10) {
                 func_80022738();
                 D_801273B0 = 0x11;

@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "projected_primitives.h"
 
 Ovl11FuncC9D4Entry *ovl_11_func_800DC9D4 (void);
-void func_8001BFA8 (void *arg0, void *arg1);
 Ovl11FuncDCF10Entry *ovl_11_func_800DCF10 (void *arg0, void *arg1, void *arg2, u8 *arg3);
 void ovl_11_func_800DD5B0 (void);
 void ovl_11_func_800DD8AC (void);
@@ -51,7 +51,7 @@ void ovl_11_func_800DCA60(void) {
                 *(Ovl11EntryTransform *)&temp_v0->pad[8] = var_s1->transform[0];
                 *(Ovl11EntryTransform *)&temp_v0->pad[0x10] = var_s1->transform[1];
                 *(Ovl11EntryTransform *)&temp_v0->pad[0x18] = var_s1->transform[2];
-                func_8001BFA8(temp_v0, temp_s3 + var_s1->offset4);
+                InitProjectedPrimitiveSource(temp_v0, temp_s3 + var_s1->offset4);
                 temp_v0_2 = (u16) var_s1->flags;
                 temp_v0->unk28 = temp_v0_2;
                 if (temp_v0_2 & 0x4000) {

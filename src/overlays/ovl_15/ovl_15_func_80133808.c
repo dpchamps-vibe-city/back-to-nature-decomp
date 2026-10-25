@@ -4,6 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
 #include "packet_work.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
@@ -12,11 +14,9 @@ void func_80015EE8 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_8002470C (s16 arg0);
 void func_80024810 (s32 arg0, s16 arg1, s16 arg2);
 void func_80024860 (s32 arg0, s16 arg1, s16 arg2);
-s32 func_8001FABC (s16 arg0);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 void func_80024770 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_15_func_80133B28 (s16 arg0);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_80024A4C (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
 void ovl_15_func_80134724 (void);
@@ -57,14 +57,14 @@ s32 ovl_15_func_80133808(s16 arg0) {
     func_80024860(temp_s2, 0x108, 0x18);
     temp_v1 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v1 & 0x2000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         D_8013759E++;
         if (D_8013759E >= 3) {
             D_8013759E = 0;
         }
         D_801375A0 = D_801375A2 = 0;
     } else if (temp_v1 & 0x8000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         D_8013759E--;
         if (D_8013759E < 0) {
             D_8013759E = 2;

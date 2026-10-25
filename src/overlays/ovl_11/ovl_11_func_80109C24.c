@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_80109974(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 position, s16 arg5, s32 arg6);
-s32 func_8001FABC(s16 arg0);
 
 s32 ovl_11_func_80109C24(Ovl11SetFieldsView *arg0) {
     s32 result;
@@ -22,7 +22,7 @@ s32 ovl_11_func_80109C24(Ovl11SetFieldsView *arg0) {
         far_base = (char *) &D_8007AFF0;
         if (*(s16 *) (far_base + 0x25476) ==
             *(s16 *) ((u8 *) arg0 + 0x30)) {
-            func_8001FABC(0x19);
+            PlaySoundEffect(0x19);
         }
         arg0->field_34 |= 0x20;
         result = 0;

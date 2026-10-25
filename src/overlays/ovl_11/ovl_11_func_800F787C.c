@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 void func_80017A38(s16 arg0, s16 arg1);
 s32 func_800226B0(void);
 void func_80022738(void);
-s32 func_8001FABC(s16 arg0);
 s32 pow_int(s32 arg0, s32 arg1);
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
@@ -33,7 +33,7 @@ void ovl_11_func_800F787C(void) {
     if (func_800226B0() && (*(s32 *)((u8 *)gPad0Input + 8) & 0x800)) {
         D_80126E40 = 0xFE;
         func_80022738();
-        func_8001FABC(3);
+        PlaySoundEffect(3);
         return;
     }
     firstText = D_80126E40;

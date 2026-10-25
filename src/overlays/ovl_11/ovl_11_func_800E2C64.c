@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -24,7 +25,6 @@ typedef struct {
 } UnkStruct80107DE0;
 
 void ovl_11_func_80107DE0(UnkStruct80107DE0 *arg0, s16 arg1, s16 arg2);
-s32 func_8001FABC(s16 arg0);
 
 s32 ovl_11_func_800E2C64(Struct_800E2C64 *arg0) {
     s32 temp;
@@ -40,7 +40,7 @@ s32 ovl_11_func_800E2C64(Struct_800E2C64 *arg0) {
     }
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        func_8001FABC(0x18);
+        PlaySoundEffect(0x18);
     }
     temp = arg0->unk16 - 10;
     base = (char *)&D_8006C838;

@@ -3,10 +3,9 @@
 #include "screen_primitives.h"
 #include "cd_audio.h"
 #include "master_volume.h"
+#include "sound_commands.h"
 
 void func_80017A08(s32 arg0, s32 arg1);
-s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-s32 func_8001FBBC(s16 arg0);
 /* Overlay imports of GetVal8005E5B8 and GetVal8005E5B4. */
 s32 GetVal8005E5B8(void);
 s32 GetVal8005E5B4(void);
@@ -19,7 +18,7 @@ s32 ovl_11_func_8011FB80(s16 arg0);
 void ovl_11_func_8011F608(void) {
     switch (D_80128540) {
     case 1:
-        func_8001FBBC(0);
+        StopSoundSequence(0);
         BeginScreenFadeIncrease(30, 1, 2);
         BeginMasterVolumeFadeOut(30);
         D_80128540 = 2;
@@ -45,7 +44,7 @@ void ovl_11_func_8011F608(void) {
         func_8002261C(2, D_80128556);
         if (GetVal8005E5B4() == 2) {
             if (D_80128556 == 0x10A) {
-                func_8001FB30(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
+                PlaySoundSequenceWithReverb(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
                 ovl_11_func_800BC9AC();
                 BeginScreenFadeDecrease(10, 1, 2);
                 BeginMasterVolumeFadeIn(10);
@@ -74,7 +73,7 @@ void ovl_11_func_8011F608(void) {
     case 7:
         if (--D_80128558 <= 0) {
             BeginScreenFadeDecrease(10, 0, 1);
-            func_8001FB30(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
+            PlaySoundSequenceWithReverb(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
             ovl_11_func_800BC9AC();
             BeginMasterVolumeFadeIn(10);
             D_80128540 = 8;

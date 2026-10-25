@@ -1,7 +1,7 @@
 #include "common.h"
-s32 func_8001FABC(s16 arg0);
+#include "sound_commands.h"
 
 s32 ovl_11_func_800E95FC(s16 arg0) {
-    func_8001FABC(arg0);
+    PlaySoundEffect(arg0);
     return 1;
 }

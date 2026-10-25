@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 /* Overlay alias for Rand; signature from its matched definition. */
 u32 Rand(s32 arg0);
-s32 func_8001FABC(s16 arg0);
 s32 ovl_19_func_800BA2D4(void);
 s32 ovl_19_func_800BA33C(u8 *arg0);
 
@@ -85,8 +85,8 @@ void ovl_19_func_800B95D4(void) {
         record = actors - 8;
         if (status == one && record[i * 32 + 0x51] == 2) {
             ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)actor, 4, actor->angle, 30);
-            record[0x101] = func_8001FABC(0x3B);
-            record[0x101] = func_8001FABC(0x44);
+            record[0x101] = PlaySoundEffect(0x3B);
+            record[0x101] = PlaySoundEffect(0x44);
             continue;
         }
         if (actor->command == 4) {
@@ -121,7 +121,7 @@ void ovl_19_func_800B95D4(void) {
                         command = 8;
                     }
                     ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)opponent, command, opponent[2], state[0xC7]);
-                    state[0x101] = func_8001FABC(0x3C);
+                    state[0x101] = PlaySoundEffect(0x3C);
                 } else {
                     ovl_19_func_800BAC40((Ovl19Func800BAC40Arg *)actor, 5, actor->angle, state[0xC6]);
                     actor->flag = 0;

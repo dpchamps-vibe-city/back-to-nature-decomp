@@ -5,9 +5,9 @@
 #include "screen_fade.h"
 #include "pad_actuator_sequences.h"
 #include "master_volume.h"
+#include "sound_commands.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
-s32 func_8001FABC (s16 arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D58D0 (void *arg0);
 void ovl_11_func_800CCF14 (C580C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
@@ -52,7 +52,6 @@ s32 ovl_11_func_80113310 (Ovl11CE034Object *arg0);
 void ovl_11_func_800CD5BC (C580C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 s32 ovl_11_func_800C4B6C (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C4C94 (Ovl11C7010Object *arg0);
-void func_8001FAE8 (s32 arg0);
 s32 ovl_11_func_800C5098 (Ovl11CD5BCObject *arg0);
 void ovl_11_func_800C541C (Ovl11CD5BCObject *arg0);
 void ovl_11_func_800C523C (Ovl11CD5BCObject *arg0);
@@ -103,12 +102,12 @@ reset_done:
             return 0;
         case 0x52:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            func_8001FABC(0x15);
+            PlaySoundEffect(0x15);
             arg0->timer = 0x64;
             goto negative_action;
         case 0x55:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            func_8001FABC(0x11);
+            PlaySoundEffect(0x11);
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 8);
             temp_s0 = (C580C_7f0a9cc905ed_UnkStruct800D72E8 *) ((u8 *) arg0 + 0x84);
             if (arg0->attributes & 8) {
@@ -130,7 +129,7 @@ reset_done:
             return 0;
         case 0x51:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            func_8001FABC(0x11);
+            PlaySoundEffect(0x11);
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 4);
             temp_s0_2 = (C580C_7f0a9cc905ed_UnkStruct800D72E8 *) ((u8 *) arg0 + 0x84);
             if (arg0->attributes & 8) {
@@ -171,7 +170,7 @@ reset_done:
 
         case 0x53:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            func_8001FABC(0xE);
+            PlaySoundEffect(0xE);
             ovl_11_func_800C4A2C((Ovl11C4A2CObject *) arg0);
             status = arg0->unk6C;
             status &= 0xEFFFFFFF;
@@ -192,7 +191,7 @@ negative_action:
             ovl_11_func_800CB4E0();
             return 0;
         case 0x3B:
-            func_8001FABC(0x10);
+            PlaySoundEffect(0x10);
             arg0->timer114 = 0;
             arg0->direction = 0U;
             arg0->unk6C |= 1;
@@ -224,7 +223,7 @@ state_done:
             return 0;
         case 0x46:
             if ((D_80128C50 & 0x80) && (ovl_11_func_800F3EF0() != 0)) {
-                func_8001FABC(0x13);
+                PlaySoundEffect(0x13);
                 func_8001AF70(7U, 1U);
             }
             arg0->unk6C &= ~0x4000;
@@ -263,7 +262,7 @@ state_done:
         applyCost = 0;
         switch (status) {
         case 0x6F:
-            func_8001FABC(9);
+            PlaySoundEffect(9);
             ((struct Ovl11C580CState *)D_8006C838)->record->flags |= 0x100;
             D_80129634 = 3;
             if (ovl_11_func_800F3E44(arg0->item) != 0) {
@@ -301,15 +300,15 @@ state_done:
         case 0x6E:
             temp_s0_4 = arg0->item;
             if (arg0->state == 0x61) {
-                func_8001FABC(0x13);
+                PlaySoundEffect(0x13);
             }
             if (arg0->state == 0x62) {
                 ovl_11_func_800CE034((C580C_ad72053e5aa9_StructOvl11CE034A *) arg0, (C580C_ad72053e5aa9_StructOvl11CE034B *)&position, 4);
                 ovl_11_func_800F43CC(0x64, position, arg0->collisionId, 0);
-                func_8001FABC(7);
+                PlaySoundEffect(7);
             }
             if (arg0->state == 0x6E) {
-                func_8001FABC(0x10);
+                PlaySoundEffect(0x10);
                 ((struct Ovl11C580CState *)D_8006C838)->selected = (u16) arg0->item;
                 if (arg0->item == 0xA4) {
                     ((struct Ovl11C580CState *)D_8006C838)->selected = (u16) ((struct Ovl11C580CState *)D_8006C838)->fallback;
@@ -339,7 +338,7 @@ state_done:
                     request1.id = 0xE4;
                 }
                 request1.count = 1;
-                func_8001FABC(7);
+                PlaySoundEffect(7);
                 ovl_11_func_800CB540(&request1.id);
                 return 0;
             } else if (arg0->state == 0x5A) {
@@ -354,7 +353,7 @@ state_done:
                     request2.id = 0xE6;
                 }
                 request2.count = 1;
-                func_8001FABC(7);
+                PlaySoundEffect(7);
                 ovl_11_func_800CB540(&request2.id);
                 return 0;
             } else if (arg0->state == 0x5B) {
@@ -372,7 +371,7 @@ state_done:
                     request3.id = 0x8A;
                 }
                 request3.count = 1;
-                func_8001FABC(7);
+                PlaySoundEffect(7);
                 ovl_11_func_800CB540(&request3.id);
                 return 0;
             } else if (arg0->state == 0x5C) {
@@ -422,13 +421,13 @@ finish_action:
             ovl_11_func_800CB4E0();
             return 0;
         case 0x2F:
-            func_8001FABC(9);
+            PlaySoundEffect(9);
             ovl_11_func_800CBF70((C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *) ((u8 *) arg0 + 0x100), (u16 *) ((u8 *) arg0 + 0x8A), (s16) arg0->direction);
             arg0->unk6C |= 0x40;
             /* fallthrough */
         case 0x9:
             if (arg0->state == 9) {
-                func_8001FABC(9);
+                PlaySoundEffect(9);
             }
             arg0->unk6C &= 0xE7FF3FFF;
             if (arg0->state == 9) {
@@ -437,7 +436,7 @@ finish_action:
             ovl_11_func_800CB4E0();
             return 0;
         case 0x38:
-            func_8001FABC(9);
+            PlaySoundEffect(9);
             ovl_11_func_800C55FC((Ovl11CE034Object *) arg0);
             arg0->unk6C &= 0xE7FF3FFF;
             ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);
@@ -530,7 +529,7 @@ tool_done:
             } else {
                 applyCost = 1;
             }
-            func_8001FAE8((s32) D_80128C70);
+            StopSoundEffectVoice((s32) D_80128C70);
             D_80128C70 = -1;
             goto finish_action;
         case 0x68:

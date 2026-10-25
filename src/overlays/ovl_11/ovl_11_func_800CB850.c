@@ -1,12 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_800CB730(Ovl11CE034Object *arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 /* This caller zero-extends the byte; the callee stores only its low byte. */
 void func_80015840(ObjectState *obj, u8 arg1);
 s32 ovl_11_func_800D736C(s16 *arg0);
-s32 func_8001FABC(s16 arg0);
 
 s32 ovl_11_func_800CB850(s32 arg0) {
     Ovl11C7010Object *obj;
@@ -104,12 +104,12 @@ common_action:
         return 1;
     case 3:
         ovl_11_func_800C70CC(obj, 3, 5, -2);
-        func_8001FABC(0x4A);
+        PlaySoundEffect(0x4A);
         return 1;
     case 4:
         obj->unk6C |= 0x5800;
         ovl_11_func_800C70CC(obj, 0x49, 0, -2);
-        func_8001FABC(0x4B);
+        PlaySoundEffect(0x4B);
         return 1;
     }
     return 0;

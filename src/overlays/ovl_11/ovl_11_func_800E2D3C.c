@@ -1,12 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 typedef struct {
     s16 unk0;
     s16 unk2;
 } UnkStruct80107DE0;
 
-s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 void ovl_11_func_80107DE0(UnkStruct80107DE0 *arg0, s16 arg1, s16 arg2);
@@ -28,7 +28,7 @@ s32 ovl_11_func_800E2D3C(Ovl11SetFieldsView *arg0) {
     }
     far_base = (char *) &D_8007AFF0;
     if ((*(s16 *) (far_base + 0x25476)) == (*(s16 *) ((u8 *) arg0 + 0x30))) {
-        func_8001FABC(0x18);
+        PlaySoundEffect(0x18);
     }
     temp_v0 = (*(u16 *) ((u8 *) arg0 + 0x16)) - 0xA;
     (*(u16 *) ((u8 *) arg0 + 0x16)) = temp_v0;

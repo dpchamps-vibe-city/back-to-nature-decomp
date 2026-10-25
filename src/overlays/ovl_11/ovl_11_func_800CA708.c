@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16);
 s32 ovl_11_func_800CB114(Ovl11CB114Object *, s32 *, s16);
 s32 ovl_11_func_800BF4B4(s32 *, s32);
 void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
@@ -50,7 +50,7 @@ void ovl_11_func_800CA708(void) {
         if ((D_80128C54 & 0x20) && (((player->velocity[0]) != 0) || ((player->velocity[2]) != 0)) && (ovl_11_func_800BF4B4((s32 *)&player->position, (s32) (player->direction)) != 0) && ((player->mode) == 4)) {
             if (!((player->flags) & 0x40000000)) {
                 (player->flags) = (s32) ((player->flags) | 0x40000000);
-                func_8001FABC(6);
+                PlaySoundEffect(6);
                 if ((player->flags) & 0x100) {
                     ((struct Ovl11C907CStateView *)D_8006C838)->field_92D0 = (s32) (((struct Ovl11C907CStateView *)D_8006C838)->field_92D0 | 0x01000000);
                     ovl_11_func_800C70CC((Ovl11C7010Object *)player, 5U, (player->direction) + 0x3F, -2);

@@ -5,6 +5,8 @@
 #include "psyq/libsnd.h"
 #include "psyq/libgpu.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 short SsSeqOpen (unsigned long *, short);
@@ -15,14 +17,7 @@ void SsUtReverbOn (void);
 void ovl_28_func_800B8C94 (void);
 void ovl_28_func_800B8CE4 (void);
 s32 ovl_28_func_800B8D48 (void);
-s32 func_80020818 (void);
-s32 func_8001FB30 (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-s32 func_800201C4 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
-s32 func_80020E38 (void);
-s32 func_80020E58 (void);
 void StepMasterVolumeRamp (void);
-void func_8001FBE4 (s32 arg0, s32 arg1);
-void func_8001FBF0(s16 arg0, s16 arg1);
 void func_8001719C (u8 *arg0);
 void func_80015704(SpriteSourceData *out, SpriteDataHeader *header);
 void func_80015840(ObjectState *obj, u8 arg1);
@@ -63,8 +58,8 @@ void ovl_28_func_800B7FD4(void) {
         break;
     case 0xFF:
         D_800B961C = 0;
-        func_80020818();
-        func_8001FB30(0, 0, 0x23, 0x7F);
+        OpenSoundSequencesAndStart();
+        PlaySoundSequenceWithReverb(0, 0, 0x23, 0x7F);
         base = (s32 *)&D_8006C838;
         base[0x1122] = base[0x1122] + 1;
         break;

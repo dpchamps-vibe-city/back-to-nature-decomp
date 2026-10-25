@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -7,7 +8,6 @@ void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 func_800226B0(void);
-s32 func_8001FABC(s16 arg0);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 void func_80022738(void);
 void ovl_11_func_80102368(void);
@@ -63,7 +63,7 @@ void ovl_11_func_80101B9C(void) {
             case 0x4000:
                 Ovl11_D_801273E7 = Ovl11_D_801273E7 >= 4 ?
                     Ovl11_D_801273E7 - 4 : Ovl11_D_801273E7 + 4;
-                func_8001FABC(5);
+                PlaySoundEffect(5);
                 break;
             case 0x2000:
                 if (Ovl11_D_801273E7 == 3 || Ovl11_D_801273E7 == 7) {
@@ -73,7 +73,7 @@ void ovl_11_func_80101B9C(void) {
                 if (Ovl11_D_801273E7 == Ovl11_D_801273E7 / 4 * 4) {
                     Ovl11_D_801273E7 -= 4;
                 }
-                func_8001FABC(5);
+                PlaySoundEffect(5);
                 break;
             case 0x8000:
                 if (Ovl11_D_801273E7 == 0 || Ovl11_D_801273E7 == 4) {
@@ -83,16 +83,16 @@ void ovl_11_func_80101B9C(void) {
                 if (Ovl11_D_801273E7 == 3 || Ovl11_D_801273E7 == -1) {
                     Ovl11_D_801273E7 += 4;
                 }
-                func_8001FABC(5);
+                PlaySoundEffect(5);
                 break;
             }
             if (((u32 *)gPad0Input)[0] & 0xA) {
                 D_801273EA_table++;
-                func_8001FABC(5);
+                PlaySoundEffect(5);
             }
             if (((u32 *)gPad0Input)[0] & 5) {
                 D_801273EA_table--;
-                func_8001FABC(5);
+                PlaySoundEffect(5);
             }
             if (D_801273EA_table < 0) {
                 D_801273EA_table = 8;
@@ -109,22 +109,22 @@ void ovl_11_func_80101B9C(void) {
                 for (i = 0; i < 8; i++) {
                     if (D_8012CF00_ids[i] != 0) {
                         func_80022738();
-                        func_8001FABC(0);
+                        PlaySoundEffect(0);
                         D_801273E4_state = 7;
                         return;
                     }
                 }
-                func_8001FABC(2);
+                PlaySoundEffect(2);
             } else if (((u32 *)gPad0Input)[2] & 0x10) {
                 if (*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7) != 0) {
                     func_80022738();
-                    func_8001FABC(0);
+                    PlaySoundEffect(0);
                     D_801273E4_state = 6;
                 } else {
-                    func_8001FABC(2);
+                    PlaySoundEffect(2);
                 }
             } else if (((u32 *)gPad0Input)[2] & 0x20) {
-                func_8001FABC(1);
+                PlaySoundEffect(1);
                 if (*(u16 *)&D_801273F0 != 0) {
                     for (i = 0; i < 8; i++) {
                         D_8012CF00_ids[i] = 0;
@@ -135,13 +135,13 @@ void ovl_11_func_80101B9C(void) {
                 }
             } else if (((u32 *)gPad0Input)[2] & 0x40) {
                 if (*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7) == 0) {
-                    func_8001FABC(2);
+                    PlaySoundEffect(2);
                     return;
                 }
                 if (ovl_11_func_801027D4(D_801273EA_table, Ovl11_D_801273E7) == 1) {
                     for (i = 0; i < 8; i++) {
                         if (D_8012CF00_ids[i] == *(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7)) {
-                            func_8001FABC(1);
+                            PlaySoundEffect(1);
                             D_8012CF00_ids[i] = 0;
                             break;
                         }
@@ -149,13 +149,13 @@ void ovl_11_func_80101B9C(void) {
                 } else {
                     if (*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7) != 0) {
                         if (empty < 8 && ovl_11_func_800D583C(*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7)) != 1) {
-                            func_8001FABC(0);
+                            PlaySoundEffect(0);
                             D_8012CF00_ids[empty] = *(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7);
                         } else {
-                            func_8001FABC(2);
+                            PlaySoundEffect(2);
                         }
                     } else {
-                        func_8001FABC(2);
+                        PlaySoundEffect(2);
                     }
                 }
             }

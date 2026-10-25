@@ -5,12 +5,12 @@
 #include "aux_sprite_display.h"
 #include "sprite_grid.h"
 #include "master_volume.h"
+#include "sound_driver.h"
 
 /* Resident sprite-display disable at exe:8001B100. */
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 /* The original callers supply an additional, unread fade-time argument. */
-s32 func_8002029C();
 void func_800226F0(void);
 void func_8002495C(s16);
 void ovl_15_func_8012E15C(void);
@@ -24,7 +24,7 @@ void ovl_15_func_8012E2CC(void) {
     sprite = gActiveRenderContext->field_D8 + 0x2C;
     state = (Ovl21MainStateView *)D_8006C838;
     if (state->state == 0) {
-        func_8002029C(0, 0, 0, 0, 0);
+        SetSoundSequenceSlotVolume(0, 0, 0, 0, 0);
         SsUtAllKeyOff(0);
         DisableAuxSpriteDisplay();
         func_800226F0();
@@ -73,7 +73,7 @@ void ovl_15_func_8012E2CC(void) {
         if (IsScreenFadeComplete() == 1) {
             state->state = state->state == 3 ? 3 : 4;
             RequestSceneChange(0xF);
-            func_8002029C(0, 0, 0, 0x50, 0xA);
+            SetSoundSequenceSlotVolume(0, 0, 0, 0x50, 0xA);
         }
     }
 }

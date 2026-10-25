@@ -4408,11 +4408,60 @@ Members (address order):
   directly follows matched member func_8001FA0C in the link order (low
   confidence)
 
-## sound-sequencer slot wrappers — 0x8001FAE8–0x8001FCDC (confidence: low)
+## sound-sequencer slot wrappers — 0x8001FABC–0x8001FCE4
 
-Unassigned gap between the gradient-interpolation cluster (ends 0x8001FABC)
-and the volume/pan-fade run (starts 0x8001FCE4), a contiguous run of small
-functions whose matched edge links them into the SsSeq sound-control family.
+**Reconstructed module: `src/modules/sound_commands.c`**, all nine compiled
+members FABC/FAE8/FB08/FB10/FB30/FBBC/FBE4/FBF0/FCDC in original order.
+The older findings below remain as address provenance, not current boundaries.
+
+Membership: FBE4 and FBF0 share E530 through GP, a direct buffer-setter to
+command-dispatcher data flow; FBF0 also owns E31C's reset guard. Neither word
+is directly referenced outside this run. Its byte-pair table at 49296 selects
+bank/sequence loads; FB30's adjacent halfword pairs at 492E0 select reverb
+type/depth. FB30/FBBC are the track-zero play/stop pair. Scene entry/exit
+callers in ovl_17/19/21/23/25/27/28 pair these with FBF0's load commands.
+FABC returns an effect voice handle, which FAE8 consumes on those same exit
+paths (e.g. ovl_21:800B8134 and ovl_23:800B8104). FB08/FB10 expose/use the
+same final voice, 23, as FABC's inclusive range. These paired interfaces and
+correlated callers support the control run beyond its GP core. Empty FCDC
+remains neutrally named: its role is unknown, not an internal boundary.
+
+Left boundary: preceding FAB4 is the zero-return helper of the StoreImage/
+gradient family. Its callers and palette-upload records do not use the
+command state, presets or load protocol; there is no positive extension
+signal. Right boundary: FCE4 starts master_volume.c's independent six-word
+volume record. FBF0 clears its transfer latch as a client, but does not use
+its level, step or ramp state. These are evidence-limited cuts around
+separately connected families, not GP/absolute contradiction proofs. A larger
+original sound TU is not disproved. No boundary was invented for a flag.
+
+Names/interface: sound_commands.h publishes effect playback/voice cleanup,
+voice-23 helpers, PlaySoundSequenceWithReverb, StopSoundSequence,
+SetSoundCommandReadBuffer and QueueSoundLoadCommand. Five globals have
+canonical EXE names, including the fixed load-area address (extent unknown).
+Documentation explains commands 0/999/1000, unchecked table indices, the
+transfer latch, presets and ignored ABI parameters. Descriptive dispatcher
+labels preserve its branch shape. Linkage is unchanged.
+
+Interface discovery: 800BC9AC passes a full-word volume accumulator; the other
+preset callers pass constants or s16 values. Publishing the old s16 parameter
+manufactured a caller truncation. The interface now accepts s32 volume and
+explicitly narrows at the driver call. The wrapper and all callers remain
+byte-identical, without conflicting declarations, pointer casts or exceptions.
+interfaceAudit removed that existing signature conflict (59 to 58 legacy
+conflict sites, zero published failures); canonicalNames propagated renames.
+
+The entire merged unit matched baseline -O2/-G8. No override existed or was
+added/retired. The fold checked all nine members and EXE. Final
+`tuProgress.ts --verify --no-cache --baseline build/tu-campaign/baseline.json`
+passed all gates: 201 folded functions, 22 valid modules, linked EXE/all 13
+overlays, data/placement, canonical interfaces, ownership, policy and exception
+non-growth. An obsolete unconfigured build/asm/data/4EA74.sdata.s and its
+object initially shadowed the current 4EA74.data.s names in diagnostics.
+Only those stale ignored outputs were removed; no generated file was edited,
+no tool changed and no matching workaround was introduced.
+
+Historical findings:
 
 Fingerprints:
 - call graph (new 2026-08-21): func_8001FBBC → func_80020414; func_80020A94
@@ -4423,9 +4472,9 @@ Fingerprints:
 - no register quirks or gp-rel cluster found historically; new 2026-08-22: func_8001FBF0's TU
   owns D_8005E31C/D_8005E530 (gp_rel), func_8001FBE4's target reaches D_8005E530 through
   gp_rel too, and FBF0 forwards that value into func_800200E4 (D_8005E544–558 sound-request
-  slots) — a setter→dispatch→request data flow inside the cluster. TU membership stays
-  unproven (both TUs can emit a common .comm for D_8005E530); the relationship is data, not
-  file.
+  slots) — a setter→dispatch→request data flow inside the cluster. This,
+  together with the caller protocol, supports the reconstructed unit above;
+  common-symbol emission alone is not unique historical file recovery.
 - func_8001FB30 (m, 2026-08-22) calls func_800201C4 and the SsUt reverb
   family from inside this span, linking it to the score-table sequencer TU;
   its D_800492E0 table is an as-yet unowned data candidate for that TU.
@@ -4702,7 +4751,64 @@ Members:
 - func_8001BB88 (m, 2026-10) — gte_ReadRotMatrix into the adjacent
   D_80061E88 object (single SDK GTE read idiom)
 
-## projected primitive clipping — 0x8001BFEC–0x8001D348 (confidence: medium)
+## projected primitive clipping — 0x8001BFA8–0x8001D86C
+
+**Reconstructed module: `src/modules/projected_primitives.c`**, 12 compiled
+members and the existing dead D678 scale variant, in original order. The
+whole source-descriptor/clipping/scaling unit is folded, not the earlier
+BFEC..D348 or D648..D6B8 slices described below.
+
+Membership: C0D4 resets/returns the E4E8 GP counter that C37C increments.
+BFEC/C0D4 test E2D4 through GP; D648 sets it and D6AC clears it. The exclusive
+491C8 scale-ratio writer D648 and reader D6B8 complete that enable/apply
+protocol. D348 writes the private 61EA8 plane normals and 61EC8 origin that
+C1C0 reads; C0D4 calls both. C37C calls the two X-bounds helpers, and both
+drivers call C37C/D6B8. The constructor at BFA8 must also be included: it
+produces the exact two-pointer descriptor C0D4 consumes. Overlay initializer/
+draw pairs corroborate this for 80128818 (ovl_11), 800BF700 (ovl_19),
+800C0DD8 (ovl_21) and 800C0454 (ovl_25). BFE0 clears that descriptor;
+it is retained even though no current caller reaches it. D678 is carried,
+not treated as a boundary inside the scale family.
+
+Left boundary: BF9C ends the GTE scene-state module with a fog-state setter;
+that GP-owned color/fog family neither constructs these descriptors nor uses
+the batch/count/scale state. There is no positive extension signal. Right
+boundary: D86C begins an unused opcode/size lookup over its separate
+491F0/49218 tables; following D8B8 walks the public primitive format but uses
+none of this module's scale, count or clipping state. That common format does
+not establish a shared TU. These cuts are evidence-limited, not claimed
+GP/absolute conflict proofs; the exact historical boundary beyond the
+state/helper closure remains uncertain.
+
+Names/interface: projected_primitives.h publishes source construction/clear,
+both drawing paths and uniform scale enable/disable. All eight demonstrated
+state/table globals now have canonical EXE names. ProjectedPrimitiveSource
+replaces the generated FuncC0D4Args identity across overlay callers; its
+cullPointData field explains the four-byte prefix and SVECTOR stride. The
+scale view now names its signed per-column numerator/denominator fields.
+The constructor/clear/draw pointer ABI is unchanged; no linkage was narrowed.
+Documentation records active packet/OT updates, culling-point preconditions,
+signed count, ratio skip rules and the original early return before stack
+restore. Existing classified scratchpad macros remain intact, with no new
+asm/pinning permission. Internal helpers keep external linkage without being
+unnecessarily published. Large packet dispatch remains SDK-macro C.
+
+Canonical reconciliation: the first merge rolled back on the local
+FuncC0D4Args duplicate and const-void versus u8 emitter declarations. The
+shared game_types.h view and the actual emitter prototype resolved these
+without changing bytes. Publishing the constructor exposed an identical
+Ovl11FuncDCF10Entry local/header duplicate in one caller; it now uses the
+canonical game_types.h type. interfaceAudit then published all affected
+callers with byte-identical objects and zero published interface failures.
+No tool changes were needed.
+
+Flags/verification: all 13 entries compiled together under baseline -O2/-G8;
+no member override existed, was added or retired. The fold checked every C
+member and full EXE, carrying D678. After naming/readability/header edits,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passed
+all gates: 213 folded functions, 23 valid modules, full EXE/13-overlay bytes,
+data/placement, canonical interfaces, GP ownership, policy, convergence and
+exception non-growth. Historical identities and findings follow.
 
 GTE-projected triangle/quad rendering and screen-X rejection. Fingerprints:
 func_8001C37C directly calls both adjacent bounds helpers four times each;
@@ -4736,6 +4842,10 @@ func_8001D6B8's verified read of D_800491C8 now also ties it to the following
 D_800491C8 rotation-scale cluster (see that section).
 
 ## D_800491C8 rotation-scale cluster — 0x8001D648–0x8001D6B8 (confidence: low–medium)
+
+Now part of the whole projected_primitives.c unit above: the E2D4 GP
+set/test/clear protocol joins scaling to the projected drivers. This is not
+an independent TU boundary. Original-name details below remain provenance.
 
 GTE rotation-matrix scaling built on the absolute .data global D_800491C8
 (six s32 words: the x/y/z scale numerator/denominator triples). New evidence
@@ -6067,6 +6177,11 @@ workaround was needed.
 
 ## VAB transfer setup/state — around 0x80020E58–0x800218C4 (confidence: high)
 
+Now inside `src/modules/sound_driver.c`, except 218C4 which starts the
+separately reconstructed cd_audio.c. See the sound-init section for the
+whole unit, GP-connected membership, boundaries, names and verification.
+The member list below is historical; it is not a separate TU proposal.
+
 Sound-bank transfer setup and progress state.
 Fingerprints: func_80020E58 directly calls func_800214FC, func_800215EC,
 func_80021604, and func_80021668; func_80020E58, func_800214FC, and
@@ -6095,10 +6210,12 @@ References: src/func_800218C4.c, src/func_80020E58.c.
 ## SPU voice allocation and playback — around 0x800212A8–0x80021820 (confidence: medium)
 
 Per-voice allocation, playback (SsUtKeyOnV) and release (SsUtKeyOffV) over the
-24-voice group/LRU tables. Functionally distinct from the VAB-transfer group but
-interleaved with it in link order (the VAB members sit between func_80021484 and
-func_800217B0); the two share no globals, and the interleaving is the open
-TU-boundary question (one combined sound TU vs two adjacent TUs).
+24-voice group/LRU tables. Now included in sound_driver.c: although these
+helpers do not directly use VAB transfer state, 1FF98 initializes their
+private group/age tables, and 1FF70 initializes their timestamp table. This
+initialization/use relation joins the interleaved family to the GP-connected
+sound core; functional distinction alone is not an internal TU boundary.
+See the sound-init section for the full module and boundary evidence.
 
 Fingerprints:
 - shared absolute 24-voice table pair D_8006C0C8 (per-voice group, 0–3) +
@@ -6227,6 +6344,70 @@ container bytes, canonical interfaces, configuration, ownership, source policy
 and exception non-growth: 148 folded functions, 19 valid modules.
 
 ## sound init and control — around 0x8001FEA4–0x80020A94 (confidence: medium)
+
+**Reconstructed as the complete `src/modules/sound_driver.c` run,
+exe:8001FE7C–800218C4:** 42 compiled members and six existing dead stubs,
+not separate initialization, transfer and allocator slices. The historical
+subgroups below describe responsibilities inside that unit, not boundaries.
+
+Membership: original-byte GP ownership connects FEA4/200E4/20818/20A14/
+20A40/20A94 to 1FF98/20148/20174/20B80 and 20E38/20E58/214FC through
+E538/E53C/E540/E544/E548/E54C/E550/E554/E558/E55C/E560. Thus the transfer
+cluster is not a second TU: E538 and E54C cross the former proposed cut
+through GP, not just absolute references. Getters expose that same state.
+FE7C calls the stereo setter; 201C4/2029C/20414 operate on the exact six-by-one
+sequence-state and handle tables reset by FF98 and opened/closed by 20818/
+20A94. 215EC/21604/21668 are the transfer dispatcher's helpers over one
+private chunk-state object and offset table. The interleaved 212A8/21484/
+217B0/21820 voice family uses the 24-entry group/age tables reset by FF98;
+FF70 clears its key-on timestamps. This initialization/use chain supports
+including it rather than cutting on its distinct role. The single jump table
+at rodata 0xA24 belongs to 20E58 and pools without a layout change. Six dead
+sequence/voice variants are carried inside the run. State-free libsnd
+parameter wrappers and the empty output-mode hook remain in original member
+order: they form this control API, but their exact historical file membership
+is weaker than the GP-connected core, not an independently proved boundary.
+
+Left boundary: the preceding master_volume.c owns/services its separate
+six-word absolute volume/latch record; it calls the load service through the
+public API but owns none of the driver's GP request state. There is no
+positive evidence to merge the intervening volume unit and preceding slot
+wrappers into this GP-connected run. Right boundary: cd_audio.c begins at
+218C4, with a distinct E584..E5A4 GP state cluster, XA filename/track tables
+and a CdlFILE scratch record at 6C7D8. FE7C calls its file-search interface;
+that cross-module call is not shared state. Neither boundary is claimed as
+an absolute-vs-GP contradiction; both are evidence-limited cuts around closed
+state/helper families. A larger original sound TU is not disproved.
+
+Names: functions now describe sequence slots, inclusive SPU voice ranges,
+reverb, and staged archive/VAB loading. All 13 demonstrated GP scalars and
+19 private tables/transfer records have canonical EXE names. The transfer
+view is SoundBankTransferState with byte offsets, buffer/chunk sizes, VAB ID,
+read phase and inclusive chunk bound named; its existing trailing view words
+are retained, not newly interpreted. ABI widths, ignored trailing inputs,
+external linkage and scalar-lvalue table views are unchanged. sound_driver.h
+publishes the used control/playback/load API and documents capacity, units,
+sentinels, reentrancy, unchecked failure paths, frame samples and chunk-overrun
+behavior. Unused/dead functions with unknown roles retain neutral identities.
+Canonicalization propagated EXE renames through overlay callers; the alias
+backing declarations were reconciled explicitly. interfaceAudit published the
+header to callers with unchanged caller objects and zero published failures.
+
+Flags: the complete merged TU matched at baseline -O2/-G8; no member had an
+override and none was added or retired. The initial fold rolled back on a
+local int/int SsVoKeyOff declaration conflicting with the SDK long/long
+prototype. Using libsnd.h resolved it with unchanged bytes, rather than
+creating a boundary or a compiler exception. The 24-entry key-on array and
+canonical private table views now live in globals_override.h, removing the
+old inconsistent local []/[3] declarations. No tooling change was needed.
+
+Verification: the checked fold confirmed all 42 C members and the full EXE.
+After naming/header/readability integration, `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passed every integrity gate,
+including EXE/all overlays, associated data and placement, policy, canonical
+interfaces, ownership and exception non-growth: 192 folded functions and
+21 valid modules. The historical descriptions below retain original names
+as address provenance.
 
 Sound system initialization, stereo/mono control, and score sequence opening.
 Fingerprints: shared gp-rel cluster D_8005E538, D_8005E53C (init flags),

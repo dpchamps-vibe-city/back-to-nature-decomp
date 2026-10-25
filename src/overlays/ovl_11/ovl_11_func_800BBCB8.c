@@ -2,14 +2,13 @@
 #include "screen_fade.h"
 #include "scene_selection.h"
 #include "master_volume.h"
+#include "sound_commands.h"
 
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
 void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
 s32 func_8001AF44(u32 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
-s32 func_8001FABC(s16 arg0);
-s32 func_8001FBBC(s16 arg0);
 void ovl_11_func_800BCF28(void);
 s32 ovl_11_func_800BD374(s32 arg0, s32 arg1);
 s32 ovl_11_func_800CB4E0(void);
@@ -158,7 +157,7 @@ void ovl_11_func_800BBCB8(void) {
                 break;
             case 18:
                 RequestSceneChange(3);
-                func_8001FBBC(0);
+                StopSoundSequence(0);
                 break;
             case 19:
                 RequestSceneChange(4);
@@ -187,7 +186,7 @@ void ovl_11_func_800BBCB8(void) {
                 break;
             case 5:
                 if (D_801287EC != 0) {
-                    func_8001FABC(0x4C);
+                    PlaySoundEffect(0x4C);
                 }
             case 25:
                 D_801287F4 = 3;

@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "globals_override.h"
+#include "sound_commands.h"
 
 void func_80024108(s32 arg0, s32 arg1);
 s32 func_800226B0(void);
@@ -24,8 +25,6 @@ u16 D_8005E33C;
 u16 D_8005E338;
 struct struct_8005E340_target *D_8005E340;
 
-s32 func_8001FABC(s16 arg0);
-
 void func_80023910(void) {
     s32 temp_v1;
     command_word *gfx;
@@ -36,7 +35,7 @@ void func_80023910(void) {
         temp_v1 = gfx->field_8;
         if (temp_v1 == 0x40) {
             if (D_8005E33C == 0) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 temp_v1 = 5;
                 D_8005E338 = temp_v1;
                 func_80022738();
@@ -46,14 +45,14 @@ void func_80023910(void) {
         }
         if (temp_v1 == 0x20) {
 block_5:
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             D_8005E33A = ((cursor_table_entry *)D_8005E340)->unk4;
             D_8005E338 = 2;
             func_80022738();
             return;
         }
         if (gfx->field_0 & 0x5000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             temp_v1 = D_8005E33C;
             temp_v1 += 1;
             temp_v1 &= 1;

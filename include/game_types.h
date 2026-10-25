@@ -1851,14 +1851,13 @@ typedef struct {
     /* 0x30 */ s16 unk30;
 } Ovl11D4030Arg;
 
-/* FuncC0D4Args - argument descriptor for func_8001C0D4: a primitive batch
- * pointer and the vector array origin. Shared by src/func_8001C0D4.c (its
- * local copy predates this header) and ovl_21_func_800BB2B4, which hands
- * &D_800C0DD8 to the callee. */
+/* Projected-primitive source, exe:8001BFA8/8001C0D4. The initializer stores
+ * the batch and, for at least two entries, the following culling-point block.
+ * That block has a four-byte prefix followed by 8-byte SVECTOR records. */
 typedef struct {
     /* 0x00 */ void *batch;
-    /* 0x04 */ s8 *vecs;
-} FuncC0D4Args;
+    /* 0x04 */ s8 *cullPointData;
+} ProjectedPrimitiveSource;
 
 /* One 8-byte entry of the D_800BF87C record array written by
  * ovl_23_func_800B9454: s32 at +0, s16 at +4, s16 at +6. */

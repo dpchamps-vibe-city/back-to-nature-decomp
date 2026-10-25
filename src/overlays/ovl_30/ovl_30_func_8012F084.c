@@ -7,10 +7,10 @@
 #include "scene_selection.h"
 #include "cd_audio.h"
 #include "master_volume.h"
+#include "sound_commands.h"
 
 void ovl_30_func_8012F030(s32 arg0);
 void ovl_30_func_8012FE94(void);
-s32 func_8001FABC(s16 arg0);
 void func_8001AF70(u16 arg0, u16 arg1);
 
 #define clamp_selection(expression) \
@@ -64,13 +64,13 @@ void ovl_30_func_8012F084(void) {
             D_80134AE0 = 0;
             D_80134B10 = -1;
             *index = clamp_selection(*index += 1);
-            func_8001FABC(4);
+            PlaySoundEffect(4);
         } else if (temp_v1 & 1) {
             temp_v1_2 = --D_80134ADC;
             D_80134AE0 = 0;
             D_80134B10 = -1;
             D_80134ADC = clamp_nonnegative(temp_v1_2);
-            func_8001FABC(4);
+            PlaySoundEffect(4);
         }
         temp_v0_2 = D_80133FC0[D_80134ADC];
         D_80134B18 = temp_v0_2;

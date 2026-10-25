@@ -11,6 +11,8 @@
 #include "pad_actuator_sequences.h"
 #include "sprite_rotation.h"
 #include "cd_audio.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -106,7 +108,6 @@ void ovl_11_func_80107DD0 (s16 *arg0);
 s32 func_800129E8 (void);
 void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
 void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800C1224 (s16 arg0, s16 arg1);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
@@ -119,7 +120,6 @@ void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
-s32 func_8001FABC (s16 arg0);
 s32 ovl_11_func_800F413C (M2C_99ae33ae0e41_M2C_4c1a205b3b09_ReconA0View *arg0, M2C_99ae33ae0e41_M2C_4c1a205b3b09_F413CArg1 *arg1);
 void ovl_11_func_8011E588 (void);
 s32 ovl_11_func_800FBE4C (void);

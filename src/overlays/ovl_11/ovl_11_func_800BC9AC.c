@@ -1,5 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 typedef struct {
     s16 unk0;
@@ -20,10 +22,7 @@ typedef struct {
     s16 field_2549C;
 } Ovl11BC9ACFarView;
 
-s32 func_8001FBBC(s16 arg0);
 s32 ovl_11_func_800C0834(s16 arg0);
-s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s32 arg3);
-s32 func_8002029C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void ovl_11_func_800BC9AC(void) {
     s16 temp_v1;
@@ -31,7 +30,7 @@ void ovl_11_func_800BC9AC(void) {
     s32 var_s1;
 
     if (D_801217A4 != 0) {
-        func_8001FBBC(0);
+        StopSoundSequence(0);
     }
     var_s1 = 0x64;
     temp_a2 = ovl_11_func_800C0834(((struct struct_8006C838_time *) D_8006C838)->field_44C0);
@@ -63,8 +62,8 @@ void ovl_11_func_800BC9AC(void) {
         var_s1 = 0x64;
     }
     if (D_801217A4 != 0) {
-        func_8001FB30(0, 0, ((Ovl11BC9ACFarView *) &D_8007AFF0)->field_2549C, var_s1);
+        PlaySoundSequenceWithReverb(0, 0, ((Ovl11BC9ACFarView *) &D_8007AFF0)->field_2549C, var_s1);
         return;
     }
-    func_8002029C(0, 0, 0, var_s1, 0xA);
+    SetSoundSequenceSlotVolume(0, 0, 0, var_s1, 0xA);
 }

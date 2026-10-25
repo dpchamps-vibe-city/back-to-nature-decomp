@@ -1,9 +1,9 @@
 #include "common.h"
 #include "screen_primitives.h"
+#include "sound_commands.h"
 
 /* Overlay import of u32 Rand(s32), at 0x80012A34. */
 u32 Rand(s32 arg0);
-s32 func_8001FABC(s16 arg0);
 
 s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
     struct Ovl11ColorTriple colors = D_800B9E38;
@@ -22,7 +22,7 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
         D_80129560[arg1] += 5;
         switch (D_80129560[arg1]) {
         case 0:
-            func_8001FABC(0x46);
+            PlaySoundEffect(0x46);
             break;
         case 300:
             i = Rand(3);
@@ -38,7 +38,7 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
             }
             break;
         case 330:
-            func_8001FABC(0x47);
+            PlaySoundEffect(0x47);
             break;
         default:
             if (D_80129560[arg1] >= 360) {

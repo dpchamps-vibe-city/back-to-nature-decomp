@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
+#include "sound_commands.h"
 
-void func_8001FAE8 (s32 arg0);
 s32 ovl_11_func_800C0824 (void);
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
@@ -32,7 +32,7 @@ void ovl_11_func_800C401C(void) {
 
     if ((*(s32 *) ((u8 *) obj + -0x51BC)) & 0x08000000) {
         if (D_80128C70 != -1) {
-            func_8001FAE8((s32) D_80128C70);
+            StopSoundEffectVoice((s32) D_80128C70);
             D_80128C70 = -1;
         }
     } else if ((ovl_11_func_800C0824() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (ovl_11_func_800DD1D0(obj->collision) == 0)) {

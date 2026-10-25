@@ -1,6 +1,5 @@
 #include "common.h"
-
-void func_80020A40(void);
+#include "sound_driver.h"
 
 void ovl_27_func_800BABD4(void) {
     char *base;
@@ -12,5 +11,5 @@ void ovl_27_func_800BABD4(void) {
     *(s16 *)(base + 0x64CE) = 1;
     *(s16 *)(base + 0x64D0) = 1;
     *(s16 *)(base + 0x64D2) = 1;
-    func_80020A40();
+    SetSoundStereo();
 }

@@ -1,9 +1,9 @@
 #include "common.h"
+#include "sound_commands.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 /* Both return paths in 801344E8 produce sign-extended halfwords. */
 s16 ovl_15_func_801344E8(u8 *arg0, s16 arg1);
-s32 func_8001FABC(s16 arg0);
 void func_80024770(s32 arg0, s16 arg1, s16 arg2);
 void func_800247C0(s32 arg0, s16 arg1, s16 arg2);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
@@ -41,10 +41,10 @@ s32 ovl_15_func_80133B28(s16 arg0) {
     temp_s4 = ovl_15_func_801344E8(var_s3, -1);
     temp_v1 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v1 & 0x1000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         D_801375A2 -= 1;
     } else if (temp_v1 & 0x4000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         D_801375A2 += 1;
     }
     temp_v1_2 = temp_s4 - 1;
@@ -85,22 +85,22 @@ s32 ovl_15_func_80133B28(s16 arg0) {
     }
     temp_a0 = *(s32 *) ((u8 *) gPad0Input + 8);
     if (temp_a0 & 0x20) {
-        func_8001FABC(1);
+        PlaySoundEffect(1);
         sp18 = -1;
     } else if (temp_a0 & 0x40) {
         if (temp_s4 == 0) {
-            func_8001FABC(2);
+            PlaySoundEffect(2);
         } else if (ovl_15_func_801340B8((s32) var_s3, ovl_15_func_801344E8(var_s3, (s16) (D_801375A2 + 1))) == 1) {
             ovl_15_func_80134000((s32) var_s3, ovl_15_func_801344E8(var_s3, (s16) (D_801375A2 + 1)));
-            func_8001FABC(1);
+            PlaySoundEffect(1);
         } else if ((s16) D_801375A4 >= 5) {
-            func_8001FABC(2);
+            PlaySoundEffect(2);
         } else {
             ovl_15_func_80133F4C((s32) var_s3, ovl_15_func_801344E8(var_s3, (s16) (D_801375A2 + 1)));
-            func_8001FABC(0);
+            PlaySoundEffect(0);
         }
     } else if (temp_a0 & 0x800) {
-        func_8001FABC(0);
+        PlaySoundEffect(0);
         sp18 = 1;
     }
     return sp18;

@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "screen_fade.h"
 #include "master_volume.h"
+#include "sound_commands.h"
 
 #define SELECTION (*(u16 *)&D_801273D8)
 
@@ -12,7 +13,6 @@ void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 s32 func_800226B0(void);
-s32 func_8001FABC(s16);
 void func_800248B0(s32, s16, s16);
 void func_80022738(void);
 void func_8001AF70(u16, u16);
@@ -35,10 +35,10 @@ s32 ovl_11_func_800FFB08(void) {
     if (ready) {
         buttons = *(s32 *)gPad0Input;
         if (buttons & 0x4000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             SELECTION++;
         } else if (buttons & 0x1000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             SELECTION += 3;
         }
         SELECTION &= 3;
@@ -54,11 +54,11 @@ s32 ovl_11_func_800FFB08(void) {
     if (ready) {
         buttons = *(s32 *)((u8 *)gPad0Input + 8);
         if (buttons & 0x820) {
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             func_80022738();
             return -1;
         } else if (buttons & 0x40) {
-            func_8001FABC(0);
+            PlaySoundEffect(0);
             func_80022738();
             switch (SELECTION) {
             case 1:

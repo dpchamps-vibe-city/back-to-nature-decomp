@@ -1,11 +1,10 @@
 #include "common.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 s32 ovl_25_func_800B9480 (s16 *arg0);
 void ovl_25_func_800B97E4 (s16 *arg0);
 void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
-s32 func_8001FABC (s16 arg0);
-void func_8001FAE8 (s32 arg0);
-s32 func_800207E4 (s16 arg0, s16 arg1, s16 arg2);
 
 void ovl_25_func_800B8DF4(s16 *arg0) {
     s16 temp_a0;
@@ -60,7 +59,7 @@ void ovl_25_func_800B8DF4(s16 *arg0) {
         case 2:                             /* switch 2 */
         case 3:                             /* switch 2 */
             if (D_800BFE44_view.unk4CA == -1) {
-                D_800BFE44_view.unk4CA = func_8001FABC(0x37);
+                D_800BFE44_view.unk4CA = PlaySoundEffect(0x37);
             }
             break;
         case 4:                                     /* switch 2 */
@@ -70,7 +69,7 @@ void ovl_25_func_800B8DF4(s16 *arg0) {
         case 5:                                 /* switch 2 */
             temp_a0 = D_800BFE44_view.unk4CA;
             if (temp_a0 != -1) {
-                func_8001FAE8((s32) temp_a0);
+                StopSoundEffectVoice((s32) temp_a0);
                 D_800BFE44_view.unk4CA = -1;
             }
             if ((*(s16 *) ((u8 *) arg0 + 4)) == 0) {
@@ -79,17 +78,17 @@ void ovl_25_func_800B8DF4(s16 *arg0) {
             break;
         case 6:                                     /* switch 2 */
             if (D_800BFE44_view.unk4CA != -1) {
-                func_8001FAE8((s32) D_800BFE44_view.unk4CA);
+                StopSoundEffectVoice((s32) D_800BFE44_view.unk4CA);
                 D_800BFE44_view.unk4CA = -1;
             }
             break;
         }
         if ((s16) (*(u16 *) ((u8 *) arg0 + 2)) == 5) {
             if (D_800BFE44_view.unk4CA != -1) {
-                func_800207E4(D_800BFE44_view.unk4CA, 0x46, 0x46);
+                SetSoundVoiceVolume(D_800BFE44_view.unk4CA, 0x46, 0x46);
             }
         } else if (D_800BFE44_view.unk4CA != -1) {
-            func_800207E4(D_800BFE44_view.unk4CA, 0x7F, 0x7F);
+            SetSoundVoiceVolume(D_800BFE44_view.unk4CA, 0x7F, 0x7F);
         }
         if ((D_800BFE44_view.unk8 == 1) && (D_800BFE44_view.unk20 == D_800BCC40)) {
             D_800BFE44_view.unk4CC = -1;

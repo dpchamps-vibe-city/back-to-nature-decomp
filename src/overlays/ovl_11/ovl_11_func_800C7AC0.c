@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
 #include "aged_item_pool.h"
+#include "sound_commands.h"
 
 void *ovl_11_func_800BDE84 (u8 *arg0, s16 *arg1);
 s32 ovl_11_func_800CB4E0 (void);
@@ -41,7 +42,6 @@ s32 ovl_11_func_800F24B0 (void);
 void ovl_11_func_800C84DC (Recon_ovl_11_func_800C7270_A0View *arg0);
 s32 ovl_11_func_800F3F7C (void);
 void func_8001AF70 (u16 arg0, u16 arg1);
-s32 func_8001FABC (s16 arg0);
 void ovl_11_func_800C857C(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
 void ovl_11_func_800C8670(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
 s32 ovl_11_func_80121204(void);                      /* static */
@@ -406,7 +406,7 @@ block_78:
             case 49:
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    func_8001FABC(7);
+                    PlaySoundEffect(7);
                     ovl_11_func_800C7270(arg0, 0x6E, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
                     return 0x31;
                 }

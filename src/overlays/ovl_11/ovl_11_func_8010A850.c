@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D04D4(Ovl11A47CObject *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
@@ -8,7 +9,6 @@ s32 ovl_11_func_8010AFCC(Ovl11SetFieldsView *arg0);
 s32 ovl_11_func_800F413C(Ovl11F413CArg0View *arg0, Ovl11F413CArg1View *arg1);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11CC7CCPosition v);
 s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_8010B05C(Recon_ovl_11_func_800D2594_A0View *arg0);
 
 s32 ovl_11_func_8010A850(Ovl11A47CObject *arg0) {
@@ -88,7 +88,7 @@ s32 ovl_11_func_8010A850(Ovl11A47CObject *arg0) {
                     D_8012D074 = 0;
                     D_8012D076 = 3;
                     if (((struct Ovl11UpdateWork *) &D_8007AFF0)->field_25476 == arg0->unk30) {
-                        func_8001FABC(0x19);
+                        PlaySoundEffect(0x19);
                     }
                 }
             } else {

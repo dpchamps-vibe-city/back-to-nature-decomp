@@ -2,6 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
@@ -9,11 +11,9 @@ void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 void func_800248E8 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80015F80 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7, u16 arg8);
 void func_800158E4 (SpriteSourceData *src);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 void func_80024A4C (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
 void func_80015840(ObjectState *obj, u8 arg1);
 void ovl_25_func_800BA758 (SpriteSourceData *arg0, u16 *arg1);
-s32 func_8001FABC (s16 arg0);
 
 extern s32 D_800BCD58;
 extern SVECTOR D_800BCDC4;

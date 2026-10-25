@@ -1,7 +1,7 @@
 #include "common.h"
+#include "sound_commands.h"
 
 s32 func_800226B0(void);
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_800FA4F4(s32 arg0, s16 arg1, s16 arg2);
 
 void ovl_11_func_800F9FF4(void) {
@@ -11,7 +11,7 @@ void ovl_11_func_800F9FF4(void) {
 
     if ((D_80126F80 == 0xFF) && (func_800226B0() != 0)) {
         if (*(s32 *) gPad0Input & 0xF000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             buttons = *(s32 *) gPad0Input;
             if (buttons & 0x1000) {
                 D_80126F84 -= 7;

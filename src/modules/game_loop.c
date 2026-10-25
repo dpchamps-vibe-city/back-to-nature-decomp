@@ -45,9 +45,7 @@
 #include "aux_sprite_display.h"
 #include "camera_offset.h"
 #include "master_volume.h"
-
-/* Callees not in functions.h */
-void func_8001FEA4(void);
+#include "sound_driver.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -73,8 +71,6 @@ void func_80017A70(u32 arg0);
 /* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
    leave the delay slot empty — it takes no arguments. */
 void func_8001E160(void);
-void func_8001FE7C(void);
-s32 func_80020818(void);
 void func_80021DA8(void);
 void func_80021FD0(void);
 
@@ -160,7 +156,7 @@ int main(void) {
     do {
     } while (DrawSync(1) != 0);
     InitMasterVolumeRamp();
-    func_8001FEA4();
+    InitSoundDriver();
     SetVideoMode(0);
     ResetGraph(0);
     gCurrentSceneId = 0xD;
@@ -209,8 +205,8 @@ int main(void) {
     InitCameraOffsetState();
     func_8001E160();
     func_80021DA8();
-    func_8001FE7C();
-    func_80020818();
+    InitSoundOutputAndCdFiles();
+    OpenSoundSequencesAndStart();
     func_80017A48(3);
     func_80017A70(3);
     D_8005E398 = 0;

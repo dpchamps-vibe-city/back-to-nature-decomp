@@ -13,10 +13,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/stdlib.h"
+#include "sound_commands.h"
 
 void ovl_11_func_800E54C8(void);
 void ovl_11_func_800DCC1C(s16 sprite, void *rotation);
-s32 func_8001FABC(s16 soundId);
 
 /* Private views of the externally supplied sprite pool, not new storage. */
 typedef struct {
@@ -106,7 +106,7 @@ s32 Ovl11RequestSpriteRotation(s16 id, u16 direction) {
         switch (state) {
         case OVL11_ROTATION_IDLE:
             if (!(entry->source->flags & 0x200)) {
-                func_8001FABC(0x16);
+                PlaySoundEffect(0x16);
             }
             /* fallthrough */
         case OVL11_ROTATION_OUTBOUND:
@@ -198,7 +198,7 @@ void Ovl11StepSpriteRotation(Ovl11RotationState *entry) {
         } else if (entry->rotation.y > 0) {
             return;
         }
-        func_8001FABC(0x4C);
+        PlaySoundEffect(0x4C);
         entry->state = OVL11_ROTATION_IDLE;
         entry->angularStep = 0;
         entry->rotation.y = 0U;

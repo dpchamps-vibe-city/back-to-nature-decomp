@@ -1,8 +1,6 @@
 #include "common.h"
-
-s32 func_8001FB30(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-
-s32 func_80020818(void);
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     char *far_base;
@@ -24,8 +22,8 @@ s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
         far_base = (char *)&D_8007AFF0;
         var_s0 = arg0;
     }
-    func_80020818();
+    OpenSoundSequencesAndStart();
     far_base2 = (char *)&D_8007AFF0;
-    func_8001FB30(0, 0, *(s16 *)(far_base2 + 0x2549C), var_s0);
+    PlaySoundSequenceWithReverb(0, 0, *(s16 *)(far_base2 + 0x2549C), var_s0);
     return 1;
 }

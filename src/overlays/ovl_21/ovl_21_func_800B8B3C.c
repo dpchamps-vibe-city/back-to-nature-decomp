@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "sound_commands.h"
 
 void ovl_21_func_800BA9F8(void);
-s32 func_8001FABC(s16 arg0);
 void ovl_21_func_800BAA18(void);
 void ovl_21_func_800BA4C0(void);
 void ovl_21_func_800BA4F0(void);
@@ -27,7 +27,7 @@ void ovl_21_func_800B8B3C(void) {
         ((Ovl21C0448View *)D_800C0448)->unk4 = temp;
         if (temp == 1) {
             ovl_21_func_800BA9F8();
-            ((Ovl21C0448View *)D_800C0448)->unk984 = func_8001FABC(0x36);
+            ((Ovl21C0448View *)D_800C0448)->unk984 = PlaySoundEffect(0x36);
         } else {
             ovl_21_func_800BAA18();
         }
@@ -68,7 +68,7 @@ void ovl_21_func_800B8B3C(void) {
         }
     } else if (((Ovl21C0448View *)D_800C0448)->unk988 == 0 &&
                (*(u32 *)((u8 *)gPad0Input + 8) & 0xA050)) {
-        ((Ovl21C0448View *)D_800C0448)->unk984 = func_8001FABC(2);
+        ((Ovl21C0448View *)D_800C0448)->unk984 = PlaySoundEffect(2);
         *(void **)((u8 *)D_800C0448 + 0xC) = D_800BCA78;
         ((Ovl21C0448View *)D_800C0448)->unk988 = 1;
     }
@@ -116,7 +116,7 @@ void ovl_21_func_800B8B3C(void) {
     (((Ovl21C0448View *)D_800C0448)->unk8)--;
     if (((Ovl21C0448View *)D_800C0448)->unk8 <= 0 ||
         ovl_21_func_800BA7F0(0) == 0 || ovl_21_func_800BA7F0(1) == 0) {
-        ((Ovl21C0448View *)D_800C0448)->unk986 = func_8001FABC(0x39);
+        ((Ovl21C0448View *)D_800C0448)->unk986 = PlaySoundEffect(0x39);
         func_80022738();
         D_800C0448[0] = 8;
         ((Ovl21C0448View *)D_800C0448)->unk988 = 0;

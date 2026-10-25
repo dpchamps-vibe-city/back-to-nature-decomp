@@ -9,9 +9,8 @@
 #include "common.h"
 #include "master_volume.h"
 #include "psyq/libsnd.h"
+#include "sound_driver.h"
 
-s32 func_80020E38(void);
-s32 func_80020E58(void);
 void StepMasterVolumeRamp(void);
 
 void InitMasterVolumeRamp(void) {
@@ -31,8 +30,8 @@ void InitMasterVolumeRamp(void) {
 }
 
 void UpdateMasterVolumeAndSoundTransfer(void) {
-    if (func_80020E38() != -1) {
-        func_80020E58();
+    if (GetPendingSoundLoad() != -1) {
+        StepSoundLoad();
     } else {
         gMasterVolumeState.transferComplete = 1;
     }

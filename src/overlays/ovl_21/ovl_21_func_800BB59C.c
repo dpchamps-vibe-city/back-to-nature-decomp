@@ -14,6 +14,8 @@
 #include "aux_sprite_display.h"
 #include "cd_audio.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 typedef struct {
                s16 unk0;
@@ -42,7 +44,6 @@ s32 func_800129E8 (void);
 void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
 void func_80017300 (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 *func_80021FE4 (void);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 s32 func_8001AF44 (u32 arg0);
 void func_8001AF70 (u16 arg0, u16 arg1);
 s16 func_80022AF0 (void);
@@ -53,7 +54,6 @@ void func_80022008 (void);
 void ovl_11_func_800BD160 (void);
 void ovl_11_func_800BD168 (void);
 void func_8001E160 (void);
-s32 func_80020818 (void);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800C1C90 (void);
@@ -92,7 +92,6 @@ s32 ovl_11_func_800FEB68 (void);
 s32 ovl_11_func_800FEBB0 (void);
 s32 ovl_11_func_800FEAD4 (void);
 s32 ovl_11_func_800F3C9C (u16 arg0);
-s32 func_8001FABC(s16 arg0);
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);

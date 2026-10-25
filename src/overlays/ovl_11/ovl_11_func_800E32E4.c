@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -20,8 +21,6 @@ s32 ovl_11_func_800D04D4(Ovl11D04D4Obj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16
 
 extern u8 D_801240C8;
 
-s32 func_8001FABC(s16 arg0);
-
 s32 ovl_11_func_800E32E4(Ovl11D04D4Obj *arg0) {
     s16 temp_v1;
     s32 var_s1;
@@ -36,9 +35,9 @@ s32 ovl_11_func_800E32E4(Ovl11D04D4Obj *arg0) {
         if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
             temp_a0 = arg0->unk0;
             if (temp_a0 == 0x109) {
-                func_8001FABC(0x17);
+                PlaySoundEffect(0x17);
             } else if (temp_a0 == 0x10A) {
-                func_8001FABC(0x1B);
+                PlaySoundEffect(0x1B);
             }
         }
         arg0->unk28 = 1;

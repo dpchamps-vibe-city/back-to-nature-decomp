@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800CB4E0 (void);
-s32 func_8001FABC (s16 arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (Ovl11InteractionRecord *arg0);
@@ -37,7 +37,7 @@ s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
                 temp_v1 = *(u16 *) ((u8 *) D_80128C4C_dispatch + 0);
                 if (temp_v1 == 0x15F) {
                     ((struct Ovl11C907CStateView *) D_8006C838)->field_92D0 |= 0x20;
-                    func_8001FABC(6);
+                    PlaySoundEffect(6);
                     arg0->unk38 = ((struct Ovl11C907CStateView *) D_8006C838)->field_92BE;
                     ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x39U, arg0->unk38 + 0x32, -2);
                     arg0->unk6C |= 0x100;
@@ -50,7 +50,7 @@ s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
         }
         if ((D_80128C54 & 2) && (arg0->unk34 != 0)) {
             Ovl11SavedInteractionObject = D_80128C4C_dispatch;
-            func_8001FABC(6);
+            PlaySoundEffect(6);
             temp_v0 = *(u16 *) ((u8 *) Ovl11SavedInteractionObject + 0x22);
             arg0->unk38 = temp_v0;
             ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x39U, arg0->unk38 + 0x32, -2);

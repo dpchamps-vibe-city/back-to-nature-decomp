@@ -1,10 +1,10 @@
 #include "common.h"
+#include "sound_commands.h"
 
 void func_80017A38(s16, s16);
 void SetVal8005E2BC(s32);
 void func_80017B3C(s32, s32, s32, s32);
 s32 pow_int(s32, s32);
-s32 func_8001FABC(s16);
 void func_80022580(u32 *, s32, s32, s32, s16, s16);
 s32 func_8002261C(s32, s32);
 s32 func_800226B0(void);
@@ -61,25 +61,25 @@ void ovl_11_func_800FAC0C(void) {
         if (buttons & 0x10) {
             if (D_80126FE0 == state) {
                 if (*(s16 *)ovl_11_func_800FB4B0(D_80126FE4)) {
-                    func_8001FABC(0);
+                    PlaySoundEffect(0);
                     func_80022738();
                     D_80126FE0 = 2;
                 } else {
-                    func_8001FABC(2);
+                    PlaySoundEffect(2);
                 }
             }
         } else if (buttons & 0x20) {
             if (D_80126FEC == 0xFF) {
                 func_80022738();
                 D_80126FE0 = 3;
-                func_8001FABC(3);
+                PlaySoundEffect(3);
                 return;
             }
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             D_80126FEC = 0xFF;
         } else if (buttons & 0x40) {
             if (D_80126FEC == 0xFF) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 D_80126FEC = D_80126FE4;
             } else {
                 D_80126FE8 = D_80126FE4;
@@ -89,15 +89,15 @@ void ovl_11_func_800FAC0C(void) {
                 failed = ovl_11_func_800FB120(D_80126FEC, D_80126FE4);
                 D_80126FE4 = D_80126FE8;
                 if (!failed) {
-                    func_8001FABC(0);
+                    PlaySoundEffect(0);
                     D_80126FEC = 0xFF;
                 } else {
-                    func_8001FABC(2);
+                    PlaySoundEffect(2);
                 }
             }
         } else if (buttons & 0x800) {
             func_80022738();
-            func_8001FABC(3);
+            PlaySoundEffect(3);
             D_80126FE0 = 3;
         } else {
             movement = ((u32 *)gPad0Input)[0] & 0xF000;
@@ -116,7 +116,7 @@ void ovl_11_func_800FAC0C(void) {
                     break;
                 }
                 D_80126FE4 = Ovl11FarmMenuRows[D_80126FE4].destinations[((struct Ovl11ItemGridState *)D_8006C838)->exponent + direction * 3];
-                func_8001FABC(5);
+                PlaySoundEffect(5);
             }
         }
     }

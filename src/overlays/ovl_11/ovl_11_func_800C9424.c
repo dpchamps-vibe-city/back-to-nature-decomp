@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "sprite_rotation.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_80112DA8 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -14,7 +15,6 @@ void ovl_11_func_800C8E98 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 directio
 s32 ovl_11_func_800C7838 (u8 *arg0);
 void ovl_11_func_800CF308 (s16 arg0);
 /* 8001FAD0 calls func_800212A8 and forwards its return value unchanged. */
-s32 func_8001FABC (s16 arg0);
 s32 ovl_11_func_800C8D24 (M2C_15512f31231d_Func800C7878Arg0 *arg0, u16 arg1);
 s32 ovl_11_func_800C76EC (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C77D8 (Ovl11C7010Object *arg0, u16 arg1);
@@ -113,14 +113,14 @@ s32 ovl_11_func_800C9424(void) {
                     ovl_11_func_800C70CC(obj, 0x14, obj->unk38 + 0x43, -2);
                     ovl_11_func_800C7838((u8 *)obj);
                     ovl_11_func_800CF308(1);
-                    func_8001FABC(0x12);
+                    PlaySoundEffect(0x12);
                     return 1;
                 }
                 if (pressed & 1) {
                     ovl_11_func_800C70CC(obj, 0x14, obj->unk38 + 0x43, -2);
                     ovl_11_func_800C7838((u8 *)obj);
                     ovl_11_func_800CF308(2);
-                    func_8001FABC(0x12);
+                    PlaySoundEffect(0x12);
                     return 1;
                 }
             }
@@ -145,7 +145,7 @@ s32 ovl_11_func_800C9424(void) {
                 delay = 8;
             }
             if (delay < D_80123150) {
-                D_80128C70 = func_8001FABC(0x48);
+                D_80128C70 = PlaySoundEffect(0x48);
                 D_80123150 = 0;
             } else {
                 D_80123150++;

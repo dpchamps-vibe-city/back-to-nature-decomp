@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800B91B8(void);
@@ -6,7 +7,6 @@ void func_80017A08(s32 arg0, s32 arg1);
 s32 func_8002261C(s32 arg0, s32 arg1);
 /* GetVal8005E5B4, named by its original overlay import. */
 s32 GetVal8005E5B4(void);
-void func_8001FAE8(s32 arg0);
 
 void ovl_17_func_800B8C38(void) {
     s32 i;
@@ -43,7 +43,7 @@ void ovl_17_func_800B8C38(void) {
     func_8002261C(4, 6);
     if (GetVal8005E5B4() == 2) {
         state = D_800BD848;
-        func_8001FAE8(*(s16 *)(state + 0x2CA));
+        StopSoundEffectVoice(*(s16 *)(state + 0x2CA));
         state[4] = 9;
     }
 }

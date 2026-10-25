@@ -1,11 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 u16 D_8005E2BA;
 
 void func_80019E14(s32 arg0, s16 arg1, s16 arg2);
-
-s32 func_8001FABC(s16 arg0);
 
 s32 func_80019CBC(s16 arg0, s16 arg1, u16 *arg2, s16 arg3) {
     SomeStruct *unk;
@@ -18,7 +17,7 @@ s32 func_80019CBC(s16 arg0, s16 arg1, u16 *arg2, s16 arg3) {
     result = 0;
     unk = (SomeStruct *)gPad0Input;
     if (unk->field_0x0 & 0x4000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         var_a0 = 0;
         value = *arg2 + 1;
         *arg2 = value;
@@ -27,7 +26,7 @@ s32 func_80019CBC(s16 arg0, s16 arg1, u16 *arg2, s16 arg3) {
         }
         *arg2 = var_a0;
     } else if (unk->field_0x0 & 0x1000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         temp = *arg2 - 1;
         *arg2 = temp;
         if ((s16)temp < 0) {
@@ -37,7 +36,7 @@ s32 func_80019CBC(s16 arg0, s16 arg1, u16 *arg2, s16 arg3) {
         }
         *arg2 = var_v0;
     } else if (unk->field_0x8 & 0x40) {
-        func_8001FABC(0);
+        PlaySoundEffect(0);
         result = (s16)*arg2 + 1;
     }
     if (result == 0) {

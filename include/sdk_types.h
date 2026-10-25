@@ -561,16 +561,6 @@ typedef struct {
 } M2C_213c62eeb7d1_Ovl11D04D4Obj;
 
 typedef struct {
-               u8 pad0[0x18];
-               u16 unk18;
-               u16 unk1A;
-               u16 unk1C;
-               u8 pad1[0x0E];
-               u16 unk2C;
-               u8 pad2[0x6];
-} M2C_245f54a50d63_Ovl11FuncDCF10Entry;
-
-typedef struct {
                u16 field_0;
                u16 field_2;
                u16 field_4;
@@ -2070,21 +2060,6 @@ typedef struct {
 } M2C_e096e915c96b_Ovl11E0180Obj;
 
 typedef struct {
-               u8 data[0x1C];
-} M2C_e0bb1011384a_PrimPrim;
-
-typedef struct {
-               u8 pad[8];
-               s32 count;
-               M2C_e0bb1011384a_PrimPrim prims[1];
-} M2C_e0bb1011384a_PrimBatch;
-
-typedef struct {
-               M2C_e0bb1011384a_PrimBatch *batch;
-               s8 *vecs;
-} M2C_e0bb1011384a_FuncC0D4Args;
-
-typedef struct {
     char pad_000[0x100];
     s32 field_100;
     s32 field_104;
@@ -3070,6 +3045,16 @@ typedef struct {
 } Ovl11Func80116F4CArg;
 
 typedef struct {
+    u8 pad0[0x18];
+    u16 unk18;
+    u16 unk1A;
+    u16 unk1C;
+    u8 pad1[0x0E];
+    u16 unk2C;
+    u8 pad2[0x6];
+} Ovl11FuncDCF10Entry;
+
+typedef struct {
     u8 unk0;
     u8 unk1;
     u16 unk2;
@@ -3443,9 +3428,9 @@ struct PadInputState {
 };
 
 typedef struct {
-    s32 field_0;
-    s32 field_4;
-} PairS32;
+               void *batch;
+               s8 *cullPointData;
+} ProjectedPrimitiveSource;
 
 typedef struct {
     char pad_0[0x38];

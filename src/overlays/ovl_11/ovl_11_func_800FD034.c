@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_800FE704(void);
 void ovl_11_func_800FE780(void);
 
@@ -13,10 +13,10 @@ void ovl_11_func_800FD034(s16 arg0, void (*arg1)(s16, s16)) {
     draw = arg1;
     if (arg0 >= 8) {
         if (((SomeStruct *) gPad0Input)->field_0x0 & 0x1000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             D_80127210--;
         } else if (((SomeStruct *) gPad0Input)->field_0x0 & 0x4000) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             D_80127210++;
         }
     }

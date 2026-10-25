@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 u16 D_8005E344;
 s32 D_8005E348;
@@ -10,7 +11,6 @@ u16 D_8005E356;
 s16 D_8005E358;
 u16 *D_8005E360;
 
-s32 func_8001FABC(s16 arg0);
 s32 func_800226B0(void);
 void func_80022738(void);
 s32 func_800241EC(s32 arg0, s32 arg1, u32 arg2);
@@ -94,7 +94,7 @@ void func_80023DBC(void) {
             break;
         }
         if (var_s1 >= 0) {
-            func_8001FABC(var_s1);
+            PlaySoundEffect(var_s1);
         }
     }
 }

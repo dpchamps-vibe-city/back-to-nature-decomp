@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -10,7 +11,6 @@ extern s32 D_801273B0;
 extern Ovl11Packed12 D_8012CEE8;
 
 void ovl_11_func_800FEBF8(void);
-s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_800FEC2C(void) {
     u8 *dst;
@@ -24,6 +24,6 @@ void ovl_11_func_800FEC2C(void) {
         base = (s32 *)&D_8006C838;
         src = (u8 *)(base + (0x8000 >> 2));
         *(Ovl11Packed12 *)dst = *(Ovl11Packed12 *)(src + 0x64CC);
-        func_8001FABC(3);
+        PlaySoundEffect(3);
     }
 }

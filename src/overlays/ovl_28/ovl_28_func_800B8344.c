@@ -1,10 +1,8 @@
 #include "common.h"
 #include "screen_fade.h"
 #include "master_volume.h"
-
-s32 func_8001FBBC(s16 arg0);
-s32 func_80020818(void);
-s32 func_80020B80(s32 arg0, s32 arg1);
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 s32 ovl_28_func_800B8344(void) {
     s32 *base;
@@ -17,9 +15,9 @@ s32 ovl_28_func_800B8344(void) {
     }
     ret = 2;
     if (x == 2) {
-        func_8001FBBC(0);
-        func_80020818();
-        func_80020B80(2, 0);
+        StopSoundSequence(0);
+        OpenSoundSequencesAndStart();
+        RewindSoundLoadSlots(2, 0);
         base = (s32 *)&D_8006C838;
         ret = base[0x4488 >> 2] + 1;
         base[0x4488 >> 2] = ret;

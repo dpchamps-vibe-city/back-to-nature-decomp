@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 s32 func_800226B0(void);
 void func_80022738(void);
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_800F9BE4(void);
 s32 ovl_11_func_800F7D34(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F8224(s16 *arg0, s16 arg1);
@@ -20,27 +20,27 @@ s32 ovl_11_func_800F7AA0(void) {
         if (temp_v1 & 0x10) {
             if (*ovl_11_func_800F82FC((s32) D_80126E44, (s32) D_80126E4A) != 0) {
                 func_80022738();
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 D_80126E4E = 0;
                 goto block_32;
             }
-            func_8001FABC(2);
+            PlaySoundEffect(2);
             return 0;
         }
         if (temp_v1 & 0x20) {
             if (D_80126E48 == temp_s0) {
                 func_80022738();
                 D_80126E40 = 0xFE;
-                func_8001FABC(3);
+                PlaySoundEffect(3);
                 return 0;
             }
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             D_80126E48 = temp_s0;
             goto block_32;
         }
         if (temp_v1 & 0x40) {
             if (D_80126E48 == temp_s0) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 D_80126E48 = (s16) (u16) D_80126E44;
                 D_80126E4C = (s16) (u16) D_80126E4A;
                 goto block_32;
@@ -54,16 +54,16 @@ s32 ovl_11_func_800F7AA0(void) {
             ovl_11_func_800F9BE4();
             D_80126E44 = (s16) D_80126E46;
             if (temp_s0_2 == 1) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 D_80126E48 = 0xFF;
                 return 1;
             }
-            func_8001FABC(2);
+            PlaySoundEffect(2);
             return 0;
         }
         if (temp_v1 & 0x100) {
             if (D_80126E48 == temp_s0) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 switch (D_80126E40) {
                 case 0:
                     ovl_11_func_800F8224((s16 *) &D_80070EC2, 0x40);
@@ -77,7 +77,7 @@ s32 ovl_11_func_800F7AA0(void) {
                 }
                 goto block_32;
             }
-            func_8001FABC(2);
+            PlaySoundEffect(2);
             goto block_32;
         }
         goto block_32;

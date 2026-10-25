@@ -5,6 +5,8 @@
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
 #include "sprite_rotation.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 typedef struct {
     s16 field_0;
@@ -62,7 +64,6 @@ s32 func_8001E78C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_8001E38C (void);
 s32 func_8001E7DC (s32 *arg0, s32 *arg1);
 s32 func_8001E878 (M2C_2bc7a43223fd_CoordTri *p0, M2C_2bc7a43223fd_CoordTri *p1, M2C_2bc7a43223fd_CoordTri *p2);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 void SetVal8005E2E8 (s32 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800BD358 (void);
@@ -76,7 +77,6 @@ void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F0C ();
 void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
-s32 func_8001FABC (s16 arg0);
 s32 ovl_11_func_800D589C (s16 arg0);
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 void ovl_11_func_800D666C (s16 arg0);

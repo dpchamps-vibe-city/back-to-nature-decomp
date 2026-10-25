@@ -2,13 +2,13 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 s32 func_800226B0 (void);
-s32 func_8001FABC (s16 arg0);
 void ovl_11_func_80104418 (s16 arg0, s16 *arg1);
 s32 ovl_11_func_80104394 (void);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 
 s32 ovl_11_func_80103C00(void) {
     s16 *temp_s1;
@@ -32,24 +32,24 @@ s32 ovl_11_func_80103C00(void) {
         var_s0 = -1;
     }
     if (var_s0 != 0) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         ovl_11_func_80104418(var_s0, temp_s1);
     }
     temp_a1 = *(s32 *) ((u8 *) gPad0Input + 8);
     if (temp_a1 & 0x800) {
         if (ovl_11_func_80104394() == 1) {
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             return -2;
         }
-        func_8001FABC(0);
+        PlaySoundEffect(0);
         return 2;
     }
     if (temp_a1 & 0x20) {
-        func_8001FABC(1);
+        PlaySoundEffect(1);
         return -1;
     }
     if (temp_a1 & 0x40) {
-        func_8001FABC(0);
+        PlaySoundEffect(0);
         return 1;
     }
     return 0;

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80015840(ObjectState *obj, u8 arg1);
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -24,7 +24,7 @@ s32 ovl_11_func_800C6AFC(Ovl11C7010Object *arg0) {
         switch (temp_v0) {
         case 0x4F:
             if (((*(s32 *) ((u8 *) arg0 + 0x264)) & ~0xFF) == 0x400) {
-                func_8001FABC(0xC);
+                PlaySoundEffect(0xC);
                 return 0;
             }
             return 0;
@@ -38,7 +38,7 @@ s32 ovl_11_func_800C6AFC(Ovl11C7010Object *arg0) {
                 arg0->sprite.field_5 = (u8) (*(u16 *) ((u8 *) arg0 + 0x38));
                 arg0->unk6C = (arg0->unk6C | 0x40000000) & ~1;
                 (*(u16 *) ((u8 *) arg0 + 0x36)) = (u16) ((*(u16 *) ((u8 *) arg0 + 0x36)) & 0xFEFF);
-                func_8001FABC(6);
+                PlaySoundEffect(6);
             }
             goto block_9;
         case 0x57:

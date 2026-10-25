@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_collision_query_budget.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
 
 s32 ovl_11_func_800CBE2C(Ovl11CC4E0Object *arg0) {
@@ -25,7 +25,7 @@ failed:
     return 0;
 success:
     ovl_11_func_800F3BCC(*(u16 *)((u8 *)arg0 + 2));
-    func_8001FABC(0x13);
+    PlaySoundEffect(0x13);
     ovl_11_func_800CCBE8(arg0);
     return 1;
 }

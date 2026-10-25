@@ -1,4 +1,5 @@
 #include "common.h"
+#include "sound_commands.h"
 
 typedef struct {
     char pad_000[0x5224];
@@ -10,7 +11,6 @@ typedef struct {
 } View3830;
 
 void ovl_11_func_801037EC(void);
-s32 func_8001FABC(s16 arg0);
 
 void ovl_11_func_80103830(void) {
     View3830 *v;
@@ -24,7 +24,7 @@ void ovl_11_func_80103830(void) {
     }
     ovl_11_func_801037EC();
     D_80127428 = 1;
-    func_8001FABC(3);
+    PlaySoundEffect(3);
     D_8012CF20 = v->field_5224;
     cnt = 0;
     do {

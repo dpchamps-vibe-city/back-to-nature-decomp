@@ -1,9 +1,9 @@
 #include "common.h"
 #include "sprite_grid.h"
+#include "sound_commands.h"
 
 s32 ovl_11_func_800DD9F0(void);
 s32 ovl_11_func_800DDB4C(void);
-s32 func_8001FABC(s16 arg0);
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
@@ -38,7 +38,7 @@ void ovl_11_func_800F67E0(void) {
             }
             if (check()) {
                 ((struct struct_8006C838_view *)&D_8006C838)->field_0C |= 0x20000;
-                func_8001FABC(3);
+                PlaySoundEffect(3);
                 SetVal8005E334(0);
                 SetVal8005E2BC(0);
                 func_8002261C(3, id);

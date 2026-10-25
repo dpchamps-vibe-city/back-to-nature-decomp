@@ -2,8 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
-
-s16 func_8001C0D4(FuncC0D4Args *arg0, VECTOR *arg1, VECTOR *arg2);
+#include "projected_primitives.h"
 
 void ovl_11_func_800DB904(void) {
     char *far_base;
@@ -17,5 +16,5 @@ void ovl_11_func_800DB904(void) {
     v1.vx = *(s16 *)(far_base + 0x253B4);
     v1.vy = *(s16 *)(far_base + 0x253B6);
     v1.vz = *(s16 *)(far_base + 0x253B8);
-    func_8001C0D4((FuncC0D4Args *)&D_80128818, &v0, &v1);
+    DrawCulledProjectedPrimitives((ProjectedPrimitiveSource *)&D_80128818, &v0, &v1);
 }

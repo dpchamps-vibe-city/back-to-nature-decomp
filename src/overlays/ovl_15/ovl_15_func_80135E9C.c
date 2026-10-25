@@ -8,6 +8,8 @@
 #include "psyq/strings.h"
 #include "psyq/libmcx.h"
 #include "packet_work.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 
 int McxCardType (int);
@@ -26,7 +28,6 @@ u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 func_800212A8 (s32 soundId, s32 lo, s32 hi);
 void func_800136D4 (u32 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_80024A4C (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4);
 void ovl_15_func_8013468C (void);
@@ -42,7 +43,6 @@ s32 ovl_15_func_8012FFD8 (void);
 void func_8001AC10 (u32 *arg0, s32 arg1, s32 arg2);
 s32 ovl_15_func_80137228 (s16 arg0, s16 arg1);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
-s32 func_8001FABC (s16 arg0);
 s32 ovl_15_func_80136558 (s16 arg0, s16 arg1);
 void ovl_15_func_801359FC (void);
 void ovl_15_func_80137544 (char *arg0, s32 arg1);

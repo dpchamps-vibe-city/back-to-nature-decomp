@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 func_8001FABC(s16 arg0);
+#include "sound_commands.h"
 
 s32 func_800226B0(void);
 
@@ -21,7 +20,7 @@ s32 ovl_11_func_80103D44(void) {
             var_s0 = 1;
         }
         if (var_s0 != 0) {
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             temp_v0 = D_8012742C + var_s0;
             D_8012742C = temp_v0;
             if (temp_v0 < 0) {
@@ -43,7 +42,7 @@ s32 ovl_11_func_80103D44(void) {
                 if (D_8012742C != 6) {
                     D_8012CF1C = D_8012CF10[D_8012742C];
                     D_8012CF24 = D_8012CF20;
-                    func_8001FABC(0);
+                    PlaySoundEffect(0);
                     return 2;
                 }
                 if (ovl_11_func_80104394() != 1) {
@@ -54,10 +53,10 @@ s32 ovl_11_func_80103D44(void) {
             }
         }
 block_18:
-        func_8001FABC(1);
+        PlaySoundEffect(1);
         return -1;
 block_19:
-        func_8001FABC(0);
+        PlaySoundEffect(0);
         return 1;
     }
 block_20:

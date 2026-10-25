@@ -5,8 +5,8 @@
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_800FB908(void);
 void func_8001719C(u8 *arg0);
 /* The initializer does not read its trailing parameters. */
@@ -15,7 +15,7 @@ void func_80015704();
 void ovl_11_func_800FBE88(void) {
     u32 i;
 
-    func_8001FABC(3);
+    PlaySoundEffect(3);
     ovl_11_func_800FB908();
     D_8012720C = 1;
     DrawSync(0);

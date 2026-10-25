@@ -3,8 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-
-s32 func_8001FABC(s16 arg0);
+#include "sound_commands.h"
 
 void ovl_21_func_800B9F3C(void) {
     u8 *base;
@@ -89,7 +88,7 @@ void ovl_21_func_800B9F3C(void) {
                     shot->duration = life;
                     shot->kind = target;
                     setVector((SVECTOR *)((u8 *)(D_800C0448 + 0x24) + shotOffset), velocityX, 0, velocityZ);
-                    *(s16 *)((u8 *)base + 0x984) = func_8001FABC(0x40);
+                    *(s16 *)((u8 *)base + 0x984) = PlaySoundEffect(0x40);
                 }
             }
         }

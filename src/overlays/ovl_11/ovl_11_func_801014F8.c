@@ -1,11 +1,11 @@
 #include "common.h"
+#include "sound_commands.h"
 
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 s32 func_800226B0(void);
-s32 func_8001FABC(s16 arg0);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 void func_80022738(void);
 void func_80017D9C(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4);
@@ -22,12 +22,12 @@ void ovl_11_func_801014F8(void) {
         case 0x1000:
         case 0x8000:
             D_801273E9_selection += 4;
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             break;
         case 0x2000:
         case 0x4000:
             D_801273E9_selection++;
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             break;
         }
         D_801273E9_selection -= (s8)(D_801273E9_selection / 5) * 5;
@@ -36,14 +36,14 @@ void ovl_11_func_801014F8(void) {
     if (func_800226B0()) {
         if (((u32 *)gPad0Input)[2] & 0x20) {
             func_80022738();
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             D_801273E4_state = 3;
         } else if (((u32 *)gPad0Input)[2] & 0x40) {
             D_801273EE_flags ^= 1 << (D_801273E9_selection + 7);
             if ((D_801273EE_flags >> (D_801273E9_selection + 7)) & 1) {
-                func_8001FABC(0);
+                PlaySoundEffect(0);
             } else {
-                func_8001FABC(1);
+                PlaySoundEffect(1);
             }
         }
     }

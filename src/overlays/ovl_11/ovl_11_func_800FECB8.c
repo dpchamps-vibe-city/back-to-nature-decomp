@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "screen_fade.h"
+#include "sound_commands.h"
 
 
 void func_80017A38 (s16 arg0, s16 arg1);
@@ -20,7 +21,6 @@ void SetVal8005E2BC (s32 arg0);
 s32 func_8002261C (s32 arg0, s32 arg1);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 void func_80022738 (void);
-s32 func_8001FABC (s16 arg0);
 
 void ovl_11_func_800FECB8(void) {
     if (D_801273B0 != 0) {

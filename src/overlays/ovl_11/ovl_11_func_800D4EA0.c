@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800D425C(u16 *arg0);
 s32 ovl_11_func_800D3D60(u16 arg0);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
-s32 func_8001FABC(s16 arg0);
 u32 Rand(s32 arg0);
 
 s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
@@ -33,7 +33,7 @@ s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
         arg0->field_30 = 1;
         far_base = (u8 *)&D_8007AFF0;
         if (*(s16 *)(far_base + 0x25476) == 1) {
-            func_8001FABC(0x1C);
+            PlaySoundEffect(0x1C);
         }
         break;
     case 1:

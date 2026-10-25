@@ -1,6 +1,6 @@
 #include "common.h"
+#include "sound_commands.h"
 void ovl_25_func_800BA2E8 (void);
-s32 func_8001FABC (s16 arg0);
 void ovl_25_func_800BA40C (void);
 void ovl_25_func_800B93BC (void);
 void ovl_25_func_800B8848 (void);
@@ -20,7 +20,7 @@ void ovl_25_func_800B8728(void) {
         D_800BFE44_view.unk4 = temp_v0;
         if (temp_v0 == 1) {
             ovl_25_func_800BA2E8();
-            D_800BFE44_view.unk4C8 = func_8001FABC(0x36);
+            D_800BFE44_view.unk4C8 = PlaySoundEffect(0x36);
         } else {
             ovl_25_func_800BA40C();
         }

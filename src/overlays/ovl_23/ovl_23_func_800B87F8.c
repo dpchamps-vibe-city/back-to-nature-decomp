@@ -2,17 +2,15 @@
 #include "screen_fade.h"
 #include "scene_selection.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 void ovl_23_func_800BB0E8(void);
-s32 func_8001FABC(s16 arg0);
 void ovl_23_func_800BB150(void);
 void ovl_23_func_800B92E8(void);
 void ovl_23_func_800B8B94(void);
 void ovl_23_func_800B8C18(void);
 void ovl_23_func_800B8FA4(void);
-void func_8001FAE8(s32 arg0);
-s32 func_8001FBBC(s16 arg0);
-s32 func_80020B80(s32 arg0, s32 arg1);
 void ovl_23_func_800BB7A0(s16 arg0);
 void ovl_23_func_800BB800(s16 arg0);
 void ovl_23_func_800B9310(void);
@@ -36,7 +34,7 @@ void ovl_23_func_800B87F8(void) {
             state->unk4 = paused;
             if (paused == 1) {
                 ovl_23_func_800BB0E8();
-                state->unk414 = func_8001FABC(0x36);
+                state->unk414 = PlaySoundEffect(0x36);
             } else {
                 ovl_23_func_800BB150();
             }
@@ -66,7 +64,7 @@ void ovl_23_func_800B87F8(void) {
             result = ((struct Ovl23ScreenHeader *)race)->unk8;
             if (result == 0) {
                 ((struct Ovl23ScreenHeader *)race)->unk8 = 1;
-                ((struct Ovl23ScreenHeader *)race)->unk414 = func_8001FABC(0x43);
+                ((struct Ovl23ScreenHeader *)race)->unk414 = PlaySoundEffect(0x43);
                 if (i == 2) {
                     *(s32 *)(save + 0x6630) = 1;
                 } else {
@@ -95,11 +93,11 @@ void ovl_23_func_800B87F8(void) {
                         }
                         if (readyCount == 2) {
                             if (state->unk414 != -1) {
-                                func_8001FAE8((s32)state->unk414);
+                                StopSoundEffectVoice((s32)state->unk414);
                             }
-                            func_8001FBBC(0);
-                            func_80020B80(2, 0);
-                            func_80020B80(1, 0);
+                            StopSoundSequence(0);
+                            RewindSoundLoadSlots(2, 0);
+                            RewindSoundLoadSlots(1, 0);
                             *(s32 *)(systemData + 0x448C) = 0xFF;
                             RequestSceneChange(6);
                             *(s32 *)(systemData + 0xC) |= 0x80000;

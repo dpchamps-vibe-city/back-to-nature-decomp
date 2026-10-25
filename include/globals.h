@@ -5,7 +5,7 @@
 /* Requires common.h typedefs (s8, s16, s32, u8, u16, u32) */
 #include "globals_override.h"
 
-/* 23 symbol(s) supplied by overrides or translation-unit-specific declarations */
+/* 17 symbol(s) supplied by overrides or translation-unit-specific declarations */
 
 /* GP-relative symbols (within $gp ± 0x7FF0) */
 extern u16 D_8005E2BA;
@@ -21,11 +21,9 @@ extern s16 D_8005E4A2;
 extern s16 D_8005E566;
 extern s16 D_8005E56A;
 extern s16 D_8005E56E;
-extern s16 D_8005E572;
 extern u8 D_8005E5D1;
 extern s32 D_8005EA28;
 extern s32 D_8005F028;
-extern s32 D_80061F28;
 
 /* Absolute-addressed symbols (outside $gp range) */
 /* Declared as >8-byte arrays with __asm__ to force lui+lo addressing with -G8 */
@@ -38,8 +36,6 @@ extern s32 _D_80011324[3] __asm__("D_80011324");
 #define D_80011324 (*((s32*)_D_80011324))
 extern s32 _D_80011334[3] __asm__("D_80011334");
 #define D_80011334 (*((s32*)_D_80011334))
-extern s32 _D_80049296[3] __asm__("D_80049296");
-#define D_80049296 (*((s32*)_D_80049296))
 extern s32 _D_800537B2[3] __asm__("D_800537B2");
 #define D_800537B2 (*((s32*)_D_800537B2))
 extern s32 _D_8005392E[3] __asm__("D_8005392E");
@@ -50,32 +46,6 @@ extern s32 _D_80053946[3] __asm__("D_80053946");
 #define D_80053946 (*((s32*)_D_80053946))
 extern s32 _D_80061ED8[3] __asm__("D_80061ED8");
 #define D_80061ED8 (*((s32*)_D_80061ED8))
-extern s32 _D_8006BF28[3] __asm__("D_8006BF28");
-#define D_8006BF28 (*((s32*)_D_8006BF28))
-extern s32 _D_8006BF48[3] __asm__("D_8006BF48");
-#define D_8006BF48 (*((s32*)_D_8006BF48))
-extern s32 _D_8006BF68[3] __asm__("D_8006BF68");
-#define D_8006BF68 (*((s32*)_D_8006BF68))
-extern s32 _D_8006BF88[3] __asm__("D_8006BF88");
-#define D_8006BF88 (*((s32*)_D_8006BF88))
-extern s32 _D_8006BFA8[3] __asm__("D_8006BFA8");
-#define D_8006BFA8 (*((s32*)_D_8006BFA8))
-extern s32 _D_8006BFC8[3] __asm__("D_8006BFC8");
-#define D_8006BFC8 (*((s32*)_D_8006BFC8))
-extern s32 _D_8006BFE8[3] __asm__("D_8006BFE8");
-#define D_8006BFE8 (*((s32*)_D_8006BFE8))
-extern s32 _D_8006C008[3] __asm__("D_8006C008");
-#define D_8006C008 (*((s32*)_D_8006C008))
-extern s32 _D_8006C028[3] __asm__("D_8006C028");
-#define D_8006C028 (*((s32*)_D_8006C028))
-extern s32 _D_8006C048[3] __asm__("D_8006C048");
-#define D_8006C048 (*((s32*)_D_8006C048))
-extern s32 _D_8006C068[3] __asm__("D_8006C068");
-#define D_8006C068 (*((s32*)_D_8006C068))
-extern s32 _D_8006C0C8[3] __asm__("D_8006C0C8");
-#define D_8006C0C8 (*((s32*)_D_8006C0C8))
-extern s32 _D_8006C128[3] __asm__("D_8006C128");
-#define D_8006C128 (*((s32*)_D_8006C128))
 extern s32 _D_8006C188[3] __asm__("D_8006C188");
 #define D_8006C188 (*((s32*)_D_8006C188))
 extern s32 _D_8006C398[3] __asm__("D_8006C398");

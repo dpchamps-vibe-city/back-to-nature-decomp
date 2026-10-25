@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 void ovl_17_func_800BAFDC(void);
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
@@ -13,7 +14,6 @@ s32 GetVal8005E5B4(void);
 s16 ovl_17_func_800B9C48(s16 arg0);
 void func_80022738(void);
 /* The original 8001FAD0 jal forwards func_800212A8's s32 voice result. */
-s32 func_8001FABC(s16 arg0);
 void ovl_17_func_800BB050(void);
 void ovl_17_func_800BB0C4(s16 arg0);
 
@@ -43,7 +43,7 @@ void ovl_17_func_800B8790(void) {
             }
             work = D_800BD848;
             func_80022738();
-            *(s16 *)(work + 0x2C8) = func_8001FABC(0x38);
+            *(s16 *)(work + 0x2C8) = PlaySoundEffect(0x38);
             ovl_17_func_800BB050();
             work[4] = 7;
             *(s16 *)(work + 0x2CC) = -1;

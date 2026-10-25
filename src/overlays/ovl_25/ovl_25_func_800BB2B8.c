@@ -1,9 +1,9 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
+#include "projected_primitives.h"
 
 void func_8001719C(u8 *arg0);
-void func_8001BFA8(void *arg0, void *arg1);
 void func_8001E340(void **arg0);
 void SetVal8005E51C(s32 arg0);
 
@@ -24,7 +24,7 @@ void ovl_25_func_800BB2B8(void) {
     memcpy(&D_8009F78C, (void *)D_8007AFF0, 0xBDC);
     dst = &D_800C0454;
     __asm__("" : : : "memory");
-    func_8001BFA8(dst, (void *)(D_8007AFF0 + 0x2000));
+    InitProjectedPrimitiveSource(dst, (void *)(D_8007AFF0 + 0x2000));
     far_base = (char *)&D_8007AFF0;
     *(s32 *)(far_base + 0x2547C) = 0x39;
     *(s32 *)(far_base + 0x25388) = (s32)&D_8009F78C;

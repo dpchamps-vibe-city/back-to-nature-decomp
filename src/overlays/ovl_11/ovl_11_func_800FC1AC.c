@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 void ovl_11_func_800FE640(void);
 void ovl_11_func_800FE928(void);
@@ -7,8 +8,6 @@ void ovl_11_func_800FEA00(void);
 void ovl_11_func_800FC320(void);
 
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-
-s32 func_8001FABC(s16 arg0);
 
 void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 
@@ -22,11 +21,11 @@ void ovl_11_func_800FC1AC(void) {
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) &D_8012CDC8, 0x3E, 0x1A);
     temp_v0 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v0 & 0x2000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         D_80127210 = 0;
         ovl_11_func_800FE928();
     } else if (temp_v0 & 0x8000) {
-        func_8001FABC(5);
+        PlaySoundEffect(5);
         D_80127210 = 0;
         ovl_11_func_800FEA00();
     }

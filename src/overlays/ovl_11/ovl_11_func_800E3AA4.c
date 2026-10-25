@@ -3,6 +3,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 typedef struct {
     char pad[0xE];
@@ -11,10 +13,6 @@ typedef struct {
 
 s32 func_8001AF44(u32 arg0);
 void ClearActiveOrderingTables(void);
-void func_8001FBE4(s32 arg0, s32 arg1);
-s32 func_8001FBBC(s16 arg0);
-s32 func_80020B80(s32 arg0, s32 arg1);
-void func_8001FBF0(s16 arg0, s16 arg1);
 
 void ovl_11_func_800E3AA4(void) {
     s16 temp_s1;
@@ -42,11 +40,11 @@ void ovl_11_func_800E3AA4(void) {
             env2->unk1B = 0;
             DrawSync(0);
             ClearActiveOrderingTables();
-            func_8001FBE4(0, D_8005E3B0 + 0x4290);
-            func_8001FBBC(0);
-            func_80020B80(2, 0);
+            SetSoundCommandReadBuffer(0, D_8005E3B0 + 0x4290);
+            StopSoundSequence(0);
+            RewindSoundLoadSlots(2, 0);
             *(s32 *)(far + 0x25498) = (s32)((Unk0E *)(*(u8 **)(far + 0x25388)))->unkE;
-            func_8001FBF0(temp_s1, 0);
+            QueueSoundLoadCommand(temp_s1, 0);
             *(s32 *)(far + 0x2549C) = (s32)temp_s1;
             ((struct struct_8006C838_800E3AA4 *)D_8006C838)->field_4438 = -1;
             do {

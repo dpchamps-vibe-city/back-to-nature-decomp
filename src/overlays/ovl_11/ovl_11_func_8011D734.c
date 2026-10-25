@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
-s32 func_8001FABC(s16 arg0);
 s16 ovl_11_func_8011D890(Ovl11D548Arg x, s32 mode);
 
 s32 ovl_11_func_8011D734(Ovl11D548Arg *arg0) {
@@ -16,22 +16,22 @@ s32 ovl_11_func_8011D734(Ovl11D548Arg *arg0) {
     temp_v1 = ((SomeStruct *) gPad0Input)->field_0x8;
     if (temp_a0 & 0x1000) {
         *dst = ovl_11_func_8011D890(*arg0, 0);
-        func_8001FABC(5);
+        PlaySoundEffect(5);
     } else if (temp_a0 & 0x4000) {
         *dst = ovl_11_func_8011D890(*arg0, 1);
-        func_8001FABC(5);
+        PlaySoundEffect(5);
     } else {
         if (temp_v1 & 0x40) {
             var_s1 = 1;
-            func_8001FABC(0);
+            PlaySoundEffect(0);
         } else if (temp_v1 & 0x10) {
             if (D_8012D52C != 7) {
                 var_s1 = 2;
-                func_8001FABC(0);
+                PlaySoundEffect(0);
             }
         } else if (temp_v1 & 0x20) {
             var_s1 = 3;
-            func_8001FABC(1);
+            PlaySoundEffect(1);
         }
     }
     return var_s1;

@@ -5,19 +5,14 @@
 #include "psyq/libgpu.h"
 #include "cd_audio.h"
 #include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 
 void ovl_30_func_8012F44C(void);
 void ovl_30_func_8012F410(void);
 void ovl_30_func_8012F3D4(void);
 s32 ovl_30_func_8012FE68(s32, s32);
 void ovl_30_func_8012FDEC(void);
-void func_8001FAE8(s32);
-s32 func_8001FBBC(s16);
-s32 func_80020818(void);
-s32 func_80020B80(s32, s32);
-void func_8001FBF0(s16, s16);
-s32 func_8001FABC(s16);
-s32 func_8001FB30(s16, s16, s16, s16);
 
 #define DEBUG_FLAGS ((struct Ovl30DebugFlags *)D_8006C838)
 #define INPUT ((SomeStruct *)gPad0Input)
@@ -126,8 +121,8 @@ s32 ovl_30_func_8012F454(s32 state) {
             break;
         case 6:
             if (INPUT->field_0x8 & 0x20) {
-                if (D_80134AF8 != -1) func_8001FAE8(D_80134AF8);
-                D_80134AF8 = func_8001FABC(D_80134AE8);
+                if (D_80134AF8 != -1) StopSoundEffectVoice(D_80134AF8);
+                D_80134AF8 = PlaySoundEffect(D_80134AE8);
             } else {
                 if (INPUT->field_0x0 & 0x2000) {
                     if (++D_80134AE8 >= 77) D_80134AE8 = 0;
@@ -140,10 +135,10 @@ s32 ovl_30_func_8012F454(s32 state) {
         case 7:
             if (INPUT->field_0x8 & 0x20) {
                 state = 999;
-                func_8001FBBC(0);
-                func_80020818();
-                func_80020B80(2, 0);
-                func_8001FBF0(D_80134AF0 + 1, 0);
+                StopSoundSequence(0);
+                OpenSoundSequencesAndStart();
+                RewindSoundLoadSlots(2, 0);
+                QueueSoundLoadCommand(D_80134AF0 + 1, 0);
             } else {
                 if (INPUT->field_0x0 & 0x2000) {
                     if (++D_80134AF0 >= 37) D_80134AF0 = 0;
@@ -155,8 +150,8 @@ s32 ovl_30_func_8012F454(s32 state) {
             break;
         case 8:
             if (INPUT->field_0x8 & 0x20) {
-                if (D_80134AF8 != -1) func_8001FAE8(D_80134AF8);
-                D_80134AF8 = func_8001FABC(D_80134AEC + 54);
+                if (D_80134AF8 != -1) StopSoundEffectVoice(D_80134AF8);
+                D_80134AF8 = PlaySoundEffect(D_80134AEC + 54);
             } else {
                 if (INPUT->field_0x0 & 0x2000) {
                     if (++D_80134AEC >= 16) D_80134AEC = 0;
@@ -183,14 +178,14 @@ s32 ovl_30_func_8012F454(s32 state) {
     case 999:
         if (IsSoundTransferComplete()) {
             state = 1;
-            func_80020818();
-            func_8001FB30(0, 0, D_80134AF0, 127);
+            OpenSoundSequencesAndStart();
+            PlaySoundSequenceWithReverb(0, 0, D_80134AF0, 127);
         }
         break;
     case 1000:
         if (IsSoundTransferComplete()) {
             state = 1;
-            func_80020818();
+            OpenSoundSequencesAndStart();
         }
         break;
     }

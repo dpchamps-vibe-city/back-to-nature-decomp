@@ -3,8 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-
-s32 func_8001FABC(s16 arg0);
+#include "sound_commands.h"
 
 void ovl_30_func_80133A8C(Ovl30FlagMenuEntry *arg0, s32 arg1) {
     char *labels[2];
@@ -75,7 +74,7 @@ void ovl_30_func_80133A8C(Ovl30FlagMenuEntry *arg0, s32 arg1) {
     } else {
         goto edit_entry;
     }
-    func_8001FABC(5);
+    PlaySoundEffect(5);
     return;
 
 edit_entry:

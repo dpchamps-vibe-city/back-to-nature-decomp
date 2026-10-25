@@ -1,12 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "sound_commands.h"
 
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
 s32 func_800226B0(void);
 void func_80022738(void);
-s32 func_8001FABC(s16 arg0);
 void ovl_11_func_80100898(u8 arg0);
 s32 ovl_11_func_80100A8C(s32 arg0);
 void ovl_11_func_80103714(void);
@@ -31,29 +31,29 @@ void ovl_11_func_8010021C(void) {
             return;
         case 0x20:
             func_80022738();
-            func_8001FABC(1);
+            PlaySoundEffect(1);
             Ovl11_D_801273DC = ovl_11_func_80100194;
             return;
         case 0x10:
             if (((Ovl11SelectionRecords *)&D_8006C838)->records[Ovl11_D_801273E8 * 20 + Ovl11_D_801273E7][0] != 0) {
                 func_80022738();
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 Ovl11_D_801273DC = ovl_11_func_80100644;
                 return;
             }
-            func_8001FABC(2);
+            PlaySoundEffect(2);
             break;
         case 0x40:
             if (((Ovl11SelectionRecords *)&D_8006C838)->records[Ovl11_D_801273E8 * 20 + Ovl11_D_801273E7][0] == 0) {
-                func_8001FABC(2);
+                PlaySoundEffect(2);
             } else if (ovl_11_func_80100A8C((u8)(Ovl11_D_801273E8 * 20 + Ovl11_D_801273E7)) == 0) {
                 func_80022738();
-                func_8001FABC(2);
+                PlaySoundEffect(2);
                 Ovl11_D_801273DC = ovl_11_func_801006F8;
                 return;
             } else {
                 func_80022738();
-                func_8001FABC(0);
+                PlaySoundEffect(0);
                 Ovl11_D_801273DC = ovl_11_func_801007AC;
                 return;
             }
@@ -61,21 +61,21 @@ void ovl_11_func_8010021C(void) {
         }
         switch (*(u32 *)gPad0Input & 0xF000) {
         case 0x1000:
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             Ovl11_D_801273E7--;
             if (Ovl11_D_801273E7 == -1 || Ovl11_D_801273E7 == 9) {
                 Ovl11_D_801273E7 += 10;
             }
             break;
         case 0x4000:
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             Ovl11_D_801273E7++;
             if (Ovl11_D_801273E7 == 10 || Ovl11_D_801273E7 == 20) {
                 Ovl11_D_801273E7 -= 10;
             }
             break;
         case 0x8000:
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             Ovl11_D_801273E7 -= 10;
             if (Ovl11_D_801273E7 < 0) {
                 Ovl11_D_801273E7 += 20;
@@ -83,7 +83,7 @@ void ovl_11_func_8010021C(void) {
             }
             break;
         case 0x2000:
-            func_8001FABC(5);
+            PlaySoundEffect(5);
             Ovl11_D_801273E7 += 10;
             if (Ovl11_D_801273E7 >= 20) {
                 Ovl11_D_801273E7 -= 20;

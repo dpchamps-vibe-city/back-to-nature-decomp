@@ -1,6 +1,7 @@
 #include "common.h"
 #include "psyq/libspu.h"
 #include "screen_fade.h"
+#include "sound_commands.h"
 
 void ovl_21_func_800BA4C0(void);
 s32 GetVal8005E5B4(void);
@@ -8,7 +9,6 @@ void func_80022738(void);
 void ovl_21_func_800B9798(s16 arg0, s16 arg1);
 void SetVal8005E2BC(s32 arg0);
 void SetVal8005E334(s32 arg0);
-s32 func_8001FABC(s16 arg0);
 
 void ovl_21_func_800B9178(void) {
     u8 *base;
@@ -45,7 +45,7 @@ void ovl_21_func_800B9178(void) {
     base = (u8 *)D_800C0448;
     if (*(s16 *)(base + 0x988) == 0) {
         if (GetVal8005E5B4() == 5) {
-            *(s16 *)(base + 0x986) = func_8001FABC(0x45);
+            *(s16 *)(base + 0x986) = PlaySoundEffect(0x45);
             ovl_21_func_800B9798(0, 0xB);
             *(s16 *)(base + 0x988) = 1;
         }

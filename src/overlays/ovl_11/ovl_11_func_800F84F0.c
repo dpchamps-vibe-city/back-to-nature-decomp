@@ -1,7 +1,7 @@
 #include "common.h"
+#include "sound_commands.h"
 
 s32 func_800226B0(void);
-s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800F8404(s32 arg0);
 void ovl_11_func_800F6F7C(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F6F40(s32 arg0, s16 arg1, s16 arg2);
@@ -36,17 +36,17 @@ void ovl_11_func_800F84F0(s32 arg0) {
             }
             if (D_80126E4E == 255) {
                 D_80126E44 = D_80126E54[D_80126E44].links[direction][D_80071A1E];
-                func_8001FABC(5);
+                PlaySoundEffect(5);
             }
         }
         if (D_80126E4E == 255) {
             pageButtons = *(s32 *)gPad0Input;
             if (pageButtons & 5) {
-                func_8001FABC(5);
+                PlaySoundEffect(5);
                 previous = delta.value - 1;
                 delta.value = previous + arg0 / 8;
             } else if (pageButtons & 10) {
-                func_8001FABC(5);
+                PlaySoundEffect(5);
                 delta.value++;
             }
         }

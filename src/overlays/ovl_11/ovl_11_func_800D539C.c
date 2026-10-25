@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "sound_commands.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -15,7 +16,6 @@ typedef struct {
 void ovl_11_func_800D0408();
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
-s32 func_8001FABC(s16 arg0);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D04D4(Ovl11D539CStepObj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_800D3D60(u16 arg0);
@@ -84,7 +84,7 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
         (arg0->flags) |= 0x800;
         far_base = (u8 *)&D_8007AFF0;
         if ((*(s16 *) (far_base + 0x25476)) == (arg0->map)) {
-            func_8001FABC(0x1C);
+            PlaySoundEffect(0x1C);
         }
         break;
     case -1:

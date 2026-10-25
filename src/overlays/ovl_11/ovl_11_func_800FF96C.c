@@ -1,8 +1,7 @@
 #include "common.h"
 #include "pad_actuator_gate.h"
+#include "sound_driver.h"
 
-void func_80020A40(void);
-void func_80020A14(void);
 void ovl_11_func_800FB608(void);
 void ovl_11_func_800FB628(void);
 
@@ -20,9 +19,9 @@ void ovl_11_func_800FF96C(void) {
     base1 = (char *)&D_8006C838;
     base1 += 0x8000;
     if (*(s16 *)(base1 + 0x64D0)) {
-        func_80020A40();
+        SetSoundStereo();
     } else {
-        func_80020A14();
+        SetSoundMono();
     }
     base2 = (char *)&D_8006C838;
     base2 += 0x8000;
