@@ -22,6 +22,7 @@
 #include "ovl11_state_field_access.h"
 #include "ovl11_interaction_volume_query.h"
 #include "integer_power.h"
+#include "game_flags.h"
 
 typedef struct {
                s16 field_0;
@@ -159,8 +160,6 @@ void ResetPadActuatorSequence (s32 arg0);
 void SetVal8005E2E8 (s32 arg0);
 s32 func_8001E38C (void);
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
-s32 func_8001AF44 (u32 arg0);
-void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_800C47F0 (void);
 s32 ovl_11_func_80107DEC (M2C_42071334137b_Ov11Timer *arg0);
 void ovl_11_func_800CD6F4 (void *arg0);

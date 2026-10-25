@@ -1,7 +1,7 @@
 #include "common.h"
+#include "game_flags.h"
 
 void ovl_11_func_800F1E44(u32 arg0, s16 *arg1, s32 arg2);
-s32 func_8001AF44(u32 arg0);
 
 s32 ovl_11_func_800F1878(u32 arg0, s32 arg1) {
     s16 sp10;
@@ -21,12 +21,12 @@ s32 ovl_11_func_800F1878(u32 arg0, s32 arg1) {
         one = 1;
         if (arg1 == one) {
             temp_a0 = (u16) *var_s0;
-            if ((temp_a0 != mask) && (func_8001AF44((temp_a0 + 0xFB) & 0xFFFF) != arg1)) {
+            if ((temp_a0 != mask) && (GetGameFlag((temp_a0 + 0xFB) & 0xFFFF) != arg1)) {
                 var_s1 = 0;
             }
         } else {
             temp_a0 = (u16) *var_s0;
-            if ((temp_a0 != mask) && (func_8001AF44((temp_a0 + 0xFB) & 0xFFFF) != 0)) {
+            if ((temp_a0 != mask) && (GetGameFlag((temp_a0 + 0xFB) & 0xFFFF) != 0)) {
                 var_s1 = 0;
             }
         }

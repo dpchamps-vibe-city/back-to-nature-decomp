@@ -7,8 +7,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_scene_record_visibility.h"
-
-s32 func_8001AF44(u32 flagIndex);
+#include "game_flags.h"
 
 void Ovl11InitSceneRecordVisibilityPair(void) {
     Ovl11SceneRecordFlagsView *record;
@@ -35,7 +34,7 @@ void Ovl11InitSceneRecordVisibilityPair(void) {
 
 void Ovl11UpdateSceneRecordVisibilityPair(void) {
     if (gOvl11SceneRecordVisibilityPair[0] != 0) {
-        if (func_8001AF44(0x72) == 1) {
+        if (GetGameFlag(0x72) == 1) {
             ((Ovl11SceneRecordFlagsView *)gOvl11SceneRecordVisibilityPair[1])->flags &= 0xEFFF;
             ((Ovl11SceneRecordFlagsView *)gOvl11SceneRecordVisibilityPair[0])->flags |= 0x1000;
         } else {

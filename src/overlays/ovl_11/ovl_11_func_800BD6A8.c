@@ -5,8 +5,7 @@
 #include "psyq/memory.h"
 #include "cd_loader.h"
 #include "sprite_upload.h"
-
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 void ovl_11_func_800BD6A8(s16 arg0, s16 arg1) {
     s16 var_s0;
@@ -28,10 +27,10 @@ void ovl_11_func_800BD6A8(s16 arg0, s16 arg1) {
                 var_s0 = 2;
             }
             if (var_s0 == 1) {
-                func_8001AF70(0x3FU, 1U);
+                SetGameFlag(0x3FU, 1U);
             }
             if (var_s0 == 2) {
-                func_8001AF70(0x40U, 1U);
+                SetGameFlag(0x40U, 1U);
             }
             var_s3 = 1;
             var_s0 = var_s0 + (s16) ((struct Ovl11SpriteSelectors *) D_8006C838)->day * 3;

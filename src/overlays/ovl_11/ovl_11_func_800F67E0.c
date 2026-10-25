@@ -5,10 +5,10 @@
 #include "message_window.h"
 #include "psyq/memory.h"
 #include "ovl11_texture_stream.h"
+#include "game_flags.h"
 
 void SetVal8005E2BC(s32 arg0);
 void ovl_11_func_800BCF28(void);
-void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800F69FC(void);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
@@ -65,8 +65,8 @@ void ovl_11_func_800F67E0(void) {
                     ovl_11_func_800BCF28();
                     ((struct struct_8006C838_view *)&D_8006C838)->field_0C |= 0x40000;
                     ((struct struct_8006C838_800E8F78 *)&D_8006C838)->field_5234 |= 0x2000;
-                    func_8001AF70(0x71, 0);
-                    func_8001AF70(0x70, 0);
+                    SetGameFlag(0x71, 0);
+                    SetGameFlag(0x70, 0);
                 }
             } else {
                 ovl_11_func_800F69FC();

@@ -4,8 +4,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
 #include "asset_scratch.h"
-
-s32 func_8001AF44(u32 arg0);
+#include "game_flags.h"
 
 s32 ovl_11_func_800E39B8(s32 *arg0, u32 arg1);
 
@@ -32,7 +31,7 @@ s32 ovl_11_func_800E351C(u8 *arg0, s16 arg1, s16 arg2) {
     LoadImage((RECT *)&rect, (u_long *)acc);
     acc += D_801248B4.w * D_801248B4.h * 2;
 
-    if (func_8001AF44(2) == 1) {
+    if (GetGameFlag(2) == 1) {
         DrawSync(0);
         return 0;
     }

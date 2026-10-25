@@ -7,11 +7,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800BF3F4(void);
 /* This caller supplies two arguments; the callee's trailing debug arguments
  * do not participate in sprite initialization. */
-void func_8001AF70(u16 arg0, u16 arg1);
 s32 ovl_11_func_800C79F8(Vec3 *arg0);
 s32 ovl_11_func_800D7504(s16 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
@@ -41,7 +41,7 @@ s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
         } else {
             far_base = (char *)&D_8007AFF0;
             if (((*(Ovl11CC4E0Head **) (far_base + 0x25388))->unk2 == 0x2C) && ((s16) (*(u16 *) ((u8 *) arg0 + 2)) == 0xA3)) {
-                func_8001AF70(0x5EU, 1U);
+                SetGameFlag(0x5EU, 1U);
             }
             if ((temp_v0 != 3) && ((s16) (*(u16 *) ((u8 *) arg0 + 2)) == 0x186)) {
                 D_8012DB80 = 1;

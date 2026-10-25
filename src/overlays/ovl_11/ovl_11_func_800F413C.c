@@ -13,6 +13,7 @@
 #include "random.h"
 #include "vblank_timer.h"
 #include "integer_power.h"
+#include "game_flags.h"
 
 typedef struct {
     s16 field_0;
@@ -99,7 +100,6 @@ s32 ovl_11_func_800D5868 (s16 arg0);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800D5CE4 (s16 arg0);
 s32 ovl_11_func_800D5C90 (s16 arg0);
-s32 func_8001AF44 (u32 arg0);
 void ovl_11_func_800F4360 (M2C_701317280b4c_Ov11_4360struct *arg0, s16 arg1, s16 arg2, Vec3 vec);
 s32 Ovl11IsActionGuardAreaBlocked (s32 arg0);
 s32 Ovl11TestRecordFieldGuard (s32 arg0, s32 arg1);

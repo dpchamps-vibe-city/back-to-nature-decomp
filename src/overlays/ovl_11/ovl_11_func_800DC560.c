@@ -2,13 +2,12 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "sprite_rotation.h"
+#include "game_flags.h"
 
 void ovl_11_func_80104A58 (void);
 s32 ovl_11_func_800DC388 (s32 arg0);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_80113B80 (void);
-s32 func_8001AF44 (u32 arg0);
-void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_800BD5A8 (s32 arg0);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_800DB2AC (Ovl11SetupHeader *arg0);
@@ -40,17 +39,17 @@ void ovl_11_func_800DC560(s32 arg0, s32 arg1) {
         ovl_11_func_800DBFEC((u16) (((Ovl11SetupWorkView *) &D_8007AFF0)->id), temp_s2, arg1 & 0xFFFF);
         if (arg0 != 0) {
             ovl_11_func_80113B80();
-            if (func_8001AF44(0x42U) == 1) {
+            if (GetGameFlag(0x42U) == 1) {
                 (((Ovl11SetupResidentView *) D_8006C838)->x) = -0x2CBD;
                 (((Ovl11SetupResidentView *) D_8006C838)->y) = -0x764;
                 (((Ovl11SetupResidentView *) D_8006C838)->z) = 0x25EA;
-                func_8001AF70(0x42U, 0U);
+                SetGameFlag(0x42U, 0U);
             }
-            if (func_8001AF44(0x43U) == 1) {
+            if (GetGameFlag(0x43U) == 1) {
                 (((Ovl11SetupResidentView *) D_8006C838)->x) = -0x2A9F;
                 (((Ovl11SetupResidentView *) D_8006C838)->y) = -0x695;
                 (((Ovl11SetupResidentView *) D_8006C838)->z) = 0x241A;
-                func_8001AF70(0x43U, 0U);
+                SetGameFlag(0x43U, 0U);
             }
         }
         if (temp_s2 & 0x8000) {
@@ -97,7 +96,7 @@ block_23:
 block_27:
     if ((((Ovl11SetupWorkView *) &D_8007AFF0)->state) != 0x19) {
 block_28:
-        if (func_8001AF44(2U) != 1) {
+        if (GetGameFlag(2U) != 1) {
             temp_a0_2 = *(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 0xC);
             if (temp_a0_2 != 0x3E7) {
                 ovl_11_func_800BD6A8(temp_a0_2, 0);
@@ -127,7 +126,7 @@ block_33:
     Ovl11RegisterPoolSpriteRotations((s32) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
     if (((*(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 2)) == 1) && ((((Ovl11SetupResidentView *) D_8006C838)->time) >= 0x438)) {
         ovl_11_func_800BDA70();
-        func_8001AF70(0x40U, 1U);
+        SetGameFlag(0x40U, 1U);
     }
     ovl_11_func_800CE5FC();
 }

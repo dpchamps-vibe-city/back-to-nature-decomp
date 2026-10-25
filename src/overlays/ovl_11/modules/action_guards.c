@@ -12,6 +12,7 @@
 #include "game_types.h"
 #include "ovl11_action_guards.h"
 #include "ovl11_clock_calendar.h"
+#include "game_flags.h"
 
 s32 Ovl11IsActionGuardAreaBlocked(s32 id);
 s32 Ovl11EvaluateActionGuardList(s16 *header);
@@ -24,7 +25,6 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit);
 s32 Ovl11IsOutsideGuardInterval(s32 lower, s32 upper);
 s32 Ovl11HasActionGuardAreaException(s32 id, s16 area, s16 room);
 s32 ovl_11_func_800C3548(s32 index);
-s32 func_8001AF44(u32 flag);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 Ovl11FindActionGuardResult(s32 id) {
@@ -245,9 +245,9 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
         base = (char *)&D_8006C838;
         if (*(s16 *)(base + 0x44BA) == 3) {
             if (*(s16 *)(base + 0x44BC) == 0x17) {
-                flagResult = func_8001AF44(0x1B);
+                flagResult = GetGameFlag(0x1B);
                 if (flagResult == 1) {
-                    if (func_8001AF44((index + 0x21) & 0xFFFF) == 0) {
+                    if (GetGameFlag((index + 0x21) & 0xFFFF) == 0) {
                         return 1;
                     }
                 }
@@ -258,14 +258,14 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
 
     switch (selector) {
     case 0:
-        if (func_8001AF44(0x20U) == 0 && func_8001AF44(0x25U) == 0) {
+        if (GetGameFlag(0x20U) == 0 && GetGameFlag(0x25U) == 0) {
             result = 0;
         } else {
             result = 1;
         }
         break;
     case 1:
-        if (func_8001AF44(0x26U) == 0 && func_8001AF44(0x2AU) == 0) {
+        if (GetGameFlag(0x26U) == 0 && GetGameFlag(0x2AU) == 0) {
             result = 0;
         } else {
             result = 1;
@@ -273,21 +273,21 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
         break;
     case 2:
         result = 0;
-        if ((func_8001AF44(0x184U) == 1) && (func_8001AF44(0x185U) == 0)) {
-            result = func_8001AF44(0x186U) == 0;
+        if ((GetGameFlag(0x184U) == 1) && (GetGameFlag(0x185U) == 0)) {
+            result = GetGameFlag(0x186U) == 0;
         }
         break;
     case 3:
-        result = func_8001AF44(0x27);
+        result = GetGameFlag(0x27);
         break;
     case 4:
-        result = func_8001AF44(0x26);
+        result = GetGameFlag(0x26);
         break;
     case 5:
         result = gCalendarWeekday == 0;
         break;
     case 6:
-        result = func_8001AF44(0x20);
+        result = GetGameFlag(0x20);
         break;
     case 7: {
         char *base;
@@ -301,7 +301,7 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
     case 8: {
         s32 value;
         result = 0;
-        if (func_8001AF44(0x74U) == 1) {
+        if (GetGameFlag(0x74U) == 1) {
             value = Ovl11Item_80071A8A.id;
             value -= 0x106;
             result = (u32)value < 2U;
@@ -334,13 +334,13 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
         break;
     }
     case 16:
-        result = func_8001AF44(0x1C);
+        result = GetGameFlag(0x1C);
         break;
     case 17:
-        result = func_8001AF44(0x1D);
+        result = GetGameFlag(0x1D);
         break;
     case 18:
-        result = func_8001AF44(0x1F);
+        result = GetGameFlag(0x1F);
         break;
     case 19: {
         Ovl11GuardState *state;
@@ -370,7 +370,7 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
     }
     case 20:
         result = 0;
-        flagResult = func_8001AF44(0x19BU);
+        flagResult = GetGameFlag(0x19BU);
         if (flagResult == 1) {
             if (gCalendarWeekday != flagResult) {
                 result = gCalendarWeekday != 3;
@@ -378,7 +378,7 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
         }
         break;
     case 21:
-        result = func_8001AF44(0x2A);
+        result = GetGameFlag(0x2A);
         break;
     default:
         result = 0;

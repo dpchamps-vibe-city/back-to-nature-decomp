@@ -27,6 +27,10 @@
 #include "render_packet_pool.h"
 #include "ovl11_choice_messages.h"
 #include "ovl11_sprite_effect_pool.h"
+#include "game_flags.h"
+#include "psyq/abs.h"
+#include "ovl11_object_event_script.h"
+#include "ovl11_object_event_pool.h"
 
 typedef struct {
                s16 unk0;
@@ -53,8 +57,6 @@ void *memmove (unsigned char *, const unsigned char *, int);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 *func_80021FE4 (void);
-s32 func_8001AF44 (u32 arg0);
-void func_8001AF70 (u16 arg0, u16 arg1);
 s16 GetMessageWindowArchiveId (void);
 void func_800179E8 (void);
 void func_80022008 (void);
@@ -62,11 +64,9 @@ void ovl_11_func_800BD160 (void);
 void ovl_11_func_800BD168 (void);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
-void ovl_11_func_800C1C90 (void);
 void ovl_11_func_800F4114 (void);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800F1038 (u16 arg0, s32 arg1);
-s32 ovl_11_func_800C2884 (s16 key, u32 *table);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800E39B8 (s32 *arg0, u32 arg1);
 void ovl_11_func_800E5230 (void);

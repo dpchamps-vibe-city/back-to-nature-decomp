@@ -1,7 +1,6 @@
 #include "common.h"
 #include "screen_fade.h"
-
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 s32 ovl_11_func_800E7660(s32 arg0, s32 arg1, s32 arg2) {
     s16 var_a0;
@@ -44,7 +43,7 @@ s32 ovl_11_func_800E7660(s32 arg0, s32 arg1, s32 arg2) {
     var_v0 = var_s0;
     if (var_s0 == 1) {
         ((struct struct_8006C838_800E7660 *)D_8006C838)->field_51EA = -1;
-        func_8001AF70(0x46U, 0U);
+        SetGameFlag(0x46U, 0U);
         var_v0 = var_s0;
     }
     return var_v0;

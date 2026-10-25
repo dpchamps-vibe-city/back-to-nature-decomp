@@ -2,12 +2,12 @@
 #include "game_types.h"
 #include "ovl11_clock_calendar.h"
 #include "u16_string.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 func_8001AF44(u32 arg0);
 s32 ovl_11_func_800EF0E8(s16 arg0);
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount);
 s32 ovl_11_func_800CFB20(s32 arg0, s32 arg1);
@@ -245,7 +245,7 @@ block_64:
         }
         return 1;
     case 0xE:
-        if (func_8001AF44(0x192U) == 0) {
+        if (GetGameFlag(0x192U) == 0) {
             var_v0 = 0;
             if (((Ovl11ConditionState *) D_8006C838)->field_52C6 == ((Ovl11ConditionState *) D_8006C838)->actors[11].field46) {
                 goto block_68;
@@ -276,7 +276,7 @@ block_72:
         }
         break;
     case 0xF:
-        if (func_8001AF44(0xE6U) != 0) {
+        if (GetGameFlag(0xE6U) != 0) {
             if ((((Ovl11ConditionState *) D_8006C838)->field_5492 == -1) || (var_v0 = 1, (((Ovl11ConditionState *) D_8006C838)->field_5492 == 7))) {
                 amount_F = ((Ovl11ConditionState *) D_8006C838)->actors[7].amount;
                 switch (((Ovl11ConditionState *) D_8006C838)->date[0]) {
@@ -317,7 +317,7 @@ block_72:
     case 0x12:
         var_a0_4 = 0xE6;
 block_406:
-        return func_8001AF44(var_a0_4) != 1;
+        return GetGameFlag(var_a0_4) != 1;
     case 0x13:
         if ((((Ovl11ConditionState *) D_8006C838)->field_5492 == -1) || (var_v0 = 1, (((Ovl11ConditionState *) D_8006C838)->field_5492 == 3))) {
             amount_13 = ((Ovl11ConditionState *) D_8006C838)->actors[3].amount;
@@ -367,8 +367,8 @@ block_406:
         }
         return 1;
     case 0x16:
-        if (func_8001AF44(0x20U) != 1) {
-            if (func_8001AF44(0x25U) != 0) {
+        if (GetGameFlag(0x20U) != 1) {
+            if (GetGameFlag(0x25U) != 0) {
                 if ((((Ovl11ConditionState *) D_8006C838)->field_5492 == -1) || (((Ovl11ConditionState *) D_8006C838)->field_5492 == 3)) {
                     return (u16) ((Ovl11ConditionState *) D_8006C838)->actors[3].amount <= 0xEA5FU;
                 }
@@ -483,7 +483,7 @@ block_406:
     case 0x20:
         var_a0_5 = 0x73;
 block_172:
-        return func_8001AF44(var_a0_5);
+        return GetGameFlag(var_a0_5);
     case 0x21:
         if (ovl_11_func_800E6EE0(0x47, 1, 1, 0) != 1) {
             record28.unk0 = 0x28;
@@ -515,7 +515,7 @@ block_172:
         return 0;
     case 0x24:
         if (D_80071CCA == 7) {
-            if (func_8001AF44(0x1B) == 0) {
+            if (GetGameFlag(0x1B) == 0) {
                 return 0;
             }
         }
@@ -537,7 +537,7 @@ block_172:
     case 0x28:
         var_a0_10 = 0xE8;
 block_338:
-        var_v0_3 = func_8001AF44(var_a0_10) ^ 1;
+        var_v0_3 = GetGameFlag(var_a0_10) ^ 1;
 block_339:
         return var_v0_3 == 0;
     case 0x29:
@@ -629,19 +629,19 @@ block_339:
         return var_v0;
     case 0x3F:
         if (D_80071CCA == 3) {
-            if (func_8001AF44(0x4E) == 1) {
+            if (GetGameFlag(0x4E) == 1) {
                 return 0;
             }
-            if (func_8001AF44(0x4D) == 1) {
+            if (GetGameFlag(0x4D) == 1) {
                 return 0;
             }
         }
         return 1;
     case 0x40:
         var_a0_4 = 0x4D;
-        return func_8001AF44(var_a0_4) != 1;
+        return GetGameFlag(var_a0_4) != 1;
     case 0x41:
-        if (func_8001AF44(0x4DU) != 1) {
+        if (GetGameFlag(0x4DU) != 1) {
             var_v0 = 0;
             if (((Ovl11ConditionState *) D_8006C838)->field_E798 == ((Ovl11ConditionState *) D_8006C838)->date[1]) {
                 var_a0_11 = ((Ovl11ConditionState *) D_8006C838)->field_E79A;
@@ -655,7 +655,7 @@ block_258:
         }
         return 0;
     case 0x42:
-        if (func_8001AF44(0x4DU) != 1) {
+        if (GetGameFlag(0x4DU) != 1) {
             temp_v0_3 = (void *) ((u8 *) D_8006C838 + (((Ovl11ConditionState *) D_8006C838)->field_5492 * 0x1D4));
             var_v0 = 0;
             if (((Ovl11ConditionState *) temp_v0_3)->actors[0].location == ((Ovl11ConditionState *) D_8006C838)->date[1]) {
@@ -669,7 +669,7 @@ block_258:
         }
         return 0;
     case 0x43:
-        if (func_8001AF44(0x4DU) != 1) {
+        if (GetGameFlag(0x4DU) != 1) {
             var_v0 = 0;
             if (((Ovl11ConditionState *) D_8006C838)->actors[36].location == ((Ovl11ConditionState *) D_8006C838)->date[1]) {
                 var_a0_11 = ((Ovl11ConditionState *) D_8006C838)->actors[36].tile;
@@ -682,7 +682,7 @@ block_258:
         }
         return 0;
     case 0x44:
-        if (func_8001AF44(0x4DU) != 1) {
+        if (GetGameFlag(0x4DU) != 1) {
             var_v0 = 0;
             if (((Ovl11ConditionState *) D_8006C838)->field_5246 == ((Ovl11ConditionState *) D_8006C838)->date[1]) {
                 var_a0_11 = ((Ovl11ConditionState *) D_8006C838)->field_5248;
@@ -856,31 +856,31 @@ block_305:
         return 1;
     case 0x54:
         var_a0_10 = 0x67;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x55:
         var_a0_10 = 0x68;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x56:
         var_a0_10 = 0x69;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x57:
         var_a0_10 = 0x6A;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x58:
         var_a0_10 = 0x6B;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x59:
         var_a0_10 = 0x6C;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x5A:
         var_a0_10 = 0x6D;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x5B:
         var_a0_10 = 0x6E;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x5C:
         var_a0_10 = 0x6F;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x22:
     case 0x5F:
         return (s32) (((Ovl11ConditionState *) D_8006C838)->field_91E1 >> 7);
@@ -892,33 +892,33 @@ block_305:
         return 1;
     case 0x62:
         var_a0_10 = 0x2A;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x63:
         var_a0_10 = 0x2A;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x64:
         var_a0_10 = 0x27;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x65:
         var_a0_10 = 0x26;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x66:
         var_a0_10 = 0x28;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x67:
         var_a0_10 = 0x29;
-        return func_8001AF44(var_a0_10) == 1;
+        return GetGameFlag(var_a0_10) == 1;
     case 0x68:
         var_a0_4 = 0x38;
         if (D_80070D06 == 0) {
-            return func_8001AF44(var_a0_4) != 1;
+            return GetGameFlag(var_a0_4) != 1;
         }
         return 0;
     case 0x69:
-        if (func_8001AF44(0x15FU) != 0) {
+        if (GetGameFlag(0x15FU) != 0) {
             var_a0_10 = 0x164;
-            if (func_8001AF44(0x163U) != 1) {
-                return func_8001AF44(var_a0_10) == 1;
+            if (GetGameFlag(0x163U) != 1) {
+                return GetGameFlag(var_a0_10) == 1;
             }
             return 1;
         }
@@ -926,14 +926,14 @@ block_305:
         return 1;
     case 0x6A:
         var_v0 = 0;
-        if (func_8001AF44(0x26U) != 1) {
+        if (GetGameFlag(0x26U) != 1) {
             var_v0 = 0;
-            if (func_8001AF44(0x27U) != 1) {
+            if (GetGameFlag(0x27U) != 1) {
                 var_v0 = 0;
-                if (func_8001AF44(0x28U) != 1) {
+                if (GetGameFlag(0x28U) != 1) {
                     var_a0_4 = 0x2A;
-                    if (func_8001AF44(0x29U) != 1) {
-                        return func_8001AF44(var_a0_4) != 1;
+                    if (GetGameFlag(0x29U) != 1) {
+                        return GetGameFlag(var_a0_4) != 1;
                     }
                     return 0;
                 }
@@ -1059,7 +1059,7 @@ date_ready:
         var_v0 = 0;
         if (D_80071A5C >= 0x1F4) {
             var_v0 = 0;
-            if (func_8001AF44(0xE7U) == 1) {
+            if (GetGameFlag(0xE7U) == 1) {
                 if (ovl_11_func_800E6EE0(0x38, 0, 2, 0) == 0) {
                     return 1;
                 }
@@ -1080,7 +1080,7 @@ date_ready:
         goto block_172;
     case 0x75:
         var_a0_4 = 0x1B;
-        return func_8001AF44(var_a0_4) != 1;
+        return GetGameFlag(var_a0_4) != 1;
     default:
         break;
     }

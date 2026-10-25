@@ -5,6 +5,7 @@
 #include "sound_commands.h"
 #include "ovl11_position_transition.h"
 #include "message_window.h"
+#include "game_flags.h"
 
 #define SELECTION (*(u16 *)&D_801273D8)
 
@@ -13,7 +14,6 @@ void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 void func_800248B0(s32, s16, s16);
-void func_8001AF70(u16, u16);
 
 s32 ovl_11_func_800FFB08(void) {
     s32 ready;
@@ -59,7 +59,7 @@ s32 ovl_11_func_800FFB08(void) {
             CloseMessageWindow();
             switch (SELECTION) {
             case 1:
-                func_8001AF70(0x48, 1);
+                SetGameFlag(0x48, 1);
             case 0:
                 Ovl11BeginPositionTransition((Ovl11C7010Object *)&D_80071A00);
                 break;

@@ -7,6 +7,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_scene_animation_cycle.h"
+#include "game_flags.h"
 
 void Ovl11InitSceneAnimationCycle(void) {
     s16 duration;
@@ -73,9 +74,6 @@ typedef struct {
     void *blend;
 } CycleRecord;
 
-s32 func_8001AF44(u32 flagIndex);
-void func_8001AF70(u16 flagIndex, u16 value);
-
 void Ovl11StepSceneAnimationCycle(void) {
     /* This is a real nested helper: the original calls pass a static chain.
      * Keeping it nested preserves that ABI without register-capture asm. */
@@ -109,7 +107,7 @@ void Ovl11StepSceneAnimationCycle(void) {
     }
     return;
 idle:
-    if (func_8001AF44(7) == one) {
+    if (GetGameFlag(7) == one) {
         gOvl11SceneAnimationCycleState = one;
     }
     return;
@@ -122,6 +120,6 @@ stage_2:
     return;
 stage_3:
     if (Ovl11AdvanceSceneAnimationCycle((CycleRecord *)gOvl11SceneAnimationCycle[2], first, 0) == one) {
-        func_8001AF70(7, 0);
+        SetGameFlag(7, 0);
     }
 }

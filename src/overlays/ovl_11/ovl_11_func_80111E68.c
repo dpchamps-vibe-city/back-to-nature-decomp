@@ -1,6 +1,5 @@
 #include "common.h"
-
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 typedef struct {
     char pad_000[0x44D8];
@@ -25,5 +24,5 @@ void ovl_11_func_80111E68(s16 arg0) {
     }
     ((Ov11_11E68View *)&D_8006C838)->field_51C6 = arg0;
     ((Ov11_11E68View *)&D_8006C838)->field_44DA = mode;
-    func_8001AF70(0x37, 1);
+    SetGameFlag(0x37, 1);
 }

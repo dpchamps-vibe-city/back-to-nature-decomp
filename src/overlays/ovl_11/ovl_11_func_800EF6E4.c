@@ -17,6 +17,7 @@
 #include "sprite_upload.h"
 #include "ovl11_state_field_access.h"
 #include "integer_power.h"
+#include "game_flags.h"
 
 typedef struct {
     s16 unk0;
@@ -66,7 +67,6 @@ void CdReadBreak (void);
 int CdReadSync (int mode, u_char *result);
 int CdSync (int mode, u_char *result);
 void *memmove (unsigned char *, const unsigned char *, int);
-void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_800EEFB8 (s16 arg0, M2C_a34e94965883_M2C_800EEFB8_Arg1 *arg1);
 void ovl_11_func_800EF870 (s16 arg0);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
@@ -92,7 +92,6 @@ void ovl_11_func_800D075C (s32 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_80118C6C (void);
-s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800DBEF8(s32 arg0);
 s32 ovl_11_func_800DBE30 (s32 arg0);
 void ovl_11_func_800F4AC0 (s32 arg0);
@@ -160,7 +159,7 @@ void ovl_11_func_800EF6E4(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (var_s2 == 5) {
         var_s2 = 4;
         var_s0 = 0;
-        func_8001AF70(0x25U, 1U);
+        SetGameFlag(0x25U, 1U);
         base = (char *) D_8006C838;
         base += 0x8000;
         (*(u16 *) (base + 0x47BA)) = (u16) ((*(u16 *) (base + 0x47BA)) | 8);

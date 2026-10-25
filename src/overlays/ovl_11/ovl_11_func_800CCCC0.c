@@ -4,13 +4,12 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "game_flags.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
 s32 ovl_11_func_800CB4E0 (void);
-void func_8001AF70 (u16 arg0, u16 arg1);
-s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 s32 ovl_11_func_800CD578 (s32 arg0);
 s32 ovl_11_func_800CD534 (s32 arg0);
@@ -40,10 +39,10 @@ void ovl_11_func_800CCCC0(void) {
     temp_s0->status = (s32) (temp_s0->status & 0xFFFE3FFF);
     ovl_11_func_800C9D38();
     ovl_11_func_800CB4E0();
-    func_8001AF70(0x3FU, 0U);
-    func_8001AF70(0x40U, 0U);
+    SetGameFlag(0x3FU, 0U);
+    SetGameFlag(0x40U, 0U);
     if (!(temp_s0->flags & 4)) {
-        if (func_8001AF44(0x47U) != 1) {
+        if (GetGameFlag(0x47U) != 1) {
             ovl_11_func_800D622C(0, 0xA, 0, 0);
         } else {
             temp_s1 = temp_s0->angle + 0x5A0;
@@ -70,9 +69,9 @@ void ovl_11_func_800CCCC0(void) {
         ((struct Ovl11CCCC0State *)D_8006C838)->counter = 0xFU;
     }
     ((struct Ovl11CCCC0State *)D_8006C838)->pending = 0;
-    func_8001AF70(0xAU, 0U);
-    func_8001AF70(0x76U, 0U);
+    SetGameFlag(0xAU, 0U);
+    SetGameFlag(0x76U, 0U);
     ovl_11_func_800CDE3C((u8 *)player);
     ovl_11_func_800CDF4C((u8 *)player);
-    func_8001AF70(0xA0U, 0U);
+    SetGameFlag(0xA0U, 0U);
 }

@@ -1,8 +1,6 @@
 #include "common.h"
 #include "random.h"
-
-s32 func_8001AF44(u32 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 s16 ovl_11_func_80120414(s32 *arg0) {
     s16 *table;
@@ -26,61 +24,61 @@ s16 ovl_11_func_80120414(s32 *arg0) {
         if (roll < total) {
             switch (table[1]) {
             case 0xEA:
-                if (func_8001AF44(0x5A) == 1) break;
-                func_8001AF70(0x5A, 1);
+                if (GetGameFlag(0x5A) == 1) break;
+                SetGameFlag(0x5A, 1);
                 return table[1];
             case 0x67:
-                if (func_8001AF44(0x53) == 1) break;
-                func_8001AF70(0x53, 1);
+                if (GetGameFlag(0x53) == 1) break;
+                SetGameFlag(0x53, 1);
                 return table[1];
             case 0xED:
-                if (func_8001AF44(0x54) != 1 &&
-                    func_8001AF44(0x55) == 1 &&
-                    func_8001AF44(0x56) == 1 &&
-                    func_8001AF44(0x57) == 1 &&
-                    func_8001AF44(0x58) == 1 &&
-                    func_8001AF44(0x59) == 1) {
-                    func_8001AF70(0x54, 1);
+                if (GetGameFlag(0x54) != 1 &&
+                    GetGameFlag(0x55) == 1 &&
+                    GetGameFlag(0x56) == 1 &&
+                    GetGameFlag(0x57) == 1 &&
+                    GetGameFlag(0x58) == 1 &&
+                    GetGameFlag(0x59) == 1) {
+                    SetGameFlag(0x54, 1);
                     ((struct Ovl11WeightedSelectionState *)D_8006C838)->flags |= 4;
                     return table[1];
                 }
                 break;
             case 0xF0:
-                if (func_8001AF44(0x57) != 1 && func_8001AF44(0x5E) == 1) {
-                    func_8001AF70(0x57, 1);
+                if (GetGameFlag(0x57) != 1 && GetGameFlag(0x5E) == 1) {
+                    SetGameFlag(0x57, 1);
                     ((struct Ovl11WeightedSelectionState *)D_8006C838)->flags |= 0x20;
                     return table[1];
                 }
                 break;
             case 0xF1:
-                if (func_8001AF44(0x58) != 1 &&
+                if (GetGameFlag(0x58) != 1 &&
                     (((struct Ovl11WeightedSelectionState *)D_8006C838)->time < 0x1E0 ||
                      ((struct Ovl11WeightedSelectionState *)D_8006C838)->time > 0x528)) {
-                    func_8001AF70(0x58, 1);
+                    SetGameFlag(0x58, 1);
                     ((struct Ovl11WeightedSelectionState *)D_8006C838)->flags |= 0x40;
                     return table[1];
                 }
                 break;
             case 0xF2:
-                if (func_8001AF44(0x59) != 1 && func_8001AF44(0x5F) == 1) {
-                    func_8001AF70(0x59, 1);
+                if (GetGameFlag(0x59) != 1 && GetGameFlag(0x5F) == 1) {
+                    SetGameFlag(0x59, 1);
                     ((struct Ovl11WeightedSelectionState *)D_8006C838)->flags |= 0x80;
                     return table[1];
                 }
                 break;
             case 0xEF:
-                if (func_8001AF44(0x56) == 0) {
-                    func_8001AF70(0x56, 1);
+                if (GetGameFlag(0x56) == 0) {
+                    SetGameFlag(0x56, 1);
                     ((struct Ovl11WeightedSelectionState *)D_8006C838)->flags |= 0x10;
                     return table[1];
                 }
                 break;
             case 0xEE:
-                if (func_8001AF44(0x55) != 1 &&
-                    func_8001AF44(0x5B) == 1 &&
-                    func_8001AF44(0x5C) == 1 &&
-                    func_8001AF44(0x5D) == 1) {
-                    func_8001AF70(0x55, 1);
+                if (GetGameFlag(0x55) != 1 &&
+                    GetGameFlag(0x5B) == 1 &&
+                    GetGameFlag(0x5C) == 1 &&
+                    GetGameFlag(0x5D) == 1) {
+                    SetGameFlag(0x55, 1);
                     ((struct Ovl11WeightedSelectionState *)D_8006C838)->flags |= 8;
                     return table[1];
                 }

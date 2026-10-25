@@ -8,10 +8,10 @@
 #include "cd_audio.h"
 #include "master_volume.h"
 #include "sound_commands.h"
+#include "game_flags.h"
 
 void ovl_30_func_8012F030(s32 arg0);
 void ovl_30_func_8012FE94(void);
-void func_8001AF70(u16 arg0, u16 arg1);
 
 #define clamp_selection(expression) \
     ({ s32 value = (expression); \
@@ -103,10 +103,10 @@ void ovl_30_func_8012F084(void) {
         DrawSync(0);
     }
         copy_display(1);
-        func_8001AF70(0x9CU, 0U);
+        SetGameFlag(0x9CU, 0U);
         index = &D_80134B14;
         if (*index != ((struct Ovl30SettingsView *)&D_8007AFF0)->selected) {
-            func_8001AF70(0x9CU, 1U);
+            SetGameFlag(0x9CU, 1U);
             D_8005E32C = *index;
         }
         D_80134B0C = 0;
@@ -114,9 +114,9 @@ void ovl_30_func_8012F084(void) {
         BeginMasterVolumeFadeIn(0xA);
         ((struct struct_8006C838_view *)D_8006C838)->field_0C &= 0xF7FFFFFF;
         RequestSceneChange(2);
-        func_8001AF70(0x9BU, 0U);
+        SetGameFlag(0x9BU, 0U);
         if (D_80134008 != 0) {
-            func_8001AF70(0x9BU, 1U);
+            SetGameFlag(0x9BU, 1U);
         }
         break;
     }

@@ -8,21 +8,21 @@
 #include "random.h"
 #include "render_packet_pool.h"
 #include "ovl11_sprite_effect_pool.h"
+#include "game_flags.h"
+#include "psyq/memory.h"
+#include "ovl11_object_event_pool.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
 void ovl_11_func_800BD168();
-void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800BCD28(void);
 void ovl_11_func_800BC868(void);
 /* Resident sprite-display disable at exe:8001B100. */
 void ovl_11_func_800CD0C0(s32 *arg0);
-s32 func_8001AF44(u32 arg0);
 void ovl_11_func_800CCC5C(void);
 void ovl_11_func_800BC9AC(void);
 void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800CF428(void);
-void ovl_11_func_800C1C90(void);
 void ovl_11_func_800F4114(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
@@ -42,7 +42,7 @@ void ovl_11_func_800BC3E0(void) {
         ((Ovl11MovementState *)D_8006C838)->flagsC |= 0x8000000;
         ((Ovl11MovementState *)D_8006C838)->flags10 |= 0x8000000;
         ovl_11_func_800BD160();
-        func_8001AF70(3, 1);
+        SetGameFlag(3, 1);
         D_801287F4++;
         break;
     case 1:
@@ -106,17 +106,17 @@ void ovl_11_func_800BC3E0(void) {
             ((Ovl11MovementCameraWork *)&D_8007AFF0)->coordinates[2] = ((struct Ovl11FrameState *)D_8006C838)->position[4];
         }
         if (!(((Ovl11MovementState *)D_8006C838)->flagsC & 0x2000)) {
-            if (!func_8001AF44(2)) {
-                func_8001AF70(3, 0);
+            if (!GetGameFlag(2)) {
+                SetGameFlag(3, 0);
             }
         } else {
-            func_8001AF70(3, 1);
+            SetGameFlag(3, 1);
         }
         ovl_11_func_800CCC5C();
         ovl_11_func_800BC9AC();
         ovl_11_func_800CF36C(0);
         ovl_11_func_800CF428();
-        ovl_11_func_800C1C90();
+        Ovl11ClearEventSlotScheduleChanges();
         ovl_11_func_800F4114();
         Ovl11ClearSpriteEffects();
         if (((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x40) {
@@ -125,20 +125,20 @@ void ovl_11_func_800BC3E0(void) {
                 ovl_11_func_800F0FB0(8);
                 ovl_11_func_800F0F50();
                 ovl_11_func_800DBAB0();
-                if (func_8001AF44(2) == 1) {
+                if (GetGameFlag(2) == 1) {
                     for (;;) {
                         if (((struct Ovl11E4280State *)D_8006C838)->selector == 1) {
                             ovl_11_func_800DBAB0();
                             break;
                         }
                         ovl_11_func_800DBAB0();
-                        if (func_8001AF44(2) == 0) {
+                        if (GetGameFlag(2) == 0) {
                             break;
                         }
                     }
                 }
             }
-            if (!(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 4) && !func_8001AF44(2)) {
+            if (!(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 4) && !GetGameFlag(2)) {
                 ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11AreaInitView *)D_8006C838)->field_51C8, Rand(4) + 0x11B, 0);
             }
         } else {
@@ -151,14 +151,14 @@ void ovl_11_func_800BC3E0(void) {
             }
             ovl_11_func_800F0F50();
             ovl_11_func_800DBAB0();
-            if (func_8001AF44(2) == 1) {
+            if (GetGameFlag(2) == 1) {
                 for (;;) {
                     if (((struct Ovl11E4280State *)D_8006C838)->selector == 1) {
                         ovl_11_func_800DBAB0();
                         break;
                     }
                     ovl_11_func_800DBAB0();
-                    if (func_8001AF44(2) == 0) {
+                    if (GetGameFlag(2) == 0) {
                         break;
                     }
                 }

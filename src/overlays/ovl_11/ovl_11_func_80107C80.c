@@ -2,8 +2,7 @@
 #include "psyq/stddef.h"
 #include "sprite_rotation.h"
 #include "ovl11_action_guards.h"
-
-s32 func_8001AF44(u32 arg0);
+#include "game_flags.h"
 
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3) {
     s16 *var_v1;
@@ -27,7 +26,7 @@ s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3) {
         if (arg3 == 0) {
             var_s2 = Ovl11FindActionGuardResult((s32) arg0);
         }
-        if ((arg0 == 0x20) && (func_8001AF44(0x76U) == 1)) {
+        if ((arg0 == 0x20) && (GetGameFlag(0x76U) == 1)) {
             *arg2 = 0x209;
             goto block_21;
         }

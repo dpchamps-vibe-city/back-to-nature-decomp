@@ -12,8 +12,8 @@
 #include "common.h"
 #include "ovl11_selection_message.h"
 #include "message_window.h"
+#include "game_flags.h"
 
-s32 func_8001AF44(u32 arg0);
 s32 Ovl11AdvanceSelectionMessageVariant(s32 category);
 s32 Ovl11CountSelectionMessageItems(void);
 
@@ -82,7 +82,7 @@ s32 Ovl11AdvanceSelectionMessageVariant(s32 category) {
     if (variant != 0) {
         switch (category) {
         case 0:
-            if (func_8001AF44(0x64) == 1) {
+            if (GetGameFlag(0x64) == 1) {
                 *state = (u8) (variant == 2 ? 1 : 2);
                 variant = *state;
             } else {
@@ -90,7 +90,7 @@ s32 Ovl11AdvanceSelectionMessageVariant(s32 category) {
             }
             break;
         case 1:
-            if (func_8001AF44(0x63) == 1) {
+            if (GetGameFlag(0x63) == 1) {
                 *state = (u8) (variant == 2 ? 1 : 2);
                 variant = *state;
             } else {
@@ -98,7 +98,7 @@ s32 Ovl11AdvanceSelectionMessageVariant(s32 category) {
             }
             break;
         case 2:
-            if (func_8001AF44(0x65) == 1) {
+            if (GetGameFlag(0x65) == 1) {
                 *state = (u8) (variant == 2 ? 1 : 2);
                 variant = *state;
             } else {
@@ -107,7 +107,7 @@ s32 Ovl11AdvanceSelectionMessageVariant(s32 category) {
             }
             break;
         case 3:
-            if (func_8001AF44(0x66) == 1) {
+            if (GetGameFlag(0x66) == 1) {
                 *state = (u8) (variant == 5 ? 3 : variant + 1);
                 variant = 6 - *state;
             } else if (Ovl11CountSelectionMessageItems() >= 10) {
@@ -197,9 +197,9 @@ s32 Ovl11AdvanceSelectionMessageVariant(s32 category) {
             firstCount = ((struct Ovl11StateSelection *) D_8006C838)->counters[0];
             secondCount = ((struct Ovl11StateSelection *) D_8006C838)->counters[1];
             firstCounter = &gSelectionMessageRepeatCounters.first;
-            result = func_8001AF44(0x13D);
+            result = GetGameFlag(0x13D);
             secondCounter = &gSelectionMessageStates.second;
-            if (result == 1 || func_8001AF44(0x143) == 1) {
+            if (result == 1 || GetGameFlag(0x143) == 1) {
                 if (firstCount >= 2) {
                     *state = (u8) (variant == 4 ? 3 : 4);
                 } else {

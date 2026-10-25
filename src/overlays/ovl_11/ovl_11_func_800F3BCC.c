@@ -1,6 +1,5 @@
 #include "common.h"
-
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 s32 ovl_11_func_800D603C(s32 arg0);
 
@@ -22,7 +21,7 @@ s32 ovl_11_func_800F3BCC(u16 arg0) {
         v = *(u16 *) ((u8 *) p + 0x44DC) + 1;
         *(u16 *) ((u8 *) p + 0x44DC) = v;
         if ((s16) v >= 0xC8) {
-            func_8001AF70(0x5FU, 1U);
+            SetGameFlag(0x5FU, 1U);
         }
     }
     *(s32 *) ((u8 *) base + 0x34) = *(s32 *) ((u8 *) base + 0x34) + ovl_11_func_800D603C(id);

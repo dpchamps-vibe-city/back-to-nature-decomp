@@ -13,7 +13,7 @@ void ovl_11_func_800F1F48(s32 arg0) {
     u32 j;
     u32 value;
 
-    var_s0 = &D_80076220;
+    var_s0 = &gObjectEventSlotBase;
     for (index = 0; index < 0x25U; index++, var_s0++) {
         *(u16 *)var_s0->unk0 = index;
         var_s0->unk2C = 0x36;

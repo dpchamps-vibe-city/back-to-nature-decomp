@@ -8,10 +8,9 @@
 #include "ovl11_scene_animation_pair.h"
 #include "ovl11_scene_animation_cycle.h"
 #include "ovl11_vertex_blend.h"
+#include "game_flags.h"
 
 Ovl11FuncC9D4Entry *ovl_11_func_800DC9D4 (void);
-void func_8001AF70 (u16 arg0, u16 arg1);
-s32 func_8001AF44 (u32 arg0);
 
 typedef struct __attribute__((packed)) {
     u8 bytes[8];

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "random.h"
+#include "game_flags.h"
 
-s32 func_8001AF44(u32 arg0);
 s32 ovl_11_func_800EFA1C(s16 arg0);
 s32 ovl_11_func_800EDF3C();
 
@@ -18,7 +18,7 @@ s32 ovl_11_func_800ED7E0(s16 arg0, s16 arg1) {
 
     if (arg0 == 0) {
         for (i = 0; i < 4; i++) {
-            if (func_8001AF44((u16)(i + 0x21)) == 1) {
+            if (GetGameFlag((u16)(i + 0x21)) == 1) {
                 choices.values[i] = -1;
                 count++;
             }

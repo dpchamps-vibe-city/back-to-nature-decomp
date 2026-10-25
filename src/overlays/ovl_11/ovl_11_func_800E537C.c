@@ -1,6 +1,6 @@
 #include "common.h"
+#include "game_flags.h"
 
-void func_8001AF70(u16 arg0, u16 arg1);
 s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 /* The original calls explicitly supply zero in both trailing argument slots. */
 s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -9,7 +9,7 @@ void ovl_11_func_800F4CEC(void);
 void ovl_11_func_8010941C(s32 arg0);
 
 void ovl_11_func_800E537C(void) {
-    func_8001AF70(3, 0);
+    SetGameFlag(3, 0);
     ovl_11_func_800E880C(-2, 0, 0, 0);
     ovl_11_func_800E63C8(1, 0, 0, 0);
     ((struct Ovl11ResetState *) &D_8006C838)->field_51EA = -1;

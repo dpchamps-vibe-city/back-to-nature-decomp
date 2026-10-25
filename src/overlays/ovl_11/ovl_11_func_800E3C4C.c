@@ -7,6 +7,7 @@
 #include "psyq/libcd.h"
 #include "psyq/memory.h"
 #include "cd_loader.h"
+#include "game_flags.h"
 
 
 int CdControl (u_char com, u_char *param, u_char *result);
@@ -16,14 +17,13 @@ int CdReadSync (int mode, u_char *result);
 int CdSync (int mode, u_char *result);
 int ResetCallback (void);
 void *memmove (unsigned char *, const unsigned char *, int);
-s32 func_8001AF44 (u32 arg0);
 void ovl_11_func_800E3CDC (u8 *arg0);
 s32 ovl_11_func_800E351C (u8 *arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_800E3C4C(void) {
     s32 temp_s0;
 
-    if (func_8001AF44(2U) != 1) {
+    if (GetGameFlag(2U) != 1) {
         if (D_8006C844 & 0x18000) {
             return 0;
         }

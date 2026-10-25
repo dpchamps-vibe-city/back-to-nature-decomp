@@ -6,9 +6,7 @@
  */
 #include "common.h"
 #include "ovl11_scene_animation_pair.h"
-
-s32 func_8001AF44(u32 flagIndex);
-void func_8001AF70(u16 flagIndex, u16 value);
+#include "game_flags.h"
 
 void Ovl11InitSceneAnimationPair(void) {
     s16 duration;
@@ -48,8 +46,8 @@ void Ovl11InitSceneAnimationPair(void) {
             gOvl11SceneAnimationPair[slot] = (u8 *)record;
         }
     }
-    func_8001AF70(9, 0);
-    if (func_8001AF44(10) == 1) {
+    SetGameFlag(9, 0);
+    if (GetGameFlag(10) == 1) {
         gOvl11SceneAnimationPairState = 3;
         ((Ovl11SceneBlendRecordView *)gOvl11SceneAnimationPair[0])->flags |= 0x1000;
         ((Ovl11SceneBlendRecordView *)gOvl11SceneAnimationPair[1])->flags &= 0xEFFF;
@@ -74,7 +72,7 @@ void Ovl11StepSceneAnimationPair(void) {
         phase = (u32)gOvl11SceneAnimationPairState;
         switch (phase) {
         case 0:
-            flag = func_8001AF44(9U);
+            flag = GetGameFlag(9U);
             if (flag == 1) {
                 gOvl11SceneAnimationPairState = flag;
                 return;
@@ -85,16 +83,16 @@ void Ovl11StepSceneAnimationPair(void) {
             blend0 = record0->blend;
             record1 = (Ovl11SceneBlendRecordView *)gOvl11SceneAnimationPair[1];
             if ((s16)blend0->progress >= (s16)blend0->duration) {
-                if (func_8001AF44(9U) == phase) {
+                if (GetGameFlag(9U) == phase) {
                     switchBlend1 = record1->blend;
                     switchBlend0 = record0->blend;
                     switchBlend1->progress = 0;
                     switchBlend0->progress = 0;
                     record0->flags |= 0x1000;
                     record1->flags &= 0xEFFF;
-                    func_8001AF70(9U, 0U);
+                    SetGameFlag(9U, 0U);
                 }
-                if (func_8001AF44(10U) == phase) {
+                if (GetGameFlag(10U) == phase) {
                     gOvl11SceneAnimationPairState = 2;
                     return;
                 }
@@ -114,7 +112,7 @@ void Ovl11StepSceneAnimationPair(void) {
             }
             break;
         case 3:
-            if (func_8001AF44(10U) == 0) {
+            if (GetGameFlag(10U) == 0) {
                 record0 = (Ovl11SceneBlendRecordView *)gOvl11SceneAnimationPair[0];
                 record1 = (Ovl11SceneBlendRecordView *)gOvl11SceneAnimationPair[1];
                 record0->flags &= 0xEFFF;

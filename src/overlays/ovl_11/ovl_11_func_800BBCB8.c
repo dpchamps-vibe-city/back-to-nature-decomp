@@ -3,12 +3,11 @@
 #include "scene_selection.h"
 #include "master_volume.h"
 #include "sound_commands.h"
+#include "game_flags.h"
 
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
 void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
-s32 func_8001AF44(u32 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800BCF28(void);
 s32 ovl_11_func_800BD374(s32 arg0, s32 arg1);
 s32 ovl_11_func_800CB4E0(void);
@@ -177,8 +176,8 @@ void ovl_11_func_800BBCB8(void) {
                 ovl_11_func_800BCF28();
                 if (WORK->state == 31) {
                     WORK->state = 30;
-                    func_8001AF70(0x9D, 1);
-                    func_8001AF70(0x47, 1);
+                    SetGameFlag(0x9D, 1);
+                    SetGameFlag(0x47, 1);
                 } else {
                     WORK->state = 13;
                 }
@@ -201,9 +200,9 @@ void ovl_11_func_800BBCB8(void) {
                 if (WORK->selection == 256) {
                     WORK->selection = 0;
                 }
-                if (func_8001AF44(0x9C) == 1) {
+                if (GetGameFlag(0x9C) == 1) {
                     WORK->selection = D_8005E32C;
-                    func_8001AF70(0x9C, 0);
+                    SetGameFlag(0x9C, 0);
                 }
                 STATUS->direction = WORK->selection - WORK->selection / 4 * 4;
                 ovl_11_func_800DE2EC();

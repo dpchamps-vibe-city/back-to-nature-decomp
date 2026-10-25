@@ -1,6 +1,5 @@
 #include "common.h"
-
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 void ovl_11_func_801129A0(void) {
     char *base;
@@ -13,6 +12,6 @@ void ovl_11_func_801129A0(void) {
     base += 0x8000;
     *(u16 *)(base + 0x5BDC) = v1;
     *(u16 *)(base + 0x5BDE) = a0v;
-    func_8001AF70(0x4E, 0);
+    SetGameFlag(0x4E, 0);
     *(u16 *)(base + 0x6770) = 0;
 }

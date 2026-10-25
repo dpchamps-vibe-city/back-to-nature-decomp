@@ -10,7 +10,7 @@ struct_80076220 *ovl_11_func_800BF1D0(s16 *arg0, void *arg1, void *arg2) {
     u8 *p;
 
     bp = box;
-    entry = &D_80076220;
+    entry = &gObjectEventSlotBase;
     i = 0;
     box[0] = arg0[0] - 0x96;
     box[1] = arg0[0] + 0x96;

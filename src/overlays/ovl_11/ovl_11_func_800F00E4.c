@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "game_flags.h"
 
-s32 func_8001AF44(u32 arg0);
 s32 ovl_11_func_800F021C(s16 arg0);
 
 s32 ovl_11_func_800F00E4(void) {
@@ -19,7 +19,7 @@ s32 ovl_11_func_800F00E4(void) {
 
     var_s3 = 0;
     var_s6 = 0x465;
-    if (func_8001AF44(0x3EU) == 1) {
+    if (GetGameFlag(0x3EU) == 1) {
         s32 var_s4;
 
         var_s6 = 0x496;

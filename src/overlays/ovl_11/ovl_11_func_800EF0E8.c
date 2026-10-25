@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800EF8BC(s16 arg0, s16 arg1, s16 arg2);
-s32 func_8001AF44(u32 arg0);
 s32 ovl_11_func_800EFA1C(s16 arg0);
 
 s32 ovl_11_func_800EF0E8(s16 arg0) {
@@ -27,14 +27,14 @@ s32 ovl_11_func_800EF0E8(s16 arg0) {
     }
     switch (arg0) {
     case -1:
-        if (func_8001AF44(0x1B) == 0) {
+        if (GetGameFlag(0x1B) == 0) {
             return 0;
         }
     case 4:
-        if (func_8001AF44(0x122) != 0) {
+        if (GetGameFlag(0x122) != 0) {
             return 0;
         }
-        if (func_8001AF44(0x2A) == 1) {
+        if (GetGameFlag(0x2A) == 1) {
             return 1;
         }
         if (ovl_11_func_800EFA1C(0) == 1) {
@@ -60,10 +60,10 @@ s32 ovl_11_func_800EF0E8(s16 arg0) {
             second = 0x29;
             break;
         }
-        if (func_8001AF44(second) == 1) {
+        if (GetGameFlag(second) == 1) {
             return 1;
         }
-        if (func_8001AF44(first) == 1) {
+        if (GetGameFlag(first) == 1) {
             return 0;
         }
         break;
@@ -102,7 +102,7 @@ s32 ovl_11_func_800EF0E8(s16 arg0) {
         }
         if (arg0 == 0) {
             if (((Ovl11EF488SelectionView *) D_8006C838)->selected == 20) {
-                if (func_8001AF44(0x1B) == 0) {
+                if (GetGameFlag(0x1B) == 0) {
                     return 2;
                 } else {
                     return 1;
@@ -110,14 +110,14 @@ s32 ovl_11_func_800EF0E8(s16 arg0) {
             }
         }
     } else {
-        if (func_8001AF44(0xC9) == 1) {
+        if (GetGameFlag(0xC9) == 1) {
             if (((Ovl11EF0E8StatusView *) ((u8 *) D_8006C838 + record->index_A * 0x1D4))->field_99EC > 0xEA5F &&
                 ((Ovl11EF488SelectionView *) D_8006C838)->selected != -1) {
                 return 0;
             }
             return 1;
         }
-        if (func_8001AF44(0x11E) == 1) {
+        if (GetGameFlag(0x11E) == 1) {
             return 2;
         }
     }

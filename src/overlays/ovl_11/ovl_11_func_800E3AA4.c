@@ -5,13 +5,13 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "game_flags.h"
 
 typedef struct {
     char pad[0xE];
     s16 unkE;
 } Unk0E;
 
-s32 func_8001AF44(u32 arg0);
 void ClearActiveOrderingTables(void);
 
 void ovl_11_func_800E3AA4(void) {
@@ -23,7 +23,7 @@ void ovl_11_func_800E3AA4(void) {
     env_struct_0x134 *env;
     env_struct_0x134 *env2;
 
-    if (func_8001AF44(2U) == 1) {
+    if (GetGameFlag(2U) == 1) {
         temp_s1 = ((struct struct_8006C838_800E3AA4 *)D_8006C838)->field_4438;
         far = (u8 *)&D_8007AFF0;
         if ((*(s32 *)(far + 0x2549C) != temp_s1) && (temp_s1 != -1)) {

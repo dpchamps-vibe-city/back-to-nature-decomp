@@ -1,6 +1,5 @@
 #include "common.h"
-
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 void ovl_11_func_80112B60(void) {
     s32 value;
@@ -10,9 +9,9 @@ void ovl_11_func_80112B60(void) {
     value = (s32)&D_8006C838;
     base = (unsigned char *)(value + 0x8000);
     if (*(u16 *)(base + 0x676E) < 0x12D) {
-        func_8001AF70(0x50, 0);
-        func_8001AF70(0x51, 0);
-        func_8001AF70(0x52, 0);
+        SetGameFlag(0x50, 0);
+        SetGameFlag(0x51, 0);
+        SetGameFlag(0x52, 0);
         if (*(u16 *)(base + 0x676E) < 0x12C) {
             *(u16 *)(base + 0x676E) = *(u16 *)(base + 0x676E) + 1;
         }
@@ -25,9 +24,9 @@ void ovl_11_func_80112B60(void) {
             *(s16 *)(base + 0x677C) = 1;
             var_a0 = 0x51;
 block_7:
-            func_8001AF70(var_a0, 1);
+            SetGameFlag(var_a0, 1);
             return;
         }
-        func_8001AF70(0x50, 1);
+        SetGameFlag(0x50, 1);
     }
 }

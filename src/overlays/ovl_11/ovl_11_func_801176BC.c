@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game_flags.h"
 
 extern u16 D_8012824C[];
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -10,8 +11,6 @@ typedef struct {
     s8 field_E7A2[8];
 } M2C_ovl11_801176BC_E7A2;
 
-void func_8001AF70(u16 arg0, u16 arg1);
-
 s32 ovl_11_func_801176BC(u32 arg0) {
     s32 temp_v0;
     u8 *base;
@@ -21,6 +20,6 @@ s32 ovl_11_func_801176BC(u32 arg0) {
     }
     ovl_11_func_800F2354(-temp_v0, 1);
     ((M2C_ovl11_801176BC_E7A2 *)base)->field_E7A2[arg0] = 3;
-    func_8001AF70((arg0 + 0x67) & 0xFFFF, 1U);
+    SetGameFlag((arg0 + 0x67) & 0xFFFF, 1U);
     return 1;
 }

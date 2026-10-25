@@ -9,14 +9,13 @@
 #include "game_types.h"
 #include "psyq/memory.h"
 #include "screen_fade.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800DE4C0(void);
 void ovl_11_func_800BFE3C(void);
 void ovl_11_func_800C19B0(void);
 void ovl_11_func_800F227C(s16 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
-s32 func_8001AF44(u32 arg0);
 void ovl_11_func_800CA6C4(void *arg0);
 void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
@@ -136,9 +135,9 @@ void Ovl11InitClockAndCalendar(void) {
     Ovl11RefreshCalendarDayFlags(state->weekday);
     Ovl11RefreshCalendarSeasonFlags(state->season);
     if (Ovl11FindCalendarDate(state->season, state->day) != 0) {
-        func_8001AF70(0x2B, 1);
+        SetGameFlag(0x2B, 1);
     }
-    func_8001AF70(0x96, 1);
+    SetGameFlag(0x96, 1);
 }
 
 void Ovl11ResetClockEvents(void) {
@@ -175,7 +174,7 @@ void Ovl11TickClock(void) {
 
     CLOCK_STATE->flags &= 0xBDEFFFFF;
     if (gOvl11ClockAdvanceActive == 0) {
-        if (IsScreenFadeComplete() == 0 || func_8001AF44(3U) == 1 ||
+        if (IsScreenFadeComplete() == 0 || GetGameFlag(3U) == 1 ||
             (CLOCK_STATE->flags & 0x08000000) || Ovl11IsSceneClockBlocked() == 1) {
             return;
         }
@@ -234,17 +233,17 @@ void Ovl11TickClock(void) {
             if (date->season >= 4) {
                 date->season = 0;
                 date->year++;
-                func_8001AF70(0x96, 0);
+                SetGameFlag(0x96, 0);
                 if (date->year >= 99) {
                     date->year = 98;
                 }
             }
             Ovl11RefreshCalendarDayFlags(CLOCK_STATE->weekday);
-            func_8001AF70(0x2B, 0);
-            func_8001AF70(0x2C, 0);
+            SetGameFlag(0x2B, 0);
+            SetGameFlag(0x2C, 0);
             Ovl11RefreshCalendarSeasonFlags(date->season);
             if (Ovl11FindCalendarDate(CLOCK_STATE->season, CLOCK_STATE->day) != 0) {
-                func_8001AF70(0x2B, 1);
+                SetGameFlag(0x2B, 1);
             }
             ruleIndex = 0;
             rule = gOvl11ClockEventRules[0];
@@ -357,34 +356,34 @@ void Ovl11RefreshCalendarDayFlags(s16 weekday) {
     struct Ovl11FlagDatePair *lastDate;
 
     for (flag = 0; flag < 7; flag++) {
-        func_8001AF70((u16)(flag + 0xB), 0);
+        SetGameFlag((u16)(flag + 0xB), 0);
     }
-    func_8001AF70((u16)(weekday + 0xB), 1);
+    SetGameFlag((u16)(weekday + 0xB), 1);
     for (flag = 0x78; flag < 0x96; flag++) {
-        func_8001AF70((u16)flag, 0);
+        SetGameFlag((u16)flag, 0);
     }
-    func_8001AF70((u16)(CALENDAR_STATE->field_44BC + 0x78), 1);
-    func_8001AF70(0x97, 0);
+    SetGameFlag((u16)(CALENDAR_STATE->field_44BC + 0x78), 1);
+    SetGameFlag(0x97, 0);
     if (CALENDAR_STATE->field_44BA == CALENDAR_STATE->field_5246 && CALENDAR_STATE->field_44BC == CALENDAR_STATE->field_5248) {
-        func_8001AF70(0x97, 1);
+        SetGameFlag(0x97, 1);
     }
-    if (func_8001AF44(0x1B) != 1) {
-        func_8001AF70(0x99, 0);
+    if (GetGameFlag(0x1B) != 1) {
+        SetGameFlag(0x99, 0);
         if (CALENDAR_STATE->field_44BA == CALENDAR_STATE->field_E798) {
             if (CALENDAR_STATE->field_44BC == CALENDAR_STATE->field_E79A) {
-                func_8001AF70(0x99, 1);
+                SetGameFlag(0x99, 1);
             }
         }
-        func_8001AF70(0x98, 0);
+        SetGameFlag(0x98, 0);
         savedDate = (s16 *)((u8 *)D_80076244 + CALENDAR_STATE->field_E778 * 0x1D4);
         if (CALENDAR_STATE->field_44BA == savedDate[0] && CALENDAR_STATE->field_44BC == savedDate[1]) {
-            func_8001AF70(0x98, 1);
+            SetGameFlag(0x98, 1);
         }
-        if (func_8001AF44(0x4F) != 1) {
-            func_8001AF70(0x9A, 0);
+        if (GetGameFlag(0x4F) != 1) {
+            SetGameFlag(0x9A, 0);
             lastDate = &D_8007A414;
             if (CALENDAR_STATE->field_44BA == lastDate->field_0 && CALENDAR_STATE->field_44BC == lastDate->field_2) {
-                func_8001AF70(0x9A, 1);
+                SetGameFlag(0x9A, 1);
             }
         }
     }
@@ -396,9 +395,9 @@ void Ovl11RefreshCalendarSeasonFlags(s32 season) {
 
     selected = season;
     for (flag = 0; flag < 4; flag++) {
-        func_8001AF70((u16)(flag + 0x17), 0);
+        SetGameFlag((u16)(flag + 0x17), 0);
     }
-    func_8001AF70((u16)(selected + 0x17), 1);
+    SetGameFlag((u16)(selected + 0x17), 1);
 }
 
 s32 Ovl11FindCalendarDate(s16 season, s16 day) {
@@ -432,15 +431,15 @@ void Ovl11RefreshSavedDateFlags(void) {
     records = (Ovl11Rec64D8View *)D_80074838;
     for (; index < 5U; index++) {
         flag = (index + 0x26) & 0xFFFF;
-        func_8001AF70(flag, 0U);
+        SetGameFlag(flag, 0U);
         if ((((Ovl11Status44B8View *)D_8006C838)->field_44B8 == records->recs[index][0]) && (((Ovl11Status44B8View *)D_8006C838)->field_44BA == records->recs[index][1]) && (((Ovl11Status44B8View *)D_8006C838)->field_44BC == ((Ovl11Status44B8View *)D_8006C838)->field_E4DC[index * 6])) {
-            func_8001AF70(0x2CU, 1U);
-            func_8001AF70((index + 0x21) & 0xFFFF, 1U);
-            func_8001AF70(flag, 1U);
+            SetGameFlag(0x2CU, 1U);
+            SetGameFlag((index + 0x21) & 0xFFFF, 1U);
+            SetGameFlag(flag, 1U);
         }
     }
     if ((((Ovl11Status44B8View *)D_8006C838)->field_44B8 == ((Ovl11Status44B8View *)D_8006C838)->field_5488) && (((Ovl11Status44B8View *)D_8006C838)->field_44BA == ((Ovl11Status44B8View *)D_8006C838)->field_548A) && (((Ovl11Status44B8View *)D_8006C838)->field_44BC == ((Ovl11Status44B8View *)D_8006C838)->field_548C)) {
-        func_8001AF70(0x2CU, 1U);
+        SetGameFlag(0x2CU, 1U);
     }
 }
 

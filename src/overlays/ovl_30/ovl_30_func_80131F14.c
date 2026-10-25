@@ -43,7 +43,7 @@ s32 ovl_30_func_80131F14(void) {
     }
     var_s0 = 0;
     do {
-        rec = &_D_80076220[(D_801349B0 + var_s0) % 0x25];
+        rec = &gObjectEventSlotStorage[(D_801349B0 + var_s0) % 0x25];
         FntPrint(&D_8012ECD8, (D_801349B0 + var_s0) % 0x25, *(s32 *)rec->unk28);
         var_s0 += 1;
     } while (var_s0 < 0xAU);

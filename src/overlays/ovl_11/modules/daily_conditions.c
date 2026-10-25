@@ -10,13 +10,12 @@
 #include "ovl11_daily_conditions.h"
 #include "ovl11_clock_calendar.h"
 #include "random.h"
+#include "game_flags.h"
 
 /* Helpers retain external linkage. Co-location does not establish static. */
 void Ovl11AdvanceConditionDate(Ovl11ConditionDate *date);
 s32 Ovl11IsConditionExcludedDate(s16 *date);
 void Ovl11PublishDayConditionFlags(void);
-s32 func_8001AF44(u32 slot);
-void func_8001AF70(u16 slot, u16 value);
 
 s16 Ovl11ChooseNextDayCondition(void) {
     Ovl11ConditionDate next;
@@ -104,7 +103,7 @@ s16 Ovl11ApplyCurrentDayCondition(void) {
     if ((Ovl11FindCalendarDate(next.season, next.day) != 0) && ((s16)((Ovl11DayConditionWorkView *)D_8006C838)->currentCondition >= 3)) {
         ((Ovl11DayConditionWorkView *)D_8006C838)->currentCondition -= 2;
     }
-    if (func_8001AF44(0x2CU) == 1) {
+    if (GetGameFlag(0x2CU) == 1) {
         ((Ovl11DayConditionWorkView *)D_8006C838)->currentCondition = 0;
     }
     if (Ovl11IsConditionExcludedDate((s16 *)&current) == 1) {
@@ -119,7 +118,7 @@ s32 Ovl11IsConditionExcludedDate(s16 *date) {
     s32 i;
 
     for (i = 0; i < 5; i++) {
-        entry = &D_80076220 + gOvl11ConditionDateRecordIndices[i];
+        entry = &gObjectEventSlotBase + gOvl11ConditionDateRecordIndices[i];
         if (entry->unk24 == date[0]) {
             if (entry->unk26 == date[1]) {
                 return 1;
@@ -135,12 +134,12 @@ void Ovl11PublishDayConditionFlags(void) {
     char *base;
 
     for (i = 0; i < 5; i++) {
-        func_8001AF70((u16)(i + 0x12), 0);
+        SetGameFlag((u16)(i + 0x12), 0);
     }
     base = (char *)&D_8006C838;
     base += 0x8000;
     condition = *(u16 *)(base + 0x64C8);
-    func_8001AF70((u16)(condition + 0x12), 1);
+    SetGameFlag((u16)(condition + 0x12), 1);
 }
 
 void Ovl11SetCurrentDayCondition(s16 condition) {

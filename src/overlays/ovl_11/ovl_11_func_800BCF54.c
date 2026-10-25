@@ -5,8 +5,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_upload.h"
+#include "game_flags.h"
 
-s32 func_8001AF44(u32 arg0);
 void ovl_11_func_800BD938(void);
 void ovl_11_func_800F0E00(void *arg0);
 void ovl_11_func_800E3CDC(u8 *arg0);
@@ -30,7 +30,7 @@ void ovl_11_func_800BCF54(s32 arg0, s32 arg1) {
     *(Ovl25SetupStatePair *)(base + 0x25474) =
         *(Ovl25SetupStatePair *)(base + 0x2479C);
     *(u8 **)(base + 0x25388) = D_8009F78C;
-    if (func_8001AF44(0x9B) == 1) {
+    if (GetGameFlag(0x9B) == 1) {
         ovl_11_func_800BD938();
     }
     start1 = record[1];

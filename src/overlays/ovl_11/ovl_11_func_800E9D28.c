@@ -8,14 +8,13 @@
 #include "psyq/memory.h"
 #include "card_deal.h"
 #include "ovl11_state_field_access.h"
+#include "game_flags.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
-s32 func_8001AF44 (u32 arg0);
 void ovl_11_func_800EF6E4 ();
-void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_801129A0 (void);
 s32 ovl_11_func_80118A68 (s32 arg0);
 s32 ovl_11_func_80118C6C (void);
@@ -89,7 +88,7 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             case 5: var_s3 = 0x25; break;
             case -1: return ovl_11_func_800EFA1C((s16)arg3);
             }
-            return func_8001AF44(var_s3);
+            return GetGameFlag(var_s3);
         case 2:
             ovl_11_func_800EF6E4((s16) arg2, (s16) arg3);
             return 1;
@@ -100,7 +99,7 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             if (arg2 != -1) {
                 if (D_80071CCA == -1) {
                     *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = (s32) D_80071CCA;
-                } else if (func_8001AF44(0x1BU) == 1) {
+                } else if (GetGameFlag(0x1BU) == 1) {
                     *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = 0;
                 } else {
                     *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = 1;
@@ -113,14 +112,14 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         }
         goto block_204;
     case 2:
-        func_8001AF70(0x4FU, 1U);
-        func_8001AF70(0x50U, 1U);
+        SetGameFlag(0x4FU, 1U);
+        SetGameFlag(0x50U, 1U);
         ((E9State *)D_8006C838)->fE780 = 1;
         ((E9State *)D_8006C838)->fE76E = 0;
         ovl_11_func_801129A0();
         ovl_11_func_800F2538(2, 0x37, 2);
         for (var_s3 = 0; var_s3 < 4; var_s3++) {
-            if (func_8001AF44((u16)(var_s3 + 0x21)) != 0) {
+            if (GetGameFlag((u16)(var_s3 + 0x21)) != 0) {
                 if (((E9State *)((u8 *)D_8006C838 + ((E9SmallView *)D_8006C838)->records[var_s3].id * 0x1D4))->f99EA >= 0xC8) {
                     ovl_11_func_800F2538(2, var_s3 + 0x33, 2);
                 }
@@ -151,22 +150,22 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         temp_v0_2 = (E9State *) ((u8 *) D_8006C838 + (var_s3 * 0x1D4));
         temp_v0_2->f99EC = arg1;
         temp_v0_2->f9A06 = (u16) (temp_v0_2->f9A06 | 0x400);
-        func_8001AF70(0x4DU, 0U);
-        func_8001AF70(0x4AU, 0U);
+        SetGameFlag(0x4DU, 0U);
+        SetGameFlag(0x4AU, 0U);
         ((E9State *)D_8006C838)->fE772 = 0;
         goto block_204;
     case 4:
         switch (arg1) {                             /* switch 4; irregular */
         case 0:
             D_80071A16 = 0x64;
-            func_8001AF70(0x49, 1U);
+            SetGameFlag(0x49, 1U);
             goto block_204;
         case 1:
             ((E9State *)D_8006C838)->fE77A = 0;
             temp_v0_3 = (E9State *) ((u8 *) D_8006C838 + ((s16) ((E9State *)D_8006C838)->f5492 * 0x1D4));
             temp_v0_3->f9A06 = (u16) (temp_v0_3->f9A06 | 0x400);
-            func_8001AF70(0x4BU, 1U);
-            func_8001AF70(0x4C, 1U);
+            SetGameFlag(0x4BU, 1U);
+            SetGameFlag(0x4C, 1U);
             goto block_204;
         }
         goto block_204;
@@ -180,39 +179,39 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         switch (arg1) {
         case 0:
             ((E9State *)D_8006C838)->f44CC |= 0x1;
-            func_8001AF70(0x67, 0);
+            SetGameFlag(0x67, 0);
             goto block_204;
         case 1:
             ((E9State *)D_8006C838)->f44CC |= 0x2;
-            func_8001AF70(0x68, 0);
+            SetGameFlag(0x68, 0);
             goto block_204;
         case 2:
             ((E9State *)D_8006C838)->f44CC |= 0x4;
-            func_8001AF70(0x69, 0);
+            SetGameFlag(0x69, 0);
             goto block_204;
         case 3:
             ((E9State *)D_8006C838)->f44CC |= 0x8;
-            func_8001AF70(0x6A, 0);
+            SetGameFlag(0x6A, 0);
             goto block_204;
         case 4:
             ((E9State *)D_8006C838)->f44CC |= 0x10;
-            func_8001AF70(0x6B, 0);
+            SetGameFlag(0x6B, 0);
             goto block_204;
         case 5:
             ((E9State *)D_8006C838)->f44CC |= 0x20;
-            func_8001AF70(0x6C, 0);
+            SetGameFlag(0x6C, 0);
             goto block_204;
         case 6:
             ((E9State *)D_8006C838)->f44CC |= 0x40;
-            func_8001AF70(0x6D, 0);
+            SetGameFlag(0x6D, 0);
             goto block_204;
         case 7:
             ((E9State *)D_8006C838)->f44CC |= 0x80;
-            func_8001AF70(0x6E, 0);
+            SetGameFlag(0x6E, 0);
             goto block_204;
         case 8:
             ovl_11_func_800E9D28(6, 4, 0, 0);
-            func_8001AF70(0x6F, 0);
+            SetGameFlag(0x6F, 0);
             return 1;
         }
 block_118:
@@ -252,7 +251,7 @@ block_118:
                     ovl_11_func_80118A68(0x18);
                     return 1;
                 }
-                return func_8001AF44(0x38U);
+                return GetGameFlag(0x38U);
             case 10:
                 ovl_11_func_80118A68(0xE);
                 return 1;
@@ -265,7 +264,7 @@ block_118:
         }
         return 0;
     case 8:
-        func_8001AF70(0x66, 1U);
+        SetGameFlag(0x66, 1U);
         goto block_204;
     case 9:
         ovl_11_func_800F2538(arg1, (s16) arg2, (s16) arg3);
@@ -434,10 +433,10 @@ block_118:
         return 0;
     case 18:
         if (arg1 != 0) {
-            func_8001AF70(8, 1U);
+            SetGameFlag(8, 1U);
             goto block_204;
         }
-        return func_8001AF44(8U) != 1;
+        return GetGameFlag(8U) != 1;
     case 19:
         switch (arg1) {                             /* switch 12; irregular */
         case 0:

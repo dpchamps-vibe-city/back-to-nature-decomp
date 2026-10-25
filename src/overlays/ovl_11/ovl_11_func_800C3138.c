@@ -14,7 +14,7 @@ s32 ovl_11_func_800C3138(u8 *arg0) {
     struct_80076220 *var_s0;
     u16 temp_a0;
 
-    var_s0 = &D_80076220;
+    var_s0 = &gObjectEventSlotBase;
     D_80128B70 = 0x7FFFFFFF;
     for (var_s2 = 0; var_s2 < 35; var_s2++) {
         temp_a0 = var_s0->unk1E;

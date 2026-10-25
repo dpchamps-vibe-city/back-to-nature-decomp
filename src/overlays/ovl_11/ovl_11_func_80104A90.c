@@ -7,6 +7,7 @@
 #include "ovl11_choice_messages.h"
 #include "state_memory_init.h"
 #include "ovl11_sprite_effect_pool.h"
+#include "game_flags.h"
 
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800D6628(void);
@@ -31,7 +32,6 @@ s32 ovl_11_func_800DE76C(void);
 s32 ovl_11_func_80109310(s32 *arg0);
 void ovl_11_func_800BD668(void);
 void ovl_11_func_800F1F48(s32 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800FF96C(void);
 void ovl_11_func_800BD3C4(s32 arg0);
 
@@ -95,7 +95,7 @@ void ovl_11_func_80104A90(void) {
     far->field_254A0 = 0xC;
     base->field_4450 = (s32) (base->field_4450 | 0x40);
     if (base->field_44C0 >= 7) {
-        func_8001AF70(0xADU, 1U);
+        SetGameFlag(0xADU, 1U);
     }
     ovl_11_func_800FF96C();
 }

@@ -1,6 +1,5 @@
 #include "common.h"
-void func_8001AF70 (u16 arg0, u16 arg1);
-s32 func_8001AF44 (u32 arg0);
+#include "game_flags.h"
 void ovl_11_func_800F4CEC (void);
 void ovl_11_func_800F4CAC (void);
 void ovl_11_func_800CD0C0 (s32 *arg0);
@@ -13,18 +12,18 @@ void ovl_11_func_80111F88(void) {
 
     if (((Ovl11ProgressState *)D_8006C838)->activeTimer == 0 ||
         --((Ovl11ProgressState *)D_8006C838)->activeTimer < 0) {
-        func_8001AF70(0x37U, 0U);
+        SetGameFlag(0x37U, 0U);
         ((Ovl11ProgressState *)D_8006C838)->activeTimer = 0;
     }
-    if (func_8001AF44(0x38U) == 1) {
+    if (GetGameFlag(0x38U) == 1) {
         if (--((Ovl11ProgressState *)D_8006C838)->pendingTimer < 0) {
             ovl_11_func_800D0FB4();
             ovl_11_func_800F4CEC();
             ovl_11_func_800F4CAC();
-            func_8001AF70(0x38U, 0U);
+            SetGameFlag(0x38U, 0U);
             ((Ovl11ProgressState *)D_8006C838)->pendingTimer = 0U;
             for (var_s0 = 0x3A; var_s0 < 0x3E; var_s0++) {
-                if (func_8001AF44((u16)var_s0) == 0) {
+                if (GetGameFlag((u16)var_s0) == 0) {
                     break;
                 }
             }
@@ -46,10 +45,10 @@ void ovl_11_func_80111F88(void) {
                 temp_v0_3 = (Ovl11ProgressState *)D_8006C838;
                 temp_v0_3->complete = 1;
                 temp_v0_3->flags = (s32) (temp_v0_3->flags | 0x2000);
-                func_8001AF70(0x39U, 1U);
+                SetGameFlag(0x39U, 1U);
                 break;
             }
-            func_8001AF70((u16) temp_s1, 1U);
+            SetGameFlag((u16) temp_s1, 1U);
             if (((Ovl11ProgressState *)D_8006C838)->mode == 2) {
                 ovl_11_func_800CD0C0(&D_80075A1C);
             }

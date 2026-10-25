@@ -76,10 +76,10 @@ extern Ovl11TransitionBounds D_80122D8C[4][2];
 
 /* 800C2CE8 compares this absolute-addressed unsigned halfword to 4. */
 extern u16 D_80071A3C;
-/* 800C2CE8 increments this absolute-addressed word once per update. */
-extern s32 D_80122F88;
-/* 800C2CE8 tests this absolute-addressed signed halfword before incrementing. */
-extern s16 D_80128B68;
+/* ovl_11:800C30AC increments per pass; 800C2CE8 also increments per replay tick. */
+extern s32 gOvl11ObjectScriptTick;
+/* ovl_11:800C19B0 brackets schedule reconstruction with 0, then restores 1. */
+extern s16 gOvl11ObjectScriptLiveMode;
 
 /* 800E9D28: original lh/lhu/lw/sb/sh/sw offsets through the shared
  * work-area bases, with 0xB4/0xB8 scans and a 0xC-byte index table. */
@@ -987,8 +987,10 @@ struct Ovl11EventInitRecord {
     u8 pad3C[0xE4 - 0x3C];
     struct_80076220_entry entries[30];
 };
-extern struct_80076220 _D_80076220[1] __asm__("D_80076220");
-#define D_80076220 (*((struct_80076220*)_D_80076220))
+/* Existing first-record lvalue/array binding; pool walkers prove 37 records.
+ * Keep the one-element declaration and original assembly-symbol identity view. */
+extern struct_80076220 gObjectEventSlotStorage[1] __asm__("gObjectEventSlotBase");
+#define gObjectEventSlotBase (*((struct_80076220*)gObjectEventSlotStorage))
 
 /* 801315E0 takes width-two field addresses at these bases, stride 0x1D4. */
 extern u16 D_80076222[];
@@ -6488,9 +6490,9 @@ extern s32 *D_80125DC0[50];
 extern s32 D_80122810[];
 /* ovl_11_func_800BFD1C loads this pointer and indexes 0xC-byte entries. */
 extern s32 *D_80128A80;
-/* ovl_11_func_800C28CC publishes the group and one-based item index (sw). */
-extern s32 D_80128B74;
-extern s32 D_80128B78;
+/* ovl_11:800C28CC publishes the group and one-based item BEFORE group remap. */
+extern s32 gOvl11ScriptSpriteGroup;
+extern s32 gOvl11ScriptSpriteItemIndex1;
 
 /* ovl_11_func_800C32C8: lh/lhu at +44C4, lhu +44CE and lh +E778/+E77C. */
 struct Ovl11AnimationState {

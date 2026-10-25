@@ -13,14 +13,13 @@
 #include "ovl11_choice_messages.h"
 #include "ovl11_daily_conditions.h"
 #include "ovl11_sprite_effect_pool.h"
+#include "ovl11_object_event_pool.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);
 void ovl_11_func_800D6628 (void);
 void ovl_11_func_800C9C60 (void);
-void ovl_11_func_800C1C08 (void);
-void ovl_11_func_800C1BA0 (void);
 void ovl_11_func_800BFEA4 (void);
 void ovl_11_func_800BFF00 (void);
 void ovl_11_func_800DBFA0 (void);
@@ -69,8 +68,8 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800DB9A4();
     Ovl11InitClockAndCalendar();
     ovl_11_func_800C9C60();
-    ovl_11_func_800C1C08();
-    ovl_11_func_800C1BA0();
+    Ovl11ResetAllEventSlots();
+    Ovl11AllocateAllEventSlots();
     ovl_11_func_800BFEA4();
     ovl_11_func_800BFF00();
     ovl_11_func_800DBFA0();

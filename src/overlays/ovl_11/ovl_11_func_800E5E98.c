@@ -1,7 +1,7 @@
 #include "common.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800DD274(void);
-s32 func_8001AF44(u32 arg0);
 
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_a2;
@@ -16,7 +16,7 @@ s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     case -4:
         if (((struct Ovl11MessageSelectState *) D_8006C838)->status & 0x100000) {
             var_a2 = 0x78;
-        } else if (func_8001AF44(0x3AU) == 1) {
+        } else if (GetGameFlag(0x3AU) == 1) {
             var_a2 = 0x74;
         } else {
             var_a2 = 0x70;
@@ -27,7 +27,7 @@ s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             var_a2 = 0x6C;
         } else if (((struct Ovl11MessageSelectState *) D_8006C838)->status & 0x200) {
             var_a2 = 0x68;
-        } else if (func_8001AF44(0x3CU) == 1) {
+        } else if (GetGameFlag(0x3CU) == 1) {
             var_a2 = 0x64;
         } else {
             var_a2 = 0x60;

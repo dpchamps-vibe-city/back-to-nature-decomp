@@ -7,15 +7,15 @@
 #include "ovl11_clock_calendar.h"
 #include "ovl11_vertex_blend.h"
 #include "ovl11_daily_conditions.h"
+#include "game_flags.h"
+#include "psyq/memory.h"
+#include "ovl11_object_event_pool.h"
 
-void func_8001AF70 (u16 arg0, u16 arg1);
-s32 func_8001AF44 (u32 arg0);
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
 void ovl_11_func_800CCCC0 (void);
 void ovl_11_func_80111F88 (void);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
-void ovl_11_func_800C1D68 (void);
 void ovl_11_func_800BD5A8 (s32 arg0);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_800DB0E4 (void);
@@ -29,7 +29,6 @@ void ovl_11_func_800EEECC (void);
 void ovl_11_func_800BD668 (void);
 void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_800C19B0 (void);
-void ovl_11_func_800C1BE0 (void);
 void ovl_11_func_800BFEA4 (void);
 void ovl_11_func_800BFF00 (void);
 void ovl_11_func_800C044C (s16 arg0);
@@ -58,7 +57,7 @@ s32 ovl_11_func_800DDDFC(void) {
     s32 same;
     Ovl11DDDFCState *phase0;
 
-    func_8001AF70(3, 1);
+    SetGameFlag(3, 1);
     result = 0;
     ((Ovl11DDDFCState *)D_8006C838)->flags |= 0x08000000;
     ((s32 *)gPad0Input)[2] = 0;
@@ -71,7 +70,7 @@ s32 ovl_11_func_800DDDFC(void) {
             phase0->phase += 2;
             break;
         }
-        if (func_8001AF44(0x47) == 0) {
+        if (GetGameFlag(0x47) == 0) {
             if (IsScreenFadeComplete() != 1) {
                 break;
             }
@@ -88,7 +87,7 @@ s32 ovl_11_func_800DDDFC(void) {
         }
         break;
     case 2:
-        func_8001AF70(0x73, ((Ovl11DDDFCState *)D_8006C838)->mode == 3);
+        SetGameFlag(0x73, ((Ovl11DDDFCState *)D_8006C838)->mode == 3);
         ovl_11_func_800D7B8C();
         ovl_11_func_800CECB0();
         Ovl11ApplyCurrentDayCondition();
@@ -109,7 +108,7 @@ s32 ovl_11_func_800DDDFC(void) {
             same = ((Ovl11SetupWorkView *)&D_8007AFF0)->id == id;
             ((Ovl11SetupWorkView *)&D_8007AFF0)->id = id;
             ovl_11_func_800DBFEC((u16)((Ovl11SetupWorkView *)&D_8007AFF0)->id, 0x8000, same);
-            ovl_11_func_800C1D68();
+            Ovl11UpdateEventSlotCounters();
             ovl_11_func_801129EC();
             ovl_11_func_800BD5A8(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xA));
             ovl_11_func_800BD6A8(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xC), 0);
@@ -131,13 +130,13 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800BD668();
             ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
             ovl_11_func_800C19B0();
-            ovl_11_func_800C1BE0();
+            Ovl11ClearEventSlotTimeOrigins();
             ovl_11_func_800BFEA4();
             ovl_11_func_800BFF00();
             ovl_11_func_800C044C(((Ovl11DDDFCState *)D_8006C838)->mode);
             ((Ovl11SetupWorkView *)&D_8007AFF0)->state = 0;
             ((Ovl11DDDFCState *)D_8006C838)->phase++;
-            if (func_8001AF44(0x48) == 0) {
+            if (GetGameFlag(0x48) == 0) {
                 ovl_11_func_800BC868();
                 while (IsSoundTransferComplete() == 0) {
                     UpdateMasterVolumeAndSoundTransfer();
@@ -180,7 +179,7 @@ s32 ovl_11_func_800DDDFC(void) {
         }
         break;
     case 6:
-        func_8001AF70(3, 0);
+        SetGameFlag(3, 0);
         ((Ovl11DDDFCState *)D_8006C838)->flags &= 0xF7FFFFFF;
         result = 1;
         break;

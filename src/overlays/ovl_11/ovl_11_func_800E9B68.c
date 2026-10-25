@@ -8,7 +8,7 @@ s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u32 var_v1;
     s16 c;
 
-    temp_s0 = &D_80076220 + arg0;
+    temp_s0 = &gObjectEventSlotBase + arg0;
     temp_s0->unk2C = 0x36;
     temp_s0->unk2E = 0x36;
     (*(s16 *) ((u8 *) temp_s0 + 8)) = 0;

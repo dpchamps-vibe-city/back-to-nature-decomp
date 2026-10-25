@@ -13,6 +13,7 @@
 #include "psyq/libcd.h"
 #include "psyq/libsnd.h"
 #include "update_timing.h"
+#include "game_flags.h"
 
 /* Tentative definitions preserve this unit's original small-data ownership. */
 s16 gCdAudioState;
@@ -24,8 +25,6 @@ s32 gCdAudioRestartCount;
 s32 gCdAudioTrackIndex;
 s32 gCdAudioFileIndex;
 s32 gCdAudioChannel;
-
-s32 func_8001AF44(u32 arg0);
 
 void FindCdAudioFiles(void) {
     s32 fileIndex;
@@ -146,7 +145,7 @@ void StartCdAudioTrack(s32 trackIndex) {
 
     gameState = (struct struct_8006C838_view *)&D_8006C838;
     if ((gameState->field_CC == 0) &&
-        ((func_8001AF44(2) != 1) || (*(s32 *)((u8 *)gameState + 0x7A74) == 1))) {
+        ((GetGameFlag(2) != 1) || (*(s32 *)((u8 *)gameState + 0x7A74) == 1))) {
         /* {countdown, file index, XA channel}. Keep the halfword-base
          * expression: it preserves the original field-load scheduling. */
         u16 *settings = (u16 *)gCdAudioTrackSettings + trackIndex * 3;

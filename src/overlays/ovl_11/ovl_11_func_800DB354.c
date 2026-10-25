@@ -3,8 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-
-s32 func_8001AF44(u32 arg0);
+#include "game_flags.h"
 
 typedef struct {
     u16 unk0;
@@ -47,7 +46,7 @@ void ovl_11_func_800DB354(Ovl11DB354Arg0 *arg0) {
 
     base = (char *)&D_8007AFF0;
     p = *(Ovl11DB354Table **)(base + 0x25388);
-    if ((p->unk4 != 0x5B) || (func_8001AF44(0x45U) != 0)) {
+    if ((p->unk4 != 0x5B) || (GetGameFlag(0x45U) != 0)) {
         rect.x = arg0->unkE;
         rect.y = arg0->unk10;
         rect.w = arg0->unk12;

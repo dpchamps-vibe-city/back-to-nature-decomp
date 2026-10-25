@@ -22,6 +22,7 @@
 #include "sprite_source.h"
 #include "sprite_upload.h"
 #include "sprite_render.h"
+#include "game_flags.h"
 
 /* Tentative definitions retain the original $gp ownership. The saved flag-3
  * word is stored whole but only its low halfword is restored. The archive
@@ -48,8 +49,6 @@ s32 AnimateMessageWindowRect(s32 packet, s32 unused, s16 x, s16 y,
 
 void SetVal8005E2BC(s32 value);
 void func_80022580(u32 *packet, s32 style, s32 x, s32 y, s16 width, s16 height);
-s32 func_8001AF44(u32 slot);
-void func_8001AF70(u16 slot, u16 value);
 void func_800179E8(void);
 void func_80022008(void);
 void func_80017A38(s16 x, s16 y);
@@ -235,8 +234,8 @@ s32 BeginMessageWindowRead(void) {
     struct struct_8006C838_view *work;
     s32 flags;
 
-    gMessageWindowSavedFlag3 = func_8001AF44(3);
-    func_8001AF70(3, 1);
+    gMessageWindowSavedFlag3 = GetGameFlag(3);
+    SetGameFlag(3, 1);
     work = (struct struct_8006C838_view *)D_8006C838;
     flags = work->field_0C;
     gMessageWindowStatus = 0xE;
@@ -371,7 +370,7 @@ s32 ShrinkMessageWindow(void) {
 }
 
 s32 FinishMessageWindow(void) {
-    func_8001AF70(3, (u16)gMessageWindowSavedFlag3);
+    SetGameFlag(3, (u16)gMessageWindowSavedFlag3);
     if (gMessageWindowSavedWorkFlags & 0x08000000) {
         ((struct struct_8006C838_view *)&D_8006C838)->field_0C |= 0x08000000;
     } else {

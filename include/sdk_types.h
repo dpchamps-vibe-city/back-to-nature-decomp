@@ -1854,16 +1854,6 @@ typedef struct {
 } M2C_ececd3ff98bf_Struct_801110CC;
 
 typedef struct {
-               u8 unk0[0x14];
-               s16 unk14;
-               u16 unk16;
-               u8 unk18[0x1E - 0x18];
-               u16 unk1E;
-               u8 unk20[0x22 - 0x20];
-               u16 unk22;
-} M2C_ed53708abf36_Struct800C2A98;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;

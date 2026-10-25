@@ -1,9 +1,6 @@
 #include "common.h"
 #include "random.h"
-
-s32 func_8001AF44(u32 arg0);
-
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 s32 ovl_11_func_80113A20(s32 arg0) {
     s16 var_s3;
@@ -29,22 +26,22 @@ s32 ovl_11_func_80113A20(s32 arg0) {
         if (a2 < s2) {
             if (var_s3 == 0x37) {
                 if (s1[i] == 0x67) {
-                    if (func_8001AF44(0x62) != 0) {
+                    if (GetGameFlag(0x62) != 0) {
                         return 0;
                     }
-                    func_8001AF70(0x62, 1);
+                    SetGameFlag(0x62, 1);
                 }
                 if (s1[i] == 0x63) {
-                    if (func_8001AF44(0x60) != 0) {
+                    if (GetGameFlag(0x60) != 0) {
                         return 0;
                     }
-                    func_8001AF70(0x60, 1);
+                    SetGameFlag(0x60, 1);
                 }
             } else if (s1[i] == 0x67) {
-                if (func_8001AF44(0x61) != 0) {
+                if (GetGameFlag(0x61) != 0) {
                     return 0;
                 }
-                func_8001AF70(0x61, 1);
+                SetGameFlag(0x61, 1);
             }
             return s1[i];
         }

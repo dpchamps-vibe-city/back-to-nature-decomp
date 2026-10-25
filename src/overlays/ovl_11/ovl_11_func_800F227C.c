@@ -18,7 +18,7 @@ void ovl_11_func_800F227C(s16 arg0) {
     s32 j;
 
     if (arg0 != 0x168) {
-        rec = &D_80076220;
+        rec = &gObjectEventSlotBase;
         for (j = 0; j < 37; j++, rec++) {
             en = (struct_80076220_entry *)((u8 *)rec + 0xE4);
             for (i = 0; i < 30; i++, en++) {

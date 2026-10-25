@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game_flags.h"
 
 void ovl_11_func_800DBE9C(void);
 
@@ -6,8 +7,6 @@ typedef struct {
     char pad_0[0x30];
     s32 *field_30;
 } D8006C838ViewBEF8;
-
-void func_8001AF70(u16 arg0, u16 arg1);
 
 s32 ovl_11_func_800DBEF8(s32 arg0) {
     char *base;
@@ -20,7 +19,7 @@ s32 ovl_11_func_800DBEF8(s32 arg0) {
     if (*(s16 *)((char *)p + 4) == *(s16 *)(far_base + 0x25476)) {
         return 0;
     }
-    func_8001AF70(2, 0);
+    SetGameFlag(2, 0);
     *(s32 *)(base + 0x7A74) = 0;
     ovl_11_func_800DBE9C();
     return 1;

@@ -4,11 +4,10 @@
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
-s32 func_8001AF44 (u32 arg0);
-void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
 s32 ovl_11_func_800CB4E0 (void);
 void ovl_11_func_800C47F0 (void);
@@ -40,8 +39,8 @@ void ovl_11_func_800C401C(void) {
             ovl_11_func_800CCF58((Ovl11C7010Object *) obj);
             obj->flags = (s32) (obj->flags & ~0x2000);
         }
-        if (func_8001AF44(0xADU) == 1) {
-            func_8001AF70(0xADU, 0U);
+        if (GetGameFlag(0xADU) == 1) {
+            SetGameFlag(0xADU, 0U);
             RequestMessageWindow(0, 0x724);
         }
         ovl_11_func_800C498C((Ovl11C498CObject *) obj);

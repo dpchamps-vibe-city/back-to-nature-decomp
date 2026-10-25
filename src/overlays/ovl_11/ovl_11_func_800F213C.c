@@ -1,7 +1,6 @@
 #include "common.h"
 #include "psyq/stddef.h"
-
-s32 func_8001AF44(u32 arg0);
+#include "game_flags.h"
 
 void *ovl_11_func_800F213C(u16 *arg0, s32 arg1, u16 *arg2) {
     s32 a0;
@@ -22,7 +21,7 @@ void *ovl_11_func_800F213C(u16 *arg0, s32 arg1, u16 *arg2) {
         s2 = 0;
         arg0 += 1;
         for (;;) {
-            a0 = func_8001AF44(*arg0 & 0x7FFF);
+            a0 = GetGameFlag(*arg0 & 0x7FFF);
             if (*arg0 & 0x8000) {
                 if (a0 != 0) {
                     a0 = 0;

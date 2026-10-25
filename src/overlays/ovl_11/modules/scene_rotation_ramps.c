@@ -6,8 +6,7 @@
  */
 #include "common.h"
 #include "ovl11_scene_rotation_ramps.h"
-
-s32 func_8001AF44(u32 flagIndex);
+#include "game_flags.h"
 
 void Ovl11InitSceneZRotationRamp(void) {
     s32 index;
@@ -47,7 +46,7 @@ void Ovl11StepSceneZRotationRamp(void) {
     }
     return;
 idle:
-    flag = func_8001AF44(0x71U);
+    flag = GetGameFlag(0x71U);
     if (flag == 1) {
         gOvl11SceneZRotationRampState = flag;
         return;
@@ -62,7 +61,7 @@ outward:
     }
     return;
 held:
-    if (func_8001AF44(0x71U) == 0) {
+    if (GetGameFlag(0x71U) == 0) {
         gOvl11SceneZRotationRampState = 3;
         return;
     }
@@ -117,7 +116,7 @@ void Ovl11StepSceneYRotationRamp(void) {
     }
     return;
 idle:
-    flag = func_8001AF44(0x70U);
+    flag = GetGameFlag(0x70U);
     if (flag == 1) {
         gOvl11SceneYRotationRampState = flag;
     }
@@ -130,7 +129,7 @@ outward:
     }
     return;
 held:
-    if (func_8001AF44(0x70U) == 0) {
+    if (GetGameFlag(0x70U) == 0) {
         gOvl11SceneYRotationRampState = 3;
     }
     return;

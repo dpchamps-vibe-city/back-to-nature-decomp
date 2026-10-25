@@ -14,7 +14,7 @@ void ovl_11_func_800C3CCC(void) {
         if (*(s16 *)(c838_base + 0x5238) < 0xF) {
             *(u16 *)(c838_base + 0x5238) = *(u16 *)(c838_base + 0x5238) + 1;
         }
-        p = &D_80076220;
+        p = &gObjectEventSlotBase;
         for (i = 0; i < 37; i++) {
             p->unk2 = p->unk2 - 1;
             if ((s16)p->unk2 < 0) {

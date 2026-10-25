@@ -4,12 +4,11 @@
 #include "pad_actuator_sequences.h"
 #include "message_window.h"
 #include "ovl11_interaction_volume_query.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670(s16 arg0);
 s32 ovl_11_func_800CB4E0(void);
-s32 func_8001AF44(u32 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
 
 s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
     s32 messages[2];
@@ -74,8 +73,8 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                         return 0;
                     }
                 }
-                if (func_8001AF44(0x15U) != 1) {
-                    if (func_8001AF44(0x16U) != 1) {
+                if (GetGameFlag(0x15U) != 1) {
+                    if (GetGameFlag(0x16U) != 1) {
                         ((struct Ovl11SelectionResetMode *)&D_8007AFF0)->mode = 3;
                         arg0->unk6C |= 0x400;
                         ovl_11_func_800CB4E0();
@@ -127,7 +126,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                     ovl_11_func_800CD670(0xA);
                     ovl_11_func_800CB4E0();
                     if (D_801287F0->unk2 != 0xFFFE) {
-                        func_8001AF70(3U, 1U);
+                        SetGameFlag(3U, 1U);
                         return 1;
                     }
                     return 1;

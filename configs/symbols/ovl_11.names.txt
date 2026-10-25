@@ -1,5 +1,32 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Fixed object-event slot lifecycle and counter maintenance.
+Ovl11AllocateAllEventSlots = 0x800C1BA0; // type:func
+Ovl11ClearEventSlotTimeOrigins = 0x800C1BE0; // type:func
+Ovl11ResetAllEventSlots = 0x800C1C08; // type:func
+Ovl11InitEventSlot = 0x800C1C5C; // type:func
+Ovl11ClearEventSlotScheduleChanges = 0x800C1C90; // type:func
+Ovl11AllocateEventSlot = 0x800C1CBC; // type:func
+Ovl11UpdateEventSlotCounters = 0x800C1D68; // type:func
+
+// Object event-script interpreter, schedule selection and frame driver.
+Ovl11ApplyEventAnimationCommand = 0x800C1F94; // type:func
+Ovl11AdvanceScriptCommand = 0x800C2044; // type:func
+Ovl11MoveTowardScriptCommand = 0x800C2678; // type:func
+Ovl11FindCountedWordIndex = 0x800C2884; // type:func
+Ovl11SelectScriptSpriteSource = 0x800C28CC; // type:func
+Ovl11LoadScheduledEvent = 0x800C2A98; // type:func
+Ovl11AdvanceScheduledEvent = 0x800C2B04; // type:func
+Ovl11DispatchCurrentScriptCommand = 0x800C2C74; // type:func
+Ovl11RunObjectScriptTicks = 0x800C2CE8; // type:func
+Ovl11StepObjectEvent = 0x800C2F74; // type:func
+Ovl11UpdateObjectCommand = 0x800C3020; // type:func
+Ovl11UpdateObjectEvents = 0x800C30AC; // type:func
+gOvl11ObjectScriptTick = 0x80122F88; // type:data size:0x4
+gOvl11ObjectScriptLiveMode = 0x80128B68; // type:data size:0x2
+gOvl11ScriptSpriteGroup = 0x80128B74; // type:data size:0x4
+gOvl11ScriptSpriteItemIndex1 = 0x80128B78; // type:data size:0x4
+
 // The complete 25-entry projected sprite-effect pool lifecycle.
 Ovl11UpdateSpriteEffects = 0x801212C4; // type:func
 Ovl11ClearSpriteEffects = 0x80121318; // type:func

@@ -1,14 +1,13 @@
 #include "common.h"
-
-s32 func_8001AF44(u32 arg0);
+#include "game_flags.h"
 
 s32 ovl_11_func_800EFA1C(s16 arg0) {
     s32 temp_v0;
     char *p;
 
-    temp_v0 = func_8001AF44(0x25U);
+    temp_v0 = GetGameFlag(0x25U);
     if (temp_v0 == 1) {
-        if (func_8001AF44(0xC9U) == temp_v0) {
+        if (GetGameFlag(0xC9U) == temp_v0) {
             return 1;
         }
         p = (char *) &D_8006C838;
@@ -17,7 +16,7 @@ s32 ovl_11_func_800EFA1C(s16 arg0) {
         }
     }
     if (arg0 != 0) {
-        if (func_8001AF44(0x20U) == 1) {
+        if (GetGameFlag(0x20U) == 1) {
             return 1;
         }
     }

@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
@@ -10,7 +11,6 @@ void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (Ovl11InteractionRecord *arg0);
 s16 ovl_11_func_800F4240(Ovl11InteractionRecord *arg0);
-s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
@@ -85,7 +85,7 @@ s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
             case 0x173:
             case 0x174:
                 if (((struct Ovl11D2764StateView *) &D_8007AFF0)->field_25476 == 0xE) {
-                    if (func_8001AF44(0xD7U) == 1) {
+                    if (GetGameFlag(0xD7U) == 1) {
                         var_s0 = 0x283;
                     } else {
                         var_s0 = 0x282;

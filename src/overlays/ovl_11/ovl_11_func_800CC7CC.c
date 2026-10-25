@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 unsigned long long ovl_11_func_800BF450(void);
@@ -16,7 +17,6 @@ Ovl11CC7CCSpawn *ovl_11_func_800F4994(Vec3 *arg0);
 s32 ovl_11_func_800F3E44(s16 arg0);
 s32 ovl_11_func_800BF3D0(void);
 s32 ovl_11_func_800F3BCC(u16 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800CC6A8(Ovl11CC7CCObject *arg0);
@@ -91,7 +91,7 @@ remove:
                 ovl_11_func_800F3BCC(arg0->unk2);
                 PlaySoundEffect(0x13);
                 ovl_11_func_800CCBE8((Ovl11CC4E0Object *)arg0);
-                func_8001AF70(7, 1);
+                SetGameFlag(7, 1);
                 return 1;
             }
             if (arg0->unk2 == 0x65) {

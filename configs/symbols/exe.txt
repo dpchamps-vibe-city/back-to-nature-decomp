@@ -1,4 +1,8 @@
 
+// First-record lvalue of the 37 x 0x1D4 object-event pool in shared state.
+// Keep the established one-record C symbol extent, not a new allocation.
+gObjectEventSlotBase = 0x80076220; // size:0x1D4
+
 // Selected-entry threshold operations compare/debit this shared signed word.
 gSelectedThresholdBalance = 0x80071A60; // size:0x4
 
@@ -302,8 +306,8 @@ func_8001AD6C = 0x8001AD6C; // type:func
 func_8001ADD8 = 0x8001ADD8; // type:func
 func_8001AE34 = 0x8001AE34; // type:func
 func_8001AF34 = 0x8001AF34; // type:func
-func_8001AF44 = 0x8001AF44; // type:func
-func_8001AF70 = 0x8001AF70; // size:0x70 type:func
+GetGameFlag = 0x8001AF44; // type:func
+SetGameFlag = 0x8001AF70; // size:0x70 type:func
 _8001AFB0 = 0x8001AFB0; // type:label
 ResetAuxSpriteDisplay = 0x8001AFE0; // type:func
 InitAuxSpriteDisplaySource16 = 0x8001B028; // type:func

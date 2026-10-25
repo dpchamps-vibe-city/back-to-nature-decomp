@@ -7,6 +7,7 @@
 #include "master_volume.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "game_flags.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -20,7 +21,6 @@ void ovl_11_func_800C4A2C (Ovl11C4A2CObject *arg0);
 void ovl_11_func_800C6770 (Ovl11C6770Object *arg0);
 void ovl_11_func_800C70CC (Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8001AF70 (u16 arg0, u16 arg1);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670 (s16 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
@@ -224,7 +224,7 @@ state_done:
         case 0x46:
             if ((D_80128C50 & 0x80) && (ovl_11_func_800F3EF0() != 0)) {
                 PlaySoundEffect(0x13);
-                func_8001AF70(7U, 1U);
+                SetGameFlag(7U, 1U);
             }
             arg0->unk6C &= ~0x4000;
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -243,11 +243,11 @@ state_done:
                 BeginScreenFadeIncrease(0x1E, 0, 2);
                 BeginMasterVolumeFadeOut(0x1E);
                 arg0->unk6C |= 0x400;
-                func_8001AF70(0x47U, 1U);
+                SetGameFlag(0x47U, 1U);
                 return 0;
             }
             if (temp_v1 == 1) {
-                func_8001AF70(0xAU, 1U);
+                SetGameFlag(0xAU, 1U);
             }
             ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x4A, arg0->phase + 1, *((s32 *) ((u8 *) &D_80123244 + (arg0->phase * 4))));
             return 0;
@@ -319,7 +319,7 @@ state_done:
             ovl_11_func_800D666C(arg0->item);
             ovl_11_func_800D7328((s16 *) ((u8 *) arg0 + 0x8A));
             if (arg0->state == 0x6A) {
-                func_8001AF70(0x45U, 1U);
+                SetGameFlag(0x45U, 1U);
                 temp_v0_2 = ((struct Ovl11C580CState *)D_8006C838)->count + 1;
                 ((struct Ovl11C580CState *)D_8006C838)->count = temp_v0_2;
                 if ((s16) temp_v0_2 < 2) {

@@ -10,12 +10,12 @@
 #include "ovl11_calendar_panel.h"
 #include "ovl11_interaction_volume_query.h"
 #include "ovl11_choice_messages.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800CB4E0 (void);
 s32 ovl_11_func_800CB540 (u16 *arg0);
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800F6778 (void);
-s32 func_8001AF44 (u32 arg0);
 void ovl_11_func_800FFA40 (void);
 void ovl_11_func_800F6734 (void);
 void ovl_11_func_800FFE64 (void);
@@ -41,7 +41,6 @@ void ovl_11_func_800C8764 (Recon_ovl_11_func_800C8334_A0View *arg0);
 s32 ovl_11_func_800F24B0 (void);
 void ovl_11_func_800C84DC (Recon_ovl_11_func_800C7270_A0View *arg0);
 s32 ovl_11_func_800F3F7C (void);
-void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_800C857C(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
 void ovl_11_func_800C8670(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
 s32 ovl_11_func_80121204(void);                      /* static */
@@ -120,7 +119,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
                     var_v0 = 0;
-                    if (func_8001AF44(2U) != 1) {
+                    if (GetGameFlag(2U) != 1) {
                         ovl_11_func_800FFA40();
                         var_v0_2 = 2;
                         goto block_28;
@@ -215,10 +214,10 @@ block_28:
                 temp_v1_2 = *(s16 *) ((u8 *) temp_v0 + 8);
                 if ((temp_v1_2 == (*(u16 *) ((u8 *) arg0 + 0x38))) || (var_v0 = 0, (temp_v1_2 == 5))) {
                     var_s0 = *(s16 *) ((u8 *) temp_v0 + 4);
-                    if (func_8001AF44(0x24U) == 1) {
+                    if (GetGameFlag(0x24U) == 1) {
                         var_s0 = 0x1B0;
                     }
-                    if (func_8001AF44(0x1FU) == 1) {
+                    if (GetGameFlag(0x1FU) == 1) {
                         var_s0 = 0x1B1;
                     }
                     RequestMessageWindow(2, var_s0);
@@ -392,12 +391,12 @@ block_78:
             case 48:
                 var_v0 = 0x30;
                 if ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
-                    if (func_8001AF44(((*(u16 *) ((u8 *) temp_v0 + 6)) + 0xA1) & 0xFFFF) == 0) {
+                    if (GetGameFlag(((*(u16 *) ((u8 *) temp_v0 + 6)) + 0xA1) & 0xFFFF) == 0) {
                         event[0] = (u16) (*(s16 *) ((u8 *) temp_v0 + 4));
                         event[1] = 0;
                         event[2] = 1;
                         ovl_11_func_800CB540(event);
-                        func_8001AF70(((*(u16 *) ((u8 *) temp_v0 + 6)) + 0xA1) & 0xFFFF, 1U);
+                        SetGameFlag(((*(u16 *) ((u8 *) temp_v0 + 6)) + 0xA1) & 0xFFFF, 1U);
                     }
                     return 0x30;
                 }

@@ -12,7 +12,7 @@ s32 ovl_11_func_800E9620(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         return 1;
     }
     if ((arg0 > 0) && (arg1 < 0x25)) {
-        temp_v1 = &D_80076220 + arg0;
+        temp_v1 = &gObjectEventSlotBase + arg0;
         if (arg1 != 2) {
             temp_v1->unk1E &= 0xE7FF;
         }

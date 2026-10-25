@@ -4,10 +4,9 @@
  * membership and pooled-table evidence are in notes/file-groupings.md. */
 #include "ovl11_state_field_access.h"
 #include "debug_break.h"
+#include "game_flags.h"
 
 s32 Ovl11ClampStateField(s32 fieldId, s32 elementIndex, s32 value);
-void func_8001AF70(u16 flagId, u16 value);
-s32 func_8001AF44(u32 flagId);
 
 void Ovl11UpdateStateField(s32 fieldId, s32 elementIndex, s32 operand, s32 operation) {
     s32 kind;
@@ -16,7 +15,7 @@ void Ovl11UpdateStateField(s32 fieldId, s32 elementIndex, s32 operand, s32 opera
     u8 *data;
 
     if ((u32)(fieldId - 0x31) < 0x2EFU) {
-        func_8001AF70((fieldId - 0x30) & 0xFFFF, operand & 0xFFFF);
+        SetGameFlag((fieldId - 0x30) & 0xFFFF, operand & 0xFFFF);
         return;
     }
     data = Ovl11ResolveStateField(fieldId, elementIndex, &kind);
@@ -75,7 +74,7 @@ s32 Ovl11ReadStateField(s32 fieldId, s32 elementIndex) {
     u8 *data;
 
     if ((u32)(fieldId - 0x31) < 0x2EFU) {
-        value = func_8001AF44((fieldId - 0x30) & 0xFFFF);
+        value = GetGameFlag((fieldId - 0x30) & 0xFFFF);
     } else {
         data = Ovl11ResolveStateField(fieldId, elementIndex, &kind);
         switch (kind) {

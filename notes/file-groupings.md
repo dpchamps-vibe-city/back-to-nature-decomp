@@ -5319,6 +5319,38 @@ load + explicit s16 casts), strengthening the score-table sequencer TU
 hypothesis; both still reach the tables absolutely, so TU membership remains
 unproven.
 
+## game-state flag bank — exe:0x8001AF44–0x8001AFE0 exclusive (confidence: medium)
+
+**Reconstructed `src/modules/game_flags.c`:** `GetGameFlag` (8001AF44,
+formerly func_8001AF44) and `SetGameFlag` (8001AF70, formerly func_8001AF70).
+Membership is the complementary read/modify/write API over the SAME word/bit
+mapping at D_8006C838+0x38: low-16-bit ID, word ID/32, bit ID%32. Message-window
+begin/finish saves and restores flag 3 through the pair; CD audio and overlay
+clients query the same API. This is a specific shared layout/protocol, not a
+claim based on the widely used state base or adjacency alone.
+
+Left boundary: 8001AF34 writes only the text engine's E468 slot marker and
+has no flag-bank operation or call into this pair. Right boundary: the
+auxiliary-display initializer at 8001AFE0 clears its own OT/source workspace
+and calls its own source initializer, with no flag-bank connection. These
+are responsibility/state cuts with no positive joining witness, NOT GP-proven
+historical object boundaries. The original-byte ownership tool reports zero
+GP accesses for both members; no tentative definition or ownership was added.
+
+`game_flags.h` publishes their existing, deliberately different u32/u16 ID
+ABIs, low-16-bit getter behavior, exact 0/1 return, nonzero setter enable,
+other-bit preservation and lack of bounds checks. Numeric IDs retain neutral
+meanings. Locals now identify bank, word/bit indices and byte offsets. The
+symbol configuration/canonicalization propagated both names through EXE and
+overlay callers; interfaceAudit replaced caller-local prototypes with this
+header and confirmed unchanged objects. No storage, linkage or type change.
+
+Checked fold passed at baseline -O2/-G8; neither function has an override.
+Full campaign verification passed every integrity gate at 610 folded functions,
+and the subsequent script batch passed at 622: all EXE/overlay code, data,
+tables and placement exact; canonical interfaces, ownership, convergence,
+source policy and exception non-growth pass. No shared tool was changed.
+
 ## auxiliary sprite display — 0x8001AFE0–0x8001B258 (confidence: high)
 
 **Reconstructed module: `src/modules/aux_sprite_display.c`**, five compiled
@@ -10156,11 +10188,58 @@ the run itself remains link-order adjacency only.
   `func_8001AF44` flag-test idiom of the ovl_11 leaves; zero-gap predecessor
   of 0x800F00AC.
 
-## `ovl_11` struct_80076220 record-init/clear run — 0x800C1BA0–0x800C1D68 (confidence: medium)
+## `ovl_11` object-event pool lifecycle — 0x800C1BA0–0x800C1F94 exclusive (confidence: medium)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): one gapless
-link-order run whose matched members all operate on the 0x1D4-byte record of
-the 37-entry absolute-addressed array `D_80076220`.
+**Reconstructed `src/overlays/ovl_11/modules/object_event_pool.c`**, the seven
+original functions at 1BA0, 1BE0, 1C08, 1C5C, 1C90, 1CBC and 1D68, in
+original order. The distant record-family consumers listed below are NOT
+additional TU members. Membership rests on the reset/allocate lifecycle:
+1C08 and 1CBC both call the local 1C5C whole-record initializer then clear
+the +E0 timer pair; 1BA0 and 1C08 both finish by rebuilding pairings through
+F0C70. Caller 801044E4 invokes reset and populate consecutively. The other
+pool-wide clears and counter pass act on this lifecycle's offsets and flags.
+The shared 37-record array alone and gapless link order alone prove nothing.
+
+Left boundary: 19B0 is a time-of-day script reconstruction pass, using the
+interpreter's command/sprite API and live/replay globals, with no pool API
+call. Right boundary: 1F94 starts command-animation interpretation, followed
+by the mutually calling interpreter run documented below. The pool has no
+call into that interpreter. Flag 0x8000 is the allocator-to-script handshake;
+the shared time-origin/timer fields do NOT prove complete field disjointness.
+These are separate lifecycle/command call protocols, not GP-proven historical
+cuts (-G0 overlay). Neither the record array nor adjacency is used to absorb
+the isolated 19B0 client or remote record consumers.
+
+Names: Ovl11AllocateAllEventSlots, ClearEventSlotTimeOrigins,
+ResetAllEventSlots, InitEventSlot, ClearEventSlotScheduleChanges,
+AllocateEventSlot and UpdateEventSlotCounters (all with Ovl11 prefix).
+The public `ovl11_object_event_pool.h` exposes the five externally used
+whole-pool operations, their initialized-state requirement, 37x0x1D4 layout,
+free-ID sentinel, reset-versus-populate distinction, counter clamps, transient
+flag effects and threshold latching. The initializer's retained s32 ABI is a
+record ADDRESS, not an index. Importantly allocation/counter classification
+uses the physical SLOT INDEX, not the stored/requested ID. Allocation returns
+void and silently does nothing when full; IDs narrow to s16. No disputed
+counter gameplay meaning is named. Helpers retain external linkage.
+
+The shared first-record lvalue is now `gObjectEventSlotBase` at EXE:80076220.
+Its pre-existing one-record symbol extent and array-backed lvalue/assembly
+binding are preserved; no new 37-record declaration or storage was invented.
+Canonicalization propagated the rename to all consumers; the existing macro,
+assembly-label binding and ovl_30 backing-array use were explicitly renamed
+to `gObjectEventSlotStorage`. The struct identities, widths, signedness,
+layout and all absolute accesses remain unchanged. Local names identify IDs,
+slot indices, records, counters and addresses. Public caller prototypes were
+replaced by the module header with unchanged objects.
+
+Checked fold passed all seven members and ovl_11 at baseline -O2/-G0.
+No override exists on a member, and no flag/policy exception was added or
+retired. Full campaign verification passes every integrity gate at
+**629 folded / 86 valid modules**: EXE/all overlays, data/callbacks/tables/
+placement, canonical identities, interfaces, ownership, convergence, source
+policy and exception non-growth. No shared tool changed.
+
+Historical family evidence (address-derived names retained for provenance):
 
 Fingerprints:
 - **gapless contiguous run**: 0x800C1BA0 (0x40, ends exactly at 0x800C1BE0)
@@ -10237,11 +10316,65 @@ Members (address order):
   This adds a table-layout/data dependency, not evidence that the distant
   selector belongs to the 800C1Bxx translation unit.
 
-## `ovl_11` animation-command helper/update run — 0x800C1F94 / 0x800C2044 / 0x800C2678 (confidence: low)
+## `ovl_11` object event-script interpreter — 0x800C1F94–0x800C3138 exclusive (confidence: medium)
 
-Candidate same-TU run: direct calls and gapless link adjacency, corroborated
-by shared object/event fields and D_80125F24; no TU boundary proven.
-Evidence and limits: [research note](research/ovl_11_func_800C1F94-grouping.md).
+**Reconstructed `src/overlays/ovl_11/modules/object_event_script.c`**, all
+12 original functions: 1F94, 2044, 2678, 2884, 28CC, 2A98, 2B04, 2C74,
+2CE8, 2F74, 3020, 30AC. This merges the old three-member command run and
+seven-member update run below, including the counted-table lookup and sprite
+source selector between them. It is not either historical slice.
+
+The joins are bidirectional calls with concrete data flow: 2044 calls 2A98
+and 2C74; 3020 calls 2678; 2678 calls 2044; 2B04 selects sprite data through
+28CC/2884 and loads the same schedule entries as 2044. Command dispatch clears
++50/+54/+58, which movement consumes; entry loading writes +2C and rotates
++14/+16, which scheduled advancement consumes. 2F74/2CE8/3020 share the
+countdown/active-command protocol, and 30AC drives it across 37 records.
+The shared script tick and live/reconstruction mode corroborate this closure.
+Original link order is preserved; adjacency by itself is neutral here.
+
+Left boundary: 1D68 maintains/clamps +2/+4 counters and clears pool flags,
+with no call into command processing; it belongs to the lifecycle group above.
+Right boundary: 3138 searches for a nearby eligible record through 35EC,
+uses its own B6C/B70 result words and has no call into this interpreter.
+These cuts rest on distinct field/call surfaces and positive ties to the
+neighboring protocols, not on GP/absolute contradictions (-G0 overlay).
+19B0, before the intervening lifecycle group, is an external time-of-day
+reconstruction client of the public script API. It shares the script modes
+but calls no pool operation; that shared mode alone does not establish the
+21-member union as one original TU. The exact historical cuts remain uncertain.
+
+Names at original ovl_11 identities now describe command animation, command
+advancement, motion, counted-word lookup, sprite-source selection, schedule
+load/advance, current-command dispatch, ticks, per-object state and whole-pool
+update. Four data names identify `gOvl11ObjectScriptTick`, live mode, selected
+sprite group and one-based sprite item. The last two are published BEFORE the
+special group remap; the tick is not a frame clock. Canonicalization carried
+container-qualified function/data names through callers and overlay configuration;
+the four shared override-header externs were explicitly reconciled to those
+ovl_11 data identities because the header has no container qualifier.
+
+`ovl11_object_event_script.h` publishes the seven externally referenced
+entries, existing pointer-view ABIs, 0x1D4 record prerequisites, 30-entry
+schedules, 17-command rows, 16.16 motion/truncation, replay tick units,
+unchecked indices, search failure and the deliberate group==-1 hang.
+Parameters/locals now describe objects, command bases, hits, ticks and indices.
+The schedule loader now uses the existing Ovl11EventObject identity rather
+than a duplicate local Struct800C2A98; its packed four-byte copy is retained.
+Other conflicting local prototypes were reconciled against the callees' own
+definitions with explicit view casts. No type widths, layout, storage or
+linkage changed; byte-aligned copy and countdown sentinel constructions stay.
+
+The checked fold passed all 12 members and ovl_11 at baseline -O2/-G0;
+no flag override exists or was introduced. Full campaign gate passes all
+integrity checks at **622 folded / 85 valid modules**, every executable and
+overlay byte, data/table/placement, interfaces, ownership, policy, convergence
+and exception non-growth included. No shared tool was changed. The initial
+fold attempt rolled back on stale EXE rename metadata; the supported TU gate
+regenerated that metadata before the successful fold, with no manual split.
+
+Historical evidence and original identities:
+[research note](research/ovl_11_func_800C1F94-grouping.md).
 
 - ovl_11_func_800C1F94 (m, finalized) — handles animation commands 0, 1 and 16.
 - ovl_11_func_800C2044 (s) — advances and dispatches object command-table entries, invoking the helper.
@@ -10249,11 +10382,10 @@ Evidence and limits: [research note](research/ovl_11_func_800C1F94-grouping.md).
 
 ## `ovl_11` event helper/update run — 0x800C2A98 / 0x800C2B04 / 0x800C2C74 / 0x800C2CE8 / 0x800C2F74 / 0x800C3020 / 0x800C30AC (confidence: low)
 
-Candidate same-TU run: call graph and gapless link order agree, with shared
-object-state dependencies and counter D_80122F88. Verified 800C2B04 adds
-predecessor 800C2A98 through a direct call and table-index/event-field data
-flow; no TU boundary proven.
-Evidence and limits: [research note](research/ovl_11_func_800C2C74-grouping.md).
+Historical subgroup, now wholly inside `object_event_script` above. There
+is no TU cut at 2A98: 2044 reaches this subgroup and 3020 reaches back to
+2678. The old member list preserves address identities, not separate units.
+Evidence: [research note](research/ovl_11_func_800C2C74-grouping.md).
 
 - ovl_11_func_800C2A98 — loads the indexed table entry into object event/state fields.
 - ovl_11_func_800C2B04 (m, finalized) — conditionally advances the object's table entry and prepares event flags.
@@ -12870,6 +13002,29 @@ Fingerprints:
   at the read call site.
 
 ## `ovl_25` D_800BCBD8 dispatch-table cluster — 0x800B7EB4–0x800B81F4 (confidence: medium)
+
+TU-campaign boundary audit: do not fold the outer callbacks, intervening
+82B4/8340/83A0/8478 initializers and 853C/860C/8728 event callbacks as three
+units merely because each callback table ends. The initializer chain is
+shared across outer load and inner event phases; it writes exactly the
+selectors those dispatchers consume. The front 13-function union is more
+coherent, but its proposed cut before 8848 is also weak: 8728 calls 8848,
+and 8848 writes the same +4CC counter and BCD21/BCD48 event values as 860C.
+The tail's BCBF8 callbacks also call back into these initializers. With -G0,
+no GP/absolute discriminator exists; private tables and their complete
+callback sets establish protocols, not a boundary at table exhaustion.
+
+No slice was folded. A dry run of the widest candidate (all 65 original
+overlay functions, not a claim that all 65 are one historical TU) concretely
+refuses at `CC1FLAGS_ovl_25_func_800B95B0 := -fno-cse-follow-jumps` before
+writing anything. That is a mechanical compiler-setting limit, not evidence
+for a TU cut. The live matching sources and setting remain intact. Next
+useful experiment is to reconcile the shared FE44 scalar/array/struct views
+and measure the supported merged scene/service extent at baseline, then
+review 95B0's setting across that whole extent under plans/flag-review-report.md.
+The original rodata has three table owners and an intervening generic zero
+word; a broad fold must preserve/recover that emission rather than evade it
+with small callback-only files.
 
 Candidate same-TU cluster around the callback table `D_800BCBD8` (ovl_25 data
 asm, 5× function pointers). Evidence is address adjacency, a shared dispatch

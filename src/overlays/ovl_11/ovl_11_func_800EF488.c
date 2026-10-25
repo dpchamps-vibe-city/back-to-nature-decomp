@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "game_flags.h"
 
 void ovl_11_func_80112904(s16 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
 
 void ovl_11_func_800EF488(s16 arg0) {
     Ovl11EF488Record *record;
@@ -65,13 +65,13 @@ void ovl_11_func_800EF488(s16 arg0) {
     record->field_2 = source[1];
     record->field_4 = source[2];
     record->field_6 = source[3];
-    func_8001AF70(first, 1);
+    SetGameFlag(first, 1);
     if (arg0 == -1) {
-        func_8001AF70(0x1B, 0);
-        func_8001AF70(0x41, 1);
+        SetGameFlag(0x1B, 0);
+        SetGameFlag(0x41, 1);
         return;
     }
-    func_8001AF70(second, 1);
+    SetGameFlag(second, 1);
     ((Ovl11EF488FlagView *) ((u8 *) D_8006C838 +
         ((Ovl11EF488RecordsView *) D_8006C838)->records[arg0].index_8 * 0x1D4))->flags |= 8;
     ((Ovl11EF488FlagView *) ((u8 *) D_8006C838 +

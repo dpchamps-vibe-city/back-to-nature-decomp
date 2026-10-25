@@ -23,13 +23,13 @@ void ovl_11_func_800F0C70(void) {
         *(u16 *)(q + 0x8000 + 0x5EC6) = D_80124DE4[i].unk2 - 1;
     }
     for (i = 0; i < 5U; i++) {
-        rec = &D_80076220 + D_80124E00[i].unk0;
+        rec = &gObjectEventSlotBase + D_80124E00[i].unk0;
         rec->unk24 = D_80124E00[i].unk2;
         rec->unk26 = D_80124E00[i].unk4;
     }
     for (i = 0; i < 5U; i++) {
         src = D_80124E1E + i;
-        rec = &D_80076220 + src->unk0;
+        rec = &gObjectEventSlotBase + src->unk0;
         if (((Ovl11View800F0C70 *)D_8006C838)->field_5246 == rec->unk24 &&
             ((Ovl11View800F0C70 *)D_8006C838)->field_5248 == rec->unk26) {
             rec->unk24 = src->unk2;
@@ -37,7 +37,7 @@ void ovl_11_func_800F0C70(void) {
         }
     }
     sentinel = -1;
-    tab = &D_80076220;
+    tab = &gObjectEventSlotBase;
     src = D_80124E3C;
 loop_10:
     idx = src->unk0;

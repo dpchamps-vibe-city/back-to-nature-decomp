@@ -5,11 +5,7 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "random.h"
-
-/* Byte-valued animation index: the callee stores it with sb, and this
- * target masks all computed indices to 0xFF before the call. */
-s32 func_8001AF44(u32 arg0);
-void func_8001AF70(u16 arg0, u16 arg1);
+#include "game_flags.h"
 
 #define STATE ((struct Ovl11AnimationState *) D_8006C838)
 
@@ -29,7 +25,7 @@ void ovl_11_func_800C32C8(Ovl11AnimationObject *obj, s32 arg1, s32 arg2, s32 arg
     obj->field_1C = previous;
     SelectSpriteAnimation(initial, arg2);
     if (STATE->selected == obj->id) {
-        if (func_8001AF44(0x4F) == 1 && STATE->mode == 0) {
+        if (GetGameFlag(0x4F) == 1 && STATE->mode == 0) {
             hour = (u16) STATE->hour;
             allowed = (hour < 5 || hour >= 12);
             if (hour >= 14 && hour < 16) {
@@ -41,7 +37,7 @@ void ovl_11_func_800C32C8(Ovl11AnimationObject *obj, s32 arg1, s32 arg2, s32 arg
         }
         if (STATE->hour >= 16) {
             if (STATE->field_44CE == 2) {
-                func_8001AF70(0x72, 1);
+                SetGameFlag(0x72, 1);
             }
             SelectSpriteAnimation((ObjectState *) &obj->sprite, 10);
             return;
@@ -50,7 +46,7 @@ void ovl_11_func_800C32C8(Ovl11AnimationObject *obj, s32 arg1, s32 arg2, s32 arg
     id = obj->id;
     sprite = &obj->sprite;
     if (id == 0x24) {
-        if (func_8001AF44(0x4F) == 1) {
+        if (GetGameFlag(0x4F) == 1) {
             if (STATE->mode == 0) {
                 s32 value;
 

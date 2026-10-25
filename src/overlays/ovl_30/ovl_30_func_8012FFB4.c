@@ -7,8 +7,8 @@
 #include "pad_actuator_sequences.h"
 #include "sound_commands.h"
 #include "random.h"
+#include "game_flags.h"
 
-void func_8001AF70(u16, u16);
 void ovl_30_func_80133454(Ovl30ValueMenuEntry *, s32);
 u16 *ovl_11_func_800CE744(s32, s32);
 s32 ovl_11_func_800D5750(s16);
@@ -192,7 +192,7 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             default: id = 0xA2; break;
             }
             EVENT(ACTION->selected)->field_99EC = 0xFFFF;
-            func_8001AF70(id + 0xFB, 1);
+            SetGameFlag(id + 0xFB, 1);
             ACTION->state44CE = 2;
             ACTION->state44D0 = 1;
             ACTION->state44D2 = 1;

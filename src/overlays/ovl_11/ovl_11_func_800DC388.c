@@ -1,9 +1,9 @@
 #include "common.h"
 #include "ovl11_clock_calendar.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800E3D88(void);
 s32 ovl_11_func_800DD274(void);
-s32 func_8001AF44(u32 arg0);
 
 s32 ovl_11_func_800DC388(s32 arg0) {
     s32 id;
@@ -26,18 +26,18 @@ s32 ovl_11_func_800DC388(s32 arg0) {
         id = ((struct Ovl11MessageState *)D_8006C838)->variant60 * 4 + ((struct Ovl11MessageState *)D_8006C838)->base + 0x60;
     }
     if (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[0] == 0x43) {
-        if ((func_8001AF44(0x44U) == 0) && (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[1] == 0x44)) {
+        if ((GetGameFlag(0x44U) == 0) && (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[1] == 0x44)) {
             id = gCalendarSeason + 0x48;
         }
-        if (func_8001AF44(0x42U) == 1) {
+        if (GetGameFlag(0x42U) == 1) {
             id = gCalendarSeason + 0x48;
         }
     }
     if (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[0] == 0x37) {
-        if ((func_8001AF44(0x44U) == 0) && (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[1] == 0x38)) {
+        if ((GetGameFlag(0x44U) == 0) && (((struct Ovl11SpriteWork *)&D_8007AFF0)->header[1] == 0x38)) {
             id = gCalendarSeason + 0x44;
         }
-        if (func_8001AF44(0x43U) == 1) {
+        if (GetGameFlag(0x43U) == 1) {
             id = gCalendarSeason + 0x44;
         }
     }

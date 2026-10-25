@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "game_flags.h"
 
-void func_8001AF70(u16 arg0, u16 arg1);
 /* These calls explicitly zero the unused trailing argument slots. */
 s32 ovl_11_func_800E63C8();
 u16 ovl_11_func_800EAF5C();
@@ -12,7 +12,7 @@ void ovl_11_func_80107DD0(s16 *arg0);
 void ovl_11_func_800E5294(void) {
     struct Ovl11E5294State *state;
 
-    func_8001AF70(3U, 1U);
+    SetGameFlag(3U, 1U);
     if (!(((struct Ovl11E5294State *) D_8006C838)->status & 0x20000010)) {
         ovl_11_func_800E63C8(0, 0, 0, 0);
     }

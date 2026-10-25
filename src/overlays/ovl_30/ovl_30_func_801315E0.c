@@ -15,15 +15,15 @@ s32 ovl_30_func_801315E0(s32 arg0) {
     s32 *destinationSpeed = (s32 *)((u8 *)D_80076290 + Ovl30_ResidentSelection->resident * 0x1D4);
     s16 *birth = (s16 *)((u8 *)D_80076244 + Ovl30_ResidentSelection->resident * 0x1D4);
     Ovl30ValueMenuEntry entries[32] = {
-        {(u8 *)&(&D_80076220)[Ovl30_ResidentSelection->resident], 0, 0x27, 2, -2, D_8012EA00},
-        {(u8 *)&(&D_80076220)[Ovl30_ResidentSelection->resident], 0, 1, 2, -2, D_8012EA14},
+        {(u8 *)&(&gObjectEventSlotBase)[Ovl30_ResidentSelection->resident], 0, 0x27, 2, -2, D_8012EA00},
+        {(u8 *)&(&gObjectEventSlotBase)[Ovl30_ResidentSelection->resident], 0, 1, 2, -2, D_8012EA14},
         {(u8 *)D_80076222 + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 0xFF, 2, -1, D_8012EA28},
         {(u8 *)D_80076224 + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 0xFFFF, 2, -1, D_8012EA3C},
-        {(u8 *)&(&D_80076220)[Ovl30_ResidentSelection->resident], 0, 0x1F, 2, -2, D_8012EA50},
+        {(u8 *)&(&gObjectEventSlotBase)[Ovl30_ResidentSelection->resident], 0, 0x1F, 2, -2, D_8012EA50},
         {(u8 *)D_80076226 + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 3, 2, -2, D_8012EA64},
         {(u8 *)D_80076228 + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 0, 2, -2, D_8012EA78},
         {(u8 *)D_8007622A + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 0, 2, -2, D_8012EA8C},
-        {(u8 *)&(&D_80076220)[Ovl30_ResidentSelection->resident], 0, 0x1F, 2, -2, D_8012EA50},
+        {(u8 *)&(&gObjectEventSlotBase)[Ovl30_ResidentSelection->resident], 0, 0x1F, 2, -2, D_8012EA50},
         {(u8 *)D_8007622C + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 0, 2, -2, D_8012EAA0},
         {(u8 *)D_8007623A + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 0, 2, -2, D_8012EAB4},
         {(u8 *)D_8007623C + Ovl30_ResidentSelection->resident * sizeof(struct_80076220), 0, 0, 2, -2, D_8012EAC8},

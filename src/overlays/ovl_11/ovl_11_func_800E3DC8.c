@@ -5,8 +5,8 @@
 #include "psyq/libapi.h"
 #include "asset_scratch.h"
 #include "cd_loader.h"
+#include "game_flags.h"
 
-void func_8001AF70(u16 arg0, u16 arg1);
 void ClearActiveOrderingTables(void);
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
 void ovl_11_func_800E5230(void);
@@ -31,7 +31,7 @@ s32 ovl_11_func_800E3DC8(void) {
 
     data = NULL;
     if (((struct Ovl11CurrentObjectView *)D_8006C838)->current[3] != 1) {
-        func_8001AF70((u16)(((struct Ovl11CurrentObjectView *)D_8006C838)->current[1] + 0xFB), 1);
+        SetGameFlag((u16)(((struct Ovl11CurrentObjectView *)D_8006C838)->current[1] + 0xFB), 1);
     }
     ((struct Ovl11CurrentObjectView *)D_8006C838)->current[2] = 0;
     ((struct Ovl11CurrentObjectView *)D_8006C838)->current[4] = 0;

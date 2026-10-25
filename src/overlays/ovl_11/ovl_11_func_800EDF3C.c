@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game_flags.h"
 
 /* Existing address-prefix exception, kept local to its authorized caller.
  * Computes a byte-pointer offset using an unsigned 16-bit constant.
@@ -17,8 +18,6 @@
  * preserves the match in this source; this is not a clean-C impossibility
  * or proof of an original macro. See notes/asm-exception-evidence.md. */
 
-s32 func_8001AF44(u32 arg0);
-
 s32 ovl_11_func_800EDF3C(s16 arg0, s32 arg1) {
     s16 var_a0;
     s32 temp_v0;
@@ -35,7 +34,7 @@ s32 ovl_11_func_800EDF3C(s16 arg0, s32 arg1) {
         goto block_b;
     }
     if (var_a0 == 0x14) {
-        temp_v0 = func_8001AF44(0x25U);
+        temp_v0 = GetGameFlag(0x25U);
         if (temp_v0 == 1) {
             if (gCalendarSeason == temp_v0) {
                 goto ret1;
@@ -49,7 +48,7 @@ block_7:
 ret1:
     return 1;
 block_b:
-    if (func_8001AF44(0x129U) == 1) {
+    if (GetGameFlag(0x129U) == 1) {
         goto block_7;
     }
     p = (char *) &D_8006C838;

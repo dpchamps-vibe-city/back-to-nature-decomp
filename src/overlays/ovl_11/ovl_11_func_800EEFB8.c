@@ -17,6 +17,7 @@
 #include "sprite_upload.h"
 #include "ovl11_state_field_access.h"
 #include "integer_power.h"
+#include "game_flags.h"
 
 typedef struct {
                char pad0[0x38];
@@ -72,7 +73,6 @@ int CdSync (int mode, u_char *result);
 void *memmove (unsigned char *, const unsigned char *, int);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-void func_8001AF70 (u16 arg0, u16 arg1);
 void SetVal8005E2E8 (s32 arg0);
 s32 func_8001E38C (void);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -95,7 +95,6 @@ void ovl_11_func_800D075C (s32 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_80118C6C (void);
-s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800DBEF8(s32 arg0);
 s32 ovl_11_func_800DBE30 (s32 arg0);
 void ovl_11_func_800F4AC0 (s32 arg0);

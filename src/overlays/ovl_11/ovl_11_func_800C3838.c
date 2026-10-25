@@ -1,8 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/abs.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_object_event_script.h"
 
 s32 ovl_11_func_800C3828(void);
-void ovl_11_func_800C2678(Ovl11C3B78Arg0 *arg0);
 void ovl_11_func_800C3B78(Ovl11C3B78Arg0 *arg0, Ovl11C3B78Arg1 *arg1);
 void ovl_11_func_800C32C8(Ovl11AnimationObject *obj, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800C3EE8(Ovl11AnimationObject *arg0, u16 *arg1);
@@ -56,7 +60,7 @@ s32 ovl_11_func_800C3838(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2) {
     }
     if (temp_s0->unk0 == 7) {
         arg0->unkC = 0;
-        ovl_11_func_800C2678(arg0);
+        Ovl11MoveTowardScriptCommand(arg0);
     }
     ovl_11_func_800C3B78(arg0, (Ovl11C3B78Arg1 *)((u8 *)temp_s0 + (arg0->unkC * 0xC)));
     ovl_11_func_800C32C8((Ovl11AnimationObject *)arg0, 1, 0, -2);
@@ -66,7 +70,7 @@ s32 ovl_11_func_800C3838(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2) {
     if (temp_v1_2 == 5) {
         *(u16 *)((u8 *)arg0 + 0x1E) = temp_t0 | 0x4000;
         ovl_11_func_800C32C8((Ovl11AnimationObject *)arg0, 2, (s16)arg0->unk6 + 1, -2);
-        if (D_80128B68 != 0) {
+        if (gOvl11ObjectScriptLiveMode != 0) {
             *(u16 *)((u8 *)arg0 + 0x10) = temp_s0->unk2;
         }
         return 1;

@@ -1,6 +1,6 @@
 #include "common.h"
+#include "game_flags.h"
 
-s32 func_8001AF44(u32);
 s32 ovl_11_func_800EFA1C(s16);
 s32 ovl_11_func_800F3820(void);
 s32 ovl_11_func_800F3C9C(u16);
@@ -29,14 +29,14 @@ void ovl_11_func_800F291C(void) {
     temp_s6 = temp_v1->field_44BC;
     if ((~temp_s3 == -1) && (temp_s6 == 0)) {
         var_s1 = temp_s3;
-        if (func_8001AF44(0xE6U) == 1) {
+        if (GetGameFlag(0xE6U) == 1) {
             var_s1 = events->field_690A >= 0x64;
             goto block_6;
         }
         if (events->field_690A >= 0xC8) {
             var_s1 = 2;
         block_6:
-            if (((((Ovl11EventStateView *)D_8006C838)->field_AE06) >= 0xC8) && (func_8001AF44(0x22U) == 1)) {
+            if (((((Ovl11EventStateView *)D_8006C838)->field_AE06) >= 0xC8) && (GetGameFlag(0x22U) == 1)) {
                 var_s1 = 3;
             }
         }
@@ -44,7 +44,7 @@ void ovl_11_func_800F291C(void) {
             ovl_11_func_800F2538(2, var_s1, 1);
         }
         var_s1 = ((((Ovl11EventStateView *)D_8006C838)->field_A88A) >= 0x64) * 4;
-        if (((((Ovl11EventStateView *)D_8006C838)->field_A88A) >= 0xC8) && (func_8001AF44(0x23U) == 1)) {
+        if (((((Ovl11EventStateView *)D_8006C838)->field_A88A) >= 0xC8) && (GetGameFlag(0x23U) == 1)) {
             var_s1 = 5;
         }
         if (var_s1 != 0) {
@@ -53,14 +53,14 @@ void ovl_11_func_800F291C(void) {
         var_s1 = 0;
         if ((((Ovl11EventStateView *)D_8006C838)->field_BCA6) >= 0x64) {
             var_s1 = 6;
-            if (func_8001AF44(0x25U) == 1) {
+            if (GetGameFlag(0x25U) == 1) {
                 var_s1 = 7;
             }
         }
-        if (func_8001AF44(0x20U) == 1) {
+        if (GetGameFlag(0x20U) == 1) {
             var_s1 = 8;
         }
-        if (((((Ovl11EventStateView *)D_8006C838)->field_BCA6) >= 0xC8) && (func_8001AF44(0x21U) == 1)) {
+        if (((((Ovl11EventStateView *)D_8006C838)->field_BCA6) >= 0xC8) && (GetGameFlag(0x21U) == 1)) {
             var_s1 = 9;
         }
         if (var_s1 != 0) {
@@ -70,7 +70,7 @@ void ovl_11_func_800F291C(void) {
         if ((((Ovl11EventStateView *)D_8006C838)->field_A30E) >= 0x64) {
             var_s1 = 0xA;
         }
-        if (((((Ovl11EventStateView *)D_8006C838)->field_A30E) >= 0xC8) && (func_8001AF44(0x24U) == 1)) {
+        if (((((Ovl11EventStateView *)D_8006C838)->field_A30E) >= 0xC8) && (GetGameFlag(0x24U) == 1)) {
             var_s1 = 0xB;
         }
         if (var_s1 != 0) {
@@ -82,11 +82,11 @@ void ovl_11_func_800F291C(void) {
                 var_s1 = 0xC;
             }
             if ((((Ovl11EventStateView *)D_8006C838)->field_C79E) >= 0xC8) {
-                temp_v0 = func_8001AF44(0x25U);
+                temp_v0 = GetGameFlag(0x25U);
                 if (temp_v0 == 1) {
                     if (ovl_11_func_800EFA1C(0) == temp_v0) {
                         var_s1 = 0xE;
-                    } else if (func_8001AF44(0x11EU) == temp_v0) {
+                    } else if (GetGameFlag(0x11EU) == temp_v0) {
                         var_s1 = 0xD;
                     }
                 }
@@ -101,7 +101,7 @@ void ovl_11_func_800F291C(void) {
             ovl_11_func_800F2538(2, 0x10, 0);
         }
         var_s1 = 0x11;
-        if (func_8001AF44(0x1DU) == 1) {
+        if (GetGameFlag(0x1DU) == 1) {
             var_s1 = 0x12;
         }
         ovl_11_func_800F2538(2, var_s1, 2);
@@ -135,35 +135,35 @@ void ovl_11_func_800F291C(void) {
             ovl_11_func_800F2538(2, var_s1, 0);
         }
         var_s1 = 0;
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_BE7C) > 0xEA5FU) && (func_8001AF44(0x25U) == 0) && (ovl_11_func_800F3820() == 1)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_BE7C) > 0xEA5FU) && (GetGameFlag(0x25U) == 0) && (ovl_11_func_800F3820() == 1)) {
             var_s1 = 0x1B;
         }
         if (var_s1 != 0) {
             ovl_11_func_800F2538(2, var_s1, 4);
         }
         var_s1 = 0;
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_A6B8) > 0xEA5FU) && (func_8001AF44(0x22U) == 0) && (ovl_11_func_800F3820() == 1)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_A6B8) > 0xEA5FU) && (GetGameFlag(0x22U) == 0) && (ovl_11_func_800F3820() == 1)) {
             var_s1 = 0x1C;
         }
         if (var_s1 != 0) {
             ovl_11_func_800F2538(2, var_s1, 3);
         }
         var_s1 = 0;
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_9F68) > 0xEA5FU) && (func_8001AF44(0x21U) == 0) && (ovl_11_func_800F3820() == 1)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_9F68) > 0xEA5FU) && (GetGameFlag(0x21U) == 0) && (ovl_11_func_800F3820() == 1)) {
             var_s1 = 0x1D;
         }
         if (var_s1 != 0) {
             ovl_11_func_800F2538(2, var_s1, 2);
         }
         var_s1 = 0;
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_AA60) > 0xEA5FU) && (func_8001AF44(0x23U) == 0) && (ovl_11_func_800F3820() == 1)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_AA60) > 0xEA5FU) && (GetGameFlag(0x23U) == 0) && (ovl_11_func_800F3820() == 1)) {
             var_s1 = 0x1E;
         }
         if (var_s1 != 0) {
             ovl_11_func_800F2538(2, var_s1, 0);
         }
         var_s1 = 0;
-        if ((func_8001AF44(0x24U) == 0) && (ovl_11_func_800F3820() == 1)) {
+        if ((GetGameFlag(0x24U) == 0) && (ovl_11_func_800F3820() == 1)) {
             var_s1 = 0x1F;
             if ((u16) (((Ovl11EventStateView *)D_8006C838)->field_B384) > 0xEA5FU) {
                 var_s1 = 0x20;
@@ -175,19 +175,19 @@ void ovl_11_func_800F291C(void) {
     }
     var_v1 = (Ovl11EventStateView *)D_8006C838;
     if ((temp_s3 == (var_v1->field_5246)) && (temp_s6 == (var_v1->field_5248))) {
-        if (((u16) (var_v1->field_BE7C) > 0x9C3FU) && (func_8001AF44(0x20U) == 0)) {
+        if (((u16) (var_v1->field_BE7C) > 0x9C3FU) && (GetGameFlag(0x20U) == 0)) {
             ovl_11_func_800F2538(2, 0x29, 0);
         }
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_A6B8) > 0x9C3FU) && (func_8001AF44(0x1DU) == 0)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_A6B8) > 0x9C3FU) && (GetGameFlag(0x1DU) == 0)) {
             ovl_11_func_800F2538(2, 0x2A, 0);
         }
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_9F68) > 0x9C3FU) && (func_8001AF44(0x1CU) == 0)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_9F68) > 0x9C3FU) && (GetGameFlag(0x1CU) == 0)) {
             ovl_11_func_800F2538(2, 0x2B, 0);
         }
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_AA60) > 0x9C3FU) && (func_8001AF44(0x1EU) == 0)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_AA60) > 0x9C3FU) && (GetGameFlag(0x1EU) == 0)) {
             ovl_11_func_800F2538(2, 0x2C, 0);
         }
-        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_B384) > 0x9C3FU) && (func_8001AF44(0x1FU) == 0)) {
+        if (((u16) (((Ovl11EventStateView *)D_8006C838)->field_B384) > 0x9C3FU) && (GetGameFlag(0x1FU) == 0)) {
             ovl_11_func_800F2538(2, 0x2D, 0);
         }
         if (temp_s3 != 1) {
@@ -195,7 +195,7 @@ void ovl_11_func_800F291C(void) {
                 ovl_11_func_800F2538(2, 0x2E, 0);
             }
         }
-        if (((((Ovl11EventStateView *)D_8006C838)->field_AE06) >= 0xC8) && (func_8001AF44(0x129U) == 1)) {
+        if (((((Ovl11EventStateView *)D_8006C838)->field_AE06) >= 0xC8) && (GetGameFlag(0x129U) == 1)) {
             ovl_11_func_800F2538(2, 0x2F, 0);
         }
         if ((((Ovl11EventStateView *)D_8006C838)->field_A88A) >= 0xC8) {
@@ -223,7 +223,7 @@ void ovl_11_func_800F291C(void) {
             events->flags = (s32) (events->flags | 4);
         }
     }
-    if (!(events->flags & 8) && ((temp_s3 == 3) || ((((Ovl11EventStateView *)D_8006C838)->field_44D4) == 1)) && (func_8001AF44(0x10EU) == 1)) {
+    if (!(events->flags & 8) && ((temp_s3 == 3) || ((((Ovl11EventStateView *)D_8006C838)->field_44D4) == 1)) && (GetGameFlag(0x10EU) == 1)) {
         ovl_11_func_800F2538(2, 0x3B, 0);
         events->flags = (s32) (events->flags | 8);
     }
@@ -255,7 +255,7 @@ void ovl_11_func_800F291C(void) {
         ovl_11_func_800F2538(2, 0x42, 0);
         events->flags = (s32) (events->flags | 0x400);
     }
-    if (!(events->flags & 0x800) && (func_8001AF44(0x24U) == 1)) {
+    if (!(events->flags & 0x800) && (GetGameFlag(0x24U) == 1)) {
         ovl_11_func_800F2538(2, 0x43, 1);
         events->flags = (s32) (events->flags | 0x800);
     }
@@ -266,7 +266,7 @@ void ovl_11_func_800F291C(void) {
     if (((((Ovl11EventStateView *)D_8006C838)->field_44B8.halves.high) == 2) && ((((Ovl11EventStateView *)D_8006C838)->field_44BC) == 0)) {
         ovl_11_func_800F2538(2, 0x27, 0);
     }
-    if (!(events->flags & 0x2000) && ((((Ovl11EventStateView *)D_8006C838)->field_44B8.halves.high) == 1) && ((((Ovl11EventStateView *)D_8006C838)->field_44BC) >= 0) && ((((Ovl11EventStateView *)D_8006C838)->field_44BC) < 0x11) && ((((Ovl11EventStateView *)D_8006C838)->field_5492) == -1) && (func_8001AF44(0x22U) == 0) && ((u16) (((Ovl11EventStateView *)D_8006C838)->field_A6B8) >= 0x3A99U)) {
+    if (!(events->flags & 0x2000) && ((((Ovl11EventStateView *)D_8006C838)->field_44B8.halves.high) == 1) && ((((Ovl11EventStateView *)D_8006C838)->field_44BC) >= 0) && ((((Ovl11EventStateView *)D_8006C838)->field_44BC) < 0x11) && ((((Ovl11EventStateView *)D_8006C838)->field_5492) == -1) && (GetGameFlag(0x22U) == 0) && ((u16) (((Ovl11EventStateView *)D_8006C838)->field_A6B8) >= 0x3A99U)) {
         ovl_11_func_800F2538(2, 0x19B, 0);
         events->flags = (s32) (events->flags | 0x2000);
     }

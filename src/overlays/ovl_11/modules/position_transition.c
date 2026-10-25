@@ -8,16 +8,16 @@
  */
 #include "ovl11_position_transition.h"
 #include "word_interpolation.h"
+#include "game_flags.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8001AF70(u16 arg0, u16 arg1);
 void Ovl11SelectPositionTransitionTarget(s32 *out);
 
 void Ovl11BeginPositionTransition(Ovl11C7010Object *object) {
     object->unk38 = 0;
     object->unk6C |= 0x20001800;
     ovl_11_func_800C70CC(object, 0x4AU, 0, -2);
-    func_8001AF70(9U, 1U);
+    SetGameFlag(9U, 1U);
     Ovl11SelectPositionTransitionTarget(&gOvl11PositionTransitionTarget.x);
     gOvl11PositionTransitionStart.x = ((Ovl11PositionTransitionObject *)object)->x;
     gOvl11PositionTransitionStart.y = ((Ovl11PositionTransitionObject *)object)->y;

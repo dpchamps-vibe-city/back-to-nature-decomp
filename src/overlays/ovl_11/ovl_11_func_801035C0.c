@@ -1,7 +1,7 @@
 #include "common.h"
+#include "game_flags.h"
 
 s16 ovl_11_func_80102BCC(u16 *outId, u16 *outValue);
-void func_8001AF70(u16 arg0, u16 arg1);
 
 void ovl_11_func_801035C0(void) {
     u16 id;
@@ -34,13 +34,13 @@ void ovl_11_func_801035C0(void) {
     } while (i < 8);
     switch ((s16)id) {
     case 0xD6:
-        func_8001AF70(0x5B, 1);
+        SetGameFlag(0x5B, 1);
         break;
     case 0xD7:
-        func_8001AF70(0x5C, 1);
+        SetGameFlag(0x5C, 1);
         break;
     case 0xD1:
-        func_8001AF70(0x5D, 1);
+        SetGameFlag(0x5D, 1);
         break;
     }
 }

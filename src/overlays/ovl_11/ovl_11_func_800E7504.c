@@ -43,7 +43,7 @@ s32 ovl_11_func_800E7504(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         ((struct struct_8006C838_800E7504 *)D_8006C838)->field_4450 |= 2;
         break;
     default:
-        base = &D_80076220;
+        base = &gObjectEventSlotBase;
         var_s1_2 = sp10;
         var_s0 = 3;
         sp10[0] = (s32) arg0;

@@ -4,9 +4,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "game_flags.h"
 
 s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
-s32 func_8001AF44(u32 arg0);
 void ovl_11_func_80107E2C(u8 *arg0, s32 arg1, s16 arg2, s16 arg3);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                     s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
@@ -23,7 +23,7 @@ void ovl_11_func_800C36D0(Ovl11AnimationObject *arg0) {
     if (ovl_11_func_800F5888(pos, screen) != 0) {
         ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
         if (arg0->id == ((struct Ovl11FlagDateView *)D_8006C838)->field_E778) {
-            if (func_8001AF44(0x72) != 0) {
+            if (GetGameFlag(0x72) != 0) {
                 ot -= 0x14;
             }
         }

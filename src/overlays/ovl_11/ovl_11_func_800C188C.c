@@ -1,6 +1,7 @@
 #include "common.h"
 #include "ovl11_clock_calendar.h"
 #include "ovl11_clock_hud.h"
+#include "game_flags.h"
 
 typedef struct {
     /* 0x000 */ char pad_000[0x0C];
@@ -8,8 +9,6 @@ typedef struct {
     /* 0x010 */ char pad_010[0xE4C2];
     /* 0xE4D2 */ s16 field_E4D2;
 } OvC188CView;
-
-s32 func_8001AF44(u32 arg0);
 
 void ovl_11_func_800C188C(void) {
     char *far_base;
@@ -22,11 +21,11 @@ void ovl_11_func_800C188C(void) {
     if (((OvC188CView *)D_8006C838)->field_0C & 0x10000000) {
         return;
     }
-    temp = func_8001AF44(2);
+    temp = GetGameFlag(2);
     if (temp == 1) {
         far_base = (char *)&D_8007AFF0;
         if (*(u16 *)(*(s32 *)(far_base + 0x25388) + 8) & 0x1000) {
-            if (func_8001AF44(0xB0) == 1) {
+            if (GetGameFlag(0xB0) == 1) {
                 Ovl11DisableClockHud();
                 return;
             }
@@ -34,11 +33,11 @@ void ovl_11_func_800C188C(void) {
                 goto block_9;
             }
         }
-        if (func_8001AF44(5) == 1) {
+        if (GetGameFlag(5) == 1) {
             Ovl11DisableClockHud();
             return;
         }
-        if (func_8001AF44(4) == 1) {
+        if (GetGameFlag(4) == 1) {
             Ovl11EnableClockHud();
             return;
         }

@@ -15,6 +15,9 @@
 #include "sprite_source.h"
 #include "random.h"
 #include "debug_break.h"
+#include "game_flags.h"
+#include "psyq/abs.h"
+#include "ovl11_object_event_script.h"
 
 typedef struct {
                s16 unk0;
@@ -141,8 +144,6 @@ struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
 u16 *ovl_11_func_8010B1C4 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
-s32 func_8001AF44 (u32 arg0);
-s32 ovl_11_func_800C2884 (s16 key, u32 *table);
 void ovl_11_func_800CFD9C (void);
 s32 ovl_11_func_800D2E20 (void);
 s32 ovl_11_func_800F5888 ();

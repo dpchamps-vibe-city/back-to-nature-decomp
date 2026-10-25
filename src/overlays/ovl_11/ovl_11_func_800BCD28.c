@@ -7,6 +7,7 @@
 #include "ovl11_scene_camera_lighting.h"
 #include "ovl11_vertex_blend.h"
 #include "ovl11_choice_messages.h"
+#include "game_flags.h"
 
 void ovl_11_func_800DB0E4 (void);
 void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
@@ -18,7 +19,6 @@ void ovl_11_func_800D78D0 (void);
 s32 ovl_11_func_8011DF4C (s32 arg0);
 void ovl_11_func_8011E45C (void);
 s32 ovl_11_func_80112FA8 (s32 arg0);
-void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_80111F10 (void);
 void ovl_11_func_800BFEF8 (void);
 /* Extra debug-hook parameters forwarded by this wrapper are unread. */
@@ -64,7 +64,7 @@ void ovl_11_func_800BCD28(void) {
     if ((u32) ((u16) ((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25476 - 0xC) < 2U) {
         ovl_11_func_80112D10();
     }
-    func_8001AF70(0x45U, 0U);
+    SetGameFlag(0x45U, 0U);
     ovl_11_func_80111F10();
     ovl_11_func_800BFEF8();
     state = (struct Ovl11ResetState *)D_8006C838;
@@ -73,7 +73,7 @@ void ovl_11_func_800BCD28(void) {
     D_801217A0 = 0;
     ovl_11_func_800CDE3C(temp_s1);
     ovl_11_func_800CDF4C(temp_s1);
-    func_8001AF70(0x5EU, 0U);
+    SetGameFlag(0x5EU, 0U);
     D_8012DB8C = 0;
     state->field_51FE &= ~4;
 }
