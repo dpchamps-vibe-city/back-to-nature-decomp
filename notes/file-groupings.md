@@ -138,7 +138,24 @@ The complete two-member fold passed at baseline; no override applies.
 
 ---
 
-## `ovl_11` s16 range-map helper pair — 0x800CB020–0x800CB110 (confidence: medium)
+## `ovl_11` s16 range-map helper pair — 0x800CB020–0x800CB114 exclusive (confidence: medium)
+
+**Module: `src/overlays/ovl_11/modules/grouped_value_mapping.c`**, both
+original entries, named `Ovl11MapGroupedValueCode` (CB020) and
+`Ovl11GetGroupedValueIndex` (CB0B0). The common 1..25 / 26..29 partition,
+shared five-value arithmetic and consecutive use by C72F8 corroborate the
+link-order pair. `ovl11_grouped_value_mapping.h` documents both pure s16
+maps, including zero for out-of-range inputs; public callers include it
+rather than restating their declarations.
+
+Boundaries are conservative, not GP proofs (these leaves have no data
+access). Predecessor CAE64 rotates/compacts six-byte records through CADBC;
+it neither calls these maps nor shares their arithmetic or private state.
+Successor CB114 is a collision-query/action updater using the collision
+budget interface and offset table, not either map. No evidence currently
+joins either neighbor to this pair; common callers elsewhere are not being
+folded merely for calling the interface. Neither member has a flag override;
+the checked fold passed at baseline, in original order.
 
 Evidence: link-order adjacency (0x800CB020 ends at 0x800CB0B0 where the next
 function starts) plus a shared caller: `ovl_11_func_800C72F8` calls
@@ -157,7 +174,27 @@ Members:
 - ovl_11_func_800CB0B0 (m) — sibling range map: 0x01–0x19 → (arg0-1)/5;
   0x1A–0x1D → (s16)(arg0-26); else 0.
 
-## `ovl_11` D_800749F4 predicate-scan + its callee — 0x800CFAD0 / 0x800CFB20 (confidence: medium)
+## `ovl_11` D_800749F4 predicate-scan + its callee — 0x800CFAD0 / 0x800CFB20 (confidence: high within the pair)
+
+**Module: `src/overlays/ovl_11/modules/record_flag_query.c`**, both original
+entries through CFC20 exclusive. The original nested predicate's static-chain
+spill, its two calls from the parent and the existing nested C definition
+establish that these two compiled together; the former CFAD0 carrier had no
+independent definition. Names: `Ovl11TestRecordFlagSelection` (nested CFAD0)
+and `Ovl11AnyRecordFlagMatch` (CFB20). Only the latter is published in
+`ovl11_record_flag_query.h`. The masked 0x80000 value is literally compared
+with 1 in the bit-0 arm, so that arm cannot accept anything; documentation
+records the behavior without repairing it.
+
+At the head, CFA48 randomly sets work-state bit 0x800000 after D3230 checks;
+it has no call or private-data connection to this nested query. At the tail,
+CFC20 mutates/resets records through DF0F8/E2904 and increments work counters.
+It shares the widely accessed record pools, not the nested helper or any
+query-private state. Those pools alone do not establish additional membership;
+there is no proven original-TU boundary at either end. This is the entire
+positively established nested unit, with neighbors left outside for lack of
+membership evidence. The checked baseline fold preserved both entries and
+all overlay bytes; no linkage change, capture construct or flag was added.
 
 Evidence: zero-gap link-order adjacency that the call graph agrees with —
 `ovl_11_func_800CFAD0` (0x800CFAD0, size 0x50) ends exactly where
@@ -8110,6 +8147,41 @@ Members (address order):
 - ovl_11 0x80115308→0x80115C60 caller/counter-leaf run — low-confidence candidate same-TU membership; original boundaries and data ownership remain unproven ([evidence, including the existing 801152BC forwarding-twin relation](research/ovl_11_func_80115308-grouping.md)).
   - ovl_11_func_80115308 (m, byte-exact) — quantity-purchase, naming and selected-record transaction state handler.
   - ovl_11_func_80115C60 (m) — forwards purchase cost and quantity to the economy/counter helpers.
+- **Module `src/overlays/ovl_11/modules/selection_list_panel.c`** — the
+  complete proven nested pair 8011D438/8011D474, ending at 8011D734.
+  Names `Ovl11HasRowTypeTwo` (nested) and `Ovl11DrawSelectionListPanel`.
+  The original static-chain spill and enclosing frame setup establish shared
+  compilation. Defining the actual child inside the parent removed the
+  former CAPTURE_PREV_RET/asm-label emulation; the checked fold proved both
+  functions and the entire overlay exactly at baseline with the clean form.
+  Only the parent is published in `ovl11_selection_list_panel.h`; its void,
+  s32-pointer, s16-coordinate signature is unchanged. Four callers now use
+  it, including the former byte-pointer declaration via an explicit cast.
+  The header documents the 0x60-byte record layout, 14-pixel row pitch,
+  selected marker, bounds assumptions and the surprisingly absolute numeric
+  text X column (not panel-x-relative).
+
+  Shared formatter scratch is now `gOvl11TextFormatScratch` (8012D608),
+  propagated through all five users and the override header. Its 0x18-halfword
+  fill and the independently read name record at 8012D638 bound the original
+  0x30-byte data span (also emitted that way by the extractor). The symbol
+  metadata carries that extent; the existing scalar-first-word C view stays
+  unchanged. No new storage is defined.
+
+  Left boundary: D400 clears generic selection records for many callers and
+  is neither called by this pair nor tied to its nested helper. Right boundary:
+  D734 is an input/navigation client of D890, driven from B840, whereas this
+  renderer is called by A7A4/A7D8/A8D0/A998. Shared record layout does not
+  join those services. CEE0/CF10 are shared string appenders also used by
+  CC08/CD2C, separated by other supported services; the pair has no private
+  table/state tie across them. D608 is shared scratch, not ownership evidence.
+  Thus there is no affirmative extension beyond the nested pair; no GP-proven
+  outer boundary is claimed. Final batch verification reports 693 folded
+  eligible functions (667 at entry), all 104 modules valid, and every integrity
+  gate PASS, including all linked containers/data, canonical interfaces,
+  source policy, config convergence and exception non-growth. No compiler
+  setting or tool implementation changed. The historical fossil spelling follows:
+
 - ovl_11 v0-channel/static-chain fossil run — 0x8011D400 / 0x8011D438 /
   0x8011D474, zero-gap link run (0x8011D400 0x38 → 0x8011D438 0x3C →
   0x8011D474 0x2C0, each ending exactly where the next starts; the caller
@@ -9790,6 +9862,22 @@ at those entries, that twin relation is not TU-membership evidence — here only
 the dispatcher call graph and the gapless link run are.
 
 ## `ovl_23` D_8006C838 record-field setter pair — 0x800BB7A0 / 0x800BB800 (confidence: medium)
+
+**Module: `src/overlays/ovl_23/modules/record_value_increments.c`**, both
+entries, named `Ovl23RaiseRecordByteRangeValue` and
+`Ovl23RaiseRecordHalfwordRangeValue`. Shared record addressing, adjacent
+fields and the common B87F8 caller's two index lists support the pair;
+the checked baseline fold preserved both functions and the container.
+`ovl23_record_value_increments.h` publishes the unchecked s16-indexed
+interface with exact signed/unsigned increment-and-cap behavior, without
+inventing a gameplay interpretation. B87F8 includes the header.
+
+Head boundary: BB758 queues audio loads, sharing neither these fields nor
+an internal helper; there is no evidence to extend the record service into
+it. Tail boundary: BB860 is the overlay text/data boundary (file 3A40),
+not an undecompiled function. The head is conservative (-G0, no GP proof);
+the code/data tail is concrete. Cross-overlay twins keep their own canonical
+symbols and are not merged across containers.
 
 Evidence: the two functions are gapless in link order (0x3980 and 0x39E0, each
 0x60) and close the ovl_23 code segment — `ovl_23_func_800BB800` ends 0x3A40,
@@ -11493,6 +11581,17 @@ Members (address order):
 - ovl_11_func_800F4FC8 (m) — clears the active pool gate and deactivates the next record.
 
 ## `ovl_11` D_8006C838 +0xDD8C pool-walk pair — 0x800F40A4 / 0x800F508C (confidence: medium)
+
+Module-campaign review: no fold is accepted here. The 19 pointer/count slots
+are engine state, not private TU storage: F5404 reads slots 0..3,
+`modules/entity_pool_access.c` reads slot 17, CC7CC reads slot 18, E5230
+reads slot 17/count 17, and 10D850 reads slot 16. The F5108/F5160 nesting
+proves the pair compiled together, but does not settle how its sole caller
+F508C and the neighboring pool services fit into an original whole unit.
+The larger F3FF4..F5404 run contains unrelated members and no independently
+established outer cuts. Keep the matching split sources rather than calling
+the shared arena private or inventing a boundary to obtain a smaller fold.
+The private-array wording in the historical fingerprint below is superseded.
 
 Fingerprints:
 - shared parallel-array cluster: both walk the pointer array at
@@ -14405,7 +14504,43 @@ Members (link order):
   `0x17`→`0x20`, and gapless link successor of `ovl_15_func_801328C4` (0x9C
   bytes)
 
-## `ovl_25` leaf run — 0x800BB970–0x800BBA7C (confidence: medium)
+## `ovl_25` leaf run — 0x800BB970–0x800BBA7C (two supported services, not one established TU)
+
+The former four-entry hypothesis separates into two coherent modules. The
+only proposed join between BB9D0 and BBA30 was a sign-extension/absolute-base
+leaf prologue: that is an ABI idiom, not evidence of common compilation.
+There is no private data or call edge across that seam.
+
+- **`src/overlays/ovl_25/modules/record_value_increments.c`**, BB970/BB9D0:
+  same indexed 0x1D4-stride records, adjacent +19EA/+19EC values, and the
+  same B9208 caller applies both services in one block. Names
+  `Ovl25RaiseRecordByteRangeValue`/`Ovl25RaiseRecordHalfwordRangeValue`;
+  `ovl25_record_value_increments.h` records unchecked signed indices,
+  signed-versus-unsigned comparisons, steps 20/500 and caps 255/65535.
+  Head at BB970 follows the animation-slot lifecycle, which accesses
+  different arrays and has no edge to this pair. Tail at BBA30 changes to
+  render-context RGB, with no work-record access. These are conservative
+  boundaries from independent protocols, not GP-proven boundaries (-G0).
+- **`src/overlays/ovl_25/modules/background_color_pingpong.c`**, BBA30/BBA7C:
+  setter plus its direct interpolation-driver caller, backed by the private
+  direction/index and endpoint triples. Names `Ovl25SetBackgroundColor` and
+  `Ovl25StepBackgroundColorCycle`; both published in
+  `ovl25_background_color_cycle.h`. The head is the protocol seam above;
+  the tail is the overlay text/data boundary at BBB40 (0x800BBB40).
+  Original data at BCD50/BCD52 is the signed direction/index pair, and
+  BCDAC/BCDB8 holds RGB (0,99,127)/(0,165,213), confirmed in the original
+  overlay at offsets 4F8C/4F98. Canonical names are
+  `gOvl25BackgroundCycleDescending`, `gOvl25BackgroundCycleIndex`,
+  `gOvl25BackgroundCycleLowRgb`, `gOvl25BackgroundCycleHighRgb`.
+  Declarations now live in globals_override.h (triples as s32[3], not
+  scalar-first-word views), with all uses propagated. Rendering still
+  narrows components to bytes and enables clearing in both contexts;
+  update-before-step and endpoint repetition are documented.
+
+Both complete folds passed at baseline; neither adds a flag, changes
+linkage or defines shared work/render storage. The historical evidence
+below is retained to distinguish the two real relationships from the
+rejected prologue-only join.
 
 Candidate same-TU run of `ovl_25` at file offsets 0x3B50–0x3D20. Evidence is a
 gapless link run whose call graph agrees with it, a shared leaf-prologue idiom,
@@ -14453,6 +14588,37 @@ Members (link order):
   `D_800BCD50` flag once it reaches 0x200
 
 ## `ovl_25` 8×0x16 record-array initializer/consumers/handlers — 0x800BB4B4 / 0x800BB580 / 0x800BB628 / 0x800BB788 / 0x800BB874 (confidence: medium)
+
+**Module: `src/overlays/ovl_25/modules/vram_animation_slots.c`**, all six
+entries BB4B4/BB510/BB580/BB628/BB788/BB874, through BB970 exclusive.
+BB510 requests descriptors through BB874; BB580 dispatches the same slot
+array to BB628/BB788. Initializer, acquisition, descriptor field remapping,
+update-mode dispatch and shared storage establish the complete slot lifecycle,
+corroborated by link order. This is not a grouping based only on a global.
+
+Names follow the already-established ovl_11 protocol but remain distinct
+ovl_25 identities: `Ovl25InitVramAnimationSlots`, `Ovl25RequestVramAnimations`,
+`Ovl25UpdateVramAnimations`, `Ovl25StepVramAnimationSequence`,
+`Ovl25StepVramAnimationScroll`, `Ovl25AcquireVramAnimationSlot` in that order.
+The first three form `ovl25_vram_animation_slots.h`; the three helpers retain
+external linkage but are not newly public. The slot and nine-halfword source
+views are reconciled with `Ovl11AnimationSlot` and
+`Ovl11VramAnimationDescriptor`: same shared RAM and field remapping, not merely
+cross-overlay machine-shape similarity. Signed duration/destination fields
+remain signed; source halfwords copied without arithmetic retain their bits.
+The checked fold confirmed all six rewritten functions exactly at baseline.
+Existing storage globals already have canonical names and remain extern.
+
+Head boundary: BB46C only rewinds sound loads/queues sound commands and has
+no animation state or call into this lifecycle. Its shared setup dispatcher
+is not alone evidence that the audio and animation services compiled together.
+Tail boundary: BB970 starts the paired 0x1D4-stride work-record saturating
+setters, with no slot/descriptor access or lifecycle call. Both are conservative
+boundaries: neither is GP-proven (-G0 overlay), and no private-state evidence
+currently extends this unit across them. The public setup caller B7F3C and
+frame caller B813C now include the interface. Initialization's primary zero
+fill versus separate work-array 0xFFFF keys, full/duplicate no-ops, GPU units,
+sequence reload lifetime and paused-update flag are documented explicitly.
 
 Candidate same-TU grouping of `ovl_25`. Evidence is a shared object plus a
 gapless link run.
@@ -15500,6 +15666,10 @@ TU-membership evidence for either container; only the ovl_17 same-container
 link adjacency above is.
 
 ## `ovl_23` D_8006C838+0x8000 work-area 0x1D4-stride record pair — 0x800BB7A0 / 0x800BB800 (confidence: medium)
+
+Both entries are now compiled in `modules/record_value_increments.c`; see
+the earlier record-field setter section for canonical names, interface and
+boundary evidence. The unmatched status below is historical, not current.
 
 Evidence: zero-gap link-order adjacency plus the same D_8006C838 large-offset
 fingerprint as the ovl_17 pair above. `ovl_23_func_800BB7A0` (0x60, ends
@@ -18413,7 +18583,53 @@ data, canonical interfaces, source policy, scope and zero exception growth.
 
 ---
 
-## `ovl_11` D_801287F4 counter-state run — 0x800BBC74–0x800BCD28 (confidence: medium for shared-state core; low for wrapper extension)
+## `ovl_11` D_801287F4 counter-state run — 0x800BBC74–0x800BCF20 exclusive (confidence: medium)
+
+**Module: `src/overlays/ovl_11/modules/area_mode_sequence.c`**, the whole
+eight-entry contiguous run BBC74/BBCB8/BC3AC/BC3E0/BC868/BC9AC/BCB5C/BCD28.
+Private state A0 (BBCB8/BCD28) and A4 (BC3E0/BC868/BC9AC), the entry-step
+protocol and the internal helper edges join the run. BBC74 is BBCB8's
+scratch-stack wrapper, not a separate service. BBCB8 and BC3E0's contiguous
+jump tables (file 4..134) pool in member order. The checked baseline fold
+proved all eight functions and overlay bytes; no flag setting was involved.
+
+Canonical names in address order: `Ovl11UpdateAreaMode`,
+`Ovl11StepAreaModeState`, `Ovl11ResetAreaModeStep`,
+`Ovl11RunAreaEntrySteps`, `Ovl11RefreshAreaSoundBank`,
+`Ovl11ApplyAreaSoundVolume`, `Ovl11ChooseAreaSoundId`,
+`Ovl11ResetAreaScene`. The wrapper, two phase callbacks and two shared sound
+services are published in `ovl11_area_mode_sequence.h`; no linkage changed.
+It documents state inputs, scratch-stack/non-reentrancy restrictions, phased
+entry, blocking fade/update loops and asynchronous bank-transfer completion.
+Local sound-policy views now live in globals_override.h, with meaningful
+volume/hour/record-ID locals and unchanged load signedness.
+
+State names: 801217A0 `gOvl11AreaReadStarted`, 801217A4
+`gOvl11AreaSoundRestartNeeded`, 801287E8 `gOvl11PendingAreaReadIndex`,
+801287EC `gOvl11AreaSoundEffectPending`, 801287F4 `gOvl11AreaEntryStep`.
+The saved E8 value is a descriptor-read index, NOT a sound ID: BBCB8 passes
+it to BD374 as an argument; BD374 does not access E8 itself. All declarations
+and outside entry-step setters were reconciled; the shared-header externs
+were explicitly renamed after checking that no other container uses those
+anonymous spellings (the contextual canonicalizer cannot infer an overlay
+owner for a declaration in the shared header).
+
+Left boundary: BBC34 dispatches the shared phase table, whose targets span
+other services; it has no reference to this run's private A0/A4/E8/EC state.
+Its table adjacency in data does not establish another member. Right boundary:
+BCF20 is an empty shared phase callback, and BCF28 is a widely called flag
+helper, neither with a private-state tie here. BCF54/BD374 read a shared
+CD-sector descriptor pool: the base slice is shared by those two, while
+other slices feed BD1BC/BD238/BD3C4/BD488/BD5A8/BD6A8. That pool and the
+engine staging area do not establish a join to this mode sequencer.
+These are conservative evidence-limited cuts, not proven historical object
+boundaries (-G0). The address-apart 1048A0/104A90/104CB8 entry services use
+the public step/sound protocol, not A0/A4/E8/EC, so their shared inputs alone
+do not require absorbing all intervening modules. Their interfaces were
+updated as callers, not silently treated as same-TU members.
+
+The earlier candidate details below retain original identities; its distant
+entries are related services, not members of the reconstructed module.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): the unbroken
 link-order run around the recorded `D_801287F4` counter-state cluster, now

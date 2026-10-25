@@ -1,0 +1,21 @@
+// Semantic labels within ovl_25; original container/address identities retained.
+
+// Eight shared VRAM animation slots and two MoveImage update modes.
+Ovl25InitVramAnimationSlots = 0x800BB4B4; // type:func
+Ovl25RequestVramAnimations = 0x800BB510; // type:func
+Ovl25UpdateVramAnimations = 0x800BB580; // type:func
+Ovl25StepVramAnimationSequence = 0x800BB628; // type:func
+Ovl25StepVramAnimationScroll = 0x800BB788; // type:func
+Ovl25AcquireVramAnimationSlot = 0x800BB874; // type:func
+
+// Indexed work-record increments; storage remains halfword-sized in both.
+Ovl25RaiseRecordByteRangeValue = 0x800BB970; // type:func
+Ovl25RaiseRecordHalfwordRangeValue = 0x800BB9D0; // type:func
+
+// Double-buffer background RGB and its endpoint-clamped interpolation driver.
+Ovl25SetBackgroundColor = 0x800BBA30; // type:func
+Ovl25StepBackgroundColorCycle = 0x800BBA7C; // type:func
+gOvl25BackgroundCycleDescending = 0x800BCD50; // type:data size:0x2
+gOvl25BackgroundCycleIndex = 0x800BCD52; // type:data size:0x2
+gOvl25BackgroundCycleLowRgb = 0x800BCDAC; // type:data size:0xC
+gOvl25BackgroundCycleHighRgb = 0x800BCDB8; // type:data size:0xC

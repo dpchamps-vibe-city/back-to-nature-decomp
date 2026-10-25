@@ -9,6 +9,7 @@
 #include "card_deal.h"
 #include "ovl11_state_field_access.h"
 #include "game_flags.h"
+#include "ovl11_record_flag_query.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
@@ -25,7 +26,6 @@ s32 ovl_11_func_80103770 (void);
 void ovl_11_func_800F0358 (void);
 s32 ovl_11_func_800F0474 (s16 arg0);
 void ovl_11_func_800F05C0 (void);
-s32 ovl_11_func_800CFB20 (s32 arg0, s32 arg1);
 void ovl_11_func_800CFC20 (void);
 u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
@@ -380,7 +380,7 @@ block_118:
     case 13:
         switch (arg1) {                             /* switch 10; irregular */
         case 0:
-            return ovl_11_func_800CFB20(1 << arg2, 1 << arg3);
+            return Ovl11AnyRecordFlagMatch(1 << arg2, 1 << arg3);
         case 1:
             ovl_11_func_800CFC20();
             break;

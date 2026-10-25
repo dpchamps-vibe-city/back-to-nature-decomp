@@ -59,21 +59,21 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
         terminator = prefix_value;
         if (terminator == 0xFFFF) {
             name = &D_800535C6[*gTextBankOffsets];
-            (&D_8012D608)[i] = ((u16 *)name)[0];
+            (&gOvl11TextFormatScratch)[i] = ((u16 *)name)[0];
             text_index1 = i + 1;
-            (&D_8012D608)[text_index1] = ((u16 *)name)[1];
+            (&gOvl11TextFormatScratch)[text_index1] = ((u16 *)name)[1];
             text_index2 = i + 2;
-            (&D_8012D608)[text_index2] = ((u16 *)name)[2];
+            (&gOvl11TextFormatScratch)[text_index2] = ((u16 *)name)[2];
             text_index3 = i + 3;
-            (&D_8012D608)[text_index3] = ((u16 *)name)[3];
+            (&gOvl11TextFormatScratch)[text_index3] = ((u16 *)name)[3];
             text_index4 = i + 4;
-            (&D_8012D608)[text_index4] = terminator;
+            (&gOvl11TextFormatScratch)[text_index4] = terminator;
             break;
         }
-        (&D_8012D608)[i] = prefix_value;
+        (&gOvl11TextFormatScratch)[i] = prefix_value;
         i++;
     }
-    func_80017B3C(header_ot, (s32) &D_8012D608, 0x52, 0x1A);
+    func_80017B3C(header_ot, (s32) &gOvl11TextFormatScratch, 0x52, 0x1A);
     D_8012823C[kind](header_ot, 0xB0, 0x12);
     func_80017B3C(header_ot, (s32) &(D_800535C6 + 0x3E)[*gTextBankOffsets], 0xC8, 0x1A);
     count = ovl_11_func_80117178(kind, arg1, -1);

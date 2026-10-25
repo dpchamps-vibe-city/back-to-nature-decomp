@@ -55,5 +55,5 @@ void ovl_23_func_800BB214(void);
 void ovl_23_func_800BB488(void);
 void ovl_23_func_800BB534(void);
 void ovl_23_func_800BB758(void);
-void ovl_23_func_800BB7A0(s16 arg0);
-void ovl_23_func_800BB800(s16 arg0);
+void Ovl23RaiseRecordByteRangeValue(s16 recordIndex);
+void Ovl23RaiseRecordHalfwordRangeValue(s16 recordIndex);

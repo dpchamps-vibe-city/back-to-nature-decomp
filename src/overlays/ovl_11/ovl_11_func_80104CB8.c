@@ -13,6 +13,7 @@
 #include "psyq/libgpu.h"
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
+#include "ovl11_area_mode_sequence.h"
 
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
@@ -20,8 +21,6 @@ void ovl_11_func_800C044C(s16 arg0);
 void ovl_11_func_800BFE3C(void);
 void ovl_11_func_800CBEF8(void);
 void func_8001E340(Ovl11SceneGrid **arg0);
-void ovl_11_func_800BC868(void);
-void ovl_11_func_800BC9AC(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
@@ -45,12 +44,12 @@ void ovl_11_func_80104CB8(void) {
     Ovl11InstallSceneRecords();
     Ovl11RequestVramAnimations(D_8009F78C);
     Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);
-    ovl_11_func_800BC868();
+    Ovl11RefreshAreaSoundBank();
     while (IsSoundTransferComplete() == 0) {
         UpdateMasterVolumeAndSoundTransfer();
     }
     OpenSoundSequencesAndStart();
-    ovl_11_func_800BC9AC();
+    Ovl11ApplyAreaSoundVolume();
     if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
         ovl_11_func_800F0FB0(8);
         ovl_11_func_800F0F50();

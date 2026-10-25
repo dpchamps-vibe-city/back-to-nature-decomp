@@ -4,13 +4,12 @@
 #include "psyq/libgte.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl25_record_value_increments.h"
 
 
 extern s16 D_800BFE44[];
 
 void ovl_25_func_800B9B00 (s16 *arg0, s16 arg1, s16 arg2);
-void ovl_25_func_800BB970 (s16 arg0);
-void ovl_25_func_800BB9D0 (s16 arg0);
 
 void ovl_25_func_800B9208(void) {
     char *base;
@@ -34,23 +33,23 @@ void ovl_25_func_800B9208(void) {
                     if (var_s2 == 0) {
                         *(s32 *) (base + 0x6638) = 1;
                         *(s16 *) (base + 0x663C) = 0;
-                        ovl_25_func_800BB970(1);
-                        ovl_25_func_800BB970(2);
-                        ovl_25_func_800BB970(4);
-                        ovl_25_func_800BB970(5);
-                        ovl_25_func_800BB970(8);
-                        ovl_25_func_800BB970(0xB);
-                        ovl_25_func_800BB970(0x10);
-                        ovl_25_func_800BB970(0x11);
-                        ovl_25_func_800BB970(0x13);
-                        ovl_25_func_800BB970(0x19);
-                        ovl_25_func_800BB970(0x1C);
-                        ovl_25_func_800BB970(0x22);
-                        ovl_25_func_800BB9D0(3);
-                        ovl_25_func_800BB9D0(7);
-                        ovl_25_func_800BB9D0(9);
-                        ovl_25_func_800BB9D0(0xE);
-                        ovl_25_func_800BB9D0(0x14);
+                        Ovl25RaiseRecordByteRangeValue(1);
+                        Ovl25RaiseRecordByteRangeValue(2);
+                        Ovl25RaiseRecordByteRangeValue(4);
+                        Ovl25RaiseRecordByteRangeValue(5);
+                        Ovl25RaiseRecordByteRangeValue(8);
+                        Ovl25RaiseRecordByteRangeValue(0xB);
+                        Ovl25RaiseRecordByteRangeValue(0x10);
+                        Ovl25RaiseRecordByteRangeValue(0x11);
+                        Ovl25RaiseRecordByteRangeValue(0x13);
+                        Ovl25RaiseRecordByteRangeValue(0x19);
+                        Ovl25RaiseRecordByteRangeValue(0x1C);
+                        Ovl25RaiseRecordByteRangeValue(0x22);
+                        Ovl25RaiseRecordHalfwordRangeValue(3);
+                        Ovl25RaiseRecordHalfwordRangeValue(7);
+                        Ovl25RaiseRecordHalfwordRangeValue(9);
+                        Ovl25RaiseRecordHalfwordRangeValue(0xE);
+                        Ovl25RaiseRecordHalfwordRangeValue(0x14);
                     } else {
                         *(s32 *) (base + 0x6638) = 0;
                         *(s16 *) (base + 0x663C) = var_s2;

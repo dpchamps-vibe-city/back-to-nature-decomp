@@ -16,7 +16,7 @@ void ovl_11_func_80116F4C(Ovl11Func80116F4CArg *arg0, s32 arg1, s16 arg2, s16 ar
 
     var_a0 = 0;
     fill = 0xFFD;
-    base = &D_8012D608;
+    base = &gOvl11TextFormatScratch;
     var_v1 = base;
     do {
         *var_v1 = fill;

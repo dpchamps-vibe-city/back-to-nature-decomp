@@ -90,7 +90,6 @@ segments:
       - [0x3668, c, ovl_23_func_800BB488]
       - [0x3714, c, ovl_23_func_800BB534]
       - [0x3938, c, ovl_23_func_800BB758]
-      - [0x3980, c, ovl_23_func_800BB7A0]
-      - [0x39E0, c, ovl_23_func_800BB800]
+      - [0x3980, c, modules/record_value_increments]
       - [0x3A40, data]
   - [0x8800]

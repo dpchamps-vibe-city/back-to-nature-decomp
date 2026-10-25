@@ -10,7 +10,6 @@ void ovl_11_func_800C044C(s16 arg0);
 void ovl_11_func_800CBEF8(void);
 void ovl_11_func_800F6630(void);
 void ovl_11_func_800BFE3C(void);
-extern s32 D_801287F4;
 
 typedef struct {
     char pad_000[0xC];
@@ -45,7 +44,7 @@ void ovl_11_func_801048A0(void) {
     ovl_11_func_800F6630();
 
     base->field_4488 = 1;
-    D_801287F4 = 10;
+    gOvl11AreaEntryStep = 10;
     *(s32 *)(far + 0x2548C) = 0;
     *(s16 *)(far + 0x247A8) = -1;
     *(s16 *)(far + 0x247A6) = -1;

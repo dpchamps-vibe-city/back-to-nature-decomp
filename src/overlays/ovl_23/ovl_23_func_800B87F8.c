@@ -4,6 +4,7 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl23_record_value_increments.h"
 
 void ovl_23_func_800BB0E8(void);
 void ovl_23_func_800BB150(void);
@@ -11,8 +12,6 @@ void ovl_23_func_800B92E8(void);
 void ovl_23_func_800B8B94(void);
 void ovl_23_func_800B8C18(void);
 void ovl_23_func_800B8FA4(void);
-void ovl_23_func_800BB7A0(s16 arg0);
-void ovl_23_func_800BB800(s16 arg0);
 void ovl_23_func_800B9310(void);
 
 void ovl_23_func_800B87F8(void) {
@@ -102,21 +101,21 @@ void ovl_23_func_800B87F8(void) {
                             RequestSceneChange(6);
                             *(s32 *)(systemData + 0xC) |= 0x80000;
                             if (*(s32 *)(save + 0x6630) == 1) {
-                                ovl_23_func_800BB7A0(1);
-                                ovl_23_func_800BB7A0(2);
-                                ovl_23_func_800BB7A0(4);
-                                ovl_23_func_800BB7A0(6);
-                                ovl_23_func_800BB7A0(0xF);
-                                ovl_23_func_800BB7A0(0x10);
-                                ovl_23_func_800BB7A0(0x11);
-                                ovl_23_func_800BB7A0(0x13);
-                                ovl_23_func_800BB7A0(0x15);
-                                ovl_23_func_800BB7A0(0x16);
-                                ovl_23_func_800BB7A0(0x1A);
-                                ovl_23_func_800BB7A0(0x1C);
-                                ovl_23_func_800BB800(3);
-                                ovl_23_func_800BB800(7);
-                                ovl_23_func_800BB800(0x14);
+                                Ovl23RaiseRecordByteRangeValue(1);
+                                Ovl23RaiseRecordByteRangeValue(2);
+                                Ovl23RaiseRecordByteRangeValue(4);
+                                Ovl23RaiseRecordByteRangeValue(6);
+                                Ovl23RaiseRecordByteRangeValue(0xF);
+                                Ovl23RaiseRecordByteRangeValue(0x10);
+                                Ovl23RaiseRecordByteRangeValue(0x11);
+                                Ovl23RaiseRecordByteRangeValue(0x13);
+                                Ovl23RaiseRecordByteRangeValue(0x15);
+                                Ovl23RaiseRecordByteRangeValue(0x16);
+                                Ovl23RaiseRecordByteRangeValue(0x1A);
+                                Ovl23RaiseRecordByteRangeValue(0x1C);
+                                Ovl23RaiseRecordHalfwordRangeValue(3);
+                                Ovl23RaiseRecordHalfwordRangeValue(7);
+                                Ovl23RaiseRecordHalfwordRangeValue(0x14);
                             }
                         }
                     }

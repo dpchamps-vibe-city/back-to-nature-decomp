@@ -185,20 +185,6 @@ typedef struct {
 } M2C_00d87963cded_Ovl11CC6A8Arg;
 
 typedef struct {
-               u16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 unk6;
-               u16 unk8;
-               u16 unkA;
-               u16 unkC;
-               u16 unkE;
-               u16 unk10;
-               u16 unk12;
-               u16 unk14;
-} M2C_022d8b6d7e6d_SpriteDesc;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -672,18 +658,6 @@ typedef struct {
                char pad_68[0xA8 - 0x68];
                char unkA8[0];
 } M2C_3e88aa97bf23_Struct_800E2C64;
-
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-    u16 unk10;
-} M2C_3f138653e0bb_M2C_b93e11a2_Arg0;
 
 typedef struct {
     s16 field_0;
@@ -3025,20 +2999,6 @@ struct Ovl25ObjectRecord {
                SpriteSourceData record0;
                SpriteSourceData record1;
 };
-
-typedef struct {
-    u16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    u16 unk8;
-    u16 unkA;
-    u16 unkC;
-    u16 unkE;
-    u16 unk10;
-    u16 unk12;
-    u16 unk14;
-} Ovl25SpriteDesc;
 
 struct Ovl30FlagMenuEntry {
     void *value;

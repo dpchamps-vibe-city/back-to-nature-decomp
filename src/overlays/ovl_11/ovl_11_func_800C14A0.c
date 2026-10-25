@@ -6,10 +6,10 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "ovl11_scene_camera_lighting.h"
+#include "ovl11_area_mode_sequence.h"
 
 void ovl_11_func_800C188C(void);
 void ovl_11_func_800C162C(void);
-void ovl_11_func_800BBC74(void);
 void ovl_11_func_800E3AA4(void);
 void ovl_11_func_80120A2C(void);
 void ovl_11_func_800DCC5C(void);
@@ -24,7 +24,7 @@ void ovl_11_func_800C14A0(void) {
         if ((((struct Ovl11FrameWork *) &D_8007AFF0)->mode != 5) && (((struct Ovl11FrameWork *) &D_8007AFF0)->mode != 0x18) && (((struct Ovl11FrameWork *) &D_8007AFF0)->mode != 0x19)) {
             ovl_11_func_800C162C();
         }
-        ovl_11_func_800BBC74();
+        Ovl11UpdateAreaMode();
         ovl_11_func_800E3AA4();
         PollCdAudio();
         break;

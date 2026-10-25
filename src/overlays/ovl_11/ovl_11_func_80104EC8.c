@@ -3,6 +3,7 @@
 #include "ovl11_clock_calendar.h"
 #include "u16_string.h"
 #include "game_flags.h"
+#include "ovl11_record_flag_query.h"
 
 s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4);
@@ -10,7 +11,6 @@ s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EF0E8(s16 arg0);
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount);
-s32 ovl_11_func_800CFB20(s32 arg0, s32 arg1);
 s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_80104EC8(s16 arg0) {
@@ -612,7 +612,7 @@ block_339:
     case 0x38:
         return ((Ovl11ConditionState *) D_8006C838)->field_E670 != 0;
     case 0x39:
-        var_v0_3 = ovl_11_func_800CFB20(7, 3) ^ 1;
+        var_v0_3 = Ovl11AnyRecordFlagMatch(7, 3) ^ 1;
         return var_v0_3 == 0;
     case 0x3D:
         return ((Ovl11ConditionState *) D_8006C838)->actors[0].field14 >= 0x32;

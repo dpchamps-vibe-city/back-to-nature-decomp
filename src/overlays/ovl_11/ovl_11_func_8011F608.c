@@ -5,10 +5,10 @@
 #include "master_volume.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "ovl11_area_mode_sequence.h"
 
 void func_80017A08(s32 arg0, s32 arg1);
 /* Overlay imports of GetMessageWindowChoice and GetMessageWindowStatus. */
-void ovl_11_func_800BC9AC(void);
 void ovl_11_func_8011F958(void);
 void ovl_11_func_8011F9EC(s32 *arg0);
 s32 ovl_11_func_8011FB80(s16 arg0);
@@ -43,7 +43,7 @@ void ovl_11_func_8011F608(void) {
         if (GetMessageWindowStatus() == 2) {
             if (D_80128556 == 0x10A) {
                 PlaySoundSequenceWithReverb(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
-                ovl_11_func_800BC9AC();
+                Ovl11ApplyAreaSoundVolume();
                 BeginScreenFadeDecrease(10, 1, 2);
                 BeginMasterVolumeFadeIn(10);
                 D_80128540 = 8;
@@ -72,7 +72,7 @@ void ovl_11_func_8011F608(void) {
         if (--D_80128558 <= 0) {
             BeginScreenFadeDecrease(10, 0, 1);
             PlaySoundSequenceWithReverb(0, 0, ((struct Ovl11SelectionMusic *)&D_8007AFF0)->music, 0);
-            ovl_11_func_800BC9AC();
+            Ovl11ApplyAreaSoundVolume();
             BeginMasterVolumeFadeIn(10);
             D_80128540 = 8;
         }

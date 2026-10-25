@@ -4,14 +4,17 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl25_vram_animation_slots.h"
 
 void ovl_25_func_800BAC9C(void);
 void ovl_25_func_800BAF20(void);
 void ovl_25_func_800BAFCC(void);
 void ovl_25_func_800BB2B8(void);
 void ovl_25_func_800BB46C(void);
-void ovl_25_func_800BB4B4(void);
-void ovl_25_func_800BB510(s32 arg0);
 void ovl_25_func_800B82B4(void);
 void ovl_25_func_800BAA5C(void);
 
@@ -49,11 +52,11 @@ void ovl_25_func_800B7F3C(void) {
         break;
     }
     if (*(u8 *)D_800BCD20 == 6) {
-        ovl_25_func_800BB4B4();
+        Ovl25InitVramAnimationSlots();
         far_base = (char *)&D_8007AFF0;
         *(Ovl25SetupStatePair *)(far_base + 0x25474) =
             *(Ovl25SetupStatePair *)(far_base + 0x2479C);
-        ovl_25_func_800BB510((s32)D_8009F78C);
+        Ovl25RequestVramAnimations((s32)D_8009F78C);
         ovl_25_func_800B82B4();
         ovl_25_func_800BAA5C();
         ResetMessageWindow();

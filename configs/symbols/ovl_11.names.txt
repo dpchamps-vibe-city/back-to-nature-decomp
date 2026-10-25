@@ -507,3 +507,32 @@ gOvl11ObjectDrawPosition = 0x80128D38; // type:data size:0x8
 gOvl11ObjectDrawMarkerScreen = 0x80128D40; // type:data size:0x8
 gOvl11OffsetObjectDrawMarkerScreen = 0x80128D48; // type:data size:0x8
 gOvl11OffsetObjectDrawPosition = 0x80128D50; // type:data size:0x8
+
+// Paired five-value group maps used by the action-record callers.
+Ovl11MapGroupedValueCode = 0x800CB020; // type:func
+Ovl11GetGroupedValueIndex = 0x800CB0B0; // type:func
+
+// Pool-mask scan and its original nested flag predicate.
+Ovl11TestRecordFlagSelection = 0x800CFAD0; // type:func
+Ovl11AnyRecordFlagMatch = 0x800CFB20; // type:func
+
+// Area transition/entry state, scene installation and coordinated sound setup.
+Ovl11UpdateAreaMode = 0x800BBC74; // type:func
+Ovl11StepAreaModeState = 0x800BBCB8; // type:func
+Ovl11ResetAreaModeStep = 0x800BC3AC; // type:func
+Ovl11RunAreaEntrySteps = 0x800BC3E0; // type:func
+Ovl11RefreshAreaSoundBank = 0x800BC868; // type:func
+Ovl11ApplyAreaSoundVolume = 0x800BC9AC; // type:func
+Ovl11ChooseAreaSoundId = 0x800BCB5C; // type:func
+Ovl11ResetAreaScene = 0x800BCD28; // type:func
+gOvl11AreaReadStarted = 0x801217A0; // type:data size:0x4
+gOvl11AreaSoundRestartNeeded = 0x801217A4; // type:data size:0x4
+gOvl11PendingAreaReadIndex = 0x801287E8; // type:data size:0x4
+gOvl11AreaSoundEffectPending = 0x801287EC; // type:data size:0x4
+gOvl11AreaEntryStep = 0x801287F4; // type:data size:0x4
+
+// Selection-list renderer and its original nested ten-category scan.
+Ovl11HasRowTypeTwo = 0x8011D438; // type:func
+Ovl11DrawSelectionListPanel = 0x8011D474; // type:func
+// 0x18-halfword formatter buffer; the independent name record begins at 8012D638.
+gOvl11TextFormatScratch = 0x8012D608; // type:data size:0x30

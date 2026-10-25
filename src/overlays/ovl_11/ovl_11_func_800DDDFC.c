@@ -15,6 +15,7 @@
 #include "psyq/libgpu.h"
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
+#include "ovl11_area_mode_sequence.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
@@ -33,8 +34,6 @@ void ovl_11_func_800C19B0 (void);
 void ovl_11_func_800BFEA4 (void);
 void ovl_11_func_800BFF00 (void);
 void ovl_11_func_800C044C (s16 arg0);
-void ovl_11_func_800BC868 (void);
-void ovl_11_func_800BC9AC (void);
 void ovl_11_func_800DBC4C (void);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
@@ -138,12 +137,12 @@ s32 ovl_11_func_800DDDFC(void) {
             ((Ovl11SetupWorkView *)&D_8007AFF0)->state = 0;
             ((Ovl11DDDFCState *)D_8006C838)->phase++;
             if (GetGameFlag(0x48) == 0) {
-                ovl_11_func_800BC868();
+                Ovl11RefreshAreaSoundBank();
                 while (IsSoundTransferComplete() == 0) {
                     UpdateMasterVolumeAndSoundTransfer();
                 }
                 OpenSoundSequencesAndStart();
-                ovl_11_func_800BC9AC();
+                Ovl11ApplyAreaSoundVolume();
             }
         }
         break;

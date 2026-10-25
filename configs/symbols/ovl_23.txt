@@ -51,5 +51,5 @@ ovl_23_func_800BB214 = 0x800BB214; // type:func
 ovl_23_func_800BB488 = 0x800BB488; // type:func
 ovl_23_func_800BB534 = 0x800BB534; // type:func
 ovl_23_func_800BB758 = 0x800BB758; // type:func
-ovl_23_func_800BB7A0 = 0x800BB7A0; // type:func
-ovl_23_func_800BB800 = 0x800BB800; // type:func
+Ovl23RaiseRecordByteRangeValue = 0x800BB7A0; // type:func
+Ovl23RaiseRecordHalfwordRangeValue = 0x800BB800; // type:func

@@ -12,7 +12,6 @@ void ovl_11_func_8011CF10 (u16 *dst);
 
 extern s32 D_80071A5C;
 extern s32 gSelectedThresholdBalance;
-extern s16 D_8012D608;
 
 void ovl_11_func_8011CC08(s32 arg0) {
     s16 var_s3;
@@ -40,9 +39,9 @@ void ovl_11_func_8011CC08(s32 arg0) {
         var_s7 = 0x22;
     }
     temp_s0 = gActiveRenderContext->field_D8 + 0x40;
-    var_s4(func_8001A970(var_a0, &D_8012D608, 8));
+    var_s4(func_8001A970(var_a0, &gOvl11TextFormatScratch, 8));
     DrawBeveledPanel((u32 *) (gActiveRenderContext->field_D8 + 0x44), var_s3, 0x10, var_s5, var_s7);
     temp_s2 = var_s3 | 4;
     func_80017B3C(temp_s0, (s32) ((void *) ((u8 *) D_8005175C + (*D_80054BC0 + var_s6))), temp_s2, 0x14);
-    func_80017B3C(temp_s0, (s32) &D_8012D608, temp_s2, var_s7);
+    func_80017B3C(temp_s0, (s32) &gOvl11TextFormatScratch, temp_s2, var_s7);
 }

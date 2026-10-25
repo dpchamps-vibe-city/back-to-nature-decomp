@@ -19,6 +19,7 @@
 #include "integer_power.h"
 #include "game_flags.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_record_flag_query.h"
 
 typedef struct {
                char pad0[0x38];
@@ -107,7 +108,6 @@ s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
 void ovl_11_func_800F0358 (void);
 s32 ovl_11_func_800F0474 (s16 arg0);
-s32 ovl_11_func_800CFB20 (s32 arg0, s32 arg1);
 u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);

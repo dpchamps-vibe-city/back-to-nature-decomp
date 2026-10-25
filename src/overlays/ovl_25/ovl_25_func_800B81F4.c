@@ -8,9 +8,9 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl25_background_color_cycle.h"
 
 void ovl_25_func_800B93E4 (void);
-void ovl_25_func_800BBA30 (s16 arg0, s16 arg1, s16 arg2);
 
 void ovl_25_func_800B81F4(void) {
     s32 var_s0;
@@ -32,6 +32,6 @@ void ovl_25_func_800B81F4(void) {
         *(s32 *)(base + 0x448C) = 0xFF;
         RequestSceneChange(6);
         *(s32 *)(base + 0xC) |= 0x80000;
-        ovl_25_func_800BBA30(0, 0, 0);
+        Ovl25SetBackgroundColor(0, 0, 0);
     }
 }

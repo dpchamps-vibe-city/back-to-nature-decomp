@@ -335,8 +335,8 @@ typedef struct {
 
 /* ovl_11 80104A90 clears 0x10 bytes and publishes this buffer's address. */
 extern u8 D_800A0368[0x10];
-/* ovl_11 80104A90 stores the word value 10 here. */
-extern s32 D_801287F4;
+/* ovl_11:800BC3E0 dispatches entry steps; 801048A0/80104A90 enter at 10. */
+extern s32 gOvl11AreaEntryStep;
 
 /* ovl_11:80126FF0 — eighteen 0x1C-byte item-menu layout rows. Each row
  * starts with pixel x/y, then eight triples of unsigned navigation indices.
@@ -4489,12 +4489,11 @@ typedef struct {
     u16 status;
 } Ovl11MenuGlobals;
 
-/* D_8012D608 - ovl_11 halfword table; the 0x18-halfword fill in
- * ovl_11_func_80116F4C is the largest witnessed extent, and the same base is
- * passed as an s16* text-source buffer to func_8001A970 by
- * ovl_11_func_8011CC08. Absolute-addressed (lui/%lo) from the -G0 overlay;
- * only ever declared extern, so a scalar extern belongs here. */
-extern s16 D_8012D608;
+/* ovl_11:8012D608 is shared text-format scratch. 80116F4C fills 0x18
+ * halfwords; 8011CC08/8011CD2C/8011D474 format and append text here.
+ * The independent name record at 8012D638 bounds this 0x30-byte span.
+ * Retain the existing absolute-addressed scalar-first-word C view. */
+extern s16 gOvl11TextFormatScratch;
 
 /* D_8012D538 - 0xC-byte ovl_11 record (pointer at +4, s16 fields at
  * +8/+A); the +8 halfword is the separately named D_8012D540. Initialized
@@ -5579,6 +5578,12 @@ extern u16 D_800BCB8E[];
 extern u8 D_800BCD21;
 /* ovl_25_func_800B8848 writes the first three halfwords; original data allocates four. */
 extern s16 D_800BCD48[4];
+/* ovl_25:800BBA7C reverses/clamps a signed 0..511 interpolation index. */
+extern s16 gOvl25BackgroundCycleDescending;
+extern s16 gOvl25BackgroundCycleIndex;
+/* ovl_25:800BBA7C passes each contiguous RGB triple to InterpolateThreeWords. */
+extern s32 gOvl25BackgroundCycleLowRgb[3];
+extern s32 gOvl25BackgroundCycleHighRgb[3];
 /* 800B9E84 reads/writes unsigned state and flag bytes; its counter is D_800BCD21 + 2. */
 extern u8 D_800BCD22;
 extern u8 D_800BCD24;
@@ -6456,12 +6461,28 @@ extern s32 D_80128CF8;
  * Absolute-addressed from the -G0 overlay. */
 extern u16 D_80071318[11];
 
-/* D_801217A4 - main-RAM s32 state/flag word. ovl_11_func_800BC9AC loads it
- * with lw at 0x800BC9B0 and again at 0x800BCB04 to select its
- * func_8001FBBC vs func_8001FB30/func_8002029C paths; the neighbouring
- * ovl_11_func_800BC868 (m2c baseline) stores zero into the same word.
- * Absolute-addressed (lui + lw %lo), so a scalar extern keeps the base name. */
-extern s32 D_801217A4;
+/* ovl_11:800BC868 sets this flag; 800BC9AC stops/replays the sequence when
+ * nonzero, otherwise only adjusts volume. Absolute-addressed overlay state. */
+extern s32 gOvl11AreaSoundRestartNeeded;
+
+/* ovl_11:800BC9AC reads asset IDs/flags through work+25388, selector at
+ * state+E4C8 and sequence ID at work+2549C. Signedness follows lh/lhu. */
+typedef struct {
+    s16 primaryId;
+    s16 secondaryId;
+    u8 reserved4[4];
+    u16 flags;
+} AreaSoundRecord;
+typedef struct {
+    char reserved[0xE4C8];
+    s16 selector;
+} AreaSoundStatus;
+typedef struct {
+    char reserved0[0x25388];
+    AreaSoundRecord *record;
+    char reserved1[0x2549C - 0x2538C];
+    s16 sequenceId;
+} AreaSoundWork;
 
 /* D_80129418 - ovl_11 private s16 state word in the overlay data segment.
  * ovl_11_func_800E3CDC stores the computed frame index here (sh %lo) and
@@ -7040,10 +7061,12 @@ typedef struct {
     s16 unkA;
 } Ovl11CD9A0Record;
 extern Ovl11CD9A0Record *D_801287F0;
-/* 800BBCB8 reads/writes the load ID, selection flag and load-active words. */
-extern s32 D_801287E8;
-extern s32 D_801287EC;
-extern s32 D_801217A0;
+/* ovl_11:800BBCB8 saves the descriptor index passed to the BD374 reader. */
+extern s32 gOvl11PendingAreaReadIndex;
+/* ovl_11:800BBCB8 gates effect 0x4C after the selection's fade completes. */
+extern s32 gOvl11AreaSoundEffectPending;
+/* ovl_11:800BBCB8 marks/awaits an archive read; 800BCD28 clears the flag. */
+extern s32 gOvl11AreaReadStarted;
 
 /* 800BBCB8: shared flags, counter, direction and mode through the status base. */
 typedef struct {

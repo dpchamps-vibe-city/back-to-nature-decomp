@@ -89,7 +89,7 @@ void ovl_11_func_80104A90(void) {
     ovl_11_func_800BD668();
     ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
     base->field_4488 = 1;
-    D_801287F4 = 0xA;
+    gOvl11AreaEntryStep = 0xA;
     far->field_2548C = 0;
     base->field_4438 = -1;
     far->field_254A0 = 0xC;
