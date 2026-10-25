@@ -44,7 +44,7 @@ void ovl_11_func_800DCC5C(void) {
     u8 *var_s0;
     u8 *var_s3;
 
-    var_s0 = D_80128E08;
+    var_s0 = gOvl11SceneRecords;
     for (var_s4 = 0; var_s4 < 15; var_s4++) {
         temp_v1 = *(u16 *) ((u8 *) var_s0 + 0x28);
         if (!(temp_v1 & 0x8000)) {

@@ -37,3 +37,40 @@ gOvl11BackgroundCycleDescending = 0x80123E54; // type:data size:0x2
 gOvl11BackgroundCycleIndex = 0x80123E56; // type:data size:0x2
 gOvl11BackgroundCycleLowRgb = 0x80123E58; // type:data size:0xC
 gOvl11BackgroundCycleHighRgb = 0x80123E64; // type:data size:0xC
+
+// Flag-selected pair of scene records; bit 0x1000 suppresses their drawing.
+Ovl11InitSceneRecordVisibilityPair = 0x800DDC64;
+Ovl11UpdateSceneRecordVisibilityPair = 0x800DDD18;
+gOvl11SceneRecordVisibilityPair = 0x801291A8; // type:data size:0x8
+
+// Two flag-driven rotation ramps on scene-record angles (GTE angle units).
+Ovl11InitSceneZRotationRamp = 0x800DD8AC;
+Ovl11StepSceneZRotationRamp = 0x800DD904;
+Ovl11IsSceneZRotationRampHeld = 0x800DD9F0;
+Ovl11InitSceneYRotationRamp = 0x800DDA08;
+Ovl11StepSceneYRotationRamp = 0x800DDA60;
+Ovl11IsSceneYRotationRampHeld = 0x800DDB4C;
+gOvl11SceneZRotationRecord = 0x80129194; // type:data size:0x4
+gOvl11SceneZRotationRampState = 0x80129198; // type:data size:0x4
+gOvl11SceneYRotationRecord = 0x8012919C; // type:data size:0x4
+gOvl11SceneYRotationRampState = 0x801291A0; // type:data size:0x4
+gOvl11SceneRecords = 0x80128E08; // type:data size:0x2D0
+
+// Two-record vertex-blend sequence, controlled by game flags 9 and 10.
+Ovl11InitSceneAnimationPair = 0x800DD5B0;
+Ovl11StepSceneAnimationPair = 0x800DD6F0;
+gOvl11SceneAnimationPair = 0x80129188; // type:data size:0x8
+gOvl11SceneAnimationPairState = 0x80129190; // type:data size:0x4
+
+// Three-record vertex-blend cycle; helper remains nested in the stepper.
+Ovl11InitSceneAnimationCycle = 0x800DD374;
+Ovl11AdvanceSceneAnimationCycle = 0x800DD45C;
+Ovl11StepSceneAnimationCycle = 0x800DD4D8;
+gOvl11SceneAnimationCycle = 0x80129178; // type:data size:0xC
+gOvl11SceneAnimationCycleState = 0x80129184; // type:data size:0x4
+
+// Two three-way record-field comparisons, mapped to an order class/code.
+Ovl11CompareRecordOrderRank = 0x800D0600;
+Ovl11ClassifyRecordPairOrder = 0x800D062C;
+Ovl11SelectRecordPairCode = 0x800D0698;
+gOvl11RecordPairOrderCodes = 0x80123A00; // type:data size:0x14

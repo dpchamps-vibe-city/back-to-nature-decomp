@@ -2048,12 +2048,13 @@ typedef struct {
     s16 field_19C8[1];
 } Ovl11Work19C8View;
 
-/* 0x30-byte table entry scanned by ovl_11_func_800DDC64. */
+/* Flag-only view of a 0x30-byte scene record. The renderer skips a record
+ * when flags contains 0x1000 (hidden) or 0x8000 (unused). */
 typedef struct {
     u8 pad[0x28];
-    u16 unk28;
+    u16 flags;
     u8 pad2[6];
-} Ovl11FuncDDC64Entry;
+} Ovl11SceneRecordFlagsView;
 
 /* Signed halfword lookup at D_8006C838+99DA; full extent is unknown. */
 typedef struct {

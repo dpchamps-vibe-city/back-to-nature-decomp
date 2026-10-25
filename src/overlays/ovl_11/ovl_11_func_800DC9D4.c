@@ -11,7 +11,7 @@ Ovl11FuncC9D4Entry *ovl_11_func_800DC9D4(void) {
     s32 i;
     Ovl11FuncC9D4Entry *p;
 
-    p = (Ovl11FuncC9D4Entry *)D_80128E08;
+    p = (Ovl11FuncC9D4Entry *)gOvl11SceneRecords;
     for (i = 0; i < 0xF; i++, p++) {
         if (p->unk28 & 0x8000) {
             return p;

@@ -9,7 +9,7 @@ GP value: 0x8005E274 (range: 0x80056274–0x80066273)
 |---|-------|-----|------|----------|------------|---------|
 | 2 | 0x80010224 | 0x80011270 | 0x104C | **.data** | low (all 1 symbols ambiguous) | 1 |
 | 4 | 0x80049044 | 0x80049170 | 0x12C | **.data** | low (all 9 symbols ambiguous) | 9 |
-| 6 | 0x800491C8 | 0x80049268 | 0xA0 | **.data** | high (1/4 absolute writes) | 4 |
+| 6 | 0x800491F0 | 0x80049268 | 0x78 | **.data** | low (all 2 symbols ambiguous) | 2 |
 | 8 | 0x80049298 | 0x800492E0 | 0x48 | **.data** | low (no refs, outside GP range) | 0 |
 
 ## Region Details
@@ -50,23 +50,19 @@ Access type breakdown (by symbol count):
 | T_8004908C | addr_taken | ambiguous | 1 |
 | T_800490BC | addr_taken | ambiguous | 1 |
 
-### Region 6: 0x800491C8–0x80049268 (0xA0) → **.data**
+### Region 6: 0x800491F0–0x80049268 (0x78) → **.data**
 
-Confidence: high (1/4 absolute writes)
+Confidence: low (all 2 symbols ambiguous)
 
 Access type breakdown (by symbol count):
 
 | Access type | Symbols |
 |------------|---------|
-| abs_read | 2 |
-| abs_write | 1 |
-| addr_taken | 4 |
+| addr_taken | 2 |
 
 | Symbol | Access types | Per-symbol inference | Refs |
 |--------|-------------|---------------------|------|
-| func_800491C8 | abs_read, abs_write, addr_taken | .data | 9 |
-| T_800491E0 | abs_read, addr_taken | .rodata or .data | 2 |
-| T_800491F0 | addr_taken | ambiguous | 1 |
+| func_800491F0 | addr_taken | ambiguous | 1 |
 | T_80049218 | addr_taken | ambiguous | 1 |
 
 ### Region 8: 0x80049298–0x800492E0 (0x48) → **.data**
@@ -77,7 +73,7 @@ No referenced symbols in this region.
 
 ## Global Summary
 
-Total symbols scanned: 1259
+Total symbols scanned: 1269
 
 | Inferred section | Regions |
 |-----------------|---------|

@@ -3,18 +3,16 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "projected_primitives.h"
+#include "ovl11_scene_record_visibility.h"
+#include "ovl11_scene_rotation_ramps.h"
+#include "ovl11_scene_animation_pair.h"
+#include "ovl11_scene_animation_cycle.h"
 
 Ovl11FuncC9D4Entry *ovl_11_func_800DC9D4 (void);
 Ovl11FuncDCF10Entry *ovl_11_func_800DCF10 (void *arg0, void *arg1, void *arg2, u8 *arg3);
-void ovl_11_func_800DD5B0 (void);
-void ovl_11_func_800DD8AC (void);
-void ovl_11_func_800DDA08 (void);
-void ovl_11_func_800DDC64 (void);
 void ovl_11_func_800DCE98 (s32 arg0);
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001AF44 (u32 arg0);
-
-void ovl_11_func_800DD374(void);
 
 typedef struct __attribute__((packed)) {
     u8 bytes[8];
@@ -65,9 +63,9 @@ void ovl_11_func_800DCA60(void) {
         var_s4 -= 1;
         var_s1++;
     } while (var_s4 >= 0);
-    ovl_11_func_800DD374();
-    ovl_11_func_800DD5B0();
-    ovl_11_func_800DD8AC();
-    ovl_11_func_800DDA08();
-    ovl_11_func_800DDC64();
+    Ovl11InitSceneAnimationCycle();
+    Ovl11InitSceneAnimationPair();
+    Ovl11InitSceneZRotationRamp();
+    Ovl11InitSceneYRotationRamp();
+    Ovl11InitSceneRecordVisibilityPair();
 }

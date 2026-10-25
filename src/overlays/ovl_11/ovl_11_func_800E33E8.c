@@ -3,6 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_collision_query_budget.h"
+#include "psyq/abs.h"
+#include "ovl11_record_pair_order.h"
 
 
 void ovl_11_func_800D12B8 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
@@ -13,7 +15,6 @@ s32 ovl_11_func_800D2DB8 (Ovl11Func800BDCE8Arg1 *arg0);
 s32 ovl_11_func_800D24FC (Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
 s32 ovl_11_func_800D196C (Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 arg2);
 s32 ovl_11_func_800D1CFC (Recon_ovl_11_func_800D2594_A0View *arg0);
-void ovl_11_func_800D0698 (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D2B40 (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 

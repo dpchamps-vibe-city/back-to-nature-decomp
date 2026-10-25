@@ -590,6 +590,12 @@ export function locateFunctionSymbol(
   const textSymbols = symbols.filter((symbol) => symbol.section === ".text");
   const named = textSymbols.find((symbol) => symbol.name === functionName);
   if (named) return named;
+  /* GCC gives a nested definition a TU-local `.N` suffix; folding an earlier
+   * function changes N, not the definition's identity. Match it only when
+   * unique, as the translation-unit membership audit does. */
+  const nested = textSymbols.filter((symbol) => symbol.size > 0 &&
+    symbol.name.replace(/\.\d+$/, "") === functionName);
+  if (nested.length > 0) return nested.length === 1 ? nested[0]! : null;
   return textSymbols.find((symbol) => {
     const address = symbolAddresses.get(symbol.name) ?? addressEncodedInName(symbol.name);
     return address === vram && symbol.size > 0;

@@ -90,7 +90,6 @@ void ovl_11_func_80107DD0 (s16 *arg0);
 s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CF258 (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);
-s32 ovl_11_func_800D0600 (s32 arg0, s32 arg1);
 s32 func_80012CB4 (s32 arg0, s32 *arg1, s32 arg2);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D1C18 (s32 arg0, s32 arg1, s32 arg2);

@@ -5287,12 +5287,10 @@ extern s16 *Ovl11CurrentObjectId __asm__("D_8006C868");
 extern u8 _D_8006C904[9] __asm__("D_8006C904");
 #define D_8006C904 (*((u8*)_D_8006C904))
 
-/* D_80123A00 - ovl_11 table of u16 entries read by ovl_11_func_800D062C
- * with a computed index and `lhu`. Declared as an incomplete array (unknown
- * size > -G8) so cc1 emits the split two-register absolute address form
- * (`lui`/`addiu %lo` with a real register) the target shows, not the
- * <=-G8 self-clobber macro pair. Extern-only; the overlay data owns it. */
-extern u16 D_80123A00[];
+/* ovl_11:80123A00 - row-major 3x3 order codes (equal/less/greater ranks),
+ * plus the existing trailing zero halfword. Keep the incomplete extern's
+ * original address-formation behavior; overlay data, not module storage. */
+extern u16 gOvl11RecordPairOrderCodes[];
 
 /* D_801239D0 - ovl_11 table of 0x10-byte records (3 s32 fields plus a
  * trailing pad) walked by ovl_11_func_800CFD9C. Each iteration copies the
@@ -5714,40 +5712,41 @@ extern s16 D_80128DF8[4];
 /* ovl_11_func_800DCC5C reads the two signed screen-coordinate words. */
 extern s32 D_80128E00[2];
 
-/* D_80128E08 - fifteen 0x30-byte entries. Byte storage keeps the existing
- * partial views compatible; each client casts to its witnessed layout. */
-extern u8 D_80128E08[15 * 0x30];
+/* ovl_11:80128E08 - fifteen 0x30-byte scene render records. Byte storage
+ * keeps partial views compatible; each client casts to its witnessed layout. */
+extern u8 gOvl11SceneRecords[15 * 0x30];
 
-/* 800DD8AC scans 0x30-byte entries; 800DD904 clamps signed +0x14. */
+/* 800DD8AC/800DDA08 select 0x30-byte records. Renderer 800DCC5C passes
+ * +0x10/+0x12/+0x14 to RotMatrixZXY; both ramp updates compare signed angles. */
 typedef struct {
     /* 0x00 */ u8 pad[0x10];
-    /* 0x10 */ u16 unk10;
-    /* 0x12 */ u16 unk12;
-    /* 0x14 */ s16 unk14;
+    /* 0x10 */ s16 rotationX;
+    /* 0x12 */ s16 rotationY;
+    /* 0x14 */ s16 rotationZ;
     /* 0x16 */ u8 pad2[0x12];
-    /* 0x28 */ u16 unk28;
+    /* 0x28 */ u16 flags;
     /* 0x2A */ u8 pad3[0x6];
-} Ovl11FuncD8ACEntry;
-/* 800DD8AC records the selected entry; 800DD904 updates its signed +0x14. */
-extern Ovl11FuncD8ACEntry *D_80129194;
-/* 800DD904 reads and writes the four-state transition index as a word. */
-extern s32 D_80129198;
+} Ovl11SceneRecordRotationView;
+/* ovl_11:800DD8AC/800DD904 select and ramp the record's Z angle. */
+extern Ovl11SceneRecordRotationView *gOvl11SceneZRotationRecord;
+extern s32 gOvl11SceneZRotationRampState;
+/* ovl_11:800DDA08/800DDA60 select and ramp the record's Y angle. */
+extern Ovl11SceneRecordRotationView *gOvl11SceneYRotationRecord;
+extern s32 gOvl11SceneYRotationRampState;
 
 /* D_801290D8 - three 0x34-byte overlay entries walked by ovl_11 
    func_800DCECC and ovl_11_func_800DCF10. Byte storage keeps the existing 
    partial views compatible; each client casts to its witnessed layout. */
 extern u8 D_801290D8[3 * 0x34];
 
-/* 800DD374 clears/indexes three entry pointers; 800DD4D8 reads them. */
-extern u8 *D_80129178[3];
-/* 800DD374 clears this word; 800DD45C writes the transition state. */
-extern s32 D_80129184;
+/* ovl_11:80129178 / 80129184: 800DD374 indexes three scene records;
+ * 800DD4D8 and its nested helper step their blends and transfer visibility. */
+extern u8 *gOvl11SceneAnimationCycle[3];
+extern s32 gOvl11SceneAnimationCycleState;
 
-/* D_801291A8 - pair of pointers to 0x30-byte overlay entries. Set by
- * ovl_11_func_800DDC64, whose loop indexes the pair by bit 0 of an entry's
- * 0x28 halfword; ovl_11_func_800DDD18 clears/sets bit 0x1000 of the two
- * chosen entries' 0x28 halfwords. Absolute-addressed in ovl_11 code. */
-extern u32 D_801291A8[2];
+/* ovl_11:801291A8: two scene-record addresses selected by flags 0x10/1;
+ * setup/update alone use this pair to alternate the renderer's hide bit. */
+extern u32 gOvl11SceneRecordVisibilityPair[2];
 
 /* D_800BFC90 - ovl_23 sound/state block. Absolute-addressed (lui + %lo) from
  * ovl_23 code; ovl_23_func_800B8104 reads a signed halfword at +0 and compares
@@ -6217,16 +6216,24 @@ extern s16 D_80123754;
  * array so cc1 emits the split two-register absolute address form. */
 extern u16 D_80123A18[];
 
-/* D_80129188 - pair of pointers to 0x30-byte overlay entries, filled by
- * ovl_11_func_800DD5B0 (indexed by a flag) and read back by
- * ovl_11_func_800DD6F0. Absolute-addressed (lui/%lo) in ovl_11 code, so
- * only an extern declaration belongs here. */
-extern u8 *D_80129188[2];
-
-/* D_80129190 - ovl_11 state word set to 0/2/3 by ovl_11_func_800DD5B0 and
- * ovl_11_func_800DD6F0 and dispatched in the latter. Absolute-addressed
- * (lui/%lo); only an extern declaration belongs here. */
-extern s32 D_80129190;
+/* ovl_11:800DD5B0/800DD6F0 install/step this pair. Renderer 800DCFEC
+ * forwards progress/duration to 800DD060's vertex interpolation. Preserve
+ * u16 storage and the controllers' explicit signed comparison views. */
+typedef struct {
+    u8 pad[0x2E];
+    u16 progress;
+    u16 duration;
+} Ovl11SceneBlendStateView;
+typedef struct {
+    u8 pad[0x28];
+    u16 flags;
+    u8 pad2[2];
+    Ovl11SceneBlendStateView *blend;
+} Ovl11SceneBlendRecordView;
+/* ovl_11:80129188 / 80129190: private two-record index and phase word;
+ * absolute addressing, no storage definition in the controls module. */
+extern u8 *gOvl11SceneAnimationPair[2];
+extern s32 gOvl11SceneAnimationPairState;
 
 /* D_801295D0 - 18-byte status record copied as a whole aggregate by
  * ovl_11_func_800F0474 (into the D_800749F8 / D_8006C838+0x7AB8 record slots)

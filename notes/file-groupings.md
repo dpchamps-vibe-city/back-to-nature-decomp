@@ -1725,6 +1725,40 @@ Members:
   counters, flips their +0x28 0x1000/0xEFFF bits, and re-drives
   `func_8001AF70(9, 0)`.
 
+Reconstructed the complete pair as
+`src/overlays/ovl_11/modules/scene_animation_pair.c`, with public
+`Ovl11InitSceneAnimationPair` and `Ovl11StepSceneAnimationPair`.
+The state is now `gOvl11SceneAnimationPair` / `gOvl11SceneAnimationPairState`.
+An overlay-wide code census finds only these two accessing it. Common scene
+setup 800DCA60 installs it and scene update 800DC148 steps it, in the same
+relative order as the other controls. Besides link/private-state evidence,
+both use an identical record->blend (+0x2C) progress/duration (+0x2E/+0x30)
+protocol. Renderer 800DCC5C calls 800DCFEC, which feeds those halfwords to
+800DD060 as the numerator/denominator for vertex interpolation. The fields
+therefore describe vertex blending, not an assumed gameplay animation.
+
+The header documents selection by flag 0x80 and low nibble (0/1 durations
+8/12; malformed nibbles retain the original zero-duration fallback),
+last-match wins, unchecked slot-1/blend-pointer requirements, initial game
+flag-10 handling, separate flag-9 visibility switch and flag-10 blend trigger,
+and the hold/release behavior. Names replace all temporary/register-derived
+locals; identical per-phase pointer webs and signed comparison casts remain.
+Duplicate local views became canonical SceneBlend record/state views in the
+override header; external byte-pointer storage, unsigned halfwords, linkage
+and ownership did not change.
+
+Left boundary: 800DD374..800DD4D8 owns a THREE-slot index/state at 80129178/84,
+triggered by flag 7 with durations 8/4/12; it does not access this pair.
+Right boundary: the six rotation-ramp functions use their own selected-record
+pointers/state, flags 0x70/0x71 and direct angle fields, not blend pointers.
+Those private-state/protocol separations delimit what is supported, not a
+proven -G0 historical object boundary. All controls share the overlay-wide
+pool and setup/update callers, so those alone do not justify crossing the
+boundaries. The group has no compiler overrides: the baseline fold passed,
+then full campaign verification passed all executable/overlay bytes and data,
+interfaces, ownership, policy, canonical names and exception non-growth.
+Progress after this unit is 256/2625, with all 29 module TUs valid.
+
 ---
 
 ## `ovl_11` D_80129194–D_801291A0 mirror-pair run — 0x800DD8AC–0x800DDB64 (confidence: medium)
@@ -1771,6 +1805,43 @@ Members:
 - ovl_11_func_800DDB4C (m, matched this session) — cell B tail probe: leaf
   `return D_801291A0 == 2;`
 
+Reconstructed the entire six-member run as
+`src/overlays/ovl_11/modules/scene_rotation_ramps.c`. The two private
+record/state pairs have no users outside these six functions. Their paired
+installation in 800DCA60, stepping in 800DC148, and held-phase callbacks in
+800F67E0 corroborate the mirrored implementations and consecutive private
+state words. This is a stronger tie than merely using the common record pool.
+Renderer 800DCC5C establishes that +0x10/+0x12/+0x14 are base X/Y/Z angles:
+it adds +0x20/+0x22/+0x24 and passes them to RotMatrixZXY. Thus the ramps
+are Z:0..640 on flag 0x71 and Y:0..-448 on flag 0x70, in steps of 32 GTE
+angle units per update call, not positions or frame counts.
+
+Public names are `Ovl11{Init,Step}Scene{Z,Y}RotationRamp` and
+`Ovl11IsScene{Z,Y}RotationRampHeld`; the header documents the four phases,
+first-match selection, initialization of all three angles, missing-record
+behavior, and delayed flag observation (only idle/held sample the flag).
+The globals are `gOvl11Scene{Z,Y}RotationRecord` and
+`gOvl11Scene{Z,Y}RotationRampState`. `gOvl11SceneRecords` names the shared
+15x0x30-byte pool throughout the overlay; byte storage and all other clients'
+partial views are retained. Three previously conflicting selected-record
+views now use one canonical Ovl11SceneRecordRotationView in the override
+header; signed angle reads are witnessed by the updates and renderer. Only
+zero stores used the formerly unsigned fields. The checked baseline fold
+verified all six after reconciliation, then the full campaign gate verified
+all callers and every linked executable/overlay byte after renaming.
+
+Left boundary at 800DD8AC: preceding 800DD5B0/800DD6F0 use a different private
+pointer pair/state and modify pointed-to animation counters at +0x2C->+0x2E,
+not these angles. Right boundary at 800DDB64: the RGB cycle has separate
+private RGB/index/direction state and a scene-kind-44-only dispatch path.
+These responsibility/state separations delimit the supported module, not a
+proven original object boundary: -G0 provides no GP discriminator. The common
+setup/update caller pair and common pool also link other independent controls;
+without shared private state they do not establish a larger original TU.
+All six use baseline flags; no override or policy exception was needed, no
+linkage narrowed, and no storage ownership changed. Canonical identities and
+published headers pass; full campaign acceptance passes with 254/2625 folded.
+
 ---
 
 ## `ovl_11` D_801291A8 pointer-pair run — 0x800DDC64 / 0x800DDD18 (confidence: medium)
@@ -1803,6 +1874,39 @@ Members:
   `D_801291A8[0]` is nonzero, calls `func_8001AF44(0x72)` and, on `== 1`,
   clears bit 0x1000 on `D_801291A8[1]`'s 0x28 halfword and sets it on
   `D_801291A8[0]`'s (reversed when not 1); byte-exact clean C, baseline flags
+
+Reconstructed whole supported pair as
+`src/overlays/ovl_11/modules/record_pair_visibility.c`. The only two code
+users of the pair are its initializer and updater; scene setup 800DCA60 and
+scene update 800DC148 call them in complementary phases. Renderer 800DCC5C
+skips records with +0x28 bit 0x1000, establishing **hidden**, not destroyed.
+Names: `Ovl11InitSceneRecordVisibilityPair` (800DDC64),
+`Ovl11UpdateSceneRecordVisibilityPair` (800DDD18), and
+`gOvl11SceneRecordVisibilityPair` (801291A8). The public header documents
+last-slot-0 selection, early termination on slot 1, mandatory valid pair,
+and the initial slot-0-visible state versus flag-0x72-driven updates.
+The shared flag-only record view replaces the redundant local partial view;
+record storage and the u32-address pair keep their existing types/linkage.
+
+Left boundary: the immediately preceding 800DDB64/800DDBA0 RGB cycle has
+its own private direction/index/endpoints and is invoked only for scene kind
+44, whereas this pair is installed/updated unconditionally by the dispatchers.
+It neither reads nor writes the pair. Right boundary: 800DDDB4 returns 1;
+800DDDBC shifts three work-area word pairs at D_8006C838+0x49BC, touching
+neither the record pool nor the pair. These are positive responsibility/state
+separations, not a proof of historical object boundaries. Under overlay -G0
+there is no GP ownership discriminator; no evidence joins either neighbor to
+this private protocol, and adjacency/data proximity alone are not used to do
+so. The shared scene-record pool is used throughout the overlay, not private
+to this unit; its allocation/rendering family remains separate research.
+
+The baseline fold and subsequent full campaign verification passed: all
+executable/overlay bytes and data, canonical names, published caller headers,
+source policy, ownership, scope and exception non-growth. Neither member has
+an override; no flags, storage definitions or policy exceptions were added.
+The overlay-only data extern was renamed directly in the hand-maintained
+override header: canonicalNames resolves that header in EXE context and did
+not infer this overlay's data owner. No generated file was edited by hand.
 
 ---
 
@@ -7970,6 +8074,43 @@ initializer extension backward
 - ovl_11_func_800DD374 (m, byte-exact, candidate extension) — initializes the three-slot entry index, entry counters/limits and shared transition state.
 - ovl_11_func_800DD45C (m, nested in 800DD4D8) — advances an entry counter and transfers flags/state to the next entry at its limit.
 - ovl_11_func_800DD4D8 (m) — drives indexed-entry transitions through its nested helper using the shared state word.
+
+Reconstructed the whole supported three-entry run as
+`src/overlays/ovl_11/modules/scene_animation_cycle.c`. Only these functions
+access the three-slot index/state. Complementary shared-state writes/reads,
+identical blend subrecord protocol, setup/update dispatchers and gapless order
+support the initializer extension; the helper/stepper core is proven nested,
+not merely hypothesized. Its compiler-generated incoming static chain remains
+clean nested C, with no register pin or assembly workaround. Public names:
+`Ovl11InitSceneAnimationCycle`, `Ovl11StepSceneAnimationCycle`; the helper is
+`Ovl11AdvanceSceneAnimationCycle` but is NOT published as callable outside
+its parent. State is `gOvl11SceneAnimationCycle` / `...CycleState`.
+The header explains durations 8/4/12, visibility transfers, flag-7 trigger and
+acknowledgment, mandatory records/blend pointers and full-cycle completion.
+Locals/fields now describe selection, progress, duration and transitions;
+unsigned increment/signed compare views remain distinct and documented.
+
+Left boundary: immediately preceding 800DD36C is a leaf returning zero,
+with no cycle-index/state reference or setup/update role tying it to this
+private sequence. Its original TU membership is unknown; no evidence justifies
+absorbing it based only on adjacency. Right boundary: the following two-record
+sequence uses a different index/state, flag 0x80, durations 8/12 and game
+flags 9/10. Its shared scene pool and analogous control style alone do not
+prove one larger TU; all private state of this supported three-slot protocol
+is included. These are limits of the evidence under -G0, not claimed GP proofs
+of the original outer boundaries.
+
+The first baseline fold built a matching overlay but rolled back because the
+per-member oracle did not recognize the nested helper's `.6` object-symbol
+suffix. The scoped fix in tools/lib/functionOracle.ts accepts a UNIQUE `.N`
+variant, consistent with the existing TU audit; ambiguous variants are refused.
+No source workaround or linker alias was added. The repeat fold verified all
+three members, and full campaign verification passed executable/all overlays,
+associated data, interfaces, policy, scope and exception non-growth (259/2625,
+30 valid modules). No compiler override is involved. Existing oracle tests:
+22 passed; the sole failing integration fixture still requests the obsolete
+EXE name func_80011370 (now main), unrelated to nested lookup. No test was
+added or edited; the real fold and full gate cover this nested implementation.
 
 ## `exe` byte-triple setter twins — 0x8001BF74 / 0x8001BF88 (confidence: medium)
 
@@ -16055,6 +16196,45 @@ Confirmed same-TU nested pair 800D0600/800D062C
 - ovl_11_func_800D0600 (m) — nested comparator in 800D062C, returning equal/less/greater ranks.
 - ovl_11_func_800D062C (m) — classifies two record-field pairs through its nested comparator and a table lookup.
 - ovl_11_func_800D0698 (m, candidate same TU) — selects the record's +0x22 code using its predecessor's classification and an absolute-delta comparison.
+
+Reconstructed the whole supported three-entry run as
+`src/overlays/ovl_11/modules/record_pair_order.c`. The nested comparator /
+classifier is proven one TU; the caller extension remains an inference, now
+tested by a baseline fold. It is the classifier's only code caller and
+consumes its private 3x3 order-code mapping on the unchanged record pointer;
+zero-gap order and the +0x38/+0x58 read pair corroborate that narrow operation
+boundary. No stronger historical outer-boundary claim follows from matching.
+Names: nested `Ovl11CompareRecordOrderRank`, public
+`Ovl11ClassifyRecordPairOrder`, public `Ovl11SelectRecordPairCode`, and
+`gOvl11RecordPairOrderCodes` (80123A00). The code table has nine accessible
+halfwords followed by the existing zero halfword; its configured 0x14-byte
+extent and incomplete extern preserve the original storage/address formation.
+It is not merged with the analogous 80123A18 table/far-away nested pair.
+
+The header specifies rank/table order and every resulting code. It explicitly
+preserves the selector's +0x3C comparison versus classification's +0x40,
+class-0 no-store behavior and signed subtraction/abs constraints; no gameplay
+direction or coordinate axes are inferred. The existing two partial parameter
+views remain canonical: the internal call now declares the actual
+Ovl11RankPair signature and explicitly casts the same record pointer, rather
+than repeating its former incompatible source prototype. An unused external
+comparator declaration in 800F413C was removed; a nested helper is not offered
+as a free-standing public interface. No linkage or record layout changed.
+
+Left boundary: 800D05D0 is a general by-value three-word setter for +0x58/5C/60
+and flag bits, with callers across the overlay. It does not consume ranks or
+the code table, and no private state/call edge ties it to this classification
+protocol. Sharing the container-wide record layout alone does not establish
+TU membership. Right boundary: 800D075C dispatches tag operations to
+800D29B0/800D2A88; it does not read the table or invoke this classifier/code
+selector. Its separate tag-scanner grouping remains outside. Under -G0 these
+are supported protocol boundaries, not proofs of historical object boundaries.
+
+No member override exists; both the fold and final full gate passed at
+baseline, including the pooled switch table, all caller objects and all linked
+executable/overlay data. Canonical names, published interfaces, policy, scope,
+ownership and exception non-growth pass. Final progress for these five new
+units: 262/2625 folded (up 16), all 31 module TUs valid.
 
 ## `ovl_11` record-selector caller pair — 0x800D3230 / 0x800D3250 (confidence: low)
 

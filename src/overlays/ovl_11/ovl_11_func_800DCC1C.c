@@ -14,7 +14,7 @@ void ovl_11_func_800DCC1C(s16 arg0, void *arg1) {
     Ovl11FuncDCC1CEntry *e;
     u16 *src;
 
-    base = (Ovl11FuncDCC1CEntry *)D_80128E08;
+    base = (Ovl11FuncDCC1CEntry *)gOvl11SceneRecords;
     src = (u16 *)arg1;
     e = &base[arg0];
     e->unk20 = src[0];

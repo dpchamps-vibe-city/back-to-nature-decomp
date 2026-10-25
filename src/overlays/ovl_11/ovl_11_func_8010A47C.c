@@ -1,12 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "psyq/abs.h"
+#include "ovl11_record_pair_order.h"
 
 s32 ovl_11_func_800D04D4(Ovl11A47CObject *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
 s32 ovl_11_func_800E0C24(Ovl11ActionDispatchView *arg0, s32 arg1);
-void ovl_11_func_800D0698(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
 s32 ovl_11_func_8010A47C(Ovl11A47CObject *arg0) {
@@ -54,7 +55,7 @@ s32 ovl_11_func_8010A47C(Ovl11A47CObject *arg0) {
                     PlaySoundEffect(0x19);
                 }
             }
-            ovl_11_func_800D0698((Recon_ovl_11_func_800D2594_A0View *) arg0);
+            Ovl11SelectRecordPairCode((Recon_ovl_11_func_800D2594_A0View *) arg0);
             ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         }
         arg0->unk34 |= 0x800;

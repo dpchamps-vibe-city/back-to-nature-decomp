@@ -1,9 +1,8 @@
 #include "common.h"
 #include "sprite_grid.h"
 #include "sound_commands.h"
+#include "ovl11_scene_rotation_ramps.h"
 
-s32 ovl_11_func_800DD9F0(void);
-s32 ovl_11_func_800DDB4C(void);
 void SetVal8005E334(s32 arg0);
 void SetVal8005E2BC(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
@@ -28,11 +27,11 @@ void ovl_11_func_800F67E0(void) {
     if (D_80126E40 != 0xFF) {
         if (D_80126E40 == 6 || D_80126E40 == 7) {
             if (D_80126E40 == 6) {
-                check = ovl_11_func_800DD9F0;
+                check = Ovl11IsSceneZRotationRampHeld;
                 id = 0x378;
                 next = 3;
             } else {
-                check = ovl_11_func_800DDB4C;
+                check = Ovl11IsSceneYRotationRampHeld;
                 id = 0x379;
                 next = 5;
             }

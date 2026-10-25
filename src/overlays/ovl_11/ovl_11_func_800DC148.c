@@ -1,16 +1,15 @@
 #include "common.h"
 #include "cd_audio.h"
 #include "ovl11_background_color_cycle.h"
+#include "ovl11_scene_record_visibility.h"
+#include "ovl11_scene_rotation_ramps.h"
+#include "ovl11_scene_animation_pair.h"
+#include "ovl11_scene_animation_cycle.h"
 
 void ovl_11_func_800D93C8(void);
 void ovl_11_func_80111D94(void);
 void ovl_11_func_80111B74(void);
 void ovl_11_func_800D9F1C(void);
-void ovl_11_func_800DD4D8(void);
-void ovl_11_func_800DD6F0(void);
-void ovl_11_func_800DD904(void);
-void ovl_11_func_800DDA60(void);
-void ovl_11_func_800DDD18(void);
 
 #define STATE ((struct Ovl11EventDispatchState *)D_8006C838)
 #define HEADER ((struct Ovl11SceneHeader *)((Ovl11FarInitView *)&D_8007AFF0)->data)
@@ -67,9 +66,9 @@ void ovl_11_func_800DC148(void) {
         STATE->flags |= 0x80000;
         StartCdAudioTrack(0x15);
     }
-    ovl_11_func_800DD4D8();
-    ovl_11_func_800DD6F0();
-    ovl_11_func_800DD904();
-    ovl_11_func_800DDA60();
-    ovl_11_func_800DDD18();
+    Ovl11StepSceneAnimationCycle();
+    Ovl11StepSceneAnimationPair();
+    Ovl11StepSceneZRotationRamp();
+    Ovl11StepSceneYRotationRamp();
+    Ovl11UpdateSceneRecordVisibilityPair();
 }
