@@ -8,7 +8,7 @@ s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     u8 *position;
 
     if (arg1 != 0) {
-        index = D_80129560[arg0];
+        index = gOvl11ValueSlots[arg0];
     } else {
         index = arg0;
     }

@@ -10,7 +10,7 @@ s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
     if (arg0 != 0x2C) {
         if (arg2 != 0) {
-            var_a1 = D_80129560[arg0];
+            var_a1 = gOvl11ValueSlots[arg0];
         } else {
             var_a1 = arg0;
         }

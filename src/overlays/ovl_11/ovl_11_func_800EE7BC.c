@@ -38,7 +38,7 @@ s32 ovl_11_func_800EE7BC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
         }
     } else {
-        D_80129560[arg1] = (s32) ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0;
+        gOvl11ValueSlots[arg1] = (s32) ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0;
     }
     return 1;
 }

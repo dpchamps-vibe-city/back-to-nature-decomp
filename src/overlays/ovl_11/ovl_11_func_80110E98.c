@@ -6,11 +6,11 @@ void ovl_11_func_80110E98(Ovl11DE68Object *arg0, s32 *arg1, s32 *arg2) {
 
     coord = 0;
     if (arg0->unk30 == 0x28) {
-        if (((struct Ovl11CalendarDisplayStateView *) D_8006C838)->field_44BA == 3 &&
-            ((struct Ovl11CalendarDisplayStateView *) D_8006C838)->field_44BC >= 0x1C) {
+        if (((struct Ovl11CalendarDisplayStateView *) D_8006C838)->season == 3 &&
+            ((struct Ovl11CalendarDisplayStateView *) D_8006C838)->day >= 0x1C) {
             *arg1 = 0;
             *arg2 = 2;
-        } else if (((struct Ovl11CalendarDisplayStateView *) D_8006C838)->field_44BA != 0) {
+        } else if (((struct Ovl11CalendarDisplayStateView *) D_8006C838)->season != 0) {
             *arg1 = 0;
             *arg2 = 0;
         } else {

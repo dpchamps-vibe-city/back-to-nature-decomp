@@ -11,10 +11,10 @@ s32 ovl_11_func_800E8F78(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
     var_a2 = arg2;
     if (arg3 & 1) {
-        var_a2 = D_80129560[var_a2];
+        var_a2 = gOvl11ValueSlots[var_a2];
     }
     if (arg3 & 2) {
-        var_a1 = D_80129560[arg1];
+        var_a1 = gOvl11ValueSlots[arg1];
     } else {
         var_a1 = arg1;
     }

@@ -157,13 +157,14 @@ typedef struct {
     u8 pad32[2];
 } Ovl11VertexBlend;
 
-/* 800FA1CC: lh at +0/+2/+6; lhu at +4 narrowed before signed modulo. */
+/* Calendar panel input: year/season/day/weekday, all zero-based.
+ * Preserve the unsigned day load and its explicit narrowing before modulo. */
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-    u16 unk4;
-    s16 unk6;
-} Ovl11FA1CCArg;
+    s16 year;
+    s16 season;
+    u16 day;
+    s16 weekday;
+} Ovl11CalendarPanelDate;
 
 /* 800D0DBC clears both signed halfwords; 800F05C0 passes a selected pair. */
 typedef struct {
@@ -1220,10 +1221,6 @@ typedef struct {
 } Recon_ovl_11_func_800E1D48_A0View;
 
 typedef struct {
-    s16 unk0;
-} Recon_ovl_11_func_800FB394_A0View;
-
-typedef struct {
     char pad_0[0x2C];
     s16 unk2C;
     s16 unk2E;
@@ -2037,13 +2034,16 @@ typedef struct {
     s16 field_99C8[1];
 } Ovl11Status99C8View;
 
-/* D_8006C838 halfword triple at +0x5488 selected by ovl_11_func_800FA410. */
+/* Saved date in the work area, used for the calendar panel's special marker
+ * and message. An index of -1 suppresses the marker, but not the date test. */
 typedef struct {
     char pad_5488[0x5488];
-    s16 field_5488;
-    s16 field_548A;
-    s16 field_548C;
-} Ovl11Status5488View;
+    s16 year;
+    s16 season;
+    s16 day;
+    char pad_548E[4];
+    s16 index;
+} Ovl11CalendarSavedDateView;
 
 /* D_8006C838 slots compared by ovl_11_func_800C12DC: the +0x44B8 triple,
  * the +0x5488 triple, and the +0xE4DC halfword array stepped by six. */

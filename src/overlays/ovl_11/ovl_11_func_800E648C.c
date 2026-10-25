@@ -19,7 +19,7 @@ s32 ovl_11_func_800E648C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     temp_s0 = ((struct struct_8006C838_800E7660 *)D_8006C838)->field_51EA;
     if (temp_s0 != -1) {
         if (arg0 != -1) {
-            D_80129560[arg0] = temp_s0;
+            gOvl11ValueSlots[arg0] = temp_s0;
         }
         var_s1 = 1;
         if (arg3 != 0) {

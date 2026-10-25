@@ -9,8 +9,8 @@ s32 ovl_11_func_800E8DC8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
     ovl_11_func_800E5C60(arg0, 0, 0, 0);
     temp_v0 = ovl_11_func_800EFF04(0x22, arg0, NULL);
-    *(s32 *)temp_v0 = D_80129560[arg2];
-    *(s32 *)(temp_v0 + 4) = D_80129560[arg1];
-    *(s32 *)(temp_v0 + 8) = D_80129560[arg3];
+    *(s32 *)temp_v0 = gOvl11ValueSlots[arg2];
+    *(s32 *)(temp_v0 + 4) = gOvl11ValueSlots[arg1];
+    *(s32 *)(temp_v0 + 8) = gOvl11ValueSlots[arg3];
     return 1;
 }

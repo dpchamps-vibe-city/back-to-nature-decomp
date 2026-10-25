@@ -10,7 +10,7 @@ s32 ovl_11_func_800E8C14(s16 arg0, s16 arg1, s32 arg2) {
     s32 index;
 
     if (arg2 != 0) {
-        index = D_80129560[arg0];
+        index = gOvl11ValueSlots[arg0];
     } else {
         index = arg0;
     }
@@ -25,10 +25,10 @@ s32 ovl_11_func_800E8C14(s16 arg0, s16 arg1, s32 arg2) {
     result = ovl_11_func_800D60F0(value, index);
     if (result < 7) {
         if (result >= 0) {
-            D_80129560[arg1] = result + 1;
+            gOvl11ValueSlots[arg1] = result + 1;
             return 1;
         }
     }
-    D_80129560[arg1] = 0;
+    gOvl11ValueSlots[arg1] = 0;
     return 1;
 }

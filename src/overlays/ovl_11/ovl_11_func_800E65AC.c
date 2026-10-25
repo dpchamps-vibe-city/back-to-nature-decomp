@@ -17,7 +17,7 @@ s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
     var_s2 = arg2;
     if ((arg1 << 16) != 0) {
-        var_s0 = D_80129560[arg0];
+        var_s0 = gOvl11ValueSlots[arg0];
     } else {
         var_s0 = arg0;
     }

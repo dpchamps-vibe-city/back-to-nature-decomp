@@ -338,23 +338,25 @@ extern u8 D_800A0368[0x10];
 /* ovl_11 80104A90 stores the word value 10 here. */
 extern s32 D_801287F4;
 
-/* ovl_11 800FB510 reads s16 coordinates at +0/+2 of 0x1C-byte table rows. */
-/* 800FAC0C: coordinates followed by eight triples of unsigned navigation indices. */
-struct Ovl11FarmMenuRow {
+/* ovl_11:80126FF0 — eighteen 0x1C-byte item-menu layout rows. Each row
+ * starts with pixel x/y, then eight triples of unsigned navigation indices.
+ * Preserve both typed-navigation and halfword-coordinate views of one table. */
+struct Ovl11ItemTransferLayoutRow {
     s16 x;
     s16 y;
     u8 destinations[24];
 };
-extern struct Ovl11FarmMenuRow Ovl11FarmMenuRows[] __asm__("D_80126FF0");
-extern s16 D_80126FF0[][14];
-/* 800FAC0C indexes four signed halfwords per eight-byte rectangle. */
-extern s16 D_801271E8[][4];
+extern struct Ovl11ItemTransferLayoutRow gOvl11ItemTransferNavigation[] __asm__("gOvl11ItemTransferLayout");
+extern s16 gOvl11ItemTransferLayout[][14];
+/* Four signed x/y/width/height rectangles at ovl_11:801271E8. */
+extern s16 gOvl11ItemTransferPanels[][4];
 /* 800FAC0C adds the language byte offset to this label and its +0xC successor. */
 extern u8 D_80051B7C[];
-/* 800FAC0C reads and writes these menu-state words with lw/sw. */
-extern s32 D_80126FE4;
-extern s32 D_80126FE8;
-extern s32 D_80126FEC;
+/* Item-transfer cursor, saved cursor during a transfer, and selected source
+ * (FF means no source). Word widths follow FAC0C's lw/sw. */
+extern s32 gOvl11ItemTransferCursor;
+extern s32 gOvl11ItemTransferSavedCursor;
+extern s32 gOvl11ItemTransferSelectedSlot;
 
 /* ovl_11 800C5048/800C5098 store/load the counter, limit and result as words. */
 extern s32 D_80128CB4;
@@ -1954,14 +1956,15 @@ struct Ovl11MenuDateView {
     s16 field_44BE;
 };
 
-/* 800FB674 reads signed date/hour slots and unsigned minute storage from this base. */
+/* Clock HUD: zero-based season/day/weekday, hour, unsigned minute storage.
+ * The time formatter explicitly narrows minutes to signed before division. */
 struct Ovl11CalendarDisplayStateView {
     char pad_0[0x44BA];
-    s16 field_44BA;
-    s16 field_44BC;
-    s16 field_44BE;
-    s16 field_44C0;
-    u16 field_44C2;
+    s16 season;
+    s16 day;
+    s16 weekday;
+    s16 hour;
+    u16 minute;
 };
 
 /* 800EEECC: lh at +0x44BA/+0x44BC and sb at +0xE668 from one state base. */
@@ -3364,7 +3367,9 @@ extern s32 D_800BB88C;
 extern unsigned char D_800BB9BC[];
 extern s32 D_800BBA3C;
 
-/* 800C6770 copies six bytes from D_80128C58 to +8A; lh at +0/+4, alignment two. */
+/* Six-byte item identity/detail/count record, alignment two. 800C6770
+ * copies all six bytes; FB404 merges the count at +4, capped at 99. The
+ * two detail bytes remain neutral: this menu copies but does not decode them. */
 typedef struct {
     s16 id;
     u8 unk2[2];
@@ -3628,13 +3633,13 @@ typedef struct {
     s16 level;
 } Ovl11SceneState;
 
-/* D_80129560 - s32 table indexed by an s16 value (0x50 bytes, ovl_11).
- * Store via sw at (s16)index * 4 is done by ovl_11_func_800E8BA0;
- * load-side users ovl_11_func_800E6834/800E686C read lw at the same
- * s16-scale. Absolute-addressed from the overlays (only ever declared
- * extern, never GP). */
-extern s32 _D_80129560[] __asm__("D_80129560");
-#define D_80129560 ((s32 *)_D_80129560)
+/* ovl_11:0x80129560 — twenty s32 value slots. Ovl11CopyEntityValueToSlot
+ * writes a zero-extended record halfword; other readers/writers use integer
+ * values, selectors and coordinates. Retain the existing casted array view:
+ * exposing it directly changes address formation order in three callers.
+ * Overlay accesses are absolute, never GP-relative. */
+extern s32 _gOvl11ValueSlots[] __asm__("gOvl11ValueSlots");
+#define gOvl11ValueSlots ((s32 *)_gOvl11ValueSlots)
 
 /* D_80129540/D_80129544/D_8012954C/D_80129550 - ovl_11 s32 interpolation
  * state words written by ovl_11_func_800EE604 (sw %lo) from the
@@ -4138,23 +4143,26 @@ typedef struct {
     u8 unk5;
 } Recon_ovl_11_func_800F7010_D_800A0728View;
 
+/* ovl_11:80126F8C — eighteen season/day/message records; both the marker
+ * scan and the message scan traverse the entire table. Keep its existing
+ * object-shaped view while documenting the independently witnessed extent. */
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    s16 unk2;
-} Recon_ovl_11_func_800FA31C_D80126F8CEntry;
+    u8 season;
+    u8 day;
+    s16 message;
+} Ovl11CalendarPanelEvent;
 
-extern Recon_ovl_11_func_800FA31C_D80126F8CEntry _D_80126F8C[1] __asm__("D_80126F8C");
-#define D_80126F8C (*((Recon_ovl_11_func_800FA31C_D80126F8CEntry*)_D_80126F8C))
+extern Ovl11CalendarPanelEvent _gOvl11CalendarPanelEvents[1] __asm__("gOvl11CalendarPanelEvents");
+#define gOvl11CalendarPanelEvents (*((Ovl11CalendarPanelEvent *)_gOvl11CalendarPanelEvents))
 
-/* D_80126FD4 - 4-byte overlay table indexed by ovl_11_func_800FA600: a u8
- * state id, a u8 sub-state id, and a u16 added to the first coordinate. */
+/* ovl_11:80126FD4 — three marker styles: current day, event, saved date.
+ * Animation/frame bytes and an unsigned horizontal pixel displacement. */
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u16 unk2;
-} Recon_ovl_11_func_800FA600_D80126FD4Entry;
-extern Recon_ovl_11_func_800FA600_D80126FD4Entry D_80126FD4[];
+    u8 animation;
+    u8 frame;
+    u16 xOffset;
+} Ovl11CalendarMarkerStyle;
+extern Ovl11CalendarMarkerStyle gOvl11CalendarMarkerStyles[];
 
 /* D_80126E18 - ovl_11 table of 4 five-byte records, one unsigned byte per
  * field; indexed by D_80070CF2 only after it is bounded to < 4, so the table
@@ -4176,10 +4184,10 @@ extern u8 D_8007BFF8[];
 
 extern s32 D_80126E40;
 
-extern s32 D_80126FE0;
+extern s32 gOvl11ItemTransferMenuState; /* 0 inactive, 1 browse, 2 inspect, 3 close */
 
 /* ovl_11 800FB648 tests this word flag with lw; 800FB608/800FB628 set and clear it. */
-extern s32 D_80127208;
+extern s32 gOvl11ClockHudEnabled; /* ovl_11:80127208, zero hides the clock HUD */
 
 extern s16 D_8012720C;
 
@@ -5742,15 +5750,14 @@ extern s32 D_8013766C[];
  * (lui + %lo) from ovl_15 code. */
 extern struct SpriteSourceData D_80145670[];
 
-/* D_80126F7C / D_80126F80 / D_80126F88 - ovl_11 state words. Written by
- * ovl_11_func_800F9D3C / 800F9D5C and the 800F9F58 state handler, and read
- * back by the same run. Absolute-addressed (lui + %lo) in ovl_11 code; they
- * live in the overlay data segment, so only extern declarations belong here. */
-extern s32 D_80126F7C;
-extern s32 D_80126F80;
-/* ovl_11_func_800F9FF4 loads/stores this menu selection as a signed word. */
-extern s32 D_80126F84;
-extern s32 D_80126F88;
+/* Calendar panel state, ovl_11:80126F7C..80126F8C. The panel has phases
+ * 0=inactive, 1=interactive, 2=closing. Message state FF enables navigation;
+ * selected day is a zero-based signed word. The hook flag gates an empty
+ * compatibility callback. All remain external overlay data, not GP-owned. */
+extern s32 gOvl11CalendarPanelState;
+extern s32 gOvl11CalendarMessageState;
+extern s32 gOvl11CalendarSelectedDay;
+extern s32 gOvl11CalendarCloseHookEnabled;
 
 /* ovl_11: 123E54/56 are the background-cycle direction and 0..511 index. */
 extern s16 gOvl11BackgroundCycleDescending;
@@ -6162,20 +6169,20 @@ typedef struct {
     s32 flags;
 } Ovl11GridState;
 
-/* ovl_11 24-byte scratch span (six words) at 0x80129FF0: func_8001A970
- * fills a halfword through a returned pointer into it and ovl_11
- * functions pass its address as an argument buffer. Absolute-addressed
- * from the overlay. */
-extern s16 D_80129FF0;
+/* ovl_11:80129FF0 — calendar's 24-byte scratch text span. Number and
+ * weekday formatters return an end pointer for the FFFF terminator.
+ * Preserve the original first-halfword view; callers pass its address. */
+extern s16 gOvl11CalendarNumberText;
 
-/* 800FB674 builds halfword text in the original 0x20-byte scratch span. */
+/* Clock HUD's original 0x20-byte halfword-text scratch span at 8012A008.
+ * The leading glyph is also written directly for the five-minute digit. */
 typedef struct {
-    s16 field_0;
+    s16 leadingGlyph;
     u16 field_2;
     s16 field_4;
     s16 text[13];
-} Ovl11CalendarText;
-extern Ovl11CalendarText D_8012A008;
+} Ovl11ClockHudText;
+extern Ovl11ClockHudText gOvl11ClockHudText;
 
 /* ovl_11 indexed halfword table indexed by ovl_11_func_800D0DCC: the target
  * computes 0x15 - obj->unkB2 and stores 0xFFFF through func_8001A970's

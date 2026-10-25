@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl11_entity_pool_access.h"
 
 u32 Rand(s32);
 s32 ovl_11_func_800E5870(s16, s16, s32, s16);
@@ -12,7 +13,6 @@ s32 ovl_11_func_800E6BDC();
 s32 ovl_11_func_800E6D2C(s16, s16, s32, s32);
 s32 ovl_11_func_800E6EE0(s16, s16, s32, s32);
 s32 ovl_11_func_800E880C(s16, s16, s32, s32);
-s32 ovl_11_func_800E8960(s16, s16, s32, s32);
 s32 ovl_11_func_800E8E78(s16, s16, s32, s32);
 s32 ovl_11_func_800E8F78(s16, s16, s32, s32);
 s32 ovl_11_func_800E9284();
@@ -37,29 +37,29 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 *item;
 
     if (arg0 == -1) {
-        ovl_11_func_800E8960(0, -200, -1227, 1402);
-        ovl_11_func_800E8960(2, -200, -653, 1402);
-        ovl_11_func_800E8960(1, -200, -996, -999);
-        ovl_11_func_800E8960(3, -200, 992, -1081);
-        ovl_11_func_800E8960(4, -200, 992, -630);
+        Ovl11ActivateEntityAtPosition(0, -200, -1227, 1402);
+        Ovl11ActivateEntityAtPosition(2, -200, -653, 1402);
+        Ovl11ActivateEntityAtPosition(1, -200, -996, -999);
+        Ovl11ActivateEntityAtPosition(3, -200, 992, -1081);
+        Ovl11ActivateEntityAtPosition(4, -200, 992, -630);
         return 1;
     }
-    state = *(s16 *)&D_80129560[arg0];
+    state = *(s16 *)&gOvl11ValueSlots[arg0];
     result = 0;
     switch (state) {
     case 0:
         item = (s16 *)&Ovl11Item_80071A8A;
         if (ovl_11_func_801000D4(item[0]) == 1) {
             result = 1;
-            D_80129560[arg2] = item[1];
+            gOvl11ValueSlots[arg2] = item[1];
         } else if (item[0] == 0x87) {
-            D_80129560[arg2] = 4;
+            gOvl11ValueSlots[arg2] = 4;
             result = 1;
         }
         if (result == 1) {
             ovl_11_func_800F0A58(item[0]);
             D_80070CB4 = 1000;
-            D_80129560[arg1] = item[0];
+            gOvl11ValueSlots[arg1] = item[0];
             ovl_11_func_800E6EE0(item[0], 1, 0, 1);
         }
         return result;
@@ -108,23 +108,23 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                 best = i;
             }
         }
-        if (D_80129560[arg1] != 0) {
+        if (gOvl11ValueSlots[arg1] != 0) {
             ovl_11_func_800E8E78(0, 0, 1001, 1790);
             ovl_11_func_800E9284(0, 0, 0, 0);
             ((Ovl11SceneState *)D_8006C838)->y = -400;
             ((Ovl11SceneState *)D_8006C838)->x = 887;
             ((Ovl11SceneState *)D_8006C838)->z = 1352;
-            if (scores.values[level][best] <= D_80129560[arg2]) {
+            if (scores.values[level][best] <= gOvl11ValueSlots[arg2]) {
                 best = -1;
                 ovl_11_func_800ED4A8(32, 1, 20, 2000);
             }
         }
         switch ((s16)(best + 1)) {
-        case 0: D_80129560[arg3] = 41; break;
-        case 1: D_80129560[arg3] = 22; break;
-        case 3: D_80129560[arg3] = 13; break;
-        case 4: D_80129560[arg3] = 6; break;
-        case 5: D_80129560[arg3] = 7; break;
+        case 0: gOvl11ValueSlots[arg3] = 41; break;
+        case 1: gOvl11ValueSlots[arg3] = 22; break;
+        case 3: gOvl11ValueSlots[arg3] = 13; break;
+        case 4: gOvl11ValueSlots[arg3] = 6; break;
+        case 5: gOvl11ValueSlots[arg3] = 7; break;
         }
         ovl_11_func_800E880C(30, 0, 0, 0);
         result = 1;
@@ -181,7 +181,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             break;
         case 16:                                    
             ovl_11_func_800E5B84(0x1E, 7, 0, 0);
-            if (D_80129560[arg3] == 0x29) {
+            if (gOvl11ValueSlots[arg3] == 0x29) {
                 result = ovl_11_func_800E58DC(1, 0x461, -1, 0);
             } else {
                 result = ovl_11_func_800E58DC(1, 0x462, -1, 0);
@@ -202,7 +202,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800E5B84(0x1E, 0, 0, 1);
             ovl_11_func_800E5ADC(0x11, 0, -0x14C, 0x8CF);
             ovl_11_func_800E5B84(0x11, 0, 0, 1);
-            if (D_80129560[arg1] != 0) {
+            if (gOvl11ValueSlots[arg1] != 0) {
                 ovl_11_func_800E8E78(0, 0, -0x7F, 0xCD);
             } else {
                 ovl_11_func_800E8E78(0, 0, 0x1E8, -0x35D);
@@ -212,7 +212,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800E5B84(0x16, 0, 2, 1);
             ovl_11_func_800E5ADC(3, 0, 0x211, 0xCD);
             ovl_11_func_800E5B84(3, 0, 2, 1);
-            switch (D_80129560[arg3]) {
+            switch (gOvl11ValueSlots[arg3]) {
             case 0x29: x = -0x7F; z = 0xCD; break;
             case 0x16: x = -0x30F; z = 0x2E2; break;
             case 6: x = -0x30F; z = 0xCD; break;
@@ -226,10 +226,10 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800E5ADC(7, 0, 0x211, 0x2E2);
             ovl_11_func_800E5B84(7, 0, 2, 1);
 
-            if (D_80129560[arg3] == 0x29) {
+            if (gOvl11ValueSlots[arg3] == 0x29) {
                 ovl_11_func_800E8E78(0, 0, -0x7F, 0x2E2);
             } else {
-                ovl_11_func_800E5ADC((s16) D_80129560[arg3], 0, -0x7F, 0x2E2);
+                ovl_11_func_800E5ADC((s16) gOvl11ValueSlots[arg3], 0, -0x7F, 0x2E2);
             }
             ovl_11_func_800E60A0(-1, 0, 0x29, 0x47C);
             result = ovl_11_func_800E6B18(0xF, 0, 0, 0);
@@ -253,7 +253,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
             break;
         case 24:                                    
-            switch (D_80129560[arg3]) {                    
+            switch (gOvl11ValueSlots[arg3]) {
             case 22:                                
                 message = 0x474;
                 break;
@@ -275,20 +275,20 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             break;
         case 25:                                    
 
-            if (D_80129560[arg3] == 0x29) {
+            if (gOvl11ValueSlots[arg3] == 0x29) {
                 result = ovl_11_func_800E8F78(0, 2, 0x5A4, 0);
             } else {
-                result = ovl_11_func_800E5870((s16) D_80129560[arg3], 2, 0x5A4, 3);
+                result = ovl_11_func_800E5870((s16) gOvl11ValueSlots[arg3], 2, 0x5A4, 3);
             }
             break;
         case 26:                                    
 
-            if (D_80129560[arg3] == 0x29) {
+            if (gOvl11ValueSlots[arg3] == 0x29) {
                 ovl_11_func_800E9284(2, 0, 0, 0);
             } else {
-                ovl_11_func_800E5B84((s16) D_80129560[arg3], 0, 2, 1);
+                ovl_11_func_800E5B84((s16) gOvl11ValueSlots[arg3], 0, 2, 1);
             }
-            switch (D_80129560[arg3]) {                   
+            switch (gOvl11ValueSlots[arg3]) {
             case 22:                                
                 message = 0x475;
                 break;
@@ -314,12 +314,12 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         break;
     }
     if (result == 1) {
-        if (state != 13 || (next = 17, D_80129560[arg1] != 0)) {
+        if (state != 13 || (next = 17, gOvl11ValueSlots[arg1] != 0)) {
             next = (s16)(state + 1);
         }
         state = next;
     }
-    D_80129560[arg0] = state;
+    gOvl11ValueSlots[arg0] = state;
     if (state != 20 && state < 28) {
         result = 0;
     }

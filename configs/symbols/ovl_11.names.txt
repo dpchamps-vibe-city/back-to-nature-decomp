@@ -168,3 +168,70 @@ Ovl11AllocVertexBlend = 0x800DCF10;
 Ovl11UpdateVertexBlend = 0x800DCFEC;
 Ovl11InterpolateVertexBlend = 0x800DD060;
 gOvl11VertexBlendPool = 0x801290D8; // type:data size:0x9C
+
+// 24-byte scene-entity records, reached through work-area +0xDDD0.
+Ovl11ActivateEntityAtPosition = 0x800E8960;
+Ovl11SetEntityActive = 0x800E89CC;
+Ovl11ActivateEntityNearRecord = 0x800E8A24;
+Ovl11CopyEntityValueToSlot = 0x800E8BA0;
+gOvl11ValueSlots = 0x80129560; // type:data size:0x50
+
+// Interactive 30-day calendar, including its complete grid-rendering helpers.
+Ovl11ResetCalendarPanel = 0x800F9D3C;
+Ovl11OpenCalendarPanel = 0x800F9D5C;
+Ovl11UpdateCalendarPanel = 0x800F9DB0;
+Ovl11DrawAndProcessCalendarPanel = 0x800F9E4C;
+Ovl11ProcessCalendarCloseInput = 0x800F9F58;
+Ovl11DrawAndMoveCalendarCursor = 0x800F9FF4;
+Ovl11DrawCalendarPanelDate = 0x800FA1CC;
+Ovl11DrawCalendarEventMarkers = 0x800FA31C;
+Ovl11DrawCalendarSavedDateMarker = 0x800FA3A0;
+Ovl11ShowCalendarDateMessage = 0x800FA410;
+Ovl11DrawCalendarCursor = 0x800FA4F4;
+Ovl11DrawCalendarCurrentDayMarker = 0x800FA558;
+Ovl11DrawCalendarEventMarker = 0x800FA590;
+Ovl11DrawCalendarSavedDayMarker = 0x800FA5C8;
+Ovl11DrawCalendarMarker = 0x800FA600;
+Ovl11DrawCalendarHeading = 0x800FA6CC;
+Ovl11DrawCalendarDayNumbers = 0x800FA7D4;
+Ovl11DrawCalendarDayNumber = 0x800FA87C;
+Ovl11GetCalendarCellPosition = 0x800FA950;
+Ovl11DrawCalendarWeekdayHeadings = 0x800FA9B8;
+gOvl11CalendarPanelState = 0x80126F7C; // type:data size:0x4
+gOvl11CalendarMessageState = 0x80126F80; // type:data size:0x4
+gOvl11CalendarSelectedDay = 0x80126F84; // type:data size:0x4
+gOvl11CalendarCloseHookEnabled = 0x80126F88; // type:data size:0x4
+gOvl11CalendarPanelEvents = 0x80126F8C; // type:data size:0x48
+gOvl11CalendarMarkerStyles = 0x80126FD4; // type:data size:0xC
+gOvl11CalendarNumberText = 0x80129FF0; // type:data size:0x18
+
+// Two-sided item-transfer menu and its complete move/swap/stack helper graph.
+Ovl11ResetItemTransferMenu = 0x800FAAAC;
+Ovl11OpenItemTransferMenu = 0x800FAAD4;
+Ovl11UpdateItemTransferMenu = 0x800FAB18;
+Ovl11DrawAndProcessItemTransferMenu = 0x800FAC0C;
+Ovl11ShowItemTransferEntryMessage = 0x800FB0C4;
+Ovl11TryTransferMenuItems = 0x800FB120;
+Ovl11TryMoveItemTransferEntry = 0x800FB218;
+Ovl11TrySwapItemTransferEntries = 0x800FB290;
+Ovl11TryMergeItemTransferStacks = 0x800FB394;
+Ovl11IsItemTransferSpecialSlot = 0x800FB3E4;
+Ovl11MergeItemTransferStacks = 0x800FB404;
+Ovl11SwapItemTransferEntries = 0x800FB45C;
+Ovl11GetItemTransferEntry = 0x800FB4B0;
+Ovl11DrawItemTransferEntry = 0x800FB510;
+gOvl11ItemTransferMenuState = 0x80126FE0; // type:data size:0x4
+gOvl11ItemTransferCursor = 0x80126FE4; // type:data size:0x4
+gOvl11ItemTransferSavedCursor = 0x80126FE8; // type:data size:0x4
+gOvl11ItemTransferSelectedSlot = 0x80126FEC; // type:data size:0x4
+gOvl11ItemTransferLayout = 0x80126FF0; // type:data size:0x1F8
+gOvl11ItemTransferPanels = 0x801271E8; // type:data size:0x20
+
+// Compact date/time HUD; independent of the interactive calendar panel.
+Ovl11ResetClockHud = 0x800FB5FC;
+Ovl11EnableClockHud = 0x800FB608;
+Ovl11DisableClockHud = 0x800FB628;
+Ovl11UpdateClockHud = 0x800FB648;
+Ovl11DrawClockHud = 0x800FB674;
+gOvl11ClockHudEnabled = 0x80127208; // type:data size:0x4
+gOvl11ClockHudText = 0x8012A008; // type:data size:0x20

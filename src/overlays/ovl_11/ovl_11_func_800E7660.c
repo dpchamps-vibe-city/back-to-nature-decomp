@@ -25,11 +25,11 @@ s32 ovl_11_func_800E7660(s32 arg0, s32 arg1, s32 arg2) {
         return 0;
     }
     if (arg2 & 1) {
-        var_a0 = *(s16 *)((u8 *)D_80129560 + (var_a0 * 4));
+        var_a0 = *(s16 *)((u8 *)gOvl11ValueSlots + (var_a0 * 4));
     }
     var_a3 = var_a0;
     if (arg2 & 2) {
-        var_a1 = *(s16 *)((u8 *)D_80129560 + (var_a1 * 4));
+        var_a1 = *(s16 *)((u8 *)gOvl11ValueSlots + (var_a1 * 4));
     }
     if (var_a0 < 6) {
         var_a3 = var_a0 + 0x18;

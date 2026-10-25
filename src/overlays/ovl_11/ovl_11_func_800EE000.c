@@ -8,9 +8,9 @@ s32 ovl_11_func_800EE000(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 var_a0;
     s32 var_a1;
 
-    temp_t0 = *(s16 *)&D_80129560[arg0];
-    temp_t1 = *(s16 *)&D_80129560[arg1];
-    temp_a2 = *(s16 *)&D_80129560[arg2];
+    temp_t0 = *(s16 *)&gOvl11ValueSlots[arg0];
+    temp_t1 = *(s16 *)&gOvl11ValueSlots[arg1];
+    temp_a2 = *(s16 *)&gOvl11ValueSlots[arg2];
     switch (temp_t0) {
     case 19:
         var_a0 = 0;
@@ -119,6 +119,6 @@ s32 ovl_11_func_800EE000(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             break;
         }
     }
-    D_80129560[arg3] = var_v0;
+    gOvl11ValueSlots[arg3] = var_v0;
     return 1;
 }

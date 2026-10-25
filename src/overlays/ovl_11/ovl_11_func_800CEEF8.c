@@ -15,6 +15,7 @@
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
+#include "ovl11_item_transfer_menu.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -124,7 +125,6 @@ void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 s32 ovl_11_func_800F413C (M2C_99ae33ae0e41_M2C_4c1a205b3b09_ReconA0View *arg0, M2C_99ae33ae0e41_M2C_4c1a205b3b09_F413CArg1 *arg1);
 void ovl_11_func_8011E588 (void);
 s32 ovl_11_func_800FBE4C (void);
-s32 ovl_11_func_800FAAD4 (void);
 s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800C9DC0 (void);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);

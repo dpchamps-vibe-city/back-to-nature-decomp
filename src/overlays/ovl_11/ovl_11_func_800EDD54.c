@@ -14,12 +14,12 @@ s32 ovl_11_func_800EDD54(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 temp_a2;
 
     if (arg1 & 1) {
-        var_s0 = (s16)D_80129560[arg0];
+        var_s0 = (s16)gOvl11ValueSlots[arg0];
     } else {
         var_s0 = arg0;
     }
     if (arg1 & 2) {
-        var_a3 = (s16)D_80129560[arg3];
+        var_a3 = (s16)gOvl11ValueSlots[arg3];
     } else {
         var_a3 = (s16)arg3;
     }

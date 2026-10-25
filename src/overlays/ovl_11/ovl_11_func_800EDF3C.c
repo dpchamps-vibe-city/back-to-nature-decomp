@@ -27,7 +27,7 @@ s32 ovl_11_func_800EDF3C(s16 arg0, s32 arg1) {
     register u32 field asm("$5");
 
     if ((arg1 << 0x10) != 0) {
-        var_a0 = D_80129560[arg0];
+        var_a0 = gOvl11ValueSlots[arg0];
     } else {
         var_a0 = arg0;
     }

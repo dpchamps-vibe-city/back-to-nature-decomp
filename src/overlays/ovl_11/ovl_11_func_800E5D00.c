@@ -44,7 +44,7 @@ s32 ovl_11_func_800E5D00(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         var_t1 = arg1;
     }
     if (arg2 != -1) {
-        D_80129560[arg2] = (s32) ((struct struct_8006C838_800E5D00 *)((u8 *)D_8006C838 + arg0 * 0x1D4))->field_9A16;
+        gOvl11ValueSlots[arg2] = (s32) ((struct struct_8006C838_800E5D00 *)((u8 *)D_8006C838 + arg0 * 0x1D4))->field_9A16;
     }
     {
         struct struct_8006C838_800E5D00 *base = (struct struct_8006C838_800E5D00 *)D_8006C838;

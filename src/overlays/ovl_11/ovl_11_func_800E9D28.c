@@ -65,7 +65,7 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800F4AC0(arg2 == 1);
             return 1;
         }
-        D_80129560[arg2] = ovl_11_func_800F4B14();
+        gOvl11ValueSlots[arg2] = ovl_11_func_800F4B14();
         break;
     case 1:
         switch (arg1) {
@@ -79,7 +79,7 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             return 1;
         case 1:
             if (arg3 != 0) {
-                arg2 = *((s32 *) ((u8 *) D_80129560 + (arg2 * 4)));
+                arg2 = *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4)));
             }
             switch (arg2) {
             case 1: var_s3 = 0x21; break;
@@ -94,20 +94,20 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800EF6E4((s16) arg2, (s16) arg3);
             return 1;
         case 3:
-            ((E9State *)D_8006C838)->fE76C = (s16) (*((u16 *) ((u8 *) D_80129560 + (arg2 * 4))) - 1);
+            ((E9State *)D_8006C838)->fE76C = (s16) (*((u16 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) - 1);
             goto block_204;
         case 4:
             if (arg2 != -1) {
                 if (D_80071CCA == -1) {
-                    *((s32 *) ((u8 *) D_80129560 + (arg2 * 4))) = (s32) D_80071CCA;
+                    *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = (s32) D_80071CCA;
                 } else if (func_8001AF44(0x1BU) == 1) {
-                    *((s32 *) ((u8 *) D_80129560 + (arg2 * 4))) = 0;
+                    *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = 0;
                 } else {
-                    *((s32 *) ((u8 *) D_80129560 + (arg2 * 4))) = 1;
+                    *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = 1;
                 }
             }
             if (arg3 != -1) {
-                *((s32 *) ((u8 *) D_80129560 + (arg3 * 4))) = (s32) D_80071CCA;
+                *((s32 *) ((u8 *) gOvl11ValueSlots + (arg3 * 4))) = (s32) D_80071CCA;
             }
             goto block_204;
         }
@@ -305,15 +305,15 @@ block_118:
             case 1:
                 return ((E9State *)D_8006C838)->fE624;
             case 2: {
-                D_80129560[arg3] = ((E9State *)D_8006C838)->fE62A;
+                gOvl11ValueSlots[arg3] = ((E9State *)D_8006C838)->fE62A;
                 return ((E9State *)D_8006C838)->fE62C;
             }
             case 3: {
-                D_80129560[arg3] = ((E9State *)D_8006C838)->fE634;
+                gOvl11ValueSlots[arg3] = ((E9State *)D_8006C838)->fE634;
                 return ((E9State *)D_8006C838)->fE630;
             }
             case 4: {
-                D_80129560[arg3] = ((E9State *)D_8006C838)->fE63C;
+                gOvl11ValueSlots[arg3] = ((E9State *)D_8006C838)->fE63C;
                 return ((E9State *)D_8006C838)->fE638;
             }
             }
@@ -349,11 +349,11 @@ block_118:
             if (arg3 == 0) {
                 ((E9State *)D_8006C838)->fE628 = (u16) arg2;
             } else {
-                ((E9State *)D_8006C838)->fE628 = (u16) *((u16 *) ((u8 *) D_80129560 + (arg2 * 4)));
+                ((E9State *)D_8006C838)->fE628 = (u16) *((u16 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4)));
             }
             goto block_204;
         case 11:
-            *((s32 *) ((u8 *) D_80129560 + (arg2 * 4))) = (s32) (s16) ((E9State *)D_8006C838)->fE628;
+            *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = (s32) (s16) ((E9State *)D_8006C838)->fE628;
             goto block_204;
         case 12:
             temp_a0_2 = ((E9State *)D_8006C838)->fE618;
@@ -417,14 +417,14 @@ block_118:
         return 0;
     case 16:
         if (arg2 != -1) {
-            *((s32 *) ((u8 *) D_80129560 + (arg2 * 4))) = (s32) ((E9State *)D_8006C838)->f30->f2;
+            *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = (s32) ((E9State *)D_8006C838)->f30->f2;
         }
         return arg1 == ((E9State *)D_8006C838)->f30->f2;
     case 17:
         if (arg3 == 0) {
             var_s3 = arg1 & 0xFFFF;
         } else {
-            var_s3 = *((u16 *) ((u8 *) D_80129560 + (arg1 * 4)));
+            var_s3 = *((u16 *) ((u8 *) gOvl11ValueSlots + (arg1 * 4)));
         }
         if (arg2 != 0) {
             ((E9State *)D_8006C838)->f99D8 = var_s3;
@@ -443,7 +443,7 @@ block_118:
         case 0:
             return ovl_11_func_80112160(0);
         case 1:
-            D_80129560[arg2] = ovl_11_func_80112160(1);
+            gOvl11ValueSlots[arg2] = ovl_11_func_80112160(1);
             return 1;
         case 2:
             ovl_11_func_80112160(2);
@@ -474,7 +474,7 @@ block_118:
         ((E9State *)D_8006C838)->f44F8 |= 0x200000;
         goto block_204;
     case 25:
-        *((s32 *) ((u8 *) D_80129560 + (arg2 * 4))) = (s32) ((E9State *) ((u8 *) D_8006C838 + (arg1 * 0x1D4)))->f9A6C;
+        *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = (s32) ((E9State *) ((u8 *) D_8006C838 + (arg1 * 0x1D4)))->f9A6C;
         goto block_204;
     case 26:
         ((E9State *)D_8006C838)->f51C0 = (s32) (((E9State *)D_8006C838)->f51C0 | 0x800000);
@@ -490,11 +490,11 @@ block_118:
         goto block_204;
     case 28:
         if (arg1 != -1) {
-            *((s32 *) ((u8 *) D_80129560 + (arg1 * 4))) = (s32) ((E9State *)D_8006C838)->fE77C;
+            *((s32 *) ((u8 *) gOvl11ValueSlots + (arg1 * 4))) = (s32) ((E9State *)D_8006C838)->fE77C;
         }
         return ovl_11_func_800EFDA0((s32) ((E9State *)D_8006C838)->fE77C, arg2, arg3);
     case 29:
-        ovl_11_func_800EFE34((s32 *) ((u8 *) D_80129560 + (arg1 * 4)), arg2 / 2, arg3);
+        ovl_11_func_800EFE34((s32 *) ((u8 *) gOvl11ValueSlots + (arg1 * 4)), arg2 / 2, arg3);
         return 1;
     case 30:
         sp10 = (s32) ((E9State *)D_8006C838)->f91C2;

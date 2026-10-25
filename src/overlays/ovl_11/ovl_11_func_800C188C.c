@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl11_clock_calendar.h"
+#include "ovl11_clock_hud.h"
 
 typedef struct {
     /* 0x000 */ char pad_000[0x0C];
@@ -10,16 +11,12 @@ typedef struct {
 
 s32 func_8001AF44(u32 arg0);
 
-void ovl_11_func_800FB608(void);
-
-void ovl_11_func_800FB628(void);
-
 void ovl_11_func_800C188C(void) {
     char *far_base;
     s32 temp;
 
     if (Ovl11IsClockAdvanceActive() == 1) {
-        ovl_11_func_800FB628();
+        Ovl11DisableClockHud();
         return;
     }
     if (((OvC188CView *)D_8006C838)->field_0C & 0x10000000) {
@@ -30,7 +27,7 @@ void ovl_11_func_800C188C(void) {
         far_base = (char *)&D_8007AFF0;
         if (*(u16 *)(*(s32 *)(far_base + 0x25388) + 8) & 0x1000) {
             if (func_8001AF44(0xB0) == 1) {
-                ovl_11_func_800FB628();
+                Ovl11DisableClockHud();
                 return;
             }
             if (*(u16 *)(*(s32 *)(far_base + 0x25388) + 8) & 0x1000) {
@@ -38,18 +35,18 @@ void ovl_11_func_800C188C(void) {
             }
         }
         if (func_8001AF44(5) == 1) {
-            ovl_11_func_800FB628();
+            Ovl11DisableClockHud();
             return;
         }
         if (func_8001AF44(4) == 1) {
-            ovl_11_func_800FB608();
+            Ovl11EnableClockHud();
             return;
         }
     }
 block_9:
     if (((OvC188CView *)D_8006C838)->field_E4D2 != 0) {
-        ovl_11_func_800FB608();
+        Ovl11EnableClockHud();
         return;
     }
-    ovl_11_func_800FB628();
+    Ovl11DisableClockHud();
 }

@@ -13,6 +13,6 @@ s32 ovl_11_func_800E9CE4(s16 arg0) {
     Ovl11Entry *p;
 
     p = (Ovl11Entry *)ovl_11_func_800E3A94();
-    p->unk1 = ((Ovl11Entry *)D_80129560)[arg0].unk0;
+    p->unk1 = ((Ovl11Entry *)gOvl11ValueSlots)[arg0].unk0;
     return 1;
 }

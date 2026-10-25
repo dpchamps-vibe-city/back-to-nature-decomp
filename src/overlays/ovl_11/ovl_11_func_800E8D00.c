@@ -29,7 +29,7 @@ s32 ovl_11_func_800E8D00(s16 arg0, s32 arg1, s32 arg2) {
         return 0;
     }
     if (arg0 != -1) {
-        D_80129560[arg0] = var_a1;
+        gOvl11ValueSlots[arg0] = var_a1;
     }
     return 1;
 }

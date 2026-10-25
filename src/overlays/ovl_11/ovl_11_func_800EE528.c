@@ -18,7 +18,7 @@ s32 ovl_11_func_800EE528(s16 arg0, s16 arg1) {
         return 0;
     }
     temp_v0 = ovl_11_func_800EFF04(0x24, (s32) arg0, NULL);
-    temp_v1 = D_80129560[arg1];
+    temp_v1 = gOvl11ValueSlots[arg1];
     if (temp_v0[4] != temp_v1) {
         func_80015840((ObjectState *) temp_v0, temp_v1 & 0xFF);
     }

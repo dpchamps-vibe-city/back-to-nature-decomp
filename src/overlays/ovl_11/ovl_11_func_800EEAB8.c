@@ -11,7 +11,7 @@ s16 ovl_11_func_800EEAB8(s16 arg0, s16 arg1, s32 arg2) {
     s32 var_v1;
 
     ovl_11_func_800EE7BC(1, arg0, 0, 0);
-    base = D_80129560;
+    base = gOvl11ValueSlots;
     temp_s0 = (s32 *) ((u8 *) base + (arg0 * 4));
     var_v1 = *temp_s0;
     if (var_v1 >= 0xA) {

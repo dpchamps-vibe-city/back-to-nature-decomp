@@ -8,7 +8,7 @@ s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F07EC(s16 arg0, s32 arg1, s32 arg2, u32 *arg3);
 
 s32 ovl_11_func_800EB010(s16 arg0, s16 arg1) {
-    u16 value = *(u16 *)&D_80129560[arg1];
+    u16 value = *(u16 *)&gOvl11ValueSlots[arg1];
     struct Ovl11IdList ids = D_800B9B1C;
     u32 state;
     s32 selection;
@@ -48,7 +48,7 @@ s32 ovl_11_func_800EB010(s16 arg0, s16 arg1) {
     x = D_80124920;
     y = D_80124948;
     z = D_80124970;
-    if (D_80129560[arg0] == -1) {
+    if (gOvl11ValueSlots[arg0] == -1) {
         for (i = 0; i < 10;) {
             if (*p != -1) {
                 ovl_11_func_800E5ADC(*p, 0, *x, *y);
@@ -60,11 +60,11 @@ s32 ovl_11_func_800EB010(s16 arg0, s16 arg1) {
             y++;
             z++;
         }
-        D_80129560[arg0]++;
+        gOvl11ValueSlots[arg0]++;
     } else {
         for (i = 0; i < 10;) {
             if (*p != -1) {
-                state = D_80129560[arg0];
+                state = gOvl11ValueSlots[arg0];
                 ovl_11_func_800F07EC(*p, *x, *y, &state);
             }
             i++;
@@ -72,7 +72,7 @@ s32 ovl_11_func_800EB010(s16 arg0, s16 arg1) {
             x++;
             y++;
         }
-        D_80129560[arg0] = state;
+        gOvl11ValueSlots[arg0] = state;
     }
     return 1;
 }

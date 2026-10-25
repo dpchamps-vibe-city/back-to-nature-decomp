@@ -28,7 +28,7 @@ s32 ovl_11_func_800EE604(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (arg3 != 0) {
         Ovl11ResetSceneCameraOrbit();
     }
-    base = D_80129560;
+    base = gOvl11ValueSlots;
     temp_s2 = (s32 *)((u8 *)base + (arg0 * 4));
     state = *temp_s2;
     if (state != 1) {
@@ -47,7 +47,7 @@ s32 ovl_11_func_800EE604(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
         }
     } else {
-        temp_s0 = &D_80129560[arg1];
+        temp_s0 = &gOvl11ValueSlots[arg1];
         func_8001F2EC(*temp_s0, 0xB1, D_80129540, D_8012954C, &sp18);
         func_8001F2EC(*temp_s0, 0xB1, D_80129544, D_80129550, &sp1C);
         func_8001F2EC(*temp_s0, 0xB1, D_80129548, D_80129554, &sp20);

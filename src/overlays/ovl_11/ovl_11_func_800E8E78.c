@@ -15,9 +15,9 @@ s32 ovl_11_func_800E8E78(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         position[2] = arg3;
         break;
     case 1:
-        position[1] = D_80129560[arg1];
-        position[0] = D_80129560[arg2];
-        position[2] = D_80129560[arg3];
+        position[1] = gOvl11ValueSlots[arg1];
+        position[0] = gOvl11ValueSlots[arg2];
+        position[2] = gOvl11ValueSlots[arg3];
         break;
     case 2:
         ovl_11_func_800CD0C0(position);

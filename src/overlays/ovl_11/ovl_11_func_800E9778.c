@@ -14,13 +14,13 @@ s32 ovl_11_func_800E9778(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         return 0;
     }
     if (arg1 != -1) {
-        D_80129560[arg1] = p[1];
+        gOvl11ValueSlots[arg1] = p[1];
     }
     if (arg2 != -1) {
-        D_80129560[arg2] = p[0];
+        gOvl11ValueSlots[arg2] = p[0];
     }
     if (arg3 != -1) {
-        D_80129560[arg3] = p[2];
+        gOvl11ValueSlots[arg3] = p[2];
     }
     return 1;
 }

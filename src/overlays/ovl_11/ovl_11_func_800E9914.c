@@ -15,7 +15,7 @@ s32 ovl_11_func_800E9914(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
         }
         if (arg2 != -1) {
-            D_80129560[arg2] = ((struct Ovl11E9914State *)D_8006C838)->pending;
+            gOvl11ValueSlots[arg2] = ((struct Ovl11E9914State *)D_8006C838)->pending;
         }
         ((struct Ovl11E9914State *)D_8006C838)->pending = 0;
         break;

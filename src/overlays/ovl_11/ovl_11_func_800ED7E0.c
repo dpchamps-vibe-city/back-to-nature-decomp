@@ -67,7 +67,7 @@ s32 ovl_11_func_800ED7E0(s16 arg0, s16 arg1) {
         }
     }
     if (arg1 != -1) {
-        D_80129560[arg1] = choices.values[i];
+        gOvl11ValueSlots[arg1] = choices.values[i];
     }
     return 1;
 }

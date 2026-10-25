@@ -9,7 +9,7 @@ s32 ovl_11_func_800ED760(s16 arg0, s16 arg1, s32 arg2) {
     s32 i;
 
     if (arg2 != 0) {
-        target = D_80129560[arg0];
+        target = gOvl11ValueSlots[arg0];
     } else {
         target = arg0;
     }

@@ -16,7 +16,7 @@ s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 var_a0;
 
     if (arg1 != 0) {
-        arg1 = D_80129560[arg0];
+        arg1 = gOvl11ValueSlots[arg0];
     } else {
         arg1 = arg0;
     }
@@ -36,10 +36,10 @@ s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         var_a0 = *(s16 *)(q + 0x8000 + 0x1A0E);
     }
     if (arg2 != -1) {
-        D_80129560[arg2] = arg1;
+        gOvl11ValueSlots[arg2] = arg1;
     }
     if (arg3 != -1) {
-        D_80129560[arg3] = var_a0;
+        gOvl11ValueSlots[arg3] = var_a0;
     }
     if (((EC354TimeView *)D_8006C838)->field_44BA == arg1) {
         if (((EC354TimeView *)D_8006C838)->field_44BC == var_a0) {

@@ -1975,12 +1975,6 @@ typedef struct {
 } M2C_d4baf9e5b2ba_SpriteSourceData;
 
 typedef struct {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-} M2C_d4cb10048269_SwapStruct_B45C;
-
-typedef struct {
     char pad_00[0x26];
     s16 field_26;
     char pad_28[0x34 - 0x28];
@@ -2055,12 +2049,6 @@ typedef struct {
     char pad_38[0x42];
                u16 unk7A;
 } M2C_e3f0213dae70_Ovl11BED4Obj;
-
-typedef struct {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-} M2C_e4885161ea76_SwapStruct_B45C;
 
 typedef struct {
     char pad_00[0x24];
@@ -2711,6 +2699,13 @@ typedef struct {
 } Ovl11CF58Object;
 
 typedef struct {
+    s16 year;
+    s16 season;
+    u16 day;
+    s16 weekday;
+} Ovl11CalendarPanelDate;
+
+typedef struct {
     s32 *position;
     Ovl11CollisionTag *object;
     void **tile;
@@ -2925,13 +2920,6 @@ typedef struct {
     u8 pad24[0xE4 - 0x24];
     Ovl11EventEntry entries[30];
 } Ovl11EventObject;
-
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    u16 unk4;
-    s16 unk6;
-} Ovl11FA1CCArg;
 
 typedef struct {
     s32 unk0;
@@ -3521,10 +3509,6 @@ typedef struct {
     char pad_30[0x4];
     s32 unk34;
 } Recon_ovl_11_func_800E1D48_A0View;
-
-typedef struct {
-    s16 unk0;
-} Recon_ovl_11_func_800FB394_A0View;
 
 typedef struct {
     char pad_0[0x2C];

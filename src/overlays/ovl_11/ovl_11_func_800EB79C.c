@@ -10,7 +10,7 @@ s32 ovl_11_func_800EB79C(s32 arg0, s32 arg1, s32 arg2) {
     idx = (s16)arg0;
     arg1 = (s16)arg1;
     if (arg2 != 0) {
-        val = D_80129560[idx];
+        val = gOvl11ValueSlots[idx];
     } else {
         val = idx;
     }

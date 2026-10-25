@@ -11,13 +11,13 @@ s32 ovl_11_func_800E729C(s16 arg0, s16 arg1, s32 arg2) {
     switch (temp) {
     case -1:
         if (arg2 != temp) {
-            D_80129560[arg2] = 1;
+            gOvl11ValueSlots[arg2] = 1;
         }
         result = 1;
         break;
     case 1:
         if (arg2 != -1) {
-            D_80129560[arg2] = 0;
+            gOvl11ValueSlots[arg2] = 0;
         }
         switch (arg0) {
         case 0:

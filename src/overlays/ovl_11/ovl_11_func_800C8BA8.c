@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "ovl11_item_transfer_menu.h"
 
 void ovl_11_func_8011E588(void);
 s32 ovl_11_func_800FBE4C(void);
-s32 ovl_11_func_800FAAD4(void);
 void *ovl_11_func_800BDCE8(u8 *arg0, Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0);
 
@@ -34,7 +34,7 @@ s32 ovl_11_func_800C8BA8(Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1) {
         return 0;
     }
     if (arg1 & 0x10) {
-        ovl_11_func_800FAAD4();
+        Ovl11OpenItemTransferMenu();
         state->field_0C |= 0x10000000;
         state->field_0C |= 0x08000000;
         return 1;

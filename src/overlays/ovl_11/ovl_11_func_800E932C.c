@@ -9,7 +9,7 @@ s32 ovl_11_func_800E932C(s16 arg0, s16 arg1, s32 arg2) {
     Ovl11C7010Object *object = (Ovl11C7010Object *)&D_80071A00;
 
     if (arg1 != 0) {
-        value = D_80129560[arg0];
+        value = gOvl11ValueSlots[arg0];
     } else {
         value = arg0;
     }

@@ -10,7 +10,7 @@ s32 ovl_11_func_800E58DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
     var_v0 = 0;
     if (arg3 != 0) {
-        var_s0 = D_80129560[arg1];
+        var_s0 = gOvl11ValueSlots[arg1];
     } else {
         var_s0 = arg1;
     }
@@ -29,7 +29,7 @@ s32 ovl_11_func_800E58DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         if (GetMessageWindowStatus() == 2) {
             var_v0 = 1;
             if (arg2 != -1) {
-                D_80129560[arg2] = GetMessageWindowChoice();
+                gOvl11ValueSlots[arg2] = GetMessageWindowChoice();
             }
         }
     }

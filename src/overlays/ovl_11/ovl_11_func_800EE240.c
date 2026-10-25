@@ -19,8 +19,8 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
     s32 slot;
 
     if (arg0 == 0) {
-        D_80129560[arg1] += 5;
-        switch (D_80129560[arg1]) {
+        gOvl11ValueSlots[arg1] += 5;
+        switch (gOvl11ValueSlots[arg1]) {
         case 0:
             PlaySoundEffect(0x46);
             break;
@@ -29,7 +29,7 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
             colors.values[i] = 255;
             i = Rand(3);
             colors.values[i] = 255;
-            base = D_80129560;
+            base = gOvl11ValueSlots;
             for (i = 0; i < 3; i++) {
                 slot = arg1 + i + 1;
                 noise = Rand(32);
@@ -41,35 +41,35 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
             PlaySoundEffect(0x47);
             break;
         default:
-            if (D_80129560[arg1] >= 360) {
+            if (gOvl11ValueSlots[arg1] >= 360) {
                 for (i = 0; i < 3; i++) {
                     colors.values[i] = 160;
                 }
                 next = arg1 + 1;
-                D_80129560[next] = 0;
+                gOvl11ValueSlots[next] = 0;
                 arg0 = 1;
             }
             break;
         }
         next = arg1 + 1;
-        if (D_80129560[next] != 0) {
+        if (gOvl11ValueSlots[next] != 0) {
             packet = (s32 *)(gActiveRenderContext->field_D8 + 0x14);
             index = arg1 + 3;
-            blue = *(u8 *)&D_80129560[index];
+            blue = *(u8 *)&gOvl11ValueSlots[index];
             index2 = arg1 + 2;
-            green = *(u16 *)&D_80129560[index2];
+            green = *(u16 *)&gOvl11ValueSlots[index2];
             DrawScreenFlatRectWithBlendMode(packet, 0, 0, 320, 240,
-                blue | (green << 8) | (*(u8 *)&D_80129560[next] << 16), 1, 1);
+                blue | (green << 8) | (*(u8 *)&gOvl11ValueSlots[next] << 16), 1, 1);
             for (i = 1; i < 4; i++) {
-                D_80129560[arg1 + i] -= 15;
-                if (D_80129560[arg1 + i] < 0) {
-                    D_80129560[arg1 + i] = 0;
+                gOvl11ValueSlots[arg1 + i] -= 15;
+                if (gOvl11ValueSlots[arg1 + i] < 0) {
+                    gOvl11ValueSlots[arg1 + i] = 0;
                 }
             }
         }
     }
     if (arg0 != 0) {
-        D_80129560[arg1] = -((s16)Rand(80) * 5) - 200;
+        gOvl11ValueSlots[arg1] = -((s16)Rand(80) * 5) - 200;
     }
     return 1;
 }

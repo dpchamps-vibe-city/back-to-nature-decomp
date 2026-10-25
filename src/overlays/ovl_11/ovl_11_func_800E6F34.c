@@ -15,7 +15,7 @@ s32 ovl_11_func_800E6F34(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     Ovl11ItemState *slot;
 
     if (arg1 != 0) {
-        id = *(u16 *)&D_80129560[arg0];
+        id = *(u16 *)&gOvl11ValueSlots[arg0];
     } else {
         id = arg0;
     }

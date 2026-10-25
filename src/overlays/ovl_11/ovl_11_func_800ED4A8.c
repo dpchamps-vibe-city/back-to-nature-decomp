@@ -14,6 +14,8 @@
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
+#include "ovl11_entity_pool_access.h"
+#include "ovl11_item_transfer_menu.h"
 
 typedef struct {
                s16 field_0;
@@ -187,7 +189,6 @@ void ovl_11_func_800C6F0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_8011E588 (void);
 s32 ovl_11_func_800FBE4C (void);
-s32 ovl_11_func_800FAAD4 (void);
 void *ovl_11_func_800BDCE8 (u8 *arg0, M2C_cec44150eede_Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800C9DC0 (void);
@@ -221,7 +222,6 @@ s32 ovl_11_func_800E6D2C (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800CD0C0 (s32 *arg0);
-s32 ovl_11_func_800E8960 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_801000D4 (s16 arg0);
 s32 ovl_11_func_800E5ADC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 u32 Rand (s32 arg0);

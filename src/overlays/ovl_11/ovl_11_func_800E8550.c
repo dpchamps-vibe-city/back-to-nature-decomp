@@ -11,7 +11,7 @@ s32 ovl_11_func_800E8550(s16 arg0, s16 arg1, s32 arg2) {
     s32 var_a2;
 
     if (arg0 != 0) {
-        var_a0 = D_80129560[arg2];
+        var_a0 = gOvl11ValueSlots[arg2];
     } else {
         var_a0 = arg2;
     }

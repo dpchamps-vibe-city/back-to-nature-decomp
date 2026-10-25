@@ -9,14 +9,14 @@ s32 ovl_11_func_800E99EC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_v0;
 
     if (arg3 & 1) {
-        var_t0 = *(s16 *)((u8 *)D_80129560 + (arg0 * 4));
+        var_t0 = *(s16 *)((u8 *)gOvl11ValueSlots + (arg0 * 4));
         var_t1 = var_t0;
     } else {
         var_t0 = arg0;
         var_t1 = var_t0;
     }
     if (arg3 & 2) {
-        var_a3 = *(s16 *)((u8 *)D_80129560 + (arg1 * 4));
+        var_a3 = *(s16 *)((u8 *)gOvl11ValueSlots + (arg1 * 4));
     } else {
         var_a3 = arg1;
     }

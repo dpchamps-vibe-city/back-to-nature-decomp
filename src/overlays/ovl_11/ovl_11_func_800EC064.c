@@ -17,7 +17,7 @@ s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     struct_800759E4 *object;
 
     if (arg3 != 0) {
-        index = *(s16 *)&D_80129560[arg1];
+        index = *(s16 *)&gOvl11ValueSlots[arg1];
     } else {
         index = arg1;
     }

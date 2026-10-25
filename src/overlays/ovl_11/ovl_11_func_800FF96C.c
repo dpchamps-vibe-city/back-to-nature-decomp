@@ -1,9 +1,7 @@
 #include "common.h"
 #include "pad_actuator_gate.h"
 #include "sound_driver.h"
-
-void ovl_11_func_800FB608(void);
-void ovl_11_func_800FB628(void);
+#include "ovl11_clock_hud.h"
 
 void ovl_11_func_800FF96C(void) {
     s16 *p;
@@ -26,8 +24,8 @@ void ovl_11_func_800FF96C(void) {
     base2 = (char *)&D_8006C838;
     base2 += 0x8000;
     if (*(s16 *)(base2 + 0x64D2)) {
-        ovl_11_func_800FB608();
+        Ovl11EnableClockHud();
     } else {
-        ovl_11_func_800FB628();
+        Ovl11DisableClockHud();
     }
 }

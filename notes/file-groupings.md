@@ -3897,9 +3897,45 @@ Candidate same-TU shared-flag run
 - ovl_11_func_800FB628 (m) — clears `D_80127208` when it is nonzero.
 - ovl_11_func_800FB648 (m) — calls `ovl_11_func_800FB674` when `D_80127208` is nonzero.
 
+**Reconstructed module: `src/overlays/ovl_11/modules/clock_hud.c`**, all five
+compiled entries at 800FB5FC..800FB908. The original four-control group was
+extended through its immediately following renderer, not folded as a slice.
+B5FC/B608/B628/B648 are the only users of 127208; B648 is B674's sole direct
+caller, and B674 is the sole user of the 32-byte text span at 12A008. That
+private flag/scratch plus the enable-to-draw call edge supports the complete
+unit. Canonical names are Ovl11ResetClockHud, EnableClockHud, DisableClockHud,
+UpdateClockHud and DrawClockHud; data are gOvl11ClockHudEnabled and
+gOvl11ClockHudText. The shared date view now names season/day/weekday/hour/
+minute, with the one other date-view consumer updated without behavior change.
+
+Boundaries: predecessor FB510 draws item-transfer entries/counts using the
+126FF0 layout and calls no HUD helper; successor FB908 initializes summary
+name/count tables and 12720C/0E/10/12, not 127208 or 12A008. Neither shares
+this private protocol. No GP original-TU proof is available at overlay -G0;
+these are evidence-supported grouping limits, not certainty from adjacency.
+Clock state itself is shared engine state and does not join all its readers.
+
+include/ovl11_clock_hud.h publishes reset/enable/disable/update to the three
+external declaring callers via interfaceAudit. It documents frame units,
+zero-based date display, AM/PM subtraction without a zero-to-12 correction,
+five-minute glyph selection, shared formatting storage and text-style restore.
+The renderer now has meaningful cursor, style, row and minute names; unused
+recovery locals/includes/declarations are removed. Its matching-sensitive
+single-pass scopes and separate text/glyph cursor lifetimes are retained and
+explained, rather than turned into new register or assembly workarounds.
+
+The whole fold first matched all five at baseline. Final campaign gate:
+**423 folded functions / 47 valid modules**, all linked EXE/overlay bytes and
+data exact, canonical interfaces/policy/scope/convergence passing, no flag
+changes and no exception growth. No new assembly or dead stub was added.
+
 ---
 
 ## `ovl_11` 800FB218/800FB290 4-argument irregular-switch pair — 0x800FB218–0x800FB290 (confidence: medium)
+
+Now integrated with the full item_transfer_menu unit at 800FAAAC..800FB5FC.
+See that state-cluster section for the helper-graph bridge and outer limits;
+the pair is not treated as a separate original TU.
 
 Evidence: zero-gap link order (`ovl_11_func_800FB218`, 0x78 bytes, ends
 exactly at 0x800FB290) plus a shared author idiom cluster: both keep the
@@ -4119,6 +4155,58 @@ Members (address order):
   pair, so it call-graph- and idiom-links this state cluster to that pair
   (same-TU, address-apart so low)
 - ovl_11_func_800FB510 (m, candidate same TU, low confidence) — draws a menu entry at `D_80126FF0` coordinates ([grouping evidence](research/ovl_11_func_800FB510-grouping.md)).
+
+**Reconstructed module: `src/overlays/ovl_11/modules/item_transfer_menu.c`**,
+all fourteen entries at 800FAAAC..800FB5FC. The unit includes AAAC/AAD4's
+reset/open, AB18's frame service, AC0C's drawing/input state machine, B0C4's
+inspection-message handshake, B120's transfer dispatcher, B218/B290/B394's
+move/swap/merge validation, B3E4's special-slot predicate, B404/B45C's merge
+and swap, B4B0's six-byte entry lookup, and B510's entry/count drawer.
+Membership rests on the closed direct-helper graph, shared four-word
+state/cursor/source-selection protocol, and the private 18-row layout table
+whose coordinate halfwords are used by AC0C/B510 and navigation bytes by
+AC0C. The four panel rectangles and entry lookup corroborate the two-sided
+layout. The old validation-pair slice is absorbed, not left as a second TU.
+The historical claim of FE0/E4/E8/EC readers at F7230..F9FF4 was not borne
+out by the active-source scan: the named state is confined to this run.
+
+Boundaries: the preceding FA9B8 is calendar_panel's weekday-row drawer,
+sharing its number scratch buffer and date-grid helpers, not item-menu state
+or layout. Successor FB5FC resets 127208 for a different UI, serviced by
+FB648/FB674; it never uses these four state words or layout/navigation table.
+Neither neighbor supplies positive same-unit evidence. This -G0 overlay has
+no GP boundary witness, so these remain supported source-group limits rather
+than a claim to the original file's exact extent. Common text/sprite services
+and the shared engine item storage do not join unrelated menus into this TU.
+
+All fourteen functions have Ovl11-prefixed semantic names in ovl_11.names.txt,
+from Reset/Open/UpdateItemTransferMenu through TryTransferMenuItems,
+TryMoveItemTransferEntry, TrySwapItemTransferEntries, TryMergeItemTransferStacks,
+MergeItemTransferStacks, SwapItemTransferEntries, GetItemTransferEntry and
+DrawItemTransferEntry. State names distinguish menu phase, cursor, temporarily
+saved cursor and selected source (FF means none). The canonical data names
+are gOvl11ItemTransferLayout and gOvl11ItemTransferPanels; a named typed
+navigation view shares the layout's assembler identity. All data widths and
+object extents are unchanged.
+
+The module uses the existing six-byte Ovl11ItemState instead of four duplicate
+SwapStruct_B45C definitions and a one-field recovery view. Its two detail
+bytes remain opaque; +4 is documented as the count. Aggregate copies, unsigned
+count reads, signed-halfword sum test and cap of 99 retain original behavior.
+The second special-slot address now uses the established typed alias rather
+than adding another conflicting scalar extern. Module locals explain the
+pointer-as-word ABI and slot roles; comments explain the nested case label,
+fallthrough validation and same-slot-to-special-slot redirection. The legacy
+open function's undefined first-open return is retained and documented; none
+of its callers relies on that value.
+
+include/ovl11_item_transfer_menu.h publishes reset/open/update and documents
+slot/capacity constraints, result caveat, shared state, item effects and close
+flags. interfaceAudit supplied it to all four declaring callers. The checked
+whole fold matched at baseline before cleanup; the full campaign gate after
+names/types/documentation passes at **418 folded functions / 46 valid modules**,
+all linked containers/data/callers exact, interfaces and source policy clean,
+zero exception growth. No flag override applied or was introduced.
 
 ---
 
@@ -13806,6 +13894,68 @@ Members (address order):
 - ovl_11_func_800F9FF4 (s) — reads the same cluster and additionally walks
   `D_8006C838`.
 
+**Reconstructed whole calendar unit: `src/overlays/ovl_11/modules/calendar_panel.c`**,
+20 compiled entries at 800F9D3C..800FAAAC. This absorbs the separately noted
+FA1CC..FA410 date/event run, FA4F4..FA600 marker wrappers and FA6CC..FA9B8
+number/weekday helpers. The old six-function state group was incomplete:
+FA410 both reads and writes F80, while F9E4C calls FA1CC/FA410; FA1CC calls
+all drawing branches; the event marker and message scans share the exact
+18-entry F8C table; three marker wrappers select the adjacent FD4 style
+records and call FA950; the day-number, heading and weekday routines are
+all known consumers of the private 24-byte scratch span at 129FF0. This
+connected call/state/table graph supports the full run, beyond adjacency.
+There is no GP provenance claim for this -G0 overlay.
+
+Boundaries: predecessor F9BE4 reconciles eighteen inventory/record IDs and
+calls D666C; it shares none of these panel words, tables, scratch buffer or
+grid helpers. Successor FAAAC resets a separate FE0/E4/E8/EC state machine;
+it does not use the panel cluster. The old calendar helper boundaries were
+removed because their private-state/helper evidence bridges them. These
+outer limits rest on the change in state/protocol and absence of a positive
+extension, not on flags, address proximity, or the presence of dead code.
+Original source-file provenance remains a hypothesis; a future original
+ownership witness could widen it. Empty F6638/F6640 hooks and the constant-1
+F6648 query remain outside: they serve multiple UIs, share no private calendar
+state and are not adjacent. External calls alone do not absorb the whole UI.
+
+Canonical function names (ovl_11 addresses): F9D3C ResetCalendarPanel,
+F9D5C OpenCalendarPanel, F9DB0 UpdateCalendarPanel, F9E4C
+DrawAndProcessCalendarPanel, F9F58 ProcessCalendarCloseInput, F9FF4
+DrawAndMoveCalendarCursor; FA1CC DrawCalendarPanelDate, FA31C
+DrawCalendarEventMarkers, FA3A0 DrawCalendarSavedDateMarker, FA410
+ShowCalendarDateMessage; FA4F4 DrawCalendarCursor, FA558
+DrawCalendarCurrentDayMarker, FA590 DrawCalendarEventMarker, FA5C8
+DrawCalendarSavedDayMarker, FA600 DrawCalendarMarker, FA6CC
+DrawCalendarHeading, FA7D4 DrawCalendarDayNumbers, FA87C
+DrawCalendarDayNumber, FA950 GetCalendarCellPosition, FA9B8
+DrawCalendarWeekdayHeadings (all names prefixed Ovl11).
+
+The seven data names are gOvl11CalendarPanelState/MessageState/SelectedDay/
+CloseHookEnabled/PanelEvents/MarkerStyles/NumberText (the repeated Calendar
+prefix is retained in each full name). Source structs now describe year,
+season, day, weekday; event season/day/message; marker animation/frame/xOffset;
+and the saved-date view. Signedness and original object/casted-array views
+are preserved; the saved-date marker and message use one canonical view.
+No global definition, private linkage or storage was invented. Canonical
+renames were propagated and generated contexts regenerated; local externs
+were replaced by the override-header declarations.
+
+include/ovl11_calendar_panel.h publishes only reset/open/update to the two
+external callers (C7AC0 and F65B8), through interfaceAudit. It documents the
+frame-based lifecycle, shared sprite/text state, zero-based date units,
+closing handshake, and that viewing does not advance the clock. Reset sets
+F88 to **1**, not zero as the old sketch claimed, and deliberately does not
+reset F80. Source comments explain the unusual vertical cursor wrapping,
+last-matching event precedence, saved-date override and the retail no-op hooks.
+The work-relative date load is retained: replacing it with direct struct
+fields added one instruction; restoring it recovered exact bytes.
+
+The checked whole fold first matched all twenty at baseline; there were no
+flag overrides to transfer or retire. Final full campaign verification
+passes at **404 folded functions / 45 valid modules**: canonical interfaces,
+policy/scope, EXE and all overlay bytes and data, convergence and zero exception
+growth. No tests, tool edits or exceptions were added.
+
 ---
 
 ## `ovl_11` `D_800719F8` clear/set-then-test run — 0x80112440 / 0x80112494 (confidence: medium)
@@ -14077,6 +14227,9 @@ containers at the same relative slot before its +0x19EC twin.
 
 ## `ovl_11` 0x800FA4F4 dispatch-wrapper run + shared `800FA950` map helper — 0x800FA4F4–0x800FA600 (confidence: medium)
 
+Integrated with the whole calendar_panel unit at 800F9D3C..800FAAAC; see
+that state-run section for the bridge evidence and verified outer limits.
+
 Evidence: zero-gap link-order over the whole span — `ovl_11_func_800FA4F4`
 (0x64, ends exactly 0x800FA558) → `ovl_11_func_800FA558`/`800FA590`/`800FA5C8`
 (each 0x38, gapless, ending exactly at 0x800FA600) → `ovl_11_func_800FA600`.
@@ -14102,6 +14255,10 @@ shape, and the run's two non-wrapper members share a direct callee:
 ---
 
 ## `ovl_11` D_80129FF0 argument-buffer cluster — 0x800FA6CC–0x800FA9B8 (confidence: medium)
+
+Integrated with calendar_panel, not retained as a separate partial unit.
+The scratch buffer is now gOvl11CalendarNumberText; the full group's evidence
+and verification are recorded under 800F9D3C..800F9FF4 above.
 
 Evidence: the absolute global `D_80129FF0` (24-byte scratch span) is referenced
 by `ovl_11_func_800FA6CC`, `ovl_11_func_800FA87C` and `ovl_11_func_800FA9B8`,
@@ -14822,6 +14979,10 @@ Separate local mode-1 texture-update candidate TU pair (confidence: medium;
 - ovl_11_func_800D78D0 (s) — scans the 25×45 records and applies selected textures through 800D759C.
 
 ## `ovl_11` D_8006C838+0x5488 state-trio run — 0x800FA1CC–0x800FA410 (confidence: medium)
+
+Now part of calendar_panel's complete state/drawing unit, not a standalone
+four-function TU. See the 800F9D3C section for the shared F80 and event-table
+bridges, semantic names and verified boundaries.
 
 Candidate TU supported by shared table/state use and call/link-order adjacency;
 [including the zero-gap dispatcher predecessor](research/ovl_11_func_800FA1CC-grouping.md).
@@ -16687,6 +16848,43 @@ Members (address order):
   (or `arg2 & 0xFFFF`).
 - ovl_11_func_800E8BA0 (m) — entity-record reader: copies `u16@+2` of the
   record into `D_80129560[arg1]`.
+
+**Reconstructed module: `src/overlays/ovl_11/modules/entity_pool_access.c`**
+(800E8960..800E8BF0, four compiled entries). The whole specialized accessor
+run is folded, not a subset of its setters. Membership rests on the exact
+pool pointer at work +0xDDD0, 24-byte stride, complementary +0/+2/+4 and
++8/+C/+10 operations, and the two initialization paths' identical source-tag
+and activation protocol, corroborated by uninterrupted original order. This
+-G0 overlay provides no GP ownership proof; original same-file provenance
+remains a supported hypothesis, not a recovered file name.
+
+The preceding 800E880C is now compiled, not a stub: it resolves a value slot
+into an actor selector, uses 800E60A0 and caches 801295C6, without reaching
+this pool. Successor 800E8BF0 tests far-work +0x254A0 == 3, also without
+reaching the pool. Those neighbors supply no positive extension evidence;
+these are scope boundaries, not proven original TU boundaries. Distant
+800E4568/800E516C/800E5230 additionally use the same pool but implement a
+separate ten-record display lifecycle; neither that engine-wide pool nor
+80129560 alone establishes one TU across the intervening code. No known
+supported contiguous group was cut, and no flag or stub was used as a boundary.
+
+Canonical names: Ovl11ActivateEntityAtPosition (8960), Ovl11SetEntityActive
+(89CC), Ovl11ActivateEntityNearRecord (8A24), Ovl11CopyEntityValueToSlot
+(8BA0), and gOvl11ValueSlots (ovl_11:80129560, 20 s32 slots). The latter's
+meaning varies by consumer; the +2 record value is deliberately not named
+an entity ID. Renames are container-qualified in ovl_11.names.txt and propagated
+with canonicalNames. include/ovl11_entity_pool_access.h publishes the unchanged
+ABI, coordinate order/units, unchecked indices, low-16-bit active test and
+required 0..3 direction. interfaceAudit replaced the two callers' local
+prototypes with this header. Locals now name their work/pool/tag/position roles.
+
+Flags: the checked fold matches all four at baseline; no overrides apply or
+were added. A plain-array replacement for the pre-existing casted 80129560
+view changed address formation order in three external callers. The existing
+view was retained under the canonical name, not copied into the module or
+expanded into another exception. The full campaign gate passes at **384
+folded functions / 44 valid modules**, including all EXE/overlay bytes, callers,
+data, canonical interfaces, source policy, scope and zero exception growth.
 
 ---
 

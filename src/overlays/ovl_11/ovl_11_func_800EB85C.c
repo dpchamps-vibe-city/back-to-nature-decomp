@@ -11,7 +11,7 @@ s32 ovl_11_func_800EB85C(s16 arg0) {
     s32 result;
     s32 start;
 
-    state = *(s16 *)&D_80129560[arg0];
+    state = *(s16 *)&gOvl11ValueSlots[arg0];
     start = ovl_11_func_800EDF3C(D_80124984[0], 0, 0, 0) != 1;
     result = 0;
     switch (state) {
@@ -115,6 +115,6 @@ s32 ovl_11_func_800EB85C(s16 arg0) {
             state++;
         }
     }
-    D_80129560[arg0] = state;
+    gOvl11ValueSlots[arg0] = state;
     return 1;
 }

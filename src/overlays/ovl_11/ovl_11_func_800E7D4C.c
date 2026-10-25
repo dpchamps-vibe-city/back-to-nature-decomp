@@ -127,7 +127,7 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                     } else {
                         selected = &D_80074124[y2][x2];
                     }
-                    D_80129560[slot] = ovl_11_func_800D85F8((Recon_ovl_11_func_800D85F8_A0View *)selected);
+                    gOvl11ValueSlots[slot] = ovl_11_func_800D85F8((Recon_ovl_11_func_800D85F8_A0View *)selected);
                     selected->unk0 = selected->unk2;
                     selected->unk4 = 0;
                     selected->unk5 = 0;

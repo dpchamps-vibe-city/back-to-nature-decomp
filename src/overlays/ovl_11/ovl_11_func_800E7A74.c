@@ -9,7 +9,7 @@ s32 ovl_11_func_800E7A74(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_s1;
 
     if (arg3 != 0) {
-        var_s0 = *(s16 *)&D_80129560[arg0];
+        var_s0 = *(s16 *)&gOvl11ValueSlots[arg0];
         var_s1 = 1;
     } else {
         var_s0 = arg0;

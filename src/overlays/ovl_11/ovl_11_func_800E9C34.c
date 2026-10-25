@@ -22,9 +22,9 @@ s32 ovl_11_func_800E9C34(s16 arg0) {
         if (var_a0 == 0xCE) {
             return 0;
         }
-        D_80129560[arg0] = var_a0 + 1;
+        gOvl11ValueSlots[arg0] = var_a0 + 1;
     } else {
-        D_80129560[arg0] = temp_v0->unk2;
+        gOvl11ValueSlots[arg0] = temp_v0->unk2;
     }
     return 1;
 }
