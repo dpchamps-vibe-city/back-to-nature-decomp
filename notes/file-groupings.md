@@ -10179,6 +10179,51 @@ Members (link order):
 
 ## `ovl_11` D_8007AFF0 +0x253AC halfword-state consumer/writer run — 0x800DB674 / 0x800DB78C / 0x800DB7F0 / 0x800DB904 / 0x800DB978 (confidence: medium)
 
+**Reconstructed module: `src/overlays/ovl_11/modules/scene_camera_lighting.c`,
+800DB674–800DB9A4 (exclusive), all seven original entries.** Five functions
+share the precise orbit-input, derived-eye and target slots, as described
+below. The intervening DB824 and DB8DC are included, not treated as a split:
+BCD28 calls projection, lighting and orbit reset consecutively and later the
+vector reset; DB824 exclusively writes/installs the three 16-byte light
+records at 80128DB8. Their private data and common rendering-setup protocol
+corroborate the camera-state run. The C14A0/C162C frame controllers both call
+update/apply/draw. No GP membership signal is available at overlay -G0, so
+this remains a source-organization hypothesis supported by state/calls/private
+data, not a compiler-proven original object boundary.
+
+Left boundary: DB5CC is the eight-slot animation dispatcher over 800A03B0,
+calling DB354/DB4E0; it has no camera block, lighting records or projection
+calls. Right boundary: DB9A4 initializes game record/flag arrays at 742AC and
+6C838+E6xx, not the camera/lighting state. Later DBFEC/104CB8 load the geometry
+descriptor, a producer/consumer relationship also seen in other overlays;
+that alone does not extend the unit across the intervening state-management
+code. These are supported-family endpoints, not independently proved object
+boundaries. All entries inside the shared-state run are carried in order.
+
+Names: DB674 `Ovl11UpdateSceneCameraOffset`, DB78C `Ovl11ApplySceneCamera`,
+DB7F0 `Ovl11ResetSceneCameraOrbit`, DB824 `Ovl11InitSceneLighting`, DB8DC
+`Ovl11SetSceneProjection`, DB904 `Ovl11DrawSceneGeometry`, DB978
+`Ovl11ClearSceneCameraVectors`. Unlike the ovl_19/21 initializer, this orbit
+reset does NOT clear the target; vector clearing is a separate operation.
+The eight-byte descriptor is `gOvl11SceneGeometry` (80128818), and the private
+three-light array is `gOvl11SceneLights` (80128DB8, 0x30 bytes). The light
+array's existing backed macro/linker-name view was renamed explicitly and
+preserved, not replaced with a new addressing workaround. No type, linkage
+or ownership changes accompany these names. Unknown reset-only words remain
+neutral; named offsets/locals expose the demonstrated camera computation.
+
+`include/ovl11_scene_camera_lighting.h` documents units, split resets, lighting
+values, projection distance, ordering and geometry-loading prerequisites.
+All five caller units now include it rather than restating the interfaces.
+Function/global names are persisted by ovl_11.names.txt and regenerated symbol
+and context headers; other overlays' RAM-slot identities remain separate.
+All seven functions passed the baseline merged fold oracle (-O2/-G0), with no
+flag override. The full campaign gate passes: 278 folded functions, 34/34 valid
+modules, EXE/all overlays including data byte-identical, interfaces/canonical
+names/policy/convergence and no exception growth passing.
+
+Historical evidence:
+
 Evidence: gapless link adjacency closing a contiguous small-function run
 (`splat` offsets: 0x23854 = 0x800DB674 is 0x118 and ends exactly at 0x2396C =
 0x800DB78C; 0x2396C = 0x800DB78C is 0x64 and ends exactly at 0x800DB7F0;
@@ -11105,6 +11150,44 @@ audio-setup twin notes, that relation is not itself TU-membership evidence —
 here only the dispatcher call graph and the gapless link run are.
 
 ## `ovl_21` D_8007AFF0 far-buffer state writer + GTE reader — 0x800BB0F8 / 0x800BB138 / 0x800BB250 / 0x800BB2B4 (confidence: medium)
+
+**Reconstructed module: `src/overlays/ovl_21/modules/scene_camera_geometry.c`,
+800BB0F8–800BB328 (exclusive), four functions.** The reset writes the exact
+camera inputs/target slots read by the GTE update; apply and draw consume its
+same derived eye and target. Four scene controllers (7FC8/806C/80D4/8134)
+call update/apply/draw in the same order. This shared narrow state and protocol,
+not D_8007AFF0 usage in general or resemblance to other overlays, establishes
+membership. All four original entries remain distinct overlay-21 identities.
+
+The earlier description below overextended the evidence to the terminal
+setup run. BB8B8 reads *the value* of D_8007AFF0 as a loaded-asset buffer,
+whereas this camera uses storage at *the address* of D_8007AFF0 +25394 etc.
+Those are not the same accessed state block. BB8B8 initializes the geometry
+this module draws, but producer/consumer descriptor sharing alone does not
+establish one TU with the intervening sprite/audio setup handlers. There is
+no GP discriminator under -G0. Left neighbor BAFFC projects/draws sprites
+using BCD18/BCD20, without this camera block or descriptor. Right neighbor
+BB328 begins sprite/CD setup, without the camera update protocol. These
+boundaries are supported-family endpoints; exact original object boundaries
+remain unproved. No camera-protocol member was omitted inside the run.
+
+Names: BB0F8 `Ovl21InitSceneCamera`, BB138 `Ovl21UpdateSceneCameraOffset`,
+BB250 `Ovl21ApplySceneCamera`, BB2B4 `Ovl21DrawSceneGeometry`. The eight-byte
+two-pointer descriptor at ovl_21:800C0DD8 is `gOvl21SceneGeometry`, distinct
+from other overlays' descriptors. Named state offsets and local vectors/matrices
+retain all original widths, including low-halfword reads from word-reset
+slots. Reset-only fields remain neutral. The public header documents world
+and angle units, ordering, truncation, GTE-stack preservation and overlay
+lifetime; all five caller units use it. Function/data renames are authored
+in ovl_21.names.txt and propagated to regenerated headers and symbol tables;
+the opaque override-header extern was explicitly renamed without retyping.
+
+Merged baseline -O2/-G0 passed the fold oracle for every member. No override
+was involved or added. The full campaign gate passes with 271 folded functions
+and 33/33 valid modules: executable/overlays/data byte identity, interfaces,
+canonical identities, source policy, convergence and no exception growth.
+
+Historical evidence (the broad-buffer membership inference is corrected above):
 
 Evidence: gapless link adjacency (0x800BB0F8 is 0x40 and ends exactly at
 0x800BB138) plus a shared far-buffer global cluster: `ovl_21_func_800BB0F8`
@@ -12732,6 +12815,48 @@ Members (link order):
 
 ## `ovl_19` nested-callee pair — 0x800BB08C / 0x800BB108 (confidence: high)
 
+**Reconstructed module: `src/overlays/ovl_19/modules/value_table_display.c`,
+800BB08C–800BB318 (exclusive), both original entries.** Bilateral static-chain
+setup/store proves the nested helper and parent were one TU; the actual GNU
+nested definition is retained. This is stronger than shared-state similarity.
+The helper's former empty carrier is removed, not replaced by another stub.
+
+Names: BB108 `Ovl19DrawValueTable`; nested BB08C
+`Ovl19DrawValueTableSpriteState`. The table has two horizontal columns and
+four vertical rows, not the opposite: X=21/221 and Y=57/105/150/195. Locals
+now reflect that orientation, saved text setting, label byte offsets and
+animation/frame arguments. The signed display-state count enables the two
+marker sets. `include/ovl19_value_table_display.h` documents the public draw
+operation and its state/packet side effects; both callers use it. The unused
+external helper declaration was removed; no new linkage inference was made.
+
+The header-initialized sprite at ovl_19:800BF660 is `gOvl19UiSprite` (0x30-byte
+SpriteSourceData-compatible storage), and the exact 0x12C-byte halfword label
+pool at ovl_19:800BCD68 is `gOvl19ValueLabelText`. Names propagate to their
+other ovl_19 users. ovl_25's different object at the same 800BCD68 RAM slot
+still has its original declaration/name: its sprite-header offset table is
+NOT an alias of this label pool. Both storage declarations preserve prior
+widths/types. The broad BF4C0 state and shared EXE first-label word retain
+neutral identities; their complete roles are not established by this drawer.
+
+Left boundary: BAFAC is a projected-sprite positioning wrapper taking a
+caller-supplied object and querying surface height, with BD088/BD050 scratch;
+it has no value-text traversal or nested-helper relationship. Right boundary:
+BB318 begins the independently shared camera-state protocol, now in
+scene_camera_geometry.c. Neither supplies evidence for extending this proven
+nested pair. The clamp lookup at BADAC and other UiSprite clients are external
+providers/clients, not a static-helper proof of common TU membership.
+
+Merged baseline -O2/-G0 and both entries passed the fold oracle. No flag
+exception is involved. The parent's existing authorized register binding is
+preserved, not introduced; canonicalNames migrated its allowlist key by the
+same container/address identity, and the campaign confirms no exception
+growth. No new asm, register pin or stub was added. The full campaign gate
+passes with 280 folded functions and 35/35 valid modules, including all linked
+EXE/overlay bytes and data, source policy, canonical names and interfaces.
+
+Historical evidence:
+
 - ovl_19_func_800BB08C (m, matched this session, byte-exact) — `D_800BF660`
   ObjectState reset/handoff leaf: `func_80015840`/`func_8001585C` on the object,
   then `func_80015EE8(D_8005E3C0->field_D8 + 0x14, &D_800BF660, state[0x1A4], state[0x1A5], 0, 0)`.
@@ -12750,6 +12875,50 @@ Members (link order):
   `ovl_17_func_800BAF50` / `ovl_23_func_800BB1B8`.
 
 ## `ovl_19` D_8007AFF0 far-buffer state reader run — 0x800BB358–0x800BB4D4 (confidence: medium)
+
+**Reconstructed module: `src/overlays/ovl_19/modules/scene_camera_geometry.c`,
+800BB318–800BB5D4 (exclusive), all five entries.** BB318 resets the exact
+camera distance/height/yaw/target slots BB358 rotates and BB470 installs;
+BB4D4 constructs the identical eye/target for geometry culling. Both frame
+controllers 800B8064/800B80E8 invoke update/apply/draw in that order. BB548
+joins through the same geometry descriptor as BB4D4 and its surface-query
+protocol, not through adjacency alone. This is private state/protocol and
+call-sequence evidence; -G0 supplies no GP ownership proof.
+
+The complete supported reader/query family is folded, not the four-reader
+slice. Left neighbor BB108's nested helper pair draws the separate BF660
+sprite object; it neither consumes this camera block nor calls these helpers.
+Right neighbor BB5D4 starts sprite/CD setup, not the camera/query protocol.
+Later BBB48 loads this geometry descriptor, so descriptor sharing alone does
+not prove a boundary before setup or require merging the whole setup run;
+there is currently no additional compiler/linkage evidence joining those
+families. These endpoints delimit the evidence-supported family, not proven
+original object boundaries. No known connected camera reader was left out.
+
+Names preserve the overlay/address identity: BB318 `Ovl19InitSceneCamera`,
+BB358 `Ovl19UpdateSceneCameraOffset`, BB470 `Ovl19ApplySceneCamera`, BB4D4
+`Ovl19DrawSceneGeometry`, BB548 `Ovl19AdjustPositionToSurface`. The descriptor
+at ovl_19:800BF700 is `gOvl19SceneGeometry`; its two-pointer, eight-byte extent
+comes from InitProjectedPrimitiveSource, while its existing opaque C storage
+view is retained. Named camera offsets preserve the original word-reset and
+halfword-consumer widths. The two reset-only words remain neutral. Broad
+D_8007AFF0 work-area storage is not renamed as if it belonged only to a camera.
+
+`include/ovl19_scene_camera_geometry.h` documents units, truncation, frame
+order, geometry-loading prerequisite and collision side effects. All seven
+caller units now use this header rather than local declarations; external
+linkage and call ABIs are unchanged. Overlay functions and data names are
+persisted in ovl_19.names.txt as well as regenerated symbol/context outputs.
+The scoped override-header extern was renamed explicitly: canonicalNames
+rewrites overlay source references but does not resolve this shared header's
+unqualified overlay data identity automatically.
+
+All five members passed the merged baseline fold oracle (-O2/-G0); no member
+has an override and no flag exception was introduced. The full campaign gate
+passes: 267 folded functions, 32/32 valid modules, canonical/interfaces,
+linked EXE and all overlays including data, policy and no exception growth.
+
+Historical evidence:
 
 Evidence: gapless link run — `ovl_19_func_800BB318` (0x40, ends 0x800BB358) →
 `ovl_19_func_800BB358` (0x118, ends 0x800BB470) → `ovl_19_func_800BB470` (0x64,

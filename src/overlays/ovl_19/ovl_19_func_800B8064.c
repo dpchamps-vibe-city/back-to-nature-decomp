@@ -2,20 +2,21 @@
 #include "screen_fade.h"
 #include "gte_scene_state.h"
 #include "master_volume.h"
-
-void ovl_19_func_800BB358(void);
-void ovl_19_func_800BB470(void);
-void ovl_19_func_800BB4D4(void);
-void ovl_19_func_800BB108();
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl19_scene_camera_geometry.h"
+#include "ovl19_value_table_display.h"
 
 void ovl_19_func_800B8064(void) {
     u8 var_s0;
 
-    ovl_19_func_800BB358();
-    ovl_19_func_800BB470();
+    Ovl19UpdateSceneCameraOffset();
+    Ovl19ApplySceneCamera();
     ApplyGteSceneState();
-    ovl_19_func_800BB4D4();
-    ovl_19_func_800BB108();
+    Ovl19DrawSceneGeometry();
+    Ovl19DrawValueTable();
     var_s0 = IsScreenFadeComplete() == 1;
     if (GetMasterVolumeRampState() == 0) {
         var_s0++;

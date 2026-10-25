@@ -17,7 +17,7 @@ void ovl_19_func_800B8C74(void) {
         func_80017A08(0, ((Ovl19CompletionCounterView *)D_8006C838)->text);
         func_8002261C(4, 0x16);
     } else {
-        func_80017A08(0, (s32)((u8 *)D_800BCD68 +
+        func_80017A08(0, (s32)((u8 *)gOvl19ValueLabelText +
             ovl_19_func_800BADAC(((Ovl19SelectionState *)D_800BF4C0)->values[
                 D_800BCF24[((Ovl19SelectionState *)D_800BF4C0)->selection]])));
         func_8002261C(4, 0x17);

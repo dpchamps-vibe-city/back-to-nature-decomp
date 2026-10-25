@@ -5,6 +5,9 @@
 #include "ovl11_collision_query_budget.h"
 #include "gte_scene_state.h"
 #include "sprite_rotation.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl11_scene_camera_lighting.h"
 
 void ovl_11_func_800C06B0 (void);
 void ovl_11_func_800C0688 (void);
@@ -12,7 +15,6 @@ void ovl_11_func_800C3D70 (void);
 void ovl_11_func_800BFD1C (void);
 void ovl_11_func_800F65B8 (void);
 void ovl_11_func_80113818 (void);
-void ovl_11_func_800DB674 (void);
 void ovl_11_func_800C401C (void);
 void ovl_11_func_80107F58 (void);
 void ovl_11_func_8011F114 (void);
@@ -21,9 +23,7 @@ void ovl_11_func_800CAADC (void);
 void ovl_11_func_800DB5CC (void);
 void ovl_11_func_800C056C ();
 void ovl_11_func_801209D4 (void);
-void ovl_11_func_800DB78C (void);
 void ovl_11_func_800DCC5C (void);
-void ovl_11_func_800DB904 (void);
 void ovl_11_func_800CA24C ();
 void ovl_11_func_800CCB90 (void);
 void ovl_11_func_800DC148 (void);
@@ -49,7 +49,7 @@ void ovl_11_func_800C162C(void) {
     ovl_11_func_800BFD1C();
     ovl_11_func_800F65B8();
     ovl_11_func_80113818();
-    ovl_11_func_800DB674();
+    Ovl11UpdateSceneCameraOffset();
     ovl_11_func_800C401C();
     ovl_11_func_80107F58();
     ovl_11_func_8011F114();
@@ -72,12 +72,12 @@ void ovl_11_func_800C162C(void) {
     ovl_11_func_801209D4();
     SCRATCH_STACK_END();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
-    ovl_11_func_800DB78C();
+    Ovl11ApplySceneCamera();
     ApplyGteSceneState();
     SCRATCH_STACK_END();
     if (!(((struct Ovl11FrameState *) D_8006C838)->flags & 0x800000)) {
         ovl_11_func_800DCC5C();
-        ovl_11_func_800DB904();
+        Ovl11DrawSceneGeometry();
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
         ovl_11_func_800CA24C((Ovl11SpritePositionView *) ((struct Ovl11FrameState *) D_8006C838)->position, 1);
         ovl_11_func_800CCB90();

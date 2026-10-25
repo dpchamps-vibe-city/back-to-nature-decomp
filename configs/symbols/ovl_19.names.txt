@@ -1,0 +1,17 @@
+// Camera/geometry family, preserving overlay-19 entry identities.
+Ovl19InitSceneCamera = 0x800BB318;
+Ovl19UpdateSceneCameraOffset = 0x800BB358;
+Ovl19ApplySceneCamera = 0x800BB470;
+Ovl19DrawSceneGeometry = 0x800BB4D4;
+Ovl19AdjustPositionToSurface = 0x800BB548;
+
+// Two-pointer ProjectedPrimitiveSource initialized by ovl_19:800BBB48.
+gOvl19SceneGeometry = 0x800BF700; // type:data size:0x8
+
+// Bilaterally witnessed GNU nested helper and its table-drawing parent.
+Ovl19DrawValueTableSpriteState = 0x800BB08C;
+Ovl19DrawValueTable = 0x800BB108;
+// Header-initialized SpriteSourceData, used for table sprites and markers.
+gOvl19UiSprite = 0x800BF660; // type:data size:0x30
+// 0x12C-byte halfword-string pool selected by byte offsets from 800BADAC.
+gOvl19ValueLabelText = 0x800BCD68; // type:data size:0x12C

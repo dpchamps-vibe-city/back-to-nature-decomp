@@ -1,0 +1,8 @@
+// Camera/geometry family, preserving overlay-21 entry identities.
+Ovl21InitSceneCamera = 0x800BB0F8;
+Ovl21UpdateSceneCameraOffset = 0x800BB138;
+Ovl21ApplySceneCamera = 0x800BB250;
+Ovl21DrawSceneGeometry = 0x800BB2B4;
+
+// Two-pointer ProjectedPrimitiveSource initialized by ovl_21:800BB8B8.
+gOvl21SceneGeometry = 0x800C0DD8; // type:data size:0x8

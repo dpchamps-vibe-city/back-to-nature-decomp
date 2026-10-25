@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "packet_work.h"
+#include "ovl19_value_table_display.h"
 
 
 void ovl_19_func_800BA770 (void);
@@ -16,13 +17,9 @@ u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 s32 ovl_19_func_800BADAC (s16 arg0);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_19_func_800BB08C (s32 arg0, s32 arg1);
-
-void ovl_19_func_800BB108();                        /* static */
-
 void ovl_19_func_800B868C(void) {
     ovl_19_func_800BA770();
-    ovl_19_func_800BB108();
+    Ovl19DrawValueTable();
     if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x60) {
         D_800BF4C4 = 1;
     }

@@ -3,6 +3,11 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl19_scene_camera_geometry.h"
 
 void ovl_19_func_800BB5D4(void);
 void ovl_19_func_800BB848(void);
@@ -10,7 +15,6 @@ void ovl_19_func_800BB8F4(void);
 void ovl_19_func_800BBB48(void);
 void ovl_19_func_800BBCCC(void);
 void ovl_19_func_800B82B8(void);
-void ovl_19_func_800BB318(void);
 void func_800226F0(void);
 
 void ovl_19_func_800B7F34(void) {
@@ -47,7 +51,7 @@ void ovl_19_func_800B7F34(void) {
     }
     if (D_800BCEE4 == 6) {
         ovl_19_func_800B82B8();
-        ovl_19_func_800BB318();
+        Ovl19InitSceneCamera();
         func_800226F0();
         BeginScreenFadeDecrease(0xA, 0, 2);
         BeginMasterVolumeFadeIn(0xA);

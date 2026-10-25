@@ -1,12 +1,12 @@
 #include "common.h"
 #include "scratchpad.h"
 #include "sprite_rotation.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl11_scene_camera_lighting.h"
 
-void ovl_11_func_800DB8DC (void);
-void ovl_11_func_800DB824 (void);
-void ovl_11_func_800DB7F0 (void);
 void ovl_11_func_800DB0E4 (void);
-void ovl_11_func_800DB978 (void);
 void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
 void ovl_11_func_800DCECC (void);
@@ -30,12 +30,12 @@ void ovl_11_func_800BCD28(void) {
     u8 *temp_s1;
     struct Ovl11ResetState *state;
 
-    ovl_11_func_800DB8DC();
-    ovl_11_func_800DB824();
-    ovl_11_func_800DB7F0();
+    Ovl11SetSceneProjection();
+    Ovl11InitSceneLighting();
+    Ovl11ResetSceneCameraOrbit();
     ovl_11_func_800DB0E4();
     Ovl11ResetSpriteRotations();
-    ovl_11_func_800DB978();
+    Ovl11ClearSceneCameraVectors();
     if (D_801287F4 == 0xB) {
         ovl_11_func_800DC560(0, 0);
     } else {

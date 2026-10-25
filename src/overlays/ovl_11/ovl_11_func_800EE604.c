@@ -10,7 +10,7 @@ typedef struct {
     u16 f22;
 } FarWork;
 
-void ovl_11_func_800DB7F0(void);
+void Ovl11ResetSceneCameraOrbit(void);
 void func_8001F2EC(s32 cur, s32 span, s32 to, s32 from, s32 *out);
 
 s32 ovl_11_func_800EE604(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
@@ -26,7 +26,7 @@ s32 ovl_11_func_800EE604(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
     var_s3 = 0;
     if (arg3 != 0) {
-        ovl_11_func_800DB7F0();
+        Ovl11ResetSceneCameraOrbit();
     }
     base = D_80129560;
     temp_s2 = (s32 *)((u8 *)base + (arg0 * 4));

@@ -2,6 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl19_scene_camera_geometry.h"
 
 
 void func_80015868 (Struct_800154CC *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
@@ -10,7 +13,6 @@ void func_8001585C (ObjectState *obj, u8 arg1);
 void ovl_19_func_800BADF8 (s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
 void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
-void ovl_19_func_800BB548 (s16 *arg0);
 s32 func_8001DFD4 (s32 *arg0, SVECTOR *arg1);
 void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
 void func_800248E8 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);

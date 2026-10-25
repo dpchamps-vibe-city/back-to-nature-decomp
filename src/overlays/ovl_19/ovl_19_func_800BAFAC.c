@@ -2,8 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl19_scene_camera_geometry.h"
 
-void ovl_19_func_800BB548(s16 *arg0);
 s32 func_8001DFD4(s32 *arg0, SVECTOR *arg1);
 void func_80015840(ObjectState *obj, u8 arg1);
 void func_80015BF0(s32 arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3);
@@ -13,7 +15,7 @@ void ovl_19_func_800BAFAC(s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3) {
     s32 depth;
     s32 offset;
 
-    ovl_19_func_800BB548(arg2);
+    Ovl19AdjustPositionToSurface(arg2);
     D_800BD088[0] = arg2[0];
     D_800BD088[1] = arg2[1];
     D_800BD088[2] = arg2[2];

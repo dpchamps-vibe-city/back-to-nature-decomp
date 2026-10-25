@@ -1,16 +1,18 @@
 #include "common.h"
 #include "gte_scene_state.h"
 #include "cd_audio.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl11_scene_camera_lighting.h"
 
 void ovl_11_func_800C188C(void);
 void ovl_11_func_800C162C(void);
 void ovl_11_func_800BBC74(void);
 void ovl_11_func_800E3AA4(void);
 void ovl_11_func_80120A2C(void);
-void ovl_11_func_800DB674(void);
-void ovl_11_func_800DB78C(void);
 void ovl_11_func_800DCC5C(void);
-void ovl_11_func_800DB904(void);
 
 void ovl_11_func_800C14A0(void) {
     if (((struct Ovl11FrameState *) D_8006C838)->flags & 0x18000) {
@@ -31,12 +33,12 @@ void ovl_11_func_800C14A0(void) {
         break;
     case 3:
         ovl_11_func_80120A2C();
-        ovl_11_func_800DB674();
-        ovl_11_func_800DB78C();
+        Ovl11UpdateSceneCameraOffset();
+        Ovl11ApplySceneCamera();
         ApplyGteSceneState();
         if (!(((struct Ovl11FrameState *) D_8006C838)->flags & 0x800000)) {
             ovl_11_func_800DCC5C();
-            ovl_11_func_800DB904();
+            Ovl11DrawSceneGeometry();
         }
         break;
     }

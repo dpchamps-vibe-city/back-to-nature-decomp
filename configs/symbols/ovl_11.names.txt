@@ -74,3 +74,16 @@ Ovl11CompareRecordOrderRank = 0x800D0600;
 Ovl11ClassifyRecordPairOrder = 0x800D062C;
 Ovl11SelectRecordPairCode = 0x800D0698;
 gOvl11RecordPairOrderCodes = 0x80123A00; // type:data size:0x14
+
+// Camera orbit/projection/lighting run, with separate input/output resets.
+Ovl11UpdateSceneCameraOffset = 0x800DB674;
+Ovl11ApplySceneCamera = 0x800DB78C;
+Ovl11ResetSceneCameraOrbit = 0x800DB7F0;
+Ovl11InitSceneLighting = 0x800DB824;
+Ovl11SetSceneProjection = 0x800DB8DC;
+Ovl11DrawSceneGeometry = 0x800DB904;
+Ovl11ClearSceneCameraVectors = 0x800DB978;
+// Two-pointer geometry source initialized by 800DBFEC/80104CB8.
+gOvl11SceneGeometry = 0x80128818; // type:data size:0x8
+// Three private 16-byte light records installed by 800DB824.
+gOvl11SceneLights = 0x80128DB8; // type:data size:0x30

@@ -2,8 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
-
-void ovl_19_func_800BB548(s16 *arg0);
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl19_scene_camera_geometry.h"
 
 s32 ovl_19_func_800BA65C(Ovl19Func800BAC40Arg *arg0) {
     SVECTOR pos;
@@ -23,6 +24,6 @@ s32 ovl_19_func_800BA65C(Ovl19Func800BAC40Arg *arg0) {
         pos.vx += 200;
         break;
     }
-    ovl_19_func_800BB548((s16 *) &pos);
+    Ovl19AdjustPositionToSurface((s16 *) &pos);
     return pos.vy != *(s16 *) ((u8 *) arg0 + 0x12);
 }

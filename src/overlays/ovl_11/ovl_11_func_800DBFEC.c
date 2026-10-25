@@ -22,9 +22,9 @@ void ovl_11_func_800DBFEC(u16 arg0, u16 arg1, s32 arg2) {
     *(u16 *)(base + 0x25384) = *(u16 *)(base + 0x247A8);
     *(u16 *)(base + 0x25386) = *(u16 *)(base + 0x247AA);
     ovl_11_func_800BCF54(arg0, arg2 & 0xFFFF);
-    InitProjectedPrimitiveSource(D_80128818, (u8 *)D_8007AFF0 + 0x2000);
+    InitProjectedPrimitiveSource(gOvl11SceneGeometry, (u8 *)D_8007AFF0 + 0x2000);
     ovl_11_func_800DB00C(&D_800A00C4, &D_800A00CC);
-    func_8001E340((Ovl11SceneGrid **)D_80128818);
+    func_8001E340((Ovl11SceneGrid **)gOvl11SceneGeometry);
     ovl_11_func_800DC114(0, 0, 0);
     header = *(struct Ovl11SceneHeader **)(base + 0x25388);
     switch (header->kind) {

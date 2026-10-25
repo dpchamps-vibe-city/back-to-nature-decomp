@@ -1145,9 +1145,9 @@ typedef struct {
 } Ovl11_801278ECEntry;
 extern Ovl11_801278ECEntry D_801278EC[];
 
-/* D_80128DB8 - overlay-private array of three 16-byte flat-light records
+/* ovl_11:80128DB8 - private array of three 16-byte flat-light records
  * (GsF_LIGHT-shaped: s32 vx/vy/vz @0/4/8, u8 r/g/b @0xC/0xD/0xE), written by
- * ovl_11_func_800DB824 (absolute-addressed lui+lo in the target) and passed to
+ * Ovl11InitSceneLighting (absolute-addressed lui+lo in the target) and passed to
  * GsSetFlatLight. GsF_LIGHT itself lives in psyq/libgs.h, which this header
  * cannot include, so the .c casts the pointer at the call. */
 typedef struct {
@@ -1159,8 +1159,8 @@ typedef struct {
     /* 0x0E */ u8 b;
     /* 0x0F */ u8 pad;
 } Ovl11FlatLight;
-extern Ovl11FlatLight _D_80128DB8[3] __asm__("D_80128DB8");
-#define D_80128DB8 (_D_80128DB8)
+extern Ovl11FlatLight _gOvl11SceneLights[3] __asm__("gOvl11SceneLights");
+#define gOvl11SceneLights (_gOvl11SceneLights)
 
 /* exe:8006C7B8. The bank-body transfer uses fixed-size chunks. lastChunk
  * is an inclusive quotient bound, so even an exact multiple gets a final
@@ -2573,11 +2573,10 @@ extern s16 D_8012308C[];
 extern s16 D_80123098[];
 extern s16 D_801230A4[];
 
-/* D_800BF660 - ovl_19 bss object state base (0x800BF660). Referenced with
- * absolute addressing (lui + %lo) from ovl_19_func_800BAD50, which passes
- * its address as an ObjectState and reads the ObjectState fields at +4/+5
- * through a base pointer biased by -0x1A0. */
-extern u8 D_800BF660[];
+/* ovl_19:800BF660 - header-initialized UI sprite source, shared by 800BAD50
+ * and Ovl19DrawValueTable. Retain the opaque ObjectState-compatible view and
+ * its original absolute addressing; animation/frame bytes are at +4/+5. */
+extern u8 gOvl19UiSprite[];
 
 /* 800B8C18 reads these halfwords/position in six 0x44-byte records. */
 struct Ovl23DecisionRecord {
@@ -5250,11 +5249,9 @@ extern s32 D_800BCD20[2];
  * addressing. Not classified in globals.h. */
 extern u8 D_800C0AFC[];
 
-/* D_800C0DD8 - ovl_21 ProjectedPrimitiveSource descriptor whose address
- * ovl_21_func_800BB2B4 hands to func_8001C0D4. Only its address is taken, so
- * an opaque byte object is enough; the overlay build is -G0, giving absolute
- * lui/addiu addressing. Not classified in globals.h. */
-extern u8 D_800C0DD8[];
+/* ovl_21:800C0DD8 - two-pointer scene geometry descriptor, initialized by
+ * 800BB8B8 and consumed by Ovl21DrawSceneGeometry. Preserve opaque storage. */
+extern u8 gOvl21SceneGeometry[];
 
 /* D_80129230 - ovl_11 array of 10 records, stride 0x30. ovl_11_func_800E516C
  * walks it with a 0x30 byte pointer and reads the s32 at +0x14; the same
@@ -5360,17 +5357,15 @@ struct Ovl11C7F0NearState {
     s16 area;
 };
 
-/* D_80128818 - ovl_11 ProjectedPrimitiveSource descriptor whose address
- * ovl_11_func_800DB904 hands to func_8001C0D4. Only its address is taken, so
- * an opaque byte object is enough; the overlay build is -G0, giving absolute
- * lui/addiu addressing. */
-extern u8 D_80128818[];
+/* ovl_11:80128818 - two-pointer scene geometry descriptor, initialized by
+ * 800DBFEC/80104CB8 and shared by drawing and collision queries.
+ * Preserve its existing opaque storage view. */
+extern u8 gOvl11SceneGeometry[];
 
-/* D_800BF700 - ovl_19 ProjectedPrimitiveSource descriptor whose address
- * ovl_19_func_800BB4D4 hands to func_8001C0D4. Only its address is taken, so
- * an opaque byte object is enough; the overlay build is -G0, giving absolute
- * lui/addiu addressing. */
-extern u8 D_800BF700[];
+/* ovl_19:800BF700 - two-pointer scene geometry descriptor, initialized by
+ * 800BBB48 and shared by Ovl19DrawSceneGeometry/Ovl19AdjustPositionToSurface.
+ * Keep the existing opaque storage view; consumers cast it as needed. */
+extern u8 gOvl19SceneGeometry[];
 
 /* ovl_19_func_800B7F34 selects and advances this state with lbu/sb. */
 extern u8 D_800BCEE4;
@@ -5766,9 +5761,12 @@ extern s16 D_800BFC90;
  * groups of four halfwords, indexed by (category << 3) + (flag << 2) in
  * halfwords (category = ovl_19_func_800BA33C's threshold class, flag = whether
  * arg->+0xC is non-zero). */
-/* D_8007AE58 - ovl_19_func_800BB108 loads a word for its first text argument. */
+/* exe:8007AE58 - Ovl19DrawValueTable reads its first label address here. */
 extern s32 D_8007AE58;
-/* D_800BCD68 - ovl_19 text data: 0x12C bytes of halfwords, indexed by byte offsets. */
+/* ovl_19:800BCD68 - 0x12C-byte halfword-label pool, indexed by byte offsets. */
+extern u16 gOvl19ValueLabelText[0x96];
+/* ovl_25 has a different object at 800BCD68: 800BAFCC reads sprite-header
+ * offsets here. Preserve its prior declaration; it is NOT the ovl_19 text. */
 extern u16 D_800BCD68[0x96];
 /* 800B8C74 indexes this byte table with the signed selection at state +0x8. */
 extern u8 D_800BCF24[];

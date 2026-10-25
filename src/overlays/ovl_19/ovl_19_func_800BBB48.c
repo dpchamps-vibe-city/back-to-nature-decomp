@@ -20,7 +20,7 @@ void ovl_19_func_800BBB48(void) {
     CdReadDiscSectorsBlocking(0, p[1], p[2] - p[1], 0, gGraphicsHeapBase + 0x4290);
     func_8001719C((u8 *)(gGraphicsHeapBase + 0x4290));
     memcpy(&D_8009F78C, (void *)D_8007AFF0, 0xBDC);
-    dst = &D_800BF700;
+    dst = &gOvl19SceneGeometry;
     __asm__("" : : : "memory");
     InitProjectedPrimitiveSource(dst, (void *)(D_8007AFF0 + 0x2000));
     func_8001E340((void **)dst);

@@ -1,16 +1,18 @@
 #include "common.h"
 #include "gte_scene_state.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl21_scene_camera_geometry.h"
 
 s32 func_800225C4(void);
-void ovl_21_func_800BB138(void);
-void ovl_21_func_800BB250(void);
-void ovl_21_func_800BB2B4(void);
 
 void ovl_21_func_800B806C(void) {
     func_800225C4();
-    ovl_21_func_800BB138();
-    ovl_21_func_800BB250();
+    Ovl21UpdateSceneCameraOffset();
+    Ovl21ApplySceneCamera();
     ApplyGteSceneState();
-    ovl_21_func_800BB2B4();
+    Ovl21DrawSceneGeometry();
     D_800BCB6C[(s16) *D_800C0448]();
 }

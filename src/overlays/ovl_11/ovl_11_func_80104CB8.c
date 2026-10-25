@@ -37,9 +37,9 @@ void ovl_11_func_80104CB8(void) {
     ovl_11_func_800CBEF8();
     ((Ovl11AreaInitView *)D_8006C838)->field_4488 = 2;
     ((Ovl11FarInitView *)&D_8007AFF0)->field_2548C = 0;
-    InitProjectedPrimitiveSource(D_80128818, (u8 *)D_8007AFF0 + 0x2000);
+    InitProjectedPrimitiveSource(gOvl11SceneGeometry, (u8 *)D_8007AFF0 + 0x2000);
     ovl_11_func_800DB00C(&D_800A00C4, &D_800A00CC);
-    func_8001E340((Ovl11SceneGrid **)D_80128818);
+    func_8001E340((Ovl11SceneGrid **)gOvl11SceneGeometry);
     ovl_11_func_800DB0E4();
     ovl_11_func_800DCECC();
     ovl_11_func_800DC990();

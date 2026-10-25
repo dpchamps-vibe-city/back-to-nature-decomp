@@ -5,19 +5,21 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl21_scene_camera_geometry.h"
 
-void ovl_21_func_800BB138(void);
-void ovl_21_func_800BB250(void);
-void ovl_21_func_800BB2B4(void);
 void ovl_21_func_800BA4C0(void);
 
 void ovl_21_func_800B8134(void) {
     s32 var_s0;
 
-    ovl_21_func_800BB138();
-    ovl_21_func_800BB250();
+    Ovl21UpdateSceneCameraOffset();
+    Ovl21ApplySceneCamera();
     ApplyGteSceneState();
-    ovl_21_func_800BB2B4();
+    Ovl21DrawSceneGeometry();
     ovl_21_func_800BA4C0();
     var_s0 = IsScreenFadeComplete() == 1;
     if (GetMasterVolumeRampState() == 0) {

@@ -3,7 +3,7 @@
 
 void ovl_11_func_800BDA20(void);
 void ovl_11_func_80121134(void);
-void ovl_11_func_800DB7F0(void);
+void Ovl11ResetSceneCameraOrbit(void);
 void ovl_11_func_800D78D0(void);
 
 void ovl_11_func_80120A2C(void) {
@@ -67,7 +67,7 @@ void ovl_11_func_80120A2C(void) {
     case 3:
         if (IsScreenFadeComplete() == 1) {
             BeginScreenFadeDecrease(10, 0, 2);
-            ovl_11_func_800DB7F0();
+            Ovl11ResetSceneCameraOrbit();
             ovl_11_func_800D78D0();
             ((struct Ovl11MapCameraWork *)&D_8007AFF0)->field_2548C = 0;
             ((struct struct_8006C838_view *)D_8006C838)->field_0C |= 0x800000;

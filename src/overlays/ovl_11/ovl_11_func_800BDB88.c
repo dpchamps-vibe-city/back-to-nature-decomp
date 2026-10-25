@@ -38,7 +38,7 @@ s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1) {
         ret = 0;
     } else {
         SetVal8005E2E8(arg1);
-        found = func_8001E4C0(D_80128818, (BoundsStruct_8001E878 *)arg0);
+        found = func_8001E4C0(gOvl11SceneGeometry, (BoundsStruct_8001E878 *)arg0);
         height = func_8001E38C();
         if (found == 0) {
             ret = 1;
