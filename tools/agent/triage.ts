@@ -227,7 +227,11 @@ function readCompiled(name: string, source: string, scratch: string, prepared?: 
     return null;
   }
 
-  const lines = readFileSync(artifacts.assembly, "utf-8").split("\n");
+  const assembly = readFileSync(artifacts.assembly, "utf-8").split("\n");
+  const start = assembly.findIndex((line) => line.trim().split(/\s+/).join(" ") === `.ent ${name}`);
+  const end = assembly.findIndex((line, index) => index > start && line.trim().split(/\s+/).join(" ") === `.end ${name}`);
+  if (start < 0 || end < 0) return null;
+  const lines = assembly.slice(start, end + 1);
   const frame = lines.find((line) => /\.frame\s+\$sp/.test(line));
   if (!frame) return null;
   const size = frame.match(/\.frame\s+\$sp,(\d+),/);
@@ -257,7 +261,7 @@ function readCompiled(name: string, source: string, scratch: string, prepared?: 
     argAreaSize: parseInt(detail[4], 10),
     savedRegs: parseInt(detail[2], 10),
     varsSize: parseInt(detail[1], 10),
-    instructions: artifacts.object ? disassembleObject(artifacts.object) : [],
+    instructions: artifacts.object ? disassembleObject(artifacts.object, name) : [],
     asmBlocks,
     implicitCallees: detectImplicitDeclarations(artifacts.preprocessed, name),
   };

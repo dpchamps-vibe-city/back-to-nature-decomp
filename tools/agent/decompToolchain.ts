@@ -656,8 +656,12 @@ export function resolveAsmSource(funcName: string): string | null {
     ? [funcName, funcName.slice(prefix.length)]
     : [funcName];
   for (const stem of stems) {
-    const archived = join(disasmDir, "functions", `${stem}.s`);
-    if (existsSync(archived)) return archived;
+    /* Section-aware overlay disassembly nests split functions under the
+     * section name; semantic names need not have an older flat-file copy. */
+    const archived = join(disasmDir, "functions", "overlay", `${stem}.s`);
+    if (container?.kind === "overlay" && existsSync(archived)) return archived;
+    const flat = join(disasmDir, "functions", `${stem}.s`);
+    if (existsSync(flat)) return flat;
   }
   return null;
 }
@@ -753,8 +757,10 @@ export function splitOperands(text: string): string[] {
   return result;
 }
 
-export function disassembleObject(object: string): DisassembledInstruction[] {
-  const dump = runTool(OBJDUMP, ["-dr", "--no-show-raw-insn", object]);
+/* A module object contains several functions; function diagnostics must name
+ * the symbol rather than counting every member of the translation unit. */
+export function disassembleObject(object: string, symbol?: string): DisassembledInstruction[] {
+  const dump = runTool(OBJDUMP, ["-dr", "--no-show-raw-insn", ...(symbol ? [`--disassemble=${symbol}`] : []), object]);
   const instructions: DisassembledInstruction[] = [];
   const byAddress = new Map<number, DisassembledInstruction>();
 

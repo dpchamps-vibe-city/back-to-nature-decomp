@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
-
-s32 ovl_11_func_800BE208(s32 *arg0, Ovl11CollisionTag arg1, u16 arg2, u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
+#include "ovl11_collision_query_budget.h"
 
 /* Puts records that 800BE208 reports as colliding back at fixed positions.
  * A record in state 6 is also set back to state 1, without the collision
@@ -20,7 +19,7 @@ void ovl_11_func_800D0FB4(void) {
         record->position[2] = 3100;
         record->collision.field_2 = 1;
     } else if ((record->collision.field_2 == 1 || record->collision.field_2 == 6) &&
-               ovl_11_func_800BE208(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
+               Ovl11QueryCollisionBudgeted(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
         if (record->collision.field_2 == 1) {
             record->position[0] = -1800;
             record->position[1] = 0;
@@ -34,7 +33,7 @@ void ovl_11_func_800D0FB4(void) {
     }
     record = &((Ovl11Status99C8View *)D_8006C838)->record_929C;
     if (record->collision.field_2 == 1 &&
-        ovl_11_func_800BE208(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
+        Ovl11QueryCollisionBudgeted(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
         record->position[0] = 5000;
         record->position[1] = 0;
         record->position[2] = 2700;
@@ -42,7 +41,7 @@ void ovl_11_func_800D0FB4(void) {
     for (i = 0; i < 20; i++) {
         record = (Ovl11ResetRecordB4 *)&((Ovl11Status99C8View *)D_8006C838)->records_81BC[i];
         if (record->collision.field_2 == 1 &&
-            ovl_11_func_800BE208(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
+            Ovl11QueryCollisionBudgeted(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
             record->position[0] = i * 400 - 1000;
             record->position[1] = 0;
             record->position[2] = 2200;
@@ -56,7 +55,7 @@ void ovl_11_func_800D0FB4(void) {
             record->position[2] = i * 400 - 7600;
             record->collision.field_2 = 1;
         } else if ((record->collision.field_2 == 1 || record->collision.field_2 == 6) &&
-                   ovl_11_func_800BE208(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
+                   Ovl11QueryCollisionBudgeted(record->position, record->collision, 0, 0, NULL, NULL, 0, flags)) {
             if (record->collision.field_2 == 1) {
                 record->position[0] = -5000;
                 record->position[1] = 0;

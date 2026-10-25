@@ -2,12 +2,12 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_collision_query_budget.h"
 
 s32 ovl_11_func_800D1CFC(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D1C18(s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D2DB8(Ovl11Func800BDCE8Arg1 *arg0);
-s32 ovl_11_func_800BE208(s32 *arg0, Ovl11CollisionTag arg1, u16 arg2, u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
 s32 ovl_11_func_800D24FC(Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
 
 s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 arg2) {
@@ -69,7 +69,7 @@ s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 
                 result = 4;
             } else {
                 s32 blocked;
-                blocked = ovl_11_func_800BE208((s32 *)&position, ((Ovl11CEFCCObject *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
+                blocked = Ovl11QueryCollisionBudgeted((s32 *)&position, ((Ovl11CEFCCObject *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
                 result = (u16)direction;
                 if (blocked) {
                     result = 4;
@@ -78,7 +78,7 @@ s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 
         } else {
             s32 original;
             s32 blocked;
-            blocked = ovl_11_func_800BE208((s32 *)&position, ((Ovl11CEFCCObject *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
+            blocked = Ovl11QueryCollisionBudgeted((s32 *)&position, ((Ovl11CEFCCObject *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
             result = (u16)direction;
             original = result;
             if (blocked) {

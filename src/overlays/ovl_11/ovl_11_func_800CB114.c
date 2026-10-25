@@ -2,8 +2,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "ovl11_collision_query_budget.h"
 
-s32 ovl_11_func_800BE208(s32 *, Ovl11CollisionTag, u16, u16, void **, s32 *, s32, s32);
 void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 s32 ovl_11_func_800DF010(void *, s32);
 s32 ovl_11_func_800E0C24(void *, s32);
@@ -36,7 +36,7 @@ s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2) {
     if (D_801231F4 & 0x20) {
         var_t2 &= ~0x80;
     }
-    var_s3 = ovl_11_func_800BE208(&position[0], arg0->collision, 0x3E8U, 0x3E8U, &sp30, &sp34, 0, var_t2) * 2;
+    var_s3 = Ovl11QueryCollisionBudgeted(&position[0], arg0->collision, 0x3E8U, 0x3E8U, &sp30, &sp34, 0, var_t2) * 2;
     Ovl11CollisionFlags = 0;
     D_80128C4C = NULL;
     if ((arg2 != 0) && (arg2 != 0x38)) {

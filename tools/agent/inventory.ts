@@ -226,7 +226,7 @@ function main(): void {
   try {
     const target = disassembleObject(assembleTarget(name, scratch));
     const artifacts = compileSource(resolveSource(name, srcOverride), scratch, name, { assemble: true });
-    const compiled = disassembleObject(artifacts.object!);
+    const compiled = disassembleObject(artifacts.object!, name);
     const report = compareInventories(target, compiled);
 
     if (json) {

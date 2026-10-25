@@ -400,7 +400,9 @@ function collectAllSignatures(
   const srcDir = join(rootDir, container.paths.srcDir);
   if (!existsSync(srcDir)) return { signatures: new Map(), exported: [], skipped: [] };
   const read = contextSourceReader(rootDir);
-  const signatures = readExistingHeader(join(rootDir, functionsHeaderFor(container)));
+  /* --all is a complete publication from the configured units, not an append
+   * to yesterday's names. Keeping old signatures resurrects renamed entries. */
+  const signatures = new Map<string, string>();
   const exported: string[] = [];
   const skipped: string[] = [];
 

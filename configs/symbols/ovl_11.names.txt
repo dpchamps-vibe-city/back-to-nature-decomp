@@ -1,3 +1,8 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
+Ovl11QueryCollisionBudgeted = 0x800BE208;
+Ovl11QueryCollisionUnbudgeted = 0x800BE26C;
+Ovl11ResetCollisionQueryCount = 0x800BE2B8;
+// Both query wrappers increment this word; the frame driver resets it.
+gOvl11CollisionQueryCount = 0x80128810; // type:data size:0x4
 Ovl11DrawAndStepScreenColorRamp = 0x800BFF74;
 Ovl11SetScreenColorRampTarget = 0x800C0010;

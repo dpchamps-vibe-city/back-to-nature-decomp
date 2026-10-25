@@ -1,11 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "scratchpad.h"
+#include "psyq/libgte.h"
+#include "ovl11_collision_query_budget.h"
 
 void ovl_11_func_800C06B0 (void);
 void ovl_11_func_800C0688 (void);
 void ovl_11_func_800C3D70 (void);
-void ovl_11_func_800BE2B8 (void);
 void ovl_11_func_800BFD1C (void);
 void ovl_11_func_800F65B8 (void);
 void ovl_11_func_80113818 (void);
@@ -44,7 +45,7 @@ void ovl_11_func_800C162C(void) {
     ovl_11_func_800C0688();
     ovl_11_func_800C3D70();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
-    ovl_11_func_800BE2B8();
+    Ovl11ResetCollisionQueryCount();
     ovl_11_func_800BFD1C();
     ovl_11_func_800F65B8();
     ovl_11_func_80113818();

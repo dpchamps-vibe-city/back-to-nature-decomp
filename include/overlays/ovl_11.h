@@ -40,9 +40,6 @@ void *ovl_11_func_800BDCE8(u8 *arg0, M2C_cec44150eede_Ovl11Func800BDCE8Arg1 *arg
 void *ovl_11_func_800BDE84(u8 *arg0, s16 *arg1);
 s32 ovl_11_func_800BDF98(VECTOR position, Ovl11CollisionTag arg4, s16 arg5, s32 arg6);
 s32 ovl_11_func_800BE118(VECTOR position, s16 arg4, VECTOR *arg5, u16 *arg6, u32 arg7);
-s32 ovl_11_func_800BE208(s32 *arg0, Ovl11CollisionTag arg1, u16 arg2, u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
-s32 ovl_11_func_800BE26C(s32 *arg0, Ovl11CollisionTag arg1, s32 arg2, s32 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
-void ovl_11_func_800BE2B8(void);
 s32 ovl_11_func_800BE2C4(s32 **arg0, u16 *arg1);
 s32 ovl_11_func_800BE4A8(Ovl11CollisionQuery *arg0);
 s32 ovl_11_func_800BE5A0(M2C_f90dacf3c1c7_Ovl11CheckArg *arg0);
@@ -1602,5 +1599,8 @@ void ovl_11_func_801213D8(M2C_5a4f050efe15_Struct_801213D8 *arg0);
 void ovl_11_func_801214F8(s32 *arg0);
 void ovl_11_func_80121500(Ovl11SpriteEffect *arg0, Ovl11EffectCoordinate arg1, Ovl11EffectCoordinate arg2, Ovl11EffectCoordinate arg3, s32 arg4, u16 arg5);
 void Ovl11DrawAndStepScreenColorRamp(void);
+s32 Ovl11QueryCollisionBudgeted(s32 *position, Ovl11CollisionTag tag, u16 unused2, u16 unused3, void **hitObject, s32 *hitFlags, s32 context, s32 queryMask);
+s32 Ovl11QueryCollisionUnbudgeted(s32 *position, Ovl11CollisionTag tag, s32 unused2, s32 unused3, void **hitObject, s32 *hitFlags, s32 context, s32 queryMask);
+void Ovl11ResetCollisionQueryCount(void);
 void Ovl11SetScreenColorRampTarget(s32 updateCount, const s32 targetRgbQ12[3]);
 unsigned long long status_result(u32 low);

@@ -2,13 +2,13 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_collision_query_budget.h"
 
 s32 func_80012CB4 (s32 arg0, s32 *arg1, s32 arg2);
 void ovl_11_func_800D1E1C (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D2DB8 (Ovl11Func800BDCE8Arg1 *arg0);
 s32 ovl_11_func_800D24FC (Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
-s32 ovl_11_func_800BE208 (s32 *arg0, Ovl11CollisionTag arg1, u16 arg2, u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
 s32 ovl_11_func_800D196C (Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 arg2);
 s32 ovl_11_func_800D1CFC (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D0698 (Recon_ovl_11_func_800D2594_A0View *arg0);
@@ -81,7 +81,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
                 var_s3 |= 1;
             }
         }
-        if (ovl_11_func_800BE208(&sp20.vx, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) == 0) {
+        if (Ovl11QueryCollisionBudgeted(&sp20.vx, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) == 0) {
             var_s3 |= 1;
         }
         temp_v0_3 = *(s16 *) ((u8 *) arg0 + 0x22);
@@ -101,7 +101,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
                 var_s3 |= 4;
             }
         }
-        if (ovl_11_func_800BE208((s32 *) &sp20, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) == 0) {
+        if (Ovl11QueryCollisionBudgeted((s32 *) &sp20, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) == 0) {
             var_s3 |= 4;
         }
         temp_v0_3 = *(s16 *) ((u8 *) arg0 + 0x22);
@@ -121,7 +121,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
                 var_s3 |= 2;
             }
         }
-        if (ovl_11_func_800BE208((s32 *) &sp20, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) == 0) {
+        if (Ovl11QueryCollisionBudgeted((s32 *) &sp20, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) == 0) {
             var_s3 |= 2;
         }
         temp_v0_3 = (s16) ovl_11_func_800D196C(arg0, var_s3, var_s4);
@@ -149,7 +149,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
         if (temp_v1_2 & 0x200000) {
             var_s1 = ovl_11_func_800D2DB8((Ovl11Func800BDCE8Arg1 *) &sp20) != 0;
         }
-        if (ovl_11_func_800BE208((s32 *) &sp20, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) != 0) {
+        if (Ovl11QueryCollisionBudgeted((s32 *) &sp20, *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E), temp_s7, temp_s6, &sp30, &sp34, (s32) arg0, var_s4) != 0) {
             var_s1 = 1;
         }
         if (arg0->unk34 & 0x800000) {

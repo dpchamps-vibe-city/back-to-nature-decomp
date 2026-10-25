@@ -1585,8 +1585,6 @@ typedef struct {
     s16 unkC6;
 } Ovl11DE68Object;
 
-#endif /* GAME_TYPES_H */
-
 /* Gradient-draw command shared by func_8001FA0C and func_8001F8A4 (0xC..0x14
  * is a RECT handed to SetDrawLoad; field_0/field_8 feed func_8001F774). */
 typedef struct {
@@ -2602,3 +2600,5 @@ typedef struct {
     u8 unk22;
     u8 unk23;
 } Ovl11ConditionRecord;
+
+#endif /* GAME_TYPES_H */

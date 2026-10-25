@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_collision_query_budget.h"
 
-s32 ovl_11_func_800BE208(s32 *arg0, Ovl11CollisionTag arg1, u16 arg2, u16 arg3, void **arg4, s32 *arg5, s32 arg6, s32 arg7);
 s32 ovl_11_func_800C3020(Ovl11C3B78Arg0 *arg0);
 s32 ovl_11_func_80107DEC(Ov11Timer *arg0);
 void ovl_11_func_800C2C74(Ovl11C3B78Arg0 *arg0);
@@ -44,7 +44,7 @@ void ovl_11_func_800C2CE8(Ovl11C3B78Arg0 *arg0, s32 arg1) {
         if (D_80071A3C == 4) {
             var_a2 = 0;
         }
-        if ((var_a2 != 0) && (ovl_11_func_800BE208(position, *(Ovl11CollisionTag *)((u8 *)arg0 + 0x2C), 0x3E8U, 0x3E8U, &sp30, &sp34, 0, 1) != 0) && ((*(s16 *) ((u8 *) arg0 + 0xA)) < 0x1E)) {
+        if ((var_a2 != 0) && (Ovl11QueryCollisionBudgeted(position, *(Ovl11CollisionTag *)((u8 *)arg0 + 0x2C), 0x3E8U, 0x3E8U, &sp30, &sp34, 0, 1) != 0) && ((*(s16 *) ((u8 *) arg0 + 0xA)) < 0x1E)) {
             (*(u16 *) ((u8 *) arg0 + 0x1E)) = (u16) ((*(u16 *) ((u8 *) arg0 + 0x1E)) | 4);
         }
     }
