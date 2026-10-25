@@ -37,12 +37,14 @@
  *   npx tsx tools/diagnostics/tuProgress.ts --verify [--baseline <receipt|tree-ish>] [--full-convergence] [--no-cache]
  *   npx tsx tools/diagnostics/tuProgress.ts --write-baseline [<path>]   # campaign receipt
  *
- * --verify judges the working tree as it stands, so its report is cached under
- * build/tu-campaign/ by the tree object of that state (tracked and untracked
- * files, ignored ones excepted), HEAD, the index and the options; asking again
- * about an unchanged tree returns the same verdict at once. Its convergence
- * step re-splits only what changed since the last tree that converged
- * (tools/lib/splitScope.ts); --full-convergence re-splits every container.
+ * --verify re-splits what changed before it builds, so it needs no hand-run
+ * `make split` or `make check-all` beforehand. Its convergence step re-splits
+ * only what changed since the last tree that converged (tools/lib/splitScope.ts);
+ * --full-convergence re-splits every container. It judges the working tree as
+ * it stands, so its report is cached under build/tu-campaign/ by the tree
+ * object of that state (tracked and untracked files, ignored ones excepted),
+ * HEAD, the index and the options; asking again about an unchanged tree
+ * returns the same verdict at once.
  *
  * Exit status — the same for every mode:
  *   0  every eligible function is folded and every requested gate passes;
@@ -54,7 +56,7 @@
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { availableParallelism, tmpdir } from "node:os";
+import { availableParallelism } from "node:os";
 import { dirname, join, relative } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { containerPath, loadContainers, requireContainer, unresolvedCodeMembers, type Container } from "../lib/container.js";
@@ -456,7 +458,9 @@ function restore(paths: readonly string[], saved: ReadonlyMap<string, Buffer | n
 
 /** The tree object of the working tree as it stands — tracked and untracked files, ignored ones excepted — or of the index. */
 function treeOf(source: "worktree" | "index"): string | null {
-  const directory = mkdtempSync(join(tmpdir(), "tu-tree-"));
+  /* Under build/, not the system temp directory: a full tmpfs must not break the gate. */
+  mkdirSync(join(ROOT, "build/tu-campaign"), { recursive: true });
+  const directory = mkdtempSync(join(ROOT, "build/tu-campaign", "tree-"));
   try {
     const index = join(directory, "index");
     const gitIndex = spawnSync("git", ["rev-parse", "--git-path", "index"], { cwd: ROOT, encoding: "utf8" }).stdout.trim();
@@ -563,7 +567,7 @@ function convergence(tree: string | null, full: boolean): { state: GateState; de
   if (failure) return { state: "fail", detail: failure };
   return {
     state: "pass",
-    detail: `${ran} changed no config, header or source`,
+    detail: steps.length === 0 ? ran : `${ran} changed no config, header or source`,
     ...(tree ? { receipt: { tree, engineExport: fileDigest(ENGINE_EXPORT), at: new Date().toISOString() } } : {}),
   };
 }
@@ -625,7 +629,13 @@ export function verify(options: Options): TuProgressReport {
   const policy = run("npx", ["tsx", "tools/agent/sourcePolicy.ts", "--final"]);
   record("source policy", policy.code === 0 ? "pass" : "fail", policy.code === 0 ? verdict(policy.output, /^Source policy passed/) : tail(policy.output, 8));
 
-  /* 4. Every container's linked bytes. */
+  /* 4. Config generation reaches a fixed point. First, because the re-split is
+     also what the build needs after a rename or a fold: verifying never needs
+     a hand-run split beforehand. */
+  const converged = convergence(tree, options.fullConvergence);
+  record("config convergence", converged.state, converged.detail);
+
+  /* 5. Every container's linked bytes, built from what the split produced. */
   const build = run("make", [`-j${Math.min(8, availableParallelism())}`, "check-all"]);
   record("make check-all", build.code === 0 ? "pass" : "fail", build.code === 0 ? verdict(build.output, /^All \d+ overlay container/) : tail(build.output, 10));
 
@@ -633,10 +643,6 @@ export function verify(options: Options): TuProgressReport {
   const structural = structuralReport({ container: options.container, limit: options.limit });
   record("inventory (objects)", structural.integrity.inventory === "pass" ? "pass" : "fail",
     structural.integrity.inventory === "pass" ? `${structural.modules.length} module unit(s) valid` : structural.failures.slice(0, 3).join("; ") || "invalid modules");
-
-  /* 5. Config generation reaches a fixed point. */
-  const converged = convergence(tree, options.fullConvergence);
-  record("config convergence", converged.state, converged.detail);
 
   /* 6. No whitespace damage in the working-tree diff. */
   const whitespace = run("git", ["diff", "--check"]);

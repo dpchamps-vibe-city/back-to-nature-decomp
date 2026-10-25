@@ -1,6 +1,6 @@
 #!/usr/bin/env npx tsx
 /**
- * canonicalNames.ts — carry each established function name to every reference.
+ * canonicalNames.ts — carry each established function or data name to every reference.
  *
  * A function keeps the address-derived name splat gave it until someone names
  * it. Naming it updates the defining container's symbol table and its own
@@ -15,6 +15,13 @@
  * address. An unprefixed alias in an overlay source can only mean the PS-X EXE;
  * a prefixed one names its container. Anything else is reported, not guessed.
  *
+ * A global is named the same way: a row in the defining container's symbol
+ * configuration (`configs/symbols/exe.txt`, or an overlay's `.names.txt` with
+ * `type:data`) establishes the name, and every `D_<address>` spelling of it —
+ * the tentative definition, the `globals_override.h` extern, each use — is
+ * rewritten. The extern stays in its header, renamed; only a function alias a
+ * header declares as a workaround is moved into the files that use it.
+ *
  * The rewrite is name-only and reads the tree-sitter parse, so comments, string
  * literals, disabled preprocessor arms and same-named locals are never touched.
  * A reference inside a macro body or an assembly string is reported and left
@@ -24,6 +31,10 @@
  *   npx tsx tools/diagnostics/canonicalNames.ts            # report
  *   npx tsx tools/diagnostics/canonicalNames.ts --check    # exit 1 on an obsolete alias or stale generated name
  *   npx tsx tools/diagnostics/canonicalNames.ts --write    # rewrite obsolete aliases in active sources
+ *
+ * To name a global: add `Name = 0xADDRESS; // size:0xN` to configs/symbols/exe.txt
+ * (EXE) or `Name = 0xADDRESS; // type:data size:0xN` to configs/symbols/<id>.names.txt
+ * (overlay), then run --write and re-split the container.
  */
 
 import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
@@ -49,8 +60,9 @@ const ALIAS_TOKEN = /\b(?:(?:ovl_\d+_)?func|D)_[0-9A-F]{8}\b/g;
  *
  * A data-shaped `D_` name is decoded too: splat gives one to an address it sees
  * taken rather than called, so a callback into a function the engine export did
- * not name arrives as `D_<entry>`. It is an alias only where a function entry is
- * established; anywhere else it is data, which this pass never renames.
+ * not name arrives as `D_<entry>`. It is a function alias where a function entry
+ * is established, a data alias where the container's configuration names that
+ * address as data, and otherwise an anonymous global this pass leaves alone.
  */
 export function decodeAlias(name: string): { prefix: string | null; data: boolean; address: number } | null {
   const match = name.match(ALIAS);
@@ -61,6 +73,8 @@ export interface NameTable {
   containers: Container[];
   /** Container id -> entry address -> established function name. */
   functions: Map<string, Map<number, string>>;
+  /** Container id -> address -> established data name; absent, no global is named. */
+  data?: Map<string, Map<number, string>>;
   /** Container id -> every name the container itself defines, for genuine public aliases. */
   defined: Map<string, Set<string>>;
   /** Container id -> function names an active source defines. */
@@ -71,7 +85,7 @@ export interface NameTable {
 
 export type Resolution =
   | { kind: "current" }
-  | { kind: "obsolete"; container: string; address: number; canonical: string }
+  | { kind: "obsolete"; container: string; address: number; canonical: string; data?: true }
   | { kind: "ambiguous"; reason: string };
 
 function hex(address: number): string {
@@ -89,7 +103,15 @@ export function resolveAlias(name: string, from: string, table: NameTable): Reso
     const exe = table.containers.find((c) => c.kind === "exe");
     const local = table.containers.find((c) => c.id === from && c.kind === "overlay" && containsVram(c, decoded.address));
     const owner = local ?? (exe && containsVram(exe, decoded.address) ? exe : undefined);
-    if (!owner || !table.functions.get(owner.id)?.has(decoded.address)) return null;
+    if (!owner || !table.functions.get(owner.id)?.has(decoded.address)) {
+      /* A global: its own overlay's name for it, else the EXE's, whose data
+         reaches past its image into BSS. */
+      const named = [local, exe].find((c) => c && table.data?.get(c.id)?.has(decoded.address));
+      if (!named) return null;
+      const canonical = table.data!.get(named.id)!.get(decoded.address)!;
+      if (canonical === name || table.defined.get(named.id)?.has(name)) return { kind: "current" };
+      return { kind: "obsolete", container: named.id, address: decoded.address, canonical, data: true };
+    }
   }
   const source = table.containers.find((c) => c.id === from);
   if (!source) return { kind: "ambiguous", reason: `no container ${from}` };
@@ -134,6 +156,29 @@ function establishedFunctions(container: Container): Map<number, string> {
   return result;
 }
 
+/**
+ * Named globals: the symbol configuration's rows that are neither functions
+ * nor code labels, and an overlay's `type:data` labels, which its generated
+ * table carries only after a re-split.
+ */
+function establishedData(container: Container, functions: ReadonlyMap<number, string>): Map<number, string> {
+  const result = new Map<number, string>();
+  const paths = [container.paths.symbolAddrs, ...(container.kind === "overlay" ? [container.paths.symbolAddrs.replace(/\.txt$/, ".names.txt")] : [])];
+  for (const path of paths) {
+    if (!existsSync(join(ROOT, path))) continue;
+    for (const line of readFileSync(join(ROOT, path), "utf-8").split("\n")) {
+      const match = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;(.*)$/);
+      if (!match || decodeAlias(match[1]!)) continue;
+      const type = match[3]!.match(/\btype:(\w+)/)?.[1];
+      if (type === "func" || type === "label" || (path.endsWith(".names.txt") && type !== "data")) continue;
+      const address = Number(match[2]);
+      if (functions.has(address) || (container.kind === "overlay" && !containsVram(container, address))) continue;
+      if (!result.has(address)) result.set(address, match[1]!);
+    }
+  }
+  return result;
+}
+
 /** Container id of a configured source path. */
 export function sourceContainer(path: string): string {
   return path.match(/^src\/overlays\/([^/]+)\//)?.[1] ?? "exe";
@@ -157,6 +202,7 @@ export function handHeaders(): string[] {
 export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
   const containers = loadContainers();
   const functions = new Map(containers.map((c) => [c.id, establishedFunctions(c)]));
+  const data = new Map(containers.map((c) => [c.id, establishedData(c, functions.get(c.id)!)]));
   const defined = new Map<string, Set<string>>();
   for (const container of containers) {
     /* Only the defining symbol table establishes public aliases. The broad
@@ -177,7 +223,7 @@ export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
     if (!into) continue;
     for (const prototype of prototypesIn(text, path)) if (prototype.kind === "definition") into.add(prototype.name);
   }
-  return { containers, functions, defined, sourceDefinitions, headerDeclarations };
+  return { containers, functions, data, defined, sourceDefinitions, headerDeclarations };
 }
 
 /* ------------------------------------------------------------------ */
@@ -243,15 +289,18 @@ export function misparsedDeclaration(statement: Node, isType: (name: string) => 
 /**
  * How `name` is bound at `node`: by the nearest enclosing scope that declares
  * it before this point. `null` means no declaration in this file — a header's,
- * or an implicit one.
+ * or an implicit one. With `fileScope` false only a block or a parameter
+ * counts: a file-scope object of a global's name is that global.
  */
 export function bindingAt(
   node: Node,
   name: string,
-  isType: (name: string) => boolean = (n) => COMMON_TYPES.has(n)
+  isType: (name: string) => boolean = (n) => COMMON_TYPES.has(n),
+  fileScope = true
 ): "function" | "object" | null {
   for (let scope = node.parent; scope; scope = scope.parent) {
     let found: "function" | "object" | null = null;
+    if (scope.type === "translation_unit" && !fileScope) break;
     if (scope.type === "compound_statement" || scope.type === "translation_unit" || scope.type === "for_statement") {
       for (const child of namedChildren(scope)) {
         if (child.startIndex > node.startIndex) break;
@@ -363,8 +412,9 @@ export function aliasReferences(source: string, from: string, table: NameTable, 
       const parent = node.parent?.type ?? "";
       const context: ReferenceContext = insideAsmMacro(node) ? "assembly"
         : parent === "preproc_def" || parent === "preproc_function_def" ? "macro" : "code";
-      /* A same-named local is not the function. */
-      if (context === "code" && bindingAt(node, node.text) === "object") return true;
+      /* A same-named local is not the function, nor the global. */
+      const data = (resolution as { data?: true }).data === true;
+      if (context === "code" && bindingAt(node, node.text, undefined, !data) === "object") return true;
       found.push({
         name: node.text, start: node.startIndex, end: node.endIndex, context, resolution,
         line: node.startPosition.row + 1,
@@ -375,6 +425,8 @@ export function aliasReferences(source: string, from: string, table: NameTable, 
     /* A rename must not change which declaration a reference binds to. */
     const obsolete = found.filter((r) => r.context === "code" && r.resolution.kind === "obsolete");
     for (const reference of obsolete) {
+      /* A global's extern belongs in its header; it is renamed there, in place. */
+      if ((reference.resolution as { data?: true }).data) continue;
       const header = table.headerDeclarations.get(reference.name);
       const node = tree.rootNode.descendantForIndex(reference.start, reference.end)!;
       if (options.header) {
@@ -391,7 +443,7 @@ export function aliasReferences(source: string, from: string, table: NameTable, 
       for (const reference of obsolete.filter((r) => !r.blocked)) {
         const canonical = (reference.resolution as { canonical: string }).canonical;
         const node = tree.rootNode.descendantForIndex(reference.start, reference.end)!;
-        if (bindingAt(node, canonical) === "object") {
+        if (bindingAt(node, canonical, undefined, !(reference.resolution as { data?: true }).data) === "object") {
           reference.blocked = `a local object named ${canonical} is in scope`;
           continue;
         }
