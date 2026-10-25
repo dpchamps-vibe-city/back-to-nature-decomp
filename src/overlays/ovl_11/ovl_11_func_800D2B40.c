@@ -2,11 +2,11 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "sprite_rotation.h"
 
 s32 ovl_11_func_800BE118(VECTOR position, s16 arg4, VECTOR *arg5, u16 *arg6, u32 arg7);
 void ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
-u16 ovl_11_func_8010734C(s32 id);
 
 void ovl_11_func_800D2B40(Recon_ovl_11_func_800D2594_A0View *arg0) {
     VECTOR sp20;
@@ -67,7 +67,7 @@ void ovl_11_func_800D2B40(Recon_ovl_11_func_800D2594_A0View *arg0) {
                 } else {
                     ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
                 }
-                if (ovl_11_func_8010734C((s32) var_s2) == 3) {
+                if (Ovl11GetSpriteRotationState((s32) var_s2) == 3) {
                     (*(s32 *) ((u8 *) arg0 + 0x38)) = sp20.vx;
                     (*(s32 *) ((u8 *) arg0 + 0x40)) = sp20.vz;
                     (*(s16 *) ((u8 *) arg0 + 0x30)) = (s16) sp30;

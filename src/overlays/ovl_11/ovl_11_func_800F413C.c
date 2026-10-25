@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
+#include "sprite_rotation.h"
 
 typedef struct {
     s16 field_0;
@@ -95,7 +96,6 @@ s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D1C18 (s32 arg0, s32 arg1, s32 arg2);
 u32 Rand (s32 arg0);
 s32 ovl_11_func_800D1CD0 (s32 arg0, s32 arg1);
-u16 ovl_11_func_8010734C (s32 id);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800D5868 (s16 arg0);
 s32 ovl_11_func_800D5C3C (s16 arg0);

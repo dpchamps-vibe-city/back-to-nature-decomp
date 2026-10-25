@@ -1,12 +1,15 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/memory.h"
+#include "aged_item_pool.h"
 
 s32 ovl_11_func_800E21E4 (E21E4Object *arg0);
 s32 ovl_11_func_800DEB00 (Ovl11Deb00Object *arg0);
 s32 ovl_11_func_800E06E0 (Ovl11Deb00Object *arg0);
 s32 ovl_11_func_80108D84 (s32 *arg0);
 s32 ovl_11_func_8010B264 (Ovl11B264Object *arg0);
-s32 ovl_11_func_8010C3F8 (void);
 void ovl_11_func_800CFA48 (void);
 void ovl_11_func_800D079C (s32 arg0);
 void ovl_11_func_800CFD9C (void);
@@ -47,7 +50,7 @@ void ovl_11_func_800CECB0(void) {
         if (*(u16 *) var_s1_3 != 0) {
             ovl_11_func_8010B264((Ovl11B264Object *) var_s1_3);
         }
-        ovl_11_func_8010C3F8();
+        Ovl11UpdateAgedItemPool();
     }
     if (((struct Ovl11PoolResetView *) D_8006C838)->flags_44F8 & 0x08000000) {
         ((struct Ovl11PoolResetView *) D_8006C838)->counter_523C++;

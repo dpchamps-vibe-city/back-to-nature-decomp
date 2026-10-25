@@ -530,7 +530,7 @@ Members (address order):
 
 ## `ovl_11` `D_8012CF48` rotation-state reset/update run — 0x80106DC0–0x8010738F (confidence: medium)
 
-Candidate same-TU run supported by the shared ten-entry `D_8012CF48` table,
+Reconstructed run supported by the shared ten-entry `D_8012CF48` table,
 complementary state operations and gapless call/link adjacency. Both immediate
 successors call the reset leaf; the newly verified `80107044` is called on
 that table by its immediate successor `8010726C`, followed by the shared-table
@@ -546,6 +546,55 @@ Members (address order):
 - ovl_11_func_80107044 (m) — advances entry rotation in states 2/4, mirrors a linked sprite and updates transition state.
 - ovl_11_func_8010726C (s) — drives the shared table, calling `80107044` and counting down the intervening hold state.
 - ovl_11_func_8010734C — returns a shared-table entry's state by linked-object ID.
+
+**Module: `src/overlays/ovl_11/modules/sprite_rotation.c`**, all eight
+original entries through exclusive end 80107390. The full connected table
+run is folded, not just reset/update slices. Names in address order:
+`Ovl11ResetSpriteRotationEntry`, `Ovl11ResetSpriteRotations`,
+`Ovl11RegisterSpriteRotation`, `Ovl11RegisterPoolSpriteRotations`,
+`Ovl11RequestSpriteRotation`, `Ovl11StepSpriteRotation`,
+`Ovl11UpdateSpriteRotations`, `Ovl11GetSpriteRotationState`.
+
+The five public operations are documented in `include/sprite_rotation.h`;
+fourteen caller units now include it, with caller bytes preserved. The three
+support entries remain externally linked, not inferred static. The ten
+records are `gOvl11SpriteRotations`; the four signed-word hold-angle table
+is `gOvl11RotationHoldAngles`, both scoped to ovl_11's data identities.
+`Ovl11RotationState` now names state/direction/holdTicks/angularStep/source;
+the shared source view reconciles flags +0, direction +8, signed id +A and
+signed sprite +C. The complete existing layout and all read signedness are
+retained; reset-only partial views were replaced by the readers' complete
+view. Padding halfwords are still untouched. No new storage or asm-label
+workaround was added; the now-unnecessary alternate table label was removed.
+
+State meanings follow the implementation: free, idle, outbound, hold, return.
+Steps change by eight angle units per update; the hold timer starts at eleven
+and a repeated request adds five. The update respects game flag 08000000,
+source flag 0200 suppresses a new outbound transition, and sprite flag 0400
+selects mirrored output. The outbound threshold is 0420; the snapped table
+yaw is stored only after the setter call and not immediately reapplied.
+No speculative door/gameplay identity is assigned. Lookup/request deliberately
+read source->id before state; their header records the non-NULL-source
+precondition rather than silently adding guards. Direction must index the
+four-entry hold table. Pool registration borrows source records, does not
+deduplicate IDs and silently drops registrations beyond ten.
+
+Boundaries: preceding 80104EC8 is a large item/condition dispatch over unrelated
+records and helper chains (including the u16 three-buffer comparator); it
+neither calls a member nor references the rotation table or hold angles.
+Following 80107390 searches 31 rows at 80127814 via 80107B84/80107418 and
+writes 8012D038, starting a separate table-driven decision family. Neither
+neighbor supplies positive membership evidence. Under overlay -G0 there is
+no small-data boundary proof; shared private records, complementary state
+operations, internal calls and the exact connected link run support this
+whole-unit reconstruction, not original filename or private linkage claims.
+
+Baseline -O2/-G0 first verified all eight members through the checked fold;
+no member override exists, and none was added or retired. The type/name/
+interface pass then passed `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json`: all EXE/overlay bytes and associated data,
+converged generation, canonical interfaces, source policy and exception
+non-growth. Folded membership rose 122 → 130; all sixteen modules are valid.
 
 ---
 
@@ -2117,11 +2166,12 @@ Members:
 
 ## `ovl_11` D_80075854 4-byte-cell-array run — 0x8010C330–0x8010C668 (confidence: medium)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing the private
-`D_80075854` cell array (4-byte cells, low s16 live, undefined symbol at
-0x80075854, no other TU references it). Evidence is a shared global cluster
-plus zero-gap link-order contiguity (0x8010C330 → 0x8010C3C4 → 0x8010C3F8),
-and the caller `ovl_11_func_800CE96C` also indexes the array. The far
+Reconstructed same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing the
+`D_80075854` cell array, now `gAgedItemCells`: 99 four-byte {u16 id, u16 age}
+records. The earlier claim of no outside references was too strong: 800CE96C
+resets the byte span and 8011F4F4 separately counts the same records. Membership
+rests on the cohesive allocation/aging/removal/count call graph and record
+layout, corroborated by zero-gap link order, not exclusivity or adjacency alone. The far
 offset `D_8006C838 + 0x99E4` store uses the same `base+0x8000` ori/addu
 split as matched sibling `ovl_11_func_800D12A0` (0x99E6, previous section).
 
@@ -2162,6 +2212,59 @@ Members (address order):
   lhu u16@0 of each cell, same hand-written 0x62→0 countdown (99 cells),
   counts nonzero cells, returns the count; shares the private `Cell4`
   struct/countdown idiom with 0x8010C3C4, called by 0x8010C330 / 0x8010C3F8
+
+**Module: `src/overlays/ovl_11/modules/aged_item_pool.c`**, all nine entries
+at 8010C330–8010C6A0, including the previously unlisted C4B0 request-bit
+setter and C4D4 tier-priority remover. No slice is left behind. C4B0 writes
+the exact bit consumed/cleared by C3F8; C4D4 scans the same cells in A1/A2/A3
+priority and clears only id. Helpers C550/C5A0/C5DC respectively establish
+age from id, id from age, and population-dependent random additions; the
+allocator, updater and all three helpers call within this run. C668 supplies
+the counts to the allocator, updater and spawn helper.
+
+Names, in original order: `Ovl11AddAgedItem`, `Ovl11ClearAgedItemPool`,
+`Ovl11UpdateAgedItemPool`, `Ovl11QueueAgedItemUpdate`, `Ovl11TakeAgedItem`,
+`Ovl11InitItemAge`, `Ovl11RefreshAgedItemId`, `Ovl11TrySpawnAgedItems`,
+`Ovl11CountAgedItems`. `include/aged_item_pool.h` publishes the six externally
+useful operations, not every helper. Interface reconciliation updated eight
+caller units, retaining caller bytes. Helpers retain external linkage.
+The common global record view `Ovl11ItemCell` now names `age`; duplicate
+Cell4/Cell5A0 views were reconciled without changing widths or offsets. The
+clearer's old signed view only stored zero, so using the readers' unsigned
+view changes no read interpretation. The separately compiled duplicate
+counter now explicitly views the same array as u16 rather than conflicting
+with its canonical declaration.
+
+Behavioral constraints: updates are requested counts, not demonstrated days;
+new additions into later slots can age in the same scan. Removal prioritizes
+age tiers, not exact age. The updater's legacy s32 return is unspecified and
+must be ignored. `gAgedItemLastAddCount` records occupancy after successful
+adds only, not every mutation. The separate state count at +99E4 is refreshed
+by update/clear. The reset caller's existing 0x18E-byte span extends two bytes
+past the 99 cells; that named byte view and its asm-label binding were retained
+and renamed, not silently reduced to sizeof the array. Persistent data names
+are in the EXE configuration; function names stay scoped to ovl_11.
+
+Boundaries: preceding 8010C2EC updates a supplied object through 800CFE40 and
+80107DD0 under an unrelated 8006C844 flag; it has no cell-table, age or pool
+call access. Following 8010C6A0 initializes seven 0xF8-byte records at
+8007A638 with 8010D04C/80110E34 and private source tables. That distinct
+record family continues through 8010CAD4 (see its own section). Neither
+neighbor supplies membership evidence for the pool. Overlays use -G0, so
+there is no GP/absolute proof of either boundary; the complete connected
+pool run is what supports this reconstruction.
+
+The checked nine-member fold matched at baseline -O2/-G0; no member has an
+override, and none was added or retired. Canonicalization and the full gate
+caught stale signatures retained by contextExport's cross-container union:
+selected containers now replace their old headers completely, retaining
+published signatures only from unselected containers. This narrowly scoped
+shared-tool fix is required by the module's retired local types and lies
+outside the source integration roots. No test or exception was added.
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` then
+passed every integrity gate: EXE/all overlays and data unchanged, converged
+configuration, canonical names/interfaces, source policy and exception
+non-growth. Folded membership rose 113 → 122; all fifteen modules are valid.
 
 ---
 
@@ -4188,27 +4291,63 @@ References: notes/research/func_8001E878-dead-spill-allocation.md §9,
 notes/research/func_8001E9F8.md,
 notes/research/func_8001EAE4-v0-channel-delay-slot-fossil.md.
 
-## viewport/camera setup — 0x8001EFA4–0x8001F24C (confidence: high)
+## cylindrical camera-offset state — 0x8001EFA4–0x8001F250 (confidence: high)
 
-Viewport area and camera-rotation setup: func_8001EFA4 sets viewport dimensions
-(800×600) and calls func_8001F1E0 to compute rotated camera offset vectors, then
-copies the result into a Vec3 and sets status flags.
+**Module: `src/modules/camera_offset.c`**, eight original entries, five compiled
+C functions and three carried dead stubs. This corrects the former viewport
+interpretation: the 800/600/0 parameters are radius/height/yaw, not screen
+width/height/depth. The conversion writes (cos(yaw)*radius, -height,
+sin(yaw)*radius) with Q12 trig and 4096 angle units per turn.
 
-Fingerprints:
-- shared gp-rel cluster D_8005E2EC–D_8005E314 (viewport dimensions, status flags,
-  offsets) — func_8001EFA4 and func_8001F038 both define the overlapping subset
-  D_8005E2EE, D_8005E2F8, D_8005E2FC, D_8005E300 as tentative definitions
-  (GP-relative), which is the strongest same-TU signal.
-- internal call graph: func_8001EFA4 → func_8001F038, func_8001F1E0
-- address adjacency: all three are consecutive with no unrelated code between them.
+Membership evidence, checked against original-byte ownership and object
+relocations:
+- EFA4 and F038 share E2EE/E2F8/E2FC/E300 through $gp; F084 also reads
+  E2F8/E2FC that way. F100 shares the state/dirty/change words E2EC/E2EE/E2F4,
+  F1B4 clears E2EC, and F1C0 marks E2EE on a mode-word change. The unused
+  F084/F100/F1C0 entries are not boundaries.
+- F190 copies the exact origin triple at 80049274 zeroed by EFA4 and used by
+  F084's vector-minus-origin readback. F1E0 is EFA4's cylindrical conversion
+  helper. These private data and call relationships, not adjacency alone,
+  join both otherwise GP-free members.
+- EFA4 calls the setter and conversion in this same run; boot calls EFA4.
+  No conflicting absolute access to a member-owned small global was introduced.
 
-Members (address order):
-- func_8001EFA4 (m) — viewport setup driver; sets 800×600, calls F038 and F1E0,
-  then copies result and sets flags (D_8005E2EC=2, D_8005E2ED=1)
-- func_8001F038 (m) — viewport dimension setter; stores width/height/depth,
-  sets dirty flag on change
-- func_8001F1E0 (m) — rotated camera-offset vector calculator; uses rcos/rsin
-  trig with yaw argument
+Original identities and interfaces:
+- 8001EFA4 `InitCameraOffsetState`: defaults, zero origin, computed vector and
+  backup, state=2 and initialized=1.
+- 8001F038 `SetCameraOffsetParameters`: store radius/height/yaw, mark dirty and
+  clear the change-state word only when at least one parameter differs.
+- 8001F084 unused readback (stub); 8001F100 unused guarded target setter (stub).
+- 8001F190 `CopyCameraOffsetOrigin`: three-word copy, retained s32-address ABI.
+- 8001F1B4 `ClearCameraOffsetState`: clear only the state byte.
+- 8001F1C0 unused mode setter (stub).
+- 8001F1E0 `ComputeCylindricalOffset`: write three coordinates, yaw modulo 4096.
+
+`include/camera_offset.h` documents the coordinate/angle units, output space,
+state effects and signed-product range constraint. Boot now includes it rather
+than restating the initializer. The three parameter words, state/initialized/
+dirty bytes, change-state word, vector, origin and backup have canonical names
+in the EXE symbol configuration. Existing array-backed lvalue/asm-label views
+were renamed explicitly, not replaced or added. The neutral E308/E30C/E310/
+E314 words remain unnamed beyond their addresses: initialization alone does
+not establish their later roles. CopyVec3 declarations now agree with its
+matched Vec3 definition; parameter widths, linkage and storage are unchanged.
+
+Boundaries: before EFA4 is the collision unit's polygon iterator and its two
+GP-owned collision setters, ending EFA4; none uses the camera state or these
+three private triples. Before that, E26C is a SquareRoot0-based math helper.
+After F1E0 ends at F250 is the independent integer-power loop `pow_int`, with
+no global references or camera calls. This is the full connected camera-state
+run; neither neighbor has positive membership evidence. The exact original
+source boundary beyond that evidence is not claimed as a GP/absolute proof.
+
+The fold and readability/name/header integration all use baseline -O2/-G8;
+no member has a flag override, and none was added or retired. The checked fold
+confirmed five compiled members and the original EXE, carrying all three dead
+stubs. `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`
+then passed every integrity gate, including EXE/all overlays, data/placement,
+canonical interfaces, source policy and exception non-growth. Folded eligible
+membership rose 108 → 113; all fourteen modules are valid.
 
 ## gradient-interpolation cluster — 0x8001F278–0x8001FABC (confidence: low)
 

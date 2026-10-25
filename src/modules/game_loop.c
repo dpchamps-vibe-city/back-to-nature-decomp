@@ -43,6 +43,7 @@
 #include "cd_loader.h"
 #include "pad_actuator_sequences.h"
 #include "aux_sprite_display.h"
+#include "camera_offset.h"
 
 /* Callees not in functions.h */
 void func_8001FEA4(void);
@@ -71,7 +72,6 @@ void func_80017A70(u32 arg0);
 /* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
    leave the delay slot empty — it takes no arguments. */
 void func_8001E160(void);
-void func_8001EFA4(void);
 void func_8001FCE4(void);
 void func_8001FE00(s32 arg0);
 void func_8001FE7C(void);
@@ -207,7 +207,7 @@ int main(void) {
     gFrameOrderingTable = (s32 *)buf;
     SelectRenderConfiguration(0);
     ResetActiveRenderContext();
-    func_8001EFA4();
+    InitCameraOffsetState();
     func_8001E160();
     func_80021DA8();
     func_8001FE7C();

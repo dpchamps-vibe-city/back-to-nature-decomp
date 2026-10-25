@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/abs.h"
+#include "sprite_rotation.h"
 
 s32 ovl_11_func_800C3828(void);
 s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
-u16 ovl_11_func_8010734C(s32 id);
 void ovl_11_func_800C2044(Ovl11C3B78Arg0 *arg0, s32 arg1, void *arg2);
 
 void ovl_11_func_800C2678(Ovl11C3B78Arg0 *arg0) {
@@ -36,7 +36,7 @@ void ovl_11_func_800C2678(Ovl11C3B78Arg0 *arg0) {
     case 0x12:
         if ((*(u16 *)((u8 *)arg0 + 0x1E) & 2) &&
             (*(u16 *)((u8 *)arg0 + 0x1A) == 5) &&
-            (ovl_11_func_8010734C((s16)event->unk2) == 3)) {
+            (Ovl11GetSpriteRotationState((s16)event->unk2) == 3)) {
             ovl_11_func_800C2044(arg0, eventBase, event);
             *(s16 *)((u8 *)arg0 + 0x12) = 0x14;
             *(u16 *)((u8 *)arg0 + 0x1E) &= 0xFFFC;

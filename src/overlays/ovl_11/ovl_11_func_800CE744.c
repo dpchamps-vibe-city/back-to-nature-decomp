@@ -8,6 +8,7 @@
 #include "psyq/memory.h"
 #include "psyq/libapi.h"
 #include "packet_work.h"
+#include "aged_item_pool.h"
 
 typedef struct {
                s16 unk0;
@@ -132,7 +133,6 @@ s16 *ovl_11_func_800E1F9C (s32 arg0, s32 arg1, s32 arg2);
 Recon_ovl_11_func_800D3390_A0View *ovl_11_func_800D2F48 (s32 arg0);
 struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
 u16 *ovl_11_func_8010B1C4 (s32 arg0);
-s32 ovl_11_func_8010C330 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
 s32 func_800129E8 (void);
 void func_80015880 (SpriteSourceData *src, s32 header, s32 field_18);
@@ -145,7 +145,6 @@ void func_80015704 ();
 s32 func_80021B64 (void);
 void func_80021B90 (s32 arg0);
 void ovl_11_func_800CFD9C (void);
-void ovl_11_func_8010C3C4 (void);
 s32 ovl_11_func_800D2E20 (void);
 u32 Rand (s32 arg0);
 s32 ovl_11_func_800F5888 ();
@@ -203,8 +202,7 @@ s32 ovl_11_func_80109550 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_801098B0 (Ovl11Func801098B0Arg *arg0);
 s32 ovl_11_func_801097F4 (Ovl11Func801097F4Arg x);
 s32 ovl_11_func_8010B898 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-void ovl_11_func_8010C550 (M2C_e88a4985b4f4_Cell4 *arg0, s32 arg1);
-s32 ovl_11_func_8010C668 (void);
+void Ovl11InitItemAge (M2C_e88a4985b4f4_Cell4 *arg0, s32 arg1);
 
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1) {
     s32 var_a0;
@@ -274,7 +272,7 @@ block_8:
     case 0xA1:
     case 0xA2:
     case 0xA3:
-        ovl_11_func_8010C330(arg0);
+        Ovl11AddAgedItem(arg0);
         break;
     }
     var_v0 = 0;

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "aged_item_pool.h"
 
 s32 ovl_11_func_800BF3F4(void);
 /* This caller supplies two arguments; the callee's trailing debug arguments
@@ -7,9 +8,7 @@ s32 ovl_11_func_800BF3F4(void);
 void func_80015704();
 void func_80015840(ObjectState *obj, u8 arg1);
 s32 func_8001FABC(s16 arg0);
-s32 ovl_11_func_8010C330(s32 arg0);
 s32 func_8002261C(s32 arg0, s32 arg1);
-void ovl_11_func_8010C4B0(void);
 void func_8001AF70(u16 arg0, u16 arg1);
 s32 ovl_11_func_800C79F8(Vec3 *arg0);
 s32 ovl_11_func_800D7504(s16 arg0);
@@ -31,11 +30,11 @@ s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
         arg0->unkC = 0;
         if (temp_v0 == 2) {
             temp_a0 = *(u16 *) ((u8 *) arg0 + 2);
-            if (((u32) (temp_a0 - 0xA1) < 3U) && (ovl_11_func_8010C330((s32) (s16) temp_a0) == 0)) {
+            if (((u32) (temp_a0 - 0xA1) < 3U) && (Ovl11AddAgedItem((s32) (s16) temp_a0) == 0)) {
                 func_8002261C(3, 0x382);
             }
             if ((s16) (*(u16 *) ((u8 *) arg0 + 2)) == 0x84) {
-                ovl_11_func_8010C4B0();
+                Ovl11QueueAgedItemUpdate();
             }
         } else {
             far_base = (char *)&D_8007AFF0;

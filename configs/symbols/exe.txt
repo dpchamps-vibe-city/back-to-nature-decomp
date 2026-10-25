@@ -403,14 +403,14 @@ func_8001E9F8 = 0x8001E9F8; // type:func
 func_8001EAE4 = 0x8001EAE4; // type:func
 SetVal8005E2E8 = 0x8001EF8C; // type:func
 GetVal8005E524 = 0x8001EF98; // type:func
-func_8001EFA4 = 0x8001EFA4; // type:func
-func_8001F038 = 0x8001F038; // type:func
+InitCameraOffsetState = 0x8001EFA4; // type:func
+SetCameraOffsetParameters = 0x8001F038; // type:func
 func_8001F084 = 0x8001F084; // type:func
 func_8001F100 = 0x8001F100; // type:func
-func_8001F190 = 0x8001F190; // type:func
-ClearVal8005E2EC = 0x8001F1B4; // type:func
+CopyCameraOffsetOrigin = 0x8001F190; // type:func
+ClearCameraOffsetState = 0x8001F1B4; // type:func
 func_8001F1C0 = 0x8001F1C0; // type:func
-func_8001F1E0 = 0x8001F1E0; // type:func
+ComputeCylindricalOffset = 0x8001F1E0; // type:func
 pow_int = 0x8001F250; // type:func
 func_8001F278 = 0x8001F278; // type:func
 func_8001F2EC = 0x8001F2EC; // type:func
@@ -1324,3 +1324,19 @@ gPadActuatorBuffers = 0x8005EA18; // size:0x10
 
 // Persistent screen-color ramp; ovl_11 helpers and ovl_15's 0x24-byte save block.
 gScreenColorRamp = 0x8007AF80; // size:0x24
+
+// Cylindrical camera-offset state; 0x8001F1E0 establishes radius/height/yaw.
+gCameraOffsetState = 0x8005E2EC; // size:0x1
+gCameraOffsetInitialized = 0x8005E2ED; // size:0x1
+gCameraOffsetDirty = 0x8005E2EE; // size:0x1
+gCameraOffsetChangeState = 0x8005E2F4; // size:0x4
+gCameraOffsetRadius = 0x8005E2F8; // size:0x4
+gCameraOffsetHeight = 0x8005E2FC; // size:0x4
+gCameraOffsetYaw = 0x8005E300; // size:0x4
+gCameraOffsetVector = 0x80049268; // size:0xC
+gCameraOffsetOrigin = 0x80049274; // size:0xC
+gCameraOffsetBackup = 0x80049280; // size:0xC
+
+// ovl_11's 99 four-byte {id, age} cells and the occupancy saved after an add.
+gAgedItemCells = 0x80075854; // size:0x18C
+gAgedItemLastAddCount = 0x80070D3C; // size:0x2

@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "sprite_rotation.h"
 
 s32 ovl_11_func_80112DA8 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C93A4 (Ovl11C7010Object *arg0);
-u16 ovl_11_func_8010734C (s32 id);
 s32 ovl_11_func_800C8BA8 (Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 s32 ovl_11_func_800C907C (Ovl11C8FA8Object *arg0, u16 arg1);
@@ -51,7 +51,7 @@ s32 ovl_11_func_800C9424(void) {
             return 1;
         }
         if (*(u16 *)((u8 *)obj + 0x36) & 0x20) {
-            if (ovl_11_func_8010734C(0x20) == 1) {
+            if (Ovl11GetSpriteRotationState(0x20) == 1) {
                 *(u16 *)((u8 *)obj + 0x36) &= ~0x20;
                 obj->unk6C |= 0x400;
                 ovl_11_func_8011F574();

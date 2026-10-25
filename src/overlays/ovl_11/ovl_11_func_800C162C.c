@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "ovl11_collision_query_budget.h"
 #include "gte_scene_state.h"
+#include "sprite_rotation.h"
 
 void ovl_11_func_800C06B0 (void);
 void ovl_11_func_800C0688 (void);
@@ -18,7 +19,6 @@ void ovl_11_func_8011F114 (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
 void ovl_11_func_800DB5CC (void);
-void ovl_11_func_8010726C (void);
 void ovl_11_func_800C056C ();
 void ovl_11_func_801209D4 (void);
 void ovl_11_func_800DB78C (void);
@@ -67,7 +67,7 @@ void ovl_11_func_800C162C(void) {
         ((struct Ovl11FrameWork *) &D_8007AFF0)->field_253AA = 0;
     }
     ovl_11_func_800DB5CC();
-    ovl_11_func_8010726C();
+    Ovl11UpdateSpriteRotations();
     ovl_11_func_800C056C(1);
     ovl_11_func_801209D4();
     SCRATCH_STACK_END();

@@ -969,11 +969,6 @@ typedef struct {
 } M2C_499805aa6798_Ov11SetFields;
 
 typedef struct {
-    u16 field_0;
-    u16 field_2;
-} M2C_4ba4ff9ac5c7_Cell4;
-
-typedef struct {
     char pad0[2];
     s16 unk2;
     u16 unk4;
@@ -1303,19 +1298,6 @@ typedef struct {
 typedef struct {
                s16 unk0;
                s16 unk2;
-               s16 unk4;
-               s16 unk6;
-               s32 unk8;
-               s16 unkC;
-               s16 unkE;
-               s16 unk10;
-               s16 unk12;
-               s32 unk14;
-} M2C_7147e7f955dc_UnkStruct80106DC0;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
 } M2C_729a6ccf4038_UnkStruct80107DE0;
 
 typedef struct {
@@ -1616,11 +1598,6 @@ typedef struct {
 } M2C_a070b354da22_Recon800B977CA0View;
 
 typedef struct {
-               char pad_00[0x8];
-               u16 unk8;
-} M2C_a146efbf8f1a_Ovl11Func80106E38Arg;
-
-typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;
@@ -1655,11 +1632,6 @@ typedef struct {
     char pad_38[0x42];
                u16 unk7A;
 } M2C_a731097cefbc_Ovl11D8010BD6CObj;
-
-typedef struct {
-    u16 field_0;
-    u16 field_2;
-} M2C_a77afff7ba68_Cell5A0;
 
 typedef struct {
     s16 field_00;
@@ -2179,11 +2151,6 @@ typedef struct {
                char pad_02[0x30 - 0x02];
                s16 unk30;
 } M2C_e71177b17bd3_Struct_8010BBA8;
-
-typedef struct {
-    u16 field_0;
-    u16 field_2;
-} M2C_e88a4985b4f4_Cell4;
 
 typedef struct {
                u16 unk0;
@@ -3129,6 +3096,11 @@ struct Ovl11IdAdjustmentObject {
 };
 
 typedef struct {
+    u16 id;
+    u16 age;
+} Ovl11ItemCell;
+
+typedef struct {
     u8 pad_0[2];
     s16 unk2;
     u16 unk4;
@@ -3179,7 +3151,10 @@ typedef struct {
 } Ovl11RankPair;
 
 typedef struct {
-    char pad0[0xC];
+    u16 flags;
+    char pad2[6];
+    u16 direction;
+    s16 id;
     s16 sprite;
 } Ovl11RotationSource;
 
@@ -3190,14 +3165,14 @@ typedef struct {
 } Ovl11RotationVector;
 
 struct Ovl11RotationState {
-    u16 unk0;
-    u16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s32 unk8;
+    u16 state;
+    u16 direction;
+    s16 holdTicks;
+    s16 unused6;
+    s32 angularStep;
     Ovl11RotationVector rotation;
-    s16 unk12;
-    Ovl11RotationSource *unk14;
+    s16 unused12;
+    Ovl11RotationSource *source;
 };
 
 typedef struct {

@@ -1,10 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "aged_item_pool.h"
 
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800CFD9C(void);
-void ovl_11_func_8010C3C4(void);
 
 void ovl_11_func_800CE96C(void) {
     s32 i;
@@ -34,7 +36,7 @@ void ovl_11_func_800CE96C(void) {
         p3->records_81BC[0].type = 0;
         p3->records_81BC[0].id = 0xFFFF;
     }
-    memset(D_80075854_reset, 0, 0x18E);
+    memset(gAgedItemCellsResetSpan, 0, 0x18E);
     for (i = 98; i >= 0; i--) {
         ((struct Ovl11PoolResetView *) D_8006C838)->cells_901C[i][0] = 0;
     }
@@ -69,7 +71,7 @@ void ovl_11_func_800CE96C(void) {
         ((struct Ovl11PoolResetView *) D_8006C838)->pairs_99C8[i][0] = -1;
         ((struct Ovl11PoolResetView *) D_8006C838)->pairs_99C8[i][1] = -1;
     }
-    ovl_11_func_8010C3C4();
+    Ovl11ClearAgedItemPool();
     ((struct Ovl11PoolResetView *) D_8006C838)->field_99D8 = 0;
     ((struct Ovl11PoolResetView *) D_8006C838)->field_99E6 = 0;
     ((struct Ovl11PoolResetView *) D_8006C838)->flags &= ~8;

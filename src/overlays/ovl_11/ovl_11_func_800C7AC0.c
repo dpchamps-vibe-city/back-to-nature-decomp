@@ -2,6 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/memory.h"
+#include "aged_item_pool.h"
 
 void *ovl_11_func_800BDE84 (u8 *arg0, s16 *arg1);
 s32 ovl_11_func_800CB4E0 (void);
@@ -42,7 +44,6 @@ void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001FABC (s16 arg0);
 void ovl_11_func_800C857C(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
 void ovl_11_func_800C8670(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
-s32 ovl_11_func_8010C4D4(void);                      /* static */
 s32 ovl_11_func_80121204(void);                      /* static */
 
 s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
@@ -84,7 +85,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
                     if ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
                         var_v0 = 0;
                         if (D_80070CF2 != 3) {
-                            temp_v0_2 = ovl_11_func_8010C4D4();
+                            temp_v0_2 = Ovl11TakeAgedItem();
                             if (temp_v0_2 != 0) {
                                 request[0] = temp_v0_2;
                                 request[2] = 1;

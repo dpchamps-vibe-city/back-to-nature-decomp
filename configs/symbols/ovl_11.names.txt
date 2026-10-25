@@ -6,3 +6,26 @@ Ovl11ResetCollisionQueryCount = 0x800BE2B8;
 gOvl11CollisionQueryCount = 0x80128810; // type:data size:0x4
 Ovl11DrawAndStepScreenColorRamp = 0x800BFF74;
 Ovl11SetScreenColorRampTarget = 0x800C0010;
+
+// 99-cell item pool: ID plus age, with queued threshold updates.
+Ovl11AddAgedItem = 0x8010C330;
+Ovl11ClearAgedItemPool = 0x8010C3C4;
+Ovl11UpdateAgedItemPool = 0x8010C3F8;
+Ovl11QueueAgedItemUpdate = 0x8010C4B0;
+Ovl11TakeAgedItem = 0x8010C4D4;
+Ovl11InitItemAge = 0x8010C550;
+Ovl11RefreshAgedItemId = 0x8010C5A0;
+Ovl11TrySpawnAgedItems = 0x8010C5DC;
+Ovl11CountAgedItems = 0x8010C668;
+
+// Ten linked-sprite rotation records and their per-direction hold angles.
+Ovl11ResetSpriteRotationEntry = 0x80106DC0;
+Ovl11ResetSpriteRotations = 0x80106DE8;
+Ovl11RegisterSpriteRotation = 0x80106E38;
+Ovl11RegisterPoolSpriteRotations = 0x80106EB0;
+Ovl11RequestSpriteRotation = 0x80106F20;
+Ovl11StepSpriteRotation = 0x80107044;
+Ovl11UpdateSpriteRotations = 0x8010726C;
+Ovl11GetSpriteRotationState = 0x8010734C;
+gOvl11RotationHoldAngles = 0x801274DC; // type:data size:0x10
+gOvl11SpriteRotations = 0x8012CF48; // type:data size:0xF0

@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
+#include "sprite_rotation.h"
 
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
@@ -15,7 +16,6 @@ void ovl_11_func_800DCECC(void);
 void ovl_11_func_800DC990(void);
 void ovl_11_func_800DCA60(void);
 void ovl_11_func_800DB2AC(void *arg0);
-void ovl_11_func_80106EB0(s32 arg0);
 void ovl_11_func_800BC868(void);
 void func_8001FD10(void);
 s32 func_8001FD74(void);
@@ -47,7 +47,7 @@ void ovl_11_func_80104CB8(void) {
     ovl_11_func_800DC990();
     ovl_11_func_800DCA60();
     ovl_11_func_800DB2AC(D_8009F78C);
-    ovl_11_func_80106EB0((s32)D_8009F78C);
+    Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);
     ovl_11_func_800BC868();
     while (func_8001FD74() == 0) {
         func_8001FD10();

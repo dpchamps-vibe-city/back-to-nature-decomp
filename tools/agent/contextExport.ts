@@ -452,15 +452,18 @@ export function exportAll(
     ...collectAllSignatures(rootDir, container),
   }));
 
-  /* One resolution over every container's signatures, so the shared type header
-     covers all of them whichever container is written last. */
+  /* Selected containers are complete replacements, not additions to their old
+     headers. Import published signatures only for unselected containers;
+     otherwise a renamed member leaves its obsolete signature (and retired
+     local types) in the shared type-resolution union. */
   const union = new Map<string, string>();
-  for (const entry of perContainer) {
-    for (const [name, signature] of unionSignatures(rootDir, entry.container, entry.signatures)) if (!union.has(name)) union.set(name, signature);
+  const selected = new Set(containers.map((container) => container.id));
+  for (const other of loadContainers()) {
+    if (selected.has(other.id)) continue;
+    for (const [name, signature] of readExistingHeader(join(rootDir, functionsHeaderFor(other)))) {
+      if (!union.has(name)) union.set(name, signature);
+    }
   }
-
-  /* Fresh definitions override published headers for every selected container,
-     regardless of which header was encountered first in the union. */
   for (const entry of perContainer) for (const [name, signature] of entry.signatures) union.set(name, signature);
   const exported: string[] = [];
   const skipped: string[] = [];

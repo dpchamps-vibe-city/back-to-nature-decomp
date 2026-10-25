@@ -3,13 +3,13 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
+#include "aged_item_pool.h"
 
 
 UnkStruct800E109C *ovl_11_func_800E04FC (s32 arg0, s32 arg1);
 s8 *ovl_11_func_800DE924 (s32 arg0, s32 arg1);
 void ovl_11_func_800E2904 (s32 arg0);
 u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
-s32 ovl_11_func_8010C330 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
 s32 ovl_11_func_800DF128 (char *arg0, s32 arg1);
 s32 ovl_11_func_800E0D3C (UnkStruct800E109C *arg0, s32 arg1);

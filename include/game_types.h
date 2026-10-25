@@ -2196,9 +2196,13 @@ typedef struct {
     s16 unkB6;
 } Ovl11StageHandlerObj;
 
-/* ovl_11_func_80107044: source sprite index loaded by lh at +0xC. */
+/* Rotation-source view: F20 reads flags/id, E38 reads direction, and 7044
+ * reads the signed sprite index at +0xC. All original widths are retained. */
 typedef struct {
-    char pad0[0xC];
+    u16 flags;
+    char pad2[6];
+    u16 direction;
+    s16 id;
     s16 sprite;
 } Ovl11RotationSource;
 
@@ -2209,16 +2213,17 @@ typedef struct {
     s16 z;
 } Ovl11RotationVector;
 
-/* 0x18-byte state: 80106DC0 resets it; 80107044 updates the rotation. */
+/* 0x18-byte state: reset/step share the full record; signed hold timer and
+ * step widths match the original accesses. Padding halfwords are untouched. */
 typedef struct Ovl11RotationState {
-    u16 unk0;
-    u16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s32 unk8;
+    u16 state;
+    u16 direction;
+    s16 holdTicks;
+    s16 unused6;
+    s32 angularStep;
     Ovl11RotationVector rotation;
-    s16 unk12;
-    Ovl11RotationSource *unk14;
+    s16 unused12;
+    Ovl11RotationSource *source;
 } Ovl11RotationState;
 
 /* 80107480 reads two u8 selectors, two u16 payloads and a u16 result. */

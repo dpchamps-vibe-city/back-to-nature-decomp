@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "sprite_rotation.h"
 
 void ovl_11_func_80104A58 (void);
 s32 ovl_11_func_800DC388 (s32 arg0);
@@ -13,7 +14,6 @@ void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_800DB2AC (Ovl11SetupHeader *arg0);
 void ovl_11_func_8010B67C (void);
 void ovl_11_func_800C19B0 (void);
-void ovl_11_func_80106EB0 (s32 arg0);
 void ovl_11_func_800BDA70 (void);
 void ovl_11_func_800CE5FC (void);
 void ovl_11_func_800BD3C4(s32 arg0);
@@ -124,7 +124,7 @@ block_33:
     }
     ovl_11_func_8010B67C();
     ovl_11_func_800C19B0();
-    ovl_11_func_80106EB0((s32) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
+    Ovl11RegisterPoolSpriteRotations((s32) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
     if (((*(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 2)) == 1) && ((((Ovl11SetupResidentView *) D_8006C838)->time) >= 0x438)) {
         ovl_11_func_800BDA70();
         func_8001AF70(0x40U, 1U);

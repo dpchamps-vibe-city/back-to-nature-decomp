@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
+#include "sprite_rotation.h"
 
 void func_8001AF70 (u16 arg0, u16 arg1);
 s32 func_8001AF44 (u32 arg0);
@@ -8,7 +9,6 @@ void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
 s16 ovl_11_func_800BF8B8 (void);
 void ovl_11_func_800CCCC0 (void);
-void ovl_11_func_80106DE8 (void);
 void ovl_11_func_80111F88 (void);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_800C1D68 (void);
@@ -19,7 +19,6 @@ void ovl_11_func_800DCECC (void);
 void ovl_11_func_800DC990 (void);
 void ovl_11_func_800DCA60 (void);
 void ovl_11_func_800DB2AC (Ovl11SetupHeader *arg0);
-void ovl_11_func_80106EB0 (s32 arg0);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_800CCC5C (void);
@@ -105,7 +104,7 @@ s32 ovl_11_func_800DDDFC(void) {
     case 4:
         if (IsScreenFadeComplete() == 1) {
             ovl_11_func_800CCCC0();
-            ovl_11_func_80106DE8();
+            Ovl11ResetSpriteRotations();
             ovl_11_func_80111F88();
             ((Ovl11SetupWorkView *)&D_8007AFF0)->alternateId = -1;
             offset = ((Ovl11DDDFCState *)D_8006C838)->variant * 4 + 0x50;
@@ -126,7 +125,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800DB2AC((Ovl11SetupHeader *)D_8009F78C);
             ((Ovl11SetupWorkView *)&D_8007AFF0)->current = ((Ovl11SetupWorkView *)&D_8007AFF0)->previous;
             ((Ovl11SetupWorkView *)&D_8007AFF0)->header = D_8009F78C;
-            ovl_11_func_80106EB0((s32)D_8009F78C);
+            Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);
             ovl_11_func_800CD0C0(((Ovl11DDDFCState *)D_8006C838)->position);
             ovl_11_func_800CBEF8();
             ((Ovl11DDDFCState *)D_8006C838)->status = (((Ovl11DDDFCState *)D_8006C838)->status | 0x4000) & 0xFFF07FFF;

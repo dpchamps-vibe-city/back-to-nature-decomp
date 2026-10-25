@@ -3,6 +3,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
+#include "aged_item_pool.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -15,7 +16,6 @@ typedef struct __attribute__((packed)) {
 
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800E2904(s32 arg0);
-s32 ovl_11_func_8010C330(s32 arg0);
 void ovl_11_func_800D2D54(void *arg0);
 
 s32 ovl_11_func_800E8614(s32 arg0) {

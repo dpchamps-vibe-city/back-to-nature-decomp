@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "sprite_rotation.h"
 
 
 void ovl_11_func_8011F52C (void);
@@ -12,8 +13,6 @@ void func_8001AF70 (u16 arg0, u16 arg1);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_80107390 (s32 arg0);
 s32 func_8001AF44 (u32 arg0);
-u16 ovl_11_func_8010734C (s32 id);
-s32 ovl_11_func_80106F20 (s16 arg0, u16 arg1);
 
 void ovl_11_func_8011F958(void) {
     Ovl11C7010Object *temp_s0;

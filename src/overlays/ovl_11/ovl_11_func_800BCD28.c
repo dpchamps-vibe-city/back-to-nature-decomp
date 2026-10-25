@@ -1,11 +1,11 @@
 #include "common.h"
 #include "scratchpad.h"
+#include "sprite_rotation.h"
 
 void ovl_11_func_800DB8DC (void);
 void ovl_11_func_800DB824 (void);
 void ovl_11_func_800DB7F0 (void);
 void ovl_11_func_800DB0E4 (void);
-void ovl_11_func_80106DE8 (void);
 void ovl_11_func_800DB978 (void);
 void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
@@ -34,7 +34,7 @@ void ovl_11_func_800BCD28(void) {
     ovl_11_func_800DB824();
     ovl_11_func_800DB7F0();
     ovl_11_func_800DB0E4();
-    ovl_11_func_80106DE8();
+    Ovl11ResetSpriteRotations();
     ovl_11_func_800DB978();
     if (D_801287F4 == 0xB) {
         ovl_11_func_800DC560(0, 0);

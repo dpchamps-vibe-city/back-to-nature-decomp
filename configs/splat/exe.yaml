@@ -253,14 +253,7 @@ segments:
       - [0xF2E4, c, func_8001EAE4]       # 0x8001EAE4 func_8001EAE4
       - [0xF78C, c, SetVal8005E2E8]       # 0x8001EF8C SetVal8005E2E8
       - [0xF798, c, GetVal8005E524]       # 0x8001EF98 GetVal8005E524
-      - [0xF7A4, c, func_8001EFA4]       # 0x8001EFA4 func_8001EFA4
-      - [0xF838, c, func_8001F038]       # 0x8001F038 func_8001F038
-      - [0xF884, c, func_8001F084]       # 0x8001F084 func_8001F084
-      - [0xF900, c, func_8001F100]       # 0x8001F100 func_8001F100
-      - [0xF990, c, func_8001F190]       # 0x8001F190 func_8001F190
-      - [0xF9B4, c, ClearVal8005E2EC]       # 0x8001F1B4 ClearVal8005E2EC
-      - [0xF9C0, c, func_8001F1C0]       # 0x8001F1C0 func_8001F1C0
-      - [0xF9E0, c, func_8001F1E0]       # 0x8001F1E0 func_8001F1E0
+      - [0xF7A4, c, modules/camera_offset]
       - [0xFA50, c, pow_int]       # 0x8001F250 pow_int
       - [0xFA78, c, func_8001F278]       # 0x8001F278 func_8001F278
       - [0xFAEC, c, func_8001F2EC]       # 0x8001F2EC func_8001F2EC

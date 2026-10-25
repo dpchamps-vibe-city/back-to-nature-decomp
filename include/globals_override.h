@@ -1540,14 +1540,17 @@ extern u8 D_8007AFEF;
 /* 8011F1D0 indexes this signed-halfword base-value table with its state index. */
 extern s16 D_8012852C[10];
 
-/* 800CE96C clears 0x18E bytes; named view preserves the other TUs' cell views. */
-extern u8 D_80075854_reset[0x18E] __asm__("D_80075854");
-/* 8010C4D4 walks 99 four-byte cells, matching an item ID at +0 and clearing it. */
+/* ovl_11's pool scans 99 four-byte cells; ages select IDs A3/A2/A1 at 10/20. */
 typedef struct {
     u16 id;
-    u16 count;
+    u16 age;
 } Ovl11ItemCell;
-extern Ovl11ItemCell D_80075854_cells[] __asm__("D_80075854");
+extern Ovl11ItemCell gAgedItemCells[99];
+/* 800CE96C clears 0x18E bytes, including two bytes beyond the cell array.
+ * Preserve that witnessed reset span rather than widening the cell count. */
+extern u8 gAgedItemCellsResetSpan[0x18E] __asm__("gAgedItemCells");
+/* 8010C330 stores occupancy here only after a successful add. */
+extern s16 gAgedItemLastAddCount;
 /* 800CE96C clears six 0xB0-byte records; named view preserves the existing record type. */
 extern u8 D_80075BC4_reset[0x420] __asm__("D_80075BC4");
 
@@ -2402,12 +2405,15 @@ extern s16 D_8005E47A;
 /* D_8005E444 - unsigned halfword (lhu) — func_80019030 owns it */
 extern u16 D_8005E444;
 
-/* D_8005E2ED - GP-relative byte (sb-only access by func_8001EFA4).
- * classifyGlobals defaults GP symbols with no nonmatching accessor to s32;
- * the only accessor is a matched function, so its access is invisible to the
- * generator. Declared here so classifyGlobals skips it (it will otherwise
- * regress globals.h to s32 and conflict with func_8001EFA4.c's s8 definition). */
-extern s8 D_8005E2ED;
+/* Camera-offset bytes: InitCameraOffsetState stores 2/1/0; setters mark dirty. */
+extern s8 gCameraOffsetState;
+extern s8 gCameraOffsetInitialized;
+extern s8 gCameraOffsetDirty;
+/* SetCameraOffsetParameters resets change state and stores radius/height/yaw. */
+extern s32 gCameraOffsetChangeState;
+extern s32 gCameraOffsetRadius;
+extern s32 gCameraOffsetHeight;
+extern s32 gCameraOffsetYaw;
 
 /* D_8005E4A8 - pointer to u16 array (lw, used as base) — func_80019030 owns it */
 extern u16 *D_8005E4A8;
@@ -3070,15 +3076,15 @@ extern struct SpriteSourceData D_80128D00;
  * declaration class as D_80128D00 above. */
 extern struct SpriteSourceData D_80070400;
 
-/* D_80049268, D_80049274, D_80049280 — absolute-addressed Vec3 globals
- * used by func_8001EFA4. Accessed with lui/lw (split absolute addressing).
- * Array size 3 (12 bytes) forces >-G8 declaration for split addressing. */
-extern s32 _D_80049268[3] __asm__("D_80049268");
-#define D_80049268 (_D_80049268[0])
-extern s32 _D_80049274[3] __asm__("D_80049274");
-#define D_80049274 (*((s32*)_D_80049274))
-extern s32 _D_80049280[3] __asm__("D_80049280");
-#define D_80049280 (*((s32*)_D_80049280))
+/* InitCameraOffsetState computes a three-word offset, zeros its origin, and
+ * copies the offset into a backup. Retain the existing array-backed lvalue
+ * views used by callers; each object is 12 bytes and addressed absolutely. */
+extern s32 _gCameraOffsetVector[3] __asm__("gCameraOffsetVector");
+#define gCameraOffsetVector (_gCameraOffsetVector[0])
+extern s32 _gCameraOffsetOrigin[3] __asm__("gCameraOffsetOrigin");
+#define gCameraOffsetOrigin (*((s32*)_gCameraOffsetOrigin))
+extern s32 _gCameraOffsetBackup[3] __asm__("gCameraOffsetBackup");
+#define gCameraOffsetBackup (*((s32*)_gCameraOffsetBackup))
 
 /* D_80061EF8 — array of 3 pointers to vertex coordinate structs (s16 at 0, 2, 4).
  * Absolute addressing (lui/addiu). Array of 3 pointers = 12 bytes > -G8.
@@ -5109,9 +5115,9 @@ typedef struct {
     s16 cards[3][6][7];
 } Ovl11CardView;
 
-/* 8010726C walks ten 0x18-byte rotation states at D_8012CF48; named view preserves existing table views. */
+/* The sprite-rotation unit resets and walks ten 0x18-byte state records. */
 struct Ovl11RotationState;
-extern struct Ovl11RotationState Ovl11_D_8012CF48[] __asm__("D_8012CF48");
+extern struct Ovl11RotationState gOvl11SpriteRotations[10];
 
 /* ovl_11_func_8010C6A0 scratch state. D_8007A638 is seven 0xF8-byte
  * records (0x6C8 bytes) zeroed by that function and populated one record at
@@ -6653,7 +6659,7 @@ typedef struct {
 } Ovl15TransferRuntimeRecords;
 
 /* ovl_11_func_80107044: 4-byte stride table; original data are +/-0x420. */
-extern s32 D_801274DC[4];
+extern s32 gOvl11RotationHoldAngles[4]; /* StepSpriteRotation: per-direction hold yaw. */
 
 /* ovl_30_func_80133218 reads and writes signed halfwords at row*10 + column*2. */
 extern s16 D_801231C0[5][5];

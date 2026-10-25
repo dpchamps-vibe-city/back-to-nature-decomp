@@ -7,6 +7,7 @@
 #include "screen_fade.h"
 #include "pad_actuator_gate.h"
 #include "pad_actuator_sequences.h"
+#include "sprite_rotation.h"
 
 typedef struct {
                s16 field_0;
@@ -194,7 +195,6 @@ void ovl_11_func_800C9DC0 (void);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (M2C_38c89582ddcb_M2C_4c1a205b3b09_ReconA0View *arg0);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
-u16 ovl_11_func_8010734C (s32 id);
 s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 void ovl_11_func_800CBE14 (s32 arg0);
 s32 ovl_11_func_800C9888 (u16 arg0, u16 arg1);
