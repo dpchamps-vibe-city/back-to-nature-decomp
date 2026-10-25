@@ -12,7 +12,7 @@ void ovl_17_func_800B861C(void) {
     u8 *record;
 
     for (i = 0; i < 6; i++) {
-        base = D_800BD870 + i * 0x50;
+        base = gOvl17AnimatedRecordBase + i * 0x50;
         if (i != 2) {
             ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *)base, 0x40000);
         }

@@ -17,7 +17,7 @@ void ovl_17_func_800B8534(void) {
 
     i = 0;
     skip = 2;
-    record = D_800BD870;
+    record = gOvl17AnimatedRecordBase;
     origin = record;
     for (; i < 6; i++) {
         if (i == skip) {

@@ -60,8 +60,8 @@ extern s32 _D_8006C84C[3] __asm__("D_8006C84C");
 #define D_8006C84C (*((s32*)_D_8006C84C))
 extern s32 _gScenePhase[3] __asm__("gScenePhase");
 #define gScenePhase (*((s32*)_gScenePhase))
-extern s32 _D_80070CC4[3] __asm__("D_80070CC4");
-#define D_80070CC4 (*((s32*)_D_80070CC4))
+extern s32 _gSceneSubphase[3] __asm__("gSceneSubphase");
+#define gSceneSubphase (*((s32*)_gSceneSubphase))
 extern s32 _D_80070D18[3] __asm__("D_80070D18");
 #define D_80070D18 (*((s32*)_D_80070D18))
 extern u16 _D_80070D38[5] __asm__("D_80070D38");

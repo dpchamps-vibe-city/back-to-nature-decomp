@@ -88,6 +88,6 @@ segments:
       - [0x318C, c, ovl_19_func_800BAFAC]
       - [0x326C, c, modules/value_table_display]
       - [0x34F8, c, modules/scene_resources]
-      - [0x3EF4, c, ovl_19_func_800BBD14]
+      - [0x3EF4, c, modules/record_value_increment]
       - [0x3F54, data]
   - [0x8000]

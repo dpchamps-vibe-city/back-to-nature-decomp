@@ -4883,8 +4883,8 @@ Members (address order):
 
 ## `ovl_10` overlay tail — /15 date-utility pair around 0x800BB728 (confidence: low)
 
-Candidate tail-cluster of `ovl_10` (`Obj\gf_mcard.bin`, the memory-card manager
-overlay). Evidence is a single strong adjacency plus a shared idiom; same-TU
+Candidate tail-cluster of `ovl_10` (`Obj\PdaSamp.bin`, the PDA/memory-card
+sample overlay; `gf_mcard.bin` is ovl_31). Evidence is a single strong adjacency plus a shared idiom; same-TU
 membership is unproven (the abutting global could belong to a neighbour's data
 pool).
 
@@ -4929,7 +4929,13 @@ members' jump tables. No source/config change was applied. This is a
 mechanical rodata-reconstruction limit, not evidence for a TU boundary
 inside the shared command/editor family. Next useful experiment is to
 reconstruct its original string/table emission together, rather than
-splitting the family merely to get around the pool check.
+splitting the family merely to get around the pool check. A later read-only
+compiler witness confirms that a single GCC TU can emit per-function
+literals, then that function's jump table, then later-function literals.
+Thus the observed interleaving does not prove three separate source units.
+The shared named newline also prevents assuming every extracted string is
+a private literal. No three-way split was accepted; the obstacle remains
+representation of the literal/table emission in the checked fold.
 
 Candidate same-TU family of memory-card manager (`Obj\gf_mcard.bin`)
 status/debug printers around 0x800B92AC–0x800BA2A0. Evidence is a contiguous
@@ -8121,6 +8127,29 @@ Members (address order):
   interfaces, source policy, convergence and exception non-growth. The
   subsequent string/power batch also passes at 577 folded functions and
   79/79 valid modules. No shared tooling change was needed.
+- **Reconstructed `src/modules/scene_phase.c`, exe:80021FD0–80021FE4
+  exclusive:** ResetSceneDispatchState clears the two shared signed words
+  at state+4488/+448C. The first is the established gScenePhase; the second
+  is now gSceneSubphase. Overlay handlers increment the second word, use it
+  to select steps and sometimes store FF as a terminal step (e.g. ovl_19
+  800B8190 and ovl_25 800B81F4). The main loop invokes this reset after
+  loading selected overlays, before installing their update callbacks.
+  That is the demonstrated responsibility, not a complete scene initializer.
+  The public scene_phase.h preserves the void/no-argument ABI and states
+  exactly which state is cleared. The common state-base address form and
+  external linkage are retained; no ownership definitions are introduced.
+
+  This is a one-member unit: on the left, InitStateMemory/BindStateDataTables
+  form the closed clear/bind/pool-layout protocol described above; neither
+  uses these dispatch words as part of that protocol or calls this reset.
+  On the right, message_buffer_access tests/clears the independent byte at
+  +CD and returns +D8, without touching +4488/+448C. No private helper,
+  table or small-data witness joins either neighbor to this reset. These
+  are evidence-limited cuts, not GP-proven historical object boundaries;
+  the original-byte scan finds no GP reference here. The checked baseline
+  -O2/-G8 fold preserves this member and the complete EXE. No override or
+  policy exception is involved.
+
 - **Reconstructed `src/modules/message_buffer_access.c`, exe:80021FE4–80022014
   exclusive:** GetAvailableMessageReadBuffer (80021FE4) and
   ClearMessageReadBufferBusy (80022008). The getter tests primary state+CD;
@@ -10063,6 +10092,34 @@ Members (link order):
 - ovl_23_func_800BA368 (m, byte-exact) — converts a 2D vector to an angle in degrees.
 
 ## `ovl_23` D_800BF87C/D_800BBAB4 threshold-selector run — 0x800BA3B4 / 0x800BA494 (confidence: medium)
+
+**Reconstructed `src/overlays/ovl_23/modules/record_random_selection.c`,
+ovl_23:800BA3B4–800BA610 exclusive.** Both members implement the two-stage
+random decision used only by 800B8C18: weighted result selection followed by
+a threshold-bucket trial. The adjacent private tables at BBA9C (24 bytes,
+four three-u16 rows) and BBAB4 (40 bytes, four five-s16 rows) have no other
+readers; their end is the separate BBADC lookup used by BB534. This
+caller/protocol and private-table evidence corroborates link order; the
+widely used BF87C state base alone would not support membership.
+
+Left BA368 converts a vector angle with ratan2 and reads neither state nor
+selection table. Right BA610 advances/clamps a different argument record
+and calls BB0D8, using the shared movement limits but neither probability
+table nor either selector. No private helper/table link extends the
+selection service into those neighbors. These are conservative responsibility
+cuts, not proven original object boundaries: this overlay's -G0 supplies no
+GP witness. The remote caller 800B8C18 also drives record movement/state
+helpers; it is a client of this selection service, not evidence by itself
+for absorbing the intervening rendering/movement code.
+
+The public ovl23_record_random_selection.h names trial rows, record indices
+and weight sets without assigning gameplay meaning. It records unchecked
+indices, one Rand(100) consumption per call, strict inequalities, signed
+halfword narrowing, result codes and no state mutation. Types/widths and
+external linkage are preserved. The raw state uses the existing canonical
+Ovl23_D_800BF87C_draw view rather than adding another conflicting extern.
+The checked fold passes both members and the overlay at baseline -O2/-G0;
+no compiler override or policy exception is involved.
 
 Evidence: gapless link order in ovl_23 — `ovl_23_func_800BA368` (0x4C, ends
 0x800BA3B4) immediately precedes `ovl_23_func_800BA3B4` (0xE0, splat
@@ -12534,6 +12591,34 @@ Members (link order):
 
 ## `ovl_17` D_800BD848 0x50-stride record area + caller hub (confidence: low)
 
+**Reconstructed `src/overlays/ovl_17/modules/record_sprite_animation.c`,
+ovl_17:800BAFAC–800BB0C4 exclusive**, all five entries in original order:
+Ovl17SelectRecordAnimation2, Ovl17SelectAllRecordAnimations2,
+Ovl17SelectRecordAnimation0, Ovl17SelectAllRecordAnimations0,
+Ovl17SelectRecordAnimation1. Membership is the alternating selector/driver
+protocol: the two six-record drivers call their respective immediately
+preceding selectors, and the final selector uses the identical embedded
+source/current-animation-byte protocol with ID 1 instead of 2 or 0. No
+slice at BB020 is retained. The record base is now gOvl17AnimatedRecordBase;
+its label retains the existing A0-byte data span, not a claim that all six
+records end there (subsequent labels overlap the logical record array).
+The array is shared with the controllers below and is not private-TU proof.
+
+Left BAF50 selects animation 4 and draws a different fixed work-area source
+at BDA74, not the six record sources. Right BB0C4 owns the independent HUD
+tick/text service described under the setup run below. Neither shares this
+selector/driver protocol, so there is no positive extension witness. These
+are conservative service boundaries, not GP proofs (-G0). The controllers
+remain clients; use of their broad BD848 state is not enough to absorb them.
+Three identical parameter views are reconciled to Ovl17RecordAnimationView:
+the embedded source is +20 and its animation byte +24. The public header
+states that changing an animation restarts its frame/timer while reselecting
+the same one does nothing. Numeric IDs remain neutral. Single-record s32
+ABIs and fall-through paths are deliberately retained: only the
+already-selected path has a defined result, and all observed callers
+discard it. External linkage is unchanged. Baseline checked folding passes
+all five members and the overlay, with no flag override or added exception.
+
 Evidence: shared data cluster and call graph. `ovl_17_func_800B9F10` (m,
 matched 2026-10-03) indexes the `D_800BD848` work area as 0x50-byte records
 with an s16 field at +0x2A; `D_800BD870` is the same records aliased at
@@ -12696,6 +12781,28 @@ Members (link order):
   `func_80012A34(0x64) < (u16)((arg0 * 100) / 127)`.
 
 ## `ovl_17` D_800BB524 display-setup state-handler run — 0x800B9FA8–0x800BA54C (confidence: medium)
+
+The referenced 800BB0C4 is now the separate singleton
+`src/overlays/ovl_17/modules/timer_hud.c`, ovl_17:800BB0C4–800BB394
+exclusive, named Ovl17UpdateTimerHud. Its only state is private
+u32 gOvl17TimerTicks at BB724 and the two-halfword separator string
+at BB6E8 (gOvl17TimerSeparatorText); no other overlay function accesses
+either. Four controller/setup clients pass modes -1/0/1/2. This private
+state/draw protocol supports a complete service, not a shared-base grouping.
+The header specifies -1 reset-only, 0 advance-and-draw, 1 draw-only, 2
+advance-only; the code's `(u16)mode < 2` excludes mode 2 from drawing.
+The minute/second/fraction formulas assume 30 calls per second when ticking;
+the function does not measure VSync or enforce the call frequency. Unsigned
+arithmetic and repeated divisions are preserved, including minute-within-hour
+wrapping. The separator's glyph meaning remains neutral.
+
+On the left, BB094 is a record animation selector with no HUD state or
+rendering callees; on the right, the record_value_increments module only
+updates shared work-record halfwords. Neither shares a private object or
+protocol with this HUD. Both cuts are conservative service boundaries under
+-G0, not proven original object seams. This is not a member of the setup
+run just because BA54C calls its reset mode. The baseline checked singleton
+fold passes the member and the overlay, without flags or added exceptions.
 
 Evidence: the dispatcher `ovl_17_func_800B7E78` (s) selects on the state byte
 `D_800BB524` and, from consecutive jump-table branches, calls
@@ -13160,11 +13267,11 @@ audio-setup leaf, mirroring the ovl_17 run's 800BA504.
 
 The matched `ovl_21_func_800BB648` adds a shared-cluster tie: it initializes
 `D_800C0B2C` and the `D_800C0458` record pool used by matched
-`ovl_21_func_800BA510`, supporting a common TU with the `D_800C0448` group
-below. Matched `ovl_21_func_800BB328` adds an independent shared-object tie:
+`ovl_21_func_800BA510`. This demonstrates an initializer/client interface
+with the broad `D_800C0448` group below, not by itself common-TU ownership. Matched `ovl_21_func_800BB328` adds an independent shared-object tie:
 its `D_800C0ACC` initializer targets the same sprite at `D_800C0448 + 0x684`
-reset and projected by matched `ovl_21_func_800BAEEC`, corroborating that
-common TU. These ties do not establish the TU's boundaries.
+reset and projected by matched `ovl_21_func_800BAEEC`. This also witnesses
+an initializer/client interface, not a proven TU boundary.
 
 Members (link order):
 - ovl_21_func_800BB328 (m, byte-exact) — display-setup and D_800C0ACC sprite initializer.
@@ -13192,25 +13299,78 @@ here only the dispatcher call graph and the gapless link run are.
 
 ## `ovl_21` D_8007AFF0 far-buffer state writer + GTE reader — 0x800BB0F8 / 0x800BB138 / 0x800BB250 / 0x800BB2B4 (confidence: medium)
 
-**Reconstructed module: `src/overlays/ovl_21/modules/scene_camera_geometry.c`,
-800BB0F8–800BB328 (exclusive), four functions.** The reset writes the exact
+**Extended/renamed module: `src/overlays/ovl_21/modules/scene_resources.c`,
+800BB0F8–800BBA84 exclusive, nine functions.** It absorbs all four members
+of the former scene_camera_geometry module plus BB328/BB59C/BB648/BB8B8/
+BBA3C, now Ovl21LoadSceneSpriteArchive, Ovl21UploadSceneSpriteChunk,
+Ovl21LoadUiAndObjectSprites, Ovl21LoadSceneGeometry and
+Ovl21QueueSceneSound. No original entry or intervening stub is omitted.
+
+The prior four-function cut below is superseded. The source witnesses now
+weighed together are the private geometry descriptor's loader/draw-consumer
+pair (BB8B8/BB2B4), the gapless five-stage setup sequence called from
+800B7E98, its terminal camera startup, and the retained per-stage sprite
+blobs/offset table. BB328/BB648 retain sprite headers and bind their source
+objects; BB59C supplies the intervening standalone upload stage; BBA3C
+queues sound for the same initializer's completion wait. These are one
+resource lifetime protocol, not generic D_8007AFF0 sharing or merely a
+cross-overlay copy. The analogous ovl_19 merge corroborates but does not
+prove membership. D_8007AFF0's pointer value and its camera storage remain
+separate views and are not conflated.
+
+Outer limits: left BAFFC draws/projects a different sprite service through
+BCD18/BCD20 and shares neither camera slots nor geometry descriptor. No
+new membership witness extends the module leftward. Right BBA84 is the
+concrete code/data boundary (file 3C64). The head is conservative, not
+GP-proven (-G0); exact original object boundaries remain uncertain. The
+shared object/sprite-pool clients left of the module are not absorbed just
+because they use initialized sources.
+
+The setup interface is now ovl21_scene_resources.h; the existing camera
+header still serves its callers. They document busy-poll/no-timeout reads,
+heap scratch at +4290, retained headers and unchecked storage, source-anchor
+biases, load-before-draw constraints and queued (not completed) sound I/O.
+Private data names cover the two retained sprite blobs, UI header offsets
+and disc positions; primary-source/UI-anchor names propagate to flag
+clients as well. The override declarations were reconciled explicitly:
+ovl_25's D_800BCD28 remains its own unnamed data identity at the same RAM
+address as ovl_21's gOvl21SceneSpriteData, not an obsolete alias for it. Existing C views/extents are preserved, including the
+opaque geometry descriptor and the 0x30-byte source stride. Unused m2c
+SDK/ovl_11 declarations in BB59C were removed after folding. Its existing
+empty memory barrier in BB8B8 is retained, not added or widened. The checked
+baseline -O2/-G0 fold passes every one of the nine members and the overlay;
+none has a flag override.
+
+Final batch acceptance: `npx tsx tools/diagnostics/tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes all integrity gates and
+the linked EXE plus all 13 overlays, including data, callbacks, tables and
+placement. Folded membership rises **730 -> 747**; **117/117** module TUs are
+valid, with **1878** eligible functions still outside modules. The batch
+creates scene_phase, ovl_17 record_sprite_animation/timer_hud/
+record_value_increments, ovl_19 record_value_increment and ovl_23
+record_random_selection, and extends/renames this ovl_21 unit. Public
+interfaces have zero failing publications; canonical names, ownership,
+source policy, convergence, whitespace, input stability and exception
+non-growth pass. No flag was added or retired, and no pin, asm permission
+or stub was added. The exit status 1 denotes remaining module work, not a
+failed gate. One existing copy-family test fixture's member name was updated
+to Ovl21LoadSceneSpriteArchive so the rename does not silently drop that
+member from coverage; no test or tool behavior was added. No shared build
+or diagnostic implementation changed.
+
+Original camera membership evidence (still applicable): The reset writes the exact
 camera inputs/target slots read by the GTE update; apply and draw consume its
 same derived eye and target. Four scene controllers (7FC8/806C/80D4/8134)
 call update/apply/draw in the same order. This shared narrow state and protocol,
 not D_8007AFF0 usage in general or resemblance to other overlays, establishes
 membership. All four original entries remain distinct overlay-21 identities.
 
-The earlier description below overextended the evidence to the terminal
-setup run. BB8B8 reads *the value* of D_8007AFF0 as a loaded-asset buffer,
-whereas this camera uses storage at *the address* of D_8007AFF0 +25394 etc.
-Those are not the same accessed state block. BB8B8 initializes the geometry
-this module draws, but producer/consumer descriptor sharing alone does not
-establish one TU with the intervening sprite/audio setup handlers. There is
-no GP discriminator under -G0. Left neighbor BAFFC projects/draws sprites
-using BCD18/BCD20, without this camera block or descriptor. Right neighbor
-BB328 begins sprite/CD setup, without the camera update protocol. These
-boundaries are supported-family endpoints; exact original object boundaries
-remain unproved. No camera-protocol member was omitted inside the run.
+The earlier ruling kept BB328 outside because descriptor sharing alone
+was insufficient and there is no GP discriminator under -G0. That remains
+a valid objection to the broad-buffer argument, but the old cut did not
+weigh the complete dispatch/setup/resource-lifetime protocol now recorded
+above. It is superseded by the whole nine-entry reconstruction, not by a
+claim that a shared RAM base or the ovl_19 copy proves original ownership.
 
 Names: BB0F8 `Ovl21InitSceneCamera`, BB138 `Ovl21UpdateSceneCameraOffset`,
 BB250 `Ovl21ApplySceneCamera`, BB2B4 `Ovl21DrawSceneGeometry`. The eight-byte
@@ -14265,6 +14425,23 @@ Cross-container note: byte-shape twins `ovl_19_func_800B7ED8`,
 evidence — only the shared state word and the link adjacency are.
 
 ## `ovl_15` D_8013759E/A0/A2/A4 adjacent-u16 state run — 0x80133808–0x80134724 (confidence: medium)
+
+Module campaign check: the twelve-entry 80133808–80134770 run (including
+34444/34450) has a supported extension to 335F8 through its 34134 helper
+and mark-table protocol. 335F8's unreconciled no-GCSE override remains a
+mechanical limit, not an original-file boundary; the flag review already
+records contrary regional witnesses. No partial module was accepted.
+A dry fold of the twelve baseline members exposes an additional concrete
+interface blocker: 33B28 declares 344E8 as returning s16 while its matched
+definition returns s32. `interfaceAudit.ts --write --callee
+ovl_15_func_801344E8` refused reconciliation: "the object changes even with
+every cast in place" (one caller, zero edits). Thus merely publishing the
+matched prototype is not byte-preserving. A future whole-unit experiment
+must settle the return contract and preserve the caller's narrowing/code
+shape, then reconcile Rec/Ovl15Slots views and the local parameter types.
+This is not permission to hide the conflict behind a new alias or to split
+the baseline run. The original matched sources and flag settings remain
+unchanged.
 
 Evidence: one link-order run (0x5A20–0x693C) in which eight functions read and
 write the same four adjacent u16 globals `D_8013759E` / `D_801375A0` /
@@ -15910,6 +16087,29 @@ tie, so membership is weaker than the adjacent pair above.
 
 ## `ovl_17` D_8006C838+0x8000 work-area 0x1D4-stride record pair — 0x800BB394 / 0x800BB3F4 (confidence: medium)
 
+**Reconstructed `src/overlays/ovl_17/modules/record_value_increments.c`,
+ovl_17:800BB394–800BB454 exclusive:** Ovl17RaiseRecordByteRangeValue and
+Ovl17RaiseRecordHalfwordRangeValue. The common caller 800B80B0 issues the
+first to twelve record indices then the second to three indices (3/7/0x14).
+That paired adjacent-field update protocol supports membership, with the
+identical indexed address formation and original link order. Shared game
+state alone and the cross-overlay twins would not establish it.
+
+Head BB0C4 is a private counter/HUD formatter using BB724/BB6E8; it never
+accesses these record fields or calls either increment service. The shared
+caller belongs to the separate overlay dispatch/record controller, with no
+private data/table shared with this service. There is no positive extension
+witness across the head. The tail is the concrete code/data boundary at
+BB454 (file 3634), not a stub. The head cut is conservative, not GP-proven
+(-G0). No original private linkage is inferred: both functions stay external.
+The public ovl17_record_value_increments.h documents unchecked signed
+indices, the signed-compare/unsigned-reload asymmetry, both increments and
+caps. Local names now describe work/record addresses and values. The shared
+work-base plus separate 8000/19EA/19EC offsets are retained for original
+address formation, not replaced with a differently biased struct view.
+The baseline checked fold passes both members and the overlay, with no
+flag override or policy exception.
+
 Evidence: zero-gap link-order adjacency plus a shared D_8006C838 large-offset
 fingerprint. `ovl_17_func_800BB394` (0x60, ends exactly 0x800BB3F4) →
 `ovl_17_func_800BB3F4` (0x60). Both sign-extend an s16 arg0, scale it by
@@ -15928,8 +16128,24 @@ Members (link order):
 - ovl_17_func_800BB3F4 (s) — idiom twin, unmatched: `lhu` at +0x19EC, if
   0xFE0A < value store -1 else add 0x1F4.
 
-Cross-container note: `ovl_19_func_800BBD14` (m, matched this session,
-byte-exact) is a byte-identical shape twin of `ovl_17_func_800BB394` — same
+Cross-container note: `ovl_19_func_800BBD14` (now
+Ovl19RaiseRecordByteRangeValue in
+`src/overlays/ovl_19/modules/record_value_increment.c`) is the only member
+of ovl_19:800BBD14–800BBD74 exclusive. The shipped overlay has no 19EC
+raiser: its sole 1D4-indexed field service is this 19EA leaf. The tail is
+the concrete data start at BBD74 (file 3F54). On the left,
+Ovl19QueueSceneSound queues an archive range and initializes the sound
+bank, sharing neither the record fields nor helpers/tables with this leaf;
+no evidence extends scene_resources into it. This head cut is conservative,
+not a GP proof. The remote sole caller 800B8190 invokes the leaf for twelve
+indices on scene completion; its controller state is a separate protocol.
+The public ovl19_record_value_increment.h publishes the exact s16/void
+interface, signed comparison and unsigned reload, and names no gameplay
+meaning. The baseline singleton fold passes the member and the overlay;
+no flag, ownership definition or policy exception is added. It remains
+container-distinct from the other raisers despite identical code shapes.
+
+The original `ovl_19_func_800BBD14` is a byte-identical shape twin of `ovl_17_func_800BB394` — same
 s16 sign-extend, same 0x1D4 stride, same `(char *)&D_8006C838` + `ori 0x8000`
 work-area split, same +0x19EA halfword, same `< 0xEB then +0x14 else 0xFF`
 leaf with the store in the `jr $ra` delay slot. That twin relation is not
@@ -15959,8 +16175,9 @@ Cross-container note: `ovl_23_func_800BB7A0` is a third byte-identical shape
 twin of `ovl_17_func_800BB394` and `ovl_19_func_800BBD14` (same four-shape
 leaf body and +0x19EA halfword); as with that pair the cross-container
 relation is not itself TU-membership evidence, but the same-container
-zero-gap adjacency above is. The 0x1D4-stride leaf now appears in all three
-containers at the same relative slot before its +0x19EC twin.
+zero-gap adjacency above is. The +0x19EA leaf appears in all three
+containers; ovl_17 and ovl_23 also contain its +0x19EC sibling, while
+ovl_19 ends its code after the single +0x19EA service.
 
 ## `ovl_11` 0x800FA4F4 dispatch-wrapper run + shared `800FA950` map helper — 0x800FA4F4–0x800FA600 (confidence: medium)
 

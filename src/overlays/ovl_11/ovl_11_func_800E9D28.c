@@ -319,9 +319,9 @@ block_118:
             break;
         case 6:
             if (arg2 == 0) {
-                return D_80070CC4 == 0xFF;
+                return gSceneSubphase == 0xFF;
             }
-            D_80070CC4 = 0;
+            gSceneSubphase = 0;
         case 7:
             for (var_s3 = 0; var_s3 < 10; var_s3++) {
                 if (((E9RecordsView *)D_8006C838)->records[var_s3].flags & 0x20000) {

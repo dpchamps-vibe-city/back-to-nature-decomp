@@ -13,7 +13,7 @@ void ovl_17_func_800B92B0(void) {
     u8 *display;
 
     ovl_17_func_800BAF50();
-    base = D_800BD870;
+    base = gOvl17AnimatedRecordBase;
     work = base - 0x28;
     record = base;
     for (i = 0; i < 6; i++) {

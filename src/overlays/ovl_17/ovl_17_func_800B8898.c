@@ -3,6 +3,7 @@
 #include "pad_actuator_sequences.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "ovl17_timer_hud.h"
 
 /* 8001FAD0 forwards the s32 voice result returned by func_800212A8. */
 void ovl_17_func_800B91B8(void);
@@ -15,7 +16,6 @@ s16 ovl_17_func_800B9C48(s16 arg0);
 void ovl_17_func_800B9CAC(void);
 void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
-void ovl_17_func_800BB0C4(s16 arg0);
 void ovl_17_func_800B9628(void);
 void ovl_17_func_800B9784(void);
 
@@ -55,7 +55,7 @@ block_6:
     base = D_800BD848;
     displacement = *(s16 *)(base + 0x2BC) * -0x50;
     if (*(s32 *)(base - displacement + 0x38) <= 0x800000) {
-        ovl_17_func_800BB0C4(2);
+        Ovl17UpdateTimerHud(2);
     }
     (*(u32 *) (base + 0x1C))++;
     for (var_s1 = 0; var_s1 < 6; var_s1++) {

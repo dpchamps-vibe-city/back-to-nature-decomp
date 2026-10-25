@@ -17,10 +17,10 @@ void ovl_21_func_800BAA38(s32 arg0) {
     } else {
         updateFlags = ClearSpriteSourceFlags;
     }
-    updateFlags(&D_800C0ACC.field_0, 4);
-    updateFlags(&(&D_800C0ACC)[1].field_0, 4);
-    updateFlags(&(&D_800C0ACC)[2].field_0, 4);
-    sprite = &D_800C0ACC + 3;
+    updateFlags(&gOvl21PrimarySceneSprite.field_0, 4);
+    updateFlags(&(&gOvl21PrimarySceneSprite)[1].field_0, 4);
+    updateFlags(&(&gOvl21PrimarySceneSprite)[2].field_0, 4);
+    sprite = &gOvl21PrimarySceneSprite + 3;
     for (i = 0; i < 13; i++) {
         updateFlags(&sprite->field_0, 4);
         sprite++;

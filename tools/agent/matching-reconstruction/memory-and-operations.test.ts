@@ -192,7 +192,7 @@ projectTest("the copy family's expansion is recovered as one operation", () => {
 projectTest("every member of the copy family recovers the same operation", () => {
   /* The plan names this family: one shape across four overlays. A capability
    * that closes one member and not the rest is a spelling, not a capability. */
-  const members = ["ovl_17_func_800B9FA8", "ovl_19_func_800BB5D4", "ovl_21_func_800BB328", "ovl_23_func_800BB0AC"];
+  const members = ["ovl_17_func_800B9FA8", "ovl_19_func_800BB5D4", "Ovl21LoadSceneSpriteArchive", "ovl_23_func_800BB0AC"];
   const recognised: string[] = [];
   for (const member of members) {
     let insns;

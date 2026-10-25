@@ -13,5 +13,5 @@
 void ovl_17_func_800B7E38(void) {
     s32 *base = D_800BB4E4;
 
-    ((void (*)(s32 *))base[D_80070CC4])(base);
+    ((void (*)(s32 *))base[gSceneSubphase])(base);
 }

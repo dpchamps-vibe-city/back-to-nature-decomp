@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 ovl_17_func_800BB094();
+#include "ovl17_record_sprite_animation.h"
 
 s32 ovl_17_func_800B986C(void) {
     s32 temp_a2;
@@ -17,7 +16,7 @@ s32 ovl_17_func_800B986C(void) {
     temp_s0 = base + 0x38;
     if (*(s32 *)(temp_s0 + temp_a2) > 0x800000) {
         arg = base + 0x28;
-        ovl_17_func_800BB094(arg + temp_a2);
+        Ovl17SelectRecordAnimation1(arg + temp_a2);
     }
     for (i = 0; i < 6; i++) {
         p = temp_s0 + i * 0x50;

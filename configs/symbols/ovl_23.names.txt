@@ -3,3 +3,9 @@
 // Adjacent work-record halfwords, with distinct caps and increment sizes.
 Ovl23RaiseRecordByteRangeValue = 0x800BB7A0; // type:func
 Ovl23RaiseRecordHalfwordRangeValue = 0x800BB800; // type:func
+
+// Private random-decision tables used by the record controller.
+Ovl23TestRecordRandomThreshold = 0x800BA3B4; // type:func
+Ovl23ChooseRecordWeightedResult = 0x800BA494; // type:func
+gOvl23RecordRandomWeights = 0x800BBA9C; // type:data size:0x18
+gOvl23RecordRandomTrialThresholds = 0x800BBAB4; // type:data size:0x28

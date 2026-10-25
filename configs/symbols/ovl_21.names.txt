@@ -6,3 +6,20 @@ Ovl21DrawSceneGeometry = 0x800BB2B4;
 
 // Two-pointer ProjectedPrimitiveSource initialized by ovl_21:800BB8B8.
 gOvl21SceneGeometry = 0x800C0DD8; // type:data size:0x8
+
+// Consecutive scene-entry loading steps; these preserve overlay-21 identities.
+Ovl21LoadSceneSpriteArchive = 0x800BB328; // type:func
+Ovl21UploadSceneSpriteChunk = 0x800BB59C; // type:func
+Ovl21LoadUiAndObjectSprites = 0x800BB648; // type:func
+Ovl21LoadSceneGeometry = 0x800BB8B8; // type:func
+Ovl21QueueSceneSound = 0x800BBA3C; // type:func
+
+// Retained C views, not new allocations or inferred padded storage extents.
+gOvl21SceneSpriteData = 0x800BCD28; // type:data size:0x13DC
+gOvl21UiSpriteData = 0x800BE108; // type:data size:0x233C
+gOvl21UiSpriteOffsets = 0x800BCCDC; // type:data size:0x3C
+// Existing data label extends to BCA78; setup consumes its first three words.
+gOvl21SceneDiscPositions = 0x800BC894; // type:data size:0x1E4
+// Source lvalues at the first scene entry and second UI entry of the pool.
+gOvl21PrimarySceneSprite = 0x800C0ACC; // type:data size:0x30
+gOvl21UiSpriteAnchor = 0x800C0B2C; // type:data size:0x30

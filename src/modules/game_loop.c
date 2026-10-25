@@ -54,6 +54,7 @@
 #include "debug_break.h"
 #include "render_packet_pool.h"
 #include "state_memory_init.h"
+#include "scene_phase.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -75,9 +76,6 @@ void InitPads(void);
    returns 0, and the target's callers keep $v0 out of post-call temporaries. */
 void func_80017A48(u32 arg0);
 void func_80017A70(u32 arg0);
-/* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
-   leave the delay slot empty — it takes no arguments. */
-void func_80021FD0(void);
 
 /* Globals accessed by this function */
 /* D_80010098 / D_8001009C: the target loads these with the unsplit assembler
@@ -251,7 +249,7 @@ int main(void) {
                     SceneEntryHook(0);
                     CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                     D_8005E288 = 1;
-                    func_80021FD0();
+                    ResetSceneDispatchState();
                 }
                 D_8005E384 = (void (*)(void))&D_800BBC34;
                 break;
@@ -294,7 +292,7 @@ int main(void) {
                 CopyRenderContextBackup(0, 1);
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0xF, 0x10, D_8001009C, D_8001009C);
-                D_80070CC4 = 0;
+                gSceneSubphase = 0;
                 D_8005E384 = (void (*)(void))&D_8012E2CC;
                 break;
 
@@ -303,7 +301,7 @@ int main(void) {
                 CopyRenderContextBackup(0, 1);
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0xF, 0x10, D_8001009C, D_8001009C);
-                D_80070CC4 = 0;
+                gSceneSubphase = 0;
                 D_8005E384 = (void (*)(void))&D_8012E520;
                 break;
 
@@ -312,7 +310,7 @@ int main(void) {
                 CopyRenderContextBackup(0, 1);
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0xF, 0x10, D_8001009C, D_8001009C);
-                D_80070CC4 = 0;
+                gSceneSubphase = 0;
                 D_8005E384 = (void (*)(void))&D_8012E7C8;
                 break;
 
@@ -334,7 +332,7 @@ int main(void) {
             case 13:
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x1B, 0x1C, D_80010098, D_80010098);
-                func_80021FD0();
+                ResetSceneDispatchState();
                 D_8005E384 = (void (*)(void))&D_800B7EEC;
                 D_8005E288 = 0;
                 break;
@@ -363,7 +361,7 @@ int main(void) {
             case 16:
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x1C, 0x1D, D_80010098, D_80010098);
-                func_80021FD0();
+                ResetSceneDispatchState();
                 D_8005E288 = 0;
                 D_8005E384 = Ovl28UpdateSpriteSequenceScene;
                 break;
@@ -383,7 +381,7 @@ int main(void) {
             case 18:
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x1F, 0x20, D_80010098, D_80010098);
-                func_80021FD0();
+                ResetSceneDispatchState();
                 D_8005E384 = (void (*)(void))&D_800B7FCC;
                 D_8005E288 = 0;
                 break;
@@ -407,7 +405,7 @@ int main(void) {
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0xB, 0xC, D_80010098, D_80010098);
                 D_8005E288 = 1;
-                func_80021FD0();
+                ResetSceneDispatchState();
                 gScenePhase = 7;
                 D_8005E384 = (void (*)(void))&D_800BBC34;
                 break;

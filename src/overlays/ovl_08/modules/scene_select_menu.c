@@ -30,7 +30,7 @@ void Ovl08UpdateSceneSelectMenu(void) {
 void Ovl08InitSceneSelectMenu(void) {
     u8 *drawEnvironment;
 
-    D_80070CC4 = 0;
+    gSceneSubphase = 0;
     KanjiFntClose();
     KanjiFntOpen(8, 0, 0x140, 0xF0, 0x1C0, 0, 0x140, 0xFF, 0, 0xFF);
     BeginScreenFadeDecrease(1, 0, 2);

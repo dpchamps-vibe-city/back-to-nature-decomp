@@ -1,0 +1,19 @@
+// Semantic labels within ovl_17 only; retain original container/address identity.
+
+// Adjacent shared-record halfwords, with distinct signed/unsigned comparisons.
+Ovl17RaiseRecordByteRangeValue = 0x800BB394; // type:func
+Ovl17RaiseRecordHalfwordRangeValue = 0x800BB3F4; // type:func
+
+// Embedded record sources: skip a selection that would restart animation N.
+Ovl17SelectRecordAnimation2 = 0x800BAFAC; // type:func
+Ovl17SelectAllRecordAnimations2 = 0x800BAFDC; // type:func
+Ovl17SelectRecordAnimation0 = 0x800BB020; // type:func
+Ovl17SelectAllRecordAnimations0 = 0x800BB050; // type:func
+Ovl17SelectRecordAnimation1 = 0x800BB094; // type:func
+// Raw base label spans the first 0xA0 bytes, not the extent of all six records.
+gOvl17AnimatedRecordBase = 0x800BD870; // type:data size:0xA0
+
+// Private tick count (formatted at nominal 30 ticks/s) and shared separator glyph.
+Ovl17UpdateTimerHud = 0x800BB0C4; // type:func
+gOvl17TimerTicks = 0x800BB724; // type:data size:0x4
+gOvl17TimerSeparatorText = 0x800BB6E8; // type:data size:0x4

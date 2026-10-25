@@ -213,7 +213,7 @@ segments:
       - [0x12598, c, func_80021D98]       # 0x80021D98 func_80021D98
       - [0x125A0, c, func_80021DA0]       # 0x80021DA0 func_80021DA0
       - [0x125A8, c, modules/state_memory_init]
-      - [0x127D0, c, func_80021FD0]       # 0x80021FD0 func_80021FD0
+      - [0x127D0, c, modules/scene_phase]
       - [0x127E4, c, modules/message_buffer_access]
       - [0x12814, c, modules/card_deal]
       - [0x12B8C, c, modules/sprite_grid]

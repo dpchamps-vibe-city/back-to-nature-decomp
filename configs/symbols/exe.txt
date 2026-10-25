@@ -16,6 +16,8 @@ gPadActuatorsEnabled = 0x8005E3EC; // type:s32 size:0x4
 gGraphicsHeapBase = 0x8005E3B0; // size:0x4
 // Shared scene phase: overlay dispatchers index their handlers with this word.
 gScenePhase = 0x80070CC0; // size:0x4
+// Secondary scene-dispatch word: overlay handlers increment it or select a step.
+gSceneSubphase = 0x80070CC4; // size:0x4
 
 // Scene dispatch IDs and update-loop control; existing boot-family words.
 gPreviousSceneId = 0x8005E394; // type:s32 size:0x4
@@ -607,7 +609,7 @@ func_80021DA0 = 0x80021DA0; // type:func
 InitStateMemory = 0x80021DA8; // type:func
 BindStateDataTables = 0x80021E60; // type:func
 gInitialPoolRecordData = 0x8004ED04; // size:0x124C
-func_80021FD0 = 0x80021FD0; // type:func
+ResetSceneDispatchState = 0x80021FD0; // type:func
 GetAvailableMessageReadBuffer = 0x80021FE4; // type:func
 ClearMessageReadBufferBusy = 0x80022008; // type:func
 CardTableContainsValue = 0x80022014; // size:0x58 type:func

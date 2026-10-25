@@ -11,14 +11,13 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "ovl17_record_value_increments.h"
 
 
 void SsSeqClose (short);
 void SsSeqSetVol (short, short, short);
 void SsVabClose (short);
 void ovl_17_func_800BA808 (s32 arg0);
-void ovl_17_func_800BB394 (s16 arg0);
-void ovl_17_func_800BB3F4 (s16 arg0);
 
 void ovl_17_func_800B80B0(void) {
     u8 var_s0 = 0;
@@ -38,21 +37,21 @@ void ovl_17_func_800B80B0(void) {
         RewindSoundLoadSlots(2, 0);
         RewindSoundLoadSlots(1, 0);
         if (((Ovl17CompletionView *) D_8006C838)->mode == 1) {
-            ovl_17_func_800BB394(1);
-            ovl_17_func_800BB394(2);
-            ovl_17_func_800BB394(4);
-            ovl_17_func_800BB394(6);
-            ovl_17_func_800BB394(0xF);
-            ovl_17_func_800BB394(0x10);
-            ovl_17_func_800BB394(0x11);
-            ovl_17_func_800BB394(0x13);
-            ovl_17_func_800BB394(0x15);
-            ovl_17_func_800BB394(0x16);
-            ovl_17_func_800BB394(0x1A);
-            ovl_17_func_800BB394(0x1C);
-            ovl_17_func_800BB3F4(3);
-            ovl_17_func_800BB3F4(7);
-            ovl_17_func_800BB3F4(0x14);
+            Ovl17RaiseRecordByteRangeValue(1);
+            Ovl17RaiseRecordByteRangeValue(2);
+            Ovl17RaiseRecordByteRangeValue(4);
+            Ovl17RaiseRecordByteRangeValue(6);
+            Ovl17RaiseRecordByteRangeValue(0xF);
+            Ovl17RaiseRecordByteRangeValue(0x10);
+            Ovl17RaiseRecordByteRangeValue(0x11);
+            Ovl17RaiseRecordByteRangeValue(0x13);
+            Ovl17RaiseRecordByteRangeValue(0x15);
+            Ovl17RaiseRecordByteRangeValue(0x16);
+            Ovl17RaiseRecordByteRangeValue(0x1A);
+            Ovl17RaiseRecordByteRangeValue(0x1C);
+            Ovl17RaiseRecordHalfwordRangeValue(3);
+            Ovl17RaiseRecordHalfwordRangeValue(7);
+            Ovl17RaiseRecordHalfwordRangeValue(0x14);
         }
         ((Ovl17CompletionView *) D_8006C838)->state = 0xFF;
         ((Ovl17CompletionView *) D_8006C838)->flags |= 0x80000;

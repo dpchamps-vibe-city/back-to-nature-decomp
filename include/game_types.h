@@ -1451,20 +1451,13 @@ typedef struct {
     s16 unkC2;
 } Recon_ovl_11_func_8010D250_A0View;
 
+/* ovl_17 record-animation selectors pass the embedded source at +0x20
+ * to SelectSpriteAnimation; its animation byte is at record+0x24.
+ * This is a partial view, not the complete 0x50-byte record layout. */
 typedef struct {
-    char pad_0[0x24];
-    u8 unk24;
-} Recon_ovl_17_func_800BAFAC_A0View;
-
-typedef struct {
-    char pad_0[0x24];
-    u8 unk24;
-} Recon_ovl_17_func_800BB094_A0View;
-
-typedef struct {
-    char pad_0[0x24];
-    u8 unk24;
-} Recon_ovl_17_func_800BB020_A0View;
+    char prefix[0x24];
+    u8 animationIndex;
+} Ovl17RecordAnimationView;
 
 /* ovl_17_func_800BAD9C argument view: a D_800BD870 record (0x50 stride).
  * +0x14 points at a small animation/reference triple read as three s16s

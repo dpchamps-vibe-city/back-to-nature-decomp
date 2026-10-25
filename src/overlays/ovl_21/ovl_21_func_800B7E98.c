@@ -9,12 +9,9 @@
 #include "psyq/libgs.h"
 #include "ovl21_scene_camera_geometry.h"
 #include "message_window.h"
+#include "psyq/memory.h"
+#include "ovl21_scene_resources.h"
 
-void ovl_21_func_800BB328(void);
-void ovl_21_func_800BB59C(void);
-void ovl_21_func_800BB648(void);
-void ovl_21_func_800BB8B8(void);
-void ovl_21_func_800BBA3C(void);
 void ovl_21_func_800B8228(void);
 
 void ovl_21_func_800B7E98(void) {
@@ -22,23 +19,23 @@ void ovl_21_func_800B7E98(void) {
 
     switch (D_800BCBB8) {
     case 0:
-        ovl_21_func_800BB328();
+        Ovl21LoadSceneSpriteArchive();
         D_800BCBB8++;
         break;
     case 1:
-        ovl_21_func_800BB59C();
+        Ovl21UploadSceneSpriteChunk();
         D_800BCBB8++;
         break;
     case 2:
-        ovl_21_func_800BB648();
+        Ovl21LoadUiAndObjectSprites();
         D_800BCBB8++;
         break;
     case 3:
-        ovl_21_func_800BB8B8();
+        Ovl21LoadSceneGeometry();
         D_800BCBB8++;
         break;
     case 4:
-        ovl_21_func_800BBA3C();
+        Ovl21QueueSceneSound();
         D_800BCBB8++;
         break;
     case 5:

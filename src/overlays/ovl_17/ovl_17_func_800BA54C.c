@@ -1,9 +1,9 @@
 #include "common.h"
+#include "ovl17_timer_hud.h"
 
 void ovl_17_func_800BA630(void);
 void ovl_17_func_800BA698(void);
 void ovl_17_func_800BA704();
-void ovl_17_func_800BB0C4(s16 arg0);
 
 void ovl_17_func_800BA54C(void) {
     s32 i;
@@ -34,5 +34,5 @@ void ovl_17_func_800BA54C(void) {
     ovl_17_func_800BA630();
     ovl_17_func_800BA698();
     ovl_17_func_800BA704();
-    ovl_17_func_800BB0C4(-1);
+    Ovl17UpdateTimerHud(-1);
 }

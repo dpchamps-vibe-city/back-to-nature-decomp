@@ -69,7 +69,7 @@ s32 ovl_11_func_800FFB08(void) {
                 if (SELECTION == 3) {
                     ((Ovl11TriggerWorkView *)&D_8007AFF0)->field_254A0 = 0x11;
                 }
-                D_80070CC4 = 0;
+                gSceneSubphase = 0;
                 BeginScreenFadeIncrease(0xA, 0, 2);
                 BeginMasterVolumeFadeOut(0xA);
                 break;

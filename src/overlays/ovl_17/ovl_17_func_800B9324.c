@@ -21,7 +21,7 @@ void ovl_17_func_800B9324(void) {
     i = 0;
     work = D_80074838;
     /* D_800BD870 is the work area's record alias at +0x28. */
-    table = (u8 *)((u32)D_800BD870 - 0x28);
+    table = (u8 *)((u32)gOvl17AnimatedRecordBase - 0x28);
     resultBase = table + 0x30;
     recordOffset = 0;
     cursor = resultBase;

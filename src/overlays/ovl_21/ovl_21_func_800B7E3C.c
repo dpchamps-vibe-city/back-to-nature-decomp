@@ -13,6 +13,6 @@ void ovl_21_func_800B7E3C(void) {
     temp_s0 = func_80017A64();
     func_80017A48(3U);
     base = &D_800BCB58;
-    ((void (*)(s32 *))base[D_80070CC4])(base);
+    ((void (*)(s32 *))base[gSceneSubphase])(base);
     func_80017A48(temp_s0);
 }

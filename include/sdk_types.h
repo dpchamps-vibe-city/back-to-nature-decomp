@@ -2888,6 +2888,11 @@ typedef struct {
 } Ovl15SaveSummary;
 
 typedef struct {
+    char prefix[0x24];
+    u8 animationIndex;
+} Ovl17RecordAnimationView;
+
+typedef struct {
     char pad_0[0x4];
     s16 direction;
     s16 countdown;
@@ -3237,21 +3242,6 @@ typedef struct {
     u8 field_24;
     u8 field_25;
 } Recon_ovl_17_func_800BAD9C_A0View;
-
-typedef struct {
-    char pad_0[0x24];
-    u8 unk24;
-} Recon_ovl_17_func_800BAFAC_A0View;
-
-typedef struct {
-    char pad_0[0x24];
-    u8 unk24;
-} Recon_ovl_17_func_800BB020_A0View;
-
-typedef struct {
-    char pad_0[0x24];
-    u8 unk24;
-} Recon_ovl_17_func_800BB094_A0View;
 
 typedef struct {
     s16 pad0[17];

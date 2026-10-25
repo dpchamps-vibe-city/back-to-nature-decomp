@@ -2716,6 +2716,11 @@ struct Ovl23DecisionWindow {
 /* 800B8C18 passes these 0x44-stride records to BB0D8/BA610/B9A00. */
 extern struct Ovl23DecisionRecord D_800BFA80[6];
 
+/* ovl_23:800BA494 reads four three-u16 weight rows at BBA9C (24 bytes). */
+extern u8 gOvl23RecordRandomWeights[];
+/* ovl_23:800BA3B4 reads four five-s16 trial rows at BBAB4 (40 bytes). */
+extern s16 gOvl23RecordRandomTrialThresholds[];
+
 /* 800B954C reads word +0x10, sprite +0x3B4 and the +0x418/+0x5CC record arrays; named base preserves legacy TU views. */
 extern u8 Ovl23_D_800BF87C_draw[] __asm__("D_800BF87C");
 /* 800B9E04 reads actor +0x38/+0x3C and record +0x210 from one aggregate base. */
@@ -4904,7 +4909,9 @@ extern struct SpriteSourceData D_800BDDF8;
  * absolute-addressed (-G0). */
 extern u8 D_800BDAD4[];
 
-extern u8 D_800BD870[];
+/* ovl_17 animation drivers visit six 0x50-byte records at BD848+28;
+ * the named data label spans only the first A0 bytes of that shared view. */
+extern u8 gOvl17AnimatedRecordBase[];
 /* ovl_17_func_800B861C passes this record to 800BAC24 and stores a byte at -0xC4. */
 extern u8 D_800BD910[];
 
@@ -5306,15 +5313,17 @@ struct Ovl21InitState;
 #define D_800C0448_init (*(struct Ovl21InitState *) D_800C0448)
 
 /* 800BB648 loads fifteen 32-bit sprite-header offsets from original data. */
-extern s32 D_800BCCDC[15];
-/* 800BB648 copies the 0x233C-byte sprite blob from the shared load buffer. */
-/* ovl_21_func_800BB328 copies 0x13DC bytes here and uses the leading sprite header. */
+extern s32 gOvl21UiSpriteOffsets[15];
+/* ovl_21:800BB328 copies 0x13DC bytes and uses the leading sprite header. */
+extern u8 gOvl21SceneSpriteData[0x13DC];
+/* ovl_25:800B9E84 uses its own unnamed data at the same RAM address. */
 extern u8 D_800BCD28[0x13DC];
-/* ovl_21_func_800BB328 passes this 0x30-byte object to func_80015704. */
-extern struct SpriteSourceData D_800C0ACC;
-extern u8 D_800BE108[0x233C];
+/* ovl_21:800BB328 binds this 0x30-byte source to the scene sprite header. */
+extern struct SpriteSourceData gOvl21PrimarySceneSprite;
+/* ovl_21:800BB648 retains 0x233C bytes for its fifteen source headers. */
+extern u8 gOvl21UiSpriteData[0x233C];
 /* 800BB648 initializes this 0x30-byte sprite and its adjacent records. */
-extern struct SpriteSourceData D_800C0B2C;
+extern struct SpriteSourceData gOvl21UiSpriteAnchor;
 
 /* D_800C0458 - ovl_21 object-state base at D_800C0448 + 0x10, the sub-view
  * handed to ovl_21_func_800BAE20. ovl_21_func_800BA510 walks it at stride
@@ -5478,12 +5487,12 @@ extern u8 D_800BCEE4;
  * externally defined; this is not a new allocation or tentative definition. */
 extern s32 gOvl19SceneDiscPositions[];
 
-/* D_800BC894 - ovl_21 s32 {start,end} CD-position pair table. ovl_21
+/* gOvl21SceneDiscPositions (800BC894) - s32 CD-position table. ovl_21
  * func_800BB8B8 reads [0], [1] and [2] and passes [1]-[0] and [2]-[1] as
  * the sector counts of two func_80014BCC transfers, exactly as its
  * byte-identical twin ovl_19_func_800BBB48 does with D_800BCB74. Defined in
  * the overlay data segment, so only an extern declaration belongs here. */
-extern s32 D_800BC894[];
+extern s32 gOvl21SceneDiscPositions[];
 
 /* D_800BBED0 - ovl_25 s32 {start,end} CD-position table. ovl_25
  * func_800BB2B8 reads [0], [1] and [2] and passes [1]-[0] and [2]-[1] as the
@@ -6875,10 +6884,10 @@ extern u8 D_800BCDD4[];
 /* ovl_25 800BAC9C initializes this 0x30-byte sprite source from D_800BCDD4. */
 extern u8 D_800C021C[];
 
-/* ovl_17 800BB0C4 passes the halfword text {0x66, -1} to func_80017B3C. */
-extern s16 D_800BB6E8[2];
+/* ovl_17:800BB0C4 draws this halfword separator text {0x66, -1} twice. */
+extern s16 gOvl17TimerSeparatorText[2];
 /* ovl_17 800BB0C4 increments this word and uses unsigned constant division. */
-extern u32 D_800BB724;
+extern u32 gOvl17TimerTicks;
 
 /* 800CB114 indexes signed halfword pairs with 2 * direction + arg2. */
 extern s16 Ovl11CollisionOffsets[] __asm__("D_801230B0");

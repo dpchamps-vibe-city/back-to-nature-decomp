@@ -1,3 +1,6 @@
+// Shared-record value raiser at the end of this overlay's code.
+Ovl19RaiseRecordByteRangeValue = 0x800BBD14; // type:func
+
 // Shared actor-control prefix writers and embedded-sprite pause service.
 Ovl19SetActorControl = 0x800BAC40;
 Ovl19SetActorState = 0x800BAC50;

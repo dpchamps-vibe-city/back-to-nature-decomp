@@ -9,7 +9,8 @@
  * different overlay occupies their RAM slot.
  *
  * Initialize once, then update -> apply -> draw each frame. Scene setup must
- * load gOvl21SceneGeometry before drawing. The update preserves the GTE
+ * call Ovl21LoadSceneGeometry (ovl21_scene_resources.h) before drawing.
+ * The update preserves the GTE
  * matrix stack and truncates its results to signed-halfword coordinates. */
 void Ovl21InitSceneCamera(void);
 void Ovl21UpdateSceneCameraOffset(void);
