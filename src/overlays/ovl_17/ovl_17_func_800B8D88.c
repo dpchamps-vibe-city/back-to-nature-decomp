@@ -22,8 +22,8 @@ void ovl_17_func_800B8D88(void) {
     s32 total;
     Ovl17SummaryView *work;
 
-    boxes = (u32 *)(D_8005E3C0->field_D8 + 0xC);
-    text = D_8005E3C0->field_D8 + 8;
+    boxes = (u32 *)(gActiveRenderContext->field_D8 + 0xC);
+    text = gActiveRenderContext->field_D8 + 8;
     work = (Ovl17SummaryView *)D_8006C838;
     mode = 2;
     if (work->mode != 3) {

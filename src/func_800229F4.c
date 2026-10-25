@@ -22,7 +22,7 @@ s32 func_800229F4(void) {
     s8 v0;
 
     s0 = func_80014CBC(func_80022AF0(), D_8005E5A8 << 13, 0x2000, (u8 *)&D_8006C910, 0, 0);
-    s1 = func_80022794(D_8005E3C0->field_D8 + 8, 0, 0x1A, 0xA4, 0x10B, 0x3E, &D_8005E5CC, 0xC, 1);
+    s1 = func_80022794(gActiveRenderContext->field_D8 + 8, 0, 0x1A, 0xA4, 0x10B, 0x3E, &D_8005E5CC, 0xC, 1);
     if (s0 != 0) {
         func_80022FE0((s32 *)s0);
         D_8005E5B0 = (s32 *)((u8 *)&D_8006C910 + 0x1800);

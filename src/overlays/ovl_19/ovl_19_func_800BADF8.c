@@ -23,7 +23,7 @@ void ovl_19_func_800BADF8(s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3)
     temp_a2 = func_8001DFD4(D_800BD048, (SVECTOR *) D_800BD080);
     D_800BD048[1] += arg3;
     temp_v1 = (temp_a2 >> 3) * 4;
-    temp_a1 = D_8005E3C0->field_120;
+    temp_a1 = gActiveRenderContext->field_120;
     var_a0 = arg0 + temp_v1;
     var_s3 = temp_a1 + temp_v1;
     if ((arg1 == (SpriteSourceData *) D_800BF570) ||

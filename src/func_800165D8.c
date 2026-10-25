@@ -272,7 +272,7 @@ POLY_FT4 *func_800165D8(u_long *arg0, POLY_FT4 *arg1, SourceData *arg2, u8 arg3,
         if (arg10 & 0x40) {
             p->tag = 0x09000000 | getaddr(arg0);
             *arg0 = (u_long)p & 0xFFFFFF;
-            D_8005E3C0->field_118 += 0x28;
+            gActiveRenderContext->field_118 += 0x28;
         } else {
             addPrim(arg0, p);
         }

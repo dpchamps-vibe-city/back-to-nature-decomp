@@ -21,7 +21,7 @@ void ovl_11_func_800FD968(s32 *arg0, s16 arg1) {
     u32 *temp_s4;
     u32 *temp_s6;
 
-    temp_v0 = D_8005E3C0->field_D8;
+    temp_v0 = gActiveRenderContext->field_D8;
     var_s1 = 0;
     temp_s4 = (u32 *)(temp_v0 + 0x60);
     temp_s6 = (u32 *)(temp_v0 + 0x5C);

@@ -16,10 +16,10 @@ void ovl_11_func_800FC1AC(void) {
     s32 temp_v0;
     s32 temp_v0_2;
 
-    func_80022580(D_8005E3C0->field_D8 + 0x70, 1, 0x10, 0x20, 0x120, 0xC0);
-    func_80022580(D_8005E3C0->field_D8 + 0x6C, 1, 0x3C, 0x10, 0xC8, 0x20);
+    func_80022580(gActiveRenderContext->field_D8 + 0x70, 1, 0x10, 0x20, 0x120, 0xC0);
+    func_80022580(gActiveRenderContext->field_D8 + 0x6C, 1, 0x3C, 0x10, 0xC8, 0x20);
     ovl_11_func_800FE640();
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32) &D_8012CDC8, 0x3E, 0x1A);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) &D_8012CDC8, 0x3E, 0x1A);
     temp_v0 = *(s32 *) ((u8 *) D_8005E3A8 + 0);
     if (temp_v0 & 0x2000) {
         func_8001FABC(5);

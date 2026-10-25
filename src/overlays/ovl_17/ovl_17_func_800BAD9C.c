@@ -24,7 +24,7 @@ void ovl_17_func_800BAD9C(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1) {
     }
     temp_s3 = (s16)(0xA0 - var_v1);
     temp_a3 = arg0->field_14;
-    temp_s4 = D_8005E3C0->field_D8 + (temp_a3->field_4 * 4);
+    temp_s4 = gActiveRenderContext->field_D8 + (temp_a3->field_4 * 4);
     flag = arg0->field_0 & 1;
     temp_s1 = (Struct_800154CC *)((u8 *)arg0 + 0x20);
     temp_s2 = temp_a3->field_0;
@@ -38,7 +38,7 @@ void ovl_17_func_800BAD9C(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1) {
         ovl_17_func_800BAEF0();
         p = D_800BDAD4;
         base = p - 0x28C;
-        func_80015EE8(D_8005E3C0->field_D8 + 0x10, (s32)p,
+        func_80015EE8(gActiveRenderContext->field_D8 + 0x10, (s32)p,
                       (s32)base[0x290], (s32)base[0x291],
                       (s16)(temp_s3 - 0x38), (s16)(temp_s2 - 0x38));
     }

@@ -35,7 +35,7 @@ void ovl_11_func_800F9E4C(void) {
             SetVal8005E2BC(0);
             func_8002261C(3, 0x3B4);
         } else {
-            object = D_8005E3C0->field_D8;
+            object = gActiveRenderContext->field_D8;
             state = (struct Ovl11B264StateView *)((char *)entry - 0x44B8);
             ovl_11_func_800FA410(object + 0x58, object + 0x5C,
                 state->field_44B8, state->field_44BA, (s16)D_80126F84);

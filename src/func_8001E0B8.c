@@ -11,7 +11,7 @@ s32 func_8001E0B8(s32 arg0, s32 arg1) {
     s32 *p_entry;
     s32 clamp;
 
-    p_struct = D_8005E3C0;
+    p_struct = gActiveRenderContext;
     func_8001E158(0x80);
     clamp = p_struct->field_110;
     if (arg0 >= clamp) {

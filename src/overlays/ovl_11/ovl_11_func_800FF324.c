@@ -18,9 +18,9 @@ void ovl_11_func_800FF324(void) {
     s32 remainder;
     s32 *text;
 
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x58), 1, 0x3A, 0x1E, 0xCA, 0x84);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x3A, 0x1E, 0xCA, 0x84);
     func_80017A38(0, 2);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32)(D_80053CB8 + D_80054BBC[0]), 0x3E, 0x22);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053CB8 + D_80054BBC[0]), 0x3E, 0x22);
     func_80017A38(0, 0);
     if (D_801273B0 == 0x20 && func_800226B0() == 1) {
         if (((u32 *)D_8005E3A8)[0] & 0x5000) {
@@ -81,8 +81,8 @@ void ovl_11_func_800FF324(void) {
             }
         }
     }
-    func_800248B0(D_8005E3C0->field_D8 + 0x50, (s16)(D_801273BA * 65 + 0x42), (s16)((D_801273BC + 1) * 28 + 0x28));
-    text = (s32 *)(D_8005E3C0->field_D8 + 0x54);
+    func_800248B0(gActiveRenderContext->field_D8 + 0x50, (s16)(D_801273BA * 65 + 0x42), (s16)((D_801273BC + 1) * 28 + 0x28));
+    text = (s32 *)(gActiveRenderContext->field_D8 + 0x54);
     func_80017D9C(text, (u16 *)(D_80053D6A + D_80054BBC[0]), 0x46, 0x3E, D_8012CEE8_options[0] != 0);
     func_80017D9C(text, (u16 *)(D_80053D6A + 0xE + D_80054BBC[0]), 0x87, 0x3E, D_8012CEE8_options[0] != 1);
     func_80017D9C(text, (u16 *)(D_80053D6A + 0x1C + D_80054BBC[0]), 0xC8, 0x3E, D_8012CEE8_options[0] != 2);

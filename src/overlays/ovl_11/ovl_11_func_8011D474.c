@@ -52,7 +52,7 @@ void ovl_11_func_8011D474(s32 *arg0, s16 arg1, s16 arg2) {
     u8 temp_a2;
 
     temp_a2 = *(u8 *) ((u8 *) arg0 + 0x5A);
-    temp_s6 = D_8005E3C0->field_D8 + 0x3C;
+    temp_s6 = gActiveRenderContext->field_D8 + 0x3C;
     sp1C = (temp_a2 * 8) + 0x1C;
     temp_s0 = (*(u8 *) ((u8 *) arg0 + 0x5B)) - temp_a2;
     var_s5 = nested_ovl_11_func_8011D438((u8 *) (arg0 + 0xF));

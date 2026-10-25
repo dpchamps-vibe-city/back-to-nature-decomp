@@ -11,7 +11,7 @@ void ovl_28_func_800B8A20(void) {
     for (i = 0; i < 20; i++) {
         iter = base + i;
         if (iter->unk0 == 1) {
-            func_80015EE8(D_8005E3C0->field_D8 + 8, (s32)D_800B9720, 0,
+            func_80015EE8(gActiveRenderContext->field_D8 + 8, (s32)D_800B9720, 0,
                           (u8)iter->unk4, 0, (s16)(iter->unk8 / 4096));
         }
     }

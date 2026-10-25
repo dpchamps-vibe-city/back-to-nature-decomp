@@ -18,7 +18,7 @@ void ovl_11_func_800FD3CC(s16 arg0, s16 arg1) {
     u8 *temp_s2;
 
     temp_s2 = D_8007A638 + (arg0 * 0xF8);
-    temp_s4 = D_8005E3C0->field_D8 + 0x68;
+    temp_s4 = gActiveRenderContext->field_D8 + 0x68;
     ovl_11_func_800FE558((s16) (arg0 + 1), 0x18, (s16) (arg1 + 4));
     ovl_11_func_800FC7F0((s32) (s16) (((s16) *(u16 *) (temp_s2 + 0x16)) / 25), 0, 7U, arg0, (s32) ((void *) ((u8 *) temp_s2 + 4)), 0x28, (s16) (s32) arg1);
     if (*(u16 *) (temp_s2 + 0xB8) & 0x20) {
@@ -51,5 +51,5 @@ void ovl_11_func_800FD3CC(s16 arg0, s16 arg1) {
         var_a3 = arg1 + 4;
         var_a1 = (s16 *) ((u8 *) &D_8005362C + *D_80054BBC);
     }
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32) var_a1, 0xC6, (s16) var_a3);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) var_a1, 0xC6, (s16) var_a3);
 }

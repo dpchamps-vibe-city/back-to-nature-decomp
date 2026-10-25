@@ -28,8 +28,8 @@ void ovl_11_func_800E48CC(Recon_ovl_11_func_800E48CC_A0View *arg0,
     sp38[1] = arg0->field_C - 0x64;
     sp38[2] = arg0->field_10 - 0x96;
     if (ovl_11_func_800F5888(sp38, sp28) != 0) {
-        func_80016054(D_8005E3C0->field_120 + ((sp28[2] >> 2) * 4),
-                      D_8005E3C0->field_118, (s32) arg1, (s32) arg1->field_4,
+        func_80016054(gActiveRenderContext->field_120 + ((sp28[2] >> 2) * 4),
+                      gActiveRenderContext->field_118, (s32) arg1, (s32) arg1->field_4,
                       (u8) (s32) arg1->field_5, (s16) sp28[0],
                       (s16) sp28[1], arg1->field_8, 0, 0x40);
     }

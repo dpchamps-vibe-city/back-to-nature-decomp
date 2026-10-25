@@ -324,17 +324,17 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
         area1 = (DR_AREA *)ReservePacketWorkBytes(0xC);
         area2 = (DR_AREA *)ReservePacketWorkBytes(0xC);
         rect.x = arg2;
-        rect.y = arg3 + (s16)D_8005E3C0->field_2;
+        rect.y = arg3 + (s16)gActiveRenderContext->field_2;
         rect.w = 0x140 - arg2;
         rect.h = (s16)height;
         SetDrawArea(area2, &rect);
-        SetDrawArea(area1, (RECT *)D_8005E3C0);
+        SetDrawArea(area1, (RECT *)gActiveRenderContext);
         addPrim(arg0, area1);
         func_80019564((s32)arg0, (s32)D_8005E4A8, arg2, textY);
         addPrim(arg0, area2);
         func_80017A70(savedState);
         func_8001A018(D_8005E454, D_8005E458);
-        func_80019E80((u_long *)D_8005E3C0->field_D8, (s16)cursorX, (s16)cursorY,
+        func_80019E80((u_long *)gActiveRenderContext->field_D8, (s16)cursorX, (s16)cursorY,
                       D_8005E464 != 0 ? D_8005E454 : -1);
         D_8005E484 = D_8005E482;
         return result;

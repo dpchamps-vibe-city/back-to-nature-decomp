@@ -14,7 +14,7 @@ void ovl_11_func_80102368(void) {
 
     x = 0x84;
     y = 0x14;
-    context = (s32 *)(D_8005E3C0->field_D8 + 0x68);
+    context = (s32 *)(gActiveRenderContext->field_D8 + 0x68);
     for (i = 0; i < 8; i++) {
         id = D_8012CF00_ids[i];
         for (j = 0; j < pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1); j++) {

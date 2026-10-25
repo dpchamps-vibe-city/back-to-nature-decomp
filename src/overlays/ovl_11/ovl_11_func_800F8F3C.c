@@ -17,7 +17,7 @@ void ovl_11_func_800F8F3C(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4) {
     height = D_80129648_textures[arg1].height;
     width *= arg4 / 4096;
     height *= arg4 / 4096;
-    p = (POLY_FT4 *) D_8005E3C0->field_118;
+    p = (POLY_FT4 *) gActiveRenderContext->field_118;
     setPolyFT4(p);
     p->clut = getClut(D_80129648_textures[arg1].clutX, D_80129648_textures[arg1].clutY);
     setRGB0(p, 128, 128, 128);
@@ -35,5 +35,5 @@ void ovl_11_func_800F8F3C(s32 *arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4) {
     top = arg3 - height / 2;
     setXYWH(p, left, top, width, height);
     addPrim(arg0, p);
-    D_8005E3C0->field_118 = (s32) (p + 1);
+    gActiveRenderContext->field_118 = (s32) (p + 1);
 }

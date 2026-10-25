@@ -213,7 +213,7 @@ POLY_FT4* func_80016C08(s32 *ot, POLY_FT4 *poly, SpriteSourceData *src,
             *ot = (s32) poly & 0xFFFFFF;
             total += size;
             poly++;
-            D_8005E3C0->field_118 += 0x28;
+            gActiveRenderContext->field_118 += 0x28;
         }
     }
     return poly;

@@ -17,7 +17,7 @@ void ovl_25_func_800BAFCC(void) {
     SpriteSourceData *current;
 
     DrawSync(0);
-    ClearOTagR((u_long *)D_8005E3C0->field_120, 0x800);
+    ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
     func_80014CBC(0x1A, 0, 0x124D0, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
     do {
     } while (func_80014CBC(0x1A, 0, 0x124D0, (u8 *)(D_8005E3B0 + 0x4290), 1, 0) == 0);

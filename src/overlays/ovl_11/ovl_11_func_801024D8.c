@@ -23,9 +23,9 @@ void ovl_11_func_801024D8(void) {
     s32 *context2;
     Ovl11ItemState *slot;
 
-    context0 = (s32 *)(D_8005E3C0->field_D8 + 0x60);
-    context2 = (s32 *)(D_8005E3C0->field_D8 + 0x68);
-    context1 = (s32 *)(D_8005E3C0->field_D8 + 0x64);
+    context0 = (s32 *)(gActiveRenderContext->field_D8 + 0x60);
+    context2 = (s32 *)(gActiveRenderContext->field_D8 + 0x68);
+    context1 = (s32 *)(gActiveRenderContext->field_D8 + 0x64);
     x = 0x84;
     y = 0x5E;
     if (D_801273EA_table == 0) {

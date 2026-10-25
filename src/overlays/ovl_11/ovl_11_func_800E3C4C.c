@@ -28,7 +28,7 @@ s32 ovl_11_func_800E3C4C(void) {
             return 0;
         }
         DrawSync(0);
-        ClearOTagR((u32 *) D_8005E3C0->field_120, 0x800);
+        ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
         temp_s0 = D_8005E70C;
         func_800145F0(0x1D, 0x1E, temp_s0, temp_s0);
         ovl_11_func_800E3CDC((u8 *) temp_s0);

@@ -17,7 +17,7 @@ void ovl_08_func_800B8054(void) {
     KanjiFntClose();
     KanjiFntOpen(8, 0, 0x140, 0xF0, 0x1C0, 0, 0x140, 0xFF, 0, 0xFF);
     BeginScreenFadeDecrease(1, 0, 2);
-    fnt = (u8 *)&D_8005E5E8[0];
+    fnt = (u8 *)&gRenderContexts[0];
     fnt[0x19] = 0x40;
     fnt[0x1A] = 0x40;
     fnt[0x1B] = 0x80;

@@ -90,7 +90,7 @@ void func_8001231C(void) {
     s5 = 1;
     __asm__("" : "=r"(s5) : "0"(s5));
     s4 = GFX_HEAP_ADDR(GFX_HEAP_PRIM_OFFSET);
-    MATCH_LOAD_ADDRESS(t8, rV0, D_8005E5E8);
+    MATCH_LOAD_ADDRESS(t8, rV0, gRenderContexts);
     t9 = t8;
     s3 = GFX_HEAP_ADDR(GFX_HEAP_MAIN_OT_OFFSET);
     s2 = GFX_HEAP_ADDR(GFX_HEAP_OT2_OFFSET);

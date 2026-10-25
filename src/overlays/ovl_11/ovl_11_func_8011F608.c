@@ -54,7 +54,7 @@ void ovl_11_func_8011F608(void) {
                 func_8001FE00(10);
                 D_80128540 = 8;
             } else {
-                func_80015114((u32 *)D_8005E3C0->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
+                func_80015114((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
                 BeginScreenFadeIncrease(10, 0, 1);
                 func_8001FE00(10);
                 D_80128540 = 5;
@@ -62,7 +62,7 @@ void ovl_11_func_8011F608(void) {
         }
         break;
     case 5:
-        func_80015114((u32 *)D_8005E3C0->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
+        func_80015114((u32 *)gActiveRenderContext->field_120, 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 0);
         if (IsScreenFadeComplete() == 1 && func_8001FE6C() == 0) {
             func_80021B90(25);
             D_80128540 = 6;

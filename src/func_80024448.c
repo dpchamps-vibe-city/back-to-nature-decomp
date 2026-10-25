@@ -19,7 +19,7 @@ void func_80024448(u16 arg0) {
         add += 2;
     }
     rem += add;
-    func_800248B0(D_8005E3C0->field_D8 + 0x60,
+    func_800248B0(gActiveRenderContext->field_D8 + 0x60,
                   (s16) (rem * 9 + 0x32),
                   (s16) (quot * 14 + 0x48));
 }

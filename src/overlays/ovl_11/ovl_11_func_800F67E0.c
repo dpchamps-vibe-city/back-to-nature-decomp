@@ -45,7 +45,7 @@ void ovl_11_func_800F67E0(void) {
                 D_80126E40 = next;
             }
         } else {
-            func_8002238C(D_8005E3C0->field_D8 + 0x6C);
+            func_8002238C(gActiveRenderContext->field_D8 + 0x6C);
             if (D_80126E40 == 3 || D_80126E40 == 5 || D_80126E40 == 4) {
                 if (D_80126E40 == 3) {
                     id = 0;

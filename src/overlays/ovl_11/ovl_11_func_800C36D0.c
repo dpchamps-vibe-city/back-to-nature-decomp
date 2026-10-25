@@ -18,7 +18,7 @@ void ovl_11_func_800C36D0(Ovl11AnimationObject *arg0) {
     pos[1] = *(u16 *)((u8 *)arg0 + 0x34) - 0x64;
     pos[2] = *(u16 *)((u8 *)arg0 + 0x38) - 0x96;
     if (ovl_11_func_800F5888(pos, screen) != 0) {
-        ot = D_8005E3C0->field_120 + ((screen[2] >> 2) * 4);
+        ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
         if (arg0->id == ((struct Ovl11FlagDateView *)D_8006C838)->field_E778) {
             if (func_8001AF44(0x72) != 0) {
                 ot -= 0x14;
@@ -26,7 +26,7 @@ void ovl_11_func_800C36D0(Ovl11AnimationObject *arg0) {
         }
         ovl_11_func_80107E2C((u8 *)arg0 + 0xE0, ot, (s16)screen[0],
                               (s16)(screen[1] - 0x28));
-        func_80016054(ot, D_8005E3C0->field_118, (s32)&arg0->sprite,
+        func_80016054(ot, gActiveRenderContext->field_118, (s32)&arg0->sprite,
                        arg0->sprite.field_4, arg0->sprite.field_5,
                        (s16)screen[0], (s16)screen[1], arg0->sprite.field_8,
                        0, 0x40);

@@ -4,6 +4,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/libetc.h"
 #include "screen_fade.h"
+#include "wide_screen_fade.h"
 
 /* GP-relative globals this TU defines (target accesses all via %gp_rel).
  * Tentative definitions so cc1 keeps them inside the -G8 small-data range. */
@@ -13,8 +14,8 @@ s32 D_8005E38C;
 s32 D_8005E390;
 s32 gSceneUpdateLoopActive;
 s32 D_8005E3A4;
-s32 *D_8005E3B4;
-struct_8005E3C0 *D_8005E3C0;
+s32 *gFrameOrderingTable;
+struct_8005E3C0 *gActiveRenderContext;
 
 typedef struct {
     char pad_000[0x8];
@@ -32,7 +33,6 @@ void func_80013B04(void);
 void func_8001FD10(void);
 void func_800129F4(void);
 void func_800120C8(void);
-void func_800134C4(void);
 
 s32 GetVal8005E2CC(void);
 
@@ -64,22 +64,22 @@ void func_80011C24(void) {
                 VSync(2);
             } else {
                 func_800129F4();
-                tmp = (s32)D_8005E3C0;
-                scene_ptr = (char *)&D_8005E5E8;
+                tmp = (s32)gActiveRenderContext;
+                scene_ptr = (char *)&gRenderContexts;
                 saved = (s32)scene_ptr;
                 if ((s32)scene_ptr == tmp) {
                     scene_ptr += 0x134;
                 }
-                D_8005E3C0 = (struct_8005E3C0 *)scene_ptr;
+                gActiveRenderContext = (struct_8005E3C0 *)scene_ptr;
                 D_8005E3A4 = (s32)((s32)scene_ptr != saved);
                 toggle_ptr = (s32 *)&D_8005E5D8;
-                if (D_8005E3B4 == &D_8005E5D8) {
+                if (gFrameOrderingTable == &D_8005E5D8) {
                     toggle_ptr = (s32 *)((char *)&D_8005E5D8 + 8);
                 }
-                D_8005E3B4 = toggle_ptr;
+                gFrameOrderingTable = toggle_ptr;
                 func_800120C8();
                 UpdateAndDrawScreenFade();
-                func_800134C4();
+                UpdateAndDrawWideScreenFade();
                 D_8005E384();
                 ((struct_8006C838_view_8 *)&D_8006C838)->field_008 += 1;
                 D_8005E38C = VSync(1);

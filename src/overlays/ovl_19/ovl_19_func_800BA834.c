@@ -125,13 +125,13 @@ void ovl_19_func_800BA834(s16 *arg0) {
     if (var_s5 != -1) {
         func_8001585C((ObjectState *) var_s0, var_s5 & 0xFF);
     }
-    ovl_19_func_800BADF8(D_8005E3C0->field_120, (SpriteSourceData *) var_s0, (arg0 + 8), var_s3);
+    ovl_19_func_800BADF8(gActiveRenderContext->field_120, (SpriteSourceData *) var_s0, (arg0 + 8), var_s3);
     if (var_s4 == 1) {
         var_a1_2 = D_800BF4C0;
         if ((*(u8 *) ((u8 *) var_a1_2 + 0x1D4)) != 0x24) {
             func_80015840((ObjectState *) (var_a1_2 + 0xE8), 0x24);
         }
         sp18 = *(SVECTOR *) (arg0 + 8);
-        ovl_19_func_800BADF8(D_8005E3C0->field_D8 + 8, (SpriteSourceData *) (var_a1_2 + 0xE8), (s16 *) &sp18, -0x18);
+        ovl_19_func_800BADF8(gActiveRenderContext->field_D8 + 8, (SpriteSourceData *) (var_a1_2 + 0xE8), (s16 *) &sp18, -0x18);
     }
 }

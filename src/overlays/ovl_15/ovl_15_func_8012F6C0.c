@@ -18,7 +18,7 @@ void ovl_15_func_8012F6C0(void) {
     temp_s0 = D_8013759C;
     switch (temp_s0) {
     case 0:
-        temp_a1 = D_8005E3C0->field_D8;
+        temp_a1 = gActiveRenderContext->field_D8;
         func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32)D_80053114);
         if (*(s32 *)((u8 *)D_8005E3A8 + 8) & 0x40) {
             func_8001FABC(0);
@@ -26,7 +26,7 @@ void ovl_15_func_8012F6C0(void) {
         }
         break;
     case 1:
-        temp_a1_2 = D_8005E3C0->field_D8;
+        temp_a1_2 = gActiveRenderContext->field_D8;
         func_8001AC10((void *)(temp_a1_2 + 0x18), temp_a1_2 + 0x14, D_80054BBC[0] + (s32)D_80051FA8);
         temp_v0 = ovl_15_func_801370B4();
         if (temp_v0 != 0) {

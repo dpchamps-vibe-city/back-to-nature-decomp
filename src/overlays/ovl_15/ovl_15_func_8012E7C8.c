@@ -22,7 +22,7 @@ void ovl_15_func_8012E7C8(void) {
     s32 sprite;
     Ovl21MainStateView *state;
 
-    sprite = D_8005E3C0->field_D8 + 0x2C;
+    sprite = gActiveRenderContext->field_D8 + 0x2C;
     state = (Ovl21MainStateView *)D_8006C838;
     if (state->state == 0) {
         func_8002029C(0, 0, 0, 0, 0);

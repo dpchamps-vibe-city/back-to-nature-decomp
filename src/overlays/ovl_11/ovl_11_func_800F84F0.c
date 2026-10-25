@@ -58,11 +58,11 @@ void ovl_11_func_800F84F0(s32 arg0) {
         state = ovl_11_func_800F8404(D_80126E48);
         if (state >= 0) {
             if (state < 2 || (state == 2 && D_80126E4A == D_80126E4C)) {
-                ovl_11_func_800F6F7C(D_8005E3C0->field_D8 + 0x54,
+                ovl_11_func_800F6F7C(gActiveRenderContext->field_D8 + 0x54,
                     D_80126E54[D_80126E48].x, D_80126E54[D_80126E48].y);
             }
         }
     }
-    ovl_11_func_800F6F40(D_8005E3C0->field_D8 + 0x50,
+    ovl_11_func_800F6F40(gActiveRenderContext->field_D8 + 0x50,
         D_80126E54[D_80126E44].x, D_80126E54[D_80126E44].y);
 }

@@ -29,6 +29,16 @@ extern s16 gScreenFadeCounter;       /* 8005E3CC: current update step. */
 extern s16 gScreenFadeDenominator;   /* 8005E3CE: intensity divisor/target. */
 extern s32 gScreenFadeOtSelector;    /* 8005E3D0: frame OT if zero, else scene. */
 
+/* exe:80013450-80013668: signed word countdown, intensity step, mode and skip. */
+extern s32 gWideScreenFadeUpdatesRemaining;
+extern s32 gWideScreenFadeIntensityStep;
+extern s32 gWideScreenFadeMode;
+extern s32 gWideScreenFadeSkipDraw;
+/* exe:800134C4 views these base labels as two POLY_F4 / two DR_MODE packets.
+ * Keep the existing scalar base-label declarations; packet views are local. */
+extern s32 gWideScreenFadeQuadStorage;
+extern s32 gWideScreenFadeDrawModeStorage;
+
 /* 800BE118: four pairs of 0x1C-byte X/Z bounds, halfword tags and exit X/Z. */
 typedef struct {
     s32 minX;
@@ -2441,7 +2451,7 @@ typedef struct {
     /* 0x128 */ s32     packetWorkCapacityBytes;
     /* 0x12C */ s32     packetWorkBase; /* byte address, existing s32 representation */
 } struct_8005E3C0;
-extern struct_8005E3C0 *D_8005E3C0;
+extern struct_8005E3C0 *gActiveRenderContext;
 
 /* D_800A3FB0 / D_800A3FB4 - s16 font/geometry offsets passed to func_80015114 by
    func_80023060 / func_800231E8. Small scalars: the target's self-clobbering
@@ -2708,7 +2718,7 @@ extern u16 _D_800A0708[0x10] __asm__("D_800A0708");
 
 /* D_8005E3B4 — pointer to s32, absolute addressing (func_800134C4 loads with
  * lui/lw self-clobber, then dereferences the loaded pointer). */
-extern s32 *D_8005E3B4;
+extern s32 *gFrameOrderingTable;
 
 /* D_8005E438 - GP-relative u16, sprite tile/entry ID storage */
 extern u16 D_8005E438;
@@ -2820,14 +2830,14 @@ typedef struct {
     void *field_130;
 } env_struct_0x134;
 
-extern env_struct_0x134 D_8005E5E8[2];
+extern env_struct_0x134 gRenderContexts[2];
 
 /* D_8005E644 — array of 0x134-stride render contexts (UpdateAndDrawScreenFade).
  * Not owned by screen_fade (absolute lui/addiu base in target); the element
  * stride 0x134 lets &D_8005E644[idx] produce the target's idx*0x134 address
  * for PutDispEnv. D_8005E3A4 is owned elsewhere (func_80011370 /
  * func_800120C8) and read absolutely here. */
-extern env_struct_0x134 D_8005E644[];
+extern env_struct_0x134 gRenderDisplayEnvView[];
 extern s32 D_8005E3A4;
 
 /* D_8005E8E0 / D_8005E910 — packet arrays for UpdateAndDrawScreenFade,

@@ -33,8 +33,8 @@ void ovl_11_func_800CE0F0(Ovl11SpritePositionView *position, u8 *object,
     input[1] = position->field_4 - 0x64;
     input[2] = position->field_8 - 0x96;
     if (ovl_11_func_800F5888((u16 *)work, projected) != 0) {
-        func_80016054(D_8005E3C0->field_120 + ((projected[2] >> 2) * 4),
-                      D_8005E3C0->field_118, (s32)source,
+        func_80016054(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
+                      gActiveRenderContext->field_118, (s32)source,
                       (s32)(animation & 0xFF), (u8)(frame & 0xFF),
                       (s16)projected[0], (s16)projected[1], source->field_8,
                       0, 0x40);

@@ -30,15 +30,15 @@ void func_8001B118(void) {
         func_800129F4();
         DrawOTag((unsigned long *)(ot + (D_8005E3A4 << 7) + 0x7C));
 
-        env_base = (struct_8005E3C0 *)&D_8005E5E8;
+        env_base = (struct_8005E3C0 *)&gRenderContexts;
         env = env_base;
-        if (D_8005E3C0 == env_base) {
+        if (gActiveRenderContext == env_base) {
             env = (struct_8005E3C0 *)((char *)env_base + 0x134);
         }
-        D_8005E3C0 = env;
+        gActiveRenderContext = env;
         D_8005E3A4 = (env != env_base);
         PutDispEnv((void *)((char *)env + 0x5C));
-        PutDrawEnv((void *)D_8005E3C0);
+        PutDrawEnv((void *)gActiveRenderContext);
 
         page = ot + (D_8005E3A4 << 7);
         sp18 = (D_8005E3A4 * 0x280) + 0x100 + ot;

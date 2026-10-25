@@ -22,7 +22,7 @@ void ovl_15_func_801373A0(void) {
     u32 i;
 
     DrawSync(0);
-    ClearOTagR((u_long *) D_8005E3C0->field_120, 0x800);
+    ClearOTagR((u_long *) gActiveRenderContext->field_120, 0x800);
     func_80014CBC(0xE, 0, 0x8E90, D_80137830, 1, 1);
     do {
 

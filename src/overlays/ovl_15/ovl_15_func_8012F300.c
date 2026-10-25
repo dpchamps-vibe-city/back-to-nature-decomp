@@ -8,7 +8,7 @@ void ovl_15_func_8012F300(void) {
     s32 temp_a1;
     s32 temp_v0;
 
-    temp_a1 = D_8005E3C0->field_D8;
+    temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, D_80054BBC[0] + (s32) D_80053566);
     temp_v0 = ovl_15_func_80136B18(1);
     if (temp_v0 < 3) {

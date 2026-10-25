@@ -15,5 +15,5 @@ void ovl_25_func_800BA530(void) {
 
     func_80015840(&D_800C024C, 0);
     temp_s0 = &D_800C024C - 0x81;
-    func_80015EE8(D_8005E3C0->field_D8 + 4, (s32) &D_800C024C, (s32) (*(u8 *) ((u8 *) temp_s0 + 0x40C)), (s32) (*(u8 *) ((u8 *) temp_s0 + 0x40D)), (s16) ((s32) ((HWD0 + ((u32) HWD0 >> 0x1F)) << 0xF) >> 0x10), (s16) ((s32) ((VWD0 + ((u32) VWD0 >> 0x1F)) << 0xF) >> 0x10));
+    func_80015EE8(gActiveRenderContext->field_D8 + 4, (s32) &D_800C024C, (s32) (*(u8 *) ((u8 *) temp_s0 + 0x40C)), (s32) (*(u8 *) ((u8 *) temp_s0 + 0x40D)), (s16) ((s32) ((HWD0 + ((u32) HWD0 >> 0x1F)) << 0xF) >> 0x10), (s16) ((s32) ((VWD0 + ((u32) VWD0 >> 0x1F)) << 0xF) >> 0x10));
 }

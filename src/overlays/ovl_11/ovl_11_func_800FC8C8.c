@@ -20,7 +20,7 @@ void ovl_11_func_800FC8C8(void) {
     var_s1 = 0xA40000;
     do {
         if ((*(s32 *) (base + 0x44F8)) & var_s0->unk0) {
-            func_80015EE8(D_8005E3C0->field_D8 + 0x68, (s32) D_8012CE88, (s32) var_s0->unk4, 0, (s16) var_a1, (s16) var_s6);
+            func_80015EE8(gActiveRenderContext->field_D8 + 0x68, (s32) D_8012CE88, (s32) var_s0->unk4, 0, (s16) var_a1, (s16) var_s6);
             temp_v1 = (s16) (var_s1 >> 0x10);
             var_s1 += 0x180000;
             var_a1 = temp_v1;

@@ -24,7 +24,7 @@ void ovl_11_func_80100FFC(void) {
     s32 text;
     u32 *panels;
 
-    ui = D_8005E3C0->field_D8;
+    ui = gActiveRenderContext->field_D8;
     panels = (u32 *)(ui + 0x74);
     text = ui + 0x70;
     func_80022580(panels, 1, 0x16, 0x10, 0x10E, 0x4A);
@@ -65,7 +65,7 @@ void ovl_11_func_80100FFC(void) {
                 break;
             }
         }
-        func_800248B0(D_8005E3C0->field_D8 + 0x54,
+        func_800248B0(gActiveRenderContext->field_D8 + 0x54,
                      (Ovl11_D_801273E7 - Ovl11_D_801273E7 / 4 * 4) * 34 + 0x87,
                      Ovl11_D_801273E7 / 4 * 34 + 0x67);
         if (func_800226B0()) {

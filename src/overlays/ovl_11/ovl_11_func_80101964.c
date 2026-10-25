@@ -17,7 +17,7 @@ void ovl_11_func_80101964(void) {
     var_s2 = 0x84;
     var_s4 = 0x5E;
     var_s3 = 1;
-    temp_v0 = D_8005E3C0->field_D8;
+    temp_v0 = gActiveRenderContext->field_D8;
     temp_s6 = (s32 *)(temp_v0 + 0x68);
     temp_s5 = temp_v0 + 0x6C;
     sp10 = temp_v0 + 0x60;

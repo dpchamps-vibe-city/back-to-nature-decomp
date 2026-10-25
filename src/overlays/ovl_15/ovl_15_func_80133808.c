@@ -45,11 +45,11 @@ s32 ovl_15_func_80133808(s16 arg0) {
     s32 temp_v0;
     u16 *temp_s0;
 
-    temp_t0 = D_8005E3C0->field_D8;
+    temp_t0 = gActiveRenderContext->field_D8;
     temp_s2 = temp_t0 + 4;
     temp_s4 = temp_t0 + 0x14;
     func_80022580((u32 *) (temp_t0 + 0x28), 1, 0x18, 0x20, 0x110, 0x74);
-    func_80022580((u32 *) (D_8005E3C0->field_D8 + 0x24), 1, 0x50, 0x10, 0xA0, 0x20);
+    func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x24), 1, 0x50, 0x10, 0xA0, 0x20);
     func_80017B3C(temp_s4, (s32) ((void *) ((u8 *) &D_80053604 + *D_80054BBC)), 0xD0, 0x1A);
     func_80015EE8(temp_s2, (s32) &D_801456A0, D_80137658[D_8013759E], 0, 0xB8, 0x12);
     func_8002470C(0);

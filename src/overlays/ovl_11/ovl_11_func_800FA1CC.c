@@ -20,11 +20,11 @@ void ovl_11_func_800FA1CC(Ovl11FA1CCArg *arg0) {
     start = (s16) ((s16) arg0->unk4 % 7);
     start -= 7;
     temp_s0 = (arg0->unk6 - start) % 7;
-    temp_s1 = D_8005E3C0->field_D8;
+    temp_s1 = gActiveRenderContext->field_D8;
     temp_s4 = temp_s1 + 0x60;
     temp_s1_2 = temp_s1 + 0x54;
     func_80017A38(1, 2);
-    temp_a1 = D_8005E3C0->field_D8;
+    temp_a1 = gActiveRenderContext->field_D8;
     ovl_11_func_800FA9B8((u32 *) (temp_a1 + 0x64), temp_a1 + 0x60);
     ovl_11_func_800FA6CC(temp_s4, arg0->unk0, arg0->unk2);
     ovl_11_func_800FA7D4(temp_s4, temp_s0);

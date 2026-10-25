@@ -75,7 +75,7 @@ void ovl_23_func_800B954C(void) {
                 x = HWD0 / 2 - delta + (distance >> 1);
                 func_80015840(sprite, 4);
                 func_8001585C(sprite, frame & 0xFF);
-                func_80015BF0(D_8005E3C0->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk5CC[0].unk4);
+                func_80015BF0(gActiveRenderContext->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk5CC[0].unk4);
             }
         }
         walk = (Ovl23D87CView *)((u8 *)walk + 8);
@@ -113,7 +113,7 @@ void ovl_23_func_800B954C(void) {
                 x = HWD0 / 2 - delta + (distance >> 1);
                 func_80015840(sprite, 3);
                 func_8001585C(sprite, frame & 0xFF);
-                func_80015BF0(D_8005E3C0->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk418[0].unk4);
+                func_80015BF0(gActiveRenderContext->field_D8 + 0xD0, (SpriteSourceData *)sprite, x, walk->unk418[0].unk4);
             }
         }
         walk = (Ovl23D87CView *)((u8 *)walk + 8);

@@ -129,7 +129,7 @@ u_char *func_80014CBC(s32 file_index, s32 arg1, s32 arg2, u8 *arg3, s32 arg4, s3
 
 void ovl_21_func_800BB59C(void) {
     DrawSync(0);
-    ClearOTagR((u32 *) D_8005E3C0->field_120, 0x800);
+    ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
     func_80014CBC(0, 0, 0x2000, D_8005E3B0 + 0x4290, 1, 1);
     do {
 

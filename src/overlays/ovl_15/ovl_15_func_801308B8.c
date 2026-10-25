@@ -12,7 +12,7 @@ void ovl_15_func_801308B8(void) {
     s32 status;
     s32 fileStatus;
 
-    text = D_8005E3C0->field_D8;
+    text = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (text + 0x18), text + 0x14, D_80054BBC[0] + (s32) D_80052FC4);
     cardStates = D_80137594;
     for (slot = 0; slot < 3; slot++) {

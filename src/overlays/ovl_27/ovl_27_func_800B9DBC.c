@@ -16,7 +16,7 @@ void ovl_27_func_800B9DBC(void) {
     var = (u16)D_800C4A34 + 1;
     q = (s16)var / 1800;
     D_800C4A34 = var - q * 1800;
-    arg0 = D_8005E3C0->field_D8 + 0x8C;
+    arg0 = gActiveRenderContext->field_D8 + 0x8C;
     func_80015BF0(arg0, (SpriteSourceData *)D_800C4B40, 0x3F, 0x95);
     func_80015BF0(arg0, (SpriteSourceData *)D_800C4B40, 0xA, 0xBC);
     func_80015BF0(arg0, (SpriteSourceData *)D_800C4B40, 9, 0xD6);

@@ -10,7 +10,7 @@ void ovl_15_func_80131498(void) {
     s16 var_v1;
     s32 temp_a1;
 
-    temp_a1 = D_8005E3C0->field_D8;
+    temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*D_80054BBC]);
     if (D_8013759A >= 2) {
         for (var_s1 = 0; var_s1 < 2; var_s1++) {

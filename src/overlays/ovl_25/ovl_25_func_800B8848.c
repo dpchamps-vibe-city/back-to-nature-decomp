@@ -55,12 +55,12 @@ void ovl_25_func_800B8848(void) {
                 return;
             }
             if (state->unk4CC == 1) {
-                temp_a1 = D_8005E3C0->field_D8;
+                temp_a1 = gActiveRenderContext->field_D8;
                 func_8001AC10((u32 *)(temp_a1 + 0xC), temp_a1 + 8, (s32) D_800BCB34);
                 return;
             }
             if (state->unk4CC == -1) {
-                temp_a1_2 = D_8005E3C0->field_D8;
+                temp_a1_2 = gActiveRenderContext->field_D8;
                 func_8001AC10((u32 *)(temp_a1_2 + 0xC), temp_a1_2 + 8, (s32) D_800BCB8E);
             }
         }

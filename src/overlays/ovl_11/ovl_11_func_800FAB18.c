@@ -16,7 +16,7 @@ void ovl_11_func_800FAB18(void) {
     u32 *flags;
 
     if (D_80126FE0 != 0) {
-        func_80015114((u32 *)(D_8005E3C0->field_D8 + 0x68), 0, 0,
+        func_80015114((u32 *)(gActiveRenderContext->field_D8 + 0x68), 0, 0,
             (s16)HWD0, (s16)VWD0, 0, 1);
         if (D_80126FE0 == 3) {
             if (GetVal8005E5B4() == 2) {

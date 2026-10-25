@@ -27,11 +27,11 @@ void ovl_11_func_800FAC0C(void) {
     u32 movement;
     s32 failed;
 
-    text = D_8005E3C0->field_D8 + 0x60;
-    items = D_8005E3C0->field_D8 + 0x5C;
+    text = gActiveRenderContext->field_D8 + 0x60;
+    items = gActiveRenderContext->field_D8 + 0x5C;
     func_80017A38(0, 2);
     for (i = 0; i < 4U; i++) {
-        func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x64), 1,
+        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1,
             D_801271E8[i][0], D_801271E8[i][1], D_801271E8[i][2], D_801271E8[i][3]);
     }
     func_80017B3C(text, (s32)(D_80051B7C + D_80054BBC[0]), 0x1D, 0x14);
@@ -44,7 +44,7 @@ void ovl_11_func_800FAC0C(void) {
     }
     direction = 4;
     if (D_80126FEC != 0xFF) {
-        ovl_11_func_800F6F7C(D_8005E3C0->field_D8 + 0x54, D_80126FF0[D_80126FEC][0], D_80126FF0[D_80126FEC][1]);
+        ovl_11_func_800F6F7C(gActiveRenderContext->field_D8 + 0x54, D_80126FF0[D_80126FEC][0], D_80126FF0[D_80126FEC][1]);
     } else {
         direction = 0;
     }
@@ -120,5 +120,5 @@ void ovl_11_func_800FAC0C(void) {
             }
         }
     }
-    func_800248B0(D_8005E3C0->field_D8 + 0x50, (s16)(D_80126FF0[D_80126FE4][0] + 12), (s16)(D_80126FF0[D_80126FE4][1] + 24));
+    func_800248B0(gActiveRenderContext->field_D8 + 0x50, (s16)(D_80126FF0[D_80126FE4][0] + 12), (s16)(D_80126FF0[D_80126FE4][1] + 24));
 }

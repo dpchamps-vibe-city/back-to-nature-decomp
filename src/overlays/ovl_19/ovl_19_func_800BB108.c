@@ -33,7 +33,7 @@ void ovl_19_func_800BB108(void) {
         func_80015840((ObjectState *)&D_800BF660, arg0 & 0xFF);
         func_8001585C((ObjectState *)&D_800BF660, arg1 & 0xFF);
         base = D_800BF660 - 0x1A0;
-        func_80015EE8(D_8005E3C0->field_D8 + 0x14, (s32)&D_800BF660,
+        func_80015EE8(gActiveRenderContext->field_D8 + 0x14, (s32)&D_800BF660,
                       base[0x1A4], base[0x1A5], 0, 0);
     }
     u32 saved;
@@ -57,7 +57,7 @@ void ovl_19_func_800BB108(void) {
     base = obj;
     obj -= 0x1A0;
     values = (s32)obj;
-    func_80015EE8(D_8005E3C0->field_D8 + 0x18, (s32)base, obj[0x1A4], obj[0x1A5], 0, 0);
+    func_80015EE8(gActiveRenderContext->field_D8 + 0x18, (s32)base, obj[0x1A4], obj[0x1A5], 0, 0);
     row = 0;
     column = 0;
     saved = func_80017A64();
@@ -76,7 +76,7 @@ void ovl_19_func_800BB108(void) {
                 offset = ovl_19_func_800BADAC(((s16 *)state)[row * 4 + column]);
                 label = offset + (s32)text;
             }
-            func_80017B3C(D_8005E3C0->field_D8 + 0xC, label, (s16)(row * 200 + 21),
+            func_80017B3C(gActiveRenderContext->field_D8 + 0xC, label, (s16)(row * 200 + 21),
                           column > 0 ? rowY >> 16 : (s16)y);
             y += 45;
             rowY += 45 << 16;

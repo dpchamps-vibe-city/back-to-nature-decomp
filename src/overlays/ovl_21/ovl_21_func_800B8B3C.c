@@ -105,7 +105,7 @@ void ovl_21_func_800B8B3C(void) {
     ovl_21_func_800BA4C0();
     if (((Ovl21C0448View *)D_800C0448)->unk988 != 0) {
         if (*(void **)((u8 *)D_800C0448 + 0xC) != NULL) {
-            text = D_8005E3C0->field_D8;
+            text = gActiveRenderContext->field_D8;
             func_8001AC10((u32 *)(text + 0xC), text + 8, (s32)((Ovl21C0448View *)D_800C0448)->unkC);
         }
         (((Ovl21C0448View *)D_800C0448)->unk988)++;

@@ -16,7 +16,7 @@ void ovl_11_func_8011EE98(s16 arg0) {
     struct struct_8012DA80 *temp_s3;
 
     DrawSync(0);
-    ClearOTagR((u_long *)D_8005E3C0->field_120, 0x800);
+    ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
     arg0 = arg0 < 0 ? 0 : (arg0 > 3 ? 3 : arg0);
     temp_s0 = (arg0 * 0xE800) + 0x03D17000;
     func_80014CBC(0, temp_s0, 0xE800, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);

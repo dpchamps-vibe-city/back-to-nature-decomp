@@ -27,7 +27,7 @@ void ovl_25_func_800BA5BC(SpriteSourceData *arg0, u16 *arg1) {
     D_800BCDC4.vy = arg1[1] - 0x64;
     D_800BCDC4.vz = arg1[2] - 0x96;
     D_800BCDC4.pad = arg1[3];
-    temp_s2 = D_8005E3C0->field_120 + ((func_8001DFD4(&D_800BCD58, &D_800BCDC4) >> 2) * 4);
+    temp_s2 = gActiveRenderContext->field_120 + ((func_8001DFD4(&D_800BCD58, &D_800BCDC4) >> 2) * 4);
     func_80015BF0(temp_s2, arg0, *(s16 *) ((u8 *) &D_800BCD58 + 0), *(s16 *) ((u8 *) &D_800BCD58 + 4));
     if (D_800BFE44 == 0) {
         if ((arg0 == ((&D_800BFE44 + 0x14))) || (arg0 == ((&D_800BFE44 + 0x50))) || (arg0 == ((&D_800BFE44 + 0x8C))) || (arg0 == ((&D_800BFE44 + 0xC8))) || (arg0 == ((&D_800BFE44 + 0x104))) || (arg0 == ((&D_800BFE44 + 0x140))) || (arg0 == ((&D_800BFE44 + 0x17C))) || (arg0 == ((&D_800BFE44 + 0x1B8)))) {

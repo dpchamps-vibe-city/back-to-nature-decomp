@@ -19,8 +19,8 @@ void ovl_11_func_80113818(void) {
         if (((Ovl11GridState *)D_8012D110)->flags & 0x4000) {
             dataOffset = 0x34;
         }
-        result = ovl_11_func_80118B84(D_8005E3C0->field_D8 + 0x3C, 0x20, 0x20);
-        object = D_8005E3C0->field_D8;
+        result = ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x3C, 0x20, 0x20);
+        object = gActiveRenderContext->field_D8;
         func_8001AC10((u32 *)(object + 0x3C), object + 0x28,
                       (s32)(D_80128148 + dataOffset));
         if (result == 1) {

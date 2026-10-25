@@ -57,16 +57,16 @@ s32 ovl_11_func_800E3DC8(void) {
             return 0;
         }
         DrawSync(0);
-        if (D_8005E5E8[0].field_11C < size) {
-            ClearOTagR((u_long *)D_8005E3C0->field_120, 0x800);
-            data = (u8 *)D_8005E5E8[0].field_124;
-            if (D_8005E5E8[0].field_11C * 2 < size) {
+        if (gRenderContexts[0].field_11C < size) {
+            ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
+            data = (u8 *)gRenderContexts[0].field_124;
+            if (gRenderContexts[0].field_11C * 2 < size) {
                 func_800121D4();
             }
-        } else if ((void *)D_8005E3C0 == (void *)D_8005E5E8) {
-            data = (u8 *)D_8005E5E8[1].field_124;
+        } else if ((void *)gActiveRenderContext == (void *)gRenderContexts) {
+            data = (u8 *)gRenderContexts[1].field_124;
         } else {
-            data = (u8 *)D_8005E5E8[0].field_124;
+            data = (u8 *)gRenderContexts[0].field_124;
         }
         func_80014CBC(0xC, offset, size, data, 0, 1);
         do {

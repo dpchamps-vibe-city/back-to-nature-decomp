@@ -38,6 +38,6 @@ void ovl_11_func_800FE3A0(s32 input_level, u32 input_value, s32 input_x, s32 inp
             var_a1 = &D_8012A028;
         }
     }
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32) var_a1, (s32) arg2,
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) var_a1, (s32) arg2,
                   (s32) arg3);
 }

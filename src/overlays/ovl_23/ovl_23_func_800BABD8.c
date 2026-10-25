@@ -32,7 +32,7 @@ void ovl_23_func_800BABD8(void) {
     tileX64 = position / 4096 - (position / 262144) * 64 - 64;
     if (tileX64 < HWD0 + 64) {
         do {
-            s32 packet = D_8005E3C0->field_D8 + 0xD8;
+            s32 packet = gActiveRenderContext->field_D8 + 0xD8;
             loopSprite = sprite64;
             loopBase = tiles64;
             func_80015EE8(packet, (s32)loopSprite,
@@ -47,7 +47,7 @@ void ovl_23_func_800BABD8(void) {
         (*(s32 *)(tiles76 + 0x10) / 4096 * 3 / 76) * 76 - 76;
     if (tileX76 < HWD0 + 76) {
         do {
-            s32 packet = D_8005E3C0->field_D8 + 0xCC;
+            s32 packet = gActiveRenderContext->field_D8 + 0xCC;
             loopSprite = sprite76;
             loopBase = tiles76;
             func_80015EE8(packet, (s32)loopSprite,
@@ -63,11 +63,11 @@ void ovl_23_func_800BABD8(void) {
         func_80015840(sprite, 0);
         func_8001585C(sprite, 1);
         x = HWD0 / 2 + *(s32 *)(base + 0x10) / 4096;
-        func_80015EE8(D_8005E3C0->field_D8 + 0xD4, (s32)sprite,
+        func_80015EE8(gActiveRenderContext->field_D8 + 0xD4, (s32)sprite,
                      base[0x3B8], base[0x3B9], x - 32, 0);
         func_80015840(sprite, 2);
         x = HWD0 / 2 + *(s32 *)(base + 0x10) / 4096 + 64;
-        func_80015EE8(D_8005E3C0->field_D8 + 0xD4, (s32)sprite,
+        func_80015EE8(gActiveRenderContext->field_D8 + 0xD4, (s32)sprite,
                      base[0x3B8], base[0x3B9], x - 32, 0);
     }
     endBase = Ovl23_D_800BF87C_draw;
@@ -81,7 +81,7 @@ void ovl_23_func_800BABD8(void) {
         func_8001585C(endSprite, 1);
         x = HWD0 / 2 + *(s32 *)(endBase + 0x10) / 4096 -
             ((Ovl23D87CView39C *)endBase)->unk39C;
-        func_80015EE8(D_8005E3C0->field_D8 + 0xD4, (s32)endSprite,
+        func_80015EE8(gActiveRenderContext->field_D8 + 0xD4, (s32)endSprite,
                      endBase[0x3B8], endBase[0x3B9], x - 32, 0);
     }
 }

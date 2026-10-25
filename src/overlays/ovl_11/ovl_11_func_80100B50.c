@@ -52,7 +52,7 @@ void ovl_11_func_80100B50(u8 arg0, u8 arg1) {
     u8 *temp_fp;
 
     sp18 = arg1;
-    temp_v1 = (u8 *)D_8005E3C0->field_D8;
+    temp_v1 = (u8 *)gActiveRenderContext->field_D8;
     var_s6 = 0;
     temp_s0 = (u32 *)(temp_v1 + 0x74);
     temp_s3 = (s32)(temp_v1 + 0x70);

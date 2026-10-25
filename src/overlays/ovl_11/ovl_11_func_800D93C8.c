@@ -38,7 +38,7 @@ void ovl_11_func_800D93C8(void) {
                     D_80128DA8(((Ovl11D93C8MapView *)D_8006C838)->cells[y][x].kind,
                         ((Ovl11D93C8MapView *)D_8006C838)->cells[y][x].value,
                         &sprite, &texture, &yOffset) != 0) {
-                    func_80015EE8(D_8005E3C0->field_120 + ((projected[2] >> 2) * 4),
+                    func_80015EE8(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
                         (s32)((u8 *)D_8006C838 + 0x3BC8 + texture * 0x30),
                         (u8)sprite, 0, (s16)projected[0], (s16)(projected[1] + yOffset));
                 }

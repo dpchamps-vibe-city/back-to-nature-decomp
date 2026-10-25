@@ -22,7 +22,7 @@ s32 ovl_11_func_800EE528(s16 arg0, s16 arg1) {
     if (temp_v0[4] != temp_v1) {
         func_80015840((ObjectState *) temp_v0, temp_v1 & 0xFF);
     }
-    func_80015114((u32 *) (D_8005E3C0->field_D8 + 0x10), 0, 0, 0x140, 0xF0, 0, 0);
-    func_80015BF0(D_8005E3C0->field_D8 + 8, (SpriteSourceData *) temp_v0, 0x50, 0x3C);
+    func_80015114((u32 *) (gActiveRenderContext->field_D8 + 0x10), 0, 0, 0x140, 0xF0, 0, 0);
+    func_80015BF0(gActiveRenderContext->field_D8 + 8, (SpriteSourceData *) temp_v0, 0x50, 0x3C);
     return 1;
 }

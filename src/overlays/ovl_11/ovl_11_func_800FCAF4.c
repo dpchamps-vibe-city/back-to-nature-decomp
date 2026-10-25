@@ -15,5 +15,5 @@ void ovl_11_func_800FCAF4(s16 arg0, s16 arg1, s16 arg2) {
         var_a0 = 0x3E7;
     }
     *((u16 *)func_8001A970((s32) var_a0, &D_8012A028, 3)) = 0xFFFF;
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32) &D_8012A028, (s32) arg1, (s32) arg2);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) &D_8012A028, (s32) arg1, (s32) arg2);
 }

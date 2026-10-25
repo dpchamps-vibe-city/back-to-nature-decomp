@@ -12,7 +12,7 @@ void ovl_11_func_800FD5E8(void) {
     s32 var_a0;
     s32 value;
 
-    temp_s3 = D_8005E3C0->field_D8 + 0x54;
+    temp_s3 = gActiveRenderContext->field_D8 + 0x54;
     ((struct Ovl11NumberTextHeader *) &D_8012A028)->marker = 0xFFD;
     func_80017B3C(temp_s3, (s32) (D_80053636 + D_80054BBC[0]), 0xB2, 0x14);
     func_80017B3C(temp_s3, (s32) (D_80053636 + 0x28 + D_80054BBC[0]), 0x20, 0x40);

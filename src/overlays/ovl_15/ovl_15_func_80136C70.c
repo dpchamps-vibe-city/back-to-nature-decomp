@@ -19,26 +19,26 @@ void ovl_15_func_80136C70(s16 slot, s16 mode) {
     void *headers;
 
     y = slot * 0x31 + 0x14;
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x18), 1, 0x30, (s32) (s16) (slot * 0x31 + 0x10), 0xE4, 0x30);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x18), 1, 0x30, (s32) (s16) (slot * 0x31 + 0x10), 0xE4, 0x30);
     func_80017A08(1, (s32) ((void *) ((u8 *) &D_801375A8 + (slot * 4))));
-    func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051D8E + *D_80054BBC)), 0x41, (s32) y);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051D8E + *D_80054BBC)), 0x41, (s32) y);
     status = D_80137820[slot];
     switch (status) {
     case 1:
-        func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x13A)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
+        func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x13A)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
         return;
     case 2:
         if (mode == 0) {
-            func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x13A)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
+            func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x13A)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
         } else if (mode == 1) {
-            func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x128)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
+            func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x128)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
         }
         break;
     case 3:
         if (mode == 0) {
-            func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x13A)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
+            func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0x13A)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
         } else if (mode == 1) {
-            func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0xFC)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
+            func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32)((void *) ((u8 *) &D_80051D8E - 0xFC)) + D_80054BBC[0], 0x41, (s16)(y + 0x15));
         }
         break;
     case 0:
@@ -69,11 +69,11 @@ void ovl_15_func_80136C70(s16 slot, s16 mode) {
         func_80017A08(4, (s32) dayText);
         header->name_8.units[8] = 0xFFFF;
         func_80017A08(5, (s32)D_801376E0_headers[slot].name_8.units);
-        func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051D9E + *D_80054BBC)), 0x41, (s32) y);
+        func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051D9E + *D_80054BBC)), 0x41, (s32) y);
         y += 0xE;
         func_80017A08(6, (s32)D_801376E0_headers[slot].name_1A.units);
         header->name_1A.units[8] = 0xFFFF;
-        func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051D9E + 0x1C)) + *D_80054BBC)), 0x41, (s32) y);
+        func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051D9E + 0x1C)) + *D_80054BBC)), 0x41, (s32) y);
         return;
     }
 }

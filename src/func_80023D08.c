@@ -20,13 +20,13 @@ void func_80017A38(s16 arg0, s16 arg1);
 void func_80023D08(void) {
     s32 sum;
 
-    func_80022580(D_8005E3C0->field_D8 + 0x68, 1, 0x2D, 0x40, 0xE6, 0x56);
+    func_80022580(gActiveRenderContext->field_D8 + 0x68, 1, 0x2D, 0x40, 0xE6, 0x56);
     if (D_8005E358 == 0) {
         sum = *D_80054BBC + (s32)&D_800537B2;
     } else {
         sum = *D_80054BBC + (s32)&D_80053888;
     }
     func_80017A38(1, 2);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x64, sum, 0x2F, 0x42);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x64, sum, 0x2F, 0x42);
     func_80017A38(0, 0);
 }

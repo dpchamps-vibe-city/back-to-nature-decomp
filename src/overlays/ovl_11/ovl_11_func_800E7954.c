@@ -33,12 +33,12 @@ s32 ovl_11_func_800E7954(s16 arg0) {
         u8 *far = (u8 *)&D_8007AFF0;
 
         *(s32 *)(far + 0x254A0) = 0x16;
-        ((view_8005E5E8 *)D_8005E5E8)[0].field_19 = 0;
-        ((view_8005E5E8 *)D_8005E5E8)[0].field_1A = 0;
-        ((view_8005E5E8 *)D_8005E5E8)[0].field_1B = 0;
-        ((view_8005E5E8 *)D_8005E5E8)[1].field_19 = 0;
-        ((view_8005E5E8 *)D_8005E5E8)[1].field_1A = 0;
-        ((view_8005E5E8 *)D_8005E5E8)[1].field_1B = 0;
+        ((view_8005E5E8 *)gRenderContexts)[0].field_19 = 0;
+        ((view_8005E5E8 *)gRenderContexts)[0].field_1A = 0;
+        ((view_8005E5E8 *)gRenderContexts)[0].field_1B = 0;
+        ((view_8005E5E8 *)gRenderContexts)[1].field_19 = 0;
+        ((view_8005E5E8 *)gRenderContexts)[1].field_1A = 0;
+        ((view_8005E5E8 *)gRenderContexts)[1].field_1B = 0;
         break;
     }
     case 2: {

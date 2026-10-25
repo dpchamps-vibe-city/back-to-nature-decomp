@@ -22,6 +22,6 @@ void ovl_19_func_800BAFAC(s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3) {
     offset = (depth >> 3) * 4;
     func_80015BF0(arg0 + offset, (SpriteSourceData *) arg1,
                  (s16) D_800BD050[0], (s16) D_800BD050[1]);
-    func_800248E8(D_8005E3C0->field_120 + offset,
+    func_800248E8(gActiveRenderContext->field_120 + offset,
                  (s16) D_800BD050[0], (s16) D_800BD050[1], 0);
 }

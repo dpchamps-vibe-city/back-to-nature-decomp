@@ -42,7 +42,7 @@ s32 ovl_11_func_80115CAC(void) {
         }
         break;
     case 2:
-        switch (ovl_11_func_80118B84(D_8005E3C0->field_D8 + 0x2C, 200, 128)) {
+        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 200, 128)) {
         case 0:
             break;
         case 1:

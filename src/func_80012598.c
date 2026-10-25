@@ -119,7 +119,7 @@ void func_80012598(void) {
     s5 = 1;
     __asm__("" : "=r"(s5) : "0"(s5));
     s4 = GFX_HEAP_ADDR(GFX_HEAP_PRIM_OFFSET);
-    MATCH_LOAD_ADDRESS(s0, rV0, D_8005E5E8);
+    MATCH_LOAD_ADDRESS(s0, rV0, gRenderContexts);
     s1 = s0;
     s3 = GFX_HEAP_ADDR(GFX_HEAP_MAIN_OT_OFFSET);
     t9 = GFX_HEAP_ADDR(GFX_HEAP_OT2_OFFSET);
@@ -249,7 +249,7 @@ void func_80012598(void) {
     s2 = (GFX_HEAP_PRIM_SIZE - 1);
     do {
         s32 *base2;
-        base2 = (s32 *)((u8 *)&D_8005E5E8 + (j * 0x134));
+        base2 = (s32 *)((u8 *)&gRenderContexts + (j * 0x134));
         base2[0x44] = 0x800;
         base2[0x45] = 0xB;
         base2[0x48] = temp_s3 + GFX_HEAP_MAIN_OT_OFFSET + (j << 13);

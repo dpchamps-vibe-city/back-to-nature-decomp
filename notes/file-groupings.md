@@ -5353,25 +5353,68 @@ Members (address order):
 - func_80013400 (m, 2026-08-21) — mode-dispatch query: `switch (D_8005E294)` → 1 / 2 / 0; tail return-0 block was mis-split as "func_80013430", now merged
 - SetVal8005E29C (m) — setter for D_8005E29C (shared with func_80012D30)
 
-## Full-screen primitive setup — 0x800134C4–0x800139F8 (confidence: medium)
+## Full-screen primitive setup — 0x80013450–0x800139F8 (confidence: medium)
 
-Display-transition and screen-drawing helpers. func_800134C4 calls the
-adjacent func_80013668, then initializes a full-screen POLY_F4 and DR_MODE
-packet pair for the active ordering table. Evidence is the direct internal
-call plus address adjacency; no shared GP-relative cluster has been
-established. func_800136D4 (matched 2026-08-15) touches no globals at all,
-so no gp-rel evidence is possible for it — membership rests on adjacency
-and shared screen-drawing domain only.
+Reconstructed `src/modules/wide_screen_fade.c` contains five matched functions
+in original order, **exe:0x80013450–0x800136D4**. This is a coherent slice, not
+proof of an original file boundary. The earlier claim that no shared GP state
+was established is superseded: both starters write the signed-word countdown,
+intensity step and mode at 8005E3D4/D8/DC; the query reads the countdown; the
+service reads/decrements it and consumes the feedback starter's skip at
+8005E3E0. All use GP-relative accesses. The service's sole environment-helper
+call and that helper's matching 640x480 origin/extent support including it,
+beyond adjacency or shared SDK calls. The 80011C24 frame loop calls the service;
+no retail callers of the retained starters/query have been identified.
 
-Members:
-- func_800134C4 (m) — builds and links the full-screen POLY_F4/DR_MODE pair;
-  see `notes/retros/2026-08-13-func_800134C4-retro.md`
-- func_80013668 (m) — resets display/draw environments to 640×480
-- func_800136D4 (m) (?) — draws a beveled UI panel (beige/wood palette:
-  0xF8DBAF light edges, 0xBA8B47 shadow, 0xFDECD2 highlight, gouraud
-  0xF4DFBD/0xF9CF8F fill) as 6 pixels + 8 lines + 1 rect through the
-  0x80014E90 drawer trio, of which it is the sole caller; its own only
-  caller is the stub func_80022580
+Members (former names are func_<address>):
+- 80013450 BeginWideScreenFadeFeedback — mode 2, fixed subtraction step,
+  countdown floor(255/step), skip the next draw/decrement only.
+- 80013488 BeginWideScreenFadeIncrease — mode 1, same countdown, increasing
+  low-byte complement of step*remaining; does not clear a pending skip.
+- 800134B8 IsWideScreenFadeComplete — exactly countdown == 0, no mutation.
+- 800134C4 UpdateAndDrawWideScreenFade — install environments and clear the
+  existing 8005E278/8005E27C values even on a skipped draw; link 640x480 gray
+  subtractive POLY_F4/DR_MODE packets, then decrement. No environment restore
+  or framebuffer clear at completion. Packet details remain in
+  `notes/retros/2026-08-13-func_800134C4-retro.md`.
+- 80013668 SetWideScreenEnvironments — install display/draw environments at
+  (0,0), extent 640x480; SDK background clearing is disabled. Linkage remains
+  external, but the helper is not published in the module header.
+
+`include/wide_screen_fade.h` documents the four control/service entrypoints,
+integer channel-step units (normal range 1..255), unchecked division, emitted-
+draw counts rather than elapsed time, byte truncation, retained skip state,
+and caller synchronization/initialization obligations. The public frame-loop
+caller now includes it through interfaceAudit; no ABI or type was changed.
+Locals describe packet-buffer selection, intensity and environment roles.
+
+The four state words are gWideScreenFadeUpdatesRemaining/IntensityStep/Mode/
+SkipDraw; the packet bases at 8005E980/8005E9B0 are
+`gWideScreenFadeQuadStorage` / `gWideScreenFadeDrawModeStorage`. Their existing
+scalar base-label declarations and local SDK packet views are retained.
+Shared render state is now `gFrameOrderingTable` (8005E3B4),
+`gActiveRenderContext` (8005E3C0), and `gRenderContexts` (8005E5E8).
+The interior DISPENV anchor `gRenderDisplayEnvView` (8005E644) is explicit in
+the symbol configuration so naming the complete context array cannot hide it;
+its existing 0x134-stride view is unchanged, not a separate allocation.
+Canonicalization propagated these names to all consumers, including overlays;
+that broad use is not additional membership evidence. Tentative ownership,
+struct layouts, storage and external linkages are unchanged. No scope/name
+collision, macro leakage or new declaration conflict was introduced.
+
+Boundaries: the preceding 320x240 screen_fade and draw-latch accessors remain
+outside, as does 800136D4's beveled-panel drawer. The latter has no shared fade
+state, uses the 80014E90 drawer trio, and is called by 80022580; its old
+adjacency/domain-only membership suggestion is still unproved.
+
+The checked mechanical fold matched all five members and the linked EXE first
+at baseline -O2/-G8. There were no member flag overrides to reconcile; none was
+added or retired. After naming, header publication and readability edits,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes all
+integrity gates: 33 folded functions (previously 28), all nine module TUs valid,
+complete linked EXE/all-overlay byte identity, source policy, canonical/public
+interfaces, configuration convergence and no exception growth. No new matching
+workaround was needed.
 
 ## VAB transfer setup/state — around 0x80020E58–0x800218C4 (confidence: high)
 

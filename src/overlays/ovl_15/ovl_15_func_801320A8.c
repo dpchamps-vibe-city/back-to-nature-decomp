@@ -32,7 +32,7 @@ void ovl_15_func_801320A8(void) {
     s16 *temp_a0;
     s16 *temp_a1_2;
 
-    temp_a1 = D_8005E3C0->field_D8;
+    temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) ((void *) ((u8 *) &D_800520A0 + *D_80054BBC)));
     for (var_t1 = 0; var_t1 < 2; var_t1++) {
         sp10[var_t1] = sp18[var_t1] = sp20[var_t1] = 0;

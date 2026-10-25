@@ -21,7 +21,7 @@ void ovl_17_func_800B91B8(void) {
             screenX = 0xA0 -
                 (((Ovl17QueueView *)base)->entries[i].word -
                  *(s32 *)(base + 0x24)) / 0x1000;
-            func_80015EE8(D_8005E3C0->field_D8 + 0x54,
+            func_80015EE8(gActiveRenderContext->field_D8 + 0x54,
                          (s32)(base + 0x22C), 3, mirror, (s16)screenX, y);
         }
         i++;

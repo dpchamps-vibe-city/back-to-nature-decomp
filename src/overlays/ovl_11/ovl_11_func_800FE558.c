@@ -21,5 +21,5 @@ void ovl_11_func_800FE558(s16 arg0, s16 arg1, s16 arg2) {
             var_a1++;
         } while (var_a2 < 0xE && (u16)*var_a1 == 0xFFD);
     }
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32)var_a1, (s32)arg1, (s32)arg2);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)var_a1, (s32)arg1, (s32)arg2);
 }

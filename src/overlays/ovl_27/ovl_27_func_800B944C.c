@@ -33,7 +33,7 @@ void ovl_27_func_800B944C(void) {
     temp_a1 = D_800C4A4C / 240;
     temp_s4 = (temp_a1 * 0xF0) - (u16)D_800C4A4C;
     temp_s1 = 0x140 - (temp_a1 * 0x50);
-    temp_s5 = D_8005E3C0->field_D8 + 0x90;
+    temp_s5 = gActiveRenderContext->field_D8 + 0x90;
     temp_s1 += ccos((D_800C4A4E << 12) / 120) * 12 / 4096;
     temp_s3 = temp_s4 - temp_s1;
     func_80015EE8(temp_s5, (s32) D_800C4BD0, 0x25, 0, (s16) (s32) temp_s3, (s16) (s32) temp_s4);
@@ -82,7 +82,7 @@ void ovl_27_func_800B944C(void) {
     next2++;
     quotient3 = (s16)next2 / 960;
     next2 -= quotient3 * 960;
-    temp_s5 = D_8005E3C0->field_D8 + 0x94;
+    temp_s5 = gActiveRenderContext->field_D8 + 0x94;
     D_800C4A4E = next2;
     func_80015EE8(temp_s5, (s32) D_800C4BD0, 0x1D, 0, 0, 0);
 }

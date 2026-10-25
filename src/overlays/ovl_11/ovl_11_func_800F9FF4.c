@@ -45,6 +45,6 @@ void ovl_11_func_800F9FF4(void) {
     date = ((struct Ovl11MenuDateView *) D_8006C838)->field_44BC;
     weekday = (s16) (date % 7);
     weekday -= 7;
-    ovl_11_func_800FA4F4(D_8005E3C0->field_D8 + 0x50, (s16) D_80126F84,
+    ovl_11_func_800FA4F4(gActiveRenderContext->field_D8 + 0x50, (s16) D_80126F84,
         (s16) ((((struct Ovl11MenuDateView *) D_8006C838)->field_44BE - weekday) % 7));
 }

@@ -16,7 +16,7 @@ void ovl_15_func_8012FAE0(void) {
     u32 *icons;
     u32 paletteOffset;
 
-    temp_a1 = D_8005E3C0->field_D8;
+    temp_a1 = gActiveRenderContext->field_D8;
     icons = D_801375B4[D_8013758E];
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
                  (s32)(D_8005346A + D_80054BBC[0]));

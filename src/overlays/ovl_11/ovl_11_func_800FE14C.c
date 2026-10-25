@@ -32,7 +32,7 @@ void ovl_11_func_800FE14C(s32 input_level, u32 input_value, s32 input_x, s32 inp
     level = input_level;
     value = input_value;
     i = 0;
-    end_y = D_8005E3C0->field_D8;
+    end_y = gActiveRenderContext->field_D8;
     ot = (u32 *) (end_y + 0x60);
     for (i = 0; i < 4; i++) {
         x = (s16) input_x;
@@ -84,6 +84,6 @@ first_corner_selected:
             width = 0x82;
         }
     }
-    func_80014FAC((s32 *) (D_8005E3C0->field_D8 + 0x5C), inner_x, inner_y, width, 7,
+    func_80014FAC((s32 *) (gActiveRenderContext->field_D8 + 0x5C), inner_x, inner_y, width, 7,
                   dark_color, light_color, dark_color, light_color, 0);
 }

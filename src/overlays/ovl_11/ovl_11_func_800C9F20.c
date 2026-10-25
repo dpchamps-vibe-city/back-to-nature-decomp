@@ -42,6 +42,6 @@ void ovl_11_func_800C9F20(Ovl11C7010Object *arg0, s32 arg1, s32 *arg2) {
             var_a0 = 0;
         }
         temp_a0 = &D_8012315C[var_a0 * 2 + var_t0];
-        ovl_11_func_800D6F78(var_t1, 0, (s32 *) (D_8005E3C0->field_120 + ((arg1 >> 2) * 4)), (s16) ((*(u16 *) ((u8 *) arg2 + 0)) + temp_a0[0]), (s16) ((*(u16 *) ((u8 *) arg2 + 4)) + temp_a0[1]), 2);
+        ovl_11_func_800D6F78(var_t1, 0, (s32 *) (gActiveRenderContext->field_120 + ((arg1 >> 2) * 4)), (s16) ((*(u16 *) ((u8 *) arg2 + 0)) + temp_a0[0]), (s16) ((*(u16 *) ((u8 *) arg2 + 4)) + temp_a0[1]), 2);
     }
 }

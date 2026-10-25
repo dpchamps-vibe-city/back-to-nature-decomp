@@ -30,7 +30,7 @@ void ovl_11_func_800E3AA4(void) {
         temp_s1 = ((struct struct_8006C838_800E3AA4 *)D_8006C838)->field_4438;
         far = (u8 *)&D_8007AFF0;
         if ((*(s32 *)(far + 0x2549C) != temp_s1) && (temp_s1 != -1)) {
-            env = D_8005E5E8;
+            env = gRenderContexts;
             temp_s3 = env->unk19;
             temp_s4 = env->unk1A;
             temp_s5 = env->unk1B;
@@ -53,7 +53,7 @@ void ovl_11_func_800E3AA4(void) {
             do {
                 func_8001FD10();
             } while (func_8001FD74() == 0);
-            env = D_8005E5E8;
+            env = gRenderContexts;
             env->unk19 = temp_s3;
             env->unk1A = temp_s4;
             env->unk1B = temp_s5;

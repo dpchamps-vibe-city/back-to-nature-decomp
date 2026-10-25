@@ -16,7 +16,7 @@ s32 ovl_15_func_80137300(void) {
     s32 temp_v0;
 
     DrawSync(0);
-    ClearOTagR((u_long *)D_8005E3C0->field_120, 0x800);
+    ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
     func_80014CBC(0x10, 0, 0x900, D_80137828, 1, 1);
     do {
         temp_v0 = func_80014CBC(0x10, 0, 0x900, D_80137828, 1, 0);

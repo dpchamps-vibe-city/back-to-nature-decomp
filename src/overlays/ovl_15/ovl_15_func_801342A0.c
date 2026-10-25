@@ -35,7 +35,7 @@ void ovl_15_func_801342A0(u8 *arg0, s16 arg1, s16 arg2) {
     void *var_a2;
     u32 i;
 
-    temp_s5 = D_8005E3C0->field_D8 + 0x14;
+    temp_s5 = gActiveRenderContext->field_D8 + 0x14;
     var_s4 = 0x58;
     if (D_8013759E == 0) {
         var_s2 = (Ovl15Rec *) (arg0 + arg1 * 0xB4);

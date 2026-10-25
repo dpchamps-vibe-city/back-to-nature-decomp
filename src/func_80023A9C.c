@@ -23,6 +23,6 @@ void func_80023A9C(s32 arg0) {
         fp = func_80023C2C;
     }
     fp(&D_800A0708[0], i);
-    func_80022580(D_8005E3C0->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x64, (s32)&D_800A0708[0], 0xAD, 0x23);
+    func_80022580(gActiveRenderContext->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x64, (s32)&D_800A0708[0], 0xAD, 0x23);
 }

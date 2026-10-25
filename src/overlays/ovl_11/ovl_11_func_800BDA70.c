@@ -13,10 +13,10 @@ void ovl_11_func_800BDA70(void) {
     s32 s0;
 
     DrawSync(0);
-    if ((s32)D_8005E3C0 == (s32)&D_8005E5E8) {
-        s0 = *(s32 *)((u8 *)&D_8005E5E8 + 0x258);
+    if ((s32)gActiveRenderContext == (s32)&gRenderContexts) {
+        s0 = *(s32 *)((u8 *)&gRenderContexts + 0x258);
     } else {
-        s0 = *(s32 *)((u8 *)&D_8005E5E8 + 0x124);
+        s0 = *(s32 *)((u8 *)&gRenderContexts + 0x124);
     }
     func_80014BCC(0, 0x7F000, 0x4800, 0, s0);
     memcpy(&D_8009CBF8, (void *)s0, 0x770);

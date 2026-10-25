@@ -11,7 +11,7 @@ void ovl_11_func_800FD7B4(s16 arg0, s16 arg1) {
     s32 test;
     s32 var_a3_2;
     void *var_a1;
-    s32 drawing = D_8005E3C0->field_D8 + 0x54;
+    s32 drawing = gActiveRenderContext->field_D8 + 0x54;
 
     temp_v0 = ((struct Ovl11PairedValues *) D_8006C838)->field_44BA;
     temp_v0 += 4;
@@ -41,5 +41,5 @@ void ovl_11_func_800FD7B4(s16 arg0, s16 arg1) {
     } else {
         var_a1 = (u8 *) D_8005175C + (D_80054BBC[0] + D_8012735C[var_a3_2][var_a0]);
     }
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32) var_a1, 0xAC, (s32) arg1);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) var_a1, 0xAC, (s32) arg1);
 }

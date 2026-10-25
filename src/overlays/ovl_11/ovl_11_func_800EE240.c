@@ -53,7 +53,7 @@ s32 ovl_11_func_800EE240(s16 arg0, s16 arg1) {
         }
         next = arg1 + 1;
         if (D_80129560[next] != 0) {
-            packet = (s32 *)(D_8005E3C0->field_D8 + 0x14);
+            packet = (s32 *)(gActiveRenderContext->field_D8 + 0x14);
             index = arg1 + 3;
             blue = *(u8 *)&D_80129560[index];
             index2 = arg1 + 2;

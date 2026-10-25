@@ -35,7 +35,7 @@ s32 ovl_15_func_80133B28(s16 arg0) {
     } else {
         var_s3 = (u8 *) &D_800742EC;
     }
-    temp_a1 = D_8005E3C0->field_D8;
+    temp_a1 = gActiveRenderContext->field_D8;
     temp_s7 = temp_a1 + 0x14;
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_s7, (s32) &D_800520A0[*D_80054BBC]);
     temp_s4 = ovl_15_func_801344E8(var_s3, -1);
@@ -77,7 +77,7 @@ s32 ovl_15_func_80133B28(s16 arg0) {
         temp_s1 = var_a2 + 1;
         temp_s0 = var_a2 * 0x18;
         temp_v0 = temp_s0 + 0x36;
-        func_8001AAF4((s16) ((u16) D_801375A0 + temp_s1), 2, D_8005E3C0->field_D8 + 0x14, 0x20, (s16) (s32) temp_v0);
+        func_8001AAF4((s16) ((u16) D_801375A0 + temp_s1), 2, gActiveRenderContext->field_D8 + 0x14, 0x20, (s16) (s32) temp_v0);
         ovl_15_func_801342A0(var_s3, ovl_15_func_801344E8(var_s3, (s16) ((u16) D_801375A0 + temp_s1)), (s16) (temp_s0 + 0x30));
         if (ovl_15_func_801340B8((s32) var_s3, ovl_15_func_801344E8(var_s3, (s16) ((u16) D_801375A0 + temp_s1))) == 1) {
             func_80024924(temp_s7, 0x20, temp_v0);

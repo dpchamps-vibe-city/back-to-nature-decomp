@@ -43,7 +43,7 @@ void ovl_11_func_800F5BC0(s32 arg0, Ovl11Func5BC0Entry *arg1, s32 (*arg2)(u16, u
                 sp18[2] = arg1->unk10 - 0x96;
                 if (ovl_11_func_800F5888(sp18, sp20) != 0) {
                     if (cb(arg1->unk2, &sp30, &sp34) != 0) {
-                        func_80015EE8(D_8005E3C0->field_120 + ((sp20[2] >> 2) * 4), (s32) (&D_80070400 + sp34), (s32) sp30, 0, (s16) sp20[0], (s16) sp20[1]);
+                        func_80015EE8(gActiveRenderContext->field_120 + ((sp20[2] >> 2) * 4), (s32) (&D_80070400 + sp34), (s32) sp30, 0, (s16) sp20[0], (s16) sp20[1]);
                     }
                 }
             }

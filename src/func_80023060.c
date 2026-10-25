@@ -11,7 +11,7 @@ void func_80023288(void);
 
 s32 func_80023060(void) {
     if (D_8005E338 != 0) {
-        func_80015114((u32 *)(D_8005E3C0->field_D8 + 0x6C), 0, 0, D_800A3FB0, D_800A3FB4, 0, 1);
+        func_80015114((u32 *)(gActiveRenderContext->field_D8 + 0x6C), 0, 0, D_800A3FB0, D_800A3FB4, 0, 1);
         func_80023288();
         switch (D_8005E338) {
         case 4:

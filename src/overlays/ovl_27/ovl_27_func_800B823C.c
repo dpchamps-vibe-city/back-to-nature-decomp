@@ -120,15 +120,15 @@ void ovl_27_func_800B823C(void) {
             D_800C4A18 = 0;
             func_80020818();
             func_8001FB30(0, 0, 0x1A, 0x7F);
-            D_8005E5E8->unk19 = 0;
-            D_8005E5E8->unk1A = 0;
-            D_8005E5E8->unk1B = 0;
-            second = &D_8005E5E8[1];
+            gRenderContexts->unk19 = 0;
+            gRenderContexts->unk1A = 0;
+            gRenderContexts->unk1B = 0;
+            second = &gRenderContexts[1];
             second->unk19 = 0;
             second->unk1A = 0;
             second->unk1B = 0;
-            D_8005E5E8->unk18 = (u8) temp_v0_2;
-            D_8005E5E8[1].unk18 = (u8) temp_v0_2;
+            gRenderContexts->unk18 = (u8) temp_v0_2;
+            gRenderContexts[1].unk18 = (u8) temp_v0_2;
             state = (Ovl27StateCounterView *)D_8006C838;
             state->counter++;
         }

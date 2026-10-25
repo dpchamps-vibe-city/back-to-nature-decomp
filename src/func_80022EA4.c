@@ -21,5 +21,5 @@ void func_80022EA4(void) {
     if ((u8) _D_800A06D8[1] != var_a1) {
         func_80015840((ObjectState *) &D_800A06D8, var_a1 & 0xFF);
     }
-    func_80015C50(D_8005E3C0->field_D8 + 4, (SpriteSourceData *) &D_800A06D8, 0x11D, 0xD9);
+    func_80015C50(gActiveRenderContext->field_D8 + 4, (SpriteSourceData *) &D_800A06D8, 0x11D, 0xD9);
 }

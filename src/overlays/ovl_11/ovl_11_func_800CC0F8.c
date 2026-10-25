@@ -91,7 +91,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
 
         depth = func_8001DFD4(D_80128B98, (SVECTOR *)D_80128BA0);
         if (depth != 0) {
-            temp_v1_2 = D_8005E3C0->field_120 + ((depth >> 2) * 4);
+            temp_v1_2 = gActiveRenderContext->field_120 + ((depth >> 2) * 4);
             if ((u32) (arg0->unk6 - 3) < 2U) {
                 func_80015C50(temp_v1_2, &D_80128C80, *(s16 *) ((u8 *) D_80128B98 + 0), *(s16 *) ((u8 *) D_80128B98 + 4));
                 return;
@@ -115,7 +115,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
                 D_80128BA0[2] = (*(u16 *) ((u8 *) arg0 + 0x2C)) - 0x96;
                 depth = func_8001DFD4(D_80128B98, (SVECTOR *)D_80128BA0);
                 if (depth != 0) {
-                    ovl_11_func_800C9E90(D_8005E3C0->field_120 + ((depth >> 2) * 4), D_80128B98[0], *(s32 *) ((u8 *) D_80128B98 + 4), 0);
+                    ovl_11_func_800C9E90(gActiveRenderContext->field_120 + ((depth >> 2) * 4), D_80128B98[0], *(s32 *) ((u8 *) D_80128B98 + 4), 0);
                 }
             }
         }

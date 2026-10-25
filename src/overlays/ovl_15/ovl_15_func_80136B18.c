@@ -26,7 +26,7 @@ s8 ovl_15_func_80136B18(s16 arg0) {
     if (D_80137587 >= 3) {
         D_80137587 = 0;
     }
-    func_800248B0(D_8005E3C0->field_D8 + 4, 0x39, (D_80137587 * 0x31) + 0x18);
+    func_800248B0(gActiveRenderContext->field_D8 + 4, 0x39, (D_80137587 * 0x31) + 0x18);
     temp_v0_2 = *(s32 *) ((u8 *) D_8005E3A8 + 8);
     if (temp_v0_2 & 0x40) {
         func_8001FABC(0);

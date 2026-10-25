@@ -17,7 +17,7 @@ void ovl_19_func_800BA770(void) {
         ovl_19_func_800BAB4C(&((Ovl19Func800BAB4CArg *) D_800BF560)[j]);
     }
     for (k = 0; k < 9; k++) {
-        ovl_19_func_800BAFAC(D_8005E3C0->field_120, (ObjectState *) &D_800BF6D0,
+        ovl_19_func_800BAFAC(gActiveRenderContext->field_120, (ObjectState *) &D_800BF6D0,
                            &D_800BCF7C[k * 6], D_800BCF7C[k * 6 - 2]);
     }
 }

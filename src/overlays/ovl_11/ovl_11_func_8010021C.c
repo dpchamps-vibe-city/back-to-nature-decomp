@@ -98,7 +98,7 @@ void ovl_11_func_8010021C(void) {
         }
     }
     column = Ovl11_D_801273E7 / 10;
-    func_800248B0(D_8005E3C0->field_D8 + 0x54,
+    func_800248B0(gActiveRenderContext->field_D8 + 0x54,
                  column * 144 + 23, (Ovl11_D_801273E7 - column * 10) * 14 + 24);
     D_801273EC = Ovl11_D_801273E7 + Ovl11_D_801273E8 * 20;
 }

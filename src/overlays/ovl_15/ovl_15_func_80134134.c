@@ -40,7 +40,7 @@ void ovl_15_func_80134134(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 
     if (arg0 == 0x166) {
         var_v1 = 0xD;
     }
-    func_80015EE8(D_8005E3C0->field_D8 + 4, (s32) &D_801456A0, var_v1, arg1 & 0xFF, (s16) (s32) arg4, (s16) (s32) arg5);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x14, arg2, (s32) (s16) (arg4 + 0x18), (s32) arg5);
+    func_80015EE8(gActiveRenderContext->field_D8 + 4, (s32) &D_801456A0, var_v1, arg1 & 0xFF, (s16) (s32) arg4, (s16) (s32) arg5);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, arg2, (s32) (s16) (arg4 + 0x18), (s32) arg5);
     ovl_15_func_80134450((s16) (arg3 / 25), (s16) (arg4 + 0x5A), (s16) (arg5 + 0xC));
 }

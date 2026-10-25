@@ -19,17 +19,17 @@ void ovl_11_func_800CFE40(u8 *arg0) {
         D_80128D38[1] = *(u16 *)(arg0 + 0x3C) - 0x64;
         D_80128D38[2] = *(u16 *)(arg0 + 0x40) - 0x96;
         if (ovl_11_func_800F5888((u16 *)D_80128D38, screen) != 0) {
-            ot = D_8005E3C0->field_120 + ((screen[2] >> 2) * 4);
+            ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
             ovl_11_func_80107E2C(arg0 + 0xA8, ot, (s16)screen[0],
                 (s16)(screen[1] + ovl_11_func_800D2950(*(s16 *)arg0)));
-            func_80016054(ot, D_8005E3C0->field_118, (s32)(arg0 + 0x78),
+            func_80016054(ot, gActiveRenderContext->field_118, (s32)(arg0 + 0x78),
                 arg0[0x7C], arg0[0x7D], (s16)screen[0], (s16)screen[1],
                 *(s32 *)(arg0 + 0x80), 0, 0x40);
             if (*(s32 *)(arg0 + 0x34) & 0x01000000) {
                 D_80128D38[0] = *(u16 *)(arg0 + 0x38) + 0x96;
                 D_80128D38[1] = -0x64;
                 D_80128D38[2] = *(u16 *)(arg0 + 0x40) - 0x96;
-                ot = D_8005E3C0->field_120 +
+                ot = gActiveRenderContext->field_120 +
                     ((func_8001DFD4(D_80128D40, (s16 *)D_80128D38) >> 2) * 4);
             } else {
                 D_80128D40[0] = screen[0];

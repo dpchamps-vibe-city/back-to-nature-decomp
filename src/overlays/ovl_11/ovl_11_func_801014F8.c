@@ -16,7 +16,7 @@ void ovl_11_func_801014F8(void) {
     SetVal8005E334(0);
     SetVal8005E2BC(0);
     func_8002261C(3, 0x3BD);
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x5C), 1, 0xA6, 0x58, 0x68, 0x48);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x5C), 1, 0xA6, 0x58, 0x68, 0x48);
     if (func_800226B0()) {
         switch (((u32 *)D_8005E3A8)[0]) {
         case 0x1000:
@@ -32,7 +32,7 @@ void ovl_11_func_801014F8(void) {
         }
         D_801273E9_selection -= (s8)(D_801273E9_selection / 5) * 5;
     }
-    func_800248B0(D_8005E3C0->field_D8 + 0x54, 0xAF, D_801273E9_selection * 14 + 0x5D);
+    func_800248B0(gActiveRenderContext->field_D8 + 0x54, 0xAF, D_801273E9_selection * 14 + 0x5D);
     if (func_800226B0()) {
         if (((u32 *)D_8005E3A8)[2] & 0x20) {
             func_80022738();
@@ -47,7 +47,7 @@ void ovl_11_func_801014F8(void) {
             }
         }
     }
-    text = (s32 *)(D_8005E3C0->field_D8 + 0x58);
+    text = (s32 *)(gActiveRenderContext->field_D8 + 0x58);
     func_80017D9C(text, (u16 *)(D_8005399A + D_80054BBC[0]), 0xB1, 0x5A, ((D_801273EE_flags >> 7) ^ 1) & 1);
     func_80017D9C(text, (u16 *)(D_8005399A + 0xC + D_80054BBC[0]), 0xB1, 0x68, ((D_801273EE_flags >> 8) ^ 1) & 1);
     func_80017D9C(text, (u16 *)(D_8005399A + 0x16 + D_80054BBC[0]), 0xB1, 0x76, ((D_801273EE_flags >> 9) ^ 1) & 1);

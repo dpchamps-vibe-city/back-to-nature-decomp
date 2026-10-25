@@ -44,12 +44,12 @@ void ovl_11_func_800FED0C(void) {
     if (state != 1) {
         D_801273C0[(state >> 4) - 1]();
     } else {
-        func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x64), 1, 0x64, 0x4A, 0x82, 0x22);
-        func_80017B3C(D_8005E3C0->field_D8 + 0x60, (s32)(D_80053AE8 + D_80054BBC[0]), 0x70, 0x4E);
+        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1, 0x64, 0x4A, 0x82, 0x22);
+        func_80017B3C(gActiveRenderContext->field_D8 + 0x60, (s32)(D_80053AE8 + D_80054BBC[0]), 0x70, 0x4E);
         SetVal8005E334(0);
         SetVal8005E2BC(0);
         func_8002261C(3, 0x3B0);
-        func_800248B0(D_8005E3C0->field_D8 + 0x5C, 0x6C, (s16)(D_801273B4_selection[0] * 14 + 0x54));
+        func_800248B0(gActiveRenderContext->field_D8 + 0x5C, 0x6C, (s16)(D_801273B4_selection[0] * 14 + 0x54));
         if (ready == 1) {
             buttons = *(s32 *)((u8 *)D_8005E3A8 + 8);
             if (buttons & 0x20) {

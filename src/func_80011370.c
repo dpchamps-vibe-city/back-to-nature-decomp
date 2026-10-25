@@ -79,8 +79,8 @@ s32 gCurrentSceneId;
 s32 D_8005E3A4;
 struct GfxObj *D_8005E3A8;
 struct GfxObj *D_8005E3AC;
-s32 *D_8005E3B4;
-struct_8005E3C0 *D_8005E3C0;
+s32 *gFrameOrderingTable;
+struct_8005E3C0 *gActiveRenderContext;
 
 /* D_8005E5D8 and D_8005E5E8 declared in globals_override.h as large arrays
    for absolute lui/lw addressing under -G8 */
@@ -138,7 +138,7 @@ void func_80011370(void) {
     ResetGraph(0);
     gCurrentSceneId = 0xD;
     func_800147BC();
-    env_base = (char *)&D_8005E5E8;
+    env_base = (char *)&gRenderContexts;
     SetDefDrawEnv((DRAWENV *)env_base, 0, 0, 0x140, 0xF0);
     temp_s2 = (s32 *)(env_base + 0x134);
     SetDefDrawEnv((DRAWENV *)temp_s2, 0, 0xF0, 0x140, 0xF0);
@@ -171,12 +171,12 @@ void func_80011370(void) {
     func_80012A68(0, 0, 0x3FF, 0x1FF, 0xFF, 0xFF, 0xFF);
     VSyncCallback((void (*)(void))&D_80011334);
     buf = (char *)&D_8005E5D8;
-    D_8005E3C0 = (struct_8005E3C0 *)temp_s2;
+    gActiveRenderContext = (struct_8005E3C0 *)temp_s2;
     D_8005E3A4 = (char *)temp_s2 != env_base;
-    if (D_8005E3B4 == (s32 *)buf) {
+    if (gFrameOrderingTable == (s32 *)buf) {
         buf += 8;
     }
-    D_8005E3B4 = (s32 *)buf;
+    gFrameOrderingTable = (s32 *)buf;
     func_80012298(0);
     func_800120C8();
     func_8001EFA4();

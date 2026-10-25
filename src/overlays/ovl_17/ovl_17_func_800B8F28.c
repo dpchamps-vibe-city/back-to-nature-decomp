@@ -18,8 +18,8 @@ void ovl_17_func_800B8F28(void) {
     Ovl17SummaryUpperView *work;
     Ovl17SummaryResultView *base;
 
-    boxes = (u32 *)(D_8005E3C0->field_D8 + 0xC);
-    text = D_8005E3C0->field_D8 + 8;
+    boxes = (u32 *)(gActiveRenderContext->field_D8 + 0xC);
+    text = gActiveRenderContext->field_D8 + 8;
     ovl_17_func_800B91B8();
     ovl_17_func_800BA808(0x800000);
     DrawScreenSubtractOverlay(0x40, 0x40, 0x40);

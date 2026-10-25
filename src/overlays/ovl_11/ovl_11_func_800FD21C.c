@@ -22,6 +22,6 @@ void ovl_11_func_800FD21C(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
     base[9] = 0x26;
     base[10] = 0x24;
     *((u16 *)func_8001A970((s32) arg3, base + 0xB, 2)) = 0xFFFF;
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32) base, (s32) arg4, (s32) arg5);
-    func_80024A10(D_8005E3C0->field_D8 + 0x68, (s16) (arg4 + 0x10), arg5, arg1);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) base, (s32) arg4, (s32) arg5);
+    func_80024A10(gActiveRenderContext->field_D8 + 0x68, (s16) (arg4 + 0x10), arg5, arg1);
 }

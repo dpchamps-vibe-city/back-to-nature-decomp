@@ -16,7 +16,7 @@ void ovl_28_func_800B86D8(void) {
     u32 *ot;
     s32 column;
 
-    ot = (u32 *)D_8005E3C0->field_D8 + 4;
+    ot = (u32 *)gActiveRenderContext->field_D8 + 4;
     if (D_800B93C0 == 1) {
         switch (D_800B93C4) {
         case -1:
@@ -51,7 +51,7 @@ void ovl_28_func_800B86D8(void) {
             break;
         default:
             func_8001ADD8(ot, (u16)D_800B93C6, D_800B93C8, D_800B93CA);
-            ovl_28_func_800B8E9C((u_long *)D_8005E3C0->field_D8 + 3,
+            ovl_28_func_800B8E9C((u_long *)gActiveRenderContext->field_D8 + 3,
                 D_800B93C8, D_800B93CA, 80, 80,
                 0x4B6496, 0x4B6496, 0x4B6496, 0x4B6496, 1, 2);
             if (--D_800B93C4 == 0) {

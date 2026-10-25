@@ -13,7 +13,7 @@ void ovl_27_func_800B998C(void) {
     var = (u16)D_800C4A2C + 1;
     q = (s16)var / 1800;
     D_800C4A2C = var - q * 1800;
-    func_80015BF0(D_8005E3C0->field_D8 + 0x8C, (SpriteSourceData *)D_800C4A80, 0x11A, 0xAD);
+    func_80015BF0(gActiveRenderContext->field_D8 + 0x8C, (SpriteSourceData *)D_800C4A80, 0x11A, 0xAD);
     if (D_800C4A2C >= 0x5A) {
         D_800C4A2C = 0;
         r = Rand(0xA);

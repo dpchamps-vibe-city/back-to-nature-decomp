@@ -34,7 +34,7 @@ void ovl_11_func_800FB674(void) {
     u32 var_a0;
 
     repeat = 0;
-        temp_t0 = D_8005E3C0->field_D8;
+        temp_t0 = gActiveRenderContext->field_D8;
         temp_s5 = temp_t0 + 0x8C;
         temp_s7 = (((struct Ovl11CalendarDisplayStateView *)D_8006C838)->field_44C0) < 0xC;
         func_80022580((u32 *)(temp_t0 + 0x90), 1, 0xE4, 0x10, 0x4E, 0x20);

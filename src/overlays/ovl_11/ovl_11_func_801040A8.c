@@ -24,6 +24,6 @@ void ovl_11_func_801040A8(void) {
         var_a1 = 0xC4;
     }
     if (var_a1 != -1) {
-        func_800248B0(D_8005E3C0->field_D8 + 0x54, var_a1 + 6, var_a2 + 6);
+        func_800248B0(gActiveRenderContext->field_D8 + 0x54, var_a1 + 6, var_a2 + 6);
     }
 }

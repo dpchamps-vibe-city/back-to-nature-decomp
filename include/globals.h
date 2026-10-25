@@ -28,8 +28,6 @@ extern s16 D_8005E56A;
 extern s16 D_8005E56E;
 extern s16 D_8005E572;
 extern u8 D_8005E5D1;
-extern s32 D_8005E980;
-extern s32 D_8005E9B0;
 extern s32 D_8005EA28;
 extern s32 D_8005F028;
 extern s32 D_80061E48;

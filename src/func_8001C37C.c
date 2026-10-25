@@ -77,9 +77,9 @@ void func_8001C37C(u8 *arg0, u8 *arg1) {
         func_8001E158(0x2000);
         temp_s5 = arg0 + WORD(arg1, 0x0);
         var_s2 = arg0 + WORD(arg1, 0x10);
-        var_s0 = D_8005E3C0->field_118;
-        temp_s7 = D_8005E3C0->field_120;
-        D_8005E4DC = D_8005E3C0;
+        var_s0 = gActiveRenderContext->field_118;
+        temp_s7 = gActiveRenderContext->field_120;
+        D_8005E4DC = gActiveRenderContext;
 loop_2:
         if (var_s6 > 0) {
             flags = WORD(var_s2, 0x0);

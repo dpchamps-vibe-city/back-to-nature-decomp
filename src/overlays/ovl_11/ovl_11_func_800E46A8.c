@@ -32,12 +32,12 @@ void ovl_11_func_800E46A8(u8 *arg0) {
     box[1] = *(u16 *)(arg0 + 0x64) - 0x64;
     box[2] = *(u16 *)(arg0 + 0x68) - 0x96;
     if (ovl_11_func_800F5888(box, screen)) {
-        ot = D_8005E3C0->field_120 + ((screen[2] >> 2) * 4);
+        ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
         if (func_8001AF44(0x72) && *(s16 *)arg0 == ((Ovl11E46A8State *)D_8006C838)->selectedId) {
             ot -= 0x14;
         }
         SetVal8005E43C(0);
-        func_80016054(ot, D_8005E3C0->field_118, (s32)(arg0 + 0xB0),
+        func_80016054(ot, gActiveRenderContext->field_118, (s32)(arg0 + 0xB0),
                       arg0[0xB4], arg0[0xB5], (s16)screen[0], (s16)screen[1],
                       *(s32 *)(arg0 + 0xB8), 0, 0x40);
         ovl_11_func_80107E2C(arg0 + 0xE0, ot, (s16)screen[0],

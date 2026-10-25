@@ -12,6 +12,22 @@ gScreenFadeCounter = 0x8005E3CC; // type:s16 size:0x2
 gScreenFadeDenominator = 0x8005E3CE; // type:s16 size:0x2
 gScreenFadeOtSelector = 0x8005E3D0; // type:s32 size:0x4
 
+// 640x480 subtractive fade: countdown, intensity step, mode and draw skip.
+gWideScreenFadeUpdatesRemaining = 0x8005E3D4; // type:s32 size:0x4
+gWideScreenFadeIntensityStep = 0x8005E3D8; // type:s32 size:0x4
+gWideScreenFadeMode = 0x8005E3DC; // type:s32 size:0x4
+gWideScreenFadeSkipDraw = 0x8005E3E0; // type:s32 size:0x4
+// Double-buffered packet storage used by exe:800134C4.
+gWideScreenFadeQuadStorage = 0x8005E980; // size:0x30
+gWideScreenFadeDrawModeStorage = 0x8005E9B0; // size:0x18
+
+// Shared boot/render state, consumed absolutely by the wide-screen fade.
+gFrameOrderingTable = 0x8005E3B4; // size:0x4
+gActiveRenderContext = 0x8005E3C0; // size:0x4
+gRenderContexts = 0x8005E5E8; // size:0x268
+// Interior DISPENV anchor, used with the same 0x134 context stride; not storage.
+gRenderDisplayEnvView = 0x8005E644; // size:0x14
+
 func_80011270 = 0x80011270; // type:func
 func_80011278 = 0x80011278; // type:func
 func_80011370 = 0x80011370; // type:func
@@ -59,11 +75,11 @@ _80013428 = 0x80013428; // type:label
 _80013430 = 0x80013430; // type:label
 SetVal8005E29C = 0x80013438; // type:func
 GetVal8005E29C = 0x80013444; // type:func
-func_80013450 = 0x80013450; // type:func
-func_80013488 = 0x80013488; // type:func
-func_800134B8 = 0x800134B8; // type:func
-func_800134C4 = 0x800134C4; // type:func
-func_80013668 = 0x80013668; // type:func
+BeginWideScreenFadeFeedback = 0x80013450; // type:func
+BeginWideScreenFadeIncrease = 0x80013488; // type:func
+IsWideScreenFadeComplete = 0x800134B8; // type:func
+UpdateAndDrawWideScreenFade = 0x800134C4; // type:func
+SetWideScreenEnvironments = 0x80013668; // type:func
 func_800136D4 = 0x800136D4; // type:func
 func_800139FC = 0x800139FC; // type:func
 func_80013A24 = 0x80013A24; // type:func

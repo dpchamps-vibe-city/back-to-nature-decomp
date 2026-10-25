@@ -9,7 +9,7 @@ void ovl_15_func_8012ED6C(void) {
     s32 status;
     s32 text;
 
-    text = D_8005E3C0->field_D8;
+    text = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(text + 0x18), text + 0x14,
                  (s32) &D_80052FC4[D_80054BBC[0]]);
     if (D_8013759A >= 2) {

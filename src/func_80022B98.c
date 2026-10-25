@@ -21,7 +21,7 @@ s32 func_80022B98(void) {
     s1 = 0;
     temp_s0 = func_80017A64();
     func_80017A48(3);
-    D_8005E5B4 = func_80017BC8((s32 *)(D_8005E3C0->field_D8 + 8), (u16 *)D_8005E5B0, 0x1E, 0xA8, 0x107, 0x3A);
+    D_8005E5B4 = func_80017BC8((s32 *)(gActiveRenderContext->field_D8 + 8), (u16 *)D_8005E5B0, 0x1E, 0xA8, 0x107, 0x3A);
     func_80017A48(temp_s0);
     func_80017A38(0, 0);
     D_8005E5B8 = 0;
@@ -64,7 +64,7 @@ s32 func_80022B98(void) {
         break;
     }
     if (((struct struct_8006C838_view *)&D_8006C838)->field_CC != 6) {
-        func_80022580((u32 *)(D_8005E3C0->field_D8 + 0xC), 0, 0x1A, 0xA4, 0x10B, 0x3E);
+        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0xC), 0, 0x1A, 0xA4, 0x10B, 0x3E);
         if (s1 != 0) {
             if (D_8005E334 == 1) {
                 func_80022EA4();

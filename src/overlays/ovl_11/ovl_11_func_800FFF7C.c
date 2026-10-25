@@ -25,7 +25,7 @@ void ovl_11_func_800FFF7C(void) {
     s32 temp_a0;
     u32 temp_s0;
 
-    temp_a0 = D_8005E3C0->field_D8 + 0x78;
+    temp_a0 = gActiveRenderContext->field_D8 + 0x78;
     if (D_801273E4 != 0) {
         if (D_801273E4 == 1) {
             func_8002238C(temp_a0);

@@ -32,7 +32,7 @@ void ovl_28_func_800B9074(void) {
         rect = &D_800B9628;
         setXYWH(poly, rect->unk0, rect->unk2, rect->unk4, rect->unk6);
         SetSemiTrans(poly, 1);
-        ot = (u_long *)D_8005E3C0->field_D8;
+        ot = (u_long *)gActiveRenderContext->field_D8;
         addPrim(ot + 3, poly);
         tpage = GetTPage(0, 2, 0, 0);
         mode = (DR_MODE *)D_800BAB30;

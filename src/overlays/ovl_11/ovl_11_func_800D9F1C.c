@@ -107,7 +107,7 @@ void ovl_11_func_800D9F1C(void) {
                 default:
                     continue;
                 }
-                func_80015EE8(D_8005E3C0->field_120 + ((projected[2] >> 2) * 4),
+                func_80015EE8(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
                     (s32)(&D_80070400 + texture), (u8)sprite, 0,
                     (s16)projected[0], (s16)projected[1]);
             }

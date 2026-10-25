@@ -15,7 +15,7 @@ void func_8001E160(void) {
     base = D_8005E3B0;
 
     for (i = 0; i < 2; i++) {
-        entry = (s32 *)((s8 *)&D_8005E5E8 + i * 0x134);
+        entry = (s32 *)((s8 *)&gRenderContexts + i * 0x134);
 
         entry[0x44] = 0x800;
         entry[0x45] = 0xB;

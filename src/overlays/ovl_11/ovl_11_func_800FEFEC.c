@@ -27,9 +27,9 @@ void ovl_11_func_800FEFEC(void) {
     s32 var_s0;
     s32 remainder;
 
-    func_80022580((u32 *) (D_8005E3C0->field_D8 + 0x58), 1, 0x14, 0x37, 0x118, 0x69);
+    func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x58), 1, 0x14, 0x37, 0x118, 0x69);
     func_80017A38(0, 2);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32) ((void *) ((u8 *) &D_80053B22 + *D_80054BBC)), 0x20, 0x3B);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) ((void *) ((u8 *) &D_80053B22 + *D_80054BBC)), 0x20, 0x3B);
     func_80017A38(0, 0);
     if ((D_801273B0 == 0x10) && (func_800226B0() == 1)) {
         if ((*(s32 *) ((u8 *) D_8005E3A8 + 0)) & 0xA000) {
@@ -67,7 +67,7 @@ void ovl_11_func_800FEFEC(void) {
             }
         }
     }
-    func_800248B0(D_8005E3C0->field_D8 + 0x50, (s16) ((D_801273B6 * 0x96) + 0x1C), (s16) (((D_801273B8_selection[0] + 1) * 0xE) + 0x41));
+    func_800248B0(gActiveRenderContext->field_D8 + 0x50, (s16) ((D_801273B6 * 0x96) + 0x1C), (s16) (((D_801273B8_selection[0] + 1) * 0xE) + 0x41));
     ovl_11_func_800FF27C(D_801273B6, D_801273B8_selection[0]);
 }
 /* Warning: struct GfxObj is not defined (only forward-declared) */

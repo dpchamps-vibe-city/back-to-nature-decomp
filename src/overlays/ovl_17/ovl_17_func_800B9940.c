@@ -27,7 +27,7 @@ s16 ovl_17_func_800B9940(s32 arg0) {
     s32 i;
     u8 *text;
 
-    surface = D_8005E3C0->field_D8 + 8;
+    surface = gActiveRenderContext->field_D8 + 8;
     row = 2;
     if (((Ovl17ModeView *)D_8006C838)->mode != 3) {
         row = ((Ovl17ModeView *)D_8006C838)->mode;

@@ -21,7 +21,7 @@ void func_80023288(void) {
     s32 temp_s0;
     s16 q;
 
-    temp_s0 = D_8005E3C0->field_D8 + 0x60;
+    temp_s0 = gActiveRenderContext->field_D8 + 0x60;
     func_800233B4();
     if (D_8005E338 == 3) {
         func_80023910();

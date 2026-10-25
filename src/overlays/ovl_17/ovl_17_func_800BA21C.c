@@ -10,7 +10,7 @@ void func_8001719C(u8 *arg0);
 
 void ovl_17_func_800BA21C(void) {
     DrawSync(0);
-    ClearOTagR((u32 *) D_8005E3C0->field_120, 0x800);
+    ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
     func_80014CBC(0, 0, 0x2000, (u8 *)(D_8005E3B0 + 0x4290), 1, 1);
     do {
 

@@ -25,7 +25,7 @@ void ovl_11_func_80101814(void) {
     var_s0 = 0x84;
     var_s1 = 0x14;
     var_s6 = 1;
-    temp_v0 = D_8005E3C0->field_D8;
+    temp_v0 = gActiveRenderContext->field_D8;
     for (var_s4 = 0; var_s4 < 7; var_s4++) {
         temp_s3 = (s32 *)(temp_v0 + 0x68);
         temp_s2 = temp_v0 + 0x6C;

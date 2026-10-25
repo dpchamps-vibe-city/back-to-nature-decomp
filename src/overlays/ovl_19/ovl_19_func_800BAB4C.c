@@ -40,5 +40,5 @@ void ovl_19_func_800BAB4C(Ovl19Func800BAB4CArg *arg0) {
     if (var_s2 != -1) {
         func_8001585C(temp_s0, var_s2 & 0xFF);
     }
-    ovl_19_func_800BADF8(D_8005E3C0->field_120, (SpriteSourceData *) temp_s0, arg0->position, 0);
+    ovl_19_func_800BADF8(gActiveRenderContext->field_120, (SpriteSourceData *) temp_s0, arg0->position, 0);
 }

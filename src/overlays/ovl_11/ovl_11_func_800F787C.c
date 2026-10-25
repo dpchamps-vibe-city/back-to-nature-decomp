@@ -63,7 +63,7 @@ void ovl_11_func_800F787C(void) {
     }
     firstText = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + firstText));
     secondText = (s32)((u8 *)D_8005175C + (D_80054BBC[0] + secondText));
-    object = D_8005E3C0->field_D8;
+    object = gActiveRenderContext->field_D8;
     panel = (u32 *)(object + 0x68);
     text = object + 0x64;
     display = (s32 *)(object + 0x5C);

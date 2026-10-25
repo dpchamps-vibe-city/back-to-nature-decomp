@@ -12,7 +12,7 @@ void ovl_11_func_80103F8C(void) {
     s32 temp_t0;
     u16 var_a1;
 
-    temp_t0 = D_8005E3C0->field_D8;
+    temp_t0 = gActiveRenderContext->field_D8;
     temp_s3 = temp_t0 + 0x58;
     func_80022580((u32 *)(temp_t0 + 0x5C), 0, 0x20, 0x30, 0x101, 0x72);
     var_a1 = 2;

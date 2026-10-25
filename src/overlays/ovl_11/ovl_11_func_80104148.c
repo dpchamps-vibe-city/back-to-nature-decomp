@@ -19,7 +19,7 @@ void ovl_11_func_80104148(s32 arg0) {
 
     var_t0 = 2;
     arg0 = (s16) arg0;
-    temp_s6 = D_8005E3C0->field_D8 + 0x58;
+    temp_s6 = gActiveRenderContext->field_D8 + 0x58;
     temp_v1 = (Ovl11CardView *) D_8006C838;
     mode = temp_v1->selector;
     three = 3;

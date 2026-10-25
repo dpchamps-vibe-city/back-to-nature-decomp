@@ -9,6 +9,6 @@ void ovl_19_func_800BAD50(void) {
 
     func_80015840((ObjectState *)&D_800BF660, 9);
     base = D_800BF660 - 0x1A0;
-    func_80015EE8(D_8005E3C0->field_D8 + 4, (s32)&D_800BF660, base[0x1A4],
+    func_80015EE8(gActiveRenderContext->field_D8 + 4, (s32)&D_800BF660, base[0x1A4],
                   base[0x1A5], 0, 0);
 }

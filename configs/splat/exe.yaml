@@ -108,11 +108,7 @@ segments:
       - [0x3530, c, modules/screen_fade]
       - [0x3C38, c, SetVal8005E29C]       # 0x80013438 SetVal8005E29C
       - [0x3C44, c, GetVal8005E29C]       # 0x80013444 GetVal8005E29C
-      - [0x3C50, c, func_80013450]       # 0x80013450 func_80013450
-      - [0x3C88, c, func_80013488]       # 0x80013488 func_80013488
-      - [0x3CB8, c, func_800134B8]       # 0x800134B8 func_800134B8
-      - [0x3CC4, c, func_800134C4]       # 0x800134C4 func_800134C4
-      - [0x3E68, c, func_80013668]       # 0x80013668 func_80013668
+      - [0x3C50, c, modules/wide_screen_fade]
       - [0x3ED4, c, func_800136D4]       # 0x800136D4 func_800136D4
       - [0x41FC, c, func_800139FC]       # 0x800139FC func_800139FC
       - [0x4224, c, func_80013A24]       # 0x80013A24 func_80013A24

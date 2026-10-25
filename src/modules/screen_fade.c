@@ -71,10 +71,10 @@ void UpdateAndDrawScreenFade(void) {
         if (gScreenFadeMode == 3) {
             if (gScreenFadeDenominator == gScreenFadeCounter) {
                 gScreenFadeMode = 0;
-                D_8005E5E8[0].unk18 = 1;
-                D_8005E5E8[1].unk18 = 1;
-                D_8005E5E8[0].unk17 = 0;
-                D_8005E5E8[1].unk17 = 0;
+                gRenderContexts[0].unk18 = 1;
+                gRenderContexts[1].unk18 = 1;
+                gRenderContexts[0].unk17 = 0;
+                gRenderContexts[1].unk17 = 0;
                 func_80012A68(0, 0, 0x140, 0x1E0, 0, 0, 0);
             } else if (gScreenFadeDenominator < gScreenFadeCounter) {
                 gScreenFadeCounter = gScreenFadeDenominator;
@@ -110,9 +110,9 @@ emit_level:
             ;
         }
         if (gScreenFadeOtSelector == 0)
-            ot = D_8005E3B4;
+            ot = gFrameOrderingTable;
         else
-            ot = (s32 *)(D_8005E3C0->field_D8 + 0x14);
+            ot = (s32 *)(gActiveRenderContext->field_D8 + 0x14);
         if (intensity == 0)
             return;
         fadeQuad = (POLY_F4 *)&D_8005E8E0[D_8005E3A4];
@@ -120,14 +120,14 @@ emit_level:
         if (gScreenFadeMode == 3) {
             if (D_8005E28C == 1) {
                 D_8005E28C = 0;
-                PutDispEnv((DISPENV *)&D_8005E644[D_8005E3A4]);
+                PutDispEnv((DISPENV *)&gRenderDisplayEnvView[D_8005E3A4]);
             }
             /* Preserve the framebuffer instead of clearing it between steps;
              * enable drawing into the displayed area for the feedback effect. */
-            D_8005E5E8[0].unk18 = 0;
-            D_8005E5E8[1].unk18 = 0;
-            D_8005E5E8[0].unk17 = 1;
-            D_8005E5E8[1].unk17 = 1;
+            gRenderContexts[0].unk18 = 0;
+            gRenderContexts[1].unk18 = 0;
+            gRenderContexts[0].unk17 = 1;
+            gRenderContexts[1].unk17 = 1;
             channelValue = intensityStepQ12;
             if (channelValue < 0)
                 channelValue += 0xFFF;
@@ -159,8 +159,8 @@ void DrawScreenSubtractOverlay(u32 redQ12, u32 greenQ12, u32 blueQ12) {
     setXYWH(poly, 0, 0, 0x140, 0xF0);
     setSemiTrans(poly, 1);
     setDrawMode(dr, 1, 1, 0x40, 0);
-    addPrim((s32 *)D_8005E3C0->field_DC, poly);
-    addPrim((s32 *)D_8005E3C0->field_DC, dr);
+    addPrim((s32 *)gActiveRenderContext->field_DC, poly);
+    addPrim((s32 *)gActiveRenderContext->field_DC, dr);
 }
 
 void ResetScreenFade(void) {

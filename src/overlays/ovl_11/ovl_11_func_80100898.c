@@ -22,7 +22,7 @@ void ovl_11_func_80100898(u8 arg0) {
     s32 var_s5;
     u16 temp_a0;
 
-    temp_t0 = D_8005E3C0->field_D8;
+    temp_t0 = gActiveRenderContext->field_D8;
     temp_s0 = temp_t0 + 0x60;
     base = temp_t0 + 0x70;
     func_80022580((u32 *)(temp_t0 + 0x74), 1, 0xE, 0x10, 0x124, 0x94);

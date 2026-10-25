@@ -16,10 +16,10 @@ void ovl_11_func_800CA044(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32
     s32 temp_a3;
     s32 temp_v1;
 
-    temp_a3 = D_8005E3C0->field_120 + ((arg1 >> 2) * 4);
+    temp_a3 = gActiveRenderContext->field_120 + ((arg1 >> 2) * 4);
     if (arg0->unk6C & 0x100000) {
         temp_s0 = (SpriteSourceData *) ((u8 *) arg0 + 0x290);
-        func_80016054(temp_a3, D_8005E3C0->field_118, (s32) temp_s0, (s32) (*(u8 *) ((u8 *) arg0 + 0x294)), (u8) (s32) (*(u8 *) ((u8 *) arg0 + 0x295)), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 0)), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), *(s32 *) ((u8 *) arg0 + 0x298), 0, 0x40U);
+        func_80016054(temp_a3, gActiveRenderContext->field_118, (s32) temp_s0, (s32) (*(u8 *) ((u8 *) arg0 + 0x294)), (u8) (s32) (*(u8 *) ((u8 *) arg0 + 0x295)), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 0)), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), *(s32 *) ((u8 *) arg0 + 0x298), 0, 0x40U);
         func_800158E4(temp_s0);
         return;
     }
@@ -40,7 +40,7 @@ void ovl_11_func_800CA044(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 arg1, s32
             }
         }
     }
-    func_80016C08((s32 *) temp_a3, (POLY_FT4 *) D_8005E3C0->field_118, (SpriteSourceData *) ((u8 *) arg0 + 0x260), *(s16 *) ((u8 *) arg2 + 0), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), 0x40U, D_8005E3BC, (s32) ((void *) ((u8 *) &D_80122F9C + (D_8005E3A4 * 0x78))), (s16) (s32) var_t2, (s16) (s32) var_t4, (s16) (s32) var_t5);
+    func_80016C08((s32 *) temp_a3, (POLY_FT4 *) gActiveRenderContext->field_118, (SpriteSourceData *) ((u8 *) arg0 + 0x260), *(s16 *) ((u8 *) arg2 + 0), (s16) (s32) (*(s16 *) ((u8 *) arg2 + 4)), 0x40U, D_8005E3BC, (s32) ((void *) ((u8 *) &D_80122F9C + (D_8005E3A4 * 0x78))), (s16) (s32) var_t2, (s16) (s32) var_t4, (s16) (s32) var_t5);
     if (!(((struct struct_8006C838_view *) D_8006C838)->field_0C & 0x08000000)) {
         func_800158E4((SpriteSourceData *) ((u8 *) D_8006C838 + 0x5428));
     }

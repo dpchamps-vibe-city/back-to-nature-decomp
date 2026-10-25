@@ -17,7 +17,7 @@ void func_8002348C(void) {
     s32 temp_s0;
     s32 temp_t0;
 
-    temp_t0 = D_8005E3C0->field_D8;
+    temp_t0 = gActiveRenderContext->field_D8;
     base = temp_t0 + 0x64;
     func_80022580(temp_t0 + 0x68, 1, 0x14, 0x38, 0x117, 0x67);
     var_s1 = 0;

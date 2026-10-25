@@ -27,9 +27,9 @@ s32 ovl_11_func_800FFB08(void) {
     SetVal8005E334(0);
     SetVal8005E2BC(0);
     func_8002261C(3, 0x1B7);
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x58), 1, 0x10, 0x10, 0xAC, 0x58);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x10, 0x10, 0xAC, 0x58);
     func_80017A38(0, 2);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54, (s32)(D_80053A22 + D_80054BBC[0]), 0x12, 0x12);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053A22 + D_80054BBC[0]), 0x12, 0x12);
     func_80017A38(0, 0);
     ready = func_800226B0();
     if (ready) {
@@ -50,7 +50,7 @@ s32 ovl_11_func_800FFB08(void) {
     } else {
         row = SELECTION + 2;
     }
-    func_800248B0(D_8005E3C0->field_D8 + 0x50, 0x16, (s16)(row * 14 + 0x18));
+    func_800248B0(gActiveRenderContext->field_D8 + 0x50, 0x16, (s16)(row * 14 + 0x18));
     if (ready) {
         buttons = *(s32 *)((u8 *)D_8005E3A8 + 8);
         if (buttons & 0x820) {

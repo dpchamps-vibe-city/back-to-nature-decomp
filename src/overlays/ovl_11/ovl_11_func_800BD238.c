@@ -24,7 +24,7 @@ void ovl_11_func_800BD238(s32 arg0) {
     state = base + 0x20000;
     if ((*(s16 *)(state + 0x5476) == 1) || (*(s16 *)(state + 0x5476) == 3)) {
         DrawSync(0);
-        ClearOTagR((u_long *)D_8005E3C0->field_120, 0x800);
+        ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
         var_s1 = 0xA20;
         p = &D_80122804[arg0];
         temp_a1 = p[0];

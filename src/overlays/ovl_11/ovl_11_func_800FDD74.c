@@ -11,7 +11,7 @@ void ovl_11_func_800FDD74(void) {
     s32 i;
     s32 value;
 
-    func_80017B3C(D_8005E3C0->field_D8 + 0x54,
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x54,
                  (s32)(D_80053780 + D_80054BBC[0]), 0xBA, 0x1A);
     for (i = 0; i < 5; i++) {
         ovl_11_func_800FDFF4(i, 0x28, (s16)(0x30 + i * 0x22));

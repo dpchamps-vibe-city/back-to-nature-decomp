@@ -11,7 +11,7 @@ void ovl_11_func_800FC054(void) {
 
     temp_s0 = IsScreenFadeComplete();
     if (D_8012720C >= 3 && D_8012720C <= 5) {
-        func_800223B0(D_8005E3C0->field_D8 + 0x74);
+        func_800223B0(gActiveRenderContext->field_D8 + 0x74);
     }
     switch (D_8012720C) {
     case 1:

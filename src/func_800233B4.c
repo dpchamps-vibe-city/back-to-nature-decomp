@@ -21,8 +21,8 @@ void func_800233B4(void) {
     s32 base;
     s32 sum;
 
-    base = D_8005E3C0->field_D8 + 0x64;
-    func_80022580(D_8005E3C0->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
+    base = gActiveRenderContext->field_D8 + 0x64;
+    func_80022580(gActiveRenderContext->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
     sum = *D_80054BBC + (s32)&D_80053946;
     func_80017B3C(base, sum, 0xAD, 0x23);
     if (D_8005E338 >= 2) {

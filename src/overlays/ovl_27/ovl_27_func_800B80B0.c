@@ -18,15 +18,15 @@ void ovl_27_func_800B80B0(void) {
             state = (Ovl27StateCounterView *)D_8006C838;
             state->counter++;
         } else {
-            D_8005E5E8->unk19 = 0xFF;
-            D_8005E5E8->unk1A = 0xFF;
-            D_8005E5E8->unk1B = 0xFF;
-            second = &D_8005E5E8[1];
+            gRenderContexts->unk19 = 0xFF;
+            gRenderContexts->unk1A = 0xFF;
+            gRenderContexts->unk1B = 0xFF;
+            second = &gRenderContexts[1];
             second->unk19 = 0xFF;
             second->unk1A = 0xFF;
             second->unk1B = 0xFF;
-            D_8005E5E8->unk18 = 1;
-            D_8005E5E8[1].unk18 = 1;
+            gRenderContexts->unk18 = 1;
+            gRenderContexts[1].unk18 = 1;
             ovl_27_func_800B9324();
             BeginScreenFadeDecrease(0x1E, 0, 2);
             D_800C4A18 = 0;

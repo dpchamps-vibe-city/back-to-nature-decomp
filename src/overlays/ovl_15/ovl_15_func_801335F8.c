@@ -22,10 +22,10 @@ void ovl_15_func_801335F8(void) {
 
     var_s7 = 0x28;
     var_s5 = 0x22;
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x28), 1, 0x24, 0x10, 0x70, 0x8D);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051CAE + *D_80054BBC)), 0x3C, 0x14);
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x28), 1, 0xAC, 0x10, 0x70, 0x8D);
-    func_80017B3C(D_8005E3C0->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051CAE + 0xE)) + *D_80054BBC)), 0xC4, 0x14);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0x24, 0x10, 0x70, 0x8D);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051CAE + *D_80054BBC)), 0x3C, 0x14);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0xAC, 0x10, 0x70, 0x8D);
+    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051CAE + 0xE)) + *D_80054BBC)), 0xC4, 0x14);
     var_v1 = 0;
     do {
         if (var_v1 != 0) {

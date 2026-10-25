@@ -9,7 +9,7 @@ void ovl_15_func_8012E15C(void);
 void ovl_15_func_80130FF0(void) {
     s32 temp_a1;
 
-    temp_a1 = D_8005E3C0->field_D8;
+    temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32)(D_800533C8 + D_80054BBC[0]));
     D_80137584 = ovl_15_func_80137228(0x13, 0);
     if (D_8013759A >= 0x5B) {

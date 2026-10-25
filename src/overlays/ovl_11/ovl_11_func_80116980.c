@@ -45,15 +45,15 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
         D_8012D51A = 0;
         return -2;
     }
-    ui = D_8005E3C0->field_D8;
+    ui = gActiveRenderContext->field_D8;
     header_ot = ui + 0x38;
     row_ot = ui + 0x40;
     kind = arg0 >= 0 ? (arg0 < 3 ? arg0 : 2) : 0;
     result = -1;
-    func_80015114((u32 *)(D_8005E3C0->field_D8 + 0x48), 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 1);
+    func_80015114((u32 *)(gActiveRenderContext->field_D8 + 0x48), 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 1);
     i = 0;
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x44), 1, 0x18, 0x20, 0x110, 0x74);
-    func_80022580((u32 *)(D_8005E3C0->field_D8 + 0x3C), 1, 0x50, 0x10, 0xA0, 0x20);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x44), 1, 0x18, 0x20, 0x110, 0x74);
+    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x3C), 1, 0x50, 0x10, 0xA0, 0x20);
     for (;;) {
         prefix_value = ((Ovl11MenuGlobals *)D_8006C838)->text[i];
         terminator = prefix_value;

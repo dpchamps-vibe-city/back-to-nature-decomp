@@ -24,16 +24,16 @@ void ovl_17_func_800BA808(s32 arg0) {
     u8 *edgeBase;
     u8 *endBase;
 
-    ot = D_8005E3C0->field_D8 + 0x58;
+    ot = gActiveRenderContext->field_D8 + 0x58;
     func_80015840((ObjectState *)D_800BDA74, 0);
     func_8001585C((ObjectState *)D_800BDA74, 0);
     for (x = arg0 / 4096 - (arg0 / 262144) * 64 - 64; x < 384; x += 64) {
-        drawTile(D_8005E3C0->field_D8 + 0x5C, D_800BDA74, x);
+        drawTile(gActiveRenderContext->field_D8 + 0x5C, D_800BDA74, x);
     }
     func_80015840((ObjectState *)D_800BDA74, 1);
     x = (arg0 / 4096) * 2 - (arg0 / 155648) * 76 - 76;
     for (; x < 396; x += 76) {
-        drawTile(D_8005E3C0->field_D8 + 0x18, D_800BDA74, x);
+        drawTile(gActiveRenderContext->field_D8 + 0x18, D_800BDA74, x);
     }
     pixels = arg0 / 4096;
     if ((u32)(pixels + 191) < 383) {
@@ -62,7 +62,7 @@ void ovl_17_func_800BA808(s32 arg0) {
             x = HWD0 / 2 + (arg0 / 4096) * 2 - D_800BB5F0[list].x / 4096;
             func_80015840((ObjectState *)&D_800BDDF8, D_800BB5D4[D_800BB5F0[list].id]);
             func_8001585C((ObjectState *)&D_800BDDF8, x < HWD0 / 2);
-            func_80015F80(D_8005E3C0->field_D8 + 0x14, (s32)&D_800BDDF8,
+            func_80015F80(gActiveRenderContext->field_D8 + 0x14, (s32)&D_800BDDF8,
                           D_800BDDF8.field_4, D_800BDDF8.field_5,
                           x, (s16)VWD0, 0x1000, 0, 0);
         }

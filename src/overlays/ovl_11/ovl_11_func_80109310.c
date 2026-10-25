@@ -14,7 +14,7 @@ s32 ovl_11_func_80109310(s32 *arg0) {
     s32 var_s3;
 
     DrawSync(0);
-    ClearOTagR((u32 *) D_8005E3C0->field_120, 0x800);
+    ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
     if ((*(u16 *) ((u8 *) arg0 + 0)) == 0x107) {
         (*(s32 *) ((u8 *) arg0 + 0x34)) &= 0xFFFF7FFF;
         (*(s32 *) ((u8 *) arg0 + 0x34)) &= 0xFF7FFFFF;

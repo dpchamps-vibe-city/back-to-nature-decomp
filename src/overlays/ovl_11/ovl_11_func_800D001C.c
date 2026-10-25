@@ -18,12 +18,12 @@ void ovl_11_func_800D001C(u8 *arg0) {
         position[1] = *(u16 *)(arg0 + 0x3C) - 0x64;
         position[2] = *(u16 *)(arg0 + 0x40) - 0x96;
         if (ovl_11_func_800F5888(position, projected) != 0) {
-            ot = D_8005E3C0->field_120 + ((projected[2] >> 2) * 4);
+            ot = gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4);
             ovl_11_func_80107E2C(arg0 + 0xA8, ot, (s16)projected[0], (s16)(projected[1] - 0x14));
             if (*(u16 *)(arg0 + 0xB6) != 0) {
                 func_80015EE8(ot, (s32)(arg0 + 0xC8), 0, 0, (s16)projected[0], (s16)(projected[1] - 0x10));
             }
-            func_80016054(ot, D_8005E3C0->field_118, (s32)(arg0 + 0x78), arg0[0x7C], arg0[0x7D], (s16)projected[0], (s16)projected[1], *(s32 *)(arg0 + 0x80), 0, 0x40);
+            func_80016054(ot, gActiveRenderContext->field_118, (s32)(arg0 + 0x78), arg0[0x7C], arg0[0x7D], (s16)projected[0], (s16)projected[1], *(s32 *)(arg0 + 0x80), 0, 0x40);
             ovl_11_func_800D037C(*(s32 *)(arg0 + 0x34), ot, projected[0], projected[1]);
         }
         if (!(((struct struct_8006C838_view *)D_8006C838)->field_0C & 0x08000000)) {
