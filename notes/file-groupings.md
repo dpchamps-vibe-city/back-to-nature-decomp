@@ -2665,6 +2665,20 @@ Candidate updater-tail extension ([evidence and limits](research/ovl_11_func_800
 Candidate shared-flag helper ([evidence and limits](research/ovl_11_func_800D2DB8-grouping.md)):
 - ovl_11_func_800D2DB8 (m, candidate same TU) — shared-flag-controlled probe helper for 800D12B8 and 800D196C.
 
+Module-campaign boundary review: the proposed seven-entry 12B8–1EB8 core
+is not folded. Besides its threshold/rank/weight protocol, 12B8 writes
+D_80128D6C (zero exactly for item ID 0x15B); its only other consumer is the
+2DB8 probe called by both 12B8 and 196C. A core-only cut would leave that
+private value-flow unexplained. The earlier research report's claim of no
+private tie to the tail was incomplete. Conversely 12A0 has only adjacency,
+not a threshold/call/private-data tie, so it is not automatically a member.
+Next useful investigation is the whole 1EB8–2DB8 call/data footprint,
+including the independently reconstructed row-placement service in between,
+and whether D6C is an explicit service input across a real boundary or
+private TU state. No flag or match failure supplies a boundary here. The
+live split build remains unchanged; no slice or speculative exception was
+introduced.
+
 ---
 
 ## `ovl_11` D_80123A2C/D_80123A8C /5 row-table sibling pair — 0x800D29B0 / 0x800D2A88 (confidence: medium)
@@ -2681,8 +2695,8 @@ Fingerprints:
   `mult`/`mfhi`/`sra 1`/`subu` sign fix, sll-16/sra-12 stride, remainder
   re-sign-extended);
 - their tables are contiguous in splat data 69960.data.s: D_80123A2C
-  (6 × 16-byte rows, 0x60) ends exactly where D_80123A8C (4 × 16-byte rows,
-  0x40) begins;
+  (6 × 16-byte rows, 0x60) ends exactly where D_80123A8C (2 × 16-byte rows,
+  0x20) begins; the next independent pair table starts at 80123AAC;
 - zero-gap link order: 0x800D29B0 (0xD8) + 0xB8 = 0x800D2A88, which ends at
   0x800D2B40 (ovl_11_func_800D2B40, 0x214 — itself called by
   ovl_11_func_800D12B8, a D_80123754-run member).
@@ -2713,6 +2727,55 @@ Members (address order):
   func_80012A34(4), +0x30 = 4; twin of ovl_15_func_80132A8C.
 
 ---
+
+**Reconstructed placement units (module campaign):**
+`src/overlays/ovl_11/modules/row_placement.c` holds the two entries above,
+800D29B0–800D2B40 exclusive, as `Ovl11PlaceRowZSlot` / `Ovl11PlaceRowXSlot`.
+`src/overlays/ovl_15/modules/row_placement.c` holds its independent twins,
+80132A8C–80132C1C exclusive, as `Ovl15PlaceRowXSlot` / `Ovl15PlaceRowZSlot`:
+X precedes Z in overlay 15, and that order is preserved. Both pairs copy the
+same three coordinate words, write direction and mode, partition the slot by
+five, and use adjacent private X/Z table blocks. Overlay 11's only direct
+caller (800D075C) selects between them; overlay 15's two callers inline that
+selection. The shared layout/protocol and original table adjacency corroborate
+membership; -G0 supplies no GP-based proof of original object boundaries.
+
+Boundary evidence, overlay 11: preceding 800D2950 is a stateless item-code to
+vertical-offset switch used by object renderers, with no placement table or
+placement call. Following 800D2B40 probes four possible moves through the
+broad collision/object protocol; it neither reads these tables nor invokes
+placement. The distant dispatcher does not connect intervening functions to
+this unit. Overlay 15: preceding 801329F8 belongs to the buffer/menu state
+at 80137828 and touches neither placement table nor placement output. Following
+80132C1C and later 801331C4 are consumers in the dual-base record-pool service,
+using 801376D0/80140F90/80142550 and the large EXE pools, none of which the
+placement pair uses. The private table block and narrow output operation
+support a reusable service boundary rather than absorbing every caller.
+These are evidence-limited cuts, not assertions that absence of conflicts
+proves the exact historical source boundary. No flag was used to choose them.
+
+`ovl11_row_placement.h` / `ovl15_row_placement.h` publish the original ABIs,
+world-coordinate units, unchecked slot bounds, Z's -1/-2 sentinels, spacing
+600/400, direction/mode results and X's shared EXE RNG side effect. Tables
+have canonical per-overlay names, `gOvl11Row{X,Z}PlacementTable` and
+`gOvl15Row{X,Z}PlacementTable`; they are not conflated across RAM slots.
+The X tables each have TWO rows, not the four previously recorded here:
+80123AAC starts a separately indexed pair table used by 800D3424. Giving X
+a 0x40 extent hid that independent symbol during regeneration; the corrected
+0x20 extent preserves it and bounds the documented X slots to 0..9.
+Z has six rows. Existing incomplete row-array externs now live in the override
+header; no new storage/tentative definitions were introduced under -G0.
+
+Canonical shared `RowXPlacement` / `RowZPlacement` parameter views live in
+`game_types.h`; direction/mode retain the original signed X / unsigned Z
+halfword views, with unchanged padding and offsets. Locals now describe
+row/column/output rather than register roles. Public renames retain container
+and address identities and propagate through canonicalNames/interfaceAudit.
+No linkage, arithmetic, source policy or compiler settings changed. Each
+checked baseline -O2/-G0 fold passed both members and its complete overlay.
+The subsequent full batch gate passed all 61 module TUs (496/2625 folded),
+EXE/all overlays including data/callbacks/placement, canonical interfaces,
+converged generation, source policy, whitespace and exception non-growth.
 
 ## `ovl_11` D_80128D78 / D_80128D7A s16-pair global cluster — 0x800D31EC–0x800D55F8 (confidence: low)
 
@@ -6644,6 +6707,54 @@ evidence, not a GP-proven cut. State ownership, unsigned arithmetic and ABI
 are unchanged. The header now accurately documents low-16-bit limit
 truncation, zero-limit state advancement and direct reseeding. The checked
 fold passed baseline -O2/-G8; no flag override or exception was involved.
+
+**Display/VRAM/timing helpers (module campaign):** three minimal units now
+make the stateless services after the boot run explicit:
+
+- `src/modules/display_mask.c`, 800129F4–80012A34 exclusive, holds
+  `EnableDisplayOutput` and `DisableDisplayOutput`. Both perform the identical
+  SDK SetDispMask operation with complementary 1/0 arguments; auxiliary-display
+  setup/presentation uses them as a hide/restore pair. That paired protocol,
+  not adjacency alone, supports this two-member unit. Neither has private
+  storage. Left 800129E8 is the unrelated breakpoint helper; right Rand owns
+  its LCG word. Neither shares the display protocol, calls or state. These
+  cuts delimit the positive evidence, not proven historical object boundaries.
+- `src/modules/vram_clear.c`, 80012A68–80012AB0 exclusive, publishes
+  `ClearVramRectAndWait`: construct an s16 RECT, call ClearImage, then wait
+  through DrawSync(0). Boot and screen_fade, proven different declaring units,
+  both use it. Neither the preceding Rand's state nor the following dead
+  display-environment editor's pad/interactive protocol is used here. No
+  evidence joins either neighbor. This is a minimal singleton, not a claim
+  that the original source file necessarily held only one function.
+- `src/modules/vblank_timer.c`, 80012CB4–80012D30 exclusive, publishes
+  `HasVSyncIntervalElapsed`. Its only state is the caller's timestamp; text
+  renderers and overlay services supply independent stamps. The preceding
+  dead interactive display editor changes display environments and polls
+  pads; the following screen_fade owns a separate GP-relative effect state.
+  Neither shares this timestamp protocol or calls the predicate from the
+  neighboring function. No positive membership evidence extends this unit;
+  again this is not a GP-proven historical cut. The dead 12AB0 stub is not
+  being treated as a boundary merely because it is undecompiled: its observed
+  behavior supplies the distinction.
+
+The headers `display_mask.h`, `vram_clear.h` and `vblank_timer.h` document GPU
+synchronization, VRAM-word/row units, signed rectangle narrowing, VSync-count
+units, zero-stamp initialization and exact rearm==1 behavior. Canonical names
+retain the four EXE entry addresses and are propagated to all callers;
+interfaceAudit replaces caller-local declarations with those headers while
+checking unchanged caller objects. Locals describe rectangle coordinates and
+elapsed-count state. No linkage, ABI, ownership or storage changes were made;
+there are no private globals to name, no new macros or scope collisions.
+All three checked folds passed at baseline -O2/-G8, including each member
+and the linked executable. No flag overrides or policy exceptions are involved.
+The wider original support-file extent remains unknown; absence of a conflict
+is not evidence to merge these independent protocols with random or boot.
+Full batch verification (`tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json`) passed: 488/2625 folded, all 58 module units
+valid, EXE and all 13 overlays byte-identical including data/placement,
+canonical interfaces and generation converged, source policy and exception
+non-growth clean. The initial SDK include-prerequisite error in the timer
+was corrected before acceptance (libetc requires stddef's u_long).
 
 Names given at the merge: `main` (80011370), `RunSceneUpdateLoop` (80011C24),
 `PresentFrame` (80011DB0, stub), `SceneEntryHook` (80011EE8, empty),
@@ -11135,6 +11246,56 @@ and rodata, adjacent selector-state cluster. [Evidence and limits](research/ovl_
 - ovl_30_func_80132EE0 (m) — shared input-driven decrement/increment helper for the two adjacent editors.
 - ovl_30_func_80132F18 (s) — item-record editor displaying and updating the selected BUY/SELL/LIFE/TIRED field.
 - ovl_30_func_80133218 (m) — tool-parameter editor selecting a row/column, updating its signed-halfword value and printing the row.
+
+**Whole-unit reconstruction:** the two editor entries above now form
+`src/overlays/ovl_30/modules/debug_value_editors.c`, six functions from
+801326C4 through 80133454 exclusive, in original order. Public callback names
+are `Ovl30EditDayCount0`, `Ovl30EditDayCount1`, `Ovl30EditNValue`,
+`Ovl30EditItemFields` and `Ovl30EditToolParameters`; the intervening
+`Ovl30StepSelectedValue` helper retains external linkage but is not published.
+The five callbacks occupy menu-table slots 13..17 and return their input
+state unchanged. The first three share the same EDIT format literal, the
+same byte-edit/display protocol, and adjacent 128/8/128-byte work regions.
+The last two share their private step helper. All five allocate cursor words
+in one uninterrupted 80134AA8–80134AC4 state run, followed by the tool-name
+pointers; their format/name literals form the matching member-order run
+8012EED0–8012EFA8. Shared literal identity, ordered private state/pool and
+helper calls corroborate joining both earlier slices; adjacency or shared
+pad/FntPrint usage alone would not.
+
+Boundaries: before 801326C4, 80132660/801320C8 use the preceding literals and
+the separate 80134014/801349B4/B8 record editor machinery, not this cursor
+block or its shared EDIT literal. After 80133218 ends at 80133454, the next
+literals begin the EFB0 pointer-table family, and the record/size-selected
+field writer uses a different cursor/state block. Neither neighbor calls the
+private step helper or accesses these cursors. These are supported protocol
+and pooled-data cuts under -G0, not proven historical object boundaries.
+
+`ovl30_debug_value_editors.h` publishes the five callback ABIs, exact input
+channel (pad repeatButtons at +0, NOT heldButtons at +4), edited regions,
+field labels, units left unknown for tool parameters, and immediate live-data
+side effects. It documents the deliberately asymmetric u8 wrap/reset behavior
+and persistent cursors; no saturating arithmetic or validation was added.
+Local names identify handler state, item, selected parameter and buttons.
+The helper/item/tool paths now use the canonical PadInputState field rather
+than the generic SomeStruct view. Existing byte-region and ItemData types,
+field widths, function order and all linkages remain unchanged.
+
+Cursor/selection words, tool-name pointers and twelve directly used format
+strings have canonical ovl_30 names at their original addresses. Formats stay
+in extracted data/rodata rather than becoming new C literals; the menu callback
+pointers are regenerated from canonical identities. Override externs retain
+their original types. The table at 801231C0 is shared with overlay 11 and is
+not given an overlay-30 ownership claim. No new globals, macros, flags or
+policy exceptions were introduced. The checked baseline -O2/-G0 fold preserved
+all six members and the complete overlay, including the callback table.
+The full campaign gate passed at 502/2625 folded (up 18 this run), all 62
+modules valid: EXE and all 13 overlays byte-identical including data, callbacks,
+jump tables and placement; canonical interfaces and generation converged;
+source policy, whitespace, input stability and exception non-growth clean.
+No build/diagnostic tool was changed and no compiler exception was added or
+retired. The remaining pad and broad text-unit compiler-setting hypotheses
+were left unchanged, not hidden behind new evidence-free cuts.
 
 ## `ovl_30` size-selected field writer with its caller and neighbour — 0x80133454 / 0x80133974 / 0x80133A8C (confidence: medium)
 
@@ -17487,6 +17648,44 @@ Candidate same-TU membership; original boundaries remain unproven
 - ovl_11_func_800D001C (s, candidate same TU) — object draw variant with fixed companion offsets and an optional extra sprite.
 - ovl_11_func_800D0198 (s, candidate same TU) — parameterized object draw variant with optional fixed-height marker projection.
 - ovl_11_func_800D037C (m, candidate same TU) — flag-gated marker submission shared by the three preceding draw variants.
+
+**Reconstructed module:**
+`src/overlays/ovl_11/modules/object_render_variants.c` now holds all four
+entries, 800CFE40–800D03B4 exclusive. Names are `Ovl11DrawObjectWithMarker`,
+`Ovl11DrawObjectWithExtraSprite`, `Ovl11DrawObjectWithSourceOffsets`, and
+`Ovl11SubmitObjectMarker`. The last is called exactly once by each renderer
+and nowhere else. All three share the projection offsets, companion/sprite
+pipeline, marker gate and animation-update protocol. Default and source-offset
+variants use adjacent independent scratch pairs 80128D38/40 and 80128D48/50,
+with no outside consumers. Private helper plus scratch/protocol and gapless
+link order support the unit; this is corroboration under -G0, not GP proof.
+
+Left boundary: 800CFD9C iterates the separate 801239D0 pool and calls
+800E1F9C; it neither uses this scratch nor calls these renderers/helper.
+Right boundary: 800D03B4/800D0408 operate on three-word vector records;
+none calls the marker or shares its scratch, and 0408 is a widely used
+component writer. External renderer callers and the shared 800D2950 offset
+lookup are interfaces, not evidence to swallow intervening unrelated code.
+These cuts rest on distinct private operation/data footprints, not merely
+adjacency, flags, or an undecompiled stub.
+
+The four scratch globals have canonical `gOvl11{OffsetObject,Object}Draw*`
+names in the overlay configuration and their existing typed override externs.
+The public header `ovl11_object_render.h` publishes only the three renderer
+entry points and documents object-relative fields, projection/screen units,
+work/object flag gates, packet submission, animation advancement on failed
+projection, fixed-height marker reprojection and scratch non-reentrancy.
+Unknown meanings of +B6/+C8 and sourceBias remain neutral. Object/offset/OT
+locals are named; no speculative full object struct or field-width change
+was introduced. The unused legacy marker return contract and all external
+linkages remain unchanged. The conflicting s16* projection declaration was
+reconciled to the matched SVECTOR* definition with an explicit same-address
+cast, so the merged scope has one corroborated declaration. No macro or
+file-scope collision remains, no flag override is involved, and the checked
+baseline fold preserved all four members and the linked overlay. Full batch
+verification then passed all 61 module TUs at 496/2625 folded, every linked
+container and associated data/placement, canonical interfaces, source policy,
+converged generation and no exception growth.
 
 ## `ovl_11` constant/flag-selected callback-wrapper run — 0x80119338–0x80119470 (confidence: low)
 

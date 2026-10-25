@@ -3,3 +3,9 @@
 // has different function identities and does not read these labels.
 Ovl15WriteSaveChecksums = 0x80135AE0;
 Ovl15VerifySaveChecksums = 0x80135B68;
+
+// Overlay-15 placement twins; X precedes Z here, unlike overlay 11.
+Ovl15PlaceRowXSlot = 0x80132A8C;
+Ovl15PlaceRowZSlot = 0x80132B44;
+gOvl15RowXPlacementTable = 0x801375D8; // type:data size:0x20
+gOvl15RowZPlacementTable = 0x801375F8; // type:data size:0x60

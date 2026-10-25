@@ -4,9 +4,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_object_render.h"
 
 s32 ovl_11_func_800DF3BC(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-void ovl_11_func_800CFE40(u8 *arg0);
 
 void ovl_11_func_800DE7C8(u8 *arg0) {
     u16 sp10;
@@ -20,7 +20,7 @@ void ovl_11_func_800DE7C8(u8 *arg0) {
     if ((sp12 != 0) && (sp12 != (*(u8 *) ((u8 *) arg0 + 0x7D)))) {
         SelectSpriteAnimationFrame((ObjectState *) (arg0 + 0x78), (u8) sp12);
     }
-    ovl_11_func_800CFE40(arg0);
+    Ovl11DrawObjectWithMarker(arg0);
     temp_v1 = *(u16 *) ((u8 *) arg0 + 0x24);
     if ((temp_v1 == 0) || (temp_v1 == 5)) {
         (*(u16 *) ((u8 *) arg0 + 0x7A)) = (u16) ((*(u16 *) ((u8 *) arg0 + 0x7A)) | 0x100);

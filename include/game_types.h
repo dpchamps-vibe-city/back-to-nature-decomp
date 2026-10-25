@@ -2730,4 +2730,29 @@ typedef struct {
     u8 unk23;
 } Ovl11ConditionRecord;
 
+/* Row-placement output views: only direction/mode and the coordinate triple
+ * are written. Keep the original unsigned Z / signed X halfword views; these
+ * functions do not read them and do not establish a broader object layout. */
+typedef struct {
+    char pad0[0x22];
+    u16 direction;
+    char pad24[0x30 - 0x24];
+    u16 mode;
+    char pad32[0x38 - 0x32];
+    s32 x;
+    s32 y;
+    s32 z;
+} RowZPlacement;
+
+typedef struct {
+    s16 pad0[17];
+    s16 direction;
+    s16 pad24[6];
+    s16 mode;
+    s16 pad32[3];
+    s32 x;
+    s32 y;
+    s32 z;
+} RowXPlacement;
+
 #endif /* GAME_TYPES_H */

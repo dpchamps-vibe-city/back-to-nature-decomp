@@ -81,12 +81,11 @@ segments:
       - [0x1A78, c, __start]       # 0x80011278 __start
       - [0x1B70, c, modules/game_loop]
       - [0x31E8, c, func_800129E8]       # 0x800129E8 func_800129E8
-      - [0x31F4, c, func_800129F4]       # 0x800129F4 func_800129F4
-      - [0x3214, c, func_80012A14]       # 0x80012A14 func_80012A14
+      - [0x31F4, c, modules/display_mask]
       - [0x3234, c, modules/random]
-      - [0x3268, c, func_80012A68]       # 0x80012A68 func_80012A68
+      - [0x3268, c, modules/vram_clear]
       - [0x32B0, c, func_80012AB0]       # 0x80012AB0 func_80012AB0
-      - [0x34B4, c, func_80012CB4]       # 0x80012CB4 func_80012CB4
+      - [0x34B4, c, modules/vblank_timer]
       - [0x3530, c, modules/screen_fade]
       - [0x3C50, c, modules/wide_screen_fade]
       - [0x3ED4, c, modules/beveled_panel]

@@ -17,9 +17,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "update_timing.h"
+#include "vram_clear.h"
 
 void SetVal8005E27C(s32 arg0);
-void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6);
 void SetVal8005E278(s32 arg0);
 
 /* Tentative definitions retain the original GP-relative accesses. These names
@@ -77,7 +77,7 @@ void UpdateAndDrawScreenFade(void) {
                 gRenderContexts[1].unk18 = 1;
                 gRenderContexts[0].unk17 = 0;
                 gRenderContexts[1].unk17 = 0;
-                func_80012A68(0, 0, 0x140, 0x1E0, 0, 0, 0);
+                ClearVramRectAndWait(0, 0, 0x140, 0x1E0, 0, 0, 0);
             } else if (gScreenFadeDenominator < gScreenFadeCounter) {
                 gScreenFadeCounter = gScreenFadeDenominator;
             }

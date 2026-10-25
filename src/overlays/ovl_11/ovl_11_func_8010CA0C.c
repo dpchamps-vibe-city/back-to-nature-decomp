@@ -4,10 +4,10 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_object_render.h"
 
 s32 ovl_11_func_8010D20C(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 void ovl_11_func_801110CC(M2C_ececd3ff98bf_Struct_801110CC *arg0);
-void ovl_11_func_800D001C(u8 *arg0);
 
 void ovl_11_func_8010CA0C(M2C_ececd3ff98bf_Struct_801110CC *arg0) {
     u16 sp10;
@@ -23,5 +23,5 @@ void ovl_11_func_8010CA0C(M2C_ececd3ff98bf_Struct_801110CC *arg0) {
         SelectSpriteAnimationFrame((ObjectState *) ((u8 *) arg0 + 0x78), (u8) sp12);
     }
     ovl_11_func_801110CC(arg0);
-    ovl_11_func_800D001C((u8 *) arg0);
+    Ovl11DrawObjectWithExtraSprite((u8 *) arg0);
 }

@@ -2,9 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/memory.h"
+#include "ovl15_row_placement.h"
 
-void ovl_15_func_80132A8C(struct ovl_15_80132A8C_data *arg0, s16 arg1);
-s32 ovl_15_func_80132B44(Unk80132B44 *arg0, s16 arg1);
 /* Callee scans the selected record pool and writes its index through arg2. */
 void *ovl_15_func_8013345C(s32 *arg0, s16 arg1, s16 *arg2);
 
@@ -20,13 +19,13 @@ void ovl_15_func_801331C4(void) {
             case 0:
                 dest = ovl_15_func_8013345C(&D_800742EC, 0, &index);
                 memcpy(dest, (void *)Ovl15Slots[1][i].unk4, 0xB4);
-                ovl_15_func_80132A8C((struct ovl_15_80132A8C_data *)((u8 *)&D_800742EC + index * 0xB4), index);
+                Ovl15PlaceRowXSlot((struct ovl_15_80132A8C_data *)((u8 *)&D_800742EC + index * 0xB4), index);
                 break;
             case 1:
             case 2:
                 dest = ovl_15_func_8013345C(&D_800742EC, 1, &index);
                 memcpy(dest, (void *)Ovl15Slots[1][i].unk4, 0xB8);
-                ovl_15_func_80132B44((Unk80132B44 *)((u8 *)&D_800749F4 + index * 0xB8), index);
+                Ovl15PlaceRowZSlot((Unk80132B44 *)((u8 *)&D_800749F4 + index * 0xB8), index);
                 break;
             }
         }

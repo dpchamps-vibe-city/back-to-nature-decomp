@@ -6,10 +6,6 @@ struct Ovl11ResetB4;
 
 struct Ovl11ResetB8;
 
-struct M2C_3586522a33fd_ovl_11_800D2A88_data;
-
-struct M2C_9e3562919d92_ovl_15_80132A8C_data;
-
 struct M2C_1e7e93467acd_Unk800D3FEC;
 
 typedef struct M2C_1e7e93467acd_Unk800D3FEC M2C_1e7e93467acd_Unk800D3FEC;
@@ -428,17 +424,6 @@ typedef struct {
     Recon_ovl_11_func_800D85F8_A0View *unk50;
     s32 unk54;
 } M2C_15512f31231d_Func800C7878Arg0;
-
-typedef struct {
-               char pad[0x22];
-               u16 unk22;
-               char pad2[0x30 - 0x24];
-               u16 unk30;
-               char pad3[0x38 - 0x32];
-               s32 unk38;
-               s32 unk3C;
-               s32 unk40;
-} M2C_155fb954c77f_Unk8029B0;
 
 typedef struct {
     char pad_00[0x24];
@@ -1667,17 +1652,6 @@ typedef struct {
     char pad_54[0x7A - 0x54];
                u16 unk7A;
 } M2C_ba931234d236_Ovl11D4B1CObj;
-
-typedef struct {
-               char pad[0x22];
-               u16 unk22;
-               char pad2[0x30 - 0x24];
-               u16 unk30;
-               char pad3[0x38 - 0x32];
-               s32 unk38;
-               s32 unk3C;
-               s32 unk40;
-} M2C_bc5770384c5b_Unk80132B44;
 
 typedef struct {
     char pad_00[0x24];
@@ -3508,6 +3482,28 @@ typedef struct {
 } Recon_ovl_19_func_800BA0A0_A0View;
 
 typedef struct {
+    s16 pad0[17];
+    s16 direction;
+    s16 pad24[6];
+    s16 mode;
+    s16 pad32[3];
+    s32 x;
+    s32 y;
+    s32 z;
+} RowXPlacement;
+
+typedef struct {
+    char pad0[0x22];
+    u16 direction;
+    char pad24[0x30 - 0x24];
+    u16 mode;
+    char pad32[0x38 - 0x32];
+    s32 x;
+    s32 y;
+    s32 z;
+} RowZPlacement;
+
+typedef struct {
  u_long tag;
  u_char r0, g0, b0, code;
  short x0, y0;
@@ -3678,28 +3674,6 @@ typedef struct {
                s16 field_8;
                s16 field_A;
 } ovl_11_DD48_arg0;
-
-struct M2C_3586522a33fd_ovl_11_800D2A88_data {
-    s16 pad0[17];
-    s16 field_22;
-    s16 pad1[6];
-    s16 field_30;
-    s16 pad2[3];
-    s32 field_38;
-    s32 field_3C;
-    s32 field_40;
-};
-
-struct M2C_9e3562919d92_ovl_15_80132A8C_data {
-    s16 pad0[17];
-    s16 field_22;
-    s16 pad1[6];
-    s16 field_30;
-    s16 pad2[3];
-    s32 field_38;
-    s32 field_3C;
-    s32 field_40;
-};
 
 typedef struct {
                u16 f00;

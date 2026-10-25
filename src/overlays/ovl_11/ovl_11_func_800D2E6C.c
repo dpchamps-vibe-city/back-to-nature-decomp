@@ -4,10 +4,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_object_render.h"
 
 s32 ovl_11_func_800D3424(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-/* Engine update-latch setter, exe:0x800158D8. */
-void ovl_11_func_800CFE40(u8 *arg0);
 
 void ovl_11_func_800D2E6C(u8 *arg0) {
     u16 animation;
@@ -22,7 +21,7 @@ void ovl_11_func_800D2E6C(u8 *arg0) {
         SelectSpriteAnimationFrame((ObjectState *)(arg0 + 0x78), (u8)subAnimation);
     }
     SetSpriteAnimationUpdateLatch(0);
-    ovl_11_func_800CFE40(arg0);
+    Ovl11DrawObjectWithMarker(arg0);
     if (*(u16 *)(arg0 + 0x24) == 0) {
         *(u16 *)(arg0 + 0x7A) |= 0x100;
     }

@@ -287,3 +287,19 @@ Ovl11UpdateClockHud = 0x800FB648;
 Ovl11DrawClockHud = 0x800FB674;
 gOvl11ClockHudEnabled = 0x80127208; // type:data size:0x4
 gOvl11ClockHudText = 0x8012A008; // type:data size:0x20
+
+// Five-slot coordinate rows; distinct X- and Z-axis placement protocols.
+Ovl11PlaceRowZSlot = 0x800D29B0;
+Ovl11PlaceRowXSlot = 0x800D2A88;
+gOvl11RowZPlacementTable = 0x80123A2C; // type:data size:0x60
+gOvl11RowXPlacementTable = 0x80123A8C; // type:data size:0x20
+
+// Projected render variants and their private position/screen scratch.
+Ovl11DrawObjectWithMarker = 0x800CFE40;
+Ovl11DrawObjectWithExtraSprite = 0x800D001C;
+Ovl11DrawObjectWithSourceOffsets = 0x800D0198;
+Ovl11SubmitObjectMarker = 0x800D037C;
+gOvl11ObjectDrawPosition = 0x80128D38; // type:data size:0x8
+gOvl11ObjectDrawMarkerScreen = 0x80128D40; // type:data size:0x8
+gOvl11OffsetObjectDrawMarkerScreen = 0x80128D48; // type:data size:0x8
+gOvl11OffsetObjectDrawPosition = 0x80128D50; // type:data size:0x8

@@ -5,8 +5,8 @@
 #include "ovl11_collision_query_budget.h"
 #include "psyq/abs.h"
 #include "ovl11_record_pair_order.h"
+#include "vblank_timer.h"
 
-s32 func_80012CB4 (s32 arg0, s32 *arg1, s32 arg2);
 void ovl_11_func_800D1E1C (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D2DB8 (Ovl11Func800BDCE8Arg1 *arg0);
@@ -35,7 +35,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
     u16 var_s3;
 
     var_s4 = arg2;
-    if (func_80012CB4(0x96, &D_80123A14, 1) == 1) {
+    if (HasVSyncIntervalElapsed(0x96, &D_80123A14, 1) == 1) {
         D_80128D58 = D_80128D58 != 1;
     }
     temp_v0_3 = (D_80128D58 == 1 ? 0x438 : 0x2D0) / arg1;

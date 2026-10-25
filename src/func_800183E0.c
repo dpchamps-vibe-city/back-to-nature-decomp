@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "packet_work.h"
+#include "vblank_timer.h"
 
 /* Callee prototypes (project convention: local declarations). */
 u16 *func_800191B4(u16 *, u16, s32, s32);
@@ -14,7 +15,6 @@ void func_80019564(s32, s32, s32, s32);
 s32 func_80019CBC(s16, s16, u16 *, s16);
 s32 func_80019E50(s32);
 void func_80019E80(u_long *, s16, s16, s16);
-s32 func_80012CB4(s32, s32 *, s32);
 void func_80017A70(u32);
 s32 func_80017AA0(void);
 void func_80017AE8(void);
@@ -218,7 +218,7 @@ s32 func_800183E0(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4,
                         func_80017ACC();
                         D_8005E4A0 = (u16)D_8005E4A0 + 1;
                     }
-                    if (func_80012CB4(1, &D_8005E4AC, 1) == 1) {
+                    if (HasVSyncIntervalElapsed(1, &D_8005E4AC, 1) == 1) {
                         D_8005E4A2 = (u16)D_8005E4A2 + step;
                     }
                     if ((s16)D_8005E4A2 >= 0xE) {

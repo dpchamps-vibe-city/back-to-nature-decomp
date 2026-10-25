@@ -15,9 +15,8 @@
 #include "sprite_source.h"
 #include "sprite_upload.h"
 #include "sprite_render.h"
+#include "display_mask.h"
 
-void func_80012A14(void);
-void func_800129F4(void);
 void InitAuxSpriteDisplaySource(s32, s32, s32, s32, s32, s32);
 
 /* Tentative definitions retain this unit's original GP-relative accesses. */
@@ -40,7 +39,7 @@ void InitAuxSpriteDisplaySource(s32 unused0, s32 unused1, s32 unused2,
     SpriteSourceData *source;
     SpriteDataHeader *header;
 
-    func_80012A14();
+    DisableDisplayOutput();
     header = (SpriteDataHeader *)&gAuxSpriteHeader;
     UploadSpriteImages((u8 *)(*(s32 *)((char *)header - 4) + (s32)header));
     source = (SpriteSourceData *)&gAuxSpriteSource;
@@ -71,7 +70,7 @@ void PresentAuxSpriteDisplay(void) {
     if ((gAuxSpriteDisplayEnabled != 0) && (gAuxSpriteDisplayRendering != 1)) {
         gAuxSpriteDisplayRendering = 1;
         DrawSync(0);
-        func_800129F4();
+        EnableDisplayOutput();
         DrawOTag((unsigned long *)(tables + (gActiveRenderContextIndex << 7) + 0x7C));
 
         contextBase = (struct_8005E3C0 *)&gRenderContexts;

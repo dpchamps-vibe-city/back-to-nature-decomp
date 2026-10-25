@@ -49,6 +49,8 @@
 #include "ovl08_scene_select_menu.h"
 #include "ovl28_sprite_sequence_scene.h"
 #include "random.h"
+#include "vram_clear.h"
+#include "display_mask.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -65,7 +67,6 @@ void RunSceneUpdateLoop(void);
 void ResetActiveRenderContext(void);
 void SelectRenderConfiguration(s32 arg0);
 void CopyRenderContextBackup(s32 arg0, s32 arg1);
-void func_80012A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, u8 arg6);
 void InitPads(void);
 /* func_800145F0 ends with `addu $v0,$zero,$zero` before `jr $ra` — it
    returns 0, and the target's callers keep $v0 out of post-call temporaries. */
@@ -155,7 +156,7 @@ int main(void) {
     VSync(3);
     VSync(3);
     VSync(3);
-    func_80012A68(0, 0, 0x280, 0x1E0, 0, 0, 0);
+    ClearVramRectAndWait(0, 0, 0x280, 0x1E0, 0, 0, 0);
     do {
     } while (DrawSync(1) != 0);
     InitMasterVolumeRamp();
@@ -194,7 +195,7 @@ int main(void) {
     McxStartCom();
     InitPads();
     ResetPadInputState();
-    func_80012A68(0, 0, 0x3FF, 0x1FF, 0xFF, 0xFF, 0xFF);
+    ClearVramRectAndWait(0, 0, 0x3FF, 0x1FF, 0xFF, 0xFF, 0xFF);
     VSyncCallback((void (*)(void))&D_80011334);
     buf = (char *)&D_8005E5D8;
     gActiveRenderContext = (struct_8005E3C0 *)temp_s2;
@@ -220,7 +221,7 @@ int main(void) {
         }
         SelectRenderConfiguration(0);
         if (D_8005E27C == 1) {
-            func_80012A68(0, 0, 0x140, 0x1E0, 0, 0, 0);
+            ClearVramRectAndWait(0, 0, 0x140, 0x1E0, 0, 0, 0);
         }
         SetPadRepeatTiming(0x14, 7);
         SetPadSecondaryRepeatTiming(0x14, 7);
@@ -429,12 +430,6 @@ typedef struct {
 
 extern void PresentFrame(void);
 
-/* Callee prototypes (from include/functions.h; declared locally to avoid
- * pulling the generated header). All are void — implicit-int declarations
- * would make cc1 emit call_value_internal1 (a $v0 set) for each void call,
- * stealing $v0 from the loads that follow them. */
-void func_800129F4(void);
-
 void RunSceneUpdateLoop(void) {
     char *scene_ptr;
     s32 tmp;
@@ -458,7 +453,7 @@ void RunSceneUpdateLoop(void) {
                 DrawSync(0);
                 VSync(2);
             } else {
-                func_800129F4();
+                EnableDisplayOutput();
                 tmp = (s32)gActiveRenderContext;
                 scene_ptr = (char *)&gRenderContexts;
                 saved = (s32)scene_ptr;

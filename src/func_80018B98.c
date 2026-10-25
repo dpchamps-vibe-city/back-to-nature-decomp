@@ -1,5 +1,6 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "vblank_timer.h"
 
 /* TU-owned GP globals (tentative definitions -> .comm, so cc1 emits the
  * target's %gp_rel accesses). Types match include/globals.h where present. */
@@ -26,7 +27,6 @@ s32 D_8005E48C;
 u16 D_8005E498;
 
 /* Game callees. */
-s32 func_80012CB4(s32 arg0, s32 *arg1, s32 arg2);
 s16 GetPairedTpage(s32 tpage);
 void func_80019FC4(s16 arg0);
 void *func_80019070(s32 *ordering_table, u8 *packet, u32 glyph, s32 x,
@@ -55,7 +55,7 @@ u8 *func_80018B98(s32 *arg0, u8 *arg1, u16 *arg2, s16 arg3, s16 arg4,
         if (arg6 == 1) {
             D_8005E47E = 0;
             if (D_8005E446 == 0) {
-                if (func_80012CB4(D_8005E44C, &D_8005E448, 1) == arg6) {
+                if (HasVSyncIntervalElapsed(D_8005E44C, &D_8005E448, 1) == arg6) {
                     if (D_8005E48C != 0) {
                         PlaySoundEffect(4);
                         D_8005E48C = 0;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl11_object_render.h"
 typedef struct {
     char pad_0[0x38];
     s32 unk38;
@@ -17,12 +18,10 @@ typedef struct {
 
 extern ReconPointee0View *D_80128CF4;
 
-void ovl_11_func_800CFE40(u8 *arg0);
-
 void ovl_11_func_800CA580(ReconA0View *arg0) {
     D_80128CF4->unk38 = arg0->unk100;
     D_80128CF4->unk3C = arg0->unk104;
     D_80128CF4->unk40 = arg0->unk108;
     D_80128CF4->unk44 = arg0->unk10C;
-    ovl_11_func_800CFE40(D_80128CF4);
+    Ovl11DrawObjectWithMarker(D_80128CF4);
 }

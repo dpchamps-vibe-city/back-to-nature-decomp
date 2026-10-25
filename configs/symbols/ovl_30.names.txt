@@ -1,0 +1,28 @@
+// Overlay-30 debug page callbacks and their original cursor/state storage.
+Ovl30EditDayCount0 = 0x801326C4;
+Ovl30EditDayCount1 = 0x80132978;
+Ovl30EditNValue = 0x80132C2C;
+Ovl30StepSelectedValue = 0x80132EE0;
+Ovl30EditItemFields = 0x80132F18;
+Ovl30EditToolParameters = 0x80133218;
+gOvl30DayCount0Cursor = 0x80134AA8; // type:data size:0x4
+gOvl30DayCount1Cursor = 0x80134AAC; // type:data size:0x4
+gOvl30NValueCursor = 0x80134AB0; // type:data size:0x4
+gOvl30ItemIndex = 0x80134AB4; // type:data size:0x4
+gOvl30ItemFieldIndex = 0x80134AB8; // type:data size:0x4
+gOvl30ToolIndex = 0x80134ABC; // type:data size:0x4
+gOvl30ToolParameterIndex = 0x80134AC0; // type:data size:0x4
+gOvl30ToolNames = 0x80134AC4; // type:data size:0x14
+// Original page-format strings; extents include their existing zero padding.
+gOvl30EditValueFormat = 0x8012EED0; // type:data size:0x14
+gOvl30DayCount0Format = 0x8012EEE4; // type:data size:0x18
+gOvl30DayCount1Format = 0x8012EEFC; // type:data size:0x18
+gOvl30NValueFormat = 0x8012EF14; // type:data size:0x18
+gOvl30EditorNewlines = 0x8012EF2C; // type:data size:0x4
+gOvl30ItemIndexFormat = 0x8012EF30; // type:data size:0xC
+gOvl30ItemBuyFormat = 0x8012EF3C; // type:data size:0xC
+gOvl30ItemSellFormat = 0x8012EF48; // type:data size:0xC
+gOvl30ItemLifeFormat = 0x8012EF54; // type:data size:0xC
+gOvl30ItemTiredFormat = 0x8012EF60; // type:data size:0xC
+gOvl30ToolIndexFormat = 0x8012EF90; // type:data size:0xC
+gOvl30ToolParameterFormat = 0x8012EF9C; // type:data size:0xC
