@@ -62,6 +62,8 @@ export function registerResearchAgent(pi: ExtensionAPI, projectRoot: string): vo
   };
   pi.on("session_start", () => {
     release();
+    /* A child loads the ambient extensions, this one included; it delegates nothing. */
+    if (process.env.PI_SUBAGENT_CHILD === "1") return;
     let config: SubagentConfig | undefined;
     try {
       config = loadLoopConfig(projectRoot).subagents;
@@ -78,8 +80,8 @@ export function registerResearchAgent(pi: ExtensionAPI, projectRoot: string): vo
         model: `${config.model.provider}/${config.model.model}`,
         thinking: config.model.thinking,
         tools: ["read", "grep", "find", "ls", "bash"],
-        /* No ambient extensions: a child needs no loop, and must not register agents of its own. */
-        extensions: [],
+        /* `extensions` stays unset: the ambient extensions include whatever registers the
+           model's provider, and a child without them cannot resolve it. */
       },
     };
     pi.events.emit(REGISTER_EVENT, request);
