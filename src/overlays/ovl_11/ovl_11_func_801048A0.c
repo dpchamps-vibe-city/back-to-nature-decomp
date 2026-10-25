@@ -1,13 +1,13 @@
 #include "common.h"
 #include "scene_selection.h"
 #include "sound_commands.h"
+#include "ovl11_choice_messages.h"
 
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800BFEA4(void);
 void ovl_11_func_800BFF00(void);
 void ovl_11_func_800C044C(s16 arg0);
 void ovl_11_func_800CBEF8(void);
-void ovl_11_func_80107F18(void);
 void ovl_11_func_800F6630(void);
 void ovl_11_func_800BFE3C(void);
 extern s32 D_801287F4;
@@ -41,7 +41,7 @@ void ovl_11_func_801048A0(void) {
     ovl_11_func_800BFF00();
     ovl_11_func_800C044C(base->field_E4C8);
     ovl_11_func_800CBEF8();
-    ovl_11_func_80107F18();
+    Ovl11ResetChoiceMessages();
     ovl_11_func_800F6630();
 
     base->field_4488 = 1;

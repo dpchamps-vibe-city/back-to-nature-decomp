@@ -1703,19 +1703,20 @@ typedef struct {
     s16 unkC6;
 } Ovl11DE68Object;
 
-/* Gradient-draw command shared by func_8001FA0C and func_8001F8A4 (0xC..0x14
- * is a RECT handed to SetDrawLoad; field_0/field_8 feed func_8001F774). */
-typedef struct {
-    /* 0x00 */ s32 field_0;     /* source u16 array */
-    /* 0x04 */ s16 field_4;
-    /* 0x06 */ u16 field_6;
-    /* 0x08 */ s16 field_8;     /* gradient step count */
-    /* 0x0A */ s16 field_A;
-    /* 0x0C */ u16 field_C;     /* RECT x */
-    /* 0x0E */ u16 field_E;     /* RECT y */
-    /* 0x10 */ u16 field_10;    /* RECT w */
-    /* 0x12 */ u16 field_12;    /* RECT h */
-} GradientCmd;
+/* InitColorRowBlend captures the two source rows and fills this whole record;
+ * Step/DrawColorRowBlend construct a DR_LOAD using its destination rectangle.
+ * Address storage and all signed/unsigned widths are intentionally unchanged. */
+typedef struct ColorRowBlend {
+    /* 0x00 */ s32 sourceRowsAddress; /* two consecutive 16-entry u16 rows */
+    /* 0x04 */ s16 direction;         /* -2 initially, then 0 rising/1 falling */
+    /* 0x06 */ u16 reserved6;
+    /* 0x08 */ s16 span;
+    /* 0x0A */ s16 progress;
+    /* 0x0C */ u16 dstX;
+    /* 0x0E */ u16 dstY;
+    /* 0x10 */ u16 width;
+    /* 0x12 */ u16 height;
+} ColorRowBlend;
 
 /* Records of the table at D_80075BC4, scanned by ovl_11_func_801097F4:
  * six 0xB0-byte entries; entry u16 tag 0x15B at 0x00, an s16 selector at
@@ -2452,16 +2453,22 @@ typedef struct {
     s32 field_34;
 } Ov11D266CFields;
 
-/* 80109188's matched parameter view, also passed by 80108D84. */
+/* Shared animation/handler view. 800D04D4 reads +24/+30/+7A; the fixed
+ * sequence callbacks and 80109188 also maintain +26..+2C and +34.
+ * The halfword widths/signedness are retained across these partial views. */
 typedef struct {
     char pad_00[0x24];
-    s16 unk24;
-    s16 unk26;
-    s16 unk28;
-    s16 unk2A;
-    s16 unk2C;
-    char pad_2E[0x06];
-    s32 unk34;
+    s16 unk24;                  /* selected animation */
+    s16 unk26;                  /* selected handler */
+    s16 unk28;                  /* keyframe cursor / handler sub-state */
+    s16 unk2A;                  /* keyframe update count */
+    s16 unk2C;                  /* auto-advance timer (DFE74 reuses it) */
+    char pad_2E[2];
+    s16 unk30;                  /* selector compared by frame-step helper */
+    char pad_32[2];
+    s32 unk34;                  /* 0x800: sequence lock */
+    char pad_38[0x7A - 0x38];
+    u16 unk7A;
 } Ovl11D04D4Obj;
 
 /* 800CA580 and 8010C1C0 copy these four words from the drawing object. */

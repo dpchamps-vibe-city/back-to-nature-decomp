@@ -4,10 +4,13 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "ovl11_state_field_access.h"
 
 
 void ovl_11_func_80107DD0 (s16 *arg0);
-u8 *ovl_11_func_800EFF04 (s32 arg0, s32 arg1, s32 *arg2);
 void ovl_11_func_800CF36C (s32 arg0);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);

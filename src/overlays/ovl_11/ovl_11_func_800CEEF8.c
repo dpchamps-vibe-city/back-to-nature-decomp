@@ -19,6 +19,7 @@
 #include "sprite_source.h"
 #include "random.h"
 #include "sprite_upload.h"
+#include "debug_break.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -111,7 +112,6 @@ s32 ovl_11_func_800E6EAC (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void ovl_11_func_80107DD0 (s16 *arg0);
-s32 func_800129E8 (void);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 func_8001AF44 (u32 arg0);

@@ -51,6 +51,8 @@
 #include "random.h"
 #include "vram_clear.h"
 #include "display_mask.h"
+#include "debug_break.h"
+#include "render_packet_pool.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -74,7 +76,6 @@ void func_80017A48(u32 arg0);
 void func_80017A70(u32 arg0);
 /* func_8001AFE0 overwrites $a0 before reading it and the target's call sites
    leave the delay slot empty — it takes no arguments. */
-void func_8001E160(void);
 void func_80021DA8(void);
 void func_80021FD0(void);
 
@@ -207,7 +208,7 @@ int main(void) {
     SelectRenderConfiguration(0);
     ResetActiveRenderContext();
     InitCameraOffsetState();
-    func_8001E160();
+    InitRenderPacketPools();
     func_80021DA8();
     InitSoundOutputAndCdFiles();
     OpenSoundSequencesAndStart();
@@ -557,8 +558,6 @@ void SetVal8005E27C(s32 arg0) {
  * Upper-bound checks for the active render context's libgs packet cursor.
  */
 
-s32 func_800129E8(void);
-
 s32 ReservePacketWorkBytes(s32 byteCount) {
     s32 bufferEnd;
     s32 cursor;
@@ -569,7 +568,7 @@ s32 ReservePacketWorkBytes(s32 byteCount) {
         /* The assertion helper breaks and returns nonzero: overflow normally
          * stays here. Preserve the error call if execution ever continues. */
         do {
-        } while (func_800129E8() != 0);
+        } while (DebugBreakAndReturnTrue() != 0);
         SystemError(0x50, 0);
     }
     GsSetWorkBase((PACKET *)(cursor + byteCount));
@@ -579,7 +578,7 @@ s32 ReservePacketWorkBytes(s32 byteCount) {
 void SetPacketWorkCursor(s32 cursor) {
     if ((u32)(gActiveRenderContext->packetWorkBase + gActiveRenderContext->packetWorkCapacityBytes) < (u32)cursor) {
         do {
-        } while (func_800129E8() != 0);
+        } while (DebugBreakAndReturnTrue() != 0);
     }
     GsSetWorkBase((PACKET *)cursor);
 }
@@ -897,7 +896,7 @@ void InitGraphicsHeapCompact(void) {
         t9 += 0x134;
     } while (s8 >= 0);
 
-    func_8001E160();
+    InitRenderPacketPools();
 }
 
 /* TU-owned globals (GP-relative in the target) */

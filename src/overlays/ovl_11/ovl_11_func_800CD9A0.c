@@ -3,8 +3,8 @@
 #include "psyq/stddef.h"
 #include "pad_actuator_sequences.h"
 #include "message_window.h"
+#include "ovl11_interaction_volume_query.h"
 
-void *ovl_11_func_800BDCE8(u8 *arg0, Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670(s16 arg0);
 s32 ovl_11_func_800CB4E0(void);
@@ -40,7 +40,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
     if (((struct Ovl11C7F0Flags *)D_8006C838)->flags10 & 0x20000000) {
         return 2;
     }
-    record = ovl_11_func_800BDCE8(D_8009F78C, (Ovl11Func800BDCE8Arg1 *) &arg0->unk100, 1);
+    record = Ovl11ProbeInteractionVolume(D_8009F78C, (Ovl11Func800BDCE8Arg1 *) &arg0->unk100, 1);
     D_801287F0 = record;
     if (record != NULL) {
         flags = arg0->unk6C;

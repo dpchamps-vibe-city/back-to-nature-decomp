@@ -1120,17 +1120,20 @@ typedef struct {
 extern u8 *D_801291B8;
 extern s32 D_801291C0;
 
-/* D_8012D050 - 3-entry {s16,s16} farm-state array (ovl_11, -G0 absolute).
- * ovl_11_func_80108B8C reads field_0 @0x8 / field_2 @0xA of entry [2]. */
+/* 801081A0 fills four pairs; 801082B0 also writes slot 3 at +0xC/+0xE. */
 typedef struct {
-    /* 0x00 */ s16 field_0;
-    /* 0x02 */ s16 field_2;
-} Ovl11D050Entry;
-extern Ovl11D050Entry D_8012D050[3];
-
-/* D_8012D044 - farm-state dispatcher word (ovl_11, -G0 absolute).
- * ovl_11_func_80107F58 switches on it and ovl_11_func_80108104 clears it. */
-extern s32 D_8012D044;
+    s16 messageEntry;
+    s16 variant;
+} Ovl11ChoiceMessageSlot;
+extern Ovl11ChoiceMessageSlot gOvl11ChoiceMessageSlots[4];
+/* 80107F58 dispatches phases 0..6; input selects a slot index 0..3. */
+extern s32 gOvl11ChoiceMessagePhase;
+extern s32 gOvl11ChoiceMessageIndex;
+/* 801088E4 resets the tick and last-uploaded block; 80108930 cycles 3 blocks. */
+extern s32 gOvl11ChoiceImageTick;
+extern s32 gOvl11ChoiceImageBlock;
+/* 8010822C indexes four category messages; 801082F8 uses seven 6-byte rules. */
+extern s16 gOvl11ChoiceCategoryMessages[4];
 /* Action guards share this selector; state guards update it only on result 1. */
 extern u32 gOvl11ActionGuardSelector;
 /* Ovl11FindActionGuardResult scans 31 pointers to {s16 id,count; records*}. */
@@ -1144,18 +1147,14 @@ typedef struct {
     s16 *ids;
 } Ovl11GuardAreaException;
 extern Ovl11GuardAreaException *gOvl11ActionGuardAreaExceptions[3];
-/* The halfword view used by ovl_11_func_801082B0 has no witnessed full extent. */
-extern s16 D_8012D050_halfwords[] __asm__("D_8012D050");
-
-/* D_801278EC - 6-byte record table read by ovl_11_func_801082F8 at index arg3:
- * lh field_0 @0x0 (divisor input), lhu field_2 @0x2 (value base), lh field_4
- * @0x4 (state stored to D_8012D050[2].field_2). Absolute lui+lo addressing. */
+/* 801082F8: signed band count, unsigned base entry and signed variant;
+ * seven records occupy 0x2A bytes, followed by two padding bytes in the blob. */
 typedef struct {
-    /* 0x00 */ s16 field_0;
-    /* 0x02 */ u16 field_2;
-    /* 0x04 */ s16 field_4;
-} Ovl11_801278ECEntry;
-extern Ovl11_801278ECEntry D_801278EC[];
+    s16 bandCount;
+    u16 baseEntry;
+    s16 variant;
+} Ovl11ChoiceVariantRule;
+extern Ovl11ChoiceVariantRule gOvl11ChoiceVariantRules[7];
 
 /* ovl_11:80128DB8 - private array of three 16-byte flat-light records
  * (GsF_LIGHT-shaped: s32 vx/vy/vz @0/4/8, u8 r/g/b @0xC/0xD/0xE), written by
@@ -3564,22 +3563,18 @@ typedef struct {
 extern struct_800759E4 _D_800759E4[1] __asm__("D_800759E4");
 #define D_800759E4 (*((struct_800759E4 *)_D_800759E4))
 
-/* D_80124A18 - table of 0x14-byte range-clamp entries (ovl_11).
- * Element stride 0x14; fields used: s16 low at +0x08 (lh read by
- * ovl_11_func_800EFD54), s32 high at +0x0C (lw read), s32 field at +0x10
- * (read by ovl_11_func_800EFABC). Absolute-addressed from the overlays
- * (only ever declared extern, never GP). */
+/* EFABC..EFF04 resolve/read/write/clamp these 48 descriptors, stride 0x14.
+ * Access kinds 0/1 are u8, 2 u16, 3 s16, all others s32. */
 typedef struct {
-    /* 0x00 */ u8 *field_0;   /* lw read by ovl_11_func_800EFF04 */
-    /* 0x04 */ u8 field_4;     /* lbu read by ovl_11_func_800EFF04 */
-    /* 0x06 */ s16 field_6;    /* lh read by ovl_11_func_800EFF04 */
-    /* 0x08 */ s16 field_8;
-    /* 0x0A */ u8 pad_0A[0x2];
-    /* 0x0C */ s32 field_C;
-    /* 0x10 */ s32 field_10;   /* 0x14 stride */
-} Ovl11RangeEntry;
-extern Ovl11RangeEntry _D_80124A18[] __asm__("D_80124A18");
-#define D_80124A18 ((Ovl11RangeEntry *)_D_80124A18)
+    /* 0x00 */ u8 *data;
+    /* 0x04 */ u8 kind;
+    /* 0x06 */ s16 elementStride;  /* bytes; zero selects a scalar */
+    /* 0x08 */ s16 minimum;
+    /* 0x0A */ u8 pad_0A[2];
+    /* 0x0C */ s32 maximum;
+    /* 0x10 */ s32 mask;           /* nonzero selects a boolean bit field */
+} Ovl11StateField;
+extern Ovl11StateField gOvl11StateFields[48];
 
 /* D_801249F8 - table of 6-byte records (3 s16 fields each, 5 used entries,
 ovl_11). Indexed by a value in 0..4; ovl_11_func_800EEAB8 reads lh at
@@ -4925,15 +4920,23 @@ extern struct D800C4A60Entry D_800C4A60[];
  * pending entries, and folds the s32 at 0x130 into the s32 at 0x34. */
 extern u16 D_800711C4[0x9A];
 
-/* D_8012D060: four halfwords written by ovl_11_func_80108864 and read
- * by ovl_11_func_801089DC. Shared declaration for both sides. */
+/* 80108864 selects the two offset pairs forwarded to sprite-image upload. */
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 unk6;
-} Ovl11D060Fields;
-extern Ovl11D060Fields D_8012D060;
+    s16 x;
+    s16 y;
+    s16 type2X;
+    s16 type2Y;
+} Ovl11ChoiceImageOffsets;
+extern Ovl11ChoiceImageOffsets gOvl11ChoiceImageOffsets;
+/* 80108A24 scans nine cells; 80108B8C promotes a selected cell from 1 to 2. */
+extern u8 gChoiceCellStates[9];
+/* 80111A60/B74 pass this same record and two 16-pixel source rows to the
+ * EXE color-row service. Only the first 0x14 bytes of the 0x20 label are used. */
+extern struct ColorRowBlend gOvl11ColorRowBlend;
+extern unsigned long gOvl11ColorRowSources[16];
+extern s32 gOvl11ColorRowProgress;
+/* exe:8001FA98 post-increments this sole GP-owned signed counter. */
+extern s32 gSequenceNumber;
 
 /* 80109D08 clears/passes this record pointer, then forwards its +0x38 vector. */
 extern s32 *D_8012D078;
@@ -7088,7 +7091,16 @@ typedef struct {
 } Ovl30ActionState;
 
 /* 800DFE74 passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
-extern u8 D_80123F24[12];
+extern u8 gOvl11Animation41Sequence[12];
+/* Fixed-sequence callbacks DFC44..E0180 each address one animation/hold table;
+ * these scalar declarations denote the table bases, not their extents. */
+extern u8 gOvl11Animation0Sequence;
+extern u8 gOvl11Animation052Sequence;
+extern u8 gOvl11Animation50Sequence;
+extern u8 gOvl11Animation70Sequence;
+extern u8 gOvl11Animation60Sequence;
+extern u8 gOvl11Animation3Sequence;
+extern u8 gOvl11Animation8Sequence;
 /* 800E1A3C passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
 extern u8 D_80123FDC[12];
 /* 800D55F8 passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */

@@ -1386,6 +1386,40 @@ Members (address order):
 
 ## `ovl_11` D_8012D0xx tiny-global cluster / state-probe run — 0x80108104–0x8010AFCC (confidence: low)
 
+**Reconstructed: `modules/choice_messages.c`, 80107F18–80108BE8 exclusive,
+24 functions.** The broad D0xx-family hypothesis below is not a single-TU
+claim. This unit closes the private 8012D040/44/50/60/68/6C writer/reader
+protocol: four message/variant slots, selected index, phase, image offsets,
+cycle tick and last uploaded block. The two jump tables (7F58 then 876C)
+form one pooled run at overlay offsets 29C8–2A28, including the verified
+four-byte alignment gap. The category-message/rule tables at 801278E4/EC
+corroborate the slot builders; almost all helpers have only internal callers.
+The 7F18 reset trampoline is included, not sliced off: it does nothing but
+call this unit's clearer and publishes that same reset protocol to other
+interaction drivers. Request/update are called by 800C7AC0/800C162C.
+
+Left boundary: 80107E2C is the independently used sprite-render service,
+with no slot/phase/image state; no evidence joins it. Right: 80108BE8 begins
+object rendering, called from 800D2334 and touching none of these private
+cells. The later D070..D084 state handlers are different protocols, not
+extensions justified by numeric proximity. These are supported responsibility
+cuts, not historical object-boundary proofs: overlay -G0 has no GP discriminator.
+No positively supported member was left between these endpoints.
+
+All functions and eight state/table labels have behavior-grounded ChoiceMessage/
+ChoiceImage names at their original identities. The public header publishes
+request/update and both reset entry points; helpers retain external linkage.
+The slot view is corrected from three to FOUR records (81A0 writes four;
+82B0 writes +C/+E), preserving the separate storage label at +2. Redundant
+halfword/first-variant aliases are removed; the first-variant read retains
+its original unsigned halfword conversion. Phase/index/tick/block/category
+externs moved to globals_override.h. No storage was defined or ownership
+changed. Locals name the demonstrated slots, variants and image-block protocol,
+without assuming crop/gameplay identities. The checked baseline fold verified
+all 24 members and the overlay; no flags or policy exceptions were added.
+
+Historical, broader candidate evidence follows:
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing a compact
 file-scope D_8012D0xx main-RAM global cluster (not in generated `globals.h`)
 threaded through a contiguous-ish span of small leaf/setter/probe functions.
@@ -4925,6 +4959,38 @@ membership rose 108 → 113; all fourteen modules are valid.
 
 ## gradient-interpolation cluster — 0x8001F278–0x8001FABC (confidence: low)
 
+**Reconstructed: `src/modules/color_row_blend.c`, 8001F664–8001FABC
+exclusive, six compiled functions.** F664 is not merely an adjacent GPU helper:
+it initializes exactly the shared 0x14-byte record, captures two 16x1 rows
+into buffer+0/+20, and supplies the span/destination that F8A4/FA0C consume.
+Those builders alone call the 16-word interpolator F774. F664 alone calls
+the zero Y-offset hook FAB4. FA98 is an unused post-increment counter between
+the builders and that hook; it is retained inside the closed producer/helper
+span, not cut out because it is dead. Its isolated GP-owned word supports
+only the neutral names NextSequenceNumber/gSequenceNumber, not a gameplay role.
+Its original association remains the weakest membership evidence.
+
+The old extension to F278 is withdrawn: this is a public, global-free
+three-component interpolation service also called from unrelated overlays.
+The intervening scalar/vector utilities share neither the row record nor
+GPU capture/upload protocol. The left neighbor F5EC normalizes vectors and
+takes a dot product, not rows; the right FABC starts the independent sound
+command protocol. These are evidence-limited cuts, not GP-proven boundaries;
+absence of a conflict does not justify swallowing the generic math band.
+
+Init/Step/DrawColorRowBlend are published with buffer lifetime, VRAM-pixel,
+span/progress and packet-pool contracts. ColorRowBlend is one tagged canonical
+view in game_types.h, retaining every original signed/unsigned width and its
+s32 address field. Duplicate initializer views in 80111A60/B74 were removed;
+one header-owned extern now describes their shared record, two rows (0x40
+bytes) and progress. Symbol labels retain their original storage extents,
+including unused padding after the 0x14-byte record. Automatic bounce uses
+strict endpoint crossings; non-bounce subtracts span once. The zero/negative
+span and signed halfword constraints are documented, not fixed. The checked
+baseline fold verified all six and the EXE; no override or exception was used.
+
+Historical candidate (superseded membership interpretation):
+
 Candidate group in the unassigned gap between viewport/camera (ends 0x8001F24C)
 and sound init (starts 0x8001FEA4). Evidence is internal call graph plus
 address adjacency — no shared globals or register quirks found, so same-TU
@@ -5467,6 +5533,29 @@ References: notes/research/func_80017E34-shared-web-global-allocno.md
 notes/retros/2026-08-28-func_80017E34-retro.md.
 
 ## unknown group A — 0x8001DFD4–0x8001E26C (confidence: low)
+
+**Reconstructed packet-pool unit: `src/modules/render_packet_pool.c`,
+8001E0B8–8001E26C exclusive**, three compiled members: LinkAndReservePacket,
+PacketReservationHook and InitRenderPacketPools. The allocator calls the
+retained empty hook; the initializer writes precisely the secondary-OT count,
+OT base and packet cursor the allocator consumes, plus the pool capacity/base,
+for both 0x134-byte contexts. This producer/consumer layout, not merely the
+widely used active-context pointer, supports the three-member group.
+
+Left E088 projects a point with GTE RTPS and shares no packet-pool protocol.
+Right E26C computes a bounded vector length with GTE square/SquareRoot0;
+it touches neither the pool nor hook. No positive evidence joins either.
+These immediate cuts are evidence-limited. Separation from boot is proven:
+E0B8 reaches gActiveRenderContext absolutely, and E160 gGraphicsHeapBase
+absolutely, while game_loop defines/reaches them through GP. No storage
+or tentative definition was added here. The public header documents pool
+sizes, byte-count units, unchecked negative indices/capacity, and the hook's
+lack of bounds checking. Linking deliberately replaces the full OT word
+rather than preserving its upper byte like SDK addPrim; the packet length
+byte is preserved until the caller fills it. The checked baseline fold
+verified all three and the EXE; no flag or exception was needed.
+
+Historical unresolved projection/utility band follows:
 
 Address-adjacent block preceding collision.c; none of its functions touch
 the collision cluster (checked 2026-07-31), so the file boundary likely
@@ -6707,6 +6796,33 @@ evidence, not a GP-proven cut. State ownership, unsigned arithmetic and ABI
 are unchanged. The header now accurately documents low-16-bit limit
 truncation, zero-limit state advancement and direct reseeding. The checked
 fold passed baseline -O2/-G8; no flag override or exception was involved.
+
+**Assertion breakpoint (module campaign):** `src/modules/debug_break.c`
+contains the minimal singleton at exe:800129E8, now
+`DebugBreakAndReturnTrue`. Its implementation executes breakpoint 1 and
+returns 1 on debugger resume. The allocation/range-check loops in game_loop,
+sprite_animation and overlay services repeatedly call it; it does not log,
+repair a condition or own state. `include/debug_break.h` publishes that exact
+contract, and the canonical symbol row preserves the original address.
+The preceding game-loop member copies render-context state and owns boot
+small data; the following display-mask pair wraps SetDispMask. Neither
+shares an assertion implementation or private state with this helper. These
+are evidence-limited cuts, not a claim that the original object was necessarily
+a singleton. No supported group has been sliced to make this module.
+The checked fold passed baseline -O2/-G8 and the EXE byte oracle; the existing
+breakpoint intrinsic is unchanged, with no new flag or policy exception.
+Caller declarations were replaced by the public header through interfaceAudit.
+Full batch acceptance (debug_break, render_packet_pool, color_row_blend and
+ovl_11's interaction_volume_query, animation_sequences, animation_pose,
+state_field_access, choice_messages): `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all integrity gates. Folded membership
+rose **502 → 554**, all **70 module TUs valid**; EXE/all configured overlay
+bytes, associated data/callbacks/tables, canonical names, configuration
+convergence, source policy and exception non-growth pass. Published interfaces
+have zero failing callers; pre-existing unpublished field-read/condition arity
+debt remains explicitly documented in the field-service section. No compiler
+flag or policy exception was added or retired, no tooling changes were needed,
+and no previously folded function regressed.
 
 **Display/VRAM/timing helpers (module campaign):** three minimal units now
 make the stateless services after the boot run explicit:
@@ -15568,6 +15684,39 @@ Members (address order):
 
 ## `ovl_11` D_80124A18 range-entry accessor band — 0x800EFABC–0x800EFF9C (confidence: medium)
 
+**Reconstructed: `modules/state_field_access.c`, EFABC–EFF9C exclusive,
+six compiled members**, Update/Read/ClampStateField, TestStateFieldCondition,
+ApplyStateFieldOperation and ResolveStateField. Only this span accesses the
+48x0x14-byte descriptor table (now gOvl11StateFields). The unique field-ID/
+engine-flag dispatch is shared by the read/write siblings. The clamp is called
+only by the writer; the arithmetic helper feeds that writer as well as external
+rule callers. The comparison helper shares the rule operator protocol and
+sits inside this closed descriptor-user span. Four jump tables occur in member
+order at overlay 2098–2110, including four zero alignment bytes at 20F4.
+
+The former inclusion of EFF9C is withdrawn: it scans object state and calls
+800C3548, not the descriptor table or these helpers. Left EFA1C is an engine-
+flag predicate with no descriptor/helper access. Those protocol separations
+and the private-table/rodata closure delimit the supported unit, not a GP
+proof under -G0. Distant rule callers use the public service; they do not
+establish membership in the service's source file.
+
+Ovl11StateField names data, kind, byte stride, signed minimum/maximum and
+mask without changing any width. The redundant assembler-label macro view
+was replaced by one 48-entry extern; data remains in the overlay blob.
+Resolve/update/arithmetic have a typed service header. Read's 1/4-argument
+caller declarations and the comparator's two-argument call at E686C are
+**pre-existing unresolved ABI debt**: publishing their fixed definitions
+made interfaceAudit reject the callers. Their original argument setup and
+local declarations are preserved, not coerced by casts, invented arguments
+or new prototype workarounds. Correct two-argument read callers retain their
+local declarations. This is explicitly incomplete interface recovery, not
+new silent declaration conflict. The public service header explains why the
+read entry is not declared there. The checked whole fold passed baseline
+with all six members and overlay bytes; no flag/exception was involved.
+
+Historical candidate (superseded membership interpretation):
+
 Shared-global cluster plus zero-gap link-order contiguity in `ovl_11`
 (`Obj\GF_FARM.bin`). Every member dereferences the same absolute-addressed
 `D_80124A18` table of 0x14-byte records (`Ovl11RangeEntry`,
@@ -16203,6 +16352,48 @@ Members:
 ---
 
 ## `ovl_11` keyframe-state handler triple — 0x800E0028 / 0x800E00E0 / 0x800E0180 (confidence: high)
+
+**Whole supported playlist band reconstructed as `modules/animation_sequences.c`,
+800DFC44–800E0220 exclusive, eight compiled callbacks.** The former triple is
+not a unit on its own. DFC44/DFCFC/DFDAC/DFE74/DFF70/E0028/E00E0/E0180 each
+use one private animation/hold table, and those eight tables form the complete
+80123F00–F58 run in the same order. Shared cursor/counter/lock protocol and
+near-identical callback templates corroborate the authored table band.
+The callback names list the demonstrated animation IDs, not gameplay actions;
+the header explains terminal-state, lock and timer differences. Seven duplicate
+parameter views now use the existing Ovl11D04D4Obj identity; it is completed
+with the frame-step helper's witnessed +30/+7A fields, with all existing
+widths and offsets preserved. The callee's local duplicate also uses that
+shared definition. Tables remain extern overlay data and are named at their
+original addresses; callback-pointer entries regenerate from symbol config.
+
+Left DFC3C returns zero without a playlist/state protocol, and DFB98 before
+it is a transition handler; neither gives a positive extension signal.
+Right E0220 has no playlist and uses the separate pose protocol below. The
+private table format ends at F58, where the sprite-animation descriptor
+format begins. These are evidence-limited boundaries, not -G0 ownership
+proofs. The distant dispatcher tables mix callbacks from several address
+bands and do not justify a giant TU. No supported member of the contiguous
+playlist band was omitted. The first checked fold rolled back on conflicting
+local/callee typedefs; after canonical reconciliation all eight and the
+overlay passed baseline, with no new override or exception.
+
+**Adjacent pose unit: `modules/animation_pose.c`, E0220–E03A0 exclusive,
+two compiled members**, SubmitDeferredAnimationPose/SubmitAnimationPose.
+The former's only callee is the latter, and the latter adapts its period/mode
+for the former's selected handler ID 13. They operate on the same flags,
++24 pose selector and +48/+4C/+50 object state: this is a caller-context
+protocol, not adjacency alone. The second service argument is retained but
+unused; the pointer cast now uses its actual canonical type instead of an
+integer-to-pointer conversion. Neither parameter view or access width changed.
+The header documents the exact flags/timer effects without guessing +B2's
+meaning. Right E03A0 selects sprite animations/renders markers, touching no
+pose lock/defer protocol; left is the playlist/table band above. There is no
+private-state or table evidence joining the two modules across that cut.
+Both passed the checked baseline fold, with no flags, storage or exceptions.
+
+Historical template-family evidence follows. The alleged gap after E0180
+is E0220, a real matched function, not padding:
 
 Three zero-gap link-order neighbours with byte-for-byte identical structure,
 differing only in the table pointer each passes to the shared callee. The
@@ -17107,6 +17298,29 @@ Members:
 ---
 
 ## `ovl_11` stride-0x2C bounding-box record run — 0x800BDCE8 / 0x800BDE84 (confidence: medium)
+
+**Reconstructed: `modules/interaction_volume_query.c`, BDCE8–BDF98
+exclusive, two compiled members.** ProbeInteractionVolume/FindFlaggedVolume
+are complementary queries over the same 50x0x2C table and identical copied
+corners. Their flag classes are mutually exclusive (reject 6008 vs require
+4000), callers supply the same far-context table, and the C8BA8→C7AC0 dispatch
+path uses both. The first point ABI is THREE WORDS (only X/Z read), not the
+three halfwords claimed below; the second really is three halfwords, with
+widened Y bounds. Both strict-boundary contracts and the first query's
+conditional effects/unconditional pending-selector reset are documented.
+The duplicate point type now uses game_types.h's existing canonical view;
+the two identical corner types became one local VolumeCorner. No storage,
+linkage or flags changed; the checked baseline fold passed both and overlay.
+
+Left BDCE0 is an unused return--1 leaf with no volume protocol, so no evidence
+joins it. Right BDF98 builds the separate collision-query record and calls
+BE6E4; following BE118 scans the 1C-byte region-transition table at 80122D8C,
+not these volumes. Its table is contiguous with BE5A0's distinct region-table
+family. These are responsibility/layout boundaries, not GP-proven cuts under
+-G0. BE118 is 0xF0 bytes, not the formerly recorded 0x1AC. No producer of the
+volume table has yet been identified, so no third member is asserted.
+
+Historical candidate evidence follows (stale statuses/types superseded):
 
 Candidate same-TU pair of `ovl_11`. Evidence: shared stride-0x2C record-scan
 idiom — both gate on a u16 flag word at +0x10 (800BDE84 tests bit 0x4000;

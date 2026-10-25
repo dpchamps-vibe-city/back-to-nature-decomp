@@ -15,6 +15,7 @@
 #include "sprite_source.h"
 #include "random.h"
 #include "sprite_upload.h"
+#include "ovl11_state_field_access.h"
 
 typedef struct {
     s16 unk0;
@@ -108,8 +109,7 @@ u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800EFDA0 (s32 arg0, s32 arg1, s32 arg2);
-s32 ovl_11_func_800EFE34 (s32 *ptr, s32 arg1, s32 arg2);
+s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
 s32 pow_int (s32 arg0, s32 arg1);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_80112904 (s16 arg0);

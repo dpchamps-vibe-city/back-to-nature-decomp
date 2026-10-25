@@ -26,6 +26,7 @@
 #include "sprite_render.h"
 #include "sprite_source.h"
 #include "sprite_upload.h"
+#include "debug_break.h"
 
 POLY_FT4 *BuildSpriteEntryPackets(s32 *ot, POLY_FT4 *packets,
                        SpriteEntrySourceView *source, s16 x, s16 y,
@@ -38,8 +39,6 @@ POLY_FT4 *BuildSpriteQuadPackets(u_long *ot, POLY_FT4 *packets,
 void BuildSpriteRectPackets(u_long *ot, SPRT **sprites, DR_MODE **drawModes,
                    SpriteRectSourceView *source, u8 animation, u8 frame,
                    s16 x, s16 y);
-
-s32 func_800129E8(void);
 
 void SetSpriteSourceHeaderAndRecord(SpriteSourceData *src, s32 header, s32 field_18);
 
@@ -70,14 +69,14 @@ void InitSpriteSourceData(SpriteSourceData *out, SpriteDataHeader *header) {
     if ((s32)header != (((u32)header >> 2) << 2)) {
         FntPrint(D_800100A0);
         do {
-        } while (func_800129E8() != 0);
+        } while (DebugBreakAndReturnTrue() != 0);
     }
 
     /* Verify header tag (expected magic value 0xE for sprite-data format) */
     if (header->tag != 0xE) {
         FntPrint(D_800100A0);
         do {
-        } while (func_800129E8() != 0);
+        } while (DebugBreakAndReturnTrue() != 0);
     }
 
     /* Zero-initialize the SpriteSourceData and set field_8 to 0x1000 */
@@ -359,7 +358,7 @@ s32 FindSpriteTextureRecord(s32 arg0, s32 arg1, u16 arg2) {
 
     if (s2 == count) {
         do {
-        } while (func_800129E8() != 0);
+        } while (DebugBreakAndReturnTrue() != 0);
     }
 
     return s2 & 0xFFFF;

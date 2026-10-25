@@ -1,5 +1,11 @@
 #include "common.h"
 #include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "ovl11_state_field_access.h"
 
 extern u8 D_80077600[];
 
@@ -8,8 +14,6 @@ extern u8 D_80077600[];
  * TU declares the full 4-argument interface here. */
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
-u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
-
 s32 ovl_11_func_800E5ADC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     u8 *ptr;
 
@@ -17,7 +21,7 @@ s32 ovl_11_func_800E5ADC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         ptr = &D_80077600[arg0 * 0xF8];
     } else {
         ovl_11_func_800E5C60(arg0, 0, 0, 0);
-        ptr = ovl_11_func_800EFF04(0x22, arg0, NULL);
+        ptr = Ovl11ResolveStateField(0x22, arg0, NULL);
     }
     *(s32 *)ptr = arg2;
     *(s32 *)(ptr + 8) = arg3;

@@ -1,13 +1,6 @@
 #include "common.h"
 
-typedef struct {
-    char pad_00[0x24];
-    s16 unk24;
-    char pad_26[0x30 - 0x26];
-    s16 unk30;
-    char pad_32[0x7A - 0x32];
-    u16 unk7A;
-} Ovl11D04D4Obj;
+#include "game_types.h"
 
 typedef struct {
     s16 unk0;

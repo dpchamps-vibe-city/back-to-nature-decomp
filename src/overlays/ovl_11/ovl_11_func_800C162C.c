@@ -11,13 +11,13 @@
 #include "ovl11_selection_message.h"
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
+#include "ovl11_choice_messages.h"
 
 void ovl_11_func_800C3D70 (void);
 void ovl_11_func_800BFD1C (void);
 void ovl_11_func_800F65B8 (void);
 void ovl_11_func_80113818 (void);
 void ovl_11_func_800C401C (void);
-void ovl_11_func_80107F58 (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
 void ovl_11_func_800DB5CC (void);
@@ -50,7 +50,7 @@ void ovl_11_func_800C162C(void) {
     ovl_11_func_80113818();
     Ovl11UpdateSceneCameraOffset();
     ovl_11_func_800C401C();
-    ovl_11_func_80107F58();
+    Ovl11UpdateChoiceMessages();
     Ovl11UpdateSelectionMessage();
     if (((struct Ovl11FrameWork *) &D_8007AFF0)->mode == 0) {
         D_80128B60 = ovl_11_func_800CD9A0((Ovl11C7010Object *) &D_80071A00);

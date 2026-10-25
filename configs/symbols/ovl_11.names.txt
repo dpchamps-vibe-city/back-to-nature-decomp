@@ -1,5 +1,77 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Four-slot contextual messages and their three-block image cycle.
+Ovl11ResetChoiceMessages = 0x80107F18;
+Ovl11RequestChoiceMessages = 0x80107F38;
+Ovl11UpdateChoiceMessages = 0x80107F58;
+Ovl11ClearChoiceMessages = 0x80108104;
+Ovl11BuildChoiceMessageSlots = 0x80108118;
+Ovl11TryFillUniformChoiceMessages = 0x801081A0;
+Ovl11HasUniformChoiceMessages = 0x80108214;
+Ovl11SetChoiceMessageCategory = 0x8010822C;
+Ovl11SetChoiceMessageGridEntries = 0x801082B0;
+Ovl11SetChoiceMessageVariant = 0x801082F8;
+Ovl11TrySetSpecialChoiceMessage = 0x80108470;
+Ovl11TrySetCellChoiceMessage = 0x801084E0;
+Ovl11GetChoiceMessageBand = 0x80108594;
+Ovl11ProcessChoiceMessageInput = 0x8010860C;
+Ovl11SelectChoiceMessageFromPad = 0x801086CC;
+Ovl11RequestChoiceVariantMessage = 0x80108738;
+Ovl11GetChoiceVariantMessage = 0x8010876C;
+Ovl11RequestSelectedChoiceMessage = 0x80108828;
+Ovl11SelectChoiceImageOffsets = 0x80108864;
+Ovl11LoadChoiceImages = 0x801088E4;
+Ovl11CycleChoiceImages = 0x80108930;
+Ovl11RestoreChoiceImages = 0x801089DC;
+Ovl11AdvanceChoiceCellStates = 0x80108A24;
+Ovl11ConfirmChoiceCellState = 0x80108B8C;
+gOvl11ChoiceMessageIndex = 0x8012D040; // type:data size:0x4
+gOvl11ChoiceMessagePhase = 0x8012D044; // type:data size:0x4
+// Four C records span 0x10 bytes; retain the separately addressed +2 label.
+gOvl11ChoiceMessageSlots = 0x8012D050; // type:data size:0x2
+gOvl11ChoiceImageOffsets = 0x8012D060; // type:data size:0x8
+gOvl11ChoiceImageTick = 0x8012D068; // type:data size:0x4
+gOvl11ChoiceImageBlock = 0x8012D06C; // type:data size:0x4
+gOvl11ChoiceCategoryMessages = 0x801278E4; // type:data size:0x8
+gOvl11ChoiceVariantRules = 0x801278EC; // type:data size:0x2C
+// Caller-owned color-row blend record, row storage and explicit progress.
+gOvl11ColorRowBlend = 0x8012D088; // type:data size:0x20
+gOvl11ColorRowSources = 0x8012D0A8; // type:data size:0x40
+gOvl11ColorRowProgress = 0x8012D0E8; // type:data size:0x4
+
+// Fixed animation/hold playlists, ordered as their callback implementations.
+Ovl11RunAnimation0Sequence = 0x800DFC44;
+Ovl11RunAnimation052Sequence = 0x800DFCFC;
+Ovl11RunAnimation50Sequence = 0x800DFDAC;
+Ovl11RunAnimation41Sequence = 0x800DFE74;
+Ovl11RunAnimation70Sequence = 0x800DFF70;
+Ovl11RunAnimation60Sequence = 0x800E0028;
+Ovl11RunAnimation3Sequence = 0x800E00E0;
+Ovl11RunAnimation8Sequence = 0x800E0180;
+gOvl11Animation0Sequence = 0x80123F00; // type:data size:0x8
+gOvl11Animation052Sequence = 0x80123F08; // type:data size:0x10
+gOvl11Animation50Sequence = 0x80123F18; // type:data size:0xC
+gOvl11Animation41Sequence = 0x80123F24; // type:data size:0xC
+gOvl11Animation70Sequence = 0x80123F30; // type:data size:0xC
+gOvl11Animation60Sequence = 0x80123F3C; // type:data size:0xC
+gOvl11Animation3Sequence = 0x80123F48; // type:data size:0x8
+gOvl11Animation8Sequence = 0x80123F50; // type:data size:0x8
+Ovl11SubmitDeferredAnimationPose = 0x800E0220;
+Ovl11SubmitAnimationPose = 0x800E0280;
+
+// Descriptor-driven state access and its arithmetic/condition protocol.
+Ovl11UpdateStateField = 0x800EFABC;
+Ovl11ReadStateField = 0x800EFC68;
+Ovl11ClampStateField = 0x800EFD54;
+Ovl11TestStateFieldCondition = 0x800EFDA0;
+Ovl11ApplyStateFieldOperation = 0x800EFE34;
+Ovl11ResolveStateField = 0x800EFF04;
+gOvl11StateFields = 0x80124A18; // type:data size:0x3C0
+
+// Complementary queries over one 50-entry, 0x2C-stride volume format.
+Ovl11ProbeInteractionVolume = 0x800BDCE8;
+Ovl11FindFlaggedVolume = 0x800BDE84;
+
 // Five-tier upgrade checks and the private threshold/price pair.
 Ovl11CheckTierUpgrade = 0x8011DD90;
 Ovl11GetItemTier = 0x8011DE70;

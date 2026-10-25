@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl11_interaction_volume_query.h"
 
 typedef struct {
     /* 0x00 */ u16 field_0;
@@ -14,8 +15,6 @@ typedef struct {
 
 extern s32 D_80128CF0;
 
-extern void *ovl_11_func_800BDE84(u8 *arg0, s16 *arg1);
-
 s32 ovl_11_func_800C79F8(BoundsArgs4994 *arg0) {
     Coord800C79F8 coord;
     char *far_base;
@@ -27,7 +26,7 @@ s32 ovl_11_func_800C79F8(BoundsArgs4994 *arg0) {
     coord.field_2 = *(u16 *) ((u8 *) arg0 + 4);
     coord.field_4 = *(u16 *) ((u8 *) arg0 + 8);
     D_80128CF0 = 0;
-    p = ovl_11_func_800BDE84(*(u8 **) (far_base + 0x25388), (s16 *) &coord);
+    p = Ovl11FindFlaggedVolume(*(u8 **) (far_base + 0x25388), (s16 *) &coord);
     D_80128CF0 = (s32) p;
     if (p != 0) {
         t = *(u16 *) ((u8 *) p + 2);

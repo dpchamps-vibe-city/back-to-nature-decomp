@@ -8,15 +8,15 @@
 #include "ovl11_selection_message.h"
 #include "message_window.h"
 #include "ovl11_calendar_panel.h"
+#include "ovl11_interaction_volume_query.h"
+#include "ovl11_choice_messages.h"
 
-void *ovl_11_func_800BDE84 (u8 *arg0, s16 *arg1);
 s32 ovl_11_func_800CB4E0 (void);
 s32 ovl_11_func_800CB540 (u16 *arg0);
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800F6778 (void);
 s32 func_8001AF44 (u32 arg0);
 void ovl_11_func_800FFA40 (void);
-void ovl_11_func_80107F38 (void);
 void ovl_11_func_800F6734 (void);
 void ovl_11_func_800FFE64 (void);
 void ovl_11_func_800FFEF0 (void);
@@ -75,7 +75,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
         coord[1] = *(u16 *) ((u8 *) arg0 + 0x104);
         coord[0] = (*(u16 *) ((u8 *) arg0 + 0x100)) + ((*(u16 *) ((u8 *) arg0 + 0x110)) + (u16) temp_a3[0]);
         coord[2] = (*(u16 *) ((u8 *) arg0 + 0x108)) + ((*(u16 *) ((u8 *) arg0 + 0x118)) + (u16) temp_a3[1]);
-        temp_v0 = ovl_11_func_800BDE84((u8 *) ((struct Ovl11SpriteWork *) &D_8007AFF0)->header, coord);
+        temp_v0 = Ovl11FindFlaggedVolume((u8 *) ((struct Ovl11SpriteWork *) &D_8007AFF0)->header, coord);
         if ((temp_v0 != NULL) && (temp_s0 = *(u16 *) ((u8 *) temp_v0 + 2), ovl_11_func_800CB4E0(), temp_v1 = temp_s0 - 1, ((temp_v1 < 0x31U) != 0))) {
             switch (temp_s0) {
             case 45:
@@ -140,7 +140,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
             case 3:
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    ovl_11_func_80107F38();
+                    Ovl11RequestChoiceMessages();
                     var_v0_2 = 3;
                     goto block_28;
                 }

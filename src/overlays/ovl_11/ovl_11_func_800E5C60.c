@@ -1,7 +1,12 @@
 #include "common.h"
 #include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "ovl11_state_field_access.h"
 
-u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
 void ovl_11_func_800CF36C(s32 arg0);
 
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
@@ -14,7 +19,7 @@ s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         } else {
             var_a1 = arg0;
         }
-        temp_v0 = ovl_11_func_800EFF04(0x25, var_a1, NULL);
+        temp_v0 = Ovl11ResolveStateField(0x25, var_a1, NULL);
         if (arg1 == 0) {
             *(u16 *)temp_v0 |= 0x800;
         } else {

@@ -23,6 +23,9 @@
 #include "sprite_source.h"
 #include "random.h"
 #include "sprite_upload.h"
+#include "debug_break.h"
+#include "render_packet_pool.h"
+#include "ovl11_choice_messages.h"
 
 typedef struct {
                s16 unk0;
@@ -46,7 +49,6 @@ void SsSetSerialVol (char, short, short);
 int StoreImage (RECT *rect, u_long *p);
 void SystemError (char, long);
 void *memmove (unsigned char *, const unsigned char *, int);
-s32 func_800129E8 (void);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 *func_80021FE4 (void);
@@ -57,7 +59,6 @@ void func_800179E8 (void);
 void func_80022008 (void);
 void ovl_11_func_800BD160 (void);
 void ovl_11_func_800BD168 (void);
-void func_8001E160 (void);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800C1C90 (void);
@@ -106,7 +107,6 @@ void ovl_11_func_800BD538 (void);
 void ovl_11_func_800DC990 (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800CBEF8 (void);
-void ovl_11_func_80107F18 (void);
 s32 *ovl_11_func_80111E38 (void);
 void ovl_11_func_800F2508 (void);
 void ovl_11_func_80104898 (void);

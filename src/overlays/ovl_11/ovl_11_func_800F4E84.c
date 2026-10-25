@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "ovl11_interaction_volume_query.h"
 
-void *ovl_11_func_800BDCE8(u8 *arg0, Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
 void ovl_11_func_800F4FC8(void);
 void ovl_11_func_800F4CEC(void);
@@ -22,7 +22,7 @@ void ovl_11_func_800F4E84(void) {
             return;
         }
         position = (Ovl11Func800BDCE8Arg1 *) ((u8 *)position + 0x20);
-        hit = ovl_11_func_800BDCE8(((Ovl11FarInitView *)&D_8007AFF0)->data, position, 0) != NULL;
+        hit = Ovl11ProbeInteractionVolume(((Ovl11FarInitView *)&D_8007AFF0)->data, position, 0) != NULL;
         if (ovl_11_func_800BDB88(&position->unk0, 0xC000) != 0) {
             hit = 1;
         }
@@ -37,7 +37,7 @@ void ovl_11_func_800F4E84(void) {
         entry = *(Ovl11PoolGateRecord **)(base + 0x5DD4);
         if (type == entry->type) {
             position = (Ovl11Func800BDCE8Arg1 *) entry->position;
-            hit = ovl_11_func_800BDCE8(((Ovl11FarInitView *)&D_8007AFF0)->data, position, 0) != NULL;
+            hit = Ovl11ProbeInteractionVolume(((Ovl11FarInitView *)&D_8007AFF0)->data, position, 0) != NULL;
             if (ovl_11_func_800BDB88(&position->unk0, 0xC000) != 0) {
                 hit = 1;
             }

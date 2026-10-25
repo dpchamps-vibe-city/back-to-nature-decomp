@@ -2,9 +2,13 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "ovl11_state_field_access.h"
 
 
-u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
 s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
@@ -14,7 +18,7 @@ s32 ovl_11_func_800EAE24(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 temp_v1;
     u8 *temp_s3;
 
-    temp_s3 = ovl_11_func_800EFF04(0x23, (s32) arg0, NULL);
+    temp_s3 = Ovl11ResolveStateField(0x23, (s32) arg0, NULL);
     switch (arg3) {
     case 0:
     case 1:

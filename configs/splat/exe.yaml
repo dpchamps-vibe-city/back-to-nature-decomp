@@ -80,7 +80,7 @@ segments:
       - [0x1A70, c, func_80011270]       # 0x80011270 func_80011270
       - [0x1A78, c, __start]       # 0x80011278 __start
       - [0x1B70, c, modules/game_loop]
-      - [0x31E8, c, func_800129E8]       # 0x800129E8 func_800129E8
+      - [0x31E8, c, modules/debug_break]
       - [0x31F4, c, modules/display_mask]
       - [0x3234, c, modules/random]
       - [0x3268, c, modules/vram_clear]
@@ -185,9 +185,7 @@ segments:
       - [0xE7D4, c, func_8001DFD4]       # 0x8001DFD4 func_8001DFD4
       - [0xE84C, c, func_8001E04C]       # 0x8001E04C func_8001E04C
       - [0xE888, c, func_8001E088]       # 0x8001E088 func_8001E088
-      - [0xE8B8, c, func_8001E0B8]       # 0x8001E0B8 func_8001E0B8
-      - [0xE958, c, func_8001E158]       # 0x8001E158 func_8001E158
-      - [0xE960, c, func_8001E160]       # 0x8001E160 func_8001E160
+      - [0xE8B8, c, modules/render_packet_pool]
       - [0xEA6C, c, func_8001E26C]       # 0x8001E26C func_8001E26C
       - [0xEB34, c, SetVal8005E51C]       # 0x8001E334 SetVal8005E51C
       - [0xEB40, c, func_8001E340]       # 0x8001E340 func_8001E340
@@ -212,12 +210,7 @@ segments:
       - [0xFC2C, c, func_8001F42C]       # 0x8001F42C func_8001F42C
       - [0xFDB8, c, func_8001F5B8]       # 0x8001F5B8 func_8001F5B8
       - [0xFDEC, c, func_8001F5EC]       # 0x8001F5EC func_8001F5EC
-      - [0xFE64, c, func_8001F664]       # 0x8001F664 func_8001F664
-      - [0xFF74, c, func_8001F774]       # 0x8001F774 func_8001F774
-      - [0x100A4, c, func_8001F8A4]       # 0x8001F8A4 func_8001F8A4
-      - [0x1020C, c, func_8001FA0C]       # 0x8001FA0C func_8001FA0C
-      - [0x10298, c, func_8001FA98]       # 0x8001FA98 func_8001FA98
-      - [0x102B4, c, func_8001FAB4]       # 0x8001FAB4 func_8001FAB4
+      - [0xFE64, c, modules/color_row_blend]
       - [0x102BC, c, modules/sound_commands]
       - [0x104E4, c, modules/master_volume]
       - [0x1067C, c, modules/sound_driver]

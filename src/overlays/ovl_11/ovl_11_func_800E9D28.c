@@ -7,6 +7,7 @@
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
 #include "card_deal.h"
+#include "ovl11_state_field_access.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
@@ -32,8 +33,7 @@ s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800EFDA0 (s32 arg0, s32 arg1, s32 arg2);
-s32 ovl_11_func_800EFE34 (s32 *ptr, s32 arg1, s32 arg2);
+s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
 
 s32 ovl_11_func_800F0380(s16 arg0);
 void ovl_11_func_800F2538(s16 arg0, s16 arg1, s16 arg2);
@@ -492,13 +492,13 @@ block_118:
         if (arg1 != -1) {
             *((s32 *) ((u8 *) gOvl11ValueSlots + (arg1 * 4))) = (s32) ((E9State *)D_8006C838)->fE77C;
         }
-        return ovl_11_func_800EFDA0((s32) ((E9State *)D_8006C838)->fE77C, arg2, arg3);
+        return Ovl11TestStateFieldCondition((s32) ((E9State *)D_8006C838)->fE77C, arg2, arg3);
     case 29:
-        ovl_11_func_800EFE34((s32 *) ((u8 *) gOvl11ValueSlots + (arg1 * 4)), arg2 / 2, arg3);
+        Ovl11ApplyStateFieldOperation((s32 *) ((u8 *) gOvl11ValueSlots + (arg1 * 4)), arg2 / 2, arg3);
         return 1;
     case 30:
         sp10 = (s32) ((E9State *)D_8006C838)->f91C2;
-        ovl_11_func_800EFE34(&sp10, arg2, arg3);
+        Ovl11ApplyStateFieldOperation(&sp10, arg2, arg3);
         if (sp10 >= 0x100) {
             sp10 = 0xFF;
         }

@@ -4,8 +4,10 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
-
-u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "ovl11_state_field_access.h"
 
 /* D_8006C838 view for this function: the s32 flag word at +0x5234
  * (bit 0x100000). */
@@ -17,7 +19,7 @@ typedef struct {
 s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     u8 *ptr;
 
-    ptr = ovl_11_func_800EFF04(0x24, arg0, NULL);
+    ptr = Ovl11ResolveStateField(0x24, arg0, NULL);
     if (arg3 == 0) {
         if (*(u8 *)(ptr + 4) != arg1) {
             SelectSpriteAnimation((ObjectState *)ptr, arg1 & 0xFF);

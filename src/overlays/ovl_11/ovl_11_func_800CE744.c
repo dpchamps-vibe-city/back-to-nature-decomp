@@ -14,6 +14,7 @@
 #include "sprite_render.h"
 #include "sprite_source.h"
 #include "random.h"
+#include "debug_break.h"
 
 typedef struct {
                s16 unk0;
@@ -139,7 +140,6 @@ Recon_ovl_11_func_800D3390_A0View *ovl_11_func_800D2F48 (s32 arg0);
 struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
 u16 *ovl_11_func_8010B1C4 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
-s32 func_800129E8 (void);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 s32 func_8001AF44 (u32 arg0);
 s32 ovl_11_func_800C2884 (s16 key, u32 *table);

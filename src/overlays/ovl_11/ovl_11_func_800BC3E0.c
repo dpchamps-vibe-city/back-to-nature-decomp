@@ -6,12 +6,12 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "random.h"
+#include "render_packet_pool.h"
 
 void ovl_11_func_801044E4(void);
 void ovl_11_func_800BD160(void);
 void ovl_11_func_800BD168();
 void func_8001AF70(u16 arg0, u16 arg1);
-void func_8001E160(void);
 void ovl_11_func_800BCD28(void);
 void ovl_11_func_800BC868(void);
 /* Resident sprite-display disable at exe:8001B100. */
@@ -62,7 +62,7 @@ void ovl_11_func_800BC3E0(void) {
     case 10:
         if (IsSoundTransferComplete()) {
             D_801287F4++;
-            func_8001E160();
+            InitRenderPacketPools();
             InitGteSceneState();
         }
         break;

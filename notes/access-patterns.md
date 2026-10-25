@@ -73,7 +73,7 @@ No referenced symbols in this region.
 
 ## Global Summary
 
-Total symbols scanned: 1320
+Total symbols scanned: 1321
 
 | Inferred section | Regions |
 |-----------------|---------|

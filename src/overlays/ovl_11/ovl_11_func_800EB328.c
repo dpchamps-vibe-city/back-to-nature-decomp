@@ -2,8 +2,14 @@
 #include "psyq/libmath.h"
 #include "psyq/abs.h"
 #include "random.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "ovl11_state_field_access.h"
 
-u8 *ovl_11_func_800EFF04(s32 arg0, s32 arg1, s32 *arg2);
 s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800EB328(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
@@ -21,7 +27,7 @@ s32 ovl_11_func_800EB328(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 direction;
 
     index = arg3;
-    position = (s32 *)ovl_11_func_800EFF04(0x22, arg0, 0);
+    position = (s32 *)Ovl11ResolveStateField(0x22, arg0, 0);
     random = Rand(51);
     offset = gOvl11ValueSlots[index] - 25;
     x = random + offset;

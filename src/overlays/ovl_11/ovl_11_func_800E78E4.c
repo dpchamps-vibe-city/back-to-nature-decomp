@@ -1,7 +1,7 @@
 #include "common.h"
 #include "random.h"
 
-s32 ovl_11_func_800EFDA0(s32 arg0, s32 arg1, s32 arg2);
+s32 Ovl11TestStateFieldCondition(s32 arg0, s32 arg1, s32 arg2);
 
 void ovl_11_func_800E78E4(s32 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 temp;
@@ -10,5 +10,5 @@ void ovl_11_func_800E78E4(s32 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (arg1 != -1) {
         gOvl11ValueSlots[arg1] = temp;
     }
-    ovl_11_func_800EFDA0(temp, arg3, arg2);
+    Ovl11TestStateFieldCondition(temp, arg3, arg2);
 }

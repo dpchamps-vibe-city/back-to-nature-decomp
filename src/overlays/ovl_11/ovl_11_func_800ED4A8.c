@@ -19,6 +19,8 @@
 #include "sprite_source.h"
 #include "random.h"
 #include "sprite_render.h"
+#include "ovl11_state_field_access.h"
+#include "ovl11_interaction_volume_query.h"
 
 typedef struct {
                s16 field_0;
@@ -151,7 +153,6 @@ typedef struct {
 int MoveImage2 (RECT *rect, int x, int y);
 int csin (int a);
 s32 ovl_11_func_800C3548 (s32 arg0);
-void ovl_11_func_800EFABC (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void SetPadActuatorSequenceAddress (s32 arg0, s32 arg1);
 void ResetPadActuatorSequence (s32 arg0);
 void SetVal8005E2E8 (s32 arg0);
@@ -190,7 +191,6 @@ void ovl_11_func_800C6F0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_8011E588 (void);
 s32 ovl_11_func_800FBE4C (void);
-void *ovl_11_func_800BDCE8 (u8 *arg0, M2C_cec44150eede_Ovl11Func800BDCE8Arg1 *arg1, s32 arg2);
 s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800C9DC0 (void);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
@@ -214,7 +214,6 @@ s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5704 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-u8 *ovl_11_func_800EFF04 (s32 arg0, s32 arg1, s32 *arg2);
 s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6D2C (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -230,8 +229,7 @@ s32 ovl_11_func_800E99EC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6AB0 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800E8F78 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 pow_int (s32 arg0, s32 arg1);
-s32 ovl_11_func_800EFE34 (s32 *ptr, s32 arg1, s32 arg2);
-s32 ovl_11_func_800EFD54 (s32 arg0, s32 arg1, s32 arg2);
+s32 Ovl11ClampStateField (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_801136D0 (s32 *arg0, u16 *arg1, u16 *arg2);
 void ovl_11_func_8011F52C (void);
 s16 ovl_11_func_80120358 (M2C_93d07a715929_Ovl11SelectArg *arg0);
@@ -257,12 +255,12 @@ s32 ovl_11_func_800ED4A8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         if ((*(u16 *) (var_s2 + 0x9A06)) & 0x800) {
             if (var_s6) {
                 if (ovl_11_func_800C3548(var_s0) == 1) {
-                    ovl_11_func_800EFABC(0x1F, var_s0, arg3, (s32) arg1);
+                    Ovl11UpdateStateField(0x1F, var_s0, arg3, (s32) arg1);
                 } else {
-                    ovl_11_func_800EFABC(0x20, var_s0, arg2, (s32) arg1);
+                    Ovl11UpdateStateField(0x20, var_s0, arg2, (s32) arg1);
                 }
             } else {
-                ovl_11_func_800EFABC((s32) arg0, var_s0, arg2, (s32) arg1);
+                Ovl11UpdateStateField((s32) arg0, var_s0, arg2, (s32) arg1);
             }
         }
         temp_v0 = var_s4;

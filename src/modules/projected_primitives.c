@@ -18,6 +18,7 @@
 #include "psyq/inline_c.h"
 #include "psyq/inline_c_gas.h"
 #include "include_asm.h"
+#include "render_packet_pool.h"
 
 void InitProjectedPrimitiveSource(ProjectedPrimitiveSource *source, void *batchData) {
     s32 count;
@@ -183,7 +184,6 @@ typedef struct { u32 color; } PrimitiveColor;
 
 void PopMatrix ();
 void PushMatrix ();
-void func_8001E158 ();
 s32 HasTriangleVertexXInBounds (s32 sxy0, s32 sxy1, s32 sxy2);
 void ApplyProjectedRotationScale (void);
 void BuildProjectedClipPlanes (VECTOR *arg0, VECTOR *arg1);
@@ -242,7 +242,7 @@ void EmitProjectedPrimitiveEntry(u8 *arg0, u8 *arg1) {
 
     var_s6 = WORD(arg1, 0x14);
     if (var_s6 > 0) {
-        func_8001E158(0x2000);
+        PacketReservationHook(0x2000);
         temp_s5 = arg0 + WORD(arg1, 0x0);
         var_s2 = arg0 + WORD(arg1, 0x10);
         var_s0 = gActiveRenderContext->field_118;
