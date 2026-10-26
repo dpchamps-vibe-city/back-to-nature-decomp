@@ -4,7 +4,7 @@ void ovl_17_func_800B9158(s32 arg0, s16 arg1) {
     u8 *base;
     s32 off;
 
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     if (*(s16 *)(base + 0x5A8) >= 0x5A) {
         *(s16 *)(base + 0x5A8) = 0;
     }

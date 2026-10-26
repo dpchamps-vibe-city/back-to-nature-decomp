@@ -565,8 +565,12 @@ typedef struct Ovl30AnimalRecordB8 {
     u16 pregnancy;
     u8 padB6[2];
 } Ovl30AnimalRecordB8;
-/* 801306F4 forms menu field addresses from the legacy D_800749F4 base. */
-#define Ovl30_AnimalRecords749F4 ((Ovl30AnimalRecordB8 *)&D_800749F4)
+/* Twenty 0xB8 tagged records: D0C34 allocates, D0D7C finds the slot.
+ * Retain the existing 12-byte backing/lvalue declaration, not a new pool extent. */
+extern s32 _gTaggedRecordBase[3] __asm__("gTaggedRecordBase");
+#define gTaggedRecordBase (*((s32*)_gTaggedRecordBase))
+/* 801306F4 forms menu field addresses from the same record base. */
+#define Ovl30_AnimalRecords749F4 ((Ovl30AnimalRecordB8 *)&gTaggedRecordBase)
 /* 801306F4 reads this selector with lw and edits it as a four-byte value. */
 extern s32 D_801349A0;
 /* 801306F4 installs these NUL-terminated Shift-JIS labels and print format. */
@@ -2749,17 +2753,17 @@ extern struct Ovl23MovementBounds Ovl23_D_800BF87C_bounds __asm__("D_800BF87C");
  * absolute addressing (lui + %lo) from ovl_23_func_800BB1B8, which passes
  * its address as an ObjectState and reads the ObjectState fields at +4/+5
  * through a base pointer biased by -0x3B4. */
-extern u8 D_800BFC30[];
+extern u8 gOvl23SceneSpriteSource[];
 
 /* ovl_23_func_800BB214 copies 0x13DC bytes here and uses the leading sprite header. */
-extern u8 D_800BE49C[0x13DC];
+extern u8 gOvl23SharedSpriteBank[0x13DC];
 /* ovl_23_func_800BB214 initializes this 0x30-byte sprite object. */
-extern struct SpriteSourceData D_800BFC60;
+extern struct SpriteSourceData gOvl23SharedBankSpriteSource;
 
 /* ovl_23_func_800BB534 indexes four sprite-header offsets in original data. */
-extern s32 D_800BBADC[4];
+extern s32 gOvl23ActorSpriteHeaderOffsets[4];
 /* ovl_23_func_800BB534 copies 0x29A8 bytes here and resolves sprite headers. */
-extern u8 D_800BBAEC[0x29A8];
+extern u8 gOvl23ActorSpriteBank[0x29A8];
 
 /* D_80071C90 - ovl_11 object state base (0x80071C90), absolute addressing
  * (lui + %lo in ovl_11_func_800E9104). That function uses its address as an
@@ -4705,7 +4709,8 @@ typedef struct {
     s32 mode;
 } Ovl17CompletionView;
 
-extern u8 D_800BD848[];
+/* ovl_17: six 0x50 record views and adjacent controls share this raw base. */
+extern u8 gOvl17RecordWorkBase[];
 
 /* 800B9628 reads s32 values at +0x38 with stride 0x50 and s16 selections/count at +0x2BC/+0x2D4. */
 typedef struct {
@@ -4750,7 +4755,7 @@ typedef struct {
     s16 field_2D2;
     s16 field_2D4;
 } Ovl17DisplaySetup;
-#define Ovl17_D_800BD848 (*(Ovl17DisplaySetup *)D_800BD848)
+#define Ovl17_D_800BD848 (*(Ovl17DisplaySetup *)gOvl17RecordWorkBase)
 
 /* 800B8D88 reads a word at +0x5228 and a signed mode halfword at +0xE514. */
 typedef struct {
@@ -4915,7 +4920,11 @@ extern u8 gOvl17AnimatedRecordBase[];
 /* ovl_17_func_800B861C passes this record to 800BAC24 and stores a byte at -0xC4. */
 extern u8 D_800BD910[];
 
-extern u8 D_800BFA90[];
+/* ovl_23: +0x10 sprite field of six 0x44 records; the companion is -0x1D4. */
+extern u8 gOvl23ActorSpriteSourceBase[];
+/* ovl_23 data: six anchor Y halfwords and six inclusive (minimum, maximum) pairs. */
+extern s16 gOvl23RecordAnchorY[6];
+extern s16 gOvl23RecordYBounds[12];
 
 extern s32 D_800C49F8[];
 

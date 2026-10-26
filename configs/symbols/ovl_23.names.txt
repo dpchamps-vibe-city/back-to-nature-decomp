@@ -9,3 +9,31 @@ Ovl23TestRecordRandomThreshold = 0x800BA3B4; // type:func
 Ovl23ChooseRecordWeightedResult = 0x800BA494; // type:func
 gOvl23RecordRandomWeights = 0x800BBA9C; // type:data size:0x18
 gOvl23RecordRandomTrialThresholds = 0x800BBAB4; // type:data size:0x28
+
+// Whole sprite-source bring-up/pause protocol, in original link order.
+Ovl23PauseActorSprites = 0x800BB0E8; // type:func
+Ovl23ResumeActorSprites = 0x800BB150; // type:func
+Ovl23DrawPausedSpriteFrame = 0x800BB1B8; // type:func
+Ovl23LoadSharedSpriteBank = 0x800BB214; // type:func
+Ovl23LoadSpriteImageBank = 0x800BB488; // type:func
+Ovl23LoadActorSpriteBank = 0x800BB534; // type:func
+Ovl23QueueSoundBankLoads = 0x800BB758; // type:func
+gOvl23ActorSpriteHeaderOffsets = 0x800BBADC; // type:data size:0x10
+gOvl23ActorSpriteBank = 0x800BBAEC; // type:data size:0x29A8
+gOvl23SharedSpriteBank = 0x800BE49C; // type:data size:0x13DC
+// Raw base label within the first 0x44-stride record, not the whole array.
+gOvl23ActorSpriteSourceBase = 0x800BFA90; // type:data size:0x30
+gOvl23SceneSpriteSource = 0x800BFC30; // type:data size:0x30
+gOvl23SharedBankSpriteSource = 0x800BFC60; // type:data size:0x30
+
+// Eight-direction movement and its closed geometry helper family.
+Ovl23StepRecordInDirection = 0x800B9B18; // type:func
+Ovl23ChooseRecordDirection = 0x800B9CCC; // type:func
+Ovl23CheckDirectionalClearance = 0x800B9E04; // type:func
+Ovl23DirectionFromRecordAnchor = 0x800BA1E0; // type:func
+Ovl23DirectionFromAngleDegrees = 0x800BA278; // type:func
+Ovl23PlanarDistance = 0x800BA30C; // type:func
+Ovl23AngleDegreesFromVector = 0x800BA368; // type:func
+// Distinct from ovl_10's button word and editor bytes at these RAM addresses.
+gOvl23RecordAnchorY = 0x800BBA40; // type:data size:0xC
+gOvl23RecordYBounds = 0x800BBA4C; // type:data size:0x18

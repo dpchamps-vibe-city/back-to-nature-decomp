@@ -13,7 +13,7 @@ void ovl_17_func_800B91B8(void) {
     u8 *base;
     s16 *yFields;
 
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     i = 0;
     do {
         yFields = (s16 *)(base + 0x2DC);

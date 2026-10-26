@@ -19,7 +19,7 @@ s32 ovl_11_func_801096FC(Ovl11PaddedVec3 position, s16 key, s32 radius, s32 *fla
     i = 0;
     notmatch = 0x12;
     mask = 0x10000;
-    base = (Ovl11RecD749F4 *)&D_800749F4;
+    base = (Ovl11RecD749F4 *)&gTaggedRecordBase;
     sel = key;
     r = radius;
     lo0 = position.field_0 - r;

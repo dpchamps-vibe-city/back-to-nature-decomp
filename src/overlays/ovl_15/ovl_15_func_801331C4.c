@@ -25,7 +25,7 @@ void ovl_15_func_801331C4(void) {
             case 2:
                 dest = ovl_15_func_8013345C(&D_800742EC, 1, &index);
                 memcpy(dest, (void *)Ovl15Slots[1][i].unk4, 0xB8);
-                Ovl15PlaceRowZSlot((Unk80132B44 *)((u8 *)&D_800749F4 + index * 0xB8), index);
+                Ovl15PlaceRowZSlot((Unk80132B44 *)((u8 *)&gTaggedRecordBase + index * 0xB8), index);
                 break;
             }
         }

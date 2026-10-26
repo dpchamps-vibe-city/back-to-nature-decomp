@@ -4,11 +4,8 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "ovl23_sprite_resources.h"
 
-void ovl_23_func_800BB214 (void);
-void ovl_23_func_800BB488 (void);
-void ovl_23_func_800BB534 (void);
-void ovl_23_func_800BB758 (void);
 void ovl_23_func_800B81AC (void);
 
 void ovl_23_func_800B7F00(void) {
@@ -16,19 +13,19 @@ void ovl_23_func_800B7F00(void) {
 
     switch (*(u8 *)&D_800BBA3C) {
     case 0:
-        ovl_23_func_800BB214();
+        Ovl23LoadSharedSpriteBank();
         ++*(u8 *)&D_800BBA3C;
         break;
     case 1:
-        ovl_23_func_800BB488();
+        Ovl23LoadSpriteImageBank();
         ++*(u8 *)&D_800BBA3C;
         break;
     case 2:
-        ovl_23_func_800BB534();
+        Ovl23LoadActorSpriteBank();
         ++*(u8 *)&D_800BBA3C;
         break;
     case 3:
-        ovl_23_func_800BB758();
+        Ovl23QueueSoundBankLoads();
         ++*(u8 *)&D_800BBA3C;
         break;
     case 4:

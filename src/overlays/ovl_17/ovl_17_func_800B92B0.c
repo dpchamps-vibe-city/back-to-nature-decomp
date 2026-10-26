@@ -21,6 +21,6 @@ void ovl_17_func_800B92B0(void) {
                             *(s32 *) (work + 0x24));
         record += 0x50;
     }
-    display = D_800BD848;
+    display = gOvl17RecordWorkBase;
     ovl_17_func_800BA808(*(s32 *) (display + 0x24));
 }

@@ -13,9 +13,9 @@ void ovl_17_func_800B9784(void) {
     if (((Ovl17ModeView *)D_8006C838)->mode == 3) {
         selected = 2;
     } else {
-        selected = ((Ovl17DisplaySetup *)D_800BD848)->entries[0];
+        selected = ((Ovl17DisplaySetup *)gOvl17RecordWorkBase)->entries[0];
     }
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     scaled = selected * 0x50;
     rows = base + 0x28;
     value = *(u16 *)(base + scaled + 0x2C);

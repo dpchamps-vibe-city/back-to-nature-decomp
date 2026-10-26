@@ -19,13 +19,13 @@ void ovl_11_func_800CEBC8(void) {
             }
         }
         for (var_s0 = 0; var_s0 < 20; var_s0++) {
-            records = (u16 *) ((u8 *) &D_800749F4 + var_s0 * 0xB8);
+            records = (u16 *) ((u8 *) &gTaggedRecordBase + var_s0 * 0xB8);
             if (*records != 0) {
                 ovl_11_func_800DE9C8((UnkStruct800DF4F0 *) records);
             }
         }
         for (var_s0 = 0; var_s0 < 20; var_s0++) {
-            records = (u16 *) ((u8 *) &D_800749F4 + var_s0 * 0xB8);
+            records = (u16 *) ((u8 *) &gTaggedRecordBase + var_s0 * 0xB8);
             if (*records != 0) {
                 ovl_11_func_800E05A8((UnkStruct800E109C *) records);
             }

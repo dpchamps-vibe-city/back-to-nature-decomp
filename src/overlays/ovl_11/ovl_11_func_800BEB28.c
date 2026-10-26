@@ -80,7 +80,7 @@ after_actor:
     if (*((struct Ovl11SpriteWork *) &D_8007AFF0)->header == 0) {
         if (arg5 & 2) {
             query.field_18 = 0x14002;
-            entry = (u16 *) &D_800749F4;
+            entry = (u16 *) &gTaggedRecordBase;
             for (i = 0; i < 0x14U; i++, entry += 0x5C) {
                 if ((u32) (*entry - 0x160) < 4U &&
                     ovl_11_func_800BE2C4((s32 **) &query, entry)) {
@@ -91,7 +91,7 @@ after_actor:
         if (*((struct Ovl11SpriteWork *) &D_8007AFF0)->header == 0) {
             if (arg5 & 4) {
                 query.field_18 = 0x14004;
-                entry = (u16 *) &D_800749F4;
+                entry = (u16 *) &gTaggedRecordBase;
                 for (i = 0; i < 0x14U; i++, entry += 0x5C) {
                     if ((u32) (*entry - 0x164) < 3U &&
                         ovl_11_func_800BE2C4((s32 **) &query, entry)) {

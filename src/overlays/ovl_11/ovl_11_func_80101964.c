@@ -1,6 +1,7 @@
 #include "common.h"
+#include "psyq/memory.h"
+#include "ovl11_texture_cell_cache.h"
 
-void ovl_11_func_800F6D14 (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F6F7C (s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F7010 (s32 arg0, s16 arg1, s16 arg2);
 
@@ -23,7 +24,7 @@ void ovl_11_func_80101964(void) {
     sp10 = temp_v0 + 0x60;
     for (var_s7 = 0; var_s7 < 7; var_s7++) {
         if (((Ovl11IconFlagsView *)D_8006C838)->flags & var_s3) {
-            ovl_11_func_800F6D14(temp_s6, D_801273F4[var_s7], var_s2, var_s4);
+            Ovl11DrawTextureCell(temp_s6, D_801273F4[var_s7], var_s2, var_s4);
             if (D_801273EE_flags & var_s3) {
                 ovl_11_func_800F6F7C(sp10, var_s2, var_s4);
             }
@@ -38,7 +39,7 @@ void ovl_11_func_80101964(void) {
         var_s3 <<= 1;
     }
     if (((Ovl11IconFlagsView *)D_8006C838)->flags & 0x80) {
-        ovl_11_func_800F6D14(temp_s6, 0x79U, var_s2, var_s4);
+        Ovl11DrawTextureCell(temp_s6, 0x79U, var_s2, var_s4);
         if (D_801273EE_flags & 0xF80) {
             ovl_11_func_800F6F7C(sp10, var_s2, var_s4);
         }

@@ -27,15 +27,15 @@ void ovl_17_func_800B8790(void) {
     SetMessagePortraitEnabled(0);
     RequestMessageWindow(4, 5);
     if (GetMessageWindowStatus() == 5) {
-        u8 *counter = D_800BD848;
+        u8 *counter = gOvl17RecordWorkBase;
         (*(s16 *)(counter + 0x2CE))++;
         if (*(s16 *)(counter + 0x2CE) >= 60) {
             for (i = 0; i < 6; i++) {
-                base = D_800BD848;
+                base = gOvl17RecordWorkBase;
                 *(s16 *)(base + i * 0x50 + 0x2E) = *(s16 *)(base + i * 0x50 + 0x2C) =
                     ovl_17_func_800B9C48(*(s16 *)(base + i * 0x50 + 0x34));
             }
-            work = D_800BD848;
+            work = gOvl17RecordWorkBase;
             CloseMessageWindow();
             *(s16 *)(work + 0x2C8) = PlaySoundEffect(0x38);
             Ovl17SelectAllRecordAnimations0();

@@ -37,7 +37,7 @@ void ovl_17_func_800B8898(void) {
 
     ovl_17_func_800B91B8();
     if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x800) {
-        var_s0 = D_800BD848;
+        var_s0 = gOvl17RecordWorkBase;
         temp_v0 = (*(s32 *) (var_s0 + 0)) != 1;
         (*(s32 *) (var_s0 + 0)) = temp_v0;
         if (temp_v0 == 1) {
@@ -47,31 +47,31 @@ void ovl_17_func_800B8898(void) {
         goto block_6;
     }
 block_3:
-    if ((*(s32 *) D_800BD848) == 1) {
+    if ((*(s32 *) gOvl17RecordWorkBase) == 1) {
         ovl_17_func_800B92B0();
         return;
     }
 block_6:
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     displacement = *(s16 *)(base + 0x2BC) * -0x50;
     if (*(s32 *)(base - displacement + 0x38) <= 0x800000) {
         Ovl17UpdateTimerHud(2);
     }
     (*(u32 *) (base + 0x1C))++;
     for (var_s1 = 0; var_s1 < 6; var_s1++) {
-        var_s0 = D_800BD848;
+        var_s0 = gOvl17RecordWorkBase;
         temp_v0_2 = ovl_17_func_800B9C48(*(s16 *) (var_s0 + var_s1 * 0x50 + 0x34));
         (*(s16 *) (var_s0 + var_s1 * 0x50 + 0x2C)) = temp_v0_2;
         (*(s16 *) (var_s0 + var_s1 * 0x50 + 0x2E)) = temp_v0_2;
     }
     if ((((Ovl17ModeView *)D_8006C838)->mode == 3) && ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x40)) {
         u8 *work;
-        work = D_800BD848;
+        work = gOvl17RecordWorkBase;
         (*(s32 *) (work + 0xD0)) = 1;
         RequestPadActuatorSequence(0, 0);
         (*(s16 *) (work + 0x2C8)) = PlaySoundEffect(0x3D);
     }
-    var_s0 = D_800BD848;
+    var_s0 = gOvl17RecordWorkBase;
     if (*(u32 *) (var_s0 + 0x1C) == ((*(u32 *) (var_s0 + 0x1C) / (u32) (*(s16 *) (var_s0 + 6))) * (*(s16 *) (var_s0 + 6)))) {
         ovl_17_func_800B9CAC();
         ovl_17_func_800B9324();
@@ -82,28 +82,28 @@ block_6:
             (*(s32 *) (var_s0 + 0xD0)) = 0;
         }
     }
-    if (((Ovl17DisplaySetup *)D_800BD848)->field_24 <= 0x7FFFFF) {
+    if (((Ovl17DisplaySetup *)gOvl17RecordWorkBase)->field_24 <= 0x7FFFFF) {
         ovl_17_func_800B9784();
     }
     for (var_s1 = 0; var_s1 < 6; var_s1++) {
-        var_a1 = D_800BD848;
+        var_a1 = gOvl17RecordWorkBase;
         (*(s32 *) (var_a1 + var_s1 * 0x50 + 0x38)) += (((*(s16 *) (var_a1 + var_s1 * 0x50 + 0x2E)) << 0xC) / 30);
     }
     ovl_17_func_800B9628();
-    motion = D_800BD848;
+    motion = gOvl17RecordWorkBase;
     (*(s32 *) (motion + 0x24)) += (((*(s16 *) (motion + 0x20)) << 0xC) / 30);
     for (var_s1 = 0; var_s1 < 6; var_s1++) {
-        var_s0_2 = D_800BD848;
+        var_s0_2 = gOvl17RecordWorkBase;
         ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *) (var_s0_2 + 0x28 + var_s1 * 0x50), *(s32 *) (var_s0_2 + 0x24));
     }
-    threshold = D_800BD848;
+    threshold = gOvl17RecordWorkBase;
     if ((((*(s16 *) (threshold + 0x2D0)) << 0x17) / 100) < (*(s32 *) (threshold + 0x24))) {
         if ((*(s16 *) (threshold + 0x2CC)) == -1) {
             (*(s16 *) (threshold + 0x2CA)) = PlaySoundEffect(0x43);
             (*(s16 *) (threshold + 0x2CC)) = 0;
         }
     }
-    var_a0_2 = D_800BD848;
+    var_a0_2 = gOvl17RecordWorkBase;
     if ((*(s32 *) (var_a0_2 + 0x24)) > 0x7FFFFF) {
         (*(s32 *) (var_a0_2 + 0x24)) = 0x800000;
         (*(s16 *) (var_a0_2 + 0x20)) = 0;
@@ -118,9 +118,9 @@ block_6:
     }
     if (ovl_17_func_800B986C() == 1) {
         u8 *state;
-        state = D_800BD848;
+        state = gOvl17RecordWorkBase;
         (*(s16 *) (state + 0x2CC)) = 0;
         (*(s8 *) (state + 4)) = 8;
     }
-    ovl_17_func_800BA808(((Ovl17DisplaySetup *)D_800BD848)->field_24);
+    ovl_17_func_800BA808(((Ovl17DisplaySetup *)gOvl17RecordWorkBase)->field_24);
 }

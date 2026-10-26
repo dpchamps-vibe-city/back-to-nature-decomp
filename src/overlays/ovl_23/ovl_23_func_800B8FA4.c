@@ -4,11 +4,9 @@
 #include "psyq/libgte.h"
 #include "psyq/stdlib.h"
 #include "random.h"
+#include "ovl23_direction_movement.h"
 
-s32 ovl_23_func_800BA1E0(Ovl23Func800BA1E0Arg *arg0);
-s32 ovl_23_func_800B9CCC(Ovl23Func800BA1E0Arg *arg0);
 void ovl_23_func_800BB0C8(Ovl23Func800BB0C8Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_23_func_800B9B18(Ovl23Func800BA1E0Arg *arg0);
 void ovl_23_func_800B989C(Ovl23Func800BB0C8Arg *arg0);
 
 void ovl_23_func_800B8FA4(void) {
@@ -34,7 +32,7 @@ void ovl_23_func_800B8FA4(void) {
     s16 sampledDirection;
 
     i = 0;
-    table = (u16 *)&D_800BBA40;
+    table = (u16 *)&gOvl23RecordAnchorY;
     base = &Ovl23_D_800BF87C_decision;
     actor = base->actors;
     for (; i < 6; i++) {
@@ -48,10 +46,10 @@ void ovl_23_func_800B8FA4(void) {
                 if (abs(dx) < actor->unkA) {
                     if (distance <= base->unk39E) {
                         ovl_23_func_800BB0C8((Ovl23Func800BB0C8Arg *)actor, 2,
-                            ovl_23_func_800BA1E0((Ovl23Func800BA1E0Arg *)actor), base->unk3AC);
+                            Ovl23DirectionFromRecordAnchor((Ovl23PositionedRecord *)actor), base->unk3AC);
                     } else {
                         ovl_23_func_800BB0C8((Ovl23Func800BB0C8Arg *)actor, 1,
-                            ovl_23_func_800B9CCC((Ovl23Func800BA1E0Arg *)actor), base->unk3AC);
+                            Ovl23ChooseRecordDirection((Ovl23PositionedRecord *)actor), base->unk3AC);
                     }
                 } else {
                     state = Rand(8) + 3;
@@ -89,7 +87,7 @@ void ovl_23_func_800B8FA4(void) {
         mode = stateBase->actors[0].unk2;
         stateBase = (struct Ovl23ActorDecisionView *)actors;
         if (mode == 1) {
-            ovl_23_func_800B9B18((Ovl23Func800BA1E0Arg *)actor2);
+            Ovl23StepRecordInDirection((Ovl23PositionedRecord *)actor2);
         } else if (mode == walkingState) {
             ovl_23_func_800B989C((Ovl23Func800BB0C8Arg *)(offset + (u32)stateBase));
         }

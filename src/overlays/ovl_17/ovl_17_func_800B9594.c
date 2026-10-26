@@ -6,7 +6,7 @@ void ovl_17_func_800B9594(void) {
     s32 i;
     s16 q;
 
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     p = base;
     for (i = 5; i >= 0; i--) {
         q = (s16) ((*(s16 *) (p + 0x2E) - *(s16 *) (p + 0x2C)) * 0xFF / (((*(s16 *) (p + 0x2A)) + 1) * (*(s16 *) (base + 0x14))));

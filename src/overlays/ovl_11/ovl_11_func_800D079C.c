@@ -14,7 +14,7 @@ void ovl_11_func_800D079C(s32 arg0) {
     if (arg0 == 1) {
         i = 0;
         tgt = 5;
-        p = (u8 *)&D_800749F4;
+        p = (u8 *)&gTaggedRecordBase;
         do {
             if (*(u16 *)(p + 0) != 0 && *(s16 *)(p + 0x30) == tgt) {
                 ovl_11_func_800D075C((s32)p, (s16)i, 1);
@@ -36,7 +36,7 @@ void ovl_11_func_800D079C(s32 arg0) {
     }
     i = 0;
     do {
-        u8 *base = (u8 *)&D_800749F4;
+        u8 *base = (u8 *)&gTaggedRecordBase;
         a1 = -2;
         if (((Ovl11Work19C8View *)D_80074838)->field_19C8[i * 2] != -1) {
             iszero = (i == 0);

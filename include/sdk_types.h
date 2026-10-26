@@ -2982,18 +2982,18 @@ typedef struct {
 } Ovl23BAA60Arg;
 
 typedef struct {
-               s16 unk0;
-               char pad_02[0x12];
-               s32 unk14;
-               s32 unk18;
-} Ovl23Func800BA1E0Arg;
-
-typedef struct {
                char pad_0[0x4];
                s16 unk4;
                s16 unk6;
                s16 unk8;
 } Ovl23Func800BB0C8Arg;
+
+typedef struct {
+               s16 index;
+               char pad_02[0x12];
+               s32 xQ12;
+               s32 yQ12;
+} Ovl23PositionedRecord;
 
 struct Ovl25ObjectRecord {
                s16 unk0;

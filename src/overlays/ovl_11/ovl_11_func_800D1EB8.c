@@ -25,7 +25,7 @@ void ovl_11_func_800D1EB8(void) {
     u8 *far_base2;
 
     for (i = 0; i < 20; i++) {
-        entry = (Recon_ovl_11_func_8010CE80_A0View *)((u8 *)&D_800749F4 + i * 0xB8);
+        entry = (Recon_ovl_11_func_8010CE80_A0View *)((u8 *)&gTaggedRecordBase + i * 0xB8);
         base = (u8 *)D_8006C838;
         far_base = D_8009AFF0;
         if (*(u16 *)entry != 0 && (flags = entry->unk34, !(flags & 0x400))) {

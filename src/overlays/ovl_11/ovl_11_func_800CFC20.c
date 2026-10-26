@@ -12,7 +12,7 @@ void ovl_11_func_800CFC20(void) {
     s32 temp_v1_2;
     s32 var_s2;
 
-    var_s0 = (struct Ovl11ResetB8 *) &D_800749F4;
+    var_s0 = (struct Ovl11ResetB8 *) &gTaggedRecordBase;
     for (var_s2 = 19; var_s2 >= 0; var_s2--) {
         if (var_s0->flags & 0x100) {
             ovl_11_func_800DF0F8((s32) var_s0);

@@ -61,7 +61,7 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
         sp18[1] += arg0->y;
         sp18[2] += arg0->z;
         if ((arg0->pool) == 0) {
-            var_s0 = (Ovl11SetFieldsView *) ((u8 *) &D_800749F4 + ((arg0->index) * 0xB8));
+            var_s0 = (Ovl11SetFieldsView *) ((u8 *) &gTaggedRecordBase + ((arg0->index) * 0xB8));
             if (var_s0->field_34 & 0x10000) {
                 var_s2 = ovl_11_func_800E0C24;
             } else {

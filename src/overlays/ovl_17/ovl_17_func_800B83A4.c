@@ -15,7 +15,7 @@ void ovl_17_func_800B83A4(void) {
     u8 *state;
 
     do {
-        base = D_800BD848;
+        base = gOvl17RecordWorkBase;
         func_80017A08((u16)i, *(u16 *)(base + i * 0x50 + 0x40) + data);
         i++;
     } while (i < 6);
@@ -28,7 +28,7 @@ void ovl_17_func_800B83A4(void) {
     ovl_17_func_800BA808(0x40000);
     RequestMessageWindow(4, 3);
     if (GetMessageWindowStatus() == 2) {
-        state = D_800BD848;
+        state = gOvl17RecordWorkBase;
         *(s16 *)(state + 0x2CE) = 0;
         state[4] = i;
     }

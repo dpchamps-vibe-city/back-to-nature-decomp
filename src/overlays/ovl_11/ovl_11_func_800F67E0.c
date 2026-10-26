@@ -6,10 +6,10 @@
 #include "psyq/memory.h"
 #include "ovl11_texture_stream.h"
 #include "game_flags.h"
+#include "ovl11_texture_cell_cache.h"
 
 void SetVal8005E2BC(s32 arg0);
 void ovl_11_func_800BCF28(void);
-void ovl_11_func_800F69FC(void);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void ovl_11_func_800F787C(void);
@@ -69,7 +69,7 @@ void ovl_11_func_800F67E0(void) {
                     SetGameFlag(0x70, 0);
                 }
             } else {
-                ovl_11_func_800F69FC();
+                Ovl11ClearTextureCellActivity();
                 saved = func_80017A64();
                 func_80017A48(3);
                 ovl_11_func_800F787C();

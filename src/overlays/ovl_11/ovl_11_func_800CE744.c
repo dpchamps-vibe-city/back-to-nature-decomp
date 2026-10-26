@@ -19,6 +19,7 @@
 #include "psyq/abs.h"
 #include "ovl11_object_event_script.h"
 #include "point_projection.h"
+#include "ovl11_tagged_record_creation.h"
 
 typedef struct {
                s16 unk0;
@@ -138,7 +139,6 @@ int CdPosToInt (CdlLOC *p);
 void SsSetSerialVol (char, short, short);
 void SystemError (char, long);
 s32 ovl_11_func_800DE8A4 ();
-s32 ovl_11_func_800E047C ();
 s16 *ovl_11_func_800E1F9C (s32 arg0, s32 arg1, s32 arg2);
 Recon_ovl_11_func_800D3390_A0View *ovl_11_func_800D2F48 (s32 arg0);
 struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
@@ -212,7 +212,7 @@ u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1) {
         goto block_8;
     case 0x164:
     case 0x165:
-        var_s0 = ovl_11_func_800E047C(arg0, arg1, 1);
+        var_s0 = Ovl11AllocateTaggedRecord(arg0, arg1, 1);
         break;
     case 0x166:
         var_a0 = 0x165;

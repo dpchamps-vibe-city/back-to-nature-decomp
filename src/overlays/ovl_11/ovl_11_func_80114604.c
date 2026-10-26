@@ -241,7 +241,7 @@ s32 ovl_11_func_80114604(void) {
             } else {
                 ovl_11_func_800F2354(5000, 1);
             }
-            ovl_11_func_800DF0F8((s32)((u8 *)&D_800749F4 + selected * 0xB8));
+            ovl_11_func_800DF0F8((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
             Ovl11SetInteractionSteps(25, 24);
             break;
         case 2:
@@ -295,7 +295,7 @@ s32 ovl_11_func_80114604(void) {
             } else {
                 ovl_11_func_800F2354(3500, 1);
             }
-            ovl_11_func_800DF0F8((s32)((u8 *)&D_800749F4 + selected * 0xB8));
+            ovl_11_func_800DF0F8((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
             Ovl11SetInteractionSteps(25, 24);
             break;
         case 2:

@@ -36,7 +36,7 @@ void ovl_23_func_800BAA60(Ovl23BAA60Arg *arg0) {
         SelectSpriteAnimation(obj, var_a1);
     }
     temp_s1 = ovl_23_func_800BB040(arg0->unkC);
-    temp_s3 = *((s16 *) ((u8 *) &D_800BBA40 + (arg0->unk0 * 2)));
+    temp_s3 = *((s16 *) ((u8 *) &gOvl23RecordAnchorY + (arg0->unk0 * 2)));
     temp_s0 = ovl_23_func_800BAFFC(temp_s3 << 0xC);
     SetSpriteSourceTextureOffsets((Struct_800154CC *) obj, 0, 0, 0, arg0->unk40);
     DrawSpriteAnimationQuadsAndUpdate(temp_s0, (SpriteSourceData *) obj, temp_s1, temp_s3);

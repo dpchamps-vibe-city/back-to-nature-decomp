@@ -14,7 +14,7 @@ void ovl_17_func_800B8470(void) {
     D_800BB6F8++;
     if (D_800BB6F8 >= 30) {
         D_800BB6F8 = 0;
-        work = D_800BD848;
+        work = gOvl17RecordWorkBase;
         *(s16 *)(work + 0xCA) -= 100;
         if (*(s16 *)(work + 0xCA) < 0) {
             *(s16 *)(work + 0xCA) = 255;

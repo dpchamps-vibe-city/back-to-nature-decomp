@@ -31,7 +31,7 @@ s32 ovl_11_func_8010D850(u8 *arg0, s16 area) {
             failed = 1;
             break;
         }
-        record = (u8 *)&D_800749F4 + index * 0xB8;
+        record = (u8 *)&gTaggedRecordBase + index * 0xB8;
         *(u16 *)(record + 0xB6) = *(u16 *)(arg0 + 0xAC);
         if (!(*(s32 *)(record + 0x34) & 0x10000)) {
             ovl_11_func_800DF010((Ovl11ActionDispatchView *)record, 7);

@@ -24,7 +24,7 @@ void ovl_11_func_800FCD40(s16 arg0, s16 arg1) {
     u8 var_a2_2;
 
     var_a3 = 0;
-    var_s1 = &D_800749F4;
+    var_s1 = &gTaggedRecordBase;
     var_v1 = 0;
     var_a2 = 0x10000;
     for (; var_v1 < 0x14; var_v1++, var_s1 += 0x2E) {

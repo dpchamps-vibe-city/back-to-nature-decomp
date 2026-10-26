@@ -25,7 +25,7 @@ s32 ovl_11_func_800D3D60(u16 arg0) {
     i = 0;
     if (limit != 0) {
         mask = 0x20400;
-        large = (u8 *)&D_800749F4;
+        large = (u8 *)&gTaggedRecordBase;
         small = large - 0x708;
         smallOffset = 0;
         largeOffset = 0;

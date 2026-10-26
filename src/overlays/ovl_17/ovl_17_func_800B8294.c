@@ -34,14 +34,14 @@ void ovl_17_func_800B8294(void) {
     for (var_a3 = 0; var_a3 < 6; var_a3++) {
         temp_v0 = *var_a2;
         var_a2 += 7;
-        ((Ovl17RowsView *)D_800BD848)->rows[var_a3].data = var_a0;
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[var_a3].data = var_a0;
         var_a0 += 6;
-        ((Ovl17RowsView *)D_800BD848)->rows[var_a3].flags = 0;
-        ((Ovl17RowsView *)D_800BD848)->rows[var_a3].nameOffset = names[temp_v0];
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[var_a3].flags = 0;
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[var_a3].nameOffset = names[temp_v0];
     }
     if (((Ovl17ModeView *)D_8006C838)->mode == 3) {
         var_a1_3 = D_800BD74C;
-        ((Ovl17RowsView *)D_800BD848)->rows[2].flags |= 1;
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[2].flags |= 1;
     } else {
         var_a1_3 = D_800BD750;
     }

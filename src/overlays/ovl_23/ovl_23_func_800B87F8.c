@@ -5,9 +5,8 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "ovl23_record_value_increments.h"
+#include "ovl23_sprite_resources.h"
 
-void ovl_23_func_800BB0E8(void);
-void ovl_23_func_800BB150(void);
 void ovl_23_func_800B92E8(void);
 void ovl_23_func_800B8B94(void);
 void ovl_23_func_800B8C18(void);
@@ -32,10 +31,10 @@ void ovl_23_func_800B87F8(void) {
             paused = state->unk4 != 1;
             state->unk4 = paused;
             if (paused == 1) {
-                ovl_23_func_800BB0E8();
+                Ovl23PauseActorSprites();
                 state->unk414 = PlaySoundEffect(0x36);
             } else {
-                ovl_23_func_800BB150();
+                Ovl23ResumeActorSprites();
             }
         }
     }

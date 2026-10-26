@@ -31,13 +31,13 @@ void ovl_11_func_800CECB0(void) {
             }
         }
         for (var_s0 = 0; var_s0 < 20; var_s0++) {
-            var_s1_2 = (s32 *) ((u8 *) &D_800749F4 + var_s0 * 0xB8);
+            var_s1_2 = (s32 *) ((u8 *) &gTaggedRecordBase + var_s0 * 0xB8);
             if ((*(u16 *) ((u8 *) var_s1_2 + 0)) != 0) {
                 ovl_11_func_800DEB00((Ovl11Deb00Object *) var_s1_2);
             }
         }
         for (var_s0 = 0; var_s0 < 20; var_s0++) {
-            var_s1_3 = (s32 *) ((u8 *) &D_800749F4 + var_s0 * 0xB8);
+            var_s1_3 = (s32 *) ((u8 *) &gTaggedRecordBase + var_s0 * 0xB8);
             if ((*(u16 *) ((u8 *) var_s1_3 + 0)) != 0) {
                 ovl_11_func_800E06E0((Ovl11Deb00Object *) var_s1_3);
             }

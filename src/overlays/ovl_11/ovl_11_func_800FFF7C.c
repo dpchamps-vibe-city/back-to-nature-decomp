@@ -5,11 +5,11 @@
 #include "message_window.h"
 #include "psyq/memory.h"
 #include "ovl11_texture_stream.h"
+#include "ovl11_texture_cell_cache.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void func_80017A38(s16 arg0, s16 arg1);
-void ovl_11_func_800F69FC(void);
 
 typedef void (*Ovl11StateFunc)(void);
 extern Ovl11StateFunc D_801273DC;
@@ -49,7 +49,7 @@ void ovl_11_func_800FFF7C(void) {
                 temp_s0 = func_80017A64();
                 func_80017A48(3U);
                 func_80017A38(1, 2);
-                ovl_11_func_800F69FC();
+                Ovl11ClearTextureCellActivity();
                 D_801273E0 = D_801273DC;
                 D_801273DC();
                 func_80017A48(temp_s0);

@@ -11,7 +11,7 @@ void ovl_17_func_800B946C(void) {
     s32 flag;
     s16 q;
 
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     flag = 1;
     work = D_80074838;
     p = base;

@@ -310,7 +310,40 @@ Members:
 
 ## `ovl_11` code-0x164/0x165 allocator/clone pair — 0x800E047C / 0x800E04FC (confidence: low)
 
-Candidate same-TU pair: gapless link adjacency and a shared record initializer
+**Reconstructed `modules/tagged_record_creation.c`, E047C–E05A8 exclusive,
+both compiled entries.** Ovl11AllocateTaggedRecord and Ovl11InitOffsetRecordCopy
+are the adjacent creation facades for the same 164/165 initializer: one obtains
+an available slot and places it, the other initializes an indexed 164 slot and
+copies its position/tag fields. This specialized creation protocol plus gapless
+link order supports the pair, not private ownership of the widely used pool.
+The shared initializer remains an external service, not an inferred static helper.
+
+Left E0450 forwards two object subviews to the vector helper D03B4, without
+allocation or this initializer. Right E05A8 begins the E109C guard/state-handler
+band and neither allocates nor calls the creation facades. There is no positive
+same-TU extension across either cut. These are evidence-limited service edges,
+not original object-boundary proofs (-G0); no flag or mechanical limit chose them.
+
+The public ovl11_tagged_record_creation.h preserves the allocator's three-word
+input and signed-word address result, including its two unread arguments; the
+indexed copy retains its canonical UnkStruct800E109C pointer identity. It
+specifies unchecked indices, ignored initializer failure, possible self-copy and
+the raw third-coordinate subtraction of 200. Parameters/locals name codes,
+slots and source/destination addresses without changing disputed field types.
+The initializer's competing void*/record-pointer declarations were reconciled
+to its own matched definition before folding. Explicit pointer/address casts
+replace implicit conversions without changing the legacy ABI. Both callers
+were published through interfaceAudit with unchanged objects.
+
+EXE:800749F4 is gTaggedRecordBase throughout callers/overlays, including the
+existing animal-editor macro view. Its 12-byte backing/lvalue declaration and
+original label extent are preserved; the name does not allocate the full pool
+or make it TU-private. Function identities remain in ovl_11.names.txt. The
+checked baseline fold proved both members and all overlay bytes, with no flag
+or exception added. Final five-module batch acceptance passes every TU integrity
+gate at 775 folded functions and 122/122 valid modules (run start: 747/117).
+
+Historical evidence: gapless link adjacency and a shared record initializer
 ([evidence and limits](research/ovl_11_func_800E04FC-grouping.md)).
 
 - ovl_11_func_800E047C (m) — allocates, initializes, and tags a D_800749F4 record for code 0x164 or 0x165.
@@ -8448,6 +8481,15 @@ experiment: compile the complete reconciled TU at baseline, then assess
 its residual and minimal setting against the flag-review evidence, rather
 than adopting two command-line-defined slices.
 
+Read-only follow-up of the original ownership evidence: 17F88 also reaches
+E498/E49A/E49C/E49E through $gp; 18B98 reaches E498 as well as E444/E446,
+E2B8/E2BA and the renderer state. Thus the apparently small 183B8/183D0
+setter/clear pair is not independently closed: its GP state joins this wider
+band, and the existing u16_string module lies inside the possible full span.
+Do not fold that pair or the override-free A574 tail as an isolated solution.
+The unresolved whole-band baseline/context and compiler-setting question
+remains; no split, override change or new assembly exception was retained.
+
 Slot-based table loading: a 16-bit "slot" selects a 0x1800-byte region read
 from CD into D_8006C910 via func_80014CBC; per-slot state lives in a small
 gp-rel cluster. Fingerprints:
@@ -9811,7 +9853,11 @@ Historical identities:
 
 ## `ovl_23` D_800BFA90/D_800BF8BC array-pair walkers — 0x800BB0E8 / 0x800BB150 (confidence: medium)
 
-Evidence: both are no-argument functions that walk the same two arrays from one
+Now the pause/resume half of `modules/sprite_resources.c`, not a separate TU.
+BB534 initializes the exact sources these two walk; the complete seven-member
+unit and its boundaries are recorded in the sprite-state/display-setup section.
+
+Historical evidence: both are no-argument functions that walk the same two arrays from one
 shared base — `D_800BFA90` and its sibling `D_800BFA90 - 0x1D4` (= `D_800BF8BC`)
 — six times, advancing 0x44 and 0x50 bytes per step from the same base-register
 preheader; they differ only in the per-slot helper they call. Gapless link order
@@ -9998,7 +10044,48 @@ Members (link order):
 
 ## `ovl_23` sprite-state/display-setup run — 0x800BB0E8–0x800BB758 (confidence: medium)
 
-Evidence: the dispatcher `ovl_23_func_800B7F00` (s) selects on the state byte
+**Reconstructed `modules/sprite_resources.c`, BB0E8–BB7A0 exclusive,
+all seven compiled members.** The initializer BB534 writes the exact two
+six-source arrays paused/resumed by BB0E8/BB150: arena+40 at stride 50 and
+arena+214 at stride 44 (hex). Its scene source at arena+3B4 is selected/drawn
+by BB1B8. BB214/BB488/BB534/BB758 are the four ordered bring-up stages called
+from the B7F00 dispatcher. Field-level source initialization, complementary
+pause behavior and that ordered stage protocol join the whole run; adjacency
+or common engine helpers alone do not. The former two-function walker slice
+is superseded. No member was omitted because it was dead or mechanically hard.
+
+Left BB0C8/BB0D8 set +4/+6/+8 decision fields, not the embedded sprite-source
+fields at +10 of those records. Their clients are the decision layer, and they
+have no bring-up/pause-stage helper use. This cut distinguishes field protocols
+within shared records; it is not a claim that those records were private or a
+GP proof under -G0. Right BB7A0 is the reconstructed bounded-increment service
+for distant shared work-record halfwords, with no source/stage connection.
+Both cuts rest on those observed responsibilities, not a compiler flag.
+
+Names in original order: Ovl23PauseActorSprites, ResumeActorSprites,
+DrawPausedSpriteFrame, LoadSharedSpriteBank, LoadSpriteImageBank,
+LoadActorSpriteBank and QueueSoundBankLoads (all Ovl23-prefixed). The public
+ovl23_sprite_resources.h records load order, blocking/polling, heap and OT
+prerequisites, shared scratch/VRAM effects, header-slot selection, asynchronous
+sound completion and update-suppression versus hiding a frame. Mask 4 is the
+engine's whole-animation-update suppression bit, confirmed by sprite_animation
+and by B87F8's pause toggle. The scene source is not paused by the walkers;
+paused drawing selects animation 5 without advancing it.
+
+Named original data: actor header offsets (BBADC), actor/shared bank copies
+(BBAEC/BE49C), actor-source base (BFA90), scene source (BFC30) and shared-bank
+source (BFC60), each with gOvl23-prefixed names in ovl_23.names.txt. Canonical
+renames include every caller and the override externs; no C storage was added.
+The raw source-base label retains its 30-byte extent, not a widened array.
+The byte-aligned 29A8 bank assignment and the two distinct 13DC memcpy calls
+are retained and explained, as are the original base-relative expressions.
+No type/stride/linkage or flag changed. The baseline fold proved all seven
+and the overlay; interfaceAudit published all seven with unchanged callers.
+Final five-module batch gate passes all integrity checks at 775 folded,
+122/122 valid modules: EXE/all overlays and data, names/interfaces, policy,
+configuration convergence, whitespace, stable inputs and no exception growth.
+
+Historical evidence: the dispatcher `ovl_23_func_800B7F00` (s) selects on the state byte
 `D_800BBA3C` via `jtbl_800B7E24` and, from consecutive jump-table branches,
 calls `ovl_23_func_800BB214`, `ovl_23_func_800BB488`,
 `ovl_23_func_800BB534` and `ovl_23_func_800BB758`. Those four are one gapless
@@ -10075,6 +10162,53 @@ audio-setup twin note above, that relation is not TU-membership evidence; here
 only the gapless link run and the shared caller are.
 
 ## `ovl_23` 2D vector math helper/client run — 0x800B9B18–0x800BA368 (confidence: medium)
+
+**Reconstructed `modules/direction_movement.c`, B9B18–BA3B4 exclusive,
+all seven members.** Movement and direction choice both call the clearance
+service using the same arena +39E radius; movement and clearance share the
+eight-direction encoding and 1000/1414 diagonal ratio. Clearance and anchor
+classification compose the same three pure angle/sector/distance leaves,
+whose complete caller set is inside the run. This closed helper/coordinate
+protocol supports the full seven, not just the five geometry routines.
+
+Left B9A00 moves the 44-stride decision record's +C coordinate via the BB0D8
+setter and distinct +3A0 speed/+39C+77 bound. It never calls this unit's
+clearance or geometry leaves; the shared arena/bounds family alone does not
+extend membership. Right BA3B4 is record_random_selection, with its own
+private weights/trial tables and no geometry-helper edge. These are observed
+layout/helper/protocol cuts, not original object-boundary proofs (-G0).
+Both jump tables (B9B18 then B9E04) pool in original order at 1C–5C.
+
+Names are Ovl23StepRecordInDirection, ChooseRecordDirection,
+CheckDirectionalClearance, DirectionFromRecordAnchor,
+DirectionFromAngleDegrees, PlanarDistance and AngleDegreesFromVector.
+Only the three externally called movement/choice/anchor entries publish
+through ovl23_direction_movement.h. It documents Q12 units, direction codes,
+state-selected speed, X clamps, angle sectors and conditional Rand(2) use.
+The source explains that clearance projects only Y bounds and tests other
+records from the CURRENT position; it is not swept collision. The discarded
+SquareRoot0 call and signed-halfword distance truncation remain unchanged.
+
+The first whole-seven fold rolled back on the old typed/unprototyped clearance
+conflict. Independent caller evidence shows direction passed as a promoted
+word by B9CCC and halfword narrowing in the callee. A single word-parameter
+contract with explicit signed-halfword locals reproduced all seven bytes at
+baseline, removing the obsolete empty-list prototype without adding caller
+narrowing. No function-pointer cast or header workaround was introduced.
+Ovl23PositionedRecord names index/xQ12/yQ12 at the same existing offsets and
+widths. BA1E0's local global extern was replaced by the canonical movement
+view's identical +210/44 anchor field. No linkage or allocation changed.
+
+The anchor-Y and inclusive Y-bound tables are gOvl23RecordAnchorY (BBA40,
+six halfwords) and gOvl23RecordYBounds (BBA4C, six pairs). They are named in
+THIS container only: ovl_10's button word/editor bytes at those RAM addresses
+retain their own identities and declarations. The typed externs are in
+globals_override.h, and callers/types were propagated without hand-editing
+context outputs. Checked baseline fold proved seven members plus the overlay;
+public interfaces were reconciled with zero failing published interfaces.
+No flag or exception was added. Final five-module batch gate passes at 775
+folded and 122/122 valid modules, including all linked bytes/data/placement,
+canonical names, public interfaces, policy, convergence and exception non-growth.
 
 Membership evidence: shared `D_800BF87C` coordinate records and `D_800BBA40`
 lookup table, the same angle-to-direction helper chain, and corroborating
@@ -12766,7 +12900,47 @@ supports adding it to the cluster, without establishing a TU boundary.
 
 ## `ovl_17` Rand(100) percentage-roll wrapper trio + predicate — 0x800B9DB8–0x800B9E34 (confidence: medium)
 
-Evidence: call graph and link order agree. `ovl_17_func_800B9DB8`,
+**Whole helper closure reconstructed as `modules/record_threshold_state.c`,
+9CE4–9F10 exclusive, six compiled members.** The four-entry roll band is not
+left as a standalone unit: its sole client 9CE4 selects the addresses of 9DB8/
+9DE0 into a local function pointer, calls the secondary adapter 9E0C and the
+value-window query 9E94. Every inbound reference to these five helpers is inside
+this closure; 9324 alone calls its evaluator. The address-selected adapters,
+closed call graph and gapless order support all six independently of the broad
+shared work base. No linkage was made static merely because of co-location.
+
+Left 9CAC is a countdown walker called from 8898, with no closure-helper call
+or threshold-field protocol. Right 9F10 is a separate leaf predicate over +2A/
++36, called from the common outer client 9324 but not by this closure. Common
+outer callers and the widely used work area do not establish further members.
+These are call/protocol closure edges, not GP-proven original TU boundaries
+under -G0. No override or mechanical obstacle creates an internal cut.
+
+Names: Ovl17EvaluateRecordThresholdState, RollPrimaryThreshold,
+RollComplementThreshold, RollSecondaryThreshold, RollFraction127 and
+HasRecordInValueWindow (each Ovl17-prefixed). The sole public evaluator is in
+ovl17_record_threshold_state.h; it documents indices, the returned 0/1/2 states,
+one versus two RNG calls, percentage quantization, unsigned-halfword threshold
+truncation and the inclusive raw value window. The identical +1 adapters retain
+their distinct original entries. All three formerly void adapters now explicitly
+return the predicate result: 9CE4 consumes both the selected function pointer's
+result and the secondary adapter's result. The checked six-member baseline fold
+proved this ABI correction byte-identical; it removes the incompatible void-to-
+s32-function-pointer assignments rather than preserving a prototype workaround.
+
+The raw overlay base 800BD848 is gOvl17RecordWorkBase, propagated through every
+consumer and the existing display-setup macro view. Its original four-byte label
+extent is retained, not inflated to cover all derived records/controls. No
+layout or field signedness changed. The source names work/record/value pointers,
+thresholds and result variables without speculative gameplay meaning. Both the
+initial roll fold and the whole-six extension passed baseline and complete
+overlay bytes; no flag or exception was involved. interfaceAudit published the
+one evaluator caller without changing its object. Final five-module acceptance
+passes all integrity gates at 775 folded and 122/122 valid modules, including
+every linked EXE/overlay/data byte, canonical identities, policy and exception
+non-growth. No shared build/diagnostic tool changed in this run.
+
+Historical evidence: call graph and link order agree. `ovl_17_func_800B9DB8`,
 `ovl_17_func_800B9DE0`, `ovl_17_func_800B9E0C` and `ovl_17_func_800B9E34`
 form one gapless link-order run (9DB8 + 0x28 = 9DE0, + 0x2C = 9E0C,
 + 0x28 = 9E34), and each of the three wrappers is a direct caller of the
@@ -19277,7 +19451,47 @@ is recorded in the gradient-interpolation section above.
 
 ## `ovl_11` D_80129648 texture-ID load/lookup caller run — 0x800F6A24 / 0x800F6C78 / 0x800F6D14 / 0x800F6E38 (confidence: medium)
 
-Candidate same-TU membership; original boundaries remain unproven
+**Reconstructed `modules/texture_cell_cache.c`, F69D0–F6F40 exclusive,
+six compiled entries.** The four load/lookup members are joined by the two
+immediately preceding cache reset leaves (69D0/69FC), not kept as an arbitrary
+four-entry slice. Both resets operate on precisely the id/active pair that
+allocation, hit marking and inactive reclamation use in all 72 records. The
+loader is called only by the two load-on-miss draw paths; the hit-only sprite
+retry is called only by its sibling. This shared retention lifecycle and closed
+helper graph support all six; link order corroborates it.
+
+Left F67E0 is the message/menu state dispatcher: it calls the activity-reset
+API but accesses no cache record. Its setup client F6680 likewise calls the
+full reset without implementing cache storage. Those are service callers, not
+additional cache lifecycle members. Right F6F40 is a fixed-offset shared-sprite
+wrapper, touching no cache and paired by its F84F0 client with the separate
+F6F7C object-state service. These are responsibility/protocol edges, not original
+GP-proven TU boundaries (-G0). The distant texture_stream and texture_sprite_draw
+modules use the same external cache but implement distinct batch-install and
+packet-emission protocols; sharing that public storage does not join all the
+intervening code. No flag/mechanical obstacle creates an internal cut.
+
+Names: Ovl11ResetTextureCellCache, ClearTextureCellActivity,
+LoadTextureCellRecord, DrawCachedTextureCell, DrawTextureCell and
+DrawScaledTextureCell (all Ovl11-prefixed). Only reset/activity/draw are
+published through ovl11_texture_cell_cache.h. The dead self-retrying quad
+variant remains compiled and externally linked, not dropped or made static.
+The header documents hit marks, highest-inactive eviction versus first-free
+insertion, ID-zero fallback, all-active no-draw behavior, packet obligations,
+blocking CD/VRAM effects and shared message-buffer non-reentrancy. The loader
+retains stale unwritten geometry/activity, uses the last frame piece and does
+not silently become the batch installer's whole-record clear. Scale divides
+before multiplication. Locals now name IDs, frame/piece tables and coordinates;
+canonical record/layout identities and all widths remain unchanged. Storage
+stays in the original data blob. interfaceAudit published all three interfaces
+with unchanged caller objects. Baseline checked fold proved six members and
+the overlay, with no flags or exceptions. Final five-module batch gate passes
+all integrity checks at 775 folded and 122/122 valid modules, including all
+linked bytes/data, canonical identities and public interfaces. The global
+interface audit still reports pre-existing unpublished debt elsewhere, but
+zero failing published interfaces; none was introduced by this service.
+
+Historical candidate membership; original boundaries remain unproven
 ([lookup-pair evidence](research/ovl_11_func_800F6C78-grouping.md),
 [loader-extension evidence](research/ovl_11_func_800F6A24-grouping.md),
 [quad-caller extension evidence](research/ovl_11_func_800F6E38-grouping.md)).

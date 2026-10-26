@@ -21,7 +21,7 @@ void ovl_17_func_800B8C38(void) {
     selected = 0;
     ovl_17_func_800B91B8();
     for (i = 0; i < 6; i++) {
-        base = D_800BD848;
+        base = gOvl17RecordWorkBase;
         entry = ((Ovl17DisplaySetup *)base)->entries[i];
         if (entry == 2) {
             selected = i;
@@ -33,14 +33,14 @@ void ovl_17_func_800B8C38(void) {
     if (((Ovl17ModeView *)D_8006C838)->mode == 3) {
         name = (s32)&D_80075AD8;
     } else {
-        current = D_800BD848;
+        current = gOvl17RecordWorkBase;
         chosen = ((Ovl17DisplaySetup *)current)->entries[selected];
         name = (s32)D_800556A8 + *(u16 *)(current + chosen * 0x50 + 0x40);
     }
     func_80017A08((u16)selected, name);
     RequestMessageWindow(4, 6);
     if (GetMessageWindowStatus() == 2) {
-        state = D_800BD848;
+        state = gOvl17RecordWorkBase;
         StopSoundEffectVoice(*(s16 *)(state + 0x2CA));
         state[4] = 9;
     }

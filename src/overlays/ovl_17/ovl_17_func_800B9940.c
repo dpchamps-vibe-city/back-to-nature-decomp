@@ -35,7 +35,7 @@ s16 ovl_17_func_800B9940(s32 arg0) {
     total = 0;
     y = 0x40;
     for (i = 0; i < 6; i++) {
-        if (((Ovl17RowsView *)D_800BD848)->selected == i) {
+        if (((Ovl17RowsView *)gOvl17RecordWorkBase)->selected == i) {
             D_800BD738[0] = 0x90;
             D_800BD738[1] = 0xFFFF;
             text = (u8 *)D_800BD738;
@@ -45,11 +45,11 @@ s16 ovl_17_func_800B9940(s32 arg0) {
         D_800BD738[0] = D_800BB6EC[i];
         text = (u8 *)D_800BD738;
         func_80017B3C(surface, (s32)text, 0x38, y);
-        text = (u8 *)&((Ovl17RowsView *)D_800BD848)->rows[i];
+        text = (u8 *)&((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[i];
         if (((Ovl17ModeView *)D_8006C838)->mode == 3 && i == 2) {
             text = (u8 *)&D_80075AD8;
         } else {
-            text = &D_800556A8[((Ovl17RowsView *)D_800BD848)->rows[i].nameOffset];
+            text = &D_800556A8[((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[i].nameOffset];
         }
         func_80017B3C(surface, (s32)text, 0x46, y);
         func_80017B3C(surface, (s32)D_800BB49A, 0x8E, y);
@@ -59,7 +59,7 @@ s16 ovl_17_func_800B9940(s32 arg0) {
         func_80017B3C(surface, (s32)D_800BD738, 0xCA, y);
         text = &D_800BB49A[5];
         func_80017B3C(surface, (s32)text, 0xDE, y);
-        if (((Ovl17RowsView *)D_800BD848)->selected == i) {
+        if (((Ovl17RowsView *)gOvl17RecordWorkBase)->selected == i) {
             total += (u16)((Ovl17ModeView *)D_8006C838)->cards[row][i].weight * (u16)((Ovl17ModeView *)D_8006C838)->cards[row][i].unkC;
         }
         y += 13;

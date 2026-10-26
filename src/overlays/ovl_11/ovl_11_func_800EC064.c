@@ -36,7 +36,7 @@ s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             do {
                 if (flags[i * 0x2E] & 0x400) {
                     offset = (s16)i;
-                    object = (struct_800759E4 *)((char *)&D_800749F4 + offset * 0xB8);
+                    object = (struct_800759E4 *)((char *)&gTaggedRecordBase + offset * 0xB8);
                     break;
                 }
                 i++;
@@ -45,7 +45,7 @@ s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                 return 1;
             }
         } else {
-            object = (struct_800759E4 *)((char *)&D_800749F4 + index * 0xB8);
+            object = (struct_800759E4 *)((char *)&gTaggedRecordBase + index * 0xB8);
         }
         break;
     case 3:

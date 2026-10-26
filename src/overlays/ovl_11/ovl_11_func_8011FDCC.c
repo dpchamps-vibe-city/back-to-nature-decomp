@@ -10,6 +10,6 @@ void ovl_11_func_8011FDCC(s16 arg0) {
         ovl_11_func_8011FF74((u8 *)&D_800742EC + i * 0xB4, arg0);
     }
     for (i = 0; i < (((Ovl11Status99C8View *)&D_8006C838)->field_44D0 == 0 ? 10 : 20); i++) {
-        ovl_11_func_8011FF74((u8 *)&D_800749F4 + i * 0xB8, arg0);
+        ovl_11_func_8011FF74((u8 *)&gTaggedRecordBase + i * 0xB8, arg0);
     }
 }

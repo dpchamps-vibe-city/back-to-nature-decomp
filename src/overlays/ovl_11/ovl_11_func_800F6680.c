@@ -1,4 +1,6 @@
 #include "common.h"
+#include "psyq/memory.h"
+#include "ovl11_texture_cell_cache.h"
 extern s16 gOvl11TextureStreamCursor;
 
 extern s32 D_80126E40;
@@ -19,8 +21,6 @@ extern s16 D_80126E50;
 
 extern s16 D_80126E52;
 
-void ovl_11_func_800F69D0(void);
-
 void ovl_11_func_800F6680(void) {
     D_80126E40 = 0xFF;
     D_80126E44 = 0;
@@ -32,5 +32,5 @@ void ovl_11_func_800F6680(void) {
     D_80126E50 = 0;
     D_80126E52 = 0;
     gOvl11TextureStreamCursor = 0;
-    ovl_11_func_800F69D0();
+    Ovl11ResetTextureCellCache();
 }

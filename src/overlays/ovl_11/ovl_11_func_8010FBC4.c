@@ -24,7 +24,7 @@ s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0, s32 arg1) {
     state = -1;
     index = *(s16 *)((u8 *)arg0 + 0xBA);
     if (index != state) {
-        animal = (Ovl11ActionDispatchView *)((u8 *)&D_800749F4 + index * 0xB8);
+        animal = (Ovl11ActionDispatchView *)((u8 *)&gTaggedRecordBase + index * 0xB8);
         record = animal;
     } else {
         animal = NULL;

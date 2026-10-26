@@ -11,7 +11,7 @@ void ovl_17_func_800B9628(void) {
     Ovl17SelView *lookup;
     s16 *cursor;
 
-    v = (Ovl17SelView *) D_800BD848;
+    v = (Ovl17SelView *) gOvl17RecordWorkBase;
     if (v->count == 0) {
         v->sel[0] = -1;
     }
@@ -21,7 +21,7 @@ void ovl_17_func_800B9628(void) {
         if (records[i].field0 > 0x7FFFFF) {
             j = 0;
             if (v->sel[0] != i) {
-                lookup = (Ovl17SelView *)D_800BD848;
+                lookup = (Ovl17SelView *)gOvl17RecordWorkBase;
                 cursor = lookup->sel;
                 do {
                     j++;
@@ -45,11 +45,11 @@ void ovl_17_func_800B9628(void) {
         u8 *active;
         u8 *destination;
 
-        b = D_800BD848;
+        b = gOvl17RecordWorkBase;
         if (*(s16 *) (b + 0x2D4) == 0) {
             best = 0;
             i = 0;
-            active = D_800BD848;
+            active = gOvl17RecordWorkBase;
             p = (s32 *) (active + 0x38);
             for (; i < 6; i++) {
                 for (j = 0; j < 6; j++) {
@@ -59,7 +59,7 @@ void ovl_17_func_800B9628(void) {
                     }
                 }
             }
-            destination = D_800BD848;
+            destination = gOvl17RecordWorkBase;
             *(s16 *) (destination + 0x2BC) = best;
         }
     }

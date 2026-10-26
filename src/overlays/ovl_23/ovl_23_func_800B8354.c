@@ -26,7 +26,7 @@ void ovl_23_func_800B8354(void) {
         pr->unk2A = 2;
         pr->unk2C = 0;
         ((Ovl23D87CView50 *)base)->unk0[i].unk38 = 0xFFFE5000;
-        ((Ovl23D87CView50 *)base)->unk0[i].unk3C = ((s16 *)&D_800BBA40)[i] << 12;
+        ((Ovl23D87CView50 *)base)->unk0[i].unk3C = ((s16 *)&gOvl23RecordAnchorY)[i] << 12;
         ((struct Ovl23ScreenInitTail *)pr)->unk70 = D_800BBA64[pairIndex];
         ((struct Ovl23ScreenInitTail *)pr)->unk72 = D_800BBA64[pairIndex + 1];
         if (i == 4) {

@@ -1,6 +1,6 @@
 #include "common.h"
+#include "ovl17_record_threshold_state.h"
 
-s32 ovl_17_func_800B9CE4(s16 arg0);
 s32 ovl_17_func_800B9F44(s16 arg0);
 s32 ovl_17_func_800B9F10(s16 arg0, s16 arg1);
 s32 ovl_17_func_800B9F78(s16 arg0);
@@ -27,11 +27,11 @@ void ovl_17_func_800B9324(void) {
     cursor = resultBase;
     do {
         if (i != 2 || *(s16 *)(work + 0x6514) != 3) {
-            settings = D_800BD848;
+            settings = gOvl17RecordWorkBase;
             if (*(s32 *)cursor == 1) {
                 *(s32 *)cursor = 0;
             } else {
-                group = ovl_17_func_800B9CE4(i);
+                group = Ovl17EvaluateRecordThresholdState(i);
                 ready = ovl_17_func_800B9F44(i);
                 if (ovl_17_func_800B9F10(i, *(s16 *)(settings + 0x16)) != 0) {
                     column = 0;

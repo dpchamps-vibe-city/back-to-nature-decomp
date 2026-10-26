@@ -8,7 +8,7 @@ s32 func_8001A668(s32 arg0) {
     s32 i;
 
     var_a0 = D_8005F0F8;
-    var_s0 = (s32)&D_800749F4;
+    var_s0 = (s32)&gTaggedRecordBase;
     for (i = 0; i < 20; i++) {
         if (!(*(s32 *)((char *)var_s0 + 0x34) & 0x10000)) {
             var_a0 = func_8001A808(var_a0, var_s0, arg0);

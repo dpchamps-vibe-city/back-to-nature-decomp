@@ -8,7 +8,7 @@ void ovl_17_func_800BA630(void) {
     s16 *dst;
 
     i = 0;
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     src = D_800BB710;
     dst = (s16 *)(base + 0x208);
     for (; i < 3; i++) {

@@ -27,7 +27,7 @@ s32 ovl_11_func_800CF044(s16 arg0, Ovl25SetupStatePair *arg1, VECTOR *arg2) {
         return 1;
     }
     if ((u32) (arg0 - 0x161) < 2U) {
-        var_a0 = &D_800749F4;
+        var_a0 = &gTaggedRecordBase;
         for (var_v1_2 = 0; var_v1_2 < 20; var_v1_2++, var_a0 += 0x2E) {
             if ((*(u16 *) ((u8 *) var_a0 + 0)) == arg0 &&
                 ((*(s32 *) ((u8 *) var_a0 + 0x34)) & 0x20000)) {

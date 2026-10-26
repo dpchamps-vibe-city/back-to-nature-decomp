@@ -25,7 +25,7 @@ void ovl_23_func_800BABD8(void) {
     ObjectState *endSprite;
     ObjectState *loopSprite;
 
-    sprite64 = (ObjectState *)D_800BFC30;
+    sprite64 = (ObjectState *)gOvl23SceneSpriteSource;
     SelectSpriteAnimation(sprite64, 0);
     SelectSpriteAnimationFrame(sprite64, 0);
     tiles64 = (u8 *)sprite64 - 0x3B4;
@@ -41,7 +41,7 @@ void ovl_23_func_800BABD8(void) {
             tileX64 += 64;
         } while (tileX64 < HWD0 + 64);
     }
-    sprite76 = (ObjectState *)D_800BFC30;
+    sprite76 = (ObjectState *)gOvl23SceneSpriteSource;
     SelectSpriteAnimation(sprite76, 1);
     tiles76 = (u8 *)sprite76 - 0x3B4;
     tileX76 = (*(s32 *)(tiles76 + 0x10) / 4096 * 3) -

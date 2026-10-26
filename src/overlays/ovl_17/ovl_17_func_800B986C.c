@@ -11,7 +11,7 @@ s32 ovl_17_func_800B986C(void) {
     u8 *obj;
     u8 *arg;
 
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     temp_a2 = (*(s16 *) (base + 0x2BC)) * 0x50;
     temp_s0 = base + 0x38;
     if (*(s32 *)(temp_s0 + temp_a2) > 0x800000) {
@@ -26,7 +26,7 @@ s32 ovl_17_func_800B986C(void) {
     }
     count = 0;
     for (i = 0; i < 6; i++) {
-        obj = D_800BD848;
+        obj = gOvl17RecordWorkBase;
         p = obj + 0x38 + i * 0x50;
         if ((*(s32 *) p) <= 0x93FFFF) {
             count = (count + 1) & 0xFF;

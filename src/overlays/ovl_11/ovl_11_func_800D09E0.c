@@ -4,9 +4,9 @@
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
 #include "aged_item_pool.h"
+#include "ovl11_tagged_record_creation.h"
 
 
-UnkStruct800E109C *ovl_11_func_800E04FC (s32 arg0, s32 arg1);
 s8 *ovl_11_func_800DE924 (s32 arg0, s32 arg1);
 void ovl_11_func_800E2904 (s32 arg0);
 u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
@@ -49,7 +49,7 @@ loop_3:
         temp_s0 = ((struct Ovl11D09E0SelectionView *) var_v1)->slot;
         if (temp_a1 & 0x200) {
             if (temp_a1 & 0x10000) {
-                ovl_11_func_800E04FC((s32) temp_a0, (s32) temp_s0);
+                Ovl11InitOffsetRecordCopy((s32) temp_a0, (s32) temp_s0);
                 arg0 += 1;
             } else {
                 ovl_11_func_800DE924((s32) temp_a0, (s32) temp_s0);

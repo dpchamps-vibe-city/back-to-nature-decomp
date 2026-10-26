@@ -1515,3 +1515,6 @@ gCalendarDay = 0x80070CF4; // size:0x2
 gCalendarWeekday = 0x80070CF6; // size:0x2
 gClockHour = 0x80070CF8; // size:0x2
 gClockMinute = 0x80070CFA; // size:0x2
+
+// Base of the shared twenty 0xB8 tagged records; preserve the extracted label extent.
+gTaggedRecordBase = 0x800749F4; // size:0xC

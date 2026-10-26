@@ -561,3 +561,15 @@ gOvl11ObjectProgramBase = 0x801291B0; // type:data size:0x4
 gOvl11ObjectProgramIndex = 0x80129224; // type:data size:0xC
 gOvl11ObjectOpcodeHandlers = 0x800B975C; // type:data size:0x1C4
 gOvl11ObjectLoadHandlers = 0x800B9920; // type:data size:0x10
+
+// Tagged 0x164/0x165 record creation and indexed offset-copy facade.
+Ovl11AllocateTaggedRecord = 0x800E047C; // type:func
+Ovl11InitOffsetRecordCopy = 0x800E04FC; // type:func
+
+// Synchronous 72-slot texture-cell cache lifecycle and draw service.
+Ovl11ResetTextureCellCache = 0x800F69D0; // type:func
+Ovl11ClearTextureCellActivity = 0x800F69FC; // type:func
+Ovl11LoadTextureCellRecord = 0x800F6A24; // type:func
+Ovl11DrawCachedTextureCell = 0x800F6C78; // type:func
+Ovl11DrawTextureCell = 0x800F6D14; // type:func
+Ovl11DrawScaledTextureCell = 0x800F6E38; // type:func

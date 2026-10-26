@@ -45,7 +45,7 @@ void Ovl11DispatchStageMode(s32 mode) {
             ovl_11_func_80109188((Ovl11PrimaryStageHandlerObj *)&D_800759E4, 5);
         }
         for (slot = 0; slot < 20; slot++) {
-            object = (Ovl11StageHandlerObj *)((u8 *)&D_800749F4 + slot * 0xB8);
+            object = (Ovl11StageHandlerObj *)((u8 *)&gTaggedRecordBase + slot * 0xB8);
             if (*(u16 *)object != 0) {
                 if (object->unk34 & 0x10000) {
                     if (CURRENT_STAGE == *(s16 *)((u8 *)object + 0x30)) {

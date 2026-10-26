@@ -25,7 +25,7 @@ void ovl_11_func_800CE96C(void) {
         first->records_7AB4[0].type = 0;
         first->records_7AB4[0].id = 0xFFFF;
     }
-    memset(&D_800749F4, 0, 0xE60);
+    memset(&gTaggedRecordBase, 0, 0xE60);
     for (i = 0; i < 20; i++) {
         p2 = (struct Ovl11PoolResetView *) ((u8 *) D_8006C838 + i * 0xB8);
         p2->records_81BC[0].type = 0;

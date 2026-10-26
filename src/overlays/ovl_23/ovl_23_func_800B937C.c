@@ -10,7 +10,7 @@ void ovl_23_func_800B937C(void) {
         ((Ovl23D87CView *)D_800BF87C)->unk418[i].unk0 = 0x17000;
         ((Ovl23D87CView *)D_800BF87C)->unk418[i].unk4 = -1;
         if (i < 6) {
-            ((Ovl23D87CView *)D_800BF87C)->unk418[i].unk4 = ((u16 *)&D_800BBA40)[i];
+            ((Ovl23D87CView *)D_800BF87C)->unk418[i].unk4 = ((u16 *)&gOvl23RecordAnchorY)[i];
         }
     }
     ((Ovl23D87CView *)D_800BF87C)->unk5C8 = 6;
@@ -18,7 +18,7 @@ void ovl_23_func_800B937C(void) {
         ((Ovl23D87CView *)D_800BF87C)->unk5CC[i].unk0 = 0xFFFE5000;
         ((Ovl23D87CView *)D_800BF87C)->unk5CC[i].unk4 = -1;
         if (i < 6) {
-            ((Ovl23D87CView *)D_800BF87C)->unk5CC[i].unk4 = ((u16 *)&D_800BBA40)[i];
+            ((Ovl23D87CView *)D_800BF87C)->unk5CC[i].unk4 = ((u16 *)&gOvl23RecordAnchorY)[i];
         }
     }
     ((Ovl23D87CView *)D_800BF87C)->unk62C = 6;

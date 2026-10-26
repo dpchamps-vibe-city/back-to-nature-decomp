@@ -49,7 +49,7 @@ s32 Ovl11AnyRecordFlagMatch(s32 poolMask, s32 selectionMask) {
 
     if (poolMask & 3) {
         index = 0;
-        record = &D_800749F4;
+        record = &gTaggedRecordBase;
         work = (unsigned char *) &D_8006C838;
         state = work + 0x81F0;
 scan_primary:

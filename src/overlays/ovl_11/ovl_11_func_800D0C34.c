@@ -20,7 +20,7 @@ s32 *ovl_11_func_800D0C34(void) {
         limit = 20;
     }
     for (i = 0; i < limit; i++) {
-        ptr = (s32 *)((u8 *)&D_800749F4 + i * 0xB8);
+        ptr = (s32 *)((u8 *)&gTaggedRecordBase + i * 0xB8);
         if (*(u16 *)ptr == 0 && !(*(s32 *)((char *)ptr + 0x34) & 0x02000000)) {
             break;
         }

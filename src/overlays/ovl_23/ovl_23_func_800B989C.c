@@ -27,7 +27,7 @@ void ovl_23_func_800B989C(Ovl23Func800BB0C8Arg *arg0) {
             *(s32 *)((u8 *)arg0 + 0x14) = temp_s1;
         }
     }
-    temp_a2 = *((s16 *)((u8 *)&D_800BBA40 + (*(s16 *)((u8 *)arg0 + 0) * 2))) << 0xC;
+    temp_a2 = *((s16 *)((u8 *)&gOvl23RecordAnchorY + (*(s16 *)((u8 *)arg0 + 0) * 2))) << 0xC;
     if (*(s32 *)((u8 *)arg0 + 0x18) < temp_a2) {
         *(s32 *)((u8 *)arg0 + 0x18) += temp_s2;
         if (temp_a2 < *(s32 *)((u8 *)arg0 + 0x18)) {

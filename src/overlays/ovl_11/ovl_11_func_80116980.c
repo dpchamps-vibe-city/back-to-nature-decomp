@@ -118,7 +118,7 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
         if (kind == 0) {
             record = (Ovl11Func80116F4CArg *) ((u8 *) &D_800742EC + (record_index * 0xB4));
         } else {
-            record = (Ovl11Func80116F4CArg *) ((u8 *) &D_800749F4 + (record_index * 0xB8));
+            record = (Ovl11Func80116F4CArg *) ((u8 *) &gTaggedRecordBase + (record_index * 0xB8));
         }
         icon = kind;
         if (kind == 2) {

@@ -2149,14 +2149,14 @@ typedef struct {
     /* 0x14 */ u16 unk14;
 } Ovl23D87CViewBAA60;
 
-/* ovl_23_func_800BA1E0 argument record: s16 selector at 0x00, s32 at 0x14
- * and s32 at 0x18. Only the fields the function reads are named. */
+/* ovl_23 direction/movement view: selector and signed Q12 planar position.
+ * Movement also reads state/direction at +4/+6 and speed at +0x10. */
 typedef struct {
-    /* 0x00 */ s16 unk0;
+    /* 0x00 */ s16 index;
     /* 0x02 */ char pad_02[0x12];
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-} Ovl23Func800BA1E0Arg;
+    /* 0x14 */ s32 xQ12;
+    /* 0x18 */ s32 yQ12;
+} Ovl23PositionedRecord;
 
 /* D_8006C838 status view used by ovl_11_func_800D0BC8. The final
  * halfword array is indexed with stride two; its full extent is unknown.

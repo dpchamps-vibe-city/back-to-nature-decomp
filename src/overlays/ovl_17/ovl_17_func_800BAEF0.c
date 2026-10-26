@@ -11,7 +11,7 @@ void ovl_17_func_800BAEF0(void) {
     s32 mode;
     s16 unk;
 
-    base = D_800BD848;
+    base = gOvl17RecordWorkBase;
     unk = *(s16 *)(base + 0xCA);
     if (unk >= 0xAA) {
         mode = 0;
@@ -20,7 +20,7 @@ void ovl_17_func_800BAEF0(void) {
     } else {
         mode = 2;
     }
-    obj = D_800BD848;
+    obj = gOvl17RecordWorkBase;
     if (*(u8 *)(obj + 0x290) != mode) {
         SelectSpriteAnimation((ObjectState *)(obj + 0x28C), (s8)mode);
     }

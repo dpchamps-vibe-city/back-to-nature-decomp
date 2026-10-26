@@ -17,3 +17,13 @@ gOvl17AnimatedRecordBase = 0x800BD870; // type:data size:0xA0
 Ovl17UpdateTimerHud = 0x800BB0C4; // type:func
 gOvl17TimerTicks = 0x800BB724; // type:data size:0x4
 gOvl17TimerSeparatorText = 0x800BB6E8; // type:data size:0x4
+
+// Closed threshold-roll helper family; the two +1 adapters keep distinct entries.
+Ovl17EvaluateRecordThresholdState = 0x800B9CE4; // type:func
+Ovl17RollPrimaryThreshold = 0x800B9DB8; // type:func
+Ovl17RollComplementThreshold = 0x800B9DE0; // type:func
+Ovl17RollSecondaryThreshold = 0x800B9E0C; // type:func
+Ovl17RollFraction127 = 0x800B9E34; // type:func
+Ovl17HasRecordInValueWindow = 0x800B9E94; // type:func
+// Raw base label only; record and control views extend beyond its four bytes.
+gOvl17RecordWorkBase = 0x800BD848; // type:data size:0x4

@@ -5,7 +5,7 @@
 /* Requires common.h typedefs (s8, s16, s32, u8, u16, u32) */
 #include "globals_override.h"
 
-/* 80 symbol(s) supplied by overrides or translation-unit-specific declarations */
+/* 81 symbol(s) supplied by overrides or translation-unit-specific declarations */
 
 /* GP-relative symbols (within $gp ± 0x7FF0) */
 extern u16 D_8005E2BA;
@@ -84,8 +84,6 @@ extern s32 _D_80071A90[3] __asm__("D_80071A90");
 #define D_80071A90 (*((s32*)_D_80071A90))
 extern s32 _D_800742EC[3] __asm__("D_800742EC");
 #define D_800742EC (*((s32*)_D_800742EC))
-extern s32 _D_800749F4[3] __asm__("D_800749F4");
-#define D_800749F4 (*((s32*)_D_800749F4))
 extern s32 _D_800749F8[3] __asm__("D_800749F8");
 #define D_800749F8 (*((s32*)_D_800749F8))
 extern s32 _D_800759E8[3] __asm__("D_800759E8");
