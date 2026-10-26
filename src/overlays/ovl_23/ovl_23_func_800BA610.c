@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-void ovl_23_func_800BB0D8(Ovl23Func800BB0C8Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
+#include "ovl23_record_control_fields.h"
 
 extern Ovl23D87CView39C D_800BF87C;
 
@@ -31,13 +30,13 @@ void ovl_23_func_800BA610(Ovl23Func800BB0C8Arg *arg0) {
     if (*(s32 *)((u8 *)arg0 + 0xC) >= temp_v1) {
         *(s32 *)((u8 *)arg0 + 0xC) = temp_v1;
         if (*(s16 *)((u8 *)arg0 + 0) != 2) {
-            ovl_23_func_800BB0D8(arg0, 1, 6, arg0->unk8);
+            Ovl23SetAnchorRecordControl(arg0, 1, 6, arg0->unk8);
         }
     }
     if (*(s32 *)((u8 *)arg0 + 0xC) <= -0x30000) {
         *(s32 *)((u8 *)arg0 + 0xC) = -0x30000;
         if (*(s16 *)((u8 *)arg0 + 0) != 2) {
-            ovl_23_func_800BB0D8(arg0, 1, 2, arg0->unk8);
+            Ovl23SetAnchorRecordControl(arg0, 1, 2, arg0->unk8);
         }
     }
 }

@@ -1,8 +1,7 @@
 #include "common.h"
+#include "ovl25_fixed_point_tier_lookup.h"
 
-s32 ovl_25_func_800B9A10(s32 arg0);
 void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
-s32 ovl_25_func_800B9A84(s32 arg0);
 
 void ovl_25_func_800B97E4(s16 *arg0) {
     s16 temp_v1;
@@ -10,7 +9,7 @@ void ovl_25_func_800B97E4(s16 *arg0) {
     s32 var_a1;
     s16 var_a2;
 
-    var_a2 = (s16) (ovl_25_func_800B9A10(*(s32 *) ((u8 *) arg0 + 0xC)) / D_800BFE44_view.unk4D4);
+    var_a2 = (s16) (Ovl25LookupTierValue(*(s32 *) ((u8 *) arg0 + 0xC)) / D_800BFE44_view.unk4D4);
     temp_v1 = arg0[0];
     if (temp_v1 == 5) {
         temp_v1_2 = D_800BFE44_view.unkC / 30;
@@ -33,6 +32,6 @@ void ovl_25_func_800B97E4(s16 *arg0) {
         ovl_25_func_800B9B00(arg0, 2, 0);
     }
     if ((u32) ((u16) arg0[0] - 4) >= 2U) {
-        (*(s32 *) ((u8 *) arg0 + 0xC)) = (s32) ((*(s32 *) ((u8 *) arg0 + 0xC)) + ((s32) (ovl_25_func_800B9A84(*(s32 *) ((u8 *) arg0 + 0xC)) << 0xC) / D_800BFE44_view.unk4D4));
+        (*(s32 *) ((u8 *) arg0 + 0xC)) = (s32) ((*(s32 *) ((u8 *) arg0 + 0xC)) + ((s32) (Ovl25LookupTierDelta(*(s32 *) ((u8 *) arg0 + 0xC)) << 0xC) / D_800BFE44_view.unk4D4));
     }
 }

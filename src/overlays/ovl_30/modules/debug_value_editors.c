@@ -281,31 +281,31 @@ s32 Ovl30EditItemFields(s32 handlerState) {
     /* Existing debug labels identify these fields as BUY/SELL/LIFE/TIRED.
      * Keep the canonical ItemData views and their narrowing assignments. */
     if (gOvl30ItemFieldIndex == 0) {
-        FntPrint(D_8012DF2C);
+        FntPrint(gOvl30FlagCursorMarker);
         item->field_10 = Ovl30StepSelectedValue(item->field_10);
     } else {
-        FntPrint(D_8012DF30);
+        FntPrint(gOvl30FlagIdleMarker);
     }
     FntPrint(gOvl30ItemBuyFormat, item->field_10);
     if (gOvl30ItemFieldIndex == 1) {
-        FntPrint(D_8012DF2C);
+        FntPrint(gOvl30FlagCursorMarker);
         item->field_12 = Ovl30StepSelectedValue(item->field_12);
     } else {
-        FntPrint(D_8012DF30);
+        FntPrint(gOvl30FlagIdleMarker);
     }
     FntPrint(gOvl30ItemSellFormat, item->field_12);
     if (gOvl30ItemFieldIndex == 2) {
-        FntPrint(D_8012DF2C);
+        FntPrint(gOvl30FlagCursorMarker);
         item->action.field_4 = Ovl30StepSelectedValue(item->action.field_4);
     } else {
-        FntPrint(D_8012DF30);
+        FntPrint(gOvl30FlagIdleMarker);
     }
     FntPrint(gOvl30ItemLifeFormat, item->action.field_4);
     if (gOvl30ItemFieldIndex == 3) {
-        FntPrint(D_8012DF2C);
+        FntPrint(gOvl30FlagCursorMarker);
         item->action.field_5 = Ovl30StepSelectedValue(item->action.field_5);
     } else {
-        FntPrint(D_8012DF30);
+        FntPrint(gOvl30FlagIdleMarker);
     }
     FntPrint(gOvl30ItemTiredFormat, item->action.field_5);
     return handlerState;
@@ -345,9 +345,9 @@ s32 Ovl30EditToolParameters(s32 handlerState) {
         if (column == gOvl30ToolParameterIndex) {
             value = Ovl30StepSelectedValue(D_801231C0[gOvl30ToolIndex][column]);
             D_801231C0[gOvl30ToolIndex][column] = value;
-            FntPrint(D_8012DF2C);
+            FntPrint(gOvl30FlagCursorMarker);
         } else {
-            FntPrint(D_8012DF30);
+            FntPrint(gOvl30FlagIdleMarker);
         }
         FntPrint(gOvl30ToolParameterFormat, D_801231C0[gOvl30ToolIndex][column]);
     }

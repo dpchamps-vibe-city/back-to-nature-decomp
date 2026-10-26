@@ -142,7 +142,9 @@ void ovl_11_func_800DBAB0 (void);
 extern M2C_a34e94965883_M2C_800EEFB8_Arg1 D_80071CC0;
 extern M2C_a34e94965883_M2C_800EEFB8_Arg1 D_8007AD10[];
 
-void ovl_11_func_800EF6E4(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
+/* Only a0/a1 are inputs: the original defines a2 before every use and never
+ * reads a3. Both callers pass two arguments; no trailing parameters exist. */
+void ovl_11_func_800EF6E4(s16 arg0, s16 arg1) {
     M2C_a34e94965883_M2C_800EEFB8_Arg1 *temp_s0;
     u8 *temp_v1;
     char *base;

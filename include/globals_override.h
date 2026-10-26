@@ -483,21 +483,21 @@ extern s32 gOvl30DebugMenuPendingChange;
 /* 80133A8C divides this signed menu-selection word by nine and updates it with sw. */
 extern s32 gOvl30RecordMenuCursor;
 /* 8012FEEC prints this NUL-terminated Shift-JIS rodata heading. */
-extern char D_8012E11C[];
+extern char gOvl30MainDataTextPool[];
 /* 8012FEEC passes this 20-byte record base to 80133454 with count 22. */
-extern struct Ovl30ValueMenuEntry D_80134018;
+extern struct Ovl30ValueMenuEntry gOvl30MainDataMenu;
 /* 8012FF50 prints this NUL-terminated Shift-JIS rodata heading. */
-extern char D_8012E29C[];
+extern char gOvl30PlayerAndActionTextPool[];
 /* 8012FF50 passes this 20-byte menu-record base to 80133454 with count 23. */
-extern struct Ovl30ValueMenuEntry D_801341D0;
+extern struct Ovl30ValueMenuEntry gOvl30PlayerDataMenu;
 /* 80130690 prints this NUL-terminated Shift-JIS rodata heading. */
-extern char D_8012E848[];
+extern char gOvl30PetDataHeading[];
 /* 80130690 passes this 20-byte menu-record base to 80133454 with count 48. */
-extern struct Ovl30ValueMenuEntry D_801345E0;
+extern struct Ovl30ValueMenuEntry gOvl30PetDataMenu;
 /* 80132660 prints this NUL-terminated Shift-JIS rodata heading. */
-extern char D_8012EEB8[];
+extern char gOvl30SystemFlagHeading[];
 /* 80132660 passes this 20-byte menu-record base to 80133A8C with count 12. */
-extern struct Ovl30FlagMenuEntry D_801349B8;
+extern struct Ovl30FlagMenuEntry gOvl30SystemFlagMenu;
 /* 80133A8C copies the two string pointers in this rodata table to its local array. */
 extern char *gOvl30RowKindMarkers[2];
 /* 80133A8C passes these rodata formats and selection markers to KanjiFntPrint. */
@@ -572,45 +572,45 @@ extern s32 _gTaggedRecordBase[3] __asm__("gTaggedRecordBase");
 /* 801306F4 forms menu field addresses from the same record base. */
 #define Ovl30_AnimalRecords749F4 ((Ovl30AnimalRecordB8 *)&gTaggedRecordBase)
 /* 801306F4 reads this selector with lw and edits it as a four-byte value. */
-extern s32 D_801349A0;
+extern s32 gOvl30CowSheepIndex;
 /* 801306F4 installs these NUL-terminated Shift-JIS labels and print format. */
-extern char D_8012E8B0[];
-extern char D_8012E8C8[];
-extern char D_8012E994[];
+extern char gOvl30AnimalGrowthDaysLabel[];
+extern char gOvl30AnimalDaysSinceShearingLabel[];
+extern char gOvl30CowSheepHeading[];
 /* 80130C20 reads this record selector with lw and edits it as a four-byte value. */
-extern s32 D_801349A4;
+extern s32 gOvl30ChickenIndex;
 /* 80130C20 installs these NUL-terminated Shift-JIS labels in its local menu. */
-extern char D_8012E868[];
-extern char D_8012E874[];
-extern char D_8012E880[];
-extern char D_8012E88C[];
-extern char D_8012E898[];
-extern char D_8012E8A4[];
-extern char D_8012E8BC[];
-extern char D_8012E8D4[];
-extern char D_8012E8E0[];
-extern char D_8012E8EC[];
-extern char D_8012E8F8[];
-extern char D_8012E904[];
-extern char D_8012E910[];
-extern char D_8012E91C[];
-extern char D_8012E928[];
-extern char D_8012E934[];
-extern char D_8012E940[];
-extern char D_8012E94C[];
-extern char D_8012E958[];
-extern char D_8012E964[];
-extern char D_8012E970[];
-extern char D_8012E97C[];
-extern char D_8012E988[];
+extern char gOvl30AnimalNumberLabel[];
+extern char gOvl30AnimalAffectionLabel[];
+extern char gOvl30AnimalBirthMonthLabel[];
+extern char gOvl30AnimalBirthDayLabel[];
+extern char gOvl30AnimalGrazingTimeLabel[];
+extern char gOvl30AnimalSicknessDaysLabel[];
+extern char gOvl30AnimalPregnancyDaysLabel[];
+extern char gOvl30AnimalActionLabel[];
+extern char gOvl30AnimalProcessNumberLabel[];
+extern char gOvl30AnimalProcessIdLabel[];
+extern char gOvl30AnimalProcessTimeLabel[];
+extern char gOvl30AnimalInterruptTimeLabel[];
+extern char gOvl30AnimalCurrentLocationLabel[];
+extern char gOvl30AnimalFlagsLabel[];
+extern char gOvl30AnimalXLabel[];
+extern char gOvl30AnimalYLabel[];
+extern char gOvl30AnimalZLabel[];
+extern char gOvl30AnimalSpeedXLabel[];
+extern char gOvl30AnimalSpeedYLabel[];
+extern char gOvl30AnimalSpeedZLabel[];
+extern char gOvl30AnimalDestinationXLabel[];
+extern char gOvl30AnimalDestinationYLabel[];
+extern char gOvl30AnimalDestinationZLabel[];
 /* 80130C20 passes this NUL-terminated Shift-JIS format to KanjiFntPrint. */
-extern char D_8012E9B8[];
+extern char gOvl30ChickenHeading[];
 /* 80131100 forms the same stride-B4 menu fields from this second record base. */
 #define Ovl30_AnimalRecords75FE4 ((Ovl30AnimalRecord *)&D_80075FE4)
 /* 80131100 reads this selector with lw and edits it as a four-byte value. */
-extern s32 D_801349A8;
+extern s32 gOvl30CoopChickenIndex;
 /* 80131100 passes this NUL-terminated Shift-JIS format to KanjiFntPrint. */
-extern char D_8012E9D8[];
+extern char gOvl30CoopChickenHeading[];
 
 /* 801320C8's 0xF8-stride menu addresses witness these halfword/word fields. */
 typedef struct Ovl30RecordF8 {
@@ -642,20 +642,20 @@ typedef struct Ovl30RecordF8 {
 } Ovl30RecordF8;
 #define Ovl30_RecordsA638 ((Ovl30RecordF8 *)D_8007A638)
 /* 801320C8 loads this record selector with lw and edits it with width four. */
-extern s32 D_801349B4;
+extern s32 gOvl30KorobokkuruIndex;
 /* 801320C8 installs these NUL-terminated rodata labels and print format. */
-extern char D_8012ECE8[];
-extern char D_8012ECF4[];
-extern char D_8012ED00[];
-extern char D_8012ED0C[];
-extern char D_8012ED18[];
-extern char D_8012ED24[];
-extern char D_8012ED30[];
-extern char D_8012ED3C[];
-extern char D_8012ED48[];
-extern char D_8012ED54[];
-extern char D_8012ED60[];
-extern char D_8012ED6C[];
+extern char gOvl30HarvestTrainingLabel[];
+extern char gOvl30WateringTrainingLabel[];
+extern char gOvl30AnimalCareTrainingLabel[];
+extern char gOvl30WorkDaysLabel[];
+extern char gOvl30HeldItemLabel[];
+extern char gOvl30TargetLivestockLabel[];
+extern char gOvl30MoveSp0Label[];
+extern char gOvl30MoveSp1Label[];
+extern char gOvl30MoveSp2Label[];
+extern char gOvl30MoveSp3Label[];
+extern char gOvl30MoveSp4Label[];
+extern char gOvl30KorobokkuruAndFlagTextPool[];
 /* ovl_30 8012F084 maintains this word-sized active flag. */
 extern s32 gOvl30DebugMenuWaitingForExit;
 /* ovl_30 8012F084 loads this word-sized index; decrement uses a signed zero clamp. */
@@ -1026,38 +1026,38 @@ typedef struct {
 #define Ovl30_ResidentSelection ((Ovl30ResidentSelection *)D_8006C838)
 
 /* 801315E0 passes these resident-record labels and heading to KanjiFntPrint. */
-extern char D_8012EA00[];
-extern char D_8012EA14[];
-extern char D_8012EA28[];
-extern char D_8012EA3C[];
-extern char D_8012EA50[];
-extern char D_8012EA64[];
-extern char D_8012EA78[];
-extern char D_8012EA8C[];
-extern char D_8012EAA0[];
-extern char D_8012EAB4[];
-extern char D_8012EAC8[];
-extern char D_8012EADC[];
-extern char D_8012EAF0[];
-extern char D_8012EB04[];
-extern char D_8012EB18[];
-extern char D_8012EB2C[];
-extern char D_8012EB40[];
-extern char D_8012EB54[];
-extern char D_8012EB68[];
-extern char D_8012EB7C[];
-extern char D_8012EB90[];
-extern char D_8012EBA4[];
-extern char D_8012EBB8[];
-extern char D_8012EBCC[];
-extern char D_8012EBE0[];
-extern char D_8012EBF4[];
-extern char D_8012EC08[];
-extern char D_8012EC1C[];
-extern char D_8012EC30[];
-extern char D_8012EC44[];
-extern char D_8012EC58[];
-extern char D_8012EC6C[];
+extern char gOvl30ResidentNameNumberLabel[];
+extern char gOvl30ResidentSexLabel[];
+extern char gOvl30ResidentFriendshipLabel[];
+extern char gOvl30ResidentAffectionLabel[];
+extern char gOvl30ResidentTalkIntervalLabel[];
+extern char gOvl30ResidentDirectionLabel[];
+extern char gOvl30ResidentControlDisableDcLabel[];
+extern char gOvl30ResidentSDelayLabel[];
+extern char gOvl30ResidentLsNumberLabel[];
+extern char gOvl30ResidentActionLabel[];
+extern char gOvl30ResidentPreviousActionLabel[];
+extern char gOvl30ResidentLsTimeLabel[];
+extern char gOvl30ResidentXFlagsLabel[];
+extern char gOvl30ResidentGlobalLocationLabel[];
+extern char gOvl30ResidentLocalLocationLabel[];
+extern char gOvl30ResidentXLabel[];
+extern char gOvl30ResidentYLabel[];
+extern char gOvl30ResidentZLabel[];
+extern char gOvl30ResidentSpeedXLabel[];
+extern char gOvl30ResidentSpeedYLabel[];
+extern char gOvl30ResidentSpeedZLabel[];
+extern char gOvl30ResidentEXLabel[];
+extern char gOvl30ResidentEYLabel[];
+extern char gOvl30ResidentEZLabel[];
+extern char gOvl30ResidentESpeedXLabel[];
+extern char gOvl30ResidentESpeedYLabel[];
+extern char gOvl30ResidentESpeedZLabel[];
+extern char gOvl30ResidentBirthMonthLabel[];
+extern char gOvl30ResidentBirthDayLabel[];
+extern char gOvl30ResidentDestinationLabel[];
+extern char gOvl30ResidentPreviousDestinationLabel[];
+extern char gOvl30ResidentHeading[];
 
 /* ovl_11_func_800F1F48 indexes this 40-word table and passes each entry to the u16 stream walker. */
 extern u16 *D_80126BF0[40];
@@ -1230,43 +1230,48 @@ struct Ovl30DebugFlags {
     s32 flagsC;
     s32 flags10;
 };
+/* 8012FE68 writes the same +0x10 word using an unsigned expression. */
+typedef struct {
+    char padding[0x10];
+    u32 bits;
+} Ovl30UnsignedFlagWord;
 
 /* 8012F454 passes these original debug-menu strings to FntPrint. */
-extern char D_8012DEC4[];
-extern char D_8012DEE0[];
-extern char D_8012DEF0[];
-extern char D_8012DF00[];
-extern char D_8012DF14[];
-extern char D_8012DF20[];
-extern char D_8012DF34[];
+extern char gOvl30FlagsSoundHeading[];
+extern char gOvl30ModelNumberFormat[];
+extern char gOvl30SoundEffectFormat[];
+extern char gOvl30AlternateSoundEffectFormat[];
+extern char gOvl30SoundSequenceFormat[];
+extern char gOvl30CdAudioTrackFormat[];
+extern char gOvl30FlagRowFormat[];
 /* 8012F454 indexes the two status strings and the loaded menu-label table. */
-extern char *D_80133F70[2];
-extern char **D_80133FB4;
-extern u32 D_80133FB8;
+extern char *gOvl30FlagStatusText[2];
+extern char **gOvl30FlagRowLabels;
+extern u32 gOvl30FlagRowCount;
 /* 8012F454 uses lw/sw for the cursor, sound selectors and playback handle. */
-extern s32 D_80134AE4;
-extern s32 D_80134AE8;
-extern s32 D_80134AEC;
-extern s32 D_80134AF0;
-extern s32 D_80134AF4;
-extern s32 D_80134AF8;
+extern s32 gOvl30FlagRowIndex;
+extern s32 gOvl30SoundEffectIndex;
+extern s32 gOvl30AlternateSoundEffectIndex;
+extern s32 gOvl30SoundSequenceIndex;
+extern s32 gOvl30CdAudioTrackIndex;
+extern s32 gOvl30SoundTestVoice;
 
 /* ovl_30_func_80131C38 reads/writes this selection index with lw/sw. */
-extern s32 D_801349AC;
+extern s32 gOvl30GameFlagIndex;
 /* ovl_30_func_80131C38 passes these original rodata strings to FntPrint. */
-extern char D_8012EC90[];
-extern char D_8012ECA0[];
-extern char D_8012ECB0[];
-extern char D_8012ECC4[];
+extern char gOvl30GameFlagOnFormat[];
+extern char gOvl30GameFlagOffFormat[];
+extern char gOvl30GameEventOnFormat[];
+extern char gOvl30GameEventOffFormat[];
 
 /* D_801349B0 - s32 selection index driven by ovl_30_func_80131F14.
  * Clamped to 0..0x24 and used as a modulo-0x25 record selector.
  * Absolute-addressed (overlay -G0), so a plain extern gives lui+lo. */
-extern s32 D_801349B0;
+extern s32 gOvl30ObjectEventSlotIndex;
 
 /* D_8012ECD8 - "P %d ADR %x\n" rodata format string whose address is
  * passed to FntPrint by ovl_30_func_80131F14 (absolute overlay rodata). */
-extern char D_8012ECD8[];
+extern char gOvl30ObjectEventSlotFormat[];
 
 /* 801326C4 reads/writes this signed word as its 0..127 selector. */
 extern s32 gOvl30DayCount0Cursor;
@@ -5610,6 +5615,16 @@ extern u16 D_800BCB8E[];
 extern u8 D_800BCD21;
 /* ovl_25_func_800B8848 writes the first three halfwords; original data allocates four. */
 extern s16 D_800BCD48[4];
+/* ovl_25:800B9A10/9A84 select these private s16 values at 40/30/20/10.
+ * The delta words initially contain -2; no runtime meaning is inferred. */
+extern s16 gOvl25TierValue40;
+extern s16 gOvl25TierValue30;
+extern s16 gOvl25TierValue20;
+extern s16 gOvl25TierValueBelow20;
+extern s16 gOvl25TierDelta40;
+extern s16 gOvl25TierDelta30;
+extern s16 gOvl25TierDelta20;
+extern s16 gOvl25TierDelta10;
 /* ovl_25:800BBA7C reverses/clamps a signed 0..511 interpolation index. */
 extern s16 gOvl25BackgroundCycleDescending;
 extern s16 gOvl25BackgroundCycleIndex;
@@ -6807,8 +6822,8 @@ extern s32 gOvl11RotationHoldAngles[4]; /* StepSpriteRotation: per-direction hol
 /* ovl_30_func_80133218 reads and writes signed halfwords at row*10 + column*2. */
 extern s16 D_801231C0[5][5];
 /* ovl_30_func_80133218 passes these original NUL-terminated rodata strings to FntPrint. */
-extern char D_8012DF2C[];
-extern char D_8012DF30[];
+extern char gOvl30FlagCursorMarker[];
+extern char gOvl30FlagIdleMarker[];
 extern char gOvl30EditorNewlines[];
 extern char gOvl30ToolIndexFormat[];
 extern char gOvl30ToolParameterFormat[];
@@ -7137,16 +7152,16 @@ typedef struct {
 extern s16 D_80128CB0;
 
 /* 8012FFB4 passes these strings and the 29-entry value menu to the debug UI. */
-extern char D_8012E48C[];
-extern char D_8012E4AC[];
-extern char D_8012E4C4[];
-extern char D_8012E4C8[];
-extern struct Ovl30ValueMenuEntry D_8013439C;
+extern char gOvl30ActionHeading[];
+extern char gOvl30ActionStatusFormat[];
+extern char gOvl30ActionOffText[];
+extern char gOvl30ActionOnText[];
+extern struct Ovl30ValueMenuEntry gOvl30ActionMenu;
 /* 8012FFB4 loads these words; calls narrow the selected IDs to signed halfwords. */
-extern s32 D_80134AFC;
-extern s32 D_80134B00;
-extern s32 D_80134B04;
-extern s32 D_80134B08;
+extern s32 gOvl30DebugActuatorSequence;
+extern s32 gOvl30DebugItemId;
+extern s32 gOvl30DebugRivalIndex;
+extern s32 gOvl30DebugTimeAdvance;
 /* 8012FFB4 retains the save-state base while indexing these fields by 0x1D4. */
 typedef struct {
     u8 pad0[0x99EA];

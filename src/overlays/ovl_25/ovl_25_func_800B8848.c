@@ -1,12 +1,12 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl25_fixed_point_tier_lookup.h"
 
 s32 ovl_25_func_800B9758(Ovl25StateSelectorView *arg0);
 /* The state update has a byte-exact void body as well as the existing
  * value-returning reconstruction. This caller requires the void contract;
  * none of its calls consumes a result. */
 void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
-s32 ovl_25_func_800B9A10 (s32 arg0);
 void func_8001AC10 (u32 *arg0, s32 arg1, s32 arg2);
 
 void ovl_25_func_800B8848(void) {
@@ -35,7 +35,7 @@ void ovl_25_func_800B8848(void) {
                         D_800BCD48[2] = D_800BFE54.source[2];
                     } else {
                         ovl_25_func_800B9B00(&D_800BFE54.unk0, 4, *(s16 *)(temp_s1 + 0x4D4));
-                        *(s16 *)(temp_s1 + 0x18) = ovl_25_func_800B9A10(*(s32 *)(temp_s1 + 0x1C));
+                        *(s16 *)(temp_s1 + 0x18) = Ovl25LookupTierValue(*(s32 *)(temp_s1 + 0x1C));
                     }
                 } else {
                     temp_v0_2 = (u8 *) &D_800BFE54 - 0x10;

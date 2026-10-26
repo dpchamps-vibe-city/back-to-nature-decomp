@@ -10019,6 +10019,31 @@ Historical identities:
 
 ## `ovl_23` shared arg-record setters — 0x800BB0C8 / 0x800BB0D8 (confidence: medium)
 
+**Reconstructed `modules/record_control_fields.c`, 800BB0C8–800BB0E8
+exclusive, both entries.** Identical +4/+6/+8 signed-halfword writes serve
+two distinct record families: C8 is called by actor decision/clearance clients
+8FA4/989C, D8 by anchor-record input/clamp clients 8B94/8C18/9A00/A610.
+These caller protocols corroborate the shared record-prefix shape and gapless
+pair. They do not establish private linkage; both original entries remain
+external, named Ovl23SetActorControl and Ovl23SetAnchorRecordControl.
+
+Left BB040 is a screen-X projection helper used only by the render clients,
+not a decision-field writer/client. Right BB0E8 starts the independently
+connected sprite-source pause/load unit. Neither neighbor shares this
+three-field write protocol. These are evidence-limited responsibility/client
+edges under -G0, not GP-proven historical object cuts; the pair's original
+same-file provenance remains medium confidence. Nothing requires absorbing
+the widely shared record-arena clients or an arbitrary span between them.
+
+ovl23_record_control_fields.h documents truncation, offsets, preserved prefix,
+actor countdown versus neutral anchor control value, and direction convention.
+Parameter names now express those roles; the existing shared partial record
+view retains its original widths/extent and is not inflated into a full actor.
+interfaceAudit replaces all six callers' local setter declarations with this
+header, proving each caller object unchanged. No globals or flag overrides
+are introduced. The checked fold verifies both members and the full overlay;
+batch acceptance follows the tier-lookup note below.
+
 - ovl_23_func_800BB0C8 (m, matched via automatic reconstruction, byte-exact) —
   stores three s32 args into s16 fields +4/+6/+8 of its pointer argument.
 - ovl_23_func_800BB0D8 (m, matched via automatic reconstruction, byte-exact) —
@@ -10452,6 +10477,29 @@ Members (link order):
   else -1).
 
 ## `ovl_23` D_800BF8A0/D_800BFA80 record-pair/render driver run — 0x800B9310 / 0x800BA73C–0x800BABD8 (confidence: medium)
+
+Whole render/helper closure experiment: five entries BA73C, BAA60, BABD8,
+BAFFC and BB040 were planned as record_sprite_render. The first two share
+the latter two projection/OT helpers, with no other helper clients; 9310
+calls the strips drawer and both record drawers. The baseline dry run passes
+and pools the one 10-word jump table, but checked --write reaches the linked
+overlay oracle and fails, then restores all five sources/configuration.
+No partial module or new exception remains.
+
+The concrete context obstacle is declaration visibility: BA73C's old-style
+renderer declarations precede BAA60/BABD8's sprite_render.h when separate,
+but the merged preamble publishes signed-halfword DrawSpriteFrameRects
+coordinates to BA73C. The independent func_800248E8 declaration also says
+s32 coordinates in BAA60 versus s16 in the matched definition. A measured
+interfaceAudit --write on DrawSpriteFrameRects,
+DrawSpriteAnimationQuadsAndUpdate and func_800248E8 changes no live source:
+it refuses BA73C for both renderer callees and BAA60 for func_800248E8,
+because their objects change even with every preservation cast in place.
+This is a source/context integration blocker, not evidence for splitting
+the supported render closure or for a flag change. Next useful experiment
+is isolate which newly visible renderer prototype changes each call and
+recover a consistently declared source shape; do not bypass the header or
+introduce an incompatible-prototype workaround merely to fold it.
 
 Evidence: `ovl_23_func_800B9310` (unmatched) walks two parallel six-entry
 record arrays from one base, one leaf per array — `D_800BF8A0` (stride 0x50,
@@ -12596,6 +12644,38 @@ rodata refusal would lose the original pool/table layout and is not a fix.
 
 ## `ovl_30` debug menu and mirror-helper run — 0x8012F3D4–0x8012F454 (confidence: medium)
 
+**Reconstructed `modules/debug_flags_sound.c`, 8012F3D4–8012FE94
+exclusive, all six entries.** This extends the four-entry controller/hook
+candidate through both of its later helpers: FDEC edits the exact setting
+initialized/displayed by F454, and FE68 writes the +0x10 flag word whose
+rows F454 displays. Both have only F454 as a direct caller. F3D4/F410 are
+complementary row-8 sound-bank transitions, and the intervening no-op F44C
+is explicitly called by F454. Call closure, row protocol, private selection
+words and original order support the whole six, not just the early hook trio.
+
+Left boundary: the existing lifecycle unit ends at F3D4. Its controller
+invokes this page through the same public callback protocol used for other
+independently reconstructed pages; shared pending-setting handoff does not
+prove a larger TU. Right FE94 is the lifecycle's font/text-origin initializer,
+not a callee of this page and not a user of its row/audio selections. These
+are evidence-limited call/state-protocol cuts under -G0, not GP-proven
+historical object boundaries. No override or rodata obstruction creates an
+internal boundary. The wider all-editor TU remains unproved and would require
+reconstructing interleaved literals/tables before a whole-overlay fold.
+
+Names identify page update, enter/leave hooks, no-op, setting step and bit
+writer. Nine globals name status/row tables and the cursor/effect/sequence/CD
+selectors and voice handle. Container-scoped canonicalization preserves
+original addresses; shared-header externs were reconciled explicitly because
+unqualified overlay data names are ambiguous to that tool. Types, storage
+extents and external linkage remain unchanged. The unsigned +0x10 view is
+now beside the signed page view in globals_override.h, not another local
+struct definition. Header ovl30_debug_flags_sound.h publishes only the page
+callback, its state feedback, pad/flag/audio effects and initialization needs.
+The setting's decrement 0->256/increment 255->0 behavior and sequence
+0->35/36->0 asymmetry are documented, not repaired. The checked six-member
+fold and full overlay passed baseline settings; batch acceptance is below.
+
 [Common-caller and gapless-link evidence; membership limits](research/ovl_30_func_8012F454-grouping.md).
 
 Members (link order):
@@ -12606,6 +12686,49 @@ Members (link order):
 
 ## `ovl_30` adjacent value-menu callbacks — 0x8012FEEC–0x8012FFB4 (confidence: medium)
 
+**Reconstructed `modules/value_action_pages.c`, 8012FEEC–801306F4
+exclusive, four callbacks including 30690.** The old three-entry candidate
+was incomplete: 3439C + 29*20 = 345E0, the fourth callback's 48-row descriptor
+table. The preceding table identities/counts also agree exactly:
+34018 + 22*20 = 341D0; 341D0 + 23*20 = 3439C. Code, descriptor-table and
+lifecycle callback-array order all agree. Each transfers its cursor through
+the same widget and fade gate. Action parameters in the third table point
+to the four words consumed by its dispatch, independently tying code/data.
+The fourth callback repeats the same static-descriptor protocol, so it is
+included rather than left as an unexplained sibling outside the unit.
+
+The original Shift-JIS headings decode as メインデータ関係 (main data),
+主人公データ関係 (player data), プログラム実行関係 (program actions) and
+ペットデータ関係 (pet data). These support Ovl30EditMainData,
+Ovl30EditPlayerData, Ovl30DispatchDebugActions and Ovl30EditPetData. Four
+menu objects, their headings/text pools and actuator/item/rival/time action
+parameters have scoped names, keeping original storage extents and types.
+Text-pool labels include their pre-existing following row labels; they were
+not shortened to the first string. The header publishes all four cursor
+callbacks and documents fade gating, row counts, selected-action reset,
+work-record mutations and resident-overlay requirements. Existing imported
+legacy service contracts were not silently changed as part of naming.
+
+Left FE94 initializes the lifecycle font and text origin, with no descriptor
+or selected-action protocol. Right 306F4 begins the selected-animal-record
+editors, whose automatic descriptors derive from a changing record/selector,
+not this consecutive static table run. These corroborated data/protocol
+edges are evidence-limited under -G0, not proven historical TU boundaries;
+a common menu widget/cursor does not itself merge all callers. Both this
+unit and debug_flags_sound retain baseline settings, no flag exceptions.
+The checked four-member fold and complete overlay passed.
+
+Batch acceptance for these two pages: full tuProgress --verify against the
+campaign baseline passes all eight integrity gates, **819 -> 829 folded,
+134/134 valid module TUs**. The first attempt exposed an existing imported
+arity defect in ovl_11:800EF6E4, reconstructed with two unread trailing
+parameters despite both callers supplying two. Original a2 is assigned
+before each use and a3 is never read; removing only those parameters and
+stating the two-argument action-page prototype preserved all linked bytes.
+This concrete gate-required interface correction is included, not hidden
+behind a call cast. No flag or exception changed; full EXE/13-overlay/data
+identity passes. Exit 1 reports the remaining campaign work.
+
 [Pair evidence and limits](research/ovl_30_func_8012FEEC-grouping.md).
 [Third-callback extension: shared menu protocol and corroborated code/table/caller order](research/ovl_30_func_8012FFB4-grouping.md).
 
@@ -12614,6 +12737,66 @@ Members (link order):
 - ovl_30_func_8012FFB4 (m) — gated 29-entry action-menu callback dispatching selections through D_80134B10.
 
 ## `ovl_30` adjacent animal/resident-record editors — 0x801306F4–0x801315E0 (confidence: medium)
+
+**Reconstructed whole `modules/record_editor_pages.c`, 801306F4–801326C4
+exclusive, eight entries.** The original four-editor candidate was extended,
+not accepted as a slice. 320C8 reuses the very same animal-label addresses as
+306F4/30C20/31100 (17 shared labels), despite the intervening resident,
+game-flag and object-slot pages. The exclusively used literal run E868..EED0
+follows all eight members in code order: shared animal fields/headings,
+resident fields, game-flag formats, slot format, Korobokkuru fields/heading,
+system-flag row labels/heading. The last two even occupy the same original
+ED6C..EEB8 label extent, preserved as one named text pool. Shared literal
+instances suggest within-TU pooling; externally defined shared strings remain
+an alternative, so this is corroborated medium-confidence provenance, not a
+GP proof. There is no positive witness for a cut around the two listings.
+
+Independent data corroboration: private selectors 349A0/A4/A8/AC/B0/B4 and
+the 12*20-byte system-flag descriptor table 349B8..34AA8 follow member order.
+Only the resident page omits an overlay selector, using the engine's signed
+halfword at work+4458. All six selector words have exactly one page client.
+The first three editors use 0xB8/0xB4/0xB4 records; resident uses 0x1D4,
+Korobokkuru 0xF8. 31F14 is a callback-table page, not a helper called by
+31C38. It therefore stays external even though no C caller names it.
+
+Left boundary against value_action_pages: the static table run ends at
+349A0 and its last heading ends at E868, precisely where this unit's private
+selector and shared-label runs begin. The static pages do not consume this
+unit's records/labels/selectors. Right boundary against debug_value_editors:
+this unit's flag table ends at 34AA8 and its literals at EED0, the next
+module's cursor and first format respectively; neither side uses the other's
+private run. These are corroborated private-pool/protocol cuts under -G0,
+not original GP ownership boundaries. Shared generic widgets or callback-table
+membership alone do not establish merging the entire overlay.
+
+Names derive from the original Japanese headings: cow/sheep, chicken,
+coop-chicken, resident, game flags, object slots, Korobokkuru and system flags.
+Scoped selector, descriptor, heading/format and individual label names preserve
+all original label extents and propagate into shared users. Label names
+translate text: they deliberately do not settle existing mismatches between
+some field names and displayed labels or repair repeated resident addresses.
+No widths, signedness, field addresses, linker ownership or linkage changed.
+The public header documents cursor/state returns, fade-gated descriptor pages
+versus unconditional flag/slot pages, row/record counts, selection timing,
+mutation effects, and display-window wrapping. Automatic descriptor arrays
+stay automatic and precede the gate; selection steps occur after the current
+record is displayed. The checked initial fold and whole-eight extension each
+verify every member and complete overlay at baseline. No member override,
+new exception, asm or stub exists.
+
+Final five-unit acceptance: `npx tsx tools/diagnostics/tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes all eight integrity gates:
+**819 -> 841 folded eligible functions (+22), 137/137 valid module TUs,
+1784 remaining**. EXE and all 13 overlays retain complete linked byte
+identity, including data, callbacks, jump tables and placement. Canonical
+names and published interfaces pass, with no exception/flag/stub growth and
+no previously folded member regression. `interfaceAudit` published the new
+interfaces and reconciled eight existing setter/lookup callers with unchanged
+objects; pre-existing unrelated interface debt remains reported. No shared
+build/diagnostic tool changed, and nothing was committed. Exit 1 denotes
+remaining reconstruction work, not a failed integrity gate. Other researched
+units remain unintegrated for the concrete flag, nested-context or rodata/
+prototype-visibility obstacles documented in their respective sections.
 
 [Animal-editor evidence and limits](research/ovl_30_func_80130C20-grouping.md).
 [Resident-editor extension and verification](research/ovl_30_func_801315E0-resident-editor.md).
@@ -14705,7 +14888,44 @@ Members (link order):
 - ovl_25_func_800B977C (m, byte-exact) — randomized per-record threshold predicate.
 - ovl_25_func_800B97E4 (s) — unclassified
 
-## `ovl_25` fixed-point threshold-lookup run — 0x800B9A10–0x800B9A84 (confidence: low)
+## `ovl_25` fixed-point threshold-lookup run — 0x800B9A10–0x800B9A84 (confidence: medium-low)
+
+**Reconstructed `modules/fixed_point_tier_lookup.c`, 800B9A10–800B9B00
+exclusive, both lookup entries.** The two functions are the only users of
+the private halfword run BCC90..BCC9E: the lower four feed a delta lookup,
+the upper four a value lookup, with the same 40/30/20 threshold cascade and
+one extra delta threshold at 10. No claim that the separate data labels
+prove a single original array is needed. Matching conversion idiom, private
+constant run, complementary use by the common update caller and link order
+corroborate the pair; -G0 supplies no GP ownership witness.
+
+Left 97E4 is a duration/percentage-scaled record updater, also calling the
+general record-state setter 9B00; it consumes these services but no private
+tier constants. The value lookup also serves 8848 outside this span. Right
+9B00 is the shared state/timer setter used by other record drivers. These
+are caller/service and private-data boundaries, not GP-proven original TU
+cuts. A future stronger witness may require merging the updater; no such
+witness currently establishes the wider state/predicate band as one TU.
+
+Names Ovl25LookupTierValue/Delta and eight scoped data names describe the
+observed thresholds and caller arithmetic, not a gameplay quantity. Original
+halfword types, individual label extents and external data ownership remain.
+All eight formerly local externs now live in globals_override.h with evidence.
+The input is Q12, NOT necessarily a narrow 4.12 value: the bias/shift pair
+truncates toward zero and retains a signed 16-bit integer part, wrapping
+outside that range. That behavior and the below-threshold/default results
+are documented in ovl25_fixed_point_tier_lookup.h, not simplified away.
+The delta constants initially all equal -2; their runtime meaning is unknown.
+Both caller declarations now use the shared header, with unchanged objects.
+The checked two-member fold and full overlay pass baseline settings; no
+member flag override or source-policy exception is involved.
+
+Tier/control-setter batch acceptance: full tuProgress --verify against the
+campaign baseline passes all eight integrity gates, **829 -> 833 folded,
+136/136 valid module TUs**. Every EXE/13-overlay/data byte and table/callback
+placement remains identical. Canonical identities, published interfaces,
+source policy and exception non-growth pass. No shared tooling changed;
+exit 1 denotes the 1792 remaining eligible functions, not gate failure.
 
 Evidence is gapless link adjacency plus a shared overlay-local s16 data region;
 the two members reference different symbols, so this ties the data region and

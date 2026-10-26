@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl23_record_control_fields.h"
 
 
-void ovl_23_func_800BB0D8 (Ovl23Func800BB0C8Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_23_func_800BA610 (Ovl23Func800BB0C8Arg *arg0);
 
 extern Ovl23Func800BB0C8Arg D_800BFB08;
@@ -30,7 +30,7 @@ void ovl_23_func_800B8B94(void) {
             var_a2 = D_800BFB0E;
         }
     }
-    ovl_23_func_800BB0D8(&D_800BFB08, var_a1, (s32) var_a2, 0);
+    Ovl23SetAnchorRecordControl(&D_800BFB08, var_a1, (s32) var_a2, 0);
     ovl_23_func_800BA610(&D_800BFB08);
 }
 /* Warning: struct GfxObj is not defined (only forward-declared) */

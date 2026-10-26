@@ -1,5 +1,17 @@
 // Semantic labels within ovl_25; original container/address identities retained.
 
+// Paired Q12 tier lookups and their private signed-halfword constants.
+Ovl25LookupTierValue = 0x800B9A10; // type:func
+Ovl25LookupTierDelta = 0x800B9A84; // type:func
+gOvl25TierDelta40 = 0x800BCC90; // type:data size:0x2
+gOvl25TierDelta30 = 0x800BCC92; // type:data size:0x2
+gOvl25TierDelta20 = 0x800BCC94; // type:data size:0x2
+gOvl25TierDelta10 = 0x800BCC96; // type:data size:0x2
+gOvl25TierValue40 = 0x800BCC98; // type:data size:0x2
+gOvl25TierValue30 = 0x800BCC9A; // type:data size:0x2
+gOvl25TierValue20 = 0x800BCC9C; // type:data size:0x2
+gOvl25TierValueBelow20 = 0x800BCC9E; // type:data size:0x2
+
 // Eight shared VRAM animation slots and two MoveImage update modes.
 Ovl25InitVramAnimationSlots = 0x800BB4B4; // type:func
 Ovl25RequestVramAnimations = 0x800BB510; // type:func

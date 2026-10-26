@@ -10,6 +10,10 @@ Ovl23ChooseRecordWeightedResult = 0x800BA494; // type:func
 gOvl23RecordRandomWeights = 0x800BBA9C; // type:data size:0x18
 gOvl23RecordRandomTrialThresholds = 0x800BBAB4; // type:data size:0x28
 
+// Distinct actor and anchor-record setters over the same control prefix.
+Ovl23SetActorControl = 0x800BB0C8; // type:func
+Ovl23SetAnchorRecordControl = 0x800BB0D8; // type:func
+
 // Whole sprite-source bring-up/pause protocol, in original link order.
 Ovl23PauseActorSprites = 0x800BB0E8; // type:func
 Ovl23ResumeActorSprites = 0x800BB150; // type:func

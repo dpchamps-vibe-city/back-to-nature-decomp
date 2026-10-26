@@ -5,8 +5,8 @@
 #include "psyq/stdlib.h"
 #include "random.h"
 #include "ovl23_direction_movement.h"
+#include "ovl23_record_control_fields.h"
 
-void ovl_23_func_800BB0C8(Ovl23Func800BB0C8Arg *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_23_func_800B989C(Ovl23Func800BB0C8Arg *arg0);
 
 void ovl_23_func_800B8FA4(void) {
@@ -45,10 +45,10 @@ void ovl_23_func_800B8FA4(void) {
                 distance = abs(SquareRoot0(dx * dx + dy * dy));
                 if (abs(dx) < actor->unkA) {
                     if (distance <= base->unk39E) {
-                        ovl_23_func_800BB0C8((Ovl23Func800BB0C8Arg *)actor, 2,
+                        Ovl23SetActorControl((Ovl23Func800BB0C8Arg *)actor, 2,
                             Ovl23DirectionFromRecordAnchor((Ovl23PositionedRecord *)actor), base->unk3AC);
                     } else {
-                        ovl_23_func_800BB0C8((Ovl23Func800BB0C8Arg *)actor, 1,
+                        Ovl23SetActorControl((Ovl23Func800BB0C8Arg *)actor, 1,
                             Ovl23ChooseRecordDirection((Ovl23PositionedRecord *)actor), base->unk3AC);
                     }
                 } else {
@@ -59,7 +59,7 @@ void ovl_23_func_800B8FA4(void) {
                         direction = Rand(5) + 4;
                         direction = direction == 8 ? 0 : direction;
                     }
-                    ovl_23_func_800BB0C8((Ovl23Func800BB0C8Arg *)actor, state, direction, 60);
+                    Ovl23SetActorControl((Ovl23Func800BB0C8Arg *)actor, state, direction, 60);
                 }
             }
         }
@@ -80,7 +80,7 @@ void ovl_23_func_800B8FA4(void) {
             direction = sampledDirection;
             sampledDirection = 8;
             direction = direction == sampledDirection ? 0 : direction;
-            ovl_23_func_800BB0C8((Ovl23Func800BB0C8Arg *)decisionActor, window->actors[0].unk4,
+            Ovl23SetActorControl((Ovl23Func800BB0C8Arg *)decisionActor, window->actors[0].unk4,
                 direction, window->actors[0].unk8);
         }
         stateBase = (struct Ovl23ActorDecisionView *)(offset + (u32)modeRoot);

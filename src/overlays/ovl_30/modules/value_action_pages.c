@@ -1,4 +1,10 @@
-#include "common.h"
+/* Main/player/pet data editors and diagnostic action dispatch. The original
+ * Japanese headings identify these pages; their four descriptor tables are
+ * consecutive in the same order as the callbacks. The widget owns cursor
+ * updates and the selected-action channel. Public contract:
+ * ovl30_value_action_pages.h; membership/boundaries: notes/file-groupings.md. */
+
+#include "ovl30_value_action_pages.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -10,6 +16,34 @@
 #include "game_flags.h"
 #include "ovl30_record_menus.h"
 
+s32 Ovl30EditMainData(s32 cursor) {
+    s32 result;
+
+    if (IsScreenFadeComplete() != 0) {
+        KanjiFntPrint(gOvl30MainDataTextPool);
+        gOvl30RecordMenuCursor = cursor;
+        Ovl30DrawAndEditValueMenu(&gOvl30MainDataMenu, 0x16);
+        result = gOvl30RecordMenuCursor;
+    } else {
+        result = cursor;
+    }
+    return result;
+}
+
+s32 Ovl30EditPlayerData(s32 cursor) {
+    s32 result;
+
+    if (IsScreenFadeComplete() != 0) {
+        KanjiFntPrint(gOvl30PlayerAndActionTextPool);
+        gOvl30RecordMenuCursor = cursor;
+        Ovl30DrawAndEditValueMenu(&gOvl30PlayerDataMenu, 0x17);
+        result = gOvl30RecordMenuCursor;
+    } else {
+        result = cursor;
+    }
+    return result;
+}
+
 u16 *ovl_11_func_800CE744(s32, s32);
 s32 ovl_11_func_800D5750(s16);
 s32 ovl_11_func_800D8320();
@@ -18,13 +52,13 @@ s32 ovl_11_func_800E6F34();
 s32 ovl_11_func_800E7088(s16, s16, s32, s32);
 s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
 void ovl_11_func_800EF488(s16);
-void ovl_11_func_800EF6E4();
+void ovl_11_func_800EF6E4(s16 mode, s16 rivalIndex);
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *, s32);
 
 #define ACTION ((Ovl30ActionState *)D_8006C838)
 #define EVENT(index) ((Ovl30EventRecordView *)((u8 *)D_8006C838 + (index) * 0x1D4))
 
-s32 ovl_30_func_8012FFB4(s32 arg0) {
+s32 Ovl30DispatchDebugActions(s32 cursor) {
     s32 id;
     u16 *object;
     Ovl30RecordF8 *entry;
@@ -37,24 +71,25 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
 
     if (IsScreenFadeComplete() != 0) {
         if (gOvl30RecordMenuSelectedId < 0) {
-            KanjiFntPrint(D_8012E48C);
-            gOvl30RecordMenuCursor = arg0;
-            Ovl30DrawAndEditValueMenu(&D_8013439C, 29);
-            arg0 = gOvl30RecordMenuCursor;
-            KanjiFntPrint(D_8012E4AC, gOvl30RecordMenuSelectedId < 0 ? D_8012E4C4 : D_8012E4C8);
+            KanjiFntPrint(gOvl30ActionHeading);
+            gOvl30RecordMenuCursor = cursor;
+            Ovl30DrawAndEditValueMenu(&gOvl30ActionMenu, 29);
+            cursor = gOvl30RecordMenuCursor;
+            KanjiFntPrint(gOvl30ActionStatusFormat, gOvl30RecordMenuSelectedId < 0 ? gOvl30ActionOffText : gOvl30ActionOnText);
             if (gOvl30RecordMenuSelectedId > 0) {
                 PlaySoundEffect(0);
             }
         }
         switch (gOvl30RecordMenuSelectedId) {
         case 0:
-            RequestPadActuatorSequence(0, D_80134AFC);
+            RequestPadActuatorSequence(0, gOvl30DebugActuatorSequence);
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 1:
             StopPadActuatorSequence(0);
             gOvl30RecordMenuSelectedId = -1;
             break;
+        /* These cases share the eight-random-halfword initialization tail. */
         case 2: id = 0x162; goto spawn;
         case 3: id = 0x161; goto spawn;
         case 4: id = 0x160; goto spawn;
@@ -121,16 +156,16 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             ACTION->flags5234 &= ~0x800400;
             break;
         case 16:
-            id = (s16)ovl_11_func_800D5750((s16)D_80134B00);
+            id = (s16)ovl_11_func_800D5750((s16)gOvl30DebugItemId);
             switch (id) {
             case 0:
-                ovl_11_func_800E7088((s16)D_80134B00, 0, 1, 0);
+                ovl_11_func_800E7088((s16)gOvl30DebugItemId, 0, 1, 0);
                 break;
             case 1:
                 if (ovl_11_func_800E6EAC(1, -1, 0, 0) == 1) {
-                    ovl_11_func_800E6F34((s16)D_80134B00, 0, 1, 0);
+                    ovl_11_func_800E6F34((s16)gOvl30DebugItemId, 0, 1, 0);
                 } else {
-                    ovl_11_func_800E6F34((s16)D_80134B00, 0, 0, 0);
+                    ovl_11_func_800E6F34((s16)gOvl30DebugItemId, 0, 0, 0);
                 }
                 break;
             }
@@ -180,6 +215,7 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             ovl_11_func_800EF6E4(1, 4);
             gOvl30RecordMenuSelectedId = -1;
             break;
+        /* These diagnostic actions do not validate gameplay preconditions. */
         case 25:
             ovl_11_func_800EF488(-1);
             selected = ACTION->selected - 3;
@@ -200,8 +236,8 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 26:
-            ovl_11_func_800EF6E4(0, (s16)D_80134B04);
-            switch (D_80134B04) {
+            ovl_11_func_800EF6E4(0, (s16)gOvl30DebugRivalIndex);
+            switch (gOvl30DebugRivalIndex) {
             case 0: first = 3; second = 19; break;
             case 1: first = 7; second = 11; break;
             case 2: first = 9; second = 8; break;
@@ -215,10 +251,24 @@ s32 ovl_30_func_8012FFB4(s32 arg0) {
             EVENT(second)->field_9A06 |= 0x400;
             break;
         case 27:
-            ovl_11_func_800E99EC((s16)D_80134B08, 0, 0, 0);
+            ovl_11_func_800E99EC((s16)gOvl30DebugTimeAdvance, 0, 0, 0);
             gOvl30RecordMenuSelectedId = -1;
             break;
         }
     }
-    return arg0;
+    return cursor;
+}
+
+s32 Ovl30EditPetData(s32 cursor) {
+    s32 result;
+
+    if (IsScreenFadeComplete() != 0) {
+        KanjiFntPrint(gOvl30PetDataHeading);
+        gOvl30RecordMenuCursor = cursor;
+        Ovl30DrawAndEditValueMenu(&gOvl30PetDataMenu, 0x30);
+        result = gOvl30RecordMenuCursor;
+    } else {
+        result = cursor;
+    }
+    return result;
 }
