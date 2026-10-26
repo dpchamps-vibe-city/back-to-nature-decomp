@@ -12,6 +12,7 @@
 #include "common.h"
 #include "game_flags.h"
 #include "ovl11_interaction_dispatch.h"
+#include "ovl11_record_slot_table.h"
 
 s32 Ovl11UpdateInteractionDispatch(void) {
     s32 (*updateOrDraw)(void);
@@ -41,7 +42,6 @@ s32 Ovl11UpdateInteractionDispatch(void) {
 
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
-void ovl_11_func_800DBAB0(void);
 
 s32 Ovl11BeginInteraction(s32 interactionId) {
     s32 (*begin)(void);
@@ -51,14 +51,14 @@ s32 Ovl11BeginInteraction(s32 interactionId) {
         if ((interactionId == 0x16) && (GetGameFlag(2U) == 0)) {
             ovl_11_func_800F0FB0(0xA);
             ovl_11_func_800F0F50();
-            ovl_11_func_800DBAB0();
+            Ovl11ServiceActiveRecordSlot();
             if (GetGameFlag(2U) == 1) {
                 do {
                     if (((struct Ovl11E4280State *)D_8006C838)->selector == 1) {
-                        ovl_11_func_800DBAB0();
+                        Ovl11ServiceActiveRecordSlot();
                         break;
                     }
-                    ovl_11_func_800DBAB0();
+                    Ovl11ServiceActiveRecordSlot();
                 } while (GetGameFlag(2U) != 0);
             }
             if (GetGameFlag(2U) == 1) {

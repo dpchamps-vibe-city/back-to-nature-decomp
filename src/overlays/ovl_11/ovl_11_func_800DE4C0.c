@@ -6,10 +6,10 @@
 #include "random.h"
 #include "game_flags.h"
 #include "ovl11_weather_effect.h"
+#include "ovl11_record_slot_table.h"
 
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
-void ovl_11_func_800DBAB0(void);
 /* 800CBB9C consumes argument 1 with sh; its upper bits are immaterial. */
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 
@@ -31,14 +31,14 @@ void ovl_11_func_800DE4C0(void) {
         if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
             ovl_11_func_800F0FB0(8);
             ovl_11_func_800F0F50();
-            ovl_11_func_800DBAB0();
+            Ovl11ServiceActiveRecordSlot();
             if (GetGameFlag(2) == 1) {
                 for (;;) {
                     if (((struct Ovl11E4280State *)D_8006C838)->selector == 1) {
-                        ovl_11_func_800DBAB0();
+                        Ovl11ServiceActiveRecordSlot();
                         break;
                     }
-                    ovl_11_func_800DBAB0();
+                    Ovl11ServiceActiveRecordSlot();
                     if (GetGameFlag(2) == 0) {
                         break;
                     }

@@ -1,17 +1,72 @@
+/*
+ * item_action_gate — reconstructed translation unit.
+ *
+ * Classify the cell under the primary object and gate item-triggered state
+ * changes.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
+
 #include "common.h"
+#include "ovl11_item_action_gate.h"
 #include "game_types.h"
 #include "sound_commands.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_grid_position.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "ovl11_primary_object_state_change.h"
 
-s32 ovl_11_func_800CB730(Ovl11CE034Object *arg0);
-/* This caller zero-extends the byte; the callee stores only its low byte. */
-s32 ovl_11_func_800D736C(s16 *arg0);
+void ovl_11_func_800CE034(Ovl11CE034Object *object, Ovl11CE034Position *position, s32 offset);
 
-s32 ovl_11_func_800CB850(s32 arg0) {
+/* Leave a selected cell pointer (or NULL) as well as returning its class:
+ * 0 = empty/tag 167..169, 2 = other tag, 3 = unavailable/mode mismatch. */
+s32 Ovl11ProbeObjectCellClass(Ovl11CE034Object *object) {
+    Ovl11CE034Position position;
+    u16 column;
+    u16 row;
+    u16 tag;
+    s16 *farWork;
+    s16 mode;
+
+    ovl_11_func_800CE034(object, &position, 0);
+    gOvl11ProbedObjectCell = NULL;
+    farWork = (s16 *)&D_8007AFF0;
+    mode = farWork[0x12A3B];
+    if (mode == 1) {
+        if (Ovl11LookupMode1GridPosition(&position.unk0, &column, &row) != 0) {
+            return 3;
+        }
+        gOvl11ProbedObjectCell = (u16 *)&gMainAreaGrid[(s16)row][(s16)column];
+        goto classify;
+    }
+    if (mode == 6) {
+        if (Ovl11LookupMode6GridPosition((s32 *)&position, &column, &row) != 0) {
+            goto outside;
+        }
+        goto alternate;
+    }
+    goto classify;
+outside:
+    return 3;
+alternate:
+    gOvl11ProbedObjectCell = (u16 *)&gAlternateAreaGrid[(s16)row][(s16)column];
+classify:
+    if (gOvl11ProbedObjectCell != NULL) {
+        tag = *gOvl11ProbedObjectCell;
+        if ((u32)(tag - 0x167) >= 3U && tag != 0) {
+            return 2;
+        }
+        return 0;
+    }
+    goto outside;
+}
+
+s32 ovl_11_func_800D736C(s16 *itemId);
+
+s32 Ovl11TryBeginItemAction(s32 inputMode) {
     Ovl11C7010Object *obj;
     ItemData *item;
     s32 result;
@@ -20,8 +75,8 @@ s32 ovl_11_func_800CB850(s32 arg0) {
     u16 flags;
 
     obj = (Ovl11C7010Object *)&gPrimaryObjectBase;
-    if (arg0 == 0) {
-        result = ovl_11_func_800CB730((Ovl11CE034Object *)obj);
+    if (inputMode == 0) {
+        result = Ovl11ProbeObjectCellClass((Ovl11CE034Object *)obj);
         item = &(*(ItemData **)((u8 *)obj - 0x51A8))[obj->itemIndex];
         if (obj->itemIndex == 0x65) {
             if (D_80128C54 != 0 && result != 0) {

@@ -33,6 +33,7 @@
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_cell_actions.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_item_record_lists.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -136,12 +137,11 @@ void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *a
 s32 ovl_11_func_800F413C (M2C_99ae33ae0e41_M2C_4c1a205b3b09_ReconA0View *arg0, M2C_99ae33ae0e41_M2C_4c1a205b3b09_F413CArg1 *arg1);
 s32 ovl_11_func_800FBE4C (void);
 s32 ovl_11_func_800D5810 (s16 arg0);
-void ovl_11_func_800C9DC0 (void);
 void ovl_11_func_800F0FB0 (s32 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 void ovl_11_func_800CF308 (s16 arg0);
-s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
+s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);

@@ -16,11 +16,11 @@
 #include "ovl11_area_mode_sequence.h"
 #include "ovl11_weather_effect.h"
 #include "ovl11_moving_items.h"
+#include "ovl11_record_slot_table.h"
 
 void func_8001E340(Ovl11SceneGrid **arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
-void ovl_11_func_800DBAB0(void);
 void ovl_11_func_800CBB9C();
 
 void ovl_11_func_80104CB8(void) {
@@ -50,8 +50,8 @@ void ovl_11_func_80104CB8(void) {
     if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
         ovl_11_func_800F0FB0(8);
         ovl_11_func_800F0F50();
-        ovl_11_func_800DBAB0();
-        ovl_11_func_800DBAB0();
+        Ovl11ServiceActiveRecordSlot();
+        Ovl11ServiceActiveRecordSlot();
     }
     if (!(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 4) && !GetGameFlag(2)) {
         ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11AreaInitView *)D_8006C838)->field_51C8, Rand(4) + 0x11B, 0);

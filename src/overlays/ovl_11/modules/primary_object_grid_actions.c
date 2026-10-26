@@ -33,9 +33,10 @@
 #include "ovl11_moving_items.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_surface_height.h"
+#include "ovl11_item_record_lists.h"
+#include "ovl11_cell_geometry.h"
 
 s32 ovl_11_func_800C9D64(void);
-s32 ovl_11_func_800D806C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -57,7 +58,7 @@ void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
             if (Ovl11FindCellGridTag(&arg0->unk84, var_s1, arg0->unk38, &sp2C, &sp2E, 0) != 0) {
                 sp2C += sp28;
                 sp2E += sp2A;
-                if (ovl_11_func_800D806C(sp2C, sp2E, 1, (s16) temp_s3) == 0) {
+                if (Ovl11IsCellUnusable(sp2C, sp2E, 1, (s16) temp_s3) == 0) {
                     Ovl11TryInstallCellItem((s16) temp_s3, sp2C, sp2E, arg0->unk84);
                 }
             }
@@ -215,7 +216,7 @@ s32 Ovl11StepCellActionRequest(Ovl11CD5BCObject *arg0) {
         if (Ovl11FindCellGridTag(&arg0->value, (u32) gOvl11CellActionProgress, *(s16 *) ((u8 *) arg0 + 0x38), &sp18, &sp1A, gOvl11CellActionFilter) != 0) {
             sp18 += gOvl11CellActionColumn;
             sp1A += gOvl11CellActionRow;
-            if (ovl_11_func_800D806C(sp18, sp1A, 0, gOvl11CellActionMode) != 1) {
+            if (Ovl11IsCellUnusable(sp18, sp1A, 0, gOvl11CellActionMode) != 1) {
                 switch (gOvl11CellActionOperation) {
                 case 0:
                     if (Ovl11TryResetCellAndSpawnEffect(gOvl11CellActionMode, sp18, sp1A) == 1) {
@@ -270,7 +271,7 @@ void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *arg0) {
         if (temp_v0 == 1) {
             sp2C += sp28;
             sp2E += sp2A;
-            if (ovl_11_func_800D806C(sp2C, sp2E, 0, (s16) temp_s0) == 0) {
+            if (Ovl11IsCellUnusable(sp2C, sp2E, 0, (s16) temp_s0) == 0) {
                 D_80128C64 += temp_v0 << temp_s3;
                 if (Ovl11TryClearCellFootprintScored((s16) temp_s0, sp2C, sp2E, D_80128C64, arg0->amount) == temp_v0) {
                     var_s4 = 0x96;
@@ -311,7 +312,7 @@ void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
         if (temp_v0 == 1) {
             sp2C += sp28;
             sp2E += sp2A;
-            if (ovl_11_func_800D806C(sp2C, sp2E, 0, (s16) temp_s0) == 0) {
+            if (Ovl11IsCellUnusable(sp2C, sp2E, 0, (s16) temp_s0) == 0) {
                 D_80128C64 += temp_v0 << temp_s3;
                 if (Ovl11TryClearCellFootprint((s16) temp_s0, sp2C, sp2E, D_80128C64, arg0->amount) == temp_v0) {
                     var_s4 = 0x96;
@@ -412,7 +413,6 @@ s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
-void ovl_11_func_800C9D98 (void);
 s32 Ovl11CommitPendingItemRecord (Ovl11C7010Object *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 s32 Ovl11BeginCellEffectAction (Ovl11C7010Object *arg0);
@@ -815,7 +815,7 @@ finish_action:
             if (Ovl11IsLowerPairedItemId(arg0->item) == 0) {
                 temp_s0_6 = (u16 *) ((u8 *) arg0 + 0x8A);
                 Ovl11CopyHalfwordTriplet((u16 *) ((u8 *) arg0 + (((s16) arg0->slot * 6) + 0xBA)), temp_s0_6);
-                ovl_11_func_800C9D98();
+                Ovl11CompactSecondaryItemList();
                 var_a0_3 = temp_s0_6;
             } else {
                 ovl_11_func_800D666C(arg0->item);

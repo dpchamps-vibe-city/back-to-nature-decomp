@@ -19,6 +19,7 @@
 #include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_cell_actions.h"
+#include "ovl11_cell_geometry.h"
 
 s32 ovl_11_func_800D5868(s16 kind);
 
@@ -93,7 +94,6 @@ s32 Ovl11TryPromoteCellPendingKind(s16 layer, s16 column, s16 row, s16 unused) {
 }
 
 s32 ovl_11_func_800D5F44(u16 kind, u16 state);
-s32 ovl_11_func_800D812C(s16 column, s16 row, Vec3 *position, s16 layer);
 void ovl_11_func_800CF95C(Ovl11Func800CF95CArg position, s32 mode);
 
 s32 Ovl11TryResetCellAndSpawnEffect(s16 layer, s16 column, s16 row) {
@@ -136,7 +136,7 @@ s32 Ovl11TryResetCellAndSpawnEffect(s16 layer, s16 column, s16 row) {
         entry->unk5 = 0;
         entry->unk0 = (s16) (u16) entry->unk2;
         entry->unk6 = (u16) entry->unk6 & 0x7FFF;
-        ovl_11_func_800D812C(column, row, (Vec3 *)&position, layer);
+        Ovl11GetCellCornerPosition(column, row, (Vec3 *)&position, layer);
         position.unk4 = 0;
         ovl_11_func_800CF95C(position, 0);
         gOvl11CellTextureSetters[layer](column, row, texture);
@@ -238,7 +238,7 @@ s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
             }
             kind = (u16) entry->unk0;
             if ((kind == 0x36) || (kind == 0x40)) {
-                ovl_11_func_800D812C(column, row, (Vec3 *)&position, layer);
+                Ovl11GetCellCornerPosition(column, row, (Vec3 *)&position, layer);
                 position.unk4 = 0;
                 ovl_11_func_800CF95C(position, 1);
             }

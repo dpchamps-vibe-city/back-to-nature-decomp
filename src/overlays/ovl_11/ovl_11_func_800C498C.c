@@ -15,7 +15,7 @@ void ovl_11_func_800C498C(Ovl11C498CObject *arg0) {
     position[1] = arg0->position[1];
     position[2] = arg0->position[2];
     position[3] = arg0->position[3];
-    offset = D_80123110[arg0->direction];
+    offset = gOvl11FacingProbeOffsets[arg0->direction];
     position[0] += offset[0];
     position[2] += offset[1];
     Ovl11ResolveSurfaceHeight(position, 0);

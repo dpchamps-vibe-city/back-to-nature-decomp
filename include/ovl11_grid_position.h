@@ -13,7 +13,7 @@
  * conversions. The internal dead four-word copy is not an output operation.
  * Mode 1: 45x25, X bias 4400, Z mirrored about 1600, cell divisor 399.
  * Mode 6: 7x7, X bias 1620, Z mirrored about 1220, cell divisor 400. */
-s32 ovl_11_func_800D7EF8(s32 *position, u16 *column, u16 *row);
+s32 Ovl11LookupMode1GridPosition(s32 *position, u16 *column, u16 *row);
 s32 Ovl11LookupMode6GridPosition(s32 *position, u16 *column, u16 *row);
 
 #endif

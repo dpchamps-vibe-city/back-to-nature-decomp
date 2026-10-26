@@ -14,9 +14,9 @@
 #include "ovl11_halfword_triplets.h"
 #include "sound_commands.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_item_record_lists.h"
 
 s32 ovl_11_func_800D6A94(s16 id);
-void ovl_11_func_800C9D98(void);
 
 s32 Ovl11ResetPrimaryObjectRequest(void) {
     s32 *work;
@@ -63,7 +63,7 @@ void Ovl11CheckPrimaryObjectRequestSlot(void) {
         Ovl11ResetPrimaryObjectRequest();
         return;
     }
-    ovl_11_func_800C9D98();
+    Ovl11CompactSecondaryItemList();
     index = *(s16 *) ((u8 *) object + 0x20) - 1;
     slots = (Ovl11CB618RecordView *) object;
     if (slots->records[index][0] == 0) {

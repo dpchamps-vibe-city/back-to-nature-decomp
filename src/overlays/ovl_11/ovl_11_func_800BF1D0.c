@@ -1,6 +1,8 @@
 #include "common.h"
 
-struct_80076220 *ovl_11_func_800BF1D0(s16 *arg0, void *arg1, void *arg2) {
+/* C8808 is the sole caller and supplies two arguments. The second is
+ * retained but unread; the former third parameter had no caller/ABI witness. */
+struct_80076220 *ovl_11_func_800BF1D0(s16 *arg0, void *arg1) {
     struct_80076220 *entry;
     s32 *bp;
     s32 box[6];

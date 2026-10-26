@@ -48,6 +48,7 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_mode6_grid.h"
 #include "ovl11_area_selection_setup.h"
+#include "ovl11_record_slot_table.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -64,7 +65,6 @@ void SetVal8005E27C(s32 arg0);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CD624(void);
 void ovl_11_func_800CD670(s16 arg0);
-void ovl_11_func_800DBAB0(void);
 s32 ovl_11_func_800DE2EC(void);
 void ovl_11_func_800F4E84(void);
 
@@ -142,7 +142,7 @@ void Ovl11StepAreaModeState(void) {
         Ovl11ReadAreaResource(gOvl11PendingAreaReadIndex, 1);
         gOvl11AreaReadStarted = 1;
         if (STATUS->mode == 2) {
-            ovl_11_func_800DBAB0();
+            Ovl11ServiceActiveRecordSlot();
         }
         break;
     case 24:
@@ -183,7 +183,7 @@ void Ovl11StepAreaModeState(void) {
     case 31:
         if (IsScreenFadeComplete() == 1) {
             if (STATUS->mode == 2) {
-                ovl_11_func_800DBAB0();
+                Ovl11ServiceActiveRecordSlot();
             }
             SetVal8005E278(1);
             SetVal8005E27C(1);
@@ -400,14 +400,14 @@ void Ovl11RunAreaEntrySteps(void) {
             if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
                 ovl_11_func_800F0FB0(8);
                 ovl_11_func_800F0F50();
-                ovl_11_func_800DBAB0();
+                Ovl11ServiceActiveRecordSlot();
                 if (GetGameFlag(2) == 1) {
                     for (;;) {
                         if (((struct Ovl11E4280State *)D_8006C838)->selector == 1) {
-                            ovl_11_func_800DBAB0();
+                            Ovl11ServiceActiveRecordSlot();
                             break;
                         }
-                        ovl_11_func_800DBAB0();
+                        Ovl11ServiceActiveRecordSlot();
                         if (GetGameFlag(2) == 0) {
                             break;
                         }
@@ -426,14 +426,14 @@ void Ovl11RunAreaEntrySteps(void) {
                 ovl_11_func_800F0FB0(2);
             }
             ovl_11_func_800F0F50();
-            ovl_11_func_800DBAB0();
+            Ovl11ServiceActiveRecordSlot();
             if (GetGameFlag(2) == 1) {
                 for (;;) {
                     if (((struct Ovl11E4280State *)D_8006C838)->selector == 1) {
-                        ovl_11_func_800DBAB0();
+                        Ovl11ServiceActiveRecordSlot();
                         break;
                     }
-                    ovl_11_func_800DBAB0();
+                    Ovl11ServiceActiveRecordSlot();
                     if (GetGameFlag(2) == 0) {
                         break;
                     }

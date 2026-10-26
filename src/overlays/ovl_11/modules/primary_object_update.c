@@ -30,12 +30,12 @@
 #include "ovl11_primary_object_grid_actions.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_object_action_input.h"
+#include "ovl11_primary_object_action_phase.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
 void ovl_11_func_800CD6F4 (void *arg0);
-s32 ovl_11_func_800C9424 (void);
 s32 ovl_11_func_800CE654(void);
 void Ovl11RemapPrimaryDirectionButtons(void);
 
@@ -95,7 +95,7 @@ block_22:
                 switch ((u32)obj->flags & 0x800010) {
                 case 0x800000:
                     ovl_11_func_800CD6F4(obj);
-                    if (ovl_11_func_800C9424() != 0) {
+                    if (Ovl11DispatchPrimaryObjectAction() != 0) {
                         D_80128C64 = 0;
                     }
                     flags = obj->flags;
@@ -113,7 +113,7 @@ block_22:
                     return;
                 case 0:
                     ovl_11_func_800CD6F4(obj);
-                    D_80128CB0 = ovl_11_func_800C9424();
+                    D_80128CB0 = Ovl11DispatchPrimaryObjectAction();
                     if (D_80128CB0 != 0) {
                         D_80128C64 = 0;
                         D_80128D30 = 0;

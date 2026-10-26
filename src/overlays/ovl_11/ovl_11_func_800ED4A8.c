@@ -39,6 +39,7 @@
 #include "ovl11_moving_items.h"
 #include "ovl11_work_position_commands.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_item_record_lists.h"
 
 typedef struct {
                s16 field_0;
@@ -176,7 +177,6 @@ s32 ovl_11_func_800CDF4C (u8 *arg0);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 void ovl_11_func_800D666C (s16 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-void ovl_11_func_800C9D98 (void);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 void Ovl11SelectPrimaryAnimationForFlag10000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -185,11 +185,10 @@ void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0,
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_800FBE4C (void);
 s32 ovl_11_func_800D5810 (s16 arg0);
-void ovl_11_func_800C9DC0 (void);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (M2C_38c89582ddcb_M2C_4c1a205b3b09_ReconA0View *arg0);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
-s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
+s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 void ovl_11_func_800CBE14 (s32 arg0);
 s32 Ovl11MapDirectionButtons (u16 arg0, u16 arg1);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);

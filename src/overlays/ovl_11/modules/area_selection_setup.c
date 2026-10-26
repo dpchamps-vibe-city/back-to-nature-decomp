@@ -24,6 +24,7 @@
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
 #include "ovl11_area_selection_setup.h"
+#include "ovl11_scene_setup_install.h"
 
 #define WORK ((Ovl11SetupWorkView *)&D_8007AFF0)
 #define RESIDENT ((Ovl11SetupResidentView *)D_8006C838)
@@ -73,7 +74,6 @@ s32 Ovl11ResolveAreaSelection(s32 selection) {
 }
 
 void ovl_11_func_80104A58(void);
-void ovl_11_func_800DBFEC(u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_8010B67C(void);
 void ovl_11_func_800CE5FC(void);
 
@@ -96,7 +96,7 @@ void Ovl11InstallAreaSelection(s32 restorePosition, s32 loadOptions) {
             RESIDENT->y = *(s16 *)(WORK->record + 0x28);
             RESIDENT->z = *(s16 *)(WORK->record + 0x2A);
         }
-        ovl_11_func_800DBFEC((u16)WORK->id, recordFlags, loadOptions & 0xFFFF);
+        Ovl11InstallSceneSetup((u16)WORK->id, recordFlags, loadOptions & 0xFFFF);
         if (restorePosition != 0) {
             Ovl11RestoreAreaGridPosition();
             if (GetGameFlag(0x42U) == 1) {
@@ -118,7 +118,7 @@ void Ovl11InstallAreaSelection(s32 restorePosition, s32 loadOptions) {
             WORK->normalId = (s32)WORK->id;
         }
     } else {
-        ovl_11_func_800DBFEC((u16)WORK->id, 0U, loadOptions & 0xFFFF);
+        Ovl11InstallSceneSetup((u16)WORK->id, 0U, loadOptions & 0xFFFF);
         WORK->normalId = (s32)WORK->id;
         if (RESIDENT->flags & 0x2000) {
             Ovl11LoadIndexedSpriteRecords(0);

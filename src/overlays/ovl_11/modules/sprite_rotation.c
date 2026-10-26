@@ -14,9 +14,9 @@
 #include "psyq/libgte.h"
 #include "psyq/stdlib.h"
 #include "sound_commands.h"
+#include "ovl11_scene_record_render.h"
 
 void ovl_11_func_800E54C8(void);
-void ovl_11_func_800DCC1C(s16 sprite, void *rotation);
 
 /* Private views of the externally supplied sprite pool, not new storage. */
 typedef struct {
@@ -164,7 +164,7 @@ void Ovl11StepSpriteRotation(Ovl11RotationState *entry) {
     } else {
         entry->rotation.y += entry->angularStep;
     }
-    ovl_11_func_800DCC1C(sprite, &entry->rotation.x);
+    Ovl11SetSceneRecordRotationOffset(sprite, &entry->rotation.x);
     if (paired != 0) {
         s32 y;
 
@@ -176,7 +176,7 @@ void Ovl11StepSpriteRotation(Ovl11RotationState *entry) {
         mirrored.y = negatedYaw;
         component = (u16)entry->rotation.z;
         mirrored.z = component;
-        ovl_11_func_800DCC1C(linkedSprite, &mirrored);
+        Ovl11SetSceneRecordRotationOffset(linkedSprite, &mirrored);
     }
     if (entry->state == OVL11_ROTATION_OUTBOUND) {
         angle = abs(entry->rotation.y);
@@ -202,9 +202,9 @@ void Ovl11StepSpriteRotation(Ovl11RotationState *entry) {
         entry->state = OVL11_ROTATION_IDLE;
         entry->angularStep = 0;
         entry->rotation.y = 0U;
-        ovl_11_func_800DCC1C(sprite, &entry->rotation.x);
+        Ovl11SetSceneRecordRotationOffset(sprite, &entry->rotation.x);
         if (paired != 0) {
-            ovl_11_func_800DCC1C(linkedSprite, &entry->rotation.x);
+            Ovl11SetSceneRecordRotationOffset(linkedSprite, &entry->rotation.x);
         }
     }
 }

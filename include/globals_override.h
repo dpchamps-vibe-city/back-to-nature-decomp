@@ -201,16 +201,16 @@ typedef struct {
     char pad70[0x100 - 0x70];
     Ovl11CC7CCPosition position;
     s32 velocity[4];
-} Ovl11CA708Player;
+} Ovl11PrimaryMotionObject;
 typedef struct {
     s16 x, z;
 } Ovl11SlideOffset;
-extern Ovl11SlideOffset D_80123250[8];
-extern Ovl11SlideOffset D_80123270[8];
+extern Ovl11SlideOffset gOvl11MotionProbeOffsets[8];
+extern Ovl11SlideOffset gOvl11MotionSlideVelocities[8];
 /* 800CAADC selects four signed X/Z pairs at 80123100 or base -0x30. */
-extern Ovl11SlideOffset D_80123100[4];
+extern Ovl11SlideOffset gOvl11MotionSlideOffsets[4];
 /* 800CAADC projects into two words at 80128B90 and passes this short vector. */
-extern s32 D_80128B90[2];
+extern s32 gOvl11MotionScreenPoint[2];
 extern s16 D_800A03A4[4];
 /* 800CAADC reads flags +C/+10 and position halfwords +52C8/+52CC/+52D0. */
 typedef struct {
@@ -218,7 +218,7 @@ typedef struct {
     s32 flagsC;
     s32 flags10;
     char pad14[0x51C8 - 0x14];
-    Ovl11CA708Player player;
+    Ovl11PrimaryMotionObject player;
 } Ovl11MovementState;
 /* 800CAADC copies three halfword coordinates at D_8007AFF0 +0x253B4. */
 typedef struct {
@@ -3510,7 +3510,8 @@ typedef struct {
 } Ovl11ItemSnapshot;
 /* Typed aliases coexist with legacy scalar/array declarations of these symbols. */
 extern Ovl11ItemState Ovl11Item_80071A8A __asm__("D_80071A8A");
-extern Ovl11ItemSnapshot Ovl11Items_80071AC0 __asm__("D_80071AC0");
+/* C9D98/C9DE8 operate on eight six-byte records; E8250 copies all 48 bytes. */
+extern Ovl11ItemSnapshot gPrimaryObjectSecondaryItemList;
 extern Ovl11ItemState D_80129500;
 extern s32 D_80129510[12];
 
@@ -4015,7 +4016,24 @@ extern s32 (*gOvl11AreaCellConverters[])();
 /* D_800742AC - word cleared by ovl_11_func_800DBE30 (`extern s32`) and reset
  * together with its following 0x3C bytes by ovl_11_func_800DB9A4, which memsets
  * 0x40 bytes from its address. Absolute-addressed from ovl_11. */
-extern s32 D_800742AC;
+extern s32 gRecordSlotPhase;
+/* DBE30 dispatches through the sole original table word, passing that word's
+ * address; E3A3C ignores the extra argument. Preserve this callback call ABI. */
+typedef s32 (*Ovl11RecordSlotHandler)(void *slot);
+extern Ovl11RecordSlotHandler gOvl11RecordSlotHandlers[1];
+/* DBE9C uses packed 12-byte copies to shift the five six-halfword records. */
+typedef struct __attribute__((packed)) {
+    s32 word0, word1, word2;
+} Ovl11RecordSlotCopy;
+typedef struct {
+    u8 pad[0x7AA8];
+    s16 lastTag;
+} Ovl11RecordSlotTailView;
+/* DBEF8 reads the active record pointer at +30 and its mode halfword +4. */
+typedef struct {
+    u8 pad[0x30];
+    s32 *activeRecord;
+} Ovl11ActiveRecordSlotView;
 
 /* D_80071DFC - 25x45 table of 8-byte entries (ovl_11); row stride 0x168.
  * ovl_11_func_800D8FC8 walks all 25 rows x 45 entries and ovl_11_func_800DAF60
@@ -5278,14 +5296,13 @@ extern s32 *gOvl11CounterRecordLabels[5];
  * element type is not witnessed; u8 keeps the base/offset relation. */
 extern u8 D_8007A3F0;
 
-/* D_80123E04 - {s16,s16} bounds record indexed by a byte offset (arg3, an
- * s16 multiplied by 4) from ovl_11_func_800D806C. Absolute-addressed. */
+/* D806C indexes these {columnCount,rowCount} records; original words are
+ * {45,25},{7,7}. Absolute-addressed, owned by ovl_11's existing data section. */
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-} struct_80123E04;
-extern struct_80123E04 _D_80123E04[1] __asm__("D_80123E04");
-#define D_80123E04 (*_D_80123E04)
+    s16 columnCount;
+    s16 rowCount;
+} Ovl11CellQueryBounds;
+extern Ovl11CellQueryBounds gOvl11CellQueryLayerBounds[2];
 
 /* D_801287CC - s16 threshold table (13 halfwords) walked with a stride-2
  * pointer by ovl_11_func_80121204. Absolute-addressed (lui + %lo) from
@@ -6012,14 +6029,30 @@ extern s32 gOvl11BackgroundCycleHighRgb;
  * overlay data segment, so only an extern declaration belongs here. */
 extern u16 *gOvl11PaletteBankPointer;
 
-/* ovl_11_func_800DCC5C writes three halfwords before projecting this vector. */
-extern s16 D_80128DF8[4];
-/* ovl_11_func_800DCC5C reads the two signed screen-coordinate words. */
-extern s32 D_80128E00[2];
+/* DCC5C writes three position halfwords before projecting this vector. */
+extern s16 gOvl11SceneProjectionInput[4];
+/* DCC5C culls against the two signed screen-coordinate words. */
+extern s32 gOvl11SceneProjectionOutput[2];
 
 /* ovl_11:80128E08 - fifteen 0x30-byte scene render records. Byte storage
  * keeps partial views compatible; each client casts to its witnessed layout. */
 extern u8 gOvl11SceneRecords[15 * 0x30];
+/* DCC5C's render view: retain unsigned halfword loads, with signed position
+ * conversion at projection time. +2C points to an Ovl11VertexBlend when flag
+ * 4000 is set; void* avoids depending on that shared parameter type here. */
+typedef struct {
+    u8 primitive[8];
+    u16 positionX, positionY, positionZ;
+    u8 reservedE[2];
+    u16 baseAngleX, baseAngleY, baseAngleZ;
+    u8 reserved16[2];
+    u16 deltaAngleX, deltaAngleY, deltaAngleZ;
+    u8 reserved1E[2];
+    u16 offsetAngleX, offsetAngleY, offsetAngleZ;
+    u8 reserved26[2];
+    u16 flags;
+    void *blend;
+} Ovl11SceneRecordRenderView;
 
 /* 800DD8AC/800DDA08 select 0x30-byte records. Renderer 800DCC5C passes
  * +0x10/+0x12/+0x14 to RotMatrixZXY; both ramp updates compare signed angles. */
@@ -6619,7 +6652,7 @@ extern s32 D_8012961C;
 /* D_80128C60 - ovl_11 pointer to a u16 record, cleared and re-pointed by
  * ovl_11_func_800CB730. Absolute-addressed (lui %hi + sw/lw %lo) from the -G0
  * overlay; the overlay only declares it, so an extern pointer belongs here. */
-extern u16 *D_80128C60;
+extern u16 *gOvl11ProbedObjectCell;
 
 /* D_80127D90 / D_80127DB0 / D_80127DD0 / D_80127E00 / D_80127E20 /
  * D_80127E40 - ovl_11 keyed-position tables searched by
@@ -6666,7 +6699,7 @@ extern s16 gOvl11PositionTransitionTargets[3][2];
  * them afterward (800CD6F4). Preserve s32 word accesses and absolute -G0
  * addressing; these are not hardware input records. */
 /* 800C9424 increments this word and compares it unsigned against 8 or 12. */
-extern u32 D_80123150;
+extern u32 gOvl11FacingStepSoundDelay;
 extern s32 gOvl11PrimaryHeldButtons;
 extern s32 gOvl11PrimaryPressedButtons;
 /* 800C6C24 loads this word and scales it by ten for the state timer. */
@@ -7107,7 +7140,7 @@ typedef struct {
 extern Ovl11DirectionOffset gOvl11DirectionOffsetsMode4[];
 extern Ovl11DirectionOffset gOvl11DirectionOffsetsFlag100[];
 /* 800C498C reads signed halfword pairs indexed by u16 direction * 4. */
-extern s16 D_80123110[][2];
+extern s16 gOvl11FacingProbeOffsets[][2];
 /* 800CB114 uses lw/sw and unsigned comparison for the saturating counter. */
 extern u32 D_80123158;
 
@@ -7155,7 +7188,7 @@ extern void *Ovl11SavedInteractionObject;
 /* 800C72F8 reads this absolute-addressed word and tests its low two bits. */
 extern s32 D_80128C50;
 /* 800C9C60 clears these three absolute-addressed words with sw. */
-extern s32 D_80128C68;
+extern s32 gOvl11MotionHoldCount;
 extern s32 gOvl11ItemActionChargeFrames;
 extern s32 D_80128D30;
 /* 800CD0F4 saturating-increments the signed halfword at D_8006C838+0x5240. */
@@ -7165,8 +7198,8 @@ struct Ovl11ActionCounter {
 };
 
 /* 800DBC4C increments 0x80 and 8 byte counters through lbu/sb loops. */
-extern u8 D_8007AE78[0x80];
-extern u8 D_8007AEF8[8];
+extern u8 gTrackedRecordCounters[0x80];
+extern u8 gSecondaryRecordCounters[8];
 
 /* 800DBC4C reads lh at +0x44BA/+0x44BC and lhu at +0xE4C8. */
 struct Ovl11TimerState {

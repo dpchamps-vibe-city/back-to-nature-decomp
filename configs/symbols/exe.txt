@@ -10,6 +10,10 @@ gObjectWorkPosition = 0x80071B00; // size:0xC
 // Six-byte {id, variant, quantity} record bases used by stack insertion.
 // Preserve the existing 12-byte C anchor extents; these are not pool sizes.
 gItemStackSlotBase = 0x80071A90; // size:0xC
+gPrimaryObjectSecondaryItemList = 0x80071AC0; // size:0x30
+gRecordSlotPhase = 0x800742AC; // size:0x4
+gTrackedRecordCounters = 0x8007AE78; // size:0x80
+gSecondaryRecordCounters = 0x8007AEF8; // size:0x8
 gItemOverflowSlotBase = 0x80070EC2; // size:0xC
 
 // Progress/status work-record anchors; overlay-11 derives the low 23 flags.

@@ -216,7 +216,7 @@ s32 Ovl11ProbeTileMap(s32 **arg0, s32 arg1) {
             goto block_7;
         }
         var_v0 = 0;
-        if (ovl_11_func_800D7EF8(&pos.vx, &coords[0], &coords[1]) == 0) {
+        if (Ovl11LookupMode1GridPosition(&pos.vx, &coords[0], &coords[1]) == 0) {
 block_7:
             row = coords[1];
             col = coords[0];

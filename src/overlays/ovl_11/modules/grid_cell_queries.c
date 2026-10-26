@@ -48,9 +48,9 @@ s32 Ovl11CheckDirectionalCellTransition(s32 *position, s32 direction) {
             return result;
         }
         result = 0;
-        if ((ovl_11_func_800D7EF8(&nearPos.vx, &nearCol, &nearRow) == 0) &&
+        if ((Ovl11LookupMode1GridPosition(&nearPos.vx, &nearCol, &nearRow) == 0) &&
             (((s16) nearCol != 0x2C) || (result = 0, direction != 3))) {
-            farLookupResult = ovl_11_func_800D7EF8(&farPos.vx, &farCol, &farRow);
+            farLookupResult = Ovl11LookupMode1GridPosition(&farPos.vx, &farCol, &farRow);
 check_cells:
             if (Ovl11ClassifyGridCell((s16) nearCol, (s16) nearRow, map) == 1) {
                 if (farLookupResult == 0) {
@@ -115,7 +115,7 @@ s32 Ovl11IsSpecialCollisionCell(Ovl11CollisionQuery *query) {
     if (map == 2) {
         return 0;
     }
-    if (ovl_11_func_800D7EF8(point, &col, &row) == 0) {
+    if (Ovl11LookupMode1GridPosition(point, &col, &row) == 0) {
         if (map != 0) {
             entry = (u16 *) &gAlternateAreaGrid[(s16) row][(s16) col];
         } else {

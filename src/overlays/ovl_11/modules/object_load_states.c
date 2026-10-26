@@ -30,6 +30,7 @@
 #include "screen_fade.h"
 #include "cd_loader.h"
 #include "game_flags.h"
+#include "ovl11_record_slot_table.h"
 
 void ClearActiveOrderingTables(void);
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
@@ -164,7 +165,6 @@ s32 Ovl11RunObjectRecordProgram(void) {
 }
 
 void ovl_11_func_800E549C(void);
-s32 ovl_11_func_800DBF60(void);
 void ovl_11_func_800E537C(void);
 
 s32 Ovl11ReleaseObjectLoad(void) {
@@ -177,7 +177,7 @@ s32 Ovl11ReleaseObjectLoad(void) {
     ((struct Ovl11E4280State *)D_8006C838)->field_448C = 0;
     ((struct Ovl11E4280State *)D_8006C838)->flags_4450 &= ~0x10;
     ovl_11_func_800E5230();
-    if (ovl_11_func_800DBF60() == 1) {
+    if (Ovl11HasQueuedRecordSlots() == 1) {
         ovl_11_func_800E5294();
     } else {
         ovl_11_func_800E537C();

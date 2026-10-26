@@ -17,7 +17,7 @@ s32 ovl_11_func_800D9108(s32 *arg0) {
 
     result = 0;
     threshold = ovl_11_func_800D5C3C(0x36);
-    if (ovl_11_func_800D7EF8(arg0, (u16 *)&col, (u16 *)&row) == 0) {
+    if (Ovl11LookupMode1GridPosition(arg0, (u16 *)&col, (u16 *)&row) == 0) {
         row--;
         row = row < 0 ? 0 : row;
         col--;

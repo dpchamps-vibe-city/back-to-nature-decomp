@@ -30,7 +30,7 @@ void ovl_11_func_801024D8(void) {
     x = 0x84;
     y = 0x5E;
     if (D_801273EA_table == 0) {
-        slot = (Ovl11ItemState *)&Ovl11Items_80071AC0;
+        slot = (Ovl11ItemState *)&gPrimaryObjectSecondaryItemList;
         count = pow_int(2, slot[-27].id + 1);
     } else {
         table = D_801273EA_table - 1;

@@ -28,7 +28,7 @@ s32 Ovl11ProbeDirectionalTile(VECTOR position, Ovl11CollisionTag tag,
     query.flags = &flags;
     query.field_C = 0;
     query.field_14 = 0;
-    ovl_11_func_800D7EF8(&position.vx, &column, &row);
+    Ovl11LookupMode1GridPosition(&position.vx, &column, &row);
     if ((s16) column == 0x2C && direction == 3) {
         return 1;
     }

@@ -29,6 +29,7 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_record_flag_counters.h"
 #include "ovl11_map_grid_cells.h"
+#include "ovl11_record_slot_table.h"
 
 typedef struct {
     s16 unk0;
@@ -100,8 +101,8 @@ void ovl_11_func_800E2904 (s32 arg0);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_80118C6C (void);
-s32 ovl_11_func_800DBEF8(s32 arg0);
-s32 ovl_11_func_800DBE30 (s32 arg0);
+s32 Ovl11ResetStaleRecordSlot(s32 arg0);
+s32 Ovl11ServiceRecordSlot (s32 arg0);
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
 s32 ovl_11_func_800EFA1C (s16 arg0);
@@ -124,7 +125,6 @@ s32 ovl_11_func_800F1878 (u32 arg0, s32 arg1);
 s32 ovl_11_func_800F1954 (s32 arg0);
 s32 ovl_11_func_800F1AE0 (s32 arg0);
 s32 ovl_11_func_800F12D0 (s32 arg0, s32 arg1);
-void ovl_11_func_800DBC04 (s32 arg0);
 s32 ovl_11_func_800EEBF4 (s32 arg0);
 s32 ovl_11_func_800F1EE4 (s32 arg0);
 void ovl_11_func_800F1E44 (u32 arg0, s16 *arg1, s32 arg2);
@@ -135,7 +135,6 @@ void ovl_11_func_801037EC (void);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800EC354 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F0FB0 (s32 arg0);
-void ovl_11_func_800DBAB0 (void);
 
 extern M2C_a34e94965883_M2C_800EEFB8_Arg1 D_80071CC0;
 extern M2C_a34e94965883_M2C_800EEFB8_Arg1 D_8007AD10[];

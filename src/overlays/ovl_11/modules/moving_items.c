@@ -321,7 +321,7 @@ s32 Ovl11CheckMovingItemCellContact(Ovl11MovingItemRecord *arg0) {
     far_base = (char *)&D_8007AFF0;
     mode = *(s16 *)(far_base + 0x25476);
     if (mode == 1) {
-        if (ovl_11_func_800D7EF8((s32 *)((u8 *)arg0 + 0x24), &col, &row) != 0) {
+        if (Ovl11LookupMode1GridPosition((s32 *)((u8 *)arg0 + 0x24), &col, &row) != 0) {
             arg0->state = mode;
             arg0->timer = mode;
             arg0->fallStep = 0;

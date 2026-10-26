@@ -25,7 +25,7 @@ void ovl_11_func_801103E8(Ovl11Func801103E8Obj *arg0, s32 arg1) {
 
     if (arg1 == 1) {
         var_s2 = 0;
-        var_s1 = ovl_11_func_800D7EF8;
+        var_s1 = Ovl11LookupMode1GridPosition;
     } else {
         var_s2 = 1;
         var_s1 = Ovl11LookupMode6GridPosition;

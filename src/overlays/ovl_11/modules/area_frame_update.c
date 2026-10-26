@@ -41,11 +41,13 @@
 #include "ovl11_moving_items.h"
 #include "ovl11_condition_camera_jitter.h"
 #include "ovl11_interaction_dispatch.h"
+#include "ovl11_scene_record_render.h"
+#include "ovl11_record_slot_table.h"
+#include "ovl11_primary_object_motion.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
 void ovl_11_func_800E3AA4(void);
-void ovl_11_func_800DCC5C(void);
 
 void Ovl11RunAreaFramePhase(void) {
     if (((struct Ovl11FrameState *) D_8006C838)->flags & 0x18000) {
@@ -70,7 +72,7 @@ void Ovl11RunAreaFramePhase(void) {
         Ovl11ApplySceneCamera();
         ApplyGteSceneState();
         if (!(((struct Ovl11FrameState *) D_8006C838)->flags & 0x800000)) {
-            ovl_11_func_800DCC5C();
+            Ovl11DrawSceneRecords();
             Ovl11DrawSceneGeometry();
         }
         break;
@@ -85,11 +87,8 @@ void Ovl11RunAreaFramePhase(void) {
 
 void ovl_11_func_800F65B8 (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
-void ovl_11_func_800CAADC (void);
-void ovl_11_func_800DCC5C (void);
 void ovl_11_func_800DC148 (void);
 s32 ovl_11_func_800F0F50 (void);
-void ovl_11_func_800DBAB0 (void);
 void ovl_11_func_8010C7F0 (void);
 void ovl_11_func_800CE834 (void);
 void ovl_11_func_800F3FB4 (void);
@@ -116,7 +115,7 @@ void Ovl11UpdateAreaFrame(void) {
     SCRATCH_STACK_END();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
     if (gOvl11AreaFrameResult == 2) {
-        ovl_11_func_800CAADC();
+        Ovl11UpdatePrimaryObjectMotion();
     } else {
         ((struct Ovl11FrameState *) D_8006C838)->field_52D8 = 0;
         ((struct Ovl11FrameState *) D_8006C838)->field_52E0 = 0;
@@ -133,7 +132,7 @@ void Ovl11UpdateAreaFrame(void) {
     ApplyGteSceneState();
     SCRATCH_STACK_END();
     if (!(((struct Ovl11FrameState *) D_8006C838)->flags & 0x800000)) {
-        ovl_11_func_800DCC5C();
+        Ovl11DrawSceneRecords();
         Ovl11DrawSceneGeometry();
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
         Ovl11DrawPrimaryObjectFrame((Ovl11SpritePositionView *) ((struct Ovl11FrameState *) D_8006C838)->position, 1);
@@ -143,7 +142,7 @@ void Ovl11UpdateAreaFrame(void) {
     }
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
     ovl_11_func_800F0F50();
-    ovl_11_func_800DBAB0();
+    Ovl11ServiceActiveRecordSlot();
     Ovl11UpdateObjectEvents();
     ovl_11_func_8010C7F0();
     ovl_11_func_800CE834();

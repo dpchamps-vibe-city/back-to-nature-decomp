@@ -1,8 +1,7 @@
 #include "common.h"
+#include "ovl11_record_slot_table.h"
 
 extern s32 D_80070C88;
-
-void *ovl_11_func_800DBC28(s32 arg0);
 
 s32 ovl_11_func_800F1354(s32 arg0, s32 arg1) {
     u16 temp_s0;
@@ -13,7 +12,7 @@ s32 ovl_11_func_800F1354(s32 arg0, s32 arg1) {
     if ((D_80070C88 & 1) && (temp_s0 < 0x12C)) {
         return 1;
     }
-    temp_a1 = ovl_11_func_800DBC28(0);
+    temp_a1 = Ovl11ReserveAnyRecordSlot(0);
     if (temp_a1 != 0) {
         *(u16 *)(temp_a1 + 2) = temp_s0;
         *(u16 *)(temp_a1 + 6) = arg1;

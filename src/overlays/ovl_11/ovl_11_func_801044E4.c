@@ -26,13 +26,14 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_record_flag_counters.h"
 #include "ovl11_primary_object_sprite_records.h"
+#include "ovl11_record_slot_table.h"
+#include "ovl11_scene_setup_install.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);
 void ovl_11_func_800D6628 (void);
 void ovl_11_func_800DBFA0 (void);
-void ovl_11_func_800DBFC4 (void);
 void ovl_11_func_800D7B24 (void);
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 void ovl_11_func_800F6630 (void);
@@ -46,7 +47,6 @@ void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_80104A58 (void);
 void ovl_11_func_80104A88 (void);
 u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
-void ovl_11_func_800DB9A4(void);
 void ovl_11_func_8010476C(void);
 
 void ovl_11_func_801044E4(void) {
@@ -62,7 +62,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_80104A80();
     ovl_11_func_801047FC();
     ovl_11_func_800D6628();
-    ovl_11_func_800DB9A4();
+    Ovl11InitRecordSlotTable();
     Ovl11InitClockAndCalendar();
     Ovl11InitPrimaryObjectRecordSprites();
     Ovl11ResetAllEventSlots();
@@ -72,7 +72,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800DBFA0();
     Ovl11ResetCoordinateClamp();
     Ovl11InitVramAnimationSlots();
-    ovl_11_func_800DBFC4();
+    Ovl11SetSceneCollisionTolerance();
     ovl_11_func_800D7B24();
     Ovl11ClearResourceIndex();
     Ovl11AreaSpriteBankHook();

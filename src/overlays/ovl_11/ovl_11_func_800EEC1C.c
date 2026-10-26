@@ -39,7 +39,7 @@ s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
             if (which == 0) {
                 table = (Ovl11ItemState *)&gItemStackSlotBase;
             } else {
-                table = (Ovl11ItemState *)&Ovl11Items_80071AC0;
+                table = (Ovl11ItemState *)&gPrimaryObjectSecondaryItemList;
             }
             count = pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
             break;

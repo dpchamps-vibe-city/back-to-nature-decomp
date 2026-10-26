@@ -65,6 +65,6 @@ void Ovl11InitPrimaryObjectRecordSprites(void) {
     Ovl11LoadPrimaryObjectRecordSprites();
     ovl_11_func_800CD0C0((s32 *)(base + 0x100));
     D_80128D30 = 0;
-    D_80128C68 = 0;
+    gOvl11MotionHoldCount = 0;
     gOvl11ItemActionChargeFrames = 0;
 }

@@ -62,8 +62,8 @@ s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
                 Ovl11ResetPrimaryObjectRequest();
             }
         }
-        Ovl11Items_80071AC0 = *(Ovl11ItemSnapshot *)D_80129510;
-        slot = (s16 *)&Ovl11Items_80071AC0;
+        gPrimaryObjectSecondaryItemList = *(Ovl11ItemSnapshot *)D_80129510;
+        slot = (s16 *)&gPrimaryObjectSecondaryItemList;
         for (i = 0; i < 8;) {
             ovl_11_func_800D6A94(*slot);
             i++;

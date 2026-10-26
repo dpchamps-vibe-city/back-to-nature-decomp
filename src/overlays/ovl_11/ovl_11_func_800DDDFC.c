@@ -29,16 +29,16 @@
 #include "ovl11_record_flag_counters.h"
 #include "ovl11_grid_transition_passes.h"
 #include "ovl11_availability_event_reset.h"
+#include "ovl11_record_slot_table.h"
+#include "ovl11_scene_setup_install.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
 void ovl_11_func_800CCCC0 (void);
-void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
 void ovl_11_func_800F1F48 (s32 arg0);
-void ovl_11_func_800DBC4C (void);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
 void ovl_11_func_800F3D40 (void);
@@ -105,7 +105,7 @@ s32 ovl_11_func_800DDDFC(void) {
             id = ((Ovl11DDDFCState *)D_8006C838)->index + offset;
             same = ((Ovl11SetupWorkView *)&D_8007AFF0)->id == id;
             ((Ovl11SetupWorkView *)&D_8007AFF0)->id = id;
-            ovl_11_func_800DBFEC((u16)((Ovl11SetupWorkView *)&D_8007AFF0)->id, 0x8000, same);
+            Ovl11InstallSceneSetup((u16)((Ovl11SetupWorkView *)&D_8007AFF0)->id, 0x8000, same);
             Ovl11UpdateEventSlotCounters();
             Ovl11UpdateRecordFlagCounters();
             Ovl11LoadIndexedSpriteRecords(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xA));
@@ -146,7 +146,7 @@ s32 ovl_11_func_800DDDFC(void) {
         break;
     case 5:
         ovl_11_func_800F4BB4();
-        ovl_11_func_800DBC4C();
+        Ovl11AdvanceTrackedRecordCounters();
         ovl_11_func_8010C9B4();
         ovl_11_func_800F40A4();
         ovl_11_func_800F3D40();

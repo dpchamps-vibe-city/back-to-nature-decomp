@@ -11,8 +11,7 @@
 #include "word_interpolation.h"
 #include "game_flags.h"
 #include "ovl11_scene_triplet_interpolation.h"
-
-void ovl_11_func_800DCBDC(s16 sceneIndex, void *triplet);
+#include "ovl11_scene_record_render.h"
 
 void Ovl11ResetSceneTripletInterpolation(void) {
     u16 initial[3];
@@ -22,7 +21,7 @@ void Ovl11ResetSceneTripletInterpolation(void) {
     initial[1] = ((u16 *)gOvl11SceneTripletStart)[2];
     initial[2] = ((u16 *)gOvl11SceneTripletStart)[4];
     gOvl11SceneTripletProgress = 0;
-    ovl_11_func_800DCBDC(0, initial);
+    Ovl11SetSceneRecordPosition(0, initial);
 }
 
 void Ovl11StepSceneTripletInterpolation(void) {
@@ -36,7 +35,7 @@ void Ovl11StepSceneTripletInterpolation(void) {
         published[0] = (u16) interpolated[0];
         published[1] = (u16) interpolated[1];
         published[2] = (u16) interpolated[2];
-        ovl_11_func_800DCBDC(0, published);
+        Ovl11SetSceneRecordPosition(0, published);
         if (gOvl11SceneTripletProgress >= 0x4B0) {
             SetGameFlag(8U, 0U);
             return;

@@ -1,28 +1,56 @@
+/*
+ * primary_object_action_phase — reconstructed translation unit.
+ *
+ * Prioritize primary-object action input, its forced-state entry and
+ * fade-gated idle transition.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
+
 #include "common.h"
+#include "ovl11_primary_object_action_phase.h"
 #include "game_types.h"
 #include "sprite_rotation.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "sprite_source.h"
 #include "area_grid_triggers.h"
 #include "ovl11_counter_choice.h"
 #include "ovl11_primary_object_direction.h"
+#include "screen_fade.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_held_item_actions.h"
+#include "ovl11_interaction_volume_actions.h"
+#include "ovl11_item_list_exchange_actions.h"
 
-void ovl_11_func_800C93A4 (Ovl11C7010Object *arg0);
-s32 ovl_11_func_800C8BA8 (Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1);
+/* Consume the dispatcher's forced-entry flag with a fixed position/velocity
+ * setup. The constants are state-specific, not generic movement defaults. */
+void Ovl11BeginPrimaryObjectState3B(Ovl11C7010Object *object) {
+    object->unk6C |= 0x1800;
+    Ovl11ChangePrimaryObjectState(object, 0x3BU, 0, 0x14);
+    *(s32 *)((u8 *)object + 0x100) = -0x2286;
+    SelectSpriteAnimation((ObjectState *)&object->sprite, 4);
+    object->unk38 = 2;
+    *(s32 *)((u8 *)object + 0x114) = -0x8C;
+    object->sprite.field_5 = object->unk38;
+    object->unk6C |= 0x40000000;
+    PlaySoundEffect(6);
+}
+
+void Ovl11BeginPrimaryObjectState3B (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 s32 ovl_11_func_800C907C (Ovl11C8FA8Object *arg0, u16 arg1);
 /* This caller supplies a direction; the matched helpers do not use it. */
-void ovl_11_func_800C8D9C (Recon_ovl_11_func_800C7270_A0View *arg0, s32 direction);
-void ovl_11_func_800C8E98 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 direction);
 s32 ovl_11_func_800C7838 (u8 *arg0);
 void ovl_11_func_800CF308 (s16 arg0);
-/* 8001FAD0 calls func_800212A8 and forwards its return value unchanged. */
 s32 ovl_11_func_800C8D24 (M2C_15512f31231d_Func800C7878Arg0 *arg0, u16 arg1);
 s32 ovl_11_func_800C77D8 (Ovl11C7010Object *arg0, u16 arg1);
-s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
+s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 
-s32 ovl_11_func_800C9424(void) {
+s32 Ovl11DispatchPrimaryObjectAction(void) {
     Ovl11C7010Object *obj;
     u16 pressed;
     u16 held;
@@ -46,7 +74,7 @@ s32 ovl_11_func_800C9424(void) {
             return 1;
         }
         if (*(u16 *)((u8 *)obj + 0x36) & 0x80) {
-            ovl_11_func_800C93A4(obj);
+            Ovl11BeginPrimaryObjectState3B(obj);
             *(u16 *)((u8 *)obj + 0x36) &= ~0x80;
             return 1;
         }
@@ -58,7 +86,7 @@ s32 ovl_11_func_800C9424(void) {
             }
             return 1;
         }
-        if (ovl_11_func_800C8BA8((Recon_ovl_11_func_800C7270_A0View *)obj, pressed)) {
+        if (Ovl11DispatchPrimaryInteractionInput((Recon_ovl_11_func_800C7270_A0View *)obj, pressed)) {
             return 1;
         }
         if (!(obj->unk6C & 0x40000108)) {
@@ -74,12 +102,12 @@ s32 ovl_11_func_800C9424(void) {
             }
             if (pressed & 8) {
                 if (obj->itemIndex == 0) {
-                    ovl_11_func_800C8D9C((Recon_ovl_11_func_800C7270_A0View *)obj, 0);
+                    Ovl11TryBeginStackListItemAction((Recon_ovl_11_func_800C7270_A0View *)obj, 0);
                 }
                 return 2;
             }
             if (pressed & 2) {
-                ovl_11_func_800C8E98((Recon_ovl_11_func_800C7270_A0View *)obj, 0);
+                Ovl11TryBeginSecondaryListItemAction((Recon_ovl_11_func_800C7270_A0View *)obj, 0);
                 return 2;
             }
             if (!(obj->unk6C & 0x18000000)) {
@@ -92,7 +120,7 @@ s32 ovl_11_func_800C9424(void) {
                         direction = 0;
                     }
                     if (direction != 2) {
-                        ovl_11_func_800C8D9C((Recon_ovl_11_func_800C7270_A0View *)obj, direction);
+                        Ovl11TryBeginStackListItemAction((Recon_ovl_11_func_800C7270_A0View *)obj, direction);
                         return 2;
                     }
                 }
@@ -105,7 +133,7 @@ s32 ovl_11_func_800C9424(void) {
                         direction = 0;
                     }
                     if (direction != 2) {
-                        ovl_11_func_800C8E98((Recon_ovl_11_func_800C7270_A0View *)obj, direction);
+                        Ovl11TryBeginSecondaryListItemAction((Recon_ovl_11_func_800C7270_A0View *)obj, direction);
                         return 2;
                     }
                 }
@@ -133,7 +161,7 @@ s32 ovl_11_func_800C9424(void) {
             if (ovl_11_func_800C77D8(obj, pressed)) {
                 return 1;
             }
-            if (ovl_11_func_800C97D0((Recon_ovl_11_func_800C97D0_A0View *)obj)) {
+            if (Ovl11TryBeginIdleState54((Recon_ovl_11_func_800C97D0_A0View *)obj)) {
                 return 1;
             }
         }
@@ -144,14 +172,43 @@ s32 ovl_11_func_800C9424(void) {
             if (obj->unk3C == 4) {
                 delay = 8;
             }
-            if (delay < D_80123150) {
+            if (delay < gOvl11FacingStepSoundDelay) {
                 gOvl11ActiveItemActionSound = PlaySoundEffect(0x48);
-                D_80123150 = 0;
+                gOvl11FacingStepSoundDelay = 0;
             } else {
-                D_80123150++;
+                gOvl11FacingStepSoundDelay++;
             }
             return 1;
         }
     }
     return 0;
+}
+
+s32 Ovl11TryBeginIdleState54(Recon_ovl_11_func_800C97D0_A0View *arg0) {
+    s32 callRet3;
+    if ((D_8006C844 & 0x8000000) == 0) {
+        callRet3 = IsScreenFadeComplete();
+        if (callRet3 == 0) {
+            return 0;
+        } else {
+            if ((arg0->unk6C & 0x18000000) == 0) {
+                if (arg0->unk1A < 0x65) {
+                    return 0;
+                } else {
+                    if ((arg0->unk6C & 0x400000) == 0) {
+                        arg0->unk6C = arg0->unk6C | 0x1800;
+                        Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)arg0, 0x54, 0, -2);
+                        arg0->unk6C = arg0->unk6C | 0x400000;
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            } else {
+                return 0;
+            }
+        }
+    } else {
+        return 0;
+    }
 }

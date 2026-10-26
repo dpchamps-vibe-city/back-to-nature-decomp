@@ -8,9 +8,9 @@
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_selected_record_interaction.h"
+#include "ovl11_item_action_gate.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800CB850(s32 arg0);
 void ovl_11_func_800E2904(s32 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s16 Ovl11FindLastFlaggedSmallRecord(void);
@@ -67,7 +67,7 @@ s32 Ovl11UpdateSelectedRecordRelease(void) {
         }
         break;
     case 3:
-        ovl_11_func_800CB850(0);
+        Ovl11TryBeginItemAction(0);
         Ovl11SetInteractionSteps(4, 0);
         break;
     case 4:

@@ -731,6 +731,71 @@ Module campaign refines this broad idiom family into service-level units;
 the shared +38/+3C/+6C object and widely used state setters do not establish
 one original TU spanning every client below.
 
+**`modules/interaction_volume_actions.c`, C7AC0–C8CC8 exclusive, all fourteen
+entries:** the input gate alone calls the volume dispatcher; the dispatcher
+alone calls each of its twelve adjacent case helpers. Their common
+volume-type/facing/item/state/message protocol and the dispatcher's single
+49-entry jump-table pool corroborate the complete closure. The outer input
+gate shares the consumed-input result and request-bit transitions, rather
+than being left as a one-function slice. Left C79F8 is a coordinate-to-type
+probe used by moving-items and another external client; its private output
+is not read here. Right C8CC8 commits a latched request triple, not a volume
+case, and is called by C8D24. These are evidence-limited -G0 protocol cuts.
+
+All helpers now have demonstrated item/set/volume-action names, with uncertain
+gameplay concepts kept neutral. The public header exposes only the external
+input gate and documents menu/button priority, shared request flags, probes,
+state/message effects and the non-Boolean return codes. The facing-offset
+table has a canonical name shared with C498C. The first checked attempt
+exposed C857C/C8670's inconsistent parameter-view prototypes; they now use
+their definitions' actual view. C8334's type-12 caller supplies the record in
+a1, as every two-argument arm does, but this arm ignores it: its prototype
+and definition now explicitly retain that unused parameter, eliminating the
+old unprototyped excess-argument call. No ABI word or behavior was changed.
+The corrected complete baseline fold proves all fourteen functions and the
+pooled table/overlay exact. Repeated result assignments and shared switch
+return nodes remain; obsolete m2c experiment comments were removed. No static
+linkage, compiler override, new asm or policy exception was introduced.
+
+**`modules/item_list_exchange_actions.c`, C8D9C–C8F9C exclusive, both entries:**
+mirrored eight-record/selected-triplet protocols over +90/+84 and +C0/+8A,
+including eligibility, compaction/exchange, action-payload copy and sound 7.
+Both are called only by the action-phase dispatcher. The reusable fixed-list
+operations remain in item_record_lists; their other clients and intervening
+latch/draw/motion services do not belong to this local action pair. Left
+C8D24 is a request-commit gate with no list traversal; right C8FA8 handles
+the interaction latch without these lists. These are evidence-limited cuts.
+The header documents ignored direction (even when the caller passes 1),
+shared-primary-object storage, different occupied-selection handling, state
+changes and the exchange wrappers' always-1 result. Parameters and scan
+locals are named; all original widths, guards and external linkage remain.
+The complete baseline fold and overlay passed without flags or exceptions.
+
+**`modules/primary_object_action_phase.c`, C93A4–C9888 exclusive, all three
+entries:** C9424 alone calls the adjacent forced-state-3B entry and the
+fade/counter-gated idle-state-54 helper; these are private phase branches,
+not general state setters. The primary-object update service calls the phase
+entry and consumes its 0/1/2 result. The public contract documents ordered
+input handling, list-path return 2 (not proof of an action), final direction
+update and sound-delay state. The delay at 80123150 now has a canonical
+name; the motion hold counter at 80128C68 is likewise named throughout its
+initializer and motion users. Left C907C is the independent record-latch
+interaction service; right C9888 is the reusable direction implementation.
+The phase calls those public services but shares neither their private
+record protocol nor direction tables. These are evidence-limited -G0 cuts;
+no distant helper edges are promoted into a claim about every intervening
+function. All three and the complete overlay passed the baseline fold.
+No flags, source exceptions or private linkage were added.
+
+The final published-interface gate also exposed BF1D0's stale three-argument
+definition: C8808 is its sole caller and materializes two arguments, while
+the scan reads only the first. The unwitnessed third parameter was removed,
+retaining the unread but supplied second; the full linked-byte gate proves
+the external scanner as well as all module members unchanged. Acceptance for
+these three modules passes at **1421/2625 folded, 219/219 valid modules**:
+all executable/overlay bytes, data/tables/callbacks, convergence, interfaces,
+source policy, stability, whitespace and exception non-growth pass.
+
 **`modules/primary_object_state_change.c`, 800C6E0C–800C72F8 exclusive:**
 all seven entries 6E0C/6E8C/6F0C/6F6C/7010/70CC/7270. Each of the five
 selectors is called only by 70CC, and its word/byte animation-parameter
@@ -1254,6 +1319,36 @@ related controls. Helpers remain externally linked but are not public header
 entries. `gOvl11SceneRecords` keeps its existing canonical byte-block extern;
 no storage ownership or global rename is invented. The four-member checked
 fold passed at baseline, including all linked overlay bytes, without flags.
+
+**Reconstructed transform/render unit: `modules/scene_record_render.c`,
+DCBDC–DCE98 exclusive, all three entries.** The position and offset-angle
+setters publish the exact triples consumed by the adjacent renderer:
++8/+A/+C become signed translation and projection input; +20/+22/+24 are
+added to the base angles before RotMatrixZXY. Scene-triplet interpolation
+and sprite-rotation controls independently call the two setters; the area's
+frame service calls the renderer. This producer/consumer schema, the closed
+projection scratch pair at 80128DF8/80128E00 and original order corroborate
+the three-member unit, rather than the widely used record pool alone.
+Left DCA60 belongs to the independent free/find/install lifecycle described
+above. Right DCE98 starts the generic three-descriptor vertex-blend pool,
+which takes caller-provided blocks and does not know the scene-record flags
+or field writers. These are evidence-limited protocol boundaries at -G0;
+using the blend service does not absorb it or every other blend client.
+
+Names are Ovl11SetSceneRecordPosition, Ovl11SetSceneRecordRotationOffset,
+and Ovl11DrawSceneRecords, with the unchanged s16/void* setter contracts in
+`ovl11_scene_record_render.h`. The render view retains all unsigned-halfword
+loads and explicit signed position conversions; field names now expose the
+base/delta/offset angle protocol. Projection input/output scratch has canonical
+names and unchanged extents. The public contract records culling bounds,
+flag-80 scratch bypass, blend lifetime, transform restoration and angle
+stepping after culling (but not for skipped records). No linkage or ownership
+was narrowed. The complete checked baseline fold and overlay passed before
+readability changes; batch acceptance uses the full TU campaign gate.
+No flag override or source exception was present, added or retired.
+Final full campaign acceptance passes at 1421 folded / 219 valid modules,
+including the typed renderer, both setters, callers, storage and all linked
+container bytes, declaration and policy checks.
 
 ---
 
@@ -10630,6 +10725,42 @@ fingerprint but still does not prove TU membership.
 
 ## `ovl_11` D_8006C838 +0x7A78 halfword-record table — 0x800DBB94 / 0x800DBF60 / 0x800DBE9C (confidence: low)
 
+**Reconstructed `modules/record_slot_table.c`, DB9A4–DBFA0 exclusive,
+all twelve original entries.** The initializer, active-slot service,
+tag lookup, three reservation wrappers, counter updater, free-slot finder,
+handler service, unconditional queue shift, stale-mode removal and pending-slot
+query close one protocol. The initializer produces the exact -1 tags,
+active pointer and FF counter sentinels consumed by the rest; the crossed
+local helper edges corroborate original order. DBC4C is not an unrelated
+interior boundary: it alone advances the 128/8 counters initialized by DB9A4.
+Left scene_camera_lighting owns the separate orbit/light/geometry protocol;
+right DBFA0 resets area-entry far-state fields and touches neither slots nor
+counters. These are evidence-limited -G0 cuts, not GP-derived object proofs.
+
+`ovl11_record_slot_table.h` publishes initialization, active servicing,
+two pointer-returning reservations, counter advancement and the slots-1..4
+query. F12D0/F1354 immediately dereference the reservation return pointers;
+DBC04/DBC28's erroneous void definitions were corrected to s16* returns.
+The complete checked fold proves those returns add no instructions. The
+unused DBBE0 discard wrapper remains void and externally linked. Tag is
+only a duplicate-check key: allocation clears all six halfwords to zero.
+Dropping shifts all four successors and marks only the tail tag -1; it is
+not hole compaction. Packed copies, unchecked one-entry callback dispatch
+and the extra callback slot-address argument are preserved and documented.
+
+The phase word, tracked counters and secondary counters now have canonical
+EXE names, propagated through the save-image service too. The original
+one-word handler table is named gOvl11RecordSlotHandlers, remains in its
+existing data section and is declared centrally; no C storage is introduced.
+The callback's installed E3A3C ignores the extra argument, an existing ABI
+asymmetry recorded explicitly rather than hidden by a prototype rewrite.
+The selected-pointer, tail-tag and packed-copy views are centralized in the
+override header. Baseline fold: all twelve and the complete overlay exact;
+no flags or source-policy exception was present, added or retired.
+Final full campaign acceptance passes at 1421 folded / 219 valid modules,
+including reservation callers, save-image data references, linked container
+bytes, declaration visibility, policy and exception non-growth.
+
 Scans and a shift over the same main-binary 5-entry record table — absolute
 `lui %hi(D_8006C838)` + `%lo` base, element offset 0x3D3C (byte 0x7A78), stride
 6 s16 (0xC bytes), first s16 is a -1 empty sentinel; same strength-reduced
@@ -12903,6 +13034,30 @@ Members:
 
 ### Separate `ovl_11` scene-setup/render-context helper pair — 0x800DBFEC / 0x800DC114 (confidence: low)
 
+**Reconstructed `modules/scene_setup_install.c`, DBFC4–DC148 exclusive,
+all four entries including the empty DBFE4 hook.** BFEC installs scene
+geometry and calls C114 to clear both render-context colors. BFC4 supplies
+the complementary 200-unit collision tolerance: the corresponding ovl_19
+and ovl_21 geometry installers end with precisely that setter call, supporting
+this local scene-install family beyond adjacency. The intervening empty
+function has no separate state/protocol and is not used as a boundary.
+This is weaker membership evidence for the two small entries than the
+BFEC/C114 direct call; it is a reconstruction inference, not a GP proof.
+Left DBFA0 resets area-entry far-state fields without this installation
+protocol. Right DC148 is the per-frame update dispatcher with its own pooled
+jump table, not a loaded-scene installer or color writer. No private-state
+or helper evidence requires either neighbor to join.
+
+The public header names installation, the separate tolerance setter and the
+both-context RGB writer; it documents loader prerequisites, unused second
+argument, low-halfword alreadyLoaded, header-specific follow-up, modulo-byte
+RGB and update flags. The empty hook keeps external linkage without becoming
+a public interface. Existing canonical scene geometry/render contexts retain
+their declarations and ownership. All four and the complete overlay passed
+the checked baseline fold; no flag or source-policy exception was involved.
+Final full campaign acceptance passes at 1421 folded / 219 valid modules,
+including render-color callers, loaded geometry data, interfaces and policy.
+
 Candidate same-TU membership, separate from the D_8012D110 pair above
 ([call/link-order evidence and limits](research/ovl_11_func_800DBFEC-grouping.md)).
 
@@ -13385,6 +13540,33 @@ field +0x194 of the preceding slot is unresolved while the record layout is.
 
 ## `ovl_11` D_80071A90/D_80071AC0 3×s16 record-table compaction cluster — 0x800C9D98–0x800CAE64 (confidence: medium)
 
+**Reconstructed fixed-list clients: `modules/item_record_lists.c`,
+C9D98–C9E90 exclusive, all four entries.** The two compactors and two
+exchange wrappers form a paired protocol: each uses eight six-byte records,
+and the exchange uses the corresponding selected record (+84 for the stack
+list at +90, +8A for the secondary list at +C0). The mirrored callers C8D9C
+and C8E98 compact then exchange their respective lists. This private paired
+operation, exact storage geometry and link order support every member;
+the generic distant service is not evidence to absorb unrelated intervening
+rendering or movement functions. Left C9D64 only maps a far-state mode to
+0/1/2; right C9E90 draws animation 0x18 through the shared sprite source.
+Neither participates in the fixed-list/selected-record protocol. These are
+evidence-limited -G0 boundaries, not proven original object cuts.
+
+The public `ovl11_item_record_lists.h` names the list operations and documents
+stable compaction, selected-record exchange, zero/nonzero direction mapping,
+the unchecked empty-list reverse case and the wrappers' unconditional **1**
+(the generic helper returns -1). Names are recorded at their original overlay
+identities. The secondary list at EXE:80071AC0 is now canonically
+`gPrimaryObjectSecondaryItemList`, using the established 48-byte snapshot
+view; the obsolete asm-labelled view and local u8 externs were reconciled,
+without changing widths, addresses, external linkage or ownership. The
+stack subtraction remains three s32 words before casting, not three records.
+The complete four-member fold passed baseline settings and the overlay byte
+check; no member override or exception was added or retired. Final full TU
+campaign acceptance passes at 1421 folded / 219 valid modules, including
+all affected callers, saved-image references, linked data and policy gates.
+
 **Reconstructed generic service: `modules/triple_record_table.c`, CADBC–CB020
 exclusive, both entries.** Ovl11CompactTripleRecords and
 Ovl11ExchangeTripleRecordEndpoint share the exact six-byte record and empty-key
@@ -13750,6 +13932,49 @@ Members:
   writes on the D_80075AD4 record.
 
 ## `ovl_11` D_80128C4C / D_80128C54 state-pair cluster — 0x800C4DE0–0x800CD0F4 (confidence: medium)
+
+**Reconstructed `modules/primary_object_motion.c`, CA708–CADBC exclusive,
+both entries.** The frame integrator alone calls the adjacent collision/
+side-slide probe. The complementary 40000000/01000000 transitions, private
+probe-offset and slide-velocity pairs, private four-direction increments and
+projection output corroborate the pair. The preceding CA6C4 is a clock-driven
+object counter with no helper/table edge to motion; the following generic
+triple_record_table consumes caller-owned six-byte lists, not motion data.
+These are evidence-limited -G0 protocol cuts. The common dispatch pair is
+not used to absorb the intervening table services or other dispatch clients.
+
+`ovl11_primary_object_motion.h` publishes only the frame integrator; the probe
+keeps external linkage. Local names describe ahead/side probes, collision
+class, clear-side mask, surface result and velocity pairs. The existing object
+view is now Ovl11PrimaryMotionObject with unchanged fields/widths; the four
+private table/scratch globals have canonical names and unchanged extents.
+The preceding direction bank (slide-offset base -30) remains shared with
+primary_object_direction, not claimed private. The public contract documents
+world-unit integration, special vertical-motion updates, hold counter,
+collision-tolerance restore, camera publication, cleared horizontal velocity,
+projection and unchecked direction indices. Both members and overlay passed
+the complete baseline fold; no overrides or exceptions were involved.
+
+**Reconstructed `modules/item_action_gate.c`, CB730–CBB9C exclusive,
+both entries.** CB850 is the sole caller of CB730 and consumes exactly its
+0/2/3 cell classification. The probe's output pointer at 80128C60 has no
+other code users and is now gOvl11ProbedObjectCell. Its duplicate object/
+position typedefs were reconciled to the identical canonical CE034 views;
+the checked fold confirms unchanged code. Public inputMode remains raw:
+zero uses grid/item/dispatch state, nonzero uses the separate item-class path.
+The header makes explicit that result 1 means handled, not necessarily a new
+state. The selected cell pointer or NULL is a documented side effect.
+
+Left primary_object_requests uses its own request-triple protocol, not this
+private classifier. Right CBB9C installs/snapshots an item and has a distant
+partner in primary_object_grid_actions; it neither calls the classifier nor
+uses its output. Repeated state/sound idioms do not establish membership.
+These are evidence-limited cuts, not proven historical objects. All shared
+dispatch storage remains externally owned, no linkage was narrowed, and both
+members plus overlay passed the checked baseline fold without flags or
+source exceptions. Final full campaign acceptance for both motion and item
+gating passes at 1421 folded / 219 valid modules, including every renamed
+table/counter user, linked container byte, interface and source-policy gate.
 
 **Reconstructed `modules/primary_object_sprite_records.c`, 800C9BB8–
 800C9D38 exclusive**, LoadPrimaryObjectRecordSprites and
@@ -22578,7 +22803,11 @@ witnessed {columnCount,rowCount} pairs {45,25},{7,7}. Its obsolete one-element
 asm-bound macro view became a normal extern of the same four-byte record
 layout; the query indexes the real two-entry array. The adjacent E0C bounds
 array belongs to neighborhood mutation and is not aliased or reinterpreted.
-No data allocation/ownership changed. The existing grid_position header keeps
+No data allocation/ownership changed. Current full campaign acceptance
+passes at 1421 folded / 219 valid modules. The canonical mode-1 declaration
+is published explicitly in grid_position.h (the alias migrator removes the
+old address-shaped declaration); declaring callers were reconciled against
+that shared prototype with unchanged objects. The existing grid_position header keeps
 the shared address-taken lookup contract, and cell_geometry.h publishes the
 usability/corner operations, Y-preservation, return Z, bounds/null constraints,
 layer interpretation and 399-versus-400 distinction. Parameters and locals now
