@@ -1,7 +1,17 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_item_table_queries.h"
 
 s32 ovl_11_func_800F8404(s32 arg0);
-s8 ovl_11_func_800D583C(s16 arg0);
 void ovl_11_func_800F8428(u16 *arg0, u16 *arg1);
 
 s32 ovl_11_func_800F8188(u16 *arg0, s32 arg1, u16 *arg2, s32 arg3) {
@@ -15,9 +25,9 @@ s32 ovl_11_func_800F8188(u16 *arg0, s32 arg1, u16 *arg2, s32 arg3) {
             }
             goto block_5;
         }
-        if (ovl_11_func_800D583C((s16) *arg0) == 2) {
+        if (Ovl11GetItemType((s16) *arg0) == 2) {
 block_5:
-            if (ovl_11_func_800D583C((s16) *arg0) != 1) {
+            if (Ovl11GetItemType((s16) *arg0) != 1) {
                 ovl_11_func_800F8428(arg0, arg2);
                 return 1;
             }

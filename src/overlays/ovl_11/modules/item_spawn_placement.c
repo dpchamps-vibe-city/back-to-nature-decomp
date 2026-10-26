@@ -10,6 +10,7 @@
 
 #include "ovl11_item_spawn_placement.h"
 #include "random.h"
+#include "ovl11_tagged_record_choice.h"
 
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void Ovl11SpawnArea108Item(void);
@@ -225,14 +226,12 @@ void Ovl11TrySpawnPositionedItem(Ovl11ItemSpawnPosition position, s32 mode) {
     }
 }
 
-s32 ovl_11_func_800D3230(u16 arg0);
-
 /* This producer only latches the bit; the coordinator owns its time-window
  * test. Keep the two record queries short-circuited in their original order. */
 void Ovl11RollSpawnWindowLatch(void) {
     char *base;
 
-    if ((ovl_11_func_800D3230(0) >= 0) || (ovl_11_func_800D3230(1) >= 0)) {
+    if ((Ovl11ChooseTaggedRecordIndex(0) >= 0) || (Ovl11ChooseTaggedRecordIndex(1) >= 0)) {
         base = (char *)D_8006C838;
         if ((*(s16 *)(base + 0xE4C8) == 0) && (*(s16 *)(base + 0x44BA) != 3) && (Rand(0xA) == 0)) {
             *(s32 *)(base + 0x44F8) |= 0x800000;

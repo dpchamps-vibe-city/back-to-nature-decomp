@@ -22,8 +22,16 @@
 #include "ovl11_cell_geometry.h"
 #include "ovl11_item_spawn_placement.h"
 #include "ovl11_save_counters.h"
-
-s32 ovl_11_func_800D5868(s16 kind);
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_item_table_queries.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s32 Ovl11TryInstallCellItem(s16 layer, s16 column, s16 row, s16 kind) {
     Ovl11D124Entry *entry;
@@ -36,7 +44,7 @@ s32 Ovl11TryInstallCellItem(s16 layer, s16 column, s16 row, s16 kind) {
     if (((u32) (u16) entry->unk0 - 0x168) >= 2) {
         return 0;
     }
-    if (ovl_11_func_800D5868(kind) == 0) {
+    if (Ovl11ItemHasFlag40(kind) == 0) {
         return 0;
     }
     if ((gCalendarSeason == 3) && (layer == 0)) {
@@ -95,8 +103,6 @@ s32 Ovl11TryPromoteCellPendingKind(s16 layer, s16 column, s16 row, s16 unused) {
     return 1;
 }
 
-s32 ovl_11_func_800D5F44(u16 kind, u16 state);
-
 s32 Ovl11TryResetCellAndSpawnEffect(s16 layer, s16 column, s16 row) {
     Ovl11ItemSpawnPosition position;
     Ovl11D124Entry *entry;
@@ -114,10 +120,10 @@ s32 Ovl11TryResetCellAndSpawnEffect(s16 layer, s16 column, s16 row) {
     {
         kind = (u16) entry->unk0;
         state = 0;
-        if (ovl_11_func_800D5868(entry->unk0) == 1) {
+        if (Ovl11ItemHasFlag40(entry->unk0) == 1) {
             state = entry->unk4;
         }
-        if (ovl_11_func_800D5F44(kind, (u16) state) == 0) {
+        if (Ovl11RecordPropertyHasFlag0800(kind, (u16) state) == 0) {
             return 0;
         }
         if (((u16) entry->unk0 == 0x169) || (texture = 1, ((u16) entry->unk2 == 0x16B))) {
@@ -146,11 +152,6 @@ s32 Ovl11TryResetCellAndSpawnEffect(s16 layer, s16 column, s16 row) {
     }
 }
 
-s32 ovl_11_func_800D589C(s16 kind);
-s32 ovl_11_func_800D5C3C(s16 kind);
-s32 ovl_11_func_800D5CE4(s16 kind);
-s32 ovl_11_func_800D5C90(s16 kind);
-
 u16 Ovl11ResolveCellItemState(Ovl11CellActionEntry *entry) {
     s16 signedKind;
     s16 index;
@@ -161,21 +162,21 @@ u16 Ovl11ResolveCellItemState(Ovl11CellActionEntry *entry) {
 
     signedKind = entry->u0.unk0_s;
     kind = entry->u0.unk0;
-    if (ovl_11_func_800D589C(signedKind) == 0 && ovl_11_func_800D5868(signedKind) == 0) {
+    if (Ovl11ItemHasFlag8100(signedKind) == 0 && Ovl11ItemHasFlag40(signedKind) == 0) {
         return 0;
     }
 
     index = (s16)kind;
-    if (ovl_11_func_800D5868(index) == 1) {
+    if (Ovl11ItemHasFlag40(index) == 1) {
         state = entry->unk4;
-        if (state != ovl_11_func_800D5C3C(index)) {
+        if (state != Ovl11ReadRecordTypeProperty02(index)) {
             return 0;
         }
         if (entry->u0.unk0 == 0x36) {
             return 0;
         }
-        result = ovl_11_func_800D5CE4(index);
-        refreshedState = ovl_11_func_800D5C90(index);
+        result = Ovl11ReadRecordTypeProperty0E(index);
+        refreshedState = Ovl11ReadRecordTypeProperty04(index);
         if (refreshedState == -1) {
             entry->unk4 = 0;
             entry->unk5 = 0;
@@ -210,8 +211,6 @@ u16 Ovl11ResolveCellItemState(Ovl11CellActionEntry *entry) {
     return result;
 }
 
-s32 ovl_11_func_800D5D38(u16 kind, u16 state);
-
 s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
     Ovl11ItemSpawnPosition position;
     Ovl11D124Entry *entry;
@@ -221,10 +220,10 @@ s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
     entry = Ovl11GetMapGridCell((s32) layer, column, row);
     if (entry != NULL) {
         state = 0;
-        if (ovl_11_func_800D5868(entry->unk0) == 1) {
+        if (Ovl11ItemHasFlag40(entry->unk0) == 1) {
             state = entry->unk4;
         }
-        if (ovl_11_func_800D5D38((u16) entry->unk0, (u16) state) == 1) {
+        if (Ovl11RecordPropertyHasFlag8000((u16) entry->unk0, (u16) state) == 1) {
             if ((u16) entry->unk0 == 0x36) {
                 Ovl11AddSaveCounter18(1U, 0U);
                 Ovl11SpawnCellEffectSprite((u16) entry->unk0, layer, column, row);
@@ -248,10 +247,6 @@ s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
     return 0;
 }
 
-s32 ovl_11_func_800D5D9C(u16 kind, u16 state);
-s32 ovl_11_func_800D5E64(u16 kind, u16 state);
-s32 ovl_11_func_800D5ED4(u16 kind, u16 state);
-
 s32 Ovl11TryClearCellFootprint(s16 layer, s16 column, s16 row, s16 power, s16 amount) {
     s32 changed;
     Ovl11D124Entry *entry;
@@ -265,10 +260,10 @@ s32 Ovl11TryClearCellFootprint(s16 layer, s16 column, s16 row, s16 power, s16 am
     }
     kind = (u16) entry->unk0;
     state = 0;
-    if (ovl_11_func_800D5868(entry->unk0) == 1) {
+    if (Ovl11ItemHasFlag40(entry->unk0) == 1) {
         state = entry->unk4;
     }
-    if ((ovl_11_func_800D5D9C(kind, (u16) state) == 1) && ((u32) amount >= ovl_11_func_800D5E64(kind, (u16) state)) && ((u32) power >= ovl_11_func_800D5ED4(kind, (u16) state))) {
+    if ((Ovl11RecordPropertyHasFlag2000(kind, (u16) state) == 1) && ((u32) amount >= Ovl11ReadRecordPropertyValue0(kind, (u16) state)) && ((u32) power >= Ovl11ReadRecordPropertyValue2(kind, (u16) state))) {
         switch (kind) {
         case 0x3B:
         case 0x3C:
@@ -316,8 +311,6 @@ s32 Ovl11TryClearCellFootprint(s16 layer, s16 column, s16 row, s16 power, s16 am
     return changed;
 }
 
-s32 ovl_11_func_800D5E00(u16 kind, u16 state);
-
 s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, s16 amount) {
     s32 changed;
     Ovl11D124Entry *entry;
@@ -332,10 +325,10 @@ s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, 
     {
         kind = (u16) entry->unk0;
         state = 0;
-        if (ovl_11_func_800D5868(entry->unk0) == 1) {
+        if (Ovl11ItemHasFlag40(entry->unk0) == 1) {
             state = entry->unk4;
         }
-        if ((ovl_11_func_800D5E00(kind, (u16) state) == 1) && ((u32) amount >= ovl_11_func_800D5E64(kind, (u16) state)) && ((u32) power >= ovl_11_func_800D5ED4(kind, (u16) state))) {
+        if ((Ovl11RecordPropertyHasFlag4000(kind, (u16) state) == 1) && ((u32) amount >= Ovl11ReadRecordPropertyValue0(kind, (u16) state)) && ((u32) power >= Ovl11ReadRecordPropertyValue2(kind, (u16) state))) {
             switch (kind) {
             case 0x3D:
                 Ovl11AddSaveCounter19(2U, 0U);

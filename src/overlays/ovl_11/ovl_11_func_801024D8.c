@@ -11,10 +11,11 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "psyq/abs.h"
+#include "ovl11_item_table_queries.h"
 
 void func_80024810(s32 arg0, s16 arg1, s16 arg2);
 void func_80024860(s32 arg0, s16 arg1, s16 arg2);
-s8 ovl_11_func_800D583C(s16 arg0);
 void ovl_11_func_800F6F7C(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F7010(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F7094(s32 arg0, s16 arg1, s16 arg2, s32 arg3);
@@ -65,7 +66,7 @@ void ovl_11_func_801024D8(void) {
                 Ovl11DrawTextureCell(context2, (u16)slot->id, x, y);
             }
             if (slot->id != 0) {
-                type = ovl_11_func_800D583C(slot->id);
+                type = Ovl11GetItemType(slot->id);
                 if (D_801273EA_table == 0) {
                     if (type == 2) {
                         ovl_11_func_800F7094((s32)context1, x, y, slot->unk4);

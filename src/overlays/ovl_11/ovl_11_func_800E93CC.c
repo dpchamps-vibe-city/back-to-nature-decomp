@@ -15,7 +15,7 @@ s32 ovl_11_func_800E93CC(s16 arg0, s16 arg1) {
     if (arg1 == 0xA4) {
         return 1;
     }
-    item = D_8006C858;
+    item = gItemDataTable;
     item += arg1;
     flags = item->u0.flags;
     flags &= 0x1C00;

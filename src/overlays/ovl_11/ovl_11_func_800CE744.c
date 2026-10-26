@@ -27,6 +27,7 @@
 #include "ovl11_projected_record_sprites.h"
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_shared_animation_icon.h"
+#include "ovl11_object_id_state.h"
 
 typedef struct {
                s16 unk0;
@@ -171,7 +172,6 @@ s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3424 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 void ovl_11_func_800D03B4 (M2C_057dca34f681_Struct_800D03B4 *arg0, M2C_057dca34f681_Struct_800D03B4 *arg1, s32 arg2);
-s32 ovl_11_func_800D3468 (u16 *arg0);
 s32 ovl_11_func_800DF3BC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_800DF4F0 (M2C_a5df3a0a31de_UnkStruct800DF4F0 *arg0);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);

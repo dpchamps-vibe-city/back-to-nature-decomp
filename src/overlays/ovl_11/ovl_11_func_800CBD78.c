@@ -20,7 +20,7 @@ void ovl_11_func_800CBD78(Ovl11C7010Object *arg0) {
     s16 temp_s0;
 
     temp_s0 = arg0->itemIndex;
-    if (D_8006C858[temp_s0].u0.flags & 0x100) {
+    if (gItemDataTable[temp_s0].u0.flags & 0x100) {
         ovl_11_func_800CE034((Ovl11CE034Object *) arg0, (Ovl11CE034Position *) &sp10, 2);
         Ovl11RefreshRecordById(temp_s0, (Ovl25SetupStatePair *) ((u8 *) arg0 + 0xFC), &sp10);
     }

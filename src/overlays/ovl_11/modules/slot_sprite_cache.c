@@ -19,8 +19,8 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_table_queries.h"
 
-s32 ovl_11_func_800D5750(s16 id);
 void ovl_11_func_800F7010(s32 orderingTable, s16 x, s16 y);
 void *Ovl11EmitSlotSprite(s16 slot, s16 row, s16 alternate, s32 *ot,
                          SPRT *sprite, s16 x, s16 y, s32 flags);
@@ -40,7 +40,7 @@ void Ovl11RemoveSlotSprite(s16 id) {
     Ovl11A04B8Entry *entry;
 
     if (id != 0) {
-        row = ovl_11_func_800D5750(id);
+        row = Ovl11ClassifyItemFlags(id);
         remaining = 0;
         if (row == 2) {
             row = 1;
@@ -252,7 +252,7 @@ s32 Ovl11InstallSlotSprite(s16 id) {
     if (id == 0) {
         return 0;
     }
-    row = ovl_11_func_800D5750(id);
+    row = Ovl11ClassifyItemFlags(id);
     if (row == 2) {
         row = 1;
     }

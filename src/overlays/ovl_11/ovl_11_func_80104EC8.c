@@ -7,8 +7,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
+#include "ovl11_cell_grid_lookup.h"
 
-s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EF0E8(s16 arg0);
@@ -179,7 +179,7 @@ enough_slots:
         return 0;
     case 0x7:
         record18.unk0 = 0x31;
-        record18.unk4 = ovl_11_func_800D5C3C(0x31);
+        record18.unk4 = Ovl11ReadRecordTypeProperty02(0x31);
         if (Ovl11FindRandomGridCell(&sp20[0], &sp20[1], 1, &record18, 2) == 0) {
             return Ovl11FindRandomGridCell(&sp20[0], &sp20[1], 0, &record18, 2) != 0;
         }
@@ -489,7 +489,7 @@ block_172:
     case 0x21:
         if (ovl_11_func_800E6EE0(0x47, 1, 1, 0) != 1) {
             record28.unk0 = 0x28;
-            record28.unk4 = ovl_11_func_800D5C3C(0x28);
+            record28.unk4 = Ovl11ReadRecordTypeProperty02(0x28);
             var_v0 = 1;
             if (Ovl11FindRandomGridCell(&sp30[0], &sp30[1], 1, &record28, 2) == 0) {
                 if (Ovl11FindRandomGridCell(&sp30[0], &sp30[1], 0, &record28, 2) != 0) {
@@ -527,7 +527,7 @@ block_172:
         for (var_s4 = 0; var_s4 < 5; var_s4++) {
             temp_v0_2 = D_801274D0[var_s4];
             record28.unk0 = temp_v0_2;
-            record28.unk4 = ovl_11_func_800D5C3C((s16) temp_v0_2);
+            record28.unk4 = Ovl11ReadRecordTypeProperty02((s16) temp_v0_2);
             var_s0 = var_s0 + Ovl11FindRandomGridCell(&sp30[2], &sp30[3], 1, &record28, 0xA);
             var_s0 = var_s0 + Ovl11FindRandomGridCell(&sp30[2], &sp30[3], 0, &record28, 0xA);
         }
@@ -744,22 +744,22 @@ block_258:
         return 0;
     case 0x4C:
         record38.unk0 = 0x31;
-        record38.unk4 = ovl_11_func_800D5C3C(0x31);
+        record38.unk4 = Ovl11ReadRecordTypeProperty02(0x31);
         var_v0 = 1;
         if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
             record38.unk0 = 0x32;
-            record38.unk4 = ovl_11_func_800D5C3C(0x32);
+            record38.unk4 = Ovl11ReadRecordTypeProperty02(0x32);
             var_v0 = 1;
             if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
                 record38.unk0 = 0x178;
-                record38.unk4 = ovl_11_func_800D5C3C(0x178);
+                record38.unk4 = Ovl11ReadRecordTypeProperty02(0x178);
                 var_v0 = 1;
                 if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
                     record38.unk0 = 0x179;
-                    record38.unk4 = ovl_11_func_800D5C3C(0x179);
+                    record38.unk4 = Ovl11ReadRecordTypeProperty02(0x179);
                     if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
                         record38.unk0 = 0x34;
-                        record38.unk4 = ovl_11_func_800D5C3C(0x34);
+                        record38.unk4 = Ovl11ReadRecordTypeProperty02(0x34);
                         return Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) != 0;
                     }
                     return 1;

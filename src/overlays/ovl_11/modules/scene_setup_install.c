@@ -46,7 +46,7 @@ void Ovl11InstallSceneSetup(u16 resourceIndex, u16 unused, s32 alreadyLoaded) {
     *(u16 *)(base + 0x25386) = *(u16 *)(base + 0x247AA);
     Ovl11LoadAreaResourceSet(resourceIndex, alreadyLoaded & 0xFFFF);
     InitProjectedPrimitiveSource(gOvl11SceneGeometry, (u8 *)D_8007AFF0 + 0x2000);
-    Ovl11SetCoordinateClamp(&D_800A00C4, &D_800A00CC);
+    Ovl11SetCoordinateClamp(&gLoadedAreaClampFirstCorner, &gLoadedAreaClampSecondCorner);
     func_8001E340((Ovl11SceneGrid **)gOvl11SceneGeometry);
     Ovl11SetRenderContextColor(0, 0, 0);
     header = *(struct Ovl11SceneHeader **)(base + 0x25388);

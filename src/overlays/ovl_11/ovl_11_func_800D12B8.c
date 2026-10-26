@@ -65,8 +65,8 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
         var_s4 &= ~0x20;
     }
     item = *(u16 *) arg0;
-    temp_s7 = *(u16 *) ((u8 *) &D_8006C858[item] + 0x24);
-    temp_s6 = *(u16 *) ((u8 *) &D_8006C858[item] + 0x26);
+    temp_s7 = *(u16 *) ((u8 *) &gItemDataTable[item] + 0x24);
+    temp_s6 = *(u16 *) ((u8 *) &gItemDataTable[item] + 0x26);
     ++(*(s16 *) ((u8 *) arg0 + 0x2E));
     if (((*(s16 *) ((u8 *) arg0 + 0x2E)) >= temp_v0_3) && !(temp_a2 & 0x01000000)) {
         var_s3 = 0;

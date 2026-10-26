@@ -8,14 +8,10 @@
 #include "ovl11_spawn_effect_consume.h"
 #include "ovl11_sprite_effect_pool.h"
 #include "ovl11_save_counters.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *record);
-s32 ovl_11_func_800D5D38(u16 id, u16 mode);
-s32 ovl_11_func_800D5D9C(u16 id, u16 mode);
-s32 ovl_11_func_800D5E64(u16 id, u16 mode);
-s32 ovl_11_func_800D5ED4(u16 id, u16 mode);
 void ovl_11_func_800F0FB0(s32 value);
-s32 ovl_11_func_800D5E00(u16 id, u16 mode);
 
 s32 Ovl11ConsumeSpawnEffect(Ovl11SpawnEffectRecord *record) {
     s32 consumed;
@@ -31,7 +27,7 @@ s32 Ovl11ConsumeSpawnEffect(Ovl11SpawnEffectRecord *record) {
     if (*(s16 *) (farState + 0x25474) == 0x13) {
         return 0;
     }
-    if (ovl_11_func_800D5D38((u16) record->unk2, 0) == 1) {
+    if (Ovl11RecordPropertyHasFlag8000((u16) record->unk2, 0) == 1) {
         record->unk4 &= 0xFFFE;
         Ovl11SpawnSpriteEffect(record->unk2, *(VECTOR *)&record->unk8);
         consumed = 1;
@@ -49,9 +45,9 @@ s32 Ovl11ConsumeSpawnEffectWithBudgets(Ovl11SpawnEffectRecord *record,
     if (id == 0) {
         return 0;
     }
-    if (ovl_11_func_800D5D9C(id, 0) == 1) {
-        if ((u32) attribute0Budget >= ovl_11_func_800D5E64(id, 0)) {
-            if ((u32) attribute2Budget >= ovl_11_func_800D5ED4(id, 0)) {
+    if (Ovl11RecordPropertyHasFlag2000(id, 0) == 1) {
+        if ((u32) attribute0Budget >= Ovl11ReadRecordPropertyValue0(id, 0)) {
+            if ((u32) attribute2Budget >= Ovl11ReadRecordPropertyValue2(id, 0)) {
                 record->unk4 &= 0xFFFE;
                 Ovl11SpawnSpriteEffect(record->unk2, *(VECTOR *)&record->unk8);
                 consumed = 1;
@@ -79,9 +75,9 @@ s32 Ovl11ConsumeTieredSpawnEffect(Ovl11SpawnEffectRecord *record,
         ovl_11_func_800F0FB0(5);
         return 0;
     }
-    if (ovl_11_func_800D5E00(id, 0) == 1) {
-        if ((u32) attribute0Budget >= ovl_11_func_800D5E64(id, 0)) {
-            if ((u32) attribute2Budget >= ovl_11_func_800D5ED4(id, 0)) {
+    if (Ovl11RecordPropertyHasFlag4000(id, 0) == 1) {
+        if ((u32) attribute0Budget >= Ovl11ReadRecordPropertyValue0(id, 0)) {
+            if ((u32) attribute2Budget >= Ovl11ReadRecordPropertyValue2(id, 0)) {
                 record->unk4 &= 0xFFFE;
                 switch (id) {
                 case 0x3D:

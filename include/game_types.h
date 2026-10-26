@@ -2484,6 +2484,13 @@ typedef struct {
     u16 unk7A;
 } Ovl11D04D4Obj;
 
+/* 800D3468/800D3D2C: ID at +0 and signed value tested against zero at +AC. */
+typedef struct {
+    u16 id;
+    u8 pad2[0xAC - 2];
+    s16 valueAC;
+} Ovl11ObjectIdCondition;
+
 /* 800CA580 and 8010C1C0 copy these four words from the drawing object. */
 typedef struct {
     char pad0[0x100];

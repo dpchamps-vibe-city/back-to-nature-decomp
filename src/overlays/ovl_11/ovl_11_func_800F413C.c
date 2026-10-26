@@ -26,6 +26,8 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_table_queries.h"
+#include "ovl11_cell_grid_lookup.h"
 
 typedef struct {
     s16 field_0;
@@ -91,7 +93,6 @@ void Ovl11SelectPrimaryAnimationForFlag10000000 (Recon_ovl_11_func_800C6F0C_A0Vi
 void Ovl11SelectPrimaryAnimationForFlag08000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryState2Animation ();
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
-s32 ovl_11_func_800D589C (s16 arg0);
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
@@ -100,11 +101,6 @@ void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D1C18 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D1CD0 (s32 arg0, s32 arg1);
-s32 ovl_11_func_800D5750 (s16 arg0);
-s32 ovl_11_func_800D5868 (s16 arg0);
-s32 ovl_11_func_800D5C3C (s16 arg0);
-s32 ovl_11_func_800D5CE4 (s16 arg0);
-s32 ovl_11_func_800D5C90 (s16 arg0);
 void ovl_11_func_800F4360 (M2C_701317280b4c_Ov11_4360struct *arg0, s16 arg1, s16 arg2, Vec3 vec);
 s32 Ovl11IsActionGuardAreaBlocked (s32 arg0);
 s32 Ovl11TestRecordFieldGuard (s32 arg0, s32 arg1);

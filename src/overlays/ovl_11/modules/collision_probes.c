@@ -41,7 +41,7 @@ s32 Ovl11ProbePlacedRecord(s32 **arg0, u16 *arg1) {
         if ((*(u16 **) ((u8 *) arg0 + 0xC)) != arg1) {
             if (!((*(s32 *) ((u8 *) arg1 + 0x34)) & 0x02020400) || ((*arg1 == 0x106) && (Ovl11FindCalendarDate(((struct struct_8006C838_button *) D_8006C838)->field_44BA, (s16) ((struct Ovl11MenuDateView *) D_8006C838)->field_44BC) != 8))) {
                 temp_v1 = *(s16 *) ((u8 *) arg1 + 0x38);
-                item_base = D_8006C858;
+                item_base = gItemDataTable;
                 temp_a2 = (ItemData *) (temp_s2 * sizeof(ItemData) + (u32) item_base);
                 temp_a0 = *(s16 *) ((u8 *) temp_a2 + 0x24);
                 temp_a1 = (Vec3 *) *arg0;

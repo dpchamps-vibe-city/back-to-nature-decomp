@@ -39,6 +39,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_shared_animation_icon.h"
+#include "ovl11_flagged_volume_code.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -248,7 +249,6 @@ void Ovl11UpdateMovingItemRecord(Ovl11MovingItemRecord *arg0) {
         }
 }
 
-s32 ovl_11_func_800C79F8(Vec3 *arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 
 s32 Ovl11HandleMovingItemGeometryHit(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
@@ -282,7 +282,7 @@ s32 Ovl11HandleMovingItemGeometryHit(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
                 gOvl11HeldActionSignal = 1;
             }
         }
-        temp_v0_2 = ovl_11_func_800C79F8(arg1);
+        temp_v0_2 = Ovl11QueryFlaggedVolumeCode(arg1);
         if (temp_v0_2 == 0) {
             goto success;
         }
@@ -420,14 +420,14 @@ s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0) {
             spawn = ovl_11_func_800F4994((Vec3 *)&next);
             if (spawn != NULL) {
                 spawn->flags |= 0x100;
-                if (D_8006C858[arg0->itemId].field_12 != 0 && ovl_11_func_800F3E44(arg0->itemId) != 0) {
+                if (gItemDataTable[arg0->itemId].field_12 != 0 && ovl_11_func_800F3E44(arg0->itemId) != 0) {
                     RequestMessageWindow(3, 0x383);
                 }
 remove:
                 Ovl11ReleaseMovingItemRecord((Ovl11CC4E0Object *)arg0);
                 return 1;
             }
-            if (Ovl11GetGeometryHitHighBit() != 0 && D_8006C858[arg0->itemId].field_12 != 0) {
+            if (Ovl11GetGeometryHitHighBit() != 0 && gItemDataTable[arg0->itemId].field_12 != 0) {
                 ovl_11_func_800F3BCC(arg0->itemId);
                 PlaySoundEffect(0x13);
                 Ovl11ReleaseMovingItemRecord((Ovl11CC4E0Object *)arg0);

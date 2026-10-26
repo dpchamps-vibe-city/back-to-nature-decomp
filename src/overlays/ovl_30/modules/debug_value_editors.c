@@ -275,7 +275,7 @@ s32 Ovl30EditItemFields(s32 handlerState) {
             gOvl30ItemFieldIndex = 0;
         }
     }
-    item = &D_8006C858[gOvl30ItemIndex];
+    item = &gItemDataTable[gOvl30ItemIndex];
     FntPrint(gOvl30EditorNewlines);
     FntPrint(gOvl30ItemIndexFormat, gOvl30ItemIndex);
     /* Existing debug labels identify these fields as BUY/SELL/LIFE/TIRED.

@@ -7,9 +7,8 @@
  */
 #include "ovl11_object_state_dispatch.h"
 #include "game_types.h"
+#include "ovl11_object_id_state.h"
 
-void ovl_11_func_800D3574(u16 *record);
-s32 ovl_11_func_800D3468(u16 *record);
 s32 ovl_11_func_800D0408(s16 mode, Recon800D0408A1View *source, s32 value);
 
 s32 Ovl11UpdateObjectState(u16 *record) {
@@ -18,7 +17,7 @@ s32 Ovl11UpdateObjectState(u16 *record) {
     if (*record == 0) {
         return -1;
     }
-    ovl_11_func_800D3574(record);
+    Ovl11RefreshObjectSpriteForId(record);
     if (*record == 0) {
         return -1;
     }
@@ -28,7 +27,7 @@ s32 Ovl11UpdateObjectState(u16 *record) {
     }
     if (!(*(s32 *) ((u8 *) record + 0x34) & 0x800) &&
         *(s16 *) ((u8 *) record + 0x2C) >= 300) {
-        ovl_11_func_800D3468(record);
+        Ovl11EnterObjectStateForId(record);
         *(s16 *) ((u8 *) record + 0x2C) = 0;
     }
     (*(s16 *) ((u8 *) record + 0x2C))++;

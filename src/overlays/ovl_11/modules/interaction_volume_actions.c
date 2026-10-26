@@ -542,7 +542,7 @@ void Ovl11TryBeginFlaggedItemVolumeAction(Recon_ovl_11_func_800C8334_A0View *arg
         RequestMessageWindow(2, 0x20A);
         return;
     }
-    item = &D_8006C858[arg0->unk8A];
+    item = &gItemDataTable[arg0->unk8A];
     var_a2 = 0;
     if (((item->u0.flags & 0x9000) == 0x9000) || ((*(s32 *) ((u8 *) item + 0x14)) == -1)) {
         var_a2 = 1;

@@ -3,8 +3,7 @@
 #include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_grid_position.h"
-
-s32 ovl_11_func_800D5C3C(s16 arg0);
+#include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_800D9108(s32 *arg0) {
     s16 col;
@@ -16,7 +15,7 @@ s32 ovl_11_func_800D9108(s32 *arg0) {
     Ovl11D124Entry *entry;
 
     result = 0;
-    threshold = ovl_11_func_800D5C3C(0x36);
+    threshold = Ovl11ReadRecordTypeProperty02(0x36);
     if (Ovl11LookupMode1GridPosition(arg0, (u16 *)&col, (u16 *)&row) == 0) {
         row--;
         row = row < 0 ? 0 : row;

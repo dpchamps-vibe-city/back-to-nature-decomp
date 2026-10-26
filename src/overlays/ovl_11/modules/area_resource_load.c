@@ -144,14 +144,14 @@ void Ovl11LoadOffsetSpriteSet(s32 index) {
     offsets = D_80124FCC_tables[index + 2];
     imageOffset = *(s32 *)((u8 *)offsets + (*offsets * 4) + 4);
     CdReadDiscSectorsBlocking(0, bounds[0], bounds[1] - bounds[0], 0, gGraphicsHeapBase + 0x4290);
-    memcpy(&D_80098BF8, (void *)(gGraphicsHeapBase + 0x4290), imageOffset);
+    memcpy(&gSeasonalObjectSpriteBankBase, (void *)(gGraphicsHeapBase + 0x4290), imageOffset);
     imageOffset = imageOffset + 0x4290;
     UploadSpriteImages((u8 *)(gGraphicsHeapBase + imageOffset));
 }
 
 void Ovl11LoadFixedAreaSpriteBank(void) {
     CdReadDiscSectorsBlocking(0, 0x0380B000, 0x5000, 0, gGraphicsHeapBase + 0x4290);
-    Ovl11CopyWordBlock(&D_8009A3F8, gGraphicsHeapBase + 0x4290, 0x540U);
+    Ovl11CopyWordBlock(&gFixedIdSpriteBankBase, gGraphicsHeapBase + 0x4290, 0x540U);
     UploadSpriteImages(gGraphicsHeapBase + 0x5790);
 }
 
@@ -232,7 +232,7 @@ load_selected:
             if (variantKind == 1) {
                 memcpy(D_8008F7F8_words, (void *) staging, imageOffset);
             } else {
-                memcpy(&D_8009CBF8, (void *) staging, imageOffset);
+                memcpy(&gAreaSpriteWorkBase, (void *) staging, imageOffset);
             }
             UploadSpriteImages((u8 *) (staging + imageOffset));
             if (variantKind == 2) {
@@ -280,6 +280,6 @@ void Ovl11LoadRenderContextSpriteBank(void) {
         staging = *(s32 *)((u8 *)&gRenderContexts + 0x124);
     }
     CdReadDiscSectorsBlocking(0, 0x7F000, 0x4800, 0, staging);
-    memcpy(&D_8009CBF8, (void *)staging, 0x770);
+    memcpy(&gAreaSpriteWorkBase, (void *)staging, 0x770);
     UploadSpriteImages((u8 *)staging + 0x770);
 }

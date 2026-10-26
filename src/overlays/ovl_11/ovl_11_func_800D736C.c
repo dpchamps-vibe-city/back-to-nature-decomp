@@ -6,7 +6,7 @@
  * of special values. */
 s32 ovl_11_func_800D736C(s16 *arg0) {
     s16 h = *arg0;
-    u16 flags = D_8006C858[h].u0.flags;
+    u16 flags = gItemDataTable[h].u0.flags;
 
     if (flags & 0x400) {
         return 4;

@@ -13,12 +13,12 @@
 #include "aged_item_pool.h"
 #include "ovl11_record_pair_slots.h"
 #include "ovl11_item_spawn_placement.h"
+#include "ovl11_tagged_record_choice.h"
 
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE9C8(UnkStruct800DF4F0 *arg0);
 s32 ovl_11_func_800E05A8(UnkStruct800E109C *arg0);
-s32 ovl_11_func_800D3250(u16 *arg0);
 s32 ovl_11_func_800E20F0(u16 *arg0);
 s32 ovl_11_func_800E21E4(E21E4Object *arg0);
 s32 ovl_11_func_800DEB00(Ovl11Deb00Object *arg0);
@@ -124,7 +124,7 @@ void Ovl11RunRecordPoolFirstPass(void) {
         }
         for (index = 0; index < 6; index++) {
             record = (u16 *) (D_80075BC4_reset + index * 0xB0);
-            ovl_11_func_800D3250(record);
+            Ovl11ApplyTaggedRecordValueAdjustment(record);
         }
     }
 }

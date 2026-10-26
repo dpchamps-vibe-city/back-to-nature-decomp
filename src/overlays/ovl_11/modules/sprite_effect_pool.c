@@ -14,12 +14,19 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "ovl11_projected_record_sprites.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_item_table_queries.h"
 
 /* Helpers retain external linkage. */
 void Ovl11DrawAndStepSpriteEffect(Ovl11SpriteEffect *effect);
 void Ovl11ReleaseSpriteEffect(Ovl11SpriteEffect *effect);
 void Ovl11InitSpriteEffect(Ovl11SpriteEffect *effect, VECTOR position, u16 id);
-s32 ovl_11_func_800D5868(s16 id);
 s32 ovl_11_func_800D61D8(s16 id);
 
 void Ovl11UpdateSpriteEffects(void) {
@@ -184,7 +191,7 @@ void Ovl11InitSpriteEffect(Ovl11SpriteEffect *effect, VECTOR position, u16 id) {
         sourceIndex = sourceBase + 6;
         break;
     default:
-        if (ovl_11_func_800D5868((s16)id) == 1 &&
+        if (Ovl11ItemHasFlag40((s16)id) == 1 &&
             (itemSeason = ovl_11_func_800D61D8((s16)id), animation = 1, EFFECT_SEASON != itemSeason) &&
             EFFECT_AREA != 6) {
             animation = 1;

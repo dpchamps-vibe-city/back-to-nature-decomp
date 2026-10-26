@@ -25,6 +25,8 @@
 #include "ovl11_area_resource_load.h"
 #include "ovl11_area_selection_setup.h"
 #include "ovl11_scene_setup_install.h"
+#include "psyq/libetc.h"
+#include "ovl11_area_scene_load.h"
 
 #define WORK ((Ovl11SetupWorkView *)&D_8007AFF0)
 #define RESIDENT ((Ovl11SetupResidentView *)D_8006C838)
@@ -73,7 +75,6 @@ s32 Ovl11ResolveAreaSelection(s32 selection) {
     return Ovl11RemapCalendarValue((s16)id);
 }
 
-void ovl_11_func_80104A58(void);
 void ovl_11_func_8010B67C(void);
 void ovl_11_func_800CE5FC(void);
 
@@ -87,7 +88,7 @@ void Ovl11InstallAreaSelection(s32 restorePosition, s32 loadOptions) {
 
     previousMusic = WORK->music;
     previousKind = WORK->previous.field_0;
-    ovl_11_func_80104A58();
+    Ovl11ClearAreaSpriteWork();
     WORK->id = Ovl11ResolveAreaSelection(WORK->id);
     if (WORK->record != NULL) {
         recordFlags = *(u16 *)WORK->record;

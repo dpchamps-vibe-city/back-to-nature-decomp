@@ -5,8 +5,7 @@
 #include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_cell_actions.h"
-
-s32 ovl_11_func_800D5C3C(s16 arg0);
+#include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
     Ovl11D124Entry item;
@@ -85,7 +84,7 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                     case 4: item.unk0 = 0x35; break;
                     case 5: item.unk0 = 0x179; break;
                 }
-                item.unk4 = ovl_11_func_800D5C3C(item.unk0);
+                item.unk4 = Ovl11ReadRecordTypeProperty02(item.unk0);
                 if (Ovl11FindRandomGridCell(&x, &y, group, &item, 2) == 0) {
                     goto no_match;
                 }
@@ -121,7 +120,7 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                     case 4: item.unk0 = 0x35; break;
                     case 5: item.unk0 = 0x179; break;
                 }
-                item.unk4 = ovl_11_func_800D5C3C(item.unk0);
+                item.unk4 = Ovl11ReadRecordTypeProperty02(item.unk0);
                 if (Ovl11FindRandomGridCell(&x2, &y2, group, &item, 2) != 0) {
                     if (group == 1) {
                         selected = &gMainAreaGrid[y2][x2];

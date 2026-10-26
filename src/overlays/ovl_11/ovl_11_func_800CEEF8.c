@@ -39,6 +39,8 @@
 #include "ovl11_save_counters.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_table_queries.h"
+#include "ovl11_cell_grid_lookup.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -126,7 +128,6 @@ int CdReadSync (int mode, u_char *result);
 int CdSync (int mode, u_char *result);
 int MoveImage (RECT *rect, int x, int y);
 void SsSetSerialVol (char, short, short);
-s32 ovl_11_func_800D589C (s16 arg0);
 s32 ovl_11_func_800E6EAC (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
@@ -141,7 +142,6 @@ void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0,
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_800F413C (M2C_99ae33ae0e41_M2C_4c1a205b3b09_ReconA0View *arg0, M2C_99ae33ae0e41_M2C_4c1a205b3b09_F413CArg1 *arg1);
 s32 ovl_11_func_800FBE4C (void);
-s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
@@ -149,12 +149,7 @@ s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
-s32 ovl_11_func_800D5750 (s16 arg0);
 void Ovl11CopySlotSpritePieces (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-s32 ovl_11_func_800D5868 (s16 arg0);
-s32 ovl_11_func_800D5C3C (s16 arg0);
-s32 ovl_11_func_800D5CE4 (s16 arg0);
-s32 ovl_11_func_800D5C90 (s16 arg0);
 s32 ovl_11_func_800D603C (s32 arg0);
 s32 ovl_11_func_800F3C9C (u16 arg0);
 s32 ovl_11_func_800F581C (void);
@@ -168,7 +163,7 @@ s32 ovl_11_func_80110890 (M2C_33501d1b78e1_Recon80110838A0View *arg0);
 s32 ovl_11_func_800CEEF8(M2C_4c1a205b3b09_ReconA0View *arg0) {
     s32 temp_v1;
 
-    if (ovl_11_func_800D589C(*(s16 *) ((u8 *) arg0 + 0)) == 0) {
+    if (Ovl11ItemHasFlag8100(*(s16 *) ((u8 *) arg0 + 0)) == 0) {
         return 1;
     }
     temp_v1 = *(s32 *) ((u8 *) arg0 + 0x34);

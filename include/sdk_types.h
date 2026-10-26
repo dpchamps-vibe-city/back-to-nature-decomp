@@ -14,13 +14,13 @@ struct M2C_1e7e93467acd_Unk800D3FEC;
 
 typedef struct M2C_1e7e93467acd_Unk800D3FEC M2C_1e7e93467acd_Unk800D3FEC;
 
-struct M2C_6fc629d778b7_Unk800D3D2C;
-
-typedef struct M2C_6fc629d778b7_Unk800D3D2C M2C_6fc629d778b7_Unk800D3D2C;
-
 struct SpriteSourceData;
 
 typedef struct SpriteSourceData SpriteSourceData;
+
+struct Ovl11DispatchRecord;
+
+typedef struct Ovl11DispatchRecord Ovl11DispatchRecord;
 
 struct Ovl11IdAdjustmentObject;
 
@@ -410,12 +410,6 @@ typedef struct {
 } M2C_266679f3a6df_Struct_800DFA7C;
 
 typedef struct {
-               s32 field_00;
-               s32 field_04;
-               s32 field_08;
-} M2C_2667c0b769b3_BoundsArgs4994;
-
-typedef struct {
                char pad[0x22];
                u16 unk22;
                char pad2[0x30 - 0x24];
@@ -683,13 +677,6 @@ typedef struct {
 } M2C_52b404e2029f_Ovl11E18C4Obj;
 
 typedef struct {
-               u8 pad0[2];
-               u16 unk2;
-               u16 unk4;
-               u8 pad6[0x18 - 0x06];
-} M2C_54cb810e3946_Ovl11Func5700Entry;
-
-typedef struct {
     char pad_00[0x24];
     s16 unk24;
     s16 unk26;
@@ -861,12 +848,6 @@ typedef struct {
                u16 unk7A;
 } M2C_6ed90a0ace9a_Ovl11D04D4Obj;
 
-struct M2C_6fc629d778b7_Unk800D3D2C {
-               u16 unk0;
-               u8 pad[0xAA];
-               s16 unkAC;
-};
-
 typedef struct {
                s16 unk0;
                s16 unk2;
@@ -895,13 +876,6 @@ typedef struct {
                char pad_32[0x2];
                s32 unk34;
 } M2C_70aec20fd137_UnkStruct8010BB18;
-
-typedef struct {
-    u8 pad0[2];
-    u16 unk2;
-    u16 unk4;
-    u8 pad6[0x18 - 0x06];
-} M2C_711776ffaed8_Ovl11Func5700Entry;
 
 typedef struct {
     char pad_00[0x24];
@@ -1119,13 +1093,6 @@ typedef struct {
                char pad_32[0xAE - 0x32];
                u16 unkAE;
 } M2C_99e8d4889750_Struct_800E11C0;
-
-typedef struct {
-               u8 pad0[2];
-               u16 unk2;
-               u16 unk4;
-               u8 pad6[0x18 - 0x06];
-} M2C_9fae74c412a7_Ovl11Func5700Entry;
 
 typedef struct {
     s16 unk0;
@@ -2131,6 +2098,17 @@ typedef struct {
     u16 field_B4;
 } Ovl11Deb00Object;
 
+struct Ovl11DispatchRecord {
+    s16 id;
+    u16 kind;
+    u16 flags;
+    u16 pad6;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 unk14;
+};
+
 typedef struct {
     char pad0[0x100];
     s32 unk100;
@@ -2348,6 +2326,12 @@ typedef struct {
     char padBA[4];
     u16 unkBE;
 } Ovl11ObjectCB6C;
+
+typedef struct {
+    u16 id;
+    u8 pad2[0xAC - 2];
+    s16 valueAC;
+} Ovl11ObjectIdCondition;
 
 typedef struct {
                u16 tag;

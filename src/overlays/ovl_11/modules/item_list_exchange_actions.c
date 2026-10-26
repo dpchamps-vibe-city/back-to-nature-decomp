@@ -12,8 +12,17 @@
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_item_record_lists.h"
 #include "ovl11_primary_object_requests.h"
-
-s32 ovl_11_func_800D5810(s16 itemId);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_item_table_queries.h"
 
 void Ovl11TryBeginStackListItemAction(Recon_ovl_11_func_800C7270_A0View *object, s32 unusedDirection) {
     u8 *record;
@@ -35,7 +44,7 @@ void Ovl11TryBeginStackListItemAction(Recon_ovl_11_func_800C7270_A0View *object,
     item = object->unk84;
     if (empty == 0 || item != 0) {
         selected = &object->unk84;
-        if ((s16)object->unk84 == 0 || ovl_11_func_800D5810((s16)object->unk84) == 1) {
+        if ((s16)object->unk84 == 0 || Ovl11IsItemStatusNegative((s16)object->unk84) == 1) {
             object->unk6C &= 0xE7FFFFFF;
             Ovl11CompactItemStackList();
             if (Ovl11ExchangeItemStackList(0) != -1 && (s16)object->unk84 != 0) {
@@ -66,7 +75,7 @@ void Ovl11TryBeginSecondaryListItemAction(Recon_ovl_11_func_800C7270_A0View *obj
     if (empty == 0 || item != 0) {
         selected = (s16 *)((u8 *)object + 0x8A);
         if (*selected != 0) {
-            if (ovl_11_func_800D5810(*selected) == 1) {
+            if (Ovl11IsItemStatusNegative(*selected) == 1) {
                 Ovl11CheckPrimaryObjectRequestSlot();
             }
         } else {

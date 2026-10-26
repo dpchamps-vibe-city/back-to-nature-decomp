@@ -3599,7 +3599,7 @@ typedef struct {
 
 /* D_8006C858 - shared item table pointer (main-binary data, absolute addressed
  * from overlays that only declare it extern; stride 0x28 per ItemData). */
-extern ItemData *D_8006C858;
+extern ItemData *gItemDataTable;
 
 /* 800D60F0 loads item and four-word packed-property pointers at +20/+34. */
 typedef struct {
@@ -4274,24 +4274,21 @@ typedef struct {
     s16 unk4;
 } Recon_func_80023710_Pointee0View;
 
+/* D5D38..D5F44: the +20 record header is also an 18-halfword index row.
+ * This is a view of the same 0x28-byte record, not another allocation. */
 typedef struct {
-    /* 0x00 */ char pad_00[0x20];
-    /* 0x20 */ void *field_20;
-    /* 0x24 */ char pad_24[0x04];
-    /* 0x28 */ void *field_28;
-} Recon_ovl_11_func_800D5D38_D8006C838Lookup;
+    char pad0[4];
+    s16 propertyIndex[18];
+} Ovl11RecordPropertyRow;
 
-typedef struct {
-    /* 0x00 */ char pad_00[4];
-    /* 0x04 */ s16 arr[18];
-} Recon_ovl_11_func_800D5D38_D8006C838Row;
-
-/* D5960/D5ABC/D5B3C/D5BBC share the +20 record headers and +24 cell grids;
- * retain void pointers and the original 0x28/0xB0 byte-stride arithmetic. */
+/* D5960..D5F44 share four pointer slots: headers, grids, flag records and
+ * type properties. Keep void pointers and witnessed byte-stride arithmetic. */
 typedef struct {
     /* 0x00 */ char pad_00[0x20];
     /* 0x20 */ void *recordHeaders;
     /* 0x24 */ void *cellGrids;
+    /* 0x28 */ void *flagEntries;
+    /* 0x2C */ void *typeProperties;
 } Ovl11CellGridTables;
 
 typedef struct {
@@ -6275,16 +6272,17 @@ extern struct SpriteSourceData gOvl19AuxSceneSpriteSource;
 /* 800BAC9C stores its set/clear operation here before applying mask 4. */
 extern void (*gOvl19ActorSpriteFlagOperation)(u16 *flags, s32 mask);
 
-/* 800D3250 reads u16 at +0x1086 and updates +index*0xB8 through this base. */
-struct Ovl11D3250FirstView {
+/* 800D3250's large-bank value anchor and shared scale at +1086.
+ * This address view spans intervening state; it is not a record allocation. */
+struct Ovl11LargeTaggedValueView {
     u16 value;
     u8 pad_2[0x1086 - 2];
     u16 scale;
 };
-extern struct Ovl11D3250FirstView D_80074A0A;
+extern struct Ovl11LargeTaggedValueView gTaggedRecordValueBase;
 
-/* 800D3250 reads u16 at +0x178E from D_8006C838+0x7ACA. */
-struct Ovl11D3250SecondView {
+/* 800D3250's small-bank value anchor at work+7ACA, scale at work+9258. */
+struct Ovl11SmallTaggedValueView {
     u16 value;
     u8 pad_2[0x178E - 2];
     u16 scale;
@@ -6775,19 +6773,20 @@ typedef struct {
 extern s16 gOvl11SpriteBankVramXOffset;
 
 /* ovl_11_func_800D3574 selects byte offsets into these sprite-data banks. */
-extern s32 D_80098BF8;
-extern s32 D_8009A3F8;
+extern s32 gSeasonalObjectSpriteBankBase;
+extern s32 gFixedIdSpriteBankBase;
 /* ovl_11_func_800D3574 loads word offsets at +4 through +14 from these pointers. */
-extern s32 *D_80124FD4;
-extern s32 *D_80124FD8;
-extern s32 *D_80124FDC;
-extern s32 *D_80124FE0;
-extern s32 *D_80124FE4;
+/* 800D3574 indexes byte-offset arrays selected by calendar season or fixed ID. */
+extern s32 *gOvl11ObjectSpriteOffsetsSeason0;
+extern s32 *gOvl11ObjectSpriteOffsetsSeason1;
+extern s32 *gOvl11ObjectSpriteOffsetsSeason2;
+extern s32 *gOvl11ObjectSpriteOffsetsSeason3;
+extern s32 *gOvl11FixedIdSpriteOffsets;
 /* ovl_11_func_800D3574 reads the engine mode with lw, unlike halfword users. */
 extern s32 D_80070CF8_word __asm__("gClockHour");
 
 /* D_8009CBF8: ovl_11_func_800C2884 reads counted words; other users copy bytes. */
-extern s32 D_8009CBF8;
+extern s32 gAreaSpriteWorkBase;
 /* D_8008F7F8 word view: the helper reads u32 counts/items; existing users
  * also address this bank through signed and unsigned scalar views. */
 extern u32 D_8008F7F8_words[] __asm__("D_8008F7F8");
@@ -6835,8 +6834,8 @@ extern s32 gOvl11SelectionMessagePhase;
 extern s32 gOvl11SelectionMessageCategory;
 
 /* 800DBFEC passes these halfword triplets to the matched 800DB00C. */
-extern struct Ovl11SceneCoordinates D_800A00C4;
-extern struct Ovl11SceneCoordinates D_800A00CC;
+extern struct Ovl11SceneCoordinates gLoadedAreaClampFirstCorner;
+extern struct Ovl11SceneCoordinates gLoadedAreaClampSecondCorner;
 
 /* 800DBFEC: the work pointer at +0x25388 has lh +2 and lw +4. */
 struct Ovl11SceneHeader {
@@ -7152,6 +7151,21 @@ struct Ovl11DispatchWork {
     u16 selector;
 };
 
+/* 800F5160 indexes 6-byte rows and reads three signed halfwords. */
+extern u8 gOvl11RecordRowValueTriples[];
+
+/* 800F5740 matches record +2 against these 16-byte coordinate rules.
+ * The selector at work+44CE chooses 2 default rules or 10 alternatives. */
+struct Ovl11RecordCoordinateRule {
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 kind;
+};
+extern struct Ovl11RecordCoordinateRule gOvl11RecordCoordinateRulesDefault[2];
+extern struct Ovl11RecordCoordinateRule gOvl11RecordCoordinateRules1[10];
+extern struct Ovl11RecordCoordinateRule gOvl11RecordCoordinateRules2[10];
+
 /* 800F5404 reads status flags, two byte lists and signed counts from this base. */
 struct Ovl11FlagRefreshState {
     u8 pad0[0x44CC];
@@ -7238,6 +7252,8 @@ extern void *gOvl11InteractionHitRecord;
 #endif
 /* 800CB114 publishes the interaction probe's record/category result. */
 extern s32 gOvl11InteractionHitFlags;
+/* 800C79F8 saves the raw address returned by Ovl11FindFlaggedVolume here. */
+extern s32 gOvl11LastFlaggedVolumeAddress;
 /* Existing publisher spelling preserves its original address-register order. */
 extern s32 Ovl11CollisionFlags __asm__("gOvl11InteractionHitFlags");
 /* 800C523C reads and updates this counter with lhu/sh. */

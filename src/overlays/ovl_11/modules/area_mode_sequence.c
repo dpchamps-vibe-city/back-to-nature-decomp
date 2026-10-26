@@ -52,6 +52,7 @@
 #include "ovl11_default_position.h"
 #include "ovl11_item_spawn_placement.h"
 #include "ovl11_pool_record_transition.h"
+#include "ovl11_area_scene_load.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -291,7 +292,6 @@ void Ovl11ResetAreaModeStep(void) {
     counter[0x1122] += 1;
 }
 
-void ovl_11_func_801044E4(void);
 void Ovl11ResetAreaScene(void);
 void Ovl11RefreshAreaSoundBank(void);
 /* Resident sprite-display disable at exe:8001B100. */
@@ -313,7 +313,7 @@ void Ovl11RunAreaEntrySteps(void) {
 
     switch (gOvl11AreaEntryStep) {
     case 0:
-        ovl_11_func_801044E4();
+        Ovl11PrepareAreaScene();
     case 9:
         ((Ovl11MovementState *)D_8006C838)->flagsC |= 0x8000000;
         ((Ovl11MovementState *)D_8006C838)->flags10 |= 0x8000000;

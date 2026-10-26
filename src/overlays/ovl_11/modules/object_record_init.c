@@ -16,6 +16,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_object_id_state.h"
 
 s32 Ovl11SetObjectRecordTag(Ovl11ObjectTagView *record, s32 tag);
 
@@ -35,10 +36,8 @@ s32 Ovl11InitObjectRecord(Ovl11ObjectInitRecord *record, s32 tag) {
     return 0;
 }
 
-void ovl_11_func_800D3574(u16 *record);
-
 s32 Ovl11SetObjectRecordTag(Ovl11ObjectTagView *record, s32 tag) {
     record->tag = tag;
-    ovl_11_func_800D3574((u16 *)record);
+    Ovl11RefreshObjectSpriteForId((u16 *)record);
     return 0;
 }

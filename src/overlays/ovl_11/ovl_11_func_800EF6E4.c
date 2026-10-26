@@ -34,6 +34,8 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_table_queries.h"
+#include "ovl11_cell_grid_lookup.h"
 
 typedef struct {
     s16 unk0;
@@ -101,7 +103,6 @@ s32 ovl_11_func_800D2E20 (void);
 void ovl_11_func_800DF0F8 (s32 arg0);
 void ovl_11_func_800E2904 (s32 arg0);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
-s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_80118C6C (void);
 s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);
@@ -134,7 +135,6 @@ s32 ovl_11_func_800F19C8 (s32 arg0);
 s32 ovl_11_func_800F13D8 (u16 arg0);
 void Ovl11QueueImmediateEvent (s16 kind, s16 value);
 void ovl_11_func_801037EC (void);
-s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800EC354 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F0FB0 (s32 arg0);
 

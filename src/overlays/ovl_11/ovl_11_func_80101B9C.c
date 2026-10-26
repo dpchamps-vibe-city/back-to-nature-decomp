@@ -4,6 +4,15 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_item_table_queries.h"
 
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
@@ -15,7 +24,6 @@ void ovl_11_func_80102268(s8 arg0, s8 arg1);
 void ovl_11_func_801022E8(void);
 s32 ovl_11_func_801027D4(s8 arg0, s8 arg1);
 void *ovl_11_func_80102844(s8 arg0, s8 arg1);
-s8 ovl_11_func_800D583C(s16 arg0);
 void ovl_11_func_80100FFC(void);
 
 void ovl_11_func_80101B9C(void) {
@@ -147,7 +155,7 @@ void ovl_11_func_80101B9C(void) {
                     }
                 } else {
                     if (*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7) != 0) {
-                        if (empty < 8 && ovl_11_func_800D583C(*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7)) != 1) {
+                        if (empty < 8 && Ovl11GetItemType(*(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7)) != 1) {
                             PlaySoundEffect(0);
                             D_8012CF00_ids[empty] = *(s16 *)ovl_11_func_80102844(D_801273EA_table, Ovl11_D_801273E7);
                         } else {

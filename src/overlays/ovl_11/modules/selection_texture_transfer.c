@@ -19,6 +19,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_table_queries.h"
 
 s32 ovl_11_func_800F8404(s32 arg0);
 void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOutgoing);
@@ -38,7 +39,6 @@ void Ovl11ReorderSelectionTextures(u16 *firstId, s32 firstPane, u16 *secondId,
 }
 
 void Ovl11ReleaseUnusedSelectionTextures(void);
-s32 ovl_11_func_800D5750(s16 arg0);
 
 #define imageRect (*(RECT *)gOvl11TextureTransferRect)
 #define TRANSFER_SLOTS (((Ovl11FarSlotTableView *)&D_8007AFF0)->slots)
@@ -69,7 +69,7 @@ void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOu
     special = 0;
     position = 0;
     if (outgoingId != 0) {
-        oldRow = (s16)ovl_11_func_800D5750(outgoingId) != 0;
+        oldRow = (s16)Ovl11ClassifyItemFlags(outgoingId) != 0;
         for (slot = 0; slot < 9; slot = (s16)(slot + 1)) {
             if (TRANSFER_SLOTS[oldRow][slot] == outgoingId) {
                 break;
@@ -106,7 +106,7 @@ void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOu
         }
     }
     if (incomingId != 0) {
-        row = (s16)ovl_11_func_800D5750(incomingId) != 0;
+        row = (s16)Ovl11ClassifyItemFlags(incomingId) != 0;
         for (index = 0; index < 72; index++) {
             if (cache[index].id == incomingId) {
                 break;
@@ -160,7 +160,7 @@ void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOu
                 return;
             }
         }
-        oldRow = (s16)ovl_11_func_800D5750(outgoingId) != 0;
+        oldRow = (s16)Ovl11ClassifyItemFlags(outgoingId) != 0;
         for (index = 0; index < 72; index++) {
             if (cache[index].id == 0) {
                 break;

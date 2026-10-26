@@ -25,6 +25,8 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "psyq/abs.h"
+#include "ovl11_item_table_queries.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
@@ -36,8 +38,6 @@ void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CCF58(Ovl11C7010Object *object);
 void ovl_11_func_800F6F7C(s32 ot, s16 x, s16 y);
 s32 ovl_11_func_800D60D4(s16 *item);
-s32 ovl_11_func_800D5810(s16 id);
-s8 ovl_11_func_800D583C(s16 id);
 void ovl_11_func_800D5740(s16 *item);
 void ovl_11_func_800F7010(s32 ot, s16 x, s16 y);
 void ovl_11_func_800F7094(s32 ot, s16 x, s16 y, s32 count);
@@ -268,7 +268,7 @@ s32 Ovl11TryMoveItemTransferEntry(s32 source, s32 sourceSlot, s32 destination, s
      * item predicate, while the two special slots bypass that test. */
     switch (special) {
     case 0:
-        if (ovl_11_func_800D5810(((Ovl11ItemState *)source)->id) != 0) {
+        if (Ovl11IsItemStatusNegative(((Ovl11ItemState *)source)->id) != 0) {
         case 1:
             Ovl11SwapItemTransferEntries((Ovl11ItemState *)source, (Ovl11ItemState *)destination);
             return 0;
@@ -282,12 +282,12 @@ s32 Ovl11TrySwapItemTransferEntries(Ovl11ItemState *source, s32 sourceSlot,
                                    Ovl11ItemState *destination, s32 destinationSlot) {
     switch (Ovl11IsItemTransferSpecialSlot(destinationSlot)) {
     case 0:
-        if (ovl_11_func_800D5810(source->id) == 0) {
+        if (Ovl11IsItemStatusNegative(source->id) == 0) {
             return 1;
         }
         /* fall through */
     case 1:
-        if (ovl_11_func_800D583C(source->id) != 0 || source->unk4 < 2) {
+        if (Ovl11GetItemType(source->id) != 0 || source->unk4 < 2) {
             break;
         }
         return 1;
@@ -297,12 +297,12 @@ s32 Ovl11TrySwapItemTransferEntries(Ovl11ItemState *source, s32 sourceSlot,
 
     switch (Ovl11IsItemTransferSpecialSlot(sourceSlot)) {
     case 0:
-        if (ovl_11_func_800D5810(destination->id) == 0) {
+        if (Ovl11IsItemStatusNegative(destination->id) == 0) {
             return 1;
         }
         /* fall through */
     case 1:
-        if (ovl_11_func_800D583C(destination->id) != 0 || destination->unk4 < 2) {
+        if (Ovl11GetItemType(destination->id) != 0 || destination->unk4 < 2) {
             Ovl11SwapItemTransferEntries(source, destination);
             return 0;
         }
@@ -316,7 +316,7 @@ s32 Ovl11TryMergeItemTransferStacks(Ovl11ItemState *source, s32 sourceSlot,
                                   s32 destination, s32 destinationSlot) {
     s32 itemClass;
 
-    itemClass = ovl_11_func_800D583C(source->id);
+    itemClass = Ovl11GetItemType(source->id);
     if (itemClass == 2) {
         Ovl11MergeItemTransferStacks((u16 *)source, (u16 *)destination);
         return 0;
@@ -379,7 +379,7 @@ void Ovl11DrawItemTransferEntry(s32 ot, s32 slot, s16 *item) {
     }
     Ovl11DrawSlotSprite(id, 0, (s32 *)ot,
         gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1], 8);
-    if (ovl_11_func_800D583C(item[0]) == 2) {
+    if (Ovl11GetItemType(item[0]) == 2) {
         ovl_11_func_800F7094(gActiveRenderContext->field_D8 + 0x58,
             gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1], item[2]);
     }

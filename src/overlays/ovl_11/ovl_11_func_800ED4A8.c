@@ -47,6 +47,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_table_queries.h"
 
 typedef struct {
                s16 field_0;
@@ -174,7 +175,6 @@ void Ovl11RemapPrimaryDirectionButtons (void);
 void ovl_11_func_800CD6F4 (void *arg0);
 s32 GetVal8005E524 (void);
 void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
-s32 ovl_11_func_800D58D0 (void *arg0);
 void ovl_11_func_800CCF14 (M2C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
@@ -189,7 +189,6 @@ void Ovl11SelectPrimaryAnimationForFlag08000000 (Recon_ovl_11_func_800C6F0C_A0Vi
 void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_800FBE4C (void);
-s32 ovl_11_func_800D5810 (s16 arg0);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (M2C_38c89582ddcb_M2C_4c1a205b3b09_ReconA0View *arg0);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
@@ -203,7 +202,6 @@ s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);
-s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5704 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);

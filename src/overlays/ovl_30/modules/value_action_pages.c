@@ -16,6 +16,7 @@
 #include "game_flags.h"
 #include "ovl30_record_menus.h"
 #include "ovl11_cell_actions.h"
+#include "ovl11_item_table_queries.h"
 
 s32 Ovl30EditMainData(s32 cursor) {
     s32 result;
@@ -46,7 +47,6 @@ s32 Ovl30EditPlayerData(s32 cursor) {
 }
 
 u16 *ovl_11_func_800CE744(s32, s32);
-s32 ovl_11_func_800D5750(s16);
 s32 ovl_11_func_800E6EAC();
 s32 ovl_11_func_800E6F34();
 s32 ovl_11_func_800E7088(s16, s16, s32, s32);
@@ -156,7 +156,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             ACTION->flags5234 &= ~0x800400;
             break;
         case 16:
-            id = (s16)ovl_11_func_800D5750((s16)gOvl30DebugItemId);
+            id = (s16)Ovl11ClassifyItemFlags((s16)gOvl30DebugItemId);
             switch (id) {
             case 0:
                 ovl_11_func_800E7088((s16)gOvl30DebugItemId, 0, 1, 0);

@@ -15,7 +15,7 @@ typedef struct {
     M2C_D80124FCC_inner *unk18;
 } M2C_D80124FCC;
 
-extern s32 D_8009A3F8;
+extern s32 gFixedIdSpriteBankBase;
 extern M2C_D80124FCC D_80124FCC;
 
 s32 ovl_11_func_800CDE3C(u8 *arg0) {
@@ -35,7 +35,7 @@ s32 ovl_11_func_800CDE3C(u8 *arg0) {
         var_a1 += 0x10;
     } while (var_s1 < 0xAU);
     var_s1 = 0;
-    var_s3 = (u8 *) &D_8009A3F8;
+    var_s3 = (u8 *) &gFixedIdSpriteBankBase;
     (*(s16 *) ((u8 *) arg0 + 0x32)) = 0;
     var_s0 = arg0 + 0x2D4;
     temp_s2 = D_80124FCC.unk18->unk4;

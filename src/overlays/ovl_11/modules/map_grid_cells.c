@@ -22,6 +22,7 @@
 #include "random.h"
 
 #include "ovl11_map_grid_cells.h"
+#include "ovl11_cell_grid_lookup.h"
 
 void Ovl11ApplyCellNeighborhoodVariants(s16 row, s16 column, s16 layer,
                                         s16 useCountFallback, s16 skipTextureDispatch) {
@@ -234,8 +235,6 @@ void Ovl11SpawnCellEffectSprite(u16 effectId, s16 layer, s16 column, s16 row) {
     Ovl11SpawnSpriteEffect(id, position);
 }
 
-s32 ovl_11_func_800D5C90(s16 arg0);
-
 void Ovl11RefreshCellTextureVariant(s16 row, s16 column, s32 layer) {
     Ovl11D124Entry *entry;
     u16 flags;
@@ -244,7 +243,7 @@ void Ovl11RefreshCellTextureVariant(s16 row, s16 column, s32 layer) {
     entry = Ovl11GetMapGridCell(layer, column, row);
     if (entry != 0) {
         if ((u16)entry->unk0 == 0x36) {
-            entry->unk4 = ovl_11_func_800D5C90(entry->unk0);
+            entry->unk4 = Ovl11ReadRecordTypeProperty04(entry->unk0);
             entry->unk5 = 0;
             flags = (u16)entry->unk6 | 0x8000;
             entry->unk6 = flags;

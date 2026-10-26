@@ -4,8 +4,15 @@
 #include "ovl11_grid_entry_transitions.h"
 #include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
-
-s32 ovl_11_func_800D5868(s16 arg0);
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_item_table_queries.h"
 
 void ovl_11_func_800D7B8C(void) {
     u16 rows;
@@ -53,7 +60,7 @@ void ovl_11_func_800D7B8C(void) {
                             Ovl11TrySeasonalGridTransition(entry);
                         }
                         value = entry->unk0;
-                        isCrop = ovl_11_func_800D5868(value);
+                        isCrop = Ovl11ItemHasFlag40(value);
                         if (layer == 0) {
                             if (((Ovl11GrowthGlobals *) D_8006C838)->season == 3) {
                                 tag = (u16) entry->unk0;

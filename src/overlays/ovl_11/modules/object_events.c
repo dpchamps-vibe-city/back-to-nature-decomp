@@ -549,7 +549,7 @@ s32 Ovl11SelectScriptSpriteSource(s16 key, SpriteSourceData *source) {
     u32 *table;
     u32 *fallback;
 
-    table = (u32 *) &D_8009CBF8;
+    table = (u32 *) &gAreaSpriteWorkBase;
     fallback = D_8008F7F8_words;
     group = ((struct Ovl11SpriteWork *) &D_8007AFF0)->header[6];
     index = Ovl11FindCountedWordIndex(key, table);

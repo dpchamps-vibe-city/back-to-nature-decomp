@@ -47,6 +47,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_table_queries.h"
 
 s32 ovl_11_func_800C9D64(void);
 
@@ -397,7 +398,6 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
-s32 ovl_11_func_800D58D0 (void *arg0);
 void ovl_11_func_800CCF14(Ovl11TripletTailView *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
@@ -482,7 +482,7 @@ reset_done:
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 8);
             temp_s0 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x84);
             if (arg0->attributes & 8) {
-                ovl_11_func_800D58D0(temp_s0);
+                Ovl11InvokeItemAction(temp_s0);
             }
             ovl_11_func_800CCF14(temp_s0);
             arg0->unk6C &= 0xFFFF7FFB;
@@ -493,7 +493,7 @@ reset_done:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             Ovl11SetPendingStageMode(0);
             if (arg0->attributes & 8) {
-                ovl_11_func_800D58D0((void *) ((u8 *) arg0 + 0x84));
+                Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             Ovl11ResetPrimaryObjectRequest();
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
@@ -504,7 +504,7 @@ reset_done:
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 4);
             temp_s0_2 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x84);
             if (arg0->attributes & 8) {
-                ovl_11_func_800D58D0(temp_s0_2);
+                Ovl11InvokeItemAction(temp_s0_2);
             }
             ovl_11_func_800CCF14(temp_s0_2);
             arg0->unk6C &= 0xFFFF7FFB;
@@ -515,7 +515,7 @@ reset_done:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 6);
             if (arg0->attributes & 8) {
-                ovl_11_func_800D58D0((void *) ((u8 *) arg0 + 0x84));
+                Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             arg0->unk6C &= ~4;
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
@@ -524,7 +524,7 @@ reset_done:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 2);
             if (arg0->attributes & 8) {
-                ovl_11_func_800D58D0((void *) ((u8 *) arg0 + 0x84));
+                Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             Ovl11ResetPrimaryObjectRequest();
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
@@ -533,7 +533,7 @@ reset_done:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 5);
             if (arg0->attributes & 8) {
-                ovl_11_func_800D58D0((void *) ((u8 *) arg0 + 0x84));
+                Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             arg0->unk6C &= ~4;
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
@@ -588,7 +588,7 @@ state_done:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             temp_s0_3 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x8A);
             arg0->unk6C &= 0xEFFF3FFF;
-            ovl_11_func_800D58D0(temp_s0_3);
+            Ovl11InvokeItemAction(temp_s0_3);
             ovl_11_func_800CCF14(temp_s0_3);
             Ovl11ResetPrimaryObjectRequest();
             return 0;
@@ -751,7 +751,7 @@ state_done:
             Ovl11ResetPrimaryObjectRequest();
             break;
         case 0x33:
-            ovl_11_func_800F2354((s32) (*(s16 *) ((u8 *) D_8006C858 + 0x1002)), 0);
+            ovl_11_func_800F2354((s32) (*(s16 *) ((u8 *) gItemDataTable + 0x1002)), 0);
             Ovl11RemoveSlotSprite(arg0->item);
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;
@@ -967,13 +967,11 @@ script_finished:
     }
 }
 
-s32 ovl_11_func_800D58D0(void *arg0);
-
 void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *arg0) {
     Ovl11ItemState *temp_s1;
 
     temp_s1 = &arg0->item;
-    ovl_11_func_800D58D0(temp_s1);
+    Ovl11InvokeItemAction(temp_s1);
     if (arg0->item.id == 0x126) {
         arg0->unk6C |= 0x200;
     }
@@ -993,7 +991,6 @@ void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *arg0) {
     }
 }
 
-s32 ovl_11_func_800D5750(s16 arg0);
 s32 Ovl11BeginFlaggedItemFollowup(Ovl11C7010Object *arg0);
 
 s32 Ovl11CommitPendingItemRecord(Ovl11C7010Object *arg0) {
@@ -1012,7 +1009,7 @@ s32 Ovl11CommitPendingItemRecord(Ovl11C7010Object *arg0) {
         arg0->unk6C |= 0x8000;
         return 1;
     }
-    index = ovl_11_func_800D5750(*(s16 *) ((u8 *) arg0 + 0xF0));
+    index = Ovl11ClassifyItemFlags(*(s16 *) ((u8 *) arg0 + 0xF0));
     if (index == 2) {
         index = 1;
     }
@@ -1034,7 +1031,7 @@ s32 Ovl11CommitPendingItemRecord(Ovl11C7010Object *arg0) {
 }
 
 s32 Ovl11BeginFlaggedItemFollowup(Ovl11C7010Object *arg0) {
-    if ((D_8006C858[arg0->itemIndex].u0.flags & 0x1200) == 0x1200) {
+    if ((gItemDataTable[arg0->itemIndex].u0.flags & 0x1200) == 0x1200) {
         Ovl11ChangePrimaryObjectState(arg0, 3, 5, -2);
         PlaySoundEffect(0x4A);
         return 1;

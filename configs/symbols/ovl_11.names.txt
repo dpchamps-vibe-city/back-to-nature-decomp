@@ -1,5 +1,72 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Row-selected record values and the original nested flag-priority helper.
+Ovl11AssignPoolRowValues = 0x800F508C; // type:func
+Ovl11SelectRecordRowValue = 0x800F5108; // type:func
+Ovl11AssignRecordRowValues = 0x800F5160; // type:func
+gOvl11RecordRowValueTriples = 0x80126E00; // type:data size:0x18
+
+// Row/type/flag-record readers extending the complete cell-grid lookup API.
+Ovl11ReadRecordTypeProperty02 = 0x800D5C3C; // type:func
+Ovl11ReadRecordTypeProperty04 = 0x800D5C90; // type:func
+Ovl11ReadRecordTypeProperty0E = 0x800D5CE4; // type:func
+Ovl11RecordPropertyHasFlag8000 = 0x800D5D38; // type:func
+Ovl11RecordPropertyHasFlag2000 = 0x800D5D9C; // type:func
+Ovl11RecordPropertyHasFlag4000 = 0x800D5E00; // type:func
+Ovl11ReadRecordPropertyValue0 = 0x800D5E64; // type:func
+Ovl11ReadRecordPropertyValue2 = 0x800D5ED4; // type:func
+Ovl11RecordPropertyHasFlag0800 = 0x800D5F44; // type:func
+
+// Area-scene preparation and phase callbacks, with empty lifecycle hooks.
+Ovl11PrepareAreaScene = 0x801044E4; // type:func
+Ovl11ClearAreaRowRecords = 0x8010476C; // type:func
+Ovl11ResetAreaSlotRecords = 0x801047FC; // type:func
+Ovl11AreaResetEffectsHook = 0x80104898; // type:func
+Ovl11BeginLightAreaEntry = 0x801048A0; // type:func
+Ovl11ClearAreaSpriteWork = 0x80104A58; // type:func
+Ovl11AreaResetBeginHook = 0x80104A80; // type:func
+Ovl11AreaResetEndHook = 0x80104A88; // type:func
+Ovl11LoadAreaScene = 0x80104A90; // type:func
+Ovl11InstallAreaScene = 0x80104CB8; // type:func
+Ovl11ReloadAreaScene = 0x80104EA8; // type:func
+
+// Object-ID state/sprite service, including its sole-caller choice helpers.
+Ovl11EnterObjectStateForId = 0x800D3468; // type:func
+Ovl11RefreshObjectSpriteForId = 0x800D3574; // type:func
+Ovl11GetObjectMoveStep = 0x800D3BB0; // type:func
+Ovl11ChooseStateByClockAndValue = 0x800D3D2C; // type:func
+gOvl11ObjectSpriteOffsetsSeason0 = 0x80124FD4; // type:data size:0x4
+gOvl11ObjectSpriteOffsetsSeason1 = 0x80124FD8; // type:data size:0x4
+gOvl11ObjectSpriteOffsetsSeason2 = 0x80124FDC; // type:data size:0x4
+gOvl11ObjectSpriteOffsetsSeason3 = 0x80124FE0; // type:data size:0x4
+gOvl11FixedIdSpriteOffsets = 0x80124FE4; // type:data size:0x4
+
+// Item-table queries and action-callback dispatch.
+Ovl11ClassifyItemFlags = 0x800D5750; // type:func
+Ovl11ClassifyItemStatus = 0x800D57A4; // type:func
+Ovl11IsItemStatusNegative = 0x800D5810; // type:func
+Ovl11GetItemType = 0x800D583C; // type:func
+Ovl11ItemHasFlag40 = 0x800D5868; // type:func
+Ovl11ItemHasFlag8100 = 0x800D589C; // type:func
+Ovl11InvokeItemAction = 0x800D58D0; // type:func
+
+// Dispatch-record flags and mode-selected coordinate refresh.
+Ovl11RefreshDispatchRecordPools = 0x800F5404; // type:func
+Ovl11SetDispatchRecordEnabledByMask = 0x800F5698; // type:func
+Ovl11FindDispatchRecordByKind = 0x800F5700; // type:func
+Ovl11ApplyDispatchRecordCoordinateRules = 0x800F5740; // type:func
+gOvl11RecordCoordinateRulesDefault = 0x80126CA0; // type:data size:0x20
+gOvl11RecordCoordinateRules1 = 0x80126CC0; // type:data size:0xA0
+gOvl11RecordCoordinateRules2 = 0x80126D60; // type:data size:0xA0
+
+// Three-word position query, preserving the last flagged-volume address.
+Ovl11QueryFlaggedVolumeCode = 0x800C79F8; // type:func
+gOvl11LastFlaggedVolumeAddress = 0x80128CF0; // type:data size:0x4
+
+// Selection facades over the paired tagged-record banks.
+Ovl11ChooseTaggedRecordIndex = 0x800D3230; // type:func
+Ovl11ApplyTaggedRecordValueAdjustment = 0x800D3250; // type:func
+
 // Shared animation-24 frame service; not the primary-object draw protocol.
 Ovl11DrawSharedAnimationIcon = 0x800C9E90; // type:func
 

@@ -59,8 +59,8 @@ s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 
         ovl_11_func_800D0408(direction, (Recon800D0408A1View *)&position, 400);
         position.vx += *(s32 *)((u8 *)arg0 + 0x38);
         position.vz += *(s32 *)((u8 *)arg0 + 0x40);
-        width = *(u16 *)((u8 *)&D_8006C858[*(u16 *)arg0] + 0x24);
-        height = *(u16 *)((u8 *)&D_8006C858[*(u16 *)arg0] + 0x26);
+        width = *(u16 *)((u8 *)&gItemDataTable[*(u16 *)arg0] + 0x24);
+        height = *(u16 *)((u8 *)&gItemDataTable[*(u16 *)arg0] + 0x26);
         if (arg0->unk34 & 0x800000) {
             arg2 &= ~0x20;
         }
