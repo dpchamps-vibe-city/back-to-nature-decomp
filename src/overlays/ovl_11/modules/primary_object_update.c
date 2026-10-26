@@ -1,5 +1,21 @@
+/*
+ * Primary-object frame service: select live or substituted button masks,
+ * dispatch object actions, advance timers/effects, and retain position history.
+ * The adjacent direction remapper consumes a latch maintained only here.
+ * History A samples on odd ticks; history B and direction tags sample when
+ * tick % 8 == 7. Early exits deliberately skip those samples.
+ *
+ * Public contract: ovl11_primary_object_update.h. Object-specific movement,
+ * collision and action services remain separately linked; co-location does
+ * not give either entry private linkage.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
+
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_primary_object_update.h"
 #include "screen_fade.h"
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
@@ -15,19 +31,19 @@
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
-void ovl_11_func_800C47F0 (void);
 void ovl_11_func_800CD6F4 (void *arg0);
 s32 ovl_11_func_800C9424 (void);
 s32 ovl_11_func_800C6AFC (Ovl11C7010Object *arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800C580C(Ovl11C580CObject *);
 s32 ovl_11_func_800CE654(void);
+void Ovl11RemapPrimaryDirectionButtons(void);
 
-void ovl_11_func_800C401C(void) {
+void Ovl11UpdatePrimaryObject(void) {
     Ovl11PlayerUpdate *obj;
-    Ovl11UpdateInput *input;
-    s32 var_a1;
-    u32 temp_v1;
+    PadInputState *input;
+    s32 advanceAction;
+    u32 cachedValue;
     s32 flags;
 
     obj = &((Ovl11UpdateState *)D_8006C838)->player;
@@ -47,27 +63,27 @@ void ovl_11_func_800C401C(void) {
             RequestMessageWindow(0, 0x724);
         }
         ovl_11_func_800C498C((Ovl11C498CObject *) obj);
-        temp_v1 = obj->flags;
-        if ((temp_v1 & 0x20000) && !(obj->flags & 0x20000010)) {
+        cachedValue = obj->flags;
+        if ((cachedValue & 0x20000) && !(obj->flags & 0x20000010)) {
             Ovl11ResetPrimaryObjectRequest();
             D_80123158 = 0;
             obj->flags = (s32) (obj->flags & 0xFFFDFFFF);
         }
         obj->flags36 = (u16) (obj->flags36 & 0xFFFB);
         if (obj->flags & 0x800000) {
-            D_801231F4 = ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C;
-            D_801231F8 = ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230;
+            gOvl11PrimaryHeldButtons = ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C;
+            gOvl11PrimaryPressedButtons = ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230;
             goto block_22;
         }
-        input = (Ovl11UpdateInput *)gPad0Input;
-        D_801231F4 = input->held;
-        D_801231F8 = input->pressed;
+        input = gPad0Input;
+        gOvl11PrimaryHeldButtons = input->heldButtons;
+        gOvl11PrimaryPressedButtons = input->pressedButtons;
         if (ovl_11_func_800CE654() == 0) {
-            ovl_11_func_800C47F0();
+            Ovl11RemapPrimaryDirectionButtons();
             if (obj->flags36 & 0x40) {
-                if (D_801231F4 & 0x20) {
-                    D_801231F4 &= ~0x20;
-                    D_801231F8 &= ~0x20;
+                if (gOvl11PrimaryHeldButtons & 0x20) {
+                    gOvl11PrimaryHeldButtons &= ~0x20;
+                    gOvl11PrimaryPressedButtons &= ~0x20;
                 } else {
                     obj->flags36 = (u16) (obj->flags36 & 0xFFBF);
                 }
@@ -84,9 +100,9 @@ block_22:
                     }
                     flags = obj->flags;
                     if (flags & 8) {
-                        temp_v1 = (u16)obj->timer;
+                        cachedValue = (u16)obj->timer;
                         if (obj->timer != 0) {
-                            obj->timer = temp_v1 - 1;
+                            obj->timer = cachedValue - 1;
                         } else {
                             goto clear_flags;
                         }
@@ -103,9 +119,9 @@ block_22:
                         D_80128D30 = 0;
                     } else if (D_80128D30 == 0x10) {
                         D_80128D30 = 0;
-                        D_80128CF8 = 1;
+                        gOvl11PrimaryDirectionRemap = 1;
                         if ((obj->direction == 2) || (obj->direction == 0)) {
-                            D_80128CF8 = 0;
+                            gOvl11PrimaryDirectionRemap = 0;
                         }
                     } else {
                         D_80128D30 += 1;
@@ -124,18 +140,18 @@ clear_flags:
             } else {
                 ovl_11_func_800C6AFC((Ovl11C7010Object *)obj);
             }
-            var_a1 = 0;
+            advanceAction = 0;
             if (obj->countdown != -2) {
                 if (obj->countdown != -3) {
                     obj->countdown = (s16) ((u16) obj->countdown - 1);
                 }
                 if (obj->countdown == -1) {
-                    var_a1 = 1;
+                    advanceAction = 1;
                 }
             } else if ((obj->flags36 & 0x10) || (obj->flags262 & 0x100)) {
-                var_a1 = 1;
+                advanceAction = 1;
             }
-            if (var_a1 != 0) {
+            if (advanceAction != 0) {
                 if (ovl_11_func_800C580C((Ovl11C580CObject *)obj) != 0) {
                     ovl_11_func_800C70CC((Ovl11C7010Object *) obj, 1U, 0, -2);
                     obj->flags = (s32) ((obj->flags & 0xDFFFFFFF) | 0x04000000);
@@ -180,6 +196,67 @@ clear_flags:
                 }
                 obj->tags[0].direction = 5U;
             }
+        }
+    }
+}
+
+/* Keep snapshots of both masks: all four output bits must come from the
+ * original nibble, not from earlier writes to the rotated result. */
+void Ovl11RemapPrimaryDirectionButtons(void) {
+    s32 held;
+    s32 pressed;
+    s32 heldUp;
+    s32 heldWithoutDirections;
+    s32 remap;
+
+    remap = 0;
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 3) {
+        if (gPad0Input->stickMagnitude >= 0x56) {
+            gOvl11PrimaryHeldButtons |= 0x20;
+        }
+    }
+    if (gOvl11PrimaryDirectionRemap != 0) {
+        remap = 1;
+    }
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 1) {
+        remap = 1;
+    }
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 0) {
+        remap = 0;
+    }
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 3) {
+        remap = 0;
+    }
+    if (remap != 0) {
+        held = gOvl11PrimaryHeldButtons;
+        pressed = gOvl11PrimaryPressedButtons;
+        heldWithoutDirections = held & 0xFFFF0FFF;
+        heldUp = held & 0x1000;
+        gOvl11PrimaryHeldButtons = heldWithoutDirections;
+        gOvl11PrimaryPressedButtons = pressed & 0xFFFF0FFF;
+        if (heldUp != 0) {
+            gOvl11PrimaryHeldButtons = heldWithoutDirections | 0x8000;
+        }
+        if (pressed & 0x1000) {
+            gOvl11PrimaryPressedButtons = (pressed & 0xFFFF0FFF) | 0x8000;
+        }
+        if (held & 0x4000) {
+            gOvl11PrimaryHeldButtons |= 0x2000;
+        }
+        if (pressed & 0x4000) {
+            gOvl11PrimaryPressedButtons |= 0x2000;
+        }
+        if (held & 0x8000) {
+            gOvl11PrimaryHeldButtons |= 0x4000;
+        }
+        if (pressed & 0x8000) {
+            gOvl11PrimaryPressedButtons |= 0x4000;
+        }
+        if (held & 0x2000) {
+            gOvl11PrimaryHeldButtons |= 0x1000;
+        }
+        if (pressed & 0x2000) {
+            gOvl11PrimaryPressedButtons |= 0x1000;
         }
     }
 }

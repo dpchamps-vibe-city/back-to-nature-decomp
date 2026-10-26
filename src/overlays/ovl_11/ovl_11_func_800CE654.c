@@ -20,8 +20,8 @@ s32 ovl_11_func_800CE654(void) {
         }
     } else if (STATE->flags & 0x8000) {
         STATE->flags = (STATE->flags & ~0x8000) | 0x10000;
-        D_801231F4 = 0;
-        D_801231F8 = 0;
+        gOvl11PrimaryHeldButtons = 0;
+        gOvl11PrimaryPressedButtons = 0;
         STATE->input->current = STATE->input->samples[STATE->input->index];
         ++STATE->input->index;
         return 1;

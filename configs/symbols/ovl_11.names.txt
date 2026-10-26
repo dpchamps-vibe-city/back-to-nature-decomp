@@ -1,5 +1,18 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Refresh flagged record placement; both adjacent helpers serve this entry.
+Ovl11UpdateRecordPlacement = 0x800CEFCC; // type:func
+Ovl11RefreshRecordById = 0x800CF044; // type:func
+Ovl11IsItemIdEnabled = 0x800CF258; // type:func
+gOvl11ItemPlacementRules = 0x80123758; // type:data size:0x198
+
+// Primary-object frame service and its held/pressed direction remapping.
+Ovl11UpdatePrimaryObject = 0x800C401C; // type:func
+Ovl11RemapPrimaryDirectionButtons = 0x800C47F0; // type:func
+gOvl11PrimaryHeldButtons = 0x801231F4; // type:data size:0x4
+gOvl11PrimaryPressedButtons = 0x801231F8; // type:data size:0x4
+gOvl11PrimaryDirectionRemap = 0x80128CF8; // type:data size:0x4
+
 // Area per-frame phase dispatcher and its two ordered service steps.
 Ovl11RunAreaFramePhase = 0x800C14A0; // type:func
 Ovl11UpdateAreaFrame = 0x800C162C; // type:func

@@ -69,7 +69,7 @@ s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 
                 result = 4;
             } else {
                 s32 blocked;
-                blocked = Ovl11QueryCollisionBudgeted((s32 *)&position, ((Ovl11CEFCCObject *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
+                blocked = Ovl11QueryCollisionBudgeted((s32 *)&position, ((Ovl11PlacedRecordView *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
                 result = (u16)direction;
                 if (blocked) {
                     result = 4;
@@ -78,7 +78,7 @@ s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 
         } else {
             s32 original;
             s32 blocked;
-            blocked = Ovl11QueryCollisionBudgeted((s32 *)&position, ((Ovl11CEFCCObject *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
+            blocked = Ovl11QueryCollisionBudgeted((s32 *)&position, ((Ovl11PlacedRecordView *)arg0)->collision, width, height, &hit, &hitType, (s32)arg0, arg2);
             result = (u16)direction;
             original = result;
             if (blocked) {

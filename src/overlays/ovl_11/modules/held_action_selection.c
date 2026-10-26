@@ -45,7 +45,7 @@ s32 Ovl11UpdateHeldSelectionAction(Ovl11SelectionObject *obj) {
     struct Ovl11SpriteWork *work;
 
     state = gOvl11HeldActionState;
-    flags = *(u16 *)&D_801231F4;
+    flags = *(u16 *)&gOvl11PrimaryHeldButtons;
     switch (obj->phase) {
     case 0x45:
         if (obj->flags & 0x40) return 0;

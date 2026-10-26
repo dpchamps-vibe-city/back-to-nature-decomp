@@ -21,8 +21,8 @@ s32 ovl_11_func_800C6AFC(Ovl11C7010Object *arg0) {
     u16 pressed;
 
     if (!(arg0->unk6C & 0x40)) {
-        held = *(u16 *)&D_801231F4;
-        pressed = *(u16 *)&D_801231F8;
+        held = *(u16 *)&gOvl11PrimaryHeldButtons;
+        pressed = *(u16 *)&gOvl11PrimaryPressedButtons;
         temp_v0 = arg0->unk3C;
         switch (temp_v0) {
         case 0x4F:

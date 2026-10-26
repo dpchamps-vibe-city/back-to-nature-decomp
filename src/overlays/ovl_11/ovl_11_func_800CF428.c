@@ -28,7 +28,7 @@ void ovl_11_func_800CF428(void) {
         return;
     }
     mask = ovl_11_func_800D2E20();
-    entry = (s16 *)D_80123758;
+    entry = (s16 *)gOvl11ItemPlacementRules;
     i = 0;
     for (; i < 17; i++) {
         if (!((D_80128D66 >> i) & 1)) {

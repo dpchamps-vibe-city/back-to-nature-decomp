@@ -11238,6 +11238,42 @@ Members:
 
 ## `ovl_11` D_80128CF8 / D_801231F4-D_801231F8 shared-flag pair and adjacent probe helper — 0x800C401C–0x800C498C (confidence: medium for pair; low for helper)
 
+**Reconstructed `modules/primary_object_update.c`:** 800C401C and 800C47F0,
+now `Ovl11UpdatePrimaryObject` and `Ovl11RemapPrimaryDirectionButtons`.
+The pair-private 80128CF8 latch (all source references checked), its sole
+writer/caller relationship, and the adjacent remapper's consumption of the
+same held/pressed masks support the two-member unit, not adjacency alone.
+The masks are `gOvl11PrimaryHeldButtons`/`gOvl11PrimaryPressedButtons`; their
+source is pad 0 or stored substitutes and later object services may alter
+them. `gOvl11PrimaryDirectionRemap` names the private latch, without assigning
+an unproved gameplay meaning. `Ovl11DirectionRemapState.mode` retains the
+same signed halfword and padded layout. No linkage/storage/ownership changed.
+
+The left neighbor is object_events' command-message service (800C3F6C),
+which neither touches this latch nor participates in its input/history
+protocol. The right neighbor 800C498C is a position-offset collision probe,
+with a separate 80128C50 result and table 80123110; this update calls it,
+but so do other object paths. That external-service call alone does not
+extend the latch/remap unit. Wider primary-object code shares the input
+masks, not the private latch. These are protocol/private-state boundaries
+under overlay -G0, not a GP proof of original object-file boundaries;
+no supported larger TU is being cut to accommodate flags or mechanics.
+
+The baseline checked fold proved both members and the complete ovl_11
+payload unchanged. Neither has a flag override; none was added. The public
+header publishes the no-argument update to its actual area/object callers;
+the remapper retains external linkage but is not advertised as another
+per-frame entry. Direction rotation uses snapshots of both input masks,
+and the mode-3 magnitude threshold affects only held bit 0x20. History
+samples remain at odd ticks and tick%8==7, including the original guards.
+Canonical symbols retain each original overlay/address identity.
+The final source also uses the established `PadInputState` for held/pressed
+masks and stick magnitude, replacing its duplicate partial input view without
+changing widths. After canonical propagation, the three overlay data externs
+in the shared override header needed explicit renaming (the namespace-aware
+tool left those shared-header declarations unchanged); the first full gate
+caught the undeclared names. The corrected batch passed all campaign gates.
+
 Evidence: `ovl_11_func_800C401C` is the sole caller of `ovl_11_func_800C47F0`
 (jal 0x800C41D4) and ends exactly at 0x800C47F0 (head + 0x7D4), so the call
 edge and strict link-order adjacency agree. The two share two absolute-
@@ -12847,6 +12883,18 @@ Members:
 
 ## `ovl_11` D_80075BC4 record-table consumers — 0x801097F4 / 0x801098B0 / 0x800CF36C (confidence: low)
 
+Whole-unit fold experiment for the 801097F4/801098B0 pair: the existing
+callee takes one 0x1C-byte aggregate while its sole caller declares seven
+scalars. A unified `Ovl11PaddedVec3` by-value position followed by s16 key,
+s32 half-width and output-pointer arguments compiled, but the checked fold's
+full ovl_11 byte check failed and rolled back. Both original per-function
+sources/prototypes were then restored; the complete campaign gate passed.
+This is a measured interface-reconstruction limit, not evidence for a TU
+boundary between the two. No partial proximity module or exception remains.
+The next bounded experiment is the alternative common 0x1C-byte aggregate
+interface with the caller constructing all seven witnessed words; the failed
+split-aggregate spelling does not rule that out. No flag was tried or changed.
+
 - call-graph adjacency for the pair: `ovl_11_func_801097F4` (0xBC) ends at
   0x801098B0 and its sole caller `ovl_11_func_801098B0` starts exactly there
   (link order and the call graph agree); the caller's `jal` reads the
@@ -12874,11 +12922,54 @@ The narrower low-confidence candidate same-TU pool reset/update run is
 the distant consumers ([reset/update evidence](research/ovl_11_func_800CE96C-grouping.md),
 [successor evidence and limits](research/ovl_11_func_800CECB0-grouping.md)).
 
-A separate low-confidence candidate same-TU run is
-800CEFCC / 800CF044 / 800CF258; it does not merge with the reset/update run,
-the distant consumers or the D_80123758 spawn run
-([original pair](research/ovl_11_func_800CEFCC-grouping.md),
-[successor link and limits](research/ovl_11_func_800CF044-grouping.md)).
+**Reconstructed `modules/record_placement.c`:** the complete adjacent
+800CEFCC / 800CF044 / 800CF258 helper/coordinator/helper run, now
+`Ovl11UpdateRecordPlacement`, `Ovl11RefreshRecordById` and
+`Ovl11IsItemIdEnabled`. Current source-call census and original call-word
+research find CF044 is the only live caller of BOTH helpers (two placement
+calls, one mask test). The four other CF258 declarations are unused, not
+additional callers; this corrects the older research's distant-caller claim.
+The coordinator's flag selection exactly complements the placement helper's
+0x20000 clear and tag/position writes; its mask-result branch selects the
+record clearer. One seven-word switch table is pooled in the same place.
+This supports a whole three-entry unit more strongly than the original
+adjacency-only candidate, though -G0 supplies no GP ownership proof.
+
+Left boundary: CEEF8 is a separately called interaction-preparation service
+(C7878/C907C), setting 0x20000 and resetting motion/effect fields rather
+than selecting a pool record or calling either helper. Right boundary:
+CF2C8 is a separately called per-record deactivation service (E21E4/108D84),
+using the selected-item cell at 80071A8A, with no call into the trio. Both
+neighbors share the general record flag, but not the trio's exclusive helper
+edges; that ubiquitous flag does not establish a wider unit. The distant
+spawn coordinator CF428 reads the same 17-entry rule table but calls neither
+helper and has its own spawn-mask lifecycle. That table is therefore shared
+interface data, not a proven private TU owner; the competing wider-table
+hypothesis remains unresolved, not an excuse to absorb intervening services.
+These boundaries rest on separate caller/protocol cohorts, not flags or a
+mechanical limit, and are corroborative rather than proven object boundaries.
+
+`ovl11_record_placement.h` publishes only the coordinator with the canonical
+`Ovl11CollisionTag` alias. It documents native position units, first-match
+versus all-match selection, the deliberate missing ID test for 109/10A,
+mask-based clearing and the unconditional return value 1. Helpers retain
+external linkage. `Ovl11PlacedRecordView` replaces the address-derived type
+name without changing layout; collision-query consumers use the same view.
+`gOvl11ItemPlacementRules` and `Ovl11ItemPlacementRule` name the shared
+17x0x18 table, ID, mode, enable mask and coordinates corroborated by CF428.
+All storage stays extern, with unchanged types, widths and linkage. The
+checked baseline fold matched both the three members and full ovl_11;
+no member has a flag override and no exception was introduced.
+The completed primary-object/placement batch passed
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`:
+all 167 modules valid, every executable/overlay linked byte unchanged,
+interfaces/canonical identities/source policy/convergence/exception non-growth
+passing. Folded functions rose 1052 -> 1057; exit 1 reports only the still
+unfinished campaign (1568 remaining), not an integrity failure.
+
+Earlier evidence:
+[original pair](research/ovl_11_func_800CEFCC-grouping.md),
+[successor link and limits](research/ovl_11_func_800CF044-grouping.md).
 
 Members:
 - ovl_11_func_800CE96C (m) — pool reset/setup for the candidate reset/update run.

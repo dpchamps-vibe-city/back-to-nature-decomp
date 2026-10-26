@@ -12,6 +12,7 @@
 #include "ovl11_paired_item_ids.h"
 #include "area_grid_triggers.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_record_placement.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -28,7 +29,6 @@ s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670 (s16 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 void ovl_11_func_800CBD78 (Ovl11C7010Object *arg0);
-s32 ovl_11_func_800CF044 (s16 arg0, Ovl25SetupStatePair *arg1, VECTOR *arg2);
 void ovl_11_func_800CF314 (u8 *arg0, C580C_b6c4596908ca_Ovl11CF314Arg1 *arg1, C580C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
 void ovl_11_func_800C5738 (Ovl11C498CObject *arg0);
@@ -271,7 +271,7 @@ state_done:
             return 0;
         case 0x3A:
             if (arg0->unk6C & 0x80) {
-                ovl_11_func_800CF044(*(s16 *)Ovl11SavedInteractionObject, (Ovl25SetupStatePair *) ((u8 *) arg0 + 0xFC), (VECTOR *) ((u8 *) arg0 + 0x100));
+                Ovl11RefreshRecordById(*(s16 *)Ovl11SavedInteractionObject, (Ovl25SetupStatePair *) ((u8 *) arg0 + 0xFC), (VECTOR *) ((u8 *) arg0 + 0x100));
             } else {
                 ovl_11_func_800CF314((u8 *)&D_80075AD4, (C580C_b6c4596908ca_Ovl11CF314Arg1 *) ((u8 *) arg0 + 0xFC), (C580C_b6c4596908ca_Ovl11CF314Arg2 *) ((u8 *) arg0 + 0x100));
             }

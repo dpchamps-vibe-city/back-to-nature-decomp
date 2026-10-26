@@ -90,7 +90,7 @@ void ovl_11_func_800D666C (s16 arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
-s32 ovl_11_func_800CF258 (s32 arg0);
+s32 Ovl11IsItemIdEnabled (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D2E20 (void);
 void ovl_11_func_800DF0F8 (s32 arg0);

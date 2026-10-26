@@ -30,8 +30,8 @@ s32 ovl_11_func_800C9424(void) {
     u32 delay;
 
     obj = (Ovl11C7010Object *)&gPrimaryObjectBase;
-    pressed = *(u16 *)&D_801231F8;
-    held = *(u16 *)&D_801231F4;
+    pressed = *(u16 *)&gOvl11PrimaryPressedButtons;
+    held = *(u16 *)&gOvl11PrimaryHeldButtons;
     if ((((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25474 == 0x37 ||
          ((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25474 == 0x43) &&
         Ovl11CheckAreaGridContact(obj)) {

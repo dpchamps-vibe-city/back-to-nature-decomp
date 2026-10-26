@@ -365,7 +365,7 @@ typedef struct {
     char pad32[2];
     s32 flags;
     s32 position[4];
-} Ovl11CEFCCObject;
+} Ovl11PlacedRecordView;
 
 /* 800D0FB4 resets the tag state at +30 and position at +38 in
  * ten 0xB4 records and twenty 0xB8 records. */

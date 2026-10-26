@@ -33,7 +33,7 @@ s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2) {
     if (temp_a2 & 0x100) {
         var_t2 = 0x8DAE;
     }
-    if (D_801231F4 & 0x20) {
+    if (gOvl11PrimaryHeldButtons & 0x20) {
         var_t2 &= ~0x80;
     }
     var_s3 = Ovl11QueryCollisionBudgeted(&position[0], arg0->collision, 0x3E8U, 0x3E8U, &sp30, &sp34, 0, var_t2) * 2;

@@ -9,8 +9,8 @@ void ovl_11_func_800C9C60(void) {
     base = (u8 *)&gPrimaryObjectBase;
     D_80128C54 = 0;
     D_80128C4C_dispatch = 0;
-    D_801231F4 = 0;
-    D_801231F8 = 0;
+    gOvl11PrimaryHeldButtons = 0;
+    gOvl11PrimaryPressedButtons = 0;
     if (*(s32 *)(base - 0x51BC) & 0x8000) {
         *(s16 *)(base + 0x90) = 3;
         *(s16 *)(base + 0x92) = 2;

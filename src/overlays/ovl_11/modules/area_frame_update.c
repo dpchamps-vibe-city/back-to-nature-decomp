@@ -36,6 +36,7 @@
 #include "ovl11_object_events.h"
 #include "ovl11_clock_hud.h"
 #include "game_flags.h"
+#include "ovl11_primary_object_update.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -79,7 +80,6 @@ void Ovl11RunAreaFramePhase(void) {
 }
 
 void ovl_11_func_800F65B8 (void);
-void ovl_11_func_800C401C (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
 void ovl_11_func_800C056C(s32 unused);
@@ -107,7 +107,7 @@ void Ovl11UpdateAreaFrame(void) {
     ovl_11_func_800F65B8();
     Ovl11UpdateAreaGridTrigger();
     Ovl11UpdateSceneCameraOffset();
-    ovl_11_func_800C401C();
+    Ovl11UpdatePrimaryObject();
     Ovl11UpdateChoiceMessages();
     Ovl11UpdateSelectionMessage();
     if (((struct Ovl11FrameWork *) &D_8007AFF0)->mode == 0) {

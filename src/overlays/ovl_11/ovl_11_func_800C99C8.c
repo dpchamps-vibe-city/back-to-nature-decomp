@@ -14,7 +14,7 @@ s32 ovl_11_func_800C99C8(void) {
 
     obj = (Ovl11C7010Object *) &gPrimaryObjectBase;
     var_s2 = 0;
-    var_s0 = *(u16 *) &D_801231F4;
+    var_s0 = *(u16 *) &gOvl11PrimaryHeldButtons;
     temp_s3 = obj->unk38;
     if (var_s0 & 0x20) {
         var_s2 = 1;

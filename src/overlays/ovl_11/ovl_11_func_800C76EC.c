@@ -19,8 +19,8 @@ s32 ovl_11_func_800C76EC(Ovl11C7010Object *arg0) {
     if (*(s16 *)((u8 *)arg0 + 0x16) >= 100) {
         return 1;
     }
-    pressed = *(u16 *)&D_801231F8;
-    held = *(u16 *)&D_801231F4;
+    pressed = *(u16 *)&gOvl11PrimaryPressedButtons;
+    held = *(u16 *)&gOvl11PrimaryHeldButtons;
     if (temp_a0 & 0x40) {
         return 0;
     }

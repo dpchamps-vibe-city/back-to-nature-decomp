@@ -86,7 +86,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
             }
             if (D_80128C50 & 0x2000) {
                 if (recordDirection == arg0->unk38) {
-                    if (!(D_801231F8 & 0x40)) {
+                    if (!(gOvl11PrimaryPressedButtons & 0x40)) {
                         return 0;
                     }
                     goto check_direction;
@@ -96,7 +96,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
             direction = arg0->unk38;
             if (D_801287F0->unkA != 0x2F) {
                 if (mode != 2) {
-                    if (!(recordFlags & 0x200) && !(D_801231F8 & 0x40)) {
+                    if (!(recordFlags & 0x200) && !(gOvl11PrimaryPressedButtons & 0x40)) {
                         return (recordDirection != direction) * 2;
                     }
                     goto check_direction;

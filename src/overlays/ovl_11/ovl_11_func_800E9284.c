@@ -1,6 +1,5 @@
 #include "common.h"
-
-void ovl_11_func_800C401C(void);
+#include "ovl11_primary_object_update.h"
 
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 temp_s0;
@@ -19,7 +18,7 @@ s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             temp_s0 = ((struct struct_8006C838_800E4608 *) D_8006C838)->field_0C;
             ((Ovl11CBB9CGlobals *) D_8006C838)->state = arg0;
             ((struct struct_8006C838_800E4608 *) D_8006C838)->field_0C = temp_s0 & 0xF7FFFFFF;
-            ovl_11_func_800C401C();
+            Ovl11UpdatePrimaryObject();
             ((struct struct_8006C838_800E4608 *) D_8006C838)->field_0C = temp_s0;
             return 1;
         }

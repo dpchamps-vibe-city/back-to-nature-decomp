@@ -2311,12 +2311,12 @@ typedef struct {
     u16 field_E4C8;
 } Ovl11CAD4StateView;
 
-/* View of D_8006C838 for ovl_11_func_800C47F0: the s16 state word at
- * +0xE4CC. Reached as a struct member so cc1 keeps lui %hi(D_8006C838),
- * addiu %lo, ori 0x8000, addu followed by lh 0x64CC. */
-struct struct_8006C838_800C47F0 {
-    char pad_000[0xE4CC];   /* 0x0000-0xE4CB */
-    s16 field_E4CC;         /* 0xE4CC */
+/* Direction-remap mode at D_8006C838+0xE4CC: 0/3 suppress rotation,
+ * 1 forces it, other values use the primary-object latch. Keep this member
+ * view: it preserves the original high-base plus signed-displacement access. */
+struct Ovl11DirectionRemapState {
+    char pad_000[0xE4CC];
+    s16 mode;
 };
 
 /* 8011F958 stores a halfword at D_8006C838 + 0xE4D2 before resetting selection. */
@@ -5510,24 +5510,21 @@ typedef struct {
 } Ovl11CFD9CEntry; /* 0x10 */
 extern Ovl11CFD9CEntry D_801239D0[];
 
-/* D_80123758 - ovl_11 table of 0x18-byte records (17 entries), scanned by
- * ovl_11_func_800CF258 and ovl_11_func_800CF428. Field 0x0 is an s16 id
- * (compared against item ids), field 0x4 is a u16 mask ANDed with the
- * sign-extended ovl_11_func_800D2E20() result. Absolute-addressed
- * (lui + %lo, split two-register form): declared as an aggregate wider
- * than -G8 so cc1 emits the split address, and owned by the ovl_11 data
- * image (this TU only declares it). */
+/* ovl_11:800CF258 scans 17 item-ID/mask rules; 800CF428 also compares
+ * mode and copies the three coordinate words into spawned records.
+ * The mask is ANDed with the signed-halfword result of 800D2E20.
+ * This aggregate remains extern; no source ownership is inferred. */
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ u16 unk4;
+    /* 0x00 */ s16 itemId;
+    /* 0x02 */ s16 mode;
+    /* 0x04 */ u16 enabledMask;
     /* 0x06 */ char pad_06[0x08 - 0x06];
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-    /* 0x10 */ s32 unk10; /* 800CF428 copies the third coordinate word. */
+    /* 0x08 */ s32 x;
+    /* 0x0C */ s32 y;
+    /* 0x10 */ s32 z;
     /* 0x14 */ char pad_14[0x18 - 0x14];
-} Ovl11ItemEntry; /* 0x18 */
-extern Ovl11ItemEntry D_80123758[];
+} Ovl11ItemPlacementRule; /* 0x18 */
+extern Ovl11ItemPlacementRule gOvl11ItemPlacementRules[];
 
 /* 800CF428 reads three coordinate words from each of three 0x10-byte records. */
 extern s32 D_801238F0[][4];
@@ -6553,21 +6550,20 @@ extern s32 gOvl11PositionTransitionStep;
 /* ovl_11:800CE2EC selects one of three signed X/Z pairs by script code. */
 extern s16 gOvl11PositionTransitionTargets[3][2];
 
-/* D_801231F4 / D_801231F8 - ovl_11 parallel 16-bit flag words read,
- * masked with 0xFFFF0FFF and nibble-rotated by ovl_11_func_800C47F0;
- * ovl_11_func_800CD6F4 clears D_801231F8 and stores a table value into
- * D_801231F4. Absolute-addressed from the -G0 overlay; s32 keeps the word
- * load/store width. */
+/* ovl_11:800C401C copies held/pressed pad masks (or substituted masks)
+ * here; 800C47F0 rotates direction bits. Object actions can replace/clear
+ * them afterward (800CD6F4). Preserve s32 word accesses and absolute -G0
+ * addressing; these are not hardware input records. */
 /* 800C9424 increments this word and compares it unsigned against 8 or 12. */
 extern u32 D_80123150;
-extern s32 D_801231F4;
-extern s32 D_801231F8;
+extern s32 gOvl11PrimaryHeldButtons;
+extern s32 gOvl11PrimaryPressedButtons;
 /* 800C6C24 loads this word and scales it by ten for the state timer. */
 extern s32 gOvl11ClockMinutePeriodTwice;
 
-/* D_80128CF8 - ovl_11 word tested non-zero by ovl_11_func_800C47F0 to make
- * the flag-word rotation run. Absolute-addressed from the -G0 overlay. */
-extern s32 D_80128CF8;
+/* ovl_11:800C401C alone maintains this latch; 800C47F0 uses it when the
+ * state mode neither forces nor suppresses direction-button rotation. */
+extern s32 gOvl11PrimaryDirectionRemap;
 
 /* D_80071318 - ovl_11 u16 record table read with lhu at 0x16-byte stride by
  * ovl_11_func_80100898, ovl_11_func_80100A8C and ovl_11_func_80100F9C.
@@ -7395,13 +7391,6 @@ typedef struct {
     u8 padC[0x51C8 - 0xC];
     Ovl11PlayerUpdate player;
 } Ovl11UpdateState;
-
-/* 800C401C reads these two words through the gPad0Input pointer. */
-typedef struct {
-    s32 pad0;
-    s32 held;
-    s32 pressed;
-} Ovl11UpdateInput;
 
 /* 80104EC8 passes two seven-halfword strings at byte offsets 0 and 0xE. */
 extern u16 D_80051F26[];

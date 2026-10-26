@@ -69,7 +69,7 @@ void ovl_11_func_800CA708(void) {
         goto block_25;
     }
 block_25:
-    if (D_801231F4 & 0xF020) {
+    if (gOvl11PrimaryHeldButtons & 0xF020) {
         var_s4 = 0;
         var_s0 = &D_80123250[(player->direction & 1) * 2];
         temp_v0 = ovl_11_func_800BDB88((s32 *)&pos, 0xE080);
@@ -105,7 +105,7 @@ block_25:
             (player->velocity[0]) = 0;
             (player->velocity[2]) = 0;
             temp_a1 = &D_80123270[(player->direction & 1) * 2];
-            if (D_801231F4 & 0x20) {
+            if (gOvl11PrimaryHeldButtons & 0x20) {
                 if (var_s4 == 1) {
                     (player->velocity[0]) = (s32) temp_a1[0].x;
                     (player->velocity[2]) = (s32) temp_a1[0].z;

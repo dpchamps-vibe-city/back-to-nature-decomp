@@ -2196,14 +2196,6 @@ typedef struct {
 } Ovl11CE034Object;
 
 typedef struct {
-    char pad0[0x2E];
-    Ovl11CollisionTag collision;
-    char pad32[2];
-    s32 flags;
-    s32 position[4];
-} Ovl11CEFCCObject;
-
-typedef struct {
     char pad0[0x26];
     s16 unk26;
     char pad28[0x30 - 0x28];
@@ -2591,6 +2583,14 @@ typedef struct {
     s32 field_8;
     u8 pad_C[4];
 } Ovl11PaddedVec3;
+
+typedef struct {
+    char pad0[0x2E];
+    Ovl11CollisionTag collision;
+    char pad32[2];
+    s32 flags;
+    s32 position[4];
+} Ovl11PlacedRecordView;
 
 typedef struct {
                char pad_00[0x100];
