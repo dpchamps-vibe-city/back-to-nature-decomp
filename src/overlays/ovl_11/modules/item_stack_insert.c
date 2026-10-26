@@ -1,11 +1,55 @@
+/*
+ * item_stack_insert — reconstructed translation unit.
+ *
+ * Count available capacity in 99-item stacks and insert a quantity into the
+ * held/slot records, with a separate 64-record overflow fallback.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
+
 #include "common.h"
+#include "ovl11_item_stack_insert.h"
 #include "integer_power.h"
 #include "ovl11_halfword_triplets.h"
 
-s16 ovl_11_func_8011D9DC(s16, s32);
+/* The original caller supplies two additional, unused zero arguments. */
+s32 ovl_11_func_800E6EAC();
+
+s16 Ovl11GetItemStackCapacity(s16 id, s32 mode) {
+    s32 count;
+    s32 total;
+    s32 i;
+    s16 *slot;
+
+    if (mode == 0) {
+        if (ovl_11_func_800E6EAC(0, 2, 0, 0) == 1) {
+            return 99;
+        }
+    }
+    total = 0;
+    count = pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
+    slot = (s16 *)&((struct Ovl11ItemInsertState *)D_8006C838)->held;
+    if (slot[0] == 0) {
+        total = 99;
+    } else if (slot[0] == id) {
+        total = 99 - slot[2];
+    }
+    /* Three halfwords per record; count is supplied by the saved exponent. */
+    slot = (s16 *)&gItemStackSlotBase;
+    for (i = 0; i < count; i++, slot += 3) {
+        if (slot[0] == 0) {
+            total += 99;
+        } else if (slot[0] == id) {
+            total += 99 - slot[2];
+        }
+    }
+    return (s16)total;
+}
+
 s32 ovl_11_func_800D6A94(s16);
 
-s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
+s32 Ovl11InsertItemStack(s16 id, s16 amount, s32 mode) {
     s32 i;
     s32 count;
     s32 capacity;
@@ -18,10 +62,12 @@ s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
     if (mode == 1) {
         insufficient = 0;
     } else {
-        insufficient = ovl_11_func_8011D9DC(id, 1) < amount;
+        insufficient = Ovl11GetItemStackCapacity(id, 1) < amount;
     }
     if (!insufficient) {
         count = pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1);
+        /* fresh intentionally persists between slots. Once set, subsequent
+         * occupied matching stacks also run the ID bookkeeping helper. */
         fresh = 0;
         slot = (s16 *)((u8 *)D_8006C838 + 0x524C);
         capacity = 0;
@@ -49,7 +95,7 @@ s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
                 Ovl11SetHalfwordTriplet(slot, id, 0, total);
             }
         }
-        slot = (s16 *)&D_80071A90;
+        slot = (s16 *)&gItemStackSlotBase;
         for (i = 0; i < count; i++, slot += 3) {
             capacity = 0;
             if (slot[0] == 0) {
@@ -81,7 +127,9 @@ s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode) {
             }
         }
     } else {
-        empty = (s16 *)&D_80070EC2;
+        /* Overflow stores the entire quantity in one empty record, not a
+         * sequence of 99-item stacks; it does not run ID bookkeeping. */
+        empty = (s16 *)&gItemOverflowSlotBase;
         for (i = 0; i < 64; i++, empty += 3) {
             if (empty[0] == 0) {
                 Ovl11SetHalfwordTriplet(empty, id, 0, amount);

@@ -2,10 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
-
-s16 ovl_21_func_800BABF8(s16 arg0);
-s32 ovl_21_func_800BACB0(s16 arg0);
-u8 *ovl_21_func_800BAD18(s16 arg0);
+#include "ovl21_entity_record_views.h"
 
 void ovl_21_func_800B836C(void) {
     s32 index;
@@ -46,12 +43,12 @@ void ovl_21_func_800B836C(void) {
         position->vy = 0;
         position->vx = D_800BCC48[index].unk0;
         position->vz = D_800BCC48[index].unk2;
-        record->unk22 = ovl_21_func_800BABF8(record->unk10);
-        record->unk24 = ovl_21_func_800BACB0(record->unk10);
+        record->unk22 = Ovl21ReadEntityRangeValue(record->unk10);
+        record->unk24 = Ovl21GetEntityRangeConstant(record->unk10);
         D_800C0448_init.records[index].unk28 = 0;
         record->unk2C = 4;
         record->unk2E = 0;
-        D_800C0448_init.records[index].unk30 = ovl_21_func_800BAD18(record->unk10);
+        D_800C0448_init.records[index].unk30 = Ovl21GetEntityObjectRecord(record->unk10);
         nextIndex = index + 1;
         /* Walk the three state slices while retaining the position source. */
         state = record;

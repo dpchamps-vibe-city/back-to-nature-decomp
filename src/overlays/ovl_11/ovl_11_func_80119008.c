@@ -1,6 +1,7 @@
 #include "common.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
+#include "ovl11_primary_object_wait_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -8,7 +9,6 @@ s32 ovl_11_func_800D6090(u16 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011B784(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80119008(void) {
@@ -92,7 +92,7 @@ s32 ovl_11_func_80119008(void) {
         break;
     case 10:
     case 11:
-        if (ovl_11_func_8011B784(&gOvl11InteractionStep, 10, D_8012D51C)) {
+        if (Ovl11StepPrimaryObjectA4Request(&gOvl11InteractionStep, 10, D_8012D51C)) {
             Ovl11SetInteractionSteps(4, 0);
         }
         break;

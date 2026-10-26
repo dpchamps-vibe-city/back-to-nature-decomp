@@ -46,7 +46,7 @@ s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
         }
         if (selected == 0) {
-            slot = (Ovl11ItemState *)&D_80070EC2;
+            slot = (Ovl11ItemState *)&gItemOverflowSlotBase;
             for (i = 0; i < 64; i++, slot++) {
                 if (slot->id == 0) {
                     selected = (s16 *)slot;

@@ -1,4 +1,12 @@
 
+// Shared {x,y,z} work position set and directionally bounded by object scripts.
+gObjectWorkPosition = 0x80071B00; // size:0xC
+
+// Six-byte {id, variant, quantity} record bases used by stack insertion.
+// Preserve the existing 12-byte C anchor extents; these are not pool sizes.
+gItemStackSlotBase = 0x80071A90; // size:0xC
+gItemOverflowSlotBase = 0x80070EC2; // size:0xC
+
 // Progress/status work-record anchors; overlay-11 derives the low 23 flags.
 gProgressDerivedFlags = 0x800719F8; // size:0x4
 gProgressStateFlags = 0x80070D30; // size:0x4

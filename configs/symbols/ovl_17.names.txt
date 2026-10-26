@@ -1,5 +1,12 @@
 // Semantic labels within ovl_17 only; retain original container/address identity.
 
+// Complementary per-record drawers and their shared threshold indicator.
+Ovl17DrawRecordSpriteQuads = 0x800BAC24; // type:func
+Ovl17DrawRecordSpriteRects = 0x800BAD9C; // type:func
+Ovl17SelectRecordIndicatorAnimation = 0x800BAEF0; // type:func
+gOvl17RecordDrawTick = 0x800BD864; // type:data size:0x4
+gOvl17ThresholdIndicatorSprite = 0x800BDAD4; // type:data size:0x30
+
 // Record work-area initialization and mode-selected card display rows.
 Ovl17InitRecordWork = 0x800BA54C; // type:func
 Ovl17InitRecordRollThresholds = 0x800BA630; // type:func

@@ -2,15 +2,15 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "ovl19_actor_controls.h"
+#include "ovl19_projected_actor_render.h"
 
 void ovl_19_func_800B843C(void);
-void ovl_19_func_800BA770(void);
 /* Executable aliases: SetVal8005E2BC, SetMessagePortraitEnabled and GetMessageWindowStatus. */
 void SetVal8005E2BC(s32 arg0);
 
 void ovl_19_func_800B8830(void) {
     ovl_19_func_800B843C();
-    ovl_19_func_800BA770();
+    Ovl19DrawProjectedActorSprites();
     SetVal8005E2BC(0);
     SetMessagePortraitEnabled(0);
     RequestMessageWindow(4, Ovl19_D_800BCFF0[gOvl19SceneWork[4]]);

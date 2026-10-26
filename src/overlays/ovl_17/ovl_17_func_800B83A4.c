@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "ovl17_record_sprite_animation.h"
+#include "ovl17_record_sprite_draw.h"
 
 void func_80017A08(s32 arg0, s32 arg1);
-void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
 
 void ovl_17_func_800B83A4(void) {
@@ -22,7 +22,7 @@ void ovl_17_func_800B83A4(void) {
     Ovl17SelectAllRecordAnimations2();
     work = gOvl17AnimatedRecordBase;
     for (i = 0; i < 6; i++) {
-        ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *)work, 0x40000);
+        Ovl17DrawRecordSpriteQuads((Recon_ovl_17_func_800BAD9C_A0View *)work, 0x40000);
         work += 0x50;
     }
     ovl_17_func_800BA808(0x40000);

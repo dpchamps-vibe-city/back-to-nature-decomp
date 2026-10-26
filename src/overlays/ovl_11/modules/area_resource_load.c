@@ -256,9 +256,9 @@ void Ovl11LoadPaletteBankTriplet(void) {
     CdReadDiscSectorsBlocking(0, 0x03D57800, 0x800, 0, gGraphicsHeapBase + 0x4290);
     palette = gGraphicsHeapBase + 0x4290;
     gOvl11PaletteBankPointer = palette;
-    Ovl11CopyHalfwordBlock((u16 *) &D_80070EC2, palette, 0xC0U);
-    Ovl11CopyHalfwordBlock((u16 *) ((&D_80070EC2 + 0x60)), gGraphicsHeapBase + 0x4410, 0xC0U);
-    Ovl11CopyHalfwordBlock((u16 *) ((&D_80070EC2 - 0x60)), gGraphicsHeapBase + 0x4590, 0xC0U);
+    Ovl11CopyHalfwordBlock((u16 *) &gItemOverflowSlotBase, palette, 0xC0U);
+    Ovl11CopyHalfwordBlock((u16 *) ((&gItemOverflowSlotBase + 0x60)), gGraphicsHeapBase + 0x4410, 0xC0U);
+    Ovl11CopyHalfwordBlock((u16 *) ((&gItemOverflowSlotBase - 0x60)), gGraphicsHeapBase + 0x4590, 0xC0U);
 }
 
 void Ovl11LoadSmallIndexedSpriteBank(s32 index) {

@@ -65,7 +65,7 @@ s32 ovl_11_func_800F7AA0(void) {
                 PlaySoundEffect(0);
                 switch (gOvl11InteractionPhase) {
                 case 0:
-                    ovl_11_func_800F8224((s16 *) &D_80070EC2, 0x40);
+                    ovl_11_func_800F8224((s16 *) &gItemOverflowSlotBase, 0x40);
                     break;
                 case 2:
                     ovl_11_func_800F8224((s16 *) D_80070D42_slots, 0x40);

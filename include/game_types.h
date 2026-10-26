@@ -2272,14 +2272,14 @@ typedef struct {
  * Only the witnessed fields are named. */
 typedef struct {
     /* 0x00 */ char pad_00[0x16];
-    /* 0x16 */ u16 unk16;
+    /* 0x16 */ u16 gaugeValue;
     /* 0x18 */ char pad_18[2];
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ s16 unk1C;
-    /* 0x1E */ s16 unk1E;
+    /* 0x1A */ s16 rowValue;
+    /* 0x1C */ s16 trailingValue;
+    /* 0x1E */ s16 ordinalIndex;
     /* 0x20 */ char pad_20[0x14];
-    /* 0x34 */ s32 unk34;
-} Ovl11Func80116F4CArg;
+    /* 0x34 */ s32 flags;
+} Ovl11RecordFamilyRow;
 
 /* ovl_11:800CE37C parameter view: full-word object position at +100. */
 typedef struct {

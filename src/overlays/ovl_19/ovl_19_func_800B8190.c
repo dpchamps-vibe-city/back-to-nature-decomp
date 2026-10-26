@@ -12,20 +12,20 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 #include "ovl19_projected_sprite.h"
+#include "ovl19_projected_actor_render.h"
 
 
 void SsSeqClose (short);
 void SsSeqSetVol (short, short, short);
 void SsVabClose (short);
-void ovl_19_func_800BA770 (void);
-void ovl_19_func_800BA834 (s16 *arg0);
-void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
+void Ovl19DrawActorPairSprite (s16 *arg0);
+void Ovl19DrawAuxRecordSprite (Ovl19Func800BAB4CArg *arg0);
 
 void ovl_19_func_800B8190(void) {
     u8 var_s0;
     u8 *base;
 
-    ovl_19_func_800BA770();
+    Ovl19DrawProjectedActorSprites();
     var_s0 = 0;
     if (IsScreenFadeComplete() == 1) {
         var_s0++;

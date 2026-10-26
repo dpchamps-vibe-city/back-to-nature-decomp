@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl17_record_sprite_draw.h"
 
 void ovl_17_func_800BAF50(void);
-void ovl_17_func_800BAD9C(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
 
 void ovl_17_func_800B92B0(void) {
@@ -17,7 +17,7 @@ void ovl_17_func_800B92B0(void) {
     work = base - 0x28;
     record = base;
     for (i = 0; i < 6; i++) {
-        ovl_17_func_800BAD9C((Recon_ovl_17_func_800BAD9C_A0View *) record,
+        Ovl17DrawRecordSpriteRects((Recon_ovl_17_func_800BAD9C_A0View *) record,
                             *(s32 *) (work + 0x24));
         record += 0x50;
     }

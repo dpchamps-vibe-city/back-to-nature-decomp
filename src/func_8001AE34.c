@@ -22,12 +22,12 @@ s32 func_8001AE34(void) {
                 count = 1;
                 break;
             case 1:
-                base = (s16 *)&D_80071A90;
+                base = (s16 *)&gItemStackSlotBase;
                 exponent = base[-0x39];
                 count = pow_int(2, exponent + 1);
                 break;
             case 2:
-                base = (s16 *)&D_80070EC2;
+                base = (s16 *)&gItemOverflowSlotBase;
                 count = 64;
                 break;
         }

@@ -3,13 +3,13 @@
 #include "screen_fade.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
+#include "ovl11_primary_object_wait_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 u16 ovl_11_func_801164F8(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 s16 ovl_11_func_8011D98C(StructD548 x);
@@ -170,7 +170,7 @@ s32 ovl_11_func_80115FE0(void) {
         break;
     case 27:
     case 28:
-        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 27, ((StructD548 *)gOvl11SecondarySelectionRecord)->data[((StructD548 *)gOvl11SecondarySelectionRecord)->index])) {
+        if (Ovl11StepPrimaryObjectItemRequest(&gOvl11InteractionStep, 27, ((StructD548 *)gOvl11SecondarySelectionRecord)->data[((StructD548 *)gOvl11SecondarySelectionRecord)->index])) {
             Ovl11SetInteractionSteps(26, 0);
         }
         break;

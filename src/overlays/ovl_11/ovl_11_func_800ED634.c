@@ -14,15 +14,15 @@ s32 ovl_11_func_800ED634(s16 arg0, s16 arg1) {
 
     switch (arg0) {
     case 2:
-        var_a0 = abs(D_80071B00[0]);
-        var_v0 = abs(D_80071B00[2]);
+        var_a0 = abs(gObjectWorkPosition[0]);
+        var_v0 = abs(gObjectWorkPosition[2]);
         if (var_v0 < var_a0) {
             var_a0_2 = 1;
-            if (D_80071B00[0] > 0) {
+            if (gObjectWorkPosition[0] > 0) {
                 var_a0_2 = 3;
             }
         } else {
-            var_a0_2 = (D_80071B00[2] > 0) * 2;
+            var_a0_2 = (gObjectWorkPosition[2] > 0) * 2;
         }
         ovl_11_func_800E9284(var_a0_2, 0, 0, 0);
         /* fallthrough */

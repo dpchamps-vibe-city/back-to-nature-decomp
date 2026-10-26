@@ -1,8 +1,8 @@
 #include "common.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "ovl19_projected_actor_render.h"
 
-void ovl_19_func_800BA770(void);
 void func_80017A08(s32 arg0, s32 arg1);
 s32 ovl_19_func_800BADAC(s16 arg0);
 void ovl_19_func_800B843C(void);
@@ -10,7 +10,7 @@ void ovl_19_func_800B843C(void);
 void ovl_19_func_800B8C74(void) {
     s32 flag;
 
-    ovl_19_func_800BA770();
+    Ovl19DrawProjectedActorSprites();
     flag = ((Ovl19SelectionState *)gOvl19SceneWork)->flag;
     if (flag == 0) {
         func_80017A08(0, ((Ovl19CompletionCounterView *)D_8006C838)->text);

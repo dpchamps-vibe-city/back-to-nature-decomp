@@ -37,6 +37,7 @@
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
 #include "ovl11_moving_items.h"
+#include "ovl11_work_position_commands.h"
 
 typedef struct {
                s16 field_0;
@@ -230,7 +231,6 @@ s32 ovl_11_func_800E5870(s16 arg0, s16 arg1, s32 arg2, s16 arg3);
 s32 ovl_11_func_800E9AFC (s16 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800E99EC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6AB0 (s32 arg0, s32 arg1, s32 arg2);
-s32 ovl_11_func_800E8F78 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 Ovl11ClampStateField (s32 arg0, s32 arg1, s32 arg2);
 
 s32 ovl_11_func_800ED4A8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {

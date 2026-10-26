@@ -72,14 +72,14 @@ extern u16 _D_80070D3E[5] __asm__("D_80070D3E");
 #define D_80070D3E (*((u16*)_D_80070D3E))
 extern u16 _D_80070D40[5] __asm__("D_80070D40");
 #define D_80070D40 (*((u16*)_D_80070D40))
-extern s32 _D_80070EC2[3] __asm__("D_80070EC2");
-#define D_80070EC2 (*((s32*)_D_80070EC2))
+extern s32 _gItemOverflowSlotBase[3] __asm__("gItemOverflowSlotBase");
+#define gItemOverflowSlotBase (*((s32*)_gItemOverflowSlotBase))
 extern u16 _D_800712C0[5] __asm__("D_800712C0");
 #define D_800712C0 (*((u16*)_D_800712C0))
 extern s32 _D_80071A84[3] __asm__("D_80071A84");
 #define D_80071A84 (*((s32*)_D_80071A84))
-extern s32 _D_80071A90[3] __asm__("D_80071A90");
-#define D_80071A90 (*((s32*)_D_80071A90))
+extern s32 _gItemStackSlotBase[3] __asm__("gItemStackSlotBase");
+#define gItemStackSlotBase (*((s32*)_gItemStackSlotBase))
 extern s32 _D_800749F8[3] __asm__("D_800749F8");
 #define D_800749F8 (*((s32*)_D_800749F8))
 extern s32 _D_800759E8[3] __asm__("D_800759E8");

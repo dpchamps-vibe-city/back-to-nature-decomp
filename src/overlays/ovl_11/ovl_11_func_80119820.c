@@ -2,6 +2,7 @@
 #include "message_window.h"
 #include "two_choice_prompt.h"
 #include "ovl11_interaction_steps.h"
+#include "ovl11_item_stack_insert.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -9,7 +10,6 @@ s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
-s16 ovl_11_func_8011D9DC(s16 arg0, s32 arg1);
 
 s32 ovl_11_func_80119820(void) {
     s32 result;
@@ -53,7 +53,7 @@ s32 ovl_11_func_80119820(void) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D9DC(0x21, 1) == 0) {
+            if (Ovl11GetItemStackCapacity(0x21, 1) == 0) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
                 Ovl11SetInteractionSteps(2, 7);

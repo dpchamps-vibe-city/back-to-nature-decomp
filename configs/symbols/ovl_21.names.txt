@@ -1,3 +1,25 @@
+// Per-entity value service consumed together by scene-record initialization.
+Ovl21RaiseEntityRangeValue = 0x800BAB28; // type:func
+Ovl21ReadEntityRangeValue = 0x800BABF8; // type:func
+Ovl21GetEntityRangeConstant = 0x800BACB0; // type:func
+Ovl21GetEntityObjectRecord = 0x800BAD18; // type:func
+gOvl21EntityRange480 = 0x800BCC1C; // type:data size:0x2
+gOvl21EntityRange420 = 0x800BCC1E; // type:data size:0x2
+gOvl21EntityRange360 = 0x800BCC20; // type:data size:0x2
+gOvl21DefaultEntitySprite = 0x800C0B5C; // type:data size:0x30
+gOvl21EntitySprite19 = 0x800C0B8C; // type:data size:0x30
+gOvl21EntitySprite7 = 0x800C0BBC; // type:data size:0x30
+gOvl21EntitySprite6 = 0x800C0BEC; // type:data size:0x30
+gOvl21EntitySprite21 = 0x800C0C1C; // type:data size:0x30
+gOvl21EntitySprite22 = 0x800C0C4C; // type:data size:0x30
+gOvl21EntitySprite34 = 0x800C0C7C; // type:data size:0x30
+gOvl21EntitySprite9 = 0x800C0CAC; // type:data size:0x30
+gOvl21EntitySprite20 = 0x800C0CDC; // type:data size:0x30
+gOvl21EntitySprite25 = 0x800C0D0C; // type:data size:0x30
+gOvl21EntitySprite16 = 0x800C0D3C; // type:data size:0x30
+gOvl21EntitySprite11 = 0x800C0D6C; // type:data size:0x30
+gOvl21EntitySprite5 = 0x800C0D9C; // type:data size:0x30
+
 // Camera/geometry family, preserving overlay-21 entry identities.
 Ovl21InitSceneCamera = 0x800BB0F8;
 Ovl21UpdateSceneCameraOffset = 0x800BB138;

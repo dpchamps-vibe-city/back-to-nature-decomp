@@ -4,6 +4,7 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "ovl17_timer_hud.h"
+#include "ovl17_record_sprite_draw.h"
 
 /* 8001FAD0 forwards the s32 voice result returned by func_800212A8. */
 void ovl_17_func_800B91B8(void);
@@ -15,7 +16,6 @@ s32 ovl_17_func_800B986C(void);
 s16 ovl_17_func_800B9C48(s16 arg0);
 void ovl_17_func_800B9CAC(void);
 void ovl_17_func_800BA808(s32 arg0);
-void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800B9628(void);
 void ovl_17_func_800B9784(void);
 
@@ -94,7 +94,7 @@ block_6:
     (*(s32 *) (motion + 0x24)) += (((*(s16 *) (motion + 0x20)) << 0xC) / 30);
     for (var_s1 = 0; var_s1 < 6; var_s1++) {
         var_s0_2 = gOvl17RecordWorkBase;
-        ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *) (var_s0_2 + 0x28 + var_s1 * 0x50), *(s32 *) (var_s0_2 + 0x24));
+        Ovl17DrawRecordSpriteQuads((Recon_ovl_17_func_800BAD9C_A0View *) (var_s0_2 + 0x28 + var_s1 * 0x50), *(s32 *) (var_s0_2 + 0x24));
     }
     threshold = gOvl17RecordWorkBase;
     if ((((*(s16 *) (threshold + 0x2D0)) << 0x17) / 100) < (*(s32 *) (threshold + 0x24))) {

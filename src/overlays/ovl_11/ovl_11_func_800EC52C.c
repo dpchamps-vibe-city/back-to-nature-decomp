@@ -1,6 +1,7 @@
 #include "common.h"
 #include "ovl11_entity_pool_access.h"
 #include "random.h"
+#include "ovl11_work_position_commands.h"
 
 s32 ovl_11_func_800E5870(s16, s16, s32, s16);
 s32 ovl_11_func_800E58DC(s16, s16, s32, s32);
@@ -13,8 +14,6 @@ s32 ovl_11_func_800E6BDC();
 s32 ovl_11_func_800E6D2C(s16, s16, s32, s32);
 s32 ovl_11_func_800E6EE0(s16, s16, s32, s32);
 s32 ovl_11_func_800E880C(s16, s16, s32, s32);
-s32 ovl_11_func_800E8E78(s16, s16, s32, s32);
-s32 ovl_11_func_800E8F78(s16, s16, s32, s32);
 s32 ovl_11_func_800E9284();
 s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
 s32 ovl_11_func_800E9AFC();
@@ -109,7 +108,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
         }
         if (gOvl11ValueSlots[arg1] != 0) {
-            ovl_11_func_800E8E78(0, 0, 1001, 1790);
+            Ovl11ApplyWorkPositionCommand(0, 0, 1001, 1790);
             ovl_11_func_800E9284(0, 0, 0, 0);
             ((Ovl11SceneState *)D_8006C838)->y = -400;
             ((Ovl11SceneState *)D_8006C838)->x = 887;
@@ -203,9 +202,9 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800E5ADC(0x11, 0, -0x14C, 0x8CF);
             ovl_11_func_800E5B84(0x11, 0, 0, 1);
             if (gOvl11ValueSlots[arg1] != 0) {
-                ovl_11_func_800E8E78(0, 0, -0x7F, 0xCD);
+                Ovl11ApplyWorkPositionCommand(0, 0, -0x7F, 0xCD);
             } else {
-                ovl_11_func_800E8E78(0, 0, 0x1E8, -0x35D);
+                Ovl11ApplyWorkPositionCommand(0, 0, 0x1E8, -0x35D);
             }
             ovl_11_func_800E9284(2, 0, 0, 0);
             ovl_11_func_800E5ADC(0x16, 0, -0x30F, 0x2E2);
@@ -227,7 +226,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800E5B84(7, 0, 2, 1);
 
             if (gOvl11ValueSlots[arg3] == 0x29) {
-                ovl_11_func_800E8E78(0, 0, -0x7F, 0x2E2);
+                Ovl11ApplyWorkPositionCommand(0, 0, -0x7F, 0x2E2);
             } else {
                 ovl_11_func_800E5ADC((s16) gOvl11ValueSlots[arg3], 0, -0x7F, 0x2E2);
             }
@@ -276,7 +275,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         case 25:                                    
 
             if (gOvl11ValueSlots[arg3] == 0x29) {
-                result = ovl_11_func_800E8F78(0, 2, 0x5A4, 0);
+                result = Ovl11UpdateWorkPositionBound(0, 2, 0x5A4, 0);
             } else {
                 result = ovl_11_func_800E5870((s16) gOvl11ValueSlots[arg3], 2, 0x5A4, 3);
             }

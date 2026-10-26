@@ -4,13 +4,13 @@
 #include "message_window.h"
 #include "ovl19_actor_controls.h"
 #include "ovl19_actor_behavior_states.h"
+#include "ovl19_projected_actor_render.h"
 
 void ovl_19_func_800B942C(void);
 s32 ovl_19_func_800BA25C(void);
 void ovl_19_func_800B9454(void);
 void ovl_19_func_800B95D4(void);
 s32 ovl_19_func_800BA73C(Ovl19Func800BA73CArg *arg0);
-void ovl_19_func_800BA770(void);
 
 void ovl_19_func_800B89C8(void) {
     s32 selection;
@@ -77,6 +77,6 @@ void ovl_19_func_800B89C8(void) {
                 }
             }
         }
-        ovl_19_func_800BA770();
+        Ovl19DrawProjectedActorSprites();
     }
 }

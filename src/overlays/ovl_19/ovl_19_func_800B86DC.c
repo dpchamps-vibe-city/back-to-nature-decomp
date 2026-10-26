@@ -1,13 +1,12 @@
 #include "common.h"
 #include "message_window.h"
-
-void ovl_19_func_800BA770(void);
+#include "ovl19_projected_actor_render.h"
 
 void ovl_19_func_800B86DC(void) {
     s32 status;
     s32 result;
 
-    ovl_19_func_800BA770();
+    Ovl19DrawProjectedActorSprites();
     switch (gOvl19SceneWork[4]) {
     case 0:
         gOvl19SceneWork[2] = 2;

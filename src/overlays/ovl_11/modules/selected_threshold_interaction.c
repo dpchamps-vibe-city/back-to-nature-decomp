@@ -6,12 +6,12 @@
 #include "selected_threshold_interaction.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
+#include "ovl11_primary_object_wait_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 Ovl11CanApplySelectedThreshold(StructD548 *arg0);
 void Ovl11ApplySelectedThreshold(StructD548 *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 
 s32 Ovl11UpdateThresholdInteraction(void) {
@@ -91,7 +91,7 @@ s32 Ovl11UpdateThresholdInteraction(void) {
         break;
     case 12:
     case 13:
-        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 12, ((StructD548 *)gOvl11PrimarySelectionRecord)->data[((StructD548 *)gOvl11PrimarySelectionRecord)->index])) {
+        if (Ovl11StepPrimaryObjectItemRequest(&gOvl11InteractionStep, 12, ((StructD548 *)gOvl11PrimarySelectionRecord)->data[((StructD548 *)gOvl11PrimarySelectionRecord)->index])) {
             Ovl11SetInteractionSteps(11, 0);
         }
         break;

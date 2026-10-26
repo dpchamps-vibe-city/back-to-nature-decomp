@@ -11,6 +11,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_item_stack_insert.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -19,8 +20,6 @@ s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 s16 ovl_11_func_8011D98C(StructD548 arg0);
-s16 ovl_11_func_8011D9DC(s16 arg0, s32 arg1);
-s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode);
 
 s32 ovl_11_func_80119DF8(void) {
     Ovl11D8012D7B8 first;
@@ -114,7 +113,7 @@ s32 ovl_11_func_80119DF8(void) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D9DC(item, 1) == 0) {
+            if (Ovl11GetItemStackCapacity(item, 1) == 0) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
                 Ovl11SetInteractionSteps(1, 3);
@@ -170,7 +169,7 @@ s32 ovl_11_func_80119DF8(void) {
         break;
     case 5:
         ovl_11_func_800F2354(-price, 1);
-        ovl_11_func_8011DAD4(item, 1, 1);
+        Ovl11InsertItemStack(item, 1, 1);
         Ovl11RefreshProgressStatus();
         ovl_11_func_8011B2B0();
         gOvl11InteractionDrawMode = 4;

@@ -1,5 +1,26 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Complementary object-script operations on the shared work-position triple.
+Ovl11ApplyWorkPositionCommand = 0x800E8E78; // type:func
+Ovl11UpdateWorkPositionBound = 0x800E8F78; // type:func
+
+// Four-row tagged-record browser and its private row-render helper closure.
+Ovl11DrawAndProcessRecordFamilyList = 0x80116980; // type:func
+Ovl11DrawRecordFamilyRow = 0x80116F4C; // type:func
+Ovl11ReadRecordRowValue = 0x801170D8; // type:func
+Ovl11DrawRecordRowGauge = 0x801170E4; // type:func
+gOvl11RecordListCursor = 0x8012D518; // type:data size:0x2
+gOvl11RecordListScroll = 0x8012D51A; // type:data size:0x2
+gOvl11RecordListIconDrawers = 0x8012823C; // type:data size:0x10
+
+// Capacity and insertion for 99-item stacks and overflow records.
+Ovl11GetItemStackCapacity = 0x8011D9DC; // type:func
+Ovl11InsertItemStack = 0x8011DAD4; // type:func
+
+// Two-phase primary-object request callbacks (caller-owned absolute step).
+Ovl11StepPrimaryObjectItemRequest = 0x8011B6C4; // type:func
+Ovl11StepPrimaryObjectA4Request = 0x8011B784; // type:func
+
 // Read/cache the last scene-geometry hit descriptor's flag word.
 Ovl11GetGeometryHitHighBit = 0x800BF3D0; // type:func
 Ovl11ClassifyGeometryHit = 0x800BF3F4; // type:func

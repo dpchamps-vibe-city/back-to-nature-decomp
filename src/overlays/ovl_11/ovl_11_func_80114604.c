@@ -4,6 +4,8 @@
 #include "text_entry.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_record_pair_slots.h"
+#include "ovl11_item_stack_insert.h"
+#include "ovl11_record_family_list.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
@@ -12,15 +14,12 @@ void ovl_11_func_800DF0F8(s32 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80113CD0(void);
 void ovl_11_func_801152BC(void *arg0);
-s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80117178(s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_8011D06C(s32 arg0);
 s16 ovl_11_func_8011D98C(StructD548 x);
-s16 ovl_11_func_8011D9DC(s16 arg0, s32 arg1);
-s32 ovl_11_func_8011DAD4(s16 id, s16 amount, s32 mode);
 
 s32 ovl_11_func_80114604(void) {
     Ovl11D8012D7B8 params;
@@ -83,11 +82,11 @@ s32 ovl_11_func_80114604(void) {
             case 7:
             case 8:
                 if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
-                    if (ovl_11_func_8011D9DC(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
+                    if (Ovl11GetItemStackCapacity(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
                         Ovl11SetInteractionSteps(25, 24);
                     } else {
-                        ovl_11_func_8011DAD4(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
+                        Ovl11InsertItemStack(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
                         ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x84);
                         Ovl11SetInteractionSteps(25, 24);
@@ -117,7 +116,7 @@ s32 ovl_11_func_80114604(void) {
                 } else {
                     RequestMessageWindow(2, 0x75);
                     gOvl11InteractionDrawMode = 0;
-                    ovl_11_func_80116980(0, 0, -1);
+                    Ovl11DrawAndProcessRecordFamilyList(0, 0, -1);
                     Ovl11SetInteractionSteps(25, 18);
                 }
                 break;
@@ -128,7 +127,7 @@ s32 ovl_11_func_80114604(void) {
                 } else {
                     RequestMessageWindow(2, 0x77);
                     gOvl11InteractionDrawMode = 0;
-                    ovl_11_func_80116980(0, 0, -1);
+                    Ovl11DrawAndProcessRecordFamilyList(0, 0, -1);
                     Ovl11SetInteractionSteps(25, 21);
                 }
                 break;
@@ -204,7 +203,7 @@ s32 ovl_11_func_80114604(void) {
         Ovl11SetInteractionSteps(26, 19);
         break;
     case 19:
-        selected = ovl_11_func_80116980(1, 0, 0);
+        selected = Ovl11DrawAndProcessRecordFamilyList(1, 0, 0);
         if (selected == -2) {
             CloseMessageWindow();
             RequestMessageWindow(2, 0x79);
@@ -225,7 +224,7 @@ s32 ovl_11_func_80114604(void) {
         }
         break;
     case 20:
-        selected = ovl_11_func_80116980(1, 0, 1);
+        selected = Ovl11DrawAndProcessRecordFamilyList(1, 0, 1);
         switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
         case 0:
             break;
@@ -258,7 +257,7 @@ s32 ovl_11_func_80114604(void) {
         Ovl11SetInteractionSteps(26, 22);
         break;
     case 22:
-        selected = ovl_11_func_80116980(2, 0, 0);
+        selected = Ovl11DrawAndProcessRecordFamilyList(2, 0, 0);
         if (selected == -2) {
             CloseMessageWindow();
             RequestMessageWindow(2, 0x79);
@@ -279,7 +278,7 @@ s32 ovl_11_func_80114604(void) {
         }
         break;
     case 23:
-        selected = ovl_11_func_80116980(2, 0, 1);
+        selected = Ovl11DrawAndProcessRecordFamilyList(2, 0, 1);
         switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
         case 0:
             break;
@@ -316,10 +315,10 @@ s32 ovl_11_func_80114604(void) {
         break;
     case 26:
         if (gOvl11InteractionResumeStep == 20) {
-            ovl_11_func_80116980(1, 0, 1);
+            Ovl11DrawAndProcessRecordFamilyList(1, 0, 1);
         }
         if (gOvl11InteractionResumeStep == 23) {
-            ovl_11_func_80116980(2, 0, 1);
+            Ovl11DrawAndProcessRecordFamilyList(2, 0, 1);
         }
         if (GetMessageWindowStatus() == 5) {
             SetVal8005E2BC(0);

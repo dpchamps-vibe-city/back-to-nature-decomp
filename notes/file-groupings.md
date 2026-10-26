@@ -1332,6 +1332,31 @@ Members:
 
 ## `ovl_11` text/sprite table-builder run — 0x80116980–0x80117178 (confidence: medium)
 
+**Reconstructed `modules/record_family_list.c`, all four entries through
+17178 exclusive.** The panel's only row renderer is 16F4C; that renderer is
+the only client of the halfword reader 170D8 and gauge drawer 170E4. Original
+calls and gapless order establish this closed hierarchy. Cursor/scroll
+halfwords 8012D518/51A are private to the panel; the text-format scratch is
+shared with other panels and does not bind the group. All four baseline
+fold checks and the linked overlay passed, with no flags or exceptions.
+
+Left neighbor selected_threshold_interaction is the independent threshold
+lookup/debit protocol, not this browser. Right 17178 is a shared tagged-family
+scanner, also called by 114604/115308/118C7C, and never touches the cursor,
+scroll or row scratch. Its service calls do not extend this renderer unit.
+These are evidence-limited responsibility cuts under -G0, not GP-proven
+historical edges; no known same-unit member or stub is left outside.
+
+Public Ovl11DrawAndProcessRecordFamilyList and internal-but-still-external
+Ovl11DrawRecordFamilyRow/ReadRecordRowValue/DrawRecordRowGauge describe
+observed behavior. `ovl11_record_family_list.h` documents four visible rows,
+24-pixel pitch, retained halfword indices, reset/input/draw-only return
+contracts, scratch writes and signed gauge division. Ovl11RecordFamilyRow
+and its fields have neutral display-role names without changing layout or
+signedness. Cursor, scroll and the four icon callbacks are now canonical
+container-owned data names. The scanner and runtime text-bank base remain
+external dependencies. Batch acceptance is recorded below.
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) around the table
 setup at the overlay's 0x5F12C text region. Evidence is an internal call
 graph plus strict link-order adjacency, the same fingerprint class as the
@@ -8813,6 +8838,33 @@ Members (address order):
   - ovl_11_func_8011DAD4 (m; low-confidence same-TU candidate with
     8011D9DC; [evidence and limits](research/ovl_11_func_8011DAD4-grouping.md)) —
     item-stack insertion with a fallback record list; returns unplaced quantity.
+
+  **Reconstructed `src/overlays/ovl_11/modules/item_stack_insert.c`, both
+  entries D9DC/DAD4 through DD48 exclusive.** The inserter calls the adjacent
+  capacity helper to select normal-stack versus overflow handling. Both scan
+  the same held record and exponent-sized six-byte slot records, agree on
+  empty/matching-ID capacity and the 99-item limit, and have the same callers'
+  item-quantity protocol. This direct capacity/update relationship is the
+  positive membership evidence, not their broad shared work area alone.
+
+  Left neighbor D9B4 reads an indexed value from a caller-provided selection
+  record passed by value; it touches no fixed inventory or capacity state.
+  Right DD48 initializes a caller-provided progress/selector descriptor for
+  the following interaction services, not item stacks. The old ledger's
+  D9DC link-order-follower claim does not join it to the selection accessors:
+  no shared private table or local helper spans that seam. Both cuts are
+  conservative responsibility boundaries under -G0, not GP-proven historical
+  object edges, and neither protects an override.
+
+  Public names `Ovl11GetItemStackCapacity` and `Ovl11InsertItemStack` retain
+  signed widths and raw mode contracts; the header documents stack quantities,
+  capacity narrowing, partial insertion, whole-quantity overflow and the
+  persistent fresh-slot bookkeeping flag. EXE anchors 80071A90/80070EC2 are
+  `gItemStackSlotBase`/`gItemOverflowSlotBase`, propagated to every user while
+  retaining their established 12-byte C anchor extents (not claiming pool
+  extents or changing pointer arithmetic). No private storage/linkage is
+  inferred. The checked fold passed both functions and the full overlay at
+  baseline. No flag override or exception was added or retired.
   Call-graph agreement via the shared by-value parameter ABI + zero-gap
   link order; callers (0x80114604 etc.) are stubs, so data TU ownership
   unconfirmed. StructD548 is shared-typed in include/game_types.h.
@@ -12419,6 +12471,57 @@ Members:
 - ovl_11_func_800E8C14 (m, candidate local same TU with 800E8D00; [evidence](research/ovl_11_func_800E8C14-grouping.md)) — writes a one-based lookup result to a selected `D_80129560` slot.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
 - ovl_11_func_800E8E78 (m, candidate local same TU with 800E8F78; [shared-global/link-adjacency evidence](research/ovl_11_func_800E8E78-grouping.md)) — sets or resets the position triple from raw coordinates or table slots, then refreshes collision state.
+
+  **Reconstructed both complementary commands as
+  `modules/work_position_commands.c`, E8E78–E9104 exclusive.** The setter
+  replaces/commits the same three-word work position whose first/third words
+  the immediately following directional updater adopts. Their common
+  raw-or-slot operand protocol and position-cell operation are positive
+  evidence beyond gapless order. The cell is shared with several snapshot
+  clients, not private to this pair; the large opcode-handler table and value
+  slots are published dependencies, not evidence for folding the whole band.
+
+  Left E8DC8 writes a different resolved state-field record and never touches
+  this triple. Right E9104 gates a separate sprite/animation request using
+  shared flag words, without the position cell. Neither shares a narrow
+  helper/table with the two commands. These are conservative operation cuts
+  under -G0, not GP-proven original TU boundaries; no larger same-unit group
+  is established and no flag/mechanical limit motivated the cut.
+
+  Names Ovl11ApplyWorkPositionCommand/Ovl11UpdateWorkPositionBound and
+  EXE:gObjectWorkPosition propagate through all clients and snapshot readers.
+  The triple remains exactly s32[3] at 80071B00, with no type/extent/linkage
+  change. Public header documents raw units, mode and slot operands, all four
+  directional inequalities/reversal words, equality/invalid-direction behavior,
+  parity rejection flags and unconditional request/collision refresh. Locals
+  identify bounds, direction, adoption and reversal. The canonical work-area
+  struct tail is retained for its distinct address formation; the old
+  unprototyped E9284 declaration now agrees with the four-argument definition.
+  The complete baseline fold proved both entries and linked overlay; no flags,
+  ownership changes or exceptions were introduced.
+
+  **Seven-module run acceptance:** primary_object_wait_steps (2),
+  item_stack_insert (2), record_family_list (4), work_position_commands (2),
+  ovl_17 record_sprite_draw (3), ovl_19 projected_actor_render (3), and ovl_21
+  entity_record_views (4) add 20 folded functions: **1144 -> 1164 / 2625**,
+  with **184/184 valid modules**. Final `tuProgress.ts --verify --baseline
+  build/tu-campaign/baseline.json` passes every integrity gate: complete linked
+  EXE/all thirteen overlays (code, data, callbacks/tables and placement),
+  original inventory/completeness, source policy, configuration convergence,
+  whitespace/input stability and exception non-growth. Exit 1 means the overall
+  campaign remains incomplete, not failed verification. Canonical names are
+  clean; all fourteen newly published members have reconciled callers, with
+  zero failing module publications and no increase in the existing unrelated
+  interface findings. No tool, test, compiler override or policy allowlist was
+  changed, and nothing was committed.
+
+  The first batch's data rename briefly exposed the old generated anchor
+  declaration's split-address requirement in EXE:8001AE34: substituting a plain
+  scalar extern changed six bytes. That experiment was withdrawn. The supported
+  globals generator now retains exactly the pre-existing array-backed scalar
+  lvalue representation under the new canonical names; full verification proves
+  the unchanged addressing. No manual generated-header edit or new workaround
+  remains.
 - ovl_11_func_800EB010 (m, candidate same TU; [evidence](research/ovl_11_func_800EB010-grouping.md)) — ten-ID initializer/updater using the shared state slots and accessor-helper cluster.
 - ovl_11_func_800EB328 (m, candidate same TU; [evidence](research/ovl_11_func_800EB328-grouping.md)) — randomized trigonometric position updater and direction selector using the shared table and 0x22-record helper cluster.
 - ovl_11_func_800EB700 (m, candidate same TU; [evidence](research/ovl_11_func_800EB700-grouping.md)) — resolves a `D_80129560` slot through `ovl_11_func_800EFC68` and compares the result via `ovl_11_func_800EFDA0`.
@@ -14037,6 +14140,34 @@ Members (link order):
 
 ## `ovl_17` D_800BD848 0x50-stride record area + caller hub (confidence: low)
 
+**Reconstructed the complete drawer/helper closure BAC24/BAD9C/BAEF0 as
+`modules/record_sprite_draw.c`, ending at BAF50.** The first two implement
+complementary animated-quad/current-frame-rectangle paths over one record
+view, and are the only two clients of the immediately following indicator
+animation helper. The common flag-gated helper/sprite protocol, descriptor
+layout and original call/link order support all three members; the broad
+work-area cluster alone does not identify a TU.
+
+Left BA808 draws the scrolling backdrop/decorations using a separate prop
+table and display sprite; it neither calls the indicator helper nor reads
+its narrow state. Right BAF50 selects animation 4 on that separate display
+sprite for its scene callback; following record_sprite_animation is the
+countdown/state update protocol. Shared rendering dependencies and work-area
+base are not positive evidence for joining them. Both edges remain
+conservative reconstruction cuts under -G0, not proved historical boundaries.
+No flag limit dictated this closure: the 9158 override is in an external
+periodic service and is unchanged, not a reason for a cut here.
+
+Names Ovl17DrawRecordSpriteQuads/Rects and
+Ovl17SelectRecordIndicatorAnimation, gOvl17RecordDrawTick and
+ gOvl17ThresholdIndicatorSprite preserve container identities and original
+types/extents. The public header publishes only the two drawers; helper
+linkage stays external. It documents fixed-point/pixel units, OT indexing,
+bit-0 side effects, animation progression, threshold choices and periodic
+service behavior. Locals now identify projection, sprite, descriptor and
+indicator roles. The checked whole fold passes baseline with no override,
+new exception or storage definition. Batch acceptance is recorded below.
+
 Whole-unit campaign review: the opening callbacks are not a six-function
 unit ending at 81FC. The two private dispatch tables BB4E4/BB4F8 join them
 to the display-stage bodies through 8F28. The 8294 initializer resets the
@@ -15427,6 +15558,36 @@ Fingerprints:
 
 ## `ovl_21` D_8006C838 +0x8000 per-entity field writer+reader — 0x800BAB28 / 0x800BABF8 (confidence: medium)
 
+**Whole four-entry service reconstructed as `modules/entity_record_views.c`,
+BAB28/BABF8/BACB0/BAD18 through BAE20 exclusive.** The writer/read pair has
+identical per-ID storage and special-ID partition; scene initialization
+836C consumes the reader, class constant and object selector consecutively
+for the same ID into one scene record. This coherent accessor surface,
+original order and narrow storage partition join all four (medium confidence
+for the quartet, stronger for the complementary pair). The selectors' data
+and slot records are external storage, not invented tentative definitions.
+
+Left BAA38 toggles sprite flags in the scene pool, while right BAE20 starts
+the scene projection/submission chain. Neither uses the persistent per-entity
+fields/class constants or calls this accessor set; the accessors themselves
+do not touch the scene dispatcher/update state. Client calls from 836C/9644
+are service consumption, not TU-membership proof. Both cuts rest on this
+state/protocol distinction and lack of a private cross-seam witness; -G0
+supplies no GP proof. The earlier broad D_800C0448 family is a related call
+family, not evidence overriding this service seam. No boundary protects the
+unresolved 98CC/A698 flags elsewhere in that family.
+
+All four functions have canonical Ovl21 entity-service names and one public
+header. Parameters and work-record/value locals are named; signed versus
+unsigned fields, ID-0 asymmetry, saturation tests and integer square-root
+conversion are documented without inferring gameplay units. The original
+reader performs NO clamp (correcting the historical wording below).
+Three mutable class constants and all thirteen selected sprite objects
+(twelve mapped IDs plus default) have ID/role-supported canonical names;
+their old opaque byte-array interfaces and external linkage remain intact.
+Their declarations moved from source files to globals_override.h. The full
+four-entry fold and linked overlay pass baseline, no flags/exceptions added.
+
 Evidence: shared global D_8006C838 with identical `arg0 * 0x1D4` stride
 computation (the `sll 3; subu; sll 2; addu; sll 2; addu; sll 2; addu`
 sequence), both accessing adjacent per-record fields at +0x19EA (s16) and
@@ -15449,6 +15610,10 @@ Members (link order):
   ids).
 
 ## `ovl_21` per-entity id-dispatch readers — 0x800BACB0 / 0x800BAD18 (confidence: medium)
+
+Reconstructed with the preceding writer/reader as the whole
+`modules/entity_record_views.c`; membership and both outer boundaries are
+recorded in that section. This pair is not an unfinished standalone slice.
 
 Evidence: gapless link adjacency (800BABF8 ends at 0x800BACB0; 0x800BACB0 +
 0x68 = 0x800BAD18), a shared s16-id contract — both take the sign-extending
@@ -18361,6 +18526,33 @@ Members (link order):
 ---
 
 ## `ovl_19` D_800BF4D0 overlay-local s16-state consumer cluster — 0x800B8064 … 0x800BA834 (confidence: medium)
+
+**Reconstructed `modules/projected_actor_render.c`, BA770/BA834/BAB4C,
+ending at BAC40.** The entry calls each leaf over the same paired-actor and
+auxiliary-record arrays; neither leaf has another code client. Their two
+switch tables are contiguous (rodata offsets 74/A4) in member order, ending
+at the text boundary B8. This private helper closure plus pooled-table order
+supports the complete renderer unit, not the old broad-state grouping alone.
+The existing paired projection service remains its external dependency.
+
+Left BA750 is a field predicate whose sole caller belongs to the behavior
+state band, with no renderer helper/table access. Right actor_controls
+starts a widely published control-prefix/flag update API, not these draw
+passes. No private helper/table witness crosses either seam. These are
+conservative responsibility cuts under -G0, not GP-proven original object
+boundaries; the broader state-consumer heading denotes a related family,
+not proof that all its members were one TU.
+
+Public Ovl19DrawProjectedActorSprites draws two actors, three auxiliary
+records and nine fixed sprites. Only it is published by the module header;
+Ovl19DrawActorPairSprite and Ovl19DrawAuxRecordSprite retain external
+linkage but are not exposed there. Local names identify other-actor variant
+copying, threshold ticks, animation/frame choices and projected Y offsets.
+Data anchors are gOvl19AuxRecordBase, gOvl19FixedSpritePositions and
+ gOvl19State10ThresholdTicks; the first two keep their incomplete-halfword
+array views and scalar anchor extents, not fabricated full pool extents.
+The baseline checked fold passes all three functions and linked overlay.
+No override, exception, type-width or ownership change was needed.
 
 Whole-unit campaign review supersedes a new phase-only cut: the private
 BCE94/BCEA8/BCEC8 tables connect the outer phases, modes and stage handlers.
@@ -21923,6 +22115,37 @@ Historical candidate membership; original boundaries remain unproven
 - ovl_11_func_800F6E38 (m) — texture-ID lookup and quad-draw caller with inactive-record reclamation, loading, and recursive retry.
 
 ## `ovl_11` two-state start/wait helper pair — 0x8011B6C4 / 0x8011B784 (confidence: low)
+
+Reconstructed as `src/overlays/ovl_11/modules/primary_object_wait_steps.c`,
+both entries in original order. The positive evidence is the shared callback
+protocol `(s32 *step, s32 baseStep, s16 value)`: unsigned two-phase range
+check, one request submission, write-back of the absolute phase, and polling
+the same primary-object completion flags without advancing the finished step.
+Consecutive clients 80118CE4/80119008 use the two variants in the same order;
+other interaction clients corroborate the identical step contract. This is a
+small protocol-family hypothesis, not a private-global or GP ownership proof:
+the flags are shared engine state and ovl_11 uses -G0.
+
+The complete supported local family is retained. Left neighbor 8011B6B4 is
+an unconditional interaction draw-mode reset returning 1; it neither takes a
+step nor submits/polls a request. Right neighbor 8011B840 starts a six-phase
+message/selection transaction over a by-value descriptor and delegates to the
+interaction-step dispatcher rather than this two-phase write-back protocol.
+Neither shares a private helper/table with this pair. These are evidence-limited
+reconstruction cuts, not proven historical object boundaries; no override or
+mechanical limit dictated them.
+
+Names: B6C4 `Ovl11StepPrimaryObjectItemRequest`, B784
+`Ovl11StepPrimaryObjectA4Request`; parameters and phase/completion/request
+locals now describe their demonstrated roles. The public
+`ovl11_primary_object_wait_steps.h` documents absolute step units, one-shot
+submission (including ignored rejection), completion masks, caller advancement
+and out-of-range behavior. The A4 request's second halfword remains neutral.
+No data rename is needed: the only read global is already
+`gPrimaryObjectFlags`. External linkage and all existing widths are retained.
+Checked fold passed both functions and the complete overlay at baseline;
+no compiler exception was involved or added. Batch acceptance is recorded
+with the other modules from this run below.
 
 Candidate same-TU pair: gapless helper order, shared state/status idiom and
 corroborating consecutive-client order; original TU boundaries remain unproven.

@@ -2376,17 +2376,6 @@ typedef struct {
 } Ovl11Func801098B0Arg;
 
 typedef struct {
-               char pad_00[0x16];
-               u16 unk16;
-               char pad_18[2];
-               s16 unk1A;
-               s16 unk1C;
-               s16 unk1E;
-               char pad_20[0x14];
-               s32 unk34;
-} Ovl11Func80116F4CArg;
-
-typedef struct {
     u8 firstKind;
     u8 secondKind;
     u16 firstValue;
@@ -2529,6 +2518,17 @@ typedef struct {
                char pad_5C[0x4];
                s32 unk60;
 } Ovl11RankPair;
+
+typedef struct {
+               char pad_00[0x16];
+               u16 gaugeValue;
+               char pad_18[2];
+               s16 rowValue;
+               s16 trailingValue;
+               s16 ordinalIndex;
+               char pad_20[0x14];
+               s32 flags;
+} Ovl11RecordFamilyRow;
 
 typedef struct {
     s16 recordIndex;

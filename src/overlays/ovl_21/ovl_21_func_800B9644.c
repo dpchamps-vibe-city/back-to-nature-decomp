@@ -1,7 +1,7 @@
 #include "common.h"
+#include "ovl21_entity_record_views.h"
 
 void ovl_21_func_800BA4C0(void);
-void ovl_21_func_800BAB28(s16 arg0);
 
 typedef struct {
     u8 pad_000[0x118];
@@ -15,8 +15,8 @@ void ovl_21_func_800B9644(void) {
     u8 *p;
 
     ovl_21_func_800BA4C0();
-    ovl_21_func_800BAB28(((D800C0448View *) D_800C0448)->unk118);
-    ovl_21_func_800BAB28(((D800C0448View *) D_800C0448)->unk220);
+    Ovl21RaiseEntityRangeValue(((D800C0448View *) D_800C0448)->unk118);
+    Ovl21RaiseEntityRangeValue(((D800C0448View *) D_800C0448)->unk220);
     base = (u8 *) D_8006C838;
     p = base + 0x8000;
     *(s32 *) (p + 0x662C) = 1;

@@ -2359,7 +2359,7 @@ extern u8 D_8007A670[];
  * the two trackers written by ovl_11_func_800E8F78; p[0..2] are the three
  * values ovl_11_func_800E9778 and ovl_11_func_800EDEB8 copy to D_80129560.
  * Declared here (not per-file) so absolute addressing is derived once. */
-extern s32 D_80071B00[3];
+extern s32 gObjectWorkPosition[3];
 
 /* Four 4-byte selection slots: D08FC scans slots 0/1 at work+99C8,
  * slots 2/3 at work+99D0; D0BC8 tests the same leading -1 free marker.
@@ -4591,10 +4591,10 @@ extern u8 D_80051D34[];
 extern s32 gOvl11ResourceOptionTextOffsets[];
 
 /* 80116980 reads/writes these two-byte menu indices with lh/lhu/sh. */
-extern s16 D_8012D518;
-extern s16 D_8012D51A;
+extern s16 gOvl11RecordListCursor;
+extern s16 gOvl11RecordListScroll;
 /* 8012823C contains the three-argument draw routines 8002462C..800246D4. */
-extern void (*D_8012823C[4])(s32, s16, s16);
+extern void (*gOvl11RecordListIconDrawers[4])(s32, s16, s16);
 /* 80116980 reads halfwords at +44E0 and +8270 through this common base. */
 typedef struct {
     u8 pad0[0x44E0];
@@ -4976,11 +4976,11 @@ extern u16 D_800BB6EC[6];
 /* ovl_17_func_800B9940 reads signed/unsigned halfwords at a computed byte offset. */
 extern s16 D_8007AD5A[];
 
-/* D_800BD864 - ovl_17 unsigned counter read (lw) by ovl_17_func_800BAC24
+/* gOvl17RecordDrawTick - ovl_17 unsigned counter read by Ovl17DrawRecordSpriteQuads
  * and compared against ((x + 1) / 10) * 10 - 1; the target divides with
  * multu and srl 3, so the value is unsigned. Plain extern (never defined in
  * this TU), absolute-addressed (-G0). */
-extern u32 D_800BD864;
+extern u32 gOvl17RecordDrawTick;
 
 /* BA698 initializes six 6-byte triples; BA704/8294 install their addresses
  * in display rows. The original label spans 0xF0, only its first 0x24 is used. */
@@ -5011,13 +5011,10 @@ extern u8 *gOvl17SpriteHeaderVariantB;
 struct SpriteSourceData;
 extern struct SpriteSourceData gOvl17SceneSpriteSource;
 
-/* D_800BDAD4 - ovl_17 object-state record embedded at +0x28C of the
- * D_800BD848 display-area block. ovl_17_func_800BAD9C passes its address to
- * func_80015EE8 and reads the two bytes at +4/+5 through a base pointer
- * biased to D_800BDAD4 - 0x28C, exactly as the matched ovl_17_func_800BAF50
- * does with D_800BDA74 - 0x22C. Plain extern (never defined in this TU),
- * absolute-addressed (-G0). */
-extern u8 D_800BDAD4[];
+/* ovl_17 indicator sprite embedded at work+0x28C. The rectangle drawer
+ * reads animation/frame through the work base; the quad drawer updates it.
+ * Plain external storage, absolute-addressed (-G0). */
+extern u8 gOvl17ThresholdIndicatorSprite[];
 
 /* ovl_17 animation drivers visit six 0x50-byte records at BD848+28;
  * the named data label spans only the first A0 bytes of that shared view. */
@@ -6031,9 +6028,9 @@ extern s32 D_800BD078;
 /* ovl_19 800B95D4 anchors its two 0x48-byte signed-halfword records here. */
 extern s16 gOvl19ActorPairState[];
 /* ovl_19 800BA770 walks three 0x40-byte halfword records through 800BAB4C. */
-extern s16 D_800BF560[];
+extern s16 gOvl19AuxRecordBase[];
 /* ovl_19 800BA770 passes positions at this base, stepping by six halfwords. */
-extern s16 D_800BCF7C[];
+extern s16 gOvl19FixedSpritePositions[];
 /* ovl_19 800B80E8 indexes eight original handlers; each overwrites incoming $a0 before use. */
 extern void (*D_800BCEA8[8])(void);
 /* ovl_19 800B87C4 indexes seven original handlers; none consumes incoming $a0. */
@@ -6066,7 +6063,7 @@ extern s16 gOvl19StepStartTicks;
  * (overlay build is -G0). */
 extern s16 gOvl19DoubleThresholdTicks;
 /* ovl_19 800BA834 loads this signed halfword for the case-10 thresholds. */
-extern s16 D_800BF652;
+extern s16 gOvl19State10ThresholdTicks;
 extern u16 D_800BCEF0[];
 extern s16 D_800BCF0C[];
 /* ovl_19 800B8830 indexes this overlay-local table with a signed halfword load. */
@@ -7649,6 +7646,37 @@ extern s32 gOvl11RowXPlacementTable[][4];
 /* Overlay-15 twins use separate 2-row X / 6-row Z tables at 801375D8/F8. */
 extern s32 gOvl15RowXPlacementTable[][4];
 extern s32 gOvl15RowZPlacementTable[][4];
+
+/* Ovl21GetEntityRangeConstant selects these signed halfwords by entity ID. */
+extern s16 gOvl21EntityRange480;
+extern s16 gOvl21EntityRange420;
+extern s16 gOvl21EntityRange360;
+/* Ovl21GetEntityObjectRecord maps unmatched IDs to this 0x30-byte sprite. */
+extern u8 gOvl21DefaultEntitySprite[];
+/* Ovl21GetEntityObjectRecord maps entity 19 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite19[];
+/* Ovl21GetEntityObjectRecord maps entity 7 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite7[];
+/* Ovl21GetEntityObjectRecord maps entity 6 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite6[];
+/* Ovl21GetEntityObjectRecord maps entity 21 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite21[];
+/* Ovl21GetEntityObjectRecord maps entity 22 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite22[];
+/* Ovl21GetEntityObjectRecord maps entity 34 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite34[];
+/* Ovl21GetEntityObjectRecord maps entity 9 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite9[];
+/* Ovl21GetEntityObjectRecord maps entity 20 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite20[];
+/* Ovl21GetEntityObjectRecord maps entity 25 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite25[];
+/* Ovl21GetEntityObjectRecord maps entity 16 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite16[];
+/* Ovl21GetEntityObjectRecord maps entity 11 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite11[];
+/* Ovl21GetEntityObjectRecord maps entity 5 to this 0x30-byte sprite. */
+extern u8 gOvl21EntitySprite5[];
 
 #endif /* GLOBALS_OVERRIDE_H */
 

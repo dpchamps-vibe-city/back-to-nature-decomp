@@ -4,8 +4,8 @@
 #include "message_window.h"
 #include "ovl17_record_sprite_animation.h"
 #include "ovl17_timer_hud.h"
+#include "ovl17_record_sprite_draw.h"
 
-void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
 /* Original overlay imports for SetVal8005E2BC and SetMessagePortraitEnabled. */
 void SetVal8005E2BC(s32 arg0);
@@ -19,7 +19,7 @@ void ovl_17_func_800B8790(void) {
     Ovl17SelectAllRecordAnimations2();
     base = gOvl17AnimatedRecordBase;
     for (i = 0; i < 6; i++) {
-        ovl_17_func_800BAC24((Recon_ovl_17_func_800BAD9C_A0View *)base, 0x40000);
+        Ovl17DrawRecordSpriteQuads((Recon_ovl_17_func_800BAD9C_A0View *)base, 0x40000);
         base += 0x50;
     }
     ovl_17_func_800BA808(0x40000);

@@ -12,6 +12,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_primary_object_wait_steps.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
@@ -22,7 +23,6 @@ s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
@@ -50,7 +50,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         break;
     case 12:
     case 13:
-        if (ovl_11_func_8011B6C4(&gOvl11InteractionStep, 12, arg0)) {
+        if (Ovl11StepPrimaryObjectItemRequest(&gOvl11InteractionStep, 12, arg0)) {
             RequestMessageWindow(arg1, arg2);
             Ovl11SetInteractionSteps(3, 11);
         }

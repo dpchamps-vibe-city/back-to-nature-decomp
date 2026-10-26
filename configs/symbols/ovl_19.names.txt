@@ -1,3 +1,11 @@
+// Projected actor-render closure; keep scalar storage anchors, not pool extents.
+Ovl19DrawProjectedActorSprites = 0x800BA770; // type:func
+Ovl19DrawActorPairSprite = 0x800BA834; // type:func
+Ovl19DrawAuxRecordSprite = 0x800BAB4C; // type:func
+gOvl19AuxRecordBase = 0x800BF560; // type:data size:0x2
+gOvl19FixedSpritePositions = 0x800BCF7C; // type:data size:0x2
+gOvl19State10ThresholdTicks = 0x800BF652; // type:data size:0x2
+
 // Shared-record value raiser at the end of this overlay's code.
 Ovl19RaiseRecordByteRangeValue = 0x800BBD14; // type:func
 

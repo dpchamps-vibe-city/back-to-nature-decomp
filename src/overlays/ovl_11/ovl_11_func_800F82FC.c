@@ -37,7 +37,7 @@ s16 *ovl_11_func_800F82FC(s32 column, s32 row) {
     default:
         switch (gOvl11InteractionPhase) {
         case 0:
-            return (s16 *)((Ovl11ItemState *)&D_80070EC2 + index);
+            return (s16 *)((Ovl11ItemState *)&gItemOverflowSlotBase + index);
         default:
             return (s16 *)(D_80071042 + index);
         case 2:
