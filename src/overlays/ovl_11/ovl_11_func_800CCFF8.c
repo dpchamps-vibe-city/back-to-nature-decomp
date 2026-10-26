@@ -12,7 +12,9 @@
 
 extern u16 D_801231FC[];
 
-void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3) {
+/* Only the object and load flag are read; the held-item caller supplies two
+ * arguments. Live a2/a3 at other call sites are not additional parameters. */
+void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
     SpriteSourceData *temp_s1;
     s16 temp_v0;
 

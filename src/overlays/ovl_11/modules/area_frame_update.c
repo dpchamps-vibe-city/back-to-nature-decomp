@@ -39,6 +39,7 @@
 #include "ovl11_primary_object_update.h"
 #include "ovl11_primary_object_draw.h"
 #include "ovl11_moving_items.h"
+#include "ovl11_condition_camera_jitter.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -84,7 +85,6 @@ void Ovl11RunAreaFramePhase(void) {
 void ovl_11_func_800F65B8 (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
-void ovl_11_func_800C056C(s32 unused);
 void ovl_11_func_800DCC5C (void);
 void ovl_11_func_800DC148 (void);
 s32 ovl_11_func_800F0F50 (void);
@@ -125,7 +125,7 @@ void Ovl11UpdateAreaFrame(void) {
     }
     Ovl11UpdateVramAnimations();
     Ovl11UpdateSpriteRotations();
-    ovl_11_func_800C056C(1);
+    Ovl11JitterCameraTargetZ(1);
     Ovl11StepMapCameraVerticalOffset();
     SCRATCH_STACK_END();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);

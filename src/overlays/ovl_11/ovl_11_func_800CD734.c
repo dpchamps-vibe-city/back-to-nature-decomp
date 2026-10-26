@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_primary_object_state_change.h"
 
 void ovl_11_func_800DE3A0(void);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800CD734(Ovl11C7010Object *arg0, s32 arg1) {
     s32 temp_a1;
@@ -87,7 +87,7 @@ s32 ovl_11_func_800CD734(Ovl11C7010Object *arg0, s32 arg1) {
     var_v0 = 0;
     if ((arg1 == 0) && (var_s1 != 0)) {
         arg0->unk6C |= 0x5800;
-        ovl_11_func_800C70CC(arg0, var_s1, 0, -2);
+        Ovl11ChangePrimaryObjectState(arg0, var_s1, 0, -2);
         var_v0 = 1;
     }
     return var_v0;

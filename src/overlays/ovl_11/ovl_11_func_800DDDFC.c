@@ -28,6 +28,7 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_record_flag_counters.h"
 #include "ovl11_grid_transition_passes.h"
+#include "ovl11_availability_event_reset.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
@@ -44,7 +45,6 @@ void ovl_11_func_800F3D40 (void);
 void ovl_11_func_800F2620 (void);
 s32 ovl_11_func_800DE76C (void);
 void ovl_11_func_800F4D28 (void);
-void ovl_11_func_800C05F8 (void);
 void ovl_11_func_800DE4C0 (void);
 void ovl_11_func_800F4BB4(void);
 
@@ -165,7 +165,7 @@ s32 ovl_11_func_800DDDFC(void) {
         case 3:
         case 4:
             Ovl11PassGridEntryResets();
-            ovl_11_func_800C05F8();
+            Ovl11TryClearAvailabilityEvent();
             break;
         }
         ((Ovl11DDDFCState *)D_8006C838)->phase++;

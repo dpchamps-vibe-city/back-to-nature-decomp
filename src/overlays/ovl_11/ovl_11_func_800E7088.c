@@ -2,10 +2,10 @@
 #include "game_types.h"
 #include "integer_power.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_primary_object_grid_actions.h"
 
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800D6A94(s16 arg0);
-void ovl_11_func_800C4F44(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 id;
@@ -67,7 +67,7 @@ s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         }
         Ovl11SetHalfwordTriplet(selected, id, variant, 1);
         if (overflow == 0 && arg3 != 0) {
-            ovl_11_func_800C4F44((Recon_ovl_11_func_800C7270_A0View *)&gPrimaryObjectBase,
+            Ovl11BeginSelectedRecordTransfer((Recon_ovl_11_func_800C7270_A0View *)&gPrimaryObjectBase,
                                index != -1, index, arg3 == 1 ? 10 : 60);
         }
         result = 1;

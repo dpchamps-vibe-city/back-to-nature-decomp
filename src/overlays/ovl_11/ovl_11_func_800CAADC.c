@@ -5,12 +5,12 @@
 #include "pad_actuator_sequences.h"
 #include "ovl11_coordinate_clamp.h"
 #include "point_projection.h"
+#include "ovl11_primary_object_state_change.h"
 
 void ovl_11_func_800CA708(void);
 s32 GetVal8005E524(void);
 void SetVal8005E51C(s32);
 s32 ovl_11_func_800BDB88(s32 *, s32);
-void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 
 void ovl_11_func_800CAADC(void) {
     Ovl11CA708Player *player;
@@ -51,7 +51,7 @@ void ovl_11_func_800CAADC(void) {
             player->flags &= ~0x40000000;
             if (player->flags & 0x100) {
                 ((struct Ovl11C907CStateView *)D_8006C838)->field_92D0 &= ~0x01000000;
-                ovl_11_func_800C70CC((Ovl11C7010Object *)&((Ovl11MovementState *)D_8006C838)->player, 1, 0, -2);
+                Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)&((Ovl11MovementState *)D_8006C838)->player, 1, 0, -2);
             }
         } else if (!(player->flags & 1)) {
             player->velocity[1] += 0x10;

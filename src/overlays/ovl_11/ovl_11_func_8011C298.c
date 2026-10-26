@@ -13,10 +13,10 @@
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_primary_object_wait_steps.h"
+#include "ovl11_primary_object_grid_actions.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
-void ovl_11_func_800C4FDC(Ovl11C7010Object *arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -106,7 +106,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
             ovl_11_func_800E6EE0(arg0, 1, 0, 1);
             Ovl11SetInteractionSteps(10, 0);
         } else if (arg3 == 1) {
-            ovl_11_func_800C4FDC((Ovl11C7010Object *)((Ovl11PurchaseState *)D_8006C838)->object);
+            Ovl11SelectHeldPairChangeAnimation((Ovl11C7010Object *)((Ovl11PurchaseState *)D_8006C838)->object);
             ((Ovl11PurchaseState *)D_8006C838)->level++;
             if (((Ovl11PurchaseState *)D_8006C838)->level >= 3) {
                 ((Ovl11PurchaseState *)D_8006C838)->level = 2;

@@ -14,11 +14,11 @@
 #include "ovl11_selection_mode_state.h"
 #include "ovl11_interaction_sequence.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_primary_object_state_change.h"
 
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800FFA40 (void);
 s32 ovl_11_func_800F4B5C (s16 arg0);
-s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800C893C (Recon_ovl_11_func_800C7270_A0View *arg0);
 void ovl_11_func_800C846C (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
@@ -190,7 +190,7 @@ block_28:
                         }
                     } else if (ovl_11_func_800F4B5C(temp_a0) != 0) {
                         arg0->unk6C |= 0x4000;
-                        ovl_11_func_800C7270(arg0, 0x6B, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
+                        Ovl11ChangeObjectStateDirect(arg0, 0x6B, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
                     }
                     return 0x14;
                 }
@@ -243,7 +243,7 @@ block_28:
                 temp_v1_4 = *(s16 *) ((u8 *) arg0 + 0x8A);
                 if (temp_v1_4 == 0x3F || temp_v1_4 == 0x13D) {
                     if (((struct Ovl11SceneHeader *) ((struct Ovl11SpriteWork *) &D_8007AFF0)->header)->id == 0x5B) {
-                        ovl_11_func_800C7270(arg0, 0x6A, temp_a2 + 0x17, -2);
+                        Ovl11ChangeObjectStateDirect(arg0, 0x6A, temp_a2 + 0x17, -2);
                     }
                 }
                 return 0x12;
@@ -402,7 +402,7 @@ block_78:
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
                     PlaySoundEffect(7);
-                    ovl_11_func_800C7270(arg0, 0x6E, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
+                    Ovl11ChangeObjectStateDirect(arg0, 0x6E, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
                     return 0x31;
                 }
                 /* Duplicate return node #102. Try simplifying control flow for better match */

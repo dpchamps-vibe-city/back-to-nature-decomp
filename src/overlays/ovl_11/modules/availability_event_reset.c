@@ -1,13 +1,24 @@
+/*
+ * availability_event_reset — reconstructed translation unit.
+ *
+ * Probabilistic clearing of the shared availability selector with grid/record
+ * cleanup and game-flag reset; invoked by the scene transition driver.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
+
 #include "common.h"
 #include "random.h"
 #include "game_flags.h"
+#include "ovl11_availability_event_reset.h"
 
 void ovl_11_func_800D7B24(void);
 void ovl_11_func_800D0FB4(void);
 void ovl_11_func_800F4CEC(void);
 void ovl_11_func_800F4CAC(void);
 
-void ovl_11_func_800C05F8(void) {
+void Ovl11TryClearAvailabilityEvent(void) {
     char *state;
 
     state = (char *)D_8006C838;

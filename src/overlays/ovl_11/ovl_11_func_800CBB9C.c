@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_primary_object_state_change.h"
 
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800D666C(s16 arg0);
 s32 ovl_11_func_800D6A94(s16 arg0);
 
@@ -20,7 +20,7 @@ void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2) {
     sp10[0] = arg1;
     sp10[1] = 0;
     sp10[2] = 1;
-    ovl_11_func_800C70CC(arg0, 3U, 5, -2);
+    Ovl11ChangePrimaryObjectState(arg0, 3U, 5, -2);
     D_80128C58 = *(Ovl11ItemState *)((u8 *)arg0 + 0x8A);
     temp_a0 = arg0->itemIndex;
     temp_s3 = &arg0->itemIndex;
@@ -45,18 +45,18 @@ void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2) {
     case 0:
     case 1:
         Ovl11CopyHalfwordTriplet((u16 *)temp_s3, (u16 *)temp_s1);
-        ovl_11_func_800C70CC((Ovl11C7010Object *)((Ovl11CBB9CGlobals *)D_8006C838)->object, 0x30U, ((Ovl11CBB9CGlobals *)D_8006C838)->state + 0x21, -2);
+        Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)((Ovl11CBB9CGlobals *)D_8006C838)->object, 0x30U, ((Ovl11CBB9CGlobals *)D_8006C838)->state + 0x21, -2);
         return;
     case 2:
         arg0->unk6C = temp_a1 | 0x8000;
         Ovl11CopyHalfwordTriplet((u16 *)temp_s3, (u16 *)temp_s1);
-        ovl_11_func_800C70CC(arg0, 0x31U, 5, -2);
+        Ovl11ChangePrimaryObjectState(arg0, 0x31U, 5, -2);
         PlaySoundEffect(0x4A);
         return;
     case 3:
         Ovl11CopyHalfwordTriplet((u16 *)temp_s3, (u16 *)temp_s1);
         arg0->unk6C |= 0x5800;
-        ovl_11_func_800C70CC(arg0, 0x4CU, 0, -2);
+        Ovl11ChangePrimaryObjectState(arg0, 0x4CU, 0, -2);
         PlaySoundEffect(0x4B);
         return;
     }

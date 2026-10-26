@@ -359,15 +359,15 @@ extern s32 gOvl11ItemTransferSavedCursor;
 extern s32 gOvl11ItemTransferSelectedSlot;
 
 /* ovl_11 800C5048/800C5098 store/load the counter, limit and result as words. */
-extern s32 D_80128CB4;
-extern s32 D_80128CB8;
-extern s32 D_80128CBC;
+extern s32 gOvl11CellActionProgress;
+extern s32 gOvl11CellActionLimit;
+extern s32 gOvl11CellActionScore;
 /* ovl_11 800C5048 writes these halfwords; 800C5098 reads coordinates and modes. */
-extern s16 D_80128CC0;
-extern s16 D_80128CC2;
-extern s16 D_80128CC4;
-extern s16 D_80128CC6;
-extern s16 D_80128CC8;
+extern s16 gOvl11CellActionColumn;
+extern s16 gOvl11CellActionRow;
+extern s16 gOvl11CellActionMode;
+extern s16 gOvl11CellActionOperation;
+extern s16 gOvl11CellActionFilter;
 
 /* ovl_11 800FFA64 reads its state with lh and advances it with sh. */
 extern s16 D_801273DA;
@@ -375,7 +375,8 @@ extern s16 D_801273DA;
 extern s32 D_8012CEF8;
 
 /* 800C6A9C stores the sound helper's return value with sh. */
-extern s16 D_80128C70;
+/* Action input stores PlaySoundEffect's handle; primary update stops that voice. */
+extern s16 gOvl11ActiveItemActionSound;
 
 /* 800BE4A8 reads signed halfwords at D_80071A00+FE/+100/+104/+108. */
 typedef struct {
@@ -725,7 +726,7 @@ extern s32 gOvl11ReactionDistanceSquared;
 extern s32 gOvl11ReactionSearchSentinel;
 
 /* ovl_11_func_800C35EC reads this absolute-addressed direction value with lhu. */
-extern u16 D_80071A38;
+extern u16 gPrimaryObjectFacing;
 
 /* ovl_17_func_800B8028 indexes 11 original callbacks; all entries ignore incoming arguments. */
 extern void (*D_800BB4F8[11])(void);
@@ -4003,13 +4004,13 @@ typedef struct {
 extern u16 gOvl11CompanionScreenOffsets[32];
 
 /* 800C4B6C indexes signed halfwords; original data spans six entries. */
-extern s16 D_8012319C[6];
+extern s16 gOvl11CellResetTierCounts[6];
 /* 800C4C94 indexes signed halfwords; original data spans six entries. */
-extern s16 D_801231A8[6];
+extern s16 gOvl11CellPromotionTierCounts[6];
 /* 800C4DE0 indexes signed halfwords; original data spans six entries. */
-extern s16 D_801231B4[6];
+extern s16 gOvl11CellEffectTierCounts[6];
 /* 800C55FC dispatches three pointers through the D7EF8/E090 callback pair. */
-extern s32 (*D_80123234[])();
+extern s32 (*gOvl11AreaCellConverters[])();
 
 /* D_800742AC - word cleared by ovl_11_func_800DBE30 (`extern s32`) and reset
  * together with its following 0x3C bytes by ovl_11_func_800DB9A4, which memsets
@@ -6929,7 +6930,7 @@ typedef struct {
 extern s32 gOvl11RotationHoldAngles[4]; /* StepSpriteRotation: per-direction hold yaw. */
 
 /* ovl_30_func_80133218 reads and writes signed halfwords at row*10 + column*2. */
-extern s16 D_801231C0[5][5];
+extern s16 gOvl11ItemActionTierValues[5][5];
 /* ovl_30_func_80133218 passes these original NUL-terminated rodata strings to FntPrint. */
 extern char gOvl30FlagCursorMarker[];
 extern char gOvl30FlagIdleMarker[];
@@ -7035,6 +7036,13 @@ extern u32 gOvl17TimerTicks;
 
 /* 800CB114 indexes signed halfword pairs with 2 * direction + arg2. */
 extern s16 Ovl11CollisionOffsets[] __asm__("D_801230B0");
+/* 800C9938 indexes signed X/Z pairs by facing; CB114 shares the first table. */
+typedef struct {
+    s16 x;
+    s16 z;
+} Ovl11DirectionOffset;
+extern Ovl11DirectionOffset gOvl11DirectionOffsetsMode4[];
+extern Ovl11DirectionOffset gOvl11DirectionOffsetsFlag100[];
 /* 800C498C reads signed halfword pairs indexed by u16 direction * 4. */
 extern s16 D_80123110[][2];
 /* 800CB114 uses lw/sw and unsigned comparison for the saturating counter. */
@@ -7061,8 +7069,8 @@ struct Ovl11C580CWork {
 };
 
 /* 800C580C indexes u16 slots at 8012323C and s32 delays at 80123244. */
-extern u16 D_8012323C[4];
-extern s32 D_80123244[3];
+extern u16 gOvl11ItemKindSlots[4];
+extern s32 gOvl11ActionPhaseDelays[3];
 
 /* 800CD0F4 indexes signed halfword actions at 80123290 and reads 80123292. */
 extern s16 D_80123290[];
@@ -7085,7 +7093,7 @@ extern void *Ovl11SavedInteractionObject;
 extern s32 D_80128C50;
 /* 800C9C60 clears these three absolute-addressed words with sw. */
 extern s32 D_80128C68;
-extern s32 D_80128C6C;
+extern s32 gOvl11ItemActionChargeFrames;
 extern s32 D_80128D30;
 /* 800CD0F4 saturating-increments the signed halfword at D_8006C838+0x5240. */
 struct Ovl11ActionCounter {

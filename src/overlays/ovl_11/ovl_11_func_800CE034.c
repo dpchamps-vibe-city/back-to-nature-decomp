@@ -1,23 +1,7 @@
 #include "common.h"
+#include "game_types.h"
 
-typedef struct {
-    /* 0x00 */ char pad0[0x38];
-    /* 0x38 */ u16 unk38;
-    /* 0x3A */ char pad3A[0x100 - 0x3A];
-    /* 0x100 */ s32 unk100;
-    /* 0x104 */ s32 unk104;
-    /* 0x108 */ s32 unk108;
-} StructOvl11CE034A;
-
-typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-} StructOvl11CE034B;
-
-extern u8 gOvl11AreaGridCellOffsets[];
-
-void ovl_11_func_800CE034(StructOvl11CE034A *arg0, StructOvl11CE034B *arg1, s32 arg2) {
+void ovl_11_func_800CE034(Ovl11CE034Object *arg0, Ovl11CE034Position *arg1, s32 arg2) {
     u16 *var_t0;
     s32 var_a3;
     s32 var_a0;

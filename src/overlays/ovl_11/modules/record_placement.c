@@ -78,17 +78,17 @@ place_selected:
             case 0x119:
             case 0x11A:
                 ovl_11_func_800D3104((u16 *) record, 0x10);
-                (*(u16 *) ((u8 *) record + 0x22)) = (u16) D_80071A38;
+                (*(u16 *) ((u8 *) record + 0x22)) = (u16) gPrimaryObjectFacing;
                 break;
             case 0x114:
             case 0x115:
                 ovl_11_func_800D3104((u16 *) record, 0xF);
-                (*(u16 *) ((u8 *) record + 0x22)) = (u16) D_80071A38;
+                (*(u16 *) ((u8 *) record + 0x22)) = (u16) gPrimaryObjectFacing;
                 break;
             case 0x116:
             case 0x117:
                 ovl_11_func_800D3104((u16 *) record, 0xE);
-                (*(u16 *) ((u8 *) record + 0x22)) = (u16) D_80071A38;
+                (*(u16 *) ((u8 *) record + 0x22)) = (u16) gPrimaryObjectFacing;
                 break;
             }
             Ovl11UpdateRecordPlacement(record, tag, position);

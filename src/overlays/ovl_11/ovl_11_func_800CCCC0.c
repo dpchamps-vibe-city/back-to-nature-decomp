@@ -10,6 +10,7 @@
 #include "psyq/memory.h"
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_primary_object_state_change.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
@@ -20,7 +21,6 @@ s32 ovl_11_func_800CD534 (s32 arg0);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800DE3A0 (void);
 
 void ovl_11_func_800CCCC0(void) {

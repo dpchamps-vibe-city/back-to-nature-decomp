@@ -343,13 +343,13 @@ s32 Ovl30EditToolParameters(s32 handlerState) {
     FntPrint(gOvl30ToolIndexFormat, gOvl30ToolIndex, gOvl30ToolNames[gOvl30ToolIndex]);
     for (column = 0; column < 5; column++) {
         if (column == gOvl30ToolParameterIndex) {
-            value = Ovl30StepSelectedValue(D_801231C0[gOvl30ToolIndex][column]);
-            D_801231C0[gOvl30ToolIndex][column] = value;
+            value = Ovl30StepSelectedValue(gOvl11ItemActionTierValues[gOvl30ToolIndex][column]);
+            gOvl11ItemActionTierValues[gOvl30ToolIndex][column] = value;
             FntPrint(gOvl30FlagCursorMarker);
         } else {
             FntPrint(gOvl30FlagIdleMarker);
         }
-        FntPrint(gOvl30ToolParameterFormat, D_801231C0[gOvl30ToolIndex][column]);
+        FntPrint(gOvl30ToolParameterFormat, gOvl11ItemActionTierValues[gOvl30ToolIndex][column]);
     }
     return handlerState;
 }

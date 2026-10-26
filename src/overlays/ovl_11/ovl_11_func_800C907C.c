@@ -4,10 +4,10 @@
 #include "message_window.h"
 #include "game_flags.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_primary_object_state_change.h"
 
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (Ovl11InteractionRecord *arg0);
 s16 ovl_11_func_800F4240(Ovl11InteractionRecord *arg0);
@@ -39,7 +39,7 @@ s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
                     ((struct Ovl11C907CStateView *) D_8006C838)->field_92D0 |= 0x20;
                     PlaySoundEffect(6);
                     arg0->unk38 = ((struct Ovl11C907CStateView *) D_8006C838)->field_92BE;
-                    ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x39U, arg0->unk38 + 0x32, -2);
+                    Ovl11ChangePrimaryObjectState((Ovl11C7010Object *) arg0, 0x39U, arg0->unk38 + 0x32, -2);
                     arg0->unk6C |= 0x100;
                 } else if (temp_v1 == 0x15E) {
                     ovl_11_func_8010B57C(&D_80075AD4, 5);
@@ -53,7 +53,7 @@ s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
             PlaySoundEffect(6);
             temp_v0 = *(u16 *) ((u8 *) Ovl11SavedInteractionObject + 0x22);
             arg0->unk38 = temp_v0;
-            ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x39U, arg0->unk38 + 0x32, -2);
+            Ovl11ChangePrimaryObjectState((Ovl11C7010Object *) arg0, 0x39U, arg0->unk38 + 0x32, -2);
             arg0->unk6C = (arg0->unk6C | 0x180) & 0xFFDDFFFF;
             ovl_11_func_800CEEF8((Ovl11InteractionRecord *) Ovl11SavedInteractionObject);
             return 1;

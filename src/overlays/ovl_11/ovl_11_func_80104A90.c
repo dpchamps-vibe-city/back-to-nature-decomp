@@ -18,11 +18,11 @@
 #include "psyq/libetc.h"
 #include "psyq/abs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_primary_object_sprite_records.h"
 
 void ovl_11_func_800D6628(void);
 /* These two sprite-loader wrappers use their matched definition signatures;
  * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
-void ovl_11_func_800C9BB8(void);
 s32 ovl_11_func_800CDE3C(u8 *arg0);
 void ovl_11_func_800F6630(void);
 void ovl_11_func_800F42A8(u16 arg0, s32 arg1);
@@ -64,7 +64,7 @@ void ovl_11_func_80104A90(void) {
     Ovl11SetWeatherParticleMode(base->field_E4C8);
     Ovl11InitAreaSpriteSource();
     Ovl11LoadIndexedSpriteSet(0);
-    ovl_11_func_800C9BB8();
+    Ovl11LoadPrimaryObjectRecordSprites();
     Ovl11LoadFixedAreaSpriteBank();
     ovl_11_func_800CDE3C(base->field_51C8);
     Ovl11LoadOffsetSpriteSet((s32) base->field_44BA);

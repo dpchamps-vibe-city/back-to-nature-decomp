@@ -1,14 +1,7 @@
 #include "common.h"
+#include "game_types.h"
 
-typedef struct {
-    /* 0x00 */ char pad0[0x36];
-    /* 0x36 */ u16 flags;
-    /* 0x38 */ char pad38[0x40 - 0x38];
-    /* 0x40 */ u16 vals[(0x84 - 0x40) / 2];
-    /* 0x84 */ s16 value;
-} UnkStruct800CD5BC;
-
-void ovl_11_func_800CD5BC(UnkStruct800CD5BC *arg0, s32 arg1) {
+void ovl_11_func_800CD5BC(Ovl11CD5BCObject *arg0, s32 arg1) {
     s32 idx;
     s32 sum;
 

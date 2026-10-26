@@ -77,7 +77,7 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
     }
     if (D_80128C54 & 0x800) {
         if (arg1 == 0 && *(u16 *) D_80128C4C_dispatch == 0x15B) {
-            ovl_11_func_800D31EC(((arg0->unk3C - 0x48) % 5) * 10 & 0xFFFE, D_80071A38);
+            ovl_11_func_800D31EC(((arg0->unk3C - 0x48) % 5) * 10 & 0xFFFE, gPrimaryObjectFacing);
             ovl_11_func_800D3104(D_80128C4C_dispatch, 6);
             return 1;
         }

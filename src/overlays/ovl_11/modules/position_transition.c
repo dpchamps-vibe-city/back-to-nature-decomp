@@ -9,14 +9,14 @@
 #include "ovl11_position_transition.h"
 #include "word_interpolation.h"
 #include "game_flags.h"
+#include "ovl11_primary_object_state_change.h"
 
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void Ovl11SelectPositionTransitionTarget(s32 *out);
 
 void Ovl11BeginPositionTransition(Ovl11C7010Object *object) {
     object->unk38 = 0;
     object->unk6C |= 0x20001800;
-    ovl_11_func_800C70CC(object, 0x4AU, 0, -2);
+    Ovl11ChangePrimaryObjectState(object, 0x4AU, 0, -2);
     SetGameFlag(9U, 1U);
     Ovl11SelectPositionTransitionTarget(&gOvl11PositionTransitionTarget.x);
     gOvl11PositionTransitionStart.x = ((Ovl11PositionTransitionObject *)object)->x;

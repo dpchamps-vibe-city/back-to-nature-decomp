@@ -1,5 +1,70 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Primary-object grid actions, asynchronous footprint requests and item handoff.
+Ovl11InstallObjectCellItems = 0x800C4A2C; // type:func
+Ovl11BeginCellResetAction = 0x800C4B6C; // type:func
+Ovl11BeginCellPromotionAction = 0x800C4C94; // type:func
+Ovl11BeginCellEffectAction = 0x800C4DE0; // type:func
+Ovl11BeginSelectedRecordTransfer = 0x800C4F44; // type:func
+Ovl11SelectHeldPairChangeAnimation = 0x800C4FDC; // type:func
+Ovl11BeginCellActionRequest = 0x800C5048; // type:func
+Ovl11StepCellActionRequest = 0x800C5098; // type:func
+Ovl11ApplyScoredCellFootprint = 0x800C523C; // type:func
+Ovl11ApplyCellFootprint = 0x800C541C; // type:func
+Ovl11PlaceObjectCellTexture = 0x800C55FC; // type:func
+Ovl11MoveToFreeDirection = 0x800C5738; // type:func
+Ovl11StepPrimaryObjectAction = 0x800C580C; // type:func
+Ovl11FinalizePrimaryItemAction = 0x800C6770; // type:func
+Ovl11CommitPendingItemRecord = 0x800C6858; // type:func
+Ovl11BeginFlaggedItemFollowup = 0x800C69B8; // type:func
+gOvl11CellResetTierCounts = 0x8012319C; // type:data size:0xC
+gOvl11CellPromotionTierCounts = 0x801231A8; // type:data size:0xC
+gOvl11CellEffectTierCounts = 0x801231B4; // type:data size:0xC
+gOvl11ItemActionTierValues = 0x801231C0; // type:data size:0x32
+gOvl11AreaCellConverters = 0x80123234; // type:data size:0x8
+gOvl11ItemKindSlots = 0x8012323C; // type:data size:0x8
+gOvl11ActionPhaseDelays = 0x80123244; // type:data size:0xC
+gOvl11CellActionProgress = 0x80128CB4; // type:data size:0x4
+gOvl11CellActionLimit = 0x80128CB8; // type:data size:0x4
+gOvl11CellActionScore = 0x80128CBC; // type:data size:0x4
+gOvl11CellActionColumn = 0x80128CC0; // type:data size:0x2
+gOvl11CellActionRow = 0x80128CC2; // type:data size:0x2
+gOvl11CellActionMode = 0x80128CC4; // type:data size:0x2
+gOvl11CellActionOperation = 0x80128CC6; // type:data size:0x2
+gOvl11CellActionFilter = 0x80128CC8; // type:data size:0x2
+
+// Action input/charge, reusable state switching and held-code dispatch.
+Ovl11ReleaseChargedItemAction = 0x800C6A24; // type:func
+Ovl11DispatchObjectActionInput = 0x800C6AFC; // type:func
+Ovl11SelectPrimaryAnimationForFlag10000000 = 0x800C6E0C; // type:func
+Ovl11SelectPrimaryAnimationForFlag08000000 = 0x800C6E8C; // type:func
+Ovl11SelectPrimaryState2Animation = 0x800C6F0C; // type:func
+Ovl11SelectPrimaryAnimationForFlag100 = 0x800C6F6C; // type:func
+Ovl11SelectPrimaryFlaggedAnimation = 0x800C7010; // type:func
+Ovl11ChangePrimaryObjectState = 0x800C70CC; // type:func
+Ovl11ChangeObjectStateDirect = 0x800C7270; // type:func
+Ovl11TryBeginLowCodeItemAction = 0x800C72F8; // type:func
+Ovl11TryBeginGroupedItemAction = 0x800C73FC; // type:func
+Ovl11TryBeginHighCodeItemAction = 0x800C74AC; // type:func
+Ovl11TryBeginSpecialItemAction = 0x800C7524; // type:func
+Ovl11ResetItemActionCollisionDispatch = 0x800C7650; // type:func
+Ovl11UpdateHeldItemAction = 0x800C76EC; // type:func
+gOvl11ItemActionChargeFrames = 0x80128C6C; // type:data size:0x4
+gOvl11ActiveItemActionSound = 0x80128C70; // type:data size:0x2
+
+// Facing-button mapping, per-facing offsets and record-set sprite preload.
+Ovl11MapDirectionButtons = 0x800C9888; // type:func
+Ovl11AccumulateFacingOffset = 0x800C9938; // type:func
+Ovl11UpdatePrimaryObjectDirection = 0x800C99C8; // type:func
+Ovl11LoadPrimaryObjectRecordSprites = 0x800C9BB8; // type:func
+Ovl11InitPrimaryObjectRecordSprites = 0x800C9C60; // type:func
+gOvl11DirectionOffsetsMode4 = 0x801230D0; // type:data size:0x10
+gOvl11DirectionOffsetsFlag100 = 0x801230F0; // type:data size:0x10
+
+// Independent condition-gated camera and scene-transition reset services.
+Ovl11JitterCameraTargetZ = 0x800C056C; // type:func
+Ovl11TryClearAvailabilityEvent = 0x800C05F8; // type:func
+
 // Complementary object-script operations on the shared work-position triple.
 Ovl11ApplyWorkPositionCommand = 0x800E8E78; // type:func
 Ovl11UpdateWorkPositionBound = 0x800E8F78; // type:func

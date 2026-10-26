@@ -2,8 +2,7 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
-
-s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
+#include "ovl11_primary_object_state_change.h"
 
 void ovl_11_func_800C8764(Recon_ovl_11_func_800C8334_A0View *arg0) {
     ItemData *item;
@@ -19,7 +18,7 @@ void ovl_11_func_800C8764(Recon_ovl_11_func_800C8334_A0View *arg0) {
         var_a2 = 1;
     }
     if (var_a2 != 0) {
-        ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *)arg0, 0x61, arg0->unk38 + 0x17, -2);
+        Ovl11ChangeObjectStateDirect((Recon_ovl_11_func_800C7270_A0View *)arg0, 0x61, arg0->unk38 + 0x17, -2);
         PlaySoundEffect(9);
     }
 }

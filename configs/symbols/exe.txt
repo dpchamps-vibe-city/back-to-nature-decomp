@@ -1539,6 +1539,8 @@ gCalendarDay = 0x80070CF4; // size:0x2
 gCalendarWeekday = 0x80070CF6; // size:0x2
 gClockHour = 0x80070CF8; // size:0x2
 gClockMinute = 0x80070CFA; // size:0x2
+// Primary-object direction service writes +38; other readers use the 0..3 facing.
+gPrimaryObjectFacing = 0x80071A38; // size:0x2
 
 // Legacy projected-quad paths: computed OT depth and context caches.
 gProjectedQuadOtDepth = 0x8005E2E4; // size:0x4

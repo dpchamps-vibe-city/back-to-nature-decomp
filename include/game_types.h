@@ -1117,19 +1117,19 @@ typedef struct {
     s32 position[4];
 } Ovl11C498CObject;
 
-/* 800C9938's matched parameter view, also used by its caller 800C99C8. */
+/* C9938 adds facing-indexed world-coordinate offsets at +110/+118. */
 typedef struct {
     char pad_0[0x38];
-    u16 unk38;
+    u16 facing;
     char pad_3A[0x2];
-    u16 unk3C;
+    u16 state;
     char pad_3E[0x2E];
-    s32 unk6C;
+    s32 flags;
     char pad_70[0xA0];
-    s32 unk110;
+    s32 offsetX;
     char pad_114[0x4];
-    s32 unk118;
-} Ovl119938View;
+    s32 offsetZ;
+} Ovl11FacingOffsetObject;
 
 /* 800CEEF8 and 800F4240 pass records with s16 +2 and u16 +4. */
 typedef struct {
@@ -2560,11 +2560,6 @@ typedef struct {
 
 /* Parameter views used by 800C580C: layouts from the selected callee access witnesses. */
 typedef struct {
-               u8 unk0[4];
-               s16 unk4;
-} C580C_7f0a9cc905ed_UnkStruct800D72E8;
-
-typedef struct {
                u16 unk0;
                u16 unk2;
 } C580C_b6c4596908ca_Ovl11CF314Arg1;
@@ -2574,21 +2569,6 @@ typedef struct {
                s32 unk4;
                s32 unk8;
 } C580C_b6c4596908ca_Ovl11CF314Arg2;
-
-typedef struct {
-               char pad0[0x38];
-               u16 unk38;
-               char pad3A[0x100 - 0x3A];
-                s32 unk100;
-                s32 unk104;
-                s32 unk108;
-} C580C_ad72053e5aa9_StructOvl11CE034A;
-
-typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-} C580C_ad72053e5aa9_StructOvl11CE034B;
 
 typedef struct {
                s16 unk0;
@@ -2613,14 +2593,6 @@ typedef struct {
                s32 unk4;
                s32 unk8;
 } C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0;
-
-typedef struct {
-               char pad0[0x36];
-               u16 flags;
-               char pad38[0x40 - 0x38];
-               u16 vals[(0x84 - 0x40) / 2];
-               s16 value;
-} C580C_583b0b68ff5a_UnkStruct800CD5BC;
 
 /* 80110494's matched parameter layout, also passed by 8010F80C. */
 typedef struct {

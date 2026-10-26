@@ -3,8 +3,7 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "ovl11_area_slot_flags.h"
-
-s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
+#include "ovl11_primary_object_state_change.h"
 
 void ovl_11_func_800C857C(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1) {
     s32 matches;
@@ -23,7 +22,7 @@ void ovl_11_func_800C857C(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1) {
         if (matches) {
             ((Recon_ovl_11_func_800C7270_A0View *)arg0)->unk6C |= 0x4000;
             PlaySoundEffect(7);
-            ovl_11_func_800C7270((Recon_ovl_11_func_800C7270_A0View *)arg0,
+            Ovl11ChangeObjectStateDirect((Recon_ovl_11_func_800C7270_A0View *)arg0,
                 0x5E, arg0->unk38 + 0x17, -2);
             Ovl11SetAreaSlotFlag(arg1[2], 0);
         }

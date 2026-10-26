@@ -27,15 +27,15 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_held_action_selection.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_primary_object_grid_actions.h"
+#include "ovl11_primary_object_state_change.h"
+#include "ovl11_object_action_input.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
 void ovl_11_func_800CD6F4 (void *arg0);
 s32 ovl_11_func_800C9424 (void);
-s32 ovl_11_func_800C6AFC (Ovl11C7010Object *arg0);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800C580C(Ovl11C580CObject *);
 s32 ovl_11_func_800CE654(void);
 void Ovl11RemapPrimaryDirectionButtons(void);
 
@@ -49,9 +49,9 @@ void Ovl11UpdatePrimaryObject(void) {
     obj = &((Ovl11UpdateState *)D_8006C838)->player;
 
     if ((*(s32 *) ((u8 *) obj + -0x51BC)) & 0x08000000) {
-        if (D_80128C70 != -1) {
-            StopSoundEffectVoice((s32) D_80128C70);
-            D_80128C70 = -1;
+        if (gOvl11ActiveItemActionSound != -1) {
+            StopSoundEffectVoice((s32) gOvl11ActiveItemActionSound);
+            gOvl11ActiveItemActionSound = -1;
         }
     } else if ((Ovl11IsClockAdvanceActive() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (ovl_11_func_800DD1D0(obj->collision) == 0)) {
         if (obj->flags & 0x2000) {
@@ -138,7 +138,7 @@ clear_flags:
                     break;
                 }
             } else {
-                ovl_11_func_800C6AFC((Ovl11C7010Object *)obj);
+                Ovl11DispatchObjectActionInput((Ovl11C7010Object *)obj);
             }
             advanceAction = 0;
             if (obj->countdown != -2) {
@@ -152,8 +152,8 @@ clear_flags:
                 advanceAction = 1;
             }
             if (advanceAction != 0) {
-                if (ovl_11_func_800C580C((Ovl11C580CObject *)obj) != 0) {
-                    ovl_11_func_800C70CC((Ovl11C7010Object *) obj, 1U, 0, -2);
+                if (Ovl11StepPrimaryObjectAction((Ovl11C580CObject *)obj) != 0) {
+                    Ovl11ChangePrimaryObjectState((Ovl11C7010Object *) obj, 1U, 0, -2);
                     obj->flags = (s32) ((obj->flags & 0xDFFFFFFF) | 0x04000000);
                 }
             }

@@ -25,12 +25,12 @@
 #include "psyq/abs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_record_flag_counters.h"
+#include "ovl11_primary_object_sprite_records.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);
 void ovl_11_func_800D6628 (void);
-void ovl_11_func_800C9C60 (void);
 void ovl_11_func_800DBFA0 (void);
 void ovl_11_func_800DBFC4 (void);
 void ovl_11_func_800D7B24 (void);
@@ -64,7 +64,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800D6628();
     ovl_11_func_800DB9A4();
     Ovl11InitClockAndCalendar();
-    ovl_11_func_800C9C60();
+    Ovl11InitPrimaryObjectRecordSprites();
     Ovl11ResetAllEventSlots();
     Ovl11AllocateAllEventSlots();
     Ovl11ResetWeatherParticles();

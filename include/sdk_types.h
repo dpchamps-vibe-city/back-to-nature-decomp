@@ -273,19 +273,6 @@ typedef struct {
 } M2C_1023b6857e0a_UnkStruct800E109C;
 
 typedef struct {
-    char pad_0[0x38];
-    u16 unk38;
-    char pad_3A[0x2];
-    u16 unk3C;
-    char pad_3E[0x2E];
-    s32 unk6C;
-    char pad_70[0xA0];
-    s32 unk110;
-    char pad_114[0x4];
-    s32 unk118;
-} M2C_1052de249052_Ovl119938View;
-
-typedef struct {
                char pad_00[0x16];
                u16 unk16;
                char pad_18[0xA8 - 0x18];
@@ -737,14 +724,6 @@ typedef struct {
                u16 unk4;
                u8 pad6[0x18 - 0x06];
 } M2C_54cb810e3946_Ovl11Func5700Entry;
-
-typedef struct {
-               char pad0[0x36];
-               u16 flags;
-               char pad38[0x40 - 0x38];
-               u16 vals[(0x84 - 0x40) / 2];
-               s16 value;
-} M2C_583b0b68ff5a_UnkStruct800CD5BC;
 
 typedef struct {
     char pad_00[0x24];
@@ -1227,21 +1206,6 @@ typedef struct {
     s32 unk4;
     s32 unk8;
 } M2C_ac15726e4209_E2654;
-
-typedef struct {
-               char pad0[0x38];
-               u16 unk38;
-               char pad3A[0x100 - 0x3A];
-                s32 unk100;
-                s32 unk104;
-                s32 unk108;
-} M2C_ad72053e5aa9_StructOvl11CE034A;
-
-typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-} M2C_ad72053e5aa9_StructOvl11CE034B;
 
 typedef struct {
                char pad0[0x38];
@@ -2039,6 +2003,12 @@ typedef struct {
 } Ovl11CE034Object;
 
 typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Ovl11CE034Position;
+
+typedef struct {
     char pad0[0x26];
     s16 unk26;
     char pad28[0x30 - 0x28];
@@ -2277,6 +2247,19 @@ typedef struct {
     u8 pad24[0xE4 - 0x24];
     Ovl11EventEntry entries[30];
 } Ovl11EventObject;
+
+typedef struct {
+    char pad_0[0x38];
+    u16 facing;
+    char pad_3A[0x2];
+    u16 state;
+    char pad_3E[0x2E];
+    s32 flags;
+    char pad_70[0xA0];
+    s32 offsetX;
+    char pad_114[0x4];
+    s32 offsetZ;
+} Ovl11FacingOffsetObject;
 
 typedef struct {
     s32 unk0;

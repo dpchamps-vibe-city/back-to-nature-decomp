@@ -969,7 +969,7 @@ s32 Ovl11TryStartObjectReaction(Ovl11AnimationObject *obj) {
         if ((s32) Rand(101) < threshold) {
             Ovl11SelectObjectEventAnimation(obj, 3, 0, 150);
             Ovl11StartTimedSpriteEffect((Ovl11C35ECStatePair *) ((u8 *) obj + 0xE0), 0x22, 150);
-            obj->field_6 = (D_80071A38 + 2) & 3;
+            obj->field_6 = (gPrimaryObjectFacing + 2) & 3;
             obj->sprite.field_5 = *(u8 *) &obj->field_6;
             return 1;
         }

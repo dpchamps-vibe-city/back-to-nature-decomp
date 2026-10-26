@@ -5,9 +5,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_primary_object_state_change.h"
 
 s32 ovl_11_func_800CB730(Ovl11CE034Object *arg0);
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 /* This caller zero-extends the byte; the callee stores only its low byte. */
 s32 ovl_11_func_800D736C(s16 *arg0);
 
@@ -35,7 +35,7 @@ s32 ovl_11_func_800CB850(s32 arg0) {
             if (D_80128C54 != 0) {
                 return 0;
             }
-            ovl_11_func_800C70CC(obj, 0x62, obj->unk38 + 0x17, -2);
+            Ovl11ChangePrimaryObjectState(obj, 0x62, obj->unk38 + 0x17, -2);
             return 1;
         } else if (obj->itemIndex == 0x84) {
             if (D_80128C54 != 0 && result != 0) {
@@ -49,7 +49,7 @@ s32 ovl_11_func_800CB850(s32 arg0) {
                     return 0;
                 }
                 if (D_80128C54 == 0 || result == 0) {
-                    ovl_11_func_800C70CC(obj, 9, obj->unk38 + 0x17, -2);
+                    Ovl11ChangePrimaryObjectState(obj, 9, obj->unk38 + 0x17, -2);
                     return 1;
                 }
             }
@@ -61,7 +61,7 @@ s32 ovl_11_func_800CB850(s32 arg0) {
                 } else {
                     if (D_80128C54 & 0x8000) {
                         if (((u16 *)D_80128C4C_dispatch)[1] == 0x64 && item->field_12 != 0) {
-                            ovl_11_func_800C70CC(obj, 0x6F, obj->unk38 + 0x17, -2);
+                            Ovl11ChangePrimaryObjectState(obj, 0x6F, obj->unk38 + 0x17, -2);
                             return 1;
                         }
                         allow = 1;
@@ -77,7 +77,7 @@ s32 ovl_11_func_800CB850(s32 arg0) {
             }
             if (itemStatus & 0x10) {
                 if (result == 0 && D_80128C54 == 0) {
-                    ovl_11_func_800C70CC(obj, 0x38, obj->unk38 + 0x17, -2);
+                    Ovl11ChangePrimaryObjectState(obj, 0x38, obj->unk38 + 0x17, -2);
                     return 1;
                 }
                 if (result == 3 && D_80128C54 == 0) {
@@ -92,12 +92,12 @@ s32 ovl_11_func_800CB850(s32 arg0) {
             }
         }
 common_action:
-        ovl_11_func_800C70CC(obj, 0x2F, obj->unk38 + 0x17, -2);
+        Ovl11ChangePrimaryObjectState(obj, 0x2F, obj->unk38 + 0x17, -2);
         return 1;
     }
     if (obj->itemIndex == 0x64) {
         obj->unk6C |= 0x1800;
-        ovl_11_func_800C70CC(obj, 0x46, 0, -2);
+        Ovl11ChangePrimaryObjectState(obj, 0x46, 0, -2);
         SelectSpriteAnimation((ObjectState *)&obj->sprite, (u8)obj->unk38);
         obj->unk6C |= 0x4000;
         return 1;
@@ -106,12 +106,12 @@ common_action:
     case 1:
         return 1;
     case 3:
-        ovl_11_func_800C70CC(obj, 3, 5, -2);
+        Ovl11ChangePrimaryObjectState(obj, 3, 5, -2);
         PlaySoundEffect(0x4A);
         return 1;
     case 4:
         obj->unk6C |= 0x5800;
-        ovl_11_func_800C70CC(obj, 0x49, 0, -2);
+        Ovl11ChangePrimaryObjectState(obj, 0x49, 0, -2);
         PlaySoundEffect(0x4B);
         return 1;
     }

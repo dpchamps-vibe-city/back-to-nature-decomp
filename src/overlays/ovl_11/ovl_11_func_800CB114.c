@@ -3,8 +3,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "ovl11_collision_query_budget.h"
+#include "ovl11_primary_object_state_change.h"
 
-void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 s32 ovl_11_func_800DF010(void *, s32);
 s32 ovl_11_func_800E0C24(void *, s32);
 s32 ovl_11_func_8010B57C(u16 *, s32);
@@ -59,7 +59,7 @@ s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2) {
             if (var_a2 != 0) {
                 if (var_a2 == 2) {
                     if (!(arg0->flags & 0x200000)) {
-                        ovl_11_func_800C70CC((Ovl11C7010Object *) &gPrimaryObjectBase, 1U, 0, -2);
+                        Ovl11ChangePrimaryObjectState((Ovl11C7010Object *) &gPrimaryObjectBase, 1U, 0, -2);
                     }
                     arg0->flags = (s32) (arg0->flags | 0x200000);
                 }

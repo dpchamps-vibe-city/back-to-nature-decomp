@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
-
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
+#include "ovl11_primary_object_state_change.h"
 
 s32 ovl_11_func_800C97D0(Recon_ovl_11_func_800C97D0_A0View *arg0) {
     s32 callRet3;
@@ -17,7 +16,7 @@ s32 ovl_11_func_800C97D0(Recon_ovl_11_func_800C97D0_A0View *arg0) {
                 } else {
                     if ((arg0->unk6C & 0x400000) == 0) {
                         arg0->unk6C = arg0->unk6C | 0x1800;
-                        ovl_11_func_800C70CC(((s32)arg0), 0x54, 0, -2);
+                        Ovl11ChangePrimaryObjectState(((s32)arg0), 0x54, 0, -2);
                         arg0->unk6C = arg0->unk6C | 0x400000;
                         return 1;
                     } else {

@@ -4,8 +4,10 @@
 #include "sound_commands.h"
 #include "area_grid_triggers.h"
 #include "ovl11_counter_choice.h"
+#include "ovl11_primary_object_direction.h"
+#include "ovl11_primary_object_state_change.h"
+#include "ovl11_held_item_actions.h"
 
-void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C93A4 (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C8BA8 (Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
@@ -17,10 +19,8 @@ s32 ovl_11_func_800C7838 (u8 *arg0);
 void ovl_11_func_800CF308 (s16 arg0);
 /* 8001FAD0 calls func_800212A8 and forwards its return value unchanged. */
 s32 ovl_11_func_800C8D24 (M2C_15512f31231d_Func800C7878Arg0 *arg0, u16 arg1);
-s32 ovl_11_func_800C76EC (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C77D8 (Ovl11C7010Object *arg0, u16 arg1);
 s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
-s32 ovl_11_func_800C99C8 (void);
 
 s32 ovl_11_func_800C9424(void) {
     Ovl11C7010Object *obj;
@@ -39,7 +39,7 @@ s32 ovl_11_func_800C9424(void) {
     }
     if (!(obj->unk6C & 0xA)) {
         if ((obj->unk6C & 0x100) && (pressed & 0x40)) {
-            ovl_11_func_800C70CC(obj, 0x3A, 0xB0, -2);
+            Ovl11ChangePrimaryObjectState(obj, 0x3A, 0xB0, -2);
             return 1;
         }
         if (obj->unk6C & 0x40) {
@@ -110,14 +110,14 @@ s32 ovl_11_func_800C9424(void) {
                     }
                 }
                 if (pressed & 4) {
-                    ovl_11_func_800C70CC(obj, 0x14, obj->unk38 + 0x43, -2);
+                    Ovl11ChangePrimaryObjectState(obj, 0x14, obj->unk38 + 0x43, -2);
                     ovl_11_func_800C7838((u8 *)obj);
                     ovl_11_func_800CF308(1);
                     PlaySoundEffect(0x12);
                     return 1;
                 }
                 if (pressed & 1) {
-                    ovl_11_func_800C70CC(obj, 0x14, obj->unk38 + 0x43, -2);
+                    Ovl11ChangePrimaryObjectState(obj, 0x14, obj->unk38 + 0x43, -2);
                     ovl_11_func_800C7838((u8 *)obj);
                     ovl_11_func_800CF308(2);
                     PlaySoundEffect(0x12);
@@ -127,7 +127,7 @@ s32 ovl_11_func_800C9424(void) {
             if (ovl_11_func_800C8D24((M2C_15512f31231d_Func800C7878Arg0 *)obj, pressed)) {
                 return 1;
             }
-            if (ovl_11_func_800C76EC(obj)) {
+            if (Ovl11UpdateHeldItemAction(obj)) {
                 return 0;
             }
             if (ovl_11_func_800C77D8(obj, pressed)) {
@@ -139,13 +139,13 @@ s32 ovl_11_func_800C9424(void) {
         }
     }
     if (!(obj->unk6C & 0x40000000)) {
-        if (ovl_11_func_800C99C8()) {
+        if (Ovl11UpdatePrimaryObjectDirection()) {
             delay = 0xC;
             if (obj->unk3C == 4) {
                 delay = 8;
             }
             if (delay < D_80123150) {
-                D_80128C70 = PlaySoundEffect(0x48);
+                gOvl11ActiveItemActionSound = PlaySoundEffect(0x48);
                 D_80123150 = 0;
             } else {
                 D_80123150++;

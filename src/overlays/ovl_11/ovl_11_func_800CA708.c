@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "ovl11_grid_cell_queries.h"
+#include "ovl11_primary_object_state_change.h"
 
 s32 ovl_11_func_800CB114(Ovl11CB114Object *, s32 *, s16);
-void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 s32 ovl_11_func_800BDB88(s32 *, s32);
 
 void ovl_11_func_800CA708(void) {
@@ -53,9 +53,9 @@ void ovl_11_func_800CA708(void) {
                 PlaySoundEffect(6);
                 if ((player->flags) & 0x100) {
                     ((struct Ovl11C907CStateView *)D_8006C838)->field_92D0 = (s32) (((struct Ovl11C907CStateView *)D_8006C838)->field_92D0 | 0x01000000);
-                    ovl_11_func_800C70CC((Ovl11C7010Object *)player, 5U, (player->direction) + 0x3F, -2);
+                    Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)player, 5U, (player->direction) + 0x3F, -2);
                 } else {
-                    ovl_11_func_800C70CC((Ovl11C7010Object *)player, 5U, 0xA, -2);
+                    Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)player, 5U, 0xA, -2);
                 }
                 (player->velocity[0]) = 0;
                 (player->velocity[2]) = 0;
