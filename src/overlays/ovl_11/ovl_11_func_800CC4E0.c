@@ -44,7 +44,7 @@ s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
                 SetGameFlag(0x5EU, 1U);
             }
             if ((temp_v0 != 3) && ((s16) (*(u16 *) ((u8 *) arg0 + 2)) == 0x186)) {
-                D_8012DB80 = 1;
+                gOvl11HeldActionSignal = 1;
             }
         }
         temp_v0_2 = ovl_11_func_800C79F8(arg1);

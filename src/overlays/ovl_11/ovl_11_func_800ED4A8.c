@@ -32,6 +32,7 @@
 #include "area_grid_triggers.h"
 #include "psyq/abs.h"
 #include "ovl11_object_events.h"
+#include "ovl11_counter_choice.h"
 
 typedef struct {
                s16 field_0;
@@ -230,9 +231,6 @@ s32 ovl_11_func_800E99EC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6AB0 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800E8F78 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 Ovl11ClampStateField (s32 arg0, s32 arg1, s32 arg2);
-void ovl_11_func_8011F52C (void);
-s16 ovl_11_func_80120358 (M2C_93d07a715929_Ovl11SelectArg *arg0);
-void ovl_11_func_80120850 (s32 arg0);
 
 s32 ovl_11_func_800ED4A8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;

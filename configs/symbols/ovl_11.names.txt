@@ -725,3 +725,53 @@ gOvl11AreaGridRewardItems = 0x80128128; // type:data size:0x10
 gOvl11Area37RewardItems = 0x80128138; // type:data size:0x10
 gOvl11AreaGridRewardWeights = 0x80127FE8; // type:data size:0xA0
 gOvl11Area37RewardWeights = 0x80128088; // type:data size:0xA0
+
+// Counter-driven message choices and the complete local effect-helper closure.
+Ovl11ResetCounterChoice = 0x8011F52C; // type:func
+Ovl11BeginCounterChoice = 0x8011F574; // type:func
+Ovl11UpdateCounterChoice = 0x8011F5BC; // type:func
+Ovl11StepCounterChoice = 0x8011F608; // type:func
+Ovl11FinishCounterChoice = 0x8011F958; // type:func
+Ovl11BuildCounterChoiceText = 0x8011F9EC; // type:func
+Ovl11ApplyCounterChoice = 0x8011FB80; // type:func
+Ovl11AddToAllRecordValues255 = 0x8011FD2C; // type:func
+Ovl11AddToAllRecordValues65535 = 0x8011FD7C; // type:func
+Ovl11AddToBothRecordPoolValues255 = 0x8011FDCC; // type:func
+Ovl11AddToRecordValue255 = 0x8011FEA0; // type:func
+Ovl11AddToRecordValue65535 = 0x8011FF0C; // type:func
+Ovl11AddToObjectValue255 = 0x8011FF74; // type:func
+
+gOvl11CounterChoicePhase = 0x80128540; // type:data size:0x2
+gOvl11CounterChoiceText = 0x80128544; // type:data size:0xC
+// The third field retains its original separate label at +4.
+gOvl11CounterChoiceIndices = 0x80128550; // type:data size:0x4
+gOvl11CounterChoiceRandomIndex = 0x80128554; // type:data size:0x2
+gOvl11CounterChoiceMessage = 0x80128556; // type:data size:0x2
+gOvl11CounterChoiceDelay = 0x80128558; // type:data size:0x2
+gOvl11CounterChoiceSavedSelection = 0x8012855A; // type:data size:0x2
+gOvl11CounterChoiceCategoryText = 0x8012855C; // type:data size:0x24
+gOvl11CounterChoiceRandomText = 0x80128580; // type:data size:0x72
+
+// Held-input action, range-delayed selection and gated weighted outcomes.
+Ovl11UpdateHeldSelectionAction = 0x8011FFA8; // type:func
+Ovl11SelectHeldActionDelay = 0x80120358; // type:func
+Ovl11SelectHeldActionOutcome = 0x80120414; // type:func
+Ovl11DrawHeldActionSprite = 0x80120850; // type:func
+
+gOvl11HeldActionRangeValues = 0x801285F4; // type:data size:0x38
+gOvl11HeldActionDelayBounds = 0x8012862C; // type:data size:0xC
+gOvl11HeldActionCategory1Weights = 0x801286D0; // type:data size:0x28
+gOvl11HeldActionCategory3Weights = 0x801286F8; // type:data size:0x10
+gOvl11HeldActionCategory2Weights = 0x80128708; // type:data size:0x24
+gOvl11HeldActionCategory4Weights = 0x8012872C; // type:data size:0x1C
+gOvl11HeldActionDefaultWeightTables = 0x80128748; // type:data size:0x10
+gOvl11HeldActionFallbackValues = 0x80128758; // type:data size:0xC
+gOvl11HeldActionSpritePhase = 0x8012DB18; // type:data size:0x2
+gOvl11HeldActionProjectionInput = 0x8012DB20; // type:data size:0x8
+gOvl11HeldActionProjectionOutput = 0x8012DB28; // type:data size:0x10
+gOvl11HeldActionState = 0x8012DB48; // type:data size:0xC
+gOvl11HeldActionSpritePosition = 0x8012DB78; // type:data size:0x8
+gOvl11HeldActionSignal = 0x8012DB80; // type:data size:0x4
+gOvl11HeldActionSpriteHeader = 0x8012DB84; // type:data size:0x4
+gOvl11HeldActionSpriteStep = 0x8012DB88; // type:data size:0x4
+gOvl11HeldActionFallbackCounter = 0x8012DB8C; // type:data size:0x4

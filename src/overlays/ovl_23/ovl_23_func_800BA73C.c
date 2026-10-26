@@ -4,13 +4,13 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl23_record_trails.h"
 
 s32 ovl_23_func_800BB040(s32 arg0);
 s32 ovl_23_func_800BAFFC(s32 arg0);
 void DrawSpriteAnimationQuadsAndUpdate();
 void DrawSpriteFrameRects();
 void func_800248E8();
-void ovl_23_func_800B94D0();
 
 void ovl_23_func_800BA73C(Ovl23BA73CArg *arg0) {
     ObjectState *temp_s1;
@@ -94,6 +94,6 @@ void ovl_23_func_800BA73C(Ovl23BA73CArg *arg0) {
     if ((((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk4 != 1) &&
         (((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk14 ==
          (((((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk14 + 1) / 30) * 30) - 1)) {
-        ovl_23_func_800B94D0(arg0->unk14, temp_s4, arg0->unk6);
+        Ovl23PushActorTrailNode(arg0->unk14, temp_s4, arg0->unk6);
     }
 }

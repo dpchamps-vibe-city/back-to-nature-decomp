@@ -8,11 +8,10 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "point_projection.h"
+#include "ovl19_projected_sprite.h"
 
 
-void ovl_19_func_800BADF8 (s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
-void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
 void func_800248E8 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void ovl_19_func_800BA834(s16 *arg0) {
@@ -125,13 +124,13 @@ void ovl_19_func_800BA834(s16 *arg0) {
     if (var_s5 != -1) {
         SelectSpriteAnimationFrame((ObjectState *) var_s0, var_s5 & 0xFF);
     }
-    ovl_19_func_800BADF8(gActiveRenderContext->field_120, (SpriteSourceData *) var_s0, (arg0 + 8), var_s3);
+    Ovl19DrawProjectedSprite(gActiveRenderContext->field_120, (SpriteSourceData *) var_s0, (arg0 + 8), var_s3);
     if (var_s4 == 1) {
         var_a1_2 = gOvl19SceneWork;
         if ((*(u8 *) ((u8 *) var_a1_2 + 0x1D4)) != 0x24) {
             SelectSpriteAnimation((ObjectState *) (var_a1_2 + 0xE8), 0x24);
         }
         sp18 = *(SVECTOR *) (arg0 + 8);
-        ovl_19_func_800BADF8(gActiveRenderContext->field_D8 + 8, (SpriteSourceData *) (var_a1_2 + 0xE8), (s16 *) &sp18, -0x18);
+        Ovl19DrawProjectedSprite(gActiveRenderContext->field_D8 + 8, (SpriteSourceData *) (var_a1_2 + 0xE8), (s16 *) &sp18, -0x18);
     }
 }

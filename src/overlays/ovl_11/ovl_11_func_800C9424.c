@@ -3,6 +3,7 @@
 #include "sprite_rotation.h"
 #include "sound_commands.h"
 #include "area_grid_triggers.h"
+#include "ovl11_counter_choice.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C93A4 (Ovl11C7010Object *arg0);
@@ -20,7 +21,6 @@ s32 ovl_11_func_800C76EC (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C77D8 (Ovl11C7010Object *arg0, u16 arg1);
 s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800C99C8 (void);
-char *ovl_11_func_8011F574(void);
 
 s32 ovl_11_func_800C9424(void) {
     Ovl11C7010Object *obj;
@@ -54,7 +54,7 @@ s32 ovl_11_func_800C9424(void) {
             if (Ovl11GetSpriteRotationState(0x20) == 1) {
                 *(u16 *)((u8 *)obj + 0x36) &= ~0x20;
                 obj->unk6C |= 0x400;
-                ovl_11_func_8011F574();
+                Ovl11BeginCounterChoice();
             }
             return 1;
         }

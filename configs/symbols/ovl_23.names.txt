@@ -41,3 +41,11 @@ Ovl23AngleDegreesFromVector = 0x800BA368; // type:func
 // Distinct from ovl_10's button word and editor bytes at these RAM addresses.
 gOvl23RecordAnchorY = 0x800BBA40; // type:data size:0xC
 gOvl23RecordYBounds = 0x800BBA4C; // type:data size:0x18
+
+// Bounded record-trail lifecycle, preserving original entry identities.
+Ovl23ResetRecordTrails = 0x800B937C; // type:func
+Ovl23PushDecisionTrailNode = 0x800B9454; // type:func
+Ovl23PushActorTrailNode = 0x800B94D0; // type:func
+Ovl23DrawRecordTrails = 0x800B954C; // type:func
+// Preserve the leading label extent, not the extent of its aggregate views.
+gOvl23RecordRunWork = 0x800BF87C; // type:data size:0x4

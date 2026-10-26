@@ -3,13 +3,13 @@
 
 extern u16 D_800BBA7C[];
 extern u16 D_800BBA88[];
-extern u8 D_800BF87C[];
+extern u8 gOvl23RecordRunWork[];
 
 void ovl_23_func_800B8290(void) {
     s32 i = 0;
     s32 one = 1;
     u16 *src = D_800BBA7C;
-    u8 *p = D_800BF87C;
+    u8 *p = gOvl23RecordRunWork;
     u16 temp;
 
     for (; i < 6; i++, p += 0x44) {

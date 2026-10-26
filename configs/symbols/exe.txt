@@ -5,6 +5,8 @@ gObjectEventSlotBase = 0x80076220; // size:0x1D4
 
 // Selected-entry threshold operations compare/debit this shared signed word.
 gSelectedThresholdBalance = 0x80071A60; // size:0x4
+// Six signed category counters scanned and consumed by the counter-choice event.
+gCounterChoiceCategoryCounts = 0x80071A70; // size:0xC
 
 // Raw timing-mode byte shared by input repeat, CD-volume decay and feedback fade.
 gUpdateTimingMode = 0x8005E274; // size:0x1

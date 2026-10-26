@@ -928,7 +928,7 @@ extern u16 D_80128C82;
 /* ovl_11_func_800CC4E0 initializes this sprite via func_80015704. */
 extern struct SpriteSourceData D_80128C80;
 /* ovl_11_func_800CC4E0 stores a word flag when object id is 0x186. */
-extern s32 D_8012DB80;
+extern s32 gOvl11HeldActionSignal;
 /* 800CDD7C clears three halfwords; 80120850 reads these coordinates. */
 typedef struct {
     u16 x;
@@ -936,11 +936,16 @@ typedef struct {
     u16 z;
     u16 w;
 } Ovl11EffectCoordinates;
-extern Ovl11EffectCoordinates D_8012DB78;
+extern Ovl11EffectCoordinates gOvl11HeldActionSpritePosition;
 /* 800CDD7C writes this mode word; 80120850 reads its low byte. */
-extern s32 D_8012DB84;
+extern s32 gOvl11HeldActionSpriteHeader;
 /* 800CDD7C resets this word; 80120850 increments it. */
-extern s32 D_8012DB88;
+extern s32 gOvl11HeldActionSpriteStep;
+/* 80120850 wraps a signed phase modulo 4096, writes three projection
+ * halfwords, then projects into this four-word workspace. */
+extern s16 gOvl11HeldActionSpritePhase;
+extern s16 gOvl11HeldActionProjectionInput[4];
+extern s32 gOvl11HeldActionProjectionOutput[4];
 
 /* Per-entry 8-byte table stored at offset 0xE4 of each D_80076220 record.
  * ovl_11_func_800F227C scans .unk0 (s16 threshold) and reads .unk2/.unk4/.unk6
@@ -2683,7 +2688,7 @@ struct Ovl23ScreenHeader {
     s16 unk414;
     s16 unk416;
 };
-extern struct Ovl23ScreenHeader Ovl23_D_800BF87C_header __asm__("D_800BF87C");
+extern struct Ovl23ScreenHeader Ovl23_D_800BF87C_header __asm__("gOvl23RecordRunWork");
 
 /* 800B8FA4 reads six 0x50-byte actors at +0x24 and timer/limit fields through +0x3AE. */
 struct Ovl23ActorDecision {
@@ -2713,7 +2718,7 @@ struct Ovl23ActorDecisionView {
     s16 unk3AC;
     s16 unk3AE;
 };
-extern struct Ovl23ActorDecisionView Ovl23_D_800BF87C_decision __asm__("D_800BF87C");
+extern struct Ovl23ActorDecisionView Ovl23_D_800BF87C_decision __asm__("gOvl23RecordRunWork");
 
 /* 800B8C18 retains the aggregate-relative state address across calls. */
 struct Ovl23DecisionWindow {
@@ -2733,10 +2738,28 @@ extern u8 gOvl23RecordRandomWeights[];
 /* ovl_23:800BA3B4 reads four five-s16 trial rows at BBAB4 (40 bytes). */
 extern s16 gOvl23RecordRandomTrialThresholds[];
 
+/* 937C resets both rings; 9454/94D0 append; 954C renders the same nodes.
+ * These views share the original D_800BF87C storage with the scene header,
+ * decision records and sprite data. They define no new storage. */
+typedef struct {
+    s32 xQ12;
+    s16 laneY;
+    s16 state;
+} Ovl23TrailNode;
+typedef struct {
+    u8 pad_000[0x418];
+    Ovl23TrailNode decisionNodes[54];
+    s16 decisionNext;
+    u8 pad_5CA[2];
+    Ovl23TrailNode actorNodes[12];
+    s16 actorNext;
+} Ovl23TrailWork;
+extern Ovl23TrailWork gOvl23RecordTrails __asm__("gOvl23RecordRunWork");
+
 /* 800B954C reads word +0x10, sprite +0x3B4 and the +0x418/+0x5CC record arrays; named base preserves legacy TU views. */
-extern u8 Ovl23_D_800BF87C_draw[] __asm__("D_800BF87C");
+extern u8 Ovl23_D_800BF87C_draw[] __asm__("gOvl23RecordRunWork");
 /* 800B9E04 reads actor +0x38/+0x3C and record +0x210 from one aggregate base. */
-extern struct Ovl23DecisionView Ovl23_D_800BF87C_movement __asm__("D_800BF87C");
+extern struct Ovl23DecisionView Ovl23_D_800BF87C_movement __asm__("gOvl23RecordRunWork");
 
 /* 800B9B18 reads +0x39C/+0x39E/+0x3B2; 800B81AC initializes halfwords +0/+0x39C..+0x3B2. */
 struct Ovl23MovementBounds {
@@ -2755,7 +2778,7 @@ struct Ovl23MovementBounds {
     s16 unk3B0;
     s16 unk3B2;
 };
-extern struct Ovl23MovementBounds Ovl23_D_800BF87C_bounds __asm__("D_800BF87C");
+extern struct Ovl23MovementBounds Ovl23_D_800BF87C_bounds __asm__("gOvl23RecordRunWork");
 
 /* D_800BFC30 - ovl_23 bss object state base (0x800BFC30). Referenced with
  * absolute addressing (lui + %lo) from ovl_23_func_800BB1B8, which passes
@@ -6017,13 +6040,13 @@ extern s32 (*gOvl11ObjectOpcodeHandlers[0x71])(s16, s16, s32, s32);
 extern u8 gOvl19ActorSprites[];
 extern u8 gOvl19AuxActorSprites[];
 /* ovl_19_func_800BADF8 passes this two-word output to func_8001DFD4. */
-extern s32 D_800BD048[2];
+extern s32 gOvl19ProjectedSpriteScreen[2];
 /* ovl_19_func_800BADF8 fills three halfwords of this eight-byte GTE vector. */
-extern s16 D_800BD080[4];
+extern s16 gOvl19ProjectedSpriteVector[4];
 /* ovl_19_func_800BAFAC passes this two-word output to func_8001DFD4. */
-extern s32 D_800BD050[2];
+extern s32 gOvl19ProjectedStateScreen[2];
 /* ovl_19_func_800BAFAC fills three halfwords of this eight-byte GTE vector. */
-extern s16 D_800BD088[4];
+extern s16 gOvl19ProjectedStateVector[4];
 /* Ovl19LoadUiAndActorSprites reads six word offsets for sprite headers. */
 extern s32 gOvl19UiSpriteOffsets[6];
 /* The same loader copies this complete blob, retaining its byte alignment. */
@@ -6067,27 +6090,25 @@ extern s16 D_80075AEA;
 extern u16 _D_80075AD4[0xF0 / 2] __asm__("D_80075AD4");
 #define D_80075AD4 (_D_80075AD4[0])
 
-/* D_801285F4 - ovl_11 table of 4 entries with 0xE-byte stride walked by
- * ovl_11_func_80120358. Each entry holds an s16 min at +0, an s16 max at +2
- * and five s16 values at +4. Absolute-addressed (overlay build is -G0), only
- * ever declared extern. */
+/* 80120358 walks four 0xE-byte rows, with inclusive signed bounds and
+ * five category values. Overlay -G0 supplies no GP ownership witness. */
 typedef struct {
     /* 0x00 */ s16 min;
     /* 0x02 */ s16 max;
-    /* 0x04 */ s16 vals[5];
-} Ovl11D1285F4Entry;
-extern Ovl11D1285F4Entry D_801285F4[4];
+    /* 0x04 */ s16 values[5];
+} Ovl11HeldActionRange;
+extern Ovl11HeldActionRange gOvl11HeldActionRangeValues[4];
 
 /* 80120414 reads count-prefixed s16 weight/value pairs and four table pointers. */
-extern s16 D_801286D0[20];
-extern s16 D_801286F8[8];
-extern s16 D_80128708[18];
-extern s16 D_8012872C[14];
-extern s16 *D_80128748[4];
-/* 80120414 indexes six signed fallback values with the object's +8 word. */
-extern s16 D_80128758[6];
-/* 80120414 increments this signed word and resets it after eleven. */
-extern s32 D_8012DB8C;
+extern s16 gOvl11HeldActionCategory1Weights[20];
+extern s16 gOvl11HeldActionCategory3Weights[8];
+extern s16 gOvl11HeldActionCategory2Weights[18];
+extern s16 gOvl11HeldActionCategory4Weights[14];
+extern s16 *gOvl11HeldActionDefaultWeightTables[4];
+/* Six signed fallback values indexed by the action state's category word. */
+extern s16 gOvl11HeldActionFallbackValues[6];
+/* Ordinary outcomes advance this counter; the twelfth uses a fallback. */
+extern s32 gOvl11HeldActionFallbackCounter;
 /* 80120414 reads lh +44BA, lhu +44CA and updates the word at +44F8. */
 struct Ovl11WeightedSelectionState {
     u8 pad0[0x44BA];
@@ -6100,40 +6121,37 @@ struct Ovl11WeightedSelectionState {
 
 /* D_8012862C - ovl_11 u16 table indexed by the s32 field at +8 of the object
  * passed to ovl_11_func_80120358 (lhu load, s16-scale). Absolute-addressed. */
-extern u16 D_8012862C[6];
+extern u16 gOvl11HeldActionDelayBounds[6];
 
-/* D_80128550 / D_8012855C / D_80128580 - ovl_11 s16 triplets with a 6-byte
- * stride. D_80128550 (unk0=max_i, unk2=sec_i, unk4=sel) is the selector state
- * written by ovl_11_func_8011F9EC and cleared to -1 by ovl_11_func_8011F52C;
- * D_8012855C is the 6-entry offset table ovl_11_func_8011F9EC indexes by the
- * two winning scan indices and D_80128580 the table it indexes by the
- * func_80012A34(0x13) result (both read with lh, only unk0 used).
- * Absolute-addressed (overlay build is -G0), only ever declared extern. */
+/* 8011F9EC records the two highest counter categories and a random row.
+ * 8011FB80 distinguishes a category's last count from multiple counts. */
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-} Ovl11D1285Entry;
-extern Ovl11D1285Entry D_80128550;
-extern Ovl11D1285Entry D_8012855C[6];
-extern Ovl11D1285Entry D_80128580[];
+    /* 0x00 */ s16 primaryCategory;
+    /* 0x02 */ s16 secondaryCategory;
+    /* 0x04 */ s16 randomTextIndex;
+} Ovl11CounterChoiceIndices;
+typedef struct {
+    /* 0x00 */ s16 textOffset;
+    /* 0x02 */ s16 multipleMessage;
+    /* 0x04 */ s16 singleMessage;
+} Ovl11CounterChoiceTextEntry;
+extern Ovl11CounterChoiceIndices gOvl11CounterChoiceIndices;
+extern Ovl11CounterChoiceTextEntry gOvl11CounterChoiceCategoryText[6];
+extern Ovl11CounterChoiceTextEntry gOvl11CounterChoiceRandomText[];
 
-/* ovl_11_func_8011FB80 reads the same triplet region through s16 arrays: it
- * indexes D_80128550 by arg0-1 (arg0 1..2 selects max_i/sec_i) and D_80128580
- * by D_80128554*3 + func_80012A34(2) + 1. Declaring the array view is
- * load-bearing: cc1's mips_check_split/address folding keeps the `arg0 - 1`
- * in a register for an array (target: addiu a1,a1,-1; sll v0,a1,1; addu),
- * but folds it into the symbol/displacement for the Ovl11D1285Entry object.
- * The asm labels give the shared addresses a real array type without
- * changing the entry views the other ovl_11 readers use. D_80128554 is the
- * entry's sel field carrying its own splat symbol (target lh at 0x80128554). */
-extern s16 D_80128554;
-extern s16 D_80128550_ary[] __asm__("D_80128550");
-extern s16 D_80128580_ary[] __asm__("D_80128580");
+/* ApplyCounterChoice indexes the same storage as halfword arrays. Keep
+ * these existing array-backed views: a struct-member address folds the
+ * choice-minus-one into the displacement instead of the original index
+ * arithmetic. The random index is also the triplet's separately named +4
+ * field; these declarations are views, not additional storage or aliases
+ * for retired linker symbols. */
+extern s16 gOvl11CounterChoiceRandomIndex;
+extern s16 gOvl11CounterChoiceIndexWords[] __asm__("gOvl11CounterChoiceIndices");
+extern s16 gOvl11CounterChoiceRandomWords[] __asm__("gOvl11CounterChoiceRandomText");
 
 /* D_80071A70 - ovl_11 s16[6] scan table read by ovl_11_func_8011F9EC with lh
  * over six stride-2 entries (-1 sentinel). Absolute-addressed. */
-extern s16 D_80071A70[6];
+extern s16 gCounterChoiceCategoryCounts[6];
 
 /* D_80070D02 - ovl_11 s16 selector compared against the min/max bounds by
  * ovl_11_func_80120358 (lh load). Absolute-addressed. */
@@ -6202,14 +6220,13 @@ extern u32 D_8012880C;
 
 /* ovl_11 reset-run halfwords, initialized by 8011F52C and rewritten by
  * 8011F574. Their signed storage views agree with the matched reset leaf. */
-extern s16 D_80128540;
-extern s16 D_8012855A;
-/* 8011F608 reads three word text pointers at +0/+4/+8; array alias
- * preserves the existing initializer's struct view of the same symbol. */
-extern s32 Ovl11_D_80128544[3] __asm__("D_80128544");
+extern s16 gOvl11CounterChoicePhase;
+extern s16 gOvl11CounterChoiceSavedSelection;
+/* 8011F608 reads three word text addresses at +0/+4/+8. */
+extern s32 gOvl11CounterChoiceText[3];
 /* 8011F608 stores/loads the selected signed text ID and decrements a timer. */
-extern s16 D_80128556;
-extern s16 D_80128558;
+extern s16 gOvl11CounterChoiceMessage;
+extern s16 gOvl11CounterChoiceDelay;
 /* 8011F608 reads the signed music ID through D_8007AFF0 + 0x2549C. */
 struct Ovl11SelectionMusic {
     u8 pad0[0x2549C];
@@ -7059,7 +7076,7 @@ extern s16 gOvl11WideChoiceSelection;
 extern s32 (*D_800B95CC[20])(void *);
 
 /* 8011FFA8 reads/writes the three selection words at +0/+4/+8. */
-extern s32 D_8012DB48[3];
+extern s32 gOvl11HeldActionState[3];
 
 /* 800DC148 scans ten 0xB4-byte records, reading u16 +0/+AE. */
 struct Ovl11EventDispatchRecord {

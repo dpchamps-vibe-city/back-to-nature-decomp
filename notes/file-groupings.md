@@ -10133,6 +10133,57 @@ Members (link order):
 
 ## `ovl_23` D_800BF87C record init/append run — 0x800B937C–0x800B94D0 (confidence: medium)
 
+**Complete lifecycle reconstructed as `modules/record_trails.c`,
+ovl_23:800B937C–800B97E0 exclusive**, all four original functions:
+Ovl23ResetRecordTrails (937C), Ovl23PushDecisionTrailNode (9454),
+Ovl23PushActorTrailNode (94D0), and Ovl23DrawRecordTrails (954C).
+The renderer is included, not left outside the former three-member hypothesis.
+Only these four access the 54-node ring at +418 / cursor +5C8 and 12-node
+ring at +5CC / cursor +62C. Reset, bounded overwrite and consumption of exactly
+those node counts establish the whole private subregion's lifecycle. Link
+order is gapless. Setup 823C, producer clients BAA60/BA73C and frame compositor
+9310 each invoke the matching service; they do not directly access a node or
+cursor. Original displacement/caller scans corroborate the C access census.
+
+Left neighbor 9310 composes actor/decision rendering and calls the trail draw
+service; it reads the actor array at +24, not the trail arrays/cursors. Its
+preceding 92E8 is a screen/UI service. Neither supplies a private-state or
+helper-ownership join. Right 97E0 fills six distinct name picks at +16 from
+Rand(10), with no trail-node access or service call. The distant initializer
+823C calls reset as one step among header/actor/decision resets, not as a
+shared private implementation. These are state/protocol boundaries, not an
+original-object proof: the overlay uses -G0, with zero GP-relative accesses.
+No mechanical/flag restriction creates an internal cut.
+
+`ovl23_record_trails.h` publishes all four actual externally used services,
+Q12 X versus pixel lane Y, -1 visibility, cursor initialization/unchecked
+negative cursors, overwrite behavior, camera culling and shared sprite state.
+Reset retains node state fields; it enables six lanes and sets both cursors
+to 6. Ovl23TrailNode/TrailWork replace the address-named views at unchanged
+widths/offsets in globals_override.h. The old competing per-source raw/struct
+externs now use canonical views of one original object. Raw reset/draw and
+object-backed append expressions are deliberately retained: an initial local-
+base-copy fold changed the linked bytes and rolled back; the preserved access
+forms passed all four members. The drawer's existing repeated product/zero
+term remains, with its source comment reduced to the necessary compiler
+constraint rather than a byte-score experiment log.
+
+The broad shared base is named gOvl23RecordRunWork at its original overlay
+identity, preserving the leading four-byte label extent rather than claiming
+ownership of its overlapping typed views. All header asm-label views and C
+references now point to that canonical label; gOvl23RecordTrails is a typed
+view, not newly allocated storage or a private-linkage assertion. Existing
+semantic names in the authored names file are retained. No EXE/other-overlay
+symbol at the same RAM address was renamed. Interface publication reconciled
+the four clients without changing caller bytes.
+
+The checked fold passed baseline -O2/-G0; no member has a flag override and
+no exception was added. The two-module projection/trails batch passes every
+campaign integrity gate at 936 folded / 147 valid modules, including linked
+EXE/all overlays and data, names/interfaces, policy and exception non-growth.
+
+Historical membership evidence:
+
 Evidence: gapless link order — 0x800B937C + 0xD8 = 0x800B9454 and
 0x800B9454 + 0x7C = 0x800B94D0 (consecutive functions in the ovl_23 code
 segment). All three write the same 8-byte-record arrays (`{s32,s16,s16}`)
@@ -11425,6 +11476,11 @@ Evidence and limits: [research note](research/ovl_11_func_800C3838-grouping.md).
 ---
 
 ## `ovl_11` 0x8011FD2C–0x8011FF74 link-order run — paired drivers and halfword writers (confidence: low)
+
+These six effect adapters/writers are now carried with their sole choice-mapper
+client in `modules/counter_choice.c`, not left as a separate adjacency-only
+module. See the D_801285xx table-selection section for the full 13-member
+closure, supported boundaries, names, interfaces and batch verification.
 
 Zero-gap link-order run in `ovl_11` whose matched member calls the matched
 writer two entries later, so the run is the tightest TU-membership evidence
@@ -14576,6 +14632,24 @@ Fingerprints:
 
 ## `ovl_25` D_800BCBD8 dispatch-table cluster — 0x800B7EB4–0x800B81F4 (confidence: medium)
 
+Whole-unit boundary review: do **not** turn 9B28–BA7F0 into a separate
+sprite-projection module merely because its ten functions avoid the 95B0
+flag. The exact sprite sets in BA5BC's identity tests and BA2E8/BA40C's
+mirror walkers are initialized together by BAFCC, outside that span. The
+9E84 sequence selectors BCD21/BCD48 are also written by 860C/8848/BA858;
+BAC9C shares its C021C object. This is the same specialized producer/consumer
+and object-set evidence that joins the ten internally, crossing both proposed
+ends. 8D70/8DF4/9208 likewise belong to the wider record/state hypothesis;
+their helper pool crosses the proposed dispatcher-only cut. A single broad
+scene/object-model unit remains the hypothesis to test, not several slices.
+Non-monotonic ownership of interleaved data/scratch declarations corroborates
+that hypothesis only conditional on original per-object section concatenation
+and the inferred data-symbol boundaries; it is not independent link-map proof.
+The present mechanical obstacle is the intervening 95B0 no-follow override,
+not a supported TU boundary. No partial fold or override experiment was retained
+in this run. Next useful experiment remains baseline reconstruction of 95B0
+in the whole scene context, followed by a whole-unit fold/flag review.
+
 TU-campaign boundary audit: do not fold the outer callbacks, intervening
 82B4/8340/83A0/8478 initializers and 853C/860C/8728 event callbacks as three
 units merely because each callback table ends. The initializer chain is
@@ -17617,8 +17691,49 @@ Members (link order):
 - ovl_19_func_800BA834 (s, 0x318) — base reader; resets an ObjectState via
   `func_80015840`/`8001585C`/`80015868` and calls `800BADF8`.
 
-Related same-TU candidate ([paired render helpers and caller/link-order evidence](research/ovl_19_func_800BAFAC-grouping.md)):
-- ovl_19_func_800BAFAC (m, byte-exact) — collision-adjusted, depth-bucketed sprite submission helper for `800BA770`.
+**Paired projection service reconstructed as
+`src/overlays/ovl_19/modules/projected_sprite_render.c`,
+ovl_19:800BADF8–800BB08C exclusive**, both original entries:
+Ovl19DrawProjectedSprite (BADF8) and Ovl19DrawProjectedSpriteState (BAFAC).
+Both adjust the input position to the surface, fill a private three-halfword
+projection vector, project into a two-word screen buffer, depth-bucket a
+sprite submission and submit the same companion sprite. The first retains
+caller Y adjustment and source-identity special cases; the second selects
+an animation first. Their paired output buffers at BD048/BD050 and input
+vectors at BD080/BD088 are consecutive, same-sized scratch objects used only
+by these members. BA770/BA834/BAB4C form their actual client family. This
+paired data/projection/submission protocol, not shape similarity or adjacency
+alone, supports the join at BAFAC. The four scratch globals now carry semantic
+container-owned names without moving or defining any storage.
+
+Boundary at BADF8: preceding BADAC is a stateless value-label offset lookup,
+using only the private BCFF8 table and no projection/surface/draw helper. Its
+clients are the value-table display and B8C74, not this pair. BAD50 draws a
+fixed UI sprite and has no shared projection scratch. Their data adjacency
+alone does not include them. Boundary at BB08C: the following nested helper
+and Ovl19DrawValueTable have their own proven static-chain relationship,
+label text/offset protocol and field_D8 slots, with no use of this scratch.
+The left render-driver clients are separated by the independent actor-control
+service and two leaves; no evidence supports absorbing those intervening
+functions just to co-locate callers. These are conservative protocol/data cuts,
+not GP-proven original TU boundaries (-G0); a wider original object remains
+unproven, not declared impossible.
+
+The public ovl19_projected_sprite.h keeps both ABIs and documents mutable
+surface-adjusted input coordinates, pixel offsets, OT slot arithmetic,
+source-specific companion behavior, unchecked projection/OT bounds and shared
+scratch non-reentrancy. Parameters/locals name the demonstrated submission
+roles without assigning a gameplay meaning to the companion sprite. Five
+caller/declaration carriers now include the header; no linkage was narrowed,
+no data ownership changed, and no old live function alias remains.
+
+The complete pair first passed the checked baseline -O2/-G0 fold. No flag
+or policy exception exists for either member. Projection/trails batch
+acceptance: `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`
+passes all integrity gates, 936 folded / 147 valid modules, including every
+linked EXE/overlay/data byte, interfaces, source policy and exception non-growth.
+
+Historical [paired render helper/caller evidence](research/ovl_19_func_800BAFAC-grouping.md).
 
 ---
 
@@ -18458,7 +18573,77 @@ no member override, new exception or matching workaround.
 
 ## `ovl_11` D_801285xx–D_801287xx table-selection run — 0x8011F52C–0x80120414 (confidence: medium)
 
-Candidate extensions: [driver/reset shared-state and call/link evidence](research/ovl_11_func_8011F608-grouping.md);
+**Reconstructed as two complete protocol closures, not one table-adjacency
+TU: `modules/counter_choice.c` (8011F52C–8011FFA8 exclusive, 13 functions)
+and `modules/held_action_selection.c` (8011FFA8–801209A8 exclusive, four).**
+The earlier proposed attachment of the latter to the former had only adjacent
+tables, a broad work base and Rand in common. Source/caller inspection supplies
+no shared private state or helper edge across FFA8. This revises that hypothesis;
+it is not a cut made to accommodate compiler settings or a fold limit.
+
+Counter-choice members in original order: ResetCounterChoice (F52C),
+BeginCounterChoice (F574), UpdateCounterChoice (F5BC), StepCounterChoice
+(F608), FinishCounterChoice (F958), BuildCounterChoiceText (F9EC),
+ApplyCounterChoice (FB80), AddToAllRecordValues255 (FD2C),
+AddToAllRecordValues65535 (FD7C), AddToBothRecordPoolValues255 (FDCC),
+AddToRecordValue255 (FEA0), AddToRecordValue65535 (FF0C), and
+AddToObjectValue255 (FF74), all prefixed Ovl11. Reset/begin/update/finish
+share the otherwise private phase, saved-selection, three text-address words
+and selected-index triplet at 80128540–5A. The text builder and choice mapper
+share the six category rows and 19 random rows; the mapper calls all three
+bulk-effect adapters, which call the three local upper-clamped halfword
+writers. The complete helper closure has no actual callers outside this run;
+remote sites only declared some helpers without calling them. The two public
+clients are C9424 (begin) and F65B8 (update). Public reset declarations now
+include the same header, rather than manufacture another contract.
+
+Held-action members: Ovl11UpdateHeldSelectionAction (FFA8),
+Ovl11SelectHeldActionDelay (120358), Ovl11SelectHeldActionOutcome (120414),
+and Ovl11DrawHeldActionSprite (120850). The driver's three helpers use its
+pulse/delay/category protocol, range rows, count-prefixed weighted tables and
+projection workspace. It is their only actual caller; unused ED4A8 helper
+prototypes were removed. C401C calls the driver as an object-state service.
+The signal, sprite position/header and fallback counter also have distant
+setup/reset consumers: those are clients of shared action state, not evidence
+for absorbing the intervening overlay. Names distinguish demonstrated counters,
+messages, timer ticks and sprite projection from unproven gameplay meanings.
+
+Boundaries: before F52C the existing selection_message closure ends with its
+count helper F4F4; it reads neither counter-choice state nor its text tables.
+At FFA8 the preceding object/value writer ends exactly where the independent
+held-input state driver begins. The latter uses DB48/DB78–8C, not 28540–5A,
+and neither closure invokes the other. After 120850, 1209A8 starts the existing
+map_texture_camera module's enter/vertical-offset/tile-texture protocol; it
+reads neither action selection tables nor projection workspace and has no
+helper edge into this closure. These are private-state/helper/protocol cuts,
+not GP-proven original object boundaries: all code here is -G0. Adjacent data
+emission corroborates each closure internally but cannot alone merge them.
+
+Headers ovl11_counter_choice.h and ovl11_held_action_selection.h publish only
+entry/update/reset and the object-state driver. They document shared-state
+non-reentrancy, unchecked indices, service-tick units, RNG/flag effects and
+asynchronous completion. Globals and functions are named at original container
+identities; the category counters remain an EXE data identity. The third
+index halfword retains its original +4 label; its defining label's configured
+extent is four bytes, while the existing C view spans the full six. Existing
+array-backed aliases retain their addressing semantics under semantic labels.
+The reset's local competing struct/extern is replaced by the canonical three-
+word text array; choice indices and text rows now have separate field names.
+The action range helper uses the existing shared state type instead of a second
+anonymous typedef. Projection scratch externs moved into globals_override.h;
+all widths, external linkage, data allocation and actual call ABIs are unchanged.
+
+Both complete folds passed baseline -O2/-G0. No current member flag override
+exists; historical FF74 scheduling comments are not a live exception. No flag,
+pin, assembly or allowlist permission was added. The 17-member batch passes
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`: 930 folded,
+145/145 valid modules, every integrity gate PASS including all linked EXE and
+overlay/data bytes, interfaces, policy and exception non-growth. The first gate
+refused an overlapping named-data extent at +4; retaining the original separate
+label extents fixed configuration generation without a tooling workaround.
+
+Historical candidate extensions:
+ [driver/reset shared-state and call/link evidence](research/ovl_11_func_8011F608-grouping.md);
 [upper call/link and table-cluster evidence](research/ovl_11_func_80120414-grouping.md).
 Original TU boundaries remain unproven.
 

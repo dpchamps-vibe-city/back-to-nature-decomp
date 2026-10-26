@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl23_record_trails.h"
 
 void ovl_23_func_800BABD8(void);
 void ovl_23_func_800BA73C(Ovl23BA73CArg *arg0);
 void ovl_23_func_800BAA60(Ovl23BAA60Arg *arg0);
-void ovl_23_func_800B954C();
 
 void ovl_23_func_800B9310(void) {
     Ovl23BA73CArg *actor;
@@ -24,5 +24,5 @@ void ovl_23_func_800B9310(void) {
         i++;
         actor++;
     } while (i < 6);
-    ovl_23_func_800B954C();
+    Ovl23DrawRecordTrails();
 }

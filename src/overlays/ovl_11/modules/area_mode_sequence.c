@@ -638,6 +638,6 @@ void Ovl11ResetAreaScene(void) {
     ovl_11_func_800CDE3C(objectState);
     ovl_11_func_800CDF4C(objectState);
     SetGameFlag(0x5EU, 0U);
-    D_8012DB8C = 0;
+    gOvl11HeldActionFallbackCounter = 0;
     state->field_51FE &= ~4;
 }

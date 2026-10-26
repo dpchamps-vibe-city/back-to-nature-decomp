@@ -1255,12 +1255,6 @@ typedef struct {
 } M2C_91755d460345_Ovl11D04D4Obj;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-} M2C_93d07a715929_Ovl11SelectArg;
-
-typedef struct {
     s16 unk0;
     char pad2[2];
     u16 unk4;
@@ -2684,6 +2678,12 @@ typedef struct {
     u16 flags;
     u8 tail[0x6];
 } Ovl11SceneRecordSlot;
+
+typedef struct {
+    s32 pulseTicks;
+    s32 delayTicks;
+    s32 category;
+} Ovl11SelectArg;
 
 typedef struct {
     u8 pad0[0x38];

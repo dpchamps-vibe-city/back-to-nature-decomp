@@ -27,6 +27,7 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "selection_panel.h"
 #include "area_grid_triggers.h"
+#include "ovl11_counter_choice.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -167,7 +168,6 @@ s32 ovl_11_func_800F3A18 (u16 arg0);
 s32 ovl_11_func_80110790 (M2C_59ee2b8b632a_ReconA0View *arg0);
 s32 ovl_11_func_80110838 (M2C_8740fcdc649a_Recon80110838A0View *arg0);
 s32 ovl_11_func_80110890 (M2C_33501d1b78e1_Recon80110838A0View *arg0);
-void ovl_11_func_8011F52C (void);
 
 s32 ovl_11_func_800CEEF8(M2C_4c1a205b3b09_ReconA0View *arg0) {
     s32 temp_v1;

@@ -20,14 +20,14 @@ s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0) {
     effect[1] = 0;
     effect[2] = 1;
     ovl_11_func_800CBF70((Ovl11CBF70Position *) ((u8 *) arg0 + 0x100), effect, (s16) arg0->unk38);
-    D_8012DB78.x = 0;
-    D_8012DB78.y = 0;
-    D_8012DB78.z = 0;
-    D_8012DB84 = 0x1B;
+    gOvl11HeldActionSpritePosition.x = 0;
+    gOvl11HeldActionSpritePosition.y = 0;
+    gOvl11HeldActionSpritePosition.z = 0;
+    gOvl11HeldActionSpriteHeader = 0x1B;
     if (arg0->unk84 == 0x39) {
-        D_8012DB84 = 0x1C;
+        gOvl11HeldActionSpriteHeader = 0x1C;
     }
-    D_8012DB88 = 0;
-    D_8012DB80 = 0;
+    gOvl11HeldActionSpriteStep = 0;
+    gOvl11HeldActionSignal = 0;
     return 1;
 }

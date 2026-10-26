@@ -2,7 +2,7 @@
 #include "game_types.h"
 #include "ovl23_record_control_fields.h"
 
-extern Ovl23D87CView39C D_800BF87C;
+extern Ovl23D87CView39C gOvl23RecordRunWork;
 
 void ovl_23_func_800BA610(Ovl23Func800BB0C8Arg *arg0) {
     s32 temp_a0;
@@ -12,10 +12,10 @@ void ovl_23_func_800BA610(Ovl23Func800BB0C8Arg *arg0) {
     case 0:
         return;
     case 2:
-        temp_a0 = (D_800BF87C.unk3A0 << 0xC) / 10;
+        temp_a0 = (gOvl23RecordRunWork.unk3A0 << 0xC) / 10;
         break;
     case 3:
-        temp_a0 = (D_800BF87C.unk3A2 << 0xC) / 10;
+        temp_a0 = (gOvl23RecordRunWork.unk3A2 << 0xC) / 10;
         break;
     default:
         return;
@@ -26,7 +26,7 @@ void ovl_23_func_800BA610(Ovl23Func800BB0C8Arg *arg0) {
     } else {
         *(s32 *)((u8 *)arg0 + 0xC) += temp_a0;
     }
-    temp_v1 = (D_800BF87C.unk39C + 0x77) << 0xC;
+    temp_v1 = (gOvl23RecordRunWork.unk39C + 0x77) << 0xC;
     if (*(s32 *)((u8 *)arg0 + 0xC) >= temp_v1) {
         *(s32 *)((u8 *)arg0 + 0xC) = temp_v1;
         if (*(s16 *)((u8 *)arg0 + 0) != 2) {

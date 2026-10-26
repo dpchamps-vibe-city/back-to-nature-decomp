@@ -9,6 +9,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_held_action_selection.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
@@ -17,7 +18,6 @@ s32 ovl_11_func_800CB4E0 (void);
 void ovl_11_func_800C47F0 (void);
 void ovl_11_func_800CD6F4 (void *arg0);
 s32 ovl_11_func_800C9424 (void);
-s32 ovl_11_func_8011FFA8 (Ovl11SelectionObject *obj);
 s32 ovl_11_func_800C6AFC (Ovl11C7010Object *arg0);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800C580C(Ovl11C580CObject *);
@@ -93,7 +93,7 @@ block_22:
                     }
                     break;
                 case 0x10:
-                    ovl_11_func_8011FFA8((Ovl11SelectionObject *)obj);
+                    Ovl11UpdateHeldSelectionAction((Ovl11SelectionObject *)obj);
                     return;
                 case 0:
                     ovl_11_func_800CD6F4(obj);

@@ -63,3 +63,11 @@ gOvl19SceneSpriteData = 0x800BD090; // type:data size:0x13DC
 gOvl19UiSpriteData = 0x800BE470; // type:data size:0x104C
 gOvl19SceneSpriteSource = 0x800BF690; // type:data size:0x30
 gOvl19AuxSceneSpriteSource = 0x800BF6D0; // type:data size:0x30
+
+// Surface-adjusted paired sprite submission and private projection scratch.
+Ovl19DrawProjectedSprite = 0x800BADF8; // type:func
+Ovl19DrawProjectedSpriteState = 0x800BAFAC; // type:func
+gOvl19ProjectedSpriteScreen = 0x800BD048; // type:data size:0x8
+gOvl19ProjectedStateScreen = 0x800BD050; // type:data size:0x8
+gOvl19ProjectedSpriteVector = 0x800BD080; // type:data size:0x8
+gOvl19ProjectedStateVector = 0x800BD088; // type:data size:0x8

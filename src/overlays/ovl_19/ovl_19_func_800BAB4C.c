@@ -4,8 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
-
-void ovl_19_func_800BADF8 (s32 arg0, SpriteSourceData *arg1, s16 *arg2, s16 arg3);
+#include "psyq/libgs.h"
+#include "ovl19_projected_sprite.h"
 
 void ovl_19_func_800BAB4C(Ovl19Func800BAB4CArg *arg0) {
     ObjectState *temp_s0;
@@ -41,5 +41,5 @@ void ovl_19_func_800BAB4C(Ovl19Func800BAB4CArg *arg0) {
     if (var_s2 != -1) {
         SelectSpriteAnimationFrame(temp_s0, var_s2 & 0xFF);
     }
-    ovl_19_func_800BADF8(gActiveRenderContext->field_120, (SpriteSourceData *) temp_s0, arg0->position, 0);
+    Ovl19DrawProjectedSprite(gActiveRenderContext->field_120, (SpriteSourceData *) temp_s0, arg0->position, 0);
 }

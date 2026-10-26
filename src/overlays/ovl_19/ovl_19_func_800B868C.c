@@ -7,12 +7,13 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "psyq/libgs.h"
+#include "ovl19_projected_sprite.h"
 
 
 void ovl_19_func_800BA770 (void);
 void ovl_19_func_800BA834 (s16 *arg0);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
-void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
 u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 s32 ovl_19_func_800BADAC (s16 arg0);

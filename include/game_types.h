@@ -561,11 +561,12 @@ typedef struct {
     ObjectState animation;
 } Ovl11SelectionObject;
 
-/* 80120358 reads +8 and writes +0; 8011FFA8 also maintains +4. */
+/* Held-action state: 80120358 seeds pulseTicks, while 8011FFA8 updates
+ * both countdowns and selects a category from the current area. */
 typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
+    s32 pulseTicks;
+    s32 delayTicks;
+    s32 category;
 } Ovl11SelectArg;
 
 /* Per-pad input/auto-repeat state (0x38 bytes). Boot binds gPad0Input and
@@ -2024,27 +2025,6 @@ typedef struct {
     /* 0x00 */ void *batch;
     /* 0x04 */ s8 *cullPointData;
 } ProjectedPrimitiveSource;
-
-/* One 8-byte entry of the D_800BF87C record array written by
- * ovl_23_func_800B9454: s32 at +0, s16 at +4, s16 at +6. */
-typedef struct {
-    s32 unk0;   /* 0x00 */
-    s16 unk4;   /* 0x04 */
-    s16 unk6;   /* 0x06 */
-} Ovl23D87CEntry;
-
-/* D_800BF87C view for ovl_23_func_800B9454: a 54-entry array at 0x418
- * followed by the s16 write cursor at 0x5C8 (the 54 bound equals the array
- * length, matching the sibling ovl_23_func_800B94D0 whose 12-entry array at
- * 0x5CC is followed by its cursor at 0x62C). */
-typedef struct {
-    u8 pad_000[0x418];
-    Ovl23D87CEntry unk418[54];  /* 0x418 */
-    s16 unk5C8;                 /* 0x5C8 */
-    u8 pad_5CA[2];
-    Ovl23D87CEntry unk5CC[12];  /* 0x5CC */
-    s16 unk62C;                 /* 0x62C */
-} Ovl23D87CView;
 
 /* One 0x44-byte entry of the D_800BF87C record array read by
  * ovl_23_func_800BA1E0; the value the function reads is the leading s32,

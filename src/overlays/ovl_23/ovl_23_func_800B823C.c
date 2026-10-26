@@ -1,8 +1,8 @@
 #include "common.h"
+#include "ovl23_record_trails.h"
 
 void ovl_23_func_800B8290(void);
 void ovl_23_func_800B8354(void);
-void ovl_23_func_800B937C(void);
 
 void ovl_23_func_800B823C(void) {
     struct Ovl23ScreenHeader *state = &Ovl23_D_800BF87C_header;
@@ -15,5 +15,5 @@ void ovl_23_func_800B823C(void) {
     state->unk14 = 0;
     ovl_23_func_800B8290();
     ovl_23_func_800B8354();
-    ovl_23_func_800B937C();
+    Ovl23ResetRecordTrails();
 }

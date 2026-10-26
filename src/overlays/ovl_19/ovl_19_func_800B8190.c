@@ -9,6 +9,9 @@
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "ovl19_record_value_increment.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "ovl19_projected_sprite.h"
 
 
 void SsSeqClose (short);
@@ -17,7 +20,6 @@ void SsVabClose (short);
 void ovl_19_func_800BA770 (void);
 void ovl_19_func_800BA834 (s16 *arg0);
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
-void ovl_19_func_800BAFAC (s32 arg0, ObjectState *arg1, s16 *arg2, s16 arg3);
 
 void ovl_19_func_800B8190(void) {
     u8 var_s0;
