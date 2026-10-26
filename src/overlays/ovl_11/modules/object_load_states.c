@@ -31,6 +31,7 @@
 #include "cd_loader.h"
 #include "game_flags.h"
 #include "ovl11_record_slot_table.h"
+#include "ovl11_scene_value_commands.h"
 
 void ClearActiveOrderingTables(void);
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
@@ -41,7 +42,6 @@ void ovl_11_func_800E499C(s32 arg0);
 s32 ovl_11_func_800E3978(s32 arg0);
 void ovl_11_func_800E5524(u8 *arg0, u8 *arg1, s32 arg2);
 void ovl_11_func_800E5078(void);
-s32 ovl_11_func_800EEBC8(s32 unused0, s32 unused1, s32 unused2, s32 unused3);
 void ovl_11_func_800E54C8(void);
 
 s32 Ovl11StartObjectArchiveLoad(void) {
@@ -107,7 +107,7 @@ s32 Ovl11StartObjectArchiveLoad(void) {
     }
     gOvl11ObjectProgramBase = Ovl11RecordCursor = D_8006E910;
     gOvl11ObjectProgramIndex = 0;
-    ovl_11_func_800EEBC8(0, 0, 0, 0);
+    Ovl11ClearValueSlotsCommand(0, 0, 0, 0);
     base = (u8 *)D_8006E910 - 0x20D8;
     ovl_11_func_800E54C8();
     ((struct struct_8006C838_800E3AA4 *)base)->field_4438 = -1;
@@ -208,7 +208,7 @@ s32 Ovl11PollObjectArchiveLoad(void) {
     Ovl11RecordCursor = D_8006E910;
     gOvl11ObjectProgramBase = D_8006E910;
     gOvl11ObjectProgramIndex = 0;
-    ovl_11_func_800EEBC8(0, 0, 0, 0);
+    Ovl11ClearValueSlotsCommand(0, 0, 0, 0);
     base = (u8 *)D_8006E910 - 0x20D8;
     ovl_11_func_800E54C8();
     *(s16 *)(base + 0x4438) = -1;

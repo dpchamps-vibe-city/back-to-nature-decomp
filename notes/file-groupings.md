@@ -1523,8 +1523,24 @@ Members:
   0x1D4 bytes with store value −1 (`memset(arg0, 0, 0x1D4); *(s16 *)arg0 =
   -1;`); the 0x1D4 size ties it to `sizeof(struct_80076220)` (see the
   struct_80076220 record run below), unlike the other members' sizes
-- ovl_11_func_800D3200 (m) — clears an 0xB0-byte struct (memset 0xB0, sh 0 at
-  +0); called by nine functions in the 0x800CF044–0x800D506C run
+- ovl_11_func_800D3200 (m) — now `Ovl11ClearB0ObjectRecord` in
+  **`modules/object_record_clear.c`, 800D3200–800D3230 exclusive**.
+  This storage-free shared constructor clears a caller-owned 0xB0-byte record
+  then explicitly zeroes its leading halfword. Callers include record placement
+  and multiple state handlers, including distant EF6E4; it is not a private
+  helper of one neighboring selector. The integer-address ABI is retained.
+  `ovl11_object_record_clear.h` documents extent/alignment, state zero and the
+  absence of allocation or resource teardown. The explicit halfword store is
+  the existing constructor idiom, not a newly added matching workaround.
+  Left D31EC writes the independent D80128D78/7A argument pair and neither
+  receives a record nor calls this clearer. Right tagged_record_choice begins
+  at D3230 and implements random two-bank selection/value adjustment without
+  invoking this helper. Neither neighbor supplies private-state/helper/table
+  evidence to extend this singleton. These are conservative service cuts,
+  not -G0 ownership proofs or a claim that all memset constructors share a TU.
+  The checked baseline fold proved the member and ovl_11; no override or
+  policy exception changed. Public naming and caller-header propagation
+  preserve the existing signed-word address contract.
 - ovl_11_func_800DF0F8 (m) — same construction over 0xB8 bytes
 - ovl_11_func_800E0D0C (m) — same construction over 0xB8 bytes; sits between
   800DF0F8 and 800E2904 in the ovl_11 link order
@@ -1652,6 +1668,40 @@ and its fields have neutral display-role names without changing layout or
 signedness. Cursor, scroll and the four icon callbacks are now canonical
 container-owned data names. The scanner and runtime text-bank base remain
 external dependencies. Batch acceptance is recorded below.
+
+**Shared scanner reconstructed as `modules/record_family_lookup.c`,
+80117178–80117370 exclusive**, named Ovl11FindFamilyRecordIndex. It is a
+call-free, storage-free query over the shared ten-0xB4 and twenty-0xB8 pools,
+not a private list-rendering helper: record_family_list, quantity purchase,
+114604 and the 118C7C forwarding service all use its count/ordinal protocol.
+Its only data reference is shared work, with no private table or helper that
+would extend it across either neighboring module. Left record_family_list
+owns cursor/scroll state absent from this query; right cell_status_panel
+neither queries these pools nor calls the scanner. These are conservative
+service boundaries under -G0, not small-data ownership proofs.
+
+`ovl11_record_family_lookup.h` publishes all three signed-halfword inputs:
+family, filter and one-based match ordinal (-1 counts). It documents each
+family's unsigned tail-field tests, zero-based physical result, ambiguous
+zero on failure, and the out-of-domain ordinal-zero behavior. Locals now
+name count/result/index/recordBase; byte-stride tail access and signed
+halfword count narrowing are unchanged. No gameplay meaning was assigned
+to the neutral pool-tail fields and no global is tentatively defined.
+The checked singleton fold proved both this function and ovl_11 at baseline;
+no override applies and no exception changed. All four callers that declared
+the scanner now include its canonical header, with unchanged objects.
+
+Final two-batch acceptance (scene_value_commands, object_record_clear,
+options_menu, record_family_lookup): **1588/2625 folded, +21 functions;
+257/257 module TUs valid**. `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates, including
+all linked EXE/overlay code/data/callback bytes, configuration convergence,
+canonical interfaces, policy, whitespace and zero exception growth. No
+previously folded function regressed. No compiler flag, allowlist permission,
+assembly construct or tool implementation changed. Exit 1 reflects the
+remaining overall campaign work, not a failed gate. The investigated early
+text and storage-menu closures remain split only at their recorded unresolved
+compiler/context limits; no flag-compatible slice was introduced here.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) around the table
 setup at the overlay's 0x5F12C text region. Evidence is an internal call
@@ -5632,6 +5682,60 @@ Members:
 ---
 
 ## `ovl_11` D_801295C6 setter/getter run — 0x800E60A0–0x800EEBC8 (confidence: medium)
+
+**Reconstructed `modules/scene_value_commands.c`, 800EE604–800EEBF4
+exclusive, all six consecutive entries.** The camera callback, condition
+classifier, two code-expansion callbacks, selected-position getter and bank
+reset form the local value-command service. Both expansion functions call
+EE7BC to copy the cached condition into their first slot, then consume that
+same value; their adjacent byte-offset and five-row triple tables have no
+other C consumers. EE604 owns the six private interpolation endpoints and
+invalidates the position selection returned by EEBB8. EEBC8 clears the exact
+twenty-word bank used as phases, counters and outputs by the commands. These
+call, private-table/scratch and command-protocol witnesses support the whole
+six-entry run; adjacency and the widely shared bank alone do not prove
+original file ownership. Membership strength is tiered: EE7BC/EE944/EEAB8
+have the internal-call and private-table witnesses; EE604/EEBB8 share the
+selection latch also used by the snap service. EEBC8 is the weaker lifecycle
+member: its program-start/load clients clear the command bank, and it has no
+private data or dispatch-table entry of its own. The four commands from EE604
+through EEAB8 occur consecutively in the generic command table at B9910..1C;
+that table spans many other services and is corroboration, not TU ownership.
+The reset retains its clients' four explicitly supplied zero operands. A
+wider original file remains possible; no mechanical limit dictated this cut.
+
+Outer boundaries are evidence-limited under -G0, not proven original-object
+cuts. Before EE604, EE528 selects a sprite animation from a value slot and
+renders it over a screen tile, with no camera-endpoint or classification-table
+access or call into this
+six-entry closure. After EEBC8, EEBF4 forwards a state-field read, followed
+by an empty callback and an inventory scan; none consumes this unit's
+interpolation scratch or code tables. The remote E60A0/E880C writers use
+selected-position state as an interface to coordinate snapping; sharing
+that index does not require absorbing the intervening command families.
+The generic value bank remains an externally shared protocol, not newly
+claimed TU ownership. No private linkage was inferred.
+
+Public names and contracts are in `ovl11_scene_value_commands.h`: camera
+phase/tick slots, completion one call after reaching phase 2, non-reset tick
+input, per-call orbit-reset effect, raw coordinate units, sequential aliasing
+and unchecked indices. Code/condition meanings remain neutral. Six functions,
+six endpoint scalars, the selected-position index and two expansion tables
+have canonical ovl_11 names at their original addresses. Existing scalar and
+casted-array views retain their widths and addressing. Shared-header data
+externs were explicitly reconciled after canonicalNames renamed the overlay
+uses; no alias or second symbol identity was added.
+
+The checked baseline fold proved all six members and ovl_11 bytes. No compiler
+setting or source-policy exception changed. The full batch gate,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`, passes
+all eight integrity gates: all EXE/overlay linked bytes, canonical interfaces,
+configuration convergence, policy and zero exception growth. Together with
+object_record_clear, folded progress rises 1567 → 1574 of 2625, with all
+255 module TUs valid. Exit 1 denotes the unfinished campaign, not gate failure.
+
+Historical wider-family hypothesis follows (not a claim that the entire
+E60A0–EEBC8 span is one source file).
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing a single
 file-scope s16 global. Same shared-global-cluster fingerprint as the documented
@@ -15579,6 +15683,54 @@ Members (link order):
   cursor navigation and selected-id protocol as 80133454
 
 ## `ovl_11` D_801273D8/D_801273DA init/reset pair — 0x800FFA28 / 0x800FFA40 (confidence: medium)
+
+**Reconstructed `modules/options_menu.c`, 800FEBF8–800FFDCC exclusive,
+all thirteen entries.** The earlier pair/page slices below are retained as
+historical research, not separate reconstructed files. Reset/open/snapshot,
+active wrapper, dispatcher, both registered pages and their description
+helpers share state B0 and selectors B4..BC. The two-entry page table C0
+contains the two local page callbacks; C8/D0 are the sound/clock setter pairs
+used by the settings editor. FF96C applies the exact three committed work
+flags restored by FED0C and is called there as well as by scene startup.
+This is a state/helper/table closure, not adjacency alone.
+
+The companion four-choice prompt contributes reset/begin/service/input over
+D8/DA plus result CEF8. These are complementary operations over its private
+state, selected alongside the options renderer by the pause-menu driver.
+Its storage immediately follows the options selectors/tables in the same
+B0..DA control block. Taking the complete run preserves the historical
+shared pause-menu hypothesis rather than cutting at FFA28 to get a smaller
+fold. This internal connection is weaker than each state machine's own
+private-state/helper closure: no GP proof under -G0 establishes one original
+object, and physical proximity alone is not asserted as that proof.
+
+Left boundary: FEAD4/FEB14/FEB68/FEBB0 are shared scan/count services whose
+callers include the distant FB908/FC1AC and pending-event queue; none uses
+this menu's private control block or settings snapshot. Right boundary:
+selection_mode_state begins at FFDCC and owns a distinct callback/mode
+protocol starting at 801273DC, with no access to this menu block. These
+service/data-protocol cuts are evidence-limited, not proven original linker
+object boundaries. No flag or dead stub dictated an internal boundary.
+
+The module and `ovl11_options_menu.h` publish Open/Draw, ApplyWorkSettings,
+and Reset/Begin/ServiceMenuChoice. Naming reaches all callers and the data
+callback addresses via container-specific configuration. Thirteen functions
+and thirteen control/settings objects now have behavior-based names.
+The root/list array-lvalue selector views, signed reset versus unsigned
+prompt-row view, and packed twelve-byte copy retain their widths and original
+addressing. The duplicate local packed type now uses canonical
+Ovl11MenuSettings; no global extern remains in the C file, and all linkages
+remain external. Parameters/locals name rows, choices, held/pressed inputs,
+message indices, work pointers and ordering-table storage. Documentation
+covers delayed settings commit, immediate preview/test effects, FE/FF close
+phases, the unchanged result on reset and deliberate switch fallthroughs.
+Uncertain setting meanings remain neutral rather than inferred from labels.
+
+The checked full baseline -O2/-G0 fold proved all thirteen members and the
+linked overlay, without a compiler-setting change or new exception. Batch
+verification follows the record-family scanner note.
+
+Historical evidence:
 
 - **gapless link adjacency:** `ovl_11_func_800FFA28` (0x18 bytes at 0x47C08)
   ends exactly at `ovl_11_func_800FFA40` (0x24 bytes at 0x47C20) — one

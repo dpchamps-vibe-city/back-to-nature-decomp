@@ -49,6 +49,7 @@
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_item_table_queries.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_object_record_clear.h"
 
 typedef struct {
                s16 field_0;
@@ -200,7 +201,6 @@ s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
-void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5704 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);

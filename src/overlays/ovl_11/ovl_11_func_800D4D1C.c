@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_object_record_clear.h"
 
 typedef struct {
     char pad_00[0x22];
@@ -19,7 +20,6 @@ typedef struct {
     /* 0x7A */ u16 unk7A;
 } Ovl11D4D1CObj;
 
-void ovl_11_func_800D3200(s32 arg0);
 s32 ovl_11_func_800D04D4(Ovl11D4D1CObj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
@@ -37,7 +37,7 @@ s32 ovl_11_func_800D4D1C(Ovl11D4D1CObj *arg0) {
         arg0->unk34 |= 0x800;
         break;
     case -1:
-        ovl_11_func_800D3200((s32)arg0);
+        Ovl11ClearB0ObjectRecord((s32)arg0);
         var_s1 = 1;
         break;
     case 1:

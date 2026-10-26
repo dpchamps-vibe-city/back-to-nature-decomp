@@ -1480,3 +1480,54 @@ Ovl11HandleInteractionRequest80 = 0x800C8FA8; // type:func
 Ovl11DispatchInteractionRecordInput = 0x800C907C; // type:func
 gOvl11InteractionHitRecord = 0x80128C4C; // type:data size:0x4
 gOvl11InteractionHitFlags = 0x80128C54; // type:data size:0x4
+
+// Caller-owned 0xB0-byte record clear service.
+Ovl11ClearB0ObjectRecord = 0x800D3200; // type:func
+
+// Scene value commands and their camera interpolation/code-expansion state.
+Ovl11StepCameraValueCommand = 0x800EE604; // type:func
+Ovl11UpdateConditionValueCommand = 0x800EE7BC; // type:func
+Ovl11WriteConditionCodeSlots = 0x800EE944; // type:func
+Ovl11WriteConditionTripleSlots = 0x800EEAB8; // type:func
+Ovl11GetSelectedPositionRecord = 0x800EEBB8; // type:func
+Ovl11ClearValueSlotsCommand = 0x800EEBC8; // type:func
+gOvl11CameraCommandStartHeight = 0x80129540; // type:data size:0x4
+gOvl11CameraCommandStartDistance = 0x80129544; // type:data size:0x4
+gOvl11CameraCommandStartTargetY = 0x80129548; // type:data size:0x2
+gOvl11CameraCommandEndHeight = 0x8012954C; // type:data size:0x4
+gOvl11CameraCommandEndDistance = 0x80129550; // type:data size:0x4
+gOvl11CameraCommandEndTargetY = 0x80129554; // type:data size:0x2
+gOvl11SelectedPositionRecord = 0x801295C6; // type:data size:0x2
+gOvl11ConditionCodeOffsets = 0x801249EC; // type:data size:0xC
+gOvl11ConditionCodeTriples = 0x801249F8; // type:data size:0x1E
+
+// Options pages and the companion four-choice pause prompt.
+Ovl11ResetOptionsMenuState = 0x800FEBF8; // type:func
+Ovl11OpenOptionsMenu = 0x800FEC2C; // type:func
+Ovl11DrawOptionsMenu = 0x800FECB8; // type:func
+Ovl11UpdateOptionsMenu = 0x800FED0C; // type:func
+Ovl11UpdateOptionsListPage = 0x800FEFEC; // type:func
+Ovl11ShowOptionsListRowDescription = 0x800FF27C; // type:func
+Ovl11UpdateOptionsSettingsPage = 0x800FF324; // type:func
+Ovl11ShowOptionsRowDescription = 0x800FF8C8; // type:func
+Ovl11ApplyWorkSettings = 0x800FF96C; // type:func
+Ovl11ResetMenuChoiceState = 0x800FFA28; // type:func
+Ovl11BeginMenuChoice = 0x800FFA40; // type:func
+Ovl11ServiceMenuChoice = 0x800FFA64; // type:func
+Ovl11ShowMenuChoice = 0x800FFB08; // type:func
+gOvl11OptionsMenuState = 0x801273B0; // type:data size:0x4
+gOvl11OptionsRootRow = 0x801273B4; // type:data size:0x2
+gOvl11OptionsListColumn = 0x801273B6; // type:data size:0x2
+gOvl11OptionsListRow = 0x801273B8; // type:data size:0x2
+gOvl11OptionsSettingChoice = 0x801273BA; // type:data size:0x2
+gOvl11OptionsSettingRow = 0x801273BC; // type:data size:0x2
+gOvl11OptionsPageHandlers = 0x801273C0; // type:data size:0x8
+gOvl11OptionsSoundSetters = 0x801273C8; // type:data size:0x8
+gOvl11OptionsClockSetters = 0x801273D0; // type:data size:0x8
+gOvl11MenuChoiceRow = 0x801273D8; // type:data size:0x2
+gOvl11MenuChoiceState = 0x801273DA; // type:data size:0x2
+gOvl11OptionsSettings = 0x8012CEE8; // type:data size:0xC
+gOvl11MenuChoiceResult = 0x8012CEF8; // type:data size:0x4
+
+// Shared pool query; ordinal -1 counts rather than selecting a record.
+Ovl11FindFamilyRecordIndex = 0x80117178; // type:func

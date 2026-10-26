@@ -18,7 +18,7 @@ s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     result = 1;
     ((struct struct_8006C838_view *)D_8006C838)->field_0C |= 0x400000;
     if (index != -1 && arg2 != 0) {
-        if (D_801295C6 == index) {
+        if (gOvl11SelectedPositionRecord == index) {
             return 1;
         }
         if (index == -2) {
@@ -34,7 +34,7 @@ s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     }
     if (result == 1) {
         if (arg2 != 2) {
-            D_801295C6 = index;
+            gOvl11SelectedPositionRecord = index;
             if (index == -2) {
                 ((struct struct_8006C838_view *)D_8006C838)->field_0C &= ~0x400000;
             }

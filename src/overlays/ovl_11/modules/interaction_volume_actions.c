@@ -36,9 +36,8 @@
 #include "ovl11_pending_event_queue.h"
 #include "ovl11_save_counters.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_options_menu.h"
 
-void ovl_11_func_800FEC2C (void);
-void ovl_11_func_800FFA40 (void);
 s32 ovl_11_func_800F4B5C (s16 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void Ovl11TryBeginItem68VolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
@@ -113,7 +112,7 @@ s32 Ovl11DispatchInteractionVolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0
             case 1:
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    ovl_11_func_800FEC2C();
+                    Ovl11OpenOptionsMenu();
                     var_v0_2 = 1;
                     goto block_28;
                 }
@@ -131,7 +130,7 @@ s32 Ovl11DispatchInteractionVolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
                     var_v0 = 0;
                     if (GetGameFlag(2U) != 1) {
-                        ovl_11_func_800FFA40();
+                        Ovl11BeginMenuChoice();
                         var_v0_2 = 2;
                         goto block_28;
                     }

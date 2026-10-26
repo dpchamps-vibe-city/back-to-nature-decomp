@@ -24,6 +24,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_record_family_lookup.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
@@ -32,7 +33,6 @@ void ovl_11_func_800E2904(s32 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80113FF0(void);
 void Ovl11DebitQuantityCost(void *arg0);
-s32 ovl_11_func_80117178(s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -106,7 +106,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
                 }
                 break;
             case 2:
-                if (ovl_11_func_80117178(0, 0, -1) == 0) {
+                if (Ovl11FindFamilyRecordIndex(0, 0, -1) == 0) {
                     RequestMessageWindow(2, 0x59);
                     Ovl11SetInteractionSteps(22, 21);
                 } else {

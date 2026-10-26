@@ -6,12 +6,12 @@
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_object_id_state.h"
+#include "ovl11_object_record_clear.h"
 
 void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 void ovl_11_func_800D1960 (s16 arg0);
 s32 ovl_11_func_800D425C (u16 *arg0);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
-void ovl_11_func_800D3200 (s32 arg0);
 void ovl_11_func_800D12B8 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
 
 s32 ovl_11_func_800D506C(Ovl11SetFieldsView *arg0) {
@@ -57,7 +57,7 @@ s32 ovl_11_func_800D506C(Ovl11SetFieldsView *arg0) {
         break;
     case 3:
         arg0->field_34 &= ~0x800;
-        ovl_11_func_800D3200((s32) arg0);
+        Ovl11ClearB0ObjectRecord((s32) arg0);
         var_s2 = 1;
         break;
     }

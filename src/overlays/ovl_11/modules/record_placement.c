@@ -14,9 +14,9 @@
 #include "ovl11_record_placement.h"
 #include "ovl11_surface_height.h"
 #include "ovl11_object_state_dispatch.h"
+#include "ovl11_object_record_clear.h"
 
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *record, s32 mode);
-void ovl_11_func_800D3200(s32 record);
 s32 ovl_11_func_800D2E20(void);
 s32 Ovl11IsItemIdEnabled(s32 itemId);
 
@@ -93,7 +93,7 @@ place_selected:
             }
             Ovl11UpdateRecordPlacement(record, tag, position);
             if (Ovl11IsItemIdEnabled((s32) (*(u16 *) ((u8 *) record + 0))) == 0) {
-                ovl_11_func_800D3200((s32) record);
+                Ovl11ClearB0ObjectRecord((s32) record);
             }
         }
         recordIndex += 1;

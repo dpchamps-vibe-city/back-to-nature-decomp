@@ -370,9 +370,9 @@ extern s16 gOvl11CellActionOperation;
 extern s16 gOvl11CellActionFilter;
 
 /* ovl_11 800FFA64 reads its state with lh and advances it with sh. */
-extern s16 D_801273DA;
+extern s16 gOvl11MenuChoiceState;
 /* ovl_11 800FFA64 stores the menu return and compares it with signed -1 using lw. */
-extern s32 D_8012CEF8;
+extern s32 gOvl11MenuChoiceResult;
 
 /* 800C6A9C stores the sound helper's return value with sh. */
 /* Action input stores PlaySoundEffect's handle; primary update stops that voice. */
@@ -3712,22 +3712,20 @@ typedef struct {
 } Ovl11StateField;
 extern Ovl11StateField gOvl11StateFields[48];
 
-/* D_801249F8 - table of 6-byte records (3 s16 fields each, 5 used entries,
-ovl_11). Indexed by a value in 0..4; ovl_11_func_800EEAB8 reads lh at
-+0x00/+0x02/+0x04 and writes each into D_80129560. Absolute-addressed
-from the overlays (only ever declared extern, never GP). */
+/* ovl_11:801249F8 — five three-s16 code rows. The condition-triple
+ * command reads +0/+2/+4 and writes them to the shared value slots.
+ * Preserve the existing casted array view and absolute addressing. */
 typedef struct {
     /* 0x00 */ s16 field_0;
     /* 0x02 */ s16 field_2;
     /* 0x04 */ s16 field_4;
 } Ovl11Triple6;
-extern Ovl11Triple6 _D_801249F8[] __asm__("D_801249F8");
-#define D_801249F8 ((Ovl11Triple6 *)_D_801249F8)
+extern Ovl11Triple6 _gOvl11ConditionCodeTriples[] __asm__("gOvl11ConditionCodeTriples");
+#define gOvl11ConditionCodeTriples ((Ovl11Triple6 *)_gOvl11ConditionCodeTriples)
 
-/* D_801249EC - byte table indexed by the previous D_80129560[arg0] value
- * (0..9). ovl_11_func_800EE944 reads lbu and adds 0x7C3. Absolute-addressed
- * from the overlays (only ever declared extern, never GP). */
-extern u8 D_801249EC[];
+/* ovl_11:801249EC — condition-indexed byte offsets added to code 0x7C3.
+ * Normal command indices are 0..9; original storage ends at 801249F8. */
+extern u8 gOvl11ConditionCodeOffsets[];
 
 /* ovl_11_func_800EB010 copies ten s16 IDs from rodata and walks these parallel ten-entry tables. */
 struct Ovl11IdList {
@@ -3780,19 +3778,17 @@ typedef struct {
 extern s32 _gOvl11ValueSlots[] __asm__("gOvl11ValueSlots");
 #define gOvl11ValueSlots ((s32 *)_gOvl11ValueSlots)
 
-/* D_80129540/D_80129544/D_8012954C/D_80129550 - ovl_11 s32 interpolation
- * state words written by ovl_11_func_800EE604 (sw %lo) from the
- * D_8007AFF0 + 0x25394/0x25398 work area. D_80129548/D_80129554 are the
- * matching signed halfwords (sh %lo from a lhu read of the far field), and
- * D_801295C6 is a signed halfword cleared to -1 by the same function.
- * Absolute-addressed from the overlays (only ever declared extern, never GP). */
-extern s32 D_80129540;
-extern s32 D_80129544;
-extern s16 D_80129548;
-extern s32 D_8012954C;
-extern s32 D_80129550;
-extern s16 D_80129554;
-extern s16 D_801295C6;
+/* ovl_11:80129540..54 — camera-command endpoints, captured from scene
+ * work +25394/+25398/+253B6. Height/distance are words; target Y narrows
+ * to signed halfwords. 801295C6 caches the selected position-record index
+ * in 800E880C and is invalidated by camera/snap commands. */
+extern s32 gOvl11CameraCommandStartHeight;
+extern s32 gOvl11CameraCommandStartDistance;
+extern s16 gOvl11CameraCommandStartTargetY;
+extern s32 gOvl11CameraCommandEndHeight;
+extern s32 gOvl11CameraCommandEndDistance;
+extern s16 gOvl11CameraCommandEndTargetY;
+extern s16 gOvl11SelectedPositionRecord;
 
 /* 800E60A0 loads/stores the active s32 flag and three s32 coordinates at +0/+4/+8. */
 extern s32 D_80124908;
@@ -4493,7 +4489,7 @@ struct Ovl11NumberTextHeader {
 };
 
 /* 800FFA28 declares this s16 selection; 800FFB08 reads it as unsigned. */
-extern s16 D_801273D8;
+extern s16 gOvl11MenuChoiceRow;
 /* 800FFB08 adds D_80054BBC[0] bytes to this menu text base. */
 extern u8 D_80053A22[];
 
@@ -4527,34 +4523,30 @@ extern u8 D_8005396A[];
 extern u8 D_80053B22[];
 /* 800FED0C adds D_80054BBC[0] bytes to this text base for func_80017B3C. */
 extern u8 D_80053AE8[];
-/* 800FED0C restores twelve unaligned bytes saved by 800FEC2C. */
+/* ovl_11:8012CEE8 — twelve packed settings bytes saved on menu open
+ * and committed at work +E4CC on close. Keep packed-copy and halfword views. */
 typedef struct __attribute__((packed)) {
     s32 unk0;
     s32 unk4;
     s32 unk8;
 } Ovl11MenuSettings;
-extern Ovl11MenuSettings D_8012CEE8_menu __asm__("D_8012CEE8");
-/* 800FED0C reads/writes this signed two-option selector with lh/lhu/sh. */
-extern s16 D_801273B4;
-/* 800FED0C's remainder retains the original halfword through the subtraction. */
-extern s16 D_801273B4_selection[1] __asm__("D_801273B4");
-/* 800FED0C dispatches these two void callbacks without arguments. */
-extern void (*D_801273C0[])(void);
-/* 800FEFEC reads/writes this menu state with lw/sw. */
-extern s32 D_801273B0;
-/* 800FEFEC accesses signed menu selectors with lh/sh (lhu for decrement). */
-extern s16 D_801273B6;
-extern s16 D_801273B8;
-/* 800FEFEC reads and writes this single two-byte selector; array view preserves other TUs' scalar view. */
-extern s16 D_801273B8_selection[1] __asm__("D_801273B8");
-/* 800FF324 reads/writes these signed menu selectors with lh/sh. */
-extern s16 D_801273BA;
-extern s16 D_801273BC;
-/* 800FF324 edits and tests the first four halfwords of the twelve-byte settings. */
-extern s16 D_8012CEE8_options[6] __asm__("D_8012CEE8");
-/* 800FF324 dispatches the two no-argument setter pairs in these tables. */
-extern void (*D_801273C8[2])(void);
-extern void (*D_801273D0[2])(void);
+extern Ovl11MenuSettings gOvl11OptionsSettings_menu __asm__("gOvl11OptionsSettings");
+/* Scalar reset and array-backed selector views share each original symbol.
+ * The array lvalue retains the halfword through the remainder subtraction. */
+extern s16 gOvl11OptionsRootRow;
+extern s16 gOvl11OptionsRootRow_selection[1] __asm__("gOvl11OptionsRootRow");
+extern void (*gOvl11OptionsPageHandlers[])(void);
+extern s32 gOvl11OptionsMenuState;
+extern s16 gOvl11OptionsListColumn;
+extern s16 gOvl11OptionsListRow;
+extern s16 gOvl11OptionsListRow_selection[1] __asm__("gOvl11OptionsListRow");
+extern s16 gOvl11OptionsSettingChoice;
+extern s16 gOvl11OptionsSettingRow;
+/* First four halfwords: three-way mode, actuators, stereo and clock HUD.
+ * The final two halfwords are copied unchanged; their roles are not assumed. */
+extern s16 gOvl11OptionsSettings_options[6] __asm__("gOvl11OptionsSettings");
+extern void (*gOvl11OptionsSoundSetters[2])(void);
+extern void (*gOvl11OptionsClockSetters[2])(void);
 /* 800FF324 adds D_80054BBC[0] bytes to these text bases and label offsets. */
 extern u8 D_80053CB8[];
 extern u8 D_80053D6A[];

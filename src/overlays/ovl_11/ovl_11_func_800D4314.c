@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "ovl11_collision_query_budget.h"
 #include "random.h"
+#include "ovl11_object_record_clear.h"
 
-void ovl_11_func_800D3200(s32 arg0);
 s32 ovl_11_func_800D04D4(void *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 void ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
@@ -20,7 +20,7 @@ s32 ovl_11_func_800D4314(Ovl11D4314Object *arg0) {
         arg0->timer = Rand(60);
         break;
     case -1:
-        ovl_11_func_800D3200((s32)arg0);
+        Ovl11ClearB0ObjectRecord((s32)arg0);
         result = 1;
         break;
     case 1:

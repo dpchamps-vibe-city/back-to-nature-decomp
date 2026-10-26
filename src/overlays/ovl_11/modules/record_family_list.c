@@ -16,9 +16,9 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "ovl11_record_family_lookup.h"
 
 void func_80017B3C(s32, s32, s32, s32);
-s32 ovl_11_func_80117178(s16, s16, s16);
 void func_80024770(s32, s16, s16);
 void func_800247C0(s32, s16, s16);
 void func_800248B0(s32, s16, s16);
@@ -89,7 +89,7 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
     func_80017B3C(header_ot, (s32) &gOvl11TextFormatScratch, 0x52, 0x1A);
     gOvl11RecordListIconDrawers[kind](header_ot, 0xB0, 0x12);
     func_80017B3C(header_ot, (s32) &(D_800535C6 + 0x3E)[*gTextBankOffsets], 0xC8, 0x1A);
-    count = ovl_11_func_80117178(kind, filter, -1);
+    count = Ovl11FindFamilyRecordIndex(kind, filter, -1);
     if (input_mode == 0) {
         repeat_buttons = *(s32 *) ((u8 *) gPad0Input + 0);
         if (repeat_buttons & 0x1000) {
@@ -125,7 +125,7 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
     for (i = 0; i < 4 && (next_row = i + 1, count >= gOvl11RecordListScroll + next_row); i++) {
         row_offset = i * 0x18;
         next_index = i + 1;
-        record_index = ovl_11_func_80117178(kind, filter, (s16) ((u16) gOvl11RecordListScroll + i + 1));
+        record_index = Ovl11FindFamilyRecordIndex(kind, filter, (s16) ((u16) gOvl11RecordListScroll + i + 1));
         func_8001AAF4((s16) ((u16) gOvl11RecordListScroll + next_index), 2, row_ot, 0x20, (s16) (s32) (s16) (row_offset + 0x36));
         row_y = row_offset + 0x30;
         if (kind == 0) {
@@ -149,10 +149,10 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
             result = -2;
         } else if (pressed_buttons & 0x40) {
             PlaySoundEffect(0);
-            result = ovl_11_func_80117178(kind, filter, (s16) (gOvl11RecordListCursor + 1));
+            result = Ovl11FindFamilyRecordIndex(kind, filter, (s16) (gOvl11RecordListCursor + 1));
         }
     } else {
-        result = ovl_11_func_80117178(kind, filter, (s16) (gOvl11RecordListCursor + 1));
+        result = Ovl11FindFamilyRecordIndex(kind, filter, (s16) (gOvl11RecordListCursor + 1));
     }
     return result;
 }

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl11_object_record_clear.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -15,7 +16,6 @@ typedef struct {
     /* 0x7A */ u16 unk7A;
 } Ovl11D4624Obj;
 
-void ovl_11_func_800D3200(s32 arg0);
 s32 ovl_11_func_800D04D4(Ovl11D4624Obj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 
 extern u8 D_80123BF8;
@@ -32,7 +32,7 @@ s32 ovl_11_func_800D4624(Ovl11D4624Obj *arg0) {
         arg0->unk34 |= 0x800;
         break;
     case -1:
-        ovl_11_func_800D3200((s32)arg0);
+        Ovl11ClearB0ObjectRecord((s32)arg0);
         var_s1 = 1;
         break;
     case 1:

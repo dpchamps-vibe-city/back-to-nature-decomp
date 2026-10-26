@@ -16,6 +16,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_record_family_lookup.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
@@ -24,7 +25,6 @@ void ovl_11_func_800DF0F8(s32 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80113CD0(void);
 void ovl_11_func_801152BC(void *arg0);
-s32 ovl_11_func_80117178(s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -117,7 +117,7 @@ s32 ovl_11_func_80114604(void) {
                 }
                 break;
             case 5:
-                if (ovl_11_func_80117178(1, 0, -1) == 0) {
+                if (Ovl11FindFamilyRecordIndex(1, 0, -1) == 0) {
                     RequestMessageWindow(2, 0x76);
                     Ovl11SetInteractionSteps(25, 24);
                 } else {
@@ -128,7 +128,7 @@ s32 ovl_11_func_80114604(void) {
                 }
                 break;
             case 6:
-                if (ovl_11_func_80117178(2, 0, -1) == 0) {
+                if (Ovl11FindFamilyRecordIndex(2, 0, -1) == 0) {
                     RequestMessageWindow(2, 0x78);
                     Ovl11SetInteractionSteps(25, 24);
                 } else {

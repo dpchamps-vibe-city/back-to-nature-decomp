@@ -29,6 +29,7 @@
 #include "ovl11_item_table_queries.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_object_record_clear.h"
 
 typedef struct {
     s16 field_0;
@@ -97,7 +98,6 @@ void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *a
 s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
-void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D1C18 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D1CD0 (s32 arg0, s32 arg1);

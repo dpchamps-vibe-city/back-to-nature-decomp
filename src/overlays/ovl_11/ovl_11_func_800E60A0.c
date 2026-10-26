@@ -18,7 +18,7 @@ s32 ovl_11_func_800E60A0(s16 arg0, s32 height, s32 arg2, s32 arg3) {
     s32 *position;
 
     temp_s0 = arg0;
-    D_801295C6 = -1;
+    gOvl11SelectedPositionRecord = -1;
     ((struct struct_8006C838_view *)D_8006C838)->field_0C |= 0x400000;
     ovl_11_func_800E63C8(0, 0, 0, 0);
     var_s1 = 0x18;
