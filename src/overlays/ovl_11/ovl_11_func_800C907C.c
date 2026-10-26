@@ -3,10 +3,10 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "game_flags.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-s32 ovl_11_func_800CB4E0 (void);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CEEF8 (Ovl11InteractionRecord *arg0);
@@ -26,11 +26,11 @@ s32 ovl_11_func_800C907C(Ovl11C8FA8Object *arg0, u16 arg1) {
         if (D_80128C54 & 0x400) {
             if (!(D_80070C88 & 2)) {
                 ovl_11_func_8010CE80(D_80128C4C_dispatch, 6);
-                ovl_11_func_800CB4E0();
+                Ovl11ResetPrimaryObjectRequest();
                 return 1;
             }
             arg0->unk22 = *(u16 *) ((u8 *) D_80128C4C_dispatch + 0xAC);
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
         }
         if (D_80128C54 & 0x200) {
             if (!(arg0->unk6C & 0x18000000)) {

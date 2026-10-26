@@ -43,7 +43,7 @@ s32 ovl_11_func_800ED634(s16 arg0, s16 arg1) {
         break;
     default:
         var_a1 = 0;
-        if (!(D_80071A6C & 8)) {
+        if (!(gPrimaryObjectFlags & 8)) {
             var_a1 = 1;
         }
         break;

@@ -20,6 +20,7 @@
 #include "screen_fade.h"
 #include "game_flags.h"
 #include "random.h"
+#include "ovl11_primary_object_requests.h"
 
 void Ovl11ResetAreaGridState(void) {
     u8 *b;
@@ -85,7 +86,6 @@ s32 Ovl11CheckAreaGridContact(Ovl11C7010Object *object) {
 }
 
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800CB4E0(void);
 
 s32 Ovl11LatchAreaGridTrigger(s32 currentPlane, s32 plane, s16 column, s16 row) {
     if (((Ovl11GridState *)gOvl11AreaGridState)->grid[plane][column][row] == 2) {
@@ -95,7 +95,7 @@ s32 Ovl11LatchAreaGridTrigger(s32 currentPlane, s32 plane, s16 column, s16 row) 
         if (currentPlane == 0) {
             ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x3C, -1, 0);
         }
-        ovl_11_func_800CB4E0();
+        Ovl11ResetPrimaryObjectRequest();
         return 1;
     }
     return 0;
@@ -201,7 +201,6 @@ s32 Ovl11SetAreaGridCellTexture(s16 column, s16 row, s16 selector) {
 }
 
 s32 Ovl11PickAreaGridReward(s32 arg0);
-s32 ovl_11_func_800CB540(u16 *arg0);
 
 #define GRID ((Ovl11GridState *)gOvl11AreaGridState)
 
@@ -266,7 +265,7 @@ s32 Ovl11ClassifyAreaGridCell(Ovl11CE034Object *object) {
             item.id = 0x10F;
         }
         if ((s16)item.id != 0) {
-            ovl_11_func_800CB540((u16 *)&item);
+            Ovl11InstallPrimaryObjectRequest((u16 *)&item);
             GRID->probability += 2;
             return 1;
         }

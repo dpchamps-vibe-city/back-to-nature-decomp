@@ -13,7 +13,7 @@ void ovl_11_func_800CD624(void) {
     char *p;
     s32 temp;
 
-    base = (char *)&D_80071A00;
+    base = (char *)&gPrimaryObjectBase;
     temp = ovl_11_func_800CD4E4((UnkStruct800CD4E4 *)base);
     if (temp == -1) {
         temp = 0;

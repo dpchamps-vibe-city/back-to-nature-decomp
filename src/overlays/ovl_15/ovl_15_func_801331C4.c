@@ -17,13 +17,13 @@ void ovl_15_func_801331C4(void) {
         if (Ovl15Slots[1][i].unk0 != -1) {
             switch (Ovl15Slots[1][i].unk0) {
             case 0:
-                dest = ovl_15_func_8013345C(&D_800742EC, 0, &index);
+                dest = ovl_15_func_8013345C(&gSmallTaggedRecordBase, 0, &index);
                 memcpy(dest, (void *)Ovl15Slots[1][i].unk4, 0xB4);
-                Ovl15PlaceRowXSlot((struct ovl_15_80132A8C_data *)((u8 *)&D_800742EC + index * 0xB4), index);
+                Ovl15PlaceRowXSlot((struct ovl_15_80132A8C_data *)((u8 *)&gSmallTaggedRecordBase + index * 0xB4), index);
                 break;
             case 1:
             case 2:
-                dest = ovl_15_func_8013345C(&D_800742EC, 1, &index);
+                dest = ovl_15_func_8013345C(&gSmallTaggedRecordBase, 1, &index);
                 memcpy(dest, (void *)Ovl15Slots[1][i].unk4, 0xB8);
                 Ovl15PlaceRowZSlot((Unk80132B44 *)((u8 *)&gTaggedRecordBase + index * 0xB8), index);
                 break;

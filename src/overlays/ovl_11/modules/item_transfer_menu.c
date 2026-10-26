@@ -91,7 +91,7 @@ void Ovl11UpdateItemTransferMenu(void) {
             func_80017A48(3);
             Ovl11DrawAndProcessItemTransferMenu();
             func_80017A48(previousStyle);
-            ovl_11_func_800CCF58((Ovl11C7010Object *)&D_80071A00);
+            ovl_11_func_800CCF58((Ovl11C7010Object *)&gPrimaryObjectBase);
         }
     }
 }

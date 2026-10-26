@@ -23,7 +23,7 @@ void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0, s32 unused) {
     s32 var_s3;
     u8 *object;
 
-    object = (u8 *) &D_80071A00;
+    object = (u8 *) &gPrimaryObjectBase;
 
     if (ovl_11_func_800DD1D0((s16 *) (object + 0xFC)) == 0) {
         D_80128B80[0] = arg0->field_0 + 0x96;

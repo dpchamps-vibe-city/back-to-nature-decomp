@@ -5,10 +5,10 @@
 #include "message_window.h"
 #include "ovl11_interaction_volume_query.h"
 #include "game_flags.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670(s16 arg0);
-s32 ovl_11_func_800CB4E0(void);
 
 s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
     s32 messages[2];
@@ -68,7 +68,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                             arg0->unk38 = (u16) D_801287F0->unk8;
                             RequestMessageWindow(2, messages[0]);
                             ovl_11_func_800CD670(0x14);
-                            ovl_11_func_800CB4E0();
+                            Ovl11ResetPrimaryObjectRequest();
                         }
                         return 0;
                     }
@@ -77,7 +77,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                     if (GetGameFlag(0x16U) != 1) {
                         ((struct Ovl11SelectionResetMode *)&D_8007AFF0)->mode = 3;
                         arg0->unk6C |= 0x400;
-                        ovl_11_func_800CB4E0();
+                        Ovl11ResetPrimaryObjectRequest();
                         return 1;
                     }
                     return 2;
@@ -124,7 +124,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                     RequestPadActuatorSequence(0, 2);
                     ((struct Ovl11SelectionResetMode *)&D_8007AFF0)->mode = result;
                     ovl_11_func_800CD670(0xA);
-                    ovl_11_func_800CB4E0();
+                    Ovl11ResetPrimaryObjectRequest();
                     if (D_801287F0->unk2 != 0xFFFE) {
                         SetGameFlag(3U, 1U);
                         return 1;
@@ -135,7 +135,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                     RequestMessageWindow(2, messages[1]);
                 }
                 ovl_11_func_800CD670(5);
-                ovl_11_func_800CB4E0();
+                Ovl11ResetPrimaryObjectRequest();
                 return 0;
             }
             return 2;

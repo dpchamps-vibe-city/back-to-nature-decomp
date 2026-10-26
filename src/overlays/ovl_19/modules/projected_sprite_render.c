@@ -14,7 +14,7 @@
 #include "sprite_render.h"
 #include "point_projection.h"
 
-void func_800248E8(s32 orderingTable, s16 x, s16 y, s16 frame);
+void func_800248E8(s32 orderingTable, s32 arg1, s32 arg2, s32 arg3);
 
 void Ovl19DrawProjectedSprite(s32 orderingTable, SpriteSourceData *sprite,
                               s16 *position, s16 screenYOffset) {

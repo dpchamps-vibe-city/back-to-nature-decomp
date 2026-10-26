@@ -12,7 +12,7 @@
 
 
 void ovl_19_func_800BAB4C (Ovl19Func800BAB4CArg *arg0);
-void func_800248E8 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);
+void func_800248E8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void ovl_19_func_800BA834(s16 *arg0) {
     SVECTOR sp18;

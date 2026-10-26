@@ -3,6 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "sound_commands.h"
+#include "psyq/memory.h"
+#include "ovl11_record_selection.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -18,7 +20,6 @@ void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D04D4(Ovl11D539CStepObj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
-s32 ovl_11_func_800D3D60(u16 arg0);
 s32 ovl_11_func_800E0C24(Ovl11SetFieldsView *arg0, s32 arg1);
 s32 ovl_11_func_800DF010(Ovl11SetFieldsView *arg0, s32 arg1);
 
@@ -69,7 +70,7 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
             }
         } else {
             var_s2 = 0;
-            var_s0 = (Ovl11SetFieldsView *) ((u8 *) &D_800742EC + ((arg0->index) * 0xB4));
+            var_s0 = (Ovl11SetFieldsView *) ((u8 *) &gSmallTaggedRecordBase + ((arg0->index) * 0xB4));
         }
         if (var_s0->field_30 == 1) {
             ovl_11_func_800D05D0(var_s0, *(Ovl11PaddedVec3 *)&sp18);
@@ -92,9 +93,9 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
         (arg0->timer) = 0x12C;
         (arg0->pool) = 0;
         (arg0->flags) &= ~0x800;
-        var_v0 = ovl_11_func_800D3D60(0);
+        var_v0 = Ovl11ChooseEligibleTaggedRecord(0);
         if (var_v0 < 0) {
-            var_v0 = ovl_11_func_800D3D60(1);
+            var_v0 = Ovl11ChooseEligibleTaggedRecord(1);
             (arg0->pool) = 1;
             if (var_v0 < 0) {
                 ovl_11_func_800D3104((u16 *)arg0, 0x13);

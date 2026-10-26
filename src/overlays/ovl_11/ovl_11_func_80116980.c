@@ -118,7 +118,7 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
         func_8001AAF4((s16) ((u16) D_8012D51A + next_index), 2, row_ot, 0x20, (s16) (s32) (s16) (row_offset + 0x36));
         row_y = row_offset + 0x30;
         if (kind == 0) {
-            record = (Ovl11Func80116F4CArg *) ((u8 *) &D_800742EC + (record_index * 0xB4));
+            record = (Ovl11Func80116F4CArg *) ((u8 *) &gSmallTaggedRecordBase + (record_index * 0xB4));
         } else {
             record = (Ovl11Func80116F4CArg *) ((u8 *) &gTaggedRecordBase + (record_index * 0xB8));
         }

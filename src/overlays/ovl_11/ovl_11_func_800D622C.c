@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3) {
-    char *base = (char *)&D_80071A00;
+    char *base = (char *)&gPrimaryObjectBase;
     s32 temp_a0;
     s32 var_a0;
     s16 limit;
@@ -44,12 +44,12 @@ s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3) {
             var_a1b = 0x64;
         }
         *(u16 *)(base + 0x16) = var_a1b;
-        if ((*(s32 *)((char *)&D_80071A00 - 0xD08) == 6) && ((s16)var_a1b >= 0x64)) {
+        if ((*(s32 *)((char *)&gPrimaryObjectBase - 0xD08) == 6) && ((s16)var_a1b >= 0x64)) {
             *(u16 *)(base + 0x16) = 0x63;
         }
     }
     if (arg2 != 0) {
-        p = (char *)&D_80071A00 - 0x51C8;
+        p = (char *)&gPrimaryObjectBase - 0x51C8;
         *(s32 *)(p + 0x5220) = *(s32 *)(p + 0x5220) + arg2;
         var_v0_2 = *(s32 *)(base + 0x58);
         if (var_v0_2 < 0) {

@@ -10,11 +10,11 @@
 #include "psyq/memory.h"
 #include "psyq/libgpu.h"
 #include "ovl11_object_events.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 unsigned long long ovl_11_func_800BF450(void);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
-s32 ovl_11_func_800CB540(u16 *arg0);
 s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1);
 Ovl11CC7CCSpawn *ovl_11_func_800F4994(Vec3 *arg0);
 s32 ovl_11_func_800F3E44(s16 arg0);
@@ -69,7 +69,7 @@ s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0) {
             request.count = kind;
             request.id = Ovl11MapToLowerPairedItemId(arg0->unk2);
             ovl_11_func_800CCBE8((Ovl11CC4E0Object *)arg0);
-            ovl_11_func_800CB540(&request.id);
+            Ovl11InstallPrimaryObjectRequest(&request.id);
             return 1;
         }
         if (ovl_11_func_800CC4E0((Ovl11CC4E0Object *)arg0, (Vec3 *)&next) != 0) {

@@ -13,9 +13,8 @@
 #include "game_flags.h"
 #include "ovl11_selection_mode_state.h"
 #include "ovl11_interaction_sequence.h"
+#include "ovl11_primary_object_requests.h"
 
-s32 ovl_11_func_800CB4E0 (void);
-s32 ovl_11_func_800CB540 (u16 *arg0);
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800FFA40 (void);
 s32 ovl_11_func_800F4B5C (s16 arg0);
@@ -72,7 +71,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
         coord[0] = (*(u16 *) ((u8 *) arg0 + 0x100)) + ((*(u16 *) ((u8 *) arg0 + 0x110)) + (u16) temp_a3[0]);
         coord[2] = (*(u16 *) ((u8 *) arg0 + 0x108)) + ((*(u16 *) ((u8 *) arg0 + 0x118)) + (u16) temp_a3[1]);
         temp_v0 = Ovl11FindFlaggedVolume((u8 *) ((struct Ovl11SpriteWork *) &D_8007AFF0)->header, coord);
-        if ((temp_v0 != NULL) && (temp_s0 = *(u16 *) ((u8 *) temp_v0 + 2), ovl_11_func_800CB4E0(), temp_v1 = temp_s0 - 1, ((temp_v1 < 0x31U) != 0))) {
+        if ((temp_v0 != NULL) && (temp_s0 = *(u16 *) ((u8 *) temp_v0 + 2), Ovl11ResetPrimaryObjectRequest(), temp_v1 = temp_s0 - 1, ((temp_v1 < 0x31U) != 0))) {
             switch (temp_s0) {
             case 45:
                 var_v0 = 0;
@@ -85,7 +84,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
                             if (temp_v0_2 != 0) {
                                 request[0] = temp_v0_2;
                                 request[2] = 1;
-                                ovl_11_func_800CB540(request);
+                                Ovl11InstallPrimaryObjectRequest(request);
                                 return 0x2D;
                             }
                             goto block_101;
@@ -186,7 +185,7 @@ block_28:
                             item[0] = ((struct Ovl11InteractionState *) D_8006C838)->queuedItem;
                             item[1] = 0;
                             item[2] = 1;
-                            ovl_11_func_800CB540(item);
+                            Ovl11InstallPrimaryObjectRequest(item);
                             ((struct Ovl11InteractionState *) D_8006C838)->queuedItem = 0;
                         }
                     } else if (ovl_11_func_800F4B5C(temp_a0) != 0) {
@@ -305,7 +304,7 @@ block_28:
                         item[0] = 0x84;
                         item[1] = 0;
                         item[2] = 1;
-                        ovl_11_func_800CB540(item);
+                        Ovl11InstallPrimaryObjectRequest(item);
                     } else {
                         return 0;
                     }
@@ -329,7 +328,7 @@ block_28:
                 if (temp_v0_3 != 0) {
                     if ((temp_v0_3 == 0x177) || ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0)) {
                         ovl_11_func_80118A68((s16) ovl_11_func_80118C28(temp_v0_3));
-                        ovl_11_func_800CB4E0();
+                        Ovl11ResetPrimaryObjectRequest();
                         goto block_78;
                     }
                     goto block_101;
@@ -346,7 +345,7 @@ block_78:
                 return 0x20;
             case 21:
                 ovl_11_func_80118A68(0x1B);
-                ovl_11_func_800CB4E0();
+                Ovl11ResetPrimaryObjectRequest();
                 return 0x15;
             case 6:
                 var_v0 = 6;
@@ -378,7 +377,7 @@ block_78:
                             event[0] = 0x97;
                             event[1] = 0;
                             event[2] = (s16) temp_v0_4;
-                            ovl_11_func_800CB540(event);
+                            Ovl11InstallPrimaryObjectRequest(event);
                         }
                         return 0x2F;
                     }
@@ -392,7 +391,7 @@ block_78:
                         event[0] = (u16) (*(s16 *) ((u8 *) temp_v0 + 4));
                         event[1] = 0;
                         event[2] = 1;
-                        ovl_11_func_800CB540(event);
+                        Ovl11InstallPrimaryObjectRequest(event);
                         SetGameFlag(((*(u16 *) ((u8 *) temp_v0 + 6)) + 0xA1) & 0xFFFF, 1U);
                     }
                     return 0x30;

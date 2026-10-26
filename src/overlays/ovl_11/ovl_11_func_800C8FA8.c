@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "game_flags.h"
+#include "ovl11_primary_object_requests.h"
 
 void ovl_11_func_800F0FB0(s32 arg0);
-s32 ovl_11_func_800CB4E0(void);
 
 s32 ovl_11_func_800C8FA8(Ovl11C8FA8Object *arg0) {
     u16 *temp_s1;
@@ -26,7 +26,7 @@ s32 ovl_11_func_800C8FA8(Ovl11C8FA8Object *arg0) {
             }
             ovl_11_func_800F0FB0(3);
             arg0->unk22 = temp_s1[0];
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 1;
         }
         return 0;

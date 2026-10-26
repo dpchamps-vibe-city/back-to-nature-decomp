@@ -63,7 +63,7 @@ s32 ovl_11_func_800FFB08(void) {
             case 1:
                 SetGameFlag(0x48, 1);
             case 0:
-                Ovl11BeginPositionTransition((Ovl11C7010Object *)&D_80071A00);
+                Ovl11BeginPositionTransition((Ovl11C7010Object *)&gPrimaryObjectBase);
                 break;
             case 2:
                 ((Ovl11TriggerWorkView *)&D_8007AFF0)->field_254A0 = 0xF;

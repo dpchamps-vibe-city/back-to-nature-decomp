@@ -1,5 +1,35 @@
 // Semantic labels within ovl_23 only; preserve container/address identities.
 
+// Scene subphases, message stages and the simulation/composition spine.
+Ovl23DispatchRecordRunSubphase = 0x800B7EA4; // type:func
+Ovl23UpdateRecordRunSetup = 0x800B7F00; // type:func
+Ovl23WaitRecordRunReady = 0x800B8018; // type:func
+Ovl23DispatchRecordRunStage = 0x800B8084; // type:func
+Ovl23BeginRecordRunExitFade = 0x800B80CC; // type:func
+Ovl23FinishRecordRunExit = 0x800B8104; // type:func
+Ovl23InitRecordRunBounds = 0x800B81AC; // type:func
+Ovl23ResetRecordRunState = 0x800B823C; // type:func
+Ovl23InitDecisionRecords = 0x800B8290; // type:func
+Ovl23InitActorRecords = 0x800B8354; // type:func
+Ovl23EnterRecordRunStages = 0x800B850C; // type:func
+Ovl23UpdateRecordStage1 = 0x800B853C; // type:func
+Ovl23UpdateRecordStage2 = 0x800B8584; // type:func
+Ovl23UpdateRecordStage3 = 0x800B85FC; // type:func
+Ovl23UpdateRecordStage4 = 0x800B8644; // type:func
+Ovl23UpdateRecordStage5 = 0x800B8754; // type:func
+Ovl23UpdateRecordStage6 = 0x800B87F8; // type:func
+Ovl23ApplyPadToAnchorRecord = 0x800B8B94; // type:func
+Ovl23StepRecordWindows = 0x800B8C18; // type:func
+Ovl23StepActorDecisions = 0x800B8FA4; // type:func
+Ovl23DrawPausedRecordFrame = 0x800B92E8; // type:func
+Ovl23UpdateRecordRunFrame = 0x800B9310; // type:func
+Ovl23InitRecordChoices = 0x800B97E0; // type:func
+Ovl23ReturnActorToAnchor = 0x800B989C; // type:func
+Ovl23ReturnDecisionRecordToAnchor = 0x800B9A00; // type:func
+gOvl23RecordRunSubphases = 0x800BB9E4; // type:data size:0x14
+gOvl23RecordRunStages = 0x800BB9F8; // type:data size:0x1C
+gOvl23RecordRunSetupStage = 0x800BBA3C; // type:data size:0x1
+
 // Adjacent work-record halfwords, with distinct caps and increment sizes.
 Ovl23RaiseRecordByteRangeValue = 0x800BB7A0; // type:func
 Ovl23RaiseRecordHalfwordRangeValue = 0x800BB800; // type:func

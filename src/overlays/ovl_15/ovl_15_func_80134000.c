@@ -17,7 +17,7 @@ void ovl_15_func_80134000(s32 arg0, s16 arg1) {
 
     v = D_8013759E;
     i = 0;
-    idx = (arg0 != (s32)&D_800742EC);
+    idx = (arg0 != (s32)&gSmallTaggedRecordBase);
     for (; i < 5; i++) {
         if (D_80140F90[idx][i].unk0 == v && D_80140F90[idx][i].unk2 == arg1) {
             break;

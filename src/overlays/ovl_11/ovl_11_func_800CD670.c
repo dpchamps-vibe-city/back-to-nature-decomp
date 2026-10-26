@@ -4,7 +4,7 @@
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void ovl_11_func_800CD670(s16 arg0) {
-    u8 *base = (u8 *)&D_80071A00;
+    u8 *base = (u8 *)&gPrimaryObjectBase;
 
     if (*(s32 *)(base + 0x6C) & 0x40000000) {
         return;

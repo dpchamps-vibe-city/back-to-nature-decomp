@@ -59,7 +59,7 @@ s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2) {
             if (var_a2 != 0) {
                 if (var_a2 == 2) {
                     if (!(arg0->flags & 0x200000)) {
-                        ovl_11_func_800C70CC((Ovl11C7010Object *) &D_80071A00, 1U, 0, -2);
+                        ovl_11_func_800C70CC((Ovl11C7010Object *) &gPrimaryObjectBase, 1U, 0, -2);
                     }
                     arg0->flags = (s32) (arg0->flags | 0x200000);
                 }

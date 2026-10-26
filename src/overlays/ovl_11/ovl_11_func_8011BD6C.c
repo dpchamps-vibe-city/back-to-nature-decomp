@@ -82,7 +82,7 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
             }
             break;
         case 13:
-            if (D_80071A6C & 0x10000000) {
+            if (gPrimaryObjectFlags & 0x10000000) {
                 Ovl11ResumeInteractionStep();
             }
             break;

@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F3898(u16 arg0, u16 arg1);
 s32 ovl_11_func_800F3950(u16 arg0);
-s32 ovl_11_func_800CB540(u16 *arg0);
 
 void ovl_11_func_800C84DC(Recon_ovl_11_func_800C7270_A0View *arg0) {
     u16 item[3];
@@ -22,7 +22,7 @@ void ovl_11_func_800C84DC(Recon_ovl_11_func_800C7270_A0View *arg0) {
             PlaySoundEffect(7);
             item[0] = 0x3F;
             item[2] = 1;
-            ovl_11_func_800CB540(item);
+            Ovl11InstallPrimaryObjectRequest(item);
         }
         return;
     }

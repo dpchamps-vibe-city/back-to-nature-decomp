@@ -67,7 +67,7 @@ scan_primary:
     }
     index = 0;
     if (poolMask & 4) {
-        state = (unsigned char *) &D_800742EC;
+        state = (unsigned char *) &gSmallTaggedRecordBase;
 scan_secondary:
         if (Ovl11TestRecordFlagSelection((Ovl11RecordFlagView *) state, selectionMask)) {
             return 1;

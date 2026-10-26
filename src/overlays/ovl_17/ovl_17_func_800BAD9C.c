@@ -6,7 +6,7 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 
-void func_800248E8(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
+void func_800248E8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_17_func_800BAEF0(void);
 
 void ovl_17_func_800BAD9C(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1) {

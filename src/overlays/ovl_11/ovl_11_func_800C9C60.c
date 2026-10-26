@@ -6,7 +6,7 @@ void ovl_11_func_800CD0C0(s32 *arg0);
 void ovl_11_func_800C9C60(void) {
     u8 *base;
 
-    base = (u8 *)&D_80071A00;
+    base = (u8 *)&gPrimaryObjectBase;
     D_80128C54 = 0;
     D_80128C4C_dispatch = 0;
     D_801231F4 = 0;

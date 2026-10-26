@@ -111,7 +111,7 @@ void Ovl11UpdateAreaFrame(void) {
     Ovl11UpdateChoiceMessages();
     Ovl11UpdateSelectionMessage();
     if (((struct Ovl11FrameWork *) &D_8007AFF0)->mode == 0) {
-        gOvl11AreaFrameResult = ovl_11_func_800CD9A0((Ovl11C7010Object *) &D_80071A00);
+        gOvl11AreaFrameResult = ovl_11_func_800CD9A0((Ovl11C7010Object *) &gPrimaryObjectBase);
     }
     SCRATCH_STACK_END();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);

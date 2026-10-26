@@ -38,6 +38,10 @@ struct Ovl11TextureCoordinates;
 
 typedef struct Ovl11TextureCoordinates Ovl11TextureCoordinates;
 
+struct Ovl23Func800BB0C8Arg;
+
+typedef struct Ovl23Func800BB0C8Arg Ovl23Func800BB0C8Arg;
+
 struct Ovl25ObjectRecord;
 
 typedef struct Ovl25ObjectRecord Ovl25ObjectRecord;
@@ -2940,12 +2944,12 @@ typedef struct {
                s16 unk40;
 } Ovl23BAA60Arg;
 
-typedef struct {
+struct Ovl23Func800BB0C8Arg {
                char pad_0[0x4];
                s16 unk4;
                s16 unk6;
                s16 unk8;
-} Ovl23Func800BB0C8Arg;
+};
 
 typedef struct {
                s16 index;

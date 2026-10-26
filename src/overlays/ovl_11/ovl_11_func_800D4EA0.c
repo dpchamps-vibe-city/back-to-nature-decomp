@@ -2,10 +2,11 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "random.h"
+#include "psyq/memory.h"
+#include "ovl11_record_selection.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800D425C(u16 *arg0);
-s32 ovl_11_func_800D3D60(u16 arg0);
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 
 s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
@@ -53,9 +54,9 @@ s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
         result = 1;
         *(s16 *)((u8 *)arg0 + 0x16) = 0;
         arg0->field_34 &= ~0x800;
-        slot = ovl_11_func_800D3D60(0);
+        slot = Ovl11ChooseEligibleTaggedRecord(0);
         if (slot < 0) {
-            slot = ovl_11_func_800D3D60(1);
+            slot = Ovl11ChooseEligibleTaggedRecord(1);
             *(s16 *)((u8 *)arg0 + 0x16) = 1;
             if (slot < 0) {
                 ovl_11_func_800D3104((u16 *)arg0, 0x13);

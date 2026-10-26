@@ -7,7 +7,7 @@ void ovl_11_func_800C9BB8(void) {
     s16 (*base)[3];
     s16 (*table)[3];
 
-    base = (s16 (*)[3])&D_80071A00;
+    base = (s16 (*)[3])&gPrimaryObjectBase;
     table = base + 22;
     for (i = 0; i < 2; i++) {
         ovl_11_func_800D6A94(table[i][0]);

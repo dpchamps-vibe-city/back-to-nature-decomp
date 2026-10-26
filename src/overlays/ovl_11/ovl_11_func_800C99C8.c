@@ -12,7 +12,7 @@ s32 ovl_11_func_800C99C8(void) {
     u16 temp_s3;
     u16 var_s0;
 
-    obj = (Ovl11C7010Object *) &D_80071A00;
+    obj = (Ovl11C7010Object *) &gPrimaryObjectBase;
     var_s2 = 0;
     var_s0 = *(u16 *) &D_801231F4;
     temp_s3 = obj->unk38;
@@ -35,21 +35,21 @@ s32 ovl_11_func_800C99C8(void) {
                 ovl_11_func_800C70CC(obj, 4U, D_80071A38 + 6, -2);
             }
             obj->unk6C = (s32) (obj->unk6C & 0xDFFFFFFF);
-            ovl_11_func_800C9938((Ovl119938View *) &D_80071A00);
+            ovl_11_func_800C9938((Ovl119938View *) &gPrimaryObjectBase);
             return 1;
         }
         ovl_11_func_800C70CC(obj, 1U, 0, -2);
         obj->unk6C = (s32) ((obj->unk6C & 0xDFFFFFFF) | 0x04000000);
         return 0;
     }
-    ovl_11_func_800C9938((Ovl119938View *) &D_80071A00);
+    ovl_11_func_800C9938((Ovl119938View *) &gPrimaryObjectBase);
     if (var_s2 != 0) {
         if ((obj->unk38 != temp_s3) || (obj->unk3C != 4)) {
-            ovl_11_func_800C70CC(obj, 4, ((Ovl11C7010Object *) &D_80071A00)->unk38 + 6, -2);
+            ovl_11_func_800C70CC(obj, 4, ((Ovl11C7010Object *) &gPrimaryObjectBase)->unk38 + 6, -2);
             obj->unk6C &= 0xDFFFFFFF;
         }
     } else if ((obj->unk38 != temp_s3) || (obj->unk3C != 2)) {
-        ovl_11_func_800C70CC(obj, 2, ((Ovl11C7010Object *) &D_80071A00)->unk38 + 1, -2);
+        ovl_11_func_800C70CC(obj, 2, ((Ovl11C7010Object *) &gPrimaryObjectBase)->unk38 + 1, -2);
         obj->unk6C &= 0xDFFFFFFF;
     }
     return 1;

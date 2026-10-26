@@ -18,7 +18,7 @@ s32 ovl_11_func_800CF044(s16 arg0, Ovl25SetupStatePair *arg1, VECTOR *arg2) {
     u16 temp_v1;
 
     if ((u32) (arg0 - 0x109) < 2U) {
-        var_a0 = &D_800742EC;
+        var_a0 = &gSmallTaggedRecordBase;
         for (var_v1 = 0; var_v1 < 10; var_v1++, var_a0 += 0x2D) {
             if ((*(s32 *) ((u8 *) var_a0 + 0x34)) & 0x20000) {
                 goto block_14;

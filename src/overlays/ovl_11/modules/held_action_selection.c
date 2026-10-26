@@ -27,11 +27,11 @@
 #include "psyq/memory.h"
 #include "sprite_render.h"
 #include "point_projection.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800CD3C4(s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
-s32 ovl_11_func_800CB540(u16 *arg0);
 s16 Ovl11SelectHeldActionDelay(Ovl11SelectArg *state);
 s16 Ovl11SelectHeldActionOutcome(s32 *state);
 void Ovl11DrawHeldActionSprite(s32 arg0);
@@ -111,7 +111,7 @@ s32 Ovl11UpdateHeldSelectionAction(Ovl11SelectionObject *obj) {
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *)obj);
             if (state[2] != -1) {
                 item[0] = Ovl11SelectHeldActionOutcome(state);
-                if (item[0] != 0) ovl_11_func_800CB540((u16 *)item);
+                if (item[0] != 0) Ovl11InstallPrimaryObjectRequest((u16 *)item);
             }
         }
         break;

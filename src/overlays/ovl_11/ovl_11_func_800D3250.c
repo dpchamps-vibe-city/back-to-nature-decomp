@@ -1,8 +1,7 @@
 #include "common.h"
 #include "ovl11_clock_calendar.h"
-
-/* The callee masks its only read incoming argument to u16. */
-s32 ovl_11_func_800D3D60(u16 arg0);
+#include "psyq/memory.h"
+#include "ovl11_record_selection.h"
 
 s32 ovl_11_func_800D3250(u16 *arg0) {
     s32 second;
@@ -20,10 +19,10 @@ s32 ovl_11_func_800D3250(u16 *arg0) {
         if (*(s32 *)(state + 0x44F8) & 0x01000000) {
             if (*(s16 *)(state + 0x44C0) >= 7) {
                 second = 0;
-                index = ovl_11_func_800D3D60(0);
+                index = Ovl11ChooseEligibleTaggedRecord(0);
                 if (index < 0) {
                     second = 1;
-                    index = ovl_11_func_800D3D60(1);
+                    index = Ovl11ChooseEligibleTaggedRecord(1);
                 }
                 if (second == 0) {
                     if (index > 0) {

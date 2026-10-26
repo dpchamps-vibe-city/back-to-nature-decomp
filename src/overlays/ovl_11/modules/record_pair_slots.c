@@ -43,7 +43,7 @@ void Ovl11ResyncRecordRowPlacements(s32 poolKind) {
     } else {
         i = 0;
         selectedMode = 4;
-        record = (u8 *)&D_800742EC;
+        record = (u8 *)&gSmallTaggedRecordBase;
         do {
             if (*(u16 *)(record + 0) != 0 && *(s16 *)(record + 0x30) == selectedMode) {
                 Ovl11ApplyRecordRowPlacement((s32)record, (s16)i, 0);

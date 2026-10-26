@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-s32 ovl_11_func_800CB4E0(void);
+#include "ovl11_primary_object_requests.h"
 
 void ovl_11_func_800CCF58(Ovl11C7010Object *arg0) {
     s16 itemIndex;
@@ -11,7 +10,7 @@ void ovl_11_func_800CCF58(Ovl11C7010Object *arg0) {
     itemIndex = arg0->itemIndex;
     if (itemIndex == 0) {
         arg0->unk6C &= 0xE7FF7FFF;
-        ovl_11_func_800CB4E0();
+        Ovl11ResetPrimaryObjectRequest();
     } else {
         flagWord = &arg0->unk6C;
         flags = *flagWord & 0xE7FFFFFF;

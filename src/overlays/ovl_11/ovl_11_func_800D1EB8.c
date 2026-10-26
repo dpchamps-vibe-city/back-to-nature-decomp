@@ -72,14 +72,14 @@ void ovl_11_func_800D1EB8(void) {
         }
     }
     for (i = 0; i < 10; i++) {
-        entryB4 = (s32 *)((u8 *)&D_800742EC + i * 0xB4);
+        entryB4 = (s32 *)((u8 *)&gSmallTaggedRecordBase + i * 0xB4);
         far_base2 = D_8009AFF0;
-        base2 = (u8 *)(&D_800742EC - 0x1EAD);
+        base2 = (u8 *)(&gSmallTaggedRecordBase - 0x1EAD);
         if (*(u16 *)entryB4 != 0) {
             ovl_11_func_800E276C((s16 *)entryB4);
             update_mask = 0x20000;
             if (*(s16 *)(far_base2 + 0x5476) != *(s16 *)((u8 *)entryB4 + 0x30)) {
-                Ovl11ResetTimedSpriteEffect((s16 *)((u8 *)&D_800742EC + i * 0xB4 + 0xA8));
+                Ovl11ResetTimedSpriteEffect((s16 *)((u8 *)&gSmallTaggedRecordBase + i * 0xB4 + 0xA8));
             } else {
                 if (!(update_mask & *(s32 *)((u8 *)entryB4 + 0x34))) {
                     if (!(*(s32 *)(base2 + 0xC) & 0x08000000)) {
@@ -87,7 +87,7 @@ void ovl_11_func_800D1EB8(void) {
                     }
                     if (!(*(s32 *)((u8 *)entryB4 + 0x34) & 0x02000000)) {
                         ovl_11_func_800E1EC0((u8 *)entryB4);
-                        Ovl11TickTimedSpriteEffect((Ov11Timer *)((u8 *)&D_800742EC + i * 0xB4 + 0xA8));
+                        Ovl11TickTimedSpriteEffect((Ov11Timer *)((u8 *)&gSmallTaggedRecordBase + i * 0xB4 + 0xA8));
                     }
                 }
             }

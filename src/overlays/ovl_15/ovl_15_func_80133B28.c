@@ -33,7 +33,7 @@ s32 ovl_15_func_80133B28(s16 arg0) {
     if ((arg0 << 0x10) != 0) {
         var_s3 = gOvl15SaveWorkBase;
     } else {
-        var_s3 = (u8 *) &D_800742EC;
+        var_s3 = (u8 *) &gSmallTaggedRecordBase;
     }
     temp_a1 = gActiveRenderContext->field_D8;
     temp_s7 = temp_a1 + 0x14;

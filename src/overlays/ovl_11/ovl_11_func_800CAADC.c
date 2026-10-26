@@ -21,7 +21,7 @@ void ovl_11_func_800CAADC(void) {
     Ovl11CameraOffsetView *cameraOffset;
     s32 *screen;
 
-    player = (Ovl11CA708Player *)&D_80071A00;
+    player = (Ovl11CA708Player *)&gPrimaryObjectBase;
     if (!(player->flags & 2) && !(((Ovl11MovementState *)((u8 *)player - 0x51C8))->flags10 & 0x40000000)) {
         ovl_11_func_800CA708();
     }

@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s32 D_80071A6C;
+extern s32 gPrimaryObjectFlags;
 extern u16 D_80071A36;
 
 typedef struct {
@@ -16,7 +16,7 @@ typedef struct {
 s32 ovl_11_func_800E953C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (arg3 == 0) {
         if (arg0 != 0) {
-            return (D_80071A6C & arg2) != 0;
+            return (gPrimaryObjectFlags & arg2) != 0;
         }
         if (arg1 != 0) {
             Flag32View *view = (Flag32View *)&D_8006C838;

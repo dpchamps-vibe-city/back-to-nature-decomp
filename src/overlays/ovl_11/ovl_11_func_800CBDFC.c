@@ -1,8 +1,8 @@
 #include "common.h"
 
-extern s32 D_80071A6C;
+extern s32 gPrimaryObjectFlags;
 
 s32 ovl_11_func_800CBDFC(void) {
-    s32 t = D_80071A6C & 0x20000000;
+    s32 t = gPrimaryObjectFlags & 0x20000000;
     return t == 0;
 }

@@ -10,11 +10,11 @@
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_held_action_selection.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
-s32 ovl_11_func_800CB4E0 (void);
 void ovl_11_func_800C47F0 (void);
 void ovl_11_func_800CD6F4 (void *arg0);
 s32 ovl_11_func_800C9424 (void);
@@ -49,7 +49,7 @@ void ovl_11_func_800C401C(void) {
         ovl_11_func_800C498C((Ovl11C498CObject *) obj);
         temp_v1 = obj->flags;
         if ((temp_v1 & 0x20000) && !(obj->flags & 0x20000010)) {
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             D_80123158 = 0;
             obj->flags = (s32) (obj->flags & 0xFFFDFFFF);
         }

@@ -103,7 +103,7 @@ after_actor:
     }
     if (arg5 & 8) {
         query.field_18 = 0x2008;
-        smallEntry = &D_800742EC;
+        smallEntry = &gSmallTaggedRecordBase;
         for (j = 0; j < 0xAU; j++, smallEntry += 0x2D) {
             if (ovl_11_func_800BE2C4((s32 **) &query, (u16 *) smallEntry)) {
                 goto other_hit;

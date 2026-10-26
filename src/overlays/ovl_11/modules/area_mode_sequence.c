@@ -41,6 +41,7 @@
 #include "map_cell_texture.h"
 #include "area_grid_triggers.h"
 #include "ovl11_weather_effect.h"
+#include "ovl11_primary_object_requests.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -56,7 +57,6 @@ void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
 void ovl_11_func_800BCF28(void);
 s32 ovl_11_func_800BD374(s32 arg0, s32 arg1);
-s32 ovl_11_func_800CB4E0(void);
 void ovl_11_func_800CD624(void);
 void ovl_11_func_800CD670(s16 arg0);
 void ovl_11_func_800DBAB0(void);
@@ -120,7 +120,7 @@ void Ovl11StepAreaModeState(void) {
         }
         break;
     case 3:
-        ovl_11_func_800CB4E0();
+        Ovl11ResetPrimaryObjectRequest();
         BeginScreenFadeFeedback(20);
         ovl_11_func_800F4E84();
         gOvl11AreaSoundEffectPending = 0;
@@ -142,7 +142,7 @@ void Ovl11StepAreaModeState(void) {
         }
         break;
     case 24:
-        ovl_11_func_800CB4E0();
+        Ovl11ResetPrimaryObjectRequest();
         WORK->object = 0;
         WORK->state = 25;
         STATUS->flags |= 0x8000000;

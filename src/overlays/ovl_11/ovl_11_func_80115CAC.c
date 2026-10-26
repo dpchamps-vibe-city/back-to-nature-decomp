@@ -49,7 +49,7 @@ s32 ovl_11_func_80115CAC(void) {
             } else {
                 ovl_11_func_800F2354(500, 1);
             }
-            ovl_11_func_800E2904((s32)((u8 *)&D_800742EC + ovl_11_func_80115F38() * 0xB4));
+            ovl_11_func_800E2904((s32)((u8 *)&gSmallTaggedRecordBase + ovl_11_func_80115F38() * 0xB4));
             Ovl11SetInteractionSteps(5, 3);
             break;
         case 2:

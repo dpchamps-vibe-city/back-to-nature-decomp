@@ -11,7 +11,7 @@ s32 ovl_15_func_801340B8(s32 arg0, s16 arg1) {
 
     v = D_8013759E;
     i = 0;
-    idx = (arg0 != (s32)&D_800742EC);
+    idx = (arg0 != (s32)&gSmallTaggedRecordBase);
     p = D_80140F90;
     p += idx * 0x14;
     for (; i < 5; i++) {

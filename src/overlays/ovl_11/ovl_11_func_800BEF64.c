@@ -19,7 +19,7 @@ s32 ovl_11_func_800BEF64(Ovl11CollisionQuery *arg0) {
     entry = D_800763F4;
     box[4] = position[1] - 0x14;
     box[5] = position[1] + 0x14;
-    if (D_80071A6C & 8) {
+    if (gPrimaryObjectFlags & 8) {
         return 0;
     }
     for (i = 1; i < 0x25; i++, entry++) {

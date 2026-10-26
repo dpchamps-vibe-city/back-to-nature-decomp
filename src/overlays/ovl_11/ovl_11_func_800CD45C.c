@@ -11,7 +11,7 @@ extern Cd45cEntry D_801232A4[4];
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 
 void ovl_11_func_800CD45C(void) {
-    char *base = (char *)&D_80071A00;
+    char *base = (char *)&gPrimaryObjectBase;
     s16 *cmp;
     Cd45cEntry *p;
     u32 i;

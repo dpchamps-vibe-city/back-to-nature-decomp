@@ -1040,8 +1040,8 @@ typedef struct {
     /* 0x06 */ s16 extra;
 } Ovl19Func800BAC40Arg;
 
-/* Shared by ovl_23_func_800BB0C8 and ovl_23_func_800BB0D8. */
-typedef struct {
+/* Shared by the overlay-23 actor/anchor control setters. */
+typedef struct Ovl23Func800BB0C8Arg {
     /* 0x00 */ char pad_0[0x4];
     /* 0x04 */ s16 unk4;
     /* 0x06 */ s16 unk6;

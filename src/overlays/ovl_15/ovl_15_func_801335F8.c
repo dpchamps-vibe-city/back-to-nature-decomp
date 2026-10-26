@@ -34,7 +34,7 @@ void ovl_15_func_801335F8(void) {
             var_s2 = gOvl15SaveWorkBase;
             var_s4 = var_s7 + 0x88;
         } else {
-            var_s2 = (u8 *)&D_800742EC;
+            var_s2 = (u8 *)&gSmallTaggedRecordBase;
             var_s4 = var_s7 + 0x88;
         }
         next = var_v1 + 1;

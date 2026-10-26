@@ -5,7 +5,7 @@ typedef struct __attribute__((packed)) {
 } Ovl11UnalignedWord;
 
 void ovl_11_func_800CCC5C(void) {
-    char *dst = (char *)&D_80071A00;
+    char *dst = (char *)&gPrimaryObjectBase;
     char *far_base = (char *)&D_8007AFF0;
     Ovl11UnalignedWord *src = *(Ovl11UnalignedWord **)(far_base + 0x25388);
 

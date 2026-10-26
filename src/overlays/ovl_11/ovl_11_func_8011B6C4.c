@@ -18,7 +18,7 @@ s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2) {
         state++;
         break;
     case 1:
-        if ((D_80071A6C & 0x34008000) == 0x14008000) {
+        if ((gPrimaryObjectFlags & 0x34008000) == 0x14008000) {
             result = 1;
         }
         break;

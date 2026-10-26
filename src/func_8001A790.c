@@ -8,7 +8,7 @@ s32 func_8001A790(s32 arg0) {
     s32 i;
 
     var_a0 = D_8005F0F8;
-    var_s1 = (s32)&D_800742EC;
+    var_s1 = (s32)&gSmallTaggedRecordBase;
     for (i = 0; i < 10; i++) {
         var_a0 = func_8001A808(var_a0, var_s1, arg0);
         var_s1 += 0xB4;

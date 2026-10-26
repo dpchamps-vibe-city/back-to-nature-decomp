@@ -29,7 +29,7 @@ s32 ovl_11_func_800C9424(void) {
     s32 direction;
     u32 delay;
 
-    obj = (Ovl11C7010Object *)&D_80071A00;
+    obj = (Ovl11C7010Object *)&gPrimaryObjectBase;
     pressed = *(u16 *)&D_801231F8;
     held = *(u16 *)&D_801231F4;
     if ((((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25474 == 0x37 ||

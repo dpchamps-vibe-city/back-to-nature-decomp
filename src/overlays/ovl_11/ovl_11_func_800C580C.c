@@ -11,12 +11,12 @@
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_paired_item_ids.h"
 #include "area_grid_triggers.h"
+#include "ovl11_primary_object_requests.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D58D0 (void *arg0);
 void ovl_11_func_800CCF14 (C580C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
-s32 ovl_11_func_800CB4E0 (void);
 void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
@@ -36,7 +36,6 @@ void ovl_11_func_800CE034 (C580C_ad72053e5aa9_StructOvl11CE034A *arg0, C580C_ad7
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800D666C (s16 arg0);
-s32 ovl_11_func_800CB540 (u16 *arg0);
 void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
@@ -113,7 +112,7 @@ reset_done:
             }
             ovl_11_func_800CCF14(temp_s0);
             arg0->unk6C &= 0xFFFF7FFB;
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x50:
@@ -122,7 +121,7 @@ reset_done:
             if (arg0->attributes & 8) {
                 ovl_11_func_800D58D0((void *) ((u8 *) arg0 + 0x84));
             }
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x51:
@@ -135,7 +134,7 @@ reset_done:
             }
             ovl_11_func_800CCF14(temp_s0_2);
             arg0->unk6C &= 0xFFFF7FFB;
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x4E:
@@ -153,7 +152,7 @@ reset_done:
             if (arg0->attributes & 8) {
                 ovl_11_func_800D58D0((void *) ((u8 *) arg0 + 0x84));
             }
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x4D:
@@ -174,7 +173,7 @@ reset_done:
             status &= 0xEFFFFFFF;
             arg0->unk6C = status;
             ovl_11_func_800CCF14((C580C_7f0a9cc905ed_UnkStruct800D72E8 *) ((u8 *) arg0 + 0x84));
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
 negative_action:
             ovl_11_func_800D622C(-1, ovl_11_func_800CD3C4(0), 0, 0);
             break;
@@ -186,7 +185,7 @@ negative_action:
             ovl_11_func_800C6770((Ovl11C6770Object *) arg0);
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             arg0->unk6C &= ~0x4000;
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x3B:
             PlaySoundEffect(0x10);
@@ -217,7 +216,7 @@ state_done:
             arg0->unk6C &= 0xEFFF3FFF;
             ovl_11_func_800D58D0(temp_s0_3);
             ovl_11_func_800CCF14(temp_s0_3);
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x46:
             if ((D_80128C50 & 0x80) && (ovl_11_func_800F3EF0() != 0)) {
@@ -226,7 +225,7 @@ state_done:
             }
             arg0->unk6C &= ~0x4000;
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x4B:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -268,7 +267,7 @@ state_done:
             }
             arg0->unk6C &= 0xE7FF3FFF;
             ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x3A:
             if (arg0->unk6C & 0x80) {
@@ -337,7 +336,7 @@ state_done:
                 }
                 request1.count = 1;
                 PlaySoundEffect(7);
-                ovl_11_func_800CB540(&request1.id);
+                Ovl11InstallPrimaryObjectRequest(&request1.id);
                 return 0;
             } else if (arg0->state == 0x5A) {
                 request2.id = 0x94;
@@ -352,7 +351,7 @@ state_done:
                 }
                 request2.count = 1;
                 PlaySoundEffect(7);
-                ovl_11_func_800CB540(&request2.id);
+                Ovl11InstallPrimaryObjectRequest(&request2.id);
                 return 0;
             } else if (arg0->state == 0x5B) {
                 request3.id = 0x88;
@@ -370,19 +369,19 @@ state_done:
                 }
                 request3.count = 1;
                 PlaySoundEffect(7);
-                ovl_11_func_800CB540(&request3.id);
+                Ovl11InstallPrimaryObjectRequest(&request3.id);
                 return 0;
             } else if (arg0->state == 0x5C) {
                 ovl_11_func_800F3AF0(1U, 0U);
             }
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             break;
         case 0x33:
             ovl_11_func_800F2354((s32) (*(s16 *) ((u8 *) D_8006C858 + 0x1002)), 0);
             ovl_11_func_800D666C(arg0->item);
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             goto advance_action;
         case 0x34:
             arg0->kind = 1;
@@ -393,7 +392,7 @@ state_done:
             ovl_11_func_800D666C(arg0->item);
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             goto advance_action;
         case 0x45:
             arg0->unk6C |= 0x10;
@@ -403,7 +402,7 @@ finish_action:
         case 0x32:
             if ((ovl_11_func_800C8FA8((Ovl11C8FA8Object *) arg0) == 0) && (D_80128C54 & 0x400)) {
                 ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) D_80128C4C_dispatch, 0xD);
-                ovl_11_func_800CB4E0();
+                Ovl11ResetPrimaryObjectRequest();
             }
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0xF0));
             arg0->unk6C &= 0xFFFF7FFF;
@@ -416,7 +415,7 @@ finish_action:
                 arg0->unk6C &= 0xFFFF7FFF;
             }
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0xF0));
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x2F:
             PlaySoundEffect(9);
@@ -431,14 +430,14 @@ finish_action:
             if (arg0->state == 9) {
                 ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);
             }
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x38:
             PlaySoundEffect(9);
             ovl_11_func_800C55FC((Ovl11CE034Object *) arg0);
             arg0->unk6C &= 0xE7FF3FFF;
             ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0xC:
             if (Ovl11IsLowerPairedItemId(arg0->item) == 0) {
@@ -452,7 +451,7 @@ finish_action:
             }
             Ovl11ClearHalfwordTriplet((s16 *) var_a0_3);
             arg0->unk6C &= 0xEFFFFFFF;
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0xD:
             arg0->unk6C |= 0x10000000;
@@ -468,12 +467,12 @@ finish_action:
                 goto tool_done;
             }
             arg0->unk6C |= 0x10000000;
-            ovl_11_func_800C70CC((Ovl11C7010Object *) &D_80071A00, 0x67U, 0x1B, 0x1E);
+            ovl_11_func_800C70CC((Ovl11C7010Object *) &gPrimaryObjectBase, 0x67U, 0x1B, 0x1E);
 tool_done:
             return 0;
         case 0x67:
             arg0->unk6C |= 0x10000000;
-            ovl_11_func_800C70CC((Ovl11C7010Object *) &D_80071A00, 0xCU, (*(u16 *) ((u8 *) &D_80071A00 + 0x38)) + 0x1D, -2);
+            ovl_11_func_800C70CC((Ovl11C7010Object *) &gPrimaryObjectBase, 0xCU, (*(u16 *) ((u8 *) &gPrimaryObjectBase + 0x38)) + 0x1D, -2);
             arg0->unk6C &= 0xFFFF7FFF;
             return 0;
         case 0x2C:
@@ -484,11 +483,11 @@ tool_done:
             arg0->unk6C &= ~0x4000;
             ovl_11_func_800C6770((Ovl11C6770Object *) arg0);
             ovl_11_func_800CCF58((Ovl11C7010Object *) arg0);
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             goto advance_action;
         case 0x28:
             ovl_11_func_800CCF14((C580C_7f0a9cc905ed_UnkStruct800D72E8 *) ((u8 *) arg0 + 0x8A));
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
             goto advance_action;
         case 0x17:
             if (ovl_11_func_800C4DE0((Ovl11C7010Object *) arg0) == 1) {
@@ -557,7 +556,7 @@ tool_done:
 advance_action:
         if (applyCost == 1) {
             if (waitForAction == 0) {
-                ovl_11_func_800CB4E0();
+                Ovl11ResetPrimaryObjectRequest();
             }
             column = (s16)arg0->power / 20;
             temp_s0_5 = D_801231C0[(s16)((s16)(arg0->value - 1) / 5)][column];
@@ -573,7 +572,7 @@ advance_action:
             if (temp_v0_3 != NULL) {
                 (*(void **) ((u8 *) arg0 + 0x4C)) = temp_a0;
                 if ((*(s16 *)((u8 *)temp_v0_3 + 6)) == 0x270F) {
-                    ovl_11_func_800CB4E0();
+                    Ovl11ResetPrimaryObjectRequest();
                     (*(void **) ((u8 *) arg0 + 0x4C)) = NULL;
                     goto script_finished;
                 }

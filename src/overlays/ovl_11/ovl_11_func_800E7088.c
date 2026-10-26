@@ -67,7 +67,7 @@ s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         }
         Ovl11SetHalfwordTriplet(selected, id, variant, 1);
         if (overflow == 0 && arg3 != 0) {
-            ovl_11_func_800C4F44((Recon_ovl_11_func_800C7270_A0View *)&D_80071A00,
+            ovl_11_func_800C4F44((Recon_ovl_11_func_800C7270_A0View *)&gPrimaryObjectBase,
                                index != -1, index, arg3 == 1 ? 10 : 60);
         }
         result = 1;

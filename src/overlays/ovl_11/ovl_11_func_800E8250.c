@@ -1,12 +1,11 @@
 #include "common.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_primary_object_requests.h"
 
 void ovl_11_func_800D666C(s16 arg0);
-s32 ovl_11_func_800CB4E0(void);
 void ovl_11_func_8010941C(s32 arg0);
 void ovl_11_func_800F4CAC(void);
 void ovl_11_func_800F4CEC(void);
-s32 ovl_11_func_800CB540(u16 *arg0);
 s32 ovl_11_func_800D6A94(s16 arg0);
 
 s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
@@ -21,7 +20,7 @@ s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
             ((struct Ovl11E8250State *)D_8006C838)->flags &= 0xE7FF7FFF;
             ovl_11_func_800D666C(((struct Ovl11E8250State *)D_8006C838)->item.id);
             Ovl11ClearHalfwordTriplet((s16 *)&((struct Ovl11E8250State *)D_8006C838)->item);
-            ovl_11_func_800CB4E0();
+            Ovl11ResetPrimaryObjectRequest();
         }
         slot = (s16 *)&((struct Ovl11E8250State *)D_8006C838)->slots;
         for (i = 0; i < 8; i++) {
@@ -29,7 +28,7 @@ s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
             Ovl11ClearHalfwordTriplet(slot);
             slot += 3;
         }
-        ovl_11_func_800CB4E0();
+        Ovl11ResetPrimaryObjectRequest();
     } else {
         saved = ((struct Ovl11E8250State *)D_8006C838)->item.id;
         if (D_80129500.id != 0) {
@@ -37,7 +36,7 @@ s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
                 ((struct Ovl11E8250State *)D_8006C838)->flags &= 0xE7FF7FFF;
                 ovl_11_func_800D666C(((struct Ovl11E8250State *)D_8006C838)->item.id);
                 Ovl11ClearHalfwordTriplet((s16 *)&((struct Ovl11E8250State *)D_8006C838)->item);
-                ovl_11_func_800CB4E0();
+                Ovl11ResetPrimaryObjectRequest();
                 switch (saved) {
                 case 0x106:
                 case 0x107:
@@ -55,12 +54,12 @@ s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
                 }
             }
             if ((arg1 == 0) || (((ItemData *)((struct Ovl11E8250State *)D_8006C838)->items)[D_80129500.id].u0.flags & 0x100)) {
-                ovl_11_func_800CB540((u16 *)&D_80129500);
+                Ovl11InstallPrimaryObjectRequest((u16 *)&D_80129500);
             } else {
                 ((struct Ovl11E8250State *)D_8006C838)->item = D_80129500;
                 ovl_11_func_800D6A94(((struct Ovl11E8250State *)D_8006C838)->item.id);
                 ((struct Ovl11E8250State *)D_8006C838)->flags = (((struct Ovl11E8250State *)D_8006C838)->flags | 0x10008000) & ~0x4000;
-                ovl_11_func_800CB4E0();
+                Ovl11ResetPrimaryObjectRequest();
             }
         }
         Ovl11Items_80071AC0 = *(Ovl11ItemSnapshot *)D_80129510;

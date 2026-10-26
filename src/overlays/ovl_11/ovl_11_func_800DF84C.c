@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800DF4F0(UnkStruct800DF4F0 *arg0);
-s32 ovl_11_func_800CB540(u16 *arg0);
 void ovl_11_func_800D049C(Ovl11DF72CResetView *arg0);
 void ovl_11_func_800D12A0(s16 arg0);
 
@@ -50,7 +50,7 @@ s32 ovl_11_func_800DF84C(UnkStruct800DF4F0 *arg0) {
         if (var_s0 != 0) {
             *(s32 *)((u8 *)arg0 + 0x34) |= 8;
             Ovl11SetHalfwordTriplet(sp10, var_s0, 0, 1);
-            ovl_11_func_800CB540((u16 *)sp10);
+            Ovl11InstallPrimaryObjectRequest((u16 *)sp10);
             ovl_11_func_800D049C((Ovl11DF72CResetView *)arg0);
         }
     } else if (var_s0 != 0) {

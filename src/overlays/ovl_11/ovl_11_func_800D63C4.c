@@ -1,7 +1,7 @@
 #include "common.h"
 
 s32 ovl_11_func_800D63C4(s8 arg0, s8 arg1) {
-    char *base = (char *)&D_80071A00;
+    char *base = (char *)&gPrimaryObjectBase;
     char *p;
     s32 temp;
     s32 var;

@@ -537,7 +537,11 @@ typedef struct Ovl30AnimalRecord {
     u8 padB2[2];
 } Ovl30AnimalRecord;
 /* 80130C20 forms field addresses in this record array, retaining the legacy scalar alias. */
-#define Ovl30_AnimalRecords ((Ovl30AnimalRecord *)_D_800742EC)
+/* D3D60/D3E40 select ten 0xB4-byte records here; preserve the existing
+ * three-word array-backed base lvalue and its declaration extent. */
+extern s32 _gSmallTaggedRecordBase[3] __asm__("gSmallTaggedRecordBase");
+#define gSmallTaggedRecordBase (*((s32 *)_gSmallTaggedRecordBase))
+#define Ovl30_AnimalRecords ((Ovl30AnimalRecord *)_gSmallTaggedRecordBase)
 /* 801306F4 indexes stride-B8 records and supplies these halfword/word field widths. */
 typedef struct Ovl30AnimalRecordB8 {
     u16 number;
@@ -1117,7 +1121,11 @@ typedef struct {
 /* 800BEF64 starts this absolute-addressed scan at record 1 and advances by 0x1D4. */
 extern Ovl11ActorCollisionRecord D_800763F4[];
 /* 800BEF64 tests bit 3 of this absolute-addressed word before scanning. */
-extern s32 D_80071A6C;
+/* CB4E0..CB6C8 operate on the same primary object and its +0x6C flags.
+ * Preserve the existing three-word array-backed base lvalue, not a new object. */
+extern s32 _gPrimaryObjectBase[3] __asm__("gPrimaryObjectBase");
+#define gPrimaryObjectBase (*((s32 *)_gPrimaryObjectBase))
+extern s32 gPrimaryObjectFlags;
 
 /* D_80076280 - second absolute-addressed array of 0x1D4-byte records, 0x60
  * bytes past D_80076220. ovl_11_func_800E8A24 and ovl_11_func_800E9778 index
@@ -2662,6 +2670,22 @@ struct Ovl23DecisionView {
     struct Ovl23DecisionRecord records[6];
 };
 
+/* ovl_23:7EA4/8084 dispatch five subphases and seven stages; keep their
+ * existing scalar-base/incomplete-array views, with no storage definition. */
+extern s32 gOvl23RecordRunSubphases;
+extern s32 gOvl23RecordRunStages[];
+/* ovl_23:7F00 advances this unsigned setup byte through bank-load stages 0..5. */
+extern u8 gOvl23RecordRunSetupStage;
+/* ovl_23:8290 reads six initial values and a four-choice halfword table. */
+extern u16 D_800BBA7C[];
+extern u16 D_800BBA88[];
+/* ovl_23:97E0 writes six choices; 8644 uses the same +0x16 halfword array. */
+extern u16 D_800BF892[];
+/* ovl_23:8B94 drives this decision record and reads its +6 control halfword. */
+struct Ovl23Func800BB0C8Arg;
+extern struct Ovl23Func800BB0C8Arg D_800BFB08;
+extern s16 D_800BFB0E;
+
 /* 800B8644 indexes ten word offsets into the byte data at D_800BB860. */
 extern s32 D_800BBA14[10];
 extern u8 D_800BB860[];
@@ -3972,13 +3996,17 @@ extern s32 D_800742AC;
  * indexes it; absolute-addressed from the overlay. */
 extern Ovl11D124Entry D_80071DFC[25][45];
 
-/* D_800BAC60/D_800BB52C/D_800BBDF8/D_800BC6C4 - four 0x8CC-byte u16 tables
- * selected by ovl_27_func_800BA914, which walks 1125 halfwords from the
- * chosen base. Absolute-addressed from the overlay. */
-extern u16 D_800BAC60[];
-extern u16 D_800BB52C[];
-extern u16 D_800BBDF8[];
-extern u16 D_800BC6C4[];
+/* ovl_27:BA914 selects four 0x8CC-byte ID tables and reads 1125 halfwords. */
+extern u16 gOvl27SpriteFrameIds0[];
+extern u16 gOvl27SpriteFrameIds1[];
+extern u16 gOvl27SpriteFrameIds2[];
+extern u16 gOvl27SpriteFrameIds3[];
+/* ovl_27:BAC14 copies five packed six-byte records from this resident table. */
+extern u8 gOvl27InitialWorkRecords[];
+/* ovl_27:9124 constructs a terminated halfword string at this buffer base. */
+extern s16 gOvl27TitleSummaryText;
+/* ovl_27:9124 indexes this engine text bank by gTextBankOffsets. */
+extern u8 D_80051AF6[];
 
 /* View of D_8006C838 for ovl_27_func_800BA914: pointers at +0x20 (0x28-byte
  * records with an s8 at +3) and +0x2C (0x10-byte records with a u8 at +2).
@@ -6315,25 +6343,26 @@ extern void *D_800C4A40[3];
 /* ovl_27_func_800B80B0 uses this address as a 0x1800-byte copy destination. */
 extern u8 D_800605E8[0x1800];
 
-/* D_800C4A28 - ovl_27 saved D_8006C838+0xC flag word. ovl_27_func_800B7FE8
- * writes the pre-mask value here and ovl_27_func_800B7F2C zeroes it;
- * absolute-addressed (overlay build is -G0). */
-extern s32 D_800C4A28;
-
-/* ovl_27_func_800B823C selects and updates this state with lh/sh. */
-extern s16 D_800C4A18;
-/* 800B845C calls this handler; neighboring matched stages store code addresses. */
-extern s32 D_800C4A14;
+/* ovl_27:7FE8 saves the pre-mask work+0xC flags; 7F2C resets them. */
+extern s32 gOvl27TitleSavedWorkFlags;
+/* ovl_27:823C selects and updates this signed halfword setup stage. */
+extern s16 gOvl27TitleSetupStage;
+/* ovl_27:845C calls this address; the animation chain stores its next callback. */
+extern s32 gOvl27TitleAnimationCallback;
+/* ovl_27:7F7C initializes the animation coordinates consumed by 8EA0..90DC. */
+extern s16 gOvl27TitleBackdropY;
+extern s16 gOvl27TitleBackdropExtent;
+extern s16 gOvl27TitlePanelX;
 /* 800B845C increments this signed halfword and takes its signed remainder. */
 extern s16 D_800C4A1A;
 /* 800B845C increments and reduces this signed word modulo 108000. */
-extern s32 D_800C4A1C;
+extern s32 gOvl27TitleAnimationTicks;
 /* 800B845C increments and thresholds this signed word at 1800. */
-extern s32 D_800C4A20;
+extern s32 gOvl27TitleIdleTicks;
 /* 800B845C dispatches on this signed halfword and stores state numbers. */
-extern s16 D_800C4A24;
+extern s16 gOvl27TitleMenuStage;
 /* 800B845C sets this halfword when either timeout expires. */
-extern s16 D_800C4A26;
+extern s16 gOvl27TitleExitVariant;
 /* 800B845C passes this address to the halfword-list consumer 80023030. */
 extern u16 D_80071A7C[];
 

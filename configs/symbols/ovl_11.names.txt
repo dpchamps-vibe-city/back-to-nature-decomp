@@ -16,6 +16,16 @@ Ovl11RollState11 = 0x800D3C54; // type:func
 Ovl11RollState10 = 0x800D3CA4; // type:func
 Ovl11RollState13 = 0x800D3CE8; // type:func
 
+// Primary-object request installation, reset and selected-slot completion.
+Ovl11ResetPrimaryObjectRequest = 0x800CB4E0; // type:func
+Ovl11InstallPrimaryObjectRequest = 0x800CB540; // type:func
+Ovl11CheckPrimaryObjectRequestSlot = 0x800CB618; // type:func
+Ovl11InstallPrimaryObjectState30Request = 0x800CB6C8; // type:func
+
+// Selection from the paired tagged-record families.
+Ovl11ChooseEligibleTaggedRecord = 0x800D3D60; // type:func
+Ovl11FindTaggedRecordInBox = 0x800D3E40; // type:func
+
 // Tagged-record motion and sprite steps used by the record update loop.
 Ovl11DrawTaggedRecordSprite = 0x800DE7C8; // type:func
 Ovl11AdvanceTaggedRecordPosition = 0x800DE878; // type:func

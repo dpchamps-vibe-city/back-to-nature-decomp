@@ -64,7 +64,7 @@ s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                 return 1;
             }
         } else {
-            object = (struct_800759E4 *)((char *)&D_800742EC + index * 0xB4);
+            object = (struct_800759E4 *)((char *)&gSmallTaggedRecordBase + index * 0xB4);
         }
         break;
     case 4:

@@ -306,7 +306,7 @@ void Ovl11AddToBothRecordPoolValues255(s16 increment) {
     s32 i;
 
     for (i = 0; i < (((Ovl11Status99C8View *)&D_8006C838)->field_44D2 == 0 ? 5 : 10); i++) {
-        Ovl11AddToObjectValue255((u8 *)&D_800742EC + i * 0xB4, increment);
+        Ovl11AddToObjectValue255((u8 *)&gSmallTaggedRecordBase + i * 0xB4, increment);
     }
     for (i = 0; i < (((Ovl11Status99C8View *)&D_8006C838)->field_44D0 == 0 ? 10 : 20); i++) {
         Ovl11AddToObjectValue255((u8 *)&gTaggedRecordBase + i * 0xB8, increment);

@@ -1,3 +1,48 @@
+// Title scene phases and their setup/reset protocol.
+Ovl27DispatchTitleScenePhase = 0x800B7EEC; // type:func
+Ovl27ResetTitleSceneState = 0x800B7F2C; // type:func
+Ovl27ResetTitleAnimationState = 0x800B7F7C; // type:func
+Ovl27BeginTitleSceneSetup = 0x800B7FE8; // type:func
+Ovl27PollTitleSceneSetupLoad = 0x800B80B0; // type:func
+Ovl27UpdateTitleSceneSetup = 0x800B823C; // type:func
+Ovl27UpdateTitleMenu = 0x800B845C; // type:func
+Ovl27BeginTitleExitFade = 0x800B8C6C; // type:func
+Ovl27PollTitleExitFade = 0x800B8CAC; // type:func
+Ovl27FinishTitleMenu = 0x800B8D28; // type:func
+Ovl27InstallTitleAnimationWait = 0x800B8E28; // type:func
+Ovl27WaitTitleAnimation = 0x800B8E5C; // type:func
+Ovl27RaiseTitleBackdrop = 0x800B8EA0; // type:func
+Ovl27ShrinkTitleBackdrop = 0x800B8EF8; // type:func
+Ovl27OpenTitlePanel = 0x800B8F58; // type:func
+Ovl27BlinkTitlePanel = 0x800B8FC8; // type:func
+Ovl27CloseTitlePanel = 0x800B9064; // type:func
+Ovl27RestartTitlePanelLoop = 0x800B90DC; // type:func
+Ovl27DrawTitleRecordSummary = 0x800B9124; // type:func
+Ovl27DrawTitleMenuBackdropFull = 0x800B9224; // type:func
+Ovl27DrawTitleMenuBackdropPreview = 0x800B928C; // type:func
+Ovl27DrawTitleMenuBackdrop = 0x800B92E4; // type:func
+Ovl27InitSpriteFrameRecords = 0x800BA914; // type:func
+Ovl27InitPrimaryObject = 0x800BAA34; // type:func
+Ovl27InitWorkOptions = 0x800BABD4; // type:func
+Ovl27CopyInitialWorkRecords = 0x800BAC14; // type:func
+
+gOvl27TitleAnimationCallback = 0x800C4A14; // type:data size:0x4
+gOvl27TitleSetupStage = 0x800C4A18; // type:data size:0x2
+gOvl27TitleAnimationTicks = 0x800C4A1C; // type:data size:0x4
+gOvl27TitleIdleTicks = 0x800C4A20; // type:data size:0x4
+gOvl27TitleMenuStage = 0x800C4A24; // type:data size:0x2
+gOvl27TitleExitVariant = 0x800C4A26; // type:data size:0x2
+gOvl27TitleSavedWorkFlags = 0x800C4A28; // type:data size:0x4
+gOvl27TitleBackdropY = 0x800C4A38; // type:data size:0x2
+gOvl27TitleBackdropExtent = 0x800C4A3A; // type:data size:0x2
+gOvl27TitlePanelX = 0x800C4A3C; // type:data size:0x2
+gOvl27TitleSummaryText = 0x800C5920; // type:data size:0x500
+gOvl27InitialWorkRecords = 0x800BCFF0; // type:data size:0x1E
+gOvl27SpriteFrameIds0 = 0x800BAC60; // type:data size:0x8CC
+gOvl27SpriteFrameIds1 = 0x800BB52C; // type:data size:0x8CC
+gOvl27SpriteFrameIds2 = 0x800BBDF8; // type:data size:0x8CC
+gOvl27SpriteFrameIds3 = 0x800BC6C4; // type:data size:0x8CC
+
 // Backdrop staging/pool and fixed animation draws, original ovl_27 identities.
 Ovl27DrawBackdropAnim30 = 0x800B9324; // type:func
 Ovl27DrawBackdropAnim32 = 0x800B9368; // type:func

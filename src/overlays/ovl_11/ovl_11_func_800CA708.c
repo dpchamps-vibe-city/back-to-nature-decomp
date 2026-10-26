@@ -23,7 +23,7 @@ void ovl_11_func_800CA708(void) {
 
     var_s0 = 0;
     var_t0 = 0;
-    player = (Ovl11CA708Player *)&D_80071A00;
+    player = (Ovl11CA708Player *)&gPrimaryObjectBase;
     pos = player->position;
     pos.vx = (player->position.vx) + (player->velocity[0]);
     pos.vy = (player->position.vy) + (player->velocity[1]);

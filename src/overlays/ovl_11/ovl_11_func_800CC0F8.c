@@ -6,12 +6,12 @@
 #include "psyq/libgpu.h"
 #include "sprite_render.h"
 #include "point_projection.h"
+#include "ovl11_primary_object_requests.h"
 
 unsigned long long ovl_11_func_800BF450(void);
 s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0);
 s32 ovl_11_func_800CBE2C(Ovl11CC4E0Object *arg0);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
-s32 ovl_11_func_800CB540(u16 *arg0);
 void ovl_11_func_800D6F78(s16, s16, s32 *, s16, s16, s32);
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 void ovl_11_func_800C9E90(s32, s32, s32, s32);
@@ -80,7 +80,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
                     if (arg0->unk6 == 4) {
                         request.id = 0x87;
                         request.count = 1;
-                        ovl_11_func_800CB540(&request.id);
+                        Ovl11InstallPrimaryObjectRequest(&request.id);
                         return;
                     }
                     return;

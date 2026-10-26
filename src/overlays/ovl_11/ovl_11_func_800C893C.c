@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800F3A18(u16 arg0);
-s32 ovl_11_func_800CB540(u16 *arg0);
 void ovl_11_func_800F397C(u16 arg0, u16 arg1);
 s32 ovl_11_func_800C7270(Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 
@@ -19,7 +19,7 @@ void ovl_11_func_800C893C(Recon_ovl_11_func_800C7270_A0View *arg0) {
         if (temp_v0 == 1) {
             item[0] = 0x68;
             item[2] = (u16) temp_v0;
-            ovl_11_func_800CB540(item);
+            Ovl11InstallPrimaryObjectRequest(item);
             return;
         }
         RequestMessageWindow(2, 0x19C);

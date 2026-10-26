@@ -19,7 +19,7 @@ s32 ovl_11_func_800CB850(s32 arg0) {
     s32 itemStatus;
     u16 flags;
 
-    obj = (Ovl11C7010Object *)&D_80071A00;
+    obj = (Ovl11C7010Object *)&gPrimaryObjectBase;
     if (arg0 == 0) {
         result = ovl_11_func_800CB730((Ovl11CE034Object *)obj);
         item = &(*(ItemData **)((u8 *)obj - 0x51A8))[obj->itemIndex];

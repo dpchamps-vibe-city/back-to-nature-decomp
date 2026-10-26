@@ -11,7 +11,7 @@ s32 ovl_11_func_800BE4A8(Ovl11CollisionQuery *arg0) {
     s16 center;
     Ovl11PlayerCollisionView *player;
 
-    player = (Ovl11PlayerCollisionView *) &D_80071A00;
+    player = (Ovl11PlayerCollisionView *) &gPrimaryObjectBase;
     if (player->region != arg0->object->field_2) {
         return 0;
     }
@@ -32,7 +32,7 @@ s32 ovl_11_func_800BE4A8(Ovl11CollisionQuery *arg0) {
             upper = center + 0x14;
             if ((lower < y) && (y < upper)) {
                 *arg0->flags = arg0->field_18;
-                *arg0->tile = &D_80071A00;
+                *arg0->tile = &gPrimaryObjectBase;
                 return 1;
             }
         }

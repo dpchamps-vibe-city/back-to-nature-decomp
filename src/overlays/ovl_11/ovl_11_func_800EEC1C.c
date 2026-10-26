@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "integer_power.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_primary_object_requests.h"
 
-s32 ovl_11_func_800CB4E0(void);
 void ovl_11_func_800CBD78(Ovl11C7010Object *);
 void ovl_11_func_800D666C(s16);
 
@@ -70,7 +70,7 @@ s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
                     case 0:
                         if (which != 0) {
                             ((struct Ovl11E8250State *)D_8006C838)->flags &= 0xEFFF7FFF;
-                            ovl_11_func_800CB4E0();
+                            Ovl11ResetPrimaryObjectRequest();
                             ovl_11_func_800CBD78((Ovl11C7010Object *)((u8 *)D_8006C838 + 0x51C8));
                         } else {
                             ovl_11_func_800D666C(slot->id);

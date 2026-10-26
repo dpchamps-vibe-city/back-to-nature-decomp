@@ -18,7 +18,7 @@ s16 *ovl_11_func_800E1F9C(s32 arg0, s32 arg1, s32 arg2) {
     }
     if (arg2 == 1) {
         if (arg1 != -1) {
-            var_s0 = (s32 *) ((u8 *) &D_800742EC + (arg1 * 0xB4));
+            var_s0 = (s32 *) ((u8 *) &gSmallTaggedRecordBase + (arg1 * 0xB4));
         } else {
             var_s0 = Ovl11FindFreeB4Record();
         }

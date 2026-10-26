@@ -256,7 +256,7 @@ void Ovl27DrawBackdropAnim36(void) {
     s32 x;
 
     x = 0x68;
-    if ((D_800C4A1C % 30) < 0xF) {
+    if ((gOvl27TitleAnimationTicks % 30) < 0xF) {
         x = 0x64;
     }
     y = 0xB3;

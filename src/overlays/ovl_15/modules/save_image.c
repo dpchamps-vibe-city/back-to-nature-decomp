@@ -25,7 +25,7 @@ void Ovl15SerializeSaveImage(void)
     u8 *record;
 
     gOvl15SaveWorkBase = gOvl15SavePayload;
-    SAVE(Ovl15SaveBlock1F34, &D_800742EC, 0);
+    SAVE(Ovl15SaveBlock1F34, &gSmallTaggedRecordBase, 0);
     SAVE(Ovl15SaveBlock18, D_8006C838, 0x225C);
     ((Ovl15SaveBufferWords *)gOvl15SaveWorkBase)->field_2274 = *(s32 *)((u8 *)D_8006C838 + 0x20);
     ((Ovl15SaveBufferWords *)gOvl15SaveWorkBase)->field_2278 = *(s32 *)((u8 *)D_8006C838 + 0x24);
@@ -43,7 +43,7 @@ void Ovl15SerializeSaveImage(void)
     ((Ovl15SaveBufferWords *)gOvl15SaveWorkBase)->field_235C = ((s32 *)&gScenePhase)[15];
     ((Ovl15SaveBufferWords *)gOvl15SaveWorkBase)->field_2360 = ((s32 *)&gScenePhase)[16];
     SAVE(Ovl15SaveBlockCFC, (u8 *)&gScenePhase + 0x44, 0x2364);
-    SAVE(Ovl15SaveBlock3FC, &D_80071A00, 0x3060);
+    SAVE(Ovl15SaveBlock3FC, &gPrimaryObjectBase, 0x3060);
     SAVE(Ovl15SaveBlock2328, D_80071DFC, 0x345C);
     SAVE(Ovl15SaveBlock188, D_80074124, 0x5784);
     SAVE(Ovl15SaveBlock40, &D_800742AC, 0x590C);
@@ -102,7 +102,7 @@ void Ovl15RestoreSaveImage(void)
         *(u16 *)(record + 0x9A08) = ((Ovl15SavedRecordList *)gOvl15SaveWorkBase)->records[i].field_A;
         *(u16 *)(record + 0x9A0A) = ((Ovl15SavedRecordList *)gOvl15SaveWorkBase)->records[i].field_C;
     }
-    RESTORE(Ovl15SaveBlock1F34, &D_800742EC, 0);
+    RESTORE(Ovl15SaveBlock1F34, &gSmallTaggedRecordBase, 0);
     RESTORE(Ovl15SaveBlock18, D_8006C838, 0x225C);
     RESTORE(Ovl15SaveBlock8, (u8 *)D_8006C838 + 0x30, 0x2284);
     RESTORE(Ovl15SaveBlock94, (u8 *)D_8006C838 + 0x38, 0x228C);
@@ -116,7 +116,7 @@ void Ovl15RestoreSaveImage(void)
     ((s32 *)&gScenePhase)[15] = *(s32 *)(gOvl15SaveWorkBase + 0x235C);
     ((s32 *)&gScenePhase)[16] = *(s32 *)(gOvl15SaveWorkBase + 0x2360);
     RESTORE(Ovl15SaveBlockCFC, (u8 *)&gScenePhase + 0x44, 0x2364);
-    RESTORE(Ovl15SaveBlock3FC, &D_80071A00, 0x3060);
+    RESTORE(Ovl15SaveBlock3FC, &gPrimaryObjectBase, 0x3060);
     RESTORE(Ovl15SaveBlock2328, D_80071DFC, 0x345C);
     RESTORE(Ovl15SaveBlock188, D_80074124, 0x5784);
     RESTORE(Ovl15SaveBlock40, &D_800742AC, 0x590C);

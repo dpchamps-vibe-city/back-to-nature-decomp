@@ -18,8 +18,8 @@ void ovl_11_func_800CE96C(void) {
     struct Ovl11PoolResetView *p3;
     struct Ovl11PoolResetView *p4;
     struct Ovl11PoolResetView *p5;
-    memset(&D_800742EC, 0, 0x708);
-    p = (struct Ovl11PoolResetView *) ((u8 *) &D_800742EC - 0x7AB4);
+    memset(&gSmallTaggedRecordBase, 0, 0x708);
+    p = (struct Ovl11PoolResetView *) ((u8 *) &gSmallTaggedRecordBase - 0x7AB4);
     for (i = 0; i < 10; i++) {
         first = (struct Ovl11PoolResetView *) ((u8 *) p + i * 0xB4);
         first->records_7AB4[0].type = 0;

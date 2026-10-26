@@ -221,7 +221,7 @@ void func_800247C0(s32 arg0, s16 arg1, s16 arg2);
 void func_80024810(s32 arg0, s16 arg1, s16 arg2);
 void func_80024860(s32 arg0, s16 arg1, s16 arg2);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
-void func_800248E8(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
+void func_800248E8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80024924(s32 arg0, s16 arg1, s16 arg2);
 void func_8002495C(s16 arg0);
 void func_800249C0(s32 arg0, s16 arg1, s16 arg2);

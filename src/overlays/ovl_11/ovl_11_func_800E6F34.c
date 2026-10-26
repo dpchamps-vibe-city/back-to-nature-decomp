@@ -1,9 +1,9 @@
 #include "common.h"
 #include "integer_power.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_primary_object_requests.h"
 
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800CB540(u16 *arg0);
 s32 ovl_11_func_800D6A94(s16 arg0);
 
 s32 ovl_11_func_800E6F34(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
@@ -24,7 +24,7 @@ s32 ovl_11_func_800E6F34(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             return 0;
         }
         Ovl11SetHalfwordTriplet(item, id, 0, 1);
-        ovl_11_func_800CB540((u16 *)item);
+        Ovl11InstallPrimaryObjectRequest((u16 *)item);
         return 1;
     } else {
         if (!ovl_11_func_800E6EE0(0, 1, -1, 0)) {
