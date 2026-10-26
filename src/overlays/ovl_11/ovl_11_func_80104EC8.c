@@ -4,9 +4,11 @@
 #include "u16_string.h"
 #include "game_flags.h"
 #include "ovl11_record_flag_query.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_map_grid_cells.h"
 
 s32 ovl_11_func_800D5C3C(s16 arg0);
-s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EF0E8(s16 arg0);
@@ -178,8 +180,8 @@ enough_slots:
     case 0x7:
         record18.unk0 = 0x31;
         record18.unk4 = ovl_11_func_800D5C3C(0x31);
-        if (ovl_11_func_800DADB0(&sp20[0], &sp20[1], 1, &record18, 2) == 0) {
-            return ovl_11_func_800DADB0(&sp20[0], &sp20[1], 0, &record18, 2) != 0;
+        if (Ovl11FindRandomGridCell(&sp20[0], &sp20[1], 1, &record18, 2) == 0) {
+            return Ovl11FindRandomGridCell(&sp20[0], &sp20[1], 0, &record18, 2) != 0;
         }
         return 1;
     case 0x8:
@@ -474,10 +476,10 @@ block_406:
         if (((Ovl11ConditionState *) D_8006C838)->field_929C == 0) {
             record18.unk0 = 0x36;
             record18.unk4 = 0;
-            temp_s0 = ovl_11_func_800DADB0(&sp20[2], &sp20[3], 1, &record18, 0xE);
-            temp_s0 = temp_s0 + ovl_11_func_800DADB0(&sp20[2], &sp20[3], 0, &record18, 0xE);
-            temp_s0 = temp_s0 - ovl_11_func_800DADB0(&sp20[2], &sp20[3], 1, &record18, 0xA);
-            return (temp_s0 - ovl_11_func_800DADB0(&sp20[2], &sp20[3], 0, &record18, 0xA)) >= 0xC8;
+            temp_s0 = Ovl11FindRandomGridCell(&sp20[2], &sp20[3], 1, &record18, 0xE);
+            temp_s0 = temp_s0 + Ovl11FindRandomGridCell(&sp20[2], &sp20[3], 0, &record18, 0xE);
+            temp_s0 = temp_s0 - Ovl11FindRandomGridCell(&sp20[2], &sp20[3], 1, &record18, 0xA);
+            return (temp_s0 - Ovl11FindRandomGridCell(&sp20[2], &sp20[3], 0, &record18, 0xA)) >= 0xC8;
         }
         return 0;
     case 0x20:
@@ -489,8 +491,8 @@ block_172:
             record28.unk0 = 0x28;
             record28.unk4 = ovl_11_func_800D5C3C(0x28);
             var_v0 = 1;
-            if (ovl_11_func_800DADB0(&sp30[0], &sp30[1], 1, &record28, 2) == 0) {
-                if (ovl_11_func_800DADB0(&sp30[0], &sp30[1], 0, &record28, 2) != 0) {
+            if (Ovl11FindRandomGridCell(&sp30[0], &sp30[1], 1, &record28, 2) == 0) {
+                if (Ovl11FindRandomGridCell(&sp30[0], &sp30[1], 0, &record28, 2) != 0) {
                     return 1;
                 }
                 return (s32) ((u8) ((Ovl11ConditionState *) D_8006C838)->field_91E1 >> 7);
@@ -526,8 +528,8 @@ block_172:
             temp_v0_2 = D_801274D0[var_s4];
             record28.unk0 = temp_v0_2;
             record28.unk4 = ovl_11_func_800D5C3C((s16) temp_v0_2);
-            var_s0 = var_s0 + ovl_11_func_800DADB0(&sp30[2], &sp30[3], 1, &record28, 0xA);
-            var_s0 = var_s0 + ovl_11_func_800DADB0(&sp30[2], &sp30[3], 0, &record28, 0xA);
+            var_s0 = var_s0 + Ovl11FindRandomGridCell(&sp30[2], &sp30[3], 1, &record28, 0xA);
+            var_s0 = var_s0 + Ovl11FindRandomGridCell(&sp30[2], &sp30[3], 0, &record28, 0xA);
         }
         return var_s0 >= 0x5A;
     case 0x27:
@@ -744,21 +746,21 @@ block_258:
         record38.unk0 = 0x31;
         record38.unk4 = ovl_11_func_800D5C3C(0x31);
         var_v0 = 1;
-        if (ovl_11_func_800DADB0(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
+        if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
             record38.unk0 = 0x32;
             record38.unk4 = ovl_11_func_800D5C3C(0x32);
             var_v0 = 1;
-            if (ovl_11_func_800DADB0(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
+            if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
                 record38.unk0 = 0x178;
                 record38.unk4 = ovl_11_func_800D5C3C(0x178);
                 var_v0 = 1;
-                if (ovl_11_func_800DADB0(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
+                if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
                     record38.unk0 = 0x179;
                     record38.unk4 = ovl_11_func_800D5C3C(0x179);
-                    if (ovl_11_func_800DADB0(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
+                    if (Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) == 0) {
                         record38.unk0 = 0x34;
                         record38.unk4 = ovl_11_func_800D5C3C(0x34);
-                        return ovl_11_func_800DADB0(&sp40[0], &sp40[1], 1, &record38, 2) != 0;
+                        return Ovl11FindRandomGridCell(&sp40[0], &sp40[1], 1, &record38, 2) != 0;
                     }
                     return 1;
                 }

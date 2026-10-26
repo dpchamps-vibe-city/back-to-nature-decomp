@@ -1,8 +1,6 @@
 #include "common.h"
 
 extern s16 *D_80126254[];
-extern s32 *D_80125528[];
-extern u8 D_800957F8[];
 
 s32 ovl_11_func_800D688C(s16 arg0) {
     char *far_base = (char *)&D_8007AFF0;
@@ -21,7 +19,7 @@ s32 ovl_11_func_800D688C(s16 arg0) {
         return 0;
     }
     sp = D_80126254[idx];
-    wp = D_80125528[idx];
+    wp = gOvl11SpriteRecordSets[idx];
     if (sp == 0) {
         return 0;
     }
@@ -31,7 +29,7 @@ s32 ovl_11_func_800D688C(s16 arg0) {
     i = 1;
     while (i < n) {
         if (arg0 == sp[0]) {
-            return wp[0] + (s32)D_800957F8;
+            return wp[0] + (s32)gLoadedSpriteDataBlob;
         }
         i += 1;
         sp += 1;

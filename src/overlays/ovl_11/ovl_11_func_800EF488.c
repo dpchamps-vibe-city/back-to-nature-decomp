@@ -1,8 +1,15 @@
 #include "common.h"
 #include "game_types.h"
 #include "game_flags.h"
-
-void ovl_11_func_80112904(s16 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_record_flag_counters.h"
 
 void ovl_11_func_800EF488(s16 arg0) {
     Ovl11EF488Record *record;
@@ -15,7 +22,7 @@ void ovl_11_func_800EF488(s16 arg0) {
     source = D_80070CF0_halfwords;
     switch (arg0) {
     case -1:
-        ovl_11_func_80112904(((Ovl11EF488SelectionView *) D_8006C838)->selected);
+        Ovl11SelectCounterRecord(((Ovl11EF488SelectionView *) D_8006C838)->selected);
         switch (((Ovl11EF488SelectionView *) D_8006C838)->selected) {
         case 3:
             first = 0x1C;

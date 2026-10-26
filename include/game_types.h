@@ -110,15 +110,16 @@ typedef struct {
     u16 unkAC;
 } M2C_269c1560d5f5_Unk80110E34;
 
-/* 801110CC reads these fields; 8010CA0C forwards the same object. */
+/* 801110CC's partial object view, also passed by 8010C7F0/8010CA0C.
+ * The embedded SpriteSourceData begins at +C8; +DC is its header address. */
 typedef struct {
     char pad_00[0x30];
-    s16 unk30;
+    s16 sourceKind;
     char pad_32[0xB6 - 0x32];
-    u16 unkB6;
+    u16 itemId;
     char pad_B8[0xDC - 0xB8];
-    s32 unkDC;
-} M2C_ececd3ff98bf_Struct_801110CC;
+    s32 spriteHeader;
+} Ovl11ItemSpriteObject;
 
 /* 800DC9D4 returns 0x30-byte scene slots; flags+28 bit 8000 means free. */
 typedef struct {
@@ -1258,13 +1259,13 @@ typedef struct {
     /* 0x04 */ u8 unk4;
     /* 0x05 */ s8 unk5;
     /* 0x06 */ u16 unk6;
-} Recon_ovl_11_func_800D85F8_A0View;
+} Ovl11CellActionEntry;
 
 /* 800C7878 stores the selected item pointer at +0x50 and flags at +0x54;
  * 800C8CC8 passes this same object to it. */
 typedef struct {
     char pad0[0x50];
-    Recon_ovl_11_func_800D85F8_A0View *unk50;
+    Ovl11CellActionEntry *unk50;
     s32 unk54;
 } M2C_15512f31231d_Func800C7878Arg0;
 

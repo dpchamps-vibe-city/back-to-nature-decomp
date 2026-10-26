@@ -1,12 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "random.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_actions.h"
 
 s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void ovl_11_func_80110E28(u8 *arg0);
-u16 ovl_11_func_800D85F8(Recon_ovl_11_func_800D85F8_A0View *arg0);
 s32 ovl_11_func_800F3BCC(u16 arg0);
-s32 ovl_11_func_800D8320(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F397C(u16 arg0, u16 arg1);
 void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
 s32 ovl_11_func_8010D648(u8 *arg0, s16 area);
@@ -38,7 +39,7 @@ s32 ovl_11_func_8010D314(u8 *arg0) {
                 } else {
                     entry = (u8 *)&((Ovl11D124Entry (*)[45])((u8 *)gAlternateAreaGrid - 0x2328))[y][x];
                 }
-                item = ovl_11_func_800D85F8((void *)entry);
+                item = Ovl11ResolveCellItemState((void *)entry);
             }
             ovl_11_func_800F3BCC(item);
         }
@@ -50,9 +51,9 @@ s32 ovl_11_func_8010D314(u8 *arg0) {
                 if (ovl_11_func_80110658(&x, &y, 0, 0, 1)) {
                     break;
                 }
-                ovl_11_func_800D8320(1, x, y, 0);
+                Ovl11TryPromoteCellPendingKind(1, x, y, 0);
             } else {
-                ovl_11_func_800D8320(0, x, y, 0);
+                Ovl11TryPromoteCellPendingKind(0, x, y, 0);
             }
         }
     } else if (*(u16 *)(arg0 + 0xB8) & 4) {

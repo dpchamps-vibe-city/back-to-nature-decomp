@@ -1,12 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_actions.h"
 
 s32 ovl_11_func_800D806C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-s32 ovl_11_func_800D8428(s16 arg0, s16 arg1, s16 arg2);
-/* 800C51C4 supplies an unused fourth argument, absent from the matched definition. */
-s32 ovl_11_func_800D8320();
-s32 ovl_11_func_800D876C(s16 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800CD5BC(Ovl11CD5BCObject *arg0, s32 arg1);
 
 s32 ovl_11_func_800C5098(Ovl11CD5BCObject *arg0) {
@@ -20,19 +19,19 @@ s32 ovl_11_func_800C5098(Ovl11CD5BCObject *arg0) {
             if (ovl_11_func_800D806C(sp18, sp1A, 0, D_80128CC4) != 1) {
                 switch (D_80128CC6) {
                 case 0:
-                    if (ovl_11_func_800D8428(D_80128CC4, sp18, sp1A) == 1) {
+                    if (Ovl11TryResetCellAndSpawnEffect(D_80128CC4, sp18, sp1A) == 1) {
                         D_80128CBC = 0x96;
                     } else {
                         D_80128CB4 = D_80128CB8 + 1;
                     }
                     break;
                 case 1:
-                    if (ovl_11_func_800D8320(D_80128CC4, sp18, sp1A, 0) == 1) {
+                    if (Ovl11TryPromoteCellPendingKind(D_80128CC4, sp18, sp1A, 0) == 1) {
                         D_80128CBC = 0x96;
                     }
                     break;
                 case 2:
-                    if (ovl_11_func_800D876C(D_80128CC4, sp18, sp1A) == 1) {
+                    if (Ovl11TryApplyCellActionEffect(D_80128CC4, sp18, sp1A) == 1) {
                         D_80128CBC = 0x96;
                     }
                     break;

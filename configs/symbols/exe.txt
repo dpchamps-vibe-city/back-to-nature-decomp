@@ -1529,6 +1529,8 @@ gAgedItemLastAddCount = 0x80070D3C; // size:0x2
 
 // Base header of the 0x30-stride sprite-source bank used by ovl_11.
 gSpriteSourceBankBase = 0x80070400; // size:0x30
+// First-byte anchor of the variable-length sprite blob loaded by ovl_11:800BD5A8.
+gLoadedSpriteDataBlob = 0x800957F8; // size:0x1
 
 // Persistent calendar/clock halfwords, advanced by ovl_11:800C0A4C.
 gCalendarYear = 0x80070CF0; // size:0x2

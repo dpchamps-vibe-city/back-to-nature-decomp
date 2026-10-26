@@ -3,13 +3,19 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "game_flags.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_record_flag_counters.h"
 
 
 s32 ovl_11_func_800EF0E8 (s16 arg0);
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_800EFA1C (s16 arg0);
-void ovl_11_func_80112904 (s16 arg0);
 
 void ovl_11_func_800EEECC(void) {
     s16 var_s0;

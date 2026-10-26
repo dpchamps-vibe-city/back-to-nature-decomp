@@ -1,10 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_actions.h"
 
 s32 ovl_11_func_800C9D64(void);
 s32 ovl_11_func_800D806C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-s32 ovl_11_func_800D81BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void ovl_11_func_800C4A2C(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -27,7 +29,7 @@ void ovl_11_func_800C4A2C(Ovl11C4A2CObject *arg0) {
                 sp2C += sp28;
                 sp2E += sp2A;
                 if (ovl_11_func_800D806C(sp2C, sp2E, 1, (s16) temp_s3) == 0) {
-                    ovl_11_func_800D81BC((s16) temp_s3, sp2C, sp2E, arg0->unk84);
+                    Ovl11TryInstallCellItem((s16) temp_s3, sp2C, sp2E, arg0->unk84);
                 }
             }
             var_s1 += 1;

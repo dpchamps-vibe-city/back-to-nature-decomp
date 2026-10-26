@@ -27,6 +27,7 @@
 #include "ovl11_area_resource_load.h"
 #include "ovl11_condition_masks.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_record_flag_counters.h"
 
 typedef struct {
                char pad0[0x38];
@@ -106,7 +107,6 @@ s32 ovl_11_func_800DBE30 (s32 arg0);
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
 s32 ovl_11_func_800EFA1C (s16 arg0);
-void ovl_11_func_801129A0 (void);
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
 s32 ovl_11_func_801165C8 (void);
@@ -116,7 +116,6 @@ s32 ovl_11_func_800F0474 (s16 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
-void ovl_11_func_80112904 (s16 arg0);
 void ovl_11_func_800EF870 (s16 arg0);
 s32 ovl_11_func_800F14D8 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800F144C (u16 arg0, u16 arg1, s16 *arg2);

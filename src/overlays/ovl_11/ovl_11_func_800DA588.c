@@ -5,8 +5,6 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 
-extern s32 *D_80125528[];
-extern u8 D_800957F8[];
 extern SpriteSourceData gSpriteSourceBankBase;
 
 void ovl_11_func_800DA588(s32 arg0) {
@@ -15,7 +13,7 @@ void ovl_11_func_800DA588(s32 arg0) {
     s32 i;
     s32 off;
 
-    n = *D_80125528[arg0];
+    n = *gOvl11SpriteRecordSets[arg0];
     out = &gSpriteSourceBankBase;
     if (n >= 0x2D) {
         n = 0x2C;
@@ -25,8 +23,8 @@ void ovl_11_func_800DA588(s32 arg0) {
         do {
             off = i * 4;
             i += 1;
-            off = (s32)((u8 *)D_80125528[arg0] + off);
-            InitSpriteSourceData(out, (SpriteDataHeader *)(((s32 *)off)[1] + (s32)D_800957F8));
+            off = (s32)((u8 *)gOvl11SpriteRecordSets[arg0] + off);
+            InitSpriteSourceData(out, (SpriteDataHeader *)(((s32 *)off)[1] + (s32)gLoadedSpriteDataBlob));
             out += 1;
         } while (i < n);
     }

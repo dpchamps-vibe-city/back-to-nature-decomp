@@ -1,13 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "ovl11_grid_entry_transitions.h"
+#include "psyq/libgte.h"
+#include "ovl11_map_grid_cells.h"
 
-Ovl11D124Entry *ovl_11_func_800DAF60(s32 arg0, s16 arg1, s16 arg2);
-void ovl_11_func_800DA3AC(Ovl11D124Entry *arg0);
 s32 ovl_11_func_800D5868(s16 arg0);
-void ovl_11_func_800DA390(Ovl11GridResetEntry *arg0);
-void ovl_11_func_800DAF24(u16 *arg0);
-void ovl_11_func_800DA638(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 void ovl_11_func_800D7B8C(void) {
     u16 rows;
@@ -42,7 +40,7 @@ void ovl_11_func_800D7B8C(void) {
         {
             for (row = 0; row < rows; row++) {
                 for (column = 0; column < columns; column++) {
-                    entry = ovl_11_func_800DAF60(layer, column, (s16) row);
+                    entry = Ovl11GetMapGridCell(layer, column, (s16) row);
                     if (entry != NULL) {
                         itemOffset = (u16) entry->unk0 * sizeof(*item);
                         item = ((Ovl11GrowthGlobals *) D_8006C838)->items;
@@ -52,7 +50,7 @@ void ovl_11_func_800D7B8C(void) {
                         growth = (u16 *) ((u8 *) ((Ovl11GrowthGlobals *) D_8006C838)->groups + work);
                         state = (Ovl11GrowthState *) &entry->unk4;
                         if (layer == 0) {
-                            ovl_11_func_800DA3AC(entry);
+                            Ovl11TrySeasonalGridTransition(entry);
                         }
                         value = entry->unk0;
                         isCrop = ovl_11_func_800D5868(value);
@@ -60,7 +58,7 @@ void ovl_11_func_800D7B8C(void) {
                             if (((Ovl11GrowthGlobals *) D_8006C838)->season == 3) {
                                 tag = (u16) entry->unk0;
                                 if (tag == 0x40) {
-                                    ovl_11_func_800DA390((Ovl11GridResetEntry *) entry);
+                                    Ovl11ResetGridEntry((Ovl11GridResetEntry *) entry);
                                 } else if ((tag == 0x36) && (entry->unk4 != 0)) {
                                     entry->unk4 = 1;
                                     state->days = 0;
@@ -100,12 +98,12 @@ void ovl_11_func_800D7B8C(void) {
                         }
                         if (isCrop == 0) {
 normalizeEntry:
-                            ovl_11_func_800DAF24((u16 *) entry);
+                            Ovl11NormalizeCellKindPair((u16 *) entry);
                         } else {
 advanceGrowth:
                             nextTag = (u16) entry->unk2;
                             if ((nextTag == 0x169) || (nextTag == 0x16B) || ((u16) entry->unk0 == 0x36)) {
-                                ovl_11_func_800DAF24((u16 *) entry);
+                                Ovl11NormalizeCellKindPair((u16 *) entry);
                                 if (state->stage != growth[1]) {
                                     flags = (u16) state->flags;
                                     if (flags & 0x8000) {
@@ -122,7 +120,7 @@ advanceGrowth:
                                         state->stage += 1;
                                     }
                                     if ((u16) entry->unk0 == 0x36) {
-                                        ovl_11_func_800DA638((s16) row, (s16) column, (s16) layer, 0, 1);
+                                        Ovl11ApplyCellNeighborhoodVariants((s16) row, (s16) column, (s16) layer, 0, 1);
                                     }
                                 }
                             }

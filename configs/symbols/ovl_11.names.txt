@@ -485,6 +485,69 @@ Ovl11RefreshStageEventFlag = 0x8011266C; // type:func
 Ovl11RefreshStageGateFlags = 0x801126C8; // type:func
 Ovl11RefreshEventFlagsHigh = 0x8011277C; // type:func
 Ovl11RefreshEventFlagsTop = 0x8011282C; // type:func
+Ovl11InitRecordFlagCounters = 0x801128B4; // type:func
+Ovl11SelectCounterRecord = 0x80112904; // type:func
+Ovl11ResetRecordThresholdCount = 0x801129A0; // type:func
+Ovl11UpdateRecordFlagCounters = 0x801129EC; // type:func
+Ovl11GetCounterRecordLabel = 0x80112A84; // type:func
+Ovl11StepRecordThresholdCount = 0x80112AB4; // type:func
+Ovl11StepRecordStageCount = 0x80112B60; // type:func
+Ovl11ConsumeRecordActivityFlags = 0x80112C28; // type:func
+Ovl11StepRecordLowValueCount = 0x80112C98; // type:func
+
+gOvl11CounterRecordLabels = 0x80127FD4; // type:data size:0x14
+
+Ovl11ResetGridEntry = 0x800DA390; // type:func
+Ovl11TrySeasonalGridTransition = 0x800DA3AC; // type:func
+Ovl11TryGridKind3FTransition = 0x800DA454; // type:func
+Ovl11TryResetEligibleGridEntry = 0x800DA49C; // type:func
+Ovl11TryRefreshActiveGridEntry = 0x800DA518; // type:func
+
+Ovl11ApplyCellNeighborhoodVariants = 0x800DA638; // type:func
+Ovl11SpawnCellEffectSprite = 0x800DAC08; // type:func
+Ovl11RefreshCellTextureVariant = 0x800DACD4; // type:func
+Ovl11FindRandomGridCell = 0x800DADB0; // type:func
+Ovl11NormalizeCellKindPair = 0x800DAF24; // type:func
+Ovl11GetMapGridCell = 0x800DAF60; // type:func
+gOvl11CellTextureSetters = 0x80123DFC; // type:data size:0x8
+gOvl11CellGridLayerBounds = 0x80123E0C; // type:data size:0x8
+gOvl11CellNeighborOffsets = 0x80123E14; // type:data size:0x24
+gOvl11CellProbeColumn = 0x80128DAC; // type:data size:0x2
+gOvl11CellProbeRow = 0x80128DAE; // type:data size:0x2
+gOvl11CellProbeVariant = 0x80128DB0; // type:data size:0x2
+
+Ovl11InitTimeOfDayFade = 0x80111A60; // type:func
+Ovl11UpdateTimeOfDayFade = 0x80111B74; // type:func
+Ovl11ClassifyTimeOfDay = 0x80111CC4; // type:func
+Ovl11GetSeasonSunsetHour = 0x80111D28; // type:func
+gOvl11SunsetHours = 0x80127F60; // type:data size:0x8
+
+Ovl11ResetSceneTripletInterpolation = 0x80111D48; // type:func
+Ovl11StepSceneTripletInterpolation = 0x80111D94; // type:func
+gOvl11SceneTripletStart = 0x80127F68; // type:data size:0xC
+gOvl11SceneTripletEnd = 0x80127F74; // type:data size:0xC
+gOvl11SceneTripletProgress = 0x8012D0EC; // type:data size:0x4
+
+Ovl11InstallItemSpriteSource = 0x801110CC; // type:func
+Ovl11MapSeason0ItemSprite = 0x80111258; // type:func
+Ovl11MapSeason1ItemSprite = 0x80111400; // type:func
+Ovl11MapSeason2ItemSprite = 0x801115A8; // type:func
+Ovl11MapSeason3ItemSprite = 0x80111750; // type:func
+Ovl11MapSet4ItemSprite = 0x8011184C; // type:func
+Ovl11MapSet7ItemSprite = 0x80111944; // type:func
+gOvl11SeasonItemSpriteMaps = 0x800BAC04; // type:data size:0x20
+gOvl11SpriteRecordSets = 0x80125528; // type:data size:0x28
+
+Ovl11TryInstallCellItem = 0x800D81BC; // type:func
+Ovl11TryPromoteCellPendingKind = 0x800D8320; // type:func
+Ovl11TryResetCellAndSpawnEffect = 0x800D8428; // type:func
+Ovl11ResolveCellItemState = 0x800D85F8; // type:func
+Ovl11TryApplyCellActionEffect = 0x800D876C; // type:func
+Ovl11TryClearCellFootprint = 0x800D88D0; // type:func
+Ovl11TryClearCellFootprintScored = 0x800D8C6C; // type:func
+
+Ovl11PassGridKind3FTransitions = 0x800D8FC8; // type:func
+Ovl11PassGridEntryResets = 0x800D9064; // type:func
 gOvl11StatusCounterGroupAIds = 0x80127F80; // type:data size:0x8
 gOvl11StatusCounterGroupBIds = 0x80127F88; // type:data size:0x8
 gOvl11StatusCounterGroupCIds = 0x80127F90; // type:data size:0x8

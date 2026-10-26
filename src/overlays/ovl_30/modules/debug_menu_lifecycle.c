@@ -14,6 +14,7 @@
 #include "master_volume.h"
 #include "sound_commands.h"
 #include "game_flags.h"
+#include "ovl30_debug_font.h"
 
 void Ovl30ResetDebugMenu(void) {
     gOvl30DebugMenuPendingChange = 0;
@@ -39,7 +40,6 @@ void Ovl30DebugMenuNoOp(void) {
 }
 
 void Ovl30TransferDebugDisplay(s32 restore);
-void ovl_30_func_8012FE94(void);
 
 /* Keep the increment as an update before the upper clamp. The decrement
  * path uses a separate nonnegative clamp rather than unsigned wrapping. */
@@ -80,7 +80,7 @@ void Ovl30UpdateDebugMenu(void) {
         KanjiFntClose();
         KanjiFntOpen(8, 0x10, 0x140, 0xF0, 0x1C0, 0, 0x140, 0xFF, 0, 0xFF);
         FntFlush(-1);
-        ovl_30_func_8012FE94();
+        Ovl30InitDebugFont();
         BeginScreenFadeDecrease(0xA, 0, 2);
         BeginMasterVolumeFadeIn(0xA);
         break;

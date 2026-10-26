@@ -3975,22 +3975,29 @@ typedef struct {
 } Ovl11D124Entry;
 extern Ovl11D124Entry gAlternateAreaGrid[7][7];
 /* 800DA638 dispatches the two matched three-s16 texture setters. */
-extern s32 (*D_80123DFC[2])(s16, s16, s16);
+extern s32 (*gOvl11CellTextureSetters[2])(s16, s16, s16);
 /* 800DA638 reads signed row/column bounds at index*4 and +2. */
 typedef struct {
     s16 height;
     s16 width;
 } Ovl11GridBounds;
-extern Ovl11GridBounds D_80123E0C[2];
+extern Ovl11GridBounds gOvl11CellGridLayerBounds[2];
 /* 800DA638 loads nine pairs of halfword offsets, then narrows sums to s16. */
-extern u16 D_80123E14[18];
+extern u16 gOvl11CellNeighborOffsets[18];
 /* 800DA638 accesses the first coordinate halfword in the data word at 80128DAC. */
-extern u16 D_80128DAC;
-/* 800DA638 addresses the second halfword of D_80128DAC; retain the
- * data-word alias when re-splitting the overlay for compiled jump tables. */
-extern u16 D_80128DAE __asm__("D_80128DAC+2");
+extern u16 gOvl11CellProbeColumn;
+/* 800DA638 addresses the second coordinate through the first +2; preserve
+ * the existing assembler identity even with separately named halfwords. */
+extern u16 gOvl11CellProbeRow __asm__("gOvl11CellProbeColumn+2");
 /* 800DA638 stores the signed variant selector after the coordinate pair. */
-extern s16 D_80128DB0;
+extern s16 gOvl11CellProbeVariant;
+/* 800DADB0 preserves work-base addressing for the alternate grid and gate. */
+typedef struct {
+    char pad_0000[0x44D4];
+    u16 alternateGridEnabled;
+    char pad_44D6[0x78EC - 0x44D6];
+    Ovl11D124Entry alternateGrid[1];
+} Ovl11GridCellSearchView;
 
 /* 800C9F20 reads halfword coordinate pairs; original data spans 32 halfwords. */
 extern u16 gOvl11CompanionScreenOffsets[32];
@@ -4170,28 +4177,28 @@ extern s16 gClockMinute;
  * Defined in the overlay data segment, so only an extern declaration belongs
  * here. */
 typedef struct {
-    s32 unk0;
-    s32 (*unk4)();
-} Recon_ovl_11_func_801110CC_D800BAC04Entry;
+    s32 setIndex;
+    s32 (*mapItemId)(s16);
+} Ovl11SeasonItemSpriteMap;
 
 typedef struct {
-    Recon_ovl_11_func_801110CC_D800BAC04Entry entries[4];
-} Recon_ovl_11_func_801110CC_D800BAC04Table;
+    Ovl11SeasonItemSpriteMap entries[4];
+} Ovl11SeasonItemSpriteMaps;
 
-extern Recon_ovl_11_func_801110CC_D800BAC04Table D_800BAC04;
+extern Ovl11SeasonItemSpriteMaps gOvl11SeasonItemSpriteMaps;
 
 /* D_80125528 - ovl_11 per-index pointer table (10 entries, D_80124FE8 ..
  * D_801254D0). Each entry points at an s32 record list whose word 0 is the
  * record count; ovl_11_func_801110CC reads word [var_a2 + 1] and adds the
  * D_800957F8 blob base. Defined in the overlay data segment, so only an
  * extern declaration belongs here. */
-extern s32 *D_80125528[];
+extern s32 *gOvl11SpriteRecordSets[];
 
 /* D_800957F8 - ovl_11 sprite-data blob base (main RAM). func_80015704 headers
  * are resolved as D_800957F8 + record offset by ovl_11_func_800DA588,
  * ovl_11_func_800D688C and ovl_11_func_801110CC. Absolute-addressed from
  * overlay 11 code. */
-extern u8 D_800957F8[];
+extern u8 gLoadedSpriteDataBlob[];
 
 /* D_80070C70 - s16 slot aliased with D_8006C838 + 0x4438. ovl_11_func_800E3AA4
  * compares it against D_8007AFF0 + 0x2549C, stores -1 in its early-out arm,
@@ -5069,6 +5076,14 @@ extern u8 gChoiceCellStates[9];
 extern struct ColorRowBlend gOvl11ColorRowBlend;
 extern unsigned long gOvl11ColorRowSources[16];
 extern s32 gOvl11ColorRowProgress;
+/* 80111D28 indexes four seasonal sunset hours: 18, 19, 18, 17. */
+extern s16 gOvl11SunsetHours[];
+/* 80111D48 reads low halfwords at +0/+4/+8; 80111D94 interpolates three words. */
+extern s32 gOvl11SceneTripletStart[3];
+/* 80111D94 supplies this adjacent three-word endpoint to InterpolateThreeWords. */
+extern s32 gOvl11SceneTripletEnd[3];
+/* 80111D48 resets and 80111D94 advances the 0..1200 interpolation position. */
+extern s32 gOvl11SceneTripletProgress;
 /* exe:8001FA98 post-increments this sole GP-owned signed counter. */
 extern s32 gSequenceNumber;
 
@@ -5247,6 +5262,9 @@ struct Ovl11RecordThresholds {
     u8 padB386[0xBE7C - 0xB386];
     u16 field_BE7C;
 };
+
+/* 80112A84 selects one of five label pointers consumed by 800FB908's text row. */
+extern s32 *gOvl11CounterRecordLabels[5];
 
 /* D_8007A3F0 - address inside the D_80074838 work area (base + 0x5BB8),
  * referenced absolutely (lui + %lo) by ovl_11_func_801129EC, which passes

@@ -9,9 +9,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_cell_sprite_dispatch.h"
-
-void ovl_11_func_80111D94(void);
-void ovl_11_func_80111B74(void);
+#include "ovl11_scene_triplet_interpolation.h"
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "psyq/libcd.h"
+#include "ovl11_time_of_day_fade.h"
 
 #define STATE ((struct Ovl11EventDispatchState *)D_8006C838)
 #define HEADER ((struct Ovl11SceneHeader *)((Ovl11FarInitView *)&D_8007AFF0)->data)
@@ -48,9 +50,9 @@ void ovl_11_func_800DC148(void) {
         break;
     case 14:
         if (HEADER->id == 0xE5) {
-            ovl_11_func_80111D94();
+            Ovl11StepSceneTripletInterpolation();
         } else {
-            ovl_11_func_80111B74();
+            Ovl11UpdateTimeOfDayFade();
         }
         break;
     case 5:

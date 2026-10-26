@@ -39,7 +39,7 @@ segments:
       - [0x7B0, rodata]
       - [0x1204, c, modules/debug_menu_lifecycle]
       - [0x15EC, c, modules/debug_flags_sound]
-      - [0x20AC, c, ovl_30_func_8012FE94]
+      - [0x20AC, c, modules/debug_font]
       - [0x2104, c, modules/value_action_pages]
       - [0x290C, c, modules/record_editor_pages]
       - [0x48DC, c, modules/debug_value_editors]

@@ -1,8 +1,10 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_map_grid_cells.h"
 
 s32 ovl_11_func_800D5C3C(s16 arg0);
 s32 ovl_11_func_800D7EF8(s32 *arg0, u16 *arg1, u16 *arg2);
-void ovl_11_func_800DACD4(s16 arg0, s16 arg1, s32 arg2);
 
 s32 ovl_11_func_800D9108(s32 *arg0) {
     s16 col;
@@ -24,7 +26,7 @@ s32 ovl_11_func_800D9108(s32 *arg0) {
             for (j = (s16)col; j < (s16)col + 3 && j < 45; j++) {
                 entry = &gMainAreaGrid[i][j];
                 if ((u16)entry->unk0 == 0x36 && entry->unk4 >= threshold) {
-                    ovl_11_func_800DACD4(i, j, 0);
+                    Ovl11RefreshCellTextureVariant(i, j, 0);
                     result = 1;
                     goto done;
                 }
@@ -35,7 +37,7 @@ s32 ovl_11_func_800D9108(s32 *arg0) {
         for (j = 0; j < 45; j++) {
             entry = &gMainAreaGrid[i][j];
             if ((u16)entry->unk0 == 0x36 && entry->unk4 >= threshold) {
-                ovl_11_func_800DACD4(i, j, 0);
+                Ovl11RefreshCellTextureVariant(i, j, 0);
                 result = 1;
                 goto done;
             }

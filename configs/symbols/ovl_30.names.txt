@@ -70,6 +70,9 @@ gOvl30FlagCursorMarker = 0x8012DF2C; // type:data size:0x4
 gOvl30FlagIdleMarker = 0x8012DF30; // type:data size:0x4
 gOvl30FlagRowFormat = 0x8012DF34; // type:data size:0x8
 
+// SDK dump console and shared text-origin initialization.
+Ovl30InitDebugFont = 0x8012FE94; // type:func
+
 // Consecutive main/player/action/pet descriptor pages (headings identify roles).
 Ovl30EditMainData = 0x8012FEEC; // type:func
 Ovl30EditPlayerData = 0x8012FF50; // type:func

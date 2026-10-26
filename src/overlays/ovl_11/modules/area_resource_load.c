@@ -165,10 +165,10 @@ void Ovl11LoadIndexedSpriteRecords(s32 index) {
 
     if (index != -1) {
         bounds = &gOvl11RecordSpriteBoundaries[index];
-        offsets = D_80125528[index];
+        offsets = gOvl11SpriteRecordSets[index];
         imageOffset = *(s32 *)((u8 *)offsets + (*offsets * 4) + 4);
         CdReadDiscSectorsBlocking(0, bounds[0], bounds[1] - bounds[0], 0, gGraphicsHeapBase + 0x4290);
-        memcpy(&D_800957F8, (void *)(gGraphicsHeapBase + 0x4290), imageOffset);
+        memcpy(&gLoadedSpriteDataBlob, (void *)(gGraphicsHeapBase + 0x4290), imageOffset);
         imageOffset = imageOffset + 0x4290;
         UploadSpriteImages((u8 *)(gGraphicsHeapBase + imageOffset));
         ovl_11_func_800DA588(index);

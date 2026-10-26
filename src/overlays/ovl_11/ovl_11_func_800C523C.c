@@ -1,10 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_actions.h"
 
 s32 ovl_11_func_800C9D64(void);
 s32 ovl_11_func_800D806C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-s32 ovl_11_func_800D8C6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 s32 ovl_11_func_800F482C(Ovl11SpawnEffectRecord *arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800CD5BC(Ovl11CD5BCObject *arg0, s32 arg1);
 
@@ -33,7 +35,7 @@ void ovl_11_func_800C523C(Ovl11CD5BCObject *arg0) {
             sp2E += sp2A;
             if (ovl_11_func_800D806C(sp2C, sp2E, 0, (s16) temp_s0) == 0) {
                 D_80128C64 += temp_v0 << temp_s3;
-                if (ovl_11_func_800D8C6C((s16) temp_s0, sp2C, sp2E, D_80128C64, arg0->amount) == temp_v0) {
+                if (Ovl11TryClearCellFootprintScored((s16) temp_s0, sp2C, sp2E, D_80128C64, arg0->amount) == temp_v0) {
                     var_s4 = 0x96;
                 }
             }

@@ -13,13 +13,13 @@
 #include "psyq/libgs.h"
 #include "ovl11_area_resource_load.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_record_flag_counters.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
 void ovl_11_func_800EF6E4 ();
-void ovl_11_func_801129A0 (void);
 s32 ovl_11_func_80118A68 (s32 arg0);
 s32 ovl_11_func_80118C6C (void);
 void ovl_11_func_80103830 (void);
@@ -117,7 +117,7 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         SetGameFlag(0x50U, 1U);
         ((E9State *)D_8006C838)->fE780 = 1;
         ((E9State *)D_8006C838)->fE76E = 0;
-        ovl_11_func_801129A0();
+        Ovl11ResetRecordThresholdCount();
         ovl_11_func_800F2538(2, 0x37, 2);
         for (var_s3 = 0; var_s3 < 4; var_s3++) {
             if (GetGameFlag((u16)(var_s3 + 0x21)) != 0) {

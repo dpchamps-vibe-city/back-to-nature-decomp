@@ -1,5 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_actions.h"
 
 typedef struct {
     /* 0x00 */ char pad_0[0x22];
@@ -11,7 +14,6 @@ typedef struct {
 } Ovl11Func801103E8Obj;
 
 s32 ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
-s32 ovl_11_func_800D8320(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D7EF8(Recon800D0408A1View *arg0, s16 *arg1, s16 *arg2);
 s32 ovl_11_func_8011E090(Recon800D0408A1View *arg0, s16 *arg1, s16 *arg2);
 
@@ -33,6 +35,6 @@ void ovl_11_func_801103E8(Ovl11Func801103E8Obj *arg0, s32 arg1) {
     sp10.unk0 += arg0->unk38;
     sp10.unk8 += arg0->unk40;
     if (var_s1(&sp10, &sp20, &sp22) == 0) {
-        ovl_11_func_800D8320(var_s2, sp20, sp22, 0);
+        Ovl11TryPromoteCellPendingKind(var_s2, sp20, sp22, 0);
     }
 }

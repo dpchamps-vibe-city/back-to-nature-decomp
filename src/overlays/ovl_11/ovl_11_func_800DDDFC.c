@@ -26,6 +26,8 @@
 #include "ovl11_moving_items.h"
 #include "psyq/libetc.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_record_flag_counters.h"
+#include "ovl11_grid_transition_passes.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
@@ -42,11 +44,8 @@ void ovl_11_func_800F3D40 (void);
 void ovl_11_func_800F2620 (void);
 s32 ovl_11_func_800DE76C (void);
 void ovl_11_func_800F4D28 (void);
-void ovl_11_func_800D8FC8 (s32 arg0);
-void ovl_11_func_800D9064 (void);
 void ovl_11_func_800C05F8 (void);
 void ovl_11_func_800DE4C0 (void);
-void ovl_11_func_801129EC();                        /* static */
 void ovl_11_func_800F4BB4(void);
 
 s32 ovl_11_func_800DDDFC(void) {
@@ -108,7 +107,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ((Ovl11SetupWorkView *)&D_8007AFF0)->id = id;
             ovl_11_func_800DBFEC((u16)((Ovl11SetupWorkView *)&D_8007AFF0)->id, 0x8000, same);
             Ovl11UpdateEventSlotCounters();
-            ovl_11_func_801129EC();
+            Ovl11UpdateRecordFlagCounters();
             Ovl11LoadIndexedSpriteRecords(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xA));
             Ovl11LoadCalendarSpriteSet(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xC), 0);
             Ovl11LoadIndexedSpriteSet(0);
@@ -158,14 +157,14 @@ s32 ovl_11_func_800DDDFC(void) {
         switch (((Ovl11DDDFCState *)D_8006C838)->mode) {
         case 1:
             Ovl11ProcessMainGridCells();
-            ovl_11_func_800D8FC8(0);
+            Ovl11PassGridKind3FTransitions(0);
             break;
         case 2:
-            ovl_11_func_800D8FC8(1);
+            Ovl11PassGridKind3FTransitions(1);
             break;
         case 3:
         case 4:
-            ovl_11_func_800D9064();
+            Ovl11PassGridEntryResets();
             ovl_11_func_800C05F8();
             break;
         }

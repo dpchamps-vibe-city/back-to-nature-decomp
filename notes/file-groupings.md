@@ -2251,6 +2251,15 @@ that documented cluster. Members (address order):
 
 ## `ovl_11` far-state/reset band — 0x8010FBC4 → 0x801110CC (confidence: medium-low; 8010FBC4/8010FEF8 extensions: low)
 
+Module-campaign follow-up: the installer's complete private mapper closure,
+801110CC–80111A60, is now item_sprite_source (see the s16 dispatch-map
+section). The earlier reset/keyed-lookup/probe band is still a hypothesis,
+not a proven whole TU: shared object fields and far-state gate are also
+cross-service protocols. No positive private mapper/state witness joins
+110E98/111030 to the installer. A proposed broader merge also meets the
+standalone 2DE4 callback-table rodata limit; neither that mechanical limit
+nor the same field layout alone proves a historical boundary.
+
 Same-TU candidate band of `ovl_11` (`Obj\GF_FARM.bin`): its previously
 documented core starts with matched `ovl_11_func_80110118` in the unbroken link
 run that opens at 0x582F8 and continues through 0x80110188 / 0x8011031C / 0x801103E8 /
@@ -4724,6 +4733,42 @@ The timer-update member is a low-confidence extension; [evidence and limits](res
 
 ## `ovl_11` s16 dispatch-map run — 0x80111258–0x80111944 (confidence: medium)
 
+**Reconstructed `modules/item_sprite_source.c`, all seven functions
+801110CC–80111A60 exclusive.** The dispatcher is the sole reader of the
+four-entry {set,mapper} table at 800BAC04. Its four callback targets occur
+in member order; the dispatcher is also the only caller of the following
+set-4 and set-7 maps. The six maps therefore travel with their installer,
+not as a map-only slice. The set-4 jump table pools unchanged. Season names
+remain ordinal 0..3; set 4/7 are not guessed as commodity categories.
+
+Left E98/11030 are separate value/coordinate lookup services with different
+clients and no private table/helper tie to these maps. Right 11A60 begins
+the private time-of-day palette protocol, not item/header installation.
+These are evidence-limited call/protocol cuts under -G0. The wider far-state
+band remains a hypothesis: shared reset-field views alone do not join all
+intervening lookup services. A merge through 80110188 also has a concrete
+rodata representation limit: standalone table 800BAC04 at file 2DE4 lies
+between its switch table and the set-4 table. That is a mechanical limit,
+not proof of an original file boundary; a broader supported fold must first
+restore that table definition/pooling through the generator.
+
+Canonical names identify installer, four seasonal maps and set-4/set-7 maps.
+Only the installer is public in ovl11_item_sprite_source.h. Object storage
+is now the caller's existing canonical view, named Ovl11ItemSpriteObject;
++C8+14 = +DC establishes spriteHeader, not a speculative gameplay latch.
+sourceKind/itemId/header remain the same s16/u16/s32 fields and offsets.
+All callers use that one view. Map entry types/fields name setIndex and the
+s16-ID callback. Data names identify the four-map table and ten sprite-record
+sets. The EXE blob name is a first-byte address anchor of a variable-length
+load, not a claim that its allocation is one byte; its incomplete-array
+extern and loaded size remain unchanged. Public documentation describes
+kind/season dispatch, header suppression, clearing on unmapped IDs and the
+actual object storage requirement. All seven and the linked overlay passed
+the baseline -O2/-G0 fold; no override or exception was added or retired.
+Final third-batch acceptance with cell_actions/grid_transition_passes passes
+all eight tuProgress --verify gates at 1207/2625 folded / 193 valid modules;
+see the grid-table cluster section for the complete verification record.
+
 Candidate same-TU family of `ovl_11`: address-adjacent leaf `s16`->`s32`
 selectors — each a `switch` with no callees and no file-scope data. The
 membership fingerprint is a shared case-key set: every member dispatches on at
@@ -4757,6 +4802,44 @@ Members (address order):
 
 ## `ovl_11` D_80127F60 s16-table lookup helper — 0x80111D28 (confidence: medium)
 
+**Reconstructed two complete protocols, not one adjacency-only family:**
+`modules/time_of_day_fade.c` has four members 80111A60–80111D48;
+`modules/scene_triplet_interpolation.c` has the following two,
+80111D48–80111E38 exclusive. The old claim below that table adjacency alone
+binds D48 to the sunset getter is withdrawn. Scene-kind 15's setup/update
+callers select these as alternatives on scene id E5. No shared private
+helper, state or endpoint table joins the two alternatives.
+
+The fade init/update pair are the exclusive clients of the adjacent time-band
+classifier and sunset getter. They share color-row state, captured row buffer
+and progress; the private four-halfword table is {18,19,18,17}. This supports
+all four, not merely the paired controller functions. Public Init/Update
+names/header document VRAM rows, dusk in-game-minute progress, the old-value
+publication order and the subsequent bouncing night blend. Classifier/getter
+keep external linkage without becoming header API. The clock view's existing
+field widths and decision trees remain; CLOCK_STATE is undefined after use.
+Left 80111944 maps item IDs to sprite indices with no fade state/calls;
+right is the separate E5 triplet protocol. These are -G0 evidence-limited
+protocol boundaries, not compiler-proven original file extents.
+
+The triplet reset and flag-8-gated step share both three-word endpoint tables,
+progress word and scene-record-zero +8/+A/+C publisher. They therefore form a
+complete pair. Names deliberately say triplet, not color or position: the
+components' meaning is not established. Reset does not arm flag 8; enabled
+updates publish positions 0..1200 inclusive, then clear the flag. The public
+header describes that 1201-publication behavior and low-halfword truncation.
+Left is the disjoint clock palette protocol; right progress_status has its
+own request/timer/derived-bit pipeline and no endpoint/progress access.
+Both endpoints now have one s32[3] declaration in globals_override.h; reset
+uses an explicit low-halfword view rather than conflicting u16[]/scalar
+externs. The three data identities and progress word are named at their
+original overlay addresses. No storage or private linkage was introduced.
+Both complete folds passed baseline -O2/-G0 and the linked overlay; no
+member override or policy exception was added or retired. Full second-batch
+acceptance is recorded in the map_grid_cells/table-dispatch section: all eight
+gates PASS, 1191 folded / 190 valid modules, zero published interface failures.
+
+Historical candidate evidence follows.
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): one short leaf
 helper reading a file-scope s16 table absent from the generated `globals.h`, via
 extern + absolute addressing. Same short-leaf-over-file-scope-s16 fingerprint
@@ -13640,6 +13723,22 @@ The setting's decrement 0->256/increment 255->0 behavior and sequence
 0->35/36->0 asymmetry are documented, not repaired. The checked six-member
 fold and full overlay passed baseline settings; batch acceptance is below.
 
+**Adjacent font initialization reconstructed as `modules/debug_font.c`,
+sole entry 8012FE94–8012FEEC.** The existing lifecycle calls it on entry;
+it loads the SDK font, opens/selects the dump console and sets the shared
+custom-text origin. It touches none of the left sound/flag page's private
+row/audio protocol or the right value/action pages' descriptor/cursor
+protocol, and neither neighboring page calls it. No helper/table/state
+witness joins either immediate edge; this is a bounded single-service unit,
+not a claim that a one-function original object is proved. A wider debug-
+editor TU remains possible, not established by its generic callback table.
+The canonical Ovl30InitDebugFont interface documents screen/VRAM coordinates,
+buffer capacity and shared origin effects. SDK declarations now come from
+libgpu.h; the custom origin setter retains its corroborated s32 pair.
+The baseline fold and complete overlay passed; no flag or exception changed.
+The full second-batch gate also passes (1191 folded / 190 valid modules), as
+recorded in map_grid_cells' table-dispatch section.
+
 [Common-caller and gapless-link evidence; membership limits](research/ovl_30_func_8012F454-grouping.md).
 
 Members (link order):
@@ -19111,6 +19210,47 @@ Members (link order):
 
 ## `ovl_11` record-tag update run — 0x800DA3AC–0x800DA518 (confidence: medium)
 
+**Reconstructed `modules/grid_entry_transitions.c`, five functions at
+800DA390–800DA588 exclusive.** This includes the preceding reset, not merely
+the four random transitions: 800D7B8C invokes the seasonal transition and
+reset on the same grid-entry protocol, and the reset writes the exact
+kind/value/state/flags layout used by the following operations. 800D9064
+applies the three random-bound helpers to every main-grid entry; 800D8FC8
+also calls the kind-3F transition. The unsigned reset/transition layout is
+the existing Ovl11GridResetEntry in game_types.h; the signed seasonal view
+remains Ovl11D124Entry, preserving load and comparison semantics. The common
+record schema, reset/transition protocol and caller passes corroborate the
+complete five-member run, not link adjacency alone.
+
+Left: cell_sprite_dispatch ends at DA390, using a private resolver/output
+protocol to draw the shared grids; it does not call these mutation helpers.
+The common map is NOT a boundary proof nor a reason to merge drawing and
+mutation. Right DA588 loads sprite-source records from private 80125528
+counts/offsets; it neither uses this reset/random protocol nor its entry
+layout. These are evidence-limited protocol cuts under -G0, not proven
+original file edges. Distant grid walkers remain shared API clients, not an
+asserted larger contiguous unit.
+
+Names: Ovl11ResetGridEntry, Ovl11TrySeasonalGridTransition,
+Ovl11TryGridKind3FTransition, Ovl11TryResetEligibleGridEntry and
+Ovl11TryRefreshActiveGridEntry. Header ovl11_grid_entry_transitions.h
+publishes all five with exact kind/value/state effects and RNG consumption
+conditions. Bounds are low-16-bit Rand bounds, not percentages; zero gates
+consume no RNG. Local parameters now identify entries, kinds and bounds.
+No gameplay interpretation of kind 36/3F/167/168/175 was invented. The reset
+and two unsigned transition definitions/caller use the canonical existing
+record instead of independent prefix typedefs. No linkage or storage
+ownership was changed. The complete baseline -O2/-G0 fold and overlay passed;
+no member override or source-policy exception is involved.
+
+Batch acceptance with record_flag_counters: tuProgress --verify against
+build/tu-campaign/baseline.json passes all eight integrity gates, with
+1178/2625 folded functions and 186/186 valid modules. Executable/all overlay
+code, data, tables, callback pointers and placement remain byte-identical;
+canonical/public interfaces, policy, generation convergence, scope and
+exception non-growth pass. Exit 1 denotes remaining campaign work.
+
+Historical candidate evidence follows.
 Four functions in an unbroken link-order run that all mutate the same 8-byte
 record (`u16@+0x0`, `u16@+0x2`, `u8@+0x4`, `u8@+0x5`, `u16@+0x6`) behind an
 `ovl_11` tag test and a `func_80012A34` guard. The shared record layout is the
@@ -19132,6 +19272,65 @@ Members (link order):
 
 ## `ovl_11` Ovl11D124Entry 8-byte table cluster — D_80071DFC 25x45 / D_80074124 7x7 (confidence: low)
 
+**Reconstructed `modules/cell_actions.c`, seven members 800D81BC–800D8FC8
+exclusive.** The C4A2C/C5098/C523C/C541C callers choose these as alternatives
+on identical layer/column/row inputs and per-kind category/threshold gates.
+Six resolve cells through the checked accessor; the interposed resolved-
+record service uses the same kind/pending-kind/state/flags reset or refresh
+protocol. Four dispatch the same texture variants; the others use the same
+cell-effect/positioned-effect path. This caller/category and exact mutation
+protocol supports the complete run, including 85F8, rather than adjacency
+or the common map alone. No static linkage is inferred.
+
+Left 812C is a shared cell-to-world conversion dependency, also used by
+801105C8; it has no record/category/texture protocol. Right 8FC8 begins
+mode-selected bulk random-transition passes, not coordinate/category actions.
+No private helper/table extends either edge. These are supported protocol
+cuts, not -G0 compiler proofs of original file extents. The record's unsigned/
+signed kind union remains distinct from the signed grid view. Its established
+type is now Ovl11CellActionEntry, propagated without changing any field.
+
+All seven have behavior names and ovl11_cell_actions.h publishes their
+corroborated interfaces. Promotion's fourth parameter remains unused: every
+current caller supplies it (0 or 1); a stale comment saying it was absent
+was removed. It is not documented as an enable flag. Parameters/locals now
+name layer, row/column, kind, pending transition, texture, state, thresholds
+and effect position. The footprint implementations retain unchecked writes
+to MAIN-grid neighbors even for an alternate-layer center, signed-to-u32
+threshold conversion and different default texture effects; the header
+states these constraints rather than repairing behavior. The earlier
+cell-effect void-interface reconciliation is reused, not overridden. All
+seven and the linked overlay passed the baseline fold; no flags changed.
+
+**Adjacent `modules/grid_transition_passes.c`, two members 8FC8–9108
+exclusive.** Phase 5 of DDDFC selects these exact row-major profiles by mode:
+kind-3F-only bounds 32/16 for modes 1/2, or the ordered reset/refresh/3F
+profile for modes 3/4. The whole-grid mutation/RNG protocol and common mode
+handoff support both, not the widely shared grid alone. Left is the
+coordinate-action family above. Right 9108 searches locally then globally
+for one threshold-ready kind-36 cell and invokes refresh, using a world-
+position probe and no random-transition profile; its callers and effects
+differ. These are again evidence-limited protocol cuts. Header and local
+names document bounds, row-major order, state-dependent RNG consumption and
+later tests observing earlier mutations. Both complete functions and the
+overlay passed baseline -O2/-G0, with no override or exception involved.
+
+Final third-batch acceptance (cell_actions, grid_transition_passes and
+item_sprite_source): `npx tsx tools/diagnostics/tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes all eight integrity gates,
+with **1207/2625 folded, 193/193 valid modules, 1418 remaining**. This run
+adds **43 folded functions in nine modules**. All executable/13-overlay
+code, data, callback pointers, jump tables and placement are byte-identical;
+canonicalNames --check is clean, and the interface audit reports 727
+published interfaces with zero failing sites. Unrelated standing interface
+debt is not claimed resolved. Source policy, scope, input stability,
+configuration convergence, whitespace and exception non-growth pass. No
+flag override, pin, asm permission or INCLUDE_ASM was added; no shared tool
+changed and no commit was made. Exit 1 denotes the incomplete overall
+campaign, not a failed verification gate. Earlier batch acceptance records
+remain scoped to the tree they measured.
+
+Historical shared-data evidence follows.
 Evidence: one shared 8-byte record type (`s16@0`, `s16@0x2`, `u8@0x4`,
 `u8@0x5`, `s16@0x6`) reached absolutely by three container functions, and the
 two tables' rows are exactly the record stride (`D_80071DFC` 25x45, row
@@ -19238,6 +19437,52 @@ Members:
 
 ## `ovl_11` D_80123DFC two-entry callback-table cluster — 0x80123DFC (confidence: low)
 
+**Reconstructed `modules/map_grid_cells.c`, six entries DA638–DAFD4
+exclusive.** Neighborhood classification at DA638 and refresh at DACD4
+share the exact kind-36/state-byte/low-nibble texture protocol and call the
+local checked accessor DAF60; their span carries effect placement DAC08,
+random matching DADB0 and kind-pair normalization DAF24 in original order.
+The latter two also use that map-entry protocol, not a different private
+system. Private 3x3 offset/bounds tables and coordinate/variant scratch
+belong to DA638. The two-entry texture-setter table is shared with other
+map services, so it is corroboration, not private-state ownership proof.
+The inverted selector of random search is documented, not silently unified.
+
+Left DA588 installs sprite-source records from 80125528/800957F8 for the
+asset loader, with no cell accessor/texture/helper state; right DAFD4 begins
+coordinate_clamp's private bounds/reset/clamp protocol. Neither supplies a
+positive private-state or helper extension. These are evidence-limited
+protocol cuts under -G0; no historical TU boundary is claimed from adjacency
+alone. The nearby reset/random entry transitions and distant grid walkers
+are clients of shared services, not proof that all intervening code is one TU.
+
+The six function names and header ovl11_map_grid_cells.h describe checked
+access, neighborhood variants, state refresh, randomized matching, kind-pair
+normalization and effect placement. Inputs, inverse selector, wildcard bits,
+last-hit outputs, 400-unit spacing and shared scratch are documented. Globals
+name the setter table, bounds, nine offset pairs and probe coordinates/variant.
+The coordinate data word is now two named halfword labels; its existing
+second-halfword assembler identity remains first+2, preserving address birth.
+The alternate-grid search view moved to globals_override.h without changing
+its base origin, gate width or layout. Original nested classification tests,
+including odd fallback comparisons, remain unchanged. The existing DAC08
+memory-clobber exception is carried, not added or broadened. All six and
+the linked overlay passed the checked baseline -O2/-G0 fold; no flag changed.
+Interface publication exposed DAC08's s32 definition versus 876C's void
+contract; all observed clients discard its result. Publishing void and
+calling the pool without returning its value reconciles every caller while
+retaining every callee/caller byte, as the full gate proves. This is a
+verified interface correction, not a cast bypass or incompatible declaration.
+
+Second-batch acceptance (this unit, time_of_day_fade,
+scene_triplet_interpolation and debug_font): tuProgress --verify against
+build/tu-campaign/baseline.json passes all eight gates at 1191/2625 folded,
+190/190 modules valid. Every executable/overlay byte and associated data,
+callback/table placement matches; canonical/public interfaces have zero
+failing sites, source policy, convergence, scope and exception non-growth
+pass. Exit 1 denotes remaining campaign work. No shared tool changed.
+
+Historical evidence follows.
 Evidence: `build/ovl_11/asm/data/69960.data.s` emits `D_80123DFC` as a
 2-word table of `ovl_11_func_800D759C` / `ovl_11_func_8011E1E8`, and six
 container functions reach that table absolutely and call one entry. Both
@@ -19325,6 +19570,42 @@ Members (link order):
 
 ## `ovl_11` D_8006C838+0x8000 work-area run — 0x801128B4–0x80112C98 (confidence: medium)
 
+**Reconstructed `modules/record_flag_counters.c`, all nine functions at
+801128B4–80112D38 exclusive.** Select writes the signed record/label indices
+(+E778/E776), the getter consumes the label index through the private five-
+pointer 80127FD4 table, and Update reads the record index and calls all four
+counter helpers. ResetThresholdCount clears precisely flag 4E and +E770 used
+by the threshold helper; Init disables the same label selection. The
+warmup/stage/low-value/activity counters share the narrow +E76C..E77C protocol.
+These producer/consumer and helper ties support every member; the widely
+shared game-state base alone does not. There is no internal stub or flag cut.
+
+Left boundary: progress_status ends at 128B4 and has its own +44CE..51C6
+request/timer/derived-bit pipeline, not these selection words or helpers.
+Right 12D38 starts area_grid_triggers, its ten-plane grid, contact/reward
+protocol and separate state. Neither neighbor calls these private helpers or
+uses the five-label table. These delimit the supported protocol, not proven
+historical object boundaries under -G0. Distant event/clock/HUD clients use
+selected record state through the shared interface; that does not establish
+one intervening TU.
+
+Names identify Init/Select/ResetThresholdCount/Update/GetLabel and the four
+counter operations. `ovl11_record_flag_counters.h` publishes only the five
+external entries, with valid selection, invocation-count units and flag/work
+effects. The table is gOvl11CounterRecordLabels at its overlay identity; its
+extern is in globals_override.h. The two threshold helpers now use the
+caller's canonical struct_80076220 record (+4 u16), not duplicate prefix
+structs. The two argument-ignoring helpers retain their original material
+pointer calls and period-style declarations: their consumed parameter types
+are not invented. The unaligned eight-byte snapshot remains packed.
+Importantly, the original memset has fill=0x34 and length=0; Init does NOT
+clear the counter block. This behavior is documented rather than repaired.
+The whole nine-member fold and linked overlay passed baseline -O2/-G0; no
+compiler override or policy exception was added or retired. Batch acceptance
+with grid_entry_transitions passes every tuProgress --verify gate at 1178
+folded functions / 186 valid modules (see that section for the full result).
+
+Historical evidence follows.
 Evidence: link-order adjacency across an unbroken run plus a shared global
 cluster. Every member addresses the same work area as `(char *)&D_8006C838
 + 0x8000` and reads/writes halfwords in the narrow window `+0x676C`–`+0x677C`;

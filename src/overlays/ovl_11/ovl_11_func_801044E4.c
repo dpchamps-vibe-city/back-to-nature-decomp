@@ -24,6 +24,7 @@
 #include "ovl11_moving_items.h"
 #include "psyq/abs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_record_flag_counters.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -41,7 +42,6 @@ void ovl_11_func_8010C6A0 (void);
 void ovl_11_func_800F2508 (void);
 void ovl_11_func_80104898 (void);
 void ovl_11_func_800FFA28 (void);
-void ovl_11_func_801128B4 (void);
 void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_80104A58 (void);
 void ovl_11_func_80104A88 (void);
@@ -96,7 +96,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_80104898();
     ovl_11_func_800FFA28();
     ovl_11_func_8010476C();
-    ovl_11_func_801128B4();
+    Ovl11InitRecordFlagCounters();
     Ovl11StageFixedSpriteBank();
     ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
     far = (Ovl11FarInitView *)&D_8007AFF0;

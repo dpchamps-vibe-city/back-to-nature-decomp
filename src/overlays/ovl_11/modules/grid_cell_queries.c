@@ -10,11 +10,11 @@
 #include "ovl11_grid_cell_queries.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_cell_actions.h"
 
 s32 ovl_11_func_8011E090(VECTOR *pos, u16 *colOut, u16 *rowOut);
 s32 ovl_11_func_800D7EF8(s32 *pos, u16 *colOut, u16 *rowOut);
 s32 Ovl11ClassifyGridCell(s16 col, s16 row, s32 map);
-s32 ovl_11_func_800D8320(s16 action, s16 col, s16 row, s16 enabled);
 
 s32 Ovl11CheckDirectionalCellTransition(s32 *position, s32 direction) {
     VECTOR nearPos;
@@ -156,7 +156,7 @@ void Ovl11ProcessMainGridCells(void) {
 
     for (row = 0; row < 0x19U; row++) {
         for (col = 0; col < 0x2DU; col++) {
-            ovl_11_func_800D8320(0, (s16) col, (s16) row, 1);
+            Ovl11TryPromoteCellPendingKind(0, (s16) col, (s16) row, 1);
         }
     }
 }

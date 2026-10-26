@@ -15,6 +15,7 @@
 #include "random.h"
 #include "game_flags.h"
 #include "ovl30_record_menus.h"
+#include "ovl11_cell_actions.h"
 
 s32 Ovl30EditMainData(s32 cursor) {
     s32 result;
@@ -46,7 +47,6 @@ s32 Ovl30EditPlayerData(s32 cursor) {
 
 u16 *ovl_11_func_800CE744(s32, s32);
 s32 ovl_11_func_800D5750(s16);
-s32 ovl_11_func_800D8320();
 s32 ovl_11_func_800E6EAC();
 s32 ovl_11_func_800E6F34();
 s32 ovl_11_func_800E7088(s16, s16, s32, s32);
@@ -146,7 +146,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
         case 14:
             for (y = 0; y < 25; y++) {
                 for (x = 0; x < 45; x++) {
-                    ovl_11_func_800D8320(0, (s16)x, (s16)y, 0);
+                    Ovl11TryPromoteCellPendingKind(0, (s16)x, (s16)y, 0);
                 }
             }
             gOvl30RecordMenuSelectedId = -1;

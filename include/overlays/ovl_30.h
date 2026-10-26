@@ -3,7 +3,6 @@
  * passed to m2c before this file. */
 
 s32 clamp_nonnegative(s32 value);
-void ovl_30_func_8012FE94(void);
 void Ovl30DebugFlagsPageHook(void);
 void Ovl30DebugMenuNoOp(void);
 s32 Ovl30DebugMenuReturnZero(void);
@@ -28,6 +27,7 @@ s32 Ovl30EditSystemFlagBits(s32 cursor);
 s32 Ovl30EditToolParameters(s32 handlerState);
 void Ovl30EnterSoundTestRow(void);
 s32 Ovl30GetDebugMenuState(void);
+void Ovl30InitDebugFont(void);
 void Ovl30LeaveSoundTestRow(void);
 void Ovl30ResetDebugMenu(void);
 void Ovl30StepDebugSetting(void);

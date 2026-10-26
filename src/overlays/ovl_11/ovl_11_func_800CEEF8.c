@@ -30,6 +30,8 @@
 #include "ovl11_counter_choice.h"
 #include "psyq/libgs.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_map_grid_cells.h"
+#include "ovl11_cell_actions.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -150,7 +152,6 @@ s32 ovl_11_func_800D688C (s16 arg0);
 s32 ovl_11_func_800D678C (s16 arg0);
 s32 ovl_11_func_800D67F4 (s16 arg0);
 void ovl_11_func_800D6944 (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-Ovl11D124Entry *ovl_11_func_800DAF60 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_800D5868 (s16 arg0);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800D5CE4 (s16 arg0);
@@ -161,7 +162,6 @@ s32 ovl_11_func_800F581C (void);
 void ovl_11_func_80110E28 (u8 *arg0);
 s32 ovl_11_func_80110658 (s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 ovl_11_func_800F3BCC (u16 arg0);
-s32 ovl_11_func_800D8320(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
 void ovl_11_func_800F397C (u16 arg0, u16 arg1);
 s32 ovl_11_func_800F3BA0 (u16 arg0);

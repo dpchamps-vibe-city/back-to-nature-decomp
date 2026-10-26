@@ -2,6 +2,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "sound_commands.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_actions.h"
 
 typedef struct {
     char pad0[2];
@@ -29,7 +31,7 @@ typedef struct {
 
 typedef struct {
     char pad0[0x50];
-    Recon_ovl_11_func_800D85F8_A0View *unk50;
+    Ovl11CellActionEntry *unk50;
     s32 unk54;
 } Func800C7878Arg0;
 
@@ -37,9 +39,8 @@ s16 ovl_11_func_800F4240(ReconA0View *arg0);
 s32 ovl_11_func_800D589C(s16 arg0);
 s32 ovl_11_func_800F413C(F413CArg0 *arg0, F413CArg1 *arg1);
 s32 ovl_11_func_800CEEF8(CEEF8Arg0 *arg0);
-u16 ovl_11_func_800D85F8(Recon_ovl_11_func_800D85F8_A0View *arg0);
 
-extern Recon_ovl_11_func_800D85F8_A0View *D_80128C4C;
+extern Ovl11CellActionEntry *D_80128C4C;
 extern s32 D_80128C54;
 
 s32 ovl_11_func_800C7878(Func800C7878Arg0 *arg0, F413CArg1 *arg1) {
@@ -76,7 +77,7 @@ s32 ovl_11_func_800C7878(Func800C7878Arg0 *arg0, F413CArg1 *arg1) {
         break;
     case 0x20:
         PlaySoundEffect(7);
-        arg1->unk0 = ovl_11_func_800D85F8(arg0->unk50);
+        arg1->unk0 = Ovl11ResolveCellItemState(arg0->unk50);
         (*(s16 *) ((u8 *) arg1 + 2)) = 0;
         arg1->unk4 = 1;
         break;

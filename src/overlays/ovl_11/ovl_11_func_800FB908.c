@@ -1,8 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "psyq/memory.h"
+#include "ovl11_record_flag_counters.h"
 
-s32 ovl_11_func_80112A84 (void);
 s32 ovl_11_func_800FEB14 (void);
 s32 ovl_11_func_800FEB68 (void);
 s32 ovl_11_func_800FEBB0 (void);
@@ -82,7 +83,7 @@ complete:
     if (((Ovl11FB908State *) D_8006C838)->field_E776 >= 0) {
         var_s7 = (((Ovl11EF0E8StatusView *) ((u8 *) D_8006C838 + (((Ovl11FB908State *) D_8006C838)->field_E778 * 0x1D4)))->field_99EC / 6000) & 0xFFFF;
         D_80127234->unk0 = var_s7;
-        D_80127234->unk4 = ovl_11_func_80112A84();
+        D_80127234->unk4 = Ovl11GetCounterRecordLabel();
         D_80127234->unk9 = (u8) ((Ovl11FB908State *) D_8006C838)->field_E776 + 1;
     } else {
         var_s7 = 0;
