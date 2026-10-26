@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_800C9D64(void);
-s32 ovl_11_func_800D5960(s16 *arg0, u32 arg1, s16 arg2, s16 *arg3, s16 *arg4, s16 arg5);
 s32 ovl_11_func_800D806C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D81BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 
@@ -23,7 +23,7 @@ void ovl_11_func_800C4A2C(Ovl11C4A2CObject *arg0) {
         D_80123234[temp_s3](&sp18, &sp28, &sp2A);
         var_s1 = 0;
         do {
-            if (ovl_11_func_800D5960(&arg0->unk84, var_s1, arg0->unk38, &sp2C, &sp2E, 0) != 0) {
+            if (Ovl11FindCellGridTag(&arg0->unk84, var_s1, arg0->unk38, &sp2C, &sp2E, 0) != 0) {
                 sp2C += sp28;
                 sp2E += sp2A;
                 if (ovl_11_func_800D806C(sp2C, sp2E, 1, (s16) temp_s3) == 0) {

@@ -91,6 +91,7 @@ s16 DrawCulledProjectedPrimitives(ProjectedPrimitiveSource *source, VECTOR *eye,
 void DrawEntryConfirmationPrompt(s32 arg0, s32 arg1);
 void DrawIndexedSelectionLabels(void);
 void DrawIndexedSelectionValue(void);
+void DrawMenuPanel(u32 *ot, s32 ignoredMode, s32 x, s32 y, s16 width, s16 height);
 void DrawMessagePortrait(void);
 void DrawProjectedPrimitiveBatch(ProjectedPrimitiveSource *source);
 void DrawScreenFlatRect(s32 *ot, s16 x, s16 y, s16 width, s16 height, s32 color, s16 semitransparent);
@@ -209,7 +210,6 @@ s32 func_80021D88(void);
 void func_80021D90(void);
 void func_80021D98(void);
 void func_80021DA0(void);
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_800245F4(s32 arg0, s16 arg1, s16 arg2);
 void func_8002462C(s32 arg0, s16 arg1, s16 arg2);
 void func_80024664(s32 arg0, s16 arg1, s16 arg2);

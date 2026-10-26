@@ -1,10 +1,12 @@
 #include "common.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800FF96C(void);
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void SetVal8005E2BC(s32 arg0);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
@@ -39,7 +41,7 @@ void ovl_11_func_800FED0C(void) {
     if (state != 1) {
         D_801273C0[(state >> 4) - 1]();
     } else {
-        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1, 0x64, 0x4A, 0x82, 0x22);
+        DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1, 0x64, 0x4A, 0x82, 0x22);
         func_80017B3C(gActiveRenderContext->field_D8 + 0x60, (s32)(D_80053AE8 + gTextBankOffsets[0]), 0x70, 0x4E);
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);

@@ -16,4 +16,9 @@
  */
 void DrawBeveledPanel(u32 *ot, s16 x, s16 y, s16 width, s16 height);
 
+/* exe:0x80022580. Menu-facing facade with the same packet/lifetime contract.
+ * ignoredMode has no effect. x/y are truncated to signed 16-bit pixel
+ * coordinates before forwarding; dimensions already have that width. */
+void DrawMenuPanel(u32 *ot, s32 ignoredMode, s32 x, s32 y, s16 width, s16 height);
+
 #endif

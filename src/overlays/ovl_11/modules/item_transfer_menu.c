@@ -14,13 +14,15 @@
 #include "message_window.h"
 #include "screen_primitives.h"
 #include "integer_power.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
 void func_80017A38(s16 x, s16 y);
 void SetVal8005E2BC(s32 value);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
-void func_80022580(u32 *ot, s32 style, s32 x, s32 y, s16 width, s16 height);
 void func_800248B0(s32 ot, s16 x, s16 y);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CCF58(Ovl11C7010Object *object);
@@ -108,7 +110,7 @@ void Ovl11DrawAndProcessItemTransferMenu(void) {
     itemOt = gActiveRenderContext->field_D8 + 0x5C;
     func_80017A38(0, 2);
     for (i = 0; i < 4U; i++) {
-        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1,
+        DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1,
             gOvl11ItemTransferPanels[i][0], gOvl11ItemTransferPanels[i][1],
             gOvl11ItemTransferPanels[i][2], gOvl11ItemTransferPanels[i][3]);
     }

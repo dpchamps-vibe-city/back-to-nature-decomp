@@ -11,7 +11,6 @@
 #include "sprite_render.h"
 
 
-void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8002470C (s16 arg0);
 void func_80024810 (s32 arg0, s16 arg1, s16 arg2);
@@ -49,8 +48,8 @@ s32 ovl_15_func_80133808(s16 arg0) {
     temp_t0 = gActiveRenderContext->field_D8;
     temp_s2 = temp_t0 + 4;
     temp_s4 = temp_t0 + 0x14;
-    func_80022580((u32 *) (temp_t0 + 0x28), 1, 0x18, 0x20, 0x110, 0x74);
-    func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x24), 1, 0x50, 0x10, 0xA0, 0x20);
+    DrawMenuPanel((u32 *) (temp_t0 + 0x28), 1, 0x18, 0x20, 0x110, 0x74);
+    DrawMenuPanel((u32 *) (gActiveRenderContext->field_D8 + 0x24), 1, 0x50, 0x10, 0xA0, 0x20);
     func_80017B3C(temp_s4, (s32) ((void *) ((u8 *) &D_80053604 + *gTextBankOffsets)), 0xD0, 0x1A);
     DrawSpriteFrameRects(temp_s2, (s32) &D_801456A0, D_80137658[D_8013759E], 0, 0xB8, 0x12);
     func_8002470C(0);
@@ -87,16 +86,16 @@ s32 ovl_15_func_80133808(s16 arg0) {
         temp_a3 = (u16) temp_v0;
         if (temp_a3 == 0xFFFF) {
             var_s0 = (u16 *) (D_800535C6 + *gTextBankOffsets);
-            D_80140EE0[var_a2] = var_s0[0];
-            D_80140EE0[var_a2 + 1] = var_s0[1];
-            D_80140EE0[var_a2 + 2] = var_s0[2];
-            D_80140EE0[var_a2 + 3] = var_s0[3];
-            D_80140EE0[var_a2 + 4] = temp_a3;
+            gOvl15MenuTextScratch[var_a2] = var_s0[0];
+            gOvl15MenuTextScratch[var_a2 + 1] = var_s0[1];
+            gOvl15MenuTextScratch[var_a2 + 2] = var_s0[2];
+            gOvl15MenuTextScratch[var_a2 + 3] = var_s0[3];
+            gOvl15MenuTextScratch[var_a2 + 4] = temp_a3;
             break;
         }
-        D_80140EE0[var_a2] = temp_v0;
+        gOvl15MenuTextScratch[var_a2] = temp_v0;
     }
-    func_80017B3C(temp_s4, (s32) D_80140EE0, 0x52, 0x1A);
+    func_80017B3C(temp_s4, (s32) gOvl15MenuTextScratch, 0x52, 0x1A);
     return ovl_15_func_80133B28(arg0);
 }
 /* Warning: struct GfxObj is not defined (only forward-declared) */

@@ -1,21 +1,21 @@
 #include "common.h"
 #include "game_types.h"
 
-extern s32 D_80134B14;
+extern s32 gOvl30DebugSettingValue;
 
 void ovl_30_func_8012FDEC(void) {
     if (((SomeStruct *)gPad0Input)->field_0x0 & 0x2000) {
-        D_80134B14 += 1;
-        if (D_80134B14 == 0x100) {
-            D_80134B14 = 0;
+        gOvl30DebugSettingValue += 1;
+        if (gOvl30DebugSettingValue == 0x100) {
+            gOvl30DebugSettingValue = 0;
         }
     }
 
     if (((SomeStruct *)gPad0Input)->field_0x0 & 0x8000) {
-        if (D_80134B14 == 0) {
-            D_80134B14 = 0x100;
+        if (gOvl30DebugSettingValue == 0) {
+            gOvl30DebugSettingValue = 0x100;
             return;
         }
-        D_80134B14 -= 1;
+        gOvl30DebugSettingValue -= 1;
     }
 }

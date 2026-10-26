@@ -1,8 +1,10 @@
 #include "common.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void SetVal8005E2BC(s32 arg0);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
@@ -24,8 +26,8 @@ void ovl_11_func_80100FFC(void) {
     ui = gActiveRenderContext->field_D8;
     panels = (u32 *)(ui + 0x74);
     text = ui + 0x70;
-    func_80022580(panels, 1, 0x16, 0x10, 0x10E, 0x4A);
-    func_80022580(panels, 1, 0x16, 0x5A, 0x10E, 0x4A);
+    DrawMenuPanel(panels, 1, 0x16, 0x10, 0x10E, 0x4A);
+    DrawMenuPanel(panels, 1, 0x16, 0x5A, 0x10E, 0x4A);
     func_80017B3C(text, (s32)(D_8005396A + 0x28 + gTextBankOffsets[0]), 0x21, 0x20);
     func_80017B3C(text, (s32)(D_8005396A + gTextBankOffsets[0]), 0x21, 0x6A);
     ovl_11_func_80101814();

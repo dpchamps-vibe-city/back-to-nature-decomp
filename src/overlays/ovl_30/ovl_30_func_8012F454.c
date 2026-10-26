@@ -45,11 +45,11 @@ s32 ovl_30_func_8012F454(s32 state) {
         D_80134AF0 = 0;
         D_80134AF4 = 0;
         D_80134AF8 = -1;
-        D_80134B14 = ((struct Ovl30SettingsView *)&D_8007AFF0)->selected;
+        gOvl30DebugSettingValue = ((struct Ovl30SettingsView *)&D_8007AFF0)->selected;
         break;
     case 1:
         FntPrint(D_8012DEC4);
-        FntPrint(D_8012DEE0, D_80134B14);
+        FntPrint(D_8012DEE0, gOvl30DebugSettingValue);
         FntPrint(D_8012DEF0, D_80134AE8);
         FntPrint(D_8012DF00, D_80134AEC);
         FntPrint(D_8012DF14, D_80134AF0);

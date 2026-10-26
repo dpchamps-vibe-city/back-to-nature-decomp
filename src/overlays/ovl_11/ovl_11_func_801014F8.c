@@ -1,9 +1,11 @@
 #include "common.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
 void SetVal8005E2BC(s32 arg0);
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 void func_80017D9C(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4);
 
@@ -13,7 +15,7 @@ void ovl_11_func_801014F8(void) {
     SetMessagePortraitEnabled(0);
     SetVal8005E2BC(0);
     RequestMessageWindow(3, 0x3BD);
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x5C), 1, 0xA6, 0x58, 0x68, 0x48);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x5C), 1, 0xA6, 0x58, 0x68, 0x48);
     if (IsMessageWindowStatusFinal()) {
         switch (((u32 *)gPad0Input)[0]) {
         case 0x1000:

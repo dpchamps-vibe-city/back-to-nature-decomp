@@ -1,14 +1,14 @@
 #include "common.h"
+#include "ovl15_save_menu_ui.h"
 
 extern u8 D_80052FFA[];
 extern s8 D_80137584;
-extern s8 D_80137588;
+extern s8 gOvl15ConfirmationChoice;
 
 void func_8001AC10(void *arg0, s32 arg1, s32 arg2);
-s32 ovl_15_func_80137228(s16 arg0, s16 arg1);
 
 void ovl_15_func_801305D4(void) {
     func_8001AC10((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052FFA);
-    D_80137584 = ovl_15_func_80137228(2, 0x11);
-    D_80137588 = 1;
+    D_80137584 = Ovl15WaitForMenuButton(2, 0x11);
+    gOvl15ConfirmationChoice = 1;
 }

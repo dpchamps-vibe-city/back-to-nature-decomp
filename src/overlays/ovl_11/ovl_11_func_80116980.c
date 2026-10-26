@@ -2,8 +2,10 @@
 #include "game_types.h"
 #include "screen_primitives.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
-void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 s32 ovl_11_func_80117178(s16, s16, s16);
 void func_80024770(s32, s16, s16);
@@ -52,8 +54,8 @@ s32 ovl_11_func_80116980(s16 arg0, s16 arg1, s16 arg2) {
     result = -1;
     DrawScreenTileRect((u32 *)(gActiveRenderContext->field_D8 + 0x48), 0, 0, *(s16 *)&HWD0, *(s16 *)&VWD0, 0, 1);
     i = 0;
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x44), 1, 0x18, 0x20, 0x110, 0x74);
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x3C), 1, 0x50, 0x10, 0xA0, 0x20);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x44), 1, 0x18, 0x20, 0x110, 0x74);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x3C), 1, 0x50, 0x10, 0xA0, 0x20);
     for (;;) {
         prefix_value = ((Ovl11MenuGlobals *)D_8006C838)->text[i];
         terminator = prefix_value;

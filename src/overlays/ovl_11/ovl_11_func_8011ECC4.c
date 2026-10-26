@@ -4,8 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_render.h"
+#include "beveled_panel.h"
 
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 s32 ovl_11_func_8011EE40(s16 arg0);
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 
@@ -13,7 +13,7 @@ void ovl_11_func_8011ECC4(void) {
     s32 idx;
     u8 *gs;
 
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 0x140, 0xB0);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 0x140, 0xB0);
     DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x64, (SpriteSourceData *)&D_8012DA80[0], (s16)(HWD0 / 2), (s16)(VWD0 / 2));
     gs = (u8 *)D_8006C838;
     idx = ovl_11_func_8011EE40(*(s16 *)(gs + 0x52C6));

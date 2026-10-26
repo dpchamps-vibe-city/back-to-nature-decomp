@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "beveled_panel.h"
 
 
-void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80024810 (s32 arg0, s16 arg1, s16 arg2);
 void func_80024860 (s32 arg0, s16 arg1, s16 arg2);
 void func_80017A38 (s16 arg0, s16 arg1);
@@ -25,7 +25,7 @@ void ovl_11_func_80100898(u8 arg0) {
     temp_t0 = gActiveRenderContext->field_D8;
     temp_s0 = temp_t0 + 0x60;
     base = temp_t0 + 0x70;
-    func_80022580((u32 *)(temp_t0 + 0x74), 1, 0xE, 0x10, 0x124, 0x94);
+    DrawMenuPanel((u32 *)(temp_t0 + 0x74), 1, 0xE, 0x10, 0x124, 0x94);
     func_80024810(temp_s0, 6, 0x5A);
     func_80024860(temp_s0, 0x12A, 0x5A);
     func_80017A38(0, 2);

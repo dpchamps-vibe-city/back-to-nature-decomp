@@ -3,11 +3,6 @@
  * passed to m2c before this file. */
 
 s32 clamp_nonnegative(s32 value);
-void ovl_30_func_8012EFEC(void);
-s32 ovl_30_func_8012F000(void);
-s32 ovl_30_func_8012F020(void);
-void ovl_30_func_8012F028(void);
-void ovl_30_func_8012F084(void);
 void ovl_30_func_8012F3D4(void);
 void ovl_30_func_8012F410(void);
 void ovl_30_func_8012F44C(void);
@@ -27,6 +22,8 @@ s32 ovl_30_func_80131C38(s32 arg0);
 s32 ovl_30_func_80131F14(void);
 s32 ovl_30_func_801320C8(s32 arg0);
 s32 ovl_30_func_80132660(s32 arg0);
+void Ovl30DebugMenuNoOp(void);
+s32 Ovl30DebugMenuReturnZero(void);
 void Ovl30DrawAndEditFlagMenu(Ovl30FlagMenuEntry *entries, s32 count);
 void Ovl30DrawAndEditValueMenu(Ovl30ValueMenuEntry *entries, s32 count);
 s32 Ovl30EditDayCount0(s32 handlerState);
@@ -34,5 +31,8 @@ s32 Ovl30EditDayCount1(s32 handlerState);
 s32 Ovl30EditItemFields(s32 handlerState);
 s32 Ovl30EditNValue(s32 handlerState);
 s32 Ovl30EditToolParameters(s32 handlerState);
+s32 Ovl30GetDebugMenuState(void);
+void Ovl30ResetDebugMenu(void);
 void Ovl30StepFieldValue(u8 *value, s32 width, s32 upper, s32 lower, s32 delta);
 s32 Ovl30StepSelectedValue(s32 value);
+void Ovl30UpdateDebugMenu(void);

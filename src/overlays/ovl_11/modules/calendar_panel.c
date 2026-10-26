@@ -18,6 +18,7 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "beveled_panel.h"
 
 /* Engine text/sprite services; their original pointer-as-word ABI is kept. */
 u32 func_80017A64(void);
@@ -30,7 +31,6 @@ void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 void func_80024A10(s32 ot, s16 x, s16 y, s16 frame);
 u16 *func_8001AA7C(s32 value, u16 *text);
 u16 *func_8001AAB8(s32 weekday, u16 *text);
-void func_80022580(u32 *ot, s32 style, s32 x, s32 y, s16 width, s16 height);
 
 /* Entry/exit hooks are empty in the retail build; the query returns 1.
  * Keep the calls, since they are part of the original lifecycle. */
@@ -383,7 +383,7 @@ void Ovl11DrawCalendarWeekdayHeadings(u32 *panelOt, s32 textOt) {
     u32 previousStyle;
     u32 style;
 
-    func_80022580(panelOt, 1, 0x10, 0x30, 0x11F, 0x74);
+    DrawMenuPanel(panelOt, 1, 0x10, 0x30, 0x11F, 0x74);
     weekday = 0;
     previousStyle = func_80017A64();
     x = 0x16;

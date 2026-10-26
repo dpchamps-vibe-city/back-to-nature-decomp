@@ -21,6 +21,9 @@
 #include "message_window.h"
 #include "include_asm.h"
 #include "text_entry.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
 u16 gIndexedSelectionState;
 s16 gIndexedSelectionCursor;
@@ -167,7 +170,6 @@ void DrawAndProcessIndexedSelection(void) {
     ProcessIndexedSelectionInput();
 }
 
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80024A10(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
@@ -184,7 +186,7 @@ void DrawIndexedSelectionValue(void) {
     s32 sum;
 
     base = gActiveRenderContext->field_D8 + 0x64;
-    func_80022580(gActiveRenderContext->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
+    DrawMenuPanel(gActiveRenderContext->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
     sum = *gTextBankOffsets + (s32)&D_80053946;
     func_80017B3C(base, sum, 0xAD, 0x23);
     if (gIndexedSelectionState >= 2) {
@@ -209,7 +211,7 @@ void DrawIndexedSelectionLabels(void) {
 
     temp_t0 = gActiveRenderContext->field_D8;
     base = temp_t0 + 0x64;
-    func_80022580(temp_t0 + 0x68, 1, 0x14, 0x38, 0x117, 0x67);
+    DrawMenuPanel(temp_t0 + 0x68, 1, 0x14, 0x38, 0x117, 0x67);
     var_s1 = 0;
     var_s4 = 0x2A0000;
     var_s3 = 0x1E0000;
@@ -415,7 +417,7 @@ void DrawTextEntryPreview(s32 arg0) {
         fp = BuildTextEntryPreview;
     }
     fp(&gTextEntryPreviewBuffer[0], i);
-    func_80022580(gActiveRenderContext->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
+    DrawMenuPanel(gActiveRenderContext->field_D8 + 0x68, 1, 0xAB, 0x20, 0x85, 0x12);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x64, (s32)&gTextEntryPreviewBuffer[0], 0xAD, 0x23);
 }
 
@@ -428,7 +430,7 @@ void func_80017A38(s16 arg0, s16 arg1);
 void DrawTextEntryGrid(void) {
     s32 sum;
 
-    func_80022580(gActiveRenderContext->field_D8 + 0x68, 1, 0x2D, 0x40, 0xE6, 0x56);
+    DrawMenuPanel(gActiveRenderContext->field_D8 + 0x68, 1, 0x2D, 0x40, 0xE6, 0x56);
     if (gTextEntryCharacterSet == 0) {
         sum = *gTextBankOffsets + (s32)&D_800537B2;
     } else {
@@ -568,7 +570,7 @@ void DrawEntryConfirmationPrompt(s32 arg0, s32 arg1) {
         base = gActiveRenderContext->field_D8 + 0x58;
         sum = *gTextBankOffsets + (s32)&D_8005175C;
         func_80017B3C(base, sum, 0x93, 0x4E);
-        func_80022580(gActiveRenderContext->field_D8 + 0x5C, 1, 0x91, 0x4C, 0x28,
+        DrawMenuPanel(gActiveRenderContext->field_D8 + 0x5C, 1, 0x91, 0x4C, 0x28,
                       0x1E);
         func_800248B0(gActiveRenderContext->field_D8 + 0x54, 0x99, (s16)(tmp * 0xC + 0x54));
     }

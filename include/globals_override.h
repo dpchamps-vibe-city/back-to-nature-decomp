@@ -477,9 +477,9 @@ extern s32 D_8005E32C;
 /* ovl_30 8012F084 clears this halfword with sh. */
 extern s16 D_80133FBC;
 /* ovl_30 8012F084 indexes 18 callbacks; one table member takes no arguments. */
-extern s32 (*D_80133FC0[18])();
+extern s32 (*gOvl30DebugMenuHandlers[18])();
 /* ovl_30 8012EFEC clears this word and 8012F084 tests it. */
-extern s32 D_80134008;
+extern s32 gOvl30DebugMenuPendingChange;
 /* 80133A8C divides this signed menu-selection word by nine and updates it with sw. */
 extern s32 gOvl30RecordMenuCursor;
 /* 8012FEEC prints this NUL-terminated Shift-JIS rodata heading. */
@@ -657,19 +657,19 @@ extern char D_8012ED54[];
 extern char D_8012ED60[];
 extern char D_8012ED6C[];
 /* ovl_30 8012F084 maintains this word-sized active flag. */
-extern s32 D_80134AD8;
+extern s32 gOvl30DebugMenuWaitingForExit;
 /* ovl_30 8012F084 loads this word-sized index; decrement uses a signed zero clamp. */
-extern s32 D_80134ADC;
+extern s32 gOvl30DebugPageIndex;
 /* ovl_30 8012F084 passes this word to the selected callback and stores its result. */
-extern s32 D_80134AE0;
+extern s32 gOvl30DebugPageState;
 /* ovl_30 8012F084 dispatches on this word-sized state. */
-extern s32 D_80134B0C;
+extern s32 gOvl30DebugMenuState;
 /* ovl_30 8012F084 resets this word to -1 on a selection change. */
 extern s32 gOvl30RecordMenuSelectedId;
 /* ovl_30 8012F084 compares and copies this word-sized setting. */
-extern s32 D_80134B14;
+extern s32 gOvl30DebugSettingValue;
 /* ovl_30 8012F084 publishes the callback loaded from D_80133FC0. */
-extern s32 (*D_80134B18)();
+extern s32 (*gOvl30ActiveDebugMenuHandler)();
 
 /* 8010021C wraps signed byte selectors; named views preserve legacy declarations. */
 extern s8 Ovl11_D_801273E7 __asm__("D_801273E7");
@@ -4157,11 +4157,13 @@ typedef struct {
     /* 0x04 */ s16 arr[18];
 } Recon_ovl_11_func_800D5D38_D8006C838Row;
 
+/* D5960/D5ABC/D5B3C/D5BBC share the +20 record headers and +24 cell grids;
+ * retain void pointers and the original 0x28/0xB0 byte-stride arithmetic. */
 typedef struct {
     /* 0x00 */ char pad_00[0x20];
-    /* 0x20 */ void *field_20;
-    /* 0x24 */ void *field_24;
-} Recon_ovl_11_func_800D5ABC_D8006C838Lookup_800D5ABC;
+    /* 0x20 */ void *recordHeaders;
+    /* 0x24 */ void *cellGrids;
+} Ovl11CellGridTables;
 
 typedef struct {
     char pad_0[0x5];
@@ -5670,13 +5672,13 @@ extern s8 D_80137586;
  * the +=/-= and lb for the signed comparisons). Absolute-addressed
  * (lui + %lo) from -G0/overlay code; the TU family only declares it, so a
  * scalar extern keeps the base name. */
-extern s8 D_80137587;
+extern s8 gOvl15MenuCursor;
 
 /* D_80137588 - ovl_15 private state byte in the overlay data segment,
  * incremented/decremented and clamped by ovl_15_func_801370B4.
  * Absolute-addressed (lui + %lo) from -G0/overlay code; the TU family only
  * declares it, so a scalar extern keeps the base name. */
-extern s8 D_80137588;
+extern s8 gOvl15ConfirmationChoice;
 
 /* D_80137584 - ovl_15 private state byte in the overlay data segment; the
  * shared-prologue cluster (ovl_15_func_8012EEEC/8013063C/80131618 and the
@@ -5742,7 +5744,7 @@ extern u8 D_80052FC4[];
 /* ovl_15_func_8012E15C initializes two halfword card states here. */
 extern s16 D_80137594[];
 /* ovl_15_func_8012F158 writes three halfword save-slot states at stride 2. */
-extern s16 D_80137820[];
+extern s16 gOvl15SaveSlotStatus[];
 
 /* ovl_15_func_80134A34 copies an aligned word pair and two 18-byte
  * halfword-aligned names into each 0x3C-byte record at D_801376E0. */
@@ -6972,12 +6974,12 @@ struct Ovl11TimerState {
 };
 
 /* ovl_15_func_80136C70 indexes three 4-byte terminated text labels. */
-extern u32 D_801375A8[3];
+extern u32 gOvl15SaveSlotLabels[3];
 /* ovl_15_func_80136C70 adds the text relocation base to these byte addresses. */
 extern u8 D_80051D8E[];
 extern u8 D_80051D9E[];
 /* ovl_15_func_80136C70 clears 0x28 bytes and formats halfword text here. */
-extern s16 D_80140EE0[20];
+extern s16 gOvl15MenuTextScratch[20];
 
 /* 800DEB00 reads lh +44BA/+44BC, updates the word at +44F8 and scans 22 bytes at +4AC0. */
 typedef struct {

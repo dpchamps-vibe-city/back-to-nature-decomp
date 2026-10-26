@@ -60,7 +60,7 @@ void ovl_15_func_8012F4F4(void) {
             D_80137584 = 6;
             break;
         case 6:
-            D_80137588 = 1;
+            gOvl15ConfirmationChoice = 1;
             D_8013759C = 0;
             D_80137584 = 0xB;
             break;

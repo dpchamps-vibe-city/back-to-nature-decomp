@@ -23,6 +23,7 @@
 #include "game_flags.h"
 #include "ovl11_interaction_id_predicates.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_area_slot_flags.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -161,7 +162,6 @@ s32 ovl_11_func_800D8320(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
 void ovl_11_func_800F397C (u16 arg0, u16 arg1);
 s32 ovl_11_func_800F3BA0 (u16 arg0);
-void ovl_11_func_800D0EA4 (s32 arg0, s32 arg1);
 s32 ovl_11_func_800F3A18 (u16 arg0);
 s32 ovl_11_func_80110790 (M2C_59ee2b8b632a_ReconA0View *arg0);
 s32 ovl_11_func_80110838 (M2C_8740fcdc649a_Recon80110838A0View *arg0);

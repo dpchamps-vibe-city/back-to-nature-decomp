@@ -2,13 +2,13 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "beveled_panel.h"
 
 
 void func_8001AC10 (u32 *arg0, s32 arg1, s32 arg2);
 s16 ovl_15_func_80133538 (u8 *arg0, s16 arg1);
 u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
-void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void ovl_15_func_801320A8(void) {
@@ -94,6 +94,6 @@ void ovl_15_func_801320A8(void) {
         D_80137584 = 0x19;
         return;
     }
-    D_80137588 = 1;
+    gOvl15ConfirmationChoice = 1;
     D_80137584 = 0x1A;
 }

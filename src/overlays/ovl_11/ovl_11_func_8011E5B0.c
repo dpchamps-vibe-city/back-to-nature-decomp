@@ -6,8 +6,8 @@
 #include "screen_fade.h"
 #include "message_window.h"
 #include "sprite_render.h"
+#include "beveled_panel.h"
 
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void ovl_11_func_8011EC84(void);
@@ -37,20 +37,20 @@ void ovl_11_func_8011E5B0(void) {
         D_80128420 = 5;
         BeginScreenFadeDecrease(10, 0, 2);
     } else if (D_80128420 == 5) {
-        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
+        DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
         DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x64, (SpriteSourceData *)D_8012DA80, (s16)(HWD0 / 2), (s16)(VWD0 / 2));
         if (IsScreenFadeComplete() == 1) {
             D_80128420 = 6;
         }
     } else if (D_80128420 == 8) {
-        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
+        DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
         DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x64, (SpriteSourceData *)D_8012DA80, (s16)(HWD0 / 2), (s16)(VWD0 / 2));
         if (GetMessageWindowStatus() == 2) {
             BeginScreenFadeIncrease(10, 0, 2);
             D_80128420 = 9;
         }
     } else if (D_80128420 == 9) {
-        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
+        DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
         DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x64, (SpriteSourceData *)D_8012DA80, (s16)(HWD0 / 2), (s16)(VWD0 / 2));
         if (IsScreenFadeComplete() == 1) {
             LoadImage((RECT *)D_80128524, (u_long *)(gGraphicsHeapBase + 0x12A90));
@@ -65,7 +65,7 @@ void ovl_11_func_8011E5B0(void) {
             D_80128420 = 0;
         }
     } else if (D_80128420 == 11) {
-        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
+        DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x68), 1, 0, 0, 320, 176);
         DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x64, (SpriteSourceData *)D_8012DA80, (s16)(HWD0 / 2), (s16)(VWD0 / 2));
         if (IsScreenFadeComplete() == 1) {
             D_80128420 = 12;

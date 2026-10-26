@@ -24,6 +24,7 @@
 #include "sprite_render.h"
 #include "game_flags.h"
 #include "message_buffer_access.h"
+#include "beveled_panel.h"
 
 /* Tentative definitions retain the original $gp ownership. The saved flag-3
  * word is stored whole but only its low halfword is restored. The archive
@@ -49,7 +50,6 @@ s32 AnimateMessageWindowRect(s32 packet, s32 unused, s16 x, s16 y,
     s16 width, s16 height, s32 *step, s32 heightSteps, s32 opening);
 
 void SetVal8005E2BC(s32 value);
-void func_80022580(u32 *packet, s32 style, s32 x, s32 y, s16 width, s16 height);
 void func_800179E8(void);
 void func_80017A38(s16 x, s16 y);
 u32 func_80017A64(void);
@@ -220,12 +220,12 @@ retry:
     lastStep = heightSteps + 6;
     if (savedStep >= lastStep) {
         if (opening == 1) {
-            func_80022580(packet, 0, x, y, (s32)width, (s32)height);
+            DrawMenuPanel(packet, 0, x, y, (s32)width, (s32)height);
         }
         *step = lastStep;
         return 1;
     }
-    func_80022580(packet, 0, (s16)drawX, (s16)drawY, (s32)drawWidth, (s32)drawHeight);
+    DrawMenuPanel(packet, 0, (s16)drawX, (s16)drawY, (s32)drawWidth, (s32)drawHeight);
     *step += 1;
     return 0;
 }
@@ -344,7 +344,7 @@ s32 ProcessMessageWindowText(void) {
         break;
     }
     if (((struct struct_8006C838_view *)&D_8006C838)->field_CC != 6) {
-        func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0xC),
+        DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0xC),
             0, 0x1A, 0xA4, 0x10B, 0x3E);
         if (drawPortrait != 0) {
             if (gMessagePortraitEnabled == 1) {

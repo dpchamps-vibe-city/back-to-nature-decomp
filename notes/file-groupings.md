@@ -402,6 +402,42 @@ Members:
 
 ## `ovl_11` two-table field-lookup siblings — 0x800D5960–0x800D5BBC (confidence: medium)
 
+**Reconstructed `modules/cell_grid_lookup.c`, D5960–D5C3C exclusive,
+all four compiled entries.** The scanner is included, not left outside the
+three getters: all four resolve the same +20/+24 tables with the same
+0x28-header/+0xE signed sentinel and 0xB0 grid representation. The getter
+trio's original instruction streams differ only in final AA/AC/AE halfword
+displacement. Their shared representation/prologue plus link order support
+one source family, not a GP-proven TU (-G0). The scanner's raw grid index
+and getters' narrowed block*5+variant indexing are NOT silently unified.
+
+Left D58D0 finishes the separate +1C action-callback accessor family rooted
+at D_8006C858. Right D5C3C/D5C90 take scalar indices into the distinct +2C,
+0x10-stride table, without this two-level cell-grid resolution. These are
+representation/ABI edges with no positive extension witness, not proven GP
+boundaries. D6488 is the separately called grid-transform service beyond
+those intervening accessors; its public call alone does not prove the whole
+intervening band belonged here. No flag or mechanical limit forces a cut.
+
+Names in order: Ovl11FindCellGridTag and Ovl11ReadCellGridHalfwordAA/AC/AE.
+Only the scanner has known callers; ovl11_cell_grid_lookup.h publishes it
+with cell-coordinate units, transformation/tag arithmetic, index assumptions
+and unchanged outputs on failure. A discovered detail: only the INNER loop
+breaks, so the result is first matching column in the LAST matching row,
+not the first match globally. The getters retain their void-pointer ABI,
+unsigned halfword result/-1 sentinel and explicit signed narrowing; their
+field meanings remain unknown and their external linkage is preserved.
+
+Ovl11CellGridTables in globals_override.h replaces the four duplicate
+views with one +20 recordHeaders/+24 cellGrids view. It retains void pointers,
+byte strides and the external work-area identity, without new ownership or
+storage. Local names describe grid/row/column/index roles; transfer logs
+were removed from source. The checked whole fold passed baseline settings
+and linked ovl_11; no override was involved. Canonical names propagated to
+all callers, and interfaceAudit proved their objects unchanged.
+
+Historical evidence:
+
 Evidence: three adjacent 0x80-byte functions access the pointer members at
 `D_8006C838 + 0x20` and `+0x24`, use the same 0x28/0xB0 record strides,
 16-bit narrowing steps and -1 sentinel, and differ in the final halfword
@@ -2788,6 +2824,27 @@ Members:
 ---
 
 ## `ovl_11` D_8006C838 flag-byte writer/reader pair — 0x800D0EA4 / 0x800D0ED0 (confidence: medium)
+
+**Reconstructed `modules/area_slot_flags.c`, D0EA4–D0F20 exclusive,
+two compiled entries.** Ovl11SetAreaSlotFlag/Ovl11IsAreaSlotFlagSet form
+the same two-bank indexed-byte protocol; 8010F8E4 both tests and sets them,
+and 8010D648 maps area 4/5 to bank 0/1. Shared exact address-formation and
+link order corroborate the paired API. ovl11_area_slot_flags.h documents
+bank==1 versus ALL other values, 22/10-byte caller bounds, write-1 and
+normalized Boolean results; no gameplay meaning beyond these callers is
+asserted. The work-area object remains external and no field type changes.
+
+Left D0DCC is the separate record/message requester (+16/+AE/+B2 fields),
+not a flag-bank client. Right D0F20 allocates a B4 record and updates +99C8
+pairs, without this bank protocol. These are responsibility/closure edges,
+not GP-proven cuts under -G0. The distant F3D40 resetter shares the banks
+but has no private call edge requiring the whole intervening address band;
+its existing no-GCSE setting remains unresolved for its current source, not
+an unconditional proof that no baseline C exists. Neither paired member has
+an override, and the checked baseline fold proved both and linked ovl_11.
+Names and local bank/slot roles preserve every original operation.
+
+Historical evidence:
 
 Zero-gap link-order adjacency (0x800D0EA4, 0x2C bytes, ends exactly at
 0x800D0ED0) and a shared rare codegen idiom argue one TU. Both take the same
@@ -5267,6 +5324,21 @@ References: notes/research/func_8001E878-dead-spill-allocation.md §9,
 notes/research/func_8001E9F8.md,
 notes/research/func_8001EAE4-v0-channel-delay-slot-fossil.md.
 
+Follow-up whole-unit experiment: publish the grid and coordinate parameter
+views in game_types.h, removing the context-publication blocker described
+below, then attempt the complete twelve-entry fold at baseline. The checked
+helper reached cc1 and rolled back: `conflicting types for func_8001E878`
+(the quad helper declares integer-address parameters while the triangle
+body defines pointer parameters) and `global register variable follows a
+function definition` (E9F8's file-scope CAPTURE_PREV_RET after E878).
+All experimental type/caller changes were restored; no partial module,
+flag, register capture or permission was added. These are now measured
+mechanical limits, not a claimed TU boundary. Next useful source experiment:
+reconcile the helper's real nested-function/static-chain scope and common
+pointer contract before repeating the whole fold. Merely publishing types
+is no longer an untested suggestion; moving the global capture earlier
+would reserve v0 across other members and is not assumed safe.
+
 Whole-unit fold experiment (module campaign): include all twelve entries from
 SetVal8005E51C through GetVal8005E524, including the GP-owned setters at EF8C
 and EF98 and the existing dead E6FC stub. The checked --write attempt rolled
@@ -7716,7 +7788,18 @@ is no ownership/helper evidence joining the panel to that group. Following
 calls nor shares private state with the panel. The panel instead calls the
 stateless screen_primitives API across the intervening pad/CD units, as do
 other outside consumers. These boundaries mean no membership evidence, not
-GP-proven separation. No larger panel unit is established. There are no flag
+GP-proven separation. No larger panel unit is established. The distant facade at 80022580 is now
+`src/modules/menu_panel.c`, named DrawMenuPanel, spanning 22580–225B8.
+It forwards only to DrawBeveledPanel, truncating x/y to s16 and ignoring its
+second word; beveled_panel.h publishes this retained six-argument ABI and
+packet-lifetime contract. No private state, data or same-unit witness joins
+it to the distant drawer across intervening pad/CD/other services. Its left
+neighbor sprite_grid closes its private callback/tick/frame-table protocol;
+right 225B8 starts message_window's GP-owned state/queued-read lifecycle.
+Neither neighbor shares the facade's protocol. This is the smallest
+supported unit, not proof of an original singleton file. The checked baseline
+fold proved the facade and EXE; interfaceAudit publishes it to every declaring
+caller without changed objects. There are no flag
 overrides or storage/linkage changes; the checked fold passed baseline
 -O2/-G8 and the complete batch gate checks the named interface and callers.
 
@@ -12334,7 +12417,63 @@ Members:
 
 ## `ovl_30` init/read and nested display-helper cluster — 0x8012EFEC–0x8012FDEC (confidence: high for 8012F030/8012F084, medium for init/read pair, low for wider TU)
 
-Evidence classes: bilateral static-chain fingerprint and corroborated call/link
+**Reconstructed lifecycle unit `modules/debug_menu_lifecycle.c`,
+8012EFEC–8012F3D4 exclusive, six original entries.** Reset/read leaves
+share 34B0C with the controller; reset and controller alone clear/read
+34008. F030 is a REAL nested definition inside F084, with the bilateral
+static-chain setup/spill witnessed in the original bytes. Its previous
+empty source carrier is absorbed, not converted to an asm stub. F020's
+return-zero and F028's no-op entries lie inside this connected lifecycle
+extent and remain distinct external entries; no stronger purpose is known.
+Their original object membership is the least certain part of the unit.
+
+The start is the first code entry after the overlay's rodata. The end is
+before F3D4/F410/F44C, the setup/exit/no-op helpers of the separately called
+F454 page. Those three touch none of the lifecycle's private state or display
+scratch, and no direct lifecycle/helper edge includes them. F454 and later
+editors implement the public page-callback protocol; the controller's table
+points to multiple independently reconstructed modules as well. A common
+callback table and edited-setting handoff do not by themselves prove all
+pages were one historical TU. These are evidence-limited controller/page
+edges under -G0, not GP proofs or cuts selected to evade the rodata limit.
+The wider original-TU hypothesis below remains unproved; if supported later,
+this module must be extended/merged, not protected as a fixed boundary.
+
+Canonical entries: Ovl30ResetDebugMenu, Ovl30GetDebugMenuState,
+Ovl30DebugMenuReturnZero, Ovl30DebugMenuNoOp,
+Ovl30TransferDebugDisplay and Ovl30UpdateDebugMenu.
+ovl30_debug_menu_lifecycle.h publishes reset/query/update with state phases,
+18-page clamping, callback state reset, display-buffer lifetime, fade/audio/
+font effects, changed-setting/game-flag effects and the scene-2 request.
+The helper's assembler NAME declarations were updated explicitly after the
+canonical tool reported them; these are the same existing nested helper,
+not added assembly or register pinning. The helper remains nested and the
+external original identity is preserved. Local variables now name buttons,
+page handler, fade completion and display-transfer direction.
+
+Eight scoped globals name the lifecycle phase, pending change, exit wait,
+page index/state, 18-handler table, current handler and edited setting.
+They were propagated through both edited-setting clients, while unqualified
+shared-header externs were reconciled explicitly. Original label extents
+(including the current-handler label's unused trailing bytes), function
+pointer ABI and external data ownership are unchanged. Existing redundant
+source externs were removed; no tentative allocation was invented in -G0.
+The checked six-member fold and full overlay passed baseline settings, with
+no member override. No flag or source-policy exception was added or retired.
+
+Final acceptance for this run's five modules (menu_panel, area_slot_flags,
+cell_grid_lookup, save_menu_ui and debug_menu_lifecycle):
+`npx tsx tools/diagnostics/tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates, with
+**775 -> 794 folded eligible functions, 127/127 valid module TUs** and
+1831 eligible functions still outside modules. Every linked EXE/13-overlay
+byte, associated data/table/callback placement, canonical interface, source
+policy, configuration and exception non-growth check passes. The command's
+exit 1 denotes remaining campaign work, not a failed integrity check.
+Published interfaces have zero failing sites; unrelated standing interface
+debt is not claimed resolved. No shared build/diagnostic tool changed.
+
+Historical evidence classes: bilateral static-chain fingerprint and corroborated call/link
 adjacency for `8012F030`/`8012F084`; shared state and adjacency for the init/read
 pair; shared overlay-local data for the wider cluster. The verified parent also
 shares `D_80134B14` directly with the later editor and its caller `8012F454`.
@@ -14701,6 +14840,48 @@ Members (link order):
   so no matched neighbour needs this flag, and 801331C4/80133808 change under it)
 
 ## `ovl_15` save-slot renderer/formatter run — 0x80136B18–0x8013703C (confidence: medium)
+
+**Reconstructed as `src/overlays/ovl_15/modules/save_menu_ui.c`,
+80136990–801372A0 exclusive, six compiled entries.** The renderer/formatter
+pair is not left as a slice: 36990 and 36B18 step the same signed-byte
+cursor (37587), while 370B4 is the confirmation counterpart with its own
+37588 byte. The latter and 37228 share the +8 input/acceptance-sound
+transition contract. 36B18 calls 36C70 for all three slots; 36C70 alone
+calls 3703C to format date numbers and append relocated suffixes. This
+connected menu-service protocol and link order support all six. It is not
+GP proof (-G0); the broad overlay controller's reset/state references do
+not by themselves prove the entire save overlay was one TU.
+
+Left boundary 367F8 is the last card-file retry/read operation, using the
+37598 retry counter and 40EC0 filename, neither accessed by these UI
+services. Right 372A0 begins the streamed sprite-load service (372F0/372F8/
+37300/37398/373A0), not cursor/summary processing. Those are conservative
+service edges without a GP discriminator, not claimed proven original
+object cuts. The shared 40EE0 scratch with 33808 is a cross-service tie,
+not a closed helper relationship requiring all intervening save machinery.
+No mechanical or flag limit creates an internal slice here.
+
+Names in entry order: Ovl15UpdateTwoChoiceMenu, Ovl15UpdateSaveSlotMenu,
+Ovl15DrawSaveSlotSummary, Ovl15FormatDateNumber,
+Ovl15UpdateConfirmationMenu and Ovl15WaitForMenuButton. The five used
+interfaces are published in ovl15_save_menu_ui.h; the formatter remains
+externally linked but not needlessly public. The header documents return
+sentinels, pixel coordinates, initialized state/packet/text requirements,
+shared cursor, non-reentrant scratch and summary-name sanitization. In
+particular confirmation handles buttons BEFORE navigation; the other menus
+navigate first. The summary mutates both names and writes ninth terminators.
+
+Scoped data names: gOvl15MenuCursor, gOvl15ConfirmationChoice,
+gOvl15SaveSlotStatus, gOvl15SaveSlotLabels and gOvl15MenuTextScratch.
+Their original label extents, signedness and declarations are retained,
+including unused label padding; no allocation or ownership was added.
+Canonicalization propagated all source names; the shared override-header
+externs were explicitly reconciled because unqualified overlay addresses
+there do not select a container. Local/parameter names now describe roles.
+Baseline checked fold proved all six members and linked ovl_15 bytes, with
+no flag overrides. Interface publication verified unchanged caller objects.
+
+Historical evidence follows:
 
 Evidence: [gapless caller → renderer → formatter link order](research/ovl_15_func_80136C70-grouping.md).
 The renderer also shares `D_80140EE0` text scratch with `ovl_15_func_80133808`;

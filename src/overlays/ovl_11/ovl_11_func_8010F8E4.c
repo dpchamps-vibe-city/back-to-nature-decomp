@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_area_slot_flags.h"
 
 s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
@@ -7,10 +8,8 @@ s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
 s32 ovl_11_func_800F3A18(u16 arg0);
 s32 ovl_11_func_800F3BA0(u16 arg0);
 s32 ovl_11_func_80110520(s32 arg0, s16 arg1);
-s32 ovl_11_func_800D0ED0(s32 arg0, s32 arg1);
 void ovl_11_func_80110CE8(s32 *dst, s16 arg1);
 void ovl_11_func_80110DA0(s32 *arg0, s16 arg1);
-void ovl_11_func_800D0EA4(s32 arg0, s32 arg1);
 void ovl_11_func_80110E28(u8 *arg0);
 void ovl_11_func_800F397C(u16 arg0, u16 arg1);
 void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
@@ -78,7 +77,7 @@ s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
         }
         break;
     case 5:
-        result = ovl_11_func_800D0ED0(*(s16 *)((u8 *)arg0 + 0xBA), arg1);
+        result = Ovl11IsAreaSlotFlagSet(*(s16 *)((u8 *)arg0 + 0xBA), arg1);
         if (result == 1) {
             selected = ovl_11_func_80110944(*(s16 *)((u8 *)arg0 + 0x30), 1);
             if (selected == -1) {
@@ -94,7 +93,7 @@ s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
                 *(s16 *)((u8 *)arg0 + 0x28) = 4;
             }
         } else {
-            ovl_11_func_800D0EA4(*(s16 *)((u8 *)arg0 + 0xBA), arg1);
+            Ovl11SetAreaSlotFlag(*(s16 *)((u8 *)arg0 + 0xBA), arg1);
             ovl_11_func_80110E28((u8 *)arg0);
             *(s16 *)((u8 *)arg0 + 0x28) = 0;
         }

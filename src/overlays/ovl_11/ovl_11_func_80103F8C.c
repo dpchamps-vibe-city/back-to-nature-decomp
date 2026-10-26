@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
-void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 void func_80017A08 (s32 arg0, s32 arg1);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -14,7 +16,7 @@ void ovl_11_func_80103F8C(void) {
 
     temp_t0 = gActiveRenderContext->field_D8;
     temp_s3 = temp_t0 + 0x58;
-    func_80022580((u32 *)(temp_t0 + 0x5C), 0, 0x20, 0x30, 0x101, 0x72);
+    DrawMenuPanel((u32 *)(temp_t0 + 0x5C), 0, 0x20, 0x30, 0x101, 0x72);
     var_a1 = 2;
     if (((Ovl11CardView *) D_8006C838)->selector != 3) {
         var_a1 = (u16) ((Ovl11CardView *) D_8006C838)->selector;

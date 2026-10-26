@@ -19,6 +19,7 @@
 #include "psyq/memory.h"
 #include "cd_loader.h"
 #include "sprite_upload.h"
+#include "beveled_panel.h"
 
 void Ovl27DrawBackdropAnim30(void) {
     DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x88, ((s32)(&D_800C4BD0)), 0x1E, 0, 0, 0);
@@ -273,14 +274,13 @@ void Ovl27DrawBackdropAnim35(void) {
     DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x88, ((s32)(&D_800C4BD0)), 0x23, 0, 0, 0);
 }
 
-void func_80022580(u32 *orderingTable, s32 style, s32 x, s32 y, s16 width, s16 height);
 void func_80017B3C(s32 orderingTable, s32 text, s32 x, s32 y);
 
 void Ovl27DrawTextBankLabel(s16 index) {
     s32 text;
 
     text = (s32)&D_8005175C + (*gTextBankOffsets + D_800C4A50[index]);
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 4), 1, 0x10, 0x10, 0x78, 0x14);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 4), 1, 0x10, 0x10, 0x78, 0x14);
     func_80017B3C(gActiveRenderContext->field_D8, text, 0x14, 0x14);
 }
 

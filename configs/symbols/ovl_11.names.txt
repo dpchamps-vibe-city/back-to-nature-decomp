@@ -1,5 +1,15 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Two-table cell-grid lookup and its three unsigned trailing-field readers.
+Ovl11FindCellGridTag = 0x800D5960; // type:func
+Ovl11ReadCellGridHalfwordAA = 0x800D5ABC; // type:func
+Ovl11ReadCellGridHalfwordAC = 0x800D5B3C; // type:func
+Ovl11ReadCellGridHalfwordAE = 0x800D5BBC; // type:func
+
+// Paired indexed flag banks selected by the area-4/5 callers.
+Ovl11SetAreaSlotFlag = 0x800D0EA4; // type:func
+Ovl11IsAreaSlotFlagSet = 0x800D0ED0; // type:func
+
 // Six-byte halfword record primitives and signed tail accumulation.
 Ovl11AddTripletTail = 0x800D72E8; // type:func
 Ovl11ClearHalfwordTriplet = 0x800D7328; // type:func

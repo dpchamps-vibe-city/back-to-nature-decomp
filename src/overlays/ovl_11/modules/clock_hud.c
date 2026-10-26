@@ -7,8 +7,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_clock_hud.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
-void func_80022580(u32 *ot, s32 style, s32 x, s32 y, s16 width, s16 height);
 void func_80024A10(s32 ot, s16 x, s16 y, s16 frame);
 s16 *func_8001A970(s32 value, s16 *text, s32 digits);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
@@ -61,7 +63,7 @@ void Ovl11DrawClockHud(void) {
     drawContext = gActiveRenderContext->field_D8;
     textOt = drawContext + 0x8C;
     beforeNoon = (((struct Ovl11CalendarDisplayStateView *)D_8006C838)->hour) < 0xC;
-    func_80022580((u32 *)(drawContext + 0x90), 1, 0xE4, 0x10, 0x4E, 0x20);
+    DrawMenuPanel((u32 *)(drawContext + 0x90), 1, 0xE4, 0x10, 0x4E, 0x20);
     y = 0x13;
     x = 0x114;
     func_80024A10(textOt, 0xE8, 0x13,

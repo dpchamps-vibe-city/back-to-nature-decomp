@@ -41,7 +41,7 @@ void ovl_15_func_8012E520(void) {
         }
     } else if (state->state == 2) {
         D_80137586 = 2;
-        func_80017A08(0, (s32)&D_801375A8[D_8013758C]);
+        func_80017A08(0, (s32)&gOvl15SaveSlotLabels[D_8013758C]);
         DrawScrollingSpriteGrid(sprite);
         func_8002495C(0);
         if (D_80137584 != D_80137585) {

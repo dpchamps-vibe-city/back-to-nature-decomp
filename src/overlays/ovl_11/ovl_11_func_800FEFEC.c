@@ -9,7 +9,6 @@
 #include "beveled_panel.h"
 
 
-void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017A38 (s16 arg0, s16 arg1);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
@@ -23,7 +22,7 @@ void ovl_11_func_800FEFEC(void) {
     s32 var_s0;
     s32 remainder;
 
-    func_80022580((u32 *) (gActiveRenderContext->field_D8 + 0x58), 1, 0x14, 0x37, 0x118, 0x69);
+    DrawMenuPanel((u32 *) (gActiveRenderContext->field_D8 + 0x58), 1, 0x14, 0x37, 0x118, 0x69);
     func_80017A38(0, 2);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) ((void *) ((u8 *) &D_80053B22 + *gTextBankOffsets)), 0x20, 0x3B);
     func_80017A38(0, 0);

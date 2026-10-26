@@ -3,8 +3,10 @@
 #include "pad_actuator_sequences.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
-void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 void func_800248B0(s32, s16, s16);
@@ -17,7 +19,7 @@ void ovl_11_func_800FF324(void) {
     s32 remainder;
     s32 *text;
 
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x3A, 0x1E, 0xCA, 0x84);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x3A, 0x1E, 0xCA, 0x84);
     func_80017A38(0, 2);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053CB8 + gTextBankOffsets[0]), 0x3E, 0x22);
     func_80017A38(0, 0);

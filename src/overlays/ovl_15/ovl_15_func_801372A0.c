@@ -23,6 +23,7 @@
 #include "random.h"
 #include "sprite_upload.h"
 #include "ovl15_save_card_title.h"
+#include "ovl15_save_menu_ui.h"
 
 int McxCardType (int);
 int McxSync (int, long *, long *);
@@ -43,7 +44,6 @@ void ovl_15_func_80137398 (void);
 void ovl_15_func_801373A0 (void);
 u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
-void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 FinishMessageWindow (void);
 void SetVal8005E2BC (s32 arg0);
@@ -71,10 +71,7 @@ void ovl_15_func_801300E4 (void);
 void ovl_15_func_8013010C (void);
 s32 ovl_15_func_80135E9C (s16 arg0);
 void func_8001AC10 (u32 *arg0, s32 arg1, s32 arg2);
-s32 ovl_15_func_80137228 (s16 arg0, s16 arg1);
-s8 ovl_15_func_80136990 (void);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
-s8 ovl_15_func_801370B4 (void);
 s32 ovl_15_func_80136558 (s16 arg0, s16 arg1);
 void ovl_15_func_801359FC (void);
 void ovl_15_func_80137544 (char *arg0, s32 arg1);
@@ -122,7 +119,7 @@ void ovl_15_func_801329D0 (void);
 void ovl_15_func_801329F8 (void);
 s8 *Ovl15FormatTitleDigits (s16 arg0, s8 *arg1, s16 arg2);
 void Ovl15FormatTitleSeason (s16 arg0, char *arg1);
-void ovl_15_func_8013703C (s16 arg0, s16 *arg1, s32 arg2);
+void Ovl15FormatDateNumber (s16 arg0, s16 *arg1, s32 arg2);
 u16 *func_8001AA7C (s32 arg0, u16 *arg1);
 s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 void func_8001ABF0 (u16 *dst, u16 *src);

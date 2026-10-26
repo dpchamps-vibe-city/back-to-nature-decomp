@@ -17,7 +17,6 @@
 #include "ovl11_texture_cell_cache.h"
 
 
-void func_80022580 (u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_80100E68 (u16 arg0);
 void ovl_11_func_800F6F7C (s32 arg0, s16 arg1, s16 arg2);
@@ -55,11 +54,11 @@ void ovl_11_func_80100B50(u8 arg0, u8 arg1) {
     sp20 = (s32)(temp_v1 + 0x6C);
     sp24 = (s32)(temp_v1 + 0x60);
     temp_fp = (void *) ((u8 *) D_80071318 + ((arg0 & 0xFF) * 0x16));
-    func_80022580(temp_s0, 1, 0x16, 0x10, 0x10E, 0x4A);
+    DrawMenuPanel(temp_s0, 1, 0x16, 0x10, 0x10E, 0x4A);
     var_s4 = 0x84;
     var_s5 = 0x14;
     var_s7 = 1;
-    func_80022580(temp_s0, 1, 0x16, 0x5A, 0x10E, 0x4A);
+    DrawMenuPanel(temp_s0, 1, 0x16, 0x5A, 0x10E, 0x4A);
     func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) &D_8005396A + *gTextBankOffsets)), 0x21, 0x20);
     func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_8005396A + 0x12)) + *gTextBankOffsets)), 0x21, 0x6A);
     var_s2 = D_801273F4;

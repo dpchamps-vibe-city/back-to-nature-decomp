@@ -17,7 +17,7 @@ void ovl_15_func_80131858(void) {
     func_8001AC10((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) D_80052FC4);
     cardStates = D_80137594;
     for (; slot < 3; slot++) {
-        D_80137820[slot] = 2;
+        gOvl15SaveSlotStatus[slot] = 2;
         status = ovl_15_func_80136288(D_8013758C, (s16) slot, (Ovl15SaveSummary *) &D_801376E0_headers[slot]);
         if (status == 8) {
             D_80137584 = 6;
@@ -30,23 +30,23 @@ void ovl_15_func_80131858(void) {
         if (status == 9) {
             fileStatus = ovl_15_func_80135FF0(D_8013758C, (s16) slot);
             if (fileStatus == 0) {
-                D_80137820[slot] = 1;
+                gOvl15SaveSlotStatus[slot] = 1;
             } else if (fileStatus == 0xF) {
-                D_80137820[slot] = 3;
+                gOvl15SaveSlotStatus[slot] = 3;
             } else {
-                D_80137820[slot] = 2;
+                gOvl15SaveSlotStatus[slot] = 2;
             }
         } else if (status == 0) {
-            D_80137820[slot] = 0;
+            gOvl15SaveSlotStatus[slot] = 0;
         }
         if ((u32) ((u16) cardStates[D_8013758C] - 6) < 2U) {
-            D_80137820[slot] = 1;
+            gOvl15SaveSlotStatus[slot] = 1;
         }
     }
-    if (D_80137820[0] != 0 && D_80137820[1] != 0 && D_80137820[2] != 0) {
+    if (gOvl15SaveSlotStatus[0] != 0 && gOvl15SaveSlotStatus[1] != 0 && gOvl15SaveSlotStatus[2] != 0) {
         D_80137584 = 8;
     } else {
-        D_80137587 = 0;
+        gOvl15MenuCursor = 0;
         D_80137584 = 9;
     }
 }

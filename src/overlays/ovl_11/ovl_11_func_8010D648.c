@@ -1,9 +1,9 @@
 #include "common.h"
 #include "random.h"
+#include "ovl11_area_slot_flags.h"
 
 s32 ovl_11_func_800F3BA0(u16 arg0);
 s32 ovl_11_func_800F3A18(u16 arg0);
-void ovl_11_func_800D0EA4(s32 arg0, s32 arg1);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
 
 s32 ovl_11_func_8010D648(u8 *arg0, s16 area) {
@@ -24,7 +24,7 @@ s32 ovl_11_func_8010D648(u8 *arg0, s16 area) {
         }
         if (area == 4) {
             if (ovl_11_func_800F3BA0(1)) {
-                ovl_11_func_800D0EA4(index, 0);
+                Ovl11SetAreaSlotFlag(index, 0);
             } else {
                 failed = 1;
             }
@@ -32,7 +32,7 @@ s32 ovl_11_func_8010D648(u8 *arg0, s16 area) {
             if (!ovl_11_func_800F3A18(1)) {
                 failed = 1;
             } else {
-                ovl_11_func_800D0EA4(index, 1);
+                Ovl11SetAreaSlotFlag(index, 1);
             }
         }
     }

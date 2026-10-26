@@ -6,11 +6,13 @@
 #include "ovl11_position_transition.h"
 #include "message_window.h"
 #include "game_flags.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
 #define SELECTION (*(u16 *)&D_801273D8)
 
 void SetVal8005E2BC(s32);
-void func_80022580(u32 *, s32, s32, s32, s16, s16);
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 void func_800248B0(s32, s16, s16);
@@ -24,7 +26,7 @@ s32 ovl_11_func_800FFB08(void) {
     SetMessagePortraitEnabled(0);
     SetVal8005E2BC(0);
     RequestMessageWindow(3, 0x1B7);
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x10, 0x10, 0xAC, 0x58);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x10, 0x10, 0xAC, 0x58);
     func_80017A38(0, 2);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053A22 + gTextBankOffsets[0]), 0x12, 0x12);
     func_80017A38(0, 0);

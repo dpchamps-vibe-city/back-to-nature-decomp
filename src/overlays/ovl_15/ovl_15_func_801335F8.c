@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "beveled_panel.h"
 
-void func_80022580(u32 *arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_15_func_80134134(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5);
 
@@ -22,9 +24,9 @@ void ovl_15_func_801335F8(void) {
 
     var_s7 = 0x28;
     var_s5 = 0x22;
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0x24, 0x10, 0x70, 0x8D);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0x24, 0x10, 0x70, 0x8D);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051CAE + *gTextBankOffsets)), 0x3C, 0x14);
-    func_80022580((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0xAC, 0x10, 0x70, 0x8D);
+    DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0xAC, 0x10, 0x70, 0x8D);
     func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051CAE + 0xE)) + *gTextBankOffsets)), 0xC4, 0x14);
     var_v1 = 0;
     do {

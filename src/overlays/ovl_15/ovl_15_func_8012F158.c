@@ -16,7 +16,7 @@ void ovl_15_func_8012F158(void) {
     text = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) D_80052FC4);
     cardStates = D_80137594;
-    slotState = D_80137820;
+    slotState = gOvl15SaveSlotStatus;
     for (slot = 0; slot < 3; slot++, slotState++) {
         *slotState = 2;
         status = ovl_15_func_80136288(D_8013758C, (s16) slot, (Ovl15SaveSummary *) &D_801376E0_headers[slot]);
@@ -44,6 +44,6 @@ void ovl_15_func_8012F158(void) {
             *slotState = 1;
         }
     }
-    D_80137587 = 0;
+    gOvl15MenuCursor = 0;
     D_80137584 = 8;
 }
