@@ -46,7 +46,7 @@ void Ovl11DrawValuePanelVariant(s32 wide) {
         panelWidth = 0x77;
         panelHeight = 0x22;
     } else {
-        value = D_80071A5C;
+        value = gSpendableBalance;
         labelOffset = 0x6A;
         copyLabel = Ovl11CopyPrimaryValueLabel;
         panelX = 0xE3;

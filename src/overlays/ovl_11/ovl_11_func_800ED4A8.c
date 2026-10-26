@@ -28,6 +28,8 @@
 #include "point_projection.h"
 #include "ovl11_paired_item_ids.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "selection_panel.h"
+#include "area_grid_triggers.h"
 
 typedef struct {
                s16 field_0;
@@ -188,7 +190,6 @@ void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
-void ovl_11_func_8011E588 (void);
 s32 ovl_11_func_800FBE4C (void);
 s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800C9DC0 (void);
@@ -228,7 +229,6 @@ s32 ovl_11_func_800E99EC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6AB0 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800E8F78 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 Ovl11ClampStateField (s32 arg0, s32 arg1, s32 arg2);
-s32 ovl_11_func_801136D0 (s32 *arg0, u16 *arg1, u16 *arg2);
 void ovl_11_func_8011F52C (void);
 s16 ovl_11_func_80120358 (M2C_93d07a715929_Ovl11SelectArg *arg0);
 void ovl_11_func_80120850 (s32 arg0);

@@ -3,8 +3,8 @@
 #include "psyq/stddef.h"
 #include "ovl11_item_transfer_menu.h"
 #include "ovl11_interaction_volume_query.h"
+#include "selection_panel.h"
 
-void ovl_11_func_8011E588(void);
 s32 ovl_11_func_800FBE4C(void);
 s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0);
 
@@ -19,7 +19,7 @@ s32 ovl_11_func_800C8BA8(Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1) {
         return 0;
     }
     if (arg1 & 0x100) {
-        ovl_11_func_8011E588();
+        Ovl11OpenSelectionPanel();
         state->field_0C |= 0x10000000;
         state->field_0C |= 0x08000000;
         return 1;

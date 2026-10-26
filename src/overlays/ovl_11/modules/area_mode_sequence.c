@@ -37,6 +37,9 @@
 #include "ovl11_clock_calendar.h"
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
+#include "mode6_texture_refresh.h"
+#include "map_cell_texture.h"
+#include "area_grid_triggers.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -578,17 +581,12 @@ s32 Ovl11ChooseAreaSoundId(void) {
 
 void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
-s32 ovl_11_func_800D79E8 (s32 arg0);
-void ovl_11_func_800D78D0 (void);
 s32 ovl_11_func_8011DF4C (s32 arg0);
-void ovl_11_func_8011E45C (void);
-s32 ovl_11_func_80112FA8 (s32 arg0);
 void ovl_11_func_80111F10 (void);
 void ovl_11_func_800BFEF8 (void);
 /* Extra debug-hook parameters forwarded by this wrapper are unread. */
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
-void ovl_11_func_80112D10(void);
 
 /* Install projection, lighting, camera and scene pools before mode-specific
  * handlers. Retain their existing scratch-stack regions independently. */
@@ -614,21 +612,21 @@ void Ovl11ResetAreaScene(void) {
     Ovl11ResetChoiceMessages();
     if (((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25476 == 1) {
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
-        ovl_11_func_800D79E8(0);
-        ovl_11_func_800D78D0();
+        Ovl11BuildMapGrid(0);
+        Ovl11ApplyMapTileTextures();
         SCRATCH_STACK_END();
     }
     if (((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25476 == 6) {
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
         ovl_11_func_8011DF4C(0);
-        ovl_11_func_8011E45C();
+        Ovl11RefreshMode6CellTextures();
         SCRATCH_STACK_END();
     }
     if (((((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25474 == 0x37) || (((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25474 == 0x43)) && (((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25476 != 0x42)) {
-        ovl_11_func_80112FA8(0);
+        Ovl11BuildAreaGrid(0);
     }
     if ((u32) ((u16) ((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25476 - 0xC) < 2U) {
-        ovl_11_func_80112D10();
+        Ovl11ResetAreaGridState();
     }
     SetGameFlag(0x45U, 0U);
     ovl_11_func_80111F10();

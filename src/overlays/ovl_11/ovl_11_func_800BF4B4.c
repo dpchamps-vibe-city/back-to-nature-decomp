@@ -23,7 +23,7 @@ s32 ovl_11_func_800BF4B4(s32 *arg0, s32 arg1) {
         map = 1;
     }
     if (map != 2) {
-        delta = (s16 *) (D_801281F0 + arg1 * 4);
+        delta = (s16 *) (gOvl11AreaGridCellOffsets + arg1 * 4);
         nearPos.vx = arg0[0] + delta[0];
         nearPos.vy = arg0[1];
         nearPos.vz = arg0[2] + delta[1];

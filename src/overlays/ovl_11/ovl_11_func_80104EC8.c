@@ -767,7 +767,7 @@ block_258:
 
         return var_v0;
     case 0x4F:
-        return D_80071A5C >= 0x1F4;
+        return gSpendableBalance >= 0x1F4;
     case 0x50:
         if (!(((Ovl11ConditionState *) D_8006C838)->field_44F8 & 0x200000)) {
             if (((Ovl11ConditionState *) D_8006C838)->field_5224 >= 0x7530) {
@@ -1057,7 +1057,7 @@ date_ready:
         return 0;
     case 0x73:
         var_v0 = 0;
-        if (D_80071A5C >= 0x1F4) {
+        if (gSpendableBalance >= 0x1F4) {
             var_v0 = 0;
             if (GetGameFlag(0xE7U) == 1) {
                 if (ovl_11_func_800E6EE0(0x38, 0, 2, 0) == 0) {

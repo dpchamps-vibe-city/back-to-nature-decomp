@@ -15,16 +15,16 @@ typedef struct {
     /* 0x08 */ s32 unk8;
 } StructOvl11CE034B;
 
-extern u8 D_801281F0[];
+extern u8 gOvl11AreaGridCellOffsets[];
 
 void ovl_11_func_800CE034(StructOvl11CE034A *arg0, StructOvl11CE034B *arg1, s32 arg2) {
     u16 *var_t0;
     s32 var_a3;
     s32 var_a0;
 
-    var_t0 = (u16 *)(D_801281F0 + arg0->unk38 * 4);
+    var_t0 = (u16 *)(gOvl11AreaGridCellOffsets + arg0->unk38 * 4);
     if (arg2 == 2) {
-        var_t0 = (u16 *)(D_801281F0 + arg0->unk38 * 4 + 0x10);
+        var_t0 = (u16 *)(gOvl11AreaGridCellOffsets + arg0->unk38 * 4 + 0x10);
     }
     var_a3 = arg0->unk100;
     arg1->unk0 = var_a3;

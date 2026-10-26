@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern s32 D_80071A5C;
+extern s32 gSpendableBalance;
 
 s32 ovl_11_func_8011D06C(s32 arg0) {
-    return D_80071A5C >= arg0;
+    return gSpendableBalance >= arg0;
 }

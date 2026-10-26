@@ -17,6 +17,7 @@
 #include "ovl11_coordinate_clamp.h"
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
+#include "area_grid_triggers.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -50,7 +51,6 @@ void ovl_11_func_80104A88 (void);
 u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
 void ovl_11_func_800DB9A4(void);
 void ovl_11_func_8010476C(void);
-void ovl_11_func_80112D10(void);
 
 void ovl_11_func_801044E4(void) {
     Ovl11StartupView *base;
@@ -105,7 +105,7 @@ void ovl_11_func_801044E4(void) {
     far = (Ovl11FarInitView *)&D_8007AFF0;
     far->field_25498 = -1;
     base->field_4438 = -1;
-    ovl_11_func_80112D10();
+    Ovl11ResetAreaGridState();
     ovl_11_func_80104A58();
     DealCardGameTable();
     Ovl11ApplyCurrentDayCondition();

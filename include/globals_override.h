@@ -394,15 +394,17 @@ typedef struct {
     s16 records[8][3];
 } Ovl11CB618RecordView;
 
-/* 80120A2C reads/writes a u16 state at +0 and signed coordinates at +0xC/+0x14. */
+/* 80120A2C: phase and x/z pan; 801209D4 accumulates the vertical step at +4/+8. */
 typedef struct {
-    u16 unk0;
-    u8 pad2[0xC - 2];
-    s32 unkC;
+    u16 phase;
+    u8 pad2[2];
+    s32 verticalStep;
+    s32 verticalAccumulator;
+    s32 panX;
     u8 pad10[4];
-    s32 unk14;
+    s32 panZ;
 } Ovl11MapCameraState;
-extern s16 D_8012DB58;
+extern s16 gOvl11MapCameraState;
 
 /* 80120A2C writes camera words/halfwords and the exit flag through this far base. */
 struct Ovl11MapCameraWork {
@@ -420,7 +422,7 @@ struct Ovl11MapCameraWork {
 };
 
 /* 80121134 passes this UV/CLUT buffer to 80120CC4 and 80120F30. */
-extern struct Ovl11TextureCoordinates D_8012DB38;
+extern struct Ovl11TextureCoordinates gOvl11MapTextureScratch;
 
 /* 800DB140/800DB5CC: leading u16 of eight 0x16-byte slots at this base. */
 /* 800DB0E4 clears a four-byte prefix plus eight 0x16-byte animation slots. */
@@ -431,7 +433,7 @@ extern u16 gVramAnimationSlotHead;
 extern s16 gOvl11CompactChoiceSelection;
 
 /* ovl_11 800BF4B4/800CE034 read signed halfword pairs at four-byte strides. */
-extern u8 D_801281F0[];
+extern u8 gOvl11AreaGridCellOffsets[];
 
 /* ovl_11 800F77F0 uses lh for this state threshold and sh for updates. */
 /* 800F77F0: first sprite ID plus 0x400 while a batch read is pending. */
@@ -724,7 +726,7 @@ extern u8 gOvl17SharedSpriteBank[0x13DC];
 extern u8 gOvl17SharedBankSpriteSource[0x30];
 
 /* 80120CC4 indexes original 48-halfword texture codes with lhu and stride 2. */
-extern u16 D_80128764[48];
+extern u16 gOvl11MapTileTextureCodes[48];
 
 /* ovl_11_func_800F4CA0 clears this s16; 800F62D8 reads its unsigned value with lhu. */
 extern s16 D_80070D0E;
@@ -755,7 +757,7 @@ typedef struct {
 extern u8 Ovl11_D_80128820[0x230] __asm__("D_80128820");
 
 /* ovl_11_func_80120F30 indexes flag bytes; the original data span is 8 bytes. */
-extern u8 D_801287C4[8];
+extern u8 gOvl11MapColumnUvOrientation[8];
 
 /* ovl_11 grid at D_8007AFF0+0x23608: word header, UV bytes and u16 fields. */
 typedef struct {
@@ -878,12 +880,12 @@ typedef struct {
 } Ovl11SpawnProbeState;
 
 /* 800D759C indexes 30 ten-byte UV/clut records here (lbu +0..7, lhu +8). */
-extern u8 D_80123CA0[300];
+extern u8 gOvl11MapCellUvRecords[300];
 /* 800D759C reads a per-column flag with lbu; original data spans 48 bytes. */
-extern u8 D_80123DCC[48];
+extern u8 gOvl11MapColumnMirror[48];
 
 /* 8011E1E8 indexes ten-byte records here: eight UV bytes and lhu at +8. */
-extern u8 D_801282FC[];
+extern u8 gOvl11Mode6TextureCoords[];
 
 /* ovl_31 rodata: NUL-terminated "bu%d%d:%s" used by sprintf. */
 extern char D_800B7F20[10];
@@ -3696,30 +3698,32 @@ extern s32 D_801294F0[4];
 /* D_80128422 - s16 slot index into the D_801284AC position table, read by
  * ovl_11_func_8011ECC4 (lh) and cleared by ovl_11_func_8011E574. Only ever
  * declared extern in the overlays, so it stays absolute-addressed. */
-extern s16 D_80128422;
+extern s16 gOvl11SelectionPanelLane;
+/* 8011EE40 scans (ID, lane-slot) byte pairs until the 0xFF sentinel. */
+extern u8 gOvl11SelectionLaneSlots[0x88];
 
 /* D_801284AC - 8-byte-stride position records read by ovl_11_func_8011ECC4:
  * a u16 x at +0x00 and an s16 y at +0x02. The function indexes with byte
  * pointers to the base and to base+0x02 so both bases stay in GPRs; only ever
  * declared extern in the overlays, so it stays absolute-addressed. */
-extern u8 D_801284AC[];
+extern u8 gOvl11SelectionPanelLanes[];
 
 /* D_8012D810 - ovl_11_func_8011EE98 copies 0x264 bytes from the load buffer;
  * its leading sprite header is passed to func_80015704. */
 typedef struct {
     u8 data[0x264];
-} Ov11SpriteDataBlock;
-extern Ov11SpriteDataBlock D_8012D810;
+} Ovl11SelectionPanelSpriteBlock;
+extern Ovl11SelectionPanelSpriteBlock gOvl11SelectionPanelSpriteBlock;
 
 /* D_8012DA80 - table of 0x30-byte SpriteSourceData records blitted by
  * ovl_11_func_8011ECC4 at indices 0, 1 and 2. The override header cannot see
  * game_types.h (it is included first), so the element is a 0x30-byte view and
  * the consumer casts to SpriteSourceData *. Only ever declared extern in the
  * overlays, so it stays absolute-addressed. */
-struct struct_8012DA80 {
+struct Ovl11SelectionPanelSpriteStorage {
     char data[0x30];
 };
-extern struct struct_8012DA80 D_8012DA80[];
+extern struct Ovl11SelectionPanelSpriteStorage gOvl11SelectionPanelSprites[];
 
 /* D_801248F4 - nine-entry s16 table scanned by ovl_11_func_800E58DC: the
  * index of a matching value yields 0x731 + index. Absolute-addressed from the
@@ -3792,7 +3796,7 @@ extern u8 D_801240B0[12];
  * data at 0x801281D0, indexed by a signed s16 selector in
  * ovl_11_func_80113208 and copied field-by-field into a loaded object
  * record. Absolute-addressed from the overlay. */
-extern u8 D_801281D0;
+extern u8 gOvl11AreaGridUvRecords;
 
 /* One D_801281D0 record: four u/v byte pairs, then the clut halfword. */
 typedef struct {
@@ -4672,17 +4676,19 @@ extern s32 D_80051A90;
  * by the 0x80114184 reset-stub family (see notes/file-groupings.md). */
 extern s32 gOvl11InteractionDrawMode;
 /* ovl_11 801173B8 dispatches and stores this signed word state. */
-extern s32 D_8012D794;
+extern s32 gOvl11CellStatusPhase;
 /* ovl_11 801173B8 loads this signed id, comparing it with -1. */
-extern s32 D_8012D798;
+extern s32 gOvl11CellStatusSelection;
+/* 801176BC indexes this ten-halfword item-ID table; only indices 0..8 are accepted. */
+extern u16 gOvl11CellStatusItemIds[10];
 /* ovl_11 801173B8 tests this signed halfword against 6. */
 extern s16 gCalendarWeekday;
 /* ovl_11 801173B8 tests this signed word against 10. */
-extern s32 D_80071A5C;
+extern s32 gSpendableBalance;
 
-extern s16 D_80128420;
+extern s16 gOvl11SelectionPanelState;
 /* 8011E5B0 passes this eight-byte rectangle to StoreImage and LoadImage. */
-extern s16 D_80128524[4];
+extern s16 gOvl11SelectionPanelSaveRect[4];
 
 /* ovl_27 800B944C tests bit zero of this absolute-addressed word. */
 extern s32 D_8006C840;
@@ -5098,22 +5104,22 @@ extern s16 D_80127F90;
  * ovl_11_func_80113A20. The table index is the halfword at D_8012D110 and
  * the selected 16-byte record is walked as eight s16 values. Accessed with
  * absolute addressing from ovl_11 code. */
-extern s16 D_80127FE8[];
+extern s16 gOvl11AreaGridRewardWeights[];
 
 /* D_80128088 - second base of the same 16-byte-stride halfword table,
  * selected by ovl_11_func_80113A20 when its argument equals 0x37. Sits
  * 0xA0 bytes past D_80127FE8. Accessed with absolute addressing. */
-extern s16 D_80128088[];
+extern s16 gOvl11Area37RewardWeights[];
 
 /* D_80128128 - ovl_11 eight-halfword table walked by
  * ovl_11_func_80113A20 alongside the selected 16-byte record. Accessed
  * with absolute addressing from ovl_11 code. */
-extern s16 D_80128128[];
+extern s16 gOvl11AreaGridRewardItems[];
 
 /* D_80128138 - second ovl_11 eight-halfword table (0x10 bytes past
  * D_80128128) selected by ovl_11_func_80113A20 when its argument equals
  * 0x37. Accessed with absolute addressing from ovl_11 code. */
-extern s16 D_80128138[];
+extern s16 gOvl11Area37RewardItems[];
 
 /* D_80074838 - large ovl_11 work-area base. Referenced with absolute
  * addressing from ovl_11 code; the card-table region this overlay clears
@@ -6216,22 +6222,22 @@ struct Ovl11SelectionMusic {
 };
 
 /* 80112FA8 uses signed word loop counters and a four-word position buffer. */
-extern s32 D_8012D0F0;
-extern s32 D_8012D0F4;
-extern s32 D_8012D100[4];
+extern s32 gOvl11AreaGridScanColumn;
+extern s32 gOvl11AreaGridScanRow;
+extern s32 gOvl11AreaGridProbePosition[4];
 
 /* ovl_11 state buffer: 80112D10 clears its +C ten-byte flags, +16
  * 10x10x10 byte grid, initial halfword and word at +400. */
-extern u8 D_8012D110[];
+extern u8 gOvl11AreaGridState[];
 
 /* 80113818 passes this data address or its +0x34 byte offset to func_8001AC10. */
-extern u8 D_80128148[];
+extern u8 gOvl11AreaGridTriggerText[];
 
 /* 80112EC4 indexes the +0x16 byte grid with strides 100/10/1 and updates
  * the +0x400 word; 80113818 increments the initial unsigned halfword.
  * 80113310 reads +2/+4/+6, writes +8/+A and indexes ten flags at +C. */
 typedef struct {
-    u16 count;
+    u16 plane;
     s16 probability;
     s16 centerX;
     s16 centerY;
@@ -7077,10 +7083,10 @@ struct Ovl11EventDispatchState {
 extern u8 D_80123C88;
 
 /* 800D79E8 uses these signed word counters for the 25-by-45 scan. */
-extern s32 D_80128D88;
-extern s32 D_80128D8C;
+extern s32 gOvl11MapGridScanColumn;
+extern s32 gOvl11MapGridScanRow;
 /* 800D79E8 passes this position to 800BDB88 and steps words +0/+8. */
-extern s32 D_80128D98[4];
+extern s32 gOvl11MapGridProbePosition[4];
 
 /* 8011DD90 reads signed item IDs; 8011DEBC indexes u16 threshold/price tables. */
 typedef struct {

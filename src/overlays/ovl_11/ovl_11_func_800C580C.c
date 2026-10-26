@@ -10,6 +10,7 @@
 #include "game_flags.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_paired_item_ids.h"
+#include "area_grid_triggers.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -46,7 +47,6 @@ void ovl_11_func_800C9D98 (void);
 s32 ovl_11_func_800C6858 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C4DE0 (Ovl11C7010Object *arg0);
-s32 ovl_11_func_80113310 (Ovl11CE034Object *arg0);
 void ovl_11_func_800CD5BC (C580C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 s32 ovl_11_func_800C4B6C (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C4C94 (Ovl11C7010Object *arg0);
@@ -503,7 +503,7 @@ tool_done:
             temp_v1_4 = *((struct Ovl11C580CWork *)&D_8007AFF0)->header;
             if ((temp_v1_4 == 0x37) || (temp_v1_4 == 0x43)) {
                 var_s0 = 0x28;
-                waitForAction = ovl_11_func_80113310((Ovl11CE034Object *) arg0);
+                waitForAction = Ovl11ClassifyAreaGridCell((Ovl11CE034Object *) arg0);
                 if (waitForAction != 0) {
                     var_s0 = 0x96;
                 }

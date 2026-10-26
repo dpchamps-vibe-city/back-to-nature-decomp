@@ -5,6 +5,7 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "ovl11_halfword_triplets.h"
+#include "map_texture_camera.h"
 
 s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0);
 /* No complete prototype: this call supplies only the object and zero.
@@ -14,7 +15,6 @@ void ovl_11_func_800CCFF8();
 /* The callee stores only the low byte of the animation selector. */
 void ovl_11_func_800C7650(void);
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_801209A8(void);
 
 s32 ovl_11_func_800C7524(Ovl11C7010Object *arg0, u16 *arg1) {
     switch ((s16) *arg1) {
@@ -46,7 +46,7 @@ s32 ovl_11_func_800C7524(Ovl11C7010Object *arg0, u16 *arg1) {
         return 1;
     case 0x12D:
         arg0->unk6C |= 0x400;
-        ovl_11_func_801209A8();
+        Ovl11EnterMapCameraMode();
         return 1;
     default:
         return 0;

@@ -7,11 +7,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_vram_animation_slots.h"
+#include "area_grid_triggers.h"
 
 void ovl_11_func_80104A58 (void);
 s32 ovl_11_func_800DC388 (s32 arg0);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
-void ovl_11_func_80113B80 (void);
 void ovl_11_func_800BD5A8 (s32 arg0);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_8010B67C (void);
@@ -41,7 +41,7 @@ void ovl_11_func_800DC560(s32 arg0, s32 arg1) {
         }
         ovl_11_func_800DBFEC((u16) (((Ovl11SetupWorkView *) &D_8007AFF0)->id), temp_s2, arg1 & 0xFFFF);
         if (arg0 != 0) {
-            ovl_11_func_80113B80();
+            Ovl11RestoreAreaGridPosition();
             if (GetGameFlag(0x42U) == 1) {
                 (((Ovl11SetupResidentView *) D_8006C838)->x) = -0x2CBD;
                 (((Ovl11SetupResidentView *) D_8006C838)->y) = -0x764;

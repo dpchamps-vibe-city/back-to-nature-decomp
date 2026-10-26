@@ -17,16 +17,16 @@
 #include "ovl11_object_event_script.h"
 #include "psyq/memory.h"
 #include "ovl11_vram_animation_slots.h"
+#include "map_texture_camera.h"
+#include "area_grid_triggers.h"
 
 void ovl_11_func_800C3D70 (void);
 void ovl_11_func_800BFD1C (void);
 void ovl_11_func_800F65B8 (void);
-void ovl_11_func_80113818 (void);
 void ovl_11_func_800C401C (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
 void ovl_11_func_800C056C ();
-void ovl_11_func_801209D4 (void);
 void ovl_11_func_800DCC5C (void);
 void ovl_11_func_800CA24C ();
 void ovl_11_func_800CCB90 (void);
@@ -49,7 +49,7 @@ void ovl_11_func_800C162C(void) {
     Ovl11ResetCollisionQueryCount();
     ovl_11_func_800BFD1C();
     ovl_11_func_800F65B8();
-    ovl_11_func_80113818();
+    Ovl11UpdateAreaGridTrigger();
     Ovl11UpdateSceneCameraOffset();
     ovl_11_func_800C401C();
     Ovl11UpdateChoiceMessages();
@@ -70,7 +70,7 @@ void ovl_11_func_800C162C(void) {
     Ovl11UpdateVramAnimations();
     Ovl11UpdateSpriteRotations();
     ovl_11_func_800C056C(1);
-    ovl_11_func_801209D4();
+    Ovl11StepMapCameraVerticalOffset();
     SCRATCH_STACK_END();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
     Ovl11ApplySceneCamera();

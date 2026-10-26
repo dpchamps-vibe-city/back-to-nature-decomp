@@ -466,6 +466,8 @@ GetColorRowYOffset = 0x8001FAB4; // type:func
 gSequenceNumber = 0x8005E318; // size:0x4
 // ovl_11:80108A24/80108B8C and 8011760C maintain/scan nine work-area cells.
 gChoiceCellStates = 0x8007AFDA; // size:0x9
+// Cell-status and purchase checks compare this balance before applying debits.
+gSpendableBalance = 0x80071A5C; // size:0x4
 PlaySoundEffect = 0x8001FABC; // type:func
 StopSoundEffectVoice = 0x8001FAE8; // type:func
 GetLastSpuVoiceIndex = 0x8001FB08; // type:func

@@ -3,6 +3,7 @@
 #include "ovl11_calendar_panel.h"
 #include "ovl11_item_transfer_menu.h"
 #include "ovl11_clock_hud.h"
+#include "selection_panel.h"
 
 void func_8002470C(s16 arg0);
 
@@ -18,8 +19,6 @@ void ovl_11_func_800FC054(void);
 
 void ovl_11_func_801038E4(void);
 
-void ovl_11_func_8011E5B0(void);
-
 void ovl_11_func_8011F5BC(void);
 
 void ovl_11_func_800F65B8(void) {
@@ -33,6 +32,6 @@ void ovl_11_func_800F65B8(void) {
     ovl_11_func_800FFA64();
     ovl_11_func_800FC054();
     ovl_11_func_801038E4();
-    ovl_11_func_8011E5B0();
+    Ovl11UpdateSelectionPanel();
     ovl_11_func_8011F5BC();
 }

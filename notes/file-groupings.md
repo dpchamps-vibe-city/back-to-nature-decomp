@@ -11493,7 +11493,14 @@ Members (address order):
 
 ## `ovl_11` D_8012D110 record feed/clear caller/callee pair — 0x80113B80 / 0x80113C3C (confidence: medium)
 
-Candidate same-TU pair in `ovl_11`: zero-gap link adjacency + direct call + a
+Both now belong to the **whole area_grid_triggers unit,
+80112D10–80113CD0** (see its state-buffer initializer/consumer section), not
+a separate two-function module. Their last-cell input and centre output connect
+them to the classifier and trigger state; the whole private-state chain was
+folded together. Names: Ovl11RestoreAreaGridPosition and
+Ovl11RestoreAreaGridCenter.
+
+Original pair evidence in `ovl_11`: zero-gap link adjacency + direct call + a
 shared global that mediates their data flow — the same fingerprint as the
 documented D_80129184 caller/callee pair.
 
@@ -13022,6 +13029,44 @@ Members (link order):
 
 ## `ovl_11` D_80128420/D_80128422 init/set cluster — 0x8011E574 / 0x8011E588 / 0x8011E5B0 / 0x8011EA0C / 0x8011EC54 / 0x8011EC84 / 0x8011ECC4 / 0x8011EE98 (confidence: medium for the pair, low for 0x8011E5B0, 0x8011EA0C, 0x8011EC54, 0x8011EC84, 0x8011ECC4 and 0x8011EE98)
 
+**Reconstructed whole unit: `src/overlays/ovl_11/modules/selection_panel.c`,
+8011E574–8011F0C4 exclusive (nine members).** The earlier eight-member list
+below omitted the interposed table helper 8011EE40; it is included, not a
+boundary. Private state/lane words 80128420/422, lane links 801284AC, ID-slot
+pairs 80128424, save rectangle 80128524, sprite block 8012D810 and three
+source records 8012DA80 are used only within this run. Reset/open feed the
+frame driver; it delegates input and sprite reload; input calls confirm/draw;
+draw calls the ID-slot scanner; reload calls the seasonal loader. This closed
+protocol and private storage, corroborated by original link order, join all
+nine rather than just the initializer pair. Original state at 80128420 is not
+an array of independently owned flags.
+
+Names in original order: Ovl11ResetSelectionPanelState, Ovl11OpenSelectionPanel,
+Ovl11UpdateSelectionPanel, Ovl11ProcessSelectionPanelInput,
+Ovl11ConfirmSelectionPanel, Ovl11ReloadSelectionPanelSprites,
+Ovl11DrawSelectionPanel, Ovl11FindSelectionLaneSlot,
+Ovl11LoadSelectionPanelSprites. Canonical overlay data names are
+`gOvl11SelectionPanelState/Lane/Lanes/SaveRect/SpriteBlock/Sprites` and
+`gOvl11SelectionLaneSlots`. The ID-slot table is 0x88 bytes at **80128424**,
+not the older 0x8C-at-80128428 description below. Its extern now lives in the
+override header; the two storage views have responsibility-based type names.
+`include/selection_panel.h` publishes only Open/Update, the two externally
+called entries, and documents scratch/VRAM units, synchronous seasonal loading,
+non-reentrancy and the unguarded missing-ID slot. Other seven linkages remain
+external. Caller declarations are reconciled through interfaceAudit.
+
+Boundaries: left 8011E45C is the mode-6 grid texture refresh, with its own
+coordinate table and area-reset caller, not these phase/lane/sprite resources.
+Right 8011F0C4 begins the already reconstructed selection_message protocol,
+which owns different phase/category/base state; it shares only generic engine
+message/fade services. No member calls or private data cross either cut.
+These are positive-evidence limits, not GP-proven original object boundaries:
+overlay -G0 provides no small-data discriminator. The complete nine-member
+fold passed at baseline -O2/-G0 with unchanged container bytes; no flag override,
+exception, private linkage or stub was introduced. The unit emits no rodata.
+
+Historical hypotheses follow; the complete reconstructed unit supersedes their
+partial membership confidence, not their original-address provenance.
 Same fingerprint class as the D_801273D8/D_801273DA entry above: an
 overlay-local {s16,s16} flag pair with an init leaf and callers that reset
 one member after calling it.
@@ -16634,6 +16679,39 @@ Members (address order):
 
 ## `ovl_11` `D_8006C838+0xE7A2` per-id byte-cell state-handler run — 0x80117370–0x801176BC (confidence: medium)
 
+**Reconstructed `src/overlays/ovl_11/modules/cell_status_panel.c`, all six
+members 80117370–8011775C exclusive.** The two private words 8012D794/798
+(now gOvl11CellStatusPhase/Selection) are confined to Start/Update; the four
+helpers have only in-unit callers. The scanner's selected index is passed
+through the dispatcher to the payment helper, whose private ten-halfword
+8012824C table is now gOvl11CellStatusItemIds. Thus the phase protocol,
+exclusive helper chain and private table support every member, not adjacency
+or the broadly shared game-state base alone. All six are now compiled C.
+Names in order: Ovl11BeginCellStatusPanel, Ovl11UpdateCellStatusPanel,
+Ovl11FindPendingCellStatus, Ovl11ResetCellStatusPrompt,
+Ovl11PollCellStatusChoice, Ovl11ConfirmCellStatus. They remain externally
+linked; only Start/Update are referenced by the original interaction callback
+tables. Their callback contract, weekday gate, two debits and non-refunded first
+fee are documented in the module, with no speculative in-world panel name.
+
+The payment helper now uses the established nine-cell Ovl11StatesE7A2View,
+not its former eight-byte local struct despite accepting index 8. The scanner
+retains the canonical gChoiceCellStates address; both describe the same storage.
+The item table's extern moved from C to globals_override.h. The shared balance
+at EXE:80071A5C is named gSpendableBalance, corroborated by the signed +5224
+comparison and 800F2354 debit/update path; its s32 identity/type are unchanged.
+
+Boundaries: left 80117178 is an independently shared record scanner (types
+109/162/165, multiple outside callers) that neither touches the private words
+nor calls these helpers. Right 8011775C begins purchase_panels, with different
+private panel state/descriptors and no call/data tie to this six-member protocol.
+The distant 80108A24/80108B8C cell managers are a shared-state data family, not
+a supported contiguous TU extension. Cuts are evidence-limited, not proven
+GP boundaries under overlay -G0. This whole fold passed baseline -O2/-G0 and
+the overlay byte oracle; its dispatcher table at file 3378 is pooled unchanged,
+including the following padding residue. No override or exception is involved.
+
+Historical observations (addresses retained):
 A gapless six-function run in `configs/splat/ovl_11.yaml` immediately before
 the documented `D_8012D7A8` run: 0x80117370 (0x48, ends 0x801173B8) →
 0x801173B8 (0x254, ends 0x8011760C) → 0x8011760C (0x40) → 0x8011764C
@@ -17736,8 +17814,56 @@ Members:
 - ovl_11_func_800D88D0 (s) — reaches the same table.
 - ovl_11_func_800DA638 (m, byte-exact) — classifies 3x3 grid neighbourhoods via `800DAF60`, stores cell variants, and dispatches texture updates through `D_80123DFC[arg2]`.
 
-Separate local mode-1 texture-update candidate TU pair (confidence: medium;
-[call/link-order evidence](research/ovl_11_func_800D759C-grouping.md)):
+**Reconstructed whole mode-1 unit:**
+`src/overlays/ovl_11/modules/map_cell_texture.c`, 800D759C–800D7B24 exclusive,
+holds Ovl11SetMapCellTexture, Ovl11ApplyMapTileTextures and Ovl11BuildMapGrid.
+The 25x45 pass calls the setter, the sole consumer of contiguous private
+UV/CLUT records 80123CA0 and column orientation bytes 80123DCC. Build fills
+the exact pointer grid the setter consumes (8009AFF0+3608 equals
+8007AFF0+23608); Ovl11ResetAreaScene pairs Build then Apply in its mode-1
+branch. Its row/column/probe state 80128D8C/8D88/8D98 is exclusive to Build.
+That build/apply protocol joins all three; folding only the first pair would
+leave its supported initializer outside. The callback table alone still does
+not join the distant dispatchers listed above to this unit.
+
+The five data names are gOvl11MapCellUvRecords, gOvl11MapColumnMirror,
+gOvl11MapGridScanColumn (8D88, loop bound 45), gOvl11MapGridScanRow (8D8C,
+bound 25), and gOvl11MapGridProbePosition. Canonical extern types, storage
+and linkage are unchanged. `include/map_cell_texture.h` publishes all three
+externally used functions, documenting 400-coordinate-unit probes, retained
+scan state/reset-on-zero-low-halfword, unchecked hit pointers/indices and
+non-Boolean return status. Parameters/locals now describe grid, UV and texture
+roles; the header-branch and tpage/CLUT control structure is preserved.
+
+Boundaries: left is interaction_id_predicates, three stateless item-ID tests
+with no map-grid/data/helper use. Right 800D7B24 initializes the independent
+7x7 mode-6 tile records, not this 25x45 map/probe/private-UV protocol. No shared
+private state or member call crosses either cut. These are evidence-limited
+cuts, not GP-proven original object boundaries under -G0. The entire three-member
+checked fold passed baseline -O2/-G0 and the overlay byte oracle. Unlike the
+research report's no-rodata hypothesis, the actual merged object emits a
+**0x14-byte** switch table at file **1678**, pooled by the fold helper. No flag
+override, exception, static linkage or assembly stub was added.
+
+Batch acceptance for map_cell_texture, mode6_texture_refresh,
+map_texture_camera, selection_panel and cell_status_panel:
+`npx tsx tools/diagnostics/tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` reports **867/2625 folded** (841 before,
+**+26**), **142/142 valid module TUs**, and PASS for original inventory,
+completeness, clean-source policy, all linked EXE/overlay bytes (including
+associated data, callbacks, jump tables and placement), configuration
+convergence, whitespace, input stability and exception non-growth. The command's
+nonzero completeness status reflects the remaining 1758 eligible functions,
+not a failed integrity gate. Ten published functions across four new headers
+have zero failing interface sites; pre-existing unrelated unpublished interface
+debt is unchanged. No tool, flag override or policy allowlist was changed.
+One readability edit in selection_panel (`entry += offset`) swapped one address
+add's operand order at 8011EAC8; restoring the pre-existing `entry -= -offset`
+expression recovered full identity before acceptance. No new workaround was
+introduced to make a fold pass.
+
+Original mode-1 observations
+([call/link-order evidence](research/ovl_11_func_800D759C-grouping.md)):
 - ovl_11_func_800D759C (m, byte-exact) — updates a mode-1 grid cell's UVs/tpage/CLUT from a texture-index table.
 - ovl_11_func_800D78D0 (s) — scans the 25×45 records and applies selected textures through 800D759C.
 
@@ -18378,8 +18504,72 @@ not a claim that the driver and display-helper pair share a TU:
 
 ## ovl_11 D_8012D110 state-buffer initializer/consumer family (confidence: low)
 
-Storage/dependency evidence, not an original-TU claim: the initializer and
-two independently matched readers use the same absolute state buffer.
+**Whole lifecycle reconstructed as
+`src/overlays/ovl_11/modules/area_grid_triggers.c`, 80112D10–80113CD0 exclusive
+(twelve compiled members).** The narrower texture-only or seven-member proposal
+is not the accepted boundary. A current-source census finds every user of
+8012D110 inside this contiguous span: Reset, Contact, Latch, Build, Apply,
+Classify, Update, Reward, RestorePosition and RestoreCenter. Two enclosed helpers
+(SetTexture and CellFromPosition) complete their calls. Classify is the writer
+of lastX/Y consumed by the restore pair; RestoreCenter writes centerX/Y used by
+Classify's exclusion window. Update hands off through flag 44 and the active
+plane. Thus the restore pair is part of the protocol, not a convenient cut.
+The initializer/contact pair at the left must likewise travel with the same
+private state. This is private-state lifecycle plus internal calls and link
+order, not the broadly shared far-work-area grid alone. Overlay -G0 cannot
+supply GP ownership proof.
+
+Canonical function names in original order: Ovl11ResetAreaGridState,
+Ovl11CheckAreaGridContact, Ovl11LatchAreaGridTrigger, Ovl11BuildAreaGrid,
+Ovl11ApplyAreaGridCellTextures, Ovl11SetAreaGridCellTexture,
+Ovl11ClassifyAreaGridCell, Ovl11AreaGridCellFromPosition,
+Ovl11UpdateAreaGridTrigger, Ovl11PickAreaGridReward,
+Ovl11RestoreAreaGridPosition, Ovl11RestoreAreaGridCenter. No member was made
+static. The uncalled Apply entry remains compiled in place. The private state
+is now gOvl11AreaGridState, retaining the extracted 0x408 extent and byte-array
+extern. Its established struct view calls the initial halfword `plane` rather
+than `count`; no width, signedness or layout changed. The probe counters are
+Column at 8012D0F0 and Row at 8012D0F4, with ProbePosition at 8012D100.
+Private UV records, directional offsets, trigger text, reward items and
+per-plane weights also have behavior-based names in the overlay's names file.
+Both weight tables have this reward helper as their sole current source user;
+their earlier location does not require splitting the reward path from its caller.
+
+`include/area_grid_triggers.h` publishes the seven externally referenced
+lifecycle/position services. It records 400-world-unit mapping, plane/cell
+encodings, trigger-vs-reward return distinctions, retained reset fields,
+unchecked indices/hit pointers and message/fade effects. The two non-overlapping
+private typedefs have layout-role names, the reward loop has weight/roll/item
+locals, and the existing GRID macro is undefined after its sole consumer.
+Caller-local declarations are reconciled through interfaceAudit; canonical
+extern identities stay in globals_override.h and no overlay ownership definition
+is invented.
+
+Boundaries: left 80112C98 is a game-flag/counter updater at unrelated game-state
+fields; it does not access this state or any lifecycle helper/table. Right
+80113CD0 starts a quantity/selection-record prompt using the independently
+shared gOvl11QuantityPrompt and gOvl11PrimarySelectionRecord, not this grid state.
+Neither offers positive membership evidence; these cuts delimit the complete
+private-state chain, not proven original object boundaries. There is no
+interior command-line-defined boundary. The complete twelve-member fold passed
+baseline -O2/-G0 and the overlay byte oracle, with no flag, source-policy
+exception, stub or .rodata contribution added.
+
+Final acceptance including this unit and the five map/texture/panel units:
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` reports
+**879/2625 folded** (**+38** from 841), **143/143 valid module TUs**, 1746
+remaining, and all eight integrity gates PASS. EXE and every configured overlay
+remain byte-identical, including data, callback pointers, tables and placement.
+Seventeen newly published functions in five headers have zero failing interface
+sites; canonical renames/generation converged. Existing unrelated unpublished
+interface debt is unchanged. The nonzero overall status is unfinished campaign
+completeness, not an integrity failure. No tool, compiler override, policy
+allowlist or exception class was changed, and no previously folded function
+regressed. The broader EXE text/pad/collision groups were not sliced to avoid
+their existing flag/context/assembly constraints.
+
+Historical storage/dependency observations (the whole current-source census
+above supersedes their partial membership confidence):
 
 - ovl_11_func_80112D10 (m, finalized, 0x98) — clears ten bytes at +0xC,
   the 10x10x10 byte grid at +0x16, the initial halfword and word at +0x400.
@@ -19692,6 +19882,11 @@ Members (address order):
     `notes/retros/2026-10-09-ovl_11_func_8011E090-retro.md`.
   - Corrected 2026-10-09: there is no `+0x45476` read.
 
+This local core is now included in the **whole twelve-member
+area_grid_triggers unit, 80112D10–80113CD0**, documented in the D_8012D110
+initializer/consumer section. It is not a standalone four-function module:
+its state initializers, trigger/reward path and position restoration are carried
+with it. Original observations follow.
 Local 10×10 grid/texture-update candidate TU run (confidence: medium;
 [core evidence](research/ovl_11_func_80113124-grouping.md),
 [80113310 extension evidence](research/ovl_11_func_80113310-grouping.md)):
@@ -19700,12 +19895,64 @@ Local 10×10 grid/texture-update candidate TU run (confidence: medium;
 - ovl_11_func_80113310 (m, byte-exact) — classifies and textures an empty grid cell, optionally awarding an item.
 - ovl_11_func_801136D0 (m, byte-exact) — maps a position to a 10×10 cell and checks its pointer-grid flag.
 
-Local mode-6 texture-update candidate TU pair (confidence: medium;
+**Reconstructed mode-6 texture unit:**
+`src/overlays/ovl_11/modules/mode6_texture_refresh.c`, 8011E1E8–8011E574,
+contains Ovl11SetMode6CellTexture and Ovl11RefreshMode6CellTextures.
+The refresh computes indices from the 7x7 map records and calls the immediately
+preceding setter, the only consumer of the 29 ten-byte UV/CLUT records at
+801282FC (now gOvl11Mode6TextureCoords). The setter is also an externally
+address-taken grid operation; neither member was made static. This designed
+producer/consumer domain plus private table and original link order support
+the pair; the shared 45-column grid alone would not.
+`include/mode6_texture_refresh.h` records index units, the unusual return-0
+both after a patch and outside mode 6, row-zero UV reversal and unchecked
+texture indices. No bounds/clamp repair was smuggled into the reconstruction.
+
+Left 8011E090 is a position-to-cell gate with distant callers, not the private
+texture-index producer or table consumer. Right 8011E574 begins selection_panel's
+independent phase/lane lifecycle and private sprite/table set. Neither supplies
+positive membership evidence; the cuts are evidence limits, not GP contradictions
+under overlay -G0. The whole pair and its single five-word table at file 37B4
+passed the checked baseline fold; no compiler override/exception was involved.
+
+Local mode-6 texture-update observations (original identities;
 [call/link-order evidence](research/ovl_11_func_8011E1E8-grouping.md)):
 - ovl_11_func_8011E1E8 (m, byte-exact) — updates a mode-6 grid cell's UVs/tpage/CLUT from a texture-index table.
 - ovl_11_func_8011E45C (s) — scans the 7×7 records and applies selected textures through 8011E1E8.
 
-Local texture-update candidate TU subgroup (core: medium; 80120A2C extension: low;
+**Reconstructed map-camera/texture unit:**
+`src/overlays/ovl_11/modules/map_texture_camera.c`, 801209A8–80121204 exclusive,
+holds the whole six-member supported chain, not the three texture helpers alone.
+Enter/vertical-step/update at 209A8/209D4/20A2C exclusively share 8012DB58;
+the update calls Refresh at 21134, which drives Build at 20CC4 and Apply at
+20F30 through exclusive scratch 8012DB38. Build's 48-halfword texture codes at
+80128764 and Apply's eight orientation bytes at 801287C4 have no other source
+users. That private state/scratch chain and original link order connect every
+member without merging all users of the common pointer grid.
+
+Names in original order: Ovl11EnterMapCameraMode,
+Ovl11StepMapCameraVerticalOffset, Ovl11UpdateMapCameraMode,
+Ovl11BuildMapTileTexture, Ovl11ApplyMapTileTexture,
+Ovl11RefreshMapTileTextures. Data are gOvl11MapCameraState,
+gOvl11MapTextureScratch, gOvl11MapTileTextureCodes and
+gOvl11MapColumnUvOrientation, preserving extracted extents and scalar extern
+views. The state view names phase, verticalStep/Accumulator and panX/Z at
+unchanged offsets. `include/map_texture_camera.h` publishes only the three
+external camera operations, documenting retained state, coordinate increments,
+frame gates, unvalidated initial pans and non-null grid requirement. Helpers
+retain external linkage but are not independently published.
+
+Left 80120850 uses a separate oscillating projected-sprite state (DB18/20/28,
+DB78/84/88) and calls neither this chain nor its private state. Right 80121204
+is a date-threshold classifier over the independent 801287CC table, not an
+UV, pan or scratch consumer. These are evidence-limited cuts, not GP-proven
+boundaries under overlay -G0; no positive evidence ties either neighbor in.
+The complete baseline fold passed -O2/-G0 with its 20CC4 switch table pooled
+at file 382C and unchanged overlay bytes. No flag override or policy exception
+was added. The camera's existing signed/unsigned field views and side effects
+are retained, rather than interpreting the state name as permission to change ABI.
+
+Local texture-update observations (original identities;
 [core evidence](research/ovl_11_func_80120F30-grouping.md),
 [extension evidence](research/ovl_11_func_80120A2C-grouping.md)):
 - ovl_11_func_80120A2C (m) — map-camera input/exit state machine and texture-update caller.

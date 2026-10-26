@@ -25,6 +25,8 @@
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_area_slot_flags.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "selection_panel.h"
+#include "area_grid_triggers.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -126,7 +128,6 @@ void ovl_11_func_800C6E8C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 void ovl_11_func_800C6F0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_800F413C (M2C_99ae33ae0e41_M2C_4c1a205b3b09_ReconA0View *arg0, M2C_99ae33ae0e41_M2C_4c1a205b3b09_F413CArg1 *arg1);
-void ovl_11_func_8011E588 (void);
 s32 ovl_11_func_800FBE4C (void);
 s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800C9DC0 (void);
@@ -166,7 +167,6 @@ s32 ovl_11_func_800F3A18 (u16 arg0);
 s32 ovl_11_func_80110790 (M2C_59ee2b8b632a_ReconA0View *arg0);
 s32 ovl_11_func_80110838 (M2C_8740fcdc649a_Recon80110838A0View *arg0);
 s32 ovl_11_func_80110890 (M2C_33501d1b78e1_Recon80110838A0View *arg0);
-s32 ovl_11_func_801136D0 (s32 *arg0, u16 *arg1, u16 *arg2);
 void ovl_11_func_8011F52C (void);
 
 s32 ovl_11_func_800CEEF8(M2C_4c1a205b3b09_ReconA0View *arg0) {

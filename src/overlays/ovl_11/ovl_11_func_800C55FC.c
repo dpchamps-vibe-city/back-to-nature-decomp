@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "mode6_texture_refresh.h"
+#include "map_cell_texture.h"
 
 s32 ovl_11_func_800C9D64(void);
 void ovl_11_func_800CE034(Ovl11CE034Object *arg0, Ovl11CE034Position *arg1, s32 arg2);
-s32 ovl_11_func_8011E1E8(s16 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800D759C(s16 arg0, s16 arg1, s16 arg2);
 
 void ovl_11_func_800C55FC(Ovl11CE034Object *arg0) {
     Ovl11CE034Position sp10;
@@ -19,10 +19,10 @@ void ovl_11_func_800C55FC(Ovl11CE034Object *arg0) {
         D_80123234[temp_s0](&sp10, &sp20, &sp22);
         if (temp_s0 != 0) {
             var_s0 = &D_80074124[sp22][sp20];
-            ovl_11_func_8011E1E8(sp20, sp22, 0);
+            Ovl11SetMode6CellTexture(sp20, sp22, 0);
         } else {
             var_s0 = &D_80071DFC[sp22][sp20];
-            ovl_11_func_800D759C(sp20, sp22, 0);
+            Ovl11SetMapCellTexture(sp20, sp22, 0);
         }
         var_s0->unk0 = *(u16 *) ((u8 *) arg0 + 0x8A);
         if ((u16)var_s0->unk0 == 0x13B) {

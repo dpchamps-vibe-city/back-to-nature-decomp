@@ -7,11 +7,11 @@
 #include "psyq/libgs.h"
 #include "ovl11_scene_camera_lighting.h"
 #include "ovl11_area_mode_sequence.h"
+#include "map_texture_camera.h"
 
 void ovl_11_func_800C188C(void);
 void ovl_11_func_800C162C(void);
 void ovl_11_func_800E3AA4(void);
-void ovl_11_func_80120A2C(void);
 void ovl_11_func_800DCC5C(void);
 
 void ovl_11_func_800C14A0(void) {
@@ -32,7 +32,7 @@ void ovl_11_func_800C14A0(void) {
     case 2:
         break;
     case 3:
-        ovl_11_func_80120A2C();
+        Ovl11UpdateMapCameraMode();
         Ovl11UpdateSceneCameraOffset();
         Ovl11ApplySceneCamera();
         ApplyGteSceneState();

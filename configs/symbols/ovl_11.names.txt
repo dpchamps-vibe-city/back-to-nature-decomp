@@ -606,3 +606,84 @@ Ovl11LoadTextureCellRecord = 0x800F6A24; // type:func
 Ovl11DrawCachedTextureCell = 0x800F6C78; // type:func
 Ovl11DrawTextureCell = 0x800F6D14; // type:func
 Ovl11DrawScaledTextureCell = 0x800F6E38; // type:func
+
+// Map-camera phase/pan state and seasonal 25-by-45 grid retexturing.
+Ovl11EnterMapCameraMode = 0x801209A8; // type:func
+Ovl11StepMapCameraVerticalOffset = 0x801209D4; // type:func
+Ovl11UpdateMapCameraMode = 0x80120A2C; // type:func
+Ovl11BuildMapTileTexture = 0x80120CC4; // type:func
+Ovl11ApplyMapTileTexture = 0x80120F30; // type:func
+Ovl11RefreshMapTileTextures = 0x80121134; // type:func
+gOvl11MapTileTextureCodes = 0x80128764; // type:data size:0x60
+gOvl11MapColumnUvOrientation = 0x801287C4; // type:data size:0x8
+gOvl11MapTextureScratch = 0x8012DB38; // type:data size:0x10
+gOvl11MapCameraState = 0x8012DB58; // type:data size:0x20
+
+// Nine-cell status confirmation and its immediate-payment path.
+Ovl11BeginCellStatusPanel = 0x80117370; // type:func
+Ovl11UpdateCellStatusPanel = 0x801173B8; // type:func
+Ovl11FindPendingCellStatus = 0x8011760C; // type:func
+Ovl11ResetCellStatusPrompt = 0x8011764C; // type:func
+Ovl11PollCellStatusChoice = 0x80117674; // type:func
+Ovl11ConfirmCellStatus = 0x801176BC; // type:func
+gOvl11CellStatusPhase = 0x8012D794; // type:data size:0x4
+gOvl11CellStatusSelection = 0x8012D798; // type:data size:0x4
+gOvl11CellStatusItemIds = 0x8012824C; // type:data size:0x14
+
+// Mode-6 cell UV/CLUT updates and seven-by-seven refresh.
+Ovl11SetMode6CellTexture = 0x8011E1E8; // type:func
+Ovl11RefreshMode6CellTextures = 0x8011E45C; // type:func
+gOvl11Mode6TextureCoords = 0x801282FC; // type:data size:0x124
+
+// Selection-panel phase/lane state, directional links and seasonal sprites.
+Ovl11ResetSelectionPanelState = 0x8011E574; // type:func
+Ovl11OpenSelectionPanel = 0x8011E588; // type:func
+Ovl11UpdateSelectionPanel = 0x8011E5B0; // type:func
+Ovl11ProcessSelectionPanelInput = 0x8011EA0C; // type:func
+Ovl11ConfirmSelectionPanel = 0x8011EC54; // type:func
+Ovl11ReloadSelectionPanelSprites = 0x8011EC84; // type:func
+Ovl11DrawSelectionPanel = 0x8011ECC4; // type:func
+Ovl11FindSelectionLaneSlot = 0x8011EE40; // type:func
+Ovl11LoadSelectionPanelSprites = 0x8011EE98; // type:func
+gOvl11SelectionPanelState = 0x80128420; // type:data size:0x2
+gOvl11SelectionPanelLane = 0x80128422; // type:data size:0x2
+gOvl11SelectionLaneSlots = 0x80128424; // type:data size:0x88
+gOvl11SelectionPanelLanes = 0x801284AC; // type:data size:0x78
+gOvl11SelectionPanelSaveRect = 0x80128524; // type:data size:0x8
+gOvl11SelectionPanelSpriteBlock = 0x8012D810; // type:data size:0x264
+gOvl11SelectionPanelSprites = 0x8012DA80; // type:data size:0x90
+
+// Mode-1 25-by-45 collision-pointer grid and cell UV/CLUT pass.
+Ovl11SetMapCellTexture = 0x800D759C; // type:func
+Ovl11ApplyMapTileTextures = 0x800D78D0; // type:func
+Ovl11BuildMapGrid = 0x800D79E8; // type:func
+gOvl11MapCellUvRecords = 0x80123CA0; // type:data size:0x12C
+gOvl11MapColumnMirror = 0x80123DCC; // type:data size:0x30
+gOvl11MapGridScanColumn = 0x80128D88; // type:data size:0x4
+gOvl11MapGridScanRow = 0x80128D8C; // type:data size:0x4
+gOvl11MapGridProbePosition = 0x80128D98; // type:data size:0x10
+
+// Ten-plane area grid, contact triggers, rewards and position restoration.
+Ovl11ResetAreaGridState = 0x80112D10; // type:func
+Ovl11CheckAreaGridContact = 0x80112DA8; // type:func
+Ovl11LatchAreaGridTrigger = 0x80112EC4; // type:func
+Ovl11BuildAreaGrid = 0x80112FA8; // type:func
+Ovl11ApplyAreaGridCellTextures = 0x80113124; // type:func
+Ovl11SetAreaGridCellTexture = 0x80113208; // type:func
+Ovl11ClassifyAreaGridCell = 0x80113310; // type:func
+Ovl11AreaGridCellFromPosition = 0x801136D0; // type:func
+Ovl11UpdateAreaGridTrigger = 0x80113818; // type:func
+Ovl11PickAreaGridReward = 0x80113A20; // type:func
+Ovl11RestoreAreaGridPosition = 0x80113B80; // type:func
+Ovl11RestoreAreaGridCenter = 0x80113C3C; // type:func
+gOvl11AreaGridState = 0x8012D110; // type:data size:0x408
+gOvl11AreaGridScanColumn = 0x8012D0F0; // type:data size:0x4
+gOvl11AreaGridScanRow = 0x8012D0F4; // type:data size:0x4
+gOvl11AreaGridProbePosition = 0x8012D100; // type:data size:0x10
+gOvl11AreaGridUvRecords = 0x801281D0; // type:data size:0x20
+gOvl11AreaGridCellOffsets = 0x801281F0; // type:data size:0x20
+gOvl11AreaGridTriggerText = 0x80128148; // type:data size:0x88
+gOvl11AreaGridRewardItems = 0x80128128; // type:data size:0x10
+gOvl11Area37RewardItems = 0x80128138; // type:data size:0x10
+gOvl11AreaGridRewardWeights = 0x80127FE8; // type:data size:0xA0
+gOvl11Area37RewardWeights = 0x80128088; // type:data size:0xA0
