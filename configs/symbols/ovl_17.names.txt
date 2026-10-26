@@ -55,5 +55,9 @@ Ovl17RollComplementThreshold = 0x800B9DE0; // type:func
 Ovl17RollSecondaryThreshold = 0x800B9E0C; // type:func
 Ovl17RollFraction127 = 0x800B9E34; // type:func
 Ovl17HasRecordInValueWindow = 0x800B9E94; // type:func
+// Sole decision-hub client's column predicates and raw 0..126 threshold roll.
+Ovl17IsRecordAboveDecisionThreshold = 0x800B9F10; // type:func
+Ovl17IsRecordDecisionReady = 0x800B9F44; // type:func
+Ovl17RollAboveDecisionThreshold = 0x800B9F78; // type:func
 // Raw base label only; record and control views extend beyond its four bytes.
 gOvl17RecordWorkBase = 0x800BD848; // type:data size:0x4

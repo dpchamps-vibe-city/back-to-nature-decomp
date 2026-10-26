@@ -1,6 +1,6 @@
 #include "common.h"
-void ovl_21_func_800BAF70(void);
+#include "ovl21_scene_sprite_draw.h"
 
 void ovl_21_func_800BA4F0(void) {
-    ovl_21_func_800BAF70();
+    Ovl21DrawCenteredFrameRects();
 }

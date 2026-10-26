@@ -20,6 +20,17 @@ gOvl21EntitySprite16 = 0x800C0D3C; // type:data size:0x30
 gOvl21EntitySprite11 = 0x800C0D6C; // type:data size:0x30
 gOvl21EntitySprite5 = 0x800C0D9C; // type:data size:0x30
 
+// Per-frame source synchronization and private projection/submission workspace.
+Ovl21DrawRecordSprite = 0x800BAE20; // type:func
+Ovl21DrawSlotSprite = 0x800BAEA0; // type:func
+Ovl21DrawPrimarySceneSprite = 0x800BAEEC; // type:func
+Ovl21DrawCenteredFrameRects = 0x800BAF70; // type:func
+Ovl21SubmitProjectedSprite = 0x800BAFFC; // type:func
+gOvl21SpriteProjectPosition = 0x800BCD18; // type:data size:0x8
+gOvl21SpriteProjectScreen = 0x800BCD20; // type:data size:0x8
+gOvl21FrameRectSprite = 0x800C0AFC; // type:data size:0x30
+gOvl21SceneOffsetPairs = 0x800BCC48; // type:data size:0x18
+
 // Camera/geometry family, preserving overlay-21 entry identities.
 Ovl21InitSceneCamera = 0x800BB0F8;
 Ovl21UpdateSceneCameraOffset = 0x800BB138;

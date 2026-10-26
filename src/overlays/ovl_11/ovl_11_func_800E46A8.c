@@ -8,11 +8,11 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_projected_record_sprites.h"
 #include "ovl11_surface_height.h"
+#include "ovl11_shared_animation_icon.h"
 
 /* Engine update-latch setter, exe:0x800158D8. */
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
-void ovl_11_func_800C9E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void ovl_11_func_800E46A8(u8 *arg0) {
     s32 screen[4];
@@ -45,7 +45,7 @@ void ovl_11_func_800E46A8(u8 *arg0) {
         Ovl11DrawTimedSpriteEffect(arg0 + 0xE0, ot, (s16)screen[0],
                               (s16)(screen[1] - 0x2D));
         if (!(*(u16 *)(arg0 + 0x20) & 0x8000)) {
-            ovl_11_func_800C9E90(ot, screen[0], screen[1],
+            Ovl11DrawSharedAnimationIcon(ot, screen[0], screen[1],
                                  (*(u16 *)(arg0 + 0x20) >> 14) & 1);
         }
     }

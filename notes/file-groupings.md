@@ -11985,8 +11985,16 @@ published BB040's demonstrable signed-halfword result (both return paths
 already narrow), included sprite_render.h consistently, and used the now
 word-sized func_800248E8 declaration. It still failed the linked overlay
 oracle (original 39098e4f, built 73307f5b) and rolled back; all experimental
-source changes were restored. Thus that result-range correction alone does
-not settle the declaration-visibility problem. Next useful experiment is
+source changes were restored. A later checked whole-unit attempt changed
+BB040 and both declarations to s16, used the existing header camera field
+instead of the source-local BF88C extern, and retained the canonical renderer
+header. The linked oracle again rejected it (original 39098e4f, built
+ceb42a97). Making both callers' projected-X locals s16 as well produced the
+**same built SHA-256**, so those local-type spellings are not new experiments
+to repeat. Both attempts rolled back, and the three pre-fold edits were
+restored exactly too. No byte-level residual was diagnosed in this module
+campaign; the linked mismatch is the measured bound. Thus that result-range
+correction alone does not settle the declaration-visibility problem. Next useful experiment is
 isolate which newly visible renderer prototype changes each call and
 recover a consistently declared source shape; do not bypass the header or
 introduce an incompatible-prototype workaround merely to fold it.
@@ -15550,6 +15558,38 @@ already-selected path has a defined result, and all observed callers
 discard it. External linkage is unchanged. Baseline checked folding passes
 all five members and the overlay, with no flag override or added exception.
 
+**Decision-test helper closure reconstructed as
+`src/overlays/ovl_17/modules/record_decision_tests.c`, 800B9F10–800B9FA8
+exclusive (three members).** Source cross-references show 9324 is the only
+client of all three: it selects one of six decision-table columns from
+9F10's signed +2A comparison and 9F44's signed +36 >= 81 test, then sends
+the selected table halfword to 9F78's strict `Rand(127) > threshold` test.
+This closed, ordered decision-table protocol and gapless helper order support
+the small unit, not the widely shared BD848 base alone. No stronger private
+state or GP proof is claimed in this -G0 overlay.
+
+Boundaries: left 9E94 belongs to the separately closed threshold-state
+classifier (six members, including address-selected roll adapters); it scans
++38 values and is called only from that classifier, not this table-column
+protocol. Right 9FA8 starts blocking sprite archive uploads and persistent
+sprite-bank setup; it has no decision-table/test relationship. The shared
+outer client 9324 and shared work base do not prove either service belongs
+to one larger original TU. These are conservative protocol/closure cuts,
+not flag-created boundaries or claims of recovered historical filenames.
+
+Names: `Ovl17IsRecordAboveDecisionThreshold` (9F10),
+`Ovl17IsRecordDecisionReady` (9F44), and `Ovl17RollAboveDecisionThreshold`
+(9F78). The first two leave both record and RNG state unchanged; only the
+third consumes RNG. `ovl17_record_decision_tests.h` publishes the unchecked
+six-record indices, exact signed comparisons, raw rather than percentage
+thresholds, and out-of-range threshold behavior. The +2A/+36 gameplay units
+remain uncertain and were not invented. Existing canonical work/RNG global
+names and external linkage are unchanged. Parameters and RNG local now name
+their roles. All three and the linked overlay passed the baseline checked
+fold; no override was present, needed, added or retired. After names and
+caller-header reconciliation the full campaign gate passed all eight integrity
+checks, including EXE/all overlays, policy and exception non-growth.
+
 Evidence: shared data cluster and call graph. `ovl_17_func_800B9F10` (m,
 matched 2026-10-03) indexes the `D_800BD848` work area as 0x50-byte records
 with an s16 field at +0x2A; `D_800BD870` is the same records aliased at
@@ -16782,6 +16822,37 @@ Members (link order):
   `func_800226A4() == 5` init via `func_8001FABC(0x45)` +
   `ovl_21_func_800B9798(1, 0xB)`. Membership rests on the shared globals, the
   `ovl_21_func_800BA4C0` call, and gapless link adjacency.
+**Five-entry sprite-submission service reconstructed as
+`modules/scene_sprite_draw.c`, 800BAE20–800BB0F8 exclusive.** E20/EA0/EEC
+share comparison-before-animation-selection and call BAFFC with their source
+and halfword position; F70 is the fixed centered-rect variant. BAFFC alone
+uses the private BCD18/BCD20 projection scratch and applies the additional
+screen pass only to scene-record sources 0/1/2/5. The dispatch surface is
+A510/A5D0/A670 plus A4F0; A510 also calls BAFFC directly. The common private
+leaf/workspaces, variant protocol and gapless order support the complete
+five-entry set, not the broad C0448 work area by itself.
+
+Left entity_record_views serves entity IDs, per-entity fields and sprite-ID
+lookup, not this source/position/submission protocol. Right scene_resources
+initializes camera, geometry and retained sprite banks; its initialization
+of the primary source is a loader/client link, not private projection-state
+ownership. Neither neighboring service shares BCD18/BCD20 or the leaf
+protocol. No stronger extension witness was found. Both are conservative
+-G0 service cuts, not GP proofs; no override creates an internal boundary.
+
+Names: Ovl21DrawRecordSprite/DrawSlotSprite/DrawPrimarySceneSprite,
+DrawCenteredFrameRects and SubmitProjectedSprite. The public
+`ovl21_scene_sprite_draw.h` records raw record/slot ABIs, signed-selector
+versus low-byte setter behavior, halfword world offsets, unchecked six-entry
+X/Z table, OT placement, draw-then-update ordering and non-reentrant scratch.
+Globals are gOvl21SpriteProjectPosition/Screen, FrameRectSprite and
+SceneOffsetPairs, preserving sizes/views. BCD20 remains a separate raw symbol
+for ovl_25's unrelated load-stage byte at the same RAM address; no overlay
+identities were conflated. The unprototyped internal leaf declarations are
+replaced by its real shared signature; external linkage is unchanged. All
+five and the linked overlay passed the baseline fold, without compiler flags
+or new policy exceptions.
+
 - ovl_21_func_800BAF70 (m, matched this session, byte-exact) — ObjectState
   reset/handoff leaf: `func_80015840(&D_800C0AFC, 0)` then
   `func_80015EE8(D_8005E3C0->field_D8 + 4, &D_800C0AFC, base[0x6B8],
@@ -17053,6 +17124,34 @@ Members (link order):
 
 ## `ovl_25` D_800BFE44/D_800BFE46 state-writer run — 0x800BA7F0–0x800BA908 (confidence: medium)
 
+**Complete six-entry callback family reconstructed as
+`modules/event_state_handlers.c`, 800BA7F0–800BAA5C exclusive.** The private
+six-address table at 800BCBF8 contains exactly A7F0/A818/A858/A908/A9A4/A9F4,
+in link order. 853C indexes it with the signed work halfword at BFE46;
+callbacks advance phases 1..6, while the dispatcher handles phase 6 and
+resets to 0. 82B4 initializes the phase. The shared message/archive-4 probe
+protocol and complementary target-X/fade transitions join all six, not just
+the four historical entries below. Gameplay identity of the event is unknown.
+
+Left A758 is a projected-sprite helper with private projection scratch, called
+by sprite handlers rather than this phase table. Right AA5C initializes the
+camera pipeline and is not a phase-table entry. Table exhaustion and protocol
+change support both cuts; shared target fields and external initializer calls
+do not prove a larger TU. Under -G0 these are evidence-limited reconstruction
+boundaries, not GP proofs. The old A9A4–AAAC cross-boundary slice below is
+superseded: A9A4/A9F4 complete this table, AA5C/AAAC belong to the whole
+camera/geometry/load pipeline, not a camera-only slice.
+
+Canonical names describe Begin, prompt-31 wait, target-forward/back movement,
+and fade increase/decrease. `gOvl25EventPhase` and
+`gOvl25EventPhaseHandlers` label the actual halfword and six-pointer table;
+the existing state-record view supplies the two address-based work references
+without redeclaring the raw scalar. `ovl25_event_state_handlers.h` publishes
+all six callbacks and documents repeated message probes, signed 33-unit steps,
+asymmetric bounds/choice paths, outer phase-6 ownership and non-reentrancy.
+External linkage, widths and all side effects are unchanged. Baseline checked
+fold passed all six and the linked overlay; no override was involved or added.
+
 Candidate same-TU run of `ovl_25` around the s16 flag at `D_800BFE46`
 (= `D_800BFE44` + 0x2). Evidence is gapless link adjacency plus a shared
 write-only global cluster plus a shared state-probe call pair; no gp-rel
@@ -17261,6 +17360,13 @@ Members (link order):
 
 ## `ovl_25` D_800BCC10 far-buffer consumer extension — 0x800BA9A4–0x800BAAAC (confidence: medium)
 
+**Historical extension hypothesis, superseded by the complete reconstructions
+in the state-writer and display-setup sections.** The shared camera target and
+initial-record table are real service interfaces, not sufficient evidence to
+cross the private six-callback table's end at AA5C. A9A4/A9F4 finish
+`event_state_handlers`; AA5C/AAAC start `scene_display_pipeline`. Earlier
+observations below remain address provenance, not a current proposed unit.
+
 Extension of the `D_800BFE44`/`D_800BFE46` state cluster above: the same s16
 flag is written further along the run, and the run's tail is tied back to the
 overlay-local data table `D_800BCC10` that feeds it. Evidence is gapless link
@@ -17380,6 +17486,57 @@ Members (link order):
 - ovl_25_func_800B8848 (m, byte-exact) — input-driven object-state update and signed-selector text display.
 
 ## `ovl_25` display-setup state-handler run — 0x800BAC9C–0x800BAFCC (confidence: medium)
+
+**Whole nine-entry unit reconstructed as `modules/scene_display_pipeline.c`,
+800BAA5C–800BB4B4 exclusive.** This includes AA5C/AAAC/ABC4/AC28 camera
+initialization, rotated offset, GTE application and geometry drawing, plus
+AC9C/AF20/AFCC/B2B8/B46C sprite, geometry and sound setup. Private geometry
+descriptor 800C0454 is initialized only by B2B8 and drawn only by AC28; it
+bridges the old camera/load cut. The private camera-offset fields connect
+AA5C through AC28, and 80A4/813C invoke update/apply/draw consecutively.
+7F3C dispatches all five load stages in this order, then initializes the
+camera after transfer completion. Private bank buffers/header offsets and
+the three-word disc-boundary table corroborate. No camera-only or load-only
+slice is retained.
+
+Left A9F4 completes the separately closed six-entry event-phase table; AA5C
+is not a phase callback. Right BB4B4 starts the independent eight-slot VRAM
+animation allocator/update protocol. B2B8 publishes the area header also read
+by that animator, a real loader/client link, but neither camera descriptor,
+private camera fields nor load-stage protocol extends into the slot lifecycle.
+The same target fields and initial records are used by scene controllers;
+that broad state does not prove absorbing all intervening code. These are
+conservative -G0 protocol boundaries, not original-object proofs or cuts made
+to protect the unrelated 95B0 compiler override.
+
+Canonical names label the nine demonstrated operations and
+`gOvl25SceneGeometry`, `gOvl25SceneDiscPositions`, `gOvl25SharedSpriteData`,
+`gOvl25ObjectSpriteData`, `gOvl25InitialSceneRecords`. The initial table's
+unsigned-halfword declaration is now canonical in globals_override.h; 83A0/
+8478 retain their byte/record casts and no loads changed signedness. Its six
+records occupy only BCC10..BCC40 (0x30 bytes); the separate two-record source
+at BCC70 is gOvl25InitialAuxRecords (0x10 bytes). BCC40's independently
+compared halfword retains its neutral original label. Explicit extents preserve
+these interior anchors rather than swallowing them into one oversized label. The
+geometry storage remains opaque, preserving its existing ABI. The public
+`ovl25_scene_display_pipeline.h` documents call order, SDK angle units,
+blocking/no-timeout reads, scratch and retained storage sizes, shared CD/OT
+constraints, header publication, collision tolerance and queued-not-complete
+sound. The inherited B2B8 empty memory barrier is unchanged, not a new
+exception. All nine and the linked overlay passed the baseline checked fold;
+no compiler override was present, introduced or retired.
+
+Batch acceptance (five new modules, 24 compiled members):
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes
+inventory, decompilation, source policy, linked EXE/all-overlay bytes,
+configuration convergence, whitespace, stability and exception non-growth.
+1514/2625 eligible functions are folded; all 244 module TUs are valid, and
+no previously folded function regressed. The command's exit 1 denotes the
+remaining 1111 functions, not a failed integrity gate. Canonical-name and
+published-interface checks pass for the new surfaces; unrelated pre-existing
+prototype findings are unchanged. No tool, override, pin, stub or permission
+was added. Failed ovl_15/ovl_23 experiments were fully restored before the
+final gate; they create no new unit or artificial boundary.
 
 Evidence: the state dispatcher `ovl_25_func_800B7F3C` selects on the byte
 `D_800BCD20` via `jtbl_800B7E24` and calls, from consecutive jump-table
@@ -17676,6 +17833,22 @@ Cross-container note: byte-shape twins `ovl_19_func_800B7ED8`,
 evidence — only the shared state word and the link adjacency are.
 
 ## `ovl_15` D_8013759E/A0/A2/A4 adjacent-u16 state run — 0x80133808–0x80134724 (confidence: medium)
+
+Further baseline whole-run experiment: use a consistent s16-returning 344E8
+(the count path is sign-extended via >>16 and the index is an s16), reconcile
+33808's unused s32 declaration too, and replace the three local Rec/40F90
+array declarations plus the predicate's halfword array with the existing
+identical-layout Ovl15Slot/Ovl15Slots view. The first checked fold exposed
+those concrete declaration conflicts; after reconciliation all twelve
+compiled. The linked overlay oracle still rejected the full candidate
+(original c0bcec6e, built cf4e1bf7), and the helper rolled it back. Every
+pre-fold source edit was then restored exactly; no partial module, type
+change, alias or flag remains. This establishes that reconciling this return
+contract and slot view alone is insufficient, not that either view or every
+s16-return reconstruction is impossible. Next useful experiment must separate
+the remaining merged-header/callee visibility effects from the return-range
+premise before another full fold. The older s32-publication refusal below
+and 335F8's separate no-GCSE integration limit remain concrete blockers.
 
 Module campaign check: the twelve-entry 80133808–80134770 run (including
 34444/34450) has a supported extension to 335F8 through its 34134 helper
@@ -23881,6 +24054,27 @@ Their existing types and data extents are preserved. The saved pointer's
 established Ovl11SavedInteractionObject identity is now in the overlay symbol
 configuration; its obsolete asm-name alias and CA580's source-local extern
 are gone. No data definitions or linkage changes were introduced.
+
+**Adjacent shared animation service reconstructed independently as
+`modules/shared_animation_icon.c`, 800C9E90–800C9F20 exclusive.** This sole
+entry selects animation 24 of the engine's shared source, writes its frame
+byte to zero, and emits the explicitly selected low-byte frame as rect packets.
+Clients include moving_items, object_events, object_render_variants and
+primary_object_draw, plus CE744/E46A8; it is not a primary-object/saved-record
+helper. Left item_record_lists uses only its two fixed list/endpoint protocols;
+right primary_object_draw owns private projection/selection tables and saved
+record synchronization. Neither side adds a private state/helper relationship
+to this reusable renderer. These are conservative service cuts (-G0), not
+claims of one recovered historical object file.
+
+`Ovl11DrawSharedAnimationIcon` and `ovl11_shared_animation_icon.h` preserve
+the address-as-s32 OT ABI, signed pixel narrowing and low-byte frame argument.
+The source now uses the canonical SpriteSourceData frame byte, removing the
+redundant single-byte override view and cast tower. It deliberately resets the
+shared source yet draws the explicit frame, without animation advance or GPU
+presentation; the header documents those effects and prerequisites. The shared
+global already has its established engine identity. Baseline checked fold
+passed the member and overlay; no flag/policy exception was involved or added.
 
 Left boundary: C9E90 also serves unrelated sprite clients CC0F8/CE744/E46A8
 and the general object-render variants; it has no primary-object selection

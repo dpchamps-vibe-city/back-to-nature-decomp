@@ -41,8 +41,8 @@ void ovl_21_func_800B836C(void) {
         record->unk18 = 0;
         position = (SVECTOR *) &D_800C0448_init.records[index].unk1A;
         position->vy = 0;
-        position->vx = D_800BCC48[index].unk0;
-        position->vz = D_800BCC48[index].unk2;
+        position->vx = gOvl21SceneOffsetPairs[index].unk0;
+        position->vz = gOvl21SceneOffsetPairs[index].unk2;
         record->unk22 = Ovl21ReadEntityRangeValue(record->unk10);
         record->unk24 = Ovl21GetEntityRangeConstant(record->unk10);
         D_800C0448_init.records[index].unk28 = 0;

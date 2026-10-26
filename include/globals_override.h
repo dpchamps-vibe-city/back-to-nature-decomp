@@ -4295,11 +4295,6 @@ typedef struct {
 } Ovl11CellGridTables;
 
 typedef struct {
-    char pad_0[0x5];
-    s8 unk5;
-} Recon_ovl_11_func_800C9E90_D_800A0728View;
-
-typedef struct {
     char pad_0[0x4];
     u8 unk4;
     u8 unk5;
@@ -5428,7 +5423,7 @@ typedef struct {
     /* 0x00 */ u16 unk0;
     /* 0x02 */ u16 unk2;
 } UnkStruct800BCC48;
-extern UnkStruct800BCC48 D_800BCC48[];
+extern UnkStruct800BCC48 gOvl21SceneOffsetPairs[];
 
 /* D_800BCCC4 - ovl_21 table of s16 selector values (0x21/0x1F/0x1E/0x20 at
  * +0), indexed by a signed halfword read from the D_800C0448 state block.
@@ -5524,13 +5519,16 @@ extern s16 D_80125F24[];
  * ovl_21_func_800BAFFC writes vx/vy/vz and passes its address as the SVECTOR
  * argument of func_8001DFD4. Absolute-addressed; classified in globals.h as
  * an s16 scalar would be wrong width, so the aggregate lives here. */
-extern s16 D_800BCD18[4];
+extern s16 gOvl21SpriteProjectPosition[4];
 
 /* D_800BCD20 - ovl_21 eight-byte projection result buffer. func_8001DFD4
  * writes the two sxy words at +0/+4 through an s32* and
  * ovl_21_func_800BAFFC reads their low halfwords. Absolute-addressed;
  * classified in globals.h as an s32 scalar would be wrong width, so the
  * buffer lives here. */
+extern s32 gOvl21SpriteProjectScreen[2];
+/* ovl_25 uses the same RAM address as an unrelated load-stage byte; retain
+ * its existing word-array view separately from ovl_21's projection output. */
 extern s32 D_800BCD20[2];
 
 /* D_800C0AFC - ovl_21 object-state base (0x800C0AFC). ovl_21_func_800BAF70
@@ -5538,7 +5536,7 @@ extern s32 D_800BCD20[2];
  * through a base register biased to D_800C0AFC - 0x6B4. An opaque byte
  * object suffices; the overlay build is -G0, giving absolute lui/addiu
  * addressing. Not classified in globals.h. */
-extern u8 D_800C0AFC[];
+extern u8 gOvl21FrameRectSprite[];
 
 /* ovl_21:800C0DD8 - two-pointer scene geometry descriptor, initialized by
  * 800BB8B8 and consumed by Ovl21DrawSceneGeometry. Preserve opaque storage. */
@@ -5679,7 +5677,13 @@ extern s32 gOvl21SceneDiscPositions[];
  * publishes the D_8009F78C copy and a 0x39 value to the D_8007AFF0 far
  * buffer. Defined in the overlay data segment, so only an extern declaration
  * belongs here. */
-extern s32 D_800BBED0[];
+extern s32 gOvl25SceneDiscPositions[];
+/* ovl_25 AA5C reads unsigned position halfwords; 83A0/8478 reinterpret
+ * the same initial-record table through their existing byte/record views. */
+extern u16 gOvl25InitialSceneRecords[];
+/* ovl_25 83A0/8478 copy two eight-byte records from BCC70 through their
+ * existing byte/record views, separately from the six-record BCC10 table. */
+extern s16 gOvl25InitialAuxRecords[];
 
 /* D_8009F78C - main-RAM copy destination. ovl_19_func_800BBB48 memcpys
  * 0xBDC bytes here from the D_8007AFF0 work area (absolute lui/addiu). The
@@ -5700,7 +5704,7 @@ extern u8 D_80071C60[];
  * ovl_25_func_800BAC28 hands to func_8001C0D4. Only its address is taken, so
  * an opaque byte object is enough; the overlay build is -G0, giving absolute
  * lui/addiu addressing. */
-extern u8 D_800C0454[];
+extern u8 gOvl25SceneGeometry[];
 
 /* D_800C030C - ovl_25 signed halfword state word. ovl_25_func_800B81F4
  * loads it (lh) and, when it is not -1, passes it to func_8001FAE8.
@@ -5709,7 +5713,7 @@ extern u8 D_800C0454[];
 extern s16 D_800C030C;
 
 /* ovl_25_func_800BAFCC copies 0x1C88 streamed bytes here and indexes sprite headers. */
-extern u8 D_800BE1B4[];
+extern u8 gOvl25ObjectSpriteData[];
 /* 800BAFCC initializes full sprites; named views coexist with legacy halfword/ObjectState views. */
 extern struct SpriteSourceData Ovl25Sprite800C013C __asm__("D_800C013C");
 extern struct SpriteSourceData Ovl25Sprite800C024C __asm__("D_800C024C");
@@ -5777,6 +5781,10 @@ extern s16 D_800BCC40;
 extern u16 D_800BCB34[];
 extern u16 D_800BCB8E[];
 /* ovl_25_func_800B8848 stores a byte flag; matched neighbours declare it unsigned. */
+/* ovl_25: the six callbacks at BA7F0..BA9F4 write this signed phase;
+ * 853C indexes the six-address table with the same work-area halfword. */
+extern s16 gOvl25EventPhase;
+extern void (*gOvl25EventPhaseHandlers[6])(void);
 extern u8 D_800BCD21;
 /* ovl_25_func_800B8848 writes the first three halfwords; original data allocates four. */
 extern s16 D_800BCD48[4];
@@ -7171,7 +7179,7 @@ struct Ovl11DispatchState {
 };
 
 /* ovl_25 800BAC9C copies 0x13DC bytes here and uses the base as a sprite header. */
-extern u8 D_800BCDD4[];
+extern u8 gOvl25SharedSpriteData[];
 /* ovl_25 800BAC9C initializes this 0x30-byte sprite source from D_800BCDD4. */
 extern u8 D_800C021C[];
 

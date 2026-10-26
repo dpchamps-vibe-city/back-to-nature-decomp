@@ -4,10 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl21_scene_sprite_draw.h"
 
-
-void ovl_21_func_800BAEA0 (s32 *arg0);
-void ovl_21_func_800BAFFC ();
 
 void ovl_21_func_800BA5D0(void) {
     u8 *base;
@@ -29,7 +27,7 @@ void ovl_21_func_800BA5D0(void) {
         q = p;
         for (j = 2; j >= 0; j--) {
             if (*q != 0) {
-                ovl_21_func_800BAEA0(p);
+                Ovl21DrawSlotSprite(p);
             }
             p = (s32 *)((u8 *)p + 0x4C);
             q = (s32 *)((u8 *)q + 0x4C);

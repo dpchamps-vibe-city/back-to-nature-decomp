@@ -1,5 +1,8 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Shared animation-24 frame service; not the primary-object draw protocol.
+Ovl11DrawSharedAnimationIcon = 0x800C9E90; // type:func
+
 // Selection-slot texture movement and reconciliation against displayed IDs.
 Ovl11ReorderSelectionTextures = 0x800F9174; // type:func
 Ovl11TransferSelectionTexture = 0x800F9210; // type:func

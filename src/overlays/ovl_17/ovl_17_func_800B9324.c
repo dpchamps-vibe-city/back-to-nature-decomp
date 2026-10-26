@@ -1,9 +1,6 @@
 #include "common.h"
 #include "ovl17_record_threshold_state.h"
-
-s32 ovl_17_func_800B9F44(s16 arg0);
-s32 ovl_17_func_800B9F10(s16 arg0, s16 arg1);
-s32 ovl_17_func_800B9F78(s16 arg0);
+#include "ovl17_record_decision_tests.h"
 
 void ovl_17_func_800B9324(void) {
     s32 i;
@@ -32,10 +29,10 @@ void ovl_17_func_800B9324(void) {
                 *(s32 *)cursor = 0;
             } else {
                 group = Ovl17EvaluateRecordThresholdState(i);
-                ready = ovl_17_func_800B9F44(i);
-                if (ovl_17_func_800B9F10(i, *(s16 *)(settings + 0x16)) != 0) {
+                ready = Ovl17IsRecordDecisionReady(i);
+                if (Ovl17IsRecordAboveDecisionThreshold(i, *(s16 *)(settings + 0x16)) != 0) {
                     column = 0;
-                } else if (ovl_17_func_800B9F10(i, *(s16 *)(settings + 0x18)) != 0) {
+                } else if (Ovl17IsRecordAboveDecisionThreshold(i, *(s16 *)(settings + 0x18)) != 0) {
                     column = 2;
                 } else {
                     column = 4;
@@ -46,7 +43,7 @@ void ovl_17_func_800B9324(void) {
                 entryOffset = column * 2;
                 entryOffset += group * 0xC;
                 *(s32 *)(recordOffset + (u32)resultBase) =
-                    ovl_17_func_800B9F78(*(s16 *)(table + entryOffset + 0x208));
+                    Ovl17RollAboveDecisionThreshold(*(s16 *)(table + entryOffset + 0x208));
             }
         }
         recordOffset += 0x50;

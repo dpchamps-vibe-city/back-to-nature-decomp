@@ -4,9 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
-
-void ovl_21_func_800BAE20(s32 *arg0);
-void ovl_21_func_800BAFFC(SpriteSourceData *arg0, u16 *arg1);
+#include "ovl21_scene_sprite_draw.h"
 
 void ovl_21_func_800BA510(void) {
     u16 sp10[3];
@@ -22,13 +20,13 @@ void ovl_21_func_800BA510(void) {
     obj = (s32 *)base;
     i = 5;
     do {
-        ovl_21_func_800BAE20(obj);
+        Ovl21DrawRecordSprite(obj);
         if (rec->unk18 == 2 && (((SpriteSourceData *)rec->unk30)->field_2 & 0x100)) {
             sp10[0] = rec->unk1A;
             sp10[1] = rec->unk1C - 0x15E;
             sp10[2] = rec->unk1E;
             SelectSpriteAnimation((ObjectState *)spr, 0);
-            ovl_21_func_800BAFFC(spr, sp10);
+            Ovl21SubmitProjectedSprite(spr, sp10);
         }
         rec = (UnkStruct800C0448 *)((u8 *)rec + 0x108);
         i -= 1;

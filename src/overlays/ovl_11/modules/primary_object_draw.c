@@ -22,6 +22,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_shared_animation_icon.h"
 
 void Ovl11DrawPrimaryObjectCompanion(Ovl11C7010Object *object, s32 depth, s32 *screenPosition) {
     s16 spriteId;
@@ -114,7 +115,6 @@ void Ovl11DrawPrimaryObjectSprite(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 a
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 u32 ovl_11_func_800CDEEC (u8 *arg0);
-void ovl_11_func_800C9E90 (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void Ovl11CopyAndDrawSavedObject (Ovl11DrawState *arg0);
 void ovl_11_func_8010C1C0 (Ovl11DrawState *arg0);
 void ovl_11_func_8010C2EC (u8 *arg0);
@@ -172,7 +172,7 @@ void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *arg0, s32 unused) {
             }
             {
                 if (!(*(s32 *) (object + 0x6C) & 0x100)) {
-                    ovl_11_func_800C9E90(gActiveRenderContext->field_120 + ((var_s3 >> 2) * 4),
+                    Ovl11DrawSharedAnimationIcon(gActiveRenderContext->field_120 + ((var_s3 >> 2) * 4),
                         gOvl11PrimaryDrawScreenPoint[0], gOvl11PrimaryDrawScreenPoint[1], 0);
                 }
                 if (*(s32 *) (object + 0x6C) & 0x100) {

@@ -9,14 +9,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl25_vram_animation_slots.h"
+#include "ovl25_scene_display_pipeline.h"
 
-void ovl_25_func_800BAC9C(void);
-void ovl_25_func_800BAF20(void);
-void ovl_25_func_800BAFCC(void);
-void ovl_25_func_800BB2B8(void);
-void ovl_25_func_800BB46C(void);
 void ovl_25_func_800B82B4(void);
-void ovl_25_func_800BAA5C(void);
 
 void ovl_25_func_800B7F3C(void) {
     char *far_base;
@@ -24,23 +19,23 @@ void ovl_25_func_800B7F3C(void) {
 
     switch (*(u8 *)D_800BCD20) {
     case 0:
-        ovl_25_func_800BAC9C();
+        Ovl25LoadSharedSpriteArchive();
         (*(u8 *)D_800BCD20)++;
         break;
     case 1:
-        ovl_25_func_800BAF20();
+        Ovl25UploadCommonSpriteImages();
         (*(u8 *)D_800BCD20)++;
         break;
     case 2:
-        ovl_25_func_800BAFCC();
+        Ovl25LoadObjectSpriteSet();
         (*(u8 *)D_800BCD20)++;
         break;
     case 3:
-        ovl_25_func_800BB2B8();
+        Ovl25LoadSceneGeometry();
         (*(u8 *)D_800BCD20)++;
         break;
     case 4:
-        ovl_25_func_800BB46C();
+        Ovl25QueueSceneSoundLoads();
         (*(u8 *)D_800BCD20)++;
         break;
     case 5:
@@ -58,7 +53,7 @@ void ovl_25_func_800B7F3C(void) {
             *(Ovl25SetupStatePair *)(far_base + 0x2479C);
         Ovl25RequestVramAnimations((s32)gLoadedAreaHeaderCopy);
         ovl_25_func_800B82B4();
-        ovl_25_func_800BAA5C();
+        Ovl25InitSceneCamera();
         ResetMessageWindow();
         BeginScreenFadeDecrease(0xA, 0, 2);
         BeginMasterVolumeFadeIn(0xA);

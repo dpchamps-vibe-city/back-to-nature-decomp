@@ -193,7 +193,7 @@ segments:
       - [0x11F18, c, ovl_11_func_800C9D38]
       - [0x11F44, c, ovl_11_func_800C9D64]
       - [0x11F78, c, modules/item_record_lists]
-      - [0x12070, c, ovl_11_func_800C9E90]
+      - [0x12070, c, modules/shared_animation_icon]
       - [0x12100, c, modules/primary_object_draw]
       - [0x128A4, c, ovl_11_func_800CA6C4]
       - [0x128E8, c, modules/primary_object_motion]

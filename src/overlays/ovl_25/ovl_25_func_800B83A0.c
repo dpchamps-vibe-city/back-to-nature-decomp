@@ -8,8 +8,6 @@ typedef struct {
 } Ovl25Rec8;
 
 extern s16 D_800BFE44[];
-extern s16 D_800BCC10[];
-extern s16 D_800BCC70[];
 
 void ovl_25_func_800B83A0(void) {
     s32 i;
@@ -24,7 +22,7 @@ void ovl_25_func_800B83A0(void) {
     i = 0;
     one = 1;
     val = 0x32000;
-    base = (u8 *)D_800BCC10;
+    base = (u8 *)gOvl25InitialSceneRecords;
     src = (Ovl25Rec8 *)(base + 0x30);
     do {
         dst = D_800BFE44 + i * 0x3C;
@@ -40,7 +38,7 @@ void ovl_25_func_800B83A0(void) {
     } while (i < 6);
 
     i = 0;
-    base2 = (u8 *)D_800BCC70;
+    base2 = (u8 *)gOvl25InitialAuxRecords;
     src2 = (Ovl25Rec8 *)(base2 + 0x10);
     do {
         dst = D_800BFE44 + i * 0x3C;

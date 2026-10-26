@@ -14,7 +14,6 @@ s32 ovl_11_func_800C7878(M2C_15512f31231d_Func800C7878Arg0 *arg0, M2C_15512f3123
 s32 ovl_11_func_800C79F8(M2C_2667c0b769b3_BoundsArgs4994 *arg0);
 void ovl_11_func_800C9D38(void);
 s32 ovl_11_func_800C9D64(void);
-void ovl_11_func_800C9E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800CA6C4(void *arg0);
 s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2);
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
@@ -1014,6 +1013,7 @@ void Ovl11DrawSceneRecords(void);
 void Ovl11DrawSceneRecordSprites(void);
 void Ovl11DrawSelectionListPanel(s32 *record, s16 x, s16 y);
 void Ovl11DrawSelectionPanel(void);
+void Ovl11DrawSharedAnimationIcon(s32 otAddress, s32 x, s32 y, s32 frame);
 void Ovl11DrawSlotSprite(s16 id, s16 alternate, s32 *ot, s16 x, s16 y, s32 flags);
 void Ovl11DrawTaggedRecordSprite(u8 *record);
 void Ovl11DrawTextureCell(s32 *ot, u16 textureId, s16 x, s16 y);

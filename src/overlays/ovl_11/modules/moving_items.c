@@ -38,6 +38,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_shared_animation_icon.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -141,7 +142,6 @@ Ovl11MovingItemRecord *Ovl11SpawnMovingItemRecord(Vec3 *position, u16 *itemId, s
 s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0);
 s32 Ovl11ProbeMovingItemHit(Ovl11CC4E0Object *arg0);
 s32 ovl_11_func_800CE550(Vec3 *arg0);
-void ovl_11_func_800C9E90(s32, s32, s32, s32);
 
 void Ovl11UpdateMovingItemRecord(Ovl11MovingItemRecord *arg0) {
     VECTOR next;
@@ -242,7 +242,7 @@ void Ovl11UpdateMovingItemRecord(Ovl11MovingItemRecord *arg0) {
                 gOvl11MovingItemProjectionInput[2] = (*(u16 *) ((u8 *) arg0 + 0x2C)) - 0x96;
                 depth = ProjectPointToScreen(gOvl11MovingItemScreenPosition, (SVECTOR *)gOvl11MovingItemProjectionInput);
                 if (depth != 0) {
-                    ovl_11_func_800C9E90(gActiveRenderContext->field_120 + ((depth >> 2) * 4), gOvl11MovingItemScreenPosition[0], *(s32 *) ((u8 *) gOvl11MovingItemScreenPosition + 4), 0);
+                    Ovl11DrawSharedAnimationIcon(gActiveRenderContext->field_120 + ((depth >> 2) * 4), gOvl11MovingItemScreenPosition[0], *(s32 *) ((u8 *) gOvl11MovingItemScreenPosition + 4), 0);
                 }
             }
         }

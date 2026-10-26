@@ -33,6 +33,7 @@
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
 #include "ovl11_surface_height.h"
+#include "ovl11_shared_animation_icon.h"
 
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2);
 
@@ -979,7 +980,6 @@ s32 Ovl11TryStartObjectReaction(Ovl11AnimationObject *obj) {
 
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                     s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
-void ovl_11_func_800C9E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void Ovl11DrawObjectEvent(Ovl11AnimationObject *arg0) {
     u16 pos[3];
@@ -1002,7 +1002,7 @@ void Ovl11DrawObjectEvent(Ovl11AnimationObject *arg0) {
                        arg0->sprite.field_4, arg0->sprite.field_5,
                        (s16)screen[0], (s16)screen[1], arg0->sprite.field_8,
                        0, 0x40);
-        ovl_11_func_800C9E90(ot, screen[0], screen[1], 0);
+        Ovl11DrawSharedAnimationIcon(ot, screen[0], screen[1], 0);
     }
     if (!(((struct struct_8006C838_view *)D_8006C838)->field_0C & 0x08000000)) {
         UpdateSpriteAnimation(&arg0->sprite);

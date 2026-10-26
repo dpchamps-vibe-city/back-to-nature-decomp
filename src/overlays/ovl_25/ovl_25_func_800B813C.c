@@ -7,17 +7,14 @@
 #include "psyq/libgpu.h"
 #include "ovl25_vram_animation_slots.h"
 #include "ovl25_background_color_cycle.h"
-
-void ovl_25_func_800BAAAC(void);
-void ovl_25_func_800BABC4(void);
-void ovl_25_func_800BAC28(void);
+#include "ovl25_scene_display_pipeline.h"
 
 void ovl_25_func_800B813C(void) {
     UpdateMessageWindow();
-    ovl_25_func_800BAAAC();
-    ovl_25_func_800BABC4();
+    Ovl25UpdateSceneCameraOffset();
+    Ovl25ApplySceneCamera();
     ApplyGteSceneState();
-    ovl_25_func_800BAC28();
+    Ovl25DrawSceneGeometry();
     Ovl25UpdateVramAnimations();
     D_800BCBEC[D_800BFE44_view.selector]();
     Ovl25StepBackgroundColorCycle();

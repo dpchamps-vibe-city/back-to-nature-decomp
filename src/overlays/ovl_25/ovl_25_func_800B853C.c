@@ -2,7 +2,6 @@
 #include "screen_fade.h"
 
 extern s16 D_800BFE44[];
-extern void (*D_800BCBF8[])(void);
 
 void ovl_25_func_800B93E4(void);
 
@@ -19,7 +18,7 @@ void ovl_25_func_800B853C(void) {
             D_800BFE44[0] = (s16) temp_v0;
         }
     } else {
-        D_800BCBF8[D_800BFE44[1]]();
+        gOvl25EventPhaseHandlers[D_800BFE44[1]]();
         __asm__ volatile("" ::: "memory");
         q = (D_800BFE44[6] + 1) / 10000;
         temp = q * 0x2710 - 1;

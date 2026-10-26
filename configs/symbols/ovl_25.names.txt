@@ -1,5 +1,34 @@
 // Semantic labels within ovl_25; original container/address identities retained.
 
+// Complete six-entry event-phase callback table.
+Ovl25BeginEventPhases = 0x800BA7F0; // type:func
+Ovl25WaitEventPrompt31 = 0x800BA818; // type:func
+Ovl25MoveEventTargetForward = 0x800BA858; // type:func
+Ovl25MoveEventTargetBack = 0x800BA908; // type:func
+Ovl25BeginEventFadeIncrease = 0x800BA9A4; // type:func
+Ovl25WaitAndBeginEventFadeDecrease = 0x800BA9F4; // type:func
+gOvl25EventPhase = 0x800BFE46; // type:data size:0x2
+gOvl25EventPhaseHandlers = 0x800BCBF8; // type:data size:0x18
+
+// One camera/geometry/resource pipeline, joined by its geometry descriptor.
+Ovl25InitSceneCamera = 0x800BAA5C; // type:func
+Ovl25UpdateSceneCameraOffset = 0x800BAAAC; // type:func
+Ovl25ApplySceneCamera = 0x800BABC4; // type:func
+Ovl25DrawSceneGeometry = 0x800BAC28; // type:func
+Ovl25LoadSharedSpriteArchive = 0x800BAC9C; // type:func
+Ovl25UploadCommonSpriteImages = 0x800BAF20; // type:func
+Ovl25LoadObjectSpriteSet = 0x800BAFCC; // type:func
+Ovl25LoadSceneGeometry = 0x800BB2B8; // type:func
+Ovl25QueueSceneSoundLoads = 0x800BB46C; // type:func
+gOvl25InitialSceneRecords = 0x800BCC10; // type:data size:0x30
+// Retain the compared interior halfword and the separate two-record source.
+D_800BCC40 = 0x800BCC40; // type:data size:0x2
+gOvl25InitialAuxRecords = 0x800BCC70; // type:data size:0x10
+gOvl25SceneGeometry = 0x800C0454; // type:data size:0x8
+gOvl25SceneDiscPositions = 0x800BBED0; // type:data size:0xC
+gOvl25SharedSpriteData = 0x800BCDD4; // type:data size:0x13DC
+gOvl25ObjectSpriteData = 0x800BE1B4; // type:data size:0x1C88
+
 // Paired Q12 tier lookups and their private signed-halfword constants.
 Ovl25LookupTierValue = 0x800B9A10; // type:func
 Ovl25LookupTierDelta = 0x800B9A84; // type:func

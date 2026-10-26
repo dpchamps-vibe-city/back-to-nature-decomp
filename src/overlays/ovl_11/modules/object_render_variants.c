@@ -12,13 +12,13 @@
 #include "point_projection.h"
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_projected_record_sprites.h"
+#include "ovl11_shared_animation_icon.h"
 
 s32 ovl_11_func_800D2950(s32 objectId);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 s32 func_80015DD4(s32 *arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3,
                  s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
-void ovl_11_func_800C9E90(s32 ot, s32 x, s32 y, s32 variant);
 s32 Ovl11SubmitObjectMarker(s32 flags, s32 ot, s32 x, s32 y);
 
 void Ovl11DrawObjectWithMarker(u8 *object) {
@@ -116,7 +116,7 @@ void Ovl11DrawObjectWithSourceOffsets(u8 *object, s32 textureBase, s32 sourceBia
 /* All three callers ignore the legacy result; retain its existing ABI. */
 s32 Ovl11SubmitObjectMarker(s32 flags, s32 ot, s32 x, s32 y) {
     if ((flags & 0x1000) == 0) {
-        ovl_11_func_800C9E90(ot, x, y, ((u32)flags) >> 0x1F);
+        Ovl11DrawSharedAnimationIcon(ot, x, y, ((u32)flags) >> 0x1F);
     } else {
         return flags & 0x1000;
     }
