@@ -46,6 +46,7 @@
 #include "ovl11_area_resource_load.h"
 #include "psyq/abs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_mode6_grid.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -583,7 +584,6 @@ s32 Ovl11ChooseAreaSoundId(void) {
 
 void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
-s32 ovl_11_func_8011DF4C (s32 arg0);
 /* Extra debug-hook parameters forwarded by this wrapper are unread. */
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
@@ -618,7 +618,7 @@ void Ovl11ResetAreaScene(void) {
     }
     if (((Ovl11TriggerWorkView *)&D_8007AFF0)->field_25476 == 6) {
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
-        ovl_11_func_8011DF4C(0);
+        Ovl11BuildMode6SurfaceGrid(0);
         Ovl11RefreshMode6CellTextures();
         SCRATCH_STACK_END();
     }

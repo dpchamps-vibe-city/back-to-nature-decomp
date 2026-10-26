@@ -17,6 +17,7 @@
 #include "psyq/libgte.h"
 #include "ovl11_interaction_id_predicates.h"
 #include "ovl11_grid_cell_queries.h"
+#include "ovl11_grid_position.h"
 
 s32 Ovl11ProbePlacedRecord(s32 **arg0, u16 *arg1) {
     ItemData *temp_a2;
@@ -172,9 +173,6 @@ s32 Ovl11IsOutsideCollisionRegions(Ovl11CollisionQuery *query) {
     return 1;
 }
 
-s32 ovl_11_func_8011E090(VECTOR *, u16 *, u16 *);
-s32 ovl_11_func_800D7EF8(s32 *, u16 *, u16 *);
-
 s32 Ovl11ProbeTileMap(s32 **arg0, s32 arg1) {
     VECTOR pos;
     u16 coords[2];
@@ -212,7 +210,7 @@ s32 Ovl11ProbeTileMap(s32 **arg0, s32 arg1) {
     var_v0 = 0;
     if (var_s0 != 2) {
         if (var_s0 != 0) {
-            if (ovl_11_func_8011E090((VECTOR *) &pos.vx, &coords[0], &coords[1]) != 0) {
+            if (Ovl11LookupMode6GridPosition((VECTOR *) &pos.vx, &coords[0], &coords[1]) != 0) {
                 return 0;
             }
             goto block_7;

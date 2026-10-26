@@ -32,6 +32,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_surface_height.h"
 
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2);
 
@@ -291,7 +292,6 @@ void Ovl11ShowObjectCommandMessage(Ovl11C3F6CObjectView *, u16 *);
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *, s32, s32);
 void Ovl11SetObjectCommandMotion(Ovl11C3B78Arg0 *, Ovl11C3B78Arg1 *);
 s32 Ovl11GetObjectCommandTableAddress(void);
-s32 ovl_11_func_800BDB88(s32 *, s32);
 s32 ovl_11_func_800DD1D0(s16 *);
 void Ovl11TryDrawObjectEvent(Ovl11AnimationObject *);
 
@@ -488,7 +488,7 @@ void Ovl11MoveTowardScriptCommand(Ovl11C3B78Arg0 *object) {
     object->unk30 = fixedX / 0x10000;
     object->unk38 = fixedZ / 0x10000;
     if ((*(u16 *)((u8 *)object + 0x1E) & 0x100) && !(gOvl11ObjectScriptTick & 1)) {
-        ovl_11_func_800BDB88(&object->unk30, 0xC000);
+        Ovl11ResolveSurfaceHeight(&object->unk30, 0xC000);
     }
     command = event->unk0;
     switch (command) {

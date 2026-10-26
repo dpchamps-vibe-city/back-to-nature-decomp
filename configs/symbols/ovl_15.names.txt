@@ -73,3 +73,8 @@ Ovl15RestoreSaveImage = 0x80135380; // type:func
 Ovl15InsertSaveChecksumSlots = 0x801359FC; // type:func
 Ovl15RemoveSaveChecksumSlots = 0x80135A78; // type:func
 gOvl15SaveWorkBase = 0x801376D0; // type:data size:0x4
+
+Ovl15BuildSaveSlotHeader = 0x80134A34; // type:func
+Ovl15BuildCardFilename = 0x80137544; // type:func
+gOvl15CardFilenameTable = 0x80137680; // type:data size:0x10
+gOvl15SaveSlotHeaders = 0x801376E0; // type:data size:0xB4

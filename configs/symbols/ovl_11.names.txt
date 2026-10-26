@@ -1169,3 +1169,24 @@ gOvl11HeldActionSignal = 0x8012DB80; // type:data size:0x4
 gOvl11HeldActionSpriteHeader = 0x8012DB84; // type:data size:0x4
 gOvl11HeldActionSpriteStep = 0x8012DB88; // type:data size:0x4
 gOvl11HeldActionFallbackCounter = 0x8012DB8C; // type:data size:0x4
+
+Ovl11ResolveSurfaceHeight = 0x800BDB88;
+Ovl11ProbeDirectionalTile = 0x800BDF98;
+Ovl11BuildMode6SurfaceGrid = 0x8011DF4C;
+Ovl11LookupMode6GridPosition = 0x8011E090;
+gOvl11Mode6GridScanColumn = 0x8012D7F0; // type:data size:0x4
+gOvl11Mode6GridScanRow = 0x8012D7F4; // type:data size:0x4
+gOvl11Mode6GridProbePosition = 0x8012D800; // type:data size:0x10
+Ovl11GetDateMessageEntry = 0x80121204;
+gOvl11DateMessageThresholds = 0x801287CC; // type:data size:0x1A
+Ovl11UpdateSelectedRecordRelease = 0x80115CAC;
+Ovl11FindLastFlaggedSmallRecord = 0x80115F38;
+Ovl11SelectedSmallRecordHasFlag40 = 0x80115F80;
+Ovl11UpdateQuantityPurchaseInteraction = 0x80115308;
+Ovl11DebitQuantityCost = 0x80115C60;
+Ovl11UpdateRecordOfferInteraction = 0x80115FE0;
+Ovl11SelectOfferConditionMessage = 0x801164F8;
+gOvl11OfferConditionMessages = 0x80128214; // type:data size:0x28
+// Header and interior text labels of one existing name-entry record.
+gOvl11QuantityPurchaseNameRecord = 0x8012D6E8; // type:data size:0x4
+gOvl11QuantityPurchaseNameText = 0x8012D6EC; // type:data size:0x12

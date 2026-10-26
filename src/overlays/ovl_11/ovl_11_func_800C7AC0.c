@@ -15,6 +15,7 @@
 #include "ovl11_interaction_sequence.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_date_message.h"
 
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800FFA40 (void);
@@ -39,7 +40,6 @@ void ovl_11_func_800C84DC (Recon_ovl_11_func_800C7270_A0View *arg0);
 s32 ovl_11_func_800F3F7C (void);
 void ovl_11_func_800C857C(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
 void ovl_11_func_800C8670(Recon_ovl_11_func_800C7270_A0View *arg0, s16 *arg1); /* static */
-s32 ovl_11_func_80121204(void);                      /* static */
 
 s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
     s16 coord[3];
@@ -337,7 +337,7 @@ block_78:
                 return 0x25;
             case 31:
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    RequestMessageWindow(2, ovl_11_func_80121204());
+                    RequestMessageWindow(2, Ovl11GetDateMessageEntry());
                 }
                 return 0x1F;
             case 32:

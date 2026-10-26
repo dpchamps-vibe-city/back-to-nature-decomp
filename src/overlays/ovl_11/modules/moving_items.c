@@ -31,6 +31,7 @@
 #include "game_flags.h"
 #include "ovl11_interaction_id_predicates.h"
 #include "ovl11_geometry_hit_flags.h"
+#include "ovl11_grid_position.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -304,9 +305,6 @@ success:
     }
 }
 
-s32 ovl_11_func_800D7EF8(s32 *arg0, u16 *arg1, u16 *arg2);
-s32 ovl_11_func_8011E090(VECTOR *pos, u16 *colOut, u16 *rowOut);
-
 /* Modes 1/6 query the main/alternate cell grid. Contact enters the one-tick
  * wait state and clears the fall step; no grid returns 2. Keep the two
  * independent mode bases and block-local result: their lifetimes preserve
@@ -333,7 +331,7 @@ s32 Ovl11CheckMovingItemCellContact(Ovl11MovingItemRecord *arg0) {
     }
     far_base2 = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base2 + 0x25476) == 6) {
-        if (ovl_11_func_8011E090((VECTOR *)((u8 *)arg0 + 0x24), &col, &row) != 0) {
+        if (Ovl11LookupMode6GridPosition((VECTOR *)((u8 *)arg0 + 0x24), &col, &row) != 0) {
             goto store1;
         }
         cell = (u16 *)&gAlternateAreaGrid[(s16)row][(s16)col];

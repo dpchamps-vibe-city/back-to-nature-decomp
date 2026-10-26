@@ -4559,7 +4559,7 @@ typedef struct {
     s32 header;
     u16 values[9];
 } Ovl11NameRecord;
-extern Ovl11NameRecord D_8012D6E8;
+extern Ovl11NameRecord gOvl11QuantityPurchaseNameRecord;
 /* 80114604 copies nine halfwords from D638+4 and passes D63C to 800231AC. */
 extern Ovl11NameRecord D_8012D638;
 extern u16 D_8012D63C[];
@@ -4581,7 +4581,8 @@ typedef struct {
     Ovl11SaleAnimal animals[20];
 } Ovl11SaleAnimalGlobals;
 /* 80115308 passes this text to 800231AC. */
-extern u16 D_8012D6EC[];
+/* Interior nine-halfword name view at QuantityPurchaseNameRecord+4. */
+extern u16 gOvl11QuantityPurchaseNameText[];
 /* 80115308 reads the unsigned halfword at resident-state +0x4508. */
 typedef struct {
     u8 pad0[0x4508];
@@ -5285,7 +5286,17 @@ extern struct_80123E04 _D_80123E04[1] __asm__("D_80123E04");
 /* D_801287CC - s16 threshold table (13 halfwords) walked with a stride-2
  * pointer by ovl_11_func_80121204. Absolute-addressed (lui + %lo) from
  * ovl_11 code. */
-extern s16 D_801287CC[13];
+extern s16 gOvl11DateMessageThresholds[13];
+
+/* 801164F8 reads a signed numerator/denominator/level at work+51DA/DC/DE. */
+typedef struct {
+    char pad0[0x51DA];
+    s16 numerator;
+    s16 denominator;
+    s16 level;
+} Ovl11OfferMessageState;
+/* 801164F8 alone indexes five ratio rows by four level columns; message IDs. */
+extern u16 gOvl11OfferConditionMessages[5][4];
 
 /* ovl_11 farm-state globals. The six halfwords at D_8012CF10 are signed in
  * the reset and comparison functions; ovl_11_func_80103B24 reads their raw
@@ -5904,7 +5915,9 @@ struct Ovl15SaveHeader {
     s32 field_34;
     s32 field_38;
 };
-extern struct Ovl15SaveHeader D_801376E0_headers[] __asm__("D_801376E0");
+extern struct Ovl15SaveHeader gOvl15SaveSlotHeaders[];
+/* 80137544 selects one of four filename addresses, then copies it with strcpy. */
+extern s32 gOvl15CardFilenameTable[];
 /* ovl_15_func_80134A34 reads the word pair at +0 and names at +0x28/+0xD10. */
 struct Ovl15SaveHeaderSource {
     struct Ovl15SaveWordPair words;
@@ -7216,10 +7229,10 @@ extern u16 gOvl11UpgradeThresholds[];
 extern u16 gOvl11UpgradePrices[];
 
 /* 8011DF4C uses signed word counters for a seven-by-seven scan. */
-extern s32 D_8012D7F0;
-extern s32 D_8012D7F4;
-/* 8011DF4C passes this position to 800BDB88 and steps words +0/+8; data spans 16 bytes. */
-extern s32 D_8012D800[4];
+extern s32 gOvl11Mode6GridScanColumn;
+extern s32 gOvl11Mode6GridScanRow;
+/* 8011DF4C passes XYZ to Ovl11ResolveSurfaceHeight and steps +0/+8; 16-byte span. */
+extern s32 gOvl11Mode6GridProbePosition[4];
 
 /* 800F2400 reads/clears these word flags; 800F24B0/800F2724 set them. */
 extern s32 D_80126C90;

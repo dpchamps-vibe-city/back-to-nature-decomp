@@ -1,3 +1,9 @@
+/* Quantity/name-entry purchase interaction, including inventory insertion
+ * and list-selected record release. Its sole cost/quantity helper consumes
+ * the same +8/+A prompt fields the handler validates. The name-entry record
+ * is private scratch; generic message/selection state remains shared.
+ * Original ovl_11:80115308–80115CAC. Contract: ovl11_quantity_purchase.h. */
+
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
@@ -6,6 +12,7 @@
 #include "ovl11_record_pair_slots.h"
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_record_family_list.h"
+#include "ovl11_quantity_purchase.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
@@ -13,7 +20,7 @@ s32 ovl_11_func_800D6014(u16 arg0);
 void ovl_11_func_800E2904(s32 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80113FF0(void);
-void ovl_11_func_80115C60(void *arg0);
+void Ovl11DebitQuantityCost(void *arg0);
 s32 ovl_11_func_80117178(s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
@@ -21,7 +28,7 @@ s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ov
 s32 ovl_11_func_8011D06C(s32 arg0);
 s16 ovl_11_func_8011D98C(StructD548 x);
 
-s32 ovl_11_func_80115308(void) {
+s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
     Ovl11D8012D7B8 params;
     s32 result;
     s32 selected;
@@ -52,6 +59,7 @@ s32 ovl_11_func_80115308(void) {
         gOvl11InteractionDrawMode = 4;
         params.unk4 = -1;
         Ovl11SetInteractionSteps(2, 0);
+        /* Fall through: the newly initialized selection is processed now. */
     case 2:
     case 3:
     case 4:
@@ -147,7 +155,7 @@ s32 ovl_11_func_80115308(void) {
                     RequestMessageWindow(2, 0x4C);
                     Ovl11SetInteractionSteps(22, 9);
                 } else {
-                    ovl_11_func_80115C60(state);
+                    Ovl11DebitQuantityCost(state);
                     RequestMessageWindow(2, 0x52);
                     Ovl11SetInteractionSteps(22, 21);
                 }
@@ -160,7 +168,7 @@ s32 ovl_11_func_80115308(void) {
         break;
     case 16:
         ResetTextEntry();
-        BeginTextEntry(D_8012D6EC);
+        BeginTextEntry(gOvl11QuantityPurchaseNameText);
         gOvl11InteractionDrawMode = 0;
         Ovl11SetInteractionSteps(17, 0);
         break;
@@ -173,7 +181,7 @@ s32 ovl_11_func_80115308(void) {
         case 1:
             dest = ovl_11_func_800CE744(0x109, -1) + 2;
             for (i = 0; i < 9; i++) {
-                dest[i] = D_8012D6E8.values[i];
+                dest[i] = gOvl11QuantityPurchaseNameRecord.values[i];
             }
             ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x57);
@@ -251,4 +259,13 @@ s32 ovl_11_func_80115308(void) {
         break;
     }
     return result;
+}
+
+void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
+
+/* The caller supplies gOvl11QuantityPrompt: signed quantity/cost at +8/+A. */
+void Ovl11DebitQuantityCost(void *record) {
+    ovl_11_func_800F2354(-(((Ovl11D8012D538 *)record)->unkA *
+                          ((Ovl11D8012D538 *)record)->unk8), 1);
+    ovl_11_func_800F3AF0(2, ((Ovl11D8012D538 *)record)->unk8);
 }

@@ -19,7 +19,7 @@ void ovl_15_func_8012F158(void) {
     slotState = gOvl15SaveSlotStatus;
     for (slot = 0; slot < 3; slot++, slotState++) {
         *slotState = 2;
-        status = ovl_15_func_80136288(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &D_801376E0_headers[slot]);
+        status = ovl_15_func_80136288(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &gOvl15SaveSlotHeaders[slot]);
         if (status == 8) {
             gOvl15MenuState = 6;
             return;

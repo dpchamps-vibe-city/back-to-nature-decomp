@@ -32,6 +32,7 @@
 #include "ovl11_record_placement.h"
 #include "ovl11_moving_items.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_surface_height.h"
 
 s32 ovl_11_func_800C9D64(void);
 s32 ovl_11_func_800D806C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
@@ -363,7 +364,6 @@ void Ovl11PlaceObjectCellTexture(Ovl11CE034Object *arg0) {
     }
 }
 
-s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
 s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2);
 
 void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
@@ -378,7 +378,7 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
         position = *(VECTOR *)arg0->position;
         ovl_11_func_800CE034((Ovl11CE034Object *)arg0,
                            (Ovl11CE034Position *)&position, 2);
-        result = ovl_11_func_800BDB88((s32 *)&position, 0xC080);
+        result = Ovl11ResolveSurfaceHeight((s32 *)&position, 0xC080);
         if ((result | ovl_11_func_800CB114((Ovl11CB114Object *)arg0,
                                         (s32 *)&position, 0x18)) == 0) {
             *(VECTOR *)arg0->position = position;

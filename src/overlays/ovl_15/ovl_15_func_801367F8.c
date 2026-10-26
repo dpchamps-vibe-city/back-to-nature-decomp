@@ -1,10 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/libmcrd.h"
+#include "psyq/strings.h"
+#include "ovl15_card_filename.h"
 
 long MemCardSync(long mode, long *cmds, long *rslt);
 long MemCardReadFile(long chan, char *file, unsigned long *adrs, long ofs, long bytes);
-void ovl_15_func_80137544(char *arg0, s32 arg1);
 extern s8 D_80140EC0;
 
 s32 ovl_15_func_801367F8(s16 arg0, s16 arg1, u32 *arg2) {
@@ -24,7 +25,7 @@ s32 ovl_15_func_801367F8(s16 arg0, s16 arg1, u32 *arg2) {
         return var_v0;
     }
 block_3:
-    ovl_15_func_80137544(&D_80140EC0, (s32) arg1);
+    Ovl15BuildCardFilename(&D_80140EC0, (s32) arg1);
     gOvl15CardRetryCount = 0;
     temp_a2 = MemCardSync(1, &sp18, &sp1C);
 loop_4:

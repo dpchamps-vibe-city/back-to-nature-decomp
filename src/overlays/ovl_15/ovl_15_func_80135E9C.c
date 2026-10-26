@@ -15,6 +15,7 @@
 #include "ovl15_save_card_title.h"
 #include "ovl15_save_menu_ui.h"
 #include "ovl15_save_image.h"
+#include "ovl15_card_filename.h"
 
 
 int McxCardType (int);
@@ -46,7 +47,6 @@ s32 ovl_15_func_8012FFD8 (void);
 void func_8001AC10 (u32 *arg0, s32 arg1, s32 arg2);
 void func_800248B0 (s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_15_func_80136558 (s16 arg0, s16 arg1);
-void ovl_15_func_80137544 (char *arg0, s32 arg1);
 void ovl_15_func_801305D4 (void);
 s32 ovl_15_func_801307D8 (void);
 s32 ovl_15_func_80130848 (void);

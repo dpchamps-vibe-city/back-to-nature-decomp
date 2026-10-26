@@ -128,20 +128,20 @@ void Ovl15DrawSaveSlotSummary(s16 slot, s16 displayMode) {
         /* Sanitize the loaded summaries in place, preserving special 0xFFD.
          * The ninth glyph of each name is terminated below. */
         for (i = 0; i < 8; i++) {
-            glyph = D_801376E0_headers[slot].name_8.units[i];
+            glyph = gOvl15SaveSlotHeaders[slot].name_8.units[i];
             if ((glyph >= 0xE01U) && (glyph != 0xFFD)) {
-                D_801376E0_headers[slot].name_8.units[i] = 0xFFFF;
+                gOvl15SaveSlotHeaders[slot].name_8.units[i] = 0xFFFF;
             }
         }
         for (i = 0; i < 8; i++) {
-            glyph = D_801376E0_headers[slot].name_1A.units[i];
+            glyph = gOvl15SaveSlotHeaders[slot].name_1A.units[i];
             if ((glyph >= 0xE01U) && (glyph != 0xFFD)) {
-                D_801376E0_headers[slot].name_1A.units[i] = 0xFFFF;
+                gOvl15SaveSlotHeaders[slot].name_1A.units[i] = 0xFFFF;
             }
         }
         y += 0xE;
         memset(gOvl15MenuTextScratch, 0xFF, 0x28);
-        headers = D_801376E0_headers;
+        headers = gOvl15SaveSlotHeaders;
         offset = slot * sizeof(struct Ovl15SaveHeader);
         header = (void *)((u8 *)headers + offset);
         Ovl15FormatDateNumber((s16)(((u16 *)&header->words)[0] + 1), gOvl15MenuTextScratch, 2);
@@ -153,10 +153,10 @@ void Ovl15DrawSaveSlotSummary(s16 slot, s16 displayMode) {
         Ovl15FormatDateNumber((s16)(((u16 *)&header->words)[2] + 1), dayText, 2);
         func_80017A08(4, (s32)dayText);
         header->name_8.units[8] = 0xFFFF;
-        func_80017A08(5, (s32)D_801376E0_headers[slot].name_8.units);
+        func_80017A08(5, (s32)gOvl15SaveSlotHeaders[slot].name_8.units);
         func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D9E + *gTextBankOffsets)), 0x41, (s32)y);
         y += 0xE;
-        func_80017A08(6, (s32)D_801376E0_headers[slot].name_1A.units);
+        func_80017A08(6, (s32)gOvl15SaveSlotHeaders[slot].name_1A.units);
         header->name_1A.units[8] = 0xFFFF;
         func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)((void *)((u8 *)&D_80051D9E + 0x1C)) + *gTextBankOffsets)), 0x41, (s32)y);
         return;

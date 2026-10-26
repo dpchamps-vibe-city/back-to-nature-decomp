@@ -2,9 +2,9 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
+#include "ovl11_grid_position.h"
 
 s32 ovl_11_func_800D5C3C(s16 arg0);
-s32 ovl_11_func_800D7EF8(s32 *arg0, u16 *arg1, u16 *arg2);
 
 s32 ovl_11_func_800D9108(s32 *arg0) {
     s16 col;

@@ -1,20 +1,26 @@
+/* Two-stage record-offer interaction: confirmation/value debits, fade and
+ * request waits, then a message selected by a private ratio/level table.
+ * Original ovl_11:80115FE0–801165C8. The selector is used only by this handler;
+ * it is not a general ratio classifier. Contract: ovl11_record_offer.h. */
+
 #include "common.h"
 #include "game_types.h"
 #include "screen_fade.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_primary_object_wait_steps.h"
+#include "ovl11_record_offer.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
-u16 ovl_11_func_801164F8(void);
+u16 Ovl11SelectOfferConditionMessage(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 s16 ovl_11_func_8011D98C(StructD548 x);
 
-s32 ovl_11_func_80115FE0(void) {
+s32 Ovl11UpdateRecordOfferInteraction(void) {
     Ovl11D8012D7B8 first;
     Ovl11D8012D7B8 second;
     s32 result;
@@ -116,7 +122,7 @@ s32 ovl_11_func_80115FE0(void) {
         }
         break;
     case 14:
-        RequestMessageWindow(2, ovl_11_func_801164F8());
+        RequestMessageWindow(2, Ovl11SelectOfferConditionMessage());
         Ovl11SetInteractionSteps(0x18, 0x1A);
         break;
     case 15:
@@ -176,4 +182,44 @@ s32 ovl_11_func_80115FE0(void) {
         break;
     }
     return result;
+}
+
+u16 Ovl11SelectOfferConditionMessage(void) {
+    Ovl11OfferMessageState *base = (Ovl11OfferMessageState *)&D_8006C838;
+    s16 ratio;
+    s16 level;
+    s32 row;
+    s32 col;
+
+    /* The assignment truncates the computed percentage to signed 16 bits. */
+    ratio = base->numerator;
+    ratio = (ratio * 100) / base->denominator;
+    level = base->level;
+
+    row = 0;
+    if (ratio < 0x46) {
+        if (ratio >= 0x32) {
+            row = 1;
+        } else if (ratio >= 0x14) {
+            row = 2;
+        } else if (ratio >= 5) {
+            row = 3;
+        } else {
+            row = 4;
+        }
+    }
+
+    col = 0;
+    if (level >= 0x32) {
+        if (level >= 0x46) {
+            col = 3;
+            if (level < 0x5A) {
+                col = 2;
+            }
+        } else {
+            col = 1;
+        }
+    }
+
+    return gOvl11OfferConditionMessages[row][col];
 }

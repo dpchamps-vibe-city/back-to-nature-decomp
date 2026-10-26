@@ -14,6 +14,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "ovl11_surface_height.h"
 
 s32 Ovl11SetMapCellTexture(s16 column, s16 row, s16 textureIndex) {
     s16 selectedTexture;
@@ -137,7 +138,6 @@ void Ovl11ApplyMapTileTextures(void) {
     } while (row < 25U);
 }
 
-s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
 /* Overlay alias of the matched word-returning GetVal8005E524. */
 s32 GetVal8005E524(void);
 
@@ -157,7 +157,7 @@ s32 Ovl11BuildMapGrid(s32 resumeWord) {
         gOvl11MapGridProbePosition[0] = -4200;
         for (gOvl11MapGridScanColumn = 0; gOvl11MapGridScanColumn < 45;) {
             grid = (s32 **)(base + 0x3608);
-            ovl_11_func_800BDB88(gOvl11MapGridProbePosition, 0xC000);
+            Ovl11ResolveSurfaceHeight(gOvl11MapGridProbePosition, 0xC000);
             entry = (s32 *)GetVal8005E524();
             if (*entry & 8) {
                 cell = grid;

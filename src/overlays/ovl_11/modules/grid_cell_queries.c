@@ -11,9 +11,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_cell_actions.h"
+#include "ovl11_grid_position.h"
 
-s32 ovl_11_func_8011E090(VECTOR *pos, u16 *colOut, u16 *rowOut);
-s32 ovl_11_func_800D7EF8(s32 *pos, u16 *colOut, u16 *rowOut);
 s32 Ovl11ClassifyGridCell(s16 col, s16 row, s32 map);
 
 s32 Ovl11CheckDirectionalCellTransition(s32 *position, s32 direction) {
@@ -42,8 +41,8 @@ s32 Ovl11CheckDirectionalCellTransition(s32 *position, s32 direction) {
         farPos.vz = position[2] + delta[1] * 2;
         if (map != 0) {
             result = 0;
-            if (ovl_11_func_8011E090(&nearPos, &nearCol, &nearRow) == 0) {
-                farLookupResult = ovl_11_func_8011E090(&farPos, &farCol, &farRow);
+            if (Ovl11LookupMode6GridPosition(&nearPos, &nearCol, &nearRow) == 0) {
+                farLookupResult = Ovl11LookupMode6GridPosition(&farPos, &farCol, &farRow);
                 goto check_cells;
             }
             return result;

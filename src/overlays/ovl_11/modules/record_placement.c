@@ -12,8 +12,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_record_placement.h"
+#include "ovl11_surface_height.h"
 
-s32 ovl_11_func_800BDB88(s32 *position, s32 mode);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *record, s32 mode);
 s32 ovl_11_func_800D3104(u16 *record, s32 mode);
 void ovl_11_func_800D3200(s32 record);
@@ -25,7 +25,7 @@ s32 Ovl11UpdateRecordPlacement(Ovl11PlacedRecordView *record,
     record->flags &= ~0x20000;
     record->collision = *tag;
     *(VECTOR *)record->position = *position;
-    ovl_11_func_800BDB88((s32 *)&record->position, 0);
+    Ovl11ResolveSurfaceHeight((s32 *)&record->position, 0);
     return 1;
 }
 

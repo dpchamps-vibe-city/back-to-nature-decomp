@@ -21,6 +21,7 @@
 #include "game_flags.h"
 #include "random.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_surface_height.h"
 
 void Ovl11ResetAreaGridState(void) {
     u8 *b;
@@ -101,7 +102,6 @@ s32 Ovl11LatchAreaGridTrigger(s32 currentPlane, s32 plane, s16 column, s16 row) 
     return 0;
 }
 
-s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
 /* Overlay alias of the matched word-returning GetVal8005E524. */
 s32 GetVal8005E524(void);
 
@@ -124,7 +124,7 @@ s32 Ovl11BuildAreaGrid(s32 resumeWord) {
         gOvl11AreaGridProbePosition[0] = -1800;
         for (gOvl11AreaGridScanColumn = 0; gOvl11AreaGridScanColumn < 10;) {
             grid = (s32 **)(base + 0x3608);
-            ovl_11_func_800BDB88(gOvl11AreaGridProbePosition, 0xC000);
+            Ovl11ResolveSurfaceHeight(gOvl11AreaGridProbePosition, 0xC000);
             entry = (s32 *)GetVal8005E524();
             if (*entry & 8) {
                 cell = grid;

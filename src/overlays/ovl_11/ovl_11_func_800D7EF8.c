@@ -1,6 +1,7 @@
 #include "common.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_grid_position.h"
 
 typedef struct {
     s32 unk0;

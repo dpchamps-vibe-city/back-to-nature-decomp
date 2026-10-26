@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/libmcrd.h"
-
-void ovl_15_func_80137544(char *arg0, s32 arg1);
+#include "psyq/strings.h"
+#include "ovl15_card_filename.h"
 
 s32 ovl_15_func_80136288(s16 arg0, s16 arg1, Ovl15SaveSummary *arg2) {
     union {
@@ -26,7 +26,7 @@ s32 ovl_15_func_80136288(s16 arg0, s16 arg1, Ovl15SaveSummary *arg2) {
             return status;
         }
     }
-    ovl_15_func_80137544(Ovl15CardFilename, arg1);
+    Ovl15BuildCardFilename(Ovl15CardFilename, arg1);
     gOvl15CardRetryCount = 0;
     MemCardSync(0, &command, &result);
 retry:

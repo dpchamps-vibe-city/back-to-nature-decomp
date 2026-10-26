@@ -2,8 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "ovl11_interaction_volume_query.h"
-
-s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
+#include "ovl11_surface_height.h"
 
 s32 ovl_11_func_800D2DB8(Ovl11Func800BDCE8Arg1 *arg0) {
     if (D_80128D6C == 1) {
@@ -11,5 +10,5 @@ s32 ovl_11_func_800D2DB8(Ovl11Func800BDCE8Arg1 *arg0) {
             return 1;
         }
     }
-    return ovl_11_func_800BDB88(&arg0->unk0, 0xC000) != 0;
+    return Ovl11ResolveSurfaceHeight(&arg0->unk0, 0xC000) != 0;
 }

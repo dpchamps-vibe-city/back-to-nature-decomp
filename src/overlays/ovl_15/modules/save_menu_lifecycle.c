@@ -55,16 +55,16 @@ void Ovl15ResetSaveMenuState(void) {
     gOvl15SaveSlotStatus[2] = 2;
     gOvl15MenuStateTimer = 0;
     gOvl15CardIconResourceBuffer = D_8007BFF8;
-    memset((u8 *)D_801376E0_headers, 0, 0x3C);
-    memset((u8 *)D_801376E0_headers + 0x3C, 0, 0x3C);
-    memset((u8 *)D_801376E0_headers + 0x78, 0, 0x3C);
+    memset((u8 *)gOvl15SaveSlotHeaders, 0, 0x3C);
+    memset((u8 *)gOvl15SaveSlotHeaders + 0x3C, 0, 0x3C);
+    memset((u8 *)gOvl15SaveSlotHeaders + 0x78, 0, 0x3C);
     memset(gOvl15TransferBuffer, 0, 0x9690);
     memset(D_801377A0, 0, 0x80);
     saveWork = gOvl15TransferBuffer + 0x280;
     ovl_15_func_8013468C();
     gOvl15SaveWorkBase = saveWork;
     memset(saveWork, 0, 0x6378);
-    summary = (u8 *)D_801376E0_headers;
+    summary = (u8 *)gOvl15SaveSlotHeaders;
     invalid = 0xFFFF;
     for (summaryIndex = 2; summaryIndex >= 0; summaryIndex--) {
         (*(u16 *) (summary + 8)) = invalid;

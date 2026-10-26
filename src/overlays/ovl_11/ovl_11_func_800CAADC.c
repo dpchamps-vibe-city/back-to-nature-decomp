@@ -6,11 +6,11 @@
 #include "ovl11_coordinate_clamp.h"
 #include "point_projection.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_surface_height.h"
 
 void ovl_11_func_800CA708(void);
 s32 GetVal8005E524(void);
 void SetVal8005E51C(s32);
-s32 ovl_11_func_800BDB88(s32 *, s32);
 
 void ovl_11_func_800CAADC(void) {
     Ovl11CA708Player *player;
@@ -45,7 +45,7 @@ void ovl_11_func_800CAADC(void) {
     position.vy += player->velocity[1];
     position.vz += player->velocity[2];
     if (player->flags & 0x40000000) {
-        if (ovl_11_func_800BDB88((s32 *)&position, 0xC000) == 0) {
+        if (Ovl11ResolveSurfaceHeight((s32 *)&position, 0xC000) == 0) {
             RequestPadActuatorSequence(0, 2);
             player->velocity[1] = 0;
             player->flags &= ~0x40000000;
@@ -60,7 +60,7 @@ void ovl_11_func_800CAADC(void) {
             }
         }
     } else {
-        ovl_11_func_800BDB88((s32 *)&position, 0xC080);
+        Ovl11ResolveSurfaceHeight((s32 *)&position, 0xC080);
     }
     SetVal8005E51C(0xC8);
     player->position = position;

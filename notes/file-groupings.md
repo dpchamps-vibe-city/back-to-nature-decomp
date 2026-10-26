@@ -918,12 +918,27 @@ pool lifecycle and exclusive pool storage join every member independently
 of mere adjacency. The initializer's source-bank lookup borrows the common
 80070400 sprite bank; it does not make that bank pool-private.
 
-Boundaries: immediate predecessor 80121204 is a date-threshold classifier
-using 801287CC, with no effect-pool access or member call. Right 80121780
-begins overlay data (the scene handler table), not another C function.
-The left cut is evidence-limited, not a GP contradiction; overlay -G0
-supplies none. There is no supported lifecycle extension past either end,
-and no flag/mechanical limit motivated this cut.
+Boundaries: immediate predecessor 80121204 is the date-threshold classifier
+Ovl11GetDateMessageEntry in modules/date_message.c, using 801287CC, with no
+effect-pool access or member call. Right 80121780 begins overlay data (the
+scene handler table), not another C function. The left cut is evidence-limited,
+not a GP contradiction under -G0. No supported lifecycle extension passes
+either end, and no flag/mechanical limit motivated the cut.
+
+**Adjacent complete service `modules/date_message.c`, 80121204–801212C4:**
+its private thirteen-halfword table is now gOvl11DateMessageThresholds
+(801287CC, 1A bytes). It classifies (season*30+day+20)%120 into one of thirteen
+intervals and returns message entry 0x1BD+index, falling back to 0x1BD.
+The sole caller C7AC0 passes it directly to RequestMessageWindow(2,entry),
+which establishes the message-entry purpose without speculative content names.
+No table/state/helper extends it to either neighbor: preceding
+map_texture_camera's texture refresh reads a different private orientation
+and tile-code pair; following sprite_effect_pool owns its separate 25-record
+lifecycle. These are evidence-limited cuts, not -G0 historical object proofs.
+The signed threshold loop and shifted message accumulator are preserved;
+locals name the interval bounds/day/entry, and ovl11_date_message.h documents
+inputs, interval edges, fallback and no-state-change contract. The checked
+baseline fold passed without a flag or policy exception.
 
 The earlier ABI obstacle below is resolved: both allocator and initializer
 now accept SDK VECTOR by value, including its unused fourth word. The
@@ -1451,6 +1466,27 @@ Members (address order):
 ---
 
 ## `ovl_11` collision-query budget (formerly D_80128810 counter cluster) — 0x800BE208–0x800BE2C4 (confidence: medium)
+
+The nonadjacent client 800BDB88 is now the single-entry module
+`modules/surface_height.c`, `Ovl11ResolveSurfaceHeight` (original
+ovl_11:800BDB88–800BDCE0). Its complete supported service combines the
+mode-dependent zero-plane probes with scene-geometry intersection and
+last-hit-plane height evaluation. Callers C498C/CAADC/CE550/F4E84 and the
+placement/object-update modules pass three-word positions and either test
+zero for success or consume the updated Y. The public
+`ovl11_surface_height.h` preserves that pointer/s32 ABI and documents the
+special-mode negative-Y failure, unchanged position on failure, shared query
+count and polygon-state effects. Locals now name positions, outputs and
+height; no types, control flow, storage or linkage changed.
+
+Its left neighbor is area_resource_load's BDA70 image-bank loader, ending
+BDB88; it shares no surface helper or private geometry state. Right BDCE0
+is an unused return--1 leaf, followed by the separate volume-table queries.
+Neither neighbor calls this resolver or participates in its mode/plane
+protocol. These are evidence-limited cuts, not original object boundaries
+proved by GP addressing (overlay -G0 supplies none). The broadly shared
+collision engine does not establish a single TU spanning its many callers.
+The checked fold passed at baseline -O2/-G0; no flag/exception was added.
 
 Reconstructed as `src/overlays/ovl_11/modules/collision_query_budget.c`, with
 public interface `include/ovl11_collision_query_budget.h`. This is a narrow
@@ -5190,9 +5226,50 @@ Members (address order):
 
 ## `ovl_11` selected-record handler/flag-helper run — 0x80115CAC / 0x80115F38 / 0x80115F80 (candidate)
 
-Candidate same-TU membership: medium confidence for the existing helper pair,
-low for the handler extension; original boundaries remain unproven
-([grouping evidence](research/ovl_11_func_80115CAC-grouping.md)).
+**Reconstructed `modules/selected_record_interaction.c`, all three compiled
+members at 80115CAC–80115FC8.** Names are
+Ovl11UpdateSelectedRecordRelease, Ovl11FindLastFlaggedSmallRecord and
+Ovl11SelectedSmallRecordHasFlag40. The handler is the only client of the
+flag-0x40 helper and, with that helper, the only client of the last-match
+scanner. Both queries traverse the same ten 0xB4-byte small records' flags
+at +34; the handler uses their exact result for the 500/2000 value credit and
+whole-record clear at E2904. This exclusive helper/selected-record protocol,
+not merely adjacency or shared interaction steps, joins all three. The one
+eight-way switch table pools unchanged in member order.
+
+Left 15C60 is the quantity/cost debit-and-count forwarding helper for 15308,
+with no selected-pool queries. Right 15FC8 tests the independent D_8012D520
+mode word against 0x14, with no selected-record/helper access. The surrounding
+handlers share generic interaction/message services but not this private query
+closure. Both cuts are conservative evidence limits under -G0, not proved
+original file boundaries. No flag/mechanical limit motivates the cuts.
+
+The public header publishes only the handler; helpers retain external linkage
+without becoming public API. It documents shared step/message/portrait/work
+state, last-match selection, mandatory flagged entry, no guard of the helper's
+-1 index and the accepted whole-record-clear/value-credit effects. Local
+names identify selection/flags/index and interaction ID. No field type,
+linkage, data ownership or control construction changed. The two helper
+bodies retain their shared far-base/stride spelling. The checked whole fold
+passed at baseline -O2/-G0; no override or policy exception was added.
+
+Batch acceptance after the quantity/offer pair and the earlier
+surface_height, directional_tile_probe, mode6_grid, date_message,
+save_slot_header and card_filename work: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates. Folded
+eligible membership rises **1245 → 1259**, with **209/209 modules valid**
+and no previously folded regression. Every EXE/overlay code/data byte,
+callback pointer, jump table and placement is unchanged. Canonical names
+are clean; published-interface audit has zero failing interfaces (unrelated
+pre-existing unpublished conflicts are not claimed resolved). No compiler
+flag, exception, pin, assembly or INCLUDE_ASM was added, and no shared tool
+changed. Exit 1 denotes the still-incomplete overall campaign, not a failed
+gate. The data declaration renames in the shared override header and
+asm-bound save-summary alias reconciliation were explicit; no new storage
+or private linkage was introduced.
+
+Historical grouping evidence:
+[handler and helper run](research/ovl_11_func_80115CAC-grouping.md).
 
 Members (address order):
 - ovl_11_func_80115CAC (m, byte-exact) — selected-record interaction state handler.
@@ -8791,24 +8868,32 @@ Members (address order):
 
 ## candidates to investigate
 
-- ovl_11 0x80115FE0→0x801164F8 caller/leaf run — zero-gap link order
-  (ovl_11_func_80115FE0 (s), 0x518 bytes, ends 0x801164F4; next function
-  ovl_11_func_801164F8 starts at 0x801164F8 with no unrelated code between)
-  and the call graph agree: the head `jal`s the leaf at 0x80116320 and feeds
-  its u16 return straight to func_8002261C(2, result), then advances the
-  documented D_8012D520 state machine via ovl_11_func_8011D084(0x18, 0x1A)
-  — the same 0x1A id the D_8012D520 reader quartet's
-  ovl_11_func_801165C8 tests for, tying the run to that neighbourhood.
-  - ovl_11_func_80115FE0 (s) — state-machine dispatch step: big 0xA8-frame
-    handler that picks ids for ovl_11_func_8011D084 and calls the leaf below
-    to obtain one of them
-  - ovl_11_func_801164F8 (m, matched 2026-11) — leaf tier id: reads
-    D_8006C838+0x51DA/51DC/51DE, buckets ratio*100/den and level into
-    row/col, returns table D_80128214[row][col] (sole reader of that 5×4
-    u16 table — private data, no shared global with the caller)
-  Evidence class: link-order adjacency + caller relation only (the leaf is a
-  private-table reader with no shared gp-rel/absolute global); confidence
-  low.
+- **Reconstructed `modules/record_offer_interaction.c`, both entries
+  80115FE0–801165C8:** Ovl11UpdateRecordOfferInteraction and
+  Ovl11SelectOfferConditionMessage. The head is interaction 0x14's update
+  callback; its case 14 is the only client of the selector, immediately using
+  the returned u16 as an archive-2 message entry. The selector is the only
+  reader of the 5x4 u16 table at 80128214, now
+  gOvl11OfferConditionMessages. This exclusive helper/private-table consumer
+  chain and original order support the pair, not adjacency alone. The
+  29-word switch table stays pooled at file 32C8.
+
+  Left 15FC8 is an unused interaction-ID !=14 predicate, not a member of this
+  message/offer protocol. Right 165C8 is the !=1A predicate used by distant
+  E9D28, followed by the independent selected-threshold interaction. Neither
+  reads the private table or calls the selector. These are evidence-limited
+  cuts under -G0, not historical object proofs; deadness is not used as a
+  boundary witness. D_8012D520 selects the interaction callback, whereas
+  gOvl11InteractionStep controls the steps INSIDE this callback; the older
+  interpretation conflating these state machines is superseded.
+
+  ovl11_record_offer.h publishes the callback, including price narrowing,
+  value/fade/request effects, terminal step and the non-cleared work flag.
+  The selector's numerator/denominator/level view is now in the override
+  header alongside the sole table extern, not a source-local global view or
+  declaration. Percentage truncation and thresholds remain unchanged; the
+  actual gameplay meaning of numerator/level is left neutral. Both entries
+  and the overlay passed the baseline checked fold without flag exceptions.
 
 - ovl_11 0x800F9174→0x800F9210→0x800F9BE4 caller run — candidate same-TU membership, confidence low; original boundaries remain unproven ([evidence](research/ovl_11_func_800F9174-grouping.md)).
   - ovl_11_func_800F9174 (m, byte-exact) — category-2 transition dispatcher that orders two IDs for the adjacent image/table handler.
@@ -9083,9 +9168,34 @@ Members (address order):
   (already the stub caller of the D_8012D548 by-value run and the D_8012D520
   bridge above) to a matched link-successor. Link order + shared callee; data
   TU ownership unconfirmed.
-- ovl_11 0x80115308→0x80115C60 caller/counter-leaf run — low-confidence candidate same-TU membership; original boundaries and data ownership remain unproven ([evidence, including the existing 801152BC forwarding-twin relation](research/ovl_11_func_80115308-grouping.md)).
-  - ovl_11_func_80115308 (m, byte-exact) — quantity-purchase, naming and selected-record transaction state handler.
-  - ovl_11_func_80115C60 (m) — forwards purchase cost and quantity to the economy/counter helpers.
+- **Reconstructed `modules/quantity_purchase_interaction.c`, both entries
+  80115308–80115CAC:** Ovl11UpdateQuantityPurchaseInteraction and
+  Ovl11DebitQuantityCost. The handler is the only client of the leaf, passing
+  gOvl11QuantityPrompt; both consume its signed +8/+A quantity/cost pair.
+  That exact prompt/accounting contract, plus the handler's exclusive name
+  record/text scratch at 8012D6E8/EC, supports the whole pair. The 25-word
+  switch table remains pooled at file 3240, with the original trailing
+  four-byte zero outside the object. The earlier 14604/152BC forwarding
+  twin is corroboration of an authored pattern, not membership evidence.
+
+  Left 152BC is 14604's exclusive cost/counter leaf, not this handler's,
+  and that handler uses a different name record/counter service. Right CAC
+  owns its distinct flag-selected record-release helper closure, not the
+  quantity/name-entry path. Shared interaction steps and broad record pools
+  alone join neither neighbor. Both cuts remain evidence-limited -G0
+  responsibility edges, not GP-proven original object boundaries.
+
+  The leaf's incompatible void*/local-partial-struct declarations now use
+  the caller's existing void* ABI and the canonical quantity-prompt view
+  internally. No field, width or signedness changed; the whole baseline fold
+  proved that reconciliation. Private name labels are
+  gOvl11QuantityPurchaseNameRecord/Text; their config extents describe the
+  header and interior nine-halfword view of ONE existing record, not two
+  allocations. The override header owns both externs. The callback header
+  documents quantity accounting, name copy, item/record effects, state and
+  terminal flag behavior. Helpers retain external linkage without being
+  public API; no override, assembly or policy exception was added.
+  [Original handler/leaf evidence](research/ovl_11_func_80115308-grouping.md).
 - **Module `src/overlays/ovl_11/modules/selection_list_panel.c`** — the
   complete proven nested pair 8011D438/8011D474, ending at 8011D734.
   Names `Ovl11HasRowTypeTwo` (nested) and `Ovl11DrawSelectionListPanel`.
@@ -16806,6 +16916,26 @@ not substituted with C string literals. The four seasonal strings and digit
 encoding are independently visible in the original bytes (zero = 82 4F,
 fullwidth space = 81 40); the formatter adds to the glyph's second byte.
 
+Adjacent **80134A34–80134C48 is now `modules/save_slot_header.c`,
+Ovl15BuildSaveSlotHeader**, the complete summary-capture service. It copies
+the current two-word date/header, two nine-halfword names and eight work
+bytes into a selected 0x3C-byte summary, stamps +34 with 0x14, clears the
+0x9690-byte shared transfer workspace and publishes the record at +200.
+The save-preparation caller 8012FAE0 calls it before image serialization and
+card-title construction. Header ovl15_save_slot_header.h documents that order,
+retained +38, unchecked slot and whole-workspace invalidation; parameter is
+now slot. The original aligned aggregate assignments, halfword-aligned name
+copies and far-base work-byte expression remain unchanged.
+
+The shared summary array is now gOvl15SaveSlotHeaders, with its three 0x3C
+records (B4 bytes) named at 801376E0. The old asm-bound `_headers` alias and
+two validators' duplicate partial structs were replaced by the existing
+canonical Ovl15SaveHeader view; the validators read only its unchanged +34
+word. Title formatting, UI, summary readers and reset all use this one extern.
+The source runtime view still aliases gCalendarYear intentionally: it is not
+a second allocation or a new symbol at that address. All linkage and widths
+are unchanged; summary names' gameplay meaning remains neutral.
+
 Boundaries: preceding 80134724 resets the selection/record state, with none
 of these fragments or formatting buffers; following 80134A34 constructs a
 save-summary record and transfer image. Sharing that public save-record
@@ -18664,9 +18794,9 @@ private payload base support one six-entry protocol, beyond buffer sharing
 or adjacency. The old boundary before write/verify had no independent witness
 and is removed. The four-member scratch run is not retained as a slice.
 
-Left neighbor 80134A34 builds the separately published summary/header record
-array (used by save-slot UI), then clears/publishes the transfer image's
-metadata. It neither uses the private payload-base label nor knows the
+Left neighbor 80134A34 (now save_slot_header) builds the separately published
+summary/header record array (used by save-slot UI), then clears/publishes the
+transfer image's metadata. It neither uses the private payload-base label nor knows the
 serializer's selected runtime-field map. This public formatted-record handoff
 does not by itself join that builder or title-formatting services to this TU.
 Right neighbor 80135C20 begins asynchronous MemCard retry/command handling,
@@ -20144,6 +20274,24 @@ These are evidence-limited service boundaries, not GP-proven original cuts
 (the overlay uses -G0); no override or mechanical limit creates a slice.
 The init and card-header builders also use the icon-buffer pointer, but that
 public resource handoff alone does not join the intervening menu/card services.
+
+The following **80137544–80137584 is now `modules/card_filename.c`,
+Ovl15BuildCardFilename**. This entire single-reader table service copies one
+of four original NUL-terminated filenames through strcpy. Its private
+four-address table is gOvl15CardFilenameTable (80137680, 10 bytes hex), still
+an s32-address array in globals_override.h, not newly allocated storage.
+The header documents slots 0..3, unsigned range fallback including negatives,
+caller capacity, no path/card selection and the distinct fourth FARMP name.
+Existing save/load and MemCard callers corroborate the byte-string output.
+SDK strcpy comes from psyq/strings.h rather than a local declaration.
+
+Its left neighbor is the sprite-data/source initializer, which never reads
+this filename table or calls the builder; right 80137584 starts overlay data,
+not another function. Card-I/O clients are separated by the menu/resource
+protocols, which supply no common private helper/state witness. Thus no
+supported contiguous extension exists; the left cut remains evidence-limited
+under -G0, not proof from the current modules' boundaries. No flag limit
+motivates either new single-entry unit. Both checked folds passed at baseline.
 
 The sole published entry is Ovl15LoadMenuResources in
 ovl15_save_sprite_resources.h. It always loads card-icon resources (archive
@@ -21847,6 +21995,27 @@ joins it. Right BDF98 builds the separate collision-query record and calls
 BE6E4; following BE118 scans the 1C-byte region-transition table at 80122D8C,
 not these volumes.
 
+**BDF98–BE118 is now `modules/directional_tile_probe.c`, the complete
+single-entry service `Ovl11ProbeDirectionalTile`.** Its self-recursive second
+sample refines only tile result 2, 400 coordinate units along -Z/-X/+Z/+X;
+the column-44/direction-3 exception precedes the tile query. The sole external
+caller D24FC sets record flag 0x01000000 on result 2 when requested. This
+supports directional sampling and distinct result codes, not a stronger
+speculative terrain/gameplay interpretation. The public header retains
+by-value VECTOR/tag and s16/s32 slots, documents unchanged caller coordinates,
+recursion suppression and result forwarding. Query-output indirection and
+uninitialized unused fields remain unchanged rather than being silently
+repaired as part of naming.
+
+The preceding volume queries scan a 50x2C bounding table and do not use this
+query/tag/second-sample protocol; following BE118 reads its own exit table.
+There is no private-state/helper/table witness joining either neighbor.
+These are conservative evidence-limited cuts, not GP-proven historical file
+edges under -G0. The checked baseline fold passed; there is no member flag
+override and none was added. No globals needed new identities: geometry,
+collision work and the tile map are shared engine context, not newly owned
+module storage.
+
 **BE118–BE208 is now `modules/region_exit_query.c`, one compiled member,
 Ovl11FindRegionExit.** Its single-reader four-by-two table is named
 gOvl11RegionExitBounds (80122D8C, E0 bytes). The D2B40 movement consumer
@@ -22086,9 +22255,36 @@ Local 10×10 grid/texture-update candidate TU run (confidence: medium;
 - ovl_11_func_80113310 (m, byte-exact) — classifies and textures an empty grid cell, optionally awarding an item.
 - ovl_11_func_801136D0 (m, byte-exact) — maps a position to a 10×10 cell and checks its pointer-grid flag.
 
-**Reconstructed mode-6 texture unit:**
-`src/overlays/ovl_11/modules/mode6_texture_refresh.c`, 8011E1E8–8011E574,
-contains Ovl11SetMode6CellTexture and Ovl11RefreshMode6CellTextures.
+**Extended whole mode-6 grid unit:**
+`src/overlays/ovl_11/modules/mode6_grid.c`, 8011DF4C–8011E574, contains
+Ovl11BuildMode6SurfaceGrid, Ovl11LookupMode6GridPosition,
+Ovl11SetMode6CellTexture and Ovl11RefreshMode6CellTextures. This absorbs the
+previous texture-only module. The earlier cut before E1E8 is superseded by
+specific producer/consumer evidence, not merely the widely shared grid:
+DF4C samples exactly 7x7 centers X=-1420+400*c, Z=1020-400*r and installs
+bit-3 polygon pointers at physical stride 45; E090's X+1620 / 1220-Z mapping
+with divisor 400 maps those centers to the same cells and tests that bit.
+The setter patches those exact bit-3 entries, and the refresh supplies the
+7x7 logical-map texture indices. Most directly, area_mode_sequence's entry
+path calls DF4C(0), then Refresh consecutively to construct and texture the
+same initialized area. These initialization/mapping/texture relations and
+the private table support all four, rather than four generic grid users.
+
+DF4C alone uses the scan scratch at 8012D7F0/F4/800, now
+ gOvl11Mode6GridScanColumn/Row/ProbePosition with original 4/4/16-byte
+extents. No new data storage or ownership is introduced. Its header documents
+resume semantics, query return ignored, non-clearing cells and shared
+last-hit-state prerequisite; E090's header documents halfword wrap, biases,
+output updates, status codes and valid-grid prerequisite. The two lookup
+handlers share a truthful s32-XYZ/u16-output pointer interface, replacing
+801103E8's incompatible local record/s16-output prototypes and function-pointer
+type. Its explicit pointer views preserve the existing three-word local and
+signed output consumers; no vector size or arithmetic behavior was changed.
+
+The checked four-member baseline fold passed the overlay and each member,
+including the original texture pair's pooled five-word jump table. No override
+or exception was added or retired. The texture part was previously reconstructed
+as the following two-entry service.
 The refresh computes indices from the 7x7 map records and calls the immediately
 preceding setter, the only consumer of the 29 ten-byte UV/CLUT records at
 801282FC (now gOvl11Mode6TextureCoords). The setter is also an externally
@@ -22099,12 +22295,14 @@ the pair; the shared 45-column grid alone would not.
 both after a patch and outside mode 6, row-zero UV reversal and unchecked
 texture indices. No bounds/clamp repair was smuggled into the reconstruction.
 
-Left 8011E090 is a position-to-cell gate with distant callers, not the private
-texture-index producer or table consumer. Right 8011E574 begins selection_panel's
-independent phase/lane lifecycle and private sprite/table set. Neither supplies
-positive membership evidence; the cuts are evidence limits, not GP contradictions
-under overlay -G0. The whole pair and its single five-word table at file 37B4
-passed the checked baseline fold; no compiler override/exception was involved.
+Current boundaries: left DD90–DF4C is tier_upgrade_rules' closed ID/tier and
+private-price/threshold protocol, which neither builds this grid nor reads its
+scan scratch or texture table. Right E574 begins selection_panel's independent
+phase/lane lifecycle and private sprite/table set, with no grid construction or
+texture-table role. These are evidence-limited cuts, not GP contradictions
+under -G0. The original texture-only pair and its single five-word table at
+file 37B4 had also passed the checked baseline fold; the new fold takes that
+existing module whole rather than retaining a slice.
 
 Local mode-6 texture-update observations (original identities;
 [call/link-order evidence](research/ovl_11_func_8011E1E8-grouping.md)):

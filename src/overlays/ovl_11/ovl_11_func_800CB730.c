@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_grid_position.h"
 
 typedef struct {
                char pad0[0x38];
@@ -19,8 +20,6 @@ typedef struct {
 } M2C_ad72053e5aa9_StructOvl11CE034B;
 
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
-s32 ovl_11_func_800D7EF8 (s32 *arg0, u16 *arg1, u16 *arg2);
-s32 ovl_11_func_8011E090 (VECTOR *pos, u16 *colOut, u16 *rowOut);
 
 s32 ovl_11_func_800CB730(M2C_ad72053e5aa9_StructOvl11CE034A *arg0) {
     M2C_ad72053e5aa9_StructOvl11CE034B sp10;
@@ -42,7 +41,7 @@ s32 ovl_11_func_800CB730(M2C_ad72053e5aa9_StructOvl11CE034A *arg0) {
         goto block_8;
     }
     if (field == 6) {
-        if (ovl_11_func_8011E090((VECTOR *) &sp10, &sp20, &sp22) != 0) {
+        if (Ovl11LookupMode6GridPosition((VECTOR *) &sp10, &sp20, &sp22) != 0) {
             goto ret3;
         }
         goto body6;

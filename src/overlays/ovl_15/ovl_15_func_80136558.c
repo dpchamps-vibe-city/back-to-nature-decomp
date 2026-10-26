@@ -1,7 +1,7 @@
 #include "common.h"
 #include "psyq/libmcrd.h"
-
-void ovl_15_func_80137544(char *arg0, s32 arg1);
+#include "psyq/strings.h"
+#include "ovl15_card_filename.h"
 
 extern s8 D_80140EC0;
 
@@ -21,7 +21,7 @@ s32 ovl_15_func_80136558(s16 arg0, s16 arg1) {
         return var_v0;
     }
 block_3:
-    ovl_15_func_80137544(&D_80140EC0, (s32) arg1);
+    Ovl15BuildCardFilename(&D_80140EC0, (s32) arg1);
     gOvl15CardRetryCount = 0;
     MemCardSync(0, &sp10, &sp14);
 loop_4:

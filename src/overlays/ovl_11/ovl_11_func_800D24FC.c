@@ -2,15 +2,13 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
-
-s32 ovl_11_func_800BDF98(VECTOR position, Ovl11CollisionTag arg4,
-                       s16 arg5, s32 arg6);
+#include "ovl11_directional_tile_probe.h"
 
 s32 ovl_11_func_800D24FC(Recon_ovl_11_func_800D2594_A0View *arg0,
                        VECTOR position, s16 arg5, s32 arg6) {
     s32 result;
 
-    result = ovl_11_func_800BDF98(position,
+    result = Ovl11ProbeDirectionalTile(position,
                                 *(Ovl11CollisionTag *) ((u8 *) arg0 + 0x2E),
                                 arg5, 0);
     if (result == 2 && arg6 == 1) {

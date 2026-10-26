@@ -3,9 +3,9 @@
 #include "sound_commands.h"
 #include "ovl11_grid_cell_queries.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_surface_height.h"
 
 s32 ovl_11_func_800CB114(Ovl11CB114Object *, s32 *, s16);
-s32 ovl_11_func_800BDB88(s32 *, s32);
 
 void ovl_11_func_800CA708(void) {
     Ovl11CA708Player *player;
@@ -72,7 +72,7 @@ block_25:
     if (gOvl11PrimaryHeldButtons & 0xF020) {
         var_s4 = 0;
         var_s0 = &D_80123250[(player->direction & 1) * 2];
-        temp_v0 = ovl_11_func_800BDB88((s32 *)&pos, 0xE080);
+        temp_v0 = Ovl11ResolveSurfaceHeight((s32 *)&pos, 0xE080);
         if (temp_v0 != 0) {
             if ((u32) D_80128C68 < 5U) {
                 D_80128C68 += 1;
@@ -95,7 +95,7 @@ block_25:
             dz = var_s0->z;
             probe.vx += dx;
             probe.vz += dz;
-            if ((ovl_11_func_800BDB88((s32 *)&probe, 0xE080) == 0) && (ovl_11_func_800CB114((Ovl11CB114Object *)player, (s32 *)&probe, 0) != 4)) {
+            if ((Ovl11ResolveSurfaceHeight((s32 *)&probe, 0xE080) == 0) && (ovl_11_func_800CB114((Ovl11CB114Object *)player, (s32 *)&probe, 0) != 4)) {
                 var_s4 |= 1 << var_s2_2;
             }
             var_s2_2 += 1;

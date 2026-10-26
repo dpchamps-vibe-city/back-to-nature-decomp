@@ -18,7 +18,7 @@ s8 *Ovl15BuildSaveCardTitle(s16 slot) {
     Ovl15SaveTitleDate *source;
 
     memset(Ovl15CardHeader.title, 0, sizeof(Ovl15CardHeader.title));
-    entries = D_801376E0_headers;
+    entries = gOvl15SaveSlotHeaders;
     source = (Ovl15SaveTitleDate *)&entries[slot].words;
     date.season = source->season;
     date.field6 = source->field6;
