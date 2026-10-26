@@ -11388,6 +11388,30 @@ Members (link order):
 
 ## `ovl_23` D_800BF87C movement-clamp family — 0x800B989C / 0x800B9A00 / 0x800BA610 (confidence: medium)
 
+**`modules/record_decision_advance.c`, BA610–BA73C exclusive**, now names
+its single member `Ovl23AdvanceDecisionRecordPosition`. This is the two-speed
+advance operation complementary to the earlier return-to-anchor controller:
+state 2/3 chooses the speed, direction 6 subtracts, and the Q12 coordinate is
+clamped to -48 or track extent+119. On a clamp, records other than index 2
+enter state 1 facing inward. The public header documents independent endpoint
+tests, signed /10 truncation, preserved third control field and arithmetic
+range constraints. Locals name the step and upper endpoint; existing record
+and aggregate views, external linkage and global ownership are unchanged.
+
+The return-to-anchor controller is far away inside scene_record_run. Their
+common public setters and broad work arena do not establish one TU through
+the intervening direction_movement and random-selection protocols. Immediately
+left, BA3B4/BA468 implement the private unique-draw/reset protocol and table;
+BA610 uses none of it. Right, BA73C starts the three-drawer/two-coordinate-helper
+closure: BA610 calls no renderer or coordinate helper, and that closure does
+not mutate decision positions. These are evidence-limited responsibility cuts
+under -G0, not ownership proofs or cuts made to avoid a flag. No further member
+is supported; the singleton preserves that uncertainty without inventing a
+large arena-wide source unit. Baseline checked fold matched it and the overlay;
+no flag or policy exception applies. The final batch campaign gate passes
+at 1429 folded / 224 valid modules, including all linked containers, callers,
+data/placement, canonical interfaces, source policy and exception non-growth.
+
 Evidence: 800B9A00 and 800BA610 clamp the s32 at +0xC of a shared
 `Ovl23Func800BB0C8Arg` around the same `D_800BF87C` target
 `(unk39C + 0x77) << 12` by the same step `(unk3A0 << 12) / 10`, and both route
@@ -13932,6 +13956,59 @@ Members:
   writes on the D_80075AD4 record.
 
 ## `ovl_11` D_80128C4C / D_80128C54 state-pair cluster — 0x800C4DE0–0x800CD0F4 (confidence: medium)
+
+Two additional complete local protocols are now reconstructed; the broad
+shared hit latch is not itself evidence to merge the entire band.
+
+- **`modules/item_request_actions.c`, C8CC8–C8D9C exclusive**:
+  `Ovl11CommitSelectedItemRequest` and `Ovl11DispatchItemRequestInput`.
+  The latter's bit-0x40 gate calls the former, which resolves the six-byte
+  selected-item result, installs a nonzero request and clears object flag
+  0x200000. This direct request-commit chain and exact input/result protocol
+  corroborate their unbroken order. The helper's object already receives a
+  C7010 flags access at +6C and the caller supplies that primary object; both
+  now use that established full view publicly, retaining the resolver's
+  existing +50/+54 prefix cast privately. No width or layout changed.
+  Left C8BA8 dispatches volume cases, not a request triple; right C8D9C begins
+  the paired eight-record list-exchange protocol, which uses neither this
+  resolver nor the hit-category gate. Those distinct helper/protocol cuts
+  bound this unit, not a compiler-setting or mechanical limit.
+- **`modules/interaction_record_actions.c`, C8FA8–C93A4 exclusive**:
+  `Ovl11HandleInteractionRequest80` and
+  `Ovl11DispatchInteractionRecordInput`. The input dispatcher first calls
+  the helper, then considers the remaining latch categories. Both copy a
+  hit-record halfword to object +22, modify +6C and reset the primary request;
+  the exact record-response/reset sequence plus the internal call joins
+  them. The preceding list-exchange pair uses different tables/helpers and
+  never reads this latch. The following action-phase unit calls this service
+  but implements its own ordered phase/fade/counter protocol; it is not a
+  private branch of this latch service. These are medium-confidence
+  protocol boundaries, not proven historical object cuts (-G0).
+
+The public headers document pressed-bit masks, handled-vs-mutated results,
+request/latch side effects, conditional pointer validity and non-reentrancy.
+In particular flag-80/state-32 can mutate while returning zero, and category
+400 can fall through. Helpers retain external linkage and both used entry
+points are published where outside callers exist. Locals name hit records,
+record flags, message/item/response IDs and the request triple, without
+inventing gameplay names for the numeric categories.
+
+The original storage at 80128C4C/54 is now canonically
+`gOvl11InteractionHitRecord`/`gOvl11InteractionHitFlags`, witnessed by CB114
+publishing collision-query outputs and by these consumers. All references
+were propagated in their overlay identity. The existing opaque pointer view
+is named `gOvl11InteractionHitRecordView` and bound to the canonical symbol;
+the guarded direct-pointer view and older per-client record types are retained,
+not conflated by the rename. An attempt to remove the pre-existing scalar
+Ovl11CollisionFlags asm-name view rotated address registers in CB114 (eight
+linked words differed at CB208/20C and CB424..464). It was restored, bound to
+the canonical flags symbol; no new alias or exception was created. Thus this
+is explicitly retained declaration debt, not a claimed type/ownership fix.
+No ownership definition, private linkage or policy exception was introduced. Both checked folds passed baseline -O2/-G0 and whole overlay bytes;
+no member flag override applies. After restoring that existing publisher
+view, the full campaign gate passes at 1429 folded / 224 valid modules: all
+EXE/overlay bytes, regenerated callback/data references, affected callers,
+canonical interfaces, ownership, policy, convergence and zero exception growth.
 
 **Reconstructed `modules/primary_object_motion.c`, CA708–CADBC exclusive,
 both entries.** The frame integrator alone calls the adjacent collision/
@@ -22758,7 +22835,41 @@ copy) also touch the D_8006C838 work area but sit outside these gapless runs.
 
 ## `ovl_11` stack-box record-scan run — 0x800BEF64 / 0x800BF1D0 / 0x800BF2F4 (confidence: medium)
 
-Whole-unit experiment: attempted the complete BE208–BF3D0 closure (existing
+**Reconstructed `modules/nearby_record_scans.c`, BF1D0–BF3D0 exclusive,
+both compiled members in original order.** The pair constructs the same
+four-word stack X/Z box from a signed-halfword {x,y,z} input with radius 150,
+uses strict open comparisons, and returns the first pool match. BF1D0 adds
+Y radius 20 and active/alternate-position selection over the 37 actor slots;
+BF2F4 adds a region tag filter over 197 item records. This distinctive
+input/bounds/result protocol, not their common use of engine pools or
+adjacency alone, supports the small scan utility unit. -G0 supplies no
+ownership proof, so historical same-object membership remains medium confidence.
+
+The former BE208–BF3D0 closure hypothesis below is superseded by the later
+collision_probes evidence in its section: BEF64 consumes a dispatcher query,
+changes hit flags/output and may mutate actor state even on a miss. These
+two scans consume explicit positions, change no state, and serve the distant
+interaction-volume actions; no private query/count/bounds-table state or
+helper edge crosses BF1D0. That protocol change supports the left boundary,
+not the old merge error. At BF3D0 the geometry-hit readers consume a resident
+polygon descriptor, not either pool or a caller position/box; this supports
+the right boundary. Neither is claimed a proven original linker-object cut.
+
+Names: `Ovl11FindNearbyActiveActor` (BF1D0) and `Ovl11FindNearbyItemId`
+(BF2F4), preserved at overlay-qualified original identities. The header
+`ovl11_nearby_record_scans.h` records units, open bounds, pool limits,
+first-not-nearest selection, unused actor context argument and zero/NULL
+results. Parameters and locals now describe positions, bounds, slots and
+active masks; existing shared record identities and field types are retained.
+No private linkage, global storage or flag change was introduced. The checked
+baseline -O2/-G0 fold proved both members and the overlay byte-identical.
+The scan/scene-phase batch then passed `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json`: 1424 folded / 221 valid modules, all EXE
+and overlay bytes, canonical interfaces, ownership, policy, convergence,
+scope/stability and zero exception growth. The interaction-volume caller
+adopted the shared header with unchanged code.
+
+Historical whole-unit experiment:   attempted the complete BE208–BF3D0 closure (existing
 three-member collision_query_budget plus all dispatcher/probe and adjacent
 stack-box scan members), rather than asserting a new cut through BEF64's
 specific pool/box ties. The checked baseline fold rolled back on conflicting
@@ -23106,6 +23217,24 @@ data, canonical interfaces, source policy, scope and zero exception growth.
 ---
 
 ## `ovl_11` D_801287F4 counter-state run — 0x800BBC74–0x800BCF20 exclusive (confidence: medium)
+
+The preceding overlay entry is now **`modules/scene_phase_dispatch.c`,
+BBC34–BBC74**, a one-function unit named `Ovl11DispatchScenePhase`. Its
+private eight-word table at 80121780 is `gOvl11ScenePhaseCallbacks`; original
+data lists the mode reset, entry steps, frame phase, empty phase, and four
+later entry/exit services. It indexes the shared `gScenePhase` without a range
+check and passes the table base to the selected callback. The raw word-table
+view retains that ABI without pretending all target definitions have one
+C signature. `ovl11_scene_phase_dispatch.h` publishes the overlay-qualified
+entry; no linkage changes. No other source uses this table. The left boundary
+is the overlay's first code entry after rodata, not a neighboring function;
+the right boundary rests on the following sequencer's distinct private
+A0/A4/E8/EC state, not on its being a table target. Calls/table targets alone
+are insufficient to join the distant phase implementations and intervening
+units. This is an evidence-limited singleton, not a claimed -G0 ownership
+proof. The checked fold matched at baseline with no flag/policy changes.
+The two-unit batch passed the full campaign gate at 1424 folded / 221 valid
+modules, including every linked container and callback/data placement.
 
 **Module: `src/overlays/ovl_11/modules/area_mode_sequence.c`**, the whole
 eight-entry contiguous run BBC74/BBCB8/BC3AC/BC3E0/BC868/BC9AC/BCB5C/BCD28.

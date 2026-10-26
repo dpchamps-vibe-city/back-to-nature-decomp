@@ -41,8 +41,8 @@ void Ovl11InitPrimaryObjectRecordSprites(void) {
     u8 *base;
 
     base = (u8 *)&gPrimaryObjectBase;
-    D_80128C54 = 0;
-    D_80128C4C_dispatch = 0;
+    gOvl11InteractionHitFlags = 0;
+    gOvl11InteractionHitRecordView = 0;
     gOvl11PrimaryHeldButtons = 0;
     gOvl11PrimaryPressedButtons = 0;
     if (*(s32 *)(base - 0x51BC) & 0x8000) {

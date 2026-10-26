@@ -139,18 +139,18 @@ s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 void Ovl11ResetItemActionCollisionDispatch(void) {
     u32 temp_v1;
 
-    temp_v1 = D_80128C54 & 0x206;
+    temp_v1 = gOvl11InteractionHitFlags & 0x206;
     switch (temp_v1) {                              /* irregular */
     case 0x4:
         /* fallthrough */
     case 0x2:
-        if (D_80128C4C_dispatch != NULL) {
-            ovl_11_func_800DF010((Struct_800DF010 *)D_80128C4C_dispatch, 0);
+        if (gOvl11InteractionHitRecordView != NULL) {
+            ovl_11_func_800DF010((Struct_800DF010 *)gOvl11InteractionHitRecordView, 0);
             return;
         }
         return;
     case 0x200:
-        if (D_80128C4C_dispatch != NULL) {
+        if (gOvl11InteractionHitRecordView != NULL) {
             ovl_11_func_8010B57C(&D_80075AD4, 0);
         }
         break;

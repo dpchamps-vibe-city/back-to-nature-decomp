@@ -15,13 +15,13 @@ s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
     s16 action;
 
-    if (D_80128C54 & 0x80) {
+    if (gOvl11InteractionHitFlags & 0x80) {
         return 1;
     }
-    if (D_80128C54 & 0x400) {
+    if (gOvl11InteractionHitFlags & 0x400) {
         return 1;
     }
-    if (D_80128C54 & 2) {
+    if (gOvl11InteractionHitFlags & 2) {
         action = D_80123290[arg1];
         if (arg1 == 0) {
             if (((struct Ovl11ActionCounter *) D_8006C838)->count < 15) {
@@ -29,10 +29,10 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
             }
             StartCdAudioTrack(10);
         }
-        ovl_11_func_800DF010(D_80128C4C_dispatch, action);
+        ovl_11_func_800DF010(gOvl11InteractionHitRecordView, action);
         return 1;
     }
-    if (D_80128C54 & 4) {
+    if (gOvl11InteractionHitFlags & 4) {
         action = D_80123290[arg1];
         if (arg1 == 0) {
             if (((struct Ovl11ActionCounter *) D_8006C838)->count < 15) {
@@ -40,49 +40,49 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
             }
             StartCdAudioTrack(12);
         }
-        ovl_11_func_800E0C24(D_80128C4C_dispatch, action);
+        ovl_11_func_800E0C24(gOvl11InteractionHitRecordView, action);
         return 1;
     }
-    if (D_80128C54 & 8) {
+    if (gOvl11InteractionHitFlags & 8) {
         if (arg1 == 0) {
             if (((struct Ovl11ActionCounter *) D_8006C838)->count < 15) {
                 ((struct Ovl11ActionCounter *) D_8006C838)->count++;
             }
-            if (*(u16 *) D_80128C4C_dispatch == 0x109) {
-                ovl_11_func_800E2824(D_80128C4C_dispatch, 4);
+            if (*(u16 *) gOvl11InteractionHitRecordView == 0x109) {
+                ovl_11_func_800E2824(gOvl11InteractionHitRecordView, 4);
                 PlaySoundEffect(24);
             }
         } else if (arg1 == 4) {
-            ovl_11_func_800E2824(D_80128C4C_dispatch, 9);
+            ovl_11_func_800E2824(gOvl11InteractionHitRecordView, 9);
         }
         return 1;
     }
-    if (D_80128C54 & 0x100) {
+    if (gOvl11InteractionHitFlags & 0x100) {
         if (arg1 == 0) {
-            ovl_11_func_80109188(D_80128C4C_dispatch, 3);
+            ovl_11_func_80109188(gOvl11InteractionHitRecordView, 3);
             PlaySoundEffect(26);
         }
         return 1;
     }
-    if (D_80128C54 & 0x200) {
+    if (gOvl11InteractionHitFlags & 0x200) {
         if (arg1 == 0) {
             if (((struct Ovl11ActionCounter *) D_8006C838)->count < 15) {
                 ((struct Ovl11ActionCounter *) D_8006C838)->count++;
             }
             StartCdAudioTrack(14);
         } else {
-            ovl_11_func_8010B57C(D_80128C4C_dispatch, D_80123290[arg1]);
+            ovl_11_func_8010B57C(gOvl11InteractionHitRecordView, D_80123290[arg1]);
         }
         return 1;
     }
-    if (D_80128C54 & 0x800) {
-        if (arg1 == 0 && *(u16 *) D_80128C4C_dispatch == 0x15B) {
+    if (gOvl11InteractionHitFlags & 0x800) {
+        if (arg1 == 0 && *(u16 *) gOvl11InteractionHitRecordView == 0x15B) {
             ovl_11_func_800D31EC(((arg0->unk3C - 0x48) % 5) * 10 & 0xFFFE, gPrimaryObjectFacing);
-            ovl_11_func_800D3104(D_80128C4C_dispatch, 6);
+            ovl_11_func_800D3104(gOvl11InteractionHitRecordView, 6);
             return 1;
         }
         if (arg1 == 1) {
-            ovl_11_func_800D3104(D_80128C4C_dispatch, D_80123292);
+            ovl_11_func_800D3104(gOvl11InteractionHitRecordView, D_80123292);
             return 1;
         }
     }

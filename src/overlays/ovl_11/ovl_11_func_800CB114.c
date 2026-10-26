@@ -38,7 +38,7 @@ s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2) {
     }
     var_s3 = Ovl11QueryCollisionBudgeted(&position[0], arg0->collision, 0x3E8U, 0x3E8U, &sp30, &sp34, 0, var_t2) * 2;
     Ovl11CollisionFlags = 0;
-    D_80128C4C = NULL;
+    gOvl11InteractionHitRecord = NULL;
     if ((arg2 != 0) && (arg2 != 0x38)) {
         if (sp34 & 0x10000) {
             temp_v1_2 = arg0->flags;
@@ -98,17 +98,17 @@ s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2) {
         if (sp34 & 0x2000) {
             arg0->flags = (s32) (arg0->flags | 0x40000);
             Ovl11CollisionFlags = sp34;
-            D_80128C4C = sp30;
+            gOvl11InteractionHitRecord = sp30;
         }
         Ovl11CollisionFlags = sp34;
-        D_80128C4C = sp30;
+        gOvl11InteractionHitRecord = sp30;
     }
     if (sp34 & 0x4000) {
         var_s3 = 4;
         if (arg2 == 0x38) {
             var_s3 = 0x3E7;
             Ovl11CollisionFlags = sp34;
-            D_80128C4C = sp30;
+            gOvl11InteractionHitRecord = sp30;
         }
     }
     if (arg0->flags & 8) {

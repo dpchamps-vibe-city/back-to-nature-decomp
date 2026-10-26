@@ -61,7 +61,7 @@ void Ovl11ProbePrimaryObjectMotion(void) {
     position.vz += zAhead;
     collisionClass = ovl_11_func_800CB114((Ovl11CB114Object *)player, (s32 *)&position, 0x38);
     if (collisionClass == 0x3E7) {
-        if ((D_80128C54 & 0x20) &&
+        if ((gOvl11InteractionHitFlags & 0x20) &&
             (player->velocity[0] != 0 || player->velocity[2] != 0) &&
             Ovl11CheckDirectionalCellTransition((s32 *)&player->position, player->direction) != 0 &&
             player->mode == 4) {
@@ -81,8 +81,8 @@ void Ovl11ProbePrimaryObjectMotion(void) {
             }
         }
         collisionClass = 4;
-        D_80128C54 = 0;
-        D_80128C4C_dispatch = 0;
+        gOvl11InteractionHitFlags = 0;
+        gOvl11InteractionHitRecordView = 0;
         goto probe_sides;
     }
 probe_sides:

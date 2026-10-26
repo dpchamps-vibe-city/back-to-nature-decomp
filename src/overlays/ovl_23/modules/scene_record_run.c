@@ -37,6 +37,7 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "ovl23_record_run.h"
+#include "ovl23_record_decision_advance.h"
 
 void func_80017A48(u32 arg0);
 u32 func_80017A64(void);
@@ -474,8 +475,6 @@ void Ovl23UpdateRecordStage6(void) {
     }
 }
 
-void ovl_23_func_800BA610 (Ovl23Func800BB0C8Arg *arg0);
-
 void Ovl23ApplyPadToAnchorRecord(void) {
     s16 var_a2;
     s32 temp_v1;
@@ -497,11 +496,10 @@ void Ovl23ApplyPadToAnchorRecord(void) {
         }
     }
     Ovl23SetAnchorRecordControl(&D_800BFB08, var_a1, (s32) var_a2, 0);
-    ovl_23_func_800BA610(&D_800BFB08);
+    Ovl23AdvanceDecisionRecordPosition(&D_800BFB08);
 }
 /* Warning: struct GfxObj is not defined (only forward-declared) */
 
-void ovl_23_func_800BA610(Ovl23Func800BB0C8Arg *arg0);
 void Ovl23ReturnDecisionRecordToAnchor(Ovl23Func800BB0C8Arg *arg0);
 
 void Ovl23StepRecordWindows(void) {
@@ -626,7 +624,7 @@ void Ovl23StepRecordWindows(void) {
             offset = 1;
             test = temp_a0;
             if (test == offset) {
-                ovl_23_func_800BA610((Ovl23Func800BB0C8Arg *)var_s1);
+                Ovl23AdvanceDecisionRecordPosition((Ovl23Func800BB0C8Arg *)var_s1);
             } else {
                 test = 3;
                 if (temp_a0 == test) {

@@ -79,7 +79,7 @@ s32 Ovl11TryBeginItemAction(s32 inputMode) {
         result = Ovl11ProbeObjectCellClass((Ovl11CE034Object *)obj);
         item = &(*(ItemData **)((u8 *)obj - 0x51A8))[obj->itemIndex];
         if (obj->itemIndex == 0x65) {
-            if (D_80128C54 != 0 && result != 0) {
+            if (gOvl11InteractionHitFlags != 0 && result != 0) {
                 return 0;
             }
             goto common_action;
@@ -87,13 +87,13 @@ s32 Ovl11TryBeginItemAction(s32 inputMode) {
             if (D_80128C50 & 0xC087) {
                 return 0;
             }
-            if (D_80128C54 != 0) {
+            if (gOvl11InteractionHitFlags != 0) {
                 return 0;
             }
             Ovl11ChangePrimaryObjectState(obj, 0x62, obj->unk38 + 0x17, -2);
             return 1;
         } else if (obj->itemIndex == 0x84) {
-            if (D_80128C54 != 0 && result != 0) {
+            if (gOvl11InteractionHitFlags != 0 && result != 0) {
                 return 0;
             }
             goto common_action;
@@ -103,7 +103,7 @@ s32 Ovl11TryBeginItemAction(s32 inputMode) {
                 if (D_80128C50 & 0xC087) {
                     return 0;
                 }
-                if (D_80128C54 == 0 || result == 0) {
+                if (gOvl11InteractionHitFlags == 0 || result == 0) {
                     Ovl11ChangePrimaryObjectState(obj, 9, obj->unk38 + 0x17, -2);
                     return 1;
                 }
@@ -111,17 +111,17 @@ s32 Ovl11TryBeginItemAction(s32 inputMode) {
             flags = item->u0.flags;
             if ((flags & 0x9000) == 0x9000 || (itemStatus = *(s32 *)((u8 *)item + 0x14), itemStatus == -1)) {
                 allow = 0;
-                if (D_80128C54 == 0) {
+                if (gOvl11InteractionHitFlags == 0) {
                     allow = 1;
                 } else {
-                    if (D_80128C54 & 0x8000) {
-                        if (((u16 *)D_80128C4C_dispatch)[1] == 0x64 && item->field_12 != 0) {
+                    if (gOvl11InteractionHitFlags & 0x8000) {
+                        if (((u16 *)gOvl11InteractionHitRecordView)[1] == 0x64 && item->field_12 != 0) {
                             Ovl11ChangePrimaryObjectState(obj, 0x6F, obj->unk38 + 0x17, -2);
                             return 1;
                         }
                         allow = 1;
                     }
-                    if (D_80128C54 & 0x200) {
+                    if (gOvl11InteractionHitFlags & 0x200) {
                         allow = ((Ovl11CB850State *)D_8006C838)->selectedRecord == 0x15F;
                     }
                 }
@@ -131,18 +131,18 @@ s32 Ovl11TryBeginItemAction(s32 inputMode) {
                 itemStatus = *(s32 *)((u8 *)item + 0x14);
             }
             if (itemStatus & 0x10) {
-                if (result == 0 && D_80128C54 == 0) {
+                if (result == 0 && gOvl11InteractionHitFlags == 0) {
                     Ovl11ChangePrimaryObjectState(obj, 0x38, obj->unk38 + 0x17, -2);
                     return 1;
                 }
-                if (result == 3 && D_80128C54 == 0) {
+                if (result == 3 && gOvl11InteractionHitFlags == 0) {
                     goto common_action;
                 }
                 if (result == 2) {
                     return 1;
                 }
             }
-            if (D_80128C54 != 0 || result != 2) {
+            if (gOvl11InteractionHitFlags != 0 || result != 2) {
                 return 0;
             }
         }

@@ -25,6 +25,8 @@
 #include "ovl11_held_item_actions.h"
 #include "ovl11_interaction_volume_actions.h"
 #include "ovl11_item_list_exchange_actions.h"
+#include "ovl11_interaction_record_actions.h"
+#include "ovl11_item_request_actions.h"
 
 /* Consume the dispatcher's forced-entry flag with a fixed position/velocity
  * setup. The constants are state-specific, not generic movement defaults. */
@@ -42,11 +44,9 @@ void Ovl11BeginPrimaryObjectState3B(Ovl11C7010Object *object) {
 
 void Ovl11BeginPrimaryObjectState3B (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
-s32 ovl_11_func_800C907C (Ovl11C8FA8Object *arg0, u16 arg1);
 /* This caller supplies a direction; the matched helpers do not use it. */
 s32 ovl_11_func_800C7838 (u8 *arg0);
 void ovl_11_func_800CF308 (s16 arg0);
-s32 ovl_11_func_800C8D24 (M2C_15512f31231d_Func800C7878Arg0 *arg0, u16 arg1);
 s32 ovl_11_func_800C77D8 (Ovl11C7010Object *arg0, u16 arg1);
 s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 
@@ -97,7 +97,7 @@ s32 Ovl11DispatchPrimaryObjectAction(void) {
             if (ovl_11_func_800CD734(obj, 0)) {
                 return 0;
             }
-            if (ovl_11_func_800C907C((Ovl11C8FA8Object *)obj, pressed)) {
+            if (Ovl11DispatchInteractionRecordInput((Ovl11C8FA8Object *)obj, pressed)) {
                 return 1;
             }
             if (pressed & 8) {
@@ -152,7 +152,7 @@ s32 Ovl11DispatchPrimaryObjectAction(void) {
                     return 1;
                 }
             }
-            if (ovl_11_func_800C8D24((M2C_15512f31231d_Func800C7878Arg0 *)obj, pressed)) {
+            if (Ovl11DispatchItemRequestInput(obj, pressed)) {
                 return 1;
             }
             if (Ovl11UpdateHeldItemAction(obj)) {

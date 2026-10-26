@@ -79,3 +79,4 @@ Ovl23PushActorTrailNode = 0x800B94D0; // type:func
 Ovl23DrawRecordTrails = 0x800B954C; // type:func
 // Preserve the leading label extent, not the extent of its aggregate views.
 gOvl23RecordRunWork = 0x800BF87C; // type:data size:0x4
+Ovl23AdvanceDecisionRecordPosition = 0x800BA610; // type:func

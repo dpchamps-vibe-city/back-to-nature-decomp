@@ -7172,15 +7172,16 @@ extern s32 gOvl11ActionPhaseDelays[3];
 extern s16 D_80123290[];
 extern s16 D_80123292;
 /* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
-extern void *D_80128C4C_dispatch __asm__("D_80128C4C");
+extern void *gOvl11InteractionHitRecordView __asm__("gOvl11InteractionHitRecord");
 /* 800CB114 publishes an opaque pointer; legacy readers still have private
  * record-pointer declarations, so select this direct view explicitly. */
 #ifdef OVL11_COLLISION_OUTPUT_VIEW
-extern void *D_80128C4C;
+extern void *gOvl11InteractionHitRecord;
 #endif
-extern s32 D_80128C54;
-/* 800CB114 publishes this flag word alongside the dispatched object pointer. */
-extern s32 Ovl11CollisionFlags __asm__("D_80128C54");
+/* 800CB114 publishes the interaction probe's record/category result. */
+extern s32 gOvl11InteractionHitFlags;
+/* Existing publisher spelling preserves its original address-register order. */
+extern s32 Ovl11CollisionFlags __asm__("gOvl11InteractionHitFlags");
 /* 800C523C reads and updates this counter with lhu/sh. */
 extern u16 D_80128C64;
 /* 800C907C saves the dispatched object pointer here and reads its u16 +0x22. */
@@ -7336,6 +7337,8 @@ extern s32 gOvl11PendingAreaReadIndex;
 extern s32 gOvl11AreaSoundEffectPending;
 /* ovl_11:800BBCB8 marks/awaits an archive read; 800BCD28 clears the flag. */
 extern s32 gOvl11AreaReadStarted;
+/* ovl_11:800BBC34 indexes eight callback words at 80121780 by scene phase. */
+extern s32 gOvl11ScenePhaseCallbacks[8];
 
 /* 800BBCB8: shared flags, counter, direction and mode through the status base. */
 typedef struct {

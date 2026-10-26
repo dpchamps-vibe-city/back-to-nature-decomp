@@ -2,12 +2,12 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-void ovl_23_func_800BA610(Ovl23Func800BB0C8Arg *arg0);
 void ovl_23_func_800BA73C(Ovl23BA73CArg *arg0);
 void ovl_23_func_800BAA60(Ovl23BAA60Arg *arg0);
 void ovl_23_func_800BABD8(void);
 s32 ovl_23_func_800BAFFC(s32 arg0);
 s32 ovl_23_func_800BB040(s32 arg0);
+void Ovl23AdvanceDecisionRecordPosition(Ovl23Func800BB0C8Arg *record);
 s32 Ovl23AngleDegreesFromVector(s32 dx, s32 dy);
 void Ovl23ApplyPadToAnchorRecord(void);
 s32 Ovl23BeginRecordRunExitFade(void);

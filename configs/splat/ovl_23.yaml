@@ -39,7 +39,7 @@ segments:
       - [0x84, c, modules/scene_record_run]
       - [0x1CF8, c, modules/direction_movement]
       - [0x2594, c, modules/record_random_selection]
-      - [0x27F0, c, ovl_23_func_800BA610]
+      - [0x27F0, c, modules/record_decision_advance]
       - [0x291C, c, ovl_23_func_800BA73C]
       - [0x2C40, c, ovl_23_func_800BAA60]
       - [0x2DB8, c, ovl_23_func_800BABD8]

@@ -32,6 +32,7 @@
 #include "ovl11_date_message.h"
 #include "ovl11_interaction_dispatch.h"
 #include "selection_panel.h"
+#include "ovl11_nearby_record_scans.h"
 
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800FFA40 (void);
@@ -47,7 +48,6 @@ void Ovl11TryBeginSetCVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16
 s32 ovl_11_func_800F3AC4 (u16 arg0);
 s32 Ovl11TryBeginProbedObjectVolumeAction (Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2);
 void ovl_11_func_800CE034 (Ovl11CE034Object *arg0, VECTOR *arg1, s32 arg2);
-u16 ovl_11_func_800BF2F4 (s16 *arg0, s16 *arg1);
 s32 ovl_11_func_80118C28 (s16 id);
 void Ovl11TryBeginFlaggedItemVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0);
 s32 ovl_11_func_800F24B0 (void);
@@ -323,7 +323,7 @@ block_28:
                 coord[0] = (u16) position.vx;
                 coord[1] = (u16) position.vy;
                 coord[2] = (u16) position.vz;
-                temp_v0_3 = ovl_11_func_800BF2F4(coord, (s16 *) ((u8 *) arg0 + 0xFC));
+                temp_v0_3 = Ovl11FindNearbyItemId(coord, (s16 *) ((u8 *) arg0 + 0xFC));
                 if (temp_v0_3 != 0) {
                     if ((temp_v0_3 == 0x177) || ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0)) {
                         Ovl11BeginInteraction((s16) ovl_11_func_80118C28(temp_v0_3));
@@ -556,14 +556,13 @@ void Ovl11TryBeginFlaggedItemVolumeAction(Recon_ovl_11_func_800C8334_A0View *arg
     }
 }
 
-struct_80076220 *ovl_11_func_800BF1D0(s16 *arg0, void *arg1);
 void ovl_11_func_800F0FB0(s32 arg0);
 
 s32 Ovl11TryBeginProbedObjectVolumeAction(Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2) {
     s16 temp_v1;
     struct_80076220 *temp_v0;
 
-    temp_v0 = ovl_11_func_800BF1D0(arg1, arg0->point);
+    temp_v0 = Ovl11FindNearbyActiveActor(arg1, arg0->point);
     if (temp_v0 != NULL) {
         temp_v1 = arg2[2];
         if (temp_v1 == 0x2E) {

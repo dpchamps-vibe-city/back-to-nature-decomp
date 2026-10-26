@@ -35,6 +35,7 @@
 #include "ovl11_surface_height.h"
 #include "ovl11_item_record_lists.h"
 #include "ovl11_cell_geometry.h"
+#include "ovl11_interaction_record_actions.h"
 
 s32 ovl_11_func_800C9D64(void);
 
@@ -146,8 +147,8 @@ s32 Ovl11BeginCellEffectAction(Ovl11C7010Object *arg0) {
 
     mode = ovl_11_func_800C9D64();
     if (mode == 2) {
-        if (D_80128C54 & 0x8000) {
-            if (ovl_11_func_800F46A4(D_80128C4C_dispatch) != 0) {
+        if (gOvl11InteractionHitFlags & 0x8000) {
+            if (ovl_11_func_800F46A4(gOvl11InteractionHitRecordView) != 0) {
                 ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, 0x96);
             }
         } else {
@@ -278,9 +279,9 @@ void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *arg0) {
                 }
             }
         }
-    } else if (D_80128C54 & 0x8000) {
+    } else if (gOvl11InteractionHitFlags & 0x8000) {
         D_80128C64 += 1 << temp_s3;
-        if (ovl_11_func_800F482C(D_80128C4C_dispatch, D_80128C64, arg0->amount) == 1) {
+        if (ovl_11_func_800F482C(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
             var_s4 = 0x96;
         }
     }
@@ -319,9 +320,9 @@ void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
                 }
             }
         }
-    } else if (D_80128C54 & 0x8000) {
+    } else if (gOvl11InteractionHitFlags & 0x8000) {
         D_80128C64 += 1 << temp_s3;
-        if (ovl_11_func_800F474C(D_80128C4C_dispatch, D_80128C64, arg0->amount) == 1) {
+        if (ovl_11_func_800F474C(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
             var_s4 = 0x96;
         }
     }
@@ -410,7 +411,6 @@ void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800D666C (s16 arg0);
 void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
-s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
 s32 Ovl11CommitPendingItemRecord (Ovl11C7010Object *arg0);
@@ -772,8 +772,8 @@ state_done:
 finish_action:
             goto advance_action;
         case 0x32:
-            if ((ovl_11_func_800C8FA8((Ovl11C8FA8Object *) arg0) == 0) && (D_80128C54 & 0x400)) {
-                ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) D_80128C4C_dispatch, 0xD);
+            if ((Ovl11HandleInteractionRequest80((Ovl11C8FA8Object *) arg0) == 0) && (gOvl11InteractionHitFlags & 0x400)) {
+                ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) gOvl11InteractionHitRecordView, 0xD);
                 Ovl11ResetPrimaryObjectRequest();
             }
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0xF0));
