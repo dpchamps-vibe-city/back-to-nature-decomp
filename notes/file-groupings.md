@@ -4069,7 +4069,16 @@ handlers. This is a measured source/context integration limit, not evidence
 for splitting the handler bank or changing flags. Next useful experiment:
 reconcile the shared object view and actual D04D4/D0408 contracts, with
 byte-preserving caller conversions, before repeating the whole-bank fold.
-No partial handler module or new exception was retained.
+No partial handler module or new exception was retained. A later read-only
+census distinguishes the three entry gates (3FEC/4028/4030) from the exact
+20-function frame-table closure (41A4–5740 exclusive, frame slot 5 null).
+The sixteen sole-use step tables BCC..C94 occur in handler address order;
+425C is additionally called by 4EA0/506C/5224. This strengthens the frame
+bank's membership evidence, but does not settle the shared D04D4/D0408
+prototype and object-view conflicts exposed by the prior whole-bank compile.
+The existing definition of D0408 and its disagreeing callers must be reconciled
+with byte-preserving interfaces before another accepted bank fold. No source
+or flag slice was made from the new census.
 
 Final run acceptance covers nine new ovl_11 modules: default_position,
 hour_counter_adjustment, sixty_step_deltas, item_spawn_placement,
@@ -4393,9 +4402,61 @@ Members (link order):
 
 ## `ovl_11` sprite-position initializer/draw cluster — 0x800CDE3C–0x800CE210 (confidence: medium)
 
-Candidate same-TU cluster supported by paired initializer/driver layouts,
-shared draw-helper calls, and corroborating link order; the original TU
-boundaries remain unresolved.
+**Reconstructed `modules/primary_object_sprite_slots.c`, all six entries
+CDE3C–CE210 exclusive.** The two initializer/draw pairs consume the same
+object-local position banks (+120, ten 0x10-byte entries; +1C0, ten entries)
+and the latter's animation/frame pairs (+3D4, stride 4). Both draw walkers
+call CE0F0, whose only callers are those walkers. That exclusive helper
+closure, producer/consumer layouts and corroborating link order support the
+whole span, including intervening CE034. CE034 is a shared grid-offset
+utility, not proven private to this file: its inclusion follows the enclosing
+helper closure, not a claim that the public grid-offset table belongs here.
+The earlier unclosed five-member proposal is superseded.
+
+Names: `Ovl11InitObjectSpriteSlots`, `Ovl11DrawEmbeddedSpriteSlots`,
+`Ovl11InitSharedSpriteSlots`, `Ovl11DrawSharedSpriteSlots`,
+`Ovl11ComputeGridOffsetPosition` and `Ovl11DrawObjectSpriteSlot`.
+The header publishes the five externally called entries; the helper keeps
+external linkage without being advertised. Initialization prepares five
+embedded sources, but the original helper ALWAYS uses the first source in
+mode 0, not source[index], and steps it even when projection culls a point
+(unless resident bit 08000000 freezes it). This is preserved and documented,
+not repaired. Shared mode uses animation/frame pairs and does not step the
+shared source. Animation 5 is its inactive marker. Grid mode 2 selects the
+second offset bank; mode 4 (not mode 2) halves signed offsets toward zero.
+
+The shared source/readiness flag are `gOvl11SharedSlotSpriteSource` (80128D00)
+and `gOvl11SharedSlotSpriteEnabled` (80123154): CE5FC clears the flag, then in
+season 3 initializes source 187 from the resident sprite cache and enables it;
+primary_object_draw honors that flag. These globals are borrowed here, not
+made private or tentatively defined. CDE3C's source-local M2C global view was
+moved to the canonical override header as `Ovl11SpriteOffsetRegistry`: the
+original seven-pointer registry comprises two base tables, four season tables
+and the fixed-ID table at 80124FE4. The initializer reads
+`gOvl11SpriteOffsetRegistry.fixedIdOffsets[1]`, preserving the original
+D_80124FCC-rooted aggregate view alongside the existing leaf aliases. A direct
+`gOvl11FixedIdSpriteOffsets[1]` rewrite shortened the initializer by one
+instruction and was rejected by the full gate; naming a leaf alias does not
+make it the same compiler address expression as the witnessed aggregate root.
+No declaration or struct for that global remains local. Projection's shared position fields
+now read x/y/z, retaining unsigned low-halfword types and spacing; the only
+other reader, primary_object_draw, is updated consistently.
+
+Left CDD7C is a held-item action/spawn leaf using gOvl11HeldActionSprite*,
+with no bank/helper reference; it remains a separate source, not a member
+of held_item_actions merely because it uses that public interface. Right
+CE210 begins position_transition's separate coordinate/state protocol, with
+no slot-bank/helper use. Remote CE5FC supplies shared source state, while
+the draw unit borrows it: no private call/table witness groups the intervening
+transition and paired-ID helpers into this bank closure. These cuts describe
+what is supported, not proven original object boundaries under -G0. Baseline
+checked fold proved all six and the linked overlay; the public header is
+reconciled into callers. No compiler overrides, linkage changes, owned global
+definitions, stubs or policy exceptions were added. The full batch gate passes every
+linked executable/overlay byte and all structural/policy/interface checks:
+1567/2625 folded (+12 this run), 253/253 module TUs valid. Generated naming
+was recovered through bootstrapOverlay after a full /tmp interrupted a split;
+no generated file was hand-edited and no shared tool changed.
 
 Fingerprints:
 - `800CDE3C` / `800CDEEC` share the object's +0x120 position array with
@@ -4405,15 +4466,16 @@ Fingerprints:
   verified helper consumes the corresponding position view and selects
   embedded sprite-source state or the indexed animation/frame pairs.
 - The map places `800CDE3C` → `800CDEEC` → `800CDF4C` → `800CDFAC` →
-  `800CE034` → `800CE0F0` in zero-gap order. Intervening `800CE034` is
-  already recorded in the D_801281F0 pair-table cluster and is not added
-  here on adjacency alone.
+  `800CE034` → `800CE0F0` in zero-gap order. Intervening `800CE034` also
+  appears in the D_801281F0 pair-table family; the public table alone does
+  not assign it to that remote family as a translation unit.
 
 Members (address order):
 - ovl_11_func_800CDE3C (m) — initializes ten position records and five embedded sprite sources.
 - ovl_11_func_800CDEEC (s) — five-position draw driver using `800CE0F0` mode 0.
 - ovl_11_func_800CDF4C (m) — initializes ten indexed positions and animation/frame pairs.
 - ovl_11_func_800CDFAC (m) — ten-position draw driver using mode 1, skipping animation value 5.
+- ovl_11_func_800CE034 (m) — grid-offset position utility inside the draw-helper closure.
 - ovl_11_func_800CE0F0 (m) — projects/draws a position with embedded or shared sprite-source state.
 
 Evidence: matched initializer/helper C in `src/overlays/ovl_11/`; original
@@ -11043,7 +11105,41 @@ There was no compiler override or carried stub and no exception changed.
   and returns 1; shares the cluster's base-kept-live idiom (the `&D_8006C838`
   base stays in a callee-saved register across both calls) and sits in one
   gapless link run with members 0x800DE46C/0x800DE76C
-- ovl_11_func_800DE334 (m, low-confidence local callback-TU candidate with 800DE2EC) — queued update callback with state-gated record-field clearing ([shared-caller/link-order evidence and limits](research/ovl_11_func_800DE334-grouping.md)).
+- ovl_11_func_800DE334 (m, reconstructed with 800DDDB4–800DE334) — queued update callback with state-gated record-field clearing ([shared-caller/link-order evidence and limits](research/ovl_11_func_800DE334-grouping.md)).
+
+**Reconstructed `modules/clock_event_callbacks.c`, 800DDDB4–800DE3A0
+exclusive (five entries, original order).** The original table at 800B7F54
+(`gOvl11ClockEventHandlers`) contains precisely these entries in slots 0..4:
+acknowledgement, history shift, staged day-scene rebuild, area sprite refresh,
+and hourly record updates. The clock service retains the queue head while
+its callback returns zero, removes it on nonzero, and resets resident+D0.
+DDDFC is the consumer of that reset: its seven phases yield through fades,
+rebuild daily conditions, resource/scene/event/weather state, wait for sound
+transfer, and finish the transition. The other four complete in one call.
+This common dispatch/return protocol and its consecutive implementation block
+support the five-member callback unit beyond mere adjacency. New names are
+`Ovl11ClockAcknowledgeEvent`, `Ovl11ClockShiftValueHistory`,
+`Ovl11ClockRebuildDayScene`, `Ovl11ClockRefreshAreaSprites` and
+`Ovl11ClockApplyHourUpdates`; the header records effects, retry behavior,
+resource prerequisites and the blocking sound wait. The history operation
+copies three eight-byte pairs backward before clearing the newest one; its
+word-indexed representation is retained. No gameplay meaning is assigned to
+those pair values.
+
+Left DDC64–DDDB4 (record_pair_visibility) uses its own two selected scene
+records and flag 0x72, not the clock queue/history/phase protocol. Right DE3A0
+is an active-record-slot drain used by CCCC0/CD734; DE46C is a per-frame clock
+advance request, and DE4C0 is the shared completion/fade service used both
+here and by clock_calendar. They are dependencies/services, not adjacent
+clock-table callbacks. The table's remaining five entries are remote F3D88
+and the separately reconstructed clock_record_flags quartet; the public
+callback table alone does not establish a single original TU containing all
+intervening code. These are conservative protocol/responsibility cuts under
+-G0, not GP-proven historical object boundaries. Baseline checked fold proved
+all five and the linked overlay; no flags, private linkage, owned storage or
+policy exceptions were added. Batch verification passes all linked executable/overlay bytes, inventory,
+convergence, policy, whitespace, stability and exception non-growth; the final
+batch stands at 1567/2625 folded and 253/253 valid module TUs.
 - ovl_11_func_800CFA48 (m, matched this session) — gated bit-set leaf: after
   two `ovl_11_func_800D3230` probes, reads the s16 at +0xE4C8 via the
   cluster's +0x8000 two-stage split (base+0x8000, disp +0x64C8; same cell as
@@ -24891,6 +24987,31 @@ sequence caller. Original provenance:
 
 - ovl_11_func_800DC388 (m, candidate same TU) — resolves an ID from state variants and event flags, then applies the range-table remapper.
 - ovl_11_func_800DC560 (s, candidate same TU) — refreshes the current work-area ID through the preceding resolver before record-dependent setup.
+
+**Default-selection dependency reconstructed separately:**
+`modules/default_area_selection.c`, ovl_11:800DD274–800DD36C, publishes
+`Ovl11ResolveDefaultAreaSelection` through `ovl11_default_area_selection.h`.
+The installer-side resolver and scripted selector 800E5E98 both call this
+read-only leaf; the latter subtracts the resident base when it needs a relative
+ID. An overlay-wide source/assembly census finds its six signed-offset labels
+at 80123E38/40/42/48/4A/50 used only by this leaf. These are now named
+`gOvl11DefaultArea*`; their extents and scalar/array views are unchanged.
+The primary selector chooses the variant70 zero/nonzero offset, variant60
+zero/nonzero offset, or unchecked variant80 index; other primary values return
+the base. Header documentation records this fallback and index constraint.
+
+This singleton is the whole currently supported table-policy unit, not a
+claim that the original file had just one function. Immediate left DD21C is
+the halfword-copy leaf in block_copy (no selector/table access); immediate
+right DD36C returns constant zero (no table/state/call relationship). The
+following DD374 begins the separately established three-record vertex-blend
+cycle. Neither immediate neighbor supplies evidence to extend the table-policy
+unit. These are evidence-limited cuts under -G0, not GP-proven boundaries.
+The remote callers borrow its result but share neither its private tables nor
+its table-selection implementation. Baseline checked fold passed; no flag,
+linkage or ownership change was needed. Full batch verification passes every executable/overlay byte, inventory,
+interface/policy, convergence and exception-growth gate (1567/2625 folded,
+253/253 valid modules after all three units in this run).
 
 ## `ovl_11` object-render variants and marker helper — 0x800CFE40–0x800D037C (confidence: low)
 

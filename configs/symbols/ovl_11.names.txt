@@ -1,5 +1,31 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Primary-object embedded/shared sprite-slot banks and position utility.
+Ovl11InitObjectSpriteSlots = 0x800CDE3C; // type:func
+Ovl11DrawEmbeddedSpriteSlots = 0x800CDEEC; // type:func
+Ovl11InitSharedSpriteSlots = 0x800CDF4C; // type:func
+Ovl11DrawSharedSpriteSlots = 0x800CDFAC; // type:func
+Ovl11ComputeGridOffsetPosition = 0x800CE034; // type:func
+Ovl11DrawObjectSpriteSlot = 0x800CE0F0; // type:func
+gOvl11SharedSlotSpriteEnabled = 0x80123154; // type:data size:0x4
+gOvl11SharedSlotSpriteSource = 0x80128D00; // type:data size:0x30
+
+// Consecutive clock-queue event callbacks (event IDs 0 through 4).
+Ovl11ClockAcknowledgeEvent = 0x800DDDB4; // type:func
+Ovl11ClockShiftValueHistory = 0x800DDDBC; // type:func
+Ovl11ClockRebuildDayScene = 0x800DDDFC; // type:func
+Ovl11ClockRefreshAreaSprites = 0x800DE2EC; // type:func
+Ovl11ClockApplyHourUpdates = 0x800DE334; // type:func
+
+// Default area-selection resolver and its signed selection-offset tables.
+Ovl11ResolveDefaultAreaSelection = 0x800DD274; // type:func
+gOvl11DefaultAreaPrimaryOffsets = 0x80123E38; // type:data size:0x8
+gOvl11DefaultAreaVariant60ZeroOffset = 0x80123E40; // type:data size:0x2
+gOvl11DefaultAreaVariant60NonzeroOffset = 0x80123E42; // type:data size:0x6
+gOvl11DefaultAreaVariant70ZeroOffset = 0x80123E48; // type:data size:0x2
+gOvl11DefaultAreaVariant70NonzeroOffset = 0x80123E4A; // type:data size:0x6
+gOvl11DefaultAreaVariant80Offsets = 0x80123E50; // type:data size:0x4
+
 // Row-selected record values and the original nested flag-priority helper.
 Ovl11AssignPoolRowValues = 0x800F508C; // type:func
 Ovl11SelectRecordRowValue = 0x800F5108; // type:func

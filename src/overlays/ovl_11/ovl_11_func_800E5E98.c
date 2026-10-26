@@ -1,14 +1,13 @@
 #include "common.h"
 #include "game_flags.h"
-
-s32 ovl_11_func_800DD274(void);
+#include "ovl11_default_area_selection.h"
 
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_a2;
 
     switch (arg0) {
     case -1:
-        var_a2 = ovl_11_func_800DD274() - ((struct Ovl11MessageSelectState *) D_8006C838)->base;
+        var_a2 = Ovl11ResolveDefaultAreaSelection() - ((struct Ovl11MessageSelectState *) D_8006C838)->base;
         break;
     case -2:
         var_a2 = (((struct Ovl11MessageSelectState *) D_8006C838)->variant * 4) + 0x50;

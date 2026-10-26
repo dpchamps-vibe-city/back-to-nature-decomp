@@ -1,4 +1,14 @@
+/*
+ * Clock-queue event callbacks 0..4 (ovl_11:800DDDB4-800DE3A0).
+ * Their return values implement the queue's retry/completion protocol; the
+ * day-scene rebuild deliberately yields between its seven phases. Resource
+ * installation order and the blocking sound wait are significant.
+ * Public contracts: ovl11_clock_event_callbacks.h. Membership and conservative
+ * boundaries: notes/file-groupings.md. Shared resident storage stays external.
+ */
+
 #include "common.h"
+#include "ovl11_clock_event_callbacks.h"
 #include "game_types.h"
 #include "screen_fade.h"
 #include "sprite_rotation.h"
@@ -34,8 +44,34 @@
 #include "ovl11_default_position.h"
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_pending_event_queue.h"
+#include "ovl11_hour_counter_adjustment.h"
 #include "ovl11_record_pool_lifecycle.h"
 #include "ovl11_event_schedule.h"
+
+s32 Ovl11ClockAcknowledgeEvent(void) {
+    return 1;
+}
+
+s32 Ovl11ClockShiftValueHistory(void) {
+    s32 *residentWords;
+    s32 *newest;
+    s32 *pair;
+    s32 historyIndex;
+
+    /* Copy from oldest to newest so overlapping history slots survive. */
+    historyIndex = 2;
+    do {
+        residentWords = (s32 *)&D_8006C838;
+        pair = residentWords + (historyIndex + 1) * 2;
+        pair[0x1271] = pair[0x126F];
+        pair[0x1272] = pair[0x1270];
+        historyIndex--;
+    } while (historyIndex >= 0);
+    newest = (s32 *)&D_8006C838;
+    newest[0x1271] = 0;
+    newest[0x1272] = 0;
+    return 1;
+}
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CCCC0 (void);
@@ -48,11 +84,11 @@ s32 ovl_11_func_800DE76C (void);
 void ovl_11_func_800DE4C0 (void);
 void ovl_11_func_800F4BB4(void);
 
-s32 ovl_11_func_800DDDFC(void) {
+s32 Ovl11ClockRebuildDayScene(void) {
     s32 result;
     s32 id;
     s32 offset;
-    s32 same;
+    s32 sameArea;
     Ovl11DDDFCState *phase0;
 
     SetGameFlag(3, 1);
@@ -103,9 +139,9 @@ s32 ovl_11_func_800DDDFC(void) {
             ((Ovl11SetupWorkView *)&D_8007AFF0)->alternateId = -1;
             offset = ((Ovl11DDDFCState *)D_8006C838)->variant * 4 + 0x50;
             id = ((Ovl11DDDFCState *)D_8006C838)->index + offset;
-            same = ((Ovl11SetupWorkView *)&D_8007AFF0)->id == id;
+            sameArea = ((Ovl11SetupWorkView *)&D_8007AFF0)->id == id;
             ((Ovl11SetupWorkView *)&D_8007AFF0)->id = id;
-            Ovl11InstallSceneSetup((u16)((Ovl11SetupWorkView *)&D_8007AFF0)->id, 0x8000, same);
+            Ovl11InstallSceneSetup((u16)((Ovl11SetupWorkView *)&D_8007AFF0)->id, 0x8000, sameArea);
             Ovl11UpdateEventSlotCounters();
             Ovl11UpdateRecordFlagCounters();
             Ovl11LoadIndexedSpriteRecords(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xA));
@@ -183,4 +219,29 @@ s32 ovl_11_func_800DDDFC(void) {
         break;
     }
     return result;
+}
+
+void ovl_11_func_800F3FF4(s16 arg0);
+void ovl_11_func_800F4CA0(void);
+
+s32 Ovl11ClockRefreshAreaSprites(void) {
+    Ovl11LoadOffsetSpriteSet(((struct struct_8006C838_button *)D_8006C838)->field_44BA);
+    ovl_11_func_800F3FF4(((struct struct_8006C838_button *)D_8006C838)->field_44BA);
+    ovl_11_func_800F4CA0();
+    return 1;
+}
+
+void ovl_11_func_8010C95C(void);
+
+s32 Ovl11ClockApplyHourUpdates(void) {
+    Ovl11RunRecordPoolFirstPass();
+    ovl_11_func_8010C95C();
+    Ovl11ApplyHourCounterDeltas();
+    if (((struct struct_8006C838_time *) D_8006C838)->field_44C0 == 0xC) {
+        Ovl11ClearEventSlotTimeOrigins();
+    }
+    if (((struct struct_8006C838_time *) D_8006C838)->field_44C0 == 0x12) {
+        Ovl11ClearEventSlotTimeOrigins();
+    }
+    return 1;
 }

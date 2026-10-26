@@ -48,6 +48,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_item_table_queries.h"
+#include "ovl11_primary_object_sprite_slots.h"
 
 s32 ovl_11_func_800C9D64(void);
 
@@ -335,8 +336,6 @@ void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
     ovl_11_func_800CD5BC(arg0, var_s4);
 }
 
-void ovl_11_func_800CE034(Ovl11CE034Object *arg0, Ovl11CE034Position *arg1, s32 arg2);
-
 void Ovl11PlaceObjectCellTexture(Ovl11CE034Object *arg0) {
     Ovl11CE034Position sp10;
     s16 sp20;
@@ -345,7 +344,7 @@ void Ovl11PlaceObjectCellTexture(Ovl11CE034Object *arg0) {
     Ovl11D124Entry *var_s0;
 
     temp_s0 = ovl_11_func_800C9D64();
-    ovl_11_func_800CE034(arg0, &sp10, 1);
+    Ovl11ComputeGridOffsetPosition(arg0, &sp10, 1);
     if (temp_s0 != 2) {
         gOvl11AreaCellConverters[temp_s0](&sp10, &sp20, &sp22);
         if (temp_s0 != 0) {
@@ -384,7 +383,7 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
     for (i = 0; i < 4U; i++) {
         arg0->direction = i;
         position = *(VECTOR *)arg0->position;
-        ovl_11_func_800CE034((Ovl11CE034Object *)arg0,
+        Ovl11ComputeGridOffsetPosition((Ovl11CE034Object *)arg0,
                            (Ovl11CE034Position *)&position, 2);
         result = Ovl11ResolveSurfaceHeight((s32 *)&position, 0xC080);
         if ((result | ovl_11_func_800CB114((Ovl11CB114Object *)arg0,
@@ -408,7 +407,6 @@ void ovl_11_func_800CD670 (s16 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 void ovl_11_func_800CBD78 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CF314 (u8 *arg0, C580C_b6c4596908ca_Ovl11CF314Arg1 *arg1, C580C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
-s32 ovl_11_func_800CDF4C (u8 *arg0);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F0FB0 (s32 arg0);
@@ -650,7 +648,7 @@ state_done:
                 ovl_11_func_800CF314((u8 *)&D_80075AD4, (C580C_b6c4596908ca_Ovl11CF314Arg1 *) ((u8 *) arg0 + 0xFC), (C580C_b6c4596908ca_Ovl11CF314Arg2 *) ((u8 *) arg0 + 0x100));
             }
             arg0->unk6C &= ~0x180;
-            ovl_11_func_800CDF4C((u8 *) arg0);
+            Ovl11InitSharedSpriteSlots((u8 *) arg0);
             Ovl11MoveToFreeDirection((Ovl11C498CObject *) arg0);
             return 1;
         case 0x59:
@@ -674,7 +672,7 @@ state_done:
                 PlaySoundEffect(0x13);
             }
             if (arg0->state == 0x62) {
-                ovl_11_func_800CE034((Ovl11CE034Object *)arg0, (Ovl11CE034Position *)&position, 4);
+                Ovl11ComputeGridOffsetPosition((Ovl11CE034Object *)arg0, (Ovl11CE034Position *)&position, 4);
                 ovl_11_func_800F43CC(0x64, position, arg0->collisionId, 0);
                 PlaySoundEffect(7);
             }

@@ -501,13 +501,14 @@ typedef struct {
     s32 z;
 } Vec3;
 
-/* Halfword position view read by ovl_11_func_800CE0F0. */
+/* Sprite projection reads the unsigned low halfword of each XYZ word.
+ * Keep the interleaved high-halfword padding and unsigned promotion. */
 typedef struct {
-    /* 0x00 */ u16 field_0;
+    /* 0x00 */ u16 x;
     /* 0x02 */ u16 pad_2;
-    /* 0x04 */ u16 field_4;
+    /* 0x04 */ u16 y;
     /* 0x06 */ u16 pad_6;
-    /* 0x08 */ u16 field_8;
+    /* 0x08 */ u16 z;
 } Ovl11SpritePositionView;
 
 /* Simple 2-word structure for basic pair initialization */

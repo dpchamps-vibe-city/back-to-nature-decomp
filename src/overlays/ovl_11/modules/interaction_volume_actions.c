@@ -35,6 +35,7 @@
 #include "ovl11_nearby_record_scans.h"
 #include "ovl11_pending_event_queue.h"
 #include "ovl11_save_counters.h"
+#include "ovl11_primary_object_sprite_slots.h"
 
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800FFA40 (void);
@@ -48,7 +49,6 @@ void Ovl11TryBeginItem47VolumeAction(Recon_ovl_11_func_800C8334_A0View *arg0, s1
 void Ovl11TryBeginSetAVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void Ovl11TryBeginSetCVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 s32 Ovl11TryBeginProbedObjectVolumeAction (Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2);
-void ovl_11_func_800CE034 (Ovl11CE034Object *arg0, VECTOR *arg1, s32 arg2);
 s32 ovl_11_func_80118C28 (s16 id);
 void Ovl11TryBeginFlaggedItemVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0);
 void Ovl11TryBeginItem3FVolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
@@ -319,7 +319,7 @@ block_28:
                 Ovl11TryBeginProbedObjectVolumeAction((Ovl11C8808Object *) arg0, coord, temp_v0);
                 return 0x24;
             case 37:
-                ovl_11_func_800CE034((Ovl11CE034Object *) arg0, &position, 1);
+                Ovl11ComputeGridOffsetPosition((Ovl11CE034Object *) arg0, &position, 1);
                 coord[0] = (u16) position.vx;
                 coord[1] = (u16) position.vy;
                 coord[2] = (u16) position.vz;

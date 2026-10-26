@@ -12,14 +12,17 @@
 #include "ovl11_area_resource_load.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_sixty_step_deltas.h"
+#include "psyq/libetc.h"
+#include "psyq/abs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_primary_object_sprite_slots.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
 s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
-s32 ovl_11_func_800CDE3C (u8 *arg0);
-s32 ovl_11_func_800CDF4C (u8 *arg0);
 void ovl_11_func_800DE3A0 (void);
 
 void ovl_11_func_800CCCC0(void) {
@@ -73,7 +76,7 @@ void ovl_11_func_800CCCC0(void) {
     ((struct Ovl11CCCC0State *)D_8006C838)->pending = 0;
     SetGameFlag(0xAU, 0U);
     SetGameFlag(0x76U, 0U);
-    ovl_11_func_800CDE3C((u8 *)player);
-    ovl_11_func_800CDF4C((u8 *)player);
+    Ovl11InitObjectSpriteSlots((u8 *)player);
+    Ovl11InitSharedSpriteSlots((u8 *)player);
     SetGameFlag(0xA0U, 0U);
 }

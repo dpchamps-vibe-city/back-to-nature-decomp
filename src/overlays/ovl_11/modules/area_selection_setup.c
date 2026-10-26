@@ -27,6 +27,7 @@
 #include "ovl11_scene_setup_install.h"
 #include "psyq/libetc.h"
 #include "ovl11_area_scene_load.h"
+#include "ovl11_default_area_selection.h"
 
 #define WORK ((Ovl11SetupWorkView *)&D_8007AFF0)
 #define RESIDENT ((Ovl11SetupResidentView *)D_8006C838)
@@ -34,7 +35,6 @@
 #define SELECTION_HEADER ((struct Ovl11SpriteWork *)&D_8007AFF0)
 
 s32 ovl_11_func_800E3D88(void);
-s32 ovl_11_func_800DD274(void);
 
 s32 Ovl11ResolveAreaSelection(s32 selection) {
     s32 id;
@@ -44,7 +44,7 @@ s32 Ovl11ResolveAreaSelection(s32 selection) {
         return gCalendarSeason + 0xBC;
     }
     if (id == 0) {
-        id = ovl_11_func_800DD274();
+        id = Ovl11ResolveDefaultAreaSelection();
     }
     if (id == 0x50) {
         s32 variant = VARIANTS->variant50 * 4 + 0x50;

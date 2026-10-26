@@ -2531,11 +2531,11 @@ typedef struct {
 } Ovl11SpriteEffect;
 
 typedef struct {
-               u16 field_0;
+               u16 x;
                u16 pad_2;
-               u16 field_4;
+               u16 y;
                u16 pad_6;
-               u16 field_8;
+               u16 z;
 } Ovl11SpritePositionView;
 
 typedef struct {

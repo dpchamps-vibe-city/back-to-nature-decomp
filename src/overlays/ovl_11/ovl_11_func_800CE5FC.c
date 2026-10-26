@@ -12,18 +12,18 @@
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
 
-extern s32 D_80123154;
+extern s32 gOvl11SharedSlotSpriteEnabled;
 extern s16 gCalendarSeason;
 
 void ovl_11_func_800CE5FC(void) {
     s32 header;
 
-    D_80123154 = 0;
+    gOvl11SharedSlotSpriteEnabled = 0;
     if (gCalendarSeason == 3) {
         header = Ovl11FindResidentSlotSprite(0x187);
         if (header != 0) {
-            D_80123154 = 1;
-            InitSpriteSourceData(&D_80128D00, (SpriteDataHeader *)header);
+            gOvl11SharedSlotSpriteEnabled = 1;
+            InitSpriteSourceData(&gOvl11SharedSlotSpriteSource, (SpriteDataHeader *)header);
         }
     }
 }

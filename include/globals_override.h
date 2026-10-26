@@ -1143,6 +1143,15 @@ extern struct SpriteSourceData D_8007942C;
 extern s32 *D_80124FCC_spriteOffsets __asm__("D_80124FCC");
 /* 800BD3C4 indexes the same offset-table pointers by item number. */
 extern s32 *D_80124FCC_tables[] __asm__("D_80124FCC");
+/* CDE3C reads the seventh pointer (+18), then offset word 1. Original data
+ * contains two base tables, four named season tables, then the named fixed-ID
+ * table at 80124FE4. Keep this aggregate-root view alongside the leaf aliases. */
+typedef struct {
+    s32 *baseTables[2];
+    s32 *seasonTables[4];
+    s32 *fixedIdOffsets;
+} Ovl11SpriteOffsetRegistry;
+extern Ovl11SpriteOffsetRegistry gOvl11SpriteOffsetRegistry __asm__("D_80124FCC");
 /* 800BD3C4 reads [item] and [item + 1] as a start/end pair. */
 extern s32 gOvl11IndexedSpriteBoundaries[];
 /* 800BD3C4 stores the loaded item number at work-area +0x25478. */
@@ -3234,7 +3243,7 @@ extern u32 gAuxSpriteHeader[0x10];
 /* D_80128D00 - ovl_11 sprite source-data object (0x30 bytes).
  * The complete type is defined in game_types.h; forward-declare it here
  * because common.h includes this header before the shared types. */
-extern struct SpriteSourceData D_80128D00;
+extern struct SpriteSourceData gOvl11SharedSlotSpriteSource;
 
 /* D_80070400 - ovl_11 sprite source-data array base (0x30-byte elements).
  * Walked as a contiguous array by ovl_11_func_800DA588 and indexed by
@@ -5508,7 +5517,7 @@ extern s16 gOvl11PrimaryDrawWorldPoint[4];
 /* 8001DFD4 writes two screen-coordinate words, read by 800CA24C at +0/+4. */
 extern s32 gOvl11PrimaryDrawScreenPoint[2];
 /* 800CA24C tests this word before consulting the per-index halfword table. */
-extern s32 D_80123154;
+extern s32 gOvl11SharedSlotSpriteEnabled;
 /* 800CA24C indexes this signed-halfword table with the object's signed +FE. */
 extern s16 D_80125F24[];
 
@@ -7780,17 +7789,17 @@ typedef struct {
 } Ovl11ClockHudPolicyState;
 
 /* 800DD274 indexes signed halfwords at 80123E38 by the +44CE selector. */
-extern s16 D_80123E38[];
+extern s16 gOvl11DefaultAreaPrimaryOffsets[];
 /* 800DD274 loads this signed halfword for the +44D0 == 0 arm. */
-extern s16 D_80123E40;
+extern s16 gOvl11DefaultAreaVariant60ZeroOffset;
 /* 800DD274 loads this signed halfword for the +44D0 != 0 arm. */
-extern s16 D_80123E42;
+extern s16 gOvl11DefaultAreaVariant60NonzeroOffset;
 /* 800DD274 loads this signed halfword for the +44D2 == 0 arm. */
-extern s16 D_80123E48;
+extern s16 gOvl11DefaultAreaVariant70ZeroOffset;
 /* 800DD274 loads this signed halfword for the +44D2 != 0 arm. */
-extern s16 D_80123E4A;
+extern s16 gOvl11DefaultAreaVariant70NonzeroOffset;
 /* 800DD274 indexes signed halfwords at 80123E50 by the +44D4 selector. */
-extern s16 D_80123E50[];
+extern s16 gOvl11DefaultAreaVariant80Offsets[];
 
 /* 80110E98 indexes this signed-halfword table by the object's u16 field at +0xAC. */
 extern s16 D_80127F50[];

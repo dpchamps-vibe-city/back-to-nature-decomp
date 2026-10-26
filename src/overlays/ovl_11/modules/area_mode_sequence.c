@@ -53,6 +53,10 @@
 #include "ovl11_item_spawn_placement.h"
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_area_scene_load.h"
+#include "ovl11_clock_event_callbacks.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_primary_object_sprite_slots.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -69,7 +73,6 @@ void SetVal8005E27C(s32 arg0);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CD624(void);
 void ovl_11_func_800CD670(s16 arg0);
-s32 ovl_11_func_800DE2EC(void);
 
 #define WORK ((Ovl11BBCB8Work *)&D_8007AFF0)
 #define STATUS ((Ovl11BBCB8Status *)D_8006C838)
@@ -258,7 +261,7 @@ void Ovl11StepAreaModeState(void) {
                     SetGameFlag(0x9C, 0);
                 }
                 STATUS->direction = WORK->selection - WORK->selection / 4 * 4;
-                ovl_11_func_800DE2EC();
+                Ovl11ClockRefreshAreaSprites();
                 WORK->object = 0;
                 break;
             }
@@ -583,9 +586,6 @@ s32 Ovl11ChooseAreaSoundId(void) {
 }
 
 void ovl_11_func_800C9D38 (void);
-/* Extra debug-hook parameters forwarded by this wrapper are unread. */
-s32 ovl_11_func_800CDE3C (u8 *arg0);
-s32 ovl_11_func_800CDF4C (u8 *arg0);
 
 /* Install projection, lighting, camera and scene pools before mode-specific
  * handlers. Retain their existing scratch-stack regions independently. */
@@ -634,8 +634,8 @@ void Ovl11ResetAreaScene(void) {
     objectState = (u8 *)state + 0x51C8;
     state->field_51F0 = 0;
     gOvl11AreaReadStarted = 0;
-    ovl_11_func_800CDE3C(objectState);
-    ovl_11_func_800CDF4C(objectState);
+    Ovl11InitObjectSpriteSlots(objectState);
+    Ovl11InitSharedSpriteSlots(objectState);
     SetGameFlag(0x5EU, 0U);
     gOvl11HeldActionFallbackCounter = 0;
     state->field_51FE &= ~4;

@@ -23,6 +23,8 @@
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_shared_animation_icon.h"
+#include "psyq/abs.h"
+#include "ovl11_primary_object_sprite_slots.h"
 
 void Ovl11DrawPrimaryObjectCompanion(Ovl11C7010Object *object, s32 depth, s32 *screenPosition) {
     s16 spriteId;
@@ -114,14 +116,12 @@ void Ovl11DrawPrimaryObjectSprite(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 a
 }
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
-u32 ovl_11_func_800CDEEC (u8 *arg0);
 void Ovl11CopyAndDrawSavedObject (Ovl11DrawState *arg0);
 void ovl_11_func_8010C1C0 (Ovl11DrawState *arg0);
 void ovl_11_func_8010C2EC (u8 *arg0);
-u32 ovl_11_func_800CDFAC (u8 *arg0);
 
 /* The area-frame caller supplies a trailing 1 in a1; it is unread here. */
-void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *arg0, s32 unused) {
+void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *origin, s32 unused) {
     s32 var_a0;
     s32 var_s3;
     u8 *object;
@@ -129,12 +129,12 @@ void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *arg0, s32 unused) {
     object = (u8 *) &gPrimaryObjectBase;
 
     if (ovl_11_func_800DD1D0((s16 *) (object + 0xFC)) == 0) {
-        gOvl11PrimaryDrawWorldPoint[0] = arg0->field_0 + 0x96;
-        gOvl11PrimaryDrawWorldPoint[1] = arg0->field_4 - 0x64;
-        gOvl11PrimaryDrawWorldPoint[2] = arg0->field_8 - 0x96;
+        gOvl11PrimaryDrawWorldPoint[0] = origin->x + 0x96;
+        gOvl11PrimaryDrawWorldPoint[1] = origin->y - 0x64;
+        gOvl11PrimaryDrawWorldPoint[2] = origin->z - 0x96;
         var_s3 = ProjectPointToScreen(gOvl11PrimaryDrawScreenPoint, (SVECTOR *) gOvl11PrimaryDrawWorldPoint);
         if ((*(s16 *) (object + 0x32)) != 0) {
-            ovl_11_func_800CDEEC(object);
+            Ovl11DrawEmbeddedSpriteSlots(object);
         }
         if (var_s3 != 0) {
             if ((*(u16 *) (object + 0x36)) & 4) {
@@ -162,9 +162,9 @@ void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *arg0, s32 unused) {
                 var_a0 = 1;
             }
             if (var_a0 != 0) {
-                gOvl11PrimaryDrawWorldPoint[0] = arg0->field_0 + 0x96;
+                gOvl11PrimaryDrawWorldPoint[0] = origin->x + 0x96;
                 gOvl11PrimaryDrawWorldPoint[1] = -0x64;
-                gOvl11PrimaryDrawWorldPoint[2] = arg0->field_8 - 0x96;
+                gOvl11PrimaryDrawWorldPoint[2] = origin->z - 0x96;
                 var_s3 = ProjectPointToScreen(gOvl11PrimaryDrawScreenPoint, (SVECTOR *) gOvl11PrimaryDrawWorldPoint);
                 if (var_s3 == 0) {
                     return;
@@ -183,8 +183,8 @@ void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *arg0, s32 unused) {
                         ovl_11_func_8010C2EC((u8 *) &D_80075AD4);
                     }
                 }
-                if ((D_80123154 != 0) && (*((s16 *) ((u8 *) &D_80125F24 + ((*(s16 *) (object + 0xFE)) * 2))) == 0)) {
-                    ovl_11_func_800CDFAC(object);
+                if ((gOvl11SharedSlotSpriteEnabled != 0) && (*((s16 *) ((u8 *) &D_80125F24 + ((*(s16 *) (object + 0xFE)) * 2))) == 0)) {
+                    Ovl11DrawSharedSpriteSlots(object);
                 }
             }
         }

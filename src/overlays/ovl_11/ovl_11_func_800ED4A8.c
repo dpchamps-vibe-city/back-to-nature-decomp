@@ -48,6 +48,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_item_table_queries.h"
+#include "ovl11_primary_object_sprite_slots.h"
 
 typedef struct {
                s16 field_0;
@@ -179,7 +180,6 @@ void ovl_11_func_800CCF14 (M2C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 void ovl_11_func_800CF314 (u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
-s32 ovl_11_func_800CDF4C (u8 *arg0);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
@@ -196,7 +196,6 @@ s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 void ovl_11_func_800CBE14 (s32 arg0);
 s32 Ovl11MapDirectionButtons (u16 arg0, u16 arg1);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
-void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);

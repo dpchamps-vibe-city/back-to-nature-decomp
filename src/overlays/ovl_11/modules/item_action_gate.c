@@ -18,8 +18,7 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "ovl11_primary_object_state_change.h"
-
-void ovl_11_func_800CE034(Ovl11CE034Object *object, Ovl11CE034Position *position, s32 offset);
+#include "ovl11_primary_object_sprite_slots.h"
 
 /* Leave a selected cell pointer (or NULL) as well as returning its class:
  * 0 = empty/tag 167..169, 2 = other tag, 3 = unavailable/mode mismatch. */
@@ -31,7 +30,7 @@ s32 Ovl11ProbeObjectCellClass(Ovl11CE034Object *object) {
     s16 *farWork;
     s16 mode;
 
-    ovl_11_func_800CE034(object, &position, 0);
+    Ovl11ComputeGridOffsetPosition(object, &position, 0);
     gOvl11ProbedObjectCell = NULL;
     farWork = (s16 *)&D_8007AFF0;
     mode = farWork[0x12A3B];
