@@ -335,20 +335,6 @@ typedef struct {
 } M2C_15fe93b20d39_Ovl11E180CObj;
 
 typedef struct {
-    char pad_0[0x10];
-    s16 unk10;
-    char pad_12[0x2];
-    s16 unk14;
-} M2C_190b52b5a3be_ReconA0View;
-
-typedef struct {
-    char pad_0[0x10];
-    s16 unk10;
-    char pad_12[0x2];
-    s16 unk14;
-} M2C_190b52b5a3be_ReconA1View;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -496,22 +482,6 @@ typedef struct {
     s16 unk2;
     u16 unk4;
 } M2C_38c89582ddcb_M2C_4c1a205b3b09_ReconA0View;
-
-typedef struct {
-    char pad_0[0x4];
-    s16 unk4;
-    char pad_6[0xA];
-    s16 unk10;
-    char pad_12[0x2];
-    s16 unk14;
-} M2C_3ad8e07a3b9c_ReconA0View;
-
-typedef struct {
-    char pad_0[0x10];
-    s16 unk10;
-    char pad_12[0x2];
-    s16 unk14;
-} M2C_3ad8e07a3b9c_ReconA1View;
 
 typedef struct {
     char pad_00[0x24];
@@ -1029,22 +999,6 @@ typedef struct {
 } M2C_8573ba8bfae4_CopyStruct_84D4;
 
 typedef struct {
-    char pad_0[0x4];
-    s16 unk4;
-    char pad_6[0xA];
-    s16 unk10;
-    char pad_12[0x2];
-    s16 unk14;
-} M2C_86253703cf42_ReconA0View;
-
-typedef struct {
-    char pad_0[0x10];
-    s16 unk10;
-    char pad_12[0x2];
-    s16 unk14;
-} M2C_86253703cf42_ReconA1View;
-
-typedef struct {
                char pad_00[0x16];
                u16 unk16;
                char pad_18[0x30 - 0x18];
@@ -1092,6 +1046,13 @@ typedef struct {
     char pad_38[0x7A - 0x38];
                u16 unk7A;
 } M2C_8da617f67856_Ovl11D04D4Obj;
+
+typedef struct {
+    char pad_0[0x2];
+    u16 unk2;
+    char pad_4[0x2];
+    s16 unk6;
+} M2C_8ec60314a46f_Recon800BA750A0View;
 
 struct SpriteSourceData {
                u16 field_0;
@@ -1422,13 +1383,6 @@ typedef struct {
     char pad_38[0x7A - 0x38];
                u16 unk7A;
 } M2C_d027372267ea_Ovl11E594Obj;
-
-typedef struct {
-    char pad_0[0x2];
-    u16 unk2;
-    char pad_4[0x2];
-    s16 unk6;
-} M2C_d030f1db9199_Recon800BA750A0View;
 
 typedef struct {
                char pad_00[0x30];
@@ -2262,12 +2216,6 @@ typedef struct {
 } Ovl11Func800BDCE8Arg1;
 
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-} Ovl11Func800CADBCArg0;
-
-typedef struct {
                s32 unk0;
                s32 unk4;
                s32 unk8;
@@ -2629,6 +2577,12 @@ struct Ovl11TextureCoordinates {
     u8 u3, v3;
     u16 clut;
 };
+
+typedef struct {
+    s16 key;
+    s16 payload0;
+    s16 payload1;
+} Ovl11TripleRecord;
 
 typedef struct {
     u8 leading[4];

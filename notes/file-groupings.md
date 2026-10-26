@@ -403,6 +403,38 @@ Historical evidence: gapless link adjacency and a shared record initializer
 
 ## `ovl_11` D_800749F4 record consumer `ovl_11_func_800D0DCC` — 0x800D0DCC (confidence: medium)
 
+**Reconstructed `modules/record_status_message.c`, 800D0DCC–800D0EA4
+exclusive**, one compiled entry, now Ovl11RequestRecordStatusMessage. This
+is the complete supported service extent, not a claim of a proven one-function
+original object. Its only private storage reference is the eight-byte extracted
+80128D70 span, now gOvl11RecordStatusCountText: 8001A970 writes two numeric
+glyphs for 21-u16@+B2, the caller appends FFFF, and substitution slot 1 points
+at it. Slot 0 points at record+4. The former indexed-table description was
+incorrect; its scalar address view and all widths are retained. The only two
+callers are distant eligibility/action callbacks DF9F0/E15C8, not neighboring
+members; they share neither this buffer nor its substitution/message-selection
+operation. Their general object fields are not private TU evidence.
+
+Left record_pair_slots closes its distinct pair-table/availability protocol at
+D0DCC; this service touches none of it. Right D0EA4/D0ED0 are the separate
+area-slot flag bit setter/query pair, operating on work-area bytes without this
+buffer, text substitution, or status-message dispatch. No positive membership
+edge crosses either cut; these are conservative protocol boundaries, not GP
+proof under -G0. No supported contiguous member is omitted.
+
+The source interface comment documents offsets, shared slot/text lifetime,
+unchecked count and the RequestMessageWindow return. Parameters/locals name the operation but
++16/+AE/+B2 retain neutral meanings. The canonical symbol configuration records
+both names; the unique shared-header extern was renamed directly after the
+canonical tool left it unchanged (no other active alias user exists). The
+checked fold passed baseline -O2/-G0 and the complete overlay. No override,
+new storage or exception was added. Publishing its s32 return exposed the two
+callers' pre-existing void declarations: the interface tool refused them and a
+direct header trial changed their objects. The trial was restored, not forced
+with casts or a retyped return. This entry remains documented in source but
+unpublished pending ABI recovery. The full campaign gate then passed all
+integrity checks at 1262 folded / 211 valid modules, including all linked bytes.
+
 Module follow-up: membership in record_pair_slots is **not established**.
 Its +16/+AE/+B2 fields are overlay-wide conventions (C9C60 writes them;
 DF228/E0E38 and others read them). It touches none of the pair table,
@@ -12573,6 +12605,39 @@ Members:
 
 ## `ovl_11` 3×s32 vector-record pair + adjacent frame-step helper — 0x800D03B4–0x800D04D4 (confidence: medium; the 0x800D04D4 tail is adjacency-only)
 
+**Reconstructed `modules/direction_vector.c`, 800D03B4–800D049C exclusive:**
+Ovl11AccumulateVector and Ovl11SetDirectionVector. The common three-word
+record is not just a width coincidence: movement callers place it at object
++48, use the direction writer to construct a displacement, and consume that
+displacement with the accumulator (+38 destination, +48 increment in 800D2F1C,
+80108CA4 and 8010CAA8). Link order and complementary operations on that shared
+movement-vector protocol support the pair. Both now use the established
+Recon800D0408A1View identity, removing the accumulator's duplicate local view.
+No data storage, ownership or linkage was introduced.
+
+Left is object_render_variants' closed marker/projection helper family,
+whose scratch and operation are absent here (see its section). Right 800D049C
+is now compiled C, not an undecompiled boundary: it tests the object's +16
+quantity and starts the separate timed-sprite effect at +A8; it neither
+consumes these vectors nor calls either vector operation. 800D04D4 steps
+keyframe/hold records, also with no vector edge. Thus the earlier proposed
+tail rests only on adjacency and is not included. These are evidence-limited
+protocol boundaries, not proven original -G0 object boundaries.
+
+The header documents caller-defined units, clear-after-add behavior (including
+aliasing), signed direction codes and the legacy partially undefined return.
+The latter is not silently repaired: only negative-axis paths explicitly return
+-magnitude; callers must ignore the value. The checked whole fold passed at
+baseline -O2/-G0, both members and the linked overlay; neither has an override.
+Batch acceptance: all integrity gates passed at 1262 folded / 211 valid
+modules. The accumulator's header was published to eight callers with identical
+objects. Direction-vector publication exposed 17 pre-existing return/signedness
+conflicts; the interface tool refused their reconciliation, and a direct
+canonical-prototype trial changed caller bytes. Those trials were restored.
+The direction entry therefore remains unpublished with its historical local
+caller declarations; no casts, wrapper ABI or new workaround was introduced.
+This is explicitly unresolved interface recovery, not a retyped return.
+
 Two link-contiguous leaf functions operating on the identical 12-byte record
 (three s32 components at 0/4/8), followed by a function run the symbol map
 keeps zero-gap-contiguous with them:
@@ -12612,6 +12677,28 @@ Members (address order):
 ---
 
 ## `ovl_11` `D_800B96BC` dispatch-table run — 0x800E2C64–0x800E2E98 (confidence: medium)
+
+Whole-band baseline experiment: the private entry/tick tables and callback
+playlist band support testing E2718–E351C together (22 compiled functions),
+not a small entry-hook slice. E2718 is included because its sole caller is
+the E2A30 animation-selection helper. The outer predecessor E2654 is instead
+called by the earlier E21E4 allocation cohort; the successor E351C begins a
+different resource/table family. Whether any broader record helpers join that
+allocation cohort is still uncertain; neither adjacency nor the shared general
+object layout proves it.
+
+The complete dry run passed. Checked --write reached cc1, then rolled back
+on real merged-scope conflicts: Ovl11SetDirectionVector is declared both
+void/s32 and s16/u16 across the members, Ovl11D04D4Obj has duplicate local
+views conflicting with game_types.h, and those views conflict in D04D4's
+callee declaration. No partial unit, new flag or cast workaround was retained.
+This is a measured declaration-context limit, NOT a reason to split the entry
+hooks from their callbacks. Next useful experiment: reconcile canonical object
+views and determine one direction-vector call contract that preserves every
+member's original caller code; the earlier direct header trial elsewhere in
+this run already shows that blindly selecting its definition's s32/s16
+prototype changes some caller bytes. The live split sources and all four
+completed modules retain full verification after rollback.
 
 The rodata table `D_800B96BC` (build/ovl_11/asm/data/1664.rodata.s) holds
 function pointers to `ovl_11_func_800E2C64`, `ovl_11_func_800E2D3C`,
@@ -13199,6 +13286,37 @@ field +0x194 of the preceding slot is unresolved while the record layout is.
 
 ## `ovl_11` D_80071A90/D_80071AC0 3×s16 record-table compaction cluster — 0x800C9D98–0x800CAE64 (confidence: medium)
 
+**Reconstructed generic service: `modules/triple_record_table.c`, CADBC–CB020
+exclusive, both entries.** Ovl11CompactTripleRecords and
+Ovl11ExchangeTripleRecordEndpoint share the exact six-byte record and empty-key
+protocol; endpoint exchange invokes compaction three times across its two
+paths. The source takes caller-owned storage, not either particular global
+item list. Ovl11TripleRecord names the existing signed-halfword view's key and
+two payloads without changing widths. The public header documents stable
+ordering, zeroing, endpoint exchange, invariant return values and the dangerous
+empty-table/direction-1 case. No new bounds checks repair the original.
+
+The old distant-wrapper hypothesis is not sufficient to absorb C9D98–C9E3C
+and all intervening code: those are fixed-list clients, separated from the
+service by sprite rendering and primary-object motion. The two adjacent
+service bodies have no global state. Left CAADC integrates primary-object
+motion and camera state, calling neither table service. Right CB020 begins
+the independent pure five-value-code mapping. These are evidence-limited
+protocol boundaries under -G0, not proved original object cuts. No positively
+evidenced service member is omitted and no compiler setting creates a cut.
+Four existing clients now use the shared header. C9DE8's local global extern
+was removed in favor of the established Ovl11Items_80071AC0 storage identity,
+cast to the same six-byte view; its earlier pointer arithmetic is unchanged.
+The checked baseline fold passed both members and the complete overlay.
+No flag override or exception was present, added or retired. The first batch
+passed all integrity gates at 1296 folded functions and 211/211 valid modules.
+The final `tuProgress --verify --baseline build/tu-campaign/baseline.json`
+also passes at 1359 folded and 205/205 valid modules, including this service
+and every affected caller, data byte, interface, policy and ownership check.
+This run adds 100 functions to the actual 1259 start; the older campaign sample
+was stale. The lower module count reflects the whole-ovl_19 merger, not a
+regression or lost function.
+
 Evidence: `D_80071AC0` is `D_80071A90 + 0x30` (two adjacent 8-entry tables of
 6-byte, three-s16 records), and the cluster's functions all operate on that
 record shape: the adjacent caller pair `800C9D98`/`800C9DC0` passes each table
@@ -13594,6 +13712,45 @@ Evidence paths and limits: [grouping research](research/ovl_11_func_800C6770-gro
 - ovl_11_func_800CBB9C (s) — saves the shared item snapshot before clearing/replacing the object's item record.
 
 ## `ovl_11` D_80123758 lookup / item-spawn cluster — 0x800CF258 / 0x800CF428–0x800CFA48 (confidence: medium)
+
+**Reconstructed `modules/item_spawn_placement.c`, CF428–CFAD0 exclusive,
+all five members.** The coordinator is the only caller of both area-spawn
+helpers CF748/CF848. Those helpers and CF95C share the allocator/position/
+facing write protocol. CF428 tests work flag 800000 in its evening window;
+CFA48 is the corresponding random-latch producer, called by the external
+reset/update sweep. That state edge includes the last member, rather than
+slicing off a helper because its caller lives elsewhere. The two coordinate
+blocks and six-rule table follow the coordinator's shared 17-rule table.
+All five stay external-linkage and all data stays extern under -G0.
+
+Left CF36C clears/updates a separate B0 record pool and calls D3200, not the
+spawn allocator or these area helpers. Right record_flag_query is a read-only
+pool-flag service, touching neither the spawn-mask lifecycle nor these helpers.
+CF258 remains in record_placement: its use of the shared rule table is an
+interface-data tie, not private ownership that joins the interposed CF2C8/
+CF308/CF314/CF36C services (see that module's boundary discussion). No supported
+member of the five-function spawn protocol is omitted. The outer cuts are
+conservative call/protocol boundaries, not GP-proven original file edges.
+
+Names describe the cycle, area-108 helper, gated area records, position attempt
+and latch roll. Four data spans are gOvl11Timed154SpawnPositions (30 bytes),
+gOvl11Area108SpawnPositions (20), gOvl11AreaItemSpawnRules (90), and the signed
+halfword gOvl11ItemSpawnRuleMask (2), sizes hexadecimal. The halfword is NOT
+widened: signed promotion affects rule 16 and high-bit reuse is retained.
+The missing coordinate extern moved from CF748 into globals_override.h with
+its two four-word-group evidence; all other declarations keep their layouts.
+Canonical names propagated through callers and the external reset sweep;
+shared-header data externs were renamed directly after the canonical tool
+left those unqualified overlay declarations unchanged. No new ownership was
+inferred. Header contracts preserve random-draw order, allocation failure,
+repeated-call effects, native position units and the mode-1 time windows.
+Both private helpers remain unexposed; three externally called entries are
+published. The checked whole fold passed all five members and overlay at
+baseline -O2/-G0, with no active override to reconcile or exception added.
+Batch acceptance passed at 1270 folded / 213 valid modules: every executable
+and overlay byte (including named callback data), canonical interfaces,
+source policy, convergence and exception non-growth. Published callers of all
+three public entries were reconciled without object changes.
 
 Candidate same-TU membership, extending the split-base spawn run above
 ([evidence and limits](research/ovl_11_func_800CF428-grouping.md)); data ownership remains unproven.
@@ -16985,6 +17142,78 @@ Members (link order):
 
 ## `ovl_15` D_80053350/func_8001AC10 shared-prologue cluster — 0x8012EA18–0x80132934 (confidence: medium)
 
+**Expanded/merged as `modules/card_read_states.c`, 801301A0–80132A8C
+exclusive, all 56 entries in original order.** It absorbs the initially
+verified 35-entry card_read_sprite_states module plus the complete preceding
+21-entry plain-read dispatcher/stage set; neither closed scene is sliced.
+The two machines share the private monitor/context and duplicate prompt
+protocol, now represented together. The new public Ovl15StepCardReadMenu
+header documents restore/exit behavior separately from the transfer entry.
+The helper's section-relative alignment correction (see the whole-ovl_19
+section) proves and pools the zero at file 158, eliminating the former cut
+at 31094. Their pooled table block is F4–22C, in original member order.
+All 56 and the complete overlay passed the checked baseline fold. The
+second full campaign gate also passes every integrity check at 1359 folded
+functions and 205/205 valid modules, including the executable's named ovl_19
+callback and all data/placement. No compiler flag or source-policy exception
+was added or retired.
+
+The entire 81-entry write/read/transfer union remains a plausible wider TU.
+Its unresolved nonzero SC signature/padding at file D4 is a mechanical
+literal-emission limit, not evidence for an original boundary at 301A0. A
+fresh dry run of all 81 after the final gate confirms the sole current first
+refusal: `the members' jump tables are not contiguous: - [0xD4, rodata] lies
+between them`. Next useful experiment: recover that consumer-owned signature's
+C emission/layout, then retry the whole union; do not invent an original cut.
+The earlier zero at 68 is the same section-relative alignment class, no longer
+an asserted obstacle. Right 32A8C starts row-placement and has no stage/monitor
+protocol. Thus the current left boundary explicitly records the remaining
+representation limit rather than inventing a per-scene original file.
+
+Initial 35-entry integration details (still applicable to the transfer half): The dispatcher and its complete
+34-stage closure form the card-read/slot-transfer scene, not just the handlers
+sharing the historical text prologue. No outside function calls an individual
+stage. Three jump tables at file 174/1FC/214 pool in member order through 22C.
+The shared lifecycle calls only Ovl15StepCardTransferMenu; its header explains
+frame stepping, card monitoring, asynchronous I/O, checksum/slot-transfer
+stages and shared menu state. All entries have scoped CardTransfer names;
+undecoded prompts retain their stage numbers instead of invented text meaning.
+The alternating channel is gOvl15MonitoredCard, still a signed halfword used
+by all three dispatchers. Capacity arrays now name each side's selected
+categories, populations and limits without changing their signed widths.
+
+Boundary qualification: the preceding read-only scene has its own complete
+20-stage closure and restarted state numbering; none of those stages calls
+this scene's stages. Right 32A8C begins the separate row-placement helper.
+Neither is an omitted stage of this dispatcher. Nevertheless the three scene
+machines share narrow monitor/menu storage and duplicated prompt templates,
+so one original file for their full 81-entry union remains plausible. The
+initial left boundary was NOT an original TU proof. Its former raw-zero
+limits at 68/158 are resolved by the section-relative alignment guard; only
+D4's eight-byte SC signature/padding still blocks the full three-scene union. The folded scene is the entire closed
+stage unit presently representable; those emission/ownership questions must
+be solved before accepting the wider merge, not protected as historical cuts.
+The record-pool editor/serializer is called as an external service and has its
+own still-unresolved 335F8 compiler-setting/context question.
+
+The first checked fold rolled back on incompatible void*/u32* declarations
+of EXE:8001AC10. Reusing its matched u32* contract allowed the baseline fold
+to preserve every member and all ovl_15 bytes. Seventeen text-bank externs
+moved from C to globals_override.h with individual address/caller evidence;
+the existing Ovl15CardFilename storage binding replaces its local raw alias.
+The inherited 35C20 declaration conflict was investigated, not hidden: every
+callee exit returns a constant in 0..12, so its signed-halfword status return
+is supported and preserves its existing constant returns. Its word parameter
+and explicit input narrowing remain intact. interfaceAudit then reconciled
+all six affected caller units, adding the existing halfword argument conversion
+where needed and proving unchanged objects. No flag was applied or retired.
+Final batch `tuProgress --verify --baseline build/tu-campaign/baseline.json`
+passes every integrity gate: 1296 folded functions, 211/211 valid modules,
+all EXE and 13 overlay bytes including data/placement, canonical names and
+affected interfaces, policy, convergence and exception non-growth. The status
+service's changed return declaration and every affected caller are included.
+No extra compiler permission, assembly, register binding or stub was added.
+
 Evidence: a link-order run of ten functions that all open with the same
 text-draw call idiom: `func_8001AC10(D_8005E3C0->field_D8 + 0x18,
 D_8005E3C0->field_D8 + 0x14, D_80054BBC[0] + (s32)<updater array>)` — a
@@ -18967,6 +19196,62 @@ Members (link order):
 ---
 
 ## `ovl_19` D_800BF4D0 overlay-local s16-state consumer cluster — 0x800B8064 … 0x800BA834 (confidence: medium)
+
+**Whole scene reconstructed: `src/overlays/ovl_19/modules/scene_runtime.c`,
+all 76 original functions from 800B7ED8 through 800BBD74 exclusive.** This
+absorbs actor_behavior_states, projected_actor_render, actor_controls,
+projected_sprite_render, value_table_display, scene_resources and
+record_value_increment in full, plus every intervening standalone member.
+All smaller-module descriptions below and in their earlier sections are now
+historical; no interior source-file boundary is retained.
+
+The private BCE94/BCEA8/BCEC8 phase/mode/stage tables connect setup and update
+callbacks to the shared actor initializers and renderers. The complete scene
+entry/exit lifecycle owns their work/resources and reaches the persistent
+value update. Its five jump tables, spanning the former module seams, occur
+in member order at file 04/1C/4C/74/A4 (6/12/9/12/5 words). A single pooled
+object of size B4 at file 04 reproduces all positions, including the original
+four zero bytes at 70. This is substantially stronger than merely sharing a
+widely used work array; -G0 still prevents a GP-based proof of original TU
+membership. No positively connected scene member is left outside.
+
+Both boundaries are the container's actual text edges: file B8 starts the
+first entry and file 3F54 ends the last before writable data. The leading raw
+rodata word at file 0 (value 8) remains extraction-owned; its original C
+ownership is unknown, and no artificial C storage was added for it. All
+non-table overlay data likewise retain their existing extracted storage.
+
+The checked fold first refused the zero at 70. Its prior object ends exactly
+there (1C + 54), the next table's compiler output has .align 3, and the bytes
+are zero. The guard incorrectly tested ROM offsets rather than offsets from
+the pooled section's 04 base. foldTranslationUnit.ts now makes that one
+alignment test section-relative, retaining all original-byte/object/directive
+checks. The checked baseline fold then exposed real declaration collisions:
+BA468/BA5B4/BA628 now reuse Ovl19ActorMotionView with every prior offset and
+signed halfword unchanged. BA628 returns its ratan2 result, as both callers
+already consume it; BA544 explicitly forwards its second incoming argument,
+which its original code passed through in a1. All 76 entries and the entire
+overlay passed the helper's relocated-byte checks after this reconciliation.
+
+The public Ovl19StepScene entry is documented in ovl19_scene_runtime.h. EXE
+scene mode 4 loads archive [19,20) before installing this exact callback;
+that qualified use now names the function, not the ambiguous shared-slot data
+alias. Existing subinterface headers remain useful publications of this same
+TU. Phase/lifecycle and geometry helpers have behavior-backed names; phase,
+mode, stage tables, load byte, mode halfword, sound handle, label-offset table
+and periodic-message sound counter have scoped names with unchanged views.
+Missing externs moved out of C to globals_override.h with byte/caller evidence.
+The two pre-existing authorized local register bindings and the real nested
+helper remain unchanged; canonicalNames migrated the command-driver permission
+key by identity. No compiler flag, permission, stub or assembly was added.
+The second-batch `tuProgress --verify --baseline build/tu-campaign/baseline.json`
+passes every gate: 1359 folded functions, 205/205 valid modules, all EXE and
+13 overlay bytes including associated data/callbacks/placement, canonical
+interfaces, policy, convergence and exception non-growth. This run adds 100
+newly folded functions to the actual 1259 starting count and absorbs seven
+existing modules; no formerly folded function regresses. The shared fold-tool
+fix is outside the source integration roots and is required by the measured
+70/158 refusals; no tests were added.
 
 **Reconstructed `modules/projected_actor_render.c`, BA770/BA834/BAB4C,
 ending at BAC40.** The entry calls each leaf over the same paired-actor and
@@ -22170,6 +22455,40 @@ Candidate same-TU run; original boundaries remain unproven
 - ovl_11_func_800BF2F4 (m) — item-pool bounding-box probe that returns the matching record's identifier.
 
 ## `ovl_11` D_8007AFF0+0x23608 45-column pointer-grid readers — 0x800D7EF8 / 0x800D806C / 0x80113208 / 0x801136D0 / 0x8011E090 / 0x8011E1E8 / 0x80120F30 (confidence: medium-low)
+
+**Reconstructed local geometry unit `modules/cell_geometry.c`, D7EF8–D81BC
+exclusive**, three compiled members: Ovl11LookupMode1GridPosition,
+Ovl11IsCellUnusable and Ovl11GetCellCornerPosition. Shared action callers use
+one layer selector for position conversion, bounds/texture eligibility and
+installation; the third helper supplies the corresponding layer-specific
+400-unit cell corners. This layer/geometry protocol and unbroken order support
+the local utility group, not the ubiquitous pointer grid alone. The lookup's
+399 divisor is deliberate and retained: the corner helper is not its exact
+inverse. The mode-6 converter remains in its independently supported far-away
+surface-grid unit; common signatures/arithmetic do not swallow intervening code.
+
+Left D7B8C mutates tag/growth state in the separate 8-byte tile-record grids;
+it neither accesses the query bounds nor implements position geometry. Right
+cell_actions mutates cell records and installs textures through its action
+protocol; the corner helper has an external caller as well and changes only
+X/Z, not cell state. No private helper/state crosses these cuts. They are
+medium-confidence protocol boundaries, not GP proofs in this -G0 overlay.
+
+The eight-byte 80123E04 table is now gOvl11CellQueryLayerBounds[2], with its
+witnessed {columnCount,rowCount} pairs {45,25},{7,7}. Its obsolete one-element
+asm-bound macro view became a normal extern of the same four-byte record
+layout; the query indexes the real two-entry array. The adjacent E0C bounds
+array belongs to neighborhood mutation and is not aliased or reinterpreted.
+No data allocation/ownership changed. The existing grid_position header keeps
+the shared address-taken lookup contract, and cell_geometry.h publishes the
+usability/corner operations, Y-preservation, return Z, bounds/null constraints,
+layer interpretation and 399-versus-400 distinction. Parameters and locals now
+name columns, rows, biased coordinates and pointer-grid entries. Checked fold:
+all three members and complete overlay exact under baseline -O2/-G0, no flags
+or exceptions added. Published geometry callers reconcile without object
+changes. The final batch gate passed all integrity checks at 1270 folded /
+213 valid modules, including all linked EXE/overlay bytes, generated callback
+references, data/placement, source policy and exception non-growth.
 
 Candidate same-TU data family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence for the
 six previously recorded grid readers: they reach the grid through the

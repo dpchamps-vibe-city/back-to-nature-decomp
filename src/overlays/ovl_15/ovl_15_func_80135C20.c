@@ -2,7 +2,10 @@
 #include "psyq/libmcrd.h"
 #include "psyq/libmcx.h"
 
-s32 ovl_15_func_80135C20(s32 arg0) {
+/* Every exit returns a literal status in 0..12; menu callers consume the
+ * signed-halfword status contract. Keep the word argument/local arithmetic:
+ * the incoming card is narrowed explicitly before channel conversion. */
+s16 ovl_15_func_80135C20(s32 arg0) {
     long command;
     long result;
     s32 channel;

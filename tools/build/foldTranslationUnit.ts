@@ -457,11 +457,14 @@ export function planFold(request: FoldRequest): FoldPlan {
      compiler output. The checked write still proves the merged section's size,
      all table positions and the complete container bytes. */
   const segments = loadSubsegments(container);
+  /* .align is section-relative, not ROM-relative. Some overlays' pooled
+     table run starts four bytes into the file (ovl_19 is one witness). */
+  const pooledRodataBase = segments.find((segment) => segment.type === ".rodata" && touched.some((unit) => unit.segmentName === segment.name))?.rom;
   const alignmentPadding = new Set<number>();
   const original = readFileSync(containerTargetPath(container));
   segments.forEach((segment, i) => {
     const previous = segments[i - 1], next = segments[i + 1];
-    if (segment.type !== "rodata" || segment.name || segment.size !== 4 || segment.rom % 8 !== 4) return;
+    if (segment.type !== "rodata" || segment.name || segment.size !== 4 || pooledRodataBase === undefined || (segment.rom - pooledRodataBase) % 8 !== 4) return;
     if (previous?.type !== ".rodata" || next?.type !== ".rodata" || next.rom !== segment.rom + 4) return;
     const left = touched.find((u) => u.segmentName === previous.name);
     const right = touched.find((u) => u.segmentName === next.name);

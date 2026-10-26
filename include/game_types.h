@@ -1487,13 +1487,13 @@ typedef struct {
     s16 position1;
 } Ovl19ActorMotionView;
 
-/* ovl_11_func_800CADBC arg0: array of three-s16 records; the function moves
- * each later non-empty record into the first empty slot and zeroes its source. */
+/* Six-byte table entry used by ovl_11:800CADBC/800CAE64. A zero key marks
+ * an empty entry; both payload halfwords move with the key unchanged. */
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-} Ovl11Func800CADBCArg0;
+    s16 key;
+    s16 payload0;
+    s16 payload1;
+} Ovl11TripleRecord;
 
 /* ovl_11_func_800D0408 arg1: three s32 vector components selected by a
  * direction code; the switch stores into exactly one of the fields. */

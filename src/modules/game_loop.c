@@ -18,6 +18,7 @@
  */
 
 #include "common.h"
+#include "ovl19_scene_runtime.h"
 #include "packet_work.h"
 #include "psyq/types.h"
 #include "psyq/stddef.h"
@@ -265,7 +266,7 @@ int main(void) {
             case 4:
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x13, 0x14, D_80010098, D_80010098);
-                D_8005E384 = (void (*)(void))&D_800B7ED8;
+                D_8005E384 = (void (*)(void))&Ovl19StepScene;
                 D_8005E288 = 0;
                 break;
 

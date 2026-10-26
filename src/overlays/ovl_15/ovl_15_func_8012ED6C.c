@@ -1,7 +1,7 @@
 #include "common.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-s16 ovl_15_func_80135C20(s16 arg0);
+s16 ovl_15_func_80135C20(s32 arg0);
 
 void ovl_15_func_8012ED6C(void) {
     register s16 *states;
@@ -15,7 +15,7 @@ void ovl_15_func_8012ED6C(void) {
     if (gOvl15MenuStateTimer >= 2) {
         for (i = 0; i < 2; i++) {
             states = &gOvl15CardStates[i];
-            status = ovl_15_func_80135C20(i);
+            status = ovl_15_func_80135C20((s16)i);
             if (status == 1) {
                 status = 0;
             }

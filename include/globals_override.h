@@ -5616,7 +5616,7 @@ extern u8 gOvl11SceneGeometry[];
 extern u8 gOvl19SceneGeometry[];
 
 /* ovl_19_func_800B7F34 selects and advances this state with lbu/sb. */
-extern u8 D_800BCEE4;
+extern u8 gOvl19LoadStep;
 
 /* ovl_19:800BCB74 - disc positions. Ovl19LoadSceneGeometry reads the first
  * three and transfers the two intervening byte ranges. Overlay data remains
@@ -5837,7 +5837,7 @@ extern s8 gOvl15LastMenuState;
 extern s16 gOvl15SelectedCard;
 
 /* ovl_15_func_801301A0 reads this card index with lh and updates it with sh. */
-extern s16 D_8013758A;
+extern s16 gOvl15MonitoredCard;
 
 /* D_8013758E - ovl_15 private state s16 in the overlay data segment, read by
  * ovl_15_func_80130C8C and passed to ovl_15_func_801367F8 and by the
@@ -5883,6 +5883,42 @@ extern u8 D_8005316C[];
 extern u8 D_80051FEA[];
 /* ovl_15_func_8012F158 adds D_80054BBC[0] to this text-updater address. */
 extern u8 D_80052FC4[];
+/* ovl_15:801315B0 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80052FFA[];
+/* ovl_15:80131778 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_8005306A[];
+/* ovl_15:801317E8 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_800530C8[];
+/* ovl_15:80131A34 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_800532FE[];
+/* ovl_15:80131B5C adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_800523AC[];
+/* ovl_15:80131D88 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_8005341E[];
+/* ovl_15:80131DF8 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_800533F6[];
+/* ovl_15:80131E68 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80052F4E[];
+/* ovl_15:80131F5C adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_8005204A[];
+/* ovl_15:8013237C adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80052150[];
+/* ovl_15:80132408 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80052178[];
+/* ovl_15:80132494 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_800521F6[];
+/* ovl_15:80132520 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80052280[];
+/* ovl_15:801325AC adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_8005230A[];
+/* ovl_15:801328C4 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80053506[];
+/* ovl_15:80132934 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80051E88[];
+/* ovl_15:80130F2C adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80051E02[];
+/* ovl_15:801329F8 adds the text-bank byte offset before drawing this prompt. */
+extern u8 D_80052022[];
 /* 8012E15C clears these halfword controls before each menu session. */
 extern s16 D_80137590;
 /* Card operations 36558/36660/367F8 count retries; signed limits use casts. */
@@ -6064,13 +6100,23 @@ extern s16 gOvl19AuxRecordBase[];
 /* ovl_19 800BA770 passes positions at this base, stepping by six halfwords. */
 extern s16 gOvl19FixedSpritePositions[];
 /* ovl_19 800B80E8 indexes eight original handlers; each overwrites incoming $a0 before use. */
-extern void (*D_800BCEA8[8])(void);
+extern void (*gOvl19ModeHandlers[8])(void);
 /* ovl_19 800B87C4 indexes seven original handlers; none consumes incoming $a0. */
-extern void (*D_800BCEC8[7])(void);
+extern void (*gOvl19StageHandlers[7])(void);
 /* ovl_19 800B80E8 loads this signed halfword as the handler index. */
-extern s16 D_800BF4C4;
+extern s16 gOvl19SceneMode;
 /* ovl_19 800B8190 loads this handle with lh and compares it against -1. */
-extern s16 D_800BF6C2;
+extern s16 gOvl19SoundVoice;
+/* ovl_19:7ED8 indexes five handler words; preserve its existing scalar view. */
+extern s32 gOvl19PhaseHandlerWords;
+/* ovl_19:85F4 indexes this halfword limit table by year/category. */
+extern u16 D_800BCFE4[];
+/* ovl_19:85F4 reads the signed halfword category used by that limit table. */
+extern s16 D_800BF4C8;
+/* ovl_19:8F38 increments this word, sounds every 30 ticks and clears on exit. */
+extern s32 gOvl19MessageSoundTicks;
+/* ovl_19:BADAC clamps an index to 0..19 and reads this signed-word table. */
+extern s32 gOvl19ValueLabelOffsets[20];
 /* D_800BF4E0 - the s16 field at D_800BF4C0 + 0x20, addressed by ovl_19_func_800B8DE8
  * through its own symbol (the compiler materialises D_800BF4E0 and expresses the
  * neighbouring D_800BF4C0 accesses as negative displacements from it). */

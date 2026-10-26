@@ -1,7 +1,7 @@
 #include "common.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-s16 ovl_15_func_80135C20(s16 arg0);
+s16 ovl_15_func_80135C20(s32 arg0);
 
 void ovl_15_func_8012EF84(void) {
     s32 temp_a1;

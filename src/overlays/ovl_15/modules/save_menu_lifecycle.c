@@ -24,6 +24,8 @@
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
 #include "ovl15_save_sprite_resources.h"
+#include "ovl15_card_read_sprite_states.h"
+#include "ovl15_card_read_states.h"
 
 void ovl_15_func_8013468C(void);
 
@@ -44,7 +46,7 @@ void Ovl15ResetSaveMenuState(void) {
     gOvl15MenuCursor = 0;
     gOvl15ConfirmationChoice = 0;
     gOvl15CardRetryCount = 0;
-    D_8013758A = 0;
+    gOvl15MonitoredCard = 0;
     gOvl15SelectedCard = 2;
     gOvl15SelectedSlot = 0;
     D_80137590 = 0;
@@ -142,8 +144,6 @@ void Ovl15UpdateCardWriteScene(void) {
     }
 }
 
-void ovl_15_func_801301A0(void);
-
 void Ovl15UpdateCardReadScene(void) {
     s32 sprite;
     Ovl21MainStateView *state;
@@ -179,7 +179,7 @@ void Ovl15UpdateCardReadScene(void) {
             gOvl15MenuStateTimer++;
         }
         func_80017A38(0, 2);
-        ovl_15_func_801301A0();
+        Ovl15StepCardReadMenu();
         func_80017A38(0, 0);
         switch (gOvl15MenuExitRequest) {
         case 2:
@@ -216,8 +216,6 @@ void Ovl15UpdateCardReadScene(void) {
     }
 }
 
-void ovl_15_func_80131094(void);
-
 void Ovl15UpdateCardReadSceneWithSprites(void) {
     s32 sprite;
     Ovl21MainStateView *state;
@@ -253,7 +251,7 @@ void Ovl15UpdateCardReadSceneWithSprites(void) {
             gOvl15MenuStateTimer++;
         }
         func_80017A38(0, 2);
-        ovl_15_func_80131094();
+        Ovl15StepCardTransferMenu();
         func_80017A38(0, 0);
         switch (gOvl15MenuExitRequest) {
         case 2:

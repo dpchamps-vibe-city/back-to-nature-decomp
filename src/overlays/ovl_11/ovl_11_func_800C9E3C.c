@@ -1,13 +1,12 @@
 #include "common.h"
 #include "game_types.h"
-
-s32 ovl_11_func_800CAE64(Ovl11Func800CADBCArg0 *arg0, s32 arg1, Ovl11Func800CADBCArg0 *arg2, s32 arg3);
+#include "ovl11_triple_record_table.h"
 
 s32 ovl_11_func_800C9E3C(s32 arg0) {
     if (arg0 == 0) {
-        ovl_11_func_800CAE64((Ovl11Func800CADBCArg0 *) &gItemStackSlotBase, 8, (Ovl11Func800CADBCArg0 *) ((&gItemStackSlotBase - 3)), 0);
+        Ovl11ExchangeTripleRecordEndpoint((Ovl11TripleRecord *) &gItemStackSlotBase, 8, (Ovl11TripleRecord *) ((&gItemStackSlotBase - 3)), 0);
     } else {
-        ovl_11_func_800CAE64((Ovl11Func800CADBCArg0 *) &gItemStackSlotBase, 8, (Ovl11Func800CADBCArg0 *) ((&gItemStackSlotBase - 3)), 1);
+        Ovl11ExchangeTripleRecordEndpoint((Ovl11TripleRecord *) &gItemStackSlotBase, 8, (Ovl11TripleRecord *) ((&gItemStackSlotBase - 3)), 1);
     }
     return 1;
 }

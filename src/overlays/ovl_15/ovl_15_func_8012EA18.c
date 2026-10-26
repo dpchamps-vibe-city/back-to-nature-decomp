@@ -104,25 +104,25 @@ void ovl_15_func_8012EA18(void) {
         ovl_15_func_8013010C();
         return;
     }
-    temp_v0 = ovl_15_func_80135E9C(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : D_8013758A);
+    temp_v0 = ovl_15_func_80135E9C(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard);
     if (temp_v0 != 3) {
-        if (temp_v0 != gOvl15CardStates[gOvl15SelectedCard != 2 ? gOvl15SelectedCard : D_8013758A]) {
+        if (temp_v0 != gOvl15CardStates[gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard]) {
             if (temp_v0 == 5) {
                 gOvl15MenuState = 0;
             }
             if (temp_v0 == 4) {
                 if (gOvl15SelectedCard == 2) {
-                    gOvl15SelectedCard = (s16) (u16) D_8013758A;
+                    gOvl15SelectedCard = (s16) (u16) gOvl15MonitoredCard;
                 }
                 gOvl15MenuState = 0x15;
             }
         }
         if (gOvl15SelectedCard == 2) {
-            temp_v0_2 = &gOvl15CardStates[D_8013758A];
+            temp_v0_2 = &gOvl15CardStates[gOvl15MonitoredCard];
             if ((u32) ((u16) *temp_v0_2 - 6) >= 2U) {
                 *temp_v0_2 = (s16) temp_v0;
             }
-            D_8013758A = D_8013758A == 0;
+            gOvl15MonitoredCard = gOvl15MonitoredCard == 0;
             return;
         }
         if ((u32) ((u16) gOvl15CardStates[gOvl15SelectedCard] - 6) >= 2U) {
