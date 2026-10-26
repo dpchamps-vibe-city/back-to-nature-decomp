@@ -19,7 +19,7 @@ typedef struct {
     /* 0xDDD4 */ BoundsEntry4994 *field_DDD4;
 } D8006C838View4994;
 
-extern s32 D_80129634;
+extern s32 gOvl11RecordSpriteYOffsetIndex;
 
 BoundsEntry4994 *ovl_11_func_800F4994(BoundsArgs4994 *arg0) {
     D8006C838View4994 *base = (D8006C838View4994 *)&D_8006C838;
@@ -34,7 +34,7 @@ BoundsEntry4994 *ovl_11_func_800F4994(BoundsArgs4994 *arg0) {
         if (entry->field_0C - 20 < arg0->field_04 && arg0->field_04 < entry->field_0C + 20) {
             if (entry->field_08 - 200 < arg0->field_00 && arg0->field_00 < entry->field_08 + 200) {
                 if (entry->field_10 - 200 < arg0->field_08 && arg0->field_08 < entry->field_10 + 200) {
-                    D_80129634 = 3;
+                    gOvl11RecordSpriteYOffsetIndex = 3;
                     return entry;
                 }
             }

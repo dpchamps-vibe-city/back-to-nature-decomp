@@ -29,7 +29,7 @@ s32 ovl_11_func_800F7AA0(void) {
         if (temp_v1 & 0x20) {
             if (D_80126E48 == temp_s0) {
                 CloseMessageWindow();
-                D_80126E40 = 0xFE;
+                gOvl11InteractionPhase = 0xFE;
                 PlaySoundEffect(3);
                 return 0;
             }
@@ -63,7 +63,7 @@ s32 ovl_11_func_800F7AA0(void) {
         if (temp_v1 & 0x100) {
             if (D_80126E48 == temp_s0) {
                 PlaySoundEffect(0);
-                switch (D_80126E40) {
+                switch (gOvl11InteractionPhase) {
                 case 0:
                     ovl_11_func_800F8224((s16 *) &D_80070EC2, 0x40);
                     break;

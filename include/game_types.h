@@ -1249,22 +1249,21 @@ typedef struct {
 } Recon_ovl_11_func_800D2594_A0View;
 
 typedef struct {
-    s16 unk0;
-} Recon_ovl_11_func_800D3404_A0View;
+    s16 tag;
+} Ovl11ObjectTagView;
 
-/* 0xB0-byte object initialised by ovl_11_func_800D3390: a u16 tag at 0x00
- * that selects the already-initialised path, an s16 selector at 0x00, a
- * u16 0xFFFF marker at 0x04, and two s16 at 0xA8/0xAA cleared by
- * ovl_11_func_80107DD0. Only the witnessed fields are named. */
+/* 0xB0-byte record claimed by Ovl11InitObjectRecord. The tag is read
+ * unsigned here and written through the signed Ovl11ObjectTagView by the
+ * retag helper. Preserve both views; the trailing effect is two halfwords. */
 typedef struct {
-    /* 0x00 */ u16 unk0;
+    /* 0x00 */ u16 tag;
     /* 0x02 */ char pad_02[0x2];
-    /* 0x04 */ u16 unk4;
+    /* 0x04 */ u16 marker;
     /* 0x06 */ char pad_06[0xA2];
-    /* 0xA8 */ s16 unkA8;
-    /* 0xAA */ s16 unkAA;
+    /* 0xA8 */ s16 timedEffect;
+    /* 0xAA */ s16 timedEffectAux;
     /* 0xAC */ char pad_AC[0x4];
-} Recon_ovl_11_func_800D3390_A0View;
+} Ovl11ObjectInitRecord;
 
 typedef struct {
     s32 unk0;
@@ -2389,19 +2388,21 @@ typedef struct {
     u16 result;
 } Ovl11GuardRecord;
 
-/* ovl_11_func_800F5BC0 reads these halfwords while walking 0x18-byte records. */
+/* Halfword read view used by Ovl11DrawProjectedRecordList. The dispatcher
+ * copies the same 0x18-byte storage as Ovl11DispatchRecord below; projection
+ * deliberately takes only the low halfword of each coordinate. */
 typedef struct {
-    s16 unk0;
-    u16 unk2;
-    u16 unk4;
+    s16 selectionKey;
+    u16 spriteKind;
+    u16 flags;
     u16 pad6;
-    u16 unk8;
+    u16 xLow;
     u16 padA;
-    u16 unkC;
+    u16 yLow;
     u16 padE;
-    u16 unk10;
+    u16 zLow;
     u8 pad12[0x18 - 0x12];
-} M2C_0584a699a1f0_Ovl11Func5BC0Entry;
+} Ovl11ProjectedRecordView;
 
 /* 800F5944 copies six words, tests the low halfword at +4 and adds to +0xC. */
 typedef struct Ovl11DispatchRecord {

@@ -262,7 +262,7 @@ state_done:
         case 0x6F:
             PlaySoundEffect(9);
             ((struct Ovl11C580CState *)D_8006C838)->record->flags |= 0x100;
-            D_80129634 = 3;
+            gOvl11RecordSpriteYOffsetIndex = 3;
             if (ovl_11_func_800F3E44(arg0->item) != 0) {
                 RequestMessageWindow(3, 0x383);
             }

@@ -4,8 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_projected_record_sprites.h"
 
-s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5,
                    s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 
@@ -35,7 +35,7 @@ void ovl_11_func_800CE0F0(Ovl11SpritePositionView *position, u8 *object,
     input[0] = position->field_0 + 0x96;
     input[1] = position->field_4 - 0x64;
     input[2] = position->field_8 - 0x96;
-    if (ovl_11_func_800F5888((u16 *)work, projected) != 0) {
+    if (Ovl11ProjectRecordSprite((u16 *)work, projected) != 0) {
         func_80016054(gActiveRenderContext->field_120 + ((projected[2] >> 2) * 4),
                       gActiveRenderContext->field_118, (s32)source,
                       (s32)(animation & 0xFF), (u8)(frame & 0xFF),

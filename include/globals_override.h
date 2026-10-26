@@ -697,7 +697,12 @@ extern s8 D_801273EC;
 /* 801007AC copies the selected record into this byte with sb. */
 extern u8 D_801273E6;
 /* 80100644 installs void handlers called by 800FFF7C; named view preserves legacy declarations. */
-extern void (*Ovl11_D_801273DC)(void) __asm__("D_801273DC");
+extern void (*Ovl11_D_801273DC)(void) __asm__("gOvl11SelectionHandler");
+/* 800FFF7C compares/latches the installed handler; 800FFDCC clears it. */
+extern void (*gOvl11LastSelectionHandler)(void);
+/* 800FFDCC clears the trailing state byte and halfword with sb/sh. */
+extern s8 D_801273EB;
+extern s16 D_80127424;
 
 /* ovl_11_func_800F3FB4 reads this absolute-addressed flag word with lw. */
 extern s32 D_8006C848;
@@ -4253,7 +4258,13 @@ extern s16 D_80128800;
 
 extern u8 D_8007BFF8[];
 
-extern s32 D_80126E40;
+/* ovl_11:6680 resets the shared menu/interaction phase to 0xFF;
+ * 66F0/6734/6778 install phases serviced by 67E0. */
+extern s32 gOvl11InteractionPhase;
+/* ovl_11:8A3C selects the shared sprite frame and advances it every nine
+ * updates; 6680 clears both halfwords. Preserve signedness of the counter. */
+extern u16 gOvl11SharedSpriteFrame;
+extern s16 gOvl11SharedSpriteFrameTicks;
 
 extern s32 gOvl11ItemTransferMenuState; /* 0 inactive, 1 browse, 2 inspect, 3 close */
 
@@ -4982,16 +4993,14 @@ extern s32 D_800C49F8[];
  * the split absolute lui/addiu address the target shows. */
 extern s32 D_800C4A50[];
 
-/* D_800C4A60 - ovl_27 table of four 8-byte {s32 id; void *data;} records at
- * 0x800C4A60 (data/2E40.data.s). ovl_27_func_800BA814 clamps the s32 at
- * D_8006C838+0x18 into the entry index, memcpy's 0x1000 bytes from the
- * entry's data pointer to D_8006C838+0x1C(+6), then records the entry's id.
- * Plain extern (never defined in this TU), absolute-addressed (-G0). */
-struct D800C4A60Entry {
-    s32 field_0;
-    void *field_4;
+/* ovl_27:0x800C4A60: four 8-byte page sources, ids 1/3/0/2.
+ * Ovl27CopySelectedPage copies 0x1000 bytes to the bound work buffer +6,
+ * then records the source id. Overlay data, absolute-addressed (-G0). */
+struct Ovl27PageSource {
+    s32 id;
+    void *data;
 };
-extern struct D800C4A60Entry D_800C4A60[];
+extern struct Ovl27PageSource gOvl27PageSources[];
 
 
 /* D_800711C4 - main-EXE progress-counter record, absolute-addressed from the
@@ -6873,14 +6882,14 @@ extern char *gOvl30ToolNames[5];
 /* 80100FFC loads the unlocked-menu bitset with lbu. */
 extern u8 D_80070D04;
 /* 80100FFC tests this menu-origin byte with lbu; unsigned view preserves legacy declarations. */
-extern u8 D_801273E5_origin __asm__("D_801273E5");
+extern u8 D_801273E5_origin __asm__("gOvl11SelectionOriginVariant");
 /* 80100FFC clears this halfword before installing the next handler. */
 extern s16 D_801273F0;
 
 /* 801014F8 reads the signed menu index with lb and updates it with sb. */
 extern s8 D_801273E9_selection __asm__("D_801273E9");
 /* 801014F8 stores the state byte to 3 on cancellation. */
-extern u8 D_801273E4_state __asm__("D_801273E4");
+extern u8 D_801273E4_state __asm__("gOvl11SelectionModePhase");
 /* 801014F8 adds the text-bank byte offset to this base and +0xC/0x16/0x26/0x38. */
 extern u8 D_8005399A[];
 /* 80101B9C adds D_80054BBC[0] to this text base and its +0x16/+0x28/+0x36 labels. */
@@ -6890,18 +6899,23 @@ extern u8 D_800539E8[];
 extern u8 D_80050B5C_objects[] __asm__("D_80050B5C");
 
 /* 80101814 tests lhu flag bits; the unsigned view preserves legacy signed declarations. */
-extern u16 D_801273EE_flags __asm__("D_801273EE");
+extern u16 D_801273EE_flags __asm__("gOvl11SelectionWorkFlags");
 /* 80102F14 walks eight lhu IDs; unsigned view preserves legacy signed declarations. */
-extern u16 D_8012CF00_ids[8] __asm__("D_8012CF00");
+extern u16 D_8012CF00_ids[8] __asm__("gOvl11SelectionWorkIds");
 /* 801031E4 compares those IDs against one four-entry row selected by 0x181..0x184. */
-extern u16 D_80127404[][4];
+extern u16 gOvl11RequiredIdClasses[][4];
 /* 80101814 walks seven consecutive u16 IDs; 801014A4 also indexes this table with lhu. */
 extern u16 D_801273F4[];
 
 /* 800F5944 loads signed halfwords from the original four-entry data table. */
-extern s16 D_80126C98[4];
+/* ovl_11:800F5944 adds these offsets to the selected record's y. */
+extern s16 gOvl11RecordSpriteYOffsets[4];
 /* 800F5944 indexes that table with this absolute-addressed word. */
-extern s32 D_80129634;
+/* ovl_11:800F4994 arms index 3; 800F4A58 counts down to zero. */
+extern s32 gOvl11RecordSpriteYOffsetIndex;
+/* ovl_11:800F5888 projection scratch, original 80129620/80129628. */
+extern s32 gOvl11RecordSpriteScreen[2];
+extern s16 gOvl11RecordSpritePosition[4];
 
 /* 800F5944: header pointer at +0x25388 and lhu selector at +0x25476. */
 struct Ovl11DispatchWork {

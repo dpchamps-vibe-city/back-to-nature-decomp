@@ -18,11 +18,11 @@
 #include "random.h"
 #include "sprite_render.h"
 #include "sprite_source.h"
+#include "ovl11_projected_record_sprites.h"
 
 void Ovl11UpdateWeatherParticles(void);
 void Ovl11ClearWeatherParticle(Ovl11WeatherParticle *particle);
 void Ovl11RespawnWeatherParticle(u8 *particle);
-s32 ovl_11_func_800F5868(s32 x, s32 y);
 
 void Ovl11UpdateWeatherEffect(void) {
     s32 hourClass;
@@ -214,7 +214,7 @@ draw_particle:
         (*(u16 *)((u8 *)particle + 0)) = screenX;
         screenY = (u16)(*(s16 *)((u8 *)particle + 2)) + D_800A0384.unk16;
         (*(s16 *)((u8 *)particle + 2)) = screenY;
-        if (ovl_11_func_800F5868((s32)(s16)screenX, (s32)(s16)screenY) != 0) {
+        if (Ovl11IsRecordSpriteOnScreen((s32)(s16)screenX, (s32)(s16)screenY) != 0) {
             DrawSpriteFrameRects(gActiveRenderContext->field_120, (s32)&gSharedSpriteSource,
                 (s32)(*(u8 *)((u8 *)particle + 4)), (s32)(u8)(*(s16 *)((u8 *)particle + 6)),
                 (s16)(s32)(s16)(*(u16 *)((u8 *)particle + 0)), (s16)(s32)(*(s16 *)((u8 *)particle + 2)));

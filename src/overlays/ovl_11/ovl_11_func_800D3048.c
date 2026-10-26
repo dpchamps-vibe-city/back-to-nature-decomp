@@ -1,6 +1,6 @@
 #include "common.h"
 
-void ovl_11_func_800D3574();
+void ovl_11_func_800D3574(u16 *record);
 s32 ovl_11_func_800D3468(u16 *arg0);
 
 s32 ovl_11_func_800D3048(u16 *arg0) {

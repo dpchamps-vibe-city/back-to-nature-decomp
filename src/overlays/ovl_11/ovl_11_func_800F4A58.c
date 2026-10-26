@@ -12,7 +12,7 @@ typedef struct {
     /* 0xDDD4 */ D8006C838Inner4A58 *field_DDD4;
 } D8006C838View4A58;
 
-extern s32 D_80129634;
+extern s32 gOvl11RecordSpriteYOffsetIndex;
 
 void ovl_11_func_800F4A58(void) {
     D8006C838View4A58 *base = (D8006C838View4A58 *)&D_8006C838;
@@ -22,10 +22,10 @@ void ovl_11_func_800F4A58(void) {
     entry = base->field_DDD4;
     flags = entry->field_04;
     if ((flags & 0x100) && !(base->field_0C & 0x08000000)) {
-        if (D_80129634 == 0) {
+        if (gOvl11RecordSpriteYOffsetIndex == 0) {
             entry->field_04 = (u16)(flags & 0xFEFF);
             return;
         }
-        D_80129634 -= 1;
+        gOvl11RecordSpriteYOffsetIndex -= 1;
     }
 }

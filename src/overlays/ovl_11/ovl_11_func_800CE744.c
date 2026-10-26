@@ -24,6 +24,7 @@
 #include "ovl11_code160_record_creation.h"
 #include "ovl11_tagged_record_presentation.h"
 #include "ovl11_random_state_choice.h"
+#include "ovl11_projected_record_sprites.h"
 
 typedef struct {
                s16 unk0;
@@ -143,14 +144,13 @@ int CdPosToInt (CdlLOC *p);
 void SsSetSerialVol (char, short, short);
 void SystemError (char, long);
 s16 *ovl_11_func_800E1F9C (s32 arg0, s32 arg1, s32 arg2);
-Recon_ovl_11_func_800D3390_A0View *ovl_11_func_800D2F48 (s32 arg0);
+Ovl11ObjectInitRecord *ovl_11_func_800D2F48 (s32 arg0);
 struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
 u16 *ovl_11_func_8010B1C4 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void ovl_11_func_800CFD9C (void);
 s32 ovl_11_func_800D2E20 (void);
-s32 ovl_11_func_800F5888 ();
 s32 ovl_11_func_800D2950 (s32 arg0);
 void func_80016054 ();
 s32 Ovl11SubmitObjectMarker (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -184,7 +184,6 @@ s32 ovl_11_func_800E2AAC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_800E2A30 (s16 *arg0);
 s32 ovl_11_func_800E2AF0 (M2C_bd4797768b62_Struct_800E2AF0 *arg0);
 void ovl_11_func_8010B64C (s32 arg0);
-s32 ovl_11_func_800F5868 (s32 arg0, s32 arg1);
 s32 ovl_11_func_80109550 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_801098B0 (Ovl11Func801098B0Arg *arg0);
 s32 ovl_11_func_801097F4 (Ovl11Func801097F4Arg x);

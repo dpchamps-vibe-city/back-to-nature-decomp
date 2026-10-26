@@ -11,6 +11,7 @@
 #include "sprite_upload.h"
 #include "sprite_render.h"
 #include "ovl27_backdrop_sprite_pool.h"
+#include "ovl27_scene_resources.h"
 
 
 short SsSeqOpen (unsigned long *, short);
@@ -18,15 +19,6 @@ void SsSetMono (void);
 void SsSetStereo (void);
 void SsStart (void);
 void SsUtReverbOn (void);
-void ovl_27_func_800BA5BC (void);
-s32 ovl_27_func_800BA620 (void);
-void ovl_27_func_800BA750 (void);
-s32 ovl_27_func_800BA7B0 (void);
-void ovl_27_func_800BA514 (void);
-s32 ovl_27_func_800BA578 (void);
-void ovl_27_func_800BA80C (void);
-s32 ovl_27_func_800BA814 (void);
-void ovl_27_func_800BA4C4 (void);
 void StepMasterVolumeRamp (void);
 
 void ovl_27_func_800B823C(void) {
@@ -48,48 +40,48 @@ void ovl_27_func_800B823C(void) {
     default:
         return;
     case 1:
-        ovl_27_func_800BA5BC();
+        Ovl27BeginSharedSpriteRead();
         D_800C4A18 = 2;
         return;
     case 2:
-        if (ovl_27_func_800BA620() != 0) {
+        if (Ovl27PollSharedSpriteRead() != 0) {
             D_800C4A18 = 3;
             return;
         }
         break;
     case 3:
-        ovl_27_func_800BA750();
+        Ovl27BeginImageBankRead();
         D_800C4A18 = 4;
         return;
     case 4:
-        if (ovl_27_func_800BA7B0() != 0) {
+        if (Ovl27PollImageBankRead() != 0) {
             D_800C4A18 = 5;
             return;
         }
         break;
     case 5:
-        ovl_27_func_800BA514();
+        Ovl27BeginSceneDataRead();
         D_800C4A18 = 6;
         return;
     case 6:
-        if (ovl_27_func_800BA578() != 0) {
+        if (Ovl27PollSceneDataRead() != 0) {
             D_800C4A18 = 0xA;
             return;
         }
         break;
     case 10:
-        ovl_27_func_800BA80C();
+        Ovl27BeginPageCopy();
         D_800C4A18 = 0xB;
         return;
     case 11:
-        if (ovl_27_func_800BA814() != 0) {
+        if (Ovl27CopySelectedPage() != 0) {
             D_800C4A18 = 7;
             return;
         }
         break;
     case 7:
         BeginScreenFadeIncrease(0x1E, 0, 2);
-        ovl_27_func_800BA4C4();
+        Ovl27QueueSceneSoundLoads();
         D_800C4A18 = 8;
         return;
     case 8:

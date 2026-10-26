@@ -6,9 +6,9 @@
 #include "sprite_source.h"
 #include "game_flags.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_projected_record_sprites.h"
 
 s32 ovl_11_func_800BDB88(s32 *arg0, s32 arg1);
-s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 /* Engine update-latch setter, exe:0x800158D8. */
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
@@ -33,7 +33,7 @@ void ovl_11_func_800E46A8(u8 *arg0) {
     box[0] = *(u16 *)(arg0 + 0x60) + 0x96;
     box[1] = *(u16 *)(arg0 + 0x64) - 0x64;
     box[2] = *(u16 *)(arg0 + 0x68) - 0x96;
-    if (ovl_11_func_800F5888(box, screen)) {
+    if (Ovl11ProjectRecordSprite(box, screen)) {
         ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
         if (GetGameFlag(0x72) && *(s16 *)arg0 == ((Ovl11E46A8State *)D_8006C838)->selectedId) {
             ot -= 0x14;

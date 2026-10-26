@@ -13,12 +13,12 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "ovl11_projected_record_sprites.h"
 
 /* Helpers retain external linkage. */
 void Ovl11DrawAndStepSpriteEffect(Ovl11SpriteEffect *effect);
 void Ovl11ReleaseSpriteEffect(Ovl11SpriteEffect *effect);
 void Ovl11InitSpriteEffect(Ovl11SpriteEffect *effect, VECTOR position, u16 id);
-s32 ovl_11_func_800F5888(u16 *position, s32 *screen);
 s32 ovl_11_func_800D5868(s16 id);
 s32 ovl_11_func_800D61D8(s16 id);
 
@@ -92,7 +92,7 @@ void Ovl11DrawAndStepSpriteEffect(Ovl11SpriteEffect *effect) {
             position[0] = (u16)effect->x + 0x96;
             position[1] = (u16)effect->y - 0x64;
             position[2] = (u16)effect->z - 0x96;
-            if (ovl_11_func_800F5888(position, screen) != 0) {
+            if (Ovl11ProjectRecordSprite(position, screen) != 0) {
                 DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4), (s32)effect->sprite,
                                      (u8)effect->animation, frame & 0xFF, screen[0], screen[1]);
             }

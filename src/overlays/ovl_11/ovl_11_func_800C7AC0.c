@@ -11,18 +11,15 @@
 #include "ovl11_interaction_volume_query.h"
 #include "ovl11_choice_messages.h"
 #include "game_flags.h"
+#include "ovl11_selection_mode_state.h"
+#include "ovl11_interaction_sequence.h"
 
 s32 ovl_11_func_800CB4E0 (void);
 s32 ovl_11_func_800CB540 (u16 *arg0);
 void ovl_11_func_800FEC2C (void);
-void ovl_11_func_800F6778 (void);
 void ovl_11_func_800FFA40 (void);
-void ovl_11_func_800F6734 (void);
-void ovl_11_func_800FFE64 (void);
-void ovl_11_func_800FFEF0 (void);
 s32 ovl_11_func_800F4B5C (s16 arg0);
 s32 ovl_11_func_800C7270 (Recon_ovl_11_func_800C7270_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800F66F0 (void);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800C893C (Recon_ovl_11_func_800C7270_A0View *arg0);
 void ovl_11_func_800C846C (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
@@ -109,7 +106,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
             case 23:
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    ovl_11_func_800F6778();
+                    Ovl11StartMessageInteraction();
                     var_v0_2 = 0x17;
                     goto block_28;
                 }
@@ -148,7 +145,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
             case 4:
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    ovl_11_func_800F6734();
+                    Ovl11StartSceneYRotationInteraction();
                     var_v0_2 = 4;
                     goto block_28;
                 }
@@ -159,7 +156,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
                     var_v0 = 0;
                     if ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
-                        ovl_11_func_800FFE64();
+                        Ovl11EnterSelectionModeDefault();
                         var_v0_2 = 5;
                         goto block_28;
                     }
@@ -171,7 +168,7 @@ s32 ovl_11_func_800C7AC0(Recon_ovl_11_func_800C7270_A0View *arg0) {
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
                     var_v0 = 0;
                     if ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
-                        ovl_11_func_800FFEF0();
+                        Ovl11EnterSelectionModeAlternate();
                         var_v0_2 = 0x18;
 block_28:
                         ((struct Ovl11InteractionState *) D_8006C838)->flags |= 0x18000000;
@@ -203,7 +200,7 @@ block_28:
             case 22:
                 var_v0 = 0;
                 if ((*(s16 *) ((u8 *) temp_v0 + 8)) == (*(u16 *) ((u8 *) arg0 + 0x38))) {
-                    ovl_11_func_800F66F0();
+                    Ovl11StartSceneZRotationInteraction();
                     ((struct Ovl11InteractionState *) D_8006C838)->flags |= 0x10000000;
                     ((struct Ovl11InteractionState *) D_8006C838)->flags |= 0x08000000;
                     return 0x16;

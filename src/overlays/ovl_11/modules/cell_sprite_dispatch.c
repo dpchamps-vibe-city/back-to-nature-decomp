@@ -8,8 +8,8 @@
 #include "psyq/libgpu.h"
 #include "sprite_render.h"
 #include "ovl11_cell_sprite_dispatch.h"
+#include "ovl11_projected_record_sprites.h"
 
-s32 ovl_11_func_800F5888(u16 *position, s32 *projected);
 s32 Ovl11ResolveCellSpriteMode0(s32 kind, s32 value, s32 *sprite, s32 *texture, s32 *yOffset);
 s32 Ovl11ResolveCellSpriteMode1(s32 kind, s32 value, s32 *sprite, s32 *texture, s32 *yOffset);
 s32 Ovl11ResolveCellSpriteMode2(s32 kind, s32 value, s32 *sprite, s32 *texture, s32 *yOffset);
@@ -81,7 +81,7 @@ void Ovl11DrawVisibleCellSprites(void) {
                 position[0] = x * 400 - 4050;
                 position[1] = -100;
                 position[2] = 1250 - y * 400;
-                if (ovl_11_func_800F5888((u16 *)position, projected) != 0 &&
+                if (Ovl11ProjectRecordSprite((u16 *)position, projected) != 0 &&
                     gOvl11CellSpriteResolver(((Ovl11D93C8MapView *)D_8006C838)->cells[y][x].kind,
                         ((Ovl11D93C8MapView *)D_8006C838)->cells[y][x].value,
                         &sprite, &texture, &yOffset) != 0) {
@@ -241,7 +241,7 @@ void Ovl11DrawFixedCellSpriteGrid(void) {
             position[0] = x * 400 - 1250;
             position[1] = -100;
             position[2] = 850 - y * 400;
-            if (ovl_11_func_800F5888((u16 *)position, projected) != 0) {
+            if (Ovl11ProjectRecordSprite((u16 *)position, projected) != 0) {
                 sprite = 0;
                 texture = 0;
                 map = (u8 *)D_8006C838;

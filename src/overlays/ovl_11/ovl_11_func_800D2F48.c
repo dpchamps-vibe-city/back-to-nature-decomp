@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_object_record_init.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -9,9 +10,8 @@ typedef struct __attribute__((packed)) {
 extern UnkStruct80075BC4 D_80075BC4[6];
 
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
-s32 ovl_11_func_800D3390(Recon_ovl_11_func_800D3390_A0View *arg0, s32 arg1);
 
-Recon_ovl_11_func_800D3390_A0View *ovl_11_func_800D2F48(s32 arg0) {
+Ovl11ObjectInitRecord *ovl_11_func_800D2F48(s32 arg0) {
     UnkStruct80075BC4 *var_s0;
     UnkStruct80075BC4 *var_a0;
     UnkStruct80075BC4 *var_v1;
@@ -39,7 +39,7 @@ loop_2:
     if (var_a2 == 6) {
         return 0;
     }
-    ovl_11_func_800D3390((Recon_ovl_11_func_800D3390_A0View *)var_s0, (s16) arg0);
+    Ovl11InitObjectRecord((Ovl11ObjectInitRecord *)var_s0, (s16) arg0);
     base = (char *)&D_8006C838;
     *(Ovl11UnalignedPair800D2F48 *)((u8 *)var_s0 + 0x1A) = *(Ovl11UnalignedPair800D2F48 *)(base + 0x44B8);
     far_base = (char *)&D_8007AFF0;
@@ -52,5 +52,5 @@ loop_2:
     if (var_s0->unk0 == 0x15B) {
         ovl_11_func_800D3104((u16 *)var_s0, 0x12);
     }
-    return (Recon_ovl_11_func_800D3390_A0View *)var_s0;
+    return (Ovl11ObjectInitRecord *)var_s0;
 }

@@ -8,7 +8,7 @@
 #include "psyq/abs.h"
 #include "ovl11_object_event_script.h"
 
-void ovl_11_func_800D3574(u16 *arg0, s32 arg1) {
+void ovl_11_func_800D3574(u16 *arg0) {
     SpriteSourceData sp10;
     s32 *var_s1;
     s32 var_s0;

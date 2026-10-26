@@ -542,6 +542,39 @@ in `plans/static-first-matching-decompilation.md`.
 
 ## `ovl_11` 0xB0-object initializer pair — 0x800D3390 / 0x800D3404 (confidence: medium)
 
+**Reconstructed: `modules/object_record_init.c`, both members,
+800D3390–800D3424 exclusive.** The sole-caller helper chain claims a record,
+stores its tag/FFFF marker, then repeats the tag store through the refresh
+helper before resetting the embedded timed effect. This shared-object protocol
+and the allocator's use of it corroborate link order; adjacency alone adds
+little in this gapless overlay. `ovl11_object_record_init.h` publishes the
+claim and retag contracts, including zero-tag behavior and full-object capacity.
+Names/types are `Ovl11InitObjectRecord`, `Ovl11SetObjectRecordTag`,
+`Ovl11ObjectInitRecord` and `Ovl11ObjectTagView`. The latter deliberately keeps
+the signed tag-store view while the claim guard reads an unsigned tag. Layout,
+widths, external linkage and ownership are unchanged; no globals are defined.
+The allocator return type and its caller's declaration were propagated too.
+
+Boundaries: preceding 3250 decrements a clock-gated record counter, with no
+shared caller/callee/state; following 3424 is a pure two-output table lookup
+for renderer 2E6C. Neither provides positive membership evidence. The call to
+3574 is sprite-source setup, across that unrelated lookup and the separate
+3468 dispatcher; it does not justify absorbing them. These are supported
+reconstruction cuts, not GP-proven object boundaries (-G0).
+
+The full gate refused the copied one-argument declaration of 3574 because its
+matched definition declared an unread trailing s32. Both actual callers pass
+only the record. Its definition is now one u16-pointer parameter, and both
+caller declarations agree; no argument or behavior was synthesized. Final
+verification proves the callee, both callers and every linked container remain
+byte-identical. This is a gate-required interface correction outside the fold,
+not a speculative change to its neighboring group. Canonical names are clean,
+published interfaces have no failing callers, and the final campaign gate
+passes all integrity checks (995 folded, all 160 modules valid). Baseline flags
+sufficed; no flag, asm, pin, stub or permission was added or retired.
+
+Historical evidence:
+
 Evidence: exact link-order adjacency (0x800D3390 len 0x74 ends where
 0x800D3404 begins) and a shared object: 800D3390 clears a 0xB0-byte
 object and tags its leading halfwords, then calls 800D3404 with that same
@@ -594,6 +627,34 @@ Members:
 - ovl_11_func_800D3CE8 (m) — flag → arg 2/7, result 0xD / 1.
 
 ## `ovl_11` ovl_11_func_800F6680-driven state-set / dispatcher run — 0x800F66F0–0x800F67E0 (confidence: medium)
+
+**Reconstructed: `modules/interaction_sequence.c`, all five entries
+800F6680, 66F0, 6734, 6778, 67E0, ending at 69D0.** The reset's only three
+callers are the three starts; they install phases 6/7/4 consumed by the
+following service. Flag 71/70 setup, Z/Y ramp-held waits and matching teardown
+establish the rotation meanings independently of message IDs. Message 37A is
+the direct-start path; the ramp paths select 378/379. The reset is included,
+not left as a one-function slice.
+
+The left cut excludes the preceding UI aggregator/empty hooks: they neither
+access the sequence state nor participate in its exclusive reset/start chain.
+The right cut is the texture-cell cache's own lifecycle and private cache
+records; calls here reset/clear that service, not its ownership. The shared
+phase word also serves the later item menu; its use alone does not combine
+all intervening members. These are protocol/helper reconstruction cuts, not
+GP-proven original object cuts (-G0).
+
+Names describe entry/reset/service behavior, with `gOvl11InteractionPhase`
+and the shared sprite frame/tick halfwords recorded at their original overlay
+addresses. Missing frame/tick externs were published in globals_override.h:
+the frame consumer is unsigned, the nine-update counter signed; reset only
+stores zero. Existing state declarations were removed from the module and no
+storage/linkage was added. The header publishes four external entry points and
+documents shared-state exclusion, message/ramp waits and exit effects. Baseline
+fold and the final full campaign gate pass all container bytes and integrity
+checks (995 folded, 160/160 valid); no flag or exception changed.
+
+Historical evidence:
 
 Evidence: three link-order-contiguous functions with no gaps
 (0x800F66F0 len 0x44, 0x800F6734 len 0x44, 0x800F6778 len 0x68) that all
@@ -1514,6 +1575,17 @@ separate same-family entries, not same-TU members.
 ---
 
 ## `ovl_11` D_8007A638 seven-record state run — 0x8010C6A0 / 0x8010C7F0 / 0x8010C95C / 0x8010C9B4 / 0x8010CAD4 (confidence: medium; CAD4 low)
+
+Module-campaign review: the closed sweep/helper core also includes CA0C and
+CAA8 (sole callers C7F0), plus CB6C (sole caller C9B4, consuming the +AC index
+initialized by C6A0). An eight-member dry fold through CB6C is mechanically
+possible, but was **not written**: a boundary at CD80 is not established.
+C7F0 calls CD80/CF58/D0EC, CA0C calls D20C, CAD4 calls D314, and CB6C calls
+CE80. CE80 having eleven outside callers does not prove it was in another TU;
+public helpers can be in the same file. That proposed boundary argument is
+rejected, not adopted as evidence. Trace the following object-mode/helper
+block and its private tables before folding the complete supported unit.
+No partial seven-record module, source change or exception was retained.
 
 Candidate same-TU family over the overlay-local global `D_8007A638` (a
 seven-entry, 0xF8-stride record array, 0x6C8 bytes).
@@ -6903,6 +6975,17 @@ table; func_80024578 (m) — per-state offset scaled by arg1; func_800245C8
 
 ## sprite render dispatch wrappers — 0x800245F4–0x80024AE4 (confidence: high)
 
+Read-only module-campaign review confirms the whole seventeen-member range,
+not just its counter consumers: all wrappers feed 24A4C, and the two GP-owned
+phase bytes connect the tick functions to their animated draws. The upper
+boundary is the adddf3 library object at 24AE4. No slice was folded to bypass
+2470C/2495C's standing scheduling overrides. The regional contradictions and
+minimal-sched1 finding in plans/flag-review-report.md still apply to the
+measured sources; no new flag matrix or source experiment was run here. The
+next useful test is the whole merged baseline with coherent counter webs,
+followed by the existing hypotheses across every member, not flag-compatible
+singleton TUs. Existing sources/settings remain intact.
+
 Module-campaign baseline experiment: the complete current run has **17
 compiled functions**, including both clocks, all clock consumers and the
 shared-source dispatcher. The right boundary is hard link-order evidence:
@@ -9086,6 +9169,22 @@ says don't use shape for TU membership, only call graph + adjacency.
 
 ## D_8005E2BA cursor-offset family — func_80017A38 / func_80019030 / func_80019CBC (confidence: low)
 
+Read-only module-campaign review connects this accessor band to the larger
+179E8–1AF44 text-engine hypothesis: the interpreter/renderer, accessors, slot
+loader and glyph helpers share GP-relative state and internal calls, including
+the existing u16_string slice. No GP-versus-absolute cut was found for these
+small state words. A proposed 17A38–17E34 accessor-only fold was rejected:
+`lh` versus `lhu` is not a TU boundary, because explicit casts/typed views can
+produce both (17F88 itself demonstrates both for E49C). It cannot overrule the
+shared-state/caller evidence or separate the no-GCSE interpreter artificially.
+
+The whole-unit compiler-setting question remains open. The existing
+flag-review report records 183E0/18B98's no-GCSE requirements for their current
+sources and contrary baseline-matching loader/text witnesses. This run made no
+new flag measurement or change. A faithful complete merged declaration context
+and whole-unit baseline/no-GCSE comparison, not a small accessor slice, is the
+next useful experiment. The live matching layout is retained.
+
 Three functions whose TUs all tentatively define the same u16 `D_8005E2BA`
 (reached GP-relatively in every matched member), a menu cursor/offset value:
 `func_80017A38` is the setter, the other two are consumers. A file only gets
@@ -10746,6 +10845,44 @@ Members (link order):
 
 ## `ovl_11` GTE transform + bounds-gate pair — 0x800F5868 / 0x800F5888 (confidence: medium)
 
+**Reconstructed with the complete following callback family in
+`src/overlays/ovl_11/modules/projected_record_sprites.c`, eleven entries
+800F5868–800F65B8 exclusive.** This is not a two-function slice: the walker
+at 5BC0 calls projection at 5888, which calls clipping at 5868; the dispatcher
+selects each of the seven following callbacks and sends the same record lists
+through the walker. The three pooled jump tables remain in member order.
+Private projection scratch at 80129620/28 corroborates the helper chain.
+
+The left reconstruction cut leaves 581C outside: it is a pure calendar-mask
+utility also used by the separate spawn/record families, with no projection
+scratch or callback-table role. Its common return value is an input to this
+module, not evidence joining all consumers. At the right, 65B8 updates a dozen
+UI controllers and never invokes this renderer or accesses its private scratch
+or mapper tables. Neither cut is a GP-proven original object boundary (-G0);
+there is no stronger evidence extending this closed renderer family to either
+neighbor. All eleven members retain external linkage and original order.
+
+Public header `ovl11_projected_record_sprites.h` publishes the pixel-bounds
+predicate, checked projection and scene-list drawing. Names describe scene-kind
+selection, not inferred gameplay roles. Projection scratch and the table-driven
+y-offset/index are named at their original overlay identities. Canonicalization
+propagated callers; the explicitly ovl_11 declarations in the shared override
+header were reconciled directly because their address-only aliases are not
+container-qualified. The duplicate walker parameter typedef was unified as
+`Ovl11ProjectedRecordView` in game_types.h: it retains all halfword widths and
+the 0x18 stride, distinct from the dispatcher's full-coordinate copy view.
+
+The callback declarations now agree with all seven definitions: s32 kind and
+two s32 output pointers. The former u8 output local was actually a word written
+through the cast callback; it is now a word with an explicit low-byte read for
+drawing. This removes the cast/incompatible-pointer contract without changing
+any bytes. No global definition, storage, linkage or exception was added.
+Baseline checked fold and subsequent full campaign gate both passed, including
+callers, data/callback addresses and pooled tables (folded 952 → 972 for the
+two-module batch, all 156 module TUs valid). No override applies or was needed.
+
+Historical candidate evidence follows.
+
 Candidate same-TU pair in `ovl_11` (`Obj\GF_FARM.bin`) sitting gaplessly
 immediately before the documented dispatch run (0x800F5944–0x800F6578): a
 screen-bounds check and the GTE point-transform caller that uses it.
@@ -10777,6 +10914,11 @@ Members (link order):
   passes, stores {x, y, result} into arg1 and returns 1, else 0
 
 ## `ovl_11` dispatch + 7-callback leaf run — 0x800F5944–0x800F6578 (confidence: high)
+
+**Reconstructed together with its projection/clipping pair in
+`modules/projected_record_sprites.c`; see the immediately preceding section
+for complete membership, boundaries, interface and verification.** The final
+6578 mapper ends at 65B8; the old range heading names its start, not its end.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) threaded through a
 jump-table dispatch (`ovl_11_func_800F5944`, 0x27C) that selects one of seven
@@ -12297,6 +12439,44 @@ Members (address order):
   consumer of the D_80071AC0 and D_8006C838+0x450A 6-byte record tables.
 
 ## `ovl_11` D_8012CF00 8-entry table id-map run — 0x80102BCC–0x801033D4 (confidence: medium)
+
+**Reconstructed together with the complete outcome/commit run in
+`modules/selection_candidate.c`, twelve entries 80102BCC–80103714 exclusive:**
+2BCC, 2DC4, 2E1C, 2F14, 31E4, 32BC, 33D4, 3424, 3480, 34D0, 3548, 35C0.
+The scanner saves/restores the shared eight IDs and flag bits around each
+trial; its three validators call the adjacent classification/adjustment
+helpers. The five outcome handlers call commit, and commit calls the scanner
+again and publishes precisely those IDs/flags. That closes the family across
+the formerly proposed 33D4 cut: neither half alone is the supported unit.
+The outside selection driver installs all five result handlers and uses the
+same scanner result, corroborating the protocol rather than merely a global.
+
+The left cut excludes 2B6C's sprite-request setter: it has no transaction over
+the shared ID/flag set. The right cut excludes 3714, a common exit installed by
+nine sites across several protocols and with no validator/commit behavior.
+The earlier selection-start/release functions are interface clients with
+separate request/record-table contracts; their calls do not absorb intervening
+code. These are conservative protocol cuts under -G0, not proven object cuts.
+
+`ovl11_selection_candidate.h` publishes the scanner and five address-taken
+outcomes. It distinguishes FE (no candidate) from FF (candidate not already
+recorded), documents transaction restoration and the caller's unchecked
+capacity invariant. Functions now describe validation, adjustment, outcome and
+commit. Work IDs/flags, required-ID classes and selection handler/phase/origin
+have canonical data names; existing signed/unsigned header views retain their
+identities through explicitly updated assembler bindings, without new aliases.
+No global definition, private linkage or storage was introduced.
+
+The first checked fold rolled back on incompatible 32BC parameter views.
+It now uses the existing Ovl11IdAdjustmentObject, with its adjustment byte
+explicitly cast to s8 as the target requires; the duplicate local structs are
+gone. Integer handler-address stores now use the existing pointer view.
+Baseline fold then passed all twelve members. Naming/interface integration
+and the final campaign gate pass every EXE/overlay byte, tables, callers,
+source policy and exception non-growth (995 folded; 160 valid modules).
+No compiler override was required or changed.
+
+Historical candidate evidence:
 
 Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`) built around the
 8-entry `D_8012CF00` u16 table and the raw id set 0x181–0x184. Evidence
@@ -14093,6 +14273,40 @@ Any of the three matched ovl_17/23/25 members is a donor template for the
 offset-0x4488/0x448C variant.
 
 ## `ovl_27` D_800C4A18 display-setup state-handler run — 0x800BA4C4–0x800BA914 (confidence: medium)
+
+**Reconstructed: `src/overlays/ovl_27/modules/scene_resources.c`, all nine
+entries, no stubs.** The setup dispatcher's paired start/poll branches provide
+membership beyond link order: they serialize the same archive entry's shared
+CD channel, use scratch +4290/+566C, publish the common sprite bank, then copy
+a selected page and queue sound. The empty page-begin hook is retained as a
+real stage, not deleted or treated as a boundary. The page source table is
+private to its closing member, now `gOvl27PageSources` with `id`/`data` fields.
+The eight-byte stride and all storage/type widths are unchanged.
+
+The left cut follows the separately reconstructed backdrop_sprite_pool:
+BA230 is the completion step for its private slot-array/sprite-bank setup,
+called by the steady-state driver, not a stage of B823C. The shared CD helper
+and heap buffer alone do not combine both protocols. At the right, BA914
+initializes the resident work/record state (see its existing init/menu group),
+not a setup-loader branch or consumer of the private page-source table.
+The setup dispatcher is also left separate: it resides before an intervening
+input/drawing family, and interface calls alone do not absorb those members.
+These are responsibility/caller/table reconstruction cuts, not GP proofs
+(overlays use -G0); no claim of exact original object boundaries is made.
+
+`ovl27_scene_resources.h` publishes all nine steps to B823C, documenting the
+entry-relative byte ranges, buffer prerequisites, shared-state sequencing,
+completion results, sound-transfer ownership and selected-page copy. Names
+are recorded in ovl_27.names.txt and propagated canonically; the shared
+header's explicitly overlay-specific table extern was reconciled directly.
+Local copy variables and the page table type/fields now describe their roles.
+External linkage and ownership remain unchanged, with no scope collision.
+
+The complete fold passed at baseline with no override. After naming/header
+integration, the batch campaign gate passed all EXE/overlay bytes, data and
+tables, config convergence, source policy, input stability and exception
+non-growth (952 → 972 folded; all 156 modules valid). No flag or exception was
+added/retired; exit 1 only reports the campaign's remaining unfolded functions.
 
 Evidence: the dispatcher `ovl_27_func_800B823C` (s, 0x800B823C–0x800B845C;
 selects on the s16 state `D_800C4A18` via `jtbl_800B7E24`) calls all nine
@@ -16553,6 +16767,11 @@ and the run's `D_8005E3B0 + 0x4290` load/initialize buffer.
 
 ## `ovl_11` D_801273DC handler-table run — 0x801033D4–0x801035C0 (confidence: high)
 
+**Reconstructed as part of the whole twelve-member `selection_candidate`
+module, not a separate slice.** See the 80102BCC id-map section for the
+commit-to-validator closure, boundaries, names/interfaces and final verification.
+The 35C0 commit helper ends at 3714; the historical heading names its start.
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): a generated run of
 per-case event handlers sharing one file-scope main-RAM function-pointer global.
 
@@ -16659,6 +16878,39 @@ Members (address order):
 ---
 
 ## `ovl_11` D_801273DC state-block init/installer run — 0x800FFDCC / 0x800FFE64 / 0x800FFEF0 / 0x800FFF7C (confidence: high)
+
+**Reconstructed: `modules/selection_mode_state.c`, all four members,
+800FFDCC–801000D4 exclusive.** Both entry variants call the sole reset; the
+service owns the only other access to the reset's handler-change latch at
+801273E0 (`gOvl11LastSelectionHandler`). That private latch and complementary
+entry/reset/dispatch roles are the strongest membership evidence. The other
+shared state bytes alone would not group all their overlay-wide consumers.
+
+The left cut excludes FFB08's different menu selection/position-transition
+protocol (D8, not DC/E0/E4/E5). The right cut excludes 1000D4's standalone
+sentinel-table membership predicate, called from distant record checks and
+untied to mode state. No GP proof is available (-G0); these are state-contract
+reconstruction cuts, not recovered object-file delimiters.
+
+Public entries are `Ovl11EnterSelectionModeDefault/Alternate` and
+`Ovl11ServiceSelectionMode`; the reset keeps external linkage without public
+header exposure. `ovl11_selection_mode_state.h` documents variant differences,
+initialization/message effects, handler preconditions and palette/pen effects.
+All local global declarations were reconciled to established header views;
+missing latch/trailing-state externs were published with their store/call
+width evidence. The latch is a function pointer, not a new allocated object.
+The typed legacy views of the now-canonical handler/phase/origin/work symbols
+are retained to preserve other consumers' signedness; no new alias was added.
+
+The baseline fold proved all four members. An intermediate pre-fold rename
+caused bootstrap to emit four temporary stubs under the new filenames; the
+original C bodies were moved to those exact configured identities before
+folding, and no stub remains. Final full campaign verification passes all
+container bytes, inventory, source policy, config convergence, stability and
+exception non-growth: 995 folded and all 160 module TUs valid. Neither the
+module nor its members require an override; none was added or retired.
+
+Historical candidate evidence:
 
 Candidate same-TU run tied to the `D_801273Exx` main-RAM state block and the
 `D_801273DC` handler pointer already documented by the D_801273DC handler-table

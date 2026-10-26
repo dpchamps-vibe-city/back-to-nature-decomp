@@ -17,3 +17,15 @@ Ovl27DrawBackdropAnim35 = 0x800BA0EC; // type:func
 Ovl27DrawTextBankLabel = 0x800BA130; // type:func
 Ovl27BeginBackdropStageLoad = 0x800BA1CC; // type:func
 Ovl27PollBackdropSpritePoolLoad = 0x800BA230; // type:func
+
+// Setup-dispatcher resource steps; byte ranges are relative to archive entry 0.
+Ovl27QueueSceneSoundLoads = 0x800BA4C4; // type:func
+Ovl27BeginSceneDataRead = 0x800BA514; // type:func
+Ovl27PollSceneDataRead = 0x800BA578; // type:func
+Ovl27BeginSharedSpriteRead = 0x800BA5BC; // type:func
+Ovl27PollSharedSpriteRead = 0x800BA620; // type:func
+Ovl27BeginImageBankRead = 0x800BA750; // type:func
+Ovl27PollImageBankRead = 0x800BA7B0; // type:func
+Ovl27BeginPageCopy = 0x800BA80C; // type:func
+Ovl27CopySelectedPage = 0x800BA814; // type:func
+gOvl27PageSources = 0x800C4A60; // type:data size:0x20

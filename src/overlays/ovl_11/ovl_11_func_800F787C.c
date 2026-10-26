@@ -28,12 +28,12 @@ void ovl_11_func_800F787C(void) {
 
     func_80017A38(0, 2);
     if (IsMessageWindowStatusFinal() && (*(s32 *)((u8 *)gPad0Input + 8) & 0x800)) {
-        D_80126E40 = 0xFE;
+        gOvl11InteractionPhase = 0xFE;
         CloseMessageWindow();
         PlaySoundEffect(3);
         return;
     }
-    firstText = D_80126E40;
+    firstText = gOvl11InteractionPhase;
     if (firstText == 0) {
         firstText = 0x448;
         secondText = 0x466;

@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern u16 D_8012CF00[8];
+extern u16 gOvl11SelectionWorkIds[8];
 
 void *ovl_11_func_80102844(s8 arg0, s8 arg1);
 
@@ -10,7 +10,7 @@ s32 ovl_11_func_801027D4(s8 arg0, s8 arg1) {
 
     key = *(u16 *)ovl_11_func_80102844(arg0, arg1);
     for (i = 0; i < 8; i++) {
-        if (D_8012CF00[i] == key) {
+        if (gOvl11SelectionWorkIds[i] == key) {
             break;
         }
     }

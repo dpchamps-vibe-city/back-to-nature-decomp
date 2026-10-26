@@ -107,6 +107,64 @@ Ovl11CopyHalfwordTriplet = 0x800D7348; // type:func
 
 // Closed lifecycle of fifteen projected scene records.
 Ovl11ClearSceneRecords = 0x800DC990; // type:func
+
+// Projected record sprites and their scene-kind selectors, original identities.
+Ovl11IsRecordSpriteOnScreen = 0x800F5868; // type:func
+Ovl11ProjectRecordSprite = 0x800F5888; // type:func
+Ovl11DrawSceneRecordSprites = 0x800F5944; // type:func
+Ovl11DrawProjectedRecordList = 0x800F5BC0; // type:func
+Ovl11SelectKind5Sprite = 0x800F5D04; // type:func
+Ovl11SelectKind8Sprite = 0x800F5EE0; // type:func
+Ovl11SelectSeasonSprite = 0x800F6118; // type:func
+Ovl11SelectKind7Sprite = 0x800F6218; // type:func
+Ovl11SelectKind6Sprite = 0x800F62D8; // type:func
+Ovl11SelectKind4Sprite = 0x800F64F8; // type:func
+Ovl11SelectKind9Sprite = 0x800F6578; // type:func
+gOvl11RecordSpriteScreen = 0x80129620; // type:data size:0x8
+gOvl11RecordSpritePosition = 0x80129628; // type:data size:0x8
+gOvl11RecordSpriteYOffsetIndex = 0x80129634; // type:data size:0x4
+gOvl11RecordSpriteYOffsets = 0x80126C98; // type:data size:0x8
+
+// Selection mode entry and change-sensitive handler dispatch.
+Ovl11ResetSelectionModeState = 0x800FFDCC; // type:func
+Ovl11EnterSelectionModeDefault = 0x800FFE64; // type:func
+Ovl11EnterSelectionModeAlternate = 0x800FFEF0; // type:func
+Ovl11ServiceSelectionMode = 0x800FFF7C; // type:func
+gOvl11LastSelectionHandler = 0x801273E0; // type:data size:0x4
+
+// 0xB0-byte object record claim and tag refresh.
+Ovl11InitObjectRecord = 0x800D3390; // type:func
+Ovl11SetObjectRecordTag = 0x800D3404; // type:func
+
+// Interaction entry and message/ramp sequence, with shared menu phase word.
+Ovl11ResetInteractionSequence = 0x800F6680; // type:func
+Ovl11StartSceneZRotationInteraction = 0x800F66F0; // type:func
+Ovl11StartSceneYRotationInteraction = 0x800F6734; // type:func
+Ovl11StartMessageInteraction = 0x800F6778; // type:func
+Ovl11ServiceInteractionSequence = 0x800F67E0; // type:func
+gOvl11InteractionPhase = 0x80126E40; // type:data size:0x4
+gOvl11SharedSpriteFrame = 0x80126E50; // type:data size:0x2
+gOvl11SharedSpriteFrameTicks = 0x80126E52; // type:data size:0x2
+
+// Transactional selection validators and the complete five-outcome protocol.
+Ovl11ChooseEligibleSelection = 0x80102BCC; // type:func
+Ovl11ConsumeRequiredFlagBits = 0x80102DC4; // type:func
+Ovl11ConsumeRequiredObjectIds = 0x80102E1C; // type:func
+Ovl11AccumulateIdAdjustments = 0x80102F14; // type:func
+Ovl11ClassifyRequiredId = 0x801031E4; // type:func
+Ovl11ApplyMappedIdAdjustment = 0x801032BC; // type:func
+Ovl11SelectionUnchangedHandler = 0x801033D4; // type:func
+Ovl11SelectionSameRecordHandler = 0x80103424; // type:func
+Ovl11SelectionNoCandidateHandler = 0x80103480; // type:func
+Ovl11SelectionIncreaseHandler = 0x801034D0; // type:func
+Ovl11SelectionDecreaseHandler = 0x80103548; // type:func
+Ovl11CommitSelection = 0x801035C0; // type:func
+gOvl11SelectionHandler = 0x801273DC; // type:data size:0x4
+gOvl11SelectionModePhase = 0x801273E4; // type:data size:0x1
+gOvl11SelectionOriginVariant = 0x801273E5; // type:data size:0x1
+gOvl11SelectionWorkFlags = 0x801273EE; // type:data size:0x2
+gOvl11SelectionWorkIds = 0x8012CF00; // type:data size:0x10
+gOvl11RequiredIdClasses = 0x80127404; // type:data size:0x20
 Ovl11FindFreeSceneRecord = 0x800DC9D4; // type:func
 Ovl11ClearSceneRecord = 0x800DCA10; // type:func
 Ovl11InstallSceneRecords = 0x800DCA60; // type:func

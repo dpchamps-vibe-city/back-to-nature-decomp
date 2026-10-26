@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_projected_record_sprites.h"
 
 /* Minimal view of the 0x18-byte position record whose +8/+0xC/+0x10
  * halfwords are the box centre. Only the witnessed fields are named. */
@@ -18,7 +19,6 @@ typedef struct {
 
 /* ovl_11_func_800F5888 only reads its first two arguments (the third is
  * unused), so the call is a two-argument call. */
-s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5,
                    s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 
@@ -30,7 +30,7 @@ void ovl_11_func_800E48CC(Recon_ovl_11_func_800E48CC_A0View *arg0,
     sp38[0] = arg0->field_8 + 0x96;
     sp38[1] = arg0->field_C - 0x64;
     sp38[2] = arg0->field_10 - 0x96;
-    if (ovl_11_func_800F5888(sp38, sp28) != 0) {
+    if (Ovl11ProjectRecordSprite(sp38, sp28) != 0) {
         func_80016054(gActiveRenderContext->field_120 + ((sp28[2] >> 2) * 4),
                       gActiveRenderContext->field_118, (s32) arg1, (s32) arg1->field_4,
                       (u8) (s32) arg1->field_5, (s16) sp28[0],

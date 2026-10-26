@@ -206,19 +206,6 @@ typedef struct {
 } M2C_057dca34f681_Struct_800D03B4;
 
 typedef struct {
-               s16 unk0;
-               u16 unk2;
-               u16 unk4;
-               u16 pad6;
-               u16 unk8;
-               u16 padA;
-               u16 unkC;
-               u16 padE;
-               u16 unk10;
-               u8 pad12[0x18 - 0x12];
-} M2C_0584a699a1f0_Ovl11Func5BC0Entry;
-
-typedef struct {
                char pad_00[0x26];
                s16 unk26;
                s16 unk28;
@@ -1291,17 +1278,6 @@ typedef struct {
     s16 unk2;
     s16 unk4;
 } M2C_a34e94965883_M2C_800EEFB8_Arg1;
-
-typedef struct {
-               u16 unk0;
-               s8 unk2;
-               char pad3;
-} M2C_a3c645de7bec_M2C_Elem801032BC;
-
-typedef struct {
-               char pad0[0x1C];
-               M2C_a3c645de7bec_M2C_Elem801032BC *unk1C;
-} M2C_a3c645de7bec_M2C_Arg801032BC;
 
 typedef struct {
                u16 unk0;
@@ -2592,6 +2568,20 @@ typedef struct {
 } Ovl11ObjectCB6C;
 
 typedef struct {
+               u16 tag;
+               char pad_02[0x2];
+               u16 marker;
+               char pad_06[0xA2];
+               s16 timedEffect;
+               s16 timedEffectAux;
+               char pad_AC[0x4];
+} Ovl11ObjectInitRecord;
+
+typedef struct {
+    s16 tag;
+} Ovl11ObjectTagView;
+
+typedef struct {
     s32 field_0;
     s32 field_4;
     s32 field_8;
@@ -2604,6 +2594,19 @@ typedef struct {
                 s32 y;
                 s32 z;
 } Ovl11PositionTransitionObject;
+
+typedef struct {
+    s16 selectionKey;
+    u16 spriteKind;
+    u16 flags;
+    u16 pad6;
+    u16 xLow;
+    u16 padA;
+    u16 yLow;
+    u16 padE;
+    u16 zLow;
+    u8 pad12[0x18 - 0x12];
+} Ovl11ProjectedRecordView;
 
 typedef struct {
                char pad_00[0x38];
@@ -3104,20 +3107,6 @@ typedef struct {
     char pad_40[0xC];
     s32 unk4C;
 } Recon_ovl_11_func_800D2594_A0View;
-
-typedef struct {
-               u16 unk0;
-               char pad_02[0x2];
-               u16 unk4;
-               char pad_06[0xA2];
-               s16 unkA8;
-               s16 unkAA;
-               char pad_AC[0x4];
-} Recon_ovl_11_func_800D3390_A0View;
-
-typedef struct {
-    s16 unk0;
-} Recon_ovl_11_func_800D3404_A0View;
 
 typedef struct {
     s32 unk0;

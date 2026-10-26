@@ -1,7 +1,7 @@
 #include "common.h"
 #include "message_window.h"
 
-extern s8 D_801273E4;
+extern s8 gOvl11SelectionModePhase;
 
 s32 ovl_11_func_800D60D4(s16 *arg0);
 void *ovl_11_func_80102844(s8 arg0, s8 arg1);
@@ -18,6 +18,6 @@ void ovl_11_func_80102268(s8 arg0, s8 arg1) {
         RequestMessageWindow(3, v);
     }
     if (GetMessageWindowStatus() == 2) {
-        D_801273E4 = 3;
+        gOvl11SelectionModePhase = 3;
     }
 }

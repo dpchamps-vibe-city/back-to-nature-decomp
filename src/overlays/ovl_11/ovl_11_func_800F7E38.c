@@ -28,7 +28,7 @@ s32 ovl_11_func_800F7E38(u16 *arg0, s32 arg1, u16 *arg2, s32 arg3) {
             var_v0 = 0;
             if (ovl_11_func_800D5810((s16) arg0[0]) != 0) {
                 var_v0 = 0;
-                if (D_80126E40 != ovl_11_func_800D57A4((s16) arg0[0])) {
+                if (gOvl11InteractionPhase != ovl_11_func_800D57A4((s16) arg0[0])) {
                     return 0;
                 }
                 ovl_11_func_800F9174(arg0, arg1, arg2, arg3, 0);

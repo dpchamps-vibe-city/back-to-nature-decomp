@@ -28,6 +28,7 @@
 #include "ovl11_object_event_script.h"
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_object_events.h"
+#include "ovl11_projected_record_sprites.h"
 
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2);
 
@@ -973,7 +974,6 @@ s32 Ovl11TryStartObjectReaction(Ovl11AnimationObject *obj) {
     return 0;
 }
 
-s32 ovl_11_func_800F5888(u16 *arg0, s32 *arg1);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                     s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 void ovl_11_func_800C9E90(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -986,7 +986,7 @@ void Ovl11DrawObjectEvent(Ovl11AnimationObject *arg0) {
     pos[0] = *(u16 *)((u8 *)arg0 + 0x30) + 0x96;
     pos[1] = *(u16 *)((u8 *)arg0 + 0x34) - 0x64;
     pos[2] = *(u16 *)((u8 *)arg0 + 0x38) - 0x96;
-    if (ovl_11_func_800F5888(pos, screen) != 0) {
+    if (Ovl11ProjectRecordSprite(pos, screen) != 0) {
         ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
         if (arg0->id == ((struct Ovl11FlagDateView *)D_8006C838)->field_E778) {
             if (GetGameFlag(0x72) != 0) {

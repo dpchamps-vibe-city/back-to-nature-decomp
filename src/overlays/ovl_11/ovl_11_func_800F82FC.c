@@ -12,7 +12,7 @@ s16 *ovl_11_func_800F82FC(s32 column, s32 row) {
 
     rowOffset = row * 8 - 9;
     index = rowOffset + column;
-    if (D_80126E40 == 0) {
+    if (gOvl11InteractionPhase == 0) {
         base = (Ovl11ItemState *)&D_80071A84;
         offset = column << 1;
         offset += column;
@@ -35,7 +35,7 @@ s16 *ovl_11_func_800F82FC(s32 column, s32 row) {
     case 1:
         return (s16 *)selected;
     default:
-        switch (D_80126E40) {
+        switch (gOvl11InteractionPhase) {
         case 0:
             return (s16 *)((Ovl11ItemState *)&D_80070EC2 + index);
         default:
