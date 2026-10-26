@@ -16,6 +16,7 @@
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_date_message.h"
+#include "ovl11_interaction_dispatch.h"
 
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800FFA40 (void);
@@ -33,7 +34,6 @@ s32 ovl_11_func_800C8808 (Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2);
 void ovl_11_func_800CE034 (Ovl11CE034Object *arg0, VECTOR *arg1, s32 arg2);
 u16 ovl_11_func_800BF2F4 (s16 *arg0, s16 *arg1);
 s32 ovl_11_func_80118C28 (s16 id);
-s32 ovl_11_func_80118A68 (s32 arg0);
 void ovl_11_func_800C8764 (Recon_ovl_11_func_800C8334_A0View *arg0);
 s32 ovl_11_func_800F24B0 (void);
 void ovl_11_func_800C84DC (Recon_ovl_11_func_800C7270_A0View *arg0);
@@ -327,7 +327,7 @@ block_28:
                 temp_v0_3 = ovl_11_func_800BF2F4(coord, (s16 *) ((u8 *) arg0 + 0xFC));
                 if (temp_v0_3 != 0) {
                     if ((temp_v0_3 == 0x177) || ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0)) {
-                        ovl_11_func_80118A68((s16) ovl_11_func_80118C28(temp_v0_3));
+                        Ovl11BeginInteraction((s16) ovl_11_func_80118C28(temp_v0_3));
                         Ovl11ResetPrimaryObjectRequest();
                         goto block_78;
                     }
@@ -344,7 +344,7 @@ block_78:
                 ovl_11_func_800C8764((Recon_ovl_11_func_800C8334_A0View *) arg0);
                 return 0x20;
             case 21:
-                ovl_11_func_80118A68(0x1B);
+                Ovl11BeginInteraction(0x1B);
                 Ovl11ResetPrimaryObjectRequest();
                 return 0x15;
             case 6:

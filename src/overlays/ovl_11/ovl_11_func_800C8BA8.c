@@ -40,7 +40,7 @@ s32 ovl_11_func_800C8BA8(Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1) {
         return 1;
     }
     if (arg1 & 0x40) {
-        if (Ovl11ProbeInteractionVolume(D_8009F78C, (Ovl11Func800BDCE8Arg1 *) &((Ovl11C7010Object *) arg0)->unk100, 1) != NULL) {
+        if (Ovl11ProbeInteractionVolume(gLoadedAreaHeaderCopy, (Ovl11Func800BDCE8Arg1 *) &((Ovl11C7010Object *) arg0)->unk100, 1) != NULL) {
             return 1;
         }
         return ovl_11_func_800C7AC0(arg0);

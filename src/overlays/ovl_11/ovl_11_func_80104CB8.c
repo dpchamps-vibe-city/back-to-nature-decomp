@@ -39,8 +39,8 @@ void ovl_11_func_80104CB8(void) {
     Ovl11ResetVertexBlendPool();
     Ovl11ClearSceneRecords();
     Ovl11InstallSceneRecords();
-    Ovl11RequestVramAnimations(D_8009F78C);
-    Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);
+    Ovl11RequestVramAnimations(gLoadedAreaHeaderCopy);
+    Ovl11RegisterPoolSpriteRotations((s32)gLoadedAreaHeaderCopy);
     Ovl11RefreshAreaSoundBank();
     while (IsSoundTransferComplete() == 0) {
         UpdateMasterVolumeAndSoundTransfer();

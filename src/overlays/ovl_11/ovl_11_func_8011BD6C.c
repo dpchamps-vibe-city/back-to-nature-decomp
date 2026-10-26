@@ -12,6 +12,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_selection_record_access.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -23,7 +24,6 @@ s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-s16 ovl_11_func_8011D98C(StructD548 x);
 
 s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
     s16 messages[4][2];
@@ -37,7 +37,7 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
     if ((u32)state >= 15U) {
         return -1;
     }
-    item = ovl_11_func_8011D98C(**arg2);
+    item = Ovl11GetSelectionEntryId(**arg2);
     valid = (*arg2)->index != 1;
     if (valid) {
         mode = 0x62;

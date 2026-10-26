@@ -1,5 +1,33 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Object action dispatch and its exclusive area-record selection helpers.
+Ovl11DispatchAreaRecordAction = 0x8010D314; // type:func
+Ovl11ProcessAreaSlotActions = 0x8010D648; // type:func
+Ovl11ProcessAreaAction6Records = 0x8010D748; // type:func
+Ovl11ProcessAreaItemActions = 0x8010D850; // type:func
+
+// Begin/update interaction protocol and its callback-bank anchors.
+Ovl11UpdateInteractionDispatch = 0x801189C8; // type:func
+Ovl11BeginInteraction = 0x80118A68; // type:func
+gOvl11InteractionDrawCallbacks = 0x800BB228; // type:data size:0x20
+gOvl11InteractionUpdateCallbacks = 0x800BB248; // type:data size:0x74
+// Begin[1] is also the completion reset. Keep distinct existing lvalue views;
+// these two four-byte anchors do not describe two disjoint callback arrays.
+gOvl11InteractionBeginCallbacks = 0x800BB2BC; // type:data size:0x4
+gOvl11InteractionResetCallback = 0x800BB2C0; // type:data size:0x4
+gOvl11InteractionId = 0x8012D520; // type:data size:0x4
+
+// Ten-slot selection input, wrapped navigation and by-value ID/message access.
+Ovl11ProcessSelectionRecordInput = 0x8011D734; // type:func
+Ovl11FindOccupiedSelectionIndex = 0x8011D890; // type:func
+Ovl11CountPrecedingSelectionEntries = 0x8011D934; // type:func
+Ovl11GetSelectionEntryId = 0x8011D98C; // type:func
+Ovl11GetSelectionMessageId = 0x8011D9B4; // type:func
+
+// Area-selection resolution and loaded-record installation.
+Ovl11ResolveAreaSelection = 0x800DC388; // type:func
+Ovl11InstallAreaSelection = 0x800DC560; // type:func
+
 // Primary-object grid actions, asynchronous footprint requests and item handoff.
 Ovl11InstallObjectCellItems = 0x800C4A2C; // type:func
 Ovl11BeginCellResetAction = 0x800C4B6C; // type:func

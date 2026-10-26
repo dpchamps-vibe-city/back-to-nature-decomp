@@ -56,7 +56,7 @@ void ovl_25_func_800B7F3C(void) {
         far_base = (char *)&D_8007AFF0;
         *(Ovl25SetupStatePair *)(far_base + 0x25474) =
             *(Ovl25SetupStatePair *)(far_base + 0x2479C);
-        Ovl25RequestVramAnimations((s32)D_8009F78C);
+        Ovl25RequestVramAnimations((s32)gLoadedAreaHeaderCopy);
         ovl_25_func_800B82B4();
         ovl_25_func_800BAA5C();
         ResetMessageWindow();

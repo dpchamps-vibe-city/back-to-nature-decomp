@@ -37,11 +37,11 @@ void Ovl11LoadAreaResourceSet(s32 index, s32 alreadyLoaded) {
     if (alreadyLoaded == 0) {
         CdReadDiscSectorsBlocking(0, start, D_8005E328, 0, D_8007AFF0);
     }
-    memcpy(D_8009F78C, (void *)D_8007AFF0, 0xBDC);
+    memcpy(gLoadedAreaHeaderCopy, (void *)D_8007AFF0, 0xBDC);
     work = (u8 *)&D_8007AFF0;
     *(Ovl25SetupStatePair *)(work + 0x25474) =
         *(Ovl25SetupStatePair *)(work + 0x2479C);
-    *(u8 **)(work + 0x25388) = D_8009F78C;
+    *(u8 **)(work + 0x25388) = gLoadedAreaHeaderCopy;
     if (GetGameFlag(0x9B) == 1) {
         Ovl11LoadPaletteBankTriplet();
     }

@@ -47,6 +47,7 @@
 #include "psyq/abs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_mode6_grid.h"
+#include "ovl11_area_selection_setup.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -64,7 +65,6 @@ void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CD624(void);
 void ovl_11_func_800CD670(s16 arg0);
 void ovl_11_func_800DBAB0(void);
-s32 ovl_11_func_800DC388(s32 arg0);
 s32 ovl_11_func_800DE2EC(void);
 void ovl_11_func_800F4E84(void);
 
@@ -138,7 +138,7 @@ void Ovl11StepAreaModeState(void) {
         WORK->state = 5;
         STATUS->objectFlags &= ~0x400;
         WORK->savedSelection = selection;
-        gOvl11PendingAreaReadIndex = ovl_11_func_800DC388(selection);
+        gOvl11PendingAreaReadIndex = Ovl11ResolveAreaSelection(selection);
         Ovl11ReadAreaResource(gOvl11PendingAreaReadIndex, 1);
         gOvl11AreaReadStarted = 1;
         if (STATUS->mode == 2) {
@@ -150,7 +150,7 @@ void Ovl11StepAreaModeState(void) {
         WORK->object = 0;
         WORK->state = 25;
         STATUS->flags |= 0x8000000;
-        gOvl11PendingAreaReadIndex = ovl_11_func_800DC388(WORK->savedSelection);
+        gOvl11PendingAreaReadIndex = Ovl11ResolveAreaSelection(WORK->savedSelection);
         Ovl11ReadAreaResource(gOvl11PendingAreaReadIndex, 1);
         gOvl11AreaReadStarted = 1;
         break;
@@ -582,7 +582,6 @@ s32 Ovl11ChooseAreaSoundId(void) {
     return 0x1B;
 }
 
-void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
 /* Extra debug-hook parameters forwarded by this wrapper are unread. */
 s32 ovl_11_func_800CDE3C (u8 *arg0);
@@ -601,9 +600,9 @@ void Ovl11ResetAreaScene(void) {
     Ovl11ResetSpriteRotations();
     Ovl11ClearSceneCameraVectors();
     if (gOvl11AreaEntryStep == 0xB) {
-        ovl_11_func_800DC560(0, 0);
+        Ovl11InstallAreaSelection(0, 0);
     } else {
-        ovl_11_func_800DC560(1, gOvl11AreaReadStarted);
+        Ovl11InstallAreaSelection(1, gOvl11AreaReadStarted);
     }
     ovl_11_func_800C9D38();
     Ovl11ResetVertexBlendPool();

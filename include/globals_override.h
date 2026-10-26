@@ -334,7 +334,7 @@ typedef struct {
 } Ovl11FarInitView;
 
 /* ovl_11 80104A90 clears 0x10 bytes and publishes this buffer's address. */
-extern u8 D_800A0368[0x10];
+extern u8 gAreaSetupBuffer[0x10];
 /* ovl_11:800BC3E0 dispatches entry steps; 801048A0/80104A90 enter at 10. */
 extern s32 gOvl11AreaEntryStep;
 
@@ -4659,10 +4659,14 @@ extern s16 D_8012D51C;
 /* 801180F0 passes this state word by address and clears the adjacent word. */
 extern s32 gOvl11InteractionStep;
 extern s32 gOvl11InteractionResumeStep;
-/* 8011C6CC reads the mode with lw and stores the selected count with sh. */
-extern s32 D_8012D520;
-/* 80118A68 indexes this stride-4 no-argument handler table; matched entries return s32. */
-extern s32 (*D_800BB2BC[])(void);
+/* ovl_11 801189C8 indexes these callback-bank anchors; retain scalar views. */
+extern s32 gOvl11InteractionDrawCallbacks;
+extern s32 gOvl11InteractionUpdateCallbacks;
+extern s32 gOvl11InteractionResetCallback;
+/* ovl_11 80118A68 installs this ID; 8011C6CC compares it with 14. */
+extern s32 gOvl11InteractionId;
+/* ovl_11 80118A68 indexes no-argument callbacks; element 1 is also the reset word. */
+extern s32 (*gOvl11InteractionBeginCallbacks[])(void);
 /* Independently addressed signed halfword at QuantityPrompt +8. */
 extern s16 gOvl11QuantityPromptCount;
 /* 801180F0 reads signed halfword pairs with a four-byte table stride. */
@@ -5642,7 +5646,7 @@ extern s32 D_800BBED0[];
 /* D_8009F78C - main-RAM copy destination. ovl_19_func_800BBB48 memcpys
  * 0xBDC bytes here from the D_8007AFF0 work area (absolute lui/addiu). The
  * TU only declares it, so an opaque byte object is enough. */
-extern u8 D_8009F78C[];
+extern u8 gLoadedAreaHeaderCopy[];
 
 /* ovl_11 800BCF54/800BD374 use this word as the anchor for stride-0x10 records. */
 extern s32 gOvl11ResourceDescriptors;

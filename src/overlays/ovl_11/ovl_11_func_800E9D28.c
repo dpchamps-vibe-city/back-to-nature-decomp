@@ -14,13 +14,13 @@
 #include "ovl11_area_resource_load.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_record_flag_counters.h"
+#include "ovl11_interaction_dispatch.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
 void ovl_11_func_800EF6E4 ();
-s32 ovl_11_func_80118A68 (s32 arg0);
 s32 ovl_11_func_80118C6C (void);
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
@@ -221,43 +221,43 @@ block_118:
         if (arg3 == 0) {
             switch (arg1) {
             case 0:
-                ovl_11_func_80118A68(0x10);
+                Ovl11BeginInteraction(0x10);
                 return 1;
             case 1:
-                ovl_11_func_80118A68(0x11);
+                Ovl11BeginInteraction(0x11);
                 return 1;
             case 2:
-                ovl_11_func_80118A68(0x12);
+                Ovl11BeginInteraction(0x12);
                 return 1;
             case 3:
-                ovl_11_func_80118A68(0x13);
+                Ovl11BeginInteraction(0x13);
                 return 1;
             case 4:
-                ovl_11_func_80118A68(0x19);
+                Ovl11BeginInteraction(0x19);
                 return 1;
             case 5:
-                ovl_11_func_80118A68(0x14);
+                Ovl11BeginInteraction(0x14);
                 return 1;
             case 6:
-                ovl_11_func_80118A68(0x15);
+                Ovl11BeginInteraction(0x15);
                 return 1;
             case 7:
-                ovl_11_func_80118A68(0x16);
+                Ovl11BeginInteraction(0x16);
                 return 1;
             case 8:
-                ovl_11_func_80118A68(0x17);
+                Ovl11BeginInteraction(0x17);
                 return 1;
             case 9:
                 if (arg2 == 0) {
-                    ovl_11_func_80118A68(0x18);
+                    Ovl11BeginInteraction(0x18);
                     return 1;
                 }
                 return GetGameFlag(0x38U);
             case 10:
-                ovl_11_func_80118A68(0xE);
+                Ovl11BeginInteraction(0xE);
                 return 1;
             case 11:
-                ovl_11_func_80118A68(0x1C);
+                Ovl11BeginInteraction(0x1C);
                 return 1;
             }
         } else {
@@ -289,7 +289,7 @@ block_118:
             return ovl_11_func_801037DC();
         case 3:
             if (arg2 != 0) {
-                ovl_11_func_80118A68(0x1A);
+                Ovl11BeginInteraction(0x1A);
                 return 1;
             }
             return ovl_11_func_801165C8();

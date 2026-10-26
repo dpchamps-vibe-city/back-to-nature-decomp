@@ -1,4 +1,9 @@
 
+// Area-load staging: 0xBDC-byte header copy and the 16-byte setup buffer.
+// ovl_11 area_resource_load copies the former; 80104A90 clears the latter.
+gLoadedAreaHeaderCopy = 0x8009F78C; // size:0xBDC
+gAreaSetupBuffer = 0x800A0368; // size:0x10
+
 // Shared {x,y,z} work position set and directionally bounded by object scripts.
 gObjectWorkPosition = 0x80071B00; // size:0xC
 

@@ -3,10 +3,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_clock_calendar.h"
+#include "ovl11_area_record_claims.h"
 
 
 s32 ovl_11_func_8010CAD4 (u8 *arg0);
-s32 ovl_11_func_8010D314 (u8 *arg0);
 
 void ovl_11_func_8010C95C(void) {
     s32 var_s1;

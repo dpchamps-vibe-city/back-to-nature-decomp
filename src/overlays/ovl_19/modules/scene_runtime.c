@@ -1929,7 +1929,7 @@ void Ovl19LoadSceneGeometry(void) {
     CdReadDiscSectorsBlocking(0, discPositions[0], discPositions[1] - discPositions[0], 0, D_8007AFF0);
     CdReadDiscSectorsBlocking(0, discPositions[1], discPositions[2] - discPositions[1], 0, gGraphicsHeapBase + 0x4290);
     UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
-    memcpy(&D_8009F78C, (void *)D_8007AFF0, 0xBDC);
+    memcpy(&gLoadedAreaHeaderCopy, (void *)D_8007AFF0, 0xBDC);
     geometry = &gOvl19SceneGeometry;
     __asm__("" : : : "memory");
     InitProjectedPrimitiveSource(geometry, (void *)(D_8007AFF0 + 0x2000));

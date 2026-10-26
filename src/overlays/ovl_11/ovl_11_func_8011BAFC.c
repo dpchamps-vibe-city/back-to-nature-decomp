@@ -2,12 +2,11 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
+#include "ovl11_selection_record_access.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1);
-s16 ovl_11_func_8011D98C(StructD548 x);
-s16 ovl_11_func_8011D9B4(StructD548 x);
 void ovl_11_func_8011DD48(ovl_11_DD48_arg0 *arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3,
@@ -39,7 +38,7 @@ s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3,
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
         ovl_11_func_8011DD48(arg8, 0, 0,
-            (s16)ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*record)), 0);
+            (s16)ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*record)), 0);
         gOvl11InteractionDrawMode = arg2;
         Ovl11SetInteractionStepsOffset(2, 4, arg1);
         break;
@@ -53,7 +52,7 @@ s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3,
             break;
         case 2:
             CloseMessageWindow();
-            RequestMessageWindow(2, ovl_11_func_8011D9B4(*record));
+            RequestMessageWindow(2, Ovl11GetSelectionMessageId(*record));
             Ovl11SetInteractionStepsOffset(1, 3, arg1);
             break;
         case 3:

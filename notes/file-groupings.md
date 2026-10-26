@@ -1926,6 +1926,38 @@ below, tying the table's head to that idiom/table cluster.
   `s16@+0x26 != 0xF`, promotes the staged `s16@+0xBE/0xC0/0xC2` triple into
   `+0x26/+0x28/+0x2A` when `s16@+0xBE != 0`, else calls
   `ovl_11_func_8010CE80(this, s1)`; called by run member 8010CD80.
+**Reconstructed `modules/area_record_claims.c`, four entries
+8010D314–8010DA04 exclusive.** D314 is the only caller of each adjacent
+D648/D748/D850 helper; those three take the same object/area pair, consume
++B2 counts, select modes 1/2/4 (with mode-8 fallback) and return failure for
+D314's area 5/4/1 chain. They share the exact +AC/+B6 item/action tail, not
+merely the broad work base. This exclusive helper closure and specialized
+failure/fallback protocol supports all four; none is an object-mode callback.
+External linkage remains unchanged. No static ownership or original object
+boundary is proven by this -G0 overlay.
+
+The actual immediate left neighbor is D250 (NOT the remote CAD4 caller): it
+promotes staged mode/counter triples or chooses a handler through CE80, with
+no area/count/item helper protocol. Immediate right DA04 is a table-dispatched
+mode handler with message/step returns, not a direct-only helper of D314.
+Those are conservative responsibility boundaries. CAD4 is the remote
+clock/condition gate calling this service; shared 0xF8 record layout alone
+does not join all intervening mode handlers to the closure. No flag or
+mechanical limit motivated either cut. The broader CD80/CE80 candidate stays
+unfolded: its exclusive D250 helper and table population extend beyond that
+pair, so a two-function slice would be unfinished.
+
+Names Ovl11DispatchAreaRecordAction, Ovl11ProcessAreaSlotActions,
+Ovl11ProcessAreaAction6Records and Ovl11ProcessAreaItemActions distinguish
+observed action behavior from speculative gameplay meaning. Only the
+dispatcher is published to external clients; helper linkage stays external.
+The API documents the byte-record offsets, integer count scales, Rand effects,
+mutation/non-rollback behavior and always-zero result. Parameter/local names
+now distinguish input object, chosen record and grid cell. Raw established
+views, casts, nested fallback and loop arithmetic remain intact. Selection is
+not allocation; no shared pool/global is defined here. Baseline checked fold
+proved all four and the overlay without any override or new exception.
+
 - ovl_11_func_8010D314 (s, low-confidence candidate same TU as 8010D648) — flag-selected object-action dispatcher with area fallback helpers ([pair evidence and limits](research/ovl_11_func_8010D648-grouping.md)).
 - ovl_11_func_8010D648 (m, low-confidence candidate same TU as 8010D314) — area-selected record claim/flag helper with counter consumption and failure reporting ([pair evidence and limits](research/ovl_11_func_8010D648-grouping.md)).
 - ovl_11_func_8010D748 (m, low-confidence candidate same TU as 8010D314/8010D648) — area-selected 0xB8-record action-6 dispatcher with failure reporting ([sibling/link evidence and limits](research/ovl_11_func_8010D748-grouping.md)).
@@ -9073,7 +9105,46 @@ Members (address order):
   D_8012D520 sits in the contiguous data block D_8012D51A/51C/520/524 that
   no other code references. Shared-global fingerprint only; data TU ownership
   unconfirmed.
-  - ovl_11_func_80118A68 (m, byte-exact; low-confidence same-TU candidate with 801189C8; [evidence and limits](research/ovl_11_func_80118A68-grouping.md)) — guarded D_8012D520 state starter and initialization-callback dispatcher.
+  **Reconstructed `modules/interaction_dispatch.c`, both entries
+  801189C8–80118B84 exclusive.** This is not a fold of the scattered ID
+  readers: 189C8/18A68 alone read the private draw/update/begin callback bank
+  at 800BB228–800BB330. Begin's element 1 at 800BB2C0 is the exact word the
+  updater calls after a nonzero callback result. The ID producer/consumer and
+  this same-word begin/completion relationship, corroborated by adjacent link
+  order, support the pair. Table callbacks remain in their independent service
+  modules; a function-pointer table is not proof that all its targets compiled
+  together. Neither linkage nor data ownership is inferred from co-location.
+
+  Left purchase_panels ends in the descriptor/by-value quantity-prompt
+  protocol, not the dispatch-bank readers. Right 18B84 implements the reusable
+  compact two-choice prompt and its separate selection state, with several
+  other clients. Neither neighbor reads this callback bank; these are
+  conservative responsibility/private-table boundaries, not GP-proven original
+  object edges (-G0). The distant reset 18CB0 and adjacent update rows
+  18CE4/19008 are not folded merely because the same bank references them:
+  their shared step/draw globals and state-machine spelling are also used by
+  many other callbacks and do not establish that three-entry slice as a TU.
+
+  Public Ovl11BeginInteraction/Ovl11UpdateInteractionDispatch document the
+  29 begin/update slots, eight draw slots, unchecked IDs, busy/ID-1 override,
+  flag-2 preflight deferral and non-obvious zero return without installation.
+  Completion resets before drawing without retesting the interaction ID.
+  Locals distinguish begin/update/reset/draw callbacks and the draw-bank base
+  passed to drawing. gOvl11InteractionId and the draw/update/begin/reset bank
+  anchors are container-scoped names. Begin and reset retain their distinct
+  existing C lvalue views of the same table; four-byte symbol extents at
+  BB2BC/BB2C0 are anchors, not two new arrays. Missing scalar bank declarations
+  moved from C to globals_override.h with original types; no pool is defined.
+  The baseline checked fold proved both members and the overlay, with no
+  override or exception. Caller interfaces are reconciled through the public
+  header. The final campaign gate passes for this unit, area_selection_setup,
+  selection_record_access and area_record_claims: 1372/2625 folded (up 13),
+  209/209 modules valid, all linked EXE/overlay bytes and associated data,
+  canonical interfaces, source policy, convergence, scope/whitespace and
+  exception non-growth checked. No tools or flag settings changed.
+  [Original pair evidence](research/ovl_11_func_80118A68-grouping.md).
+
+  - ovl_11_func_80118A68 (m, byte-exact) — guarded interaction-ID starter and initialization-callback dispatcher.
 - ovl_11 D_8012D520/D_8012D52C block bridge — 0x8011D084/0x8011D098/
   0x8011D0B4 setter/sum-copy/copy run over the orphan block's top two rows,
   in strict zero-gap link order (0x8011D084, 0x14 → 0x8011D098, 0x1C →
@@ -9118,7 +9189,35 @@ Members (address order):
   - ovl_11_func_80118C6C (m) — D_8012D520 state getter.
   - ovl_11_func_80118CB0 (m) — state/busy-flag and quantity reset.
   - ovl_11_func_80118CE4 (m, byte-exact) — quantity-purchase dialogue/state handler.
-- ovl_11 by-value struct-slice run — 0x8011D890 / 0x8011D934 / 0x8011D98C /
+- **Reconstructed `modules/selection_record_access.c`, five entries
+  8011D734–8011D9DC exclusive.** The input controller and wrapped occupied-slot
+  search belong with the count/ID/message readers: all use the same ten-word
+  occupancy prefix and signed selector at +5C, and callers pair the selected
+  ID/message with the compressed row count to operate/draw that exact record.
+  D734 directly copies the record to D890 and stores the selected index back;
+  D934/98C/9B4 preserve their established 0x60-byte by-value ABI. The explicit
+  direction follows the record, not a fabricated field at +60. Gapless link
+  order corroborates this specialized record protocol, not global ownership.
+
+  Left D474 is selection_list_panel's nested row-type/count/draw closure; it
+  renders the record but does not read pad input or search occupied slots.
+  Right D9DC begins item_stack_insert's capacity/update closure over fixed
+  six-byte item pools, not the by-value selector. No private helper/table
+  establishes an extension into either neighbor. These are conservative
+  protocol cuts under -G0, not proven original object boundaries. The shared
+  panel/interaction clients do not alone establish one large interaction TU.
+
+  Public names are Ovl11ProcessSelectionRecordInput,
+  Ovl11FindOccupiedSelectionIndex, Ovl11CountPrecedingSelectionEntries,
+  Ovl11GetSelectionEntryId and Ovl11GetSelectionMessageId. The public header
+  documents ten slots, unchecked 0..9 indices, direction, button priorities,
+  sound/state effects, by-value layouts and signed ID results. Locals now
+  describe indices, input streams and the preserved Q16 count arithmetic;
+  pad reads use the canonical PadInputState fields at the same offsets.
+  No type layout, ownership, linkage or flag setting changed. The checked
+  baseline fold proved all five and the overlay; no exception was added.
+
+  Original by-value struct-slice evidence — 0x8011D890 / 0x8011D934 / 0x8011D98C /
   0x8011D9B4 / 0x8011D9DC, zero-gap link run (0x8011D890 0xA4 → 0x8011D934
   0x58 → 0x8011D98C 0x28 → 0x8011D9B4 0x28 → 0x8011D9DC 0xF8).
   The D934/D98C/D9B4 members take the same 0x60-byte struct by value (StructD548; s16 selector at 0x5C, first
@@ -23411,8 +23510,37 @@ provenance; the fourth member's clear/copy protocol was checked in its source.
 
 ## `ovl_11` state-selected ID resolver/caller pair — 0x800DC388 / 0x800DC560 (confidence: low)
 
-Candidate same-TU membership; original boundaries remain unproven
-([call/link-order evidence and limits](research/ovl_11_func_800DC388-grouping.md)).
+**Reconstructed `modules/area_selection_setup.c`, both entries DC388–DC990
+exclusive.** The caller writes the resolver's result to work +2547C before
+loading/installing it. More specifically, the resolver reads flags 42/43 to
+choose season+48/44; the installer consumes those same flags to overwrite XYZ
+and clear them. This paired selection/position protocol and direct result flow,
+corroborated by gapless order, supports the complete pair independently of the
+widely shared resident work areas. External linkage is retained; -G0 provides
+no GP proof of original object boundaries.
+
+Left DC148 is the per-frame scene/effect dispatcher: it steps animations,
+visibility and time-of-day effects but neither resolves IDs nor consumes the
+42/43 entry-position protocol. Right DC990 starts scene_record_pool's
+clear/allocate lifecycle over its own slot table. No private helper/table or
+selection/position protocol extends into either neighbor. These are
+responsibility-based cuts, not proven historical boundaries or flag limits.
+The lower-level DBFEC resource/geometry setup and remote area_mode_sequence
+callbacks are clients/dependencies, not a reason to absorb intervening code.
+
+Public names Ovl11ResolveAreaSelection/Ovl11InstallAreaSelection preserve IDs,
+signedness, low-halfword options, load order and all state effects. The header
+documents seasonal remapping, event consumption, native XYZ units and loaded
+asset requirements. Repeated work-view casts are named macros; local/label
+names describe their existing roles without changing control flow. The EXE
+buffers at 8009F78C and 800A0368 are gLoadedAreaHeaderCopy/gAreaSetupBuffer:
+area_resource_load copies 0xBDC bytes into the former and 80104A90 clears
+0x10 bytes in the latter. Canonical renames preserve their existing C views
+and propagate across overlays; neither becomes this module's owned storage.
+The checked fold passed both members and the overlay at baseline, without a
+flag override or policy exception. Interface publication reconciles the mode
+sequence caller. Original provenance:
+[call/link-order evidence](research/ovl_11_func_800DC388-grouping.md).
 
 - ovl_11_func_800DC388 (m, candidate same TU) — resolves an ID from state variants and event flags, then applies the range-table remapper.
 - ovl_11_func_800DC560 (s, candidate same TU) — refreshes the current work-area ID through the preceding resolver before record-dependent setup.

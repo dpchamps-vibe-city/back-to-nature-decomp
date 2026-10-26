@@ -10,6 +10,7 @@
 #include "ovl11_interaction_steps.h"
 #include "ovl11_primary_object_wait_steps.h"
 #include "ovl11_record_offer.h"
+#include "ovl11_selection_record_access.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -18,7 +19,6 @@ u16 Ovl11SelectOfferConditionMessage(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-s16 ovl_11_func_8011D98C(StructD548 x);
 
 s32 Ovl11UpdateRecordOfferInteraction(void) {
     Ovl11D8012D7B8 first;
@@ -38,7 +38,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
     second.unkA = 0xFC;
     second.unk10 = 6;
     second.unk0 = gOvl11SecondarySelectionRecord;
-    price = ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)gOvl11SecondarySelectionRecord));
+    price = ovl_11_func_800D6014(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11SecondarySelectionRecord));
     result = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;

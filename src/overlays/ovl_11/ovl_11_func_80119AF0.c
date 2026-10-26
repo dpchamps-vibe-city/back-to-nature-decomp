@@ -3,12 +3,12 @@
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_primary_object_wait_steps.h"
+#include "ovl11_selection_record_access.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-s16 ovl_11_func_8011D98C(StructD548 arg0);
 
 s32 ovl_11_func_80119AF0(void) {
     s32 result;
@@ -48,8 +48,8 @@ s32 ovl_11_func_80119AF0(void) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D06C(ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
-                ovl_11_func_800F2354(-ovl_11_func_800D6014(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+            if (ovl_11_func_8011D06C(ovl_11_func_800D6014(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                ovl_11_func_800F2354(-ovl_11_func_800D6014(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xB4);
                 Ovl11SetInteractionSteps(1, 4);
@@ -66,7 +66,7 @@ s32 ovl_11_func_80119AF0(void) {
         break;
     case 4:
     case 5:
-        if (Ovl11StepPrimaryObjectItemRequest(&gOvl11InteractionStep, 4, ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) {
+        if (Ovl11StepPrimaryObjectItemRequest(&gOvl11InteractionStep, 4, Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) {
             Ovl11SetInteractionSteps(3, 0);
         }
         break;

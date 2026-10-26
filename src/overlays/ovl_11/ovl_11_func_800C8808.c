@@ -3,9 +3,9 @@
 #include "psyq/stddef.h"
 #include "game_flags.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_interaction_dispatch.h"
 
 struct_80076220 *ovl_11_func_800BF1D0(s16 *arg0, void *arg1);
-s32 ovl_11_func_80118A68(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 
 s32 ovl_11_func_800C8808(Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2) {
@@ -25,7 +25,7 @@ s32 ovl_11_func_800C8808(Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2) {
         if ((arg0->unk38 == arg2[4]) || (arg2[4] == 5)) {
             Ovl11ResetPrimaryObjectRequest();
             if ((*(s16 *) temp_v0 == 6) && (((struct Ovl11SpriteWork *) &D_8007AFF0)->header[1] == 0x1B)) {
-                ovl_11_func_80118A68(0x16);
+                Ovl11BeginInteraction(0x16);
                 return 1;
             }
             arg0->unk6C |= 0x800000;

@@ -116,10 +116,10 @@ s32 ovl_11_func_800DDDFC(void) {
             Ovl11ClearSceneRecords();
             Ovl11InstallSceneRecords();
             Ovl11LoadIndexedSpriteRecords(((Ovl11SetupWorkView *)&D_8007AFF0)->music);
-            Ovl11RequestVramAnimations((Ovl11SetupHeader *)D_8009F78C);
+            Ovl11RequestVramAnimations((Ovl11SetupHeader *)gLoadedAreaHeaderCopy);
             ((Ovl11SetupWorkView *)&D_8007AFF0)->current = ((Ovl11SetupWorkView *)&D_8007AFF0)->previous;
-            ((Ovl11SetupWorkView *)&D_8007AFF0)->header = D_8009F78C;
-            Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);
+            ((Ovl11SetupWorkView *)&D_8007AFF0)->header = gLoadedAreaHeaderCopy;
+            Ovl11RegisterPoolSpriteRotations((s32)gLoadedAreaHeaderCopy);
             ovl_11_func_800CD0C0(((Ovl11DDDFCState *)D_8006C838)->position);
             Ovl11ResetMovingItemRecords();
             ((Ovl11DDDFCState *)D_8006C838)->status = (((Ovl11DDDFCState *)D_8006C838)->status | 0x4000) & 0xFFF07FFF;

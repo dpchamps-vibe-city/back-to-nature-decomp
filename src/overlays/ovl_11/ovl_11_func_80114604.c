@@ -6,6 +6,7 @@
 #include "ovl11_record_pair_slots.h"
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_record_family_list.h"
+#include "ovl11_selection_record_access.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
@@ -19,7 +20,6 @@ s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_8011D06C(s32 arg0);
-s16 ovl_11_func_8011D98C(StructD548 x);
 
 s32 ovl_11_func_80114604(void) {
     Ovl11D8012D7B8 params;
@@ -81,13 +81,13 @@ s32 ovl_11_func_80114604(void) {
             case 2:
             case 7:
             case 8:
-                if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
-                    if (Ovl11GetItemStackCapacity(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
+                if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                    if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
                         Ovl11SetInteractionSteps(25, 24);
                     } else {
-                        Ovl11InsertItemStack(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
-                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+                        Ovl11InsertItemStack(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
+                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x84);
                         Ovl11SetInteractionSteps(25, 24);
                     }
@@ -101,7 +101,7 @@ s32 ovl_11_func_80114604(void) {
                 if (Ovl11FindFreeTaggedRecord() == 0) {
                     RequestMessageWindow(2, 0x72);
                     Ovl11SetInteractionSteps(25, 24);
-                } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
+                } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
                     RequestMessageWindow(2, 0x4F);
                     Ovl11SetInteractionSteps(25, 24);
                 } else {
@@ -186,11 +186,11 @@ s32 ovl_11_func_80114604(void) {
             Ovl11SetInteractionSteps(25, 24);
             break;
         case 1:
-            dest = ovl_11_func_800CE744(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
+            dest = ovl_11_func_800CE744(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
             for (i = 0; i < 9; i++) {
                 dest[i] = D_8012D638.values[i];
             }
-            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x74);
             Ovl11SetInteractionSteps(25, 24);
             break;

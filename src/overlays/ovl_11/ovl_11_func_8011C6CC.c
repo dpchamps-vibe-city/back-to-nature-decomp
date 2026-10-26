@@ -3,12 +3,12 @@
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_item_stack_insert.h"
+#include "ovl11_selection_record_access.h"
 
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_8011D06C(s32 arg0);
-s16 ovl_11_func_8011D98C(StructD548 x);
 
 s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
     s32 result;
@@ -52,7 +52,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
         case 0:
             break;
         case 1:
-            if (Ovl11GetItemStackCapacity(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 0) == 0) {
+            if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 0) == 0) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
                 Ovl11SetInteractionSteps(1, 2);
@@ -79,14 +79,14 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
             break;
         case 1:
             if (ovl_11_func_8011D06C(recordState->unk8 * recordState->unkA) == 1) {
-                if (Ovl11GetItemStackCapacity(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 0) < recordState->unk8) {
+                if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 0) < recordState->unk8) {
                     RequestMessageWindow(2, 0xC1);
                     Ovl11SetInteractionSteps(1, 11);
                 } else {
                     secondState = &gOvl11QuantityPrompt;
-                    if (Ovl11GetItemStackCapacity(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) < secondState->unk8) {
+                    if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) < secondState->unk8) {
                         message = 0x207;
-                        if (D_8012D520 == 14) {
+                        if (gOvl11InteractionId == 14) {
                             message = 0x261;
                         }
                         RequestMessageWindow(3, message);
@@ -97,7 +97,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
                         Ovl11SetInteractionSteps(1, 7);
                     }
                     ovl_11_func_800F2354(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
-                    Ovl11InsertItemStack(ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord), gOvl11QuantityPrompt.unk8, 0);
+                    Ovl11InsertItemStack(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), gOvl11QuantityPrompt.unk8, 0);
                 }
             } else {
                 RequestMessageWindow(2, 0x4F);

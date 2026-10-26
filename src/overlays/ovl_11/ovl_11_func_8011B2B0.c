@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "random.h"
+#include "ovl11_selection_record_access.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
-s16 ovl_11_func_8011D890(Ovl11D548Arg x, s32 mode);
 
 s32 ovl_11_func_8011B2B0(void) {
     s32 flags;
@@ -120,7 +120,7 @@ s32 ovl_11_func_8011B2B0(void) {
         s16 selected;
         u8 *record;
 
-        selected = ovl_11_func_8011D890(*(Ovl11D548Arg *) gOvl11SecondarySelectionRecord, 1);
+        selected = Ovl11FindOccupiedSelectionIndex(*(Ovl11D548Arg *) gOvl11SecondarySelectionRecord, 1);
         record = gOvl11SecondarySelectionRecord;
         *(s16 *) (record + 0x5C) = selected;
     }

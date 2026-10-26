@@ -22,6 +22,7 @@
 #include "game_flags.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_selection_record_access.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
 
@@ -161,7 +162,6 @@ s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 Ovl11RequestCatalogPanelMessage(s32 arg0);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
-s16 ovl_11_func_8011D98C(StructD548 arg0);
 
 /* State 5 waits for message status 2 before resuming. A selected item is
  * charged here and handed to the object only on the terminal update. */
@@ -190,7 +190,7 @@ s32 Ovl11UpdateCatalogPurchasePanel(void) {
         case 0:
             break;
         case 1:
-            gOvl11CatalogSelectedId = ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord);
+            gOvl11CatalogSelectedId = Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord);
             cost = ovl_11_func_800D6014(*(u16 *)&gOvl11CatalogSelectedId);
             if (ovl_11_func_8011D06C(cost) == 1) {
                 ovl_11_func_800F2354(-cost, 1);
@@ -315,7 +315,6 @@ s32 Ovl11InitResourcePurchasePanel(void) {
 void SetVal8005E2BC(s32 arg0);
 s32 Ovl11UpdateResourceQuantitySelection(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011D934(StructD548 arg0);
 
 /* Per-unit purchases cap stored units at 999. Option transactions instead
  * deduct both entries of the signed {money, units} table, then set flag 0x38.
@@ -342,7 +341,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
         case 1:
             gOvl11ResourcePanelState = 8;
             gOvl11ResourcePanelResumeState = 9;
-            if (ovl_11_func_8011D934(*(StructD548 *)gOvl11PrimarySelectionRecord) == 0) {
+            if (Ovl11CountPrecedingSelectionEntries(*(StructD548 *)gOvl11PrimarySelectionRecord) == 0) {
                 if (D_80070D38 >= 999) {
                     gOvl11ResourceResultMessage = 0x13A;
                     gOvl11ResourceResultResumeState = 1;
@@ -494,8 +493,6 @@ s32 Ovl11FindFirstUnsetResourceOption(void) {
 }
 
 s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1);
-s16 ovl_11_func_8011D98C(StructD548 x);
-s16 ovl_11_func_8011D9B4(StructD548 x);
 void ovl_11_func_8011DD48(ovl_11_DD48_arg0 *arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 /* Six relative interaction steps. Return 0 while pending, 1 on quantity
@@ -531,7 +528,7 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
         ovl_11_func_8011DD48(prompt, (s32)(D_80051DBE + gTextBankOffsets[1]), 1,
-            (s16)ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*record)), 0);
+            (s16)ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*record)), 0);
         gOvl11InteractionDrawMode = drawMode;
         Ovl11SetInteractionStepsOffset(2, 4, baseStep);
         break;
@@ -545,7 +542,7 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
             break;
         case 2:
             CloseMessageWindow();
-            RequestMessageWindow(2, ovl_11_func_8011D9B4(*record));
+            RequestMessageWindow(2, Ovl11GetSelectionMessageId(*record));
             Ovl11SetInteractionStepsOffset(1, 3, baseStep);
             break;
         case 3:

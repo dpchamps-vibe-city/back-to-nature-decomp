@@ -22,13 +22,13 @@ void ovl_25_func_800BB2B8(void) {
     CdReadDiscSectorsBlocking(0, p[0], p[1] - p[0], 0, D_8007AFF0);
     CdReadDiscSectorsBlocking(0, p[1], p[2] - p[1], 0, gGraphicsHeapBase + 0x4290);
     UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
-    memcpy(&D_8009F78C, (void *)D_8007AFF0, 0xBDC);
+    memcpy(&gLoadedAreaHeaderCopy, (void *)D_8007AFF0, 0xBDC);
     dst = &D_800C0454;
     __asm__("" : : : "memory");
     InitProjectedPrimitiveSource(dst, (void *)(D_8007AFF0 + 0x2000));
     far_base = (char *)&D_8007AFF0;
     *(s32 *)(far_base + 0x2547C) = 0x39;
-    *(s32 *)(far_base + 0x25388) = (s32)&D_8009F78C;
+    *(s32 *)(far_base + 0x25388) = (s32)&gLoadedAreaHeaderCopy;
     func_8001E340((void **)dst);
     SetVal8005E51C(0xC8);
 }

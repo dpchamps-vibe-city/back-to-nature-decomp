@@ -39,7 +39,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
     if (((struct Ovl11C7F0Flags *)D_8006C838)->flags10 & 0x20000000) {
         return 2;
     }
-    record = Ovl11ProbeInteractionVolume(D_8009F78C, (Ovl11Func800BDCE8Arg1 *) &arg0->unk100, 1);
+    record = Ovl11ProbeInteractionVolume(gLoadedAreaHeaderCopy, (Ovl11Func800BDCE8Arg1 *) &arg0->unk100, 1);
     D_801287F0 = record;
     if (record != NULL) {
         flags = arg0->unk6C;
