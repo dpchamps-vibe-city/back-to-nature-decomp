@@ -21,6 +21,9 @@
 #include "point_projection.h"
 #include "ovl11_tagged_record_creation.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_code160_record_creation.h"
+#include "ovl11_tagged_record_presentation.h"
+#include "ovl11_random_state_choice.h"
 
 typedef struct {
                s16 unk0;
@@ -139,7 +142,6 @@ void CdFlush (void);
 int CdPosToInt (CdlLOC *p);
 void SsSetSerialVol (char, short, short);
 void SystemError (char, long);
-s32 ovl_11_func_800DE8A4 ();
 s16 *ovl_11_func_800E1F9C (s32 arg0, s32 arg1, s32 arg2);
 Recon_ovl_11_func_800D3390_A0View *ovl_11_func_800D2F48 (s32 arg0);
 struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
@@ -156,7 +158,6 @@ s32 func_80015DD4 ();
 void ovl_11_func_800C9E90 (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800E2904 (s32 arg0);
 void ovl_11_func_800E0450 (s32 arg0);
-void ovl_11_func_800DE878 (s32 arg0);
 s32 ovl_11_func_800E276C (s16 *arg0);
 void ovl_11_func_800E1F70 (s32 arg0);
 void ovl_11_func_800D2F1C (s32 arg0);
@@ -170,10 +171,6 @@ s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3424 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 void ovl_11_func_800D03B4 (M2C_057dca34f681_Struct_800D03B4 *arg0, M2C_057dca34f681_Struct_800D03B4 *arg1, s32 arg2);
 s32 ovl_11_func_800D3468 (u16 *arg0);
-s32 ovl_11_func_800D3C04 (void *arg0);
-s32 ovl_11_func_800D3CA4 (void *arg0);
-s32 ovl_11_func_800D3C54 (void *arg0);
-s32 ovl_11_func_800D3CE8 (void *arg0);
 s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800DF3BC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_800DF4F0 (M2C_a5df3a0a31de_UnkStruct800DF4F0 *arg0);
@@ -204,7 +201,7 @@ u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1) {
     case 0x160:
     case 0x161:
     case 0x162:
-        var_s0 = ovl_11_func_800DE8A4(arg0, arg1, 1);
+        var_s0 = Ovl11AllocateCode160Record(arg0, arg1, 1);
         break;
     case 0x163:
         var_a0 = 0x162;

@@ -4,13 +4,12 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_tagged_record_presentation.h"
 
 s32 ovl_11_func_800E0B40(Recon_ovl_11_func_8010CE80_A0View *arg0);
 void ovl_11_func_800E0450(s32 arg0);
 void ovl_11_func_800E03A0(u8 *arg0);
 s32 ovl_11_func_800DEF30(UnkStruct800DF4F0 *arg0);
-void ovl_11_func_800DE878(s32 arg0);
-void ovl_11_func_800DE7C8(u8 *arg0);
 s32 ovl_11_func_800E276C(s16 *arg0);
 void ovl_11_func_800E1F70(s32 arg0);
 void ovl_11_func_800E1EC0(u8 *arg0);
@@ -54,11 +53,11 @@ void ovl_11_func_800D1EB8(void) {
                     if (!(*(s32 *)(base + 0xC) & 0x40000000)) {
                         if (*(s16 *)(far_base + 0x5476) == *(s16 *)((u8 *)entry + 0x30)) {
                             ovl_11_func_800DEF30((UnkStruct800DF4F0 *)entry);
-                            ovl_11_func_800DE878((s32)entry);
+                            Ovl11AdvanceTaggedRecordPosition((s32)entry);
                         }
                     } else {
                         ovl_11_func_800DEF30((UnkStruct800DF4F0 *)entry);
-                        ovl_11_func_800DE878((s32)entry);
+                        Ovl11AdvanceTaggedRecordPosition((s32)entry);
                     }
                     Ovl11TickTimedSpriteEffect((Ov11Timer *)((u8 *)entry + 0xA8));
                 }
@@ -66,7 +65,7 @@ void ovl_11_func_800D1EB8(void) {
                     if (*(s16 *)(far_base + 0x5476) != *(s16 *)((u8 *)entry + 0x30)) {
                         Ovl11ResetTimedSpriteEffect((s16 *)((u8 *)entry + 0xA8));
                     } else {
-                        ovl_11_func_800DE7C8((u8 *)entry);
+                        Ovl11DrawTaggedRecordSprite((u8 *)entry);
                     }
                 }
             }

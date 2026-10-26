@@ -174,10 +174,7 @@ segments:
       - [0xE06C, c, func_8001D86C]       # 0x8001D86C func_8001D86C
       - [0xE0B8, c, func_8001D8B8]       # 0x8001D8B8 func_8001D8B8
       - [0xE3F0, c, func_8001DBF0]       # 0x8001DBF0 func_8001DBF0
-      - [0xE4A8, c, func_8001DCA8]       # 0x8001DCA8 func_8001DCA8
-      - [0xE4B0, c, func_8001DCB0]       # 0x8001DCB0 func_8001DCB0
-      - [0xE64C, c, func_8001DE4C]       # 0x8001DE4C func_8001DE4C
-      - [0xE7C8, c, GetVal8005E2E4]       # 0x8001DFC8 GetVal8005E2E4
+      - [0xE4A8, c, modules/projected_quad_packets]
       - [0xE7D4, c, modules/point_projection]
       - [0xE8B8, c, modules/render_packet_pool]
       - [0xEA6C, c, func_8001E26C]       # 0x8001E26C func_8001E26C

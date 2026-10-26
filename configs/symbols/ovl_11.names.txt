@@ -1,5 +1,33 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Area per-frame phase dispatcher and its two ordered service steps.
+Ovl11RunAreaFramePhase = 0x800C14A0; // type:func
+Ovl11UpdateAreaFrame = 0x800C162C; // type:func
+Ovl11UpdateClockHudVisibility = 0x800C188C; // type:func
+gOvl11AreaFrameResult = 0x80128B60; // type:data size:0x4
+
+// Element-counted forward copies used by the resource installers.
+Ovl11CopyWordBlock = 0x800DD21C; // type:func
+Ovl11CopyHalfwordBlock = 0x800DD248; // type:func
+
+// Flag-weighted state choices; names identify the roll-zero result.
+Ovl11RollState8 = 0x800D3C04; // type:func
+Ovl11RollState11 = 0x800D3C54; // type:func
+Ovl11RollState10 = 0x800D3CA4; // type:func
+Ovl11RollState13 = 0x800D3CE8; // type:func
+
+// Tagged-record motion and sprite steps used by the record update loop.
+Ovl11DrawTaggedRecordSprite = 0x800DE7C8; // type:func
+Ovl11AdvanceTaggedRecordPosition = 0x800DE878; // type:func
+
+// Strict X/Z region-exit query and its four pairs of private bounds.
+Ovl11FindRegionExit = 0x800BE118; // type:func
+gOvl11RegionExitBounds = 0x80122D8C; // type:data size:0xE0
+
+// Creation facades for the 0x160-0x162 tagged-record initializer.
+Ovl11AllocateCode160Record = 0x800DE8A4; // type:func
+Ovl11InitCode160OffsetCopy = 0x800DE924; // type:func
+
 // Object-event replay, animation/presentation and scheduled-command services.
 Ovl11RebuildObjectEventsForTime = 0x800C19B0; // type:func
 Ovl11TriggerNearbyObjectReactions = 0x800C3138; // type:func

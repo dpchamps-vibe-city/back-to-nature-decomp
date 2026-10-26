@@ -411,10 +411,10 @@ _8001D884 = 0x8001D884; // type:label
 _8001D8A0 = 0x8001D8A0; // type:label
 func_8001D8B8 = 0x8001D8B8; // type:func
 func_8001DBF0 = 0x8001DBF0; // type:func
-func_8001DCA8 = 0x8001DCA8; // type:func
-func_8001DCB0 = 0x8001DCB0; // type:func
-func_8001DE4C = 0x8001DE4C; // type:func
-GetVal8005E2E4 = 0x8001DFC8; // type:func
+AcceptProjectedQuad = 0x8001DCA8; // type:func
+EmitProjectedQuadPacket = 0x8001DCB0; // type:func
+EmitProjectedQuadPacketAtDepth = 0x8001DE4C; // type:func
+GetProjectedQuadOtDepth = 0x8001DFC8; // type:func
 ProjectPointToScreen = 0x8001DFD4; // type:func
 func_8001E04C = 0x8001E04C; // type:func
 func_8001E088 = 0x8001E088; // type:func
@@ -1519,6 +1519,11 @@ gCalendarDay = 0x80070CF4; // size:0x2
 gCalendarWeekday = 0x80070CF6; // size:0x2
 gClockHour = 0x80070CF8; // size:0x2
 gClockMinute = 0x80070CFA; // size:0x2
+
+// Legacy projected-quad paths: computed OT depth and context caches.
+gProjectedQuadOtDepth = 0x8005E2E4; // size:0x4
+gProjectedQuadDepthContext = 0x8005E4E0; // size:0x4
+gProjectedQuadFixedDepthContext = 0x8005E4E4; // size:0x4
 
 // Base of the shared twenty 0xB8 tagged records; preserve the extracted label extent.
 gTaggedRecordBase = 0x800749F4; // size:0xC

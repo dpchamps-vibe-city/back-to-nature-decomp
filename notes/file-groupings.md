@@ -294,7 +294,55 @@ Members:
 - ovl_11_func_800D0D7C (m) — index-of-pointer: returns the record's array
   index (0..19) or -1.
 
+## `ovl_11` tagged-record presentation — 0x800DE7C8–0x800DE8A4 exclusive (confidence: medium-low)
+
+**Reconstructed `modules/tagged_record_presentation.c`, both compiled
+members:** Ovl11DrawTaggedRecordSprite (DE7C8) and
+Ovl11AdvanceTaggedRecordPosition (DE878). D1EB8's ordinary-record arm applies
+both to the same 0xB8 record: after its state update, integrate/clear the
+motion delta, then select/draw the sprite under its render gate. Neither has
+another actual caller; CE744's old declaration was not a call. This paired
+consumer protocol and contiguous order support the unit, not ownership of the
+shared record pool. The counterpart helpers for other record classes remain
+external; their general layout resemblance does not establish a larger TU.
+
+Left DE76C changes calendar-driven work flags and has separate frame/transition
+callers; it has no record sprite or motion relationship. Right DE8A4 begins
+the distinct allocator/indexed-copy creation pair, without presentation calls.
+There is no positive extension on either side. These are evidence-limited
+protocol cuts under -G0, not proven historical file boundaries.
+
+ovl11_tagged_record_presentation.h states unchecked initialized-record inputs,
+raw signed-word motion addition/clear, sprite/frame selection, marker drawing
+and the post-draw flag-100 update for states 0/5. The signed-word address ABI
+of the motion entry is retained; pointer casts are explicit. Animation/frame,
+state and record names replace temporary-register names without inventing
+record-field or gameplay identities. Baseline checked fold and final full
+campaign gate pass; no setting, linkage, ownership or exception changed.
+
 ## `ovl_11` D_800749F4 record-clone pair — 0x800DE8A4 / 0x800DE924 (confidence: low)
+
+**Reconstructed `modules/code160_record_creation.c`, DE8A4–DE9C8
+exclusive, both compiled members.** Ovl11AllocateCode160Record and
+Ovl11InitCode160OffsetCopy are complementary creation facades over the same
+DF128 initializer: codes 160..162 plus slot-indexed row placement versus
+indexed code-160 initialization plus position/tag copy. This specialized
+construction protocol, the call graph and gapless order support the pair;
+the widely used gTaggedRecordBase does not establish private ownership.
+DF128 stays an external service. No evidence joins the intervening updater
+band between these facades and that nonadjacent initializer into this unit.
+
+Left DE878 integrates/clears motion, with no allocation or initializer call;
+it now closes tagged_record_presentation. Right DE9C8 begins a per-tick
+liveness/flags updater band, without allocation, copy or initialization.
+These are evidence-limited responsibility cuts, not proven original object
+boundaries under -G0. No flag or mechanical limit chose either cut.
+The public ovl11_code160_record_creation.h preserves the signed-word address
+ABI, two unread allocator arguments and s8-pointer copy result. It documents
+unchecked slots, ignored initializer failure, self-copy and the third-word
+subtraction of 200 raw units. Named locals and explicit address/pointer casts
+preserve the original field widths and order. Baseline checked fold and
+all-container campaign verification pass; callers use the module header.
 
 Evidence: zero-gap link-order adjacency (800DE8A4, 0x80, ends exactly at
 800DE924; 800DE924, 0xA4, ends exactly at the 800DE9C8 predicate-run head)
@@ -510,6 +558,24 @@ Members:
   ovl_11_func_800D3574; returns 0.
 
 ## `ovl_11` +0x34 flag-to-constant map run — 0x800D3C04–0x800D3CE8 (confidence: high)
+
+**Reconstructed `modules/random_state_choice.c`, D3C04–D3D2C exclusive,
+all four compiled members.** Ovl11RollState8/11/10/13 name the roll-zero
+results, not speculative gameplay actions. The single D3468 caller selects
+exactly these four by object code and sends their result into D3104's state
+entry service. Complementary result sets, identical flag/RNG decision
+construction and contiguous order support the complete four-member family.
+The caller is not absorbed: the intervening handlers have other protocols,
+and a call alone does not establish a larger source unit.
+
+Left D3BB0 maps object codes to animation IDs for D425C/D12B8, without RNG or
++34 flag access. Right D3D2C reads clock hour and +AC for a different state
+handler. Neither shares this choice protocol; there is no positive extension
+across these evidence-limited cuts. This is not GP proof (-G0). No pooled
+rodata, owned globals or overrides occur. ovl11_random_state_choice.h states
+one RNG advance, unsigned +34 bit 2000, roll ranges 3/8 or 2/7, fallback state
+1, and unchanged object storage. The bit's meaning remains unnamed. Baseline
+fold and final all-container verification pass; callers publish via the header.
 
 Evidence: four link-order-contiguous functions with no gaps (0x800D3C04
 len 0x50, 0x800D3C54 len 0x50, 0x800D3CA4 len 0x44, 0x800D3CE8 len 0x44)
@@ -6206,6 +6272,37 @@ References: notes/research/func_80017E34-shared-web-global-allocno.md
 (apply the shared-variable shape to func_80017EA0 when decompiling it),
 notes/retros/2026-08-28-func_80017E34-retro.md.
 
+## Legacy projected-quad packets — exe 0x8001DCA8–0x8001DFD4 exclusive (confidence: medium)
+
+**Reconstructed `src/modules/projected_quad_packets.c`, all four original
+entries: AcceptProjectedQuad (1DCA8), EmitProjectedQuadPacket (1DCB0),
+EmitProjectedQuadPacketAtDepth (1DE4C), GetProjectedQuadOtDepth (1DFC8).**
+The original DCB0 store at 1DE18 and DFC8 load reach 8005E2E4 through $gp
+(deriveTuOwnedGlobals.ts). DCB0/DE4C additionally call the same preceding
+acceptance hook with four projected coordinate words, construct the same
+POLY_FT4 layout and link through LinkAndReservePacket. Their context caches
+are separate small words at E4E0/E4E4. This state/helper coupling and original
+order joins both emitters and the hook, not adjacency or SDK calls alone.
+
+The acceptance hook always returns zero; both emitters branch to rejection
+on zero. Their earlier projection/scratch-packet effects still occur, but
+neither links a packet or updates the depth cache in this build. The two
+existing dead INCLUDE_ASM bodies travel inside the unit unchanged; this fold
+is not a claim to have reconstructed their C. The two compiled members remain
+clean C. No new stub, assembly or policy exception was added. Only the getter
+needs a tentative depth definition; the dead assembly has explicit GP relocs.
+
+Left DBF0 supplies texture-page/CLUT construction without this hook, depth or
+context-cache state. Right point_projection begins DFD4 and neither uses
+these caches nor calls the acceptance hook. There is no positive extension
+on either side; these are evidence-absent cuts, not GP/absolute conflicts.
+No external C caller of these four entries was found, so no artificial public
+header or emitter prototype was introduced. All linkages remain external.
+The depth and both context caches have behavior-based names at their original
+EXE identities; no private/static linkage was inferred from their sole users.
+Baseline fold proved EXE bytes and both compiled members; campaign verification
+also proved every overlay, data placement, policy and exception non-growth.
+
 ## unknown group A — 0x8001DFD4–0x8001E26C (confidence: low)
 
 **Reconstructed packet-pool unit: `src/modules/render_packet_pool.c`,
@@ -8383,9 +8480,38 @@ Members (address order):
   exceptions were added. Interface publication removed caller restatements
   without changing their objects; generated declarations came from the gate.
 
-- ovl_11 0x800C14A0 / 0x800C162C frame-driver pair — low-confidence candidate same-TU membership ([evidence and limits](research/ovl_11_func_800C162C-grouping.md)).
-  - ovl_11_func_800C14A0 (s) — mode-gated frame dispatcher and control-flag updater.
-  - ovl_11_func_800C162C (m, byte-exact) — staged frame-update driver with scratchpad-stack call batches.
+- **Reconstructed `ovl_11/modules/area_frame_update.c`, C14A0–C19B0
+  exclusive, three compiled members:** Ovl11RunAreaFramePhase,
+  Ovl11UpdateAreaFrame, Ovl11UpdateClockHudVisibility. The head is slot 2 of
+  D_80121780's phase table, read by BBC34. It calls both contiguous successors;
+  each has no other actual caller. Their ordered frame/HUD policy and shared
+  control-flag lifecycle corroborate this dispatcher/steps unit, not ownership
+  of the widely used work-area bases. Historical pair research:
+  [evidence and limits](research/ovl_11_func_800C162C-grouping.md).
+
+  Left clock_calendar ends C14A0 with calendar tables/clock-state services;
+  this unit calls those published services but owns none of that private
+  state. Right C19B0 begins the object-event rebuild/scheduled-command module,
+  whose private script tick/live-mode and command tables are distinct. Calls
+  into that module are service use, not an extension claim. These cuts rest
+  on distinct protocols/private data and lack of positive extension, not GP
+  proof (-G0). The single-call-site C056C camera nudge remains outside: no
+  same-private-state/table relation joins the intervening clock_calendar unit.
+
+  ovl11_area_frame_update.h publishes only the table-entry callback; the two
+  internal steps retain external linkage. It documents dispatch cases,
+  reseeding, frame-order and non-reentrancy constraints. Scratchpad-stack
+  brackets/order are retained. gOvl11AreaFrameResult names the private result
+  initialized to 2 and optionally replaced by CD9A0's result. The signed HUD
+  selection/flag view moved to globals_override.h with original offsets and
+  widths; no global storage or disputed type was silently changed.
+
+  The module gate exposed two pre-existing arity errors: original C174C/C1750
+  supplies a0=1 to C056C, and C17D8/C17DC supplies a1=1 to CA24C. Both matched
+  definitions ignored those argument registers. Their signatures now retain
+  an explicit unread s32 parameter, and this caller has exact prototypes;
+  call instructions and both callee bodies stay byte-identical. No flag or
+  policy exception changed. The checked fold and final campaign gate pass.
 
 - ovl_11 D_8012D520 getter/compare quartet — ovl_11_func_80118C6C (m, matched
   this session), ovl_11_func_801165C8 (m, now matched),
@@ -16402,6 +16528,22 @@ Members (link order):
   `func_8001719C(D_8005E3B0 + 0x5790)`. Confirms the shared-global tie, not
   just the wrapper idiom.
 
+  **The copy services are now `modules/block_copy.c`, DD21C–DD274
+  exclusive:** Ovl11CopyWordBlock (DD21C) and Ovl11CopyHalfwordBlock (DD248).
+  They form complementary widths of one destination-first, unsigned-count,
+  forward-copy construction in gapless order. BD538's word resource install
+  and BD938's three palette-halfword copies corroborate count units and the
+  common installer-facing interface. This is source-family evidence, not
+  private-state/GP proof; confidence in the original TU is medium-low.
+  Left DD1D0 compares a scene-key pair via a private pointer. Right DD274
+  resolves a context ID from separate halfword tables. Neither calls the
+  copy pair or shares its operation; there is no positive extension across
+  these evidence-limited cuts. No rodata, owned globals or overrides occur.
+  ovl11_block_copy.h specifies element counts, alignment, zero-count no-op
+  and forward overlap behavior. Cursor/count/value names preserve the loops.
+  Baseline checked fold and all-container verification pass; caller-local
+  restatements were replaced by the header without changing caller bytes.
+
 Related same-TU candidate (low confidence, outside the gapless run): the verified
 C sources share the `D_801217A8` stride-0x10 table with `ovl_11_func_800BD374`
 and the run's `D_8005E3B0 + 0x4290` load/initialize buffer.
@@ -20113,8 +20255,26 @@ linkage or flags changed; the checked baseline fold passed both and overlay.
 Left BDCE0 is an unused return--1 leaf with no volume protocol, so no evidence
 joins it. Right BDF98 builds the separate collision-query record and calls
 BE6E4; following BE118 scans the 1C-byte region-transition table at 80122D8C,
-not these volumes. Its table is contiguous with BE5A0's distinct region-table
-family. These are responsibility/layout boundaries, not GP-proven cuts under
+not these volumes.
+
+**BE118–BE208 is now `modules/region_exit_query.c`, one compiled member,
+Ovl11FindRegionExit.** Its single-reader four-by-two table is named
+gOvl11RegionExitBounds (80122D8C, E0 bytes). The D2B40 movement consumer
+confirms output position/region use. This is the entire supported table-query
+service, not a claim that it shared an original file with the preceding
+collision wrapper. BDF98 neither reads this table nor calls the query; right
+BE208 resets the separate collision-query budget and never uses exit bounds.
+No helper/private state evidence extends across either cut. BE5A0 reads a
+physically adjacent but distinct 0x14-byte region-constraint table family; table
+adjacency alone does not join it. Original TU boundaries remain unproven.
+
+The public ovl11_region_exit_query.h documents by-value VECTOR input, raw
+X/Z units, strict edges, variant fallback to zero, first match, output Y=0
+and unchanged outputs on failure. Locals/parameters describe the actual
+outputs; original signedness and field widths remain. No state is written.
+The baseline checked fold and final all-container gate pass without flags.
+
+Its table is contiguous with BE5A0's distinct region-table family. These are responsibility/layout boundaries, not GP-proven cuts under
 -G0. BE118 is 0xF0 bytes, not the formerly recorded 0x1AC. No producer of the
 volume table has yet been identified, so no third member is asserted.
 

@@ -3,8 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "sprite_rotation.h"
+#include "ovl11_region_exit_query.h"
 
-s32 ovl_11_func_800BE118(VECTOR position, s16 arg4, VECTOR *arg5, u16 *arg6, u32 arg7);
 void ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 
@@ -57,7 +57,7 @@ void ovl_11_func_800D2B40(Recon_ovl_11_func_800D2594_A0View *arg0) {
         default:
             continue;
         }
-        if ((arg0->unk34 & var_v1) && (ovl_11_func_800BE118(*(VECTOR *) ((u8 *) arg0 + 0x38), *(s16 *) ((u8 *) arg0 + 0x30), &sp20, &sp30, var_t0) != 0)) {
+        if ((arg0->unk34 & var_v1) && (Ovl11FindRegionExit(*(VECTOR *) ((u8 *) arg0 + 0x38), *(s16 *) ((u8 *) arg0 + 0x30), &sp20, &sp30, var_t0) != 0)) {
             temp_s0 = *(s16 *) (work + 0x25476);
             if (temp_s0 == 1) {
                 ovl_11_func_80107C80(var_s2, var_s3, NULL, 1);

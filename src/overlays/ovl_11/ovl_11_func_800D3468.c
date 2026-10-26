@@ -1,6 +1,7 @@
 #include "common.h"
 #include "psyq/libapi.h"
 #include "random.h"
+#include "ovl11_random_state_choice.h"
 
 typedef struct Unk800D3468 {
     /* 0x00 */ u16 unk0;
@@ -9,10 +10,6 @@ typedef struct Unk800D3468 {
 } Unk800D3468;
 
 s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
-s32 ovl_11_func_800D3C04(void *arg0);
-s32 ovl_11_func_800D3C54(void *arg0);
-s32 ovl_11_func_800D3CA4(void *arg0);
-s32 ovl_11_func_800D3CE8(void *arg0);
 s32 ovl_11_func_800D3D2C(Unk800D3468 *arg0);
 
 s32 ovl_11_func_800D3468(u16 *arg0) {
@@ -41,16 +38,16 @@ s32 ovl_11_func_800D3468(u16 *arg0) {
         break;
     case 0x10B:
     case 0x10C:
-        var_s0 = ovl_11_func_800D3C04(arg0);
+        var_s0 = Ovl11RollState8(arg0);
         break;
     case 0x10D:
-        var_s0 = ovl_11_func_800D3CA4(arg0);
+        var_s0 = Ovl11RollState10(arg0);
         break;
     case 0x10E:
-        var_s0 = ovl_11_func_800D3C54(arg0);
+        var_s0 = Ovl11RollState11(arg0);
         break;
     case 0x10F:
-        var_s0 = ovl_11_func_800D3CE8(arg0);
+        var_s0 = Ovl11RollState13(arg0);
         break;
     case 0x112:
     case 0x113:

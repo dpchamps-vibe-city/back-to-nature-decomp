@@ -8,8 +8,8 @@
 #include "ovl11_record_pair_slots.h"
 #include "ovl11_row_placement.h"
 #include "ovl11_tagged_record_creation.h"
+#include "ovl11_code160_record_creation.h"
 
-s8 *ovl_11_func_800DE924(s32 arg0, s32 arg1);
 void ovl_11_func_800E2904(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 
@@ -152,7 +152,7 @@ read_b8_selection:
                 Ovl11InitOffsetRecordCopy((s32) selectedKind, (s32) recordIndex);
                 poolOrSlot += 1;
             } else {
-                ovl_11_func_800DE924((s32) selectedKind, (s32) recordIndex);
+                Ovl11InitCode160OffsetCopy((s32) selectedKind, (s32) recordIndex);
                 goto next_b8_slot;
             }
         } else {

@@ -1,7 +1,8 @@
 #include "common.h"
 #include "random.h"
 
-void ovl_11_func_800C056C(void) {
+/* The area-frame caller supplies 1 in a0; the value is deliberately unread. */
+void ovl_11_func_800C056C(s32 unused) {
     char *base;
     char *base2;
     char *far_base;

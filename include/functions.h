@@ -3,6 +3,7 @@
  * passed to m2c before this file. */
 
 void __main(void);
+s32 AcceptProjectedQuad(void);
 void AddSpriteSourceFlags(u16 *flags, s32 mask);
 s32 AdjustTextEntryColumnSet0(s32 arg0, s32 arg1, s32 arg2);
 s32 AdjustTextEntryColumnSet1(s32 arg0, s32 arg1, s32 arg2);
@@ -190,7 +191,6 @@ s32 func_8001AD6C(s32 arg0);
 void func_8001ADD8(u32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 s32 func_8001AE34(void);
 void func_8001AF34(void);
-s32 func_8001DCA8(void);
 void func_8001E340(M2C_64b5d3016a4e_Grid8001E340 **arg0);
 s32 func_8001E38C(void);
 s32 func_8001E4C0(DriverArg_1E4C0 *arg0, BoundsStruct_8001E878 *arg1);
@@ -246,6 +246,7 @@ s32 GetPadActuatorsEnabled(void);
 s16 GetPairedTpage(s32 tpage);
 s32 GetPendingSoundLoad(void);
 s32 GetPreviousSceneId(void);
+s32 GetProjectedQuadOtDepth(void);
 s32 GetScreenFadeDrawLatch(void);
 s32 GetScreenFadeRampMode(void);
 s32 GetSoundRamLoadCursor(void);
@@ -260,7 +261,6 @@ s32 GetTextEntryCodeSet0(s32 arg0, s32 arg1);
 u16 GetTextEntryCodeSet1(s32 column, s32 row);
 u8 GetUpdateTimingMode(void);
 s32 GetVal8005E2BC(void);
-s32 GetVal8005E2E4(void);
 s32 GetVal8005E524(void);
 s32 HasQuadVertexXInBounds(s32 sxy0, s32 sxy1, s32 sxy2, s32 sxy3);
 s32 HasTriangleVertexXInBounds(s32 sxy0, s32 sxy1, s32 sxy2);

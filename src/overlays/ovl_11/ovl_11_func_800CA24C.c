@@ -17,7 +17,8 @@ void ovl_11_func_8010C1C0 (Ovl11DrawState *arg0);
 void ovl_11_func_8010C2EC (u8 *arg0);
 u32 ovl_11_func_800CDFAC (u8 *arg0);
 
-void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0) {
+/* The area-frame caller supplies a trailing 1 in a1; it is unread here. */
+void ovl_11_func_800CA24C(Ovl11SpritePositionView *arg0, s32 unused) {
     s32 var_a0;
     s32 var_s3;
     u8 *object;

@@ -72,7 +72,7 @@ typedef struct {
     s32 exitX;
     s32 exitZ;
 } Ovl11TransitionBounds;
-extern Ovl11TransitionBounds D_80122D8C[4][2];
+extern Ovl11TransitionBounds gOvl11RegionExitBounds[4][2];
 
 /* 800C2CE8 compares this absolute-addressed unsigned halfword to 4. */
 extern u16 D_80071A3C;
@@ -2990,6 +2990,11 @@ typedef struct {
 } env_struct_0x134;
 
 extern env_struct_0x134 gRenderContexts[2];
+/* exe:8001DCB0 caches the computed ordering-table depth; 8001DFC8 reads it. */
+extern s32 gProjectedQuadOtDepth;
+/* exe:8001DCB0/8001DE4C preserve their render context across the quad gate. */
+extern env_struct_0x134 *gProjectedQuadDepthContext;
+extern env_struct_0x134 *gProjectedQuadFixedDepthContext;
 
 /* 8005E644: interior DISPENV view with the render contexts' 0x134 stride.
  * Not owned by screen_fade (absolute lui/addiu base in target). */
@@ -7493,8 +7498,17 @@ struct Ovl11FrameWork {
     s32 mode;
 };
 
-/* 800C162C initializes, loads and stores this absolute-addressed s32 result. */
-extern s32 D_80128B60;
+/* 800C162C initializes to 2, then caches the mode-0 update result. */
+extern s32 gOvl11AreaFrameResult;
+
+/* 800C188C reads flags and a signed selection value for clock-HUD policy.
+ * The latter is the same storage exposed by Ovl11SelectionResetState. */
+typedef struct {
+    char pad0[0xC];
+    s32 flags;
+    char pad10[0xE4D2 - 0x10];
+    s16 selectionValue;
+} Ovl11ClockHudPolicyState;
 
 /* 800DD274 indexes signed halfwords at 80123E38 by the +44CE selector. */
 extern s16 D_80123E38[];
