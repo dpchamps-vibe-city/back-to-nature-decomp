@@ -42,6 +42,8 @@
 #include "area_grid_triggers.h"
 #include "ovl11_weather_effect.h"
 #include "ovl11_primary_object_requests.h"
+#include "psyq/libcd.h"
+#include "ovl11_area_resource_load.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -56,7 +58,6 @@ void Ovl11UpdateAreaMode(void) {
 void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
 void ovl_11_func_800BCF28(void);
-s32 ovl_11_func_800BD374(s32 arg0, s32 arg1);
 void ovl_11_func_800CD624(void);
 void ovl_11_func_800CD670(s16 arg0);
 void ovl_11_func_800DBAB0(void);
@@ -135,7 +136,7 @@ void Ovl11StepAreaModeState(void) {
         STATUS->objectFlags &= ~0x400;
         WORK->savedSelection = selection;
         gOvl11PendingAreaReadIndex = ovl_11_func_800DC388(selection);
-        ovl_11_func_800BD374(gOvl11PendingAreaReadIndex, 1);
+        Ovl11ReadAreaResource(gOvl11PendingAreaReadIndex, 1);
         gOvl11AreaReadStarted = 1;
         if (STATUS->mode == 2) {
             ovl_11_func_800DBAB0();
@@ -147,7 +148,7 @@ void Ovl11StepAreaModeState(void) {
         WORK->state = 25;
         STATUS->flags |= 0x8000000;
         gOvl11PendingAreaReadIndex = ovl_11_func_800DC388(WORK->savedSelection);
-        ovl_11_func_800BD374(gOvl11PendingAreaReadIndex, 1);
+        Ovl11ReadAreaResource(gOvl11PendingAreaReadIndex, 1);
         gOvl11AreaReadStarted = 1;
         break;
     case 13:
@@ -159,7 +160,7 @@ void Ovl11StepAreaModeState(void) {
     case 5:
     case 25:
         STATUS->flags |= 0x800000;
-        if (gOvl11AreaReadStarted != 0 && ovl_11_func_800BD374(gOvl11PendingAreaReadIndex, 0) == 0) {
+        if (gOvl11AreaReadStarted != 0 && Ovl11ReadAreaResource(gOvl11PendingAreaReadIndex, 0) == 0) {
             break;
         }
     case 4:
@@ -286,8 +287,6 @@ void Ovl11ResetAreaModeStep(void) {
 }
 
 void ovl_11_func_801044E4(void);
-void ovl_11_func_800BD160(void);
-void ovl_11_func_800BD168();
 void Ovl11ResetAreaScene(void);
 void Ovl11RefreshAreaSoundBank(void);
 /* Resident sprite-display disable at exe:8001B100. */
@@ -315,12 +314,12 @@ void Ovl11RunAreaEntrySteps(void) {
     case 9:
         ((Ovl11MovementState *)D_8006C838)->flagsC |= 0x8000000;
         ((Ovl11MovementState *)D_8006C838)->flags10 |= 0x8000000;
-        ovl_11_func_800BD160();
+        Ovl11AreaResourceEntryHook();
         SetGameFlag(3, 1);
         gOvl11AreaEntryStep++;
         break;
     case 1:
-        ovl_11_func_800BD168();
+        Ovl11InitAreaSpriteSource();
         gOvl11AreaEntryStep++;
         break;
     case 2:

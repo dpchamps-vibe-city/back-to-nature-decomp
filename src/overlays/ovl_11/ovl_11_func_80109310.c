@@ -4,8 +4,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
-
-void ovl_11_func_800BD1BC(s32 arg0);
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 s32 ovl_11_func_80109310(s32 *arg0) {
     s32 *temp_s1;
@@ -24,7 +27,7 @@ s32 ovl_11_func_80109310(s32 *arg0) {
         var_a1 = 0;
         var_s3 = 0x23C8;
     }
-    ovl_11_func_800BD1BC(var_a1);
+    Ovl11LoadCopiedSpriteData(var_a1);
     temp_s1 = arg0 + 0x1E;
     InitSpriteSourceData((SpriteSourceData *) temp_s1, (SpriteDataHeader *) &D_8007F7F8);
     SetSpriteSourceRecordAddress((SomeStruct *) temp_s1, (s32) ((void *) ((u8 *) &D_8007F7F8 + var_s3)));

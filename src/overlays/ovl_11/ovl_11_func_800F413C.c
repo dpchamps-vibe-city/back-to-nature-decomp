@@ -19,6 +19,9 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "psyq/abs.h"
 #include "ovl11_object_events.h"
+#include "psyq/libgs.h"
+#include "psyq/libcd.h"
+#include "ovl11_area_resource_load.h"
 
 typedef struct {
     s16 field_0;
@@ -78,7 +81,6 @@ s32 func_8001E7DC (s32 *arg0, s32 *arg1);
 s32 func_8001E878 (M2C_2bc7a43223fd_CoordTri *p0, M2C_2bc7a43223fd_CoordTri *p1, M2C_2bc7a43223fd_CoordTri *p2);
 void SetVal8005E2E8 (s32 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
-void ovl_11_func_800BD358 (void);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
 void ovl_11_func_800CCFF8 ();
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -88,7 +90,6 @@ void ovl_11_func_800C6F6C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11
 s32 ovl_11_func_800D589C (s16 arg0);
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 void ovl_11_func_800D666C (s16 arg0);
-void ovl_11_func_800BD8DC (s16 arg0);
 s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);

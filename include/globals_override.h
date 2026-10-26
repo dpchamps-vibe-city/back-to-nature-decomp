@@ -1142,7 +1142,7 @@ extern s32 *D_80124FCC_spriteOffsets __asm__("D_80124FCC");
 /* 800BD3C4 indexes the same offset-table pointers by item number. */
 extern s32 *D_80124FCC_tables[] __asm__("D_80124FCC");
 /* 800BD3C4 reads [item] and [item + 1] as a start/end pair. */
-extern s32 D_801227B0[];
+extern s32 gOvl11IndexedSpriteBoundaries[];
 /* 800BD3C4 stores the loaded item number at work-area +0x25478. */
 typedef struct {
     u8 pad0[0x25478];
@@ -2633,11 +2633,11 @@ typedef struct {
 /* ovl_11_func_800CA044 loads this word as the sprite-submission total. */
 extern s32 D_8005E3BC;
 /* ovl_11_func_800CA044 indexes this storage in 0x78-byte texture banks. */
-extern u8 D_80122F9C[];
+extern u8 gOvl11PrimarySpriteTextureBanks[];
 /* ovl_11_func_800CA044 uses signed halfword lookups with stride two. */
-extern s16 D_8012308C[];
-extern s16 D_80123098[];
-extern s16 D_801230A4[];
+extern s16 gOvl11PrimarySpriteSubstituteIds[];
+extern s16 gOvl11PrimarySpriteSubstituteValues[];
+extern s16 gOvl11Mode1FSpriteSubstituteIds[];
 
 /* ovl_19:800BF660 - header-initialized UI sprite source, shared by 800BAD50
  * and Ovl19DrawValueTable. Retain the opaque ObjectState-compatible view and
@@ -3955,7 +3955,7 @@ typedef struct {
     /* 0x05 */ u8 unk5;
     /* 0x06 */ s16 unk6;
 } Ovl11D124Entry;
-extern Ovl11D124Entry D_80074124[7][7];
+extern Ovl11D124Entry gAlternateAreaGrid[7][7];
 /* 800DA638 dispatches the two matched three-s16 texture setters. */
 extern s32 (*D_80123DFC[2])(s16, s16, s16);
 /* 800DA638 reads signed row/column bounds at index*4 and +2. */
@@ -3975,7 +3975,7 @@ extern u16 D_80128DAE __asm__("D_80128DAC+2");
 extern s16 D_80128DB0;
 
 /* 800C9F20 reads halfword coordinate pairs; original data spans 32 halfwords. */
-extern u16 D_8012315C[32];
+extern u16 gOvl11CompanionScreenOffsets[32];
 
 /* 800C4B6C indexes signed halfwords; original data spans six entries. */
 extern s16 D_8012319C[6];
@@ -3994,7 +3994,7 @@ extern s32 D_800742AC;
 /* D_80071DFC - 25x45 table of 8-byte entries (ovl_11); row stride 0x168.
  * ovl_11_func_800D8FC8 walks all 25 rows x 45 entries and ovl_11_func_800DAF60
  * indexes it; absolute-addressed from the overlay. */
-extern Ovl11D124Entry D_80071DFC[25][45];
+extern Ovl11D124Entry gMainAreaGrid[25][45];
 
 /* ovl_27:BA914 selects four 0x8CC-byte ID tables and reads 1125 halfwords. */
 extern u16 gOvl27SpriteFrameIds0[];
@@ -4282,7 +4282,7 @@ extern Recon_ovl_11_func_800F6118_D80126E18Entry D_80126E18[];
 
 extern s32 gGraphicsHeapBase;
 
-extern s16 D_80128800;
+extern s16 gOvl11LoadedSpriteBankSelector;
 
 extern u8 D_8007BFF8[];
 
@@ -5427,9 +5427,9 @@ extern struct SpriteSourceData gOvl21UiSpriteAnchor;
 extern u8 D_800C0458[];
 
 /* 800CA24C writes three projection-input halfwords and passes them to 8001DFD4. */
-extern s16 D_80128B80[4];
+extern s16 gOvl11PrimaryDrawWorldPoint[4];
 /* 8001DFD4 writes two screen-coordinate words, read by 800CA24C at +0/+4. */
-extern s32 D_80128B88[2];
+extern s32 gOvl11PrimaryDrawScreenPoint[2];
 /* 800CA24C tests this word before consulting the per-index halfword table. */
 extern s32 D_80123154;
 /* 800CA24C indexes this signed-halfword table with the object's signed +FE. */
@@ -5600,7 +5600,14 @@ extern s32 D_800BBED0[];
 extern u8 D_8009F78C[];
 
 /* ovl_11 800BCF54/800BD374 use this word as the anchor for stride-0x10 records. */
-extern s32 D_801217A8;
+extern s32 gOvl11ResourceDescriptors;
+/* BD488/BD5A8 index adjacent archive byte boundaries, then load their difference. */
+extern s32 gOvl11OffsetSpriteBoundaries[];
+extern s32 gOvl11RecordSpriteBoundaries[];
+/* BD358 stores -1; no retail reader of this retained marker is established. */
+extern s32 gOvl11ResourceIndex;
+/* BD168 initializes this byte-backed sprite source from the staging header. */
+extern u8 D_80071C60[];
 
 /* D_800C0454 - ovl_25 ProjectedPrimitiveSource descriptor whose address
  * ovl_25_func_800BAC28 hands to func_8001C0D4. Only its address is taken, so
@@ -5733,13 +5740,13 @@ extern s32 D_800BFE60;
 /* D_801227F8 - ovl_11 pair table indexed by an s32 argument in
  * ovl_11_func_800BD1BC; entries are {start, end} s32 pairs. Defined in the
  * overlay data segment, so only an extern declaration belongs here. */
-extern s32 D_801227F8[];
+extern s32 gOvl11CopiedSpriteBoundaries[];
 
 /* D_80122804 - ovl_11 pair table sibling of D_801227F8, indexed by an s32
  * argument in ovl_11_func_800BD238; entries are {start, end} s32 pairs.
  * Defined in the overlay data segment, so only an extern declaration belongs
  * here. */
-extern s32 D_80122804[];
+extern s32 gOvl11SceneSpriteBoundaries[];
 
 /* D_8007F7F8 - main-RAM destination buffer written by ovl_11_func_800BD1BC's
  * memcpy. Address comes from undefined_syms_auto.txt. */
@@ -5909,7 +5916,7 @@ extern s32 gOvl11BackgroundCycleHighRgb;
 /* D_801287F8 - ovl_11 pointer slot written by ovl_11_func_800BD938, which
  * stores D_8005E3B0 + 0x4290 into it (absolute lui + sw %lo). Defined in the
  * overlay data segment, so only an extern declaration belongs here. */
-extern u16 *D_801287F8;
+extern u16 *gOvl11PaletteBankPointer;
 
 /* ovl_11_func_800DCC5C writes three halfwords before projecting this vector. */
 extern s16 D_80128DF8[4];
@@ -6254,8 +6261,8 @@ extern u8 D_8007121C[0x50];
 extern u8 D_8007126C[0x50];
 
 /* Object pointer and low flag-word cache written by ovl_11_func_800BF450. */
-extern u32 *D_80128808;
-extern u32 D_8012880C;
+extern u32 *gOvl11CachedGeometryHit;
+extern u32 gOvl11CachedGeometryFlags;
 
 /* ovl_11 reset-run halfwords, initialized by 8011F52C and rewritten by
  * 8011F574. Their signed storage views agree with the matched reset leaf. */
@@ -6620,7 +6627,7 @@ extern u32 D_8008F7F8_words[] __asm__("D_8008F7F8");
 /* ovl_11 data contains 50 pointers to counted word-offset lists. */
 extern s32 *D_80125DC0[50];
 /* ovl_11_func_800BD6A8 reads adjacent ROM boundary words at index*4 and +4. */
-extern s32 D_80122810[];
+extern s32 gOvl11CalendarSpriteBoundaries[];
 /* ovl_11_func_800BFD1C loads this pointer and indexes 0xC-byte entries. */
 extern s32 *gOvl11AmbientTintTable;
 /* BFEA4/C044C select these four hour-class RGB triples (12 Q12 words). */
@@ -7033,7 +7040,7 @@ extern s32 Ovl11CollisionFlags __asm__("D_80128C54");
 /* 800C523C reads and updates this counter with lhu/sh. */
 extern u16 D_80128C64;
 /* 800C907C saves the dispatched object pointer here and reads its u16 +0x22. */
-extern void *Ovl11SavedInteractionObject __asm__("D_80128CF4");
+extern void *Ovl11SavedInteractionObject;
 /* 800C72F8 reads this absolute-addressed word and tests its low two bits. */
 extern s32 D_80128C50;
 /* 800C9C60 clears these three absolute-addressed words with sw. */

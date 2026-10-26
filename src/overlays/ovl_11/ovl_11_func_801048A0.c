@@ -6,8 +6,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_weather_effect.h"
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "psyq/libcd.h"
+#include "ovl11_area_resource_load.h"
 
-void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800CBEF8(void);
 void ovl_11_func_800F6630(void);
 
@@ -35,7 +38,7 @@ void ovl_11_func_801048A0(void) {
     *(s32 *)(far + 0x25484) = 0xFFFF;
     *(s32 *)(far + 0x25488) = 0xFFFF;
 
-    ovl_11_func_800BD5A0();
+    Ovl11AreaSpriteBankHook();
     Ovl11ResetWeatherParticles();
     Ovl11ResetAmbientTintFromTable();
     Ovl11SetWeatherParticleMode(base->field_E4C8);

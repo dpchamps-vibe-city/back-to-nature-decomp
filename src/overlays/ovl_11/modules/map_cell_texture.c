@@ -98,7 +98,7 @@ void Ovl11ApplyMapTileTextures(void) {
     u32 column;
     u8 variant;
 
-    entry = &D_80071DFC[0][0];
+    entry = &gMainAreaGrid[0][0];
     row = 0;
     do {
         column = 0;

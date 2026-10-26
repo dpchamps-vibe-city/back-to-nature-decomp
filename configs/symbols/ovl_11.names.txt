@@ -1,5 +1,78 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Read/cache the last scene-geometry hit descriptor's flag word.
+Ovl11GetGeometryHitHighBit = 0x800BF3D0; // type:func
+Ovl11ClassifyGeometryHit = 0x800BF3F4; // type:func
+Ovl11CacheGeometryHit = 0x800BF450; // type:func
+gOvl11CachedGeometryHit = 0x80128808; // type:data size:0x4
+gOvl11CachedGeometryFlags = 0x8012880C; // type:data size:0x4
+
+// Area resource loading and installation; archive tables contain boundaries.
+Ovl11LoadAreaResourceSet = 0x800BCF54; // type:func
+Ovl11AreaResourceEntryHook = 0x800BD160; // type:func
+Ovl11InitAreaSpriteSource = 0x800BD168; // type:func
+Ovl11LoadCopiedSpriteData = 0x800BD1BC; // type:func
+Ovl11LoadSceneSpriteData = 0x800BD238; // type:func
+Ovl11ClearResourceIndex = 0x800BD358; // type:func
+Ovl11UnusedAreaResourceHook = 0x800BD368; // type:func
+Ovl11ReadAreaResource = 0x800BD374; // type:func
+Ovl11LoadIndexedSpriteSet = 0x800BD3C4; // type:func
+Ovl11LoadOffsetSpriteSet = 0x800BD488; // type:func
+Ovl11LoadFixedAreaSpriteBank = 0x800BD538; // type:func
+Ovl11AreaSpriteBankHook = 0x800BD5A0; // type:func
+Ovl11LoadIndexedSpriteRecords = 0x800BD5A8; // type:func
+Ovl11StageFixedSpriteBank = 0x800BD668; // type:func
+Ovl11LoadCalendarSpriteSet = 0x800BD6A8; // type:func
+Ovl11LoadLargeIndexedSpriteBank = 0x800BD8DC; // type:func
+Ovl11LoadPaletteBankTriplet = 0x800BD938; // type:func
+Ovl11LoadSmallIndexedSpriteBank = 0x800BD9D4; // type:func
+Ovl11LoadFixedSpriteImages = 0x800BDA20; // type:func
+Ovl11LoadRenderContextSpriteBank = 0x800BDA70; // type:func
+gOvl11ResourceDescriptors = 0x801217A8; // type:data size:0xFF4
+gOvl11OffsetSpriteBoundaries = 0x8012279C; // type:data size:0x14
+gOvl11IndexedSpriteBoundaries = 0x801227B0; // type:data size:0x1C
+gOvl11RecordSpriteBoundaries = 0x801227CC; // type:data size:0x2C
+gOvl11CopiedSpriteBoundaries = 0x801227F8; // type:data size:0xC
+gOvl11SceneSpriteBoundaries = 0x80122804; // type:data size:0xC
+gOvl11CalendarSpriteBoundaries = 0x80122810; // type:data size:0xCC
+gOvl11PaletteBankPointer = 0x801287F8; // type:data size:0x4
+gOvl11ResourceIndex = 0x801287FC; // type:data size:0x4
+gOvl11LoadedSpriteBankSelector = 0x80128800; // type:data size:0x2
+
+// Primary-object frame draw and its companion/saved-record variants.
+Ovl11DrawPrimaryObjectCompanion = 0x800C9F20; // type:func
+Ovl11DrawPrimaryObjectSprite = 0x800CA044; // type:func
+Ovl11DrawPrimaryObjectFrame = 0x800CA24C; // type:func
+Ovl11CopyAndDrawSavedObject = 0x800CA580; // type:func
+Ovl11SyncSavedObjectAnimation = 0x800CA5D4; // type:func
+Ovl11SavedInteractionObject = 0x80128CF4; // type:data size:0x4
+gOvl11PrimaryDrawWorldPoint = 0x80128B80; // type:data size:0x8
+gOvl11PrimaryDrawScreenPoint = 0x80128B88; // type:data size:0x8
+gOvl11CompanionScreenOffsets = 0x8012315C; // type:data size:0x40
+gOvl11PrimarySpriteTextureBanks = 0x80122F9C; // type:data size:0xF0
+gOvl11PrimarySpriteSubstituteIds = 0x8012308C; // type:data size:0xC
+gOvl11PrimarySpriteSubstituteValues = 0x80123098; // type:data size:0xC
+gOvl11Mode1FSpriteSubstituteIds = 0x801230A4; // type:data size:0xC
+
+// Selection-table callbacks 4..14: catalog IDs and quantity-message variants.
+Ovl11PurchaseCatalogEntry99 = 0x80119338; // type:func
+Ovl11PurchaseCatalogEntry9A = 0x80119364; // type:func
+Ovl11PurchaseCatalogEntryA5 = 0x80119390; // type:func
+Ovl11PurchaseCatalogEntryA6 = 0x801193BC; // type:func
+Ovl11PurchaseCatalogEntryA7 = 0x801193E8; // type:func
+Ovl11PurchaseFlagSelectedEntry = 0x80119414; // type:func
+Ovl11PurchaseGatedEntry64 = 0x80119470; // type:func
+Ovl11PurchaseQuantityOption0 = 0x801194DC; // type:func
+Ovl11PurchaseQuantityOption1 = 0x801195BC; // type:func
+Ovl11PurchaseQuantityOption2 = 0x8011969C; // type:func
+Ovl11PurchaseQuantityFixed = 0x8011977C; // type:func
+
+// Directional grid-cell classification, collision tag query and main-grid pass.
+Ovl11CheckDirectionalCellTransition = 0x800BF4B4; // type:func
+Ovl11ClassifyGridCell = 0x800BF630; // type:func
+Ovl11IsSpecialCollisionCell = 0x800BF720; // type:func
+Ovl11ProcessMainGridCells = 0x800BF844; // type:func
+
 // Refresh flagged record placement; both adjacent helpers serve this entry.
 Ovl11UpdateRecordPlacement = 0x800CEFCC; // type:func
 Ovl11RefreshRecordById = 0x800CF044; // type:func

@@ -4,8 +4,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
-
-void ovl_11_func_800BD238(s32 arg0);
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 void ovl_11_func_8010B67C(void) {
     char *base;
@@ -28,7 +31,7 @@ void ovl_11_func_8010B67C(void) {
     case 0x15F:
         var_a0 = 0;
 block_8:
-        ovl_11_func_800BD238(var_a0);
+        Ovl11LoadSceneSpriteData(var_a0);
         InitSpriteSourceData((SpriteSourceData *)(base + 0x78), (SpriteDataHeader *)&D_8007AFF8);
         far1 = (char *)&D_8007AFF8;
         state = far1 + 0x1FFF8;

@@ -55,7 +55,7 @@ block_7:
             col = coords[0];
             rowOffset = row * 0x168;
             arg1 = col * sizeof(Ovl11D124Entry);
-            mapBase = (u8 *) D_80071DFC;
+            mapBase = (u8 *) gMainAreaGrid;
             columnBase = mapBase + arg1;
             var_t0 = (void *) (rowOffset + (s32) columnBase);
             if (var_s0 != 0) {

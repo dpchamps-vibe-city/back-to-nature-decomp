@@ -18,10 +18,10 @@ void ovl_11_func_800C55FC(Ovl11CE034Object *arg0) {
     if (temp_s0 != 2) {
         D_80123234[temp_s0](&sp10, &sp20, &sp22);
         if (temp_s0 != 0) {
-            var_s0 = &D_80074124[sp22][sp20];
+            var_s0 = &gAlternateAreaGrid[sp22][sp20];
             Ovl11SetMode6CellTexture(sp20, sp22, 0);
         } else {
-            var_s0 = &D_80071DFC[sp22][sp20];
+            var_s0 = &gMainAreaGrid[sp22][sp20];
             Ovl11SetMapCellTexture(sp20, sp22, 0);
         }
         var_s0->unk0 = *(u16 *) ((u8 *) arg0 + 0x8A);

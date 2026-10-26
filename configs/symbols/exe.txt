@@ -1,4 +1,8 @@
 
+// Main 25x45 and alternate 7x7 area grids, with 8-byte tagged cells.
+gMainAreaGrid = 0x80071DFC; // size:0x2328
+gAlternateAreaGrid = 0x80074124; // size:0x188
+
 // First-record lvalue of the 37 x 0x1D4 object-event pool in shared state.
 // Keep the established one-record C symbol extent, not a new allocation.
 gObjectEventSlotBase = 0x80076220; // size:0x1D4

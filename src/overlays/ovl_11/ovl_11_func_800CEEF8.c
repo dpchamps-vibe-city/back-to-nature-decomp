@@ -28,6 +28,8 @@
 #include "selection_panel.h"
 #include "area_grid_triggers.h"
 #include "ovl11_counter_choice.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -138,7 +140,6 @@ s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800C97D0 (Recon_ovl_11_func_800C97D0_A0View *arg0);
-void ovl_11_func_800BD8DC (s16 arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);

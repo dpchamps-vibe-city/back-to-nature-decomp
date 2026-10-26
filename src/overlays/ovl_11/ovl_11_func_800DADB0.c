@@ -21,7 +21,7 @@ s32 ovl_11_func_800DADB0(s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s
     if (arg2 != 0) {
         width = 0x2D;
         count = 0x465;
-        base = &D_80071DFC[0][0];
+        base = &gMainAreaGrid[0][0];
     } else {
         view = (D8006C838SearchView *)D_8006C838;
         width = 7;

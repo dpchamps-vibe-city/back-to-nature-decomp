@@ -7,7 +7,7 @@ void ovl_11_func_800D7B24(void) {
     Ovl11D124Entry *row;
 
     i = 0;
-    base = (char *)&D_80074124[0][0];
+    base = (char *)&gAlternateAreaGrid[0][0];
     for (; i < 7; i++) {
         row = (Ovl11D124Entry *)(base + i * 56);
         for (j = 0; j < 7; j++) {

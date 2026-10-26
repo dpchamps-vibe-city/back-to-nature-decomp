@@ -76,7 +76,7 @@ void Ovl11RefreshMode6CellTextures(void) {
     u32 column;
     u8 variant;
 
-    entry = &D_80074124[0][0];
+    entry = &gAlternateAreaGrid[0][0];
     row = 0;
     do {
         column = 0;

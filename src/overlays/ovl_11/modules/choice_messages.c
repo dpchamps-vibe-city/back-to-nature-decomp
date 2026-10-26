@@ -9,6 +9,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_upload.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 void ovl_11_func_800BCF28(void);
 void Ovl11BuildChoiceMessageSlots(void);
@@ -31,7 +36,6 @@ void Ovl11CycleChoiceImages(void);
 void Ovl11RestoreChoiceImages(void);
 void Ovl11AdvanceChoiceCellStates(void);
 void Ovl11ConfirmChoiceCellState(void);
-void ovl_11_func_800BD9D4(s32 imageVariant);
 
 void Ovl11ResetChoiceMessages(void) {
     Ovl11ClearChoiceMessages();
@@ -414,7 +418,7 @@ void Ovl11SelectChoiceImageOffsets(void) {
 void Ovl11LoadChoiceImages(void) {
     gOvl11ChoiceImageTick = 0;
     gOvl11ChoiceImageBlock = -1;
-    ovl_11_func_800BD9D4(gOvl11ChoiceMessageSlots[gOvl11ChoiceMessageIndex].variant);
+    Ovl11LoadSmallIndexedSpriteBank(gOvl11ChoiceMessageSlots[gOvl11ChoiceMessageIndex].variant);
 }
 
 /* Three 0x800-byte image blocks, each held for 16 updater calls. Upload only
@@ -436,7 +440,7 @@ void Ovl11CycleChoiceImages(void) {
 }
 
 void Ovl11RestoreChoiceImages(void) {
-    ovl_11_func_800BD9D4(0x12);
+    Ovl11LoadSmallIndexedSpriteBank(0x12);
     UploadSpriteImagesAtOffsets(((u8 *)(((s32)(&D_8007BFF8)))), gOvl11ChoiceImageOffsets.x, gOvl11ChoiceImageOffsets.y, gOvl11ChoiceImageOffsets.type2X, gOvl11ChoiceImageOffsets.type2Y);
 }
 

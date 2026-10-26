@@ -11,16 +11,15 @@
 #include "ovl11_scene_record_pool.h"
 #include "psyq/libgpu.h"
 #include "ovl11_weather_effect.h"
+#include "psyq/libgs.h"
+#include "psyq/libcd.h"
+#include "ovl11_area_resource_load.h"
 
-void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800D6628(void);
 /* These two sprite-loader wrappers use their matched definition signatures;
  * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
-void ovl_11_func_800BD168(void);
 void ovl_11_func_800C9BB8(void);
-void ovl_11_func_800BD538(void);
 s32 ovl_11_func_800CDE3C(u8 *arg0);
-void ovl_11_func_800BD488(s32 arg0);
 void ovl_11_func_800F6630(void);
 void ovl_11_func_800F42A8(u16 arg0, s32 arg1);
 void ovl_11_func_800CBEF8(void);
@@ -29,10 +28,8 @@ void ovl_11_func_800FFA28(void);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE76C(void);
 s32 ovl_11_func_80109310(s32 *arg0);
-void ovl_11_func_800BD668(void);
 void ovl_11_func_800F1F48(s32 arg0);
 void ovl_11_func_800FF96C(void);
-void ovl_11_func_800BD3C4(s32 arg0);
 
 void ovl_11_func_80104A90(void) {
     Ovl11AreaInitView *base;
@@ -58,17 +55,17 @@ void ovl_11_func_80104A90(void) {
     memset(&D_800A0368, 0, 0x10);
     base->field_5214 = 0;
     BindStateDataTables(1);
-    ovl_11_func_800BD5A0();
+    Ovl11AreaSpriteBankHook();
     ovl_11_func_800D6628();
     Ovl11ResetWeatherParticles();
     Ovl11ResetAmbientTintFromTable();
     Ovl11SetWeatherParticleMode(base->field_E4C8);
-    ovl_11_func_800BD168();
-    ovl_11_func_800BD3C4(0);
+    Ovl11InitAreaSpriteSource();
+    Ovl11LoadIndexedSpriteSet(0);
     ovl_11_func_800C9BB8();
-    ovl_11_func_800BD538();
+    Ovl11LoadFixedAreaSpriteBank();
     ovl_11_func_800CDE3C(base->field_51C8);
-    ovl_11_func_800BD488((s32) base->field_44BA);
+    Ovl11LoadOffsetSpriteSet((s32) base->field_44BA);
     Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
@@ -85,7 +82,7 @@ void ovl_11_func_80104A90(void) {
     ovl_11_func_800CFD9C();
     ovl_11_func_800DE76C();
     ovl_11_func_80109310((s32 *) &D_800759E4);
-    ovl_11_func_800BD668();
+    Ovl11StageFixedSpriteBank();
     ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
     base->field_4488 = 1;
     gOvl11AreaEntryStep = 0xA;

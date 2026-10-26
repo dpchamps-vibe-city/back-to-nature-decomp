@@ -50,14 +50,14 @@ s32 ovl_11_func_800CC6A8(Ovl11CC6A8Arg *arg0) {
             arg0->unkC = 0;
             return 0;
         }
-        cell = (u16 *)&D_80071DFC[(s16)row][(s16)col];
+        cell = (u16 *)&gMainAreaGrid[(s16)row][(s16)col];
     }
     far_base2 = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base2 + 0x25476) == 6) {
         if (ovl_11_func_8011E090((VECTOR *)((u8 *)arg0 + 0x24), &col, &row) != 0) {
             goto store1;
         }
-        cell = (u16 *)&D_80074124[(s16)row][(s16)col];
+        cell = (u16 *)&gAlternateAreaGrid[(s16)row][(s16)col];
     }
     if (cell == NULL) {
         return 2;

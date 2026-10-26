@@ -18,6 +18,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "map_cell_texture.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 void Ovl11EnterMapCameraMode(void) {
     char *far_base = (char *)&D_8007AFF0;
@@ -39,7 +44,6 @@ void Ovl11StepMapCameraVerticalOffset(void) {
     }
 }
 
-void ovl_11_func_800BDA20(void);
 void Ovl11RefreshMapTileTextures(void);
 void Ovl11ResetSceneCameraOrbit(void);
 
@@ -58,7 +62,7 @@ void Ovl11UpdateMapCameraMode(void) {
         ((Ovl11MapCameraState *)&gOvl11MapCameraState)->phase++;
         return;
     case 1:
-        ovl_11_func_800BDA20();
+        Ovl11LoadFixedSpriteImages();
         Ovl11RefreshMapTileTextures();
         BeginScreenFadeDecrease(10, 0, 2);
         ((Ovl11MapCameraState *)&gOvl11MapCameraState)->phase++;

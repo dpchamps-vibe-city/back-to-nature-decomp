@@ -23,7 +23,7 @@ s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 start;
 
     if (arg2 != 0) {
-        base = &D_80071DFC[0][0];
+        base = &gMainAreaGrid[0][0];
         count = 0x465;
         width = 0x2D;
     } else {

@@ -10,16 +10,15 @@
 #include "area_grid_triggers.h"
 #include "psyq/abs.h"
 #include "ovl11_object_events.h"
+#include "psyq/libgs.h"
+#include "psyq/libcd.h"
+#include "ovl11_area_resource_load.h"
 
 void ovl_11_func_80104A58 (void);
 s32 ovl_11_func_800DC388 (s32 arg0);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
-void ovl_11_func_800BD5A8 (s32 arg0);
-void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_8010B67C (void);
-void ovl_11_func_800BDA70 (void);
 void ovl_11_func_800CE5FC (void);
-void ovl_11_func_800BD3C4(s32 arg0);
 
 void ovl_11_func_800DC560(s32 arg0, s32 arg1) {
     s16 temp_a0;
@@ -65,7 +64,7 @@ void ovl_11_func_800DC560(s32 arg0, s32 arg1) {
         ovl_11_func_800DBFEC((u16) (((Ovl11SetupWorkView *) &D_8007AFF0)->id), 0U, arg1 & 0xFFFF);
         (((Ovl11SetupWorkView *) &D_8007AFF0)->normalId) = (s32) (((Ovl11SetupWorkView *) &D_8007AFF0)->id);
         if ((((Ovl11SetupResidentView *) D_8006C838)->flags) & 0x2000) {
-            ovl_11_func_800BD5A8(0);
+            Ovl11LoadIndexedSpriteRecords(0);
         }
     }
     ((Ovl11SetupWorkView *) &D_8007AFF0)->current = ((Ovl11SetupWorkView *) &D_8007AFF0)->previous;
@@ -76,13 +75,13 @@ void ovl_11_func_800DC560(s32 arg0, s32 arg1) {
     }
     temp_a0 = *(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 0xA);
     if (temp_s6 != temp_a0) {
-        ovl_11_func_800BD5A8((s32) temp_a0);
+        Ovl11LoadIndexedSpriteRecords((s32) temp_a0);
     }
     if (!((((Ovl11SetupResidentView *) D_8006C838)->control) & 0x10)) {
         if (temp_s7 == 0) {
             if ((*(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 0)) != 0) {
                 if ((*(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 0xC)) != 0) {
-                    ovl_11_func_800BD6A8(0xE, 0);
+                    Ovl11LoadCalendarSpriteSet(0xE, 0);
                 }
                 goto block_27;
             }
@@ -91,7 +90,7 @@ void ovl_11_func_800DC560(s32 arg0, s32 arg1) {
 block_23:
         if ((((Ovl11SetupWorkView *) &D_8007AFF0)->state) == 0x19) {
             if ((((Ovl11SetupResidentView *) D_8006C838)->control) & 0x2000) {
-                ovl_11_func_800BD6A8(0xE, 0);
+                Ovl11LoadCalendarSpriteSet(0xE, 0);
             }
             goto block_27;
         }
@@ -103,7 +102,7 @@ block_28:
         if (GetGameFlag(2U) != 1) {
             temp_a0_2 = *(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 0xC);
             if (temp_a0_2 != 0x3E7) {
-                ovl_11_func_800BD6A8(temp_a0_2, 0);
+                Ovl11LoadCalendarSpriteSet(temp_a0_2, 0);
             }
         } else if ((((Ovl11SetupWorkView *) &D_8007AFF0)->state) == 0x19) {
             goto block_33;
@@ -113,23 +112,23 @@ block_33:
         if ((((Ovl11SetupResidentView *) D_8006C838)->control) & 0x2000) {
             temp_a0_3 = *(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 0xC);
             if (temp_a0_3 != 0x3E7) {
-                ovl_11_func_800BD6A8(temp_a0_3, 0);
+                Ovl11LoadCalendarSpriteSet(temp_a0_3, 0);
             }
         }
     }
     (((Ovl11SetupResidentView *) D_8006C838)->control) = (s32) ((((Ovl11SetupResidentView *) D_8006C838)->control) & ~0x2000);
     Ovl11RequestVramAnimations((Ovl11SetupHeader *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
     if ((((Ovl11SetupWorkView *) &D_8007AFF0)->current.field_0) == 0) {
-        ovl_11_func_800BD3C4(0);
+        Ovl11LoadIndexedSpriteSet(0);
     }
     if ((((Ovl11SetupWorkView *) &D_8007AFF0)->current.field_2) == 5) {
-        ovl_11_func_800BD3C4(1);
+        Ovl11LoadIndexedSpriteSet(1);
     }
     ovl_11_func_8010B67C();
     Ovl11RebuildObjectEventsForTime();
     Ovl11RegisterPoolSpriteRotations((s32) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
     if (((*(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 2)) == 1) && ((((Ovl11SetupResidentView *) D_8006C838)->time) >= 0x438)) {
-        ovl_11_func_800BDA70();
+        Ovl11LoadRenderContextSpriteBank();
         SetGameFlag(0x40U, 1U);
     }
     ovl_11_func_800CE5FC();

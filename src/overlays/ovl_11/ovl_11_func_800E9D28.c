@@ -10,6 +10,8 @@
 #include "ovl11_state_field_access.h"
 #include "game_flags.h"
 #include "ovl11_record_flag_query.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
@@ -30,7 +32,6 @@ void ovl_11_func_800CFC20 (void);
 u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
-void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
 
@@ -464,7 +465,7 @@ block_118:
         ClearActiveOrderingTables();
         temp_a0_3 = ((E9Other *)&D_8007AFF0)->f25388->fC;
         if (temp_a0_3 != 0x3E7) {
-            ovl_11_func_800BD6A8(temp_a0_3, 0);
+            Ovl11LoadCalendarSpriteSet(temp_a0_3, 0);
             return 1;
         }
         /* Duplicate return node #205. Try simplifying control flow for better match */

@@ -15,7 +15,7 @@ void ovl_11_func_800D8FC8(s32 arg0) {
         var_s3 = 0x20;
     }
     i = 0;
-    base = (u8 *) D_80071DFC;
+    base = (u8 *) gMainAreaGrid;
     do {
         k = i + 1;
         p = (u16 *) (base + i * 0x168);

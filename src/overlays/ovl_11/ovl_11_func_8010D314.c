@@ -34,9 +34,9 @@ s32 ovl_11_func_8010D314(u8 *arg0) {
                     if (ovl_11_func_80110658(&x, &y, 0, 1, 1)) {
                         return 0;
                     }
-                    entry = (u8 *)&D_80074124[y][x];
+                    entry = (u8 *)&gAlternateAreaGrid[y][x];
                 } else {
-                    entry = (u8 *)&((Ovl11D124Entry (*)[45])((u8 *)D_80074124 - 0x2328))[y][x];
+                    entry = (u8 *)&((Ovl11D124Entry (*)[45])((u8 *)gAlternateAreaGrid - 0x2328))[y][x];
                 }
                 item = ovl_11_func_800D85F8((void *)entry);
             }

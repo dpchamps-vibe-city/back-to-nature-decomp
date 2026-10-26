@@ -19,19 +19,20 @@
 #include "ovl11_weather_effect.h"
 #include "psyq/abs.h"
 #include "ovl11_object_events.h"
+#include "ovl11_grid_cell_queries.h"
+#include "psyq/libgs.h"
+#include "psyq/libcd.h"
+#include "ovl11_area_resource_load.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
 void ovl_11_func_800CCCC0 (void);
 void ovl_11_func_80111F88 (void);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
-void ovl_11_func_800BD5A8 (s32 arg0);
-void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
-void ovl_11_func_800BD668 (void);
 void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_800DBC4C (void);
 void ovl_11_func_8010C9B4 (void);
@@ -40,12 +41,10 @@ void ovl_11_func_800F3D40 (void);
 void ovl_11_func_800F2620 (void);
 s32 ovl_11_func_800DE76C (void);
 void ovl_11_func_800F4D28 (void);
-void ovl_11_func_800BF844 (void);
 void ovl_11_func_800D8FC8 (s32 arg0);
 void ovl_11_func_800D9064 (void);
 void ovl_11_func_800C05F8 (void);
 void ovl_11_func_800DE4C0 (void);
-void ovl_11_func_800BD3C4(s32 arg0);                /* static */
 void ovl_11_func_801129EC();                        /* static */
 void ovl_11_func_800F4BB4(void);
 
@@ -109,14 +108,14 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800DBFEC((u16)((Ovl11SetupWorkView *)&D_8007AFF0)->id, 0x8000, same);
             Ovl11UpdateEventSlotCounters();
             ovl_11_func_801129EC();
-            ovl_11_func_800BD5A8(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xA));
-            ovl_11_func_800BD6A8(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xC), 0);
-            ovl_11_func_800BD3C4(0);
+            Ovl11LoadIndexedSpriteRecords(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xA));
+            Ovl11LoadCalendarSpriteSet(*(s16 *)(((Ovl11SetupWorkView *)&D_8007AFF0)->header + 0xC), 0);
+            Ovl11LoadIndexedSpriteSet(0);
             Ovl11InitVramAnimationSlots();
             Ovl11ResetVertexBlendPool();
             Ovl11ClearSceneRecords();
             Ovl11InstallSceneRecords();
-            ovl_11_func_800BD5A8(((Ovl11SetupWorkView *)&D_8007AFF0)->music);
+            Ovl11LoadIndexedSpriteRecords(((Ovl11SetupWorkView *)&D_8007AFF0)->music);
             Ovl11RequestVramAnimations((Ovl11SetupHeader *)D_8009F78C);
             ((Ovl11SetupWorkView *)&D_8007AFF0)->current = ((Ovl11SetupWorkView *)&D_8007AFF0)->previous;
             ((Ovl11SetupWorkView *)&D_8007AFF0)->header = D_8009F78C;
@@ -126,7 +125,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ((Ovl11DDDFCState *)D_8006C838)->status = (((Ovl11DDDFCState *)D_8006C838)->status | 0x4000) & 0xFFF07FFF;
             ovl_11_func_800CCC5C();
             ovl_11_func_800EEECC();
-            ovl_11_func_800BD668();
+            Ovl11StageFixedSpriteBank();
             ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
             Ovl11RebuildObjectEventsForTime();
             Ovl11ClearEventSlotTimeOrigins();
@@ -157,7 +156,7 @@ s32 ovl_11_func_800DDDFC(void) {
         ((Ovl11DDDFCState *)D_8006C838)->status &= 0xFBFFFFFF;
         switch (((Ovl11DDDFCState *)D_8006C838)->mode) {
         case 1:
-            ovl_11_func_800BF844();
+            Ovl11ProcessMainGridCells();
             ovl_11_func_800D8FC8(0);
             break;
         case 2:

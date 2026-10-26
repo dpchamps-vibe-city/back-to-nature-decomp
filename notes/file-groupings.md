@@ -1384,7 +1384,64 @@ increased from 9 to 12 with the three existing modules unchanged. The existing
 
 ## `ovl_11` CD asset-load init run — 0x800BD538–0x800BDA70 (confidence: medium)
 
-Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`) sharing the asset-load
+**Reconstructed the whole 20-member unit as
+`src/overlays/ovl_11/modules/area_resource_load.c`,
+ovl_11:800BCF54–800BDB88 exclusive.** This absorbs the wrapper candidate at
+BD1BC/BD238/BD374/BD3C4/BD488, not just the historical ten-member tail below.
+BCF54 and BD374 are the only readers of the 16-byte-stride descriptor pool at
+801217A8; the six adjoining archive-boundary tables are each read only by a
+member. BD938 is BCF54's exclusive helper. Shared installed destinations tie
+BD3C4 to BD6A8, BD6A8 to BDA70, and BD8DC to BD9D4. The palette/index/selector
+slots at 801287F8/FC/8800 are referenced only here (write-only in the known
+retail code). These private tables, helper edge and installation protocol
+corroborate the complete contiguous run. The three empty hooks and source
+initializer inside that closure are retained, not treated as file boundaries.
+
+Names describe loading/copying/staging, not an inferred gameplay asset. The
+module header publishes the 18 externally used entry points, including the
+two called empty hooks; palette expansion and the unused framed hook retain
+external linkage without becoming public header entries. It documents the
+shared scratch lifetime, byte offsets/lengths, blocking retry behavior,
+unchecked indices/capacity, descriptor's overlapping final endpoint,
+start/poll restart argument, GPU waits, conditional uploads and calendar gates.
+Locals now identify bounds, copy bytes, image offsets and staging. The
+six tables are **boundary arrays**, not independent word pairs: each reader
+uses adjacent entries index/index+1. New canonical names are
+gOvl11ResourceDescriptors, gOvl11{Offset,Indexed,Record,Copied,Scene,Calendar}SpriteBoundaries,
+gOvl11PaletteBankPointer, gOvl11ResourceIndex and
+gOvl11LoadedSpriteBankSelector. Existing extents/types are preserved.
+
+Missing declarations for the two formerly source-local boundary arrays,
+resource marker and byte-backed area sprite source are now evidence-commented
+in globals_override.h. Redundant C-file externs are gone. BD488 uses the
+existing D_80124FCC_tables identity shared with BD3C4, instead of a third
+source-local spelling of the same pointer table; the separate offset view is
+not changed. No data ownership/definition or linkage was inferred from -G0.
+
+Left boundary: BCF20 is an empty phase-table slot, and BCF28 is a broadly
+called flag helper with no descriptor/staging-upload protocol. Right BDB88
+is a scene-geometry/collision probe, using the counted collision service and
+resident geometry engine rather than these descriptors, bank uploads or
+private load slots. These responsibility/data cuts bound the supported unit,
+not proven historical object boundaries. Unknown installed-buffer gameplay
+roles remain neutral. No private-state claim is based on a shared heap alone.
+
+The first baseline fold rolled back because unioned includes placed libcd
+before the SDK scalar typedefs. Putting psyq/stddef.h before that SDK group
+fixed the concrete include-order conflict; the retried full fold passed all
+20 members and the entire overlay at baseline -O2/-G0. No member override
+exists or was added/retired. Final five-unit campaign verification passed all
+eight integrity gates against build/tu-campaign/baseline.json: original
+inventory, live-C completeness, clean-source policy, every linked EXE/overlay
+byte (including data/callback pointers/placement), configuration convergence,
+whitespace, input stability and exception non-growth. Canonical names and
+published interfaces pass; no infrastructure change or new test was needed.
+Folded count rose 1057 -> 1100 (+43), all 172 module TUs valid. The 1525
+remaining eligible functions are not a failed integrity gate (CLI status 1
+reports incomplete campaign coverage). This result also accepts grid_cell_queries,
+primary_object_draw, purchase_actions and geometry_hit_flags.
+
+Historical candidate (scope superseded): same-TU run sharing the asset-load
 idiom `func_80014BCC(0, <ROM addr>, <size>, 0, D_8005E3B0+0x4290)` — the
 engine CD-read retry driver loading a retail asset into the shared
 `D_8005E3B0+0x4290` scratch buffer — and the adjacent main-RAM destination
@@ -16925,6 +16982,12 @@ Members (link order):
 
 ## `ovl_11` CD-load wrapper run — 0x800BD374 / 0x800BD3C4 (confidence: low)
 
+Superseded by the complete `area_resource_load` unit documented in the
+CD asset-load init section. The private descriptor/boundary-table reader census
+and BCF54-to-BD938 exclusive edge support joining the former slices. The old
+broad-span caution below was based on the shared loader idiom alone; it is not
+a demonstrated boundary, and no such internal boundary is retained.
+
 Candidate same-TU pair of `ovl_11` (`Obj\GF_FARM.bin`). Evidence is gapless
 link-order adjacency plus a shared CD-load call idiom, not a shared private
 data cluster (the two members index different main-RAM tables).
@@ -17448,6 +17511,36 @@ predicates above by arg2/arg3/arg4, walks the selected table
 
 ## `ovl_11` func_8001EF98 flag-reader run — 0x800BF3D0–0x800BF4AC (confidence: medium)
 
+**Reconstructed `src/overlays/ovl_11/modules/geometry_hit_flags.c`,
+ovl_11:800BF3D0–800BF4AC exclusive, all three compiled members.** They are
+the overlay's complete leaf-client set of the resident geometry-hit getter,
+reading the same descriptor's first byte/word with complementary bit queries.
+BF450 also maintains the private pointer/low-flags cache at 80128808/0C,
+now gOvl11CachedGeometryHit/Flags. This precise descriptor interpretation
+protocol and gapless order support the unit; the resident API alone would
+not prove an original TU, and -G0 gives no ownership proof.
+
+Names: Ovl11GetGeometryHitHighBit, Ovl11ClassifyGeometryHit and
+Ovl11CacheGeometryHit at their original identities. The header specifies byte
+versus word reads, null handling, classification priority, cache effects and
+the existing unsigned-long-long two-register return. Only its low status word
+is contractual on every path; the high 8000 flag is produced when descriptor
+bit 2000 is clear. Existing callers consume only the low word. The retained
+word-packing unions are clean C, not the historical assembly-tail workaround
+mentioned below; scalarizing the return would lose that register protocol.
+The resident getter's existing s32 address ABI is witnessed by its definition
+and remains unchanged. No new pin, asm, flag or exception is introduced.
+
+Left BF1D0/BF2F4 scan nearby record pools using explicit positions/group tags,
+not the resident geometry-hit descriptor. Right BF4AC is an unreferenced
+zero-return leaf with no call/data/descriptor tie, so there is no evidence to
+attach it. The following grid-query unit starts at BF4B4 with a distinct
+near/far cell protocol. These are supported responsibility edges, not proven
+historical object cuts. The unmodified fold passed baseline -O2/-G0 and the
+whole overlay; the full five-unit campaign gate passes, as recorded in
+area_resource_load's CD asset-load section above.
+
+Historical evidence (implementation notes superseded where stated):
 A gapless three-function run, sizes from `configs/splat/ovl_11.yaml`: 0x800BF3D0
 (0x24, ends 0x800BF3F4) → 0x800BF3F4 (0x5C, ends 0x800BF450) → 0x800BF450
 (0x5C, ends 0x800BF4AC), zero gaps. The call graph agrees: all three call the
@@ -18622,7 +18715,43 @@ membership is not confirmed by adjacency. The table cluster is tied to the
 record-tag update run above: `ovl_11_func_800D8FC8` calls `800DA454`, and
 `ovl_11_func_800D9064` walks the same 25x45 table applying all three run
 members (`800DA49C`, `800DA518`, `800DA454`) to every entry.
-A same-TU candidate run sits inside the cluster: `ovl_11_func_800BF630` /
+**Reconstructed `src/overlays/ovl_11/modules/grid_cell_queries.c`,
+ovl_11:800BF4B4–800BF8B8 exclusive, all four compiled members.** The
+near/far directional probe calls the immediately following classifier twice;
+that classifier and the collision leaf select the same 45x25 / 7x7 tagged
+cell layouts. The final service visits every main-grid coordinate through
+800D8320 with the same map-0 convention. This specific grid/query protocol
+and adjacent caller/classifier edge support the complete local run, not the
+widely shared work area or link order alone. -G0 leaves original ownership
+unproved; distant grid services are dependencies, not an asserted larger TU.
+
+Names at original overlay identities: Ovl11CheckDirectionalCellTransition
+(BF4B4), Ovl11ClassifyGridCell (BF630), Ovl11IsSpecialCollisionCell (BF720),
+Ovl11ProcessMainGridCells (BF844). The last is a mutating service, not a pure
+query. EXE data at 80071DFC/80074124 are gMainAreaGrid/gAlternateAreaGrid,
+with the existing 0x2328/0x188 array extents, canonicalized in every source
+and the override header. No storage or ownership was introduced. The public
+header publishes the three external services, documents coordinate units,
+initialization, gates, tag sets and unchecked direction index; the classifier
+keeps external linkage without becoming a public header entry. BF720 now uses
+the caller's existing Ovl11CollisionQuery instead of a duplicate m2c prefix
+view: only position and the signed tag/region halfword are consumed. Its
+unused map-1 branch and signed word comparison tree remain unchanged.
+
+Left boundary: BF3D0/BF3F4/BF450 interpret the collision-hit descriptor from
+GetVal8005E524 rather than grids; BF4AC is an empty zero-return leaf, with no
+call/data evidence attaching it to the grid protocol. Right boundary: the
+existing daily_conditions unit begins at BF8B8 with date/status-counter
+updates and its own condition tables, not cell classification/visitation.
+These are supported responsibility cuts, not proven historical object cuts;
+no boundary is inferred merely from adjacency or a dead stub.
+
+The unmodified whole fold passed baseline -O2/-G0 and checked the complete
+overlay. No override applies or was added/retired. Naming/interface/readability
+changes pass the full five-unit campaign gate recorded in area_resource_load's
+CD asset-load section above.
+
+Historical candidate evidence: `ovl_11_func_800BF630` /
 `ovl_11_func_800BF720` / `ovl_11_func_800BF844` are zero-gap link-order
 neighbours (`configs/splat/ovl_11.yaml`: 0x7810/0xF0 → 0x7900/0x124 →
 0x7A24/0x74) and index the same two tables by `(row, col)`, the first two
@@ -20882,6 +21011,19 @@ copy) also touch the D_8006C838 work area but sit outside these gapless runs.
 
 ## `ovl_11` stack-box record-scan run — 0x800BEF64 / 0x800BF1D0 / 0x800BF2F4 (confidence: medium)
 
+Whole-unit experiment: attempted the complete BE208–BF3D0 closure (existing
+three-member collision_query_budget plus all dispatcher/probe and adjacent
+stack-box scan members), rather than asserting a new cut through BEF64's
+specific pool/box ties. The checked baseline fold rolled back on conflicting
+BE4A8/BE5A0 parameter views and the dispatcher's packed s32 versus
+Ovl11CollisionTag by-value declaration. No partial module was retained; the
+existing budget module and split sources still build. This is a measured
+mechanical limit, not evidence for an internal TU boundary. Next useful
+experiment: reconcile the query prefixes to Ovl11CollisionQuery and establish
+a single packed-tag ABI for wrappers/dispatcher, checking original argument
+homing before retrying the whole closure. The geometry-hit reader unit after
+BF3D0 has no pool/box/query-context tie and is independently reconstructed.
+
 Candidate same-TU run; original boundaries remain unproven
 ([evidence](research/ovl_11-item-collision-family.md#ovl_11_func_800bef64-actor-probe-and-stack-box-links)).
 
@@ -21302,8 +21444,55 @@ The checked whole-pair fold passed at baseline -O2/-G0; no override applies.
 
 ## `ovl_11` object-draw helper/dispatcher run — 0x800C9F20 / 0x800CA044 / 0x800CA24C (confidence: low)
 
-Candidate same-TU membership; original boundaries remain unproven
-([evidence](research/ovl_11_func_800CA044-grouping.md)).
+**Reconstructed the complete five-member run, ovl_11:800C9F20–800CA6C4
+exclusive, as `src/overlays/ovl_11/modules/primary_object_draw.c`.** It
+includes the saved-object pair in the next section, rather than inventing a
+cut at CA580. CA24C is the exclusive caller of both preceding sprite-part
+helpers and of CA580; it orders the first two over the same projected point
+and copies/draws through the latter. CA580 and CA5D4 maintain complementary
+position versus direction/animation fields of the same saved record. Their
+default-holder twins at 8010C1C0/1FC/2EC corroborate that paired protocol.
+The projection scratch and companion/substitution tables are used only by
+this run. These call/data/variant ties support membership, not the shared
+renderer or saved pointer alone. The overlay uses -G0, so ownership and the
+historical object boundaries remain unproved.
+
+Names at original overlay identities: Ovl11DrawPrimaryObjectCompanion,
+Ovl11DrawPrimaryObjectSprite, Ovl11DrawPrimaryObjectFrame,
+Ovl11CopyAndDrawSavedObject and Ovl11SyncSavedObjectAnimation. The public
+header publishes only frame submission and animation synchronization;
+internal helpers keep external linkage. It records world/projection units,
+initialization, non-reentrancy, packet-vs-present behavior and the retained
+unread trailing frame argument. Direction's halfword store and byte reads
+remain deliberately different. Locals name sprite selection/offset groups
+and saved animation state without assigning uncertain gameplay meaning.
+
+The scratch is gOvl11PrimaryDrawWorldPoint/ScreenPoint; private tables are
+gOvl11CompanionScreenOffsets, gOvl11PrimarySpriteTextureBanks,
+gOvl11PrimarySpriteSubstituteIds/Values and gOvl11Mode1FSpriteSubstituteIds.
+Their existing types and data extents are preserved. The saved pointer's
+established Ovl11SavedInteractionObject identity is now in the overlay symbol
+configuration; its obsolete asm-name alias and CA580's source-local extern
+are gone. No data definitions or linkage changes were introduced.
+
+Left boundary: C9E90 also serves unrelated sprite clients CC0F8/CE744/E46A8
+and the general object-render variants; it has no primary-object selection
+or saved-record protocol. Right boundary: CA6C4 is the clock/calendar caller's
+flag-controlled halfword counter, with no draw/saved-record call or private
+data tie. Those are supported responsibility edges, not historical proofs.
+The distant default-holder twins are separate dependency/variant evidence,
+not a claim about all intervening functions.
+
+The first baseline fold rolled back on CA580's conflicting file-local versus
+Ovl11DrawState parameter declarations. Replacing the duplicate view with the
+existing canonical Ovl11DrawState and using the override-header saved pointer
+fixed that concrete scope conflict. The retried whole fold passed all five
+members and the full overlay under baseline -O2/-G0. No flag override or
+exception applies or was added. The full five-unit campaign gate passes
+names, interfaces, all linked data/callbacks and clean-source policy; results
+are recorded in area_resource_load's CD asset-load section above.
+
+[Earlier evidence](research/ovl_11_func_800CA044-grouping.md).
 
 - ovl_11_func_800C9F20 (s) — flag/type-selected companion sprite draw with table-selected coordinate offsets.
 - ovl_11_func_800CA044 (m) — object sprite submission with optional signed-halfword substitutions.
@@ -21311,9 +21500,10 @@ Candidate same-TU membership; original boundaries remain unproven
 
 ## `ovl_11` D_80128CF4 saved-object helper pair — 0x800CA580 / 0x800CA5D4 (confidence: low)
 
-Candidate membership rests on gapless placement and complementary updates of
-one saved object through `D_80128CF4`; original ownership and TU boundaries
-remain unproven ([evidence and limits](research/ovl_11_func_800CA5D4-grouping.md)).
+Both members are included in the whole five-entry `primary_object_draw`
+module above. Complementary saved-object fields, the dispatcher-to-copy edge
+and paired default-holder twins support joining the old pair and triple;
+no internal cut is retained. [Earlier evidence and limits](research/ovl_11_func_800CA5D4-grouping.md).
 
 - ovl_11_func_800CA580 (m) — copies draw-state words into the saved interaction object and draws it.
 - ovl_11_func_800CA5D4 (m) — synchronizes the saved interaction object's direction and sprite animation from the incoming object.
@@ -21717,9 +21907,45 @@ converged generation and no exception growth.
 
 ## `ovl_11` constant/flag-selected callback-wrapper run — 0x80119338–0x80119470 (confidence: low)
 
-Candidate same-TU membership; callback order agrees with link order and the
-members share a helper-call idiom. Original boundaries remain unproven
-([evidence and limits](research/ovl_11_func_80119414-grouping.md)).
+**Reconstructed the whole 11-member window, ovl_11:80119338–80119820
+exclusive, as `src/overlays/ovl_11/modules/purchase_actions.c`.** This includes
+the four descriptor-driven callbacks listed in the following section; there
+is no supported boundary between the seven catalog and four quantity
+wrappers. The original D_800BB248 dispatch table lists all eleven in their
+code order at entries 4..14. They are the complete callers of 8011C298 and
+8011C6CC, respectively, sharing the bank-2 request/transaction protocol and
+selection scratch. This closed client set and ordered table window corroborate
+gapless placement. It is an evidence-supported module, not a GP-proven
+original object boundary under overlay -G0.
+
+Names: Ovl11PurchaseCatalogEntry99/9A/A5/A6/A7 preserve demonstrated opaque
+catalog IDs, Ovl11PurchaseFlagSelectedEntry, Ovl11PurchaseGatedEntry64,
+Ovl11PurchaseQuantityOption0/1/2 and Ovl11PurchaseQuantityFixed. No commodity
+identity is inferred. The header records repeated-tick completion, shared
+state/non-reentrancy, all gates and message/descriptor variants. The first
+five definitions now explicitly return the transaction helper's completion
+word: 801189C8 calls table entries as s32 callbacks and consumes v0, which
+the original wrapper preserves across its epilogue. This corrects their
+former void source declarations, not the machine behavior. No direct C
+callers exist, and no linkage is made private. The fixed by-value descriptor
+and original store order remain; its +10 selects draw mode 4, not a quantity
+limit. No data is owned by these callbacks. Existing gOvl11PrimarySelectionRecord
+and uncertain shared status fields retain their canonical identities/views.
+
+Both boundaries rest on distinct state/protocol footprints: predecessor
+80119008 and successor 80119820 are message-pump state machines using
+D_8012D524/D_8012D52C and their own adjacent switch-table blocks, with no call
+to either transaction helper. The callback window emits no pooled rodata;
+the dispatch table remains external and is regenerated with the canonical
+names. Distant transaction services are dependencies, not evidence joining
+all intervening handlers. Table membership alone would not prove a TU.
+
+The unmodified whole fold passed baseline -O2/-G0 with the entire overlay;
+there are no member overrides, new flags or exceptions. The full five-unit
+campaign gate passes against the baseline, including rewritten callback
+pointers and all linked data; results are recorded in area_resource_load's
+CD asset-load section above. Earlier evidence remains in
+[the research](research/ovl_11_func_80119414-grouping.md).
 
 - ovl_11_func_80119338 (candidate same TU) — submits the fixed 0x99/0x1DD helper request.
 - ovl_11_func_80119364 (candidate same TU) — submits the fixed 0x9A/0x1DE helper request.
@@ -21731,8 +21957,10 @@ members share a helper-call idiom. Original boundaries remain unproven
 
 ## `ovl_11` descriptor-driven purchase-wrapper run — 0x801194DC–0x8011977C (confidence: low)
 
-Candidate same-TU membership; original boundaries remain unproven
-([evidence and limits](research/ovl_11_func_8011977C-grouping.md)).
+These four callbacks are included in the whole `purchase_actions` module
+above, not a separate unit. Their shared by-value descriptor, selection record
+and exclusive 8011C6CC client protocol support membership alongside the
+preceding catalog callbacks. [Earlier evidence and limits](research/ovl_11_func_8011977C-grouping.md).
 
 - ovl_11_func_801194DC (s, candidate same TU) — state-gated item/quantity purchase wrapper for variant 0.
 - ovl_11_func_801195BC (s, candidate same TU) — state-gated item/quantity purchase wrapper for variant 1.

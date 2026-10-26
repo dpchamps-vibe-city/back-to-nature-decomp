@@ -9,8 +9,8 @@
 #include "sprite_source.h"
 #include "game_flags.h"
 #include "ovl11_interaction_id_predicates.h"
+#include "ovl11_geometry_hit_flags.h"
 
-s32 ovl_11_func_800BF3F4(void);
 /* This caller supplies two arguments; the callee's trailing debug arguments
  * do not participate in sprite initialization. */
 s32 ovl_11_func_800C79F8(Vec3 *arg0);
@@ -23,7 +23,7 @@ s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
     char *far_base;
     char *main_base;
 
-    temp_v0 = ovl_11_func_800BF3F4();
+    temp_v0 = Ovl11ClassifyGeometryHit();
     if (temp_v0 != 0) {
         InitSpriteSourceData(&D_80128C80, (SpriteDataHeader *) &gSharedSpriteData);
         SelectSpriteAnimation((ObjectState *) &D_80128C80, 0x17);

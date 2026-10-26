@@ -4,6 +4,14 @@
  * halfword XYZ for the flag-0x4000 lookup. See the public header and the
  * membership/boundary evidence in notes/file-groupings.md. */
 #include "ovl11_interaction_volume_query.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 typedef struct {
     s16 x;
@@ -12,7 +20,6 @@ typedef struct {
 } VolumeCorner;
 
 void ovl_11_func_800F0FB0(s32 event);
-void ovl_11_func_800BD358(void);
 
 void *Ovl11ProbeInteractionVolume(u8 *volumes, Ovl11Func800BDCE8Arg1 *point,
                                 s32 applyEffects) {
@@ -50,7 +57,7 @@ void *Ovl11ProbeInteractionVolume(u8 *volumes, Ovl11Func800BDCE8Arg1 *point,
                     continue;
                 }
                 if (type != 0xFFFE) {
-                    ovl_11_func_800BD358();
+                    Ovl11ClearResourceIndex();
                 }
                 return volume;
             }

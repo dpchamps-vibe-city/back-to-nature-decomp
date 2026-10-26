@@ -19,6 +19,8 @@
 #include "ovl11_scene_record_pool.h"
 #include "area_grid_triggers.h"
 #include "ovl11_weather_effect.h"
+#include "psyq/libgs.h"
+#include "ovl11_area_resource_load.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -28,11 +30,7 @@ void ovl_11_func_800C9C60 (void);
 void ovl_11_func_800DBFA0 (void);
 void ovl_11_func_800DBFC4 (void);
 void ovl_11_func_800D7B24 (void);
-void ovl_11_func_800BD358 (void);
-void ovl_11_func_800BD5A0 (void);
-void ovl_11_func_800BD538 (void);
 s32 ovl_11_func_800CDE3C (u8 *arg0);
-void ovl_11_func_800BD488 (s32 arg0);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
 void ovl_11_func_800CE96C (void);
@@ -43,7 +41,6 @@ void ovl_11_func_800F2508 (void);
 void ovl_11_func_80104898 (void);
 void ovl_11_func_800FFA28 (void);
 void ovl_11_func_801128B4 (void);
-void ovl_11_func_800BD668 (void);
 void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_80104A58 (void);
 void ovl_11_func_80104A88 (void);
@@ -76,11 +73,11 @@ void ovl_11_func_801044E4(void) {
     Ovl11InitVramAnimationSlots();
     ovl_11_func_800DBFC4();
     ovl_11_func_800D7B24();
-    ovl_11_func_800BD358();
-    ovl_11_func_800BD5A0();
-    ovl_11_func_800BD538();
+    Ovl11ClearResourceIndex();
+    Ovl11AreaSpriteBankHook();
+    Ovl11LoadFixedAreaSpriteBank();
     ovl_11_func_800CDE3C(base->field_51C8);
-    ovl_11_func_800BD488((s32) base->field_44BA);
+    Ovl11LoadOffsetSpriteSet((s32) base->field_44BA);
     Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
@@ -99,7 +96,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800FFA28();
     ovl_11_func_8010476C();
     ovl_11_func_801128B4();
-    ovl_11_func_800BD668();
+    Ovl11StageFixedSpriteBank();
     ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
     far = (Ovl11FarInitView *)&D_8007AFF0;
     far->field_25498 = -1;

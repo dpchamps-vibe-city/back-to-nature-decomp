@@ -31,33 +31,33 @@ s32 ovl_11_func_800D88D0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
         case 0x3B:
         case 0x3C:
             ovl_11_func_800DA390((void *) temp_v0);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 + 1][arg1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2][arg1 + 1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 + 1][arg1 + 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 + 1][arg1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2][arg1 + 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 + 1][arg1 + 1]);
             ovl_11_func_800DAC08(temp_s3, arg0, arg1 + 1, arg2 + 1);
             break;
         case 0x16C:
         case 0x16F:
             ovl_11_func_800DA390((void *) temp_v0);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 + 1][arg1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2][arg1 - 1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 + 1][arg1 - 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 + 1][arg1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2][arg1 - 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 + 1][arg1 - 1]);
             ovl_11_func_800DAC08(temp_s3, arg0, arg1, arg2 + 1);
             break;
         case 0x16E:
         case 0x171:
             ovl_11_func_800DA390((void *) temp_v0);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 - 1][arg1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2][arg1 + 1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 - 1][arg1 + 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 - 1][arg1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2][arg1 + 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 - 1][arg1 + 1]);
             ovl_11_func_800DAC08(temp_s3, arg0, arg1 + 1, arg2);
             break;
         case 0x16D:
         case 0x170:
             ovl_11_func_800DA390((void *) temp_v0);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 - 1][arg1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2 - 1][arg1 - 1]);
-            ovl_11_func_800DA390((void *)&D_80071DFC[arg2][arg1 - 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 - 1][arg1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2 - 1][arg1 - 1]);
+            ovl_11_func_800DA390((void *)&gMainAreaGrid[arg2][arg1 - 1]);
             ovl_11_func_800DAC08(temp_s3, arg0, arg1, arg2);
             break;
         case 0x3A:

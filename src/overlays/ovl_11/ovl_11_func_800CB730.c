@@ -38,7 +38,7 @@ s32 ovl_11_func_800CB730(M2C_ad72053e5aa9_StructOvl11CE034A *arg0) {
         if (ovl_11_func_800D7EF8(&sp10.unk0, &sp20, &sp22) != 0) {
             return 3;
         }
-        D_80128C60 = (u16 *) &D_80071DFC[(s16) sp22][(s16) sp20];
+        D_80128C60 = (u16 *) &gMainAreaGrid[(s16) sp22][(s16) sp20];
         goto block_8;
     }
     if (field == 6) {
@@ -51,7 +51,7 @@ s32 ovl_11_func_800CB730(M2C_ad72053e5aa9_StructOvl11CE034A *arg0) {
 ret3:
     return 3;
 body6:
-    D_80128C60 = (u16 *) &D_80074124[(s16) sp22][(s16) sp20];
+    D_80128C60 = (u16 *) &gAlternateAreaGrid[(s16) sp22][(s16) sp20];
 block_8:
     if (D_80128C60 != NULL) {
         temp_a1 = *D_80128C60;

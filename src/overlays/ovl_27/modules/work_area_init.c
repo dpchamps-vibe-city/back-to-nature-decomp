@@ -43,7 +43,7 @@ void Ovl27InitSpriteFrameRecords(s32 tableIndex) {
     }
     i = 0;
     fill = 0x167;
-    base = (u8 *) D_80071DFC;
+    base = (u8 *) gMainAreaGrid;
     temp_t1 = (D8006C838Pools *) (base - 0x55C4);
     do {
         k = i + 1;

@@ -22,7 +22,7 @@ s32 ovl_11_func_800D9108(s32 *arg0) {
         col = col < 0 ? 0 : col;
         for (i = (s16)row; i < (s16)row + 3 && i < 25; i++) {
             for (j = (s16)col; j < (s16)col + 3 && j < 45; j++) {
-                entry = &D_80071DFC[i][j];
+                entry = &gMainAreaGrid[i][j];
                 if ((u16)entry->unk0 == 0x36 && entry->unk4 >= threshold) {
                     ovl_11_func_800DACD4(i, j, 0);
                     result = 1;
@@ -33,7 +33,7 @@ s32 ovl_11_func_800D9108(s32 *arg0) {
     }
     for (i = 0; i < 25; i++) {
         for (j = 0; j < 45; j++) {
-            entry = &D_80071DFC[i][j];
+            entry = &gMainAreaGrid[i][j];
             if ((u16)entry->unk0 == 0x36 && entry->unk4 >= threshold) {
                 ovl_11_func_800DACD4(i, j, 0);
                 result = 1;

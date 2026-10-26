@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_primary_object_draw.h"
 
 /* This state-switch family passes unsigned animation bytes; the callee
  * stores only the low byte (as in 800C7010 and 800C7270). */
@@ -14,7 +15,6 @@ void ovl_11_func_800C6E0C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_
 void ovl_11_func_800C6E8C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F0C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800C6F6C(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
-void ovl_11_func_800CA5D4(Ovl11C7010Object *arg0);
 void ovl_11_func_8010C1FC(Ovl11C7010Object *arg0);
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -54,7 +54,7 @@ void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3) 
             if (!(arg0->unk6C & 0x80)) {
                 ovl_11_func_8010C1FC(arg0);
             } else {
-                ovl_11_func_800CA5D4(arg0);
+                Ovl11SyncSavedObjectAnimation(arg0);
             }
         }
         if (GetSpriteFrameControlHighBit(&arg0->sprite) != 0) {

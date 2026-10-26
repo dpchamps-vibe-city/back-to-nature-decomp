@@ -44,8 +44,8 @@ void Ovl15SerializeSaveImage(void)
     ((Ovl15SaveBufferWords *)gOvl15SaveWorkBase)->field_2360 = ((s32 *)&gScenePhase)[16];
     SAVE(Ovl15SaveBlockCFC, (u8 *)&gScenePhase + 0x44, 0x2364);
     SAVE(Ovl15SaveBlock3FC, &gPrimaryObjectBase, 0x3060);
-    SAVE(Ovl15SaveBlock2328, D_80071DFC, 0x345C);
-    SAVE(Ovl15SaveBlock188, D_80074124, 0x5784);
+    SAVE(Ovl15SaveBlock2328, gMainAreaGrid, 0x345C);
+    SAVE(Ovl15SaveBlock188, gAlternateAreaGrid, 0x5784);
     SAVE(Ovl15SaveBlock40, &D_800742AC, 0x590C);
     SAVE(Ovl15SaveBlock74, D_8007A5C4, 0x594C);
     SAVE(Ovl15SaveBlock6C8, D_8007A638, 0x59C0);
@@ -117,8 +117,8 @@ void Ovl15RestoreSaveImage(void)
     ((s32 *)&gScenePhase)[16] = *(s32 *)(gOvl15SaveWorkBase + 0x2360);
     RESTORE(Ovl15SaveBlockCFC, (u8 *)&gScenePhase + 0x44, 0x2364);
     RESTORE(Ovl15SaveBlock3FC, &gPrimaryObjectBase, 0x3060);
-    RESTORE(Ovl15SaveBlock2328, D_80071DFC, 0x345C);
-    RESTORE(Ovl15SaveBlock188, D_80074124, 0x5784);
+    RESTORE(Ovl15SaveBlock2328, gMainAreaGrid, 0x345C);
+    RESTORE(Ovl15SaveBlock188, gAlternateAreaGrid, 0x5784);
     RESTORE(Ovl15SaveBlock40, &D_800742AC, 0x590C);
     RESTORE(Ovl15SaveBlock6C8, D_8007A638, 0x59C0);
     D_8007AD00[0] = *(s32 *)(gOvl15SaveWorkBase + 0x6088);

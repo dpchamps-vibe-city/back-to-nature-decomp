@@ -33,6 +33,9 @@
 #include "psyq/abs.h"
 #include "ovl11_object_events.h"
 #include "ovl11_counter_choice.h"
+#include "psyq/libgs.h"
+#include "psyq/libcd.h"
+#include "ovl11_area_resource_load.h"
 
 typedef struct {
                s16 field_0;
@@ -204,8 +207,6 @@ s32 ovl_11_func_800C9888 (u16 arg0, u16 arg1);
 s32 ovl_11_func_800C9938 (M2C_1052de249052_Ovl119938View *arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
-void ovl_11_func_800BD8DC (s16 arg0);
-void ovl_11_func_800BD168 (void);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);

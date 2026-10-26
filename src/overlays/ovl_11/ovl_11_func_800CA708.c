@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "ovl11_grid_cell_queries.h"
 
 s32 ovl_11_func_800CB114(Ovl11CB114Object *, s32 *, s16);
-s32 ovl_11_func_800BF4B4(s32 *, s32);
 void ovl_11_func_800C70CC(Ovl11C7010Object *, s32 arg1, s32, s32);
 s32 ovl_11_func_800BDB88(s32 *, s32);
 
@@ -47,7 +47,7 @@ void ovl_11_func_800CA708(void) {
     pos.vz += var_a3;
     var_s2 = ovl_11_func_800CB114((Ovl11CB114Object *)player, (s32 *)&pos, 0x38);
     if (var_s2 == 0x3E7) {
-        if ((D_80128C54 & 0x20) && (((player->velocity[0]) != 0) || ((player->velocity[2]) != 0)) && (ovl_11_func_800BF4B4((s32 *)&player->position, (s32) (player->direction)) != 0) && ((player->mode) == 4)) {
+        if ((D_80128C54 & 0x20) && (((player->velocity[0]) != 0) || ((player->velocity[2]) != 0)) && (Ovl11CheckDirectionalCellTransition((s32 *)&player->position, (s32) (player->direction)) != 0) && ((player->mode) == 4)) {
             if (!((player->flags) & 0x40000000)) {
                 (player->flags) = (s32) ((player->flags) | 0x40000000);
                 PlaySoundEffect(6);

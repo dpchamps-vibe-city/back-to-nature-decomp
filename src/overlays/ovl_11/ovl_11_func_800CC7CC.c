@@ -11,14 +11,13 @@
 #include "psyq/libgpu.h"
 #include "ovl11_object_events.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_geometry_hit_flags.h"
 
 s32 ovl_11_func_800CE550(Vec3 *arg0);
-unsigned long long ovl_11_func_800BF450(void);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
 s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1);
 Ovl11CC7CCSpawn *ovl_11_func_800F4994(Vec3 *arg0);
 s32 ovl_11_func_800F3E44(s16 arg0);
-s32 ovl_11_func_800BF3D0(void);
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
@@ -44,7 +43,7 @@ s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0) {
     if (arg0->position.vy >= 5001) {
         high = 1;
     }
-    if (high == 0 && ((s32)ovl_11_func_800BF450() != 0 || next.vy < arg0->position.vy - 100)) {
+    if (high == 0 && ((s32)Ovl11CacheGeometryHit() != 0 || next.vy < arg0->position.vy - 100)) {
         arg0->direction = (arg0->direction + 2) & 3;
         offset = (s32 *)(D_80123130 + arg0->direction * 8);
         arg0->velocity.vx = offset[0] * 2;
@@ -89,7 +88,7 @@ remove:
                 ovl_11_func_800CCBE8((Ovl11CC4E0Object *)arg0);
                 return 1;
             }
-            if (ovl_11_func_800BF3D0() != 0 && D_8006C858[arg0->unk2].field_12 != 0) {
+            if (Ovl11GetGeometryHitHighBit() != 0 && D_8006C858[arg0->unk2].field_12 != 0) {
                 ovl_11_func_800F3BCC(arg0->unk2);
                 PlaySoundEffect(0x13);
                 ovl_11_func_800CCBE8((Ovl11CC4E0Object *)arg0);

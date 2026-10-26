@@ -7,8 +7,8 @@
 #include "sprite_render.h"
 #include "point_projection.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_geometry_hit_flags.h"
 
-unsigned long long ovl_11_func_800BF450(void);
 s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0);
 s32 ovl_11_func_800CBE2C(Ovl11CC4E0Object *arg0);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
@@ -106,7 +106,7 @@ void ovl_11_func_800CC0F8(Ovl11CC7CCObject *arg0) {
             next.vy = arg0->height;
             next.vz = arg0->position.vz;
             ovl_11_func_800CE550((Vec3 *) &next);
-            if ((var_s3 == 2) && ((s32)ovl_11_func_800BF450() == 0)) {
+            if ((var_s3 == 2) && ((s32)Ovl11CacheGeometryHit() == 0)) {
                 arg0->height = next.vy;
             }
             if (arg0->unk2 != 0x186) {

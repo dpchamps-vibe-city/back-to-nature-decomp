@@ -26,9 +26,9 @@ void ovl_11_func_800D9064(void) {
 
     for (i = 0; i < 0x19; i++) {
         for (j = 0; j < 0x2D; j++) {
-            ovl_11_func_800DA49C((UnkStruct800DA49C *) &D_80071DFC[i][j], 0x10);
-            ovl_11_func_800DA518((UnkStruct800DA518 *) &D_80071DFC[i][j], 8);
-            ovl_11_func_800DA454((u16 *) &D_80071DFC[i][j], 0x10);
+            ovl_11_func_800DA49C((UnkStruct800DA49C *) &gMainAreaGrid[i][j], 0x10);
+            ovl_11_func_800DA518((UnkStruct800DA518 *) &gMainAreaGrid[i][j], 8);
+            ovl_11_func_800DA454((u16 *) &gMainAreaGrid[i][j], 0x10);
         }
     }
 }

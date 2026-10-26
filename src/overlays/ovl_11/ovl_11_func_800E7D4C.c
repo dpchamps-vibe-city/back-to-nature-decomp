@@ -26,7 +26,7 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                 s32 column;
 
                 for (column = 0; column < 45; column++) {
-                    entry = &D_80071DFC[i][column];
+                    entry = &gMainAreaGrid[i][column];
                     if ((u16)entry->unk0 == 0x40) {
                         entry->unk0 = 0x167;
                         entry->unk4 = 0;
@@ -90,9 +90,9 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                 break;
             }
             if (group == 1) {
-                entry = &D_80071DFC[y][x];
+                entry = &gMainAreaGrid[y][x];
             } else {
-                entry = &D_80074124[y][x];
+                entry = &gAlternateAreaGrid[y][x];
             }
             entry->unk0 = entry->unk2;
             entry->unk4 = 0;
@@ -122,9 +122,9 @@ s32 ovl_11_func_800E7D4C(s16 mode, s16 arg1, s32 slot) {
                 item.unk4 = ovl_11_func_800D5C3C(item.unk0);
                 if (ovl_11_func_800DADB0(&x2, &y2, group, &item, 2) != 0) {
                     if (group == 1) {
-                        selected = &D_80071DFC[y2][x2];
+                        selected = &gMainAreaGrid[y2][x2];
                     } else {
-                        selected = &D_80074124[y2][x2];
+                        selected = &gAlternateAreaGrid[y2][x2];
                     }
                     gOvl11ValueSlots[slot] = ovl_11_func_800D85F8((Recon_ovl_11_func_800D85F8_A0View *)selected);
                     selected->unk0 = selected->unk2;

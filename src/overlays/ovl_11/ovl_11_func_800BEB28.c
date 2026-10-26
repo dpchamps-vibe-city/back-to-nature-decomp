@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_grid_cell_queries.h"
 
 s32 ovl_11_func_800BE6E4(s32 **arg0, s32 arg1);
 s32 ovl_11_func_800BE94C(s32 **arg0, Ovl11ItemCollisionObject *arg1);
@@ -7,7 +8,6 @@ s32 ovl_11_func_800BEF64(Ovl11CollisionQuery *arg0);
 s32 ovl_11_func_800BE4A8(s32 **arg0);
 s32 ovl_11_func_800BE2C4(s32 **arg0, u16 *arg1);
 s32 ovl_11_func_800BE5A0(Ovl11CollisionQuery *arg0);
-s32 ovl_11_func_800BF720(Ovl11CollisionQuery *arg0);
 
 s32 ovl_11_func_800BEB28(s32 *arg0, s32 arg1, void **arg2, s32 *arg3, s32 arg4, s32 arg5) {
     Ovl11CollisionQuery query;
@@ -151,7 +151,7 @@ other_hit:
     return 1;
 final_probe:
     if (arg5 & 0x1000) {
-        result = ovl_11_func_800BF720(&query);
+        result = Ovl11IsSpecialCollisionCell(&query);
         returnValue = 1;
         if (result) {
             return returnValue;
