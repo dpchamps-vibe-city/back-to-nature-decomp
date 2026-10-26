@@ -9,14 +9,14 @@ void ovl_15_func_8012F7D4(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32)(D_8005316C + gTextBankOffsets[0]));
-    if (D_8013759A >= 2) {
-        temp_v0 = ovl_15_func_80136470(D_8013758C);
+    if (gOvl15MenuStateTimer >= 2) {
+        temp_v0 = ovl_15_func_80136470(gOvl15SelectedCard);
         if (temp_v0 == 0) {
-            D_80137584 = 0xF;
+            gOvl15MenuState = 0xF;
         } else if (temp_v0 == 4) {
-            D_80137584 = 0x15;
+            gOvl15MenuState = 0x15;
         } else {
-            D_80137584 = 0xE;
+            gOvl15MenuState = 0xE;
         }
     }
 }

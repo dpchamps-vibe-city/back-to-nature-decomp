@@ -1,7 +1,14 @@
 #include "common.h"
 #include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_progress_status.h"
 
-void ovl_11_func_80111F10(void);
 void ovl_11_func_8011D400(s32 *arg0);
 
 s32 ovl_11_func_80114398(void) {
@@ -11,7 +18,7 @@ s32 ovl_11_func_80114398(void) {
     s8 *c;
     s16 *b;
 
-    ovl_11_func_80111F10();
+    Ovl11RefreshProgressStatus();
     p = gOvl11PrimarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p);
     *(s8 *) (p + 0x5A) = 0xC;

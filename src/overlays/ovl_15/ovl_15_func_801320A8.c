@@ -75,25 +75,25 @@ void ovl_15_func_801320A8(void) {
     }
     sp40[1] = var_v1_2;
     if ((sp10[0] == 0) && (sp10[1] == 0)) {
-        D_80137584 = 0x15;
+        gOvl15MenuState = 0x15;
         return;
     }
     if (sp38[0] < ((sp28[0] - sp18[0]) + sp18[1])) {
-        D_80137584 = 0x16;
+        gOvl15MenuState = 0x16;
         return;
     }
     if (sp38[1] < ((sp28[1] - sp18[1]) + sp18[0])) {
-        D_80137584 = 0x17;
+        gOvl15MenuState = 0x17;
         return;
     }
     if (sp40[0] < ((sp30[0] - sp20[0]) + sp20[1])) {
-        D_80137584 = 0x18;
+        gOvl15MenuState = 0x18;
         return;
     }
     if (sp40[1] < ((sp30[1] - sp20[1]) + sp20[0])) {
-        D_80137584 = 0x19;
+        gOvl15MenuState = 0x19;
         return;
     }
     gOvl15ConfirmationChoice = 1;
-    D_80137584 = 0x1A;
+    gOvl15MenuState = 0x1A;
 }

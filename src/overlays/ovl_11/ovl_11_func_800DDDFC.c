@@ -23,14 +23,15 @@
 #include "psyq/libgs.h"
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_moving_items.h"
+#include "psyq/libetc.h"
+#include "ovl11_progress_status.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
 void ovl_11_func_800CCCC0 (void);
-void ovl_11_func_80111F88 (void);
 void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_800CD0C0 (s32 *arg0);
-void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
 void ovl_11_func_800F1F48 (s32 arg0);
@@ -99,7 +100,7 @@ s32 ovl_11_func_800DDDFC(void) {
         if (IsScreenFadeComplete() == 1) {
             ovl_11_func_800CCCC0();
             Ovl11ResetSpriteRotations();
-            ovl_11_func_80111F88();
+            Ovl11UpdateProgressTimers();
             ((Ovl11SetupWorkView *)&D_8007AFF0)->alternateId = -1;
             offset = ((Ovl11DDDFCState *)D_8006C838)->variant * 4 + 0x50;
             id = ((Ovl11DDDFCState *)D_8006C838)->index + offset;
@@ -121,7 +122,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ((Ovl11SetupWorkView *)&D_8007AFF0)->header = D_8009F78C;
             Ovl11RegisterPoolSpriteRotations((s32)D_8009F78C);
             ovl_11_func_800CD0C0(((Ovl11DDDFCState *)D_8006C838)->position);
-            ovl_11_func_800CBEF8();
+            Ovl11ResetMovingItemRecords();
             ((Ovl11DDDFCState *)D_8006C838)->status = (((Ovl11DDDFCState *)D_8006C838)->status | 0x4000) & 0xFFF07FFF;
             ovl_11_func_800CCC5C();
             ovl_11_func_800EEECC();

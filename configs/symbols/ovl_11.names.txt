@@ -444,6 +444,69 @@ gOvl11Animation8Sequence = 0x80123F50; // type:data size:0x8
 Ovl11SubmitDeferredAnimationPose = 0x800E0220;
 Ovl11SubmitAnimationPose = 0x800E0280;
 
+// Complete progress-timer/request/derived-status pipeline.
+Ovl11ResetProgressControl = 0x80111E38; // type:func
+Ovl11RequestProgressAction = 0x80111E68; // type:func
+Ovl11ArmProgressPendingTimer = 0x80111EE0; // type:func
+Ovl11RefreshProgressStatusEntry = 0x80111EF0; // type:func
+Ovl11RefreshProgressStatus = 0x80111F10; // type:func
+Ovl11UpdateProgressTimers = 0x80111F88; // type:func
+Ovl11HandleProgressRequest = 0x80112160; // type:func
+Ovl11RefreshCounterGroupAFlag = 0x80112284; // type:func
+Ovl11RefreshCounterGroupBFlag = 0x80112318; // type:func
+Ovl11RefreshCounterGroupCFlag = 0x801123AC; // type:func
+Ovl11RefreshCounter5DFlag = 0x80112440; // type:func
+Ovl11RefreshCounter5FFlag = 0x80112494; // type:func
+Ovl11RefreshPurchaseAvailabilityFlags = 0x801124E8; // type:func
+Ovl11RefreshRecordThresholdFlag = 0x8011256C; // type:func
+Ovl11RefreshStageProgressFlags = 0x801125DC; // type:func
+Ovl11RefreshStageEventFlag = 0x8011266C; // type:func
+Ovl11RefreshStageGateFlags = 0x801126C8; // type:func
+Ovl11RefreshEventFlagsHigh = 0x8011277C; // type:func
+Ovl11RefreshEventFlagsTop = 0x8011282C; // type:func
+gOvl11StatusCounterGroupAIds = 0x80127F80; // type:data size:0x8
+gOvl11StatusCounterGroupBIds = 0x80127F88; // type:data size:0x8
+gOvl11StatusCounterGroupCIds = 0x80127F90; // type:data size:0x8
+
+// Three-slot moving-item lifecycle and its private motion/render storage.
+Ovl11ProbeMovingItemHit = 0x800CBE2C; // type:func
+Ovl11ResetMovingItemRecords = 0x800CBEF8; // type:func
+Ovl11ClearMovingItemRecord = 0x800CBF40; // type:func
+Ovl11SpawnMovingItemRecord = 0x800CBF70; // type:func
+Ovl11UpdateMovingItemRecord = 0x800CC0F8; // type:func
+Ovl11HandleMovingItemGeometryHit = 0x800CC4E0; // type:func
+Ovl11CheckMovingItemCellContact = 0x800CC6A8; // type:func
+Ovl11StepMovingItemMotion = 0x800CC7CC; // type:func
+Ovl11UpdateMovingItemRecords = 0x800CCB90; // type:func
+Ovl11ReleaseMovingItemRecord = 0x800CCBE8; // type:func
+gOvl11MovingItemDirectionVelocity = 0x80123130; // type:data size:0x20
+gOvl11MovingItemScreenPosition = 0x80128B98; // type:data size:0x8
+gOvl11MovingItemProjectionInput = 0x80128BA0; // type:data size:0x8
+gOvl11MovingItemRecords = 0x80128BB0; // type:data size:0x9C
+gOvl11MovingItemSpriteSource = 0x80128C80; // type:data size:0x30
+
+// Shared collision-query context and the complete probe/dispatcher closure.
+Ovl11ProbePlacedRecord = 0x800BE2C4; // type:func
+Ovl11ProbePrimaryObject = 0x800BE4A8; // type:func
+Ovl11IsOutsideCollisionRegions = 0x800BE5A0; // type:func
+Ovl11ProbeTileMap = 0x800BE6E4; // type:func
+Ovl11ProbeItemBounds = 0x800BE94C; // type:func
+Ovl11DispatchCollisionProbes = 0x800BEB28; // type:func
+Ovl11ProbeActorBounds = 0x800BEF64; // type:func
+gOvl11CollisionRegionBounds = 0x801228DC; // type:data size:0x1F4
+gOvl11Region5Bounds = 0x80122AD0; // type:data size:0x8C
+gOvl11Region5ExpandedBounds = 0x80122B5C; // type:data size:0xB4
+gOvl11Region4Bounds = 0x80122C10; // type:data size:0x64
+gOvl11Region4ExpandedBounds = 0x80122C74; // type:data size:0xC8
+gOvl11OverrideRegionBounds = 0x80122D3C; // type:data size:0x50
+gOvl11ItemCollisionSeasonMasks = 0x80122E6C; // type:data size:0x8
+
+// Packed condition masks: calendar and current daily-condition code.
+Ovl11TestConditionMask = 0x800F1B28; // type:func
+Ovl11MaskAllowsSeason = 0x800F1BD0; // type:func
+Ovl11MaskAllowsWeekday = 0x800F1C48; // type:func
+Ovl11MaskAllowsDayCondition = 0x800F1CC4; // type:func
+
 // Descriptor-driven state access and its arithmetic/condition protocol.
 Ovl11UpdateStateField = 0x800EFABC;
 Ovl11ReadStateField = 0x800EFC68;

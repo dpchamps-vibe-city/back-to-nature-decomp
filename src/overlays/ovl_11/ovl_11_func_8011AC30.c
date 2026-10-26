@@ -17,7 +17,7 @@ s32 ovl_11_func_8011AC30(void) {
     gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &D_8005181A + gTextBankOffsets[1]);
     gOvl11QuantityPrompt.unkA = ovl_11_func_800D6014(0x6CU);
     gOvl11QuantityPrompt.unk8 = 1;
-    mask = D_800719F8 & 8;
+    mask = gProgressDerivedFlags & 8;
     p = gOvl11PrimarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p);
 

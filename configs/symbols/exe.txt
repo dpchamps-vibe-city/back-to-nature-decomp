@@ -1,4 +1,10 @@
 
+// Progress/status work-record anchors; overlay-11 derives the low 23 flags.
+gProgressDerivedFlags = 0x800719F8; // size:0x4
+gProgressStateFlags = 0x80070D30; // size:0x4
+gProgressPendingTimer = 0x80070D10; // size:0x2
+gProgressRequest = 0x800719FE; // size:0x2
+
 // Main 25x45 and alternate 7x7 area grids, with 8-byte tagged cells.
 gMainAreaGrid = 0x80071DFC; // size:0x2328
 gAlternateAreaGrid = 0x80074124; // size:0x188

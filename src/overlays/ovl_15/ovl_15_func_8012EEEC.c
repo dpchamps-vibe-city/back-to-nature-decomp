@@ -2,9 +2,9 @@
 #include "ovl15_save_menu_ui.h"
 
 extern u8 D_80053530[];
-extern s8 D_80137584;
+extern s8 gOvl15MenuState;
 extern s8 gOvl15ConfirmationChoice;
-extern s16 D_8013758C;
+extern s16 gOvl15SelectedCard;
 
 void func_8001AC10(void *arg0, s32 arg1, s32 arg2);
 
@@ -19,11 +19,11 @@ void ovl_15_func_8012EEEC(void) {
         if (temp_v0 < 0) {
             if (temp_v0 == -1) {
                 gOvl15ConfirmationChoice = 1;
-                D_80137584 = 0x16;
+                gOvl15MenuState = 0x16;
             }
         } else {
-            D_8013758C = temp_v0;
-            D_80137584 = 4;
+            gOvl15SelectedCard = temp_v0;
+            gOvl15MenuState = 4;
         }
     }
 }

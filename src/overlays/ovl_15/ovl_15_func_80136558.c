@@ -3,7 +3,6 @@
 
 void ovl_15_func_80137544(char *arg0, s32 arg1);
 
-extern s16 D_80137598;
 extern s8 D_80140EC0;
 
 s32 ovl_15_func_80136558(s16 arg0, s16 arg1) {
@@ -23,7 +22,7 @@ s32 ovl_15_func_80136558(s16 arg0, s16 arg1) {
     }
 block_3:
     ovl_15_func_80137544(&D_80140EC0, (s32) arg1);
-    D_80137598 = 0;
+    gOvl15CardRetryCount = 0;
     MemCardSync(0, &sp10, &sp14);
 loop_4:
     sp14 = MemCardCreateFile(var_s2, &D_80140EC0, 4);
@@ -33,8 +32,8 @@ loop_4:
     case 4:
     case 6:
     case 7:
-        if (D_80137598 < 7) {
-            D_80137598 = (u16) D_80137598 + 1;
+        if ((s16)gOvl15CardRetryCount < 7) {
+            gOvl15CardRetryCount = (u16) gOvl15CardRetryCount + 1;
             goto loop_4;
         }
         if (sp14 != 1) {

@@ -10,13 +10,7 @@
 
 #include "common.h"
 #include "ovl11_collision_query_budget.h"
-
-/* The dispatcher views its packed argument's home slot as a collision tag.
- * The established by-value, halfword-aligned type preserves these wrappers'
- * observed argument homing. Its separate definition spells the packed payload
- * s32; retain this explicit representation boundary rather than changing types. */
-s32 ovl_11_func_800BEB28(s32 *position, Ovl11CollisionTag tag, void **hitObject,
-                       s32 *hitFlags, s32 context, s32 queryMask);
+#include "ovl11_collision_probes.h"
 
 /* ovl_11:0x800BE208 */
 s32 Ovl11QueryCollisionBudgeted(s32 *position, Ovl11CollisionTag tag,
@@ -30,7 +24,7 @@ s32 Ovl11QueryCollisionBudgeted(s32 *position, Ovl11CollisionTag tag,
         result = 1;
     } else {
         gOvl11CollisionQueryCount += 1;
-        result = ovl_11_func_800BEB28(position, tag, hitObject, hitFlags,
+        result = Ovl11DispatchCollisionProbes(position, tag, hitObject, hitFlags,
                                      context, queryMask);
     }
     return result;
@@ -41,7 +35,7 @@ s32 Ovl11QueryCollisionUnbudgeted(s32 *position, Ovl11CollisionTag tag,
                                 s32 unused2, s32 unused3, void **hitObject,
                                 s32 *hitFlags, s32 context, s32 queryMask) {
     gOvl11CollisionQueryCount += 1;
-    return ovl_11_func_800BEB28(position, tag, hitObject, hitFlags,
+    return Ovl11DispatchCollisionProbes(position, tag, hitObject, hitFlags,
                                context, queryMask);
 }
 

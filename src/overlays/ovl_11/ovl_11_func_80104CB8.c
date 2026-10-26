@@ -15,8 +15,8 @@
 #include "ovl11_scene_record_pool.h"
 #include "ovl11_area_mode_sequence.h"
 #include "ovl11_weather_effect.h"
+#include "ovl11_moving_items.h"
 
-void ovl_11_func_800CBEF8(void);
 void func_8001E340(Ovl11SceneGrid **arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
@@ -29,7 +29,7 @@ void ovl_11_func_80104CB8(void) {
     Ovl11ResetAmbientTintFromTable();
     Ovl11SetWeatherParticleMode(((Ovl11AreaInitView *)D_8006C838)->field_E4C8);
     Ovl11SelectCurrentHourTint();
-    ovl_11_func_800CBEF8();
+    Ovl11ResetMovingItemRecords();
     ((Ovl11AreaInitView *)D_8006C838)->field_4488 = 2;
     ((Ovl11FarInitView *)&D_8007AFF0)->field_2548C = 0;
     InitProjectedPrimitiveSource(gOvl11SceneGeometry, (u8 *)D_8007AFF0 + 0x2000);

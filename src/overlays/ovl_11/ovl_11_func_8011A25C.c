@@ -3,6 +3,15 @@
 #include "message_window.h"
 #include "ovl11_tier_upgrade_rules.h"
 #include "ovl11_interaction_steps.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_progress_status.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -10,7 +19,6 @@ s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
-void ovl_11_func_80111E68(s16 arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -114,7 +122,7 @@ s32 ovl_11_func_8011A25C(void) {
         row = (group - 1) / 5 * 4;
         row += (group - 1) / 5;
         row += index;
-        ovl_11_func_80111E68(row);
+        Ovl11RequestProgressAction(row);
         CloseMessageWindow();
         RequestMessageWindow(2, 0x9F);
         Ovl11SetInteractionSteps(1, 10);

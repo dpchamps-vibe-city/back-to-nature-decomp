@@ -1,7 +1,14 @@
 #include "common.h"
 #include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_progress_status.h"
 
-void ovl_11_func_80111F10(void);
 s32 ovl_11_func_800D6014(u16 arg0);
 void ovl_11_func_8011D400(s32 *arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -15,11 +22,11 @@ s32 ovl_11_func_80113CD0(void) {
     s8 *c;
     s16 *b;
 
-    ovl_11_func_80111F10();
+    Ovl11RefreshProgressStatus();
     header = &gOvl11QuantityPrompt;
     header->unk0 = (s32) D_80051E92 + gTextBankOffsets[1];
     *(s32 *) ((u8 *) header + 4) = (s32) D_80051E92 - 0x678 + gTextBankOffsets[1];
-    flags = D_800719F8;
+    flags = gProgressDerivedFlags;
     header->unkA = ovl_11_func_800D6014(0x68U);
     header->unk8 = 1;
     ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);

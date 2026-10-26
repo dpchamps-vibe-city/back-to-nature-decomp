@@ -12,6 +12,7 @@
 #include "ovl11_record_flag_query.h"
 #include "psyq/libgs.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_progress_status.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
@@ -29,7 +30,6 @@ void ovl_11_func_800F0358 (void);
 s32 ovl_11_func_800F0474 (s16 arg0);
 void ovl_11_func_800F05C0 (void);
 void ovl_11_func_800CFC20 (void);
-u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -441,12 +441,12 @@ block_118:
     case 19:
         switch (arg1) {                             /* switch 12; irregular */
         case 0:
-            return ovl_11_func_80112160(0);
+            return Ovl11HandleProgressRequest(0);
         case 1:
-            gOvl11ValueSlots[arg2] = ovl_11_func_80112160(1);
+            gOvl11ValueSlots[arg2] = Ovl11HandleProgressRequest(1);
             return 1;
         case 2:
-            ovl_11_func_80112160(2);
+            Ovl11HandleProgressRequest(2);
             return 1;
         }
     case 20:

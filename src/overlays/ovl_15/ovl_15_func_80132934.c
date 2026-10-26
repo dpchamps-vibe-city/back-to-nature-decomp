@@ -2,7 +2,7 @@
 #include "ovl15_save_menu_ui.h"
 
 extern u8 D_80051E88[];
-extern s8 D_80137584;
+extern s8 gOvl15MenuState;
 extern s8 gOvl15MenuCursor;
 
 void func_8001AC10(void *arg0, s32 arg1, s32 arg2);
@@ -17,11 +17,11 @@ void ovl_15_func_80132934(void) {
     switch (temp_v0) {
     case 0:
         gOvl15MenuCursor = 0;
-        D_80137584 = 0x20;
+        gOvl15MenuState = 0x20;
         return;
     case 1:
     case -1:
-        D_80137584 = 0;
+        gOvl15MenuState = 0;
         return;
     }
 }

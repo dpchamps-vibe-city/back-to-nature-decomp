@@ -2,10 +2,6 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-void ovl_15_func_8012E15C(void);
-void ovl_15_func_8012E2CC(void);
-void ovl_15_func_8012E520(void);
-void ovl_15_func_8012E7C8(void);
 void ovl_15_func_8012EA18(void);
 void ovl_15_func_8012ED18(void);
 void ovl_15_func_8012ED6C(void);
@@ -129,8 +125,12 @@ void Ovl15MenuResourceHook2(void);
 void Ovl15PlaceRowXSlot(RowXPlacement *output, s16 slot);
 s32 Ovl15PlaceRowZSlot(RowZPlacement *output, s16 slot);
 void Ovl15RemoveSaveChecksumSlots(void);
+void Ovl15ResetSaveMenuState(void);
 void Ovl15RestoreSaveImage(void);
 void Ovl15SerializeSaveImage(void);
+void Ovl15UpdateCardReadScene(void);
+void Ovl15UpdateCardReadSceneWithSprites(void);
+void Ovl15UpdateCardWriteScene(void);
 s8 Ovl15UpdateConfirmationMenu(void);
 s8 Ovl15UpdateSaveSlotMenu(s16 displayMode);
 s8 Ovl15UpdateTwoChoiceMenu(void);

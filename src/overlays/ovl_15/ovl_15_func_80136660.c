@@ -5,7 +5,7 @@
 long MemCardSync(long mode, long *cmds, long *rslt);
 long MemCardWriteFile(long chan, char *file, unsigned long *adrs, long ofs, long bytes);
 void ovl_15_func_80137544(char *arg0, s32 arg1);
-extern u16 D_80137598;
+extern u16 gOvl15CardRetryCount;
 extern s8 D_80140EC0;
 
 s32 ovl_15_func_80136660(s16 arg0, s16 arg1, u32 *arg2) {
@@ -26,7 +26,7 @@ s32 ovl_15_func_80136660(s16 arg0, s16 arg1, u32 *arg2) {
     }
 block_3:
     ovl_15_func_80137544(&D_80140EC0, (s32) arg1);
-    D_80137598 = 0;
+    gOvl15CardRetryCount = 0;
     temp_a2 = MemCardSync(1, &sp18, &sp1C);
 loop_4:
     if (sp18 != 4) {
@@ -37,7 +37,7 @@ loop_4:
                     return var_v0;
                 }
                 MemCardWriteFile(var_s2, &D_80140EC0, arg2, 0, 0x8000);
-                D_80137598 = 0;
+                gOvl15CardRetryCount = 0;
                 return 3;
             }
             goto block_11;
@@ -64,20 +64,20 @@ block_positive:
     goto block_18;
 block_16:
     MemCardWriteFile(var_s2, &D_80140EC0, arg2, 0, 0x8000);
-    D_80137598 = 0;
+    gOvl15CardRetryCount = 0;
     return 3;
 block_18:
     switch (sp1C) {
     case 2:
     case 5:
-        if ((s16) D_80137598 >= 7) {
+        if ((s16) gOvl15CardRetryCount >= 7) {
             return 2;
         }
-        D_80137598 = (u16) D_80137598 + 1;
+        gOvl15CardRetryCount = (u16) gOvl15CardRetryCount + 1;
         goto loop_4;
     case 1:
-        if ((s16) D_80137598 < 7) {
-            D_80137598 = (u16) D_80137598 + 1;
+        if ((s16) gOvl15CardRetryCount < 7) {
+            gOvl15CardRetryCount = (u16) gOvl15CardRetryCount + 1;
             goto loop_4;
         }
         return 4;

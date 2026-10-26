@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_collision_probes.h"
 
 s32 ovl_11_func_800D7EF8(s32 *, u16 *, u16 *);
-s32 ovl_11_func_800BE6E4(s32 **, s32);
 
 s32 ovl_11_func_800BDF98(VECTOR position, Ovl11CollisionTag arg4,
                        s16 arg5, s32 arg6) {
@@ -27,7 +27,7 @@ s32 ovl_11_func_800BDF98(VECTOR position, Ovl11CollisionTag arg4,
     if ((s16) col == 0x2C && arg5 == 3) {
         return 1;
     }
-    checkedResult = ovl_11_func_800BE6E4((s32 **) &query, 0);
+    checkedResult = Ovl11ProbeTileMap((s32 **) &query, 0);
     result = checkedResult;
     if (checkedResult == 2) {
         if (arg6 == 0) {

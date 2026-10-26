@@ -4,8 +4,8 @@
 #include "ovl15_save_image.h"
 
 extern u8 D_80053350[];
-extern s8 D_80137584;
-extern s16 D_8013758E;
+extern s8 gOvl15MenuState;
+extern s16 gOvl15SelectedSlot;
 
 typedef struct {
     char pad_0[0x34];
@@ -24,13 +24,13 @@ void ovl_15_func_80131CDC(void) {
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
     if (Ovl15VerifySaveChecksums() == -1) {
-        D_80137584 = 0xE;
+        gOvl15MenuState = 0xE;
     }
-    else if (D_801376E0[D_8013758E].field_34 != 0x14) {
-        D_80137584 = 0xE;
+    else if (D_801376E0[gOvl15SelectedSlot].field_34 != 0x14) {
+        gOvl15MenuState = 0xE;
     }
     else {
         Ovl15RemoveSaveChecksumSlots();
-        D_80137584 = 0x10;
+        gOvl15MenuState = 0x10;
     }
 }

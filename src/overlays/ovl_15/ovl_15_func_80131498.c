@@ -12,9 +12,9 @@ void ovl_15_func_80131498(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*gTextBankOffsets]);
-    if (D_8013759A >= 2) {
+    if (gOvl15MenuStateTimer >= 2) {
         for (var_s1 = 0; var_s1 < 2; var_s1++) {
-            var_s0 = &D_80137594[var_s1];
+            var_s0 = &gOvl15CardStates[var_s1];
             var_v1 = ovl_15_func_80135C20(var_s1);
             if (var_v1 == 1) {
                 var_v1 = 0;
@@ -26,10 +26,10 @@ void ovl_15_func_80131498(void) {
                 *var_s0 = var_v1;
             }
         }
-        if (D_80137594[0] == 4 && D_80137594[1] == D_80137594[0]) {
-            D_80137584 = 2;
+        if (gOvl15CardStates[0] == 4 && gOvl15CardStates[1] == gOvl15CardStates[0]) {
+            gOvl15MenuState = 2;
         } else {
-            D_80137584 = 3;
+            gOvl15MenuState = 3;
         }
     }
 }

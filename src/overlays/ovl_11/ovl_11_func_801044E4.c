@@ -21,6 +21,9 @@
 #include "ovl11_weather_effect.h"
 #include "psyq/libgs.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_moving_items.h"
+#include "psyq/abs.h"
+#include "ovl11_progress_status.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -34,9 +37,7 @@ s32 ovl_11_func_800CDE3C (u8 *arg0);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
 void ovl_11_func_800CE96C (void);
-void ovl_11_func_800CBEF8 (void);
 void ovl_11_func_8010C6A0 (void);
-s32 *ovl_11_func_80111E38 (void);
 void ovl_11_func_800F2508 (void);
 void ovl_11_func_80104898 (void);
 void ovl_11_func_800FFA28 (void);
@@ -83,13 +84,13 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800F6630();
     ovl_11_func_800F42A8((u16) base->field_44BA, 0);
     ovl_11_func_800CE96C();
-    ovl_11_func_800CBEF8();
+    Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
     ovl_11_func_800F6630();
     Ovl11ResetSelectionMessage();
     ovl_11_func_8010C6A0();
     ResetMessageWindow();
-    ovl_11_func_80111E38();
+    Ovl11ResetProgressControl();
     ovl_11_func_800F2508();
     Ovl11ClearSpriteEffects();
     ovl_11_func_80104898();

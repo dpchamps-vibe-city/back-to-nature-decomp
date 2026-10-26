@@ -5,6 +5,13 @@
 #include "message_window.h"
 #include "two_choice_prompt.h"
 #include "ovl11_interaction_steps.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_progress_status.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
@@ -14,7 +21,6 @@ s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
-void ovl_11_func_80111F10(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011B6C4(s32 *arg0, s32 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
@@ -119,7 +125,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 &= ~0x800000;
         result = 1;
         if (arg3 == 1) {
-            ovl_11_func_80111F10();
+            Ovl11RefreshProgressStatus();
         }
         break;
     case 10:

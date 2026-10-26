@@ -14,11 +14,11 @@ void ovl_15_func_80131618(void) {
         if (temp_v0 < 0) {
             if (temp_v0 == -1) {
                 gOvl15ConfirmationChoice = 1;
-                D_80137584 = 0x1F;
+                gOvl15MenuState = 0x1F;
             }
         } else {
-            D_8013758C = temp_v0;
-            D_80137584 = 4;
+            gOvl15SelectedCard = temp_v0;
+            gOvl15MenuState = 4;
         }
     }
 }

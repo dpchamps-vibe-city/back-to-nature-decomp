@@ -48,7 +48,7 @@ s32 ovl_11_func_8011ADF4(void) {
     *a++ = 0x2E;
     *c++ = 1;
     *b++ = 0xCD;
-    if (D_800719F8 & 0x10) {
+    if (gProgressDerivedFlags & 0x10) {
         *q = (void *) ((s32) &D_8005181A + 0x196 + gTextBankOffsets[1]);
     } else {
         *q = NULL;

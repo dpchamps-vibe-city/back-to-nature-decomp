@@ -12,10 +12,10 @@ void ovl_15_func_80131FD0(void) {
         break;
     case 1:
         ovl_15_func_80134724();
-        D_80137584 = 0x13;
+        gOvl15MenuState = 0x13;
         break;
     case -1:
-        D_80137584 = 9;
+        gOvl15MenuState = 9;
         break;
     }
 }

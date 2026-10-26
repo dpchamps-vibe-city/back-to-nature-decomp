@@ -15,7 +15,7 @@ s32 ovl_11_func_8011B2B0(void) {
     s8 *c;
     s16 *b;
 
-    flags = D_800719F8;
+    flags = gProgressDerivedFlags;
     p = gOvl11PrimarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p);
     *(s8 *) (p + 0x5A) = 0xD;

@@ -18,11 +18,11 @@ void ovl_15_func_80132638(void) {
     case 1:
     case -1:
         ovl_15_func_80134724();
-        D_80137584 = 0x13;
+        gOvl15MenuState = 0x13;
         return;
     case 0:
         gOvl15ConfirmationChoice = 1;
-        D_80137584 = 0x1B;
+        gOvl15MenuState = 0x1B;
         return;
     }
 }

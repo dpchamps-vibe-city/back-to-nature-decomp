@@ -21,6 +21,7 @@
 #include "ovl11_purchase_panels.h"
 #include "game_flags.h"
 #include "ovl11_interaction_steps.h"
+#include "ovl11_progress_status.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
 
@@ -312,7 +313,6 @@ s32 Ovl11InitResourcePurchasePanel(void) {
 }
 
 void SetVal8005E2BC(s32 arg0);
-void ovl_11_func_80111EE0(void);
 s32 Ovl11UpdateResourceQuantitySelection(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D934(StructD548 arg0);
@@ -436,7 +436,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
                     ((Ovl11ResourceGlobals *)D_8006C838)->amount -= gOvl11ResourceOptionCosts[choice][1];
                     ovl_11_func_800F2354(-gOvl11ResourceOptionCosts[choice][0], 1);
                     SetGameFlag(0x38, 1);
-                    ovl_11_func_80111EE0();
+                    Ovl11ArmProgressPendingTimer();
                 } else {
                     gOvl11ResourceResultMessage = 0x145;
                     gOvl11ResourcePanelState = 8;

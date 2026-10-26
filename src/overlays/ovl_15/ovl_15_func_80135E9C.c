@@ -85,7 +85,7 @@ s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 void func_8001ABF0 (u16 *dst, u16 *src);
 void func_800249C0 (s32 arg0, s16 arg1, s16 arg2);
 
-extern u16 D_80137598;
+extern u16 gOvl15CardRetryCount;
 
 s32 ovl_15_func_80135E9C(s16 arg0) {
     s32 sp10;
@@ -101,13 +101,13 @@ s32 ovl_15_func_80135E9C(s16 arg0) {
             return 0xC;
         }
     }
-    D_80137598 += 1;
+    gOvl15CardRetryCount += 1;
     temp_v0 = MemCardSync(1, &sp10, &sp14);
     if (temp_v0 == 0) {
         return 3;
     }
     if (temp_v0 == -1) {
-        D_80137598 = 0;
+        gOvl15CardRetryCount = 0;
         goto block_19;
     }
     if (sp10 == 1) {
@@ -124,7 +124,7 @@ s32 ovl_15_func_80135E9C(s16 arg0) {
             break;
         }
 block_12:
-        if ((s16) D_80137598 >= 0x1F) {
+        if ((s16) gOvl15CardRetryCount >= 0x1F) {
             switch (sp14) {
             case 1:
                 return 4;

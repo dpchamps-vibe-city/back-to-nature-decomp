@@ -13,6 +13,7 @@
 #include "area_grid_triggers.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_record_placement.h"
+#include "ovl11_moving_items.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -40,7 +41,6 @@ void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-C580C_f3fe4d9631b5_UnkStruct800CBF40 *ovl_11_func_800CBF70 (C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *arg0, u16 *arg1, s16 arg2);
 void ovl_11_func_800C55FC (Ovl11CE034Object *arg0);
 void ovl_11_func_800C9D98 (void);
 s32 ovl_11_func_800C6858 (Ovl11C7010Object *arg0);
@@ -419,7 +419,7 @@ finish_action:
             return 0;
         case 0x2F:
             PlaySoundEffect(9);
-            ovl_11_func_800CBF70((C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *) ((u8 *) arg0 + 0x100), (u16 *) ((u8 *) arg0 + 0x8A), (s16) arg0->direction);
+            Ovl11SpawnMovingItemRecord((Vec3 *) ((u8 *) arg0 + 0x100), (u16 *) ((u8 *) arg0 + 0x8A), (s16) arg0->direction);
             arg0->unk6C |= 0x40;
             /* fallthrough */
         case 0x9:

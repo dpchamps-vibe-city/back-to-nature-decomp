@@ -174,21 +174,6 @@ typedef struct {
 } M2C_0034004658f1_Ovl11D04D4Obj;
 
 typedef struct {
- long vx, vy;
- long vz, pad;
-} VECTOR;
-
-typedef struct {
-               char pad_0[0x4];
-               s16 unk4;
-               s16 unk6;
-               char pad_8[0x4];
-               s32 unkC;
-               char pad_10[0x14];
-               VECTOR pos;
-} M2C_00d87963cded_Ovl11CC6A8Arg;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -374,24 +359,6 @@ typedef struct {
     char pad_38[0x7A - 0x38];
                u16 unk7A;
 } M2C_15fe93b20d39_Ovl11E180CObj;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 unk6;
-               s16 unk8;
-               char pad0A[0x0C - 0x0A];
-               s32 unkC;
-               s32 unk10;
-               s32 unk14;
-               s32 unk18;
-               s32 unk1C;
-               char pad20[0x24 - 0x20];
-               s32 unk24;
-               s32 unk28;
-               s32 unk2C;
-} M2C_1729124c6ef2_UnkStruct800CBF40;
 
 typedef struct {
     char pad_0[0x10];
@@ -1710,30 +1677,6 @@ typedef struct {
 } M2C_f2ce78e9f04f_Ovl11D04D4Obj;
 
 typedef struct {
-               s16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 unk6;
-               s16 unk8;
-               char pad0A[0x0C - 0x0A];
-               s32 unkC;
-               s32 unk10;
-               s32 unk14;
-               s32 unk18;
-               s32 unk1C;
-               char pad20[0x24 - 0x20];
-               s32 unk24;
-               s32 unk28;
-               s32 unk2C;
-} M2C_f3fe4d9631b5_UnkStruct800CBF40;
-
-typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-} M2C_f3fe4d9631b5_UnkStruct800CBF70Arg0;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -1753,24 +1696,6 @@ typedef struct {
                s16 unk8;
                s16 unkA;
 } M2C_f8096ae641a3_UnkStruct801152BC;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-} M2C_f90dacf3c1c7_Ovl11ObjHead;
-
-typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-} M2C_f90dacf3c1c7_Ovl11Pos;
-
-typedef struct {
-               M2C_f90dacf3c1c7_Ovl11Pos *unk0;
-               M2C_f90dacf3c1c7_Ovl11ObjHead *unk4;
-               u8 pad8[0xC];
-               s32 unk14;
-} M2C_f90dacf3c1c7_Ovl11CheckArg;
 
 typedef struct {
     char pad_0[0x24];
@@ -2118,10 +2043,10 @@ typedef struct {
 
 typedef struct {
                char pad_0[4];
-               s16 unk4;
-               s16 unk6;
+               s16 timer;
+               s16 state;
                char pad_8[4];
-               s32 unkC;
+               s32 fallStep;
 } Ovl11CC4E0Object;
 
 typedef struct {
@@ -2130,19 +2055,6 @@ typedef struct {
     s32 vz;
     s32 pad;
 } Ovl11CC7CCPosition;
-
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    u16 unk4;
-    u16 unk6;
-    u16 direction;
-    s16 padA;
-    s32 unkC;
-    s32 height;
-    Ovl11CC7CCPosition velocity;
-    Ovl11CC7CCPosition position;
-} Ovl11CC7CCObject;
 
 typedef struct {
     char pad0[0x18];
@@ -2518,6 +2430,19 @@ typedef struct {
     u16 saved28;
     u16 saved2A;
 } Ovl11ModeTransitionObject;
+
+typedef struct {
+    s16 unk0;
+    s16 itemId;
+    u16 timer;
+    u16 state;
+    u16 direction;
+    s16 padA;
+    s32 fallStep;
+    s32 height;
+    Ovl11CC7CCPosition velocity;
+    Ovl11CC7CCPosition position;
+} Ovl11MovingItemRecord;
 
 typedef struct {
     char pad[0x16];
@@ -3354,6 +3279,11 @@ typedef struct {
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 
 typedef struct { u16 unk0; } UnkStruct800E109C;
+
+typedef struct {
+ long vx, vy;
+ long vz, pad;
+} VECTOR;
 
 typedef struct {
     s32 x;

@@ -4,7 +4,7 @@
 
 extern u8 D_80051FA8[];
 extern u8 D_80053114[];
-extern s8 D_80137584;
+extern s8 gOvl15MenuState;
 extern s16 D_8013759C;
 
 void func_8001AC10(void *arg0, s32 arg1, s32 arg2);
@@ -31,10 +31,10 @@ void ovl_15_func_8012F6C0(void) {
         temp_v0 = Ovl15UpdateConfirmationMenu();
         if (temp_v0 != 0) {
             if (temp_v0 <= 0 ? temp_v0 == -1 : temp_v0 == temp_s0) {
-                D_80137584 = 0;
+                gOvl15MenuState = 0;
             }
         } else {
-            D_80137584 = 0xD;
+            gOvl15MenuState = 0xD;
         }
         break;
     }

@@ -13,15 +13,15 @@ void ovl_15_func_80131AA4(void) {
     if (temp_v0 < 3) {
         if (temp_v0 < 0) {
             if (temp_v0 == -1) {
-                D_8013758C = 2;
-                D_80137584 = 0;
+                gOvl15SelectedCard = 2;
+                gOvl15MenuState = 0;
             }
         } else {
             if (gOvl15SaveSlotStatus[temp_v0] != 0) {
-                D_80137584 = 0xA;
+                gOvl15MenuState = 0xA;
             } else {
-                D_8013758E = (s16) temp_v0;
-                D_80137584 = 0xB;
+                gOvl15SelectedSlot = (s16) temp_v0;
+                gOvl15MenuState = 0xB;
             }
         }
     }

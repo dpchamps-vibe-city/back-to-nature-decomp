@@ -51,16 +51,16 @@ typedef struct {
  * fixed-point velocity +14/+1C and four position words at +24. */
 typedef struct {
     s16 unk0;
-    s16 unk2;
-    u16 unk4;
-    u16 unk6;
+    s16 itemId;
+    u16 timer;
+    u16 state;
     u16 direction;
     s16 padA;
-    s32 unkC;
+    s32 fallStep;
     s32 height;
     Ovl11CC7CCPosition velocity;
     Ovl11CC7CCPosition position;
-} Ovl11CC7CCObject;
+} Ovl11MovingItemRecord;
 
 /* 8010E6E8: direction +22, state +28, timer +2C, flags +34,
  * unsigned index +AC and halfword choice/attributes +B4/+B8. */
@@ -1062,32 +1062,6 @@ typedef struct {
     u16 unk3C;
 } Recon_ovl_11_func_800C6F0C_A0View;
 
-/* 800CBF70's matched definition copies this three-word position into an effect. */
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-} Ovl11CBF70Position;
-
-/* Fields returned by 800CBF70, as witnessed by its matched definition. */
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    char pad0A[2];
-    s32 unkC;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    s32 unk1C;
-    char pad20[4];
-    s32 unk24;
-    s32 unk28;
-    s32 unk2C;
-} Ovl11CBF70Effect;
-
 /* 800C7010: halfwords at 38/3C, flags at 6C, animation data at 260.
  * 800C69B8 reads the signed item-table index at 8A.
  * 800CCCC0 resets halfwords at 18/1A/22/24/2A/36 and reads u16 at 2C. */
@@ -1586,10 +1560,10 @@ typedef struct {
  * The object identifier at +0x2 is also read as signed/unsigned halfwords. */
 typedef struct {
     /* 0x00 */ char pad_0[4];
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 unk6;
+    /* 0x04 */ s16 timer;
+    /* 0x06 */ s16 state;
     /* 0x08 */ char pad_8[4];
-    /* 0x0C */ s32 unkC;
+    /* 0x0C */ s32 fallStep;
 } Ovl11CC4E0Object;
 
 /* Two coordinate triples at +0 and +8; the +6 halfword is unused here.

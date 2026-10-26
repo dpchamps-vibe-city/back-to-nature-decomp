@@ -5,9 +5,9 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_moving_items.h"
 
 void ovl_11_func_800C70CC(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s32 arg3);
-Ovl11CBF70Effect *ovl_11_func_800CBF70(Ovl11CBF70Position *arg0, u16 *arg1, s16 arg2);
 
 s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0) {
     u16 effect[3];
@@ -19,7 +19,7 @@ s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0) {
     effect[0] = 0x186;
     effect[1] = 0;
     effect[2] = 1;
-    ovl_11_func_800CBF70((Ovl11CBF70Position *) ((u8 *) arg0 + 0x100), effect, (s16) arg0->unk38);
+    Ovl11SpawnMovingItemRecord((Vec3 *) ((u8 *) arg0 + 0x100), effect, (s16) arg0->unk38);
     gOvl11HeldActionSpritePosition.x = 0;
     gOvl11HeldActionSpritePosition.y = 0;
     gOvl11HeldActionSpritePosition.z = 0;

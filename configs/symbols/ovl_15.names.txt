@@ -10,6 +10,20 @@ Ovl15PlaceRowZSlot = 0x80132B44;
 gOvl15RowXPlacementTable = 0x801375D8; // type:data size:0x20
 gOvl15RowZPlacementTable = 0x801375F8; // type:data size:0x60
 
+// Shared memory-card menu lifecycle and its state-transition timer.
+Ovl15ResetSaveMenuState = 0x8012E15C; // type:func
+Ovl15UpdateCardWriteScene = 0x8012E2CC; // type:func
+Ovl15UpdateCardReadScene = 0x8012E520; // type:func
+Ovl15UpdateCardReadSceneWithSprites = 0x8012E7C8; // type:func
+gOvl15MenuState = 0x80137584; // type:data size:0x1
+gOvl15LastMenuState = 0x80137585; // type:data size:0x1
+gOvl15MenuExitRequest = 0x80137586; // type:data size:0x1
+gOvl15SelectedCard = 0x8013758C; // type:data size:0x2
+gOvl15SelectedSlot = 0x8013758E; // type:data size:0x2
+gOvl15CardStates = 0x80137594; // type:data size:0x4
+gOvl15CardRetryCount = 0x80137598; // type:data size:0x2
+gOvl15MenuStateTimer = 0x8013759A; // type:data size:0x2
+
 // Menu services retain their original entry order and distinct input contracts.
 Ovl15UpdateTwoChoiceMenu = 0x80136990; // type:func
 Ovl15UpdateSaveSlotMenu = 0x80136B18; // type:func

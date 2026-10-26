@@ -4,13 +4,13 @@
 #include "psyq/libgte.h"
 #include "psyq/libmcrd.h"
 #include "psyq/memory.h"
+#include "ovl15_save_menu_lifecycle.h"
 
 
 long MemCardSync (long mode, long *cmds, long *rslt);
-void ovl_15_func_8012E15C (void);
 void ovl_15_func_8013468C (void);
 
 void ovl_15_func_801329D0(void) {
-    ovl_15_func_8012E15C();
-    D_80137586 = -1;
+    Ovl15ResetSaveMenuState();
+    gOvl15MenuExitRequest = -1;
 }

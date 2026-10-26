@@ -3,6 +3,15 @@
 #include "screen_fade.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_progress_status.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
@@ -12,7 +21,6 @@ s32 ovl_11_func_800E6F34(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
-void ovl_11_func_80111E68(s16 arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 s16 ovl_11_func_8011D98C(StructD548 x);
@@ -132,7 +140,7 @@ s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2) {
             break;
         case 14:
             ovl_11_func_800F2354(-ovl_11_func_800D6014(item), 1);
-            ovl_11_func_80111E68(item);
+            Ovl11RequestProgressAction(item);
             CloseMessageWindow();
             RequestMessageWindow(2, 0x9F);
             Ovl11SetInteractionStepsOffset(1, 12, arg1);

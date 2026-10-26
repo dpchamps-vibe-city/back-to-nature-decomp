@@ -16,7 +16,7 @@ s32 ovl_15_func_80135C20(s32 arg0) {
     } else {
         return 0xC;
     }
-    Ovl15CardRetries = 0;
+    gOvl15CardRetryCount = 0;
     MemCardSync(0, &command, &result);
 retry:
     if (MemCardAccept(channel) != 1) {
@@ -27,21 +27,21 @@ retry:
     } while (0);
     switch (result) {
     case 1:
-        if ((s16) Ovl15CardRetries >= 8) {
+        if ((s16) gOvl15CardRetryCount >= 8) {
 no_card:
             return 4;
         }
-        Ovl15CardRetries++;
+        gOvl15CardRetryCount++;
         goto retry;
     case 2:
-        if ((s16) Ovl15CardRetries >= 8) {
+        if ((s16) gOvl15CardRetryCount >= 8) {
             return 8;
         }
-        Ovl15CardRetries++;
+        gOvl15CardRetryCount++;
         goto retry;
     case 4:
-        if ((s16) Ovl15CardRetries >= 8) {
-            Ovl15CardRetries = 0;
+        if ((s16) gOvl15CardRetryCount >= 8) {
+            gOvl15CardRetryCount = 0;
             arg0 *= 0x10;
 retry_type_changed:
             status = McxCardType(arg0);
@@ -55,10 +55,10 @@ retry_type_changed:
             case 1:
                 goto no_card;
             case 2:
-                if ((s16) Ovl15CardRetries >= 8) {
+                if ((s16) gOvl15CardRetryCount >= 8) {
                     return 6;
                 }
-                Ovl15CardRetries++;
+                gOvl15CardRetryCount++;
                 goto retry_type_changed;
             case 3:
                 return 5;
@@ -66,13 +66,13 @@ retry_type_changed:
                 return 0xC;
             }
         } else {
-            Ovl15CardRetries++;
+            gOvl15CardRetryCount++;
             goto retry;
         }
     case 3:
         return 5;
     case 0:
-        Ovl15CardRetries = 0;
+        gOvl15CardRetryCount = 0;
         arg0 *= 0x10;
 retry_type:
         status = McxCardType(arg0);
@@ -88,10 +88,10 @@ retry_type:
         case 3:
             return 5;
         case 2:
-            if ((s16) Ovl15CardRetries >= 8) {
+            if ((s16) gOvl15CardRetryCount >= 8) {
                 return 0;
             }
-            Ovl15CardRetries++;
+            gOvl15CardRetryCount++;
             goto retry_type;
         default:
             return 0xC;

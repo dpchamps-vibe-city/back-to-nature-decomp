@@ -14,6 +14,10 @@
 #include "psyq/libgs.h"
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_moving_items.h"
+#include "psyq/libetc.h"
+#include "psyq/abs.h"
+#include "ovl11_progress_status.h"
 
 void ovl_11_func_800D6628(void);
 /* These two sprite-loader wrappers use their matched definition signatures;
@@ -22,8 +26,6 @@ void ovl_11_func_800C9BB8(void);
 s32 ovl_11_func_800CDE3C(u8 *arg0);
 void ovl_11_func_800F6630(void);
 void ovl_11_func_800F42A8(u16 arg0, s32 arg1);
-void ovl_11_func_800CBEF8(void);
-void ovl_11_func_80111EF0(void);
 void ovl_11_func_800FFA28(void);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE76C(void);
@@ -71,12 +73,12 @@ void ovl_11_func_80104A90(void) {
     ovl_11_func_800F6630();
     ovl_11_func_800F42A8((u16) base->field_44BA, 1);
     Ovl11ResetClockEvents();
-    ovl_11_func_800CBEF8();
+    Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
     ovl_11_func_800F6630();
     Ovl11ResetSelectionMessage();
     ResetMessageWindow();
-    ovl_11_func_80111EF0();
+    Ovl11RefreshProgressStatusEntry();
     Ovl11ClearSpriteEffects();
     ovl_11_func_800FFA28();
     ovl_11_func_800CFD9C();

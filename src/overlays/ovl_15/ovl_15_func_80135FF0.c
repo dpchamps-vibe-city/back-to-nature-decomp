@@ -34,29 +34,29 @@ s32 ovl_15_func_80135FF0(s16 arg0, s16 arg1) {
         }
     }
     ovl_15_func_80137544(Ovl15CardFilename, arg1);
-    Ovl15CardRetries = 0;
+    gOvl15CardRetryCount = 0;
     memset(entries, 0, sizeof(entries));
     MemCardSync(0, &sync[0], &sync[1]);
 retry_first:
     sync[1] = MemCardGetDirentry(channel, Ovl15CardFilename, entries, &found, 0, 1);
     switch (sync[1]) {
     case 1:
-        if ((s16) Ovl15CardRetries < 7) {
-            u16 nextRetry = Ovl15CardRetries + 1;
-            Ovl15CardRetries = nextRetry;
+        if ((s16) gOvl15CardRetryCount < 7) {
+            u16 nextRetry = gOvl15CardRetryCount + 1;
+            gOvl15CardRetryCount = nextRetry;
             goto retry_first;
         }
         return 4;
     case 2:
-        if ((s16) Ovl15CardRetries < 7) {
-            u16 nextRetry = Ovl15CardRetries + 1;
-            Ovl15CardRetries = nextRetry;
+        if ((s16) gOvl15CardRetryCount < 7) {
+            u16 nextRetry = gOvl15CardRetryCount + 1;
+            gOvl15CardRetryCount = nextRetry;
             goto retry_first;
         }
         return 8;
     case 0:
     default:
-        Ovl15CardRetries = 0;
+        gOvl15CardRetryCount = 0;
         break;
     }
     memset(entries, 0, sizeof(entries));
@@ -65,16 +65,16 @@ retry_second:
     sync[1] = MemCardGetDirentry(channel, Ovl15CardWildcard, entries, &files, 0, 15);
     switch (sync[1]) {
     case 1:
-        if ((s16) Ovl15CardRetries < 7) {
-            u16 nextRetry = Ovl15CardRetries + 1;
-            Ovl15CardRetries = nextRetry;
+        if ((s16) gOvl15CardRetryCount < 7) {
+            u16 nextRetry = gOvl15CardRetryCount + 1;
+            gOvl15CardRetryCount = nextRetry;
             goto retry_second;
         }
         return 4;
     case 2:
-        if ((s16) Ovl15CardRetries < 7) {
-            u16 nextRetry = Ovl15CardRetries + 1;
-            Ovl15CardRetries = nextRetry;
+        if ((s16) gOvl15CardRetryCount < 7) {
+            u16 nextRetry = gOvl15CardRetryCount + 1;
+            gOvl15CardRetryCount = nextRetry;
             goto retry_second;
         }
         return 8;

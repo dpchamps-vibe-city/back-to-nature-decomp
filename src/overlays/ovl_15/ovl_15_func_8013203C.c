@@ -9,13 +9,13 @@ void ovl_15_func_8013203C(void) {
     temp_v0 = ovl_15_func_80133808(1);
     switch (temp_v0) {
     case 1:
-        D_80137584 = 0x14;
+        gOvl15MenuState = 0x14;
         break;
     case 0:
         break;
     case -1:
         ovl_15_func_80134724();
-        D_80137584 = 0x12;
+        gOvl15MenuState = 0x12;
         break;
     }
 }

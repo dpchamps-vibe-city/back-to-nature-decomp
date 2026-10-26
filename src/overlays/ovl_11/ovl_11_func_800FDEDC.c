@@ -1,6 +1,6 @@
 #include "common.h"
 
-extern s16 D_800719FE;
+extern s16 gProgressRequest;
 
 s32 ovl_11_func_800FDFD8(s16 arg0);
 s32 ovl_11_func_800FDFA8(s16 arg0);
@@ -12,7 +12,7 @@ s16 ovl_11_func_800FDEDC(s16 arg0) {
     s32 var_s0;
 
     var_s3 = 1;
-    if ((u32) (D_800719FE - arg0) < 5U) {
+    if ((u32) (gProgressRequest - arg0) < 5U) {
         var_s2 = ovl_11_func_800FDFD8;
         var_s5 = 1;
     } else {

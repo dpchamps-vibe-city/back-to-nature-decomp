@@ -10,8 +10,8 @@
 #include "psyq/memory.h"
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_moving_items.h"
 
-void ovl_11_func_800CBEF8(void);
 void ovl_11_func_800F6630(void);
 
 typedef struct {
@@ -42,7 +42,7 @@ void ovl_11_func_801048A0(void) {
     Ovl11ResetWeatherParticles();
     Ovl11ResetAmbientTintFromTable();
     Ovl11SetWeatherParticleMode(base->field_E4C8);
-    ovl_11_func_800CBEF8();
+    Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
     ovl_11_func_800F6630();
 

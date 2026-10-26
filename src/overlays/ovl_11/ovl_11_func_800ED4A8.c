@@ -36,6 +36,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_moving_items.h"
 
 typedef struct {
                s16 field_0;
@@ -187,7 +188,6 @@ s32 ovl_11_func_800CDF4C (u8 *arg0);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 void ovl_11_func_800D666C (s16 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-M2C_f3fe4d9631b5_UnkStruct800CBF40 *ovl_11_func_800CBF70 (M2C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *arg0, u16 *arg1, s16 arg2);
 void ovl_11_func_800C9D98 (void);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);

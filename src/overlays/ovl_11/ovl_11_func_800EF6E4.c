@@ -25,6 +25,8 @@
 #include "ovl11_object_events.h"
 #include "psyq/libgs.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_condition_masks.h"
+#include "ovl11_progress_status.h"
 
 typedef struct {
     s16 unk0;
@@ -108,7 +110,6 @@ s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
 void ovl_11_func_800F0358 (void);
 s32 ovl_11_func_800F0474 (s16 arg0);
-u16 ovl_11_func_80112160 (s32 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -129,15 +130,11 @@ s32 ovl_11_func_800F1EE4 (s32 arg0);
 void ovl_11_func_800F1E44 (u32 arg0, s16 *arg1, s32 arg2);
 s32 ovl_11_func_800F19C8 (s32 arg0);
 s32 ovl_11_func_800F13D8 (u16 arg0);
-s32 ovl_11_func_800F1BD0 (s32 arg0);
-s32 ovl_11_func_800F1C48 (s32 arg0);
-s32 ovl_11_func_800F1CC4 (s32 arg0);
 void ovl_11_func_800F27B0 (s16 kind, s16 value);
 void ovl_11_func_801037EC (void);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800DADB0 (s16 *arg0, s16 *arg1, s32 arg2, Ovl11D124Entry *arg3, s32 arg4);
 s32 ovl_11_func_800EC354 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_80111F10 (void);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void ovl_11_func_800DBAB0 (void);
 

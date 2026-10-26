@@ -34,10 +34,10 @@ s32 Ovl11PurchaseCatalogEntryA7(void) {
 }
 
 s32 Ovl11PurchaseFlagSelectedEntry(void) {
-    if (D_800719F8 & 0x40) {
+    if (gProgressDerivedFlags & 0x40) {
         return ovl_11_func_8011C298(0x6D, 2, 0xD4, 1);
     }
-    if (D_800719F8 & 0x80) {
+    if (gProgressDerivedFlags & 0x80) {
         return ovl_11_func_8011C298(0x6E, 2, 0x248, 1);
     }
     return 1;

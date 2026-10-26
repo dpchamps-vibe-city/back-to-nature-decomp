@@ -19,10 +19,10 @@ void ovl_15_func_8012F3FC(void) {
     case 1:
     case -1:
         gOvl15MenuCursor = 0;
-        D_80137584 = 8;
+        gOvl15MenuState = 8;
         break;
     case 0:
-        D_80137584 = 0x13;
+        gOvl15MenuState = 0x13;
         break;
     }
 }

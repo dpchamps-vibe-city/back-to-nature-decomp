@@ -618,7 +618,7 @@ block_339:
         return ((Ovl11ConditionState *) D_8006C838)->actors[0].field14 >= 0x32;
     case 0x3E:
         var_v0 = 0;
-        if ((D_80070D30 & 0xFC) == 0xFC) {
+        if ((gProgressStateFlags & 0xFC) == 0xFC) {
             temp_v1_3 = ((Ovl11ConditionWork *) &D_8007AFF0)->otherHeader->kind;
             if ((temp_v1_3 == 0xC) || (temp_v1_3 == 0x22)) {
                 return 1;

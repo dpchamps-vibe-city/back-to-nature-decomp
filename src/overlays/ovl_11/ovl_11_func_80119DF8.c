@@ -2,10 +2,18 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_progress_status.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
-void ovl_11_func_80111F10(void);
 s32 ovl_11_func_8011B2B0(void);
 s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2);
@@ -163,7 +171,7 @@ s32 ovl_11_func_80119DF8(void) {
     case 5:
         ovl_11_func_800F2354(-price, 1);
         ovl_11_func_8011DAD4(item, 1, 1);
-        ovl_11_func_80111F10();
+        Ovl11RefreshProgressStatus();
         ovl_11_func_8011B2B0();
         gOvl11InteractionDrawMode = 4;
         RequestMessageWindow(2, 0x91);

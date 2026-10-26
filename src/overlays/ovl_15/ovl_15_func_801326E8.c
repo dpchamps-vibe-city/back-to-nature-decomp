@@ -29,13 +29,13 @@ void ovl_15_func_801326E8(void) {
     case -1:
         ovl_15_func_80134724();
         gOvl15ConfirmationChoice = 1;
-        D_80137584 = 0x1A;
+        gOvl15MenuState = 0x1A;
         return;
     case 0:
         ovl_15_func_80132C1C();
         Ovl15InsertSaveChecksumSlots();
         Ovl15WriteSaveChecksums();
-        D_80137584 = 0x1D;
+        gOvl15MenuState = 0x1D;
         return;
     }
 }

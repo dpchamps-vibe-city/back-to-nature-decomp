@@ -14,21 +14,21 @@ void ovl_15_func_8012F300(void) {
     if (temp_v0 < 3) {
         if (temp_v0 < 0) {
             if (temp_v0 == -1) {
-                D_8013758C = 2;
-                D_80137584 = 0;
+                gOvl15SelectedCard = 2;
+                gOvl15MenuState = 0;
             }
         } else {
             temp_v1 = gOvl15SaveSlotStatus[(s16) temp_v0];
-            D_8013758E = (s16) temp_v0;
+            gOvl15SelectedSlot = (s16) temp_v0;
             if (temp_v1 == 0) {
                 gOvl15ConfirmationChoice = 1;
-                D_80137584 = 9;
+                gOvl15MenuState = 9;
             } else if (temp_v1 == 1) {
-                D_80137584 = 0xA;
+                gOvl15MenuState = 0xA;
             } else if (temp_v1 == 2) {
-                D_80137584 = 0x11;
+                gOvl15MenuState = 0x11;
             } else if (temp_v1 == 3) {
-                D_80137584 = 0x12;
+                gOvl15MenuState = 0x12;
             }
         }
     }

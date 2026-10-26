@@ -27,27 +27,27 @@ s32 ovl_15_func_80136288(s16 arg0, s16 arg1, Ovl15SaveSummary *arg2) {
         }
     }
     ovl_15_func_80137544(Ovl15CardFilename, arg1);
-    Ovl15CardRetries = 0;
+    gOvl15CardRetryCount = 0;
     MemCardSync(0, &command, &result);
 retry:
     MemCardReadFile(channel, Ovl15CardFilename, buffer.words, 0x200, 0x80);
     MemCardSync(0, &command, &result);
     switch (result) {
     case 1:
-        if ((s16) Ovl15CardRetries >= 7) {
+        if ((s16) gOvl15CardRetryCount >= 7) {
             return 4;
         }
-        Ovl15CardRetries++;
+        gOvl15CardRetryCount++;
         goto retry;
     case 2:
-        if ((s16) Ovl15CardRetries >= 7) {
+        if ((s16) gOvl15CardRetryCount >= 7) {
             return 8;
         }
-        Ovl15CardRetries++;
+        gOvl15CardRetryCount++;
         goto retry;
     case 5:
-        if ((s16) Ovl15CardRetries < 7) {
-            Ovl15CardRetries++;
+        if ((s16) gOvl15CardRetryCount < 7) {
+            gOvl15CardRetryCount++;
             goto retry;
         }
         return 9;

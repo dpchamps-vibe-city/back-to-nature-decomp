@@ -38,6 +38,7 @@
 #include "game_flags.h"
 #include "ovl11_primary_object_update.h"
 #include "ovl11_primary_object_draw.h"
+#include "ovl11_moving_items.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -85,7 +86,6 @@ s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CAADC (void);
 void ovl_11_func_800C056C(s32 unused);
 void ovl_11_func_800DCC5C (void);
-void ovl_11_func_800CCB90 (void);
 void ovl_11_func_800DC148 (void);
 s32 ovl_11_func_800F0F50 (void);
 void ovl_11_func_800DBAB0 (void);
@@ -137,7 +137,7 @@ void Ovl11UpdateAreaFrame(void) {
         Ovl11DrawSceneGeometry();
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
         Ovl11DrawPrimaryObjectFrame((Ovl11SpritePositionView *) ((struct Ovl11FrameState *) D_8006C838)->position, 1);
-        ovl_11_func_800CCB90();
+        Ovl11UpdateMovingItemRecords();
         ovl_11_func_800DC148();
         SCRATCH_STACK_END();
     }

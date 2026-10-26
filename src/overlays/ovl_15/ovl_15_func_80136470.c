@@ -16,20 +16,20 @@ s32 ovl_15_func_80136470(s16 arg0) {
             return status;
         }
     }
-    Ovl15CardRetries = 0;
+    gOvl15CardRetryCount = 0;
     MemCardSync(0, &command, &result);
 retry:
     result = MemCardFormat(channel);
     switch (result) {
     case 1:
-        if ((s16) Ovl15CardRetries >= 7) {
+        if ((s16) gOvl15CardRetryCount >= 7) {
             return 4;
         }
-        Ovl15CardRetries++;
+        gOvl15CardRetryCount++;
         goto retry;
     case 2:
-        if ((s16) Ovl15CardRetries < 7) {
-            Ovl15CardRetries++;
+        if ((s16) gOvl15CardRetryCount < 7) {
+            gOvl15CardRetryCount++;
             goto retry;
         }
         return 2;

@@ -240,10 +240,10 @@ typedef struct {
 } Ovl11CC7CCSpawnOwner;
 
 /* 800CCB90 walks three 0x34-byte records at +2; retain the siblings' byte-array linkage view. */
-extern u8 D_80128BB0[];
+extern u8 gOvl11MovingItemRecords[];
 
 /* 800CC7CC/800CBF70 index four pairs of signed words; retain the byte-array linkage view. */
-extern u8 D_80123130[0x20];
+extern u8 gOvl11MovingItemDirectionVelocity[0x20];
 /* 800CC7CC loads this shared entity selector with lhu. */
 extern u16 D_80071AFE;
 
@@ -929,13 +929,11 @@ struct PadInputState;
 extern s16 gOvl11PendingStageMode;
 
 /* 800CC0F8 projects to two signed words, then reads their low halfwords. */
-extern s32 D_80128B98[2];
+extern s32 gOvl11MovingItemScreenPosition[2];
 /* 800CC0F8 stores three halfwords and passes the vector to 8001DFD4. */
-extern s16 D_80128BA0[4];
-/* 800CC0F8 tests bit 0x100 in the sprite's flags halfword. */
-extern u16 D_80128C82;
+extern s16 gOvl11MovingItemProjectionInput[4];
 /* ovl_11_func_800CC4E0 initializes this sprite via func_80015704. */
-extern struct SpriteSourceData D_80128C80;
+extern struct SpriteSourceData gOvl11MovingItemSpriteSource;
 /* ovl_11_func_800CC4E0 stores a word flag when object id is 0x186. */
 extern s32 gOvl11HeldActionSignal;
 /* 800CDD7C clears three halfwords; 80120850 reads these coordinates. */
@@ -1419,9 +1417,13 @@ typedef struct {
     s32 flags;
     u8 pad44FC[0x51C4 - 0x44FC];
     s16 cooldown;
-    u8 pad51C6[0x91DC - 0x51C6];
+    s16 request;
+    u8 pad51C8[0x91DC - 0x51C8];
     s16 mode;
 } Ovl11ProgressState;
+/* 80111EE0 stores 3 at work+44D8; 80112160 reads work+51C6 directly. */
+extern s16 gProgressPendingTimer;
+extern s16 gProgressRequest;
 
 /* 80111F88 passes this address to the matched s32-pointer callee 800CD0C0. */
 extern s32 D_80075A1C;
@@ -1799,7 +1801,7 @@ struct Ovl11Scan109Globals {
 };
 
 /* ovl_11_func_800BE94C indexes four original-data halfwords by the +0x44BA selector. */
-extern u16 D_80122E6C[4];
+extern u16 gOvl11ItemCollisionSeasonMasks[4];
 /* 800C0A4C walks ten 0xE-byte records; 800C0DB4 reads seven signed halfwords. */
 extern s16 gOvl11ClockEventRules[10][7];
 /* 800C1224/800C1280 search 14/18 entries; 800C141C reads the third halfword.
@@ -1837,6 +1839,22 @@ struct Ovl11ClockAnchor {
     u8 pad_0[8];
     u32 counter;
 };
+
+/* 800BE5A0 scans 0x14-byte X/Z rectangles: four signed words and a u16 region. */
+typedef struct {
+    s32 minX;
+    s32 minZ;
+    s32 maxX;
+    s32 maxZ;
+    u16 region;
+    u16 reserved;
+} Ovl11CollisionRegionBounds;
+extern Ovl11CollisionRegionBounds gOvl11CollisionRegionBounds[25];
+extern Ovl11CollisionRegionBounds gOvl11Region5Bounds[7];
+extern Ovl11CollisionRegionBounds gOvl11Region5ExpandedBounds[9];
+extern Ovl11CollisionRegionBounds gOvl11Region4Bounds[5];
+extern Ovl11CollisionRegionBounds gOvl11Region4ExpandedBounds[10];
+extern Ovl11CollisionRegionBounds gOvl11OverrideRegionBounds[4];
 
 /* 800BEB28 reads the s16 at +91DC, flags at +91E0 and pool pointer at +DD8C. */
 struct Ovl11CollisionDispatchState {
@@ -5083,8 +5101,8 @@ extern s32 D_800BA894[];
 /* D_80070D30 and D_800719F8 - the ovl_11 file-status flag word and its
  * status sibling (reached as &D_800719F8 - 0xCC8). Both are >8-byte-view
  * symbols accessed with absolute addressing (lui + %lo) from ovl_11 code. */
-extern s32 D_80070D30;
-extern s32 D_800719F8;
+extern s32 gProgressStateFlags;
+extern s32 gProgressDerivedFlags;
 
 /* 800F291C reads these signed/unsigned state fields through one buffer base. */
 typedef struct {
@@ -5154,19 +5172,19 @@ extern Ovl11EventFlagView D_80070D34;
 /* D_80127F80 - ovl_11 table of four halfwords scanned by
  * ovl_11_func_80112284 through an advancing s16 pointer.
  * Accessed with absolute addressing from ovl_11 code. */
-extern s16 D_80127F80;
+extern s16 gOvl11StatusCounterGroupAIds;
 
 /* D_80127F88 - second ovl_11 table of four halfwords, scanned by
  * ovl_11_func_80112318 through an advancing s16 pointer. Sits just past
  * the D_80127F80 table. Accessed with absolute addressing from ovl_11
  * code. */
-extern s16 D_80127F88;
+extern s16 gOvl11StatusCounterGroupBIds;
 
 /* D_80127F90 - third ovl_11 table of four halfwords, scanned by
  * ovl_11_func_801123AC through an advancing s16 pointer. Sits just past
  * the D_80127F88 table. Accessed with absolute addressing from ovl_11
  * code. */
-extern s16 D_80127F90;
+extern s16 gOvl11StatusCounterGroupCIds;
 
 /* D_80127FE8 - base of the ovl_11 16-byte-stride halfword table read by
  * ovl_11_func_80113A20. The table index is the halfword at D_8012D110 and
@@ -5762,7 +5780,7 @@ extern s32 D_8007AFF8;
  * ovl_15_func_8012E15C clears it and ovl_15_func_801300E4 stores -1 to it
  * (sb $v0, %lo). Absolute-addressed (lui + %lo) from -G0/overlay code; the
  * TU family only declares it, so a scalar extern keeps the base name. */
-extern s8 D_80137586;
+extern s8 gOvl15MenuExitRequest;
 
 /* D_80137587 - ovl_15 private state byte in the overlay data segment,
  * incremented/decremented and clamped by ovl_15_func_80136990 (lbu/sb for
@@ -5782,14 +5800,14 @@ extern s8 gOvl15ConfirmationChoice;
  * D_80052FC4 family) stores a state code to it (sb $v0, %lo) after
  * ovl_15_func_80136990. Absolute-addressed (lui + %lo) from -G0 overlay
  * code; only extern declarations belong here. */
-extern s8 D_80137584;
+extern s8 gOvl15MenuState;
 /* 8012E520 compares this previous-state byte with lb and updates it with sb. */
-extern s8 D_80137585;
+extern s8 gOvl15LastMenuState;
 
 /* D_8013758C - ovl_15 private state s16 in the overlay data segment; the
  * same cluster stores the ovl_15_func_80136990 result to it (sh $v0, %lo).
  * Absolute-addressed (lui + %lo) from -G0 overlay code. */
-extern s16 D_8013758C;
+extern s16 gOvl15SelectedCard;
 
 /* ovl_15_func_801301A0 reads this card index with lh and updates it with sh. */
 extern s16 D_8013758A;
@@ -5798,7 +5816,7 @@ extern s16 D_8013758A;
  * ovl_15_func_80130C8C and passed to ovl_15_func_801367F8 and by the
  * ovl_15_func_80130C2C/80130D3C family. Absolute-addressed (lui + %lo) from
  * -G0 overlay code; only extern declarations belong here. */
-extern s16 D_8013758E;
+extern s16 gOvl15SelectedSlot;
 
 /* D_8013759E - ovl_15 private mode/state s16 in the overlay data segment,
  * read by the D_8013759E/A0/A2/A4 state run (ovl_15_func_801344E8 selects its
@@ -5823,7 +5841,7 @@ extern u8 D_80053530[];
 /* ovl_15_func_80130FF0 adds D_80054BBC[0] bytes to this text-updater base. */
 extern u8 D_800533C8[];
 /* ovl_15_func_80130FF0 reads this state with lh and compares it against 0x5B. */
-extern s16 D_8013759A;
+extern s16 gOvl15MenuStateTimer;
 /* ovl_15_func_8012F4F4 clears this state with sh; 8012F6C0 reads it with lh. */
 extern s16 D_8013759C;
 
@@ -5838,8 +5856,15 @@ extern u8 D_8005316C[];
 extern u8 D_80051FEA[];
 /* ovl_15_func_8012F158 adds D_80054BBC[0] to this text-updater address. */
 extern u8 D_80052FC4[];
+/* 8012E15C clears these halfword controls before each menu session. */
+extern s16 D_80137590;
+/* Card operations 36558/36660/367F8 count retries; signed limits use casts. */
+extern u16 gOvl15CardRetryCount;
+/* 8012E15C clears this 0x80-byte scratch area. Summaries use the header view. */
+extern u8 D_801377A0[];
+
 /* ovl_15_func_8012E15C initializes two halfword card states here. */
-extern s16 D_80137594[];
+extern s16 gOvl15CardStates[];
 /* ovl_15_func_8012F158 writes three halfword save-slot states at stride 2. */
 extern s16 gOvl15SaveSlotStatus[];
 
@@ -6710,9 +6735,9 @@ struct Ovl11BCB5CState {
     s16 fieldE4C8;
 };
 
-/* ovl_15_func_80136288: lh/lhu/sh retry counter at D_80137598;
+/* ovl_15_func_80136288: lh/lhu/sh retry counter at 80137598;
  * named view avoids the signed/unsigned legacy declarations in sibling TUs. */
-extern u16 Ovl15CardRetries __asm__("D_80137598");
+/* gOvl15CardRetryCount is declared with the shared menu controls above. */
 /* ovl_15 filename builder writes this 0x20-byte data object via strcpy. */
 extern char Ovl15CardFilename[0x20] __asm__("D_80140EC0");
 /* ovl_15_func_80135FF0 passes this original .asciz "*" to MemCardGetDirentry. */

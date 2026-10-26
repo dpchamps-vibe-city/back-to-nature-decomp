@@ -8,23 +8,23 @@ void ovl_15_func_8012EF84(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*gTextBankOffsets]);
-    if (D_8013759A >= 2) {
-        switch (ovl_15_func_80135C20(D_8013758C)) {
+    if (gOvl15MenuStateTimer >= 2) {
+        switch (ovl_15_func_80135C20(gOvl15SelectedCard)) {
         case 4:
-            if (D_80137594[D_8013758C] == 0) {
-                D_80137584 = 0x15;
+            if (gOvl15CardStates[gOvl15SelectedCard] == 0) {
+                gOvl15MenuState = 0x15;
             } else {
-                D_80137584 = 5;
+                gOvl15MenuState = 5;
             }
             break;
         case 5:
-            D_80137584 = 4;
+            gOvl15MenuState = 4;
             break;
         case 8:
-            D_80137584 = 6;
+            gOvl15MenuState = 6;
             break;
         default:
-            D_80137584 = 7;
+            gOvl15MenuState = 7;
             break;
         }
     }

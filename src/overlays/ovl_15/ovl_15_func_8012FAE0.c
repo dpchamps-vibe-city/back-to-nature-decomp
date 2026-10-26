@@ -16,18 +16,18 @@ void ovl_15_func_8012FAE0(void) {
     u32 paletteOffset;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    icons = D_801375B4[D_8013758E];
+    icons = D_801375B4[gOvl15SelectedSlot];
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
                  (s32)(D_8005346A + gTextBankOffsets[0]));
-    ovl_15_func_80134A34(D_8013758E);
+    ovl_15_func_80134A34(gOvl15SelectedSlot);
     Ovl15SerializeSaveImage();
     Ovl15InsertSaveChecksumSlots();
     Ovl15WriteSaveChecksums();
-    ovl_15_func_80137544(Ovl15CardFilename, D_8013758E);
+    ovl_15_func_80137544(Ovl15CardFilename, gOvl15SelectedSlot);
     memcpy(&Ovl15CardHeader, D_8012DEBC, 3);
     Ovl15CardHeader.type = 0x13;
     Ovl15CardHeader.blocks = 4;
-    Ovl15BuildSaveCardTitle(D_8013758E);
+    Ovl15BuildSaveCardTitle(gOvl15SelectedSlot);
     memset(Ovl15CardHeader.reserved, 0, sizeof(Ovl15CardHeader.reserved));
     paletteOffset = icons[0] + 0x14;
     Ovl15CardHeader.palette = *(Ovl15IconPalette *)(gOvl15CardIconResourceBuffer + paletteOffset);
@@ -35,5 +35,5 @@ void ovl_15_func_8012FAE0(void) {
     memcpy(gOvl15TransferBuffer + 0x80, (void *)(icons[0] + (u32)gOvl15CardIconResourceBuffer + 0x40), 0x80);
     memcpy(gOvl15TransferBuffer + 0x100, (void *)(icons[1] + (u32)gOvl15CardIconResourceBuffer + 0x40), 0x80);
     memcpy(gOvl15TransferBuffer + 0x180, (void *)(icons[2] + (u32)gOvl15CardIconResourceBuffer + 0x40), 0x80);
-    D_80137584 = 0x14;
+    gOvl15MenuState = 0x14;
 }
