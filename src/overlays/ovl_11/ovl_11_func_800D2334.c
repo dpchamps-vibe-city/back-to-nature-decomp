@@ -1,14 +1,16 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_clock_calendar.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_801090A4(Ovl11HandlerObjectView *arg0);
 s32 ovl_11_func_8010B4D8(u16 *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 void ovl_11_func_800D266C(Ov11D266CFields *arg0, u16 *arg1, s32 arg2);
 void ovl_11_func_80108CA4(s32 arg0);
 void ovl_11_func_80108BE8(u8 *arg0);
-s32 ovl_11_func_80107DEC(Ov11Timer *arg0);
 void ovl_11_func_8010B198(s32 arg0);
 void ovl_11_func_8010B0E8(u8 *arg0);
 
@@ -37,7 +39,7 @@ void ovl_11_func_800D2334(void) {
 block_9:
             update_mask = 0x20000;
             if ((*(s16 *) (far_base + 0x5476)) != (s16) var_s0->f30) {
-                ovl_11_func_80107DD0((s16 *) ((u8 *) var_s0 + 0xA8));
+                Ovl11ResetTimedSpriteEffect((s16 *) ((u8 *) var_s0 + 0xA8));
             } else if (!(var_s0->f34 & update_mask)) {
                 if (var_s1 == 0) {
                     if (!((*(s32 *) (base + 0xC)) & 0x08000000)) {
@@ -45,7 +47,7 @@ block_9:
                         ovl_11_func_80108CA4((s32) var_s0);
                     }
                     ovl_11_func_80108BE8((u8 *) var_s0);
-                    ovl_11_func_80107DEC((Ov11Timer *) ((u8 *) var_s0 + 0xA8));
+                    Ovl11TickTimedSpriteEffect((Ov11Timer *) ((u8 *) var_s0 + 0xA8));
                 } else {
                     base2 = (u8 *)D_8006C838;
                     if (!((*(s32 *) (base2 + 0x5234)) & 0x100)) {
@@ -54,7 +56,7 @@ block_9:
                             ovl_11_func_8010B198((s32) var_s0);
                         }
                         ovl_11_func_8010B0E8((u8 *) var_s0);
-                        ovl_11_func_80107DEC((Ov11Timer *) ((u8 *) var_s0 + 0xA8));
+                        Ovl11TickTimedSpriteEffect((Ov11Timer *) ((u8 *) var_s0 + 0xA8));
                     }
                     goto block_20;
                 }

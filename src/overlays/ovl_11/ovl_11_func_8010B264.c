@@ -1,8 +1,11 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_8010B830(Ovl11B264Object *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_8010B264(Ovl11B264Object *arg0) {
     s16 value;
@@ -95,6 +98,6 @@ s32 ovl_11_func_8010B264(Ovl11B264Object *arg0) {
         }
     }
     arg0->field_34 &= ~0x26;
-    ovl_11_func_80107DD0(arg0->field_A8);
+    Ovl11ResetTimedSpriteEffect(arg0->field_A8);
     return 0;
 }

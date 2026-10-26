@@ -1,10 +1,9 @@
 #include "common.h"
+#include "ovl11_record_pair_slots.h"
 
 s16 *ovl_11_func_800E1F9C(s32 arg0, s32 arg1, s32 arg2);
-s32 *ovl_11_func_800D0CD8(void);
 s32 ovl_11_func_800E2934(void *arg0);
 s32 ovl_11_func_800E2968(s16 *arg0, s32 arg1);
-void ovl_11_func_800D075C();
 
 void ovl_11_func_800CFD9C(void) {
     Ovl11CFD9CEntry *var_s0;

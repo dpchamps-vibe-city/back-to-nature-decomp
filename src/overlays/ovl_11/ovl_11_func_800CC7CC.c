@@ -5,11 +5,10 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "game_flags.h"
+#include "ovl11_paired_item_ids.h"
 
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 unsigned long long ovl_11_func_800BF450(void);
-s32 ovl_11_func_800CE514(s16 arg0);
-s16 ovl_11_func_800CE528(s16 arg0);
 void ovl_11_func_800CCBE8(Ovl11CC4E0Object *arg0);
 s32 ovl_11_func_800CB540(u16 *arg0);
 s32 ovl_11_func_800CC4E0(Ovl11CC4E0Object *arg0, Vec3 *arg1);
@@ -62,10 +61,10 @@ s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0) {
             saved->id = *(u16 *)(base + 0x52C6);
             saved->position = arg0->position;
         }
-        kind = ovl_11_func_800CE514(arg0->unk2);
+        kind = Ovl11IsUpperPairedItemId(arg0->unk2);
         if (kind == 1) {
             request.count = kind;
-            request.id = ovl_11_func_800CE528(arg0->unk2);
+            request.id = Ovl11MapToLowerPairedItemId(arg0->unk2);
             ovl_11_func_800CCBE8((Ovl11CC4E0Object *)arg0);
             ovl_11_func_800CB540(&request.id);
             return 1;

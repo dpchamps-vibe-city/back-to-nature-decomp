@@ -26,6 +26,8 @@
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_grouped_value_mapping.h"
 #include "point_projection.h"
+#include "ovl11_paired_item_ids.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct {
                s16 field_0;
@@ -164,7 +166,6 @@ void SetVal8005E2E8 (s32 arg0);
 s32 func_8001E38C (void);
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800C47F0 (void);
-s32 ovl_11_func_80107DEC (M2C_42071334137b_Ov11Timer *arg0);
 void ovl_11_func_800CD6F4 (void *arg0);
 s32 GetVal8005E524 (void);
 void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
@@ -180,9 +181,7 @@ s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 void ovl_11_func_800D666C (s16 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 M2C_f3fe4d9631b5_UnkStruct800CBF40 *ovl_11_func_800CBF70 (M2C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *arg0, u16 *arg1, s16 arg2);
-s32 ovl_11_func_800CE53C (s16 arg0);
 void ovl_11_func_800C9D98 (void);
-s32 ovl_11_func_800CE514 (s16 arg0);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800C6E0C (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);

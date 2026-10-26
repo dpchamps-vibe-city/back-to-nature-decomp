@@ -3,10 +3,10 @@
 #include "message_window.h"
 #include "text_entry.h"
 #include "ovl11_interaction_steps.h"
+#include "ovl11_record_pair_slots.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
-s32 *ovl_11_func_800D0CD8(void);
 s32 ovl_11_func_800D6014(u16 arg0);
 void ovl_11_func_800E2904(s32 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
@@ -79,7 +79,7 @@ s32 ovl_11_func_80115308(void) {
                 }
                 break;
             case 1:
-                if (ovl_11_func_800D0CD8() == 0) {
+                if (Ovl11FindFreeB4Record() == 0) {
                     RequestMessageWindow(2, 0x55);
                     Ovl11SetInteractionSteps(22, 21);
                 } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)ovl_11_func_8011D98C(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {

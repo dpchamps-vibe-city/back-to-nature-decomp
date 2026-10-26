@@ -20,6 +20,7 @@
 #include "game_flags.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_record_flag_query.h"
+#include "ovl11_record_pair_slots.h"
 
 typedef struct {
                char pad0[0x38];
@@ -92,7 +93,6 @@ void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D2E20 (void);
 void ovl_11_func_800DF0F8 (s32 arg0);
 void ovl_11_func_800E2904 (s32 arg0);
-void ovl_11_func_800D075C (s32 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_80118C6C (void);
@@ -114,8 +114,6 @@ void ClearActiveOrderingTables (void);
 s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_80112904 (s16 arg0);
 void ovl_11_func_800EF870 (s16 arg0);
-void ovl_11_func_800D0DBC (M2C_d453384c461b_UnkStruct800D0DBC *arg0);
-void ovl_11_func_800D079C (s32 arg0);
 s32 ovl_11_func_800F14D8 (s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800F144C (u16 arg0, u16 arg1, s16 *arg2);
 s32 ovl_11_func_800F15B4 (s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);

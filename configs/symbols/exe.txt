@@ -1518,3 +1518,8 @@ gClockMinute = 0x80070CFA; // size:0x2
 
 // Base of the shared twenty 0xB8 tagged records; preserve the extracted label extent.
 gTaggedRecordBase = 0x800749F4; // size:0xC
+
+// Four paired selection slots; expansion flags enable each pool's second half.
+gRecordPairSlots = 0x80076200; // size:0x10
+gTaggedRecordPoolExpanded = 0x80070D08; // size:0x2
+gB4RecordPoolExpanded = 0x80070D0A; // size:0x2

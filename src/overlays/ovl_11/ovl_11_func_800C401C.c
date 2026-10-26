@@ -5,13 +5,16 @@
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
 #include "game_flags.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
 s32 ovl_11_func_800CB4E0 (void);
 void ovl_11_func_800C47F0 (void);
-s32 ovl_11_func_80107DEC (Ov11Timer *arg0);
 void ovl_11_func_800CD6F4 (void *arg0);
 s32 ovl_11_func_800C9424 (void);
 s32 ovl_11_func_8011FFA8 (Ovl11SelectionObject *obj);
@@ -70,7 +73,7 @@ void ovl_11_func_800C401C(void) {
                 }
             }
 block_22:
-            ovl_11_func_80107DEC((Ov11Timer *)&obj->effectTimer);
+            Ovl11TickTimedSpriteEffect((Ov11Timer *)&obj->effectTimer);
             D_80128CB0 = 0;
             if (!(obj->flags & 0x20000000)) {
                 switch ((u32)obj->flags & 0x800010) {

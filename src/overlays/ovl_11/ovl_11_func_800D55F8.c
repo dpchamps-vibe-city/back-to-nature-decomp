@@ -1,8 +1,11 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
-void ovl_11_func_80107DE0(Ovl11C35ECStatePair *arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D04D4(Ovl11D04D4Obj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 
@@ -13,7 +16,7 @@ s32 ovl_11_func_800D55F8(Ovl11D55F8Object *arg0) {
     result = 0;
     switch (arg0->unk28) {
     case 0:
-        ovl_11_func_80107DE0((Ovl11C35ECStatePair *)((u8 *)arg0 + 0xA8), 0x24, 0x2D);
+        Ovl11StartTimedSpriteEffect((Ovl11C35ECStatePair *)((u8 *)arg0 + 0xA8), 0x24, 0x2D);
         arg0->unk28 = 1;
         arg0->unk2C = 0;
         arg0->unk2A = 0;

@@ -1,8 +1,10 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "random.h"
-
-void ovl_11_func_80107DD0(s16 *arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -23,7 +25,7 @@ s32 ovl_11_func_8010D04C(s32 arg0) {
     *(s32 *)(arg0 + 0x8C) = 0;
     *(s16 *)(arg0 + 0x16) = 0x32;
     *(s32 *)(arg0 + 0x34) |= 0x3C000000;
-    ovl_11_func_80107DD0((s16 *)(arg0 + 0xA8));
+    Ovl11ResetTimedSpriteEffect((s16 *)(arg0 + 0xA8));
     temp_v0 = Rand(0x12C);
     *(s16 *)(arg0 + 0x2C) = temp_v0;
     return 0;

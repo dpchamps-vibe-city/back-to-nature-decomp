@@ -719,9 +719,9 @@ extern void (*D_800BB4F8[11])(void);
 extern u8 D_800BD84C;
 
 /* ovl_17_func_800B9FA8 copies 0x13DC bytes here, then uses the leading sprite header. */
-extern u8 D_800BB728[0x13DC];
+extern u8 gOvl17SharedSpriteBank[0x13DC];
 /* ovl_17_func_800B9FA8 passes this 0x30-byte object to func_80015704. */
-extern u8 D_800BDAA4[0x30];
+extern u8 gOvl17SharedBankSpriteSource[0x30];
 
 /* 80120CC4 indexes original 48-halfword texture codes with lhu and stride 2. */
 extern u16 D_80128764[48];
@@ -2315,12 +2315,10 @@ extern u8 D_8007A670[];
  * Declared here (not per-file) so absolute addressing is derived once. */
 extern s32 D_80071B00[3];
 
-/* D_80076200 - four 4-byte records (s16 at +0) scanned by
- * ovl_11_func_800D08FC, which returns the address of the first record whose
- * leading s16 is -1. The same storage is also reached as D_8006C838+0x99D0.
- * Absolute-addressed (outside $gp), so it uses the _D_ label pattern. */
-extern s16 _D_80076200[4] __asm__("D_80076200");
-#define D_80076200 _D_80076200
+/* Four 4-byte selection slots: D08FC scans slots 0/1 at work+99C8,
+ * slots 2/3 at work+99D0; D0BC8 tests the same leading -1 free marker.
+ * The eight-halfword extent removes the old small-array label alias. */
+extern s16 gRecordPairSlots[8];
 
 /* D_8005F0A8 - s16 digit buffer. >8-byte declaration for the genuine split
  * address form (shared lui %hi base, see func_8001205C research).
@@ -4692,9 +4690,10 @@ extern u8 D_800C4BD0[];
 extern s32 D_800BB4E4[];
 
 /* 800B7E78 dispatches and advances this unsigned state byte with lbu/sb. */
-extern u8 D_800BB524;
+extern u8 gOvl17SceneLoadStep;
 
-extern u8 D_800BB710[];
+/* BA630 expands the three six-byte groups to halfword roll thresholds. */
+extern u8 gOvl17RecordRollThresholds[];
 
 /* ovl_17_func_800B8470 increments this byte and compares its signed value to 30. */
 extern s8 D_800BB6F8;
@@ -4729,15 +4728,18 @@ typedef struct {
     s16 count;
 } Ovl17SelView;
 
-/* 800BA54C initializes byte/halfword/word fields and six halfwords at +0x2BC. */
+/* BA54C's control view. 8898 toggles +0, counts ticks and advances the
+ * 12-fraction-bit scroll position; BA808 divides it by 4096 for screen x.
+ * 9C48 evaluates the base/bias/gain curve. The
+ * offset-named constants retain uncertain broader meaning (946C/9594). */
 typedef struct {
-    s32 field_0;
-    s8 field_4;
+    s32 toggle;
+    s8 phase;
     u8 pad_5;
-    s16 field_6;
-    s16 field_8;
-    s16 field_A;
-    s16 field_C;
+    s16 tickPeriod;
+    s16 valueBase;
+    s16 valueBias;
+    s16 valueGain;
     s16 field_E;
     s16 field_10;
     s16 field_12;
@@ -4745,19 +4747,19 @@ typedef struct {
     s16 field_16;
     s16 field_18;
     u8 pad_1A[2];
-    s32 field_1C;
-    s16 field_20;
-    s16 field_22;
-    s32 field_24;
+    s32 tickCounter;
+    s16 scrollSpeed;
+    s16 targetScrollSpeed;
+    s32 scrollPosition;
     u8 pad_28[0x2BC - 0x28];
-    s16 entries[6];
-    s16 field_2C8;
+    s16 selectionIndices[6];
+    s16 soundVoice;
     u8 pad_2CA[6];
-    s16 field_2D0;
-    s16 field_2D2;
-    s16 field_2D4;
-} Ovl17DisplaySetup;
-#define Ovl17_D_800BD848 (*(Ovl17DisplaySetup *)gOvl17RecordWorkBase)
+    s16 soundTriggerPercent;
+    s16 primaryValueThreshold;
+    s16 selectionCount;
+} Ovl17RecordWorkInitView;
+#define OVL17_RECORD_WORK (*(Ovl17RecordWorkInitView *)gOvl17RecordWorkBase)
 
 /* 800B8D88 reads a word at +0x5228 and a signed mode halfword at +0xE514. */
 typedef struct {
@@ -4881,13 +4883,15 @@ extern s16 D_8007AD5A[];
  * this TU), absolute-addressed (-G0). */
 extern u32 D_800BD864;
 
-extern u8 D_800BD758[];
+/* BA698 initializes six 6-byte triples; BA704/8294 install their addresses
+ * in display rows. The original label spans 0xF0, only its first 0x24 is used. */
+extern u8 gOvl17RowSlotTargets[];
 /* ovl_17 data/3634.data.s holds four-byte text offsets; 800B8294 stores their low halfwords. */
 extern s32 D_800BB534[];
 /* 800B8294 initializes a sprite here and writes a signed halfword at +0x1E4. */
 extern u8 D_800BD930[];
 
-extern u8 D_800BDA74[];
+extern u8 gOvl17DisplaySpriteSource[];
 /* 800BA808 indexes 8-byte records: signed halfword id at +0, fixed-point x at +4. */
 typedef struct {
     s16 id;
@@ -4898,15 +4902,15 @@ extern Ovl17BackdropEntry D_800BB5F0[];
 /* ovl_17 data/3634.data.s holds halfword frame indices; 800BA808 loads their low byte unsigned. */
 extern u16 D_800BB5D4[];
 /* ovl_17_func_800BA2C8 loads five 32-bit offsets from this original table. */
-extern s32 D_800BB6FC[5];
+extern s32 gOvl17SpriteHeaderOffsets[5];
 /* ovl_17_func_800BA2C8 copies 0xC28 bytes here before resolving sprite headers. */
-extern u8 D_800BCB08[0xC28];
+extern u8 gOvl17RecordSpriteBank[0xC28];
 /* ovl_17_func_800BA2C8 stores blob-relative pointers at these word globals. */
-extern u8 *D_800BD74C;
-extern u8 *D_800BD750;
+extern u8 *gOvl17SpriteHeaderVariantA;
+extern u8 *gOvl17SpriteHeaderVariantB;
 /* ovl_17_func_800BA2C8 passes this object to the sprite initializer. */
 struct SpriteSourceData;
-extern struct SpriteSourceData D_800BDDF8;
+extern struct SpriteSourceData gOvl17SceneSpriteSource;
 
 /* D_800BDAD4 - ovl_17 object-state record embedded at +0x28C of the
  * D_800BD848 display-area block. ovl_17_func_800BAD9C passes its address to
@@ -6455,8 +6459,8 @@ extern Ovl11StateEntry D_80127E40[2];
 /* D_80070D08 / D_80070D0A - ovl_11 progress halfwords read with lhu by
  * ovl_11_func_80110188 to choose the alternate table half; also used by
  * other matched ovl_11 leaves. Absolute-addressed from the -G0 overlay. */
-extern u16 D_80070D08;
-extern u16 D_80070D0A;
+extern u16 gTaggedRecordPoolExpanded;
+extern u16 gB4RecordPoolExpanded;
 /* 800D0FB4 reads this absolute-addressed status halfword with lhu. */
 extern u16 D_80070D0C;
 

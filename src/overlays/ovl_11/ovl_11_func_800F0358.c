@@ -1,9 +1,8 @@
 #include "common.h"
 #include "game_types.h"
-
-void ovl_11_func_800D09E0(s32 arg0);
+#include "ovl11_record_pair_slots.h"
 
 void ovl_11_func_800F0358(void) {
-    ovl_11_func_800D09E0(1);
-    ovl_11_func_800D09E0(0);
+    Ovl11RestorePairedRecords(1);
+    Ovl11RestorePairedRecords(0);
 }

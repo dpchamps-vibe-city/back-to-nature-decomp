@@ -15,7 +15,7 @@ s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3) {
     case 0:
         var_t4 = 1;
         var_t3 = D_80127D90;
-        if (D_80070D08 != 0) {
+        if (gTaggedRecordPoolExpanded != 0) {
             if (arg0->unk38 < 0) {
                 var_t3 = D_80127D90 + 1;
             }
@@ -26,13 +26,13 @@ s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3) {
     case 1:
         var_t4 = 1;
         var_t3 = D_80127DB0;
-        if (D_80070D0A != 0 && arg0->unk40 > 0) {
+        if (gB4RecordPoolExpanded != 0 && arg0->unk40 > 0) {
             var_t3 = D_80127DB0 + 1;
         }
         break;
     case 2:
         var_t4 = 3;
-        if (D_80070D0A == 0) {
+        if (gB4RecordPoolExpanded == 0) {
             D_80127DD0[2].unk0 = 0x226;
             D_80127DD0[2].unk8 = -0x960;
         }

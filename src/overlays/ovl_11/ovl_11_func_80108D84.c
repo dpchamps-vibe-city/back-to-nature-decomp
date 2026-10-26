@@ -1,10 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_clock_calendar.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_80109310(s32 *arg0);
 void ovl_11_func_800CF2C8(s32 *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
 void ovl_11_func_8010B05C(s32 *arg0);
 
@@ -117,7 +120,7 @@ s32 ovl_11_func_80108D84(s32 *arg0) {
         }
         (*(s32 *) ((u8 *) arg0 + 0x34)) = (s32) ((*(s32 *) ((u8 *) arg0 + 0x34)) & ~0x26);
         ovl_11_func_800CF2C8(arg0);
-        ovl_11_func_80107DD0((s16 *) ((arg0 + 0x2A)));
+        Ovl11ResetTimedSpriteEffect((s16 *) ((arg0 + 0x2A)));
         var_v0 = 0;
         if ((*(s32 *) ((u8 *) arg0 + 0x34)) & 0x100000) {
             ovl_11_func_8010B05C(arg0);

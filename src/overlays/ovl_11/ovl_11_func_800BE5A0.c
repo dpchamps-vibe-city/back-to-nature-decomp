@@ -1,7 +1,7 @@
 #include "common.h"
 
-extern u16 D_80070D08;
-extern u16 D_80070D0A;
+extern u16 gTaggedRecordPoolExpanded;
+extern u16 gB4RecordPoolExpanded;
 
 typedef struct {
     /* 0x00 */ s32 unk0;
@@ -48,7 +48,7 @@ s32 ovl_11_func_800BE5A0(Ovl11CheckArg *arg0) {
     temp_a1 = arg0->unk4->unk2;
     if (temp_a1 == 5) {
         var_t0 = 9;
-        if (D_80070D08 == 0) {
+        if (gTaggedRecordPoolExpanded == 0) {
             var_t0 = 7;
             var_a2 = D_80122AD0;
         } else {
@@ -58,7 +58,7 @@ s32 ovl_11_func_800BE5A0(Ovl11CheckArg *arg0) {
         var_t0 = 0x19;
         if (temp_a1 == 4) {
             var_t0 = 0xA;
-            if (D_80070D0A == 0) {
+            if (gB4RecordPoolExpanded == 0) {
                 var_t0 = 5;
                 var_a2 = D_80122C10;
             } else {

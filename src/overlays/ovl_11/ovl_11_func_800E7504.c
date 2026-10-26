@@ -8,9 +8,9 @@
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
 #include "ovl11_state_field_access.h"
+#include "ovl11_timed_sprite_effect.h"
 
 
-void ovl_11_func_80107DD0 (s16 *arg0);
 void ovl_11_func_800CF36C (s32 arg0);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -64,7 +64,7 @@ s32 ovl_11_func_800E7504(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                 (*(s32 *) ((u8 *) temp_v0 + 0x6C)) = (s32) (*(s32 *) ((u8 *) temp_v0 + 0x3C));
                 temp_v0->unk1E |= 0x1000;
                 (*(u16 *) ((u8 *) temp_v0 + 0x20)) = (u16) ((*(u16 *) ((u8 *) temp_v0 + 0x20)) & 0x3FFF);
-                ovl_11_func_80107DD0((s16 *) &temp_v0->unk30[0xB0]);
+                Ovl11ResetTimedSpriteEffect((s16 *) &temp_v0->unk30[0xB0]);
             }
             var_s0 -= 1;
             var_s1_2 += 1;

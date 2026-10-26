@@ -1,10 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "random.h"
+#include "ovl11_record_pair_slots.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_800E109C(UnkStruct800E109C *arg0);
-s32 ovl_11_func_800D0D7C(u8 *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
     s32 i;
@@ -16,7 +19,7 @@ s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
     if (arg0->field_34 & 0x400) {
         return -1;
     }
-    ovl_11_func_800D0D7C((u8 *)arg0);
+    Ovl11GetTaggedRecordIndex((u8 *)arg0);
     if (arg0->field_30 == 5 && !(arg0->field_34 & 1)) {
         for (i = 0; i < 22; i++) {
             if (((Ovl11Deb00State *)D_8006C838)->field_4AC0[i] != 0) {
@@ -120,6 +123,6 @@ s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0) {
     arg0->field_34 &= ~4;
     arg0->field_34 &= ~8;
     arg0->field_34 &= ~0x2000;
-    ovl_11_func_80107DD0(arg0->field_A8);
+    Ovl11ResetTimedSpriteEffect(arg0->field_A8);
     return 0;
 }

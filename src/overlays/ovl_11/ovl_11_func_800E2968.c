@@ -1,5 +1,9 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -7,7 +11,6 @@ typedef struct __attribute__((packed)) {
 } Ovl11E2968UnalignedWord;
 
 s32 ovl_11_func_800E2A30(s16 *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_800E2968(s16 *arg0, s32 arg1) {
     char *base;
@@ -31,6 +34,6 @@ s32 ovl_11_func_800E2968(s16 *arg0, s32 arg1) {
     *(s16 *) ((u8 *) arg0 + 0x1A) = 0;
     *(u16 *) ((u8 *) arg0 + 0x4) = 0xFFFF;
     ovl_11_func_800E2A30(arg0);
-    ovl_11_func_80107DD0(arg0 + 0x54);
+    Ovl11ResetTimedSpriteEffect(arg0 + 0x54);
     return 0;
 }

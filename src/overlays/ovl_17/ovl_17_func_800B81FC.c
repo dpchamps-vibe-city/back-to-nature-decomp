@@ -19,8 +19,8 @@ void ovl_17_func_800B81FC(void) {
     }
     ovl_17_func_800B8294();
     if (((Ovl17ModeView *) D_8006C838)->mode == 3) {
-        Ovl17_D_800BD848.field_4 = 2;
+        OVL17_RECORD_WORK.phase = 2;
     } else {
-        Ovl17_D_800BD848.field_4 = 1;
+        OVL17_RECORD_WORK.phase = 1;
     }
 }

@@ -3,8 +3,9 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
-void ovl_11_func_80107DE0 (M2C_729a6ccf4038_UnkStruct80107DE0 *arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 void ovl_11_func_800D1960 (s16 arg0);
 s32 ovl_11_func_800D425C (u16 *arg0);
@@ -20,7 +21,7 @@ s32 ovl_11_func_800D506C(Ovl11SetFieldsView *arg0) {
 
     var_s2 = 0;
     if ((u16) (*(u16 *) ((u8 *) arg0 + 0xAA)) < 2U) {
-        ovl_11_func_80107DE0((M2C_729a6ccf4038_UnkStruct80107DE0 *) ((u8 *) arg0 + 0xA8), 0x21, 0x5A);
+        Ovl11StartTimedSpriteEffect((M2C_729a6ccf4038_UnkStruct80107DE0 *) ((u8 *) arg0 + 0xA8), 0x21, 0x5A);
     }
     temp_v1 = *(s16 *) ((u8 *) arg0 + 0x28);
     switch (temp_v1) {

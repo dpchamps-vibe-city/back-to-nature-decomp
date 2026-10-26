@@ -274,7 +274,11 @@ Members:
 
 ## `ovl_11` D_800749F4 record-array accessor pair — 0x800D0C34 / 0x800D0D7C (confidence: low)
 
-Evidence: both walk the same absolute-addressed D_800749F4 record array with
+Both now belong to the complete ten-member `record_pair_slots` unit
+D075C..D0DCC, documented in the paired-slot section below; they were not
+folded as an isolated accessor slice. D0CD8 is its complementary B4 scan.
+
+Historical evidence: both walk the same absolute-addressed D_800749F4 record array with
 the same 0xB8 stride (20 entries), as a complementary accessor pair — one
 finds the first free entry, the other maps a pointer back to its index —
 plus shared callers (ovl_11_func_800DE8A4, 800DF72C, 800E047C, 800E12D8 call
@@ -351,7 +355,14 @@ Historical evidence: gapless link adjacency and a shared record initializer
 
 ## `ovl_11` D_800749F4 record consumer `ovl_11_func_800D0DCC` — 0x800D0DCC (confidence: medium)
 
-Evidence: called by both predicate-run twin heads — `ovl_11_func_800DF9F0`
+Module follow-up: membership in record_pair_slots is **not established**.
+Its +16/+AE/+B2 fields are overlay-wide conventions (C9C60 writes them;
+DF228/E0E38 and others read them). It touches none of the pair table,
+expansion gates or pool-availability flags. The adjacency below does not
+put it inside the reconstructed unit, which ends at D0DCC exclusive.
+Its relationship to the farther predicate-run clients remains open.
+
+Historical candidate evidence: called by both predicate-run twin heads — `ovl_11_func_800DF9F0`
 (800DF4F0 span) and `ovl_11_func_800E15C8` (800E109C span) — immediately
 after their `ovl_11_func_800DF4F0`/`ovl_11_func_800E109C` guard and
 `+0x34 & 2` lazy-init, passing the caller's record pointer straight through
@@ -368,37 +379,60 @@ Members:
   pointer, then selects 0x6BD/0x6BE/0x6BF/0x6C2/0x6C3/0x6C4 from
   +0xAE/+0xB2/+0x16 and returns `func_8002261C(0, code)`.
 
-## `ovl_11` D_800749F4/D_800742EC tag-setter + scanner run — 0x800D075C–0x800D08FC / 0x800D29B0–0x800D2A88 (confidence: medium)
+## `ovl_11` paired record selection slots — 0x800D075C–0x800D0DCC exclusive (confidence: medium)
 
-Evidence: a closed call/data cluster on the two absolute-addressed record
-arrays. The two setters write the discriminating tag the scanner reads:
-`ovl_11_func_800D29B0` and `ovl_11_func_800D2A88` store `+0x30 = 5` / `+0x30 = 4`
-on the D_800749F4 (0xB8 stride) / D_800742EC (0xB4 stride) records and are
-zero-gap link-order neighbours; their only caller is `ovl_11_func_800D075C`,
-itself the zero-gap predecessor of `ovl_11_func_800D079C`
-(0x1893C/0x1897C, size 0x40). 800D079C scans both arrays (D_800749F4 20×0xB8,
-D_800742EC 10×0xB4), selects entries with `u16@+0 != 0 && s16@+0x30 == 5`
-(arg0==1) or `== 4`, and re-invokes 800D075C. Same arrays as the recorded
-0x800CFAD0/800CFB20 predicate-run (a cross-container shared object), so
-membership rests on this closed call/data cluster, not on the global alone.
-Call graph + adjacency + shared idiom; not a proven TU boundary.
+**Module: `src/overlays/ovl_11/modules/record_pair_slots.c`**, ten compiled
+members in original order, all baseline -G0:
+- D075C `Ovl11ApplyRecordRowPlacement`: select the external Z/X row service.
+- D079C `Ovl11ResyncRecordRowPlacements`: scan live mode-5 B8 or mode-4 B4
+  records, then reposition selected B8 sources from the first two pairs.
+- D08FC `Ovl11FindFreeRecordPairSlot`: first enabled pair with leading -1.
+- D09E0 `Ovl11RestorePairedRecords`: restore saved selections, choosing a
+  B8 copy constructor by source flags or recreating B4 type 10A.
+- D0BC8 `Ovl11GetRecordPairSlotState`: 0 free, 1 occupied, 2 disabled.
+- D0C34/D0CD8 `Ovl11FindFreeTaggedRecord`/`Ovl11FindFreeB4Record`: scan
+  10/20 or 5/10 records for zero type and reservation bit 02000000 clear.
+- D0D7C `Ovl11GetTaggedRecordIndex`: exact pointer search of all 20 records.
+- D0DB0/D0DBC `Ovl11SetRecordPairSlot`/`Ovl11ClearRecordPairSlot`: write
+  the signed index pair / reset both indices to -1.
 
-800D08FC is a low-confidence extension: it immediately follows 800D079C
-(size 0x160, ending at 800D08FC) and selects free four-byte pairs from
-D_80076200. The predecessor's final scan reads those same pairs through
-D_80074838+0x19C8 and D_8006C838+0x99C8. Shared pair storage plus zero-gap
-adjacency supports association, but does not extend the closed call cluster
-or establish a TU boundary. See `notes/research/ovl_11_func_800D08FC-grouping.md`.
+Membership rests on one pair/pool protocol, not shared work-base adjacency.
+The four pairs at 80076200 = 8006C838+99C8 = 80074838+19C8 are read by
+079C/08FC/0BC8, written by the pair setters, and govern the selections restored
+by 09E0. The same two +44D0/+44D2 halfwords enable slots 1/3 AND the second
+half of the corresponding pool. DF72C/E12D8 use the free-pair, free-B8,
+index and pair-write operations together, then set reservation bit 02000000.
+D0F20 uses the B4 availability and pair-state services. The 079C→075C
+calls close the placement/rescan relation. All ten occupy exactly 670 bytes;
+there is no supported internal cut. The intervening 09E0 is part of the
+selection lifecycle, NOT a reason to slice off 08FC/079C.
 
-Members:
-- ovl_11_func_800D075C (m) — dispatcher leaf: `arg2 == 1` → 800D29B0, else 800D2A88.
-- ovl_11_func_800D079C (m) — tag scanner over both arrays, re-applying the
-  dispatcher to every tagged live entry.
-- ovl_11_func_800D08FC (m, low-confidence extension) — selects a free D_80076200 pair from slots 0–1 or 2–3, respecting the second-slot enable flag.
-- ovl_11_func_800D29B0 (m) — D_800749F4-path setter: `+0x30 = 5`, seeds
-  +0x38/+0x3C/+0x40 from D_80123A2C.
-- ovl_11_func_800D2A88 (m) — D_800742EC-path setter: `+0x30 = 4`, seeds
-  +0x38/+0x3C/+0x40 from D_80123A8C.
+The old candidate grouped D29B0/D2A88 with 075C. Those are now the external
+`row_placement` service with its own two private coordinate tables; calling
+that interface does not pull it into this slot unit. The module leaves all
+members externally linked. `ovl11_record_pair_slots.h` publishes the actual
+matched pointer/scalar contracts, free-versus-reserved distinction and bounds.
+The canonical four-byte `Ovl11RecordPairSlot` replaces duplicate local views.
+Shared globals are named `gRecordPairSlots`, `gTaggedRecordPoolExpanded` and
+`gB4RecordPoolExpanded`; raw base/offset accesses deliberately keep their
+original formation. The slot extern is corrected to eight halfwords (all four
+pairs), removing its obsolete `_D_` assembler-label alias, not changing layout.
+The benchmark manifest follows D0BC8's canonical name and original identity.
+
+Left cut: preceding `record_pair_order` is a closed nested-comparator/code-table
+unit, touching neither these pairs nor their availability gates. Right cut:
+D0DCC only selects message codes from overlay-wide record fields; it uses none
+of this unit's storage or allocation convention (see its section above).
+D0F20 and DF72C/E12D8 are clients; adjacency to one is not grounds for absorbing
+the unrelated interposed `area_slot_flags` service. These are evidence-limited
+protocol cuts under -G0, not GP-proven historical object seams.
+
+The initial checked fold rolled back on a duplicate UnkStruct800D0DBC
+introduced by include union. Replacing the two local setter views with the
+established shared layout fixed it; the complete ten-member fold then passed,
+including every member and all overlay bytes. No flag override, linkage
+restriction, stub or matching workaround was introduced; no pooled rodata is
+owned by these members.
 
 ## `ovl_11` two-table field-lookup siblings — 0x800D5960–0x800D5BBC (confidence: medium)
 
@@ -1707,6 +1741,41 @@ Members (address order):
   `D_80127890`–`D_801278E4` records
 
 ---
+
+## `ovl_11` embedded timed sprite effect — 0x80107DD0–0x80107F18 exclusive (confidence: medium)
+
+**Module: `src/overlays/ovl_11/modules/timed_sprite_effect.c`**, reset,
+start, tick and draw in original order. These four implement one four-byte
+state protocol: signed animation ID at +0, signed countdown ticks at +2.
+The reset writes -1/0; start writes both fields; tick decrements +2; draw
+uses +0 for animation lookup and +2/10 for the reversed frame. Independently,
+object lifecycle clients pass the same embedded +0xA8 or +0xE0 state to the
+reset/start, tick and draw operations: D2160 updates +A8, object_render_variants
+draws +A8, and C35EC/C36D0 start/draw +E0. This protocol and caller-layout
+agreement, corroborated by zero-gap original order, support all four members;
+no merely similar reset helper was appended. No global belongs to this unit.
+
+`ovl11_timed_sprite_effect.h` publishes all four operations. The canonical
+`Ovl11TimedSpriteEffect` layout is in game_types.h; the API accepts raw
+storage because existing callers pass several embedded record/array views.
+The local duplicate Ov11Timer declaration was removed in favor of the already
+shared layout before folding; the final module uses named animation/countdown
+fields. Existing caller-local views need not acquire an incompatible pointer
+prototype. Reset/start use external linkage as before. Tick returns 1 when
+the update is suppressed by 8006C844 bit 0x08000000 as well as when already
+zero, and returns 0 on the decrement that reaches zero. Drawing looks up the
+full signed ID but passes only its low byte to DrawSpriteFrameRects; neither
+quirk was repaired. Negative countdown inputs remain unchecked.
+
+Left cut: 80107C80 selects an action-guard result or requests sprite rotation,
+using the 80070C72 table and guard interface. It neither uses this pair state
+nor calls any of the four effect operations. Right cut: 80107F18 begins the
+choice_messages lifecycle, whose private choice/image state and
+message-slot tables are unrelated to this embedded record; it does not extend
+the effect protocol. These are evidence-limited cuts, not GP-proven original
+object boundaries: using the shared sprite source or container-wide work flags
+alone does not join either neighbor. All four have baseline settings; the
+checked fold preserved every member and the overlay with no new exception.
 
 ## `ovl_11` D_8012D0xx tiny-global cluster / state-probe run — 0x80108104–0x8010AFCC (confidence: low)
 
@@ -3337,7 +3406,29 @@ membership unproven.
 
 ## `ovl_11` short-fold helper trio — 0x800CE514–0x800CE53C (confidence: medium)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) — three tiny range/
+**Module: `src/overlays/ovl_11/modules/paired_item_ids.c`**, all three
+entries through CE550 exclusive, in original order and at baseline flags.
+The missing semantic connection is exact: CE528 subtracts 0x70 modulo
+16 bits, mapping CE514's entire six-ID range ED..F2 onto CE53C's 7D..82.
+CC7CC guards this conversion with the upper-range predicate before filling
+a halfword request; C580C uses both predicates on its `item` field in the
+same action-selection arm. This shared domain/conversion protocol and
+paired use, not instruction shape or adjacency alone, support the trio.
+Names are `Ovl11IsUpperPairedItemId`, `Ovl11MapToLowerPairedItemId` and
+`Ovl11IsLowerPairedItemId`; `ovl11_paired_item_ids.h` publishes the exact
+ranges and unchecked wrapping behavior without assigning gameplay categories.
+There is no module-owned global, linkage change or new exception.
+
+Both cuts are evidence-limited, not GP-proven original-file boundaries.
+Preceding `position_transition` ends at CE514 and owns its endpoint/step
+protocol and script-selected target table; these leaves use none of that
+state. Following CE550 probes five height-query settings from D_801232C8,
+updates a position's y and restores setting 0xC8; it neither classifies nor
+converts an item ID. CC7CC calling both interfaces is not private-state or
+helper evidence joining them. No positive evidence extends the trio into
+either neighbor. The checked fold preserved all member and overlay bytes.
+
+Historical candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) — three tiny range/
 fold helpers at the overlay's 0x166F4 text region. Same shared-idiom
 fingerprint class as the reset-stub family: near-identical instruction
 shapes differing only in a fold constant, over strict zero-gap link order.
@@ -13094,6 +13185,91 @@ Members (link order):
   `func_80012A34(0x64) < (u16)((arg0 * 100) / 127)`.
 
 ## `ovl_17` D_800BB524 display-setup state-handler run — 0x800B9FA8–0x800BA54C (confidence: medium)
+
+**Module: `src/overlays/ovl_17/modules/sprite_resources.c`**, the complete
+four-stage resource run 9FA8..BA54C exclusive: `Ovl17LoadSharedSpriteBank`,
+`Ovl17LoadSpriteImageBank`, `Ovl17LoadRecordSpriteBank`,
+`Ovl17QueueSoundBankLoads`. The three loaders share a private-to-this-overlay
+scratch/OT loading protocol (heap+4290, DrawSync/ClearOTagR, start/poll archive
+reads, sprite upload). The initializer's consecutive cases 0..3 invoke these
+four in exactly their gapless link order. The retained bank/source/offset-table
+relationships and corresponding ovl_23/ovl_21 resource runs corroborate this
+unit; scratch address or common caller alone would not suffice.
+
+`ovl17_sprite_resources.h` documents exact archive byte windows, retained
+copies, source/header publication, blocking behavior and queued-vs-completed
+audio. Named globals identify the two retained banks, shared-bank/scene/display
+sources, five header offsets, A/B header pointers and the initializer's load
+step. The global names are overlay-qualified and canonicalized in callers and
+the override header; no shared RAM address is treated as another overlay's
+identity. The aggregate bank copy retains its original layout/code generation.
+All members stay externally linked; there are no owned small globals or rodata.
+The checked fold passed every member and all overlay bytes at baseline -G0,
+without flags or new exceptions.
+
+Left cut: 9F78 is a Rand(127) predicate used by the decision hub, with no
+archive, source publication or resource-stage relation. Right cut: BA54C
+initializes record-work state and calls BA630/BA698/BA704 and the timer HUD.
+It is not a fifth resource loader: the initializer invokes it from the separate
+terminal state-5 block AFTER sound completion, rather than its resource-stage
+switch. It shares no resource bank, private table or loader protocol with the
+four. Its own initialization/helper extent is a separate investigation, not
+a cut made to protect a flag. The older five-member candidate below is therefore
+superseded. Both boundaries are evidence-limited service cuts under -G0,
+not GP-proven original object boundaries.
+
+### Record work initialization — BA54C..BA808 exclusive
+
+The following four entries are a separate complete module,
+`src/overlays/ovl_17/modules/record_work_init.c`: BA54C
+`Ovl17InitRecordWork`, BA630 `Ovl17InitRecordRollThresholds`, BA698
+`Ovl17InitRowSlotTargets`, BA704 `Ovl17ResetCardRows`. BA54C calls all
+three in order; BA630/BA698 have no other caller. BA704 also supports
+in-scene row reloads. The control/selection initialization and six row reset
+writes are complementary parts of the same work-area protocol. BA630 expands
+its private 3x6 byte table at BB710 to work+208; the decision hub indexes
+those halves for its Rand(127) comparisons. BA698 fills six 6-byte triples in
+BD758; BA704 installs exactly those addresses in rows, corroborated by 8294's
+same stride. This is stronger than the shared work base or adjacency alone.
+
+The public `ovl17_record_work_init.h` exposes only entry initialization and
+row reload. The two helper entries keep their external linkage without being
+published to unrelated callers. Tables are now `gOvl17RecordRollThresholds`
+and `gOvl17RowSlotTargets`; their original byte-array declarations remain,
+including the latter's F0-byte label extent with only 24 hex bytes used.
+`Ovl17RecordWorkInitView` names demonstrated control/selection fields and
+propagates them to five existing view clients. BA808 shows +24 is horizontal
+scroll position (/4096 gives screen pixels), NOT an angle; 8898 advances and
+clamps it at 800000. The header records its initial 40000 = 64 pixels.
+Broader physics/gameplay meaning of the remaining offset-named constants is
+not inferred. The row target's middle halfword is only a 0..5 permutation;
+no ultimate reader is established. The mode-3 row special case and the FF
+halfword reset value are preserved exactly.
+
+Left cut against BA504 is the resource/control boundary above. Right cut at
+BA808: it is a renderer with its own BB5D4/BB5F0 tables and sources bound by
+the resource loader, not the work-init hub. It writes no work controls and
+is not called by BA54C. Sharing scroll input and having external clients do
+not, by themselves, join a renderer to this initialization service. These
+remain evidence-limited protocol boundaries under -G0. No override, rodata,
+stub, global ownership or linkage change is needed. The complete four-member
+checked fold passed at baseline, preserving all members and the overlay.
+
+Batch verification for this unit, sprite_resources and the three ovl_11 units
+paired_item_ids/record_pair_slots/timed_sprite_effect: `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passed every integrity gate. The
+PS-X EXE and all 13 overlays match including linked data; all 132 module TUs
+are valid, progress is 819/2625 (up 25 from 794), and none of the previously
+folded address identities regressed. Policy, config convergence, input
+stability, whitespace and exception non-growth pass. The command's status 1
+means 1806 eligible functions remain, not a verification failure (status 2).
+Canonical-name check is clean; all 507 published interfaces pass, with the
+pre-existing unpublished disputes unchanged. The interface writer reconciled
+72 caller units. A path-scope audit found no changes outside the affected
+ovl_11/ovl_17 sources, headers, symbol/splat configs, grouping ledger and the
+benchmark manifest's D0BC8 name. Generated overlay headers/symbol tables and
+SDK context were kept from the verification generator, never hand-edited.
+No tooling changes or commits were made.
 
 The referenced 800BB0C4 is now the separate singleton
 `src/overlays/ovl_17/modules/timer_hud.c`, ovl_17:800BB0C4–800BB394

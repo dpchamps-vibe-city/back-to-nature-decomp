@@ -9,8 +9,8 @@
 void ovl_17_func_800BAF50(void) {
     u8 *base;
 
-    SelectSpriteAnimation((ObjectState *)&D_800BDA74, 4);
-    base = D_800BDA74 - 0x22C;
-    DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 4, (s32)&D_800BDA74, base[0x230],
+    SelectSpriteAnimation((ObjectState *)&gOvl17DisplaySpriteSource, 4);
+    base = gOvl17DisplaySpriteSource - 0x22C;
+    DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 4, (s32)&gOvl17DisplaySpriteSource, base[0x230],
                   base[0x231], 0, 0);
 }

@@ -1,9 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_record_pair_slots.h"
 
 s32 ovl_11_func_800F0380(s16 arg0);
-void ovl_11_func_800D0DBC(UnkStruct800D0DBC *arg0);
-void ovl_11_func_800D079C(s32 arg0);
 
 void ovl_11_func_800F05C0(void) {
     s32 i;
@@ -32,10 +31,10 @@ void ovl_11_func_800F05C0(void) {
                 flags = (s32 *)((u8 *)((Ovl11ClearFlagWorkView *)D_80074838)->records - offset);
                 *flags &= 0xFDFFFFFF;
             }
-            ovl_11_func_800D0DBC((UnkStruct800D0DBC *)
+            Ovl11ClearRecordPairSlot((Ovl11RecordPairSlot *)
                 ((struct Ovl11PoolResetView *)D_8006C838)->pairs_99C8[i]);
         }
     }
-    ovl_11_func_800D079C(1);
-    ovl_11_func_800D079C(0);
+    Ovl11ResyncRecordRowPlacements(1);
+    Ovl11ResyncRecordRowPlacements(0);
 }

@@ -7,24 +7,22 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_tagged_record_creation.h"
+#include "ovl11_record_pair_slots.h"
 
-s32 *ovl_11_func_800D0C34(void);
-s32 ovl_11_func_800D0D7C(u8 *record);
 s32 ovl_11_func_800E0D3C(UnkStruct800E109C *record, s32 code);
-void ovl_11_func_800D075C(s32 recordAddress, s16 slot, s32 mode);
 
 s32 Ovl11AllocateTaggedRecord(s32 code, s32 unused1, s32 unused2) {
     s32 recordAddress;
     s32 slot;
 
     if (((u32)(code + -0x164)) < ((u32)2)) {
-        recordAddress = (s32)ovl_11_func_800D0C34();
+        recordAddress = (s32)Ovl11FindFreeTaggedRecord();
         if (recordAddress == 0) {
             return 0;
         } else {
-            slot = ovl_11_func_800D0D7C((u8 *)recordAddress);
+            slot = Ovl11GetTaggedRecordIndex((u8 *)recordAddress);
             ovl_11_func_800E0D3C((UnkStruct800E109C *)recordAddress, code);
-            ovl_11_func_800D075C(recordAddress, ((s16)slot), 1);
+            Ovl11ApplyRecordRowPlacement(recordAddress, ((s16)slot), 1);
             return recordAddress;
         }
     } else {

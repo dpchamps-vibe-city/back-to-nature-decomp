@@ -1,6 +1,6 @@
 #include "common.h"
+#include "ovl11_record_pair_slots.h"
 
-s32 ovl_11_func_800D0BC8(s32 arg0);
 void ovl_11_func_800F501C(s32 arg0, s32 arg1, s16 arg2);
 
 void ovl_11_func_800F4618(void) {
@@ -17,7 +17,7 @@ void ovl_11_func_800F4618(void) {
         if (var_s0 != 1) {
             var_s0 = 0;
         }
-        ovl_11_func_800F501C(var_s1 - 2, ovl_11_func_800D0BC8(var_s1) == 1, var_s0);
+        ovl_11_func_800F501C(var_s1 - 2, Ovl11GetRecordPairSlotState(var_s1) == 1, var_s0);
         var_s1 += 1;
         var_s2 += 2;
     } while (var_s1 < 4);

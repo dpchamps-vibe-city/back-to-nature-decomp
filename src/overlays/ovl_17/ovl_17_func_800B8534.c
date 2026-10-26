@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
+#include "ovl17_record_work_init.h"
 
 void ovl_17_func_800BAC24(Recon_ovl_17_func_800BAD9C_A0View *arg0, s32 arg1);
 void ovl_17_func_800BA808(s32 arg0);
-void ovl_17_func_800BA704(void);
 
 void ovl_17_func_800B8534(void) {
     s32 i;
@@ -37,7 +37,7 @@ void ovl_17_func_800B8534(void) {
         if (result == 1) {
             base[-0xC4] = 4;
         } else if (result == state) {
-            ovl_17_func_800BA704();
+            Ovl17ResetCardRows();
             base[-0xC4] = result;
         }
     }

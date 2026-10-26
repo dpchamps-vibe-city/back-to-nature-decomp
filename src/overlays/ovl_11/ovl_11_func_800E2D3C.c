@@ -1,6 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct {
     s16 unk0;
@@ -9,7 +13,6 @@ typedef struct {
 
 s32 ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-void ovl_11_func_80107DE0(UnkStruct80107DE0 *arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_800E2D3C(Ovl11SetFieldsView *arg0) {
     Ovl11PaddedVec3 sp18;
@@ -45,6 +48,6 @@ s32 ovl_11_func_800E2D3C(Ovl11SetFieldsView *arg0) {
     sp18.field_8 = sp18.field_8 + (*(s32 *) ((u8 *) arg0 + 0x40));
     ovl_11_func_800D05D0(arg0, sp18);
     (*(u16 *) ((u8 *) arg0 + 0x22)) = (*(u16 *) (base + 0x5200));
-    ovl_11_func_80107DE0((UnkStruct80107DE0 *) ((u8 *) arg0 + 0xA8), 0x24, 0x2D);
+    Ovl11StartTimedSpriteEffect((UnkStruct80107DE0 *) ((u8 *) arg0 + 0xA8), 0x24, 0x2D);
     return 0;
 }

@@ -41,8 +41,8 @@ void ovl_17_func_800B8D88(void) {
     RequestMessageWindow(4, 7);
     if (GetMessageWindowStatus() == 2) {
         if (total != 0) {
-            Ovl17_D_800BD848.field_2C8 = PlaySoundEffect(0x3E);
+            OVL17_RECORD_WORK.soundVoice = PlaySoundEffect(0x3E);
         }
-        Ovl17_D_800BD848.field_4 = 0xA;
+        OVL17_RECORD_WORK.phase = 0xA;
     }
 }

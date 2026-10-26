@@ -1,23 +1,19 @@
 #include "common.h"
-s32 *ovl_11_func_800D0C34(void);
-
-s32 ovl_11_func_800D0D7C(u8 *arg0);
+#include "ovl11_record_pair_slots.h"
 
 s32 ovl_11_func_800DF128(char *arg0, s32 arg1);
-
-void ovl_11_func_800D075C(s32 arg0, s16 arg1, s32 arg2);
 
 s32 ovl_11_func_800DE8A4(s32 arg0, s32 arg1, s32 arg2) {
     s32 callRet3;
     s32 callRet4;
     if (((u32)(arg0 + -0x160)) < ((u32)3)) {
-        callRet3 = ovl_11_func_800D0C34();
+        callRet3 = Ovl11FindFreeTaggedRecord();
         if (callRet3 == 0) {
             return 0;
         } else {
-            callRet4 = ovl_11_func_800D0D7C(callRet3);
+            callRet4 = Ovl11GetTaggedRecordIndex(callRet3);
             ovl_11_func_800DF128(callRet3, arg0);
-            ovl_11_func_800D075C(callRet3, ((s16)callRet4), 1);
+            Ovl11ApplyRecordRowPlacement(callRet3, ((s16)callRet4), 1);
             return callRet3;
         }
     } else {

@@ -1,11 +1,13 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_800E276C(s16 *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 void ovl_11_func_800E1F70(s32 arg0);
 void ovl_11_func_800E1EC0(u8 *arg0);
-s32 ovl_11_func_80107DEC(Ov11Timer *arg0);
 
 void ovl_11_func_800D2160(void) {
     s16 *entry;
@@ -20,13 +22,13 @@ void ovl_11_func_800D2160(void) {
         if (*(u16 *)entry != 0) {
             ovl_11_func_800E276C(entry);
             if (*(s16 *)(far_base + 0x5476) != *(s16 *)((u8 *)entry + 0x30)) {
-                ovl_11_func_80107DD0(entry + 0x54);
+                Ovl11ResetTimedSpriteEffect(entry + 0x54);
             } else {
                 if (!(*(s32 *)(base + 0xC) & 0x08000000)) {
                     ovl_11_func_800E1F70((s32)entry);
                 }
                 ovl_11_func_800E1EC0((u8 *)entry);
-                ovl_11_func_80107DEC((Ov11Timer *)(entry + 0x54));
+                Ovl11TickTimedSpriteEffect((Ov11Timer *)(entry + 0x54));
             }
         }
     }

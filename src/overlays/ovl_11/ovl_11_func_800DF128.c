@@ -1,6 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -9,7 +13,6 @@ typedef struct __attribute__((packed)) {
 
 s32 ovl_11_func_800DF4F0(UnkStruct800DF4F0 *arg0);
 s16 ovl_11_func_800DF228(Recon_ovl_11_func_800DEEE0_A0View *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_800DF128(char *arg0, s32 arg1) {
     char *base;
@@ -44,7 +47,7 @@ s32 ovl_11_func_800DF128(char *arg0, s32 arg1) {
         } else {
             *(s32 *)(arg0 + 0x8C) = 0;
         }
-        ovl_11_func_80107DD0((s16 *)(arg0 + 0xA8));
+        Ovl11ResetTimedSpriteEffect((s16 *)(arg0 + 0xA8));
     }
     return 0;
 }

@@ -20,6 +20,7 @@
 #include "ovl11_object_event_script.h"
 #include "point_projection.h"
 #include "ovl11_tagged_record_creation.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct {
                s16 unk0;
@@ -155,9 +156,7 @@ s32 func_80015DD4 ();
 void ovl_11_func_800C9E90 (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800E2904 (s32 arg0);
 void ovl_11_func_800E0450 (s32 arg0);
-s32 ovl_11_func_80107DEC (M2C_42071334137b_Ov11Timer *arg0);
 void ovl_11_func_800DE878 (s32 arg0);
-void ovl_11_func_80107DD0 (s16 *arg0);
 s32 ovl_11_func_800E276C (s16 *arg0);
 void ovl_11_func_800E1F70 (s32 arg0);
 void ovl_11_func_800D2F1C (s32 arg0);

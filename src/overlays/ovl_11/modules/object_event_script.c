@@ -21,6 +21,7 @@
 #include "screen_fade.h"
 #include "game_flags.h"
 #include "ovl11_object_event_script.h"
+#include "ovl11_timed_sprite_effect.h"
 
 /* Shared animation/command services outside this unit. The distinct pointer
  * views describe established fields of the same runtime record. */
@@ -32,7 +33,6 @@ void ovl_11_func_800C3B78(Ovl11C3B78Arg0 *, Ovl11C3B78Arg1 *);
 s32 ovl_11_func_800C3828(void);
 s32 ovl_11_func_800BDB88(s32 *, s32);
 s32 ovl_11_func_800DD1D0(s16 *);
-s32 ovl_11_func_80107DEC(Ov11Timer *);
 void ovl_11_func_800C3590(Ovl11AnimationObject *);
 
 /* Forward entry used by the tick loop; external linkage is retained. */
@@ -459,7 +459,7 @@ void Ovl11RunObjectScriptTicks(Ovl11C3B78Arg0 *object, s32 tickCount) {
         }
     }
     for (tick = 0; tick < tickCount; tick++) {
-        ovl_11_func_80107DEC((Ov11Timer *) ((u8 *) object + 0xE0));
+        Ovl11TickTimedSpriteEffect((Ov11Timer *) ((u8 *) object + 0xE0));
         /* These sentinel tests are intentionally separate: -2 runs the
          * command-state path, -3 freezes the countdown. */
         if (*(s16 *)((u8 *)object + 8) != -2) {

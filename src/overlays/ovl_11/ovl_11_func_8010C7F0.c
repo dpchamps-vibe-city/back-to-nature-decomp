@@ -1,10 +1,13 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 void ovl_11_func_8010CF58(Ovl11CF58Object *arg0);
 s32 ovl_11_func_8010CD80(Recon_ovl_11_func_8010D250_A0View *arg0);
 void ovl_11_func_8010CAA8(s32 arg0);
-s32 ovl_11_func_80107DEC(Ov11Timer *arg0);
 s16 ovl_11_func_8010D0EC(M2C_90bbdd1382f9_Struct_8010D0EC *arg0);
 void ovl_11_func_8010CA0C(M2C_ececd3ff98bf_Struct_801110CC *arg0);
 
@@ -44,7 +47,7 @@ void ovl_11_func_8010C7F0(void) {
 block_10:
                     if (nearState->area == (*(s16 *) ((u8 *) var_s0 + 0x30))) {
                         if (!(flags->flagsC & 0x08000000)) {
-                            ovl_11_func_80107DEC((Ov11Timer *) &var_s0[0xA8]);
+                            Ovl11TickTimedSpriteEffect((Ov11Timer *) &var_s0[0xA8]);
                         }
                         ovl_11_func_8010D0EC((M2C_90bbdd1382f9_Struct_8010D0EC *) var_s0);
                         ovl_11_func_8010CA0C((M2C_ececd3ff98bf_Struct_801110CC *) var_s0);

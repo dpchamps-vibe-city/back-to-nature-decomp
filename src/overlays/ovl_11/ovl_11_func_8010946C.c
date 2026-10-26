@@ -1,5 +1,9 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 /* Fields preserved across the memset that clears the record. */
 typedef struct {
@@ -18,7 +22,6 @@ typedef struct __attribute__((packed)) {
 } Ovl11UnalignedPair8010946C;
 
 s32 ovl_11_func_80109310(s32 *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_8010946C(s32 arg0, s32 arg1) {
     Ovl11Saved8010946C saved;
@@ -63,6 +66,6 @@ s32 ovl_11_func_8010946C(s32 arg0, s32 arg1) {
     *(s32 *) (arg0 + 0x10) = r3;
     *(u16 *) (arg0 + 0x14) = r4;
     ovl_11_func_80109310((s32 *) arg0);
-    ovl_11_func_80107DD0((s16 *) (arg0 + 0xA8));
+    Ovl11ResetTimedSpriteEffect((s16 *) (arg0 + 0xA8));
     return 0;
 }

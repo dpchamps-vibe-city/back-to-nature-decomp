@@ -1,5 +1,28 @@
 // Semantic labels within ovl_17 only; retain original container/address identity.
 
+// Record work-area initialization and mode-selected card display rows.
+Ovl17InitRecordWork = 0x800BA54C; // type:func
+Ovl17InitRecordRollThresholds = 0x800BA630; // type:func
+Ovl17InitRowSlotTargets = 0x800BA698; // type:func
+Ovl17ResetCardRows = 0x800BA704; // type:func
+gOvl17RecordRollThresholds = 0x800BB710; // type:data size:0x12
+gOvl17RowSlotTargets = 0x800BD758; // type:data size:0xF0
+
+// Archive-backed sprite banks and the staged sound-bank request leaf.
+Ovl17LoadSharedSpriteBank = 0x800B9FA8; // type:func
+Ovl17LoadSpriteImageBank = 0x800BA21C; // type:func
+Ovl17LoadRecordSpriteBank = 0x800BA2C8; // type:func
+Ovl17QueueSoundBankLoads = 0x800BA504; // type:func
+gOvl17SharedSpriteBank = 0x800BB728; // type:data size:0x13DC
+gOvl17SharedBankSpriteSource = 0x800BDAA4; // type:data size:0x30
+gOvl17RecordSpriteBank = 0x800BCB08; // type:data size:0xC28
+gOvl17SpriteHeaderOffsets = 0x800BB6FC; // type:data size:0x14
+gOvl17SpriteHeaderVariantA = 0x800BD74C; // type:data size:0x4
+gOvl17SpriteHeaderVariantB = 0x800BD750; // type:data size:0x4
+gOvl17SceneSpriteSource = 0x800BDDF8; // type:data size:0x30
+gOvl17DisplaySpriteSource = 0x800BDA74; // type:data size:0x30
+gOvl17SceneLoadStep = 0x800BB524; // type:data size:0x1
+
 // Adjacent shared-record halfwords, with distinct signed/unsigned comparisons.
 Ovl17RaiseRecordByteRangeValue = 0x800BB394; // type:func
 Ovl17RaiseRecordHalfwordRangeValue = 0x800BB3F4; // type:func

@@ -16,6 +16,7 @@
 #include "game_flags.h"
 #include "ovl11_interaction_id_predicates.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct {
     s16 field_0;
@@ -88,7 +89,6 @@ void ovl_11_func_800D666C (s16 arg0);
 void ovl_11_func_800BD8DC (s16 arg0);
 s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
-void ovl_11_func_80107DD0 (s16 *arg0);
 s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800CF258 (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);

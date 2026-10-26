@@ -24,6 +24,7 @@
 #include "ovl11_interaction_id_predicates.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_area_slot_flags.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -115,7 +116,6 @@ s32 ovl_11_func_800D589C (s16 arg0);
 s32 ovl_11_func_800E6EAC (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
-void ovl_11_func_80107DD0 (s16 *arg0);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s16 ovl_11_func_800F4240(M2C_4c1a205b3b09_ReconA0View *arg0);
@@ -189,6 +189,6 @@ s32 ovl_11_func_800CEEF8(M2C_4c1a205b3b09_ReconA0View *arg0) {
     (*(s16 *) ((u8 *) arg0 + 0x2A)) = 0;
     (*(s16 *) ((u8 *) arg0 + 0x2C)) = 0;
     ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((arg0 + 0xC)), 0);
-    ovl_11_func_80107DD0((s16 *) ((arg0 + 0x1C)));
+    Ovl11ResetTimedSpriteEffect((s16 *) ((arg0 + 0x1C)));
     return 0;
 }

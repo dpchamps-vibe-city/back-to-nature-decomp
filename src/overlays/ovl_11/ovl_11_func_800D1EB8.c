@@ -1,13 +1,15 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_800E0B40(Recon_ovl_11_func_8010CE80_A0View *arg0);
 void ovl_11_func_800E0450(s32 arg0);
-s32 ovl_11_func_80107DEC(Ov11Timer *arg0);
 void ovl_11_func_800E03A0(u8 *arg0);
 s32 ovl_11_func_800DEF30(UnkStruct800DF4F0 *arg0);
 void ovl_11_func_800DE878(s32 arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 void ovl_11_func_800DE7C8(u8 *arg0);
 s32 ovl_11_func_800E276C(s16 *arg0);
 void ovl_11_func_800E1F70(s32 arg0);
@@ -40,12 +42,12 @@ void ovl_11_func_800D1EB8(void) {
                         ovl_11_func_800E0B40(entry);
                         ovl_11_func_800E0450((s32)entry);
                     }
-                    ovl_11_func_80107DEC((Ov11Timer *)((u8 *)entry + 0xA8));
+                    Ovl11TickTimedSpriteEffect((Ov11Timer *)((u8 *)entry + 0xA8));
                 }
                 if (*(s16 *)(far_base + 0x5476) == *(s16 *)((u8 *)entry + 0x30)) {
                     ovl_11_func_800E03A0((u8 *)entry);
                 } else {
-                    ovl_11_func_80107DD0((s16 *)((u8 *)entry + 0xA8));
+                    Ovl11ResetTimedSpriteEffect((s16 *)((u8 *)entry + 0xA8));
                 }
             } else {
                 if (!(*(s32 *)(base + 0xC) & 0x08000000)) {
@@ -58,11 +60,11 @@ void ovl_11_func_800D1EB8(void) {
                         ovl_11_func_800DEF30((UnkStruct800DF4F0 *)entry);
                         ovl_11_func_800DE878((s32)entry);
                     }
-                    ovl_11_func_80107DEC((Ov11Timer *)((u8 *)entry + 0xA8));
+                    Ovl11TickTimedSpriteEffect((Ov11Timer *)((u8 *)entry + 0xA8));
                 }
                 if (!(entry->unk34 & 0x20000)) {
                     if (*(s16 *)(far_base + 0x5476) != *(s16 *)((u8 *)entry + 0x30)) {
-                        ovl_11_func_80107DD0((s16 *)((u8 *)entry + 0xA8));
+                        Ovl11ResetTimedSpriteEffect((s16 *)((u8 *)entry + 0xA8));
                     } else {
                         ovl_11_func_800DE7C8((u8 *)entry);
                     }
@@ -78,7 +80,7 @@ void ovl_11_func_800D1EB8(void) {
             ovl_11_func_800E276C((s16 *)entryB4);
             update_mask = 0x20000;
             if (*(s16 *)(far_base2 + 0x5476) != *(s16 *)((u8 *)entryB4 + 0x30)) {
-                ovl_11_func_80107DD0((s16 *)((u8 *)&D_800742EC + i * 0xB4 + 0xA8));
+                Ovl11ResetTimedSpriteEffect((s16 *)((u8 *)&D_800742EC + i * 0xB4 + 0xA8));
             } else {
                 if (!(update_mask & *(s32 *)((u8 *)entryB4 + 0x34))) {
                     if (!(*(s32 *)(base2 + 0xC) & 0x08000000)) {
@@ -86,7 +88,7 @@ void ovl_11_func_800D1EB8(void) {
                     }
                     if (!(*(s32 *)((u8 *)entryB4 + 0x34) & 0x02000000)) {
                         ovl_11_func_800E1EC0((u8 *)entryB4);
-                        ovl_11_func_80107DEC((Ov11Timer *)((u8 *)&D_800742EC + i * 0xB4 + 0xA8));
+                        Ovl11TickTimedSpriteEffect((Ov11Timer *)((u8 *)&D_800742EC + i * 0xB4 + 0xA8));
                     }
                 }
             }

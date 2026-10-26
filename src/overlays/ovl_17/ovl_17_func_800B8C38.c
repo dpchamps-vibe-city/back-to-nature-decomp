@@ -22,7 +22,7 @@ void ovl_17_func_800B8C38(void) {
     ovl_17_func_800B91B8();
     for (i = 0; i < 6; i++) {
         base = gOvl17RecordWorkBase;
-        entry = ((Ovl17DisplaySetup *)base)->entries[i];
+        entry = ((Ovl17RecordWorkInitView *)base)->selectionIndices[i];
         if (entry == 2) {
             selected = i;
         } else {
@@ -34,7 +34,7 @@ void ovl_17_func_800B8C38(void) {
         name = (s32)&D_80075AD8;
     } else {
         current = gOvl17RecordWorkBase;
-        chosen = ((Ovl17DisplaySetup *)current)->entries[selected];
+        chosen = ((Ovl17RecordWorkInitView *)current)->selectionIndices[selected];
         name = (s32)D_800556A8 + *(u16 *)(current + chosen * 0x50 + 0x40);
     }
     func_80017A08((u16)selected, name);

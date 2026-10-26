@@ -1,5 +1,9 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 /* Two unaligned s32 words copied as one 8-byte packed aggregate, as in
  * ovl_11_func_8010D04C (D_8006C838+0x44B8 -> object+0x1A). */
@@ -16,7 +20,6 @@ typedef struct {
 } Ov11Flag8010B778Arg;
 
 s32 ovl_11_func_8010B830(Ov11Flag8010B778Arg *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_8010B778(s32 arg0, s32 arg1) {
     char *base;
@@ -35,6 +38,6 @@ s32 ovl_11_func_8010B778(s32 arg0, s32 arg1) {
     *(s32 *)(arg0 + 0x40) = 0x258;
     *(u16 *)(arg0 + 0x4) = 0xFFFF;
     ovl_11_func_8010B830((Ov11Flag8010B778Arg *)arg0);
-    ovl_11_func_80107DD0((s16 *)(arg0 + 0xA8));
+    Ovl11ResetTimedSpriteEffect((s16 *)(arg0 + 0xA8));
     return 0;
 }

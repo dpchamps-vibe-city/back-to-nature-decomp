@@ -82,7 +82,7 @@ block_6:
             (*(s32 *) (var_s0 + 0xD0)) = 0;
         }
     }
-    if (((Ovl17DisplaySetup *)gOvl17RecordWorkBase)->field_24 <= 0x7FFFFF) {
+    if (((Ovl17RecordWorkInitView *)gOvl17RecordWorkBase)->scrollPosition <= 0x7FFFFF) {
         ovl_17_func_800B9784();
     }
     for (var_s1 = 0; var_s1 < 6; var_s1++) {
@@ -122,5 +122,5 @@ block_6:
         (*(s16 *) (state + 0x2CC)) = 0;
         (*(s8 *) (state + 4)) = 8;
     }
-    ovl_17_func_800BA808(((Ovl17DisplaySetup *)gOvl17RecordWorkBase)->field_24);
+    ovl_17_func_800BA808(((Ovl17RecordWorkInitView *)gOvl17RecordWorkBase)->scrollPosition);
 }

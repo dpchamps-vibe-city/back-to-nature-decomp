@@ -190,12 +190,6 @@ typedef struct {
     s16 weekday;
 } Ovl11CalendarPanelDate;
 
-/* 800D0DBC clears both signed halfwords; 800F05C0 passes a selected pair. */
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-} UnkStruct800D0DBC;
-
 /* Eight 0x16-byte VRAM animation slots, consumed by 800DB354/800DB4E0.
  * key==0xFFFF is free; bit 0x8000 selects sequence rather than scroll.
  * nextOrDelay and step have mode-dependent meanings, not different storage. */
@@ -1310,10 +1304,13 @@ typedef struct {
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 
 /* 800D0DB0 stores the two signed indices passed by 800DF72C. */
+/* Four selection slots at 80076200 (work+99C8). A -1 recordIndex is
+ * free; both halfwords are reset to -1. The second index is used to restore
+ * the selected pool record (see record_pair_slots). */
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-} Ovl11DF72CPair;
+    s16 recordIndex;
+    s16 linkedRecordIndex;
+} Ovl11RecordPairSlot;
 
 /* 800D049C passes its +0xA8 pair to 80107DE0. */
 typedef struct {
@@ -2477,6 +2474,14 @@ typedef struct {
     u8 unk5;
     u16 unk6;
 } Ovl11GridResetEntry;
+
+/* 80107DD0..80107E2C share this embedded four-byte effect state.
+ * Animation lookup uses the full signed ID; drawing uses its low byte.
+ * A countdown of zero disables drawing. Tick does not clamp negative input. */
+typedef struct {
+    s16 animationId;
+    s16 ticksRemaining;
+} Ovl11TimedSpriteEffect;
 
 /* 800D2160 passes the record's +0xA8 pair to 80107DEC, whose matched
  * definition reads/decrements the signed halfword at +2. */

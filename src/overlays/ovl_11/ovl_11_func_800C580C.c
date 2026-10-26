@@ -9,6 +9,7 @@
 #include "message_window.h"
 #include "game_flags.h"
 #include "ovl11_halfword_triplets.h"
+#include "ovl11_paired_item_ids.h"
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -41,10 +42,8 @@ s32 ovl_11_func_800C8FA8 (Ovl11C8FA8Object *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 C580C_f3fe4d9631b5_UnkStruct800CBF40 *ovl_11_func_800CBF70 (C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0 *arg0, u16 *arg1, s16 arg2);
 void ovl_11_func_800C55FC (Ovl11CE034Object *arg0);
-s32 ovl_11_func_800CE53C (s16 arg0);
 void ovl_11_func_800C9D98 (void);
 s32 ovl_11_func_800C6858 (Ovl11C7010Object *arg0);
-s32 ovl_11_func_800CE514 (s16 arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800C4DE0 (Ovl11C7010Object *arg0);
 s32 ovl_11_func_80113310 (Ovl11CE034Object *arg0);
@@ -442,7 +441,7 @@ finish_action:
             ovl_11_func_800CB4E0();
             return 0;
         case 0xC:
-            if (ovl_11_func_800CE53C(arg0->item) == 0) {
+            if (Ovl11IsLowerPairedItemId(arg0->item) == 0) {
                 temp_s0_6 = (u16 *) ((u8 *) arg0 + 0x8A);
                 Ovl11CopyHalfwordTriplet((u16 *) ((u8 *) arg0 + (((s16) arg0->slot * 6) + 0xBA)), temp_s0_6);
                 ovl_11_func_800C9D98();
@@ -462,10 +461,10 @@ finish_action:
         case 0xE:
         case 0x30:
             ovl_11_func_800C6858((Ovl11C7010Object *) arg0);
-            if (ovl_11_func_800CE514(arg0->item) == 1) {
+            if (Ovl11IsUpperPairedItemId(arg0->item) == 1) {
                 ovl_11_func_800C70CC((Ovl11C7010Object *) arg0, 0x2FU, arg0->direction + 0x17, -2);
             }
-            if (ovl_11_func_800CE53C(arg0->item) != 1) {
+            if (Ovl11IsLowerPairedItemId(arg0->item) != 1) {
                 goto tool_done;
             }
             arg0->unk6C |= 0x10000000;

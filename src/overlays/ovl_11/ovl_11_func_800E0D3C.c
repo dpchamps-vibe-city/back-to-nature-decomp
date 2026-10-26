@@ -1,10 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_800E109C(UnkStruct800E109C *arg0);
 s16 ovl_11_func_800E0E38(UnkStruct800E109C *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_800E0D3C(UnkStruct800E109C *arg0, s32 arg1) {
     char *base;
@@ -34,6 +37,6 @@ s32 ovl_11_func_800E0D3C(UnkStruct800E109C *arg0, s32 arg1) {
     } else {
         *(s32 *)((u8 *)arg0 + 0x8C) = 0;
     }
-    ovl_11_func_80107DD0((s16 *)((u8 *)arg0 + 0xA8));
+    Ovl11ResetTimedSpriteEffect((s16 *)((u8 *)arg0 + 0xA8));
     return 0;
 }

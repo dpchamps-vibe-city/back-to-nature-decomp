@@ -1,5 +1,28 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Paired selection slots and their B8/B4 record-pool services.
+Ovl11ApplyRecordRowPlacement = 0x800D075C; // type:func
+Ovl11ResyncRecordRowPlacements = 0x800D079C; // type:func
+Ovl11FindFreeRecordPairSlot = 0x800D08FC; // type:func
+Ovl11RestorePairedRecords = 0x800D09E0; // type:func
+Ovl11GetRecordPairSlotState = 0x800D0BC8; // type:func
+Ovl11FindFreeTaggedRecord = 0x800D0C34; // type:func
+Ovl11FindFreeB4Record = 0x800D0CD8; // type:func
+Ovl11GetTaggedRecordIndex = 0x800D0D7C; // type:func
+Ovl11SetRecordPairSlot = 0x800D0DB0; // type:func
+Ovl11ClearRecordPairSlot = 0x800D0DBC; // type:func
+
+// Embedded two-halfword sprite effect: animation ID and countdown ticks.
+Ovl11ResetTimedSpriteEffect = 0x80107DD0; // type:func
+Ovl11StartTimedSpriteEffect = 0x80107DE0; // type:func
+Ovl11TickTimedSpriteEffect = 0x80107DEC; // type:func
+Ovl11DrawTimedSpriteEffect = 0x80107E2C; // type:func
+
+// Paired six-item ID ranges: ED..F2 maps to 7D..82 by subtracting 70.
+Ovl11IsUpperPairedItemId = 0x800CE514; // type:func
+Ovl11MapToLowerPairedItemId = 0x800CE528; // type:func
+Ovl11IsLowerPairedItemId = 0x800CE53C; // type:func
+
 // Two-table cell-grid lookup and its three unsigned trailing-field readers.
 Ovl11FindCellGridTag = 0x800D5960; // type:func
 Ovl11ReadCellGridHalfwordAA = 0x800D5ABC; // type:func

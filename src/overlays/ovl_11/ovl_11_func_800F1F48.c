@@ -1,7 +1,9 @@
 #include "common.h"
 #include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
-void ovl_11_func_80107DD0(s16 *arg0);
 void *ovl_11_func_800F213C(u16 *arg0, s32 arg1);
 
 void ovl_11_func_800F1F48(s32 arg0) {
@@ -32,7 +34,7 @@ void ovl_11_func_800F1F48(s32 arg0) {
         *(s32 *)var_s0->unk28 = 0;
         var_s0->unk1E = (var_s0->unk1E | 0x8000) & 0x9E48;
         *(u16 *)var_s0->unk20 &= 0xDFFF;
-        ovl_11_func_80107DD0((s16 *)&var_s0->unk30[0xB0]);
+        Ovl11ResetTimedSpriteEffect((s16 *)&var_s0->unk30[0xB0]);
         field2 = (u16 *)&var_s0->unkE4[0].unk2;
         for (j = 0; j < 0x1EU; j++) {
             var_s0->unkE4[j].unk0 = 0;

@@ -1,5 +1,9 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 typedef struct {
     /* 0x00 */ char pad_00[0x16];
@@ -14,7 +18,6 @@ typedef struct {
 } UnkStruct80107DE0;
 
 s32 ovl_11_func_800DF4F0(UnkStruct800DF4F0 *arg0);
-void ovl_11_func_80107DE0(UnkStruct80107DE0 *arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_800DF5AC(Struct_800DF5AC *arg0) {
     s32 temp;
@@ -31,6 +34,6 @@ s32 ovl_11_func_800DF5AC(Struct_800DF5AC *arg0) {
         out = temp;
     }
     arg0->unk16 = out;
-    ovl_11_func_80107DE0((UnkStruct80107DE0 *)((s32)arg0 + 0xA8), 0x1F, 0x1E);
+    Ovl11StartTimedSpriteEffect((UnkStruct80107DE0 *)((s32)arg0 + 0xA8), 0x1F, 0x1E);
     return 0;
 }

@@ -11,9 +11,12 @@
 #include "random.h"
 #include "game_flags.h"
 #include "ovl11_object_event_pool.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 void ovl_11_func_800F0C70(void);
-void ovl_11_func_80107DD0(s16 *timer);
 s32 ovl_11_func_800C3548(s32 slotIndex);
 
 /* Internal callers only, but original external linkage is retained. The
@@ -51,7 +54,7 @@ void Ovl11ResetAllEventSlots(void) {
     remaining = 0x24;
     do {
         Ovl11InitEventSlot((s32) slot);
-        ovl_11_func_80107DD0((s16 *) &slot->unk30[0xB0]);
+        Ovl11ResetTimedSpriteEffect((s16 *) &slot->unk30[0xB0]);
         remaining -= 1;
         slot += 1;
     } while (remaining >= 0);
@@ -89,7 +92,7 @@ search_slot:
         Ovl11InitEventSlot((s32) slot);
         (*(s16 *) ((u8 *) slot + 0)) = id;
         slot->unk1E |= 0x8000;
-        ovl_11_func_80107DD0((s16 *) &slot->unk30[0xB0]);
+        Ovl11ResetTimedSpriteEffect((s16 *) &slot->unk30[0xB0]);
         if (ovl_11_func_800C3548((s16) slotIndex) == 1) {
             slot->unk4 = 0;
             slot->unk2 = 0;

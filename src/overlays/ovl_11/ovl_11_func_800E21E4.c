@@ -1,6 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "random.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
 
 s32 ovl_11_func_800E2934(void *arg0);
 s32 ovl_11_func_800E2A30(s16 *arg0);
@@ -10,7 +14,6 @@ s32 ovl_11_func_800E2654(E21E4Position *src, E21E4Position *dst);
  * F43CC's current definition spells those same words as four byte blocks. */
 void ovl_11_func_800F43CC(s32 arg0, E21E4Position position, u16 arg5, s32 arg6);
 void ovl_11_func_800CF2C8(s32 *arg0);
-void ovl_11_func_80107DD0(s16 *arg0);
 
 s32 ovl_11_func_800E21E4(E21E4Object *arg0) {
     s32 index;
@@ -137,6 +140,6 @@ s32 ovl_11_func_800E21E4(E21E4Object *arg0) {
     arg0->fieldAC = 0;
     arg0->flags &= ~1;
     arg0->flags &= ~0x2000;
-    ovl_11_func_80107DD0(arg0->reset);
+    Ovl11ResetTimedSpriteEffect(arg0->reset);
     return 0;
 }
