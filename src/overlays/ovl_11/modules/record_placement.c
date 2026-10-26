@@ -13,9 +13,9 @@
 #include "psyq/libgte.h"
 #include "ovl11_record_placement.h"
 #include "ovl11_surface_height.h"
+#include "ovl11_object_state_dispatch.h"
 
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *record, s32 mode);
-s32 ovl_11_func_800D3104(u16 *record, s32 mode);
 void ovl_11_func_800D3200(s32 record);
 s32 ovl_11_func_800D2E20(void);
 s32 Ovl11IsItemIdEnabled(s32 itemId);
@@ -77,17 +77,17 @@ place_selected:
             case 0x118:
             case 0x119:
             case 0x11A:
-                ovl_11_func_800D3104((u16 *) record, 0x10);
+                Ovl11EnterObjectState((u16 *) record, 0x10);
                 (*(u16 *) ((u8 *) record + 0x22)) = (u16) gPrimaryObjectFacing;
                 break;
             case 0x114:
             case 0x115:
-                ovl_11_func_800D3104((u16 *) record, 0xF);
+                Ovl11EnterObjectState((u16 *) record, 0xF);
                 (*(u16 *) ((u8 *) record + 0x22)) = (u16) gPrimaryObjectFacing;
                 break;
             case 0x116:
             case 0x117:
-                ovl_11_func_800D3104((u16 *) record, 0xE);
+                Ovl11EnterObjectState((u16 *) record, 0xE);
                 (*(u16 *) ((u8 *) record + 0x22)) = (u16) gPrimaryObjectFacing;
                 break;
             }

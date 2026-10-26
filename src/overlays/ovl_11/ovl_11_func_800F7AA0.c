@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "ovl11_selection_texture_transfer.h"
 
-void ovl_11_func_800F9BE4(void);
 s32 ovl_11_func_800F7D34(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F8224(s16 *arg0, s16 arg1);
 s16 *ovl_11_func_800F82FC(s32 arg0, s32 arg1);
@@ -48,9 +48,9 @@ s32 ovl_11_func_800F7AA0(void) {
             if ((D_80126E48 == (s16) (u16) D_80126E44) && ((D_80126E4C == D_80126E4A) || (D_80126E48 < 9))) {
                 D_80126E44 = 0;
             }
-            ovl_11_func_800F9BE4();
+            Ovl11ReleaseUnusedSelectionTextures();
             temp_s0_2 = ovl_11_func_800F7D34((s32) D_80126E48, (s32) D_80126E44, (s32) D_80126E4C, (s32) D_80126E4A);
-            ovl_11_func_800F9BE4();
+            Ovl11ReleaseUnusedSelectionTextures();
             D_80126E44 = (s16) D_80126E46;
             if (temp_s0_2 == 1) {
                 PlaySoundEffect(0);

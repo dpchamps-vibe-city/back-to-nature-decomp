@@ -34,6 +34,7 @@
 #include "ovl11_cell_actions.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_item_record_lists.h"
+#include "ovl11_object_state_dispatch.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -145,7 +146,6 @@ s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
-s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D5750 (s16 arg0);
 s32 ovl_11_func_800D6730 (s16 value, s16 row);
 s32 ovl_11_func_800D688C (s16 arg0);

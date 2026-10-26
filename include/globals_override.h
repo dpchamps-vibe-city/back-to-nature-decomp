@@ -449,8 +449,10 @@ extern s32 (*D_800B966C[20])(void *);
 /* ovl_11 8010B4D8 indexes these 20 rodata handler-address words at +0x26. */
 extern s32 D_800BAA34[20];
 
-/* ovl_11 800D3048/800D3104 index these 21 rodata handler-address words. */
-extern s32 D_800B8EC0[21];
+/* 800D3104 calls a nullable entry gate with the same u16-record pointer. */
+extern s32 (*gOvl11ObjectStateEntryCallbacks[21])(u16 *);
+/* 800D3048/800D3104 load 21 raw callback-address words, casting at dispatch. */
+extern s32 gOvl11ObjectStateFrameCallbacks[21];
 
 /* 8001B5DC loads this fog distance with lw; SetVal8005E2D8 stores s32. */
 extern s32 gSceneFogNear;
@@ -2636,7 +2638,7 @@ typedef struct {
 /* Shared 72-record cache; resetters and stream/draw users share this view. */
 extern Ovl11TextureRecord gOvl11TextureCache[] __asm__("gOvl11TextureCacheStorage");
 /* 800F9210 passes this four-halfword scratch rectangle to the image routines. */
-extern s16 D_80129638[4];
+extern s16 gOvl11TextureTransferRect[4];
 /* 800F7230 reads four lh counts and eight lhu overflow IDs. The fourth
  * retail count is 0x0D36; only request modes 0..2 have bounded list storage. */
 extern s16 gOvl11TextureRequestCounts[];
@@ -5203,7 +5205,12 @@ typedef struct {
     s16 field_690A;
 } Ovl11EventFlagView;
 /* 800F291C reads/sets the leading word and retains this address across calls. */
-extern Ovl11EventFlagView D_80070D34;
+extern Ovl11EventFlagView gOvl11EventRequestOnceFlags;
+/* F2508 resets the same one-shot word through shared work +44FC. */
+typedef struct {
+    char pad[0x44FC];
+    s32 requestOnceFlags;
+} Ovl11EventQueueWorkView;
 
 /* D_80127F80 - ovl_11 table of four halfwords scanned by
  * ovl_11_func_80112284 through an advancing s16 pointer.
@@ -5593,9 +5600,11 @@ typedef struct {
 extern Ovl11ItemPlacementRule gOvl11ItemPlacementRules[];
 
 /* 800CF428 reads three coordinate words from each of three 0x10-byte records. */
-extern s32 D_801238F0[][4];
+extern s32 gOvl11Timed154SpawnPositions[][4];
+/* 800CF748 copies one of two four-word positions for areas 0x1F/0x1B. */
+extern s32 gOvl11Area108SpawnPositions[8];
 /* 800CF428 reads and updates the item-spawn bit mask with lh/lhu/sh. */
-extern s16 D_80128D66;
+extern s16 gOvl11ItemSpawnRuleMask;
 
 /* D_80123940 - ovl_11 table of 0x18-byte records walked by
  * ovl_11_func_800CF848 with an advancing s16 pointer (stride 0x18). Field
@@ -5605,7 +5614,7 @@ extern s16 D_80128D66;
  * record's +0x38/+0x3C/+0x40. Absolute-addressed (lui + %lo, split
  * two-register form): declared as an aggregate wider than -G8, and owned by
  * the ovl_11 data image (this TU only declares it). */
-extern s16 D_80123940[];
+extern s16 gOvl11AreaItemSpawnRules[];
 
 /* D_8009AFF0 - main-RAM base whose s16 at +0x5476 ovl_11_func_800CF848
  * compares against the D_80123940 record's +0x2 field. Only the base and
@@ -6393,9 +6402,9 @@ extern s32 (*gOvl11ObjectLoadHandlers[4])(void);
 
 /* First 20-entry stride-4 queue: D_8006C838 + 0x49E4. The full-queue
  * path in ovl_11_func_800F27B0 shifts 0x4C bytes within this 0x50-byte span. */
-extern u8 D_8007121C[0x50];
+extern u8 gOvl11ImmediateEventQueue[0x50];
 /* Adjacent second 20-entry queue selected by ovl_11_func_800F2880. */
-extern u8 D_8007126C[0x50];
+extern u8 gOvl11DatedEventQueue[0x50];
 
 /* Object pointer and low flag-word cache written by ovl_11_func_800BF450. */
 extern u32 *gOvl11CachedGeometryHit;
@@ -7082,6 +7091,34 @@ extern s16 gOvl11RecordSpriteYOffsets[4];
 /* 800F5944 indexes that table with this absolute-addressed word. */
 /* ovl_11:800F4994 arms index 3; 800F4A58 counts down to zero. */
 extern s32 gOvl11RecordSpriteYOffsetIndex;
+
+/* F4CAC/F4CEC publish a partial record view: state +0, coordinates +8/C/10;
+ * records are 0x18 apart, but this original view covers only 0x14 bytes. */
+typedef struct {
+    u16 state;
+    u16 kind;
+    s32 word4;
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11PublishedPoolRecord;
+extern Ovl11PublishedPoolRecord *gOvl11PublishedPoolRecord;
+
+/* F4FC8 clears halfword flag bit 0 in the next 0x18-byte record. */
+typedef struct {
+    char pad0[4];
+    u16 flags;
+    char pad6[0x18 - 6];
+} Ovl11PoolCompletionEntry;
+/* F4FC8's shared-work view; keep the independent entry halfword signedness. */
+typedef struct {
+    char pad0[0x44F8];
+    s32 flags;
+    char pad44FC[0xDDD4 - 0x44FC];
+    Ovl11PoolCompletionEntry *current;
+    char padDDD8[0xE650 - 0xDDD8];
+    u8 completion;
+} Ovl11PoolCompletionWork;
 /* ovl_11:800F5888 projection scratch, original 80129620/80129628. */
 extern s32 gOvl11RecordSpriteScreen[2];
 extern s16 gOvl11RecordSpritePosition[4];
@@ -7319,8 +7356,8 @@ extern s32 gOvl11Mode6GridScanRow;
 extern s32 gOvl11Mode6GridProbePosition[4];
 
 /* 800F2400 reads/clears these word flags; 800F24B0/800F2724 set them. */
-extern s32 D_80126C90;
-extern s32 D_80126C94;
+extern s32 gOvl11EventMessageActive;
+extern s32 gOvl11EventMessageLatched;
 
 /* 800CD9A0 stores the BDCE8 result here and reads u16 +0/+2, s16 +8/+A. */
 typedef struct {
@@ -7553,6 +7590,15 @@ extern s16 gCalendarYear;
 extern s16 D_80071A22;
 /* 80104EC8, 800CD0C0 and 800EC490 read this unsigned state halfword. */
 extern u16 D_80070D06;
+/* 800CD0C0 indexes three X/Z halfword pairs; original data spans 80125F18..24. */
+extern s16 gOvl11DefaultPositionPairs[6];
+/* 800CD45C walks four 4-byte records: signed hour +0 and signed byte delta +2. */
+typedef struct {
+    s16 hour;
+    s8 delta;
+    char pad3;
+} Ovl11HourCounterDelta;
+extern Ovl11HourCounterDelta gOvl11HourCounterDeltas[4];
 /* 80104EC8 walks five item IDs with lhu and a two-byte stride. */
 extern u16 D_801274D0[5];
 

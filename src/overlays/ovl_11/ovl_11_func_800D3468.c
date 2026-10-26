@@ -2,6 +2,7 @@
 #include "psyq/libapi.h"
 #include "random.h"
 #include "ovl11_random_state_choice.h"
+#include "ovl11_object_state_dispatch.h"
 
 typedef struct Unk800D3468 {
     /* 0x00 */ u16 unk0;
@@ -9,7 +10,6 @@ typedef struct Unk800D3468 {
     /* 0xAC */ s16 unkAC;
 } Unk800D3468;
 
-s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3D2C(Unk800D3468 *arg0);
 
 s32 ovl_11_func_800D3468(u16 *arg0) {
@@ -74,6 +74,6 @@ s32 ovl_11_func_800D3468(u16 *arg0) {
         SystemError(0x45, 0x64);
         break;
     }
-    ovl_11_func_800D3104(arg0, var_s0);
+    Ovl11EnterObjectState(arg0, var_s0);
     return 0;
 }

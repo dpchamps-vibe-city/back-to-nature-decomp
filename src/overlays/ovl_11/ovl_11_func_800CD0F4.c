@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "cd_audio.h"
 #include "sound_commands.h"
+#include "ovl11_object_state_dispatch.h"
 
 s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_800E0C24(Ovl11StageHandlerObj *arg0, s32 arg1);
@@ -10,7 +11,6 @@ s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 /* Both parameters are stored with sh; this caller zero-extends them. */
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
-s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 
 s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
     s16 action;
@@ -78,11 +78,11 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
     if (gOvl11InteractionHitFlags & 0x800) {
         if (arg1 == 0 && *(u16 *) gOvl11InteractionHitRecordView == 0x15B) {
             ovl_11_func_800D31EC(((arg0->unk3C - 0x48) % 5) * 10 & 0xFFFE, gPrimaryObjectFacing);
-            ovl_11_func_800D3104(gOvl11InteractionHitRecordView, 6);
+            Ovl11EnterObjectState(gOvl11InteractionHitRecordView, 6);
             return 1;
         }
         if (arg1 == 1) {
-            ovl_11_func_800D3104(gOvl11InteractionHitRecordView, D_80123292);
+            Ovl11EnterObjectState(gOvl11InteractionHitRecordView, D_80123292);
             return 1;
         }
     }

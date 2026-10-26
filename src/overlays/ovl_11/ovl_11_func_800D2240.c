@@ -4,8 +4,8 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_object_state_dispatch.h"
 
-s32 ovl_11_func_800D3048(u16 *arg0);
 void ovl_11_func_800D2F1C(s32 arg0);
 void ovl_11_func_800D2E6C(u8 *arg0);
 
@@ -20,7 +20,7 @@ void ovl_11_func_800D2240(void) {
         base = (u8 *)D_8006C838;
         far_base = D_8009AFF0;
         if ((*temp_s0 != 0) && !((*(s32 *) ((u8 *) temp_s0 + 0x34)) & 0x20000)) {
-            ovl_11_func_800D3048(temp_s0);
+            Ovl11UpdateObjectState(temp_s0);
             if (!((*(s32 *) (base + 0xC)) & 0x08000000)) {
                 ovl_11_func_800D2F1C((s32) temp_s0);
                 Ovl11TickTimedSpriteEffect((Ov11Timer *) ((temp_s0 + 0x54)));

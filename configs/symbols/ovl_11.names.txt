@@ -1,5 +1,68 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Selection-slot texture movement and reconciliation against displayed IDs.
+Ovl11ReorderSelectionTextures = 0x800F9174; // type:func
+Ovl11TransferSelectionTexture = 0x800F9210; // type:func
+Ovl11ReleaseUnusedSelectionTextures = 0x800F9BE4; // type:func
+gOvl11TextureTransferRect = 0x80129638; // type:data size:0x8
+
+// Current/next pool-record publication and collision-driven gate completion.
+Ovl11PublishNextPoolRecord = 0x800F4CAC; // type:func
+Ovl11PublishCurrentPoolRecord = 0x800F4CEC; // type:func
+Ovl11ProbePoolRecordTransitions = 0x800F4D28; // type:func
+Ovl11ProbeActivePoolGate = 0x800F4E84; // type:func
+Ovl11CompletePoolGate = 0x800F4FC8; // type:func
+gOvl11PublishedPoolRecord = 0x80129630; // type:data size:0x4
+
+// Cell-action consumers of a shared spawn-effect record protocol.
+Ovl11ConsumeSpawnEffect = 0x800F46A4; // type:func
+Ovl11ConsumeSpawnEffectWithBudgets = 0x800F474C; // type:func
+Ovl11ConsumeTieredSpawnEffect = 0x800F482C; // type:func
+
+// Immediate/dated queues, one-shot evaluation and exclusive completion helpers.
+Ovl11UpdateEventQueueGate = 0x800F2400; // type:func
+Ovl11TryShowQueuedEventMessage = 0x800F24B0; // type:func
+Ovl11ResetEventQueues = 0x800F2508; // type:func
+Ovl11QueueDatedEvent = 0x800F2538; // type:func
+Ovl11ServiceEventQueues = 0x800F2620; // type:func
+Ovl11PopEventMessageEntry = 0x800F2724; // type:func
+Ovl11QueueImmediateEvent = 0x800F27B0; // type:func
+Ovl11RemoveQueuedEvent = 0x800F2880; // type:func
+Ovl11EvaluateEventRequests = 0x800F291C; // type:func
+Ovl11GetEventEligibilityFlag = 0x800F3820; // type:func
+Ovl11CompleteLatchedEventMessage = 0x800F3840; // type:func
+gOvl11EventMessageActive = 0x80126C90; // type:data size:0x4
+gOvl11EventMessageLatched = 0x80126C94; // type:data size:0x4
+
+// Paired state-entry gates and frame callbacks indexed by record +0x26.
+Ovl11UpdateObjectState = 0x800D3048; // type:func
+Ovl11EnterObjectState = 0x800D3104; // type:func
+gOvl11ObjectStateEntryCallbacks = 0x800B8E6C; // type:data size:0x54
+gOvl11ObjectStateFrameCallbacks = 0x800B8EC0; // type:data size:0x54
+
+// Closed area/time item-spawn protocol and its original data spans.
+Ovl11SpawnTimedItemPlacements = 0x800CF428; // type:func
+Ovl11SpawnArea108Item = 0x800CF748; // type:func
+Ovl11SpawnGatedAreaItems = 0x800CF848; // type:func
+Ovl11TrySpawnPositionedItem = 0x800CF95C; // type:func
+Ovl11RollSpawnWindowLatch = 0x800CFA48; // type:func
+gOvl11Timed154SpawnPositions = 0x801238F0; // type:data size:0x30
+gOvl11Area108SpawnPositions = 0x80123920; // type:data size:0x20
+gOvl11AreaItemSpawnRules = 0x80123940; // type:data size:0x90
+gOvl11ItemSpawnRuleMask = 0x80128D66; // type:data size:0x2
+
+// Four clock-hour entries feeding the primary-object +0x16 counter.
+Ovl11ApplyHourCounterDeltas = 0x800CD45C; // type:func
+gOvl11HourCounterDeltas = 0x801232A4; // type:data size:0x10
+
+// Selected X/Z default position; three signed-halfword pairs in original data.
+Ovl11ReadDefaultPosition = 0x800CD0C0; // type:func
+gOvl11DefaultPositionPairs = 0x80125F18; // type:data size:0xC
+
+// Complementary one-sided-clamped deltas from sixty-unit input steps.
+Ovl11ComputeSixtyStepDecrease = 0x800CD534; // type:func
+Ovl11ComputeSixtyStepIncrease = 0x800CD578; // type:func
+
 // Object action dispatch and its exclusive area-record selection helpers.
 Ovl11DispatchAreaRecordAction = 0x8010D314; // type:func
 Ovl11ProcessAreaSlotActions = 0x8010D648; // type:func

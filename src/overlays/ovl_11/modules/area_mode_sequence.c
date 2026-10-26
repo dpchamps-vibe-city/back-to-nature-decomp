@@ -49,6 +49,9 @@
 #include "ovl11_mode6_grid.h"
 #include "ovl11_area_selection_setup.h"
 #include "ovl11_record_slot_table.h"
+#include "ovl11_default_position.h"
+#include "ovl11_item_spawn_placement.h"
+#include "ovl11_pool_record_transition.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -66,7 +69,6 @@ void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CD624(void);
 void ovl_11_func_800CD670(s16 arg0);
 s32 ovl_11_func_800DE2EC(void);
-void ovl_11_func_800F4E84(void);
 
 #define WORK ((Ovl11BBCB8Work *)&D_8007AFF0)
 #define STATUS ((Ovl11BBCB8Status *)D_8006C838)
@@ -126,7 +128,7 @@ void Ovl11StepAreaModeState(void) {
     case 3:
         Ovl11ResetPrimaryObjectRequest();
         BeginScreenFadeFeedback(20);
-        ovl_11_func_800F4E84();
+        Ovl11ProbeActivePoolGate();
         gOvl11AreaSoundEffectPending = 0;
         if (D_801287F0->unkA != 99) {
             if (!(D_801287F0->unk0 & 0x200)) {
@@ -293,11 +295,9 @@ void ovl_11_func_801044E4(void);
 void Ovl11ResetAreaScene(void);
 void Ovl11RefreshAreaSoundBank(void);
 /* Resident sprite-display disable at exe:8001B100. */
-void ovl_11_func_800CD0C0(s32 *arg0);
 void ovl_11_func_800CCC5C(void);
 void Ovl11ApplyAreaSoundVolume(void);
 void ovl_11_func_800CF36C(s32 arg0);
-void ovl_11_func_800CF428(void);
 void ovl_11_func_800F4114(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
@@ -376,7 +376,7 @@ void Ovl11RunAreaEntrySteps(void) {
         }
         ((Ovl11AreaInitView *)D_8006C838)->field_4488++;
         if (((Ovl11FarInitView *)&D_8007AFF0)->field_254A0 == 0xC) {
-            ovl_11_func_800CD0C0((s32 *)((struct Ovl11FrameState *)D_8006C838)->position);
+            Ovl11ReadDefaultPosition((s32 *)((struct Ovl11FrameState *)D_8006C838)->position);
             ((Ovl11MovementCameraWork *)&D_8007AFF0)->coordinates[0] = ((struct Ovl11FrameState *)D_8006C838)->position[0];
             ((Ovl11MovementCameraWork *)&D_8007AFF0)->coordinates[1] = ((struct Ovl11FrameState *)D_8006C838)->position[2];
             ((Ovl11MovementCameraWork *)&D_8007AFF0)->coordinates[2] = ((struct Ovl11FrameState *)D_8006C838)->position[4];
@@ -391,7 +391,7 @@ void Ovl11RunAreaEntrySteps(void) {
         ovl_11_func_800CCC5C();
         Ovl11ApplyAreaSoundVolume();
         ovl_11_func_800CF36C(0);
-        ovl_11_func_800CF428();
+        Ovl11SpawnTimedItemPlacements();
         Ovl11ClearEventSlotScheduleChanges();
         ovl_11_func_800F4114();
         Ovl11ClearSpriteEffects();

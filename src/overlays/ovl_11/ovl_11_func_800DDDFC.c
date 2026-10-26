@@ -31,20 +31,20 @@
 #include "ovl11_availability_event_reset.h"
 #include "ovl11_record_slot_table.h"
 #include "ovl11_scene_setup_install.h"
+#include "ovl11_default_position.h"
+#include "ovl11_pool_record_transition.h"
+#include "ovl11_pending_event_queue.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
 void ovl_11_func_800CCCC0 (void);
-void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
 void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
 void ovl_11_func_800F3D40 (void);
-void ovl_11_func_800F2620 (void);
 s32 ovl_11_func_800DE76C (void);
-void ovl_11_func_800F4D28 (void);
 void ovl_11_func_800DE4C0 (void);
 void ovl_11_func_800F4BB4(void);
 
@@ -120,7 +120,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ((Ovl11SetupWorkView *)&D_8007AFF0)->current = ((Ovl11SetupWorkView *)&D_8007AFF0)->previous;
             ((Ovl11SetupWorkView *)&D_8007AFF0)->header = gLoadedAreaHeaderCopy;
             Ovl11RegisterPoolSpriteRotations((s32)gLoadedAreaHeaderCopy);
-            ovl_11_func_800CD0C0(((Ovl11DDDFCState *)D_8006C838)->position);
+            Ovl11ReadDefaultPosition(((Ovl11DDDFCState *)D_8006C838)->position);
             Ovl11ResetMovingItemRecords();
             ((Ovl11DDDFCState *)D_8006C838)->status = (((Ovl11DDDFCState *)D_8006C838)->status | 0x4000) & 0xFFF07FFF;
             ovl_11_func_800CCC5C();
@@ -150,9 +150,9 @@ s32 ovl_11_func_800DDDFC(void) {
         ovl_11_func_8010C9B4();
         ovl_11_func_800F40A4();
         ovl_11_func_800F3D40();
-        ovl_11_func_800F2620();
+        Ovl11ServiceEventQueues();
         ovl_11_func_800DE76C();
-        ovl_11_func_800F4D28();
+        Ovl11ProbePoolRecordTransitions();
         ((Ovl11DDDFCState *)D_8006C838)->status &= 0xFBFFFFFF;
         switch (((Ovl11DDDFCState *)D_8006C838)->mode) {
         case 1:

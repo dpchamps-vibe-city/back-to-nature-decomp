@@ -20,6 +20,7 @@
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_cell_actions.h"
 #include "ovl11_cell_geometry.h"
+#include "ovl11_item_spawn_placement.h"
 
 s32 ovl_11_func_800D5868(s16 kind);
 
@@ -94,10 +95,9 @@ s32 Ovl11TryPromoteCellPendingKind(s16 layer, s16 column, s16 row, s16 unused) {
 }
 
 s32 ovl_11_func_800D5F44(u16 kind, u16 state);
-void ovl_11_func_800CF95C(Ovl11Func800CF95CArg position, s32 mode);
 
 s32 Ovl11TryResetCellAndSpawnEffect(s16 layer, s16 column, s16 row) {
-    Ovl11Func800CF95CArg position;
+    Ovl11ItemSpawnPosition position;
     Ovl11D124Entry *entry;
     s16 texture;
     u16 kind;
@@ -137,8 +137,8 @@ s32 Ovl11TryResetCellAndSpawnEffect(s16 layer, s16 column, s16 row) {
         entry->unk0 = (s16) (u16) entry->unk2;
         entry->unk6 = (u16) entry->unk6 & 0x7FFF;
         Ovl11GetCellCornerPosition(column, row, (Vec3 *)&position, layer);
-        position.unk4 = 0;
-        ovl_11_func_800CF95C(position, 0);
+        position.y = 0;
+        Ovl11TrySpawnPositionedItem(position, 0);
         gOvl11CellTextureSetters[layer](column, row, texture);
         Ovl11ApplyCellNeighborhoodVariants(row, column, layer, 1, 0);
         return 1;
@@ -213,7 +213,7 @@ s32 ovl_11_func_800D5D38(u16 kind, u16 state);
 void ovl_11_func_800F397C(u16 amount, u16 mode);
 
 s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
-    Ovl11Func800CF95CArg position;
+    Ovl11ItemSpawnPosition position;
     Ovl11D124Entry *entry;
     u16 kind;
     u8 state;
@@ -239,8 +239,8 @@ s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
             kind = (u16) entry->unk0;
             if ((kind == 0x36) || (kind == 0x40)) {
                 Ovl11GetCellCornerPosition(column, row, (Vec3 *)&position, layer);
-                position.unk4 = 0;
-                ovl_11_func_800CF95C(position, 1);
+                position.y = 0;
+                Ovl11TrySpawnPositionedItem(position, 1);
             }
             return 1;
         }

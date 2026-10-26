@@ -15,6 +15,7 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_record_flag_counters.h"
 #include "ovl11_interaction_dispatch.h"
+#include "ovl11_pending_event_queue.h"
 
 void ovl_11_func_800F4AC0 (s32 arg0);
 s32 ovl_11_func_800F4B14 (void);
@@ -36,7 +37,6 @@ s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
 
 s32 ovl_11_func_800F0380(s16 arg0);
-void ovl_11_func_800F2538(s16 arg0, s16 arg1, s16 arg2);
 
 s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 sp10;
@@ -118,11 +118,11 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         ((E9State *)D_8006C838)->fE780 = 1;
         ((E9State *)D_8006C838)->fE76E = 0;
         Ovl11ResetRecordThresholdCount();
-        ovl_11_func_800F2538(2, 0x37, 2);
+        Ovl11QueueDatedEvent(2, 0x37, 2);
         for (var_s3 = 0; var_s3 < 4; var_s3++) {
             if (GetGameFlag((u16)(var_s3 + 0x21)) != 0) {
                 if (((E9State *)((u8 *)D_8006C838 + ((E9SmallView *)D_8006C838)->records[var_s3].id * 0x1D4))->f99EA >= 0xC8) {
-                    ovl_11_func_800F2538(2, var_s3 + 0x33, 2);
+                    Ovl11QueueDatedEvent(2, var_s3 + 0x33, 2);
                 }
             }
         }
@@ -141,7 +141,7 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                     }
                 }
             }
-            ovl_11_func_800F2538(2, var_s3, 7);
+            Ovl11QueueDatedEvent(2, var_s3, 7);
             return 1;
         }
         /* Duplicate return node #205. Try simplifying control flow for better match */
@@ -268,7 +268,7 @@ block_118:
         SetGameFlag(0x66, 1U);
         goto block_204;
     case 9:
-        ovl_11_func_800F2538(arg1, (s16) arg2, (s16) arg3);
+        Ovl11QueueDatedEvent(arg1, (s16) arg2, (s16) arg3);
         return 1;
     case 10:
         ((E9State *)D_8006C838)->f44F8 = (s32) (((E9State *)D_8006C838)->f44F8 | 2);

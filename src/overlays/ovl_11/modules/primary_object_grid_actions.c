@@ -36,6 +36,7 @@
 #include "ovl11_item_record_lists.h"
 #include "ovl11_cell_geometry.h"
 #include "ovl11_interaction_record_actions.h"
+#include "ovl11_spawn_effect_consume.h"
 
 s32 ovl_11_func_800C9D64(void);
 
@@ -133,8 +134,6 @@ s32 Ovl11BeginCellPromotionAction(Ovl11C7010Object *arg0) {
     return 1;
 }
 
-s32 ovl_11_func_800F46A4(Ovl11SpawnEffectRecord *arg0);
-
 s32 Ovl11BeginCellEffectAction(Ovl11C7010Object *arg0) {
     Ovl11CE034Position pos;
     s16 col;
@@ -148,7 +147,7 @@ s32 Ovl11BeginCellEffectAction(Ovl11C7010Object *arg0) {
     mode = ovl_11_func_800C9D64();
     if (mode == 2) {
         if (gOvl11InteractionHitFlags & 0x8000) {
-            if (ovl_11_func_800F46A4(gOvl11InteractionHitRecordView) != 0) {
+            if (Ovl11ConsumeSpawnEffect(gOvl11InteractionHitRecordView) != 0) {
                 ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, 0x96);
             }
         } else {
@@ -247,8 +246,6 @@ s32 Ovl11StepCellActionRequest(Ovl11CD5BCObject *arg0) {
     return 0;
 }
 
-s32 ovl_11_func_800F482C(Ovl11SpawnEffectRecord *arg0, s16 arg1, s16 arg2);
-
 void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *arg0) {
     Ovl11CE034Position sp18;
     u16 sp28;
@@ -281,14 +278,12 @@ void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *arg0) {
         }
     } else if (gOvl11InteractionHitFlags & 0x8000) {
         D_80128C64 += 1 << temp_s3;
-        if (ovl_11_func_800F482C(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
+        if (Ovl11ConsumeTieredSpawnEffect(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
             var_s4 = 0x96;
         }
     }
     ovl_11_func_800CD5BC(arg0, var_s4);
 }
-
-s32 ovl_11_func_800F474C(Ovl11SpawnEffectRecord *arg0, s16 arg1, s16 arg2);
 
 void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
     Ovl11CE034Position sp18;
@@ -322,7 +317,7 @@ void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
         }
     } else if (gOvl11InteractionHitFlags & 0x8000) {
         D_80128C64 += 1 << temp_s3;
-        if (ovl_11_func_800F474C(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
+        if (Ovl11ConsumeSpawnEffectWithBudgets(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
             var_s4 = 0x96;
         }
     }

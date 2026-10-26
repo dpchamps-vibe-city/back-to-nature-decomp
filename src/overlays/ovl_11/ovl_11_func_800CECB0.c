@@ -5,13 +5,13 @@
 #include "psyq/memory.h"
 #include "aged_item_pool.h"
 #include "ovl11_record_pair_slots.h"
+#include "ovl11_item_spawn_placement.h"
 
 s32 ovl_11_func_800E21E4 (E21E4Object *arg0);
 s32 ovl_11_func_800DEB00 (Ovl11Deb00Object *arg0);
 s32 ovl_11_func_800E06E0 (Ovl11Deb00Object *arg0);
 s32 ovl_11_func_80108D84 (s32 *arg0);
 s32 ovl_11_func_8010B264 (Ovl11B264Object *arg0);
-void ovl_11_func_800CFA48 (void);
 void ovl_11_func_800CFD9C (void);
 void ovl_11_func_800D0FB4(void);
 
@@ -60,12 +60,12 @@ void ovl_11_func_800CECB0(void) {
     } else {
         ((struct Ovl11PoolResetView *) D_8006C838)->counter_523C = 0U;
     }
-    D_80128D66 = 0;
+    gOvl11ItemSpawnRuleMask = 0;
     ((struct Ovl11PoolResetView *) D_8006C838)->flags_44F8 &= ~0x8000;
     ((struct Ovl11PoolResetView *) D_8006C838)->flags_44F8 &= ~0x800000;
     ((struct Ovl11PoolResetView *) D_8006C838)->flags_44F8 &= ~0x1000000;
     ((struct Ovl11PoolResetView *) D_8006C838)->flags = (s32) (((struct Ovl11PoolResetView *) D_8006C838)->flags & ~8);
-    ovl_11_func_800CFA48();
+    Ovl11RollSpawnWindowLatch();
     Ovl11ResyncRecordRowPlacements(1);
     Ovl11ResyncRecordRowPlacements(0);
     ovl_11_func_800D0FB4();

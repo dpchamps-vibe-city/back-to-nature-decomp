@@ -1,11 +1,10 @@
 #include "common.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_pool_record_transition.h"
 
 void ovl_11_func_800D666C(s16 arg0);
 void ovl_11_func_8010941C(s32 arg0);
-void ovl_11_func_800F4CAC(void);
-void ovl_11_func_800F4CEC(void);
 s32 ovl_11_func_800D6A94(s16 arg0);
 
 s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
@@ -45,11 +44,11 @@ s32 ovl_11_func_800E8250(s16 arg0, s16 arg1) {
                     break;
                 case 0x65:
                     ((struct Ovl11E8250State *)D_8006C838)->effect[0xE] |= 1;
-                    ovl_11_func_800F4CAC();
+                    Ovl11PublishNextPoolRecord();
                     break;
                 case 0x64:
                     ((struct Ovl11E8250State *)D_8006C838)->effect[2] |= 1;
-                    ovl_11_func_800F4CEC();
+                    Ovl11PublishCurrentPoolRecord();
                     break;
                 }
             }

@@ -40,6 +40,8 @@
 #include "ovl11_work_position_commands.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_item_record_lists.h"
+#include "ovl11_default_position.h"
+#include "ovl11_object_state_dispatch.h"
 
 typedef struct {
                s16 field_0;
@@ -196,7 +198,6 @@ void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
-s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D5750 (s16 arg0);
@@ -207,7 +208,6 @@ s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6D2C (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800CD0C0 (s32 *arg0);
 s32 ovl_11_func_801000D4 (s16 arg0);
 s32 ovl_11_func_800E5ADC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6B18 (s16 arg0, s32 arg1, s32 arg2);

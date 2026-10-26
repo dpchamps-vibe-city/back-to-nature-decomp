@@ -22,6 +22,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_object_state_dispatch.h"
 
 typedef struct {
     s16 field_0;
@@ -92,7 +93,6 @@ void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053
 void ovl_11_func_800D666C (s16 arg0);
 s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
-s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);

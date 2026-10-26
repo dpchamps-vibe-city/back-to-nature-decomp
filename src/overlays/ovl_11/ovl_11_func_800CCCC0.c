@@ -11,13 +11,12 @@
 #include "psyq/libcd.h"
 #include "ovl11_area_resource_load.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_sixty_step_deltas.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
 s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
-s32 ovl_11_func_800CD578 (s32 arg0);
-s32 ovl_11_func_800CD534 (s32 arg0);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
@@ -50,8 +49,8 @@ void ovl_11_func_800CCCC0(void) {
         } else {
             temp_s1 = temp_s0->angle + 0x5A0;
             temp_s1 -= player->unk2C;
-            temp_s0_2 = ovl_11_func_800CD578(temp_s1);
-            ovl_11_func_800D622C(temp_s0_2, ovl_11_func_800CD534(temp_s1), 0, 0);
+            temp_s0_2 = Ovl11ComputeSixtyStepIncrease(temp_s1);
+            ovl_11_func_800D622C(temp_s0_2, Ovl11ComputeSixtyStepDecrease(temp_s1), 0, 0);
         }
     } else {
         if ((u32) ((u16) player->unk2C - 0x168) < 0x2D0U) {

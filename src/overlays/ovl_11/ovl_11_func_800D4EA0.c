@@ -4,10 +4,10 @@
 #include "random.h"
 #include "psyq/memory.h"
 #include "ovl11_record_selection.h"
+#include "ovl11_object_state_dispatch.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800D425C(u16 *arg0);
-s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 
 s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
     Ovl11PaddedVec3 position;
@@ -59,12 +59,12 @@ s32 ovl_11_func_800D4EA0(Ovl11SetFieldsView *arg0) {
             slot = Ovl11ChooseEligibleTaggedRecord(1);
             *(s16 *)((u8 *)arg0 + 0x16) = 1;
             if (slot < 0) {
-                ovl_11_func_800D3104((u16 *)arg0, 0x13);
+                Ovl11EnterObjectState((u16 *)arg0, 0x13);
                 break;
             }
         }
         *(u16 *)((u8 *)arg0 + 2) = slot;
-        ovl_11_func_800D3104((u16 *)arg0, 0x14);
+        Ovl11EnterObjectState((u16 *)arg0, 0x14);
         break;
     }
     return result;

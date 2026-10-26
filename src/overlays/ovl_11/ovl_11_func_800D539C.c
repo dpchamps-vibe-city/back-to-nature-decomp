@@ -5,6 +5,7 @@
 #include "sound_commands.h"
 #include "psyq/memory.h"
 #include "ovl11_record_selection.h"
+#include "ovl11_object_state_dispatch.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -18,7 +19,6 @@ typedef struct {
 void ovl_11_func_800D0408();
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
-s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D04D4(Ovl11D539CStepObj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_800E0C24(Ovl11SetFieldsView *arg0, s32 arg1);
 s32 ovl_11_func_800DF010(Ovl11SetFieldsView *arg0, s32 arg1);
@@ -98,12 +98,12 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
             var_v0 = Ovl11ChooseEligibleTaggedRecord(1);
             (arg0->pool) = 1;
             if (var_v0 < 0) {
-                ovl_11_func_800D3104((u16 *)arg0, 0x13);
+                Ovl11EnterObjectState((u16 *)arg0, 0x13);
                 break;
             }
         }
         (arg0->index) = var_v0;
-        ovl_11_func_800D3104((u16 *)arg0, 0x14);
+        Ovl11EnterObjectState((u16 *)arg0, 0x14);
         break;
     case 1:
     default:

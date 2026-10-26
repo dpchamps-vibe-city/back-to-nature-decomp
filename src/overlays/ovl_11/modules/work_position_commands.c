@@ -8,8 +8,8 @@
 #include "game_types.h"
 #include "ovl11_work_position_commands.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_default_position.h"
 
-void ovl_11_func_800CD0C0(s32 *position);
 s32 ovl_11_func_800E9284(s16 state, s16 recordIndex, s32 unused2, s32 unused3);
 
 s32 Ovl11ApplyWorkPositionCommand(s16 mode, s16 y, s32 x, s32 z) {
@@ -27,7 +27,7 @@ s32 Ovl11ApplyWorkPositionCommand(s16 mode, s16 y, s32 x, s32 z) {
         position[2] = gOvl11ValueSlots[z];
         break;
     case 2:
-        ovl_11_func_800CD0C0(position);
+        Ovl11ReadDefaultPosition(position);
         ovl_11_func_800E9284(0, 0, 0, 0);
         break;
     }

@@ -1919,15 +1919,14 @@ typedef struct {
     /* 0x18 */ UnkStruct80075BC4 **unk18;
 } Ovl11Func801097F4Arg;
 
-/* ovl_11_func_800CF95C argument record, passed by value like
- * Ovl11Func801097F4Arg: all 16 bytes ride in $a0-$a3 and are homed to
- * 0x0($sp) on entry. Only the fields the function reads are named. */
+/* CF95C takes this 16-byte position by value in $a0-$a3. Keep the
+ * fourth word in the ABI even though the spawn attempt reads only X/Y/Z. */
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-} Ovl11Func800CF95CArg;
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ s32 z;
+    /* 0x0C */ s32 unusedWord;
+} Ovl11ItemSpawnPosition;
 
 /* ovl_11_func_801096FC argument record, passed by value like
  * Ovl11Func801097F4Arg: the first 16 bytes ride in $a0-$a3 and are homed to

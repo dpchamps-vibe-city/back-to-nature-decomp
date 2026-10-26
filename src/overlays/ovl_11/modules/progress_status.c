@@ -15,6 +15,8 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_default_position.h"
+#include "ovl11_pool_record_transition.h"
 
 s32 *Ovl11ResetProgressControl(void) {
     Ovl11RefreshProgressStatusEntry();
@@ -90,9 +92,6 @@ void Ovl11RefreshProgressStatus(void) {
     Ovl11RefreshEventFlagsTop();
 }
 
-void ovl_11_func_800F4CEC (void);
-void ovl_11_func_800F4CAC (void);
-void ovl_11_func_800CD0C0 (s32 *arg0);
 void ovl_11_func_800D0FB4(void);
 
 void Ovl11UpdateProgressTimers(void) {
@@ -108,8 +107,8 @@ void Ovl11UpdateProgressTimers(void) {
     if (GetGameFlag(0x38U) == 1) {
         if (--((Ovl11ProgressState *)D_8006C838)->pendingTimer < 0) {
             ovl_11_func_800D0FB4();
-            ovl_11_func_800F4CEC();
-            ovl_11_func_800F4CAC();
+            Ovl11PublishCurrentPoolRecord();
+            Ovl11PublishNextPoolRecord();
             SetGameFlag(0x38U, 0U);
             ((Ovl11ProgressState *)D_8006C838)->pendingTimer = 0U;
             for (stageFlag = 0x3A; stageFlag < 0x3E; stageFlag++) {
@@ -140,7 +139,7 @@ void Ovl11UpdateProgressTimers(void) {
             }
             SetGameFlag((u16) selectedFlag, 1U);
             if (((Ovl11ProgressState *)D_8006C838)->mode == 2) {
-                ovl_11_func_800CD0C0(&D_80075A1C);
+                Ovl11ReadDefaultPosition(&D_80075A1C);
             }
         }
     }

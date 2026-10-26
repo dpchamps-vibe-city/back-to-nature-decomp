@@ -28,6 +28,7 @@
 #include "ovl11_primary_object_sprite_records.h"
 #include "ovl11_record_slot_table.h"
 #include "ovl11_scene_setup_install.h"
+#include "ovl11_pending_event_queue.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
@@ -40,7 +41,6 @@ void ovl_11_func_800F6630 (void);
 void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
 void ovl_11_func_800CE96C (void);
 void ovl_11_func_8010C6A0 (void);
-void ovl_11_func_800F2508 (void);
 void ovl_11_func_80104898 (void);
 void ovl_11_func_800FFA28 (void);
 void ovl_11_func_800F1F48 (s32 arg0);
@@ -91,7 +91,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_8010C6A0();
     ResetMessageWindow();
     Ovl11ResetProgressControl();
-    ovl_11_func_800F2508();
+    Ovl11ResetEventQueues();
     Ovl11ClearSpriteEffects();
     ovl_11_func_80104898();
     ovl_11_func_800FFA28();

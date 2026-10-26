@@ -1548,6 +1548,11 @@ gCalendarDay = 0x80070CF4; // size:0x2
 gCalendarWeekday = 0x80070CF6; // size:0x2
 gClockHour = 0x80070CF8; // size:0x2
 gClockMinute = 0x80070CFA; // size:0x2
+// Event queues inside the shared work image (ovl_11's queue protocol).
+gOvl11EventRequestOnceFlags = 0x80070D34; // size:0x4
+gOvl11ImmediateEventQueue = 0x8007121C; // size:0x50
+gOvl11DatedEventQueue = 0x8007126C; // size:0x50
+
 // Primary-object direction service writes +38; other readers use the 0..3 facing.
 gPrimaryObjectFacing = 0x80071A38; // size:0x2
 

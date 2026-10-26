@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_object_record_init.h"
+#include "ovl11_object_state_dispatch.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -8,8 +9,6 @@ typedef struct __attribute__((packed)) {
 } Ovl11UnalignedPair800D2F48;
 
 extern UnkStruct80075BC4 D_80075BC4[6];
-
-s32 ovl_11_func_800D3104(u16 *arg0, s32 arg1);
 
 Ovl11ObjectInitRecord *ovl_11_func_800D2F48(s32 arg0) {
     UnkStruct80075BC4 *var_s0;
@@ -47,10 +46,10 @@ loop_2:
     *(s16 *)((u8 *)var_s0 + 0xAC) = 0xFF;
     *(u16 *)((u8 *)var_s0 + 0x30) = var_30;
     if (var_s0->unk0 == 0x157) {
-        ovl_11_func_800D3104((u16 *)var_s0, 4);
+        Ovl11EnterObjectState((u16 *)var_s0, 4);
     }
     if (var_s0->unk0 == 0x15B) {
-        ovl_11_func_800D3104((u16 *)var_s0, 0x12);
+        Ovl11EnterObjectState((u16 *)var_s0, 0x12);
     }
     return (Ovl11ObjectInitRecord *)var_s0;
 }

@@ -30,6 +30,7 @@
 #include "ovl11_record_flag_counters.h"
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_record_slot_table.h"
+#include "ovl11_object_state_dispatch.h"
 
 typedef struct {
     s16 unk0;
@@ -92,7 +93,6 @@ void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *a
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
 void ovl_11_func_800D666C (s16 arg0);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
-s32 ovl_11_func_800D3104 (u16 *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);
 s32 ovl_11_func_800D2E20 (void);
@@ -130,7 +130,7 @@ s32 ovl_11_func_800F1EE4 (s32 arg0);
 void ovl_11_func_800F1E44 (u32 arg0, s16 *arg1, s32 arg2);
 s32 ovl_11_func_800F19C8 (s32 arg0);
 s32 ovl_11_func_800F13D8 (u16 arg0);
-void ovl_11_func_800F27B0 (s16 kind, s16 value);
+void Ovl11QueueImmediateEvent (s16 kind, s16 value);
 void ovl_11_func_801037EC (void);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800EC354 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);

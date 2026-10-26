@@ -12,6 +12,7 @@
 
 #include "common.h"
 #include "ovl11_primary_object_sprite_records.h"
+#include "ovl11_default_position.h"
 
 s32 ovl_11_func_800D6A94(s16 arg0);
 
@@ -34,8 +35,6 @@ void Ovl11LoadPrimaryObjectRecordSprites(void) {
         ovl_11_func_800D6A94(table[i][0]);
     }
 }
-
-void ovl_11_func_800CD0C0(s32 *arg0);
 
 void Ovl11InitPrimaryObjectRecordSprites(void) {
     u8 *base;
@@ -63,7 +62,7 @@ void Ovl11InitPrimaryObjectRecordSprites(void) {
         *(s16 *)(base + 0x20) = 8;
     }
     Ovl11LoadPrimaryObjectRecordSprites();
-    ovl_11_func_800CD0C0((s32 *)(base + 0x100));
+    Ovl11ReadDefaultPosition((s32 *)(base + 0x100));
     D_80128D30 = 0;
     gOvl11MotionHoldCount = 0;
     gOvl11ItemActionChargeFrames = 0;

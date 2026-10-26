@@ -2207,13 +2207,6 @@ typedef struct {
 } Ovl11Func800BDCE8Arg1;
 
 typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-               s32 unkC;
-} Ovl11Func800CF95CArg;
-
-typedef struct {
                u16 unk0;
                char pad_02[0x2E];
                s16 unk30;
@@ -2290,6 +2283,13 @@ typedef struct {
     s16 unk2;
     u16 unk4;
 } Ovl11ItemCollisionObject;
+
+typedef struct {
+               s32 x;
+               s32 y;
+               s32 z;
+               s32 unusedWord;
+} Ovl11ItemSpawnPosition;
 
 typedef struct {
     char pad_00[0x30];
