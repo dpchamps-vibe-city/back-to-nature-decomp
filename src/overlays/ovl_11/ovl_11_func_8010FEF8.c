@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_spawn_record_access.h"
+#include "ovl11_seasonal_record_ids.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
-s32 ovl_11_func_800F413C(Ovl11F413CArg0View *arg0, Ovl11F413CArg1View *arg1);
 s32 ovl_11_func_80110520(s32 arg0, s16 arg1);
 s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 u16 ovl_11_func_80110118(Ovl11ActionCompletionView *arg0);
-s32 ovl_11_func_800F44B4(u16 arg0, s32 *arg1, s16 *arg2, s32 arg3);
 s32 ovl_11_func_80110944(s16 arg0, u16 arg1);
 
 s32 ovl_11_func_8010FEF8(Ovl11SetFieldsView *arg0, s32 arg1) {
@@ -26,7 +26,7 @@ s32 ovl_11_func_8010FEF8(Ovl11SetFieldsView *arg0, s32 arg1) {
             (*(s16 *) ((u8 *) arg0 + 0x28)) = 0;
             return 1;
         }
-        temp_v0_2 = ovl_11_func_800F44B4(0x123, &sp18.field_0, &sp28, temp_v0);
+        temp_v0_2 = Ovl11ReadSpawnRecord(0x123, &sp18.field_0, &sp28, temp_v0);
         if ((temp_v0_2 == 1) && (sp28 == arg0->field_30)) {
             ovl_11_func_800D05D0(arg0, sp18);
             (*(s16 *) ((u8 *) arg0 + 0x28)) = temp_v0_2;
@@ -40,11 +40,11 @@ s32 ovl_11_func_8010FEF8(Ovl11SetFieldsView *arg0, s32 arg1) {
         }
         break;
     case 2: {
-        Ovl11F413CArg1View sp30;
+        Ovl11RecordPresentation sp30;
 
-        if (ovl_11_func_800F413C((Ovl11F413CArg0View *) (((struct Ovl11FEF8State *) D_8006C838)->records + (*(s16 *) ((u8 *) arg0 + 0xBA)) * 0x18), &sp30) == 1) {
+        if (Ovl11ConsumeSeasonalRecord((Ovl11SeasonalRecordView *) (((struct Ovl11FEF8State *) D_8006C838)->records + (*(s16 *) ((u8 *) arg0 + 0xBA)) * 0x18), &sp30) == 1) {
             (*(s16 *) ((u8 *) arg0 + 0x28)) = 3;
-            (*(u16 *) ((u8 *) arg0 + 0xB6)) = sp30.unk0;
+            (*(u16 *) ((u8 *) arg0 + 0xB6)) = sp30.id;
         } else {
             (*(s16 *) ((u8 *) arg0 + 0x28)) = 0;
         }

@@ -34,6 +34,7 @@
 #include "ovl11_area_resource_load.h"
 #include "ovl11_surface_height.h"
 #include "ovl11_shared_animation_icon.h"
+#include "ovl11_scene_header_key.h"
 
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2);
 
@@ -293,7 +294,6 @@ void Ovl11ShowObjectCommandMessage(Ovl11C3F6CObjectView *, u16 *);
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *, s32, s32);
 void Ovl11SetObjectCommandMotion(Ovl11C3B78Arg0 *, Ovl11C3B78Arg1 *);
 s32 Ovl11GetObjectCommandTableAddress(void);
-s32 ovl_11_func_800DD1D0(s16 *);
 void Ovl11TryDrawObjectEvent(Ovl11AnimationObject *);
 
 /* Forward entry used by the tick loop; external linkage is retained. */
@@ -640,7 +640,7 @@ void Ovl11AdvanceScheduledEvent(Ovl11EventObject *object) {
                 if (oldEvent != *(s16 *) ((u8 *) object + 0x2E)) {
                     changed = 1;
                 }
-                if (ovl_11_func_800DD1D0((s16 *) ((u8 *) object + 0x2C)) == 0) {
+                if (Ovl11SceneHeaderKeyDiffers((s16 *) ((u8 *) object + 0x2C)) == 0) {
                     if (!(object->flags & 0x100)) {
                         if (Ovl11SelectScriptSpriteSource(*(s16 *) object, (SpriteSourceData *) ((u8 *) object + 0x80)) != 0) {
                             *(s16 *) ((u8 *) object + 0x10) = 0;

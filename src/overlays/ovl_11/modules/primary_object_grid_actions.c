@@ -49,6 +49,8 @@
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_item_table_queries.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_balance_accounting.h"
+#include "ovl11_spawn_record_access.h"
 
 s32 ovl_11_func_800C9D64(void);
 
@@ -408,9 +410,7 @@ s32 ovl_11_func_800F3E44 (s16 arg0);
 void ovl_11_func_800CBD78 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CF314 (u8 *arg0, C580C_b6c4596908ca_Ovl11CF314Arg1 *arg1, C580C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
-void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F0FB0 (s32 arg0);
-s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
 s32 Ovl11CommitPendingItemRecord (Ovl11C7010Object *arg0);
@@ -673,7 +673,7 @@ state_done:
             }
             if (arg0->state == 0x62) {
                 Ovl11ComputeGridOffsetPosition((Ovl11CE034Object *)arg0, (Ovl11CE034Position *)&position, 4);
-                ovl_11_func_800F43CC(0x64, position, arg0->collisionId, 0);
+                Ovl11SetSpawnRecord(0x64, position, arg0->collisionId, 0);
                 PlaySoundEffect(7);
             }
             if (arg0->state == 0x6E) {
@@ -749,7 +749,7 @@ state_done:
             Ovl11ResetPrimaryObjectRequest();
             break;
         case 0x33:
-            ovl_11_func_800F2354((s32) (*(s16 *) ((u8 *) gItemDataTable + 0x1002)), 0);
+            Ovl11AdjustSpendableBalance((s32) (*(s16 *) ((u8 *) gItemDataTable + 0x1002)), 0);
             Ovl11RemoveSlotSprite(arg0->item);
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;

@@ -1,8 +1,7 @@
 #include "common.h"
 #include "ovl11_clock_calendar.h"
 #include "game_flags.h"
-
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
+#include "ovl11_balance_accounting.h"
 
 s32 ovl_11_func_800F3D88(void) {
     u8 *base;
@@ -17,7 +16,7 @@ s32 ovl_11_func_800F3D88(void) {
         return 1;
     }
     p = (u16 *)(base + 0x498C);
-    ovl_11_func_800F2354(*(s32 *)(p + 0x1A), 0);
+    Ovl11AdjustSpendableBalance(*(s32 *)(p + 0x1A), 0);
     *(s32 *)(p + 0x1A) = 0;
     return 1;
 }

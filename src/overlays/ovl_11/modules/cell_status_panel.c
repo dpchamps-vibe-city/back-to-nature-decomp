@@ -21,13 +21,13 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "game_flags.h"
+#include "ovl11_balance_accounting.h"
 
 s32 Ovl11FindPendingCellStatus(void);
 void Ovl11ResetCellStatusPrompt(void);
 s32 Ovl11PollCellStatusChoice(void);
 s32 Ovl11ConfirmCellStatus(u32 cellIndex);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_800D6014(u16 arg0);
 void SetVal8005E2BC(s32 arg0);
 
@@ -81,7 +81,7 @@ s32 Ovl11UpdateCellStatusPanel(void) {
         switch (Ovl11PollCellStatusChoice()) {
         case 1:
             if (gSpendableBalance >= 10) {
-                ovl_11_func_800F2354(-10, 1);
+                Ovl11AdjustSpendableBalance(-10, 1);
                 gOvl11CellStatusPhase = 4;
                 message = 0x11C;
             } else {
@@ -174,7 +174,7 @@ s32 Ovl11ConfirmCellStatus(u32 cellIndex) {
     if ((cellIndex >= 9U) || (cost = ovl_11_func_800D6014(gOvl11CellStatusItemIds[cellIndex]), base = (u8 *)D_8006C838, (*(s32 *)(base + 0x5224) < cost) != 0)) {
         return 0;
     }
-    ovl_11_func_800F2354(-cost, 1);
+    Ovl11AdjustSpendableBalance(-cost, 1);
     ((Ovl11StatesE7A2View *)base)->states[cellIndex] = 3;
     SetGameFlag((cellIndex + 0x67) & 0xFFFF, 1U);
     return 1;

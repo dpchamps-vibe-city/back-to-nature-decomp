@@ -5,6 +5,10 @@
 #include "sound_commands.h"
 #include "ovl17_timer_hud.h"
 #include "ovl17_record_sprite_draw.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl17_record_backdrop.h"
 
 /* 8001FAD0 forwards the s32 voice result returned by func_800212A8. */
 void ovl_17_func_800B91B8(void);
@@ -15,7 +19,6 @@ void ovl_17_func_800B9594(void);
 s32 ovl_17_func_800B986C(void);
 s16 ovl_17_func_800B9C48(s16 arg0);
 void ovl_17_func_800B9CAC(void);
-void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800B9628(void);
 void ovl_17_func_800B9784(void);
 
@@ -122,5 +125,5 @@ block_6:
         (*(s16 *) (state + 0x2CC)) = 0;
         (*(s8 *) (state + 4)) = 8;
     }
-    ovl_17_func_800BA808(((Ovl17RecordWorkInitView *)gOvl17RecordWorkBase)->scrollPosition);
+    Ovl17DrawRecordBackdrop(((Ovl17RecordWorkInitView *)gOvl17RecordWorkBase)->scrollPosition);
 }

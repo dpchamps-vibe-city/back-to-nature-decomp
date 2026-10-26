@@ -9,8 +9,8 @@
 #include "ovl11_sprite_effect_pool.h"
 #include "ovl11_save_counters.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_seasonal_record_ids.h"
 
-s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *record);
 void ovl_11_func_800F0FB0(s32 value);
 
 s32 Ovl11ConsumeSpawnEffect(Ovl11SpawnEffectRecord *record) {
@@ -19,7 +19,7 @@ s32 Ovl11ConsumeSpawnEffect(Ovl11SpawnEffectRecord *record) {
     char *farState;
 
     consumed = 0;
-    id = ovl_11_func_800F4240((Ovl11ItemCollisionObject *) record);
+    id = Ovl11GetSeasonalRecordId((Ovl11ItemCollisionObject *) record);
     if (!id) {
         return 0;
     }
@@ -41,7 +41,7 @@ s32 Ovl11ConsumeSpawnEffectWithBudgets(Ovl11SpawnEffectRecord *record,
     u16 id;
 
     consumed = 0;
-    id = ovl_11_func_800F4240((Ovl11ItemCollisionObject *) record);
+    id = Ovl11GetSeasonalRecordId((Ovl11ItemCollisionObject *) record);
     if (id == 0) {
         return 0;
     }
@@ -64,7 +64,7 @@ s32 Ovl11ConsumeTieredSpawnEffect(Ovl11SpawnEffectRecord *record,
     u16 id;
 
     consumed = 0;
-    id = ovl_11_func_800F4240((Ovl11ItemCollisionObject *) record);
+    id = Ovl11GetSeasonalRecordId((Ovl11ItemCollisionObject *) record);
     if (id == 0) {
         return 0;
     }

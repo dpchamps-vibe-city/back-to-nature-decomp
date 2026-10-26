@@ -1,8 +1,11 @@
 #include "common.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl17_record_backdrop.h"
 
-void ovl_17_func_800BA808(s32 arg0);
 void ovl_17_func_800B91B8(void);
 void func_80017A08(s32 arg0, s32 arg1);
 
@@ -17,7 +20,7 @@ void ovl_17_func_800B8C38(void) {
     u8 *state;
     u8 *current;
 
-    ovl_17_func_800BA808(0x800000);
+    Ovl17DrawRecordBackdrop(0x800000);
     selected = 0;
     ovl_17_func_800B91B8();
     for (i = 0; i < 6; i++) {

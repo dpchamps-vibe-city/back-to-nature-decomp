@@ -10,8 +10,8 @@
 #include "ovl11_collision_query_budget.h"
 #include "ovl11_interaction_volume_query.h"
 #include "ovl11_surface_height.h"
+#include "ovl11_spawn_record_access.h"
 
-s32 ovl_11_func_800F44B4(u16 id, s32 *position, s16 *selector, s32 mode);
 void Ovl11CompletePoolGate(void);
 
 void Ovl11PublishNextPoolRecord(void) {
@@ -53,7 +53,7 @@ void Ovl11ProbePoolRecordTransitions(void) {
     s32 invalidSelector;
 
     hit = 0;
-    if ((ovl_11_func_800F44B4(0x64, position, &tag.field_2, 0) == 0) &&
+    if ((Ovl11ReadSpawnRecord(0x64, position, &tag.field_2, 0) == 0) &&
         (((Ovl11SpawnProbeState *) D_8006C838)->flags & 0x800) &&
         (((Ovl11SpawnProbeState *) D_8006C838)->selected == 0x64)) {
         hit = 1;
@@ -66,7 +66,7 @@ void Ovl11ProbePoolRecordTransitions(void) {
     if (hit != 0) {
         Ovl11PublishCurrentPoolRecord();
     }
-    ovl_11_func_800F44B4(0x65, position, &tag.field_2, 0);
+    Ovl11ReadSpawnRecord(0x65, position, &tag.field_2, 0);
     hit = Ovl11QueryCollisionBudgeted(position, tag, 0, 0, NULL, NULL, 0, 0x20) != 0;
     if (tag.field_2 >= 7) {
         goto invalid;

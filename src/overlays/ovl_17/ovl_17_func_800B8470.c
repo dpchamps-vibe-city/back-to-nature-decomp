@@ -3,8 +3,10 @@
 #include "message_window.h"
 #include "ovl17_record_sprite_animation.h"
 #include "ovl17_record_sprite_draw.h"
-
-void ovl_17_func_800BA808(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl17_record_backdrop.h"
 
 void ovl_17_func_800B8470(void) {
     s32 i;
@@ -26,7 +28,7 @@ void ovl_17_func_800B8470(void) {
         Ovl17DrawRecordSpriteQuads((Recon_ovl_17_func_800BAD9C_A0View *)base, 0x40000);
         base += 0x50;
     }
-    ovl_17_func_800BA808(0x40000);
+    Ovl17DrawRecordBackdrop(0x40000);
     RequestMessageWindow(4, 0);
     if (GetMessageWindowStatus() == 2) {
         D_800BD84C = 3;

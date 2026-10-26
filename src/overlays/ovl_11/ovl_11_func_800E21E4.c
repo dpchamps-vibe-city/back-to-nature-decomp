@@ -5,14 +5,12 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_spawn_record_access.h"
 
 s32 ovl_11_func_800E2934(void *arg0);
 s32 ovl_11_func_800E2A30(s16 *arg0);
 void ovl_11_func_800E2BE8(s32 arg0);
 s32 ovl_11_func_800E2654(E21E4Position *src, E21E4Position *dst);
-/* The +38 aggregate occupies four argument words (a1-a3 and stack +10).
- * F43CC's current definition spells those same words as four byte blocks. */
-void ovl_11_func_800F43CC(s32 arg0, E21E4Position position, u16 arg5, s32 arg6);
 void ovl_11_func_800CF2C8(s32 *arg0);
 
 s32 ovl_11_func_800E21E4(E21E4Object *arg0) {
@@ -62,7 +60,8 @@ s32 ovl_11_func_800E21E4(E21E4Object *arg0) {
         } else {
             position = arg0->position;
         }
-        ovl_11_func_800F43CC(selection, position, arg0->kind, index);
+        /* The object's four-word position has the SDK VECTOR ABI. */
+        Ovl11SetSpawnRecord(selection, *(VECTOR *)&position, arg0->kind, index);
     }
     if (arg0->flags & 1) {
         s32 checkedEnergy;

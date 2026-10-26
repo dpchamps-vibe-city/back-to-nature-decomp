@@ -20,10 +20,10 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 u16 Ovl11SelectOfferConditionMessage(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
@@ -94,7 +94,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
         case 1:
             CloseMessageWindow();
             if (ovl_11_func_8011D06C(10) == 1) {
-                ovl_11_func_800F2354(-10, 1);
+                Ovl11AdjustSpendableBalance(-10, 1);
                 RequestMessageWindow(2, 0xE7);
                 Ovl11SetInteractionSteps(0x18, 10);
             } else {
@@ -152,7 +152,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
             break;
         case 1:
             if (ovl_11_func_8011D06C(price) == 1) {
-                ovl_11_func_800F2354(-price, 1);
+                Ovl11AdjustSpendableBalance(-price, 1);
                 RequestMessageWindow(2, 0xFB);
                 Ovl11SetInteractionSteps(0x18, 0x1B);
             } else {

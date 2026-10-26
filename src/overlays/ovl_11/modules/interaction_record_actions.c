@@ -12,6 +12,8 @@
 #include "game_flags.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_primary_object_state_change.h"
+#include "psyq/stddef.h"
+#include "ovl11_seasonal_record_ids.h"
 
 void ovl_11_func_800F0FB0(s32 response);
 
@@ -49,7 +51,6 @@ s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *object, s32 mode);
 s32 ovl_11_func_8010B57C(u16 *object, s32 mode);
 s32 ovl_11_func_800CEEF8(Ovl11InteractionRecord *record);
-s16 ovl_11_func_800F4240(Ovl11InteractionRecord *record);
 s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *object, s32 mode);
 
 s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
@@ -101,7 +102,7 @@ s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
         if (gOvl11InteractionHitFlags & 0x8020) {
             itemId = -1;
             if (gOvl11InteractionHitFlags & 0x8000) {
-                itemId = ovl_11_func_800F4240((Ovl11InteractionRecord *)gOvl11InteractionHitRecordView);
+                itemId = Ovl11GetSeasonalRecordId((Ovl11InteractionRecord *)gOvl11InteractionHitRecordView);
             }
             if (gOvl11InteractionHitFlags & 0x20) {
                 itemId = (s32)(s16)(*(u16 *)((u8 *)gOvl11InteractionHitRecordView + 0));

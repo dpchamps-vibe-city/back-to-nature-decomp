@@ -68,7 +68,7 @@ segments:
       - [0x20F0, c, modules/record_decision_tests]
       - [0x2188, c, modules/sprite_resources]
       - [0x272C, c, modules/record_work_init]
-      - [0x29E8, c, ovl_17_func_800BA808]
+      - [0x29E8, c, modules/record_backdrop]
       - [0x2E04, c, modules/record_sprite_draw]
       - [0x3130, c, ovl_17_func_800BAF50]
       - [0x318C, c, modules/record_sprite_animation]

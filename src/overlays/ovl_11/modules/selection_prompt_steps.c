@@ -20,6 +20,7 @@
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 value);
 s32 ovl_11_func_800D6014(u16 id);
@@ -30,7 +31,6 @@ s32 ovl_11_func_800E6EE0(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E6F34(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9284(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9B68(s16 a, s32 b, s32 c, s32 d);
-s32 ovl_11_func_800F2354(s32 amount, s32 clamp);
 s32 ovl_11_func_80118B84(s32 orderingTable, s16 x, s16 y);
 s32 ovl_11_func_8011D06C(s32 amount);
 
@@ -292,7 +292,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             Ovl11SetInteractionStepsOffset(13, 14, baseStep);
             break;
         case 14:
-            ovl_11_func_800F2354(-ovl_11_func_800D6014(item), 1);
+            Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014(item), 1);
             Ovl11RequestProgressAction(item);
             CloseMessageWindow();
             RequestMessageWindow(2, 0x9F);

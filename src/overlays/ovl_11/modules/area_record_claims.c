@@ -15,6 +15,7 @@
 #include "ovl11_area_slot_flags.h"
 #include "ovl11_area_record_claims.h"
 #include "ovl11_save_counters.h"
+#include "ovl11_seasonal_record_ids.h"
 
 s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void ovl_11_func_80110E28(u8 *arg0);
@@ -176,8 +177,6 @@ s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area) {
     return failed;
 }
 
-s32 ovl_11_func_800F413C(Ovl11F413CArg0View *arg0, Ovl11F413CArg1View *arg1);
-
 /* Try at most one mode-4 record, copying the input ID to its pending-item
  * field. If that produces no item, mode-8 records supply the fallback. The
  * count includes Rand(3) even on the single-attempt path; zero skips it. */
@@ -192,7 +191,7 @@ s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area) {
     s16 index;
     u8 *record;
     u8 *base;
-    Ovl11F413CArg1View out;
+    Ovl11RecordPresentation out;
 
     random = Rand(3);
     count = (u16)(*(u16 *)(object + 0xB2) / 100U) + random;
@@ -224,10 +223,10 @@ s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area) {
                 result = (s16)ovl_11_func_80110944(area, 8);
                 status = -1;
                 if (result != status) {
-                    status = ovl_11_func_800F413C((Ovl11F413CArg0View *)(*(u8 **)(base + 0x5DCC) + result * 0x18), &out);
+                    status = Ovl11ConsumeSeasonalRecord((Ovl11SeasonalRecordView *)(*(u8 **)(base + 0x5DCC) + result * 0x18), &out);
                     result = 1;
                     if (status == result) {
-                        *(u16 *)(object + 0xB6) = out.unk0;
+                        *(u16 *)(object + 0xB6) = out.id;
                         continue;
                     }
                 }

@@ -9,10 +9,10 @@
 #include "ovl11_interaction_steps.h"
 #include "ovl11_selected_record_interaction.h"
 #include "ovl11_item_action_gate.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 arg0);
 void ovl_11_func_800E2904(s32 arg0);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s16 Ovl11FindLastFlaggedSmallRecord(void);
 s32 Ovl11SelectedSmallRecordHasFlag40(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
@@ -52,9 +52,9 @@ s32 Ovl11UpdateSelectedRecordRelease(void) {
             CloseMessageWindow();
             RequestMessageWindow(2, 0x51);
             if (Ovl11SelectedSmallRecordHasFlag40() == 1) {
-                ovl_11_func_800F2354(2000, 1);
+                Ovl11AdjustSpendableBalance(2000, 1);
             } else {
-                ovl_11_func_800F2354(500, 1);
+                Ovl11AdjustSpendableBalance(500, 1);
             }
             ovl_11_func_800E2904((s32)((u8 *)&gSmallTaggedRecordBase + Ovl11FindLastFlaggedSmallRecord() * 0xB4));
             Ovl11SetInteractionSteps(5, 3);

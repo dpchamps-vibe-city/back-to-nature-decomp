@@ -4,15 +4,17 @@
 #include "master_volume.h"
 #include "ovl17_record_sprite_animation.h"
 #include "ovl17_record_sprite_draw.h"
-
-void ovl_17_func_800BA808(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl17_record_backdrop.h"
 
 void ovl_17_func_800B7F90(void) {
     s32 var_s0;
     s32 var_s0_2;
     u8 *var_s1;
 
-    ovl_17_func_800BA808(0x40000);
+    Ovl17DrawRecordBackdrop(0x40000);
     Ovl17SelectAllRecordAnimations2();
     var_s1 = gOvl17AnimatedRecordBase;
     for (var_s0 = 0; var_s0 < 6; var_s0++) {

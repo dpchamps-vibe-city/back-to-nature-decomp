@@ -25,6 +25,7 @@
 #include "ovl11_shared_animation_icon.h"
 #include "psyq/abs.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_scene_header_key.h"
 
 void Ovl11DrawPrimaryObjectCompanion(Ovl11C7010Object *object, s32 depth, s32 *screenPosition) {
     s16 spriteId;
@@ -115,7 +116,6 @@ void Ovl11DrawPrimaryObjectSprite(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 a
     }
 }
 
-s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void Ovl11CopyAndDrawSavedObject (Ovl11DrawState *arg0);
 void ovl_11_func_8010C1C0 (Ovl11DrawState *arg0);
 void ovl_11_func_8010C2EC (u8 *arg0);
@@ -128,7 +128,7 @@ void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *origin, s32 unused) {
 
     object = (u8 *) &gPrimaryObjectBase;
 
-    if (ovl_11_func_800DD1D0((s16 *) (object + 0xFC)) == 0) {
+    if (Ovl11SceneHeaderKeyDiffers((s16 *) (object + 0xFC)) == 0) {
         gOvl11PrimaryDrawWorldPoint[0] = origin->x + 0x96;
         gOvl11PrimaryDrawWorldPoint[1] = origin->y - 0x64;
         gOvl11PrimaryDrawWorldPoint[2] = origin->z - 0x96;

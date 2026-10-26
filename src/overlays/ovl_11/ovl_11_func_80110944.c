@@ -1,8 +1,7 @@
 #include "common.h"
 #include "psyq/memory.h"
 #include "random.h"
-
-s32 ovl_11_func_800F44B4(u16 arg0, s32 *position, s16 *area, s32 index);
+#include "ovl11_spawn_record_access.h"
 
 s32 ovl_11_func_80110944(s16 area, u16 mode) {
     u8 choices[20];
@@ -34,7 +33,7 @@ s32 ovl_11_func_80110944(s16 area, u16 mode) {
     for (i = 0; i < limit; i++) {
         eligible = 0;
         if ((mode & 8) && i < 10) {
-            if (ovl_11_func_800F44B4(0x122, position, &foundArea, i) == 1) {
+            if (Ovl11ReadSpawnRecord(0x122, position, &foundArea, i) == 1) {
                 eligible = foundArea == area;
             }
         }

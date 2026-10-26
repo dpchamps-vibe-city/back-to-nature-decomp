@@ -61,3 +61,8 @@ Ovl17IsRecordDecisionReady = 0x800B9F44; // type:func
 Ovl17RollAboveDecisionThreshold = 0x800B9F78; // type:func
 // Raw base label only; record and control views extend beyond its four bytes.
 gOvl17RecordWorkBase = 0x800BD848; // type:data size:0x4
+
+// Scrolling backdrop and its private prop/animation tables (30 props + sentinel).
+Ovl17DrawRecordBackdrop = 0x800BA808; // type:func
+gOvl17BackdropProps = 0x800BB5F0; // type:data size:0xF8
+gOvl17BackdropPropAnimations = 0x800BB5D4; // type:data size:0x1C

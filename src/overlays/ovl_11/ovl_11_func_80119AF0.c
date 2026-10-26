@@ -13,9 +13,9 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_balance_accounting.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80119AF0(void) {
@@ -57,7 +57,7 @@ s32 ovl_11_func_80119AF0(void) {
             break;
         case 1:
             if (ovl_11_func_8011D06C(ovl_11_func_800D6014(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
-                ovl_11_func_800F2354(-ovl_11_func_800D6014(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+                Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xB4);
                 Ovl11SetInteractionSteps(1, 4);

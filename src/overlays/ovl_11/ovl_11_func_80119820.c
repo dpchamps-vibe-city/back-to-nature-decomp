@@ -3,11 +3,11 @@
 #include "two_choice_prompt.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_item_stack_insert.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -76,7 +76,7 @@ s32 ovl_11_func_80119820(void) {
         break;
     case 6:
         ovl_11_func_800F45A4(0x21, 0);
-        ovl_11_func_800F2354(-price, 1);
+        Ovl11AdjustSpendableBalance(-price, 1);
         ovl_11_func_800E7088(0x21, 0, 1, 1);
         ((struct Ovl11CallbackGateState *)D_8006C838)->status |= 0x200000;
         ((struct Ovl11CallbackGateState *)D_8006C838)->flags &= ~0x100;

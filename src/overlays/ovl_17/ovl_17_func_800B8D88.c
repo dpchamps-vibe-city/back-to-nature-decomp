@@ -5,9 +5,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "psyq/libgpu.h"
+#include "ovl17_record_backdrop.h"
 
 void ovl_17_func_800B91B8(void);
-void ovl_17_func_800BA808(s32 arg0);
 void func_80017A08(s32 arg0, s32 arg1);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s16 ovl_17_func_800B9940(s32 arg0);
@@ -28,7 +29,7 @@ void ovl_17_func_800B8D88(void) {
         mode = (u16)work->mode;
     }
     ovl_17_func_800B91B8();
-    ovl_17_func_800BA808(0x800000);
+    Ovl17DrawRecordBackdrop(0x800000);
     DrawScreenSubtractOverlay(0x40, 0x40, 0x40);
     func_80017A08(0, (s32)&D_800BB528[mode * 2]);
     DrawMenuPanel(boxes, 1, 0x28, 0x30, 0xF4, 0x72);

@@ -31,8 +31,8 @@
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_object_action_input.h"
 #include "ovl11_primary_object_action_phase.h"
+#include "ovl11_scene_header_key.h"
 
-s32 ovl_11_func_800DD1D0 (s16 *arg0);
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
 void ovl_11_func_800CD6F4 (void *arg0);
@@ -53,7 +53,7 @@ void Ovl11UpdatePrimaryObject(void) {
             StopSoundEffectVoice((s32) gOvl11ActiveItemActionSound);
             gOvl11ActiveItemActionSound = -1;
         }
-    } else if ((Ovl11IsClockAdvanceActive() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (ovl_11_func_800DD1D0(obj->collision) == 0)) {
+    } else if ((Ovl11IsClockAdvanceActive() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (Ovl11SceneHeaderKeyDiffers(obj->collision) == 0)) {
         if (obj->flags & 0x2000) {
             ovl_11_func_800CCF58((Ovl11C7010Object *) obj);
             obj->flags = (s32) (obj->flags & ~0x2000);

@@ -13,6 +13,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_item_table_queries.h"
+#include "ovl11_seasonal_record_ids.h"
 
 typedef struct {
     char pad0[2];
@@ -44,8 +45,6 @@ typedef struct {
     s32 unk54;
 } Func800C7878Arg0;
 
-s16 ovl_11_func_800F4240(ReconA0View *arg0);
-s32 ovl_11_func_800F413C(F413CArg0 *arg0, F413CArg1 *arg1);
 s32 ovl_11_func_800CEEF8(CEEF8Arg0 *arg0);
 
 extern Ovl11CellActionEntry *gOvl11InteractionHitRecord;
@@ -60,8 +59,8 @@ s32 ovl_11_func_800C7878(Func800C7878Arg0 *arg0, F413CArg1 *arg1) {
     temp_v1 = gOvl11InteractionHitFlags & 0x8928;
     switch (temp_v1) {                              /* irregular */
     case 0x8000:
-        temp_v0 = Ovl11ItemHasFlag8100(ovl_11_func_800F4240((ReconA0View *) gOvl11InteractionHitRecord));
-        if ((temp_v0 == 1) && (ovl_11_func_800F413C((F413CArg0 *) gOvl11InteractionHitRecord, arg1) == temp_v0)) {
+        temp_v0 = Ovl11ItemHasFlag8100(Ovl11GetSeasonalRecordId((ReconA0View *) gOvl11InteractionHitRecord));
+        if ((temp_v0 == 1) && (Ovl11ConsumeSeasonalRecord((F413CArg0 *) gOvl11InteractionHitRecord, arg1) == temp_v0)) {
             PlaySoundEffect(7);
         }
         break;

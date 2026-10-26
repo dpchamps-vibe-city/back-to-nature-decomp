@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
+#include "ovl11_balance_accounting.h"
 
 s32 ovl_11_func_800E7CCC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 selected;
@@ -11,7 +10,7 @@ s32 ovl_11_func_800E7CCC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     } else {
         selected = arg2;
     }
-    temp = ovl_11_func_800F2354(selected, arg0);
+    temp = Ovl11AdjustSpendableBalance(selected, arg0);
     if (arg1 != -1) {
         gOvl11ValueSlots[arg1] = temp;
     }

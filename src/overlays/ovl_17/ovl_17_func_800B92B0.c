@@ -1,9 +1,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl17_record_sprite_draw.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl17_record_backdrop.h"
 
 void ovl_17_func_800BAF50(void);
-void ovl_17_func_800BA808(s32 arg0);
 
 void ovl_17_func_800B92B0(void) {
     s32 i;
@@ -22,5 +25,5 @@ void ovl_17_func_800B92B0(void) {
         record += 0x50;
     }
     display = gOvl17RecordWorkBase;
-    ovl_17_func_800BA808(*(s32 *) (display + 0x24));
+    Ovl17DrawRecordBackdrop(*(s32 *) (display + 0x24));
 }

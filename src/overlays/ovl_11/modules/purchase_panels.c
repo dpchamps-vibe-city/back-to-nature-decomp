@@ -30,6 +30,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_balance_accounting.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
 
@@ -165,7 +166,6 @@ s32 Ovl11InitFixedCatalog(void) {
 
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D6014(u16 arg0);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 Ovl11RequestCatalogPanelMessage(s32 arg0);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -199,7 +199,7 @@ s32 Ovl11UpdateCatalogPurchasePanel(void) {
             gOvl11CatalogSelectedId = Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord);
             cost = ovl_11_func_800D6014(*(u16 *)&gOvl11CatalogSelectedId);
             if (ovl_11_func_8011D06C(cost) == 1) {
-                ovl_11_func_800F2354(-cost, 1);
+                Ovl11AdjustSpendableBalance(-cost, 1);
                 gOvl11CatalogPanelState = 5;
                 gOvl11CatalogPanelResumeState = 4;
                 gOvl11InteractionDrawMode = 0;
@@ -391,7 +391,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
             gOvl11ResourcePanelResumeState = 9;
             if (ovl_11_func_8011D06C(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA) == 1) {
                 if (gOvl11QuantityPrompt.unk8 + ((Ovl11ResourceGlobals *)D_8006C838)->amount < 1000) {
-                    ovl_11_func_800F2354(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
+                    Ovl11AdjustSpendableBalance(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
                     gOvl11ResourceResultMessage = 0x143;
                     gOvl11ResourceResultResumeState = 10;
                     ((Ovl11ResourceGlobals *)D_8006C838)->amount += gOvl11QuantityPrompt.unk8;
@@ -439,7 +439,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
                     gOvl11ResourcePanelResumeState = 9;
                     gOvl11ResourceResultResumeState = 10;
                     ((Ovl11ResourceGlobals *)D_8006C838)->amount -= gOvl11ResourceOptionCosts[choice][1];
-                    ovl_11_func_800F2354(-gOvl11ResourceOptionCosts[choice][0], 1);
+                    Ovl11AdjustSpendableBalance(-gOvl11ResourceOptionCosts[choice][0], 1);
                     SetGameFlag(0x38, 1);
                     Ovl11ArmProgressPendingTimer();
                 } else {

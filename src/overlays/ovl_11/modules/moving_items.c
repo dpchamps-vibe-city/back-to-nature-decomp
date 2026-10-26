@@ -40,6 +40,7 @@
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_shared_animation_icon.h"
 #include "ovl11_flagged_volume_code.h"
+#include "ovl11_spawn_record_access.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -358,7 +359,6 @@ store1:
 s32 Ovl11HandleMovingItemGeometryHit(Ovl11CC4E0Object *arg0, Vec3 *arg1);
 Ovl11CC7CCSpawn *ovl_11_func_800F4994(Vec3 *arg0);
 s32 ovl_11_func_800F3E44(s16 arg0);
-void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11CheckMovingItemCellContact(Ovl11MovingItemRecord *arg0);
 
@@ -439,7 +439,7 @@ remove:
                 position.vy = arg0->position.vy;
                 position.vz = arg0->position.vz;
                 Ovl11ReleaseMovingItemRecord((Ovl11CC4E0Object *)arg0);
-                ovl_11_func_800F43CC(0x65, position, D_80071AFE, 0);
+                Ovl11SetSpawnRecord(0x65, position, D_80071AFE, 0);
                 ovl_11_func_80109188((Ovl11D04D4Obj *)&D_800759E4, 7);
                 return 1;
             }

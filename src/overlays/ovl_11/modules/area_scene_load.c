@@ -60,6 +60,7 @@
 #include "ovl11_event_schedule.h"
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_options_menu.h"
+#include "ovl11_spawn_record_access.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
@@ -67,7 +68,6 @@ void Ovl11ResetAreaSlotRecords (void);
 void ovl_11_func_800DBFA0 (void);
 void ovl_11_func_800D7B24 (void);
 void ovl_11_func_800F6630 (void);
-void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
 void ovl_11_func_8010C6A0 (void);
 void Ovl11AreaResetEffectsHook (void);
 void Ovl11ClearAreaSpriteWork (void);
@@ -108,7 +108,7 @@ void Ovl11PrepareAreaScene(void) {
     Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
-    ovl_11_func_800F42A8((u16) base->field_44BA, 0);
+    Ovl11PrepareSpawnRecordPools((u16) base->field_44BA, 0);
     Ovl11ResetRecordPools();
     Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
@@ -331,7 +331,6 @@ void Ovl11AreaResetEndHook(void) {
 
 /* These two sprite-loader wrappers use their matched definition signatures;
  * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
-void ovl_11_func_800F42A8(u16 arg0, s32 arg1);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE76C(void);
 s32 ovl_11_func_80109310(s32 *arg0);
@@ -374,7 +373,7 @@ void Ovl11LoadAreaScene(void) {
     Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
-    ovl_11_func_800F42A8((u16) base->field_44BA, 1);
+    Ovl11PrepareSpawnRecordPools((u16) base->field_44BA, 1);
     Ovl11ResetClockEvents();
     Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();

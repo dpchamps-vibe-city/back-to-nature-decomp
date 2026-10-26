@@ -1267,6 +1267,25 @@ not proven original file boundaries. A renderer calling the service, or
 later animation modules changing its ratio, does not by itself establish
 common original compilation. No supported descriptor member was left out.
 
+**Complete adjacent service `modules/scene_header_key.c`, ovl_11:800DD1D0–
+800DD21C exclusive, `Ovl11SceneHeaderKeyDiffers`.** It compares the first two
+halfwords behind work+25388 with the caller's two-halfword key. Primary-object
+update/draw and object-event consumers use its zero result as an exact match;
+no state is modified. The public ovl11_scene_header_key.h documents the
+inverted 0-equal/1-different result and the valid-key/bound-header prerequisites.
+The existing s16-pointer ABI and short-circuit compare are retained, with
+key/header/work locals named. No data symbol, new storage or linkage change
+is introduced: the pointer remains an interior field of the resident work area.
+Left is the distinct three-slot vertex-blend service above; right DD21C begins
+parameter-only word/halfword block copying and does not read the scene header.
+No private-state/helper/table witness joins either neighbor; both are
+conservative -G0 evidence-limited cuts, not proven historical file boundaries.
+The remote header reader in object_events and setup's header installer are
+clients of the shared work area, not a contiguous larger unit. The checked
+fold passed this member and the overlay at baseline -O2/-G0, with no flag or
+policy exception involved. The final campaign gate with the other four new
+modules passes every integrity check at 1598 folded and 262/262 valid units.
+
 Names: Ovl11ResetVertexBlend (800DCE98), Ovl11ResetVertexBlendPool (800DCECC),
 Ovl11AllocVertexBlend (800DCF10), Ovl11UpdateVertexBlend (800DCFEC),
 Ovl11InterpolateVertexBlend (800DD060), and gOvl11VertexBlendPool (801290D8).
@@ -4795,7 +4814,101 @@ Members (address order, matched in bold):
 
 ## `ovl_11` 0x18-byte spawn-record fill/clear/dispatch/read run — 0x800F4360–0x800F44B4 (confidence: low)
 
-Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) — contiguous
+**Complete adjacent `modules/seasonal_record_ids.c`, 800F413C–800F42A8
+exclusive**, both Ovl11ConsumeSeasonalRecord and Ovl11GetSeasonalRecordId.
+They share the exact signed kind@2/unsigned flags@4 record prefix, combine
+the same season mask with active bit 0, and map kind 0x40 to presentation
+0x13A in season 2. Consumption adds bit-0x80 eligibility and seasonal
+0x3A/0x3E mappings, then clears active or latches 0x4000 for kind 0x139.
+The C7878 interaction client queries and consumes the same hit-record pointer
+in sequence. This common input/seasonal-ID protocol and paired client usage,
+not just calendar/global adjacency, support both entries.
+
+Left 4114 merely forwards the season to a different pool-refresh helper and
+does not perform record-prefix gating, mapping or consumption. Right
+spawn_record_access selects concrete slots and writes/reads their coordinates;
+it implements no season gate or ID-consumption protocol. Shared record shapes
+and resident state alone do not extend either service. These are conservative
+-G0 protocol cuts, not proven historical object boundaries. There is no flag,
+stub or mechanical limit at either edge. F581C's mask leaf also serves the
+separate projected-record renderer, so its remote address does not establish
+a contiguous larger seasonal-ID unit.
+
+The first checked pair fold rolled back on 413C's unused, incompatible 4240
+prototype. Both sources now use the existing shared parameter layouts, named
+Ovl11SeasonalRecordView and Ovl11RecordPresentation with kind/flags/id/valid
+fields; signedness, widths, offsets and padding are unchanged. The already
+canonical calendar-state view replaces a duplicate source-local global view.
+Unused m2c context declarations were removed from the consumer, not imported
+as competing public types. The successful checked baseline -O2/-G0 fold proves
+both members and the overlay. No flag override or policy exception is involved.
+The public ovl11_seasonal_record_ids.h records exact masks, mappings, state
+changes and return ambiguity. It also preserves an important constraint:
+consumption guards its first output stores but subsequently dereferences out
+unconditionally. A850's existing NULL call is therefore safe only if rejected;
+no new null-safe behavior is invented or patched during consolidation.
+
+Final batch acceptance with balance_accounting, spawn_record_access,
+scene_header_key and ovl_17 record_backdrop: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes every integrity gate at **1598 folded
+of 2625, 262/262 valid modules**, up from 1588/257 at run start. All affected
+interfaces and canonical identities pass; EXE/every overlay and associated
+data/callbacks/tables/placement are unchanged. Existing unrelated interface
+disputes are not silently changed. Source policy, generation convergence,
+input stability and exception non-growth pass; no previous module regresses.
+No shared tool, compiler setting or allowlist change was needed. Exit 1
+reports the remaining project-wide campaign backlog, not an integrity failure.
+
+**Reconstructed `modules/spawn_record_access.c`, 800F42A8–800F45A4
+exclusive, all five entries in original order.** PrepareSpawnRecordPools
+calls ClearSpawnRecords on the secondary pool and, for a full reset, the
+indexed pool used by SetSpawnRecord/ReadSpawnRecord. It also deactivates
+precisely their two fixed slots. SetSpawnRecord alone calls FillSpawnRecord;
+the reader uses the identical kind-to-slot mapping and returns its active bit.
+These exact producer/consumer and helper ties, not adjacency or the generic
+resident-state base, join the complete group. Function names are prefixed
+Ovl11 at their original identities in ovl_11.names.txt.
+
+The left neighbor 800F4240 accepts an arbitrary record, checks its kind/flags
+and applies a season mapping. It neither selects these pools nor calls their
+helpers. The earlier 413C shares that generic record-prefix/season protocol,
+not the fixed/indexed-slot protocol; the historical shape-only extension
+below does not establish their membership here. Right 45A4 searches a
+different thirteen-record list at +5DB4 and toggles its flag by kind; it
+uses neither +5DCC/+5DD4 slot mapping nor this group's helpers. These are
+conservative protocol cuts under -G0, not proven original object boundaries.
+The distant secondary-pool reset client E5230 and shared refresh prerequisites
+do not establish a contiguous larger unit. No flag or dead stub created a cut.
+
+The first checked whole fold rolled back on incompatible clear/fill
+prototypes. The successful baseline fold uses the existing canonical
+Ovl11DispatchRecord layout, preserving all field widths and the 0x18 stride.
+The fill's raw IDs are zero-extended halfwords as its sole caller already
+passes them; three coordinate stores preserve their full word values. Its
+four-word by-value VECTOR includes the caller's observed fourth pad word,
+rather than the old three-word Vec3 versus seven-scalar declaration conflict.
+The old signed kind-store view is reconciled to the established unsigned
+kind field: only its raw low-halfword bits are stored here, matching the
+caller's already zero-extended IDs. No stored field value, reserved word,
+flag bit, ownership or linkage changed. The unused
+three-word fill prototype in 413C was removed; the helper remains externally
+linked but is not published as an artificial public interface.
+
+ovl11_spawn_record_access.h publishes preparation, clearing, slot write and
+readback, including unchecked indexed bounds, raw coordinate units, preserved
+fields and inactive-slot output behavior. E21E4/B05C's existing four-word
+object view is explicitly read as the canonical SDK VECTOR at the API edge;
+no object layout is changed. The original call/slot/store order is retained.
+The checked fold proves all five member spans and linked overlay bytes at
+baseline -O2/-G0. No compiler flag or policy exception is added or retired.
+Batch verification with balance_accounting passes every tuProgress integrity
+gate against build/tu-campaign/baseline.json: **1594 folded, 259/259 valid
+modules**, EXE and every overlay byte/data/table/placement unchanged, canonical
+interfaces, policy, convergence and exception non-growth clean. Interface
+publication reconciled 32 callers without object changes; the two explicit
+four-word aggregate boundary views are also covered by the linked oracle.
+
+Historical candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) — contiguous
 fill/clear/dispatch/read helpers, with nearby record-state predecessors listed
 below. Original TU boundaries remain unproven; see the
 [reader-extension evidence](research/ovl_11_func_800F44B4-grouping.md).
@@ -5092,6 +5205,15 @@ Members (address order):
 ---
 
 ## `ovl_11` D_800711C4 progress-record accessor cluster — 0x800F3BCC–0x800F3EF0 (confidence: medium)
+
+Campaign re-review: no split at 3D40 was promoted. The index mapper is shared
+by writers/readers on both sides, and the two cost producers also share
+D603C, so there is positive family evidence across that entry. 3D40's different
+flag-byte state identifies another behavior but, under -G0, does not prove a
+foreign original object or license two slices. Its standing -fno-gcse override
+is a concrete whole-family folding obstacle. Next useful experiment remains
+a consistent merged baseline context and bounded TU-wide matrix under
+plans/flag-review-report.md, not a boundary invented to protect the override.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing the main-EXE
 progress-counter record `D_800711C4` (absolute `lui`+`%lo`, defining TU
@@ -6262,6 +6384,16 @@ Members (address order):
 ---
 
 ## `ovl_10` overlay tail — /15 date-utility pair around 0x800BB728 (confidence: low)
+
+Campaign re-review corrects the historical date interpretation below:
+8A5C wraps the selected command index modulo fifteen; BB728 tests held-frame
+repeat intervals (40 early, 15 later), and its callers pass per-button held
+counters. Neither division establishes a calendar operation. All addressing
+is absolute under the overlay's -G0, so the old absolute-access ownership
+inference below is unavailable. The whole panel/handler/repeat family still
+has interleaved literal/table rodata and competing declaration views; no slice
+was folded around those limits. Reconstructing its literal pool and consistent
+shared result-record view remains the useful whole-unit experiment.
 
 Candidate tail-cluster of `ovl_10` (`Obj\PdaSamp.bin`, the PDA/memory-card
 sample overlay; `gf_mcard.bin` is ovl_31). Evidence is a single strong adjacency plus a shared idiom; same-TU
@@ -11077,6 +11209,33 @@ the overlay, never GP-relative), and the large-offset writers use the same
   corroborated storage/layout link, not evidence for placing that distant
   function in this run's original TU. Its split-address assembly/register
   bindings are explicitly authorized matching workarounds.
+
+**Reconstructed `modules/balance_accounting.c`, ovl_11:800F2354–800F2400,
+`Ovl11AdjustSpendableBalance`.** This is the complete locally supported
+balance/history service, not a claim that every user of the resident state
+compiled with it. Purchase callers pass negative prices; credit callers pass
+positive amounts. The +5224 word is the already canonical gSpendableBalance
+(EXE:80071A5C). Its +49C4/+49C8 credit/debit accumulators are the newest pair
+shifted by Ovl11ClockShiftValueHistory. No new interior global, ownership,
+private linkage or storage is introduced. The shared-high/address-low bases
+are retained, with named word indices and delta/status/history locals.
+
+Boundaries: immediate left SelectScheduleEntryForTime in event_schedule
+reads a slot's thirty-entry schedule, not balance/history; immediate right
+Ovl11UpdateEventQueueGate begins the dated/immediate queue protocol, with no
+balance/history access or call to this service. Neither has a private-helper,
+table or state-protocol tie that extends this unit. These are evidence-limited
+-G0 cuts, not proven historical object boundaries. The distant history
+shifter and many balance clients do not establish a contiguous larger TU.
+There is no flag or stub boundary. The checked fold passed baseline -O2/-G0;
+no override was involved. ovl11_balance_accounting.h documents insufficient-
+funds rejection versus partial consumption, the inclusive upper-cap status,
+requested-credit versus consumed-debit accounting, zero-delta no-op and
+signed-arithmetic constraints. Original identity is preserved in the names
+configuration; canonicalization propagates it through all callers. Batch
+verification with spawn_record_access passes all integrity gates at **1594
+folded, 259/259 valid modules**; no existing folded function regresses.
+
 **Reconstructed `modules/pending_event_queue.c`, F2400–F3898 exclusive,
 all eleven entries, not the earlier eight-entry queue-only slice.** F2508
 resets the exact +44FC one-shot word F291C tests/sets. F2620 alone calls that
@@ -16171,9 +16330,42 @@ Additional adjacency: the gapless link-order run `ovl_17_func_800BAEF0`
 +0x28C/+0x290 and +0x230/+0x231 via the +0x22C alias `D_800BDA74`) and all
 three call `func_80015840(ObjectState *, s8)`.
 
-800BA808 shares 800BAF50's `D_800BDA74` work-area alias and renderer
-callees, and is the gapless predecessor of cluster member 800BAC24. This
-supports adding it to the cluster, without establishing a TU boundary.
+**Complete `modules/record_backdrop.c`, ovl_17:800BA808–800BAC24 exclusive,
+`Ovl17DrawRecordBackdrop`.** Its private data are now
+`gOvl17BackdropProps` (800BB5F0, 30 eight-byte records plus the 255 sentinel,
+0xF8 bytes, ending at timer separator BB6E8) and
+`gOvl17BackdropPropAnimations` (800BB5D4, fourteen halfwords, 0x1C bytes).
+The original data bytes give the exact extents; repository reference search
+finds this drawer as their only consumer. Existing Ovl17BackdropEntry now
+names spriteKind and xQ12 with identical signed widths/offsets. The renderer
+selects a prop animation through the first field and converts the second
+from Q12 with /4096. No gameplay meaning is assigned to individual props.
+
+Left record_work_init ends at BA808 and owns initialization/slot-target
+binding, with neither prop-table use nor this drawer's inline tile operation.
+Right record_sprite_draw starts BAC24 and implements record/indicator
+sprite selection, not tiled backdrop or table-driven decoration. Shared
+work-area/display-source aliases and renderer SDK calls alone do not join
+these protocols. Both are conservative -G0 evidence-limited cuts, not proven
+original file boundaries; no flag or stub dictates either. The earlier broad
+cluster membership suggestion below is withdrawn as a TU claim.
+
+ovl17_record_backdrop.h publishes signed Q12 scroll, fixed tile/marker layout
+versus runtime prop bounds, prerequisites, packet/source-state effects and
+unchecked capacities. Scroll, prop and coordinate fields are named; signed
+truncating arithmetic and the private inline tile helper are preserved.
+Original identities remain in ovl_17.names.txt. The checked fold passed the
+member and complete overlay under baseline -O2/-G0, without a flag or policy
+exception. The two overlay-specific externs in globals_override.h were
+renamed explicitly after canonicalNames handled source uses: a shared header
+has no overlay identity from which to resolve those unprefixed data aliases.
+No generated header was hand-edited, storage added or private linkage inferred.
+The second and final batch gates pass all integrity checks; final progress is
+1598 folded and 262/262 valid modules, including every original EXE/overlay byte.
+
+Historical broader-cluster observation: 800BA808 shares 800BAF50's
+`D_800BDA74` work-area alias and renderer callees, and precedes 800BAC24.
+That supports a rendering family, not same-TU membership or a boundary.
 
 - ovl_17_func_800BAF50 (m, 2026-10-03) — D_800BD848 work-area sprite setup:
   `func_80015840(&D_800BDA74, 4)` then

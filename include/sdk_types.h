@@ -624,12 +624,6 @@ typedef struct {
 } M2C_499805aa6798_Ov11SetFields;
 
 typedef struct {
-    char pad0[2];
-    s16 unk2;
-    u16 unk4;
-} M2C_4c1a205b3b09_ReconA0View;
-
-typedef struct {
                s32 field_00;
                s32 field_04;
                s32 field_08;
@@ -708,17 +702,6 @@ typedef struct {
     char pad_38[0x7A - 0x38];
                u16 unk7A;
 } M2C_5a3267e904f0_Ovl11D04D4Obj;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-               u16 unk4;
-               s16 pad6;
-               s32 unk8;
-               s32 unkC;
-               s32 unk10;
-               s32 unk14;
-} M2C_5b7450153aff_Ov11_4390struct;
 
 typedef struct {
     char pad_00[0x24];
@@ -847,16 +830,6 @@ typedef struct {
     char pad_38[0x7A - 0x38];
                u16 unk7A;
 } M2C_6ed90a0ace9a_Ovl11D04D4Obj;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-               u16 unk4;
-               s16 pad6;
-               s32 unk8;
-               s32 unkC;
-               s32 unk10;
-} M2C_701317280b4c_Ov11_4360struct;
 
 typedef struct {
     char pad_00[0x24];
@@ -1072,18 +1045,6 @@ typedef struct {
     char pad_38[0x7A - 0x38];
                u16 unk7A;
 } M2C_91755d460345_Ovl11D04D4Obj;
-
-typedef struct {
-    s16 unk0;
-    char pad2[2];
-    u16 unk4;
-} M2C_99ae33ae0e41_M2C_4c1a205b3b09_F413CArg1;
-
-typedef struct {
-    char pad0[2];
-    s16 unk2;
-    u16 unk4;
-} M2C_99ae33ae0e41_M2C_4c1a205b3b09_ReconA0View;
 
 typedef struct {
                char pad_00[0x16];
@@ -2410,6 +2371,12 @@ typedef struct {
 } Ovl11RecordPairSlot;
 
 typedef struct {
+    s16 id;
+    char pad2[2];
+    u16 valid;
+} Ovl11RecordPresentation;
+
+typedef struct {
     u16 flags;
     char pad2[6];
     u16 direction;
@@ -2466,6 +2433,12 @@ typedef struct {
     u16 flags;
     u8 tail[0x6];
 } Ovl11SceneRecordSlot;
+
+typedef struct {
+    char pad0[2];
+    s16 kind;
+    u16 flags;
+} Ovl11SeasonalRecordView;
 
 typedef struct {
     s32 pulseTicks;

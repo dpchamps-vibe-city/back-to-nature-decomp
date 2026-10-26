@@ -14,13 +14,13 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_primary_object_wait_steps.h"
 #include "ovl11_primary_object_grid_actions.h"
+#include "ovl11_balance_accounting.h"
+#include "ovl11_spawn_record_access.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
-void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
@@ -99,7 +99,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         }
         break;
     case 6:
-        ovl_11_func_800F2354(-price, 1);
+        Ovl11AdjustSpendableBalance(-price, 1);
         Ovl11SetInteractionSteps(9, 0);
         if (arg3 == 2) {
             ovl_11_func_800F45A4(arg0, 1);
@@ -138,7 +138,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
         for (i = 0; i < 25; i++) {
             ((Ovl11PurchaseState *)D_8006C838)->entries[i] = 0;
         }
-        ovl_11_func_800F43CC(100, position, 1, 0);
+        Ovl11SetSpawnRecord(100, position, 1, 0);
         ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 &= ~0x800000;
         result = 1;
         break;

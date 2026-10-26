@@ -5029,15 +5029,15 @@ extern s32 D_800BB534[];
 extern u8 D_800BD930[];
 
 extern u8 gOvl17DisplaySpriteSource[];
-/* 800BA808 indexes 8-byte records: signed halfword id at +0, fixed-point x at +4. */
+/* Ovl17DrawRecordBackdrop: 30 eight-byte props then a spriteKind=255 sentinel. */
 typedef struct {
-    s16 id;
+    s16 spriteKind;
     s16 pad_2;
-    s32 x;
+    s32 xQ12;
 } Ovl17BackdropEntry;
-extern Ovl17BackdropEntry D_800BB5F0[];
-/* ovl_17 data/3634.data.s holds halfword frame indices; 800BA808 loads their low byte unsigned. */
-extern u16 D_800BB5D4[];
+extern Ovl17BackdropEntry gOvl17BackdropProps[];
+/* ovl_17:800BB5D4 holds 14 halfword animation IDs; the selector uses their low byte. */
+extern u16 gOvl17BackdropPropAnimations[];
 /* ovl_17_func_800BA2C8 loads five 32-bit offsets from this original table. */
 extern s32 gOvl17SpriteHeaderOffsets[5];
 /* ovl_17_func_800BA2C8 copies 0xC28 bytes here before resolving sprite headers. */

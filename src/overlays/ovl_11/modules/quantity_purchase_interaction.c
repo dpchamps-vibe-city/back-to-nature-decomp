@@ -25,12 +25,12 @@
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_record_family_lookup.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 s32 ovl_11_func_800D6014(u16 arg0);
 void ovl_11_func_800E2904(s32 arg0);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80113FF0(void);
 void Ovl11DebitQuantityCost(void *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
@@ -123,7 +123,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
                         Ovl11SetInteractionSteps(22, 21);
                     } else {
                         Ovl11InsertItemStack(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
-                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+                        Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x51);
                         Ovl11SetInteractionSteps(22, 21);
                     }
@@ -191,7 +191,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
             for (i = 0; i < 9; i++) {
                 dest[i] = gOvl11QuantityPurchaseNameRecord.values[i];
             }
-            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+            Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x57);
             Ovl11SetInteractionSteps(22, 21);
             break;
@@ -229,9 +229,9 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
             CloseMessageWindow();
             RequestMessageWindow(2, 0x5E);
             if (((struct Ovl11Scan109Globals *)D_8006C838)->records[selected].flags & 0x40) {
-                ovl_11_func_800F2354(2000, 1);
+                Ovl11AdjustSpendableBalance(2000, 1);
             } else {
-                ovl_11_func_800F2354(500, 1);
+                Ovl11AdjustSpendableBalance(500, 1);
             }
             ovl_11_func_800E2904((s32)((u8 *)&gSmallTaggedRecordBase + selected * 0xB4));
             Ovl11SetInteractionSteps(22, 21);
@@ -271,7 +271,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
 
 /* The caller supplies gOvl11QuantityPrompt: signed quantity/cost at +8/+A. */
 void Ovl11DebitQuantityCost(void *record) {
-    ovl_11_func_800F2354(-(((Ovl11D8012D538 *)record)->unkA *
+    Ovl11AdjustSpendableBalance(-(((Ovl11D8012D538 *)record)->unkA *
                           ((Ovl11D8012D538 *)record)->unk8), 1);
     Ovl11AddSaveCounter20(2, ((Ovl11D8012D538 *)record)->unk8);
 }

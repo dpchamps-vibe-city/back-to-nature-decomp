@@ -14,9 +14,9 @@
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_selection_record_access.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_balance_accounting.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_8011B2B0(void);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -167,7 +167,7 @@ s32 ovl_11_func_80119DF8(void) {
         }
         break;
     case 5:
-        ovl_11_func_800F2354(-price, 1);
+        Ovl11AdjustSpendableBalance(-price, 1);
         Ovl11InsertItemStack(item, 1, 1);
         Ovl11RefreshProgressStatus();
         ovl_11_func_8011B2B0();

@@ -3,10 +3,10 @@
 #include "ovl11_interaction_steps.h"
 #include "ovl11_primary_object_wait_steps.h"
 #include "ovl11_save_counters.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
@@ -90,7 +90,7 @@ s32 ovl_11_func_80118CE4(void) {
         break;
     case 6:
         Ovl11AddSaveCounter21(1, (u16)gOvl11QuantityPrompt.unk8);
-        ovl_11_func_800F2354(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
+        Ovl11AdjustSpendableBalance(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
     case 7:
         ovl_11_func_800F45A4(0x84, 1);
         ovl_11_func_800E6EE0(0x6C, 1, 0, 1);

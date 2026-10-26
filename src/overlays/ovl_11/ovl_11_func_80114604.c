@@ -17,12 +17,12 @@
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_record_family_lookup.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 s32 ovl_11_func_800D6014(u16 arg0);
 void ovl_11_func_800DF0F8(s32 arg0);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80113CD0(void);
 void ovl_11_func_801152BC(void *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
@@ -94,7 +94,7 @@ s32 ovl_11_func_80114604(void) {
                         Ovl11SetInteractionSteps(25, 24);
                     } else {
                         Ovl11InsertItemStack(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
-                        ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+                        Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x84);
                         Ovl11SetInteractionSteps(25, 24);
                     }
@@ -197,7 +197,7 @@ s32 ovl_11_func_80114604(void) {
             for (i = 0; i < 9; i++) {
                 dest[i] = D_8012D638.values[i];
             }
-            ovl_11_func_800F2354(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+            Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x74);
             Ovl11SetInteractionSteps(25, 24);
             break;
@@ -239,13 +239,13 @@ s32 ovl_11_func_80114604(void) {
             CloseMessageWindow();
             RequestMessageWindow(2, 0x83);
             if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].flags & 0x40) {
-                ovl_11_func_800F2354(8000, 1);
+                Ovl11AdjustSpendableBalance(8000, 1);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 100) {
-                ovl_11_func_800F2354(3000, 1);
+                Ovl11AdjustSpendableBalance(3000, 1);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 200) {
-                ovl_11_func_800F2354(4500, 1);
+                Ovl11AdjustSpendableBalance(4500, 1);
             } else {
-                ovl_11_func_800F2354(5000, 1);
+                Ovl11AdjustSpendableBalance(5000, 1);
             }
             ovl_11_func_800DF0F8((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
             Ovl11SetInteractionSteps(25, 24);
@@ -293,13 +293,13 @@ s32 ovl_11_func_80114604(void) {
             CloseMessageWindow();
             RequestMessageWindow(2, 0x83);
             if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].flags & 0x40) {
-                ovl_11_func_800F2354(6000, 1);
+                Ovl11AdjustSpendableBalance(6000, 1);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 100) {
-                ovl_11_func_800F2354(2000, 1);
+                Ovl11AdjustSpendableBalance(2000, 1);
             } else if (((Ovl11SaleAnimalGlobals *)D_8006C838)->animals[selected].affection <= 200) {
-                ovl_11_func_800F2354(3000, 1);
+                Ovl11AdjustSpendableBalance(3000, 1);
             } else {
-                ovl_11_func_800F2354(3500, 1);
+                Ovl11AdjustSpendableBalance(3500, 1);
             }
             ovl_11_func_800DF0F8((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
             Ovl11SetInteractionSteps(25, 24);

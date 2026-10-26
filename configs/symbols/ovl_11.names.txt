@@ -1531,3 +1531,20 @@ gOvl11MenuChoiceResult = 0x8012CEF8; // type:data size:0x4
 
 // Shared pool query; ordinal -1 counts rather than selecting a record.
 Ovl11FindFamilyRecordIndex = 0x80117178; // type:func
+
+// Spendable-balance mutation and newest credit/debit history totals.
+Ovl11AdjustSpendableBalance = 0x800F2354; // type:func
+
+// Positioned spawn-slot reset, active-bit writes and readback.
+Ovl11PrepareSpawnRecordPools = 0x800F42A8; // type:func
+Ovl11FillSpawnRecord = 0x800F4360; // type:func
+Ovl11ClearSpawnRecords = 0x800F4390; // type:func
+Ovl11SetSpawnRecord = 0x800F43CC; // type:func
+Ovl11ReadSpawnRecord = 0x800F44B4; // type:func
+
+// Compare both halfwords of a key against the currently bound scene header.
+Ovl11SceneHeaderKeyDiffers = 0x800DD1D0; // type:func
+
+// Shared record-prefix season gating, presentation mapping and consumption.
+Ovl11ConsumeSeasonalRecord = 0x800F413C; // type:func
+Ovl11GetSeasonalRecordId = 0x800F4240; // type:func

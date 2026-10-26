@@ -12,17 +12,17 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "ovl17_record_value_increments.h"
+#include "ovl17_record_backdrop.h"
 
 
 void SsSeqClose (short);
 void SsSeqSetVol (short, short, short);
 void SsVabClose (short);
-void ovl_17_func_800BA808 (s32 arg0);
 
 void ovl_17_func_800B80B0(void) {
     u8 var_s0 = 0;
 
-    ovl_17_func_800BA808(0x800000);
+    Ovl17DrawRecordBackdrop(0x800000);
     if (IsScreenFadeComplete() == 1) {
         var_s0++;
     }

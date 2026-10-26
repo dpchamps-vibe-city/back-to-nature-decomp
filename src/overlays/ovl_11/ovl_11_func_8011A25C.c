@@ -12,13 +12,13 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_balance_accounting.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -117,7 +117,7 @@ s32 ovl_11_func_8011A25C(void) {
     case 11:
         gOvl11InteractionDrawMode = 0;
     case 12:
-        ovl_11_func_800F2354(-price, 1);
+        Ovl11AdjustSpendableBalance(-price, 1);
         index = Ovl11GetUpgradeTierForItem(item) + 1;
         row = (group - 1) / 5 * 4;
         row += (group - 1) / 5;

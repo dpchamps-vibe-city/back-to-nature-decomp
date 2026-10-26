@@ -2696,18 +2696,20 @@ typedef struct {
     s16 unkB6;
 } Ovl11ActionDispatchView;
 
-/* 800F413C's matched parameter views, also passed by 8010A850. */
+/* Seasonal record-ID service: a signed kind and availability/active flags
+ * in the common record prefix. Not a full storage/stride declaration. */
 typedef struct {
     char pad0[2];
-    s16 unk2;
-    u16 unk4;
-} Ovl11F413CArg0View;
+    s16 kind;
+    u16 flags;
+} Ovl11SeasonalRecordView;
 
+/* Consumption writes only id at +0 and valid=1 at +4, retaining +2. */
 typedef struct {
-    s16 unk0;
+    s16 id;
     char pad2[2];
-    u16 unk4;
-} Ovl11F413CArg1View;
+    u16 valid;
+} Ovl11RecordPresentation;
 
 /* 800F1078 walks 0x24-byte records; widths follow its lbu/lhu/lw loads. */
 typedef struct {
