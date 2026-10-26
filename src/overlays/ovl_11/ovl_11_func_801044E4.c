@@ -18,14 +18,13 @@
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
 #include "area_grid_triggers.h"
+#include "ovl11_weather_effect.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);
 void ovl_11_func_800D6628 (void);
 void ovl_11_func_800C9C60 (void);
-void ovl_11_func_800BFEA4 (void);
-void ovl_11_func_800BFF00 (void);
 void ovl_11_func_800DBFA0 (void);
 void ovl_11_func_800DBFC4 (void);
 void ovl_11_func_800D7B24 (void);
@@ -70,8 +69,8 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_800C9C60();
     Ovl11ResetAllEventSlots();
     Ovl11AllocateAllEventSlots();
-    ovl_11_func_800BFEA4();
-    ovl_11_func_800BFF00();
+    Ovl11ResetWeatherParticles();
+    Ovl11ResetAmbientTintFromTable();
     ovl_11_func_800DBFA0();
     Ovl11ResetCoordinateClamp();
     Ovl11InitVramAnimationSlots();

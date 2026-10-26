@@ -6,8 +6,8 @@
 /*
  * Save/load-overlay interface; ovl_15 must be resident.
  *
- * Both operations use the current 0x8000-byte save image at D_80137830,
- * with D_80137A30 naming its metadata record at byte offset 0x200. The
+ * Both operations use the current 0x8000-byte image at gOvl15TransferBuffer,
+ * with gOvl15SaveMetadata naming its record at byte offset 0x200. The
  * caller must finish packing/loading the image before using these routines;
  * neither routine performs serialization, card I/O or buffer allocation.
  *

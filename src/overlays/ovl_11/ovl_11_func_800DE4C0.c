@@ -5,8 +5,8 @@
 #include "master_volume.h"
 #include "random.h"
 #include "game_flags.h"
+#include "ovl11_weather_effect.h"
 
-void ovl_11_func_800BFE3C(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 void ovl_11_func_800DBAB0(void);
@@ -17,7 +17,7 @@ void ovl_11_func_800DE4C0(void) {
     char *base;
     struct Ovl11UpdateWork *work;
 
-    ovl_11_func_800BFE3C();
+    Ovl11SelectCurrentHourTint();
     if (GetGameFlag(0x48) == 1) {
         SetGameFlag(0x48, 0);
         SetGameFlag(0x47, 0);

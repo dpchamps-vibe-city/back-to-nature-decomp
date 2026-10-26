@@ -1,5 +1,43 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Object-event replay, animation/presentation and scheduled-command services.
+Ovl11RebuildObjectEventsForTime = 0x800C19B0; // type:func
+Ovl11TriggerNearbyObjectReactions = 0x800C3138; // type:func
+Ovl11SelectObjectEventAnimation = 0x800C32C8; // type:func
+Ovl11IsSpecialCounterSlot = 0x800C3548; // type:func
+Ovl11TryDrawObjectEvent = 0x800C3590; // type:func
+Ovl11TryStartObjectReaction = 0x800C35EC; // type:func
+Ovl11DrawObjectEvent = 0x800C36D0; // type:func
+Ovl11GetObjectCommandTableAddress = 0x800C3828; // type:func
+Ovl11BeginObjectCommandRow = 0x800C3838; // type:func
+Ovl11SetObjectCommandMotion = 0x800C3B78; // type:func
+Ovl11CountDownObjectEventCounters = 0x800C3CCC; // type:func
+Ovl11TriggerTimedObjectEvents = 0x800C3D70; // type:func
+Ovl11TryStartCommandReaction = 0x800C3EE8; // type:func
+Ovl11ShowObjectCommandMessage = 0x800C3F6C; // type:func
+gOvl11CommandMotionScale = 0x80122F7C; // type:data size:0x4
+gOvl11ReducedCommandMotionScale = 0x80122F80; // type:data size:0x4
+gOvl11ReactionHeadingAngles = 0x80122F8C; // type:data size:0x10
+gOvl11ReactionDistanceSquared = 0x80128B6C; // type:data size:0x4
+gOvl11ReactionSearchSentinel = 0x80128B70; // type:data size:0x4
+
+// Hour-selected ambient tint and forty falling/splash effect records.
+Ovl11UpdateWeatherEffect = 0x800BFD1C; // type:func
+Ovl11SelectCurrentHourTint = 0x800BFE3C; // type:func
+Ovl11ResetWeatherParticles = 0x800BFEA4; // type:func
+Ovl11WeatherResetHook = 0x800BFEF8; // type:func
+Ovl11ResetAmbientTintFromTable = 0x800BFF00; // type:func
+Ovl11ClearWeatherParticle = 0x800BFF50; // type:func
+Ovl11UpdateWeatherParticle = 0x800C009C; // type:func
+Ovl11UpdateWeatherParticles = 0x800C02B0; // type:func
+Ovl11RespawnWeatherParticle = 0x800C034C; // type:func
+Ovl11SetWeatherParticleMode = 0x800C044C; // type:func
+gOvl11DefaultAmbientTintTable = 0x80125E88; // type:data size:0x30
+gOvl11WeatherAmbientTintTable = 0x80125EB8; // type:data size:0x30
+gOvl11WeatherParticles = 0x80128820; // type:data size:0x230
+gOvl11WeatherSpriteSource = 0x80128A50; // type:data size:0x30
+gOvl11AmbientTintTable = 0x80128A80; // type:data size:0x4
+
 // Paired selection slots and their B8/B4 record-pool services.
 Ovl11ApplyRecordRowPlacement = 0x800D075C; // type:func
 Ovl11ResyncRecordRowPlacements = 0x800D079C; // type:func

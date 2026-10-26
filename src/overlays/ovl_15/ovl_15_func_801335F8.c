@@ -31,7 +31,7 @@ void ovl_15_func_801335F8(void) {
     var_v1 = 0;
     do {
         if (var_v1 != 0) {
-            var_s2 = D_801376D0;
+            var_s2 = gOvl15SaveWorkBase;
             var_s4 = var_s7 + 0x88;
         } else {
             var_s2 = (u8 *)&D_800742EC;

@@ -1825,11 +1825,6 @@ typedef struct {
 } M2C_f90dacf3c1c7_Ovl11CheckArg;
 
 typedef struct {
-               u8 pad0[0x2E];
-               s16 unk2E;
-} M2C_fbb2acdf64d3_Ovl11C3F6CArg0;
-
-typedef struct {
     char pad_0[0x24];
     u16 unk24;
     char pad_26[0x4];
@@ -1852,40 +1847,6 @@ typedef struct {
                char pad_32[0x2];
                s32 unk34;
 } M2C_ff61268fbbc8_Struct_800E15C8;
-
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 unk6;
-               s16 unk8;
-               s16 unkA;
-               u16 unkC;
-} M2C_ffca89de536c_UnkStruct800BFF50;
-
-typedef struct {
-    u8 pad0[6];
-    u16 unk6;
-    u8 pad8[4];
-    s16 unkC;
-    u8 padE[0x22];
-    s32 unk30;
-    s32 unk34;
-    s32 unk38;
-    u8 pad3C[0x14];
-    s32 unk50;
-    s32 unk54;
-    s32 unk58;
-} M2C_fffe5a7b4a78_Ovl11C3B78Arg0;
-
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-} M2C_fffe5a7b4a78_Ovl11C3B78Arg1;
 
 typedef struct {
  short m[3][3];
@@ -2073,6 +2034,11 @@ typedef struct {
     s16 unk8;
     s16 unkA;
 } Ovl11C3B78Arg1;
+
+typedef struct {
+    u8 pad0[0x2E];
+    s16 unk2E;
+} Ovl11C3F6CObjectView;
 
 typedef struct {
     char pad0[0x38];
@@ -2835,6 +2801,16 @@ typedef struct {
     u16 width;
     u16 height;
 } Ovl11VramAnimationDescriptor;
+
+typedef struct {
+    s16 x;
+    s16 y;
+    s16 animation;
+    s16 frame;
+    s16 startDelay;
+    s16 age;
+    u16 flags;
+} Ovl11WeatherParticle;
 
 typedef struct {
                s16 unk0;

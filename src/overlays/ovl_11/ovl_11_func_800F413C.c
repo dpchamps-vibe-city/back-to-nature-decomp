@@ -17,6 +17,8 @@
 #include "ovl11_interaction_id_predicates.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "psyq/abs.h"
+#include "ovl11_object_events.h"
 
 typedef struct {
     s16 field_0;
@@ -104,7 +106,6 @@ void ovl_11_func_800F4360 (M2C_701317280b4c_Ov11_4360struct *arg0, s16 arg1, s16
 s32 Ovl11IsActionGuardAreaBlocked (s32 arg0);
 s32 Ovl11TestRecordFieldGuard (s32 arg0, s32 arg1);
 s32 Ovl11TestSelectorRangeGuard (u32 arg0);
-s32 ovl_11_func_800C3548 (s32 arg0);
 s32 Ovl11IsOutsideGuardInterval (s32 arg0, s32 arg1);
 s32 Ovl11TestAreaFlagGuard (s32 arg0);
 s32 Ovl11HasActionGuardAreaException (s32 arg0, s16 arg1, s16 arg2);

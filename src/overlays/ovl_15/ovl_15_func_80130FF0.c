@@ -1,9 +1,9 @@
 #include "common.h"
 #include "ovl15_save_menu_ui.h"
+#include "psyq/memory.h"
+#include "ovl15_save_image.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-void ovl_15_func_80135A78(void);
-void ovl_15_func_80135380(void);
 void ovl_15_func_8012E15C(void);
 
 void ovl_15_func_80130FF0(void) {
@@ -16,8 +16,8 @@ void ovl_15_func_80130FF0(void) {
         D_80137584 = 0;
     }
     if (D_80137584 != 0x13) {
-        ovl_15_func_80135A78();
-        ovl_15_func_80135380();
+        Ovl15RemoveSaveChecksumSlots();
+        Ovl15RestoreSaveImage();
         ovl_15_func_8012E15C();
         D_80137586 = 1;
     }

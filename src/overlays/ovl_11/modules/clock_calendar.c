@@ -10,11 +10,15 @@
 #include "psyq/memory.h"
 #include "screen_fade.h"
 #include "game_flags.h"
+#include "ovl11_weather_effect.h"
+#include "psyq/abs.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_object_events.h"
 
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800DE4C0(void);
-void ovl_11_func_800BFE3C(void);
-void ovl_11_func_800C19B0(void);
 void ovl_11_func_800F227C(s16 arg0);
 void ovl_11_func_800CA6C4(void *arg0);
 void ovl_11_func_800CF36C(s32 arg0);
@@ -60,13 +64,13 @@ void Ovl11RunClockAdvance(void) {
                 }
             } else {
                 ovl_11_func_800F227C(((struct Ovl11StateInitView *)D_8006C838)->field_44CA);
-                ovl_11_func_800C19B0();
+                Ovl11RebuildObjectEventsForTime();
             }
             if (gOvl11ClockAdvanceRefreshRequested == 1) {
                 ovl_11_func_800DE4C0();
                 gOvl11ClockAdvanceRefreshRequested = 0;
             }
-            ovl_11_func_800BFE3C();
+            Ovl11SelectCurrentHourTint();
         }
     }
 }

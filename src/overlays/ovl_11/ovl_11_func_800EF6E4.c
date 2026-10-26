@@ -21,6 +21,8 @@
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_record_flag_query.h"
 #include "ovl11_record_pair_slots.h"
+#include "psyq/abs.h"
+#include "ovl11_object_events.h"
 
 typedef struct {
     s16 unk0;
@@ -123,7 +125,6 @@ s32 ovl_11_func_800F12D0 (s32 arg0, s32 arg1);
 void ovl_11_func_800DBC04 (s32 arg0);
 s32 ovl_11_func_800EEBF4 (s32 arg0);
 s32 ovl_11_func_800F1EE4 (s32 arg0);
-s32 ovl_11_func_800C3548 (s32 arg0);
 void ovl_11_func_800F1E44 (u32 arg0, s16 *arg1, s32 arg2);
 s32 ovl_11_func_800F19C8 (s32 arg0);
 s32 ovl_11_func_800F13D8 (u16 arg0);

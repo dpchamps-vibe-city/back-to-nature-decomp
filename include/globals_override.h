@@ -707,10 +707,13 @@ extern s32 D_8006C848;
 extern u8 gOvl11SpriteEffects[0x258];
 
 /* 800C3138 indexes four original signed heading words with an unsigned halfword selector. */
-extern s32 D_80122F8C[4];
+extern s32 gOvl11ReactionHeadingAngles[4];
+/* 800C3B78 selects these signed word scales before rsin/rcos motion. */
+extern s32 gOvl11CommandMotionScale;
+extern s32 gOvl11ReducedCommandMotionScale;
 /* 800C3138 stores the squared distance and resets the best-distance word (sw). */
-extern s32 D_80128B6C;
-extern s32 D_80128B70;
+extern s32 gOvl11ReactionDistanceSquared;
+extern s32 gOvl11ReactionSearchSentinel;
 
 /* ovl_11_func_800C35EC reads this absolute-addressed direction value with lhu. */
 extern u16 D_80071A38;
@@ -754,7 +757,7 @@ typedef struct {
 } SpuCommonAttrO;
 
 /* ovl_11 data spans 0x230 bytes; 800C02B0 scans 40 records of stride 0xE. Named view preserves legacy scalar/array declarations in other TUs. */
-extern u8 Ovl11_D_80128820[0x230] __asm__("D_80128820");
+extern u8 gOvl11WeatherParticles[0x230];
 
 /* ovl_11_func_80120F30 indexes flag bytes; the original data span is 8 bytes. */
 extern u8 gOvl11MapColumnUvOrientation[8];
@@ -5805,31 +5808,23 @@ extern struct Ovl15SaveHeaderSource D_80070CF0_headerSource __asm__("gCalendarYe
 /* ovl_15 transfer buffer and its metadata view (+0x200), not two allocations.
  * Ovl15WriteSaveChecksums (0x80135AE0) covers records 5..255 at 0x80 stride;
  * metadata stores their XOR at +0x38 and its own XOR at +0x7F. The base is
- * also reused for sprite loading by ovl_15_func_801373A0. Keep these external:
+ * also reused by Ovl15LoadMenuSpriteResources. Keep these external:
  * target accesses are absolute (lui + %lo); storage stays in the data segment. */
-extern u8 D_80137830[];
-extern u8 D_80137A30[];
+extern u8 gOvl15TransferBuffer[];
+extern u8 gOvl15SaveMetadata[];
 
-/* D_8013A5A4 - end of the ovl_15 sprite-data blob. ovl_15_func_801373A0
- * passes it to func_8001719C and copies the preceding 0x2D74 bytes
- * (D_8013A5A4 - 0x2D74 .. D_8013A5A4) into D_801428F0. Absolute-addressed
- * (lui + %lo) from ovl_15 code, so only an extern declaration belongs here. */
-extern u8 D_8013A5A4[];
+/* 801373A0 uploads images at transfer-buffer +0x2D74, copying the preceding
+ * sprite records separately. This is an interior label, not another buffer. */
+extern u8 gOvl15LoadedSpriteImages[];
 
-/* D_801428F0 - ovl_15 sprite-data blob destination. ovl_15_func_801373A0
- * fills it from the D_80137830 region and then parses five sprite-data
- * headers out of it. Absolute-addressed (lui + %lo) from ovl_15 code. */
-extern u8 D_801428F0[];
+/* 801373A0 copies 0x2D74 bytes here before initializing five sprite sources. */
+extern u8 gOvl15MenuSpriteData[];
 
-/* D_8013766C - five absolute offsets into the D_801428F0 blob, read by
- * ovl_15_func_801373A0 to locate each sprite-data header. Absolute-addressed
- * (lui + %lo) from ovl_15 code. */
-extern s32 D_8013766C[];
+/* 801373A0 reads five byte offsets into the copied sprite-data block. */
+extern s32 gOvl15MenuSpriteOffsets[];
 
-/* D_80145670 - five 0x30-byte SpriteSourceData records initialized by
- * ovl_15_func_801373A0 from the D_801428F0 blob. Absolute-addressed
- * (lui + %lo) from ovl_15 code. */
-extern struct SpriteSourceData D_80145670[];
+/* 801373A0 initializes five 0x30-byte SpriteSourceData records here. */
+extern struct SpriteSourceData gOvl15MenuSpriteSources[];
 
 /* Calendar panel state, ovl_11:80126F7C..80126F8C. The panel has phases
  * 0=inactive, 1=interactive, 2=closing. Message state FF enables navigation;
@@ -6571,7 +6566,12 @@ extern s32 *D_80125DC0[50];
 /* ovl_11_func_800BD6A8 reads adjacent ROM boundary words at index*4 and +4. */
 extern s32 D_80122810[];
 /* ovl_11_func_800BFD1C loads this pointer and indexes 0xC-byte entries. */
-extern s32 *D_80128A80;
+extern s32 *gOvl11AmbientTintTable;
+/* BFEA4/C044C select these four hour-class RGB triples (12 Q12 words). */
+extern s32 gOvl11DefaultAmbientTintTable[12];
+extern s32 gOvl11WeatherAmbientTintTable[12];
+/* C044C initializes this 0x30-byte sprite source from the shared data. */
+extern struct SpriteSourceData gOvl11WeatherSpriteSource;
 /* ovl_11:800C28CC publishes the group and one-based item BEFORE group remap. */
 extern s32 gOvl11ScriptSpriteGroup;
 extern s32 gOvl11ScriptSpriteItemIndex1;
@@ -6687,7 +6687,7 @@ extern u8 D_80051EC6[];
 /* ovl_15_func_801320A8 adds the text-bank byte offset before func_8001AC10. */
 extern u8 D_800520A0[];
 /* ovl_15_func_801359FC stores the alternate record-pool byte pointer. */
-extern u8 *D_801376D0;
+extern u8 *gOvl15SaveWorkBase;
 /* 80135380 restores these word-aligned save blocks (0x4C/0x24/0x34/0x18 bytes). */
 extern s32 D_8007AD00[0x13];
 /* ovl_11:800BFF74/800C0010 use eight s32 fields; the screen renderer shifts
@@ -6704,7 +6704,7 @@ extern struct ScreenColorRampState gScreenColorRamp;
 extern s32 D_8007AFA4[13];
 extern s32 D_8007AFD8[6];
 /* 80135380 selects this save buffer and reads through byte offset 0x6377. */
-extern u8 D_80137AB0[];
+extern u8 gOvl15SavePayload[];
 
 /* 80135380's aligned aggregate transfers establish these save-block extents. */
 typedef struct { s32 words[0xF0 / 4]; } Ovl15SaveBlockF0;
@@ -6793,7 +6793,7 @@ extern s32 D_80053604;
 /* 80133808 indexes one unsigned byte with D_8013759E. */
 extern u8 D_80137658[];
 /* 80133808 and 80134134 pass this overlay buffer to func_80015EE8. */
-extern u8 D_801456A0[];
+/* 801456A0 is gOvl15MenuSpriteSources[1], not separate storage. */
 /* ovl_15 slot state: sh updates/clears in 80133B28/80134724; signed comparisons use lh. */
 extern u16 D_801375A0;
 extern u16 D_801375A2;
@@ -7021,12 +7021,11 @@ typedef struct {
 extern const s16 D_8012DEBC[4];
 /* 8012FAE0 selects nine word offsets in three 12-byte rows. */
 extern u32 D_801375B4[3][3];
-/* 8012E15C publishes this buffer pointer; 8012FAE0 adds the icon offsets. */
-extern u8 *D_80137828;
-/* 8012FAE0 copies 0x80-byte icon frames to these byte-addressed blocks. */
-extern u8 D_801378B0[0x80];
-extern u8 D_80137930[0x80];
-extern u8 D_801379B0[0x80];
+/* 8012E15C publishes this pointer; 80137300 loads archive 0x10 here and
+ * 8012FAE0 reads its card-icon palette and frames. */
+extern u8 *gOvl15CardIconResourceBuffer;
+/* 8012FAE0 places three 0x80-byte card-icon frames at transfer-buffer
+ * offsets 0x80, 0x100 and 0x180; these are not separate allocations. */
 /* 8012FAE0 copies a 32-byte under-aligned palette as one aggregate. */
 typedef struct { u8 bytes[0x20]; } Ovl15IconPalette;
 /* 8012FAE0 writes the SC header, clears +44..+5F and copies a palette at +60. */

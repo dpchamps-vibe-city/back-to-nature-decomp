@@ -1,5 +1,7 @@
 #include "common.h"
 #include "ovl15_save_checksums.h"
+#include "psyq/memory.h"
+#include "ovl15_save_image.h"
 
 extern u8 D_80053350[];
 extern s8 D_80137584;
@@ -15,7 +17,6 @@ typedef struct {
 extern D_801376E0Entry D_801376E0[];
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-void ovl_15_func_80135A78(void);
 
 void ovl_15_func_80131CDC(void) {
     s32 temp_a1;
@@ -29,7 +30,7 @@ void ovl_15_func_80131CDC(void) {
         D_80137584 = 0xE;
     }
     else {
-        ovl_15_func_80135A78();
+        Ovl15RemoveSaveChecksumSlots();
         D_80137584 = 0x10;
     }
 }

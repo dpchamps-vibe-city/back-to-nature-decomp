@@ -40,6 +40,7 @@
 #include "mode6_texture_refresh.h"
 #include "map_cell_texture.h"
 #include "area_grid_triggers.h"
+#include "ovl11_weather_effect.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -583,7 +584,6 @@ void ovl_11_func_800DC560 (s32 arg0, s32 arg1);
 void ovl_11_func_800C9D38 (void);
 s32 ovl_11_func_8011DF4C (s32 arg0);
 void ovl_11_func_80111F10 (void);
-void ovl_11_func_800BFEF8 (void);
 /* Extra debug-hook parameters forwarded by this wrapper are unread. */
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
@@ -630,7 +630,7 @@ void Ovl11ResetAreaScene(void) {
     }
     SetGameFlag(0x45U, 0U);
     ovl_11_func_80111F10();
-    ovl_11_func_800BFEF8();
+    Ovl11WeatherResetHook();
     state = (struct Ovl11ResetState *)D_8006C838;
     objectState = (u8 *)state + 0x51C8;
     state->field_51F0 = 0;

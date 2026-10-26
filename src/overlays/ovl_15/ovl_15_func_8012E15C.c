@@ -17,12 +17,12 @@ extern s16 D_80137590;
 extern s16 D_80137594[];
 extern s16 D_80137598;
 extern s16 D_8013759A;
-extern u8 *D_801376D0;
+extern u8 *gOvl15SaveWorkBase;
 extern u8 D_801376E0[];
 extern u8 D_801377A0[];
 extern s16 gOvl15SaveSlotStatus[];
-extern u8 *D_80137828;
-extern u8 D_80137830[];
+extern u8 *gOvl15CardIconResourceBuffer;
+extern u8 gOvl15TransferBuffer[];
 
 void ovl_15_func_8012E15C(void) {
     s32 sp10;
@@ -51,15 +51,15 @@ void ovl_15_func_8012E15C(void) {
     gOvl15SaveSlotStatus[1] = 2;
     gOvl15SaveSlotStatus[2] = 2;
     D_8013759A = 0;
-    D_80137828 = D_8007BFF8;
+    gOvl15CardIconResourceBuffer = D_8007BFF8;
     memset(D_801376E0, 0, 0x3C);
     memset(D_801376E0 + 0x3C, 0, 0x3C);
     memset(D_801376E0 + 0x78, 0, 0x3C);
-    memset(D_80137830, 0, 0x9690);
+    memset(gOvl15TransferBuffer, 0, 0x9690);
     memset(D_801377A0, 0, 0x80);
-    temp_s0 = D_80137830 + 0x280;
+    temp_s0 = gOvl15TransferBuffer + 0x280;
     ovl_15_func_8013468C();
-    D_801376D0 = temp_s0;
+    gOvl15SaveWorkBase = temp_s0;
     memset(temp_s0, 0, 0x6378);
     var_s2 = D_801376E0;
     fill = 0xFFFF;

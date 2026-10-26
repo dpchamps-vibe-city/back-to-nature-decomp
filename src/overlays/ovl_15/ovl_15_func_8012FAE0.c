@@ -4,11 +4,10 @@
 #include "psyq/memory.h"
 #include "psyq/strings.h"
 #include "ovl15_save_card_title.h"
+#include "ovl15_save_image.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 void ovl_15_func_80134A34(s16 arg0);
-void ovl_15_func_80134C48(void);
-void ovl_15_func_801359FC(void);
 void ovl_15_func_80137544(char *arg0, s32 arg1);
 
 void ovl_15_func_8012FAE0(void) {
@@ -21,8 +20,8 @@ void ovl_15_func_8012FAE0(void) {
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
                  (s32)(D_8005346A + gTextBankOffsets[0]));
     ovl_15_func_80134A34(D_8013758E);
-    ovl_15_func_80134C48();
-    ovl_15_func_801359FC();
+    Ovl15SerializeSaveImage();
+    Ovl15InsertSaveChecksumSlots();
     Ovl15WriteSaveChecksums();
     ovl_15_func_80137544(Ovl15CardFilename, D_8013758E);
     memcpy(&Ovl15CardHeader, D_8012DEBC, 3);
@@ -31,10 +30,10 @@ void ovl_15_func_8012FAE0(void) {
     Ovl15BuildSaveCardTitle(D_8013758E);
     memset(Ovl15CardHeader.reserved, 0, sizeof(Ovl15CardHeader.reserved));
     paletteOffset = icons[0] + 0x14;
-    Ovl15CardHeader.palette = *(Ovl15IconPalette *)(D_80137828 + paletteOffset);
-    memcpy(D_80137830, &Ovl15CardHeader, sizeof(Ovl15CardHeader));
-    memcpy(D_801378B0, (void *)(icons[0] + (u32)D_80137828 + 0x40), 0x80);
-    memcpy(D_80137930, (void *)(icons[1] + (u32)D_80137828 + 0x40), 0x80);
-    memcpy(D_801379B0, (void *)(icons[2] + (u32)D_80137828 + 0x40), 0x80);
+    Ovl15CardHeader.palette = *(Ovl15IconPalette *)(gOvl15CardIconResourceBuffer + paletteOffset);
+    memcpy(gOvl15TransferBuffer, &Ovl15CardHeader, sizeof(Ovl15CardHeader));
+    memcpy(gOvl15TransferBuffer + 0x80, (void *)(icons[0] + (u32)gOvl15CardIconResourceBuffer + 0x40), 0x80);
+    memcpy(gOvl15TransferBuffer + 0x100, (void *)(icons[1] + (u32)gOvl15CardIconResourceBuffer + 0x40), 0x80);
+    memcpy(gOvl15TransferBuffer + 0x180, (void *)(icons[2] + (u32)gOvl15CardIconResourceBuffer + 0x40), 0x80);
     D_80137584 = 0x14;
 }

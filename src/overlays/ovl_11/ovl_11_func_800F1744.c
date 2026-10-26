@@ -1,6 +1,10 @@
 #include "common.h"
-
-s32 ovl_11_func_800C3548(s32 arg0);
+#include "psyq/abs.h"
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_object_events.h"
 
 s32 ovl_11_func_800F1744(u8 arg0, u16 arg1, s32 arg2) {
     s32 temp_s0;
@@ -20,7 +24,7 @@ s32 ovl_11_func_800F1744(u8 arg0, u16 arg1, s32 arg2) {
         char *base = (char *) &D_8006C838;
         var_v1 = *(u16 *) (base + 0x8000 + 0x11C2);
     } else {
-        if (ovl_11_func_800C3548(temp_s0) == 0) {
+        if (Ovl11IsSpecialCounterSlot(temp_s0) == 0) {
             char *base = (char *) &D_8006C838;
             char *q = base + temp_s0 * 0x1D4;
             var_v1 = *(u16 *) (q + 0x8000 + 0x19EA);

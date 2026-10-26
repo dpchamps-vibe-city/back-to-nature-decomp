@@ -14,11 +14,8 @@
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
 #include "ovl11_area_mode_sequence.h"
+#include "ovl11_weather_effect.h"
 
-void ovl_11_func_800BFEA4(void);
-void ovl_11_func_800BFF00(void);
-void ovl_11_func_800C044C(s16 arg0);
-void ovl_11_func_800BFE3C(void);
 void ovl_11_func_800CBEF8(void);
 void func_8001E340(Ovl11SceneGrid **arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
@@ -28,10 +25,10 @@ void ovl_11_func_800CBB9C();
 
 void ovl_11_func_80104CB8(void) {
     ((Ovl11AreaInitView *)D_8006C838)->flags &= 0xFF7FFFFF;
-    ovl_11_func_800BFEA4();
-    ovl_11_func_800BFF00();
-    ovl_11_func_800C044C(((Ovl11AreaInitView *)D_8006C838)->field_E4C8);
-    ovl_11_func_800BFE3C();
+    Ovl11ResetWeatherParticles();
+    Ovl11ResetAmbientTintFromTable();
+    Ovl11SetWeatherParticleMode(((Ovl11AreaInitView *)D_8006C838)->field_E4C8);
+    Ovl11SelectCurrentHourTint();
     ovl_11_func_800CBEF8();
     ((Ovl11AreaInitView *)D_8006C838)->field_4488 = 2;
     ((Ovl11FarInitView *)&D_8007AFF0)->field_2548C = 0;

@@ -11039,6 +11039,84 @@ the run itself remains link-order adjacency only.
 
 ## `ovl_11` object-event pool lifecycle — 0x800C1BA0–0x800C1F94 exclusive (confidence: medium)
 
+**Whole protocol now reconstructed in
+`src/overlays/ovl_11/modules/object_events.c`, 800C19B0–800C401C exclusive,
+33 members.** This absorbs both object_event_pool (seven entries) and
+object_event_script (twelve), the replay initializer at 19B0 and all thirteen
+presentation/command helpers from 3138 through 3F6C. The earlier pool/script
+boundaries below are superseded, not preserved to protect existing modules.
+
+Membership is a cycle with concrete data handoffs: pool allocation/counters
+call the 3548 slot predicate; the interpreter calls 32C8/3838/3B78/3EE8/3F6C,
+and 3838 calls back into interpreter movement. The pool driver calls 3590,
+which alone calls 36D0 to draw/update the embedded sprite and +E0 timed effect;
+3138 calls 35EC to start that effect. 3CCC decrements the same pool +2/+4
+counters maintained by allocation and 1D68. 3D70 clears pool time origins and
+calls 19B0. In turn 19B0 drives 3838 and the interpreter, and is the sole writer
+of live/replay mode, whose readers all lie inside the unit. It passes that mode
+to 3838 to suppress reaction dispatch during replay. Thus 19B0 is not merely
+an external public-API client: it closes this private mode protocol.
+
+The retained first twenty entries are 19B0; the seven pool functions listed
+below; and the twelve interpreter functions listed in the next section. The
+last thirteen, in original order, are TriggerNearbyObjectReactions (3138),
+SelectObjectEventAnimation (32C8), IsSpecialCounterSlot (3548),
+TryDrawObjectEvent (3590), TryStartObjectReaction (35EC), DrawObjectEvent
+(36D0), GetObjectCommandTableAddress (3828), BeginObjectCommandRow (3838),
+SetObjectCommandMotion (3B78), CountDownObjectEventCounters (3CCC),
+TriggerTimedObjectEvents (3D70), TryStartCommandReaction (3EE8) and
+ShowObjectCommandMessage (3F6C), all with Ovl11 prefix. The first entry is
+Ovl11RebuildObjectEventsForTime. No stub or empty gap is used as a cut.
+
+Left boundary: 188C is a clock-HUD enable/disable client, using clock/game
+flags but none of this unit's private mode, script-table or reaction state.
+Right boundary: 401C begins a scene/UI mode dispatcher with its own
+801231F4/F8 and 80128Cxx state and no calls to/from these 33 functions.
+The shared scene work area, utilities and distant record consumers are not
+same-TU evidence. These are positive-protocol/evidence-limited boundaries,
+not GP-proven original cuts (-G0). Link order and the single 18-word table at
+file 0x170 corroborate; the table remains pooled before text, with all member
+order and branch addresses intact. No flag/mechanical limit creates a slice.
+
+The new facade ovl11_object_events.h publishes replay, nearby reactions,
+slot classification, counter countdown and timed events. The existing
+pool/script headers keep their established detailed contracts, although some
+entries now have only internal callers. External linkage is unchanged for
+all helpers. Duplicate local command/emitter and message-object parameter
+views were reconciled to the canonical game_types.h views before folding;
+field widths/signedness and layouts were retained. Two missing motion-scale
+externs moved to globals_override.h with their load/use evidence. No global
+ownership or allocation was added.
+
+Names and prose distinguish slot index from stored ID, replay ticks from
+frames, 16.16 movement from integer coordinates and byte-address ABIs from
+indices. The reaction scan handles the first 35 records, may affect multiple
+records and ALWAYS returns zero; it is not a nearest-object query. Its
+retained 7FFFFFFF sentinel store is not deleted. Five scoped data names cover
+the biased squared distance, sentinel, four heading angles and the measured
+768/256 motion scales. Public names were propagated by canonicalNames;
+override-header externs were explicitly reconciled by container identity.
+Command-row setup, replay, motion and message locals now describe their data
+flow; the message selector intentionally snapshots a value before its updater.
+The checked fold proves all 33 entries and ovl_11 under baseline -O2/-G0,
+including the pooled table. No member override or policy exception exists.
+
+Final run acceptance: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates after the
+facade/header and local-name edits, including EXE and all configured overlay
+bytes, associated data/pointers/jump tables and placement, canonical interfaces,
+source policy, convergence and exception non-growth. The four completed units
+(object_events, weather_effect, save_image and save_sprite_resources) raise
+folded membership **879 → 913 of 2625**, with **143/143 valid modules** and
+1712 functions remaining outside modules. No previously folded function
+regressed. All folds used baseline settings; no flag override or exception was
+added or retired, and no shared tool changed. Early text-engine/pad/collision
+and UI-sprite compiler/context blockers remain untouched; none was converted
+into an invented internal TU boundary. Gate exit 1 denotes remaining campaign
+work, not failed integrity. No commit was made.
+
+Historical pool-only reconstruction (superseded extent and boundaries):
+
 **Reconstructed `src/overlays/ovl_11/modules/object_event_pool.c`**, the seven
 original functions at 1BA0, 1BE0, 1C08, 1C5C, 1C90, 1CBC and 1D68, in
 original order. The distant record-family consumers listed below are NOT
@@ -11166,6 +11244,12 @@ Members (address order):
   selector belongs to the 800C1Bxx translation unit.
 
 ## `ovl_11` object event-script interpreter — 0x800C1F94–0x800C3138 exclusive (confidence: medium)
+
+Current extent: all twelve entries now belong to the 33-member object_events
+unit documented in the preceding lifecycle section. New cross-boundary cycles
+through command/presentation helpers, the pool predicate and 19B0's private
+live-mode writer/reader closure supersede the earlier cuts below. Historical
+interpreter-only evidence and names follow; they do not justify a retained slice.
 
 **Reconstructed `src/overlays/ovl_11/modules/object_event_script.c`**, all
 12 original functions: 1F94, 2044, 2678, 2884, 28CC, 2A98, 2B04, 2C74,
@@ -17084,6 +17168,57 @@ helper.
 
 ## `ovl_15` D_801376D0/D_80137AB0 scratch-buffer run — 0x80134C48–0x80135AE0 (confidence: medium)
 
+**Reconstructed `src/overlays/ovl_15/modules/save_image.c`,
+80134C48–80135C20 exclusive, six entries, absorbing save_checksums.** The
+serializer/restorer share the same block/field map and private payload-base
+label (80137AB0). Both packers install that same base and perform complementary
+0x7F/0x80-stride overlapping moves. Their checksum slots are exactly the last
+bytes checked by the existing pair: the payload starts at transfer +0x280,
+record 5 of the 0x80-byte format. Save callers use serialize/insert/write;
+load callers use verify/remove/restore. The exact record-layout handoff and
+private payload base support one six-entry protocol, beyond buffer sharing
+or adjacency. The old boundary before write/verify had no independent witness
+and is removed. The four-member scratch run is not retained as a slice.
+
+Left neighbor 80134A34 builds the separately published summary/header record
+array (used by save-slot UI), then clears/publishes the transfer image's
+metadata. It neither uses the private payload-base label nor knows the
+serializer's selected runtime-field map. This public formatted-record handoff
+does not by itself join that builder or title-formatting services to this TU.
+Right neighbor 80135C20 begins asynchronous MemCard retry/command handling,
+with the distinct retry counter and SDK synchronization protocol; no save
+layout or packer helper is used there. These are evidence-limited service
+boundaries, not GP-proven original cuts (-G0), and not flag/mechanical limits.
+
+New public names are Ovl15SerializeSaveImage, Ovl15RestoreSaveImage,
+Ovl15InsertSaveChecksumSlots and Ovl15RemoveSaveChecksumSlots. The existing
+checksum names/header remain; ovl15_save_image.h publishes image operations
+and documents call ordering, byte units, shared workspace lifetime and lack
+of validation/allocation. The restore intentionally omits saved runtime
++20..+2C and the 0x74-byte block at image +594C; it is not advertised as a
+complete inverse. Image-only transient activation clearing, exact 201-move
+packing lengths and the random byte at transfer +7FFE are preserved.
+Opaque aggregate transfers retain witnessed widths/alignment, not memcpy
+substitutions that would copy holes. Neutral block/field names stay neutral.
+
+gOvl15SaveWorkBase names the shared mutable work pointer; gOvl15SavePayload
+and gOvl15SaveMetadata name interior transfer-workspace labels. Symbol-config
+extents partition named fragments (header/icons +000..+1FF, metadata +200..+27F,
+payload up to the loaded-image label +2D74); they are not allocation capacities.
+Source extern arrays remain unbounded and all ownership stays external.
+Naming exposed swallowed interior aliases: icon destinations now use transfer
++80/+100/+180, and the menu renderer uses spriteSources[1] instead of a second
+storage identity at 801456A0. These expressions passed the container oracle.
+An intermediate regeneration created four renamed source placeholders; the
+existing clean definitions were moved to their canonical paths and the final
+fold consumed them. No new stub or exception remains. The checked whole fold
+passes every member and ovl_15 at baseline settings, with no flag overrides.
+The final campaign gate also passes after header publication and readability
+edits: 913/2625 folded, 143/143 valid modules, every linked container/data byte
+unchanged and no policy/exception growth (full batch result in object-events
+lifecycle section). The former four-function placeholder failure is resolved.
+
+
 A gapless four-function run in `configs/splat/ovl_15.yaml`, every member
 writing the pointer `D_801376D0 = (u8 *)D_80137AB0`: 0x80134C48 (0x738, ends
 exactly 0x80135380) → 0x80135380 (0x67C, ends exactly 0x801359FC) →
@@ -17136,7 +17271,8 @@ Members (link order):
 - ovl_15_func_80135B68 (m, matched this session, byte-exact) — checksum
   verifier: returns 0 when all three stored checksums match, else -1.
 
-Reconstructed as `src/overlays/ovl_15/modules/save_checksums.c`, in original
+Initially reconstructed as `src/overlays/ovl_15/modules/save_checksums.c`, now
+absorbed into save_image above. The original pair was kept in
 order, with the public interface in `include/ovl15_save_checksums.h`:
 `Ovl15WriteSaveChecksums` (ovl_15:0x80135AE0) and
 `Ovl15VerifySaveChecksums` (ovl_15:0x80135B68). The save-preparation callers
@@ -18145,6 +18281,50 @@ Members (address order):
 
 ## `ovl_15` streamed sprite-data load cluster — 0x801372A0 / 0x80137300 / 0x801373A0 (confidence: medium)
 
+**Reconstructed `src/overlays/ovl_15/modules/save_sprite_resources.c`,
+801372A0–80137544 exclusive, all six entries.** The orchestrator calls both
+loaders and all three empty hooks; the hooks remain compiled functions, not
+new stubs. Both leaves share the blocking archive issue/poll and ordering-table
+reset protocol. The sprite leaf alone consumes the five-entry offset table
+at 8013766C and initializes the five 0x30-byte source records. This closed
+call/resource protocol supports membership; adjacency only corroborates it.
+
+The left neighbor is the last save-menu input service (80137228), with no
+resource-loader helper or source-table access. The right neighbor (80137544)
+selects one of four card filenames, called by the card I/O services rather
+than this loader. Neither neighbor participates in this resource protocol.
+These are evidence-limited service boundaries, not GP-proven original cuts
+(the overlay uses -G0); no override or mechanical limit creates a slice.
+The init and card-header builders also use the icon-buffer pointer, but that
+public resource handoff alone does not join the intervening menu/card services.
+
+The sole published entry is Ovl15LoadMenuResources in
+ovl15_save_sprite_resources.h. It always loads card-icon resources (archive
+0x10, 0x900 bytes); nonzero loadSprites also loads archive 0x0E, uploads its
+images, copies 0x2D74 bytes and initializes the five sprite sources. The header
+documents initialization, packet-table invalidation, blocking/retry behavior,
+shared storage and non-reentrancy. Internal names retain external linkage:
+Ovl15MenuResourceHook0/1/2, Ovl15LoadCardIconResources and
+Ovl15LoadMenuSpriteResources. No hook purpose is invented beyond its position.
+The mechanical fold passed baseline flags and every member/container byte.
+The inherited broad context preamble and duplicate extern were removed;
+the remaining includes and forward declarations describe only this service.
+
+Data names preserve address identities and existing types: the card-icon
+resource pointer, shared transfer buffer, interior loaded-image label, copied
+sprite data, source offsets and source objects now use scoped gOvl15 names.
+The 0x9690-byte transfer workspace is still one region reused by card I/O.
+Its symbol-config extents partition the header/icons, metadata, payload and
+image-data interior labels, not buffer capacities; no allocation or source
+array bound was changed. The image
+label covers the remainder of the 0x8E90-byte archive read. Override-header
+externs were reconciled explicitly because unqualified overlay addresses
+there do not select a container. Original ownership remains external.
+Final campaign verification passes after naming, interface publication and
+interior-label reconciliation: 913/2625 folded, 143/143 valid modules, all
+linked EXE/overlay/data bytes unchanged and no policy/exception growth (batch
+result in object-events lifecycle section). No shared tool was changed.
+
 Evidence: a shared streamed-load idiom, a shared caller, and link-order adjacency.
 The orchestrator `ovl_15_func_801372A0` calls both loader halves in sequence and
 sits immediately before them in link order; the three 8-byte empty stubs
@@ -18179,6 +18359,55 @@ private `D_8013766C` offset table.
 
 ## `ovl_11` D_8007AF80 interpolation-state pair — 0x800BFF74–0x800C0010 (confidence: medium)
 
+**Whole supported protocol reconstructed as
+`src/overlays/ovl_11/modules/weather_effect.c`, 800BFD1C–800C056C exclusive,
+12 members, absorbing screen_color_ramp.** In address order: update effect,
+select current-hour tint, reset particles, empty reset hook, reset tint from
+table, clear one particle, draw/step tint, set tint target, update one particle,
+update all particles, respawn particle, select particle mode. The original
+entries are BFD1C/BFE3C/BFEA4/BFEF8/BFF00/BFF50/BFF74/C0010/C009C/C02B0/
+C034C/C044C. The empty hook inside the run is retained with external linkage.
+
+Membership rests on closed helpers and private state, not adjacency: BFD1C
+calls the tint pair and C02B0; C02B0 calls C009C, which shares C034C with
+C044C. BFEA4 clears all 40 records using BFF50. BFEA4/C044C select the two
+four-hour-class RGB tables through the same pointer; BFD1C/BFE3C/BFF00 read
+it. C044C calls BFF00 and initializes the effect's sprite source. External
+setup callers repeatedly pair reset/tint/mode selection. There is no support
+for retaining the former two-entry interpolation slice as a separate unit.
+
+Left boundary: daily_conditions ends at BFD1C and owns next/current condition
+codes (+E4C8/+E4CA), date selection and condition-flag publication. The tint
+unit instead owns the table pointer, two RGB tables and 40-record particle
+pool. Neither side accesses the other's private data/helper protocol. Right
+boundary: C056C reads the broadly used condition code and jitters camera
+center Z (+253B8), neither of which this particle unit writes. C05F8 clears
+a different event flag (+44D4) through unrelated cleanup helpers. Rand and
+scene-wide gates are not membership evidence. These cuts delimit positive
+service evidence, not proven original TU edges (-G0 gives no GP distinction).
+No flag or mechanical limit creates an internal boundary.
+
+Names are scoped Ovl11/gOvl11 and describe demonstrated tint/particle work;
+no specific rain/snow assignment to modes is asserted. The shared 0x0E-byte
+particle view names x/y, animation, frame, start delay, age and flags while
+preserving explicit signed/unsigned accesses in the update core. Random calls
+whose results are unused remain: they advance shared state. The stateful OR
+semantics of mode selection, draw-before-step Q12 ramp, suppressed updates,
+1-update versus 256-update transitions and non-reentrancy are documented in
+ovl11_weather_effect.h and the retained screen_color_ramp.h. Only externally
+used lifecycle services are newly published; helper linkage is unchanged.
+Local scalar/array aliases were reconciled to the existing byte-array identity,
+and the two RGB tables and source object now have evidence-backed externs in
+globals_override.h. All storage stays external; gScreenColorRamp stays EXE RAM.
+The checked whole fold proved baseline -O2/-G0 and every member/container byte;
+no flag override or source-policy exception was introduced or retired.
+Final campaign acceptance also passes after all names/header/readability edits,
+including the explicit update-core halfword views: 913 folded, 143/143 valid
+modules and every EXE/overlay byte unchanged (full batch result in object-events
+lifecycle section). Published interfaces have no failing callers.
+
+Historical pair-only reconstruction follows (superseded extent):
+
 Evidence: one shared absolute-addressed state block at `0x8007AF80`
 (originally `D_8007AF80`, now `gScreenColorRamp`), with the same layout in
 both helpers: three signed RGB channels, three signed per-update deltas,
@@ -18200,7 +18429,7 @@ Members (address order):
   `(target - current) / duration` steps. Neither caller consumes the final
   quotient left in v0; a void definition reproduces every original byte.
 
-Reconstructed as `src/overlays/ovl_11/modules/screen_color_ramp.c`, preserving
+Initially reconstructed as `src/overlays/ovl_11/modules/screen_color_ramp.c`, preserving
 address order. `include/screen_color_ramp.h` publishes
 `Ovl11DrawAndStepScreenColorRamp` (ovl_11:0x800BFF74) and
 `Ovl11SetScreenColorRampTarget` (ovl_11:0x800C0010). Both callers now use that
@@ -18221,9 +18450,9 @@ absolutely addressed, and save/restore callers were propagated and verified.
 The engine exporter now includes configured overlay-only data absent from the
 EXE's ELF; no artificial reference or storage definition was added.
 
-The shared layout, complementary operations and common caller support this
-small module hypothesis. The preceding table setup and broader state dispatcher
-remain outside; their exact original TU relationship is unresolved. Both
+The shared layout, complementary operations and common caller supported the
+initial pair hypothesis. The connected table setup and particle dispatcher are
+now included in weather_effect above; the old pair-only edge is superseded. Both
 members and their merge match under baseline overlay flags (`-O2 -G0`), with
 no member override, new exception or matching workaround.
 
@@ -19643,6 +19872,12 @@ obj->unk30 and, when equal, dispatches on u16@0 == 0x109/0x10A to
 ---
 
 ## `ovl_11` spawn/flag-object run — 0x800C009C–0x800C056C (confidence: medium)
+
+Current reconstruction: C009C/C02B0/C034C/C044C are included in the complete
+weather_effect module described under the D_8007AF80 interpolation section.
+C056C is not a member: its actual private work is a condition-gated camera-Z
+jitter, not this particle pool. The historical Rand/adjacency tie below is
+insufficient evidence to extend the module past C044C.
 
 Candidate same-TU family of `ovl_11`. Evidence: zero-gap link-order
 contiguity (`build/ovl_11/functions.csv`): 0x800C009C (0x214) → 0x800C02B0

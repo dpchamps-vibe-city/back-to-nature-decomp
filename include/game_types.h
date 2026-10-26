@@ -2820,4 +2820,16 @@ typedef struct {
     s32 z;
 } RowXPlacement;
 
+/* ovl_11 ambient/particle effect: 40 records at a 0x0E-byte stride.
+ * Update code also uses unsigned views of x and age; preserve those casts. */
+typedef struct {
+    s16 x;
+    s16 y;
+    s16 animation;
+    s16 frame;
+    s16 startDelay;
+    s16 age;
+    u16 flags;
+} Ovl11WeatherParticle;
+
 #endif /* GAME_TYPES_H */

@@ -51,7 +51,7 @@ s32 ovl_15_func_80133808(s16 arg0) {
     DrawMenuPanel((u32 *) (temp_t0 + 0x28), 1, 0x18, 0x20, 0x110, 0x74);
     DrawMenuPanel((u32 *) (gActiveRenderContext->field_D8 + 0x24), 1, 0x50, 0x10, 0xA0, 0x20);
     func_80017B3C(temp_s4, (s32) ((void *) ((u8 *) &D_80053604 + *gTextBankOffsets)), 0xD0, 0x1A);
-    DrawSpriteFrameRects(temp_s2, (s32) &D_801456A0, D_80137658[D_8013759E], 0, 0xB8, 0x12);
+    DrawSpriteFrameRects(temp_s2, (s32)&gOvl15MenuSpriteSources[1], D_80137658[D_8013759E], 0, 0xB8, 0x12);
     func_8002470C(0);
     func_80024810(temp_s2, 0x20, 0x18);
     func_80024860(temp_s2, 0x108, 0x18);
@@ -79,7 +79,7 @@ s32 ovl_15_func_80133808(s16 arg0) {
     if (arg0 == 0) {
         var_s0 = (u16 *) &D_80070D18;
     } else {
-        var_s0 = (u16 *) (D_801376D0 + 0x2378);
+        var_s0 = (u16 *) (gOvl15SaveWorkBase + 0x2378);
     }
     for (var_a2 = 0; var_a2 < 9; var_a2++) {
         temp_v0 = var_s0[var_a2];

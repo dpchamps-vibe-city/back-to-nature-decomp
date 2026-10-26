@@ -31,7 +31,7 @@ s32 ovl_15_func_80133B28(s16 arg0) {
 
     sp18 = 0;
     if ((arg0 << 0x10) != 0) {
-        var_s3 = D_801376D0;
+        var_s3 = gOvl15SaveWorkBase;
     } else {
         var_s3 = (u8 *) &D_800742EC;
     }

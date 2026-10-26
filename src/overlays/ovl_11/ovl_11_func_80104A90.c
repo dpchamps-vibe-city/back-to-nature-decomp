@@ -9,12 +9,11 @@
 #include "ovl11_sprite_effect_pool.h"
 #include "game_flags.h"
 #include "ovl11_scene_record_pool.h"
+#include "psyq/libgpu.h"
+#include "ovl11_weather_effect.h"
 
 void ovl_11_func_800BD5A0(void);
 void ovl_11_func_800D6628(void);
-void ovl_11_func_800BFEA4(void);
-void ovl_11_func_800BFF00(void);
-void ovl_11_func_800C044C(s16 arg0);
 /* These two sprite-loader wrappers use their matched definition signatures;
  * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
 void ovl_11_func_800BD168(void);
@@ -61,9 +60,9 @@ void ovl_11_func_80104A90(void) {
     BindStateDataTables(1);
     ovl_11_func_800BD5A0();
     ovl_11_func_800D6628();
-    ovl_11_func_800BFEA4();
-    ovl_11_func_800BFF00();
-    ovl_11_func_800C044C(base->field_E4C8);
+    Ovl11ResetWeatherParticles();
+    Ovl11ResetAmbientTintFromTable();
+    Ovl11SetWeatherParticleMode(base->field_E4C8);
     ovl_11_func_800BD168();
     ovl_11_func_800BD3C4(0);
     ovl_11_func_800C9BB8();

@@ -1,6 +1,11 @@
 #include "common.h"
+#include "psyq/abs.h"
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_object_events.h"
 
-s32 ovl_11_func_800C3548(s32 arg0);
 s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800F07EC(s16 arg0, s32 arg1, s32 arg2, u32 *arg3) {
@@ -13,7 +18,7 @@ s32 ovl_11_func_800F07EC(s16 arg0, s32 arg1, s32 arg2, u32 *arg3) {
     s32 *temp_s1;
 
     temp_s1 = (s32 *) ((u8 *) D_80076280 + (arg0 * 0x1D4));
-    temp_a2 = ovl_11_func_800C3548((s32) arg0);
+    temp_a2 = Ovl11IsSpecialCounterSlot((s32) arg0);
     temp_v1 = *arg3;
     var_s2 = 0;
     switch (temp_v1) {

@@ -7,6 +7,11 @@
 #include "master_volume.h"
 #include "sound_driver.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/memory.h"
+#include "ovl15_save_sprite_resources.h"
 
 /* Resident sprite-display disable at exe:8001B100. */
 void func_80017A08(s32, s32);
@@ -15,7 +20,6 @@ void func_80017A38(s16, s16);
 void func_8002495C(s16);
 void ovl_15_func_8012E15C(void);
 void ovl_15_func_8012EA18(void);
-void ovl_15_func_801372A0(s16);
 
 void ovl_15_func_8012E2CC(void) {
     s32 sprite;
@@ -30,7 +34,7 @@ void ovl_15_func_8012E2CC(void) {
         ResetMessageWindow();
         ovl_15_func_8012E15C();
         D_80137584 = 0;
-        ovl_15_func_801372A0(0);
+        Ovl15LoadMenuResources(0);
         BeginScreenFadeDecrease(0x3C, 0, 2);
         BeginMasterVolumeFadeIn(0x3C);
         func_8002495C(-1);

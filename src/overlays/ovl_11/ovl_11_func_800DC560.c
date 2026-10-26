@@ -8,6 +8,8 @@
 #include "psyq/libgpu.h"
 #include "ovl11_vram_animation_slots.h"
 #include "area_grid_triggers.h"
+#include "psyq/abs.h"
+#include "ovl11_object_events.h"
 
 void ovl_11_func_80104A58 (void);
 s32 ovl_11_func_800DC388 (s32 arg0);
@@ -15,7 +17,6 @@ void ovl_11_func_800DBFEC (u16 arg0, u16 arg1, s32 arg2);
 void ovl_11_func_800BD5A8 (s32 arg0);
 void ovl_11_func_800BD6A8 (s16 arg0, s16 arg1);
 void ovl_11_func_8010B67C (void);
-void ovl_11_func_800C19B0 (void);
 void ovl_11_func_800BDA70 (void);
 void ovl_11_func_800CE5FC (void);
 void ovl_11_func_800BD3C4(s32 arg0);
@@ -125,7 +126,7 @@ block_33:
         ovl_11_func_800BD3C4(1);
     }
     ovl_11_func_8010B67C();
-    ovl_11_func_800C19B0();
+    Ovl11RebuildObjectEventsForTime();
     Ovl11RegisterPoolSpriteRotations((s32) (((Ovl11SetupWorkView *) &D_8007AFF0)->header));
     if (((*(s16 *) ((u8 *) (((Ovl11SetupWorkView *) &D_8007AFF0)->header) + 2)) == 1) && ((((Ovl11SetupResidentView *) D_8006C838)->time) >= 0x438)) {
         ovl_11_func_800BDA70();

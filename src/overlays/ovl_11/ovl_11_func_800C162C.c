@@ -19,9 +19,9 @@
 #include "ovl11_vram_animation_slots.h"
 #include "map_texture_camera.h"
 #include "area_grid_triggers.h"
+#include "ovl11_weather_effect.h"
+#include "ovl11_object_events.h"
 
-void ovl_11_func_800C3D70 (void);
-void ovl_11_func_800BFD1C (void);
 void ovl_11_func_800F65B8 (void);
 void ovl_11_func_800C401C (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
@@ -44,10 +44,10 @@ void ovl_11_func_800C162C(void) {
     D_80128B60 = 2;
     Ovl11RunClockAdvance();
     Ovl11UpdateClockAndEvents();
-    ovl_11_func_800C3D70();
+    Ovl11TriggerTimedObjectEvents();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
     Ovl11ResetCollisionQueryCount();
-    ovl_11_func_800BFD1C();
+    Ovl11UpdateWeatherEffect();
     ovl_11_func_800F65B8();
     Ovl11UpdateAreaGridTrigger();
     Ovl11UpdateSceneCameraOffset();

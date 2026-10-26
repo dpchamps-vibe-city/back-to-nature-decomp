@@ -34,3 +34,28 @@ gOvl15CardTitleZeroGlyph = 0x8012E044; // type:data size:0x4
 gOvl15CardTitlePart = 0x801376B0; // type:data size:0x18
 gOvl15CardTitleGlyphScratch = 0x801376C8; // type:data size:0x8
 gOvl15CardTitleSeasonNames = 0x8013765C; // type:data size:0x10
+
+// Save-menu archive loaders and their empty lifecycle hooks.
+Ovl15LoadMenuResources = 0x801372A0; // type:func
+Ovl15MenuResourceHook0 = 0x801372F0; // type:func
+Ovl15MenuResourceHook1 = 0x801372F8; // type:func
+Ovl15LoadCardIconResources = 0x80137300; // type:func
+Ovl15MenuResourceHook2 = 0x80137398; // type:func
+Ovl15LoadMenuSpriteResources = 0x801373A0; // type:func
+gOvl15MenuSpriteOffsets = 0x8013766C; // type:data size:0x14
+gOvl15CardIconResourceBuffer = 0x80137828; // type:data size:0x4
+// These are disjoint label extents within one shared 0x9690-byte workspace,
+// not the capacities of the transfer buffer or its save payload.
+gOvl15TransferBuffer = 0x80137830; // type:data size:0x200
+gOvl15SaveMetadata = 0x80137A30; // type:data size:0x80
+gOvl15SavePayload = 0x80137AB0; // type:data size:0x2AF4
+gOvl15LoadedSpriteImages = 0x8013A5A4; // type:data size:0x611C
+gOvl15MenuSpriteData = 0x801428F0; // type:data size:0x2D74
+gOvl15MenuSpriteSources = 0x80145670; // type:data size:0xF0
+
+// Persistent-state image serialization and checksum-slot packing.
+Ovl15SerializeSaveImage = 0x80134C48; // type:func
+Ovl15RestoreSaveImage = 0x80135380; // type:func
+Ovl15InsertSaveChecksumSlots = 0x801359FC; // type:func
+Ovl15RemoveSaveChecksumSlots = 0x80135A78; // type:func
+gOvl15SaveWorkBase = 0x801376D0; // type:data size:0x4

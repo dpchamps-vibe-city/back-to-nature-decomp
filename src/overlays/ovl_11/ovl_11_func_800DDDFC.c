@@ -16,6 +16,9 @@
 #include "ovl11_vram_animation_slots.h"
 #include "ovl11_scene_record_pool.h"
 #include "ovl11_area_mode_sequence.h"
+#include "ovl11_weather_effect.h"
+#include "psyq/abs.h"
+#include "ovl11_object_events.h"
 
 void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CECB0 (void);
@@ -30,10 +33,6 @@ void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
 void ovl_11_func_800BD668 (void);
 void ovl_11_func_800F1F48 (s32 arg0);
-void ovl_11_func_800C19B0 (void);
-void ovl_11_func_800BFEA4 (void);
-void ovl_11_func_800BFF00 (void);
-void ovl_11_func_800C044C (s16 arg0);
 void ovl_11_func_800DBC4C (void);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
@@ -129,11 +128,11 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800EEECC();
             ovl_11_func_800BD668();
             ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
-            ovl_11_func_800C19B0();
+            Ovl11RebuildObjectEventsForTime();
             Ovl11ClearEventSlotTimeOrigins();
-            ovl_11_func_800BFEA4();
-            ovl_11_func_800BFF00();
-            ovl_11_func_800C044C(((Ovl11DDDFCState *)D_8006C838)->mode);
+            Ovl11ResetWeatherParticles();
+            Ovl11ResetAmbientTintFromTable();
+            Ovl11SetWeatherParticleMode(((Ovl11DDDFCState *)D_8006C838)->mode);
             ((Ovl11SetupWorkView *)&D_8007AFF0)->state = 0;
             ((Ovl11DDDFCState *)D_8006C838)->phase++;
             if (GetGameFlag(0x48) == 0) {

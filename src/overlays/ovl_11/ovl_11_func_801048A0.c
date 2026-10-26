@@ -2,14 +2,14 @@
 #include "scene_selection.h"
 #include "sound_commands.h"
 #include "ovl11_choice_messages.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_weather_effect.h"
 
 void ovl_11_func_800BD5A0(void);
-void ovl_11_func_800BFEA4(void);
-void ovl_11_func_800BFF00(void);
-void ovl_11_func_800C044C(s16 arg0);
 void ovl_11_func_800CBEF8(void);
 void ovl_11_func_800F6630(void);
-void ovl_11_func_800BFE3C(void);
 
 typedef struct {
     char pad_000[0xC];
@@ -36,9 +36,9 @@ void ovl_11_func_801048A0(void) {
     *(s32 *)(far + 0x25488) = 0xFFFF;
 
     ovl_11_func_800BD5A0();
-    ovl_11_func_800BFEA4();
-    ovl_11_func_800BFF00();
-    ovl_11_func_800C044C(base->field_E4C8);
+    Ovl11ResetWeatherParticles();
+    Ovl11ResetAmbientTintFromTable();
+    Ovl11SetWeatherParticleMode(base->field_E4C8);
     ovl_11_func_800CBEF8();
     Ovl11ResetChoiceMessages();
     ovl_11_func_800F6630();
@@ -58,22 +58,22 @@ void ovl_11_func_801048A0(void) {
     base->field_4450 &= ~0xF80;
     if (GetPreviousSceneId() == 3) {
         base->field_4450 |= 0x80;
-        ovl_11_func_800BFE3C();
+        Ovl11SelectCurrentHourTint();
     }
     if (GetPreviousSceneId() == 4) {
         base->field_4450 |= 0x100;
-        ovl_11_func_800BFE3C();
+        Ovl11SelectCurrentHourTint();
     }
     if (GetPreviousSceneId() == 5) {
         base->field_4450 |= 0x200;
-        ovl_11_func_800BFE3C();
+        Ovl11SelectCurrentHourTint();
     }
     if (GetPreviousSceneId() == 0xB) {
         base->field_4450 |= 0x400;
-        ovl_11_func_800BFE3C();
+        Ovl11SelectCurrentHourTint();
     }
     if (GetPreviousSceneId() == 0xC) {
         base->field_4450 |= 0x800;
-        ovl_11_func_800BFE3C();
+        Ovl11SelectCurrentHourTint();
     }
 }

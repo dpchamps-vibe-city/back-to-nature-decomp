@@ -30,6 +30,8 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "selection_panel.h"
 #include "area_grid_triggers.h"
+#include "psyq/abs.h"
+#include "ovl11_object_events.h"
 
 typedef struct {
                s16 field_0;
@@ -161,7 +163,6 @@ typedef struct {
 
 int MoveImage2 (RECT *rect, int x, int y);
 int csin (int a);
-s32 ovl_11_func_800C3548 (s32 arg0);
 void SetPadActuatorSequenceAddress (s32 arg0, s32 arg1);
 void ResetPadActuatorSequence (s32 arg0);
 void SetVal8005E2E8 (s32 arg0);
@@ -251,7 +252,7 @@ s32 ovl_11_func_800ED4A8(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     for (; var_s0 < 0x25; var_s0 = temp_v0 >> 0x10) {
         if ((*(u16 *) (var_s2 + 0x9A06)) & 0x800) {
             if (var_s6) {
-                if (ovl_11_func_800C3548(var_s0) == 1) {
+                if (Ovl11IsSpecialCounterSlot(var_s0) == 1) {
                     Ovl11UpdateStateField(0x1F, var_s0, arg3, (s32) arg1);
                 } else {
                     Ovl11UpdateStateField(0x20, var_s0, arg2, (s32) arg1);

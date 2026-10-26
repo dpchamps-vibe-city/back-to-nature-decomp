@@ -6,6 +6,10 @@
 #include "message_window.h"
 #include "game_flags.h"
 #include "ovl11_paired_item_ids.h"
+#include "psyq/abs.h"
+#include "psyq/memory.h"
+#include "psyq/libgpu.h"
+#include "ovl11_object_events.h"
 
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 unsigned long long ovl_11_func_800BF450(void);
@@ -19,7 +23,6 @@ s32 ovl_11_func_800F3BCC(u16 arg0);
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_800CC6A8(Ovl11CC7CCObject *arg0);
-void ovl_11_func_800C3CCC(void);
 
 s32 ovl_11_func_800CC7CC(Ovl11CC7CCObject *arg0) {
     VECTOR next;
@@ -106,7 +109,7 @@ remove:
             if (result != 2) {
                 return result;
             }
-            ovl_11_func_800C3CCC();
+            Ovl11CountDownObjectEventCounters();
             {
                 s32 r;
                 r = 0;
