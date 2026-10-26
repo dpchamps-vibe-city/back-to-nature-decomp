@@ -34,6 +34,7 @@
 #include "selection_panel.h"
 #include "ovl11_nearby_record_scans.h"
 #include "ovl11_pending_event_queue.h"
+#include "ovl11_save_counters.h"
 
 void ovl_11_func_800FEC2C (void);
 void ovl_11_func_800FFA40 (void);
@@ -46,7 +47,6 @@ void Ovl11TryBeginItem69VolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
 void Ovl11TryBeginItem47VolumeAction(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *unusedVolume);
 void Ovl11TryBeginSetAVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void Ovl11TryBeginSetCVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
-s32 ovl_11_func_800F3AC4 (u16 arg0);
 s32 Ovl11TryBeginProbedObjectVolumeAction (Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2);
 void ovl_11_func_800CE034 (Ovl11CE034Object *arg0, VECTOR *arg1, s32 arg2);
 s32 ovl_11_func_80118C28 (s16 id);
@@ -299,7 +299,7 @@ block_28:
                     return 0;
                 }
                 if ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
-                    if (ovl_11_func_800F3AC4(1U) != 0) {
+                    if (Ovl11TakeSaveCounter21(1U) != 0) {
                         item[0] = 0x84;
                         item[1] = 0;
                         item[2] = 1;
@@ -461,9 +461,6 @@ void Ovl11TryBeginSetBVolumeAction(Recon_ovl_11_func_800C8334_A0View *arg0, s16 
     }
 }
 
-void ovl_11_func_800F3898(u16 arg0, u16 arg1);
-s32 ovl_11_func_800F3950(u16 arg0);
-
 void Ovl11TryBeginItem3FVolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
     u16 item[3];
     s16 temp_v1;
@@ -471,11 +468,11 @@ void Ovl11TryBeginItem3FVolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
     temp_v1 = *(s16 *) ((u8 *) arg0 + 0x8A);
     if (temp_v1 == 0x3F || temp_v1 == 0x13D) {
         Ovl11ChangeObjectStateDirect(arg0, 0x5D, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
-        ovl_11_func_800F3898(0U, 1U);
+        Ovl11AddSaveCounter19(0U, 1U);
         PlaySoundEffect(7);
         return;
     } else if (temp_v1 == 0) {
-        if (ovl_11_func_800F3950(1U) != 0) {
+        if (Ovl11TakeSaveCounter19(1U) != 0) {
             PlaySoundEffect(7);
             item[0] = 0x3F;
             item[2] = 1;
@@ -589,9 +586,6 @@ s32 Ovl11TryBeginProbedObjectVolumeAction(Ovl11C8808Object *arg0, s16 *arg1, s16
     return 0;
 }
 
-s32 ovl_11_func_800F3A18(u16 arg0);
-void ovl_11_func_800F397C(u16 arg0, u16 arg1);
-
 void Ovl11TryBeginItem68VolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
     u16 item[3];
     s16 temp_v1;
@@ -599,7 +593,7 @@ void Ovl11TryBeginItem68VolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
 
     temp_v1 = *(s16 *) ((u8 *) arg0 + 0x8A);
     if (temp_v1 == 0) {
-        temp_v0 = ovl_11_func_800F3A18(1U);
+        temp_v0 = Ovl11TakeSaveCounter18(1U);
         if (temp_v0 == 1) {
             item[0] = 0x68;
             item[2] = (u16) temp_v0;
@@ -611,16 +605,13 @@ void Ovl11TryBeginItem68VolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
     }
     if (temp_v1 == 0x68) {
         arg0->unk6C &= 0xFFFF3FFF;
-        ovl_11_func_800F397C(0U, 1U);
+        Ovl11AddSaveCounter18(0U, 1U);
         PlaySoundEffect(7);
         Ovl11ChangeObjectStateDirect(arg0, 0x65, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
         return;
     }
     RequestMessageWindow(2, 0x19C);
 }
-
-s32 ovl_11_func_800F3BA0(u16 arg0);
-void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
 
 void Ovl11TryBeginItem69VolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
     u16 item[3];
@@ -629,7 +620,7 @@ void Ovl11TryBeginItem69VolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
 
     temp_v1 = *(s16 *) ((u8 *) arg0 + 0x8A);
     if (temp_v1 == 0) {
-        temp_v0 = ovl_11_func_800F3BA0(1U);
+        temp_v0 = Ovl11TakeSaveCounter20(1U);
         if (temp_v0 == 1) {
             item[0] = 0x69;
             item[2] = (u16) temp_v0;
@@ -641,7 +632,7 @@ void Ovl11TryBeginItem69VolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0) {
     }
     if (temp_v1 == 0x69) {
         arg0->unk6C &= 0xFFFF3FFF;
-        ovl_11_func_800F3AF0(0U, 1U);
+        Ovl11AddSaveCounter20(0U, 1U);
         PlaySoundEffect(7);
         Ovl11ChangeObjectStateDirect(arg0, 0x64, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
         return;

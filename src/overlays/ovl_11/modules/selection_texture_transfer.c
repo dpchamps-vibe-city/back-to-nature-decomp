@@ -14,6 +14,11 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "psyq/memory.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 s32 ovl_11_func_800F8404(s32 arg0);
 void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOutgoing);
@@ -34,10 +39,6 @@ void Ovl11ReorderSelectionTextures(u16 *firstId, s32 firstPane, u16 *secondId,
 
 void Ovl11ReleaseUnusedSelectionTextures(void);
 s32 ovl_11_func_800D5750(s16 arg0);
-void ovl_11_func_800D666C(s16 arg0);
-s32 ovl_11_func_800D6730(s16 value, s16 row);
-s32 ovl_11_func_800D678C(s16 arg0);
-s32 ovl_11_func_800D67F4(s16 arg0);
 
 #define imageRect (*(RECT *)gOvl11TextureTransferRect)
 #define TRANSFER_SLOTS (((Ovl11FarSlotTableView *)&D_8007AFF0)->slots)
@@ -101,7 +102,7 @@ void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOu
         backup.id = outgoingId;
         *(Ovl11A04B8Entry *)&backup = records[oldRow][slot];
         if (releaseOutgoing == 1) {
-            ovl_11_func_800D666C(outgoingId);
+            Ovl11RemoveSlotSprite(outgoingId);
         }
     }
     if (incomingId != 0) {
@@ -114,11 +115,11 @@ void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOu
         if (index == 72) {
             return;
         }
-        slot = (s16)ovl_11_func_800D6730(incomingId, row);
+        slot = (s16)Ovl11InsertSlotSpriteId(incomingId, row);
         if (slot == -1) {
             return;
         }
-        special = ovl_11_func_800D678C(row);
+        special = Ovl11CanUseSharedSlotClut(row);
         TRANSFER_SLOTS[row][slot] = incomingId;
         records[row][slot] = cacheImage(index);
         imageRect.w = 8;
@@ -132,7 +133,7 @@ void Ovl11TransferSelectionTexture(s32 outgoingId, s32 incomingId, s32 releaseOu
             records[row][slot].unk6 = records[row][slot].unk2 + records[row][slot].unkA;
             MoveImage2(&imageRect, row * 8 + 0x3E8, 0xBD);
         } else {
-            position = (s16)ovl_11_func_800D67F4(row);
+            position = (s16)Ovl11FindFreeSlotTextureRank(row);
             records[row][slot].unk0 = position * 8;
             records[row][slot].unk2 = row * 32 + 0x9B;
             records[row][slot].unk4 = records[row][slot].unk0;
@@ -240,7 +241,7 @@ void Ovl11ReleaseUnusedSelectionTextures(void) {
                 }
             }
             if (var_a0_2 != 0) {
-                ovl_11_func_800D666C(var_a0_2);
+                Ovl11RemoveSlotSprite(var_a0_2);
             }
         }
         var_v1 += 1;

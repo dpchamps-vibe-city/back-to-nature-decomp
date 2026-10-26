@@ -12,6 +12,16 @@
 #include "ovl11_item_stack_insert.h"
 #include "integer_power.h"
 #include "ovl11_halfword_triplets.h"
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 /* The original caller supplies two additional, unused zero arguments. */
 s32 ovl_11_func_800E6EAC();
@@ -46,8 +56,6 @@ s16 Ovl11GetItemStackCapacity(s16 id, s32 mode) {
     }
     return (s16)total;
 }
-
-s32 ovl_11_func_800D6A94(s16);
 
 s32 Ovl11InsertItemStack(s16 id, s16 amount, s32 mode) {
     s32 i;
@@ -90,7 +98,7 @@ s32 Ovl11InsertItemStack(s16 id, s16 amount, s32 mode) {
             }
             if (total != 0) {
                 if (fresh == 1) {
-                    ovl_11_func_800D6A94(id);
+                    Ovl11InstallSlotSprite(id);
                 }
                 Ovl11SetHalfwordTriplet(slot, id, 0, total);
             }
@@ -117,7 +125,7 @@ s32 Ovl11InsertItemStack(s16 id, s16 amount, s32 mode) {
                 }
                 if (total != 0) {
                     if (fresh == 1) {
-                        ovl_11_func_800D6A94(id);
+                        Ovl11InstallSlotSprite(id);
                     }
                     Ovl11SetHalfwordTriplet(slot, id, 0, total);
                 }

@@ -3,9 +3,18 @@
 #include "integer_power.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_primary_object_requests.h"
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 void ovl_11_func_800CBD78(Ovl11C7010Object *);
-void ovl_11_func_800D666C(s16);
 
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
     s32 key;
@@ -73,11 +82,11 @@ s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
                             Ovl11ResetPrimaryObjectRequest();
                             ovl_11_func_800CBD78((Ovl11C7010Object *)((u8 *)D_8006C838 + 0x51C8));
                         } else {
-                            ovl_11_func_800D666C(slot->id);
+                            Ovl11RemoveSlotSprite(slot->id);
                             Ovl11ClearHalfwordTriplet((s16 *)slot);
                         }
                     case 1:
-                        ovl_11_func_800D666C(slot->id);
+                        Ovl11RemoveSlotSprite(slot->id);
                         Ovl11ClearHalfwordTriplet((s16 *)slot);
                         break;
                     case 2:

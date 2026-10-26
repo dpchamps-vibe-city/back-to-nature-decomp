@@ -17,6 +17,14 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
@@ -32,7 +40,6 @@ s32 ovl_11_func_800D5810(s16 id);
 s8 ovl_11_func_800D583C(s16 id);
 void ovl_11_func_800D5740(s16 *item);
 void ovl_11_func_800F7010(s32 ot, s16 x, s16 y);
-void ovl_11_func_800D6F78(s16 id, s16 mode, s32 *ot, s16 x, s16 y, s32 flags);
 void ovl_11_func_800F7094(s32 ot, s16 x, s16 y, s32 count);
 
 /* Internal interfaces retain their original external linkage and word-sized
@@ -370,7 +377,7 @@ void Ovl11DrawItemTransferEntry(s32 ot, s32 slot, s16 *item) {
         ovl_11_func_800F7010(ot, gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1]);
         return;
     }
-    ovl_11_func_800D6F78(id, 0, (s32 *)ot,
+    Ovl11DrawSlotSprite(id, 0, (s32 *)ot,
         gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1], 8);
     if (ovl_11_func_800D583C(item[0]) == 2) {
         ovl_11_func_800F7094(gActiveRenderContext->field_D8 + 0x58,

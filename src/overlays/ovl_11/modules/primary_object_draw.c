@@ -15,8 +15,13 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_object_render.h"
 #include "ovl11_primary_object_draw.h"
-
-void ovl_11_func_800D6F78(s16 arg0, s16 arg1, s32 *arg2, s16 arg3, s16 arg4, s32 arg5);
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libsnd.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 void Ovl11DrawPrimaryObjectCompanion(Ovl11C7010Object *object, s32 depth, s32 *screenPosition) {
     s16 spriteId;
@@ -58,7 +63,7 @@ void Ovl11DrawPrimaryObjectCompanion(Ovl11C7010Object *object, s32 depth, s32 *s
             direction = 0;
         }
         offset = &gOvl11CompanionScreenOffsets[direction * 2 + offsetGroup];
-        ovl_11_func_800D6F78(spriteId, 0, (s32 *) (gActiveRenderContext->field_120 + ((depth >> 2) * 4)), (s16) ((*(u16 *) ((u8 *) screenPosition + 0)) + offset[0]), (s16) ((*(u16 *) ((u8 *) screenPosition + 4)) + offset[1]), 2);
+        Ovl11DrawSlotSprite(spriteId, 0, (s32 *) (gActiveRenderContext->field_120 + ((depth >> 2) * 4)), (s16) ((*(u16 *) ((u8 *) screenPosition + 0)) + offset[0]), (s16) ((*(u16 *) ((u8 *) screenPosition + 4)) + offset[1]), 2);
     }
 }
 

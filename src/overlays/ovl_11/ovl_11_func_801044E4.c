@@ -29,21 +29,23 @@
 #include "ovl11_record_slot_table.h"
 #include "ovl11_scene_setup_install.h"
 #include "ovl11_pending_event_queue.h"
+#include "ovl11_record_pool_lifecycle.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
+#include "ovl11_event_schedule.h"
 
 void func_80021D64 (void);
 void ovl_11_func_80104A80 (void);
 void ovl_11_func_801047FC (void);
-void ovl_11_func_800D6628 (void);
 void ovl_11_func_800DBFA0 (void);
 void ovl_11_func_800D7B24 (void);
 s32 ovl_11_func_800CDE3C (u8 *arg0);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_800F42A8 (u16 arg0, s32 arg1);
-void ovl_11_func_800CE96C (void);
 void ovl_11_func_8010C6A0 (void);
 void ovl_11_func_80104898 (void);
 void ovl_11_func_800FFA28 (void);
-void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_80104A58 (void);
 void ovl_11_func_80104A88 (void);
 u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
@@ -61,7 +63,7 @@ void ovl_11_func_801044E4(void) {
     }
     ovl_11_func_80104A80();
     ovl_11_func_801047FC();
-    ovl_11_func_800D6628();
+    Ovl11ResetSlotSpriteCache();
     Ovl11InitRecordSlotTable();
     Ovl11InitClockAndCalendar();
     Ovl11InitPrimaryObjectRecordSprites();
@@ -83,7 +85,7 @@ void ovl_11_func_801044E4(void) {
     Ovl11ResetVertexBlendPool();
     ovl_11_func_800F6630();
     ovl_11_func_800F42A8((u16) base->field_44BA, 0);
-    ovl_11_func_800CE96C();
+    Ovl11ResetRecordPools();
     Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
     ovl_11_func_800F6630();
@@ -98,7 +100,7 @@ void ovl_11_func_801044E4(void) {
     ovl_11_func_8010476C();
     Ovl11InitRecordFlagCounters();
     Ovl11StageFixedSpriteBank();
-    ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
+    Ovl11InitEventSchedules(gGraphicsHeapBase + 0x4290);
     far = (Ovl11FarInitView *)&D_8007AFF0;
     far->field_25498 = -1;
     base->field_4438 = -1;

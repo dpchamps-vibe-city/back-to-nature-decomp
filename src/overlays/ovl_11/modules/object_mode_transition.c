@@ -57,7 +57,7 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
     } else {
         if (object->unk30 == 1) {
             if (!(*(u16 *)((u8 *)object + 0xB8) & 0x100)) {
-                if (ovl_11_func_80110944(5, 1) != -1 && D_80070D3A != 0) {
+                if (ovl_11_func_80110944(5, 1) != -1 && gSaveCounter18 != 0) {
                     object->unk28 = -1;
                     ovl_11_func_80110188((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
@@ -65,7 +65,7 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
                     object->unk28 = -1;
                     ovl_11_func_80110188((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
-                } else if (ovl_11_func_80110944(4, 1) != selected && D_80070D40 != 0) {
+                } else if (ovl_11_func_80110944(4, 1) != selected && gSaveCounter20 != 0) {
                     object->unk28 = -2;
                     ovl_11_func_80110188((Ovl11StateArg0 *)transition, 4, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);

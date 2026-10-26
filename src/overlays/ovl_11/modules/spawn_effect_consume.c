@@ -7,6 +7,7 @@
  */
 #include "ovl11_spawn_effect_consume.h"
 #include "ovl11_sprite_effect_pool.h"
+#include "ovl11_save_counters.h"
 
 s16 ovl_11_func_800F4240(Ovl11ItemCollisionObject *record);
 s32 ovl_11_func_800D5D38(u16 id, u16 mode);
@@ -15,7 +16,6 @@ s32 ovl_11_func_800D5E64(u16 id, u16 mode);
 s32 ovl_11_func_800D5ED4(u16 id, u16 mode);
 void ovl_11_func_800F0FB0(s32 value);
 s32 ovl_11_func_800D5E00(u16 id, u16 mode);
-void ovl_11_func_800F3898(u16 amount, u16 mode);
 
 s32 Ovl11ConsumeSpawnEffect(Ovl11SpawnEffectRecord *record) {
     s32 consumed;
@@ -88,10 +88,10 @@ s32 Ovl11ConsumeTieredSpawnEffect(Ovl11SpawnEffectRecord *record,
                 case 0x172:
                 case 0x173:
                 case 0x174:
-                    ovl_11_func_800F3898(2, 0);
+                    Ovl11AddSaveCounter19(2, 0);
                     break;
                 case 0x3E:
-                    ovl_11_func_800F3898(1, 0);
+                    Ovl11AddSaveCounter19(1, 0);
                     break;
                 default:
                     break;

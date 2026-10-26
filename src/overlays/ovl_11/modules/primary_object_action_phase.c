@@ -27,6 +27,7 @@
 #include "ovl11_item_list_exchange_actions.h"
 #include "ovl11_interaction_record_actions.h"
 #include "ovl11_item_request_actions.h"
+#include "ovl11_pending_stage_dispatch.h"
 
 /* Consume the dispatcher's forced-entry flag with a fixed position/velocity
  * setup. The constants are state-specific, not generic movement defaults. */
@@ -46,7 +47,6 @@ void Ovl11BeginPrimaryObjectState3B (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 /* This caller supplies a direction; the matched helpers do not use it. */
 s32 ovl_11_func_800C7838 (u8 *arg0);
-void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800C77D8 (Ovl11C7010Object *arg0, u16 arg1);
 s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 
@@ -140,14 +140,14 @@ s32 Ovl11DispatchPrimaryObjectAction(void) {
                 if (pressed & 4) {
                     Ovl11ChangePrimaryObjectState(obj, 0x14, obj->unk38 + 0x43, -2);
                     ovl_11_func_800C7838((u8 *)obj);
-                    ovl_11_func_800CF308(1);
+                    Ovl11SetPendingStageMode(1);
                     PlaySoundEffect(0x12);
                     return 1;
                 }
                 if (pressed & 1) {
                     Ovl11ChangePrimaryObjectState(obj, 0x14, obj->unk38 + 0x43, -2);
                     ovl_11_func_800C7838((u8 *)obj);
-                    ovl_11_func_800CF308(2);
+                    Ovl11SetPendingStageMode(2);
                     PlaySoundEffect(0x12);
                     return 1;
                 }

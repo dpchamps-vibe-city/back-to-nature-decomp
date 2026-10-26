@@ -1080,7 +1080,8 @@ extern char gOvl30ResidentPreviousDestinationLabel[];
 extern char gOvl30ResidentHeading[];
 
 /* ovl_11_func_800F1F48 indexes this 40-word table and passes each entry to the u16 stream walker. */
-extern u16 *D_80126BF0[40];
+/* F1F48 selects one flag-gated stream per event slot; 37 of 40 entries are used. */
+extern u16 *gOvl11EventScheduleStreams[40];
 
 /* D_80124DE4 - seven 4-byte {u16,u16} pairs walked by ovl_11_func_800F0C70,
  * which reads both halfwords with lhu and writes unk0 / unk2-1 into a parallel
@@ -3497,6 +3498,17 @@ typedef struct {
     s16 unk4;
 } Ovl11ItemState;
 extern Ovl11ItemState D_80128C58;
+/* EXE 1A284 exposes fields 19/18/21/20; ovl_11 F3898..F3BA0 add/take them.
+ * Preserve the pre-existing five-halfword array-backed lvalue views. These
+ * are not four new allocations or evidence that the logical counters overlap. */
+extern u16 gSaveCounter19Storage[5] __asm__("gSaveCounter19");
+extern u16 gSaveCounter18Storage[5] __asm__("gSaveCounter18");
+extern u16 gSaveCounter21Storage[5] __asm__("gSaveCounter21");
+extern u16 gSaveCounter20Storage[5] __asm__("gSaveCounter20");
+#define gSaveCounter19 (*((u16 *)gSaveCounter19Storage))
+#define gSaveCounter18 (*((u16 *)gSaveCounter18Storage))
+#define gSaveCounter21 (*((u16 *)gSaveCounter21Storage))
+#define gSaveCounter20 (*((u16 *)gSaveCounter20Storage))
 /* 801024D8 selects 48-byte groups of eight six-byte records. */
 extern Ovl11ItemState D_80070D42_slots[][8] __asm__("D_80070D42");
 /* 800F7AA0 passes this base to 800F8224's 64-record, six-byte compaction scan. */
@@ -6349,11 +6361,11 @@ extern s16 gCounterChoiceCategoryCounts[6];
  * ovl_11_func_80120358 (lh load). Absolute-addressed. */
 extern s16 D_80070D02;
 
-/* D_800A04B8 - ovl_11 record table, one row of 9 entries of 0x1E bytes.
- * D_800A0494 is the 9-s16-per-row grid ending 0x24 below it; D_800A04B8 is
- * the row-relative view the record scan walks (ovl_11_func_800D678C indexes
- * D_800A04B8[arg0], ovl_11_func_800D666C walks 9 entries stepping +0x1E).
- * Absolute-addressed from the overlay. */
+/* Slot-sprite cache: two nine-s16 ID rows precede two nine-entry descriptor
+ * rows, stride 0x1E. D6628 resets exactly 0x24 ID + 0x21C descriptor bytes.
+ * Broader existing views below are retained, not additional owned storage.
+ * Descriptor offsets: +0/+2 and +4/+6 are variant UVs; +8/+A and +C/+E
+ * dimensions; +10..+16 variant offsets; +18/+1A CLUT coordinates. */
 typedef struct {
     /* 0x00 */ s16 unk0;
     /* 0x02 */ s16 unk2;
@@ -6371,13 +6383,15 @@ typedef struct {
     /* 0x1A */ u16 unk1A;
     /* 0x1C */ char pad[2];
 } Ovl11A04B8Entry;
-extern Ovl11A04B8Entry D_800A04B8[][9];
+extern Ovl11A04B8Entry gSlotSpriteEntries[][9];
 
 /* 800D6A94 passes this sprite-data buffer to func_80017200. */
 extern u8 D_8006CA10[];
 
 /* ovl_11_func_800F0A58 scans the first two nine-s16 rows with lh. */
-extern s16 D_800A0494[288];
+extern s16 gSlotSpriteIds[288];
+/* D688C: header[5] selects a count-prefixed s16 ID list parallel to sprite offsets. */
+extern s16 *D_80126254[];
 /* ovl_11_func_800F0A58 passes this "Error\n" rodata string to FntPrint. */
 extern char D_800B9F58[];
 /* 800F9210 reads and writes the two nine-halfword rows at base +0x254A4. */
@@ -6612,17 +6626,16 @@ typedef struct {
 
 extern Ovl11Status801295D0 D_801295D0;
 
-/* D_80128D80 - 8-byte RECT scratch used by ovl_11_func_800D6944 to stage
- * the two MoveImage source rectangles. Absolute-addressed (lui/%lo).
- * Layout mirrors the PSY-Q RECT (x, y, w, h). */
+/* Ovl11CopySlotSpritePieces stages its two MoveImage source rectangles here.
+ * Original ovl_11:80128D80, matching the PSY-Q RECT layout. */
 typedef struct {
     /* 0x00 */ s16 x;
     /* 0x02 */ s16 y;
     /* 0x04 */ s16 w;
     /* 0x06 */ s16 h;
-} Ovl11Rect80128D80;
+} Ovl11SlotSpriteCopyRect;
 
-extern Ovl11Rect80128D80 D_80128D80;
+extern Ovl11SlotSpriteCopyRect gOvl11SlotSpriteCopyRect;
 
 /* D_801248B4 - 8-byte RECT (x=320, y=0, w=128, h=255) copied into a local by
  * ovl_11_func_800E351C and offset before LoadImage; w/h are also read from the

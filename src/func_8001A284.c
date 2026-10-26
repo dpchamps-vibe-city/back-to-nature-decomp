@@ -63,16 +63,16 @@ s32 func_8001A284(s32 arg0) {
         result = (s32)func_8001A870(D_800712C0, &D_8005E490, 4);
         break;
     case 18:
-        result = (s32)func_8001A870(D_80070D3A, &D_8005E490, 4);
+        result = (s32)func_8001A870(gSaveCounter18, &D_8005E490, 4);
         break;
     case 19:
-        result = (s32)func_8001A870(D_80070D38, &D_8005E490, 4);
+        result = (s32)func_8001A870(gSaveCounter19, &D_8005E490, 4);
         break;
     case 20:
-        result = (s32)func_8001A870(D_80070D40, &D_8005E490, 4);
+        result = (s32)func_8001A870(gSaveCounter20, &D_8005E490, 4);
         break;
     case 21:
-        result = (s32)func_8001A870(D_80070D3E, &D_8005E490, 4);
+        result = (s32)func_8001A870(gSaveCounter21, &D_8005E490, 4);
         break;
     case 22: {
         unsigned char *base;

@@ -19,8 +19,11 @@
 #include "psyq/abs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_primary_object_sprite_records.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
+#include "ovl11_event_schedule.h"
 
-void ovl_11_func_800D6628(void);
 /* These two sprite-loader wrappers use their matched definition signatures;
  * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
 s32 ovl_11_func_800CDE3C(u8 *arg0);
@@ -30,7 +33,6 @@ void ovl_11_func_800FFA28(void);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE76C(void);
 s32 ovl_11_func_80109310(s32 *arg0);
-void ovl_11_func_800F1F48(s32 arg0);
 void ovl_11_func_800FF96C(void);
 
 void ovl_11_func_80104A90(void) {
@@ -58,7 +60,7 @@ void ovl_11_func_80104A90(void) {
     base->field_5214 = 0;
     BindStateDataTables(1);
     Ovl11AreaSpriteBankHook();
-    ovl_11_func_800D6628();
+    Ovl11ResetSlotSpriteCache();
     Ovl11ResetWeatherParticles();
     Ovl11ResetAmbientTintFromTable();
     Ovl11SetWeatherParticleMode(base->field_E4C8);
@@ -85,7 +87,7 @@ void ovl_11_func_80104A90(void) {
     ovl_11_func_800DE76C();
     ovl_11_func_80109310((s32 *) &D_800759E4);
     Ovl11StageFixedSpriteBank();
-    ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
+    Ovl11InitEventSchedules(gGraphicsHeapBase + 0x4290);
     base->field_4488 = 1;
     gOvl11AreaEntryStep = 0xA;
     far->field_2548C = 0;

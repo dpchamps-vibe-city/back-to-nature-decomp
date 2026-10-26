@@ -4,9 +4,16 @@
 #include "psyq/libgte.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_record_placement.h"
+#include "psyq/memory.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 void ovl_11_func_800CE034(Ovl11CE034Object *arg0, Ovl11CE034Position *arg1, s32 arg2);
-void ovl_11_func_800D666C(s16 arg0);
 
 void ovl_11_func_800CBD78(Ovl11C7010Object *arg0) {
     VECTOR sp10;
@@ -17,6 +24,6 @@ void ovl_11_func_800CBD78(Ovl11C7010Object *arg0) {
         ovl_11_func_800CE034((Ovl11CE034Object *) arg0, (Ovl11CE034Position *) &sp10, 2);
         Ovl11RefreshRecordById(temp_s0, (Ovl25SetupStatePair *) ((u8 *) arg0 + 0xFC), &sp10);
     }
-    ovl_11_func_800D666C(temp_s0);
+    Ovl11RemoveSlotSprite(temp_s0);
     Ovl11ClearHalfwordTriplet(&arg0->itemIndex);
 }

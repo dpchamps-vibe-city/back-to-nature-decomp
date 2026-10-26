@@ -3,10 +3,17 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "integer_power.h"
+#include "psyq/memory.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 
 void ovl_11_func_80102A64 (s32 arg0);
-void ovl_11_func_800D666C (s16 arg0);
 
 extern u16 gOvl11SelectionWorkIds;
 

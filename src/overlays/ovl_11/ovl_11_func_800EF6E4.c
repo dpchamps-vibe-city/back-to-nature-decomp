@@ -31,6 +31,9 @@
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_record_slot_table.h"
 #include "ovl11_object_state_dispatch.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 typedef struct {
     s16 unk0;
@@ -91,7 +94,6 @@ void Ovl11SelectPrimaryAnimationForFlag08000000 (Recon_ovl_11_func_800C6F0C_A0Vi
 void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void ovl_11_func_800CE034 (M2C_ad72053e5aa9_StructOvl11CE034A *arg0, M2C_ad72053e5aa9_StructOvl11CE034B *arg1, s32 arg2);
-void ovl_11_func_800D666C (s16 arg0);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 void ovl_11_func_800D3200 (s32 arg0);

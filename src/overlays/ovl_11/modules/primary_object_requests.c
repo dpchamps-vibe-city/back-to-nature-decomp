@@ -15,8 +15,16 @@
 #include "sound_commands.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_item_record_lists.h"
-
-s32 ovl_11_func_800D6A94(s16 id);
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 s32 Ovl11ResetPrimaryObjectRequest(void) {
     s32 *work;
@@ -47,7 +55,7 @@ s32 Ovl11InstallPrimaryObjectRequest(u16 *request) {
         animationBase = 0x25;
     }
     Ovl11CopyHalfwordTriplet((u16 *) storedRequest, request);
-    ovl_11_func_800D6A94(*(s16 *) ((u8 *) object + 0xF0));
+    Ovl11InstallSlotSprite(*(s16 *) ((u8 *) object + 0xF0));
     Ovl11ChangePrimaryObjectState(object, state,
         animationBase + (*(u16 *) ((u8 *) work + 0x5200)), -2);
     object->unk6C |= 0x8004;

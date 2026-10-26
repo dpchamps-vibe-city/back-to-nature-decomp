@@ -35,6 +35,10 @@
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_item_record_lists.h"
 #include "ovl11_object_state_dispatch.h"
+#include "ovl11_pending_stage_dispatch.h"
+#include "ovl11_save_counters.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -141,17 +145,12 @@ s32 ovl_11_func_800D5810 (s16 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
-void ovl_11_func_800CF308 (s16 arg0);
 s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
 s32 ovl_11_func_800D5750 (s16 arg0);
-s32 ovl_11_func_800D6730 (s16 value, s16 row);
-s32 ovl_11_func_800D688C (s16 arg0);
-s32 ovl_11_func_800D678C (s16 arg0);
-s32 ovl_11_func_800D67F4 (s16 arg0);
-void ovl_11_func_800D6944 (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
+void Ovl11CopySlotSpritePieces (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
 s32 ovl_11_func_800D5868 (s16 arg0);
 s32 ovl_11_func_800D5C3C (s16 arg0);
 s32 ovl_11_func_800D5CE4 (s16 arg0);
@@ -162,10 +161,6 @@ s32 ovl_11_func_800F581C (void);
 void ovl_11_func_80110E28 (u8 *arg0);
 s32 ovl_11_func_80110658 (s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 ovl_11_func_800F3BCC (u16 arg0);
-void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
-void ovl_11_func_800F397C (u16 arg0, u16 arg1);
-s32 ovl_11_func_800F3BA0 (u16 arg0);
-s32 ovl_11_func_800F3A18 (u16 arg0);
 s32 ovl_11_func_80110790 (M2C_59ee2b8b632a_ReconA0View *arg0);
 s32 ovl_11_func_80110838 (M2C_8740fcdc649a_Recon80110838A0View *arg0);
 s32 ovl_11_func_80110890 (M2C_33501d1b78e1_Recon80110838A0View *arg0);

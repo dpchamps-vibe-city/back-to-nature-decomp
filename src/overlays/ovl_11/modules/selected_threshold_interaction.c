@@ -7,12 +7,21 @@
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_primary_object_wait_steps.h"
+#include "ovl11_save_counters.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_selection_prompt_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 Ovl11CanApplySelectedThreshold(StructD548 *arg0);
 void Ovl11ApplySelectedThreshold(StructD548 *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 
 s32 Ovl11UpdateThresholdInteraction(void) {
     Ovl11D8012D7B8 params;
@@ -39,7 +48,7 @@ s32 Ovl11UpdateThresholdInteraction(void) {
     case 5:
     case 6:
     case 7:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 1, params)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 1, params)) {
         case 0:
             break;
         case 3:
@@ -110,7 +119,6 @@ s32 Ovl11CanApplySelectedThreshold(StructD548 *record) {
 }
 
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
-void ovl_11_func_800F3898(u16 arg0, u16 arg1);
 
 /* The caller checks eligibility first; this operation does not clamp or
  * repeat the balance test. The selector also chooses the completion action. */
@@ -127,7 +135,7 @@ void Ovl11ApplySelectedThreshold(StructD548 *record) {
         ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11SelectedThresholdState *)D_8006C838)->object, 0x67, 2);
         Ovl11SetInteractionSteps(9, 0xB);
     } else if (selection == 1) {
-        ovl_11_func_800F3898(3, 0x1F4);
+        Ovl11AddSaveCounter19(3, 0x1F4);
         Ovl11SetInteractionSteps(9, 0xB);
     } else {
         Ovl11SetInteractionSteps(9, 0xC);

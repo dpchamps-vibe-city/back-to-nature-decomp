@@ -32,6 +32,12 @@
 #include "ovl11_interaction_id_predicates.h"
 #include "ovl11_geometry_hit_flags.h"
 #include "ovl11_grid_position.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -134,7 +140,6 @@ Ovl11MovingItemRecord *Ovl11SpawnMovingItemRecord(Vec3 *position, u16 *itemId, s
 
 s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0);
 s32 Ovl11ProbeMovingItemHit(Ovl11CC4E0Object *arg0);
-void ovl_11_func_800D6F78(s16, s16, s32 *, s16, s16, s32);
 s32 ovl_11_func_800CE550(Vec3 *arg0);
 void ovl_11_func_800C9E90(s32, s32, s32, s32);
 
@@ -222,7 +227,7 @@ void Ovl11UpdateMovingItemRecord(Ovl11MovingItemRecord *arg0) {
             if (temp_a0 == 0x186) {
                 DrawSpriteFrameRects(temp_v1_2, (s32) &gSharedSpriteSource, (s32) (*(u8 *) ((u8 *) &gOvl11HeldActionSpriteHeader + 0)), 0, (s16) (s32) (*(s16 *) ((u8 *) gOvl11MovingItemScreenPosition + 0)), (s16) (s32) (*(s16 *) ((u8 *) gOvl11MovingItemScreenPosition + 4)));
             } else {
-                ovl_11_func_800D6F78(temp_a0, arg0->unk0, (s32 *) temp_v1_2, *(s16 *) ((u8 *) gOvl11MovingItemScreenPosition + 0), (s16) (s32) (*(s16 *) ((u8 *) gOvl11MovingItemScreenPosition + 4)), 2);
+                Ovl11DrawSlotSprite(temp_a0, arg0->unk0, (s32 *) temp_v1_2, *(s16 *) ((u8 *) gOvl11MovingItemScreenPosition + 0), (s16) (s32) (*(s16 *) ((u8 *) gOvl11MovingItemScreenPosition + 4)), 2);
             }
             next.vx = arg0->position.vx;
             next.vy = arg0->height;

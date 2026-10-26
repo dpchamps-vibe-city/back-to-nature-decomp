@@ -23,6 +23,13 @@
 #include "ovl11_interaction_steps.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_selection_record_access.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_selection_prompt_steps.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
 
@@ -160,7 +167,6 @@ void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 Ovl11RequestCatalogPanelMessage(s32 arg0);
-s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 /* State 5 waits for message status 2 before resuming. A selected item is
@@ -186,7 +192,7 @@ s32 Ovl11UpdateCatalogPurchasePanel(void) {
         gOvl11InteractionResumeStep = 0;
         return 0;
     case 2:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 0, gOvl11CatalogPanelDescriptor)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 0, gOvl11CatalogPanelDescriptor)) {
         case 0:
             break;
         case 1:
@@ -335,14 +341,14 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
         gOvl11ResourcePanelDescriptor.unk0 = gOvl11PrimarySelectionRecord;
         return 0;
     case 2:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 0, *(Ovl11D8012D7B8 *)&gOvl11ResourcePanelDescriptor)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 0, *(Ovl11D8012D7B8 *)&gOvl11ResourcePanelDescriptor)) {
         case 0:
             break;
         case 1:
             gOvl11ResourcePanelState = 8;
             gOvl11ResourcePanelResumeState = 9;
             if (Ovl11CountPrecedingSelectionEntries(*(StructD548 *)gOvl11PrimarySelectionRecord) == 0) {
-                if (D_80070D38 >= 999) {
+                if (gSaveCounter19 >= 999) {
                     gOvl11ResourceResultMessage = 0x13A;
                     gOvl11ResourceResultResumeState = 1;
                 } else {

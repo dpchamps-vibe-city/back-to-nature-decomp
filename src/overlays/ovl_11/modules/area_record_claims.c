@@ -14,12 +14,11 @@
 #include "ovl11_cell_actions.h"
 #include "ovl11_area_slot_flags.h"
 #include "ovl11_area_record_claims.h"
+#include "ovl11_save_counters.h"
 
 s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void ovl_11_func_80110E28(u8 *arg0);
 s32 ovl_11_func_800F3BCC(u16 arg0);
-void ovl_11_func_800F397C(u16 arg0, u16 arg1);
-void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
 s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area);
 s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area);
 s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area);
@@ -71,10 +70,10 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
         case 0:
             break;
         case 0x68:
-            ovl_11_func_800F397C(0, 0);
+            Ovl11AddSaveCounter18(0, 0);
             break;
         case 0x69:
-            ovl_11_func_800F3AF0(0, 0);
+            Ovl11AddSaveCounter20(0, 0);
             break;
         default:
             ovl_11_func_800F3BCC(*(u16 *)(object + 0xB6));
@@ -103,8 +102,6 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
     return 0;
 }
 
-s32 ovl_11_func_800F3BA0(u16 arg0);
-s32 ovl_11_func_800F3A18(u16 arg0);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
 
 /* Mode-1 selections update the area-specific availability bit. An unavailable
@@ -126,13 +123,13 @@ s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area) {
             break;
         }
         if (area == 4) {
-            if (ovl_11_func_800F3BA0(1)) {
+            if (Ovl11TakeSaveCounter20(1)) {
                 Ovl11SetAreaSlotFlag(index, 0);
             } else {
                 failed = 1;
             }
         } else if (area == 5) {
-            if (!ovl_11_func_800F3A18(1)) {
+            if (!Ovl11TakeSaveCounter18(1)) {
                 failed = 1;
             } else {
                 Ovl11SetAreaSlotFlag(index, 1);

@@ -37,6 +37,16 @@
 #include "ovl11_cell_geometry.h"
 #include "ovl11_interaction_record_actions.h"
 #include "ovl11_spawn_effect_consume.h"
+#include "ovl11_pending_stage_dispatch.h"
+#include "ovl11_save_counters.h"
+#include "psyq/memory.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 s32 ovl_11_func_800C9D64(void);
 
@@ -389,7 +399,6 @@ void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 s32 ovl_11_func_800D58D0 (void *arg0);
 void ovl_11_func_800CCF14(Ovl11TripletTailView *arg0);
-void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
@@ -403,8 +412,6 @@ s32 ovl_11_func_800CDF4C (u8 *arg0);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
 void ovl_11_func_800F43CC(s32 arg0, VECTOR position, u16 arg5, s32 arg6);
 void ovl_11_func_800F0FB0 (s32 arg0);
-void ovl_11_func_800D666C (s16 arg0);
-void ovl_11_func_800F3AF0 (u16 arg0, u16 arg1);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
@@ -484,7 +491,7 @@ reset_done:
             return 0;
         case 0x50:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            ovl_11_func_800CF308(0);
+            Ovl11SetPendingStageMode(0);
             if (arg0->attributes & 8) {
                 ovl_11_func_800D58D0((void *) ((u8 *) arg0 + 0x84));
             }
@@ -680,7 +687,7 @@ state_done:
                 ovl_11_func_800F0FB0(4);
             }
             arg0->unk6C &= 0xEFFF3FFF;
-            ovl_11_func_800D666C(arg0->item);
+            Ovl11RemoveSlotSprite(arg0->item);
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             if (arg0->state == 0x6A) {
                 SetGameFlag(0x45U, 1U);
@@ -739,13 +746,13 @@ state_done:
                 Ovl11InstallPrimaryObjectRequest(&request3.id);
                 return 0;
             } else if (arg0->state == 0x5C) {
-                ovl_11_func_800F3AF0(1U, 0U);
+                Ovl11AddSaveCounter20(1U, 0U);
             }
             Ovl11ResetPrimaryObjectRequest();
             break;
         case 0x33:
             ovl_11_func_800F2354((s32) (*(s16 *) ((u8 *) D_8006C858 + 0x1002)), 0);
-            ovl_11_func_800D666C(arg0->item);
+            Ovl11RemoveSlotSprite(arg0->item);
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;
             Ovl11ResetPrimaryObjectRequest();
@@ -756,7 +763,7 @@ state_done:
                 arg0->kind = 2;
             }
             arg0->slot = (u16) *((u16 *) ((u8 *) &gOvl11ItemKindSlots + (arg0->kind * 2)));
-            ovl_11_func_800D666C(arg0->item);
+            Ovl11RemoveSlotSprite(arg0->item);
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0x8A));
             arg0->unk6C &= 0xEFFFFFFF;
             Ovl11ResetPrimaryObjectRequest();
@@ -813,7 +820,7 @@ finish_action:
                 Ovl11CompactSecondaryItemList();
                 var_a0_3 = temp_s0_6;
             } else {
-                ovl_11_func_800D666C(arg0->item);
+                Ovl11RemoveSlotSprite(arg0->item);
                 var_a0_3 = (u16 *) ((u8 *) arg0 + 0x8A);
             }
             Ovl11ClearHalfwordTriplet((s16 *) var_a0_3);
@@ -961,7 +968,6 @@ script_finished:
 }
 
 s32 ovl_11_func_800D58D0(void *arg0);
-s32 ovl_11_func_800D6A94(s16 arg0);
 
 void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *arg0) {
     Ovl11ItemState *temp_s1;
@@ -974,7 +980,7 @@ void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *arg0) {
     ovl_11_func_800CCF14((Ovl11TripletTailView *)temp_s1);
     if (arg0->unk3C == 0x31) {
         arg0->item = D_80128C58;
-        ovl_11_func_800D6A94(arg0->item.id);
+        Ovl11InstallSlotSprite(arg0->item.id);
         arg0->unk6C &= ~0x4000;
         arg0->unk6C |= 0x8000;
         if (arg0->item.id == 0) {

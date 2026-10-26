@@ -19,6 +19,10 @@ gItemOverflowSlotBase = 0x80070EC2; // size:0xC
 // Progress/status work-record anchors; overlay-11 derives the low 23 flags.
 gProgressDerivedFlags = 0x800719F8; // size:0x4
 gProgressStateFlags = 0x80070D30; // size:0x4
+gSaveCounter19 = 0x80070D38; // size:0x2
+gSaveCounter18 = 0x80070D3A; // size:0x2
+gSaveCounter21 = 0x80070D3E; // size:0x2
+gSaveCounter20 = 0x80070D40; // size:0x2
 gProgressPendingTimer = 0x80070D10; // size:0x2
 gProgressRequest = 0x800719FE; // size:0x2
 
@@ -1566,6 +1570,8 @@ gPrimaryObjectBase = 0x80071A00; // size:0xC
 gPrimaryObjectFlags = 0x80071A6C; // size:0x4
 gSmallTaggedRecordBase = 0x800742EC; // size:0xC
 gTaggedRecordBase = 0x800749F4; // size:0xC
+gSlotSpriteIds = 0x800A0494; // size:0x24
+gSlotSpriteEntries = 0x800A04B8; // size:0x21C
 
 // Four paired selection slots; expansion flags enable each pool's second half.
 gRecordPairSlots = 0x80076200; // size:0x10

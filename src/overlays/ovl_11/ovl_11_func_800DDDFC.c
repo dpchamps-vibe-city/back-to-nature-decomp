@@ -34,13 +34,13 @@
 #include "ovl11_default_position.h"
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_pending_event_queue.h"
+#include "ovl11_record_pool_lifecycle.h"
+#include "ovl11_event_schedule.h"
 
 void ovl_11_func_800D7B8C (void);
-void ovl_11_func_800CECB0 (void);
 void ovl_11_func_800CCCC0 (void);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
-void ovl_11_func_800F1F48 (s32 arg0);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
 void ovl_11_func_800F3D40 (void);
@@ -87,7 +87,7 @@ s32 ovl_11_func_800DDDFC(void) {
     case 2:
         SetGameFlag(0x73, ((Ovl11DDDFCState *)D_8006C838)->mode == 3);
         ovl_11_func_800D7B8C();
-        ovl_11_func_800CECB0();
+        Ovl11RunRecordPoolSecondPass();
         Ovl11ApplyCurrentDayCondition();
         Ovl11ChooseNextDayCondition();
         ((Ovl11DDDFCState *)D_8006C838)->phase++;
@@ -126,7 +126,7 @@ s32 ovl_11_func_800DDDFC(void) {
             ovl_11_func_800CCC5C();
             ovl_11_func_800EEECC();
             Ovl11StageFixedSpriteBank();
-            ovl_11_func_800F1F48(gGraphicsHeapBase + 0x4290);
+            Ovl11InitEventSchedules(gGraphicsHeapBase + 0x4290);
             Ovl11RebuildObjectEventsForTime();
             Ovl11ClearEventSlotTimeOrigins();
             Ovl11ResetWeatherParticles();

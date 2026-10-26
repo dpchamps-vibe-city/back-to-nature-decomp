@@ -1478,6 +1478,39 @@ Members:
 
 ## `ovl_11` D_800A0494 9-`s16`-row table cluster — 0x800D6628 / 0x800D666C / 0x800D6730 / 0x800D6F78 / 0x800D7144 / 0x800F0A58 / 0x800F9BE4 (confidence: medium)
 
+**Reconstructed `modules/slot_sprite_cache.c`, all ten entries D6628–D72E8
+exclusive**, including D678C/D67F4 placement scans, D688C resident lookup,
+D6944 piece-copy helper and D6A94 installer. Installer calls all five helpers;
+the draw wrapper alone calls the final SPRT/DR_MODE emitter. Reset/remove/
+insert and placement operate on the same two-row ID/descriptor lifecycle.
+This specialized protocol, closed helper edges and original order support
+all ten, not the widely shared sprite primitives alone. Correcting the old
+interpretation below: 0x24 bytes are TWO nine-halfword ID rows; the following
+0x21C bytes are TWO nine-entry 0x1E descriptor rows, not 30 more ID rows.
+Existing broad C array views are retained without asserting more active rows.
+
+Left D6488 is a 13x13 cell-grid transpose service called from cell_grid_lookup,
+with no slot IDs, descriptor placement or helper edge. Right D72E8 starts the
+independent halfword-triplet operations, using none of this cache protocol.
+Remote F0A58/F9BE4 are activation/reconciliation clients of the same public
+storage, not evidence that every intervening function belongs here. These are
+conservative protocol cuts under -G0, not GP-proven original object boundaries.
+
+Names describe reset/removal/insertion, shared-CLUT availability, texture rank,
+resident lookup, piece copying, installation and drawing. gSlotSpriteIds and
+gSlotSpriteEntries preserve their EXE addresses and observed 0x24/0x21C extents;
+gOvl11SlotSpriteCopyRect is the overlay's private eight-byte MoveImage scratch.
+Canonical propagation reaches all users; no storage or private linkage is added.
+The emitter's forward declaration now agrees with its SPRT pointer definition,
+and the resident ID-list extern is canonical in globals_override.h. Parameters,
+locals and private texture/piece types now name their demonstrated roles.
+ovl11_slot_sprite_cache.h documents reservation, unchecked resources, VRAM/CD
+side effects, pixel units, draw flags, duplicate-ID behavior and failure limits.
+The checked complete fold passed baseline -O2/-G0 and all overlay bytes;
+no member override or new source-policy exception exists.
+
+Historical symbol-scan evidence (the 32-row interpretation is superseded):
+
 Evidence: one shared data object, D_800A0494, addressed by five functions in
 this container and by no others in any extracted bytes, with a consistent
 structure across all five: a table of rows 0x12 bytes = 9 `s16` entries (32
@@ -4704,6 +4737,29 @@ Members (address order):
 ---
 
 ## `ovl_11` D_80070D38/3A/3E/40 adjacent-u16 counter-leaves — 0x800F3898 / 0x800F3950 / 0x800F397C / 0x800F3A18 / 0x800F3A44 / 0x800F3AC4 / 0x800F3AF0 / 0x800F3BA0 (confidence: low)
+
+**Reconstructed `modules/save_counter_accessors.c`, all eight entries
+F3898–F3BCC exclusive.** The systematic add/take pairing, common store-then-
+cap and conditional-consume protocol over four adjacent save counters, and
+gapless pair-by-pair original order corroborate one unit. Neither widely
+shared save RAM nor matching instruction templates alone would suffice.
+The intervening data cell 70D3C is gAgedItemLastAddCount, not a fifth counter.
+Left pending_event_queue implements a separate queue with no counter/helper
+edge. Right F3BCC starts the distinct 25-item progress/staging record at
+711C4, not one of these four counters. No positive extension is supported;
+these are protocol cuts, not GP ownership proofs under -G0.
+
+EXE 1A284's accessor identifies these as fields 19,18,21,20. Accordingly names
+are Ovl11Add/TakeSaveCounter19/18/21/20 and gSaveCounter19/18/21/20, not guessed
+item meanings. The existing five-halfword array-backed lvalue views retain
+identical declaration shapes and now live canonically in globals_override.h;
+only each actual two-byte cell gets its symbol identity. No tentative
+storage is added. The header records every kind mapping, zero consumption,
+and the non-obvious u16 WRAP BEFORE the 999 cap; wide saturating arithmetic
+would change behavior. Locals now name counter/value/kind/amount.
+The complete eight-member fold passed baseline and the full overlay without
+any flag or policy exception. The older claim below that the eight were not
+link-adjacent is superseded by the checked current inventory.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`): Four matched leaf helpers with **numerically byte-identical bodies** (decrement-counter
 family) plus three increment+clamp leaves sharing the same global cluster (one per
@@ -12910,6 +12966,33 @@ Evidence: [research note](research/ovl_11_func_800C2C74-grouping.md).
 
 ## `ovl_11` 0x800F1F48–0x800F2354 gapless link run + call edge — 0x800F1F48 / 0x800F213C / 0x800F227C / 0x800F2354 (confidence: low)
 
+**Reconstructed `modules/event_schedule.c`, F1F48–F2354 exclusive, three
+members**, not the unrelated F2354 tail. InitEventSchedules is the sole
+caller of ResolveScheduleStream and populates the exact thirty-entry +E4
+schedule in each of 37 slots consumed by SelectScheduleEntryForTime. This
+private helper and producer/consumer protocol, corroborated by original order,
+support all three. The stream pointer table is now gOvl11EventScheduleStreams
+at ovl_11:80126BF0, retaining its forty-pointer extent (37 used); resident
+slots remain gObjectEventSlotBase, with no new ownership/storage definition.
+
+Left F1F40 is an empty, unreferenced compiled entry with no schedule/table or
+helper witness; F1EE4 is a broadly used ID mapper. Neither extends this
+protocol. Right F2354 adjusts spendable balance and positive/negative totals,
+with many independent clients and no schedule/table access. Its adjacency is
+not membership evidence. These are conservative protocol cuts under -G0,
+not GP-proven original object boundaries; no dead stub or flag creates a cut.
+
+Public ovl11_event_schedule.h publishes initialization and time selection:
+blob-relative validated-by-caller streams, reset effects, signed minute keys,
+360 no-op and low-byte versus high-byte attribute uses are documented. The
+resolver remains externally linked but is not published. Its unread third
+parameter was removed to agree with its sole two-argument caller; original
+code reads only a0/a1, and the checked whole fold proves the correction leaves
+all three members and linked overlay bytes unchanged. Generated declarations
+are regenerated, not hand-edited. Stream/slot/flag/entry locals and skip labels
+now describe their roles; all widths, masks, gotos and operation order remain.
+The complete baseline -O2/-G0 fold passed without flags or new exceptions.
+
 Evidence: one unbroken `ovl_11` link-order run — 0x800F1F48 (0x1F4) ends
 exactly at 0x800F213C (0x140), which ends exactly at 0x800F227C (0xD8), which
 ends exactly at 0x800F2354 (0xAC) — and the call graph agrees on the edge:
@@ -13062,6 +13145,15 @@ Members:
 ---
 
 ## `ovl_11` 3×s32 vector-record pair + adjacent frame-step helper — 0x800D03B4–0x800D04D4 (confidence: medium; the 0x800D04D4 tail is adjacency-only)
+
+Current-tree correction (module campaign): the direction_vector module/header
+claimed below are NOT present; both functions remain loose C sources. The
+claimed earlier integration did not survive the later rollback. The current
+independent interface audit still reports seventeen D0408 return/signedness
+conflicts, and the recorded common-prototype caller trial changed bytes.
+This pair is not a newly ready complete-interface unit; no new fold or flag
+experiment was made here. The earlier description remains historical evidence,
+not a claim of current organization.
 
 **Reconstructed `modules/direction_vector.c`, 800D03B4–800D049C exclusive:**
 Ovl11AccumulateVector and Ovl11SetDirectionVector. The common three-word
@@ -14439,8 +14531,47 @@ split-aggregate spelling does not rule that out. No flag was tried or changed.
   that 80109E04 reads (D_8012D080) — tying the record-table consumer run to
   the ovl_11 D_8012D040/D_8012D050/D_8012D060 cluster at 0x8012D0xx.
 
-The narrower low-confidence candidate same-TU pool reset/update run is
-800CE96C / 800CEBC8 / 800CECB0; this does not establish ownership or merge
+**Reconstructed `modules/record_pool_lifecycle.c`, 800CE96C–800CEEF8
+exclusive, all three reset/first-pass/second-pass entries.** Their distinctive
+10-small / 20-large / 20-large pool order, common type-zero/FFFF sentinel
+protocol and shared work+4450 bit-8 gate support the complete lifecycle run.
+The reset enables both passes; the first preserves the gate and the second
+consumes it even when skipped. The duplicated large-pool reset loop is retained.
+This is protocol evidence under -G0, not a GP ownership proof; the resident
+pools also have external clients and acquire no new tentative definitions.
+
+Left CE834 is a separately called area-frame dispatcher: it invokes the generic
+allocator but does not walk these pools or implement this skip-gated sequence.
+Right CEEF8 prepares an individual interaction record, sets its 20000 flag and
+resets motion/effect fields; it does not implement the lifecycle's pool order or
+gate. These are evidence-limited protocol cuts, not proven historical object
+boundaries. The distant CFD9C refresh service is shared by reset and second
+pass, but no evidence joins intervening interaction/placement routines to this
+unit. The pending-mode setter is likewise a distant public client, not private
+linkage inferred from a common state word.
+
+Public names are Ovl11ResetRecordPools, Ovl11RunRecordPoolFirstPass and
+Ovl11RunRecordPoolSecondPass. `ovl11_record_pool_lifecycle.h` records pool
+sizes, seed record and native coordinates, skip/cleanup asymmetry, saturation,
+shared-storage requirements and pass order. Locals name their pool/record roles;
+all widths, typed/raw views, variable reuse and operation order are retained.
+The checked baseline -O2/-G0 fold proves the three members and linked overlay;
+no compiler override or policy exception was present, added or retired.
+
+Final acceptance for this six-module run (record_pool_lifecycle,
+pending_stage_request, slot_sprite_cache, selection_prompt_steps,
+save_counter_accessors and event_schedule): `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates. Progress
+rises 1462 -> 1490 / 2625 (+28), all 239 module TUs valid, no previously
+folded identity regresses, and all linked executable/overlay code, data,
+callbacks, tables and placement remain byte-identical. Published interfaces
+have zero failing sites. No shared tool, flag, allowlist, assembly or stub was
+added/changed. A first post-EXE-rename build hit a transient nm failure while
+reading slus_011.elf; an unchanged-tree --no-cache rerun passed, as did the
+subsequent final batch. This is a build-read failure, not a byte mismatch or
+compiler-setting finding. Gate exit 1 denotes the still-incomplete campaign.
+
+The earlier narrower candidate did not establish ownership or merge
 the distant consumers ([reset/update evidence](research/ovl_11_func_800CE96C-grouping.md),
 [successor evidence and limits](research/ovl_11_func_800CECB0-grouping.md)).
 
@@ -23692,6 +23823,20 @@ proven historical object cuts. The distant request setter 800CF308 and reset
 800CE96C share state, but no evidence joins their intervening functions into
 this unit. Neither is silently claimed private.
 
+The distant setter is now the single-entry `modules/pending_stage_request.c`,
+800CF308–800CF314 exclusive, named Ovl11SetPendingStageMode and published
+through the same pending_stage_dispatch.h interface. It implements only the
+request-side halfword store, with no dispatch/counter reset or queue. Left
+CF2C8 is the independently called selected-ID deactivation guard; right CF314
+copies a tag/position into the timed-effect record. Neither reads or consumes
+the pending mode nor calls this setter. There is no positive membership witness
+extending the setter to either neighbor. The supported dispatcher closure is
+distant; no evidence joins all intervening code into one file. These remain
+conservative service boundaries under -G0, not historical single-function-TU
+proof. The checked singleton baseline fold preserves the function and overlay;
+no override, stub or exception was involved. Its public contract explicitly
+states replacement, -1 cancellation and unchecked non-0..2 values.
+
 The pending halfword is `gOvl11PendingStageMode` (80128D68); the three values
 at 80128D60/62/64 are **halfword counters**, not Boolean flags. The reset
 initializes all three to 300 and 800D2334/800D266C advance the latter two.
@@ -23898,6 +24043,33 @@ corroborating consecutive-client order; original TU boundaries remain unproven.
 - ovl_11_func_8011B784 (m, candidate same TU) — submits an ID-selected three-halfword record and waits for the completion-status bit.
 
 ## `ovl_11` interaction-handler run — 0x8011B840 / 0x8011BAFC / 0x8011BD6C (confidence: low)
+
+**Reconstructed `modules/selection_prompt_steps.c`, all three entries
+8011B840–8011C298 exclusive**, named Ovl11StepSelectionPrompt,
+Ovl11StepQuantityPrompt and Ovl11StepSelectedItemPurchase. The two six-step
+variants and extended fifteen-step purchase share the global step/resume,
+selection-record descriptor and message retry/cancel protocol. Caller 119DF8
+passes the same record descriptor to selection and purchase; other clients
+pair selection with quantity input. Three consecutive jump tables occur in
+member order and pool unchanged. These specific flow/ABI/table relationships
+support the trio, not shared UI globals alone.
+
+Left primary_object_wait_steps submits requests and polls flags without the
+selection descriptor/message protocol. Right C298/C6CC implement their own
+mode-dependent debit/stock transactions over D524/D538/D540; C6CC delegates
+to these prompt services but is not their private helper. The trio never
+reads that mode word. No private state/helper continuation joins the neighbor;
+the table seam's zero alignment word corroborates but does not prove the cut.
+These are conservative service boundaries under -G0; a larger historical UI
+file remains possible, not established by a common client or draw-mode word.
+
+The public header describes unsigned step windows, result values, shared
+non-reentrant state, unchanged by-value descriptors, quantity cap, debit and
+fade/relocation sequence. Parameters and locals name steps, descriptors,
+records and draw mode; same-call fall-through is documented and retained.
+No global ownership or linkage changes. Baseline complete fold pooled all
+three tables and preserved every member and overlay byte; no flags or new
+exceptions were present. Historical candidate evidence follows.
 
 Candidate same-TU membership; original TU boundaries remain unproven.
 [Pair evidence and limits](research/ovl_11_func_8011B840-grouping.md);

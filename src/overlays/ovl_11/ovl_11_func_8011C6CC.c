@@ -4,10 +4,17 @@
 #include "ovl11_interaction_steps.h"
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_selection_record_access.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_selection_prompt_steps.h"
 
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
-s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
-s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
@@ -48,7 +55,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
     case 8:
     case 9:
     case 10:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 4, arg3)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 4, arg3)) {
         case 0:
             break;
         case 1:
@@ -74,7 +81,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
     case 15:
     case 16:
         recordState = &gOvl11QuantityPrompt;
-        switch (ovl_11_func_8011BAFC(&gOvl11InteractionStep, 11, 5, *(Ovl11BAFCParams *)&arg3, (ovl_11_DD48_arg0 *)recordState)) {
+        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 11, 5, *(Ovl11BAFCParams *)&arg3, (ovl_11_DD48_arg0 *)recordState)) {
         case 0:
             break;
         case 1:

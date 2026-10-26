@@ -2,8 +2,15 @@
 #include "integer_power.h"
 #include "psyq/memory.h"
 #include "ovl11_texture_cell_cache.h"
-
-void ovl_11_func_800D6F78(s16 arg0, s16 arg1, s32 *arg2, s16 arg3, s16 arg4, s32 arg5);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 void ovl_11_func_80102368(void) {
     u16 x;
@@ -24,7 +31,7 @@ void ovl_11_func_80102368(void) {
             }
         }
         if (j != pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1) && id != 0) {
-            ovl_11_func_800D6F78(id, 0, context, x, y, 8);
+            Ovl11DrawSlotSprite(id, 0, context, x, y, 8);
         } else {
             Ovl11DrawTextureCell(context, id, x, y);
         }

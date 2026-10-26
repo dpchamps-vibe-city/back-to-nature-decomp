@@ -3,9 +3,18 @@
 #include "integer_power.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_primary_object_grid_actions.h"
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800D6A94(s16 arg0);
 
 s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 id;
@@ -63,7 +72,7 @@ s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             variant = (id - 1) % 5;
         }
         if (overflow == 0) {
-            ovl_11_func_800D6A94(id);
+            Ovl11InstallSlotSprite(id);
         }
         Ovl11SetHalfwordTriplet(selected, id, variant, 1);
         if (overflow == 0 && arg3 != 0) {

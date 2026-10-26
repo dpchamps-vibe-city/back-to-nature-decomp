@@ -15,7 +15,7 @@ s32 ovl_11_func_800F0A58(s16 arg0) {
     s16 *second;
 
     row = -1;
-    first = D_800A0494;
+    first = gSlotSpriteIds;
     second = first + 9;
     for (i = 0; i < 9; i++) {
         if (*first == arg0) {

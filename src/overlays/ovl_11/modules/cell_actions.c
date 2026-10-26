@@ -21,6 +21,7 @@
 #include "ovl11_cell_actions.h"
 #include "ovl11_cell_geometry.h"
 #include "ovl11_item_spawn_placement.h"
+#include "ovl11_save_counters.h"
 
 s32 ovl_11_func_800D5868(s16 kind);
 
@@ -210,7 +211,6 @@ u16 Ovl11ResolveCellItemState(Ovl11CellActionEntry *entry) {
 }
 
 s32 ovl_11_func_800D5D38(u16 kind, u16 state);
-void ovl_11_func_800F397C(u16 amount, u16 mode);
 
 s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
     Ovl11ItemSpawnPosition position;
@@ -226,7 +226,7 @@ s32 Ovl11TryApplyCellActionEffect(s16 layer, s16 column, s16 row) {
         }
         if (ovl_11_func_800D5D38((u16) entry->unk0, (u16) state) == 1) {
             if ((u16) entry->unk0 == 0x36) {
-                ovl_11_func_800F397C(1U, 0U);
+                Ovl11AddSaveCounter18(1U, 0U);
                 Ovl11SpawnCellEffectSprite((u16) entry->unk0, layer, column, row);
                 Ovl11RefreshCellTextureVariant(row, column, layer);
             } else {
@@ -317,7 +317,6 @@ s32 Ovl11TryClearCellFootprint(s16 layer, s16 column, s16 row, s16 power, s16 am
 }
 
 s32 ovl_11_func_800D5E00(u16 kind, u16 state);
-void ovl_11_func_800F3898(u16 amount, u16 mode);
 
 s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, s16 amount) {
     s32 changed;
@@ -339,7 +338,7 @@ s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, 
         if ((ovl_11_func_800D5E00(kind, (u16) state) == 1) && ((u32) amount >= ovl_11_func_800D5E64(kind, (u16) state)) && ((u32) power >= ovl_11_func_800D5ED4(kind, (u16) state))) {
             switch (kind) {
             case 0x3D:
-                ovl_11_func_800F3898(2U, 0U);
+                Ovl11AddSaveCounter19(2U, 0U);
                 Ovl11ResetGridEntry((void *) entry);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row + 1][column]);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row][column + 1]);
@@ -347,7 +346,7 @@ s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, 
                 Ovl11SpawnCellEffectSprite(0x3DU, layer, column + 1, row + 1);
                 break;
             case 0x172:
-                ovl_11_func_800F3898(2U, 0U);
+                Ovl11AddSaveCounter19(2U, 0U);
                 Ovl11ResetGridEntry((void *) entry);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row + 1][column]);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row][column - 1]);
@@ -355,7 +354,7 @@ s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, 
                 Ovl11SpawnCellEffectSprite(0x3DU, layer, column, row + 1);
                 break;
             case 0x174:
-                ovl_11_func_800F3898(2U, 0U);
+                Ovl11AddSaveCounter19(2U, 0U);
                 Ovl11ResetGridEntry((void *) entry);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row - 1][column]);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row][column + 1]);
@@ -363,7 +362,7 @@ s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, 
                 Ovl11SpawnCellEffectSprite(0x3DU, layer, column + 1, row);
                 break;
             case 0x173:
-                ovl_11_func_800F3898(2U, 0U);
+                Ovl11AddSaveCounter19(2U, 0U);
                 Ovl11ResetGridEntry((void *) entry);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row - 1][column]);
                 Ovl11ResetGridEntry((void *)&gMainAreaGrid[row - 1][column - 1]);
@@ -371,7 +370,7 @@ s32 Ovl11TryClearCellFootprintScored(s16 layer, s16 column, s16 row, s16 power, 
                 Ovl11SpawnCellEffectSprite(0x3DU, layer, column, row);
                 break;
             case 0x3E:
-                ovl_11_func_800F3898(1U, 0U);
+                Ovl11AddSaveCounter19(1U, 0U);
                 Ovl11ResetGridEntry((void *) entry);
                 Ovl11SpawnCellEffectSprite(0x3EU, layer, column, row);
                 break;

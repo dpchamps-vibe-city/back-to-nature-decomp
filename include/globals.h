@@ -5,7 +5,7 @@
 /* Requires common.h typedefs (s8, s16, s32, u8, u16, u32) */
 #include "globals_override.h"
 
-/* 83 symbol(s) supplied by overrides or translation-unit-specific declarations */
+/* 87 symbol(s) supplied by overrides or translation-unit-specific declarations */
 
 /* GP-relative symbols (within $gp ± 0x7FF0) */
 extern u16 D_8005E2BA;
@@ -64,14 +64,6 @@ extern s32 _gSceneSubphase[3] __asm__("gSceneSubphase");
 #define gSceneSubphase (*((s32*)_gSceneSubphase))
 extern s32 _D_80070D18[3] __asm__("D_80070D18");
 #define D_80070D18 (*((s32*)_D_80070D18))
-extern u16 _D_80070D38[5] __asm__("D_80070D38");
-#define D_80070D38 (*((u16*)_D_80070D38))
-extern u16 _D_80070D3A[5] __asm__("D_80070D3A");
-#define D_80070D3A (*((u16*)_D_80070D3A))
-extern u16 _D_80070D3E[5] __asm__("D_80070D3E");
-#define D_80070D3E (*((u16*)_D_80070D3E))
-extern u16 _D_80070D40[5] __asm__("D_80070D40");
-#define D_80070D40 (*((u16*)_D_80070D40))
 extern s32 _gItemOverflowSlotBase[3] __asm__("gItemOverflowSlotBase");
 #define gItemOverflowSlotBase (*((s32*)_gItemOverflowSlotBase))
 extern u16 _D_800712C0[5] __asm__("D_800712C0");

@@ -14,6 +14,16 @@
 #include "ovl11_record_family_list.h"
 #include "ovl11_quantity_purchase.h"
 #include "ovl11_selection_record_access.h"
+#include "ovl11_save_counters.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_selection_prompt_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
@@ -24,8 +34,6 @@ s32 ovl_11_func_80113FF0(void);
 void Ovl11DebitQuantityCost(void *arg0);
 s32 ovl_11_func_80117178(s16 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
-s32 ovl_11_func_8011BAFC(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
@@ -67,7 +75,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
     case 6:
     case 7:
     case 8:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 2, params)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 2, params)) {
         case 0:
         case 2:
             break;
@@ -141,7 +149,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
     case 14:
     case 15:
         state = &gOvl11QuantityPrompt;
-        switch (ovl_11_func_8011BAFC(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (ovl_11_DD48_arg0 *)state)) {
+        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (ovl_11_DD48_arg0 *)state)) {
         case 0:
         case 2:
             break;
@@ -261,11 +269,9 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
     return result;
 }
 
-void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
-
 /* The caller supplies gOvl11QuantityPrompt: signed quantity/cost at +8/+A. */
 void Ovl11DebitQuantityCost(void *record) {
     ovl_11_func_800F2354(-(((Ovl11D8012D538 *)record)->unkA *
                           ((Ovl11D8012D538 *)record)->unk8), 1);
-    ovl_11_func_800F3AF0(2, ((Ovl11D8012D538 *)record)->unk8);
+    Ovl11AddSaveCounter20(2, ((Ovl11D8012D538 *)record)->unk8);
 }

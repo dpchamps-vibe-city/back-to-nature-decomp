@@ -16,10 +16,15 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_object_events.h"
+#include "psyq/libgs.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_event_schedule.h"
 
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800DE4C0(void);
-void ovl_11_func_800F227C(s16 arg0);
 void ovl_11_func_800CA6C4(void *arg0);
 void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
@@ -63,7 +68,7 @@ void Ovl11RunClockAdvance(void) {
                     ovl_11_func_800E9B68((s16)index, 0, 0, 0);
                 }
             } else {
-                ovl_11_func_800F227C(((struct Ovl11StateInitView *)D_8006C838)->field_44CA);
+                Ovl11SelectScheduleEntryForTime(((struct Ovl11StateInitView *)D_8006C838)->field_44CA);
                 Ovl11RebuildObjectEventsForTime();
             }
             if (gOvl11ClockAdvanceRefreshRequested == 1) {

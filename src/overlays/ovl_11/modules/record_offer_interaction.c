@@ -11,13 +11,21 @@
 #include "ovl11_primary_object_wait_steps.h"
 #include "ovl11_record_offer.h"
 #include "ovl11_selection_record_access.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "ovl11_selection_prompt_steps.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 u16 Ovl11SelectOfferConditionMessage(void);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 Ovl11UpdateRecordOfferInteraction(void) {
@@ -57,7 +65,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
     case 6:
     case 7:
     case 8:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 2, first)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 2, first)) {
         case 0:
             break;
         case 3:
@@ -135,7 +143,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
     case 20:
     case 21:
     case 22:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 0x10, second)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 0x10, second)) {
         case 0:
             break;
         case 3:

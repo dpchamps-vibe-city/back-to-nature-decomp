@@ -13,12 +13,11 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_selection_record_access.h"
+#include "ovl11_selection_prompt_steps.h"
 
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800F2354(s32 arg0, s32 arg1);
 s32 ovl_11_func_8011B2B0(void);
-s32 ovl_11_func_8011B840(s32 *arg0, s32 arg1, Ovl11D8012D7B8 arg2);
-s32 ovl_11_func_8011BD6C(s32 *arg0, s32 arg1, StructD548 **arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80119DF8(void) {
@@ -68,7 +67,7 @@ s32 ovl_11_func_80119DF8(void) {
     case 10:
     case 11:
     case 12:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 6, first)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 6, first)) {
         case 0:
             break;
         case 1:
@@ -109,7 +108,7 @@ s32 ovl_11_func_80119DF8(void) {
     case 17:
     case 18:
     case 19:
-        switch (ovl_11_func_8011B840(&gOvl11InteractionStep, 13, second)) {
+        switch (Ovl11StepSelectionPrompt(&gOvl11InteractionStep, 13, second)) {
         case 0:
             break;
         case 1:
@@ -154,7 +153,7 @@ s32 ovl_11_func_80119DF8(void) {
     case 38:
     case 39:
     case 40:
-        switch (ovl_11_func_8011BD6C(&gOvl11InteractionStep, 20, (StructD548 **)&first)) {
+        switch (Ovl11StepSelectedItemPurchase(&gOvl11InteractionStep, 20, (StructD548 **)&first)) {
         case 0:
             break;
         case 1:

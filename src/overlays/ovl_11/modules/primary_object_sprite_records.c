@@ -13,8 +13,16 @@
 #include "common.h"
 #include "ovl11_primary_object_sprite_records.h"
 #include "ovl11_default_position.h"
-
-s32 ovl_11_func_800D6A94(s16 arg0);
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 void Ovl11LoadPrimaryObjectRecordSprites(void) {
     u32 i;
@@ -24,15 +32,15 @@ void Ovl11LoadPrimaryObjectRecordSprites(void) {
     base = (s16 (*)[3])&gPrimaryObjectBase;
     table = base + 22;
     for (i = 0; i < 2; i++) {
-        ovl_11_func_800D6A94(table[i][0]);
+        Ovl11InstallSlotSprite(table[i][0]);
     }
     table = base + 32;
     for (i = 0; i < 8; i++) {
-        ovl_11_func_800D6A94(table[i][0]);
+        Ovl11InstallSlotSprite(table[i][0]);
     }
     table = base + 24;
     for (i = 0; i < 8; i++) {
-        ovl_11_func_800D6A94(table[i][0]);
+        Ovl11InstallSlotSprite(table[i][0]);
     }
 }
 

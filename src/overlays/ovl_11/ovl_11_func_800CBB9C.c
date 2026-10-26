@@ -3,9 +3,16 @@
 #include "sound_commands.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_primary_object_state_change.h"
-
-void ovl_11_func_800D666C(s16 arg0);
-s32 ovl_11_func_800D6A94(s16 arg0);
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2) {
     u16 sp10[3];
@@ -25,13 +32,13 @@ void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2) {
     temp_a0 = arg0->itemIndex;
     temp_s3 = &arg0->itemIndex;
     if (temp_a0 != 0) {
-        ovl_11_func_800D666C(temp_a0);
+        Ovl11RemoveSlotSprite(temp_a0);
     }
     Ovl11ClearHalfwordTriplet(temp_s3);
     temp_s1 = (s16 *)((u8 *)arg0 + 0xF0);
     Ovl11ClearHalfwordTriplet(temp_s1);
     Ovl11CopyHalfwordTriplet((u16 *)temp_s1, sp10);
-    ovl_11_func_800D6A94(*(s16 *)((u8 *)arg0 + 0xF0));
+    Ovl11InstallSlotSprite(*(s16 *)((u8 *)arg0 + 0xF0));
     temp_a1 = arg0->unk6C & ~0x4000;
     arg0->unk6C = temp_a1;
     temp_a0_2 = ((Ovl11CBB9CGlobals *)D_8006C838)->items[*(s16 *)((u8 *)arg0 + 0xF0)].u0.flags;

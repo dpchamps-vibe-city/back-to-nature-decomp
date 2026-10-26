@@ -1,18 +1,15 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_area_slot_flags.h"
+#include "ovl11_save_counters.h"
 
 s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
-s32 ovl_11_func_800F3A18(u16 arg0);
-s32 ovl_11_func_800F3BA0(u16 arg0);
 s32 ovl_11_func_80110520(s32 arg0, s16 arg1);
 void ovl_11_func_80110CE8(s32 *dst, s16 arg1);
 void ovl_11_func_80110DA0(s32 *arg0, s16 arg1);
 void ovl_11_func_80110E28(u8 *arg0);
-void ovl_11_func_800F397C(u16 arg0, u16 arg1);
-void ovl_11_func_800F3AF0(u16 arg0, u16 arg1);
 s32 ovl_11_func_80110944(s16 arg0, u16 arg1);
 
 s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
@@ -38,14 +35,14 @@ s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
         break;
     case 2:
         if (arg1 == 1) {
-            if (ovl_11_func_800F3A18(1)) {
+            if (Ovl11TakeSaveCounter18(1)) {
                 *(s16 *)((u8 *)arg0 + 0xB6) = 0x68;
             } else {
                 *(s16 *)((u8 *)arg0 + 0x28) = 0;
                 return 1;
             }
         } else {
-            if (ovl_11_func_800F3BA0(1)) {
+            if (Ovl11TakeSaveCounter20(1)) {
                 *(s16 *)((u8 *)arg0 + 0xB6) = 0x6B;
             } else {
                 *(s16 *)((u8 *)arg0 + 0x28) = 0;
@@ -114,9 +111,9 @@ s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
         break;
     case 6:
         if (arg1 == 1) {
-            ovl_11_func_800F397C(0, 1);
+            Ovl11AddSaveCounter18(0, 1);
         } else {
-            ovl_11_func_800F3AF0(0, 1);
+            Ovl11AddSaveCounter20(0, 1);
         }
         ovl_11_func_80110E28((u8 *)arg0);
         *(s16 *)((u8 *)arg0 + 0x28) = 0;

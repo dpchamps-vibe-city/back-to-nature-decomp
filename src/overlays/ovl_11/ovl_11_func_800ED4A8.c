@@ -42,6 +42,11 @@
 #include "ovl11_item_record_lists.h"
 #include "ovl11_default_position.h"
 #include "ovl11_object_state_dispatch.h"
+#include "ovl11_pending_stage_dispatch.h"
+#include "psyq/libetc.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 typedef struct {
                s16 field_0;
@@ -171,13 +176,11 @@ s32 GetVal8005E524 (void);
 void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800D58D0 (void *arg0);
 void ovl_11_func_800CCF14 (M2C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
-void ovl_11_func_800CF308 (s16 arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 void ovl_11_func_800CF314 (u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 s32 ovl_11_func_800CDF4C (u8 *arg0);
 s32 ovl_11_func_800F2354 (s32 arg0, s32 arg1);
-void ovl_11_func_800D666C (s16 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);

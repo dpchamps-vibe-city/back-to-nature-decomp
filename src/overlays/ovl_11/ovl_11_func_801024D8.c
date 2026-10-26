@@ -2,11 +2,19 @@
 #include "integer_power.h"
 #include "psyq/memory.h"
 #include "ovl11_texture_cell_cache.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 void func_80024810(s32 arg0, s16 arg1, s16 arg2);
 void func_80024860(s32 arg0, s16 arg1, s16 arg2);
 s8 ovl_11_func_800D583C(s16 arg0);
-void ovl_11_func_800D6F78(s16 arg0, s16 arg1, s32 *arg2, s16 arg3, s16 arg4, s32 arg5);
 void ovl_11_func_800F6F7C(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F7010(s32 arg0, s16 arg1, s16 arg2);
 void ovl_11_func_800F7094(s32 arg0, s16 arg1, s16 arg2, s32 arg3);
@@ -51,7 +59,7 @@ void ovl_11_func_801024D8(void) {
                 if (slot->id == 0) {
                     ovl_11_func_800F7010((s32)context2, x, y);
                 } else {
-                    ovl_11_func_800D6F78(slot->id, 0, context2, x, y, 8);
+                    Ovl11DrawSlotSprite(slot->id, 0, context2, x, y, 8);
                 }
             } else {
                 Ovl11DrawTextureCell(context2, (u16)slot->id, x, y);

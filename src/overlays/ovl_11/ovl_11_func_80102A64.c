@@ -1,7 +1,15 @@
 #include "common.h"
 #include "integer_power.h"
-
-void ovl_11_func_800D666C(s16 arg0);
+#include "psyq/memory.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "psyq/libapi.h"
+#include "ovl11_slot_sprite_cache.h"
 
 /* 6-byte record: two s16 fields and an unsigned counter at +4. */
 typedef struct {
@@ -41,7 +49,7 @@ void ovl_11_func_80102A64(s32 arg0) {
             if ((s16)p->f2 <= 0) {
                 p->f0 = 0;
                 p->f1 = 0;
-                ovl_11_func_800D666C(s2);
+                Ovl11RemoveSlotSprite(s2);
             }
             return;
         }
