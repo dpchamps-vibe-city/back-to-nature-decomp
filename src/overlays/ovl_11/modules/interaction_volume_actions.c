@@ -42,6 +42,7 @@
 #include "ovl11_queued_item_interaction.h"
 #include "ovl11_record_pair_claim.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_progress_trigger_latch.h"
 
 void Ovl11TryBeginItem68VolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
 void Ovl11TryBeginSetBVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
@@ -53,7 +54,6 @@ void Ovl11TryBeginSetCVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16
 s32 Ovl11TryBeginProbedObjectVolumeAction (Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2);
 void Ovl11TryBeginFlaggedItemVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0);
 void Ovl11TryBeginItem3FVolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
-s32 ovl_11_func_800F3F7C (void);
 void Ovl11TryBeginItem69SlotAction(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void Ovl11TryBeginItem68SlotAction(Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 
@@ -371,7 +371,7 @@ block_78:
                 if ((u32) ((*(u16 *) ((u8 *) arg0 + 0x38)) - 1) < 2U) {
                     var_v0 = 0x2F;
                     if ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0) {
-                        temp_v0_4 = ovl_11_func_800F3F7C();
+                        temp_v0_4 = Ovl11TryLatchProgressTrigger();
                         if (temp_v0_4 == 1) {
                             event[0] = 0x97;
                             event[1] = 0;

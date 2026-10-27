@@ -258,7 +258,7 @@ typedef struct {
     s32 flags;
     E21E4Position position;
     u8 pad48[0x64];
-} Ovl11B05CObject;
+} Ovl11SpawnHandoffObject;
 
 /* 800D09E0 writes state +22, flags +34, and the position at +38..+40. */
 typedef struct {

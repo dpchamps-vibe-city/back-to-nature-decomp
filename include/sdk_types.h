@@ -722,15 +722,6 @@ typedef struct {
 } Ovl11AnimationSlot;
 
 typedef struct {
-    s32 pad0[0xC];
-    u16 selector;
-    u16 pad32;
-    s32 flags;
-    E21E4Position position;
-    u8 pad48[0x64];
-} Ovl11B05CObject;
-
-typedef struct {
                s32 pad_00[0x28 / 4];
                s16 data[26];
                s16 index;
@@ -1716,6 +1707,15 @@ typedef struct {
     s32 unk10;
     s32 unk14;
 } Ovl11SpawnEffectRecord;
+
+typedef struct {
+    s32 pad0[0xC];
+    u16 selector;
+    u16 pad32;
+    s32 flags;
+    E21E4Position position;
+    u8 pad48[0x64];
+} Ovl11SpawnHandoffObject;
 
 typedef struct {
     s16 animation;

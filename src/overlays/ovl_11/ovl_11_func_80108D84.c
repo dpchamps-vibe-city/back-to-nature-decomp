@@ -6,10 +6,10 @@
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_selected_record_flag_guard.h"
+#include "ovl11_fixed_spawn_record_handoff.h"
 
 s32 ovl_11_func_80109310(s32 *arg0);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
-void ovl_11_func_8010B05C(s32 *arg0);
 
 s32 ovl_11_func_80108D84(s32 *arg0) {
     s16 temp_v0_5;
@@ -123,7 +123,7 @@ s32 ovl_11_func_80108D84(s32 *arg0) {
         Ovl11ResetTimedSpriteEffect((s16 *) ((arg0 + 0x2A)));
         var_v0 = 0;
         if ((*(s32 *) ((u8 *) arg0 + 0x34)) & 0x100000) {
-            ovl_11_func_8010B05C(arg0);
+            Ovl11PublishObjectToFixedSpawnRecord((Ovl11SpawnHandoffObject *)arg0);
             (*(s16 *) ((u8 *) arg0 + 0x24)) = 0;
             (*(s16 *) ((u8 *) arg0 + 0x26)) = 0;
             (*(s32 *) ((u8 *) arg0 + 0x34)) &= ~0x100000;

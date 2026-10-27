@@ -1,5 +1,15 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// One-shot progress trigger consumed by the interaction request dispatcher.
+Ovl11TryLatchProgressTrigger = 0x800F3F7C; // type:func
+
+// Shared fixed-slot object-position handoff, outside both action callback banks.
+Ovl11PublishObjectToFixedSpawnRecord = 0x8010B05C; // type:func
+
+// Independent slot-code mapping and resolved animation drawing commands.
+Ovl11WriteSlotComparisonCode = 0x800EE000; // type:func
+Ovl11DrawStateRecordAnimation = 0x800EE528; // type:func
+
 // Signed record-adjustment service and its exclusive four-by-five table.
 Ovl11LookupRecordAdjustment = 0x800F0734; // type:func
 gOvl11RecordAdjustmentRows = 0x801248CC; // type:data size:0x28

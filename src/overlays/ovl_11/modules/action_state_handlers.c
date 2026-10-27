@@ -21,10 +21,10 @@
 #include "ovl11_object_state_callbacks.h"
 #include "ovl11_record_movement.h"
 #include "psyq/stddef.h"
+#include "ovl11_fixed_spawn_record_handoff.h"
 
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *object, s32 mode);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *object, Ovl11PaddedVec3 position);
-void ovl_11_func_8010B05C(Recon_ovl_11_func_800D2594_A0View *object);
 s32 Ovl11TryActionSpawnHandoff(Ovl11SetFieldsView *object);
 
 s32 Ovl11StepActionKeyframes0(Ovl11D04D4Obj *object) {
@@ -362,7 +362,7 @@ s32 Ovl11StepActionRecordHandoff(Ovl11A47CObject *object) {
         }
         /* fallthrough */
     case -2:
-        ovl_11_func_8010B05C((Recon_ovl_11_func_800D2594_A0View *)object);
+        Ovl11PublishObjectToFixedSpawnRecord((Ovl11SpawnHandoffObject *)object);
         /* fallthrough */
     case -1:
         completed = 1;

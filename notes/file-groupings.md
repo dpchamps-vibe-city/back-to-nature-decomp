@@ -2898,6 +2898,32 @@ not cut off at the old type conflict. The A850 jump table is owned by the
 module in the original member order. The address-word callback bank remains
 in its extracted rodata object; it is named and verified, not newly defined.
 
+**Reconstructed `modules/fixed_spawn_record_handoff.c`, 8010B05C–8010B0E8
+exclusive**, `Ovl11PublishObjectToFixedSpawnRecord`. Both the action-entry
+bank's handoff and the independent 80108D84 update dispatcher call this shared
+adapter. It snapshots exactly 0xAC bytes, then passes selector +30 and the
+four-word position at +38 by value to Ovl11SetSpawnRecord(kind 0x65, index 0).
+It owns no state/table/helper. Left action_state_handlers is the complete
+entry-bank/private-helper closure described above; this public adapter is not
+one of its bank targets and has a second external client. Right
+stage_mode2_record starts the separate F0-byte slot/animation/flags lifecycle;
+its drawer neither invokes the adapter nor uses its snapshot operation.
+Neither edge is a GP proof (-G0), but no private artifact or exclusive call
+closure supports extending this independently used service into those complete
+units. No stub or compiler-setting convenience creates either cut.
+
+`Ovl11SpawnHandoffObject` now names the existing exact layout, without changing
+fields, size, signedness or the four-word position view. The public header
+records source immutability, fixed slot, unchecked selector/pointer, active-bit
+and coordinate effects. Both callers include that header and explicitly cast
+their existing compatible storage views. The full snapshot and VECTOR cast are
+retained for the established aggregate-call ABI, not replaced by a three-word
+position copy. Linkage/global ownership are unchanged; the baseline checked
+fold passed, with no override or exception added. The subsequent batch
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes
+all eight integrity gates at 2245 folded/390 valid modules, including all
+callers reached by the renamed shared type and public header.
+
 Left 80109E64 belongs to the other, update-phase bank (800BA848) and runs the
 timed sprite-effect protocol, not an entry script or internal helper of this
 bank. Right 8010B05C is a shared spawn writer used by both the entry handler
@@ -6689,6 +6715,31 @@ Members (address order):
   not proof of a translation-unit boundary.
 
 ---
+
+## `ovl_11` one-shot progress trigger — 0x800F3F7C–0x800F3FB4 (service cut)
+
+**Reconstructed `modules/progress_trigger_latch.c`**, the complete single
+entry `Ovl11TryLatchProgressTrigger`. Its sole source caller is
+interaction_volume_actions: case 47 uses success to install request 0x97.
+The helper tests progress bits 10/26, sets bit 26
+only on the first successful test, and reports success. The already canonical
+gProgressStateFlags is engine-wide state, not private storage or evidence for
+joining every progress consumer. Its redundant source extern is removed in
+favor of globals_override.h; there is no new definition or linkage change.
+
+Left F3EF0 folds pending counters into the D_800711C4 progress record, with
+no read/write of this bit-latch word. Right F3FB4 orchestrates pool refresh,
+sprite drawing and an offset step under a separate engine flag; it neither
+calls this helper nor accesses the latch. No private artifact/helper/caller
+closure joins the latch to either neighboring protocol. These are conservative
+-G0 responsibility cuts, not original-object boundary proofs; the shared
+progress terminology alone is not a reason to merge. No flag or stub motivates
+the cuts. The public header documents both bit numbers, unchanged trigger bit,
+return and absence of request/reset effects without assigning gameplay meaning.
+The baseline whole-entry checked fold preserved the member and linked overlay;
+no override or policy exception was added. Full batch verification at 2245
+folded/390 valid modules passes all eight integrity gates and every linked
+container, including the interaction caller; existing exceptions are unchanged.
 
 ## `ovl_11` D_80070D04 button-byte bit-test run — 0x80100A8C–0x80100FFC (confidence: low)
 
@@ -17067,8 +17118,52 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   passed the member and linked overlay; no override or policy exception is
   involved. The broader value-bank family is a shared-data relation, not an
   unfinished whole TU around this service.
-- ovl_11_func_800EE528 (m, matched this session, 0xDC, byte-exact) —
-  0x24-record load-and-compare: rejects `(u32)(arg1 & 0xFFFF) >= 0xA`, resolves
+- **Reconstructed `modules/slot_comparison_code.c`, EE000–EE240
+  exclusive**, `Ovl11WriteSlotComparisonCode`. This complete one-entry
+  mapping owns the category switch table at B9DC0 (splat rodata offset
+  1FA0). It reads three signed slot low-halfwords before writing a code to
+  a fourth slot; it calls no helper and owns no mutable storage. Its special
+  category/reference mapping and three result-code families are contained
+  entirely in this entry. Left EDF3C is a flag/calendar predicate (no code
+  mapping or table use); right color_flash_command has its own exclusive RGB
+  seed and timer/draw protocol. Neither uses the mapping/table or calls this
+  entry. The widely shared value bank alone does not join these services.
+  These are evidence-limited -G0 cuts, not GP-proven original file edges;
+  a larger historical command file is not established. The complete baseline
+  checked fold preserved the entry, its table and the linked overlay.
+
+  The public header documents signed-halfword inputs, unchecked indices,
+  input/output aliasing, code-family selection and constant success. Parameters
+  and locals now describe the observed comparison rather than speculative
+  gameplay. Existing value-bank identity, widths, expressions, linkage and
+  ownership are unchanged. No flag or exception applies or was introduced.
+- **Reconstructed `modules/state_record_animation_draw.c`, EE528–EE604
+  exclusive**, `Ovl11DrawStateRecordAnimation`. This is the complete
+  descriptor-0x24 resolve/select/black-background/draw command; it has no
+  exclusive helper or mutable storage. Left color_flash_command uses its own
+  RGB seed and timed decay, not this descriptor/sprite operation; right
+  scene_value_commands starts its camera interpolation/condition expansion
+  closure, with separate interpolation scratch and helper calls. Neither
+  accesses the resolved sprite or calls this entry. Shared value slots and
+  generic rendering helpers are not private membership evidence. These
+  conservative -G0 responsibility cuts do not claim proven historical object
+  edges. No larger positive TU closure is sliced here. The whole baseline
+  checked fold preserved the member and linked overlay.
+
+  Its header documents the 0..9 slot guard, unchecked record index, full-word
+  animation comparison versus low-byte selection, pixel coordinates, OT
+  offsets and animation-update side effect. Parameters/locals are named and
+  unused SDK includes removed; all ABI types and operations remain unchanged.
+  It defines no global, adds no private linkage, override or source exception.
+  Names retain original ovl_11 addresses through the .names configuration;
+  canonicalization and batch interface reconciliation publish both headers.
+  Both services and the later handoff/latch batch pass all eight campaign
+  integrity gates at 2245/2625 folded, 390/390 valid modules. All executable
+  and overlay bytes (including data/tables/callbacks), source policy,
+  canonical identities, interfaces and exception non-growth pass; no flag
+  override or shared tool was changed.
+
+  Historical implementation evidence for EE528: 0x24-record load-and-compare: rejects `(u32)(arg1 & 0xFFFF) >= 0xA`, resolves
   the 0x24 record through `ovl_11_func_800EFF04(0x24, (s16)arg0, NULL)`, then
   reads `D_80129560[(s16)arg1]` with the family's s16-scaled 4-byte index and,
   when the record's `u8@+4` differs, calls `func_80015840(record, slot & 0xFF)`;
