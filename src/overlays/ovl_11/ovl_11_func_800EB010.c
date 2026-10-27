@@ -1,8 +1,8 @@
 #include "common.h"
 #include "ovl11_state_record_commands.h"
+#include "ovl11_record_action_predicate.h"
 
 /* The original call sites explicitly clear both unused trailing slots. */
-s32 ovl_11_func_800EDF3C();
 s32 ovl_11_func_800F07EC(s16 arg0, s32 arg1, s32 arg2, u32 *arg3);
 
 s32 ovl_11_func_800EB010(s16 arg0, s16 arg1) {

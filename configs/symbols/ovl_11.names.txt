@@ -1,5 +1,76 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Signed record-adjustment service and its exclusive four-by-five table.
+Ovl11LookupRecordAdjustment = 0x800F0734; // type:func
+gOvl11RecordAdjustmentRows = 0x801248CC; // type:data size:0x28
+
+// One five-record choreography with exclusive ID/XZ parameter tables.
+Ovl11StepFiveRecordSequence = 0x800EB85C; // type:func
+gOvl11FiveRecordSequenceIds = 0x80124984; // type:data size:0xC
+gOvl11FiveRecordSequenceXZ = 0x80124990; // type:data size:0x28
+
+// Literal/value-slot operand adapters, in object-program opcode order.
+Ovl11TestStateFieldAgainstLiteral = 0x800E6744; // type:func
+Ovl11TestStateFieldAgainstValueSlot = 0x800E67D4; // type:func
+Ovl11TestValueSlotAgainstLiteral = 0x800E6834; // type:func
+Ovl11TestValueSlotAgainstValueSlot = 0x800E686C; // type:func
+Ovl11TestStateFieldWithinLiteralRange = 0x800E68B4; // type:func
+Ovl11TestValueSlotWithinSelectedRange = 0x800E6914; // type:func
+Ovl11UpdateStateFieldFromLiteral = 0x800E698C; // type:func
+Ovl11UpdateStateFieldFromValueSlot = 0x800E69B8; // type:func
+Ovl11ApplyValueSlotOperation = 0x800E69F8; // type:func
+Ovl11ApplyStateFieldToValueSlot = 0x800E6A50; // type:func
+
+// Scripted camera-target movement and its position-control flag handshake.
+Ovl11MoveCameraTarget = 0x800E60A0; // type:func
+Ovl11SetPositionControlFlags = 0x800E63C8; // type:func
+gOvl11CameraMoveActive = 0x80124908; // type:data size:0x4
+gOvl11CameraMovePosition = 0x801294F0; // type:data size:0x10
+
+// Complete action-entry bank (slot numbers, not speculative gameplay labels).
+Ovl11StepActionKeyframes0 = 0x80109EC4; // type:func
+Ovl11StepActionKeyframes2 = 0x80109F7C; // type:func
+Ovl11StepActionKeyframes1 = 0x8010A02C; // type:func
+Ovl11StepActionKeyframes8 = 0x8010A0E4; // type:func
+Ovl11StepActionKeyframes10 = 0x8010A19C; // type:func
+Ovl11StepActionKeyframes11 = 0x8010A254; // type:func
+Ovl11StepActionKeyframes12 = 0x8010A30C; // type:func
+Ovl11StepActionKeyframes13 = 0x8010A3C4; // type:func
+Ovl11StepFoundRecordAction = 0x8010A47C; // type:func
+Ovl11StepProbedRecordAction = 0x8010A654; // type:func
+Ovl11StepActionRecordHandoff = 0x8010A850; // type:func
+Ovl11StepActionKeyframes14 = 0x8010ABAC; // type:func
+Ovl11StepActionKeyframes15 = 0x8010AC64; // type:func
+Ovl11StepActionKeyframes16 = 0x8010AD1C; // type:func
+Ovl11StepActionMovement = 0x8010ADD4; // type:func
+Ovl11RefreshActionMotion = 0x8010AE64; // type:func
+Ovl11TryActionSpawnHandoff = 0x8010AFCC; // type:func
+
+gOvl11ActionEntryHandlers = 0x800BA894; // type:data size:0x4C
+gOvl11ActionEntry0Keyframes = 0x80127A78; // type:data size:0x8
+gOvl11ActionEntry2Keyframes = 0x80127A80; // type:data size:0x10
+gOvl11ActionEntry1Keyframes = 0x80127A90; // type:data size:0xC
+gOvl11ActionEntry8Keyframes = 0x80127A9C; // type:data size:0x8
+gOvl11ActionEntry10Keyframes = 0x80127AA4; // type:data size:0x8
+gOvl11ActionEntry11Keyframes = 0x80127AAC; // type:data size:0x8
+gOvl11ActionEntry12Keyframes = 0x80127AB4; // type:data size:0xC
+gOvl11ActionEntry13Keyframes = 0x80127AC0; // type:data size:0x10
+gOvl11FoundRecordActionKeyframes = 0x80127AD0; // type:data size:0xC
+gOvl11ProbedRecordActionKeyframes = 0x80127ADC; // type:data size:0xC
+gOvl11RecordHandoffKeyframes = 0x80127AE8; // type:data size:0x14
+gOvl11ActionEntry14Keyframes = 0x80127AFC; // type:data size:0x10
+gOvl11ActionEntry15Keyframes = 0x80127B0C; // type:data size:0x10
+gOvl11ActionEntry16Keyframes = 0x80127B1C; // type:data size:0x10
+gOvl11ActionMotionAnimations = 0x80127B2C; // type:data size:0xC
+gOvl11FoundRecordActionTimer = 0x8012D070; // type:data size:0x2
+gOvl11ProbedRecordActionTimer = 0x8012D072; // type:data size:0x2
+gOvl11RecordHandoffTimer = 0x8012D074; // type:data size:0x2
+gOvl11RecordHandoffPhase = 0x8012D076; // type:data size:0x2
+gOvl11ActionFoundRecord = 0x8012D078; // type:data size:0x4
+gOvl11ActionFoundRecordCategory = 0x8012D07C; // type:data size:0x4
+gOvl11ActionProbedRecord = 0x8012D080; // type:data size:0x4
+gOvl11ActionMotionVariant = 0x8012D084; // type:data size:0x4
+
 // No-op extension point retained by all area-scene setup paths.
 Ovl11AreaSetupHook = 0x800F6630; // type:func
 

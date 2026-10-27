@@ -2,8 +2,7 @@
 #include "game_types.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_tagged_item_codes.h"
-
-s16 ovl_11_func_800F0734(s16 arg0, s32 arg1, s16 arg2);
+#include "ovl11_record_adjustment.h"
 
 s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
     Recon_ovl_11_func_8010CE80_A0View *temp_s2;
@@ -40,9 +39,9 @@ s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
     if (gOvl11ValueSlots[arg2] != 0) {
         if (!(temp_s2->unkB8 & 0x10)) {
             temp_s2->unkB8 |= 0x10;
-            temp_v0_2 = ovl_11_func_800F0734(temp_s5 + 0x32, 0, *table - 1);
+            temp_v0_2 = Ovl11LookupRecordAdjustment(temp_s5 + 0x32, 0, *table - 1);
         } else {
-            temp_v0_2 = ovl_11_func_800F0734(temp_s5 + 0x32, 2, *table - 1);
+            temp_v0_2 = Ovl11LookupRecordAdjustment(temp_s5 + 0x32, 2, *table - 1);
         }
         if (*(s16 *)((u8 *)temp_s2 + 0x16) < 0xFF - temp_v0_2) {
             *(s16 *)((u8 *)temp_s2 + 0x16) += temp_v0_2;

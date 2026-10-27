@@ -126,10 +126,7 @@ s32 Ovl11ClampStateField(s32 fieldId, s32 elementIndex, s32 value) {
     return result;
 }
 
-/* Rule condition codes: >=, >, <=, <, ==; other codes are true.
- * The existing 800E686C call supplies only two arguments. Its unknown incoming
- * condition register is preserved, not silently assigned a guessed value;
- * this helper is not published through the typed service header. */
+/* Rule condition codes: >=, >, <=, <, ==; other codes are true. */
 s32 Ovl11TestStateFieldCondition(s32 value, s32 operand, s32 condition) {
     s32 result = 0;
     switch (condition) {

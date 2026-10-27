@@ -118,7 +118,6 @@ s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
-s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800EF870 (s16 arg0);
 s32 Ovl11ConditionDayWindowMatches (s32 arg0, s32 arg1, s32 arg2);
 s32 Ovl11ConditionHourWindowMatches (u16 arg0, u16 arg1, s16 *arg2);

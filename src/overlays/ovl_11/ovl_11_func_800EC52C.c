@@ -18,15 +18,15 @@
 #include "ovl11_state_record_motion_limit.h"
 #include "ovl11_message_command.h"
 #include "ovl11_scene_sound_commands.h"
+#include "ovl11_camera_position_control.h"
+#include "ovl11_record_action_predicate.h"
 
-s32 ovl_11_func_800E60A0(s16, s32, s32, s32);
 s32 ovl_11_func_800E6AB0();
 s32 ovl_11_func_800E880C(s16, s16, s32, s32);
 s32 ovl_11_func_800E9284();
 s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
 s32 ovl_11_func_800E9AFC();
 s32 ovl_11_func_800ED4A8(s16, s16, s32, s32);
-s32 ovl_11_func_800EDF3C();
 s32 ovl_11_func_800F0A58(s16);
 
 s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
@@ -237,7 +237,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             } else {
                 Ovl11WriteStateRecordPosition((s16) gOvl11ValueSlots[arg3], 0, -0x7F, 0x2E2);
             }
-            ovl_11_func_800E60A0(-1, 0, 0x29, 0x47C);
+            Ovl11MoveCameraTarget(-1, 0, 0x29, 0x47C);
             result = Ovl11RequestSceneSoundBank(0xF, 0, 0, 0);
             break;
         case 20:                                    

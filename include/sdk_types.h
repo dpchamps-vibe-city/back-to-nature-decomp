@@ -459,21 +459,6 @@ typedef struct {
 } M2C_ad00b4a12930_Ovl11RecordFlagView;
 
 typedef struct {
-    char pad_00[0x24];
-               s16 unk24;
-               s16 unk26;
-               s16 unk28;
-               s16 unk2A;
-               s16 unk2C;
-    char pad_2E[0x30 - 0x2E];
-               s16 unk30;
-    char pad_32[0x34 - 0x32];
-               s32 unk34;
-    char pad_38[0x7A - 0x38];
-               u16 unk7A;
-} M2C_c5fbbe0a3d01_Ovl11D8010A19CObj;
-
-typedef struct {
                char pad_00[0x16];
                u16 unk16;
                char pad_18[0x30 - 0x18];
@@ -1525,12 +1510,7 @@ typedef struct {
     s16 tag;
 } Ovl11ObjectTagView;
 
-typedef struct {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    u8 pad_C[4];
-} Ovl11PaddedVec3;
+typedef Ovl11CC7CCPosition Ovl11PaddedVec3;
 
 typedef struct {
     char pad0[0x2E];

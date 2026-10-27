@@ -1,7 +1,12 @@
 #include "common.h"
 #include "random.h"
-
-s32 Ovl11TestStateFieldCondition(s32 arg0, s32 arg1, s32 arg2);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "ovl11_state_field_access.h"
 
 void ovl_11_func_800E78E4(s32 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 temp;

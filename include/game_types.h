@@ -2278,14 +2278,10 @@ typedef struct {
     s16 unk2;
 } M2C_729a6ccf4038_UnkStruct80107DE0;
 
-/* Callers pass four words; D0408 initializes and D05D0 consumes only
- * the three components. The final word is unused byte padding. */
-typedef struct {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    u8 pad_C[4];
-} Ovl11PaddedVec3;
+/* D0408 initializes and D05D0 consumes only the three coordinates, but
+ * callers pass four words. Use the shared-work position's canonical type;
+ * its unused fourth word remains in the ABI, not an extra call-site copy. */
+typedef Ovl11CC7CCPosition Ovl11PaddedVec3;
 
 /* 800D5224 copies these four-word positions from the indexed pool bases. */
 typedef struct {

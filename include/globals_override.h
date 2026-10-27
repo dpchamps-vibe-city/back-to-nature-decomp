@@ -3816,9 +3816,12 @@ extern s32 D_80124920[10];
 extern s32 D_80124948[10];
 extern s16 D_80124970[10];
 
-/* ovl_11_func_800EB85C walks five s16 IDs and two parallel five-s32 coordinate arrays. */
-extern s16 D_80124984[5];
-extern s32 D_80124990[2][5];
+/* ovl_11:800EB85C walks five record IDs and parallel X/Z arrays; the ID label
+ * retains its original trailing alignment halfword outside the five entries. */
+extern s16 gOvl11FiveRecordSequenceIds[5];
+extern s32 gOvl11FiveRecordSequenceXZ[2][5];
+/* ovl_11:800F0734 indexes four rows of five signed-halfword adjustments. */
+extern s16 gOvl11RecordAdjustmentRows[4][5];
 
 /* ovl_11_func_800ED7E0 copies five signed halfwords from this rodata object. */
 struct Ovl11CandidateList {
@@ -3870,9 +3873,9 @@ extern s32 gOvl11CameraCommandEndDistance;
 extern s16 gOvl11CameraCommandEndTargetY;
 extern s16 gOvl11SelectedPositionRecord;
 
-/* 800E60A0 loads/stores the active s32 flag and three s32 coordinates at +0/+4/+8. */
-extern s32 D_80124908;
-extern s32 D_801294F0[4];
+/* ovl_11:800E60A0 caches camera-target XYZ in words 0..2; word 3 is unused. */
+extern s32 gOvl11CameraMoveActive;
+extern s32 gOvl11CameraMovePosition[4];
 
 /* D_80128422 - s16 slot index into the D_801284AC position table, read by
  * ovl_11_func_8011ECC4 (lh) and cleared by ovl_11_func_8011E574. Only ever
@@ -3915,43 +3918,43 @@ extern s32 gOvl11Code109PayloadOffsets[5];
 /* D_80127A9C - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127A9C, passed by address to ovl_11_func_800D04D4 from
  * ovl_11_func_8010A0E4. Absolute-addressed from the overlay. */
-extern u8 D_80127A9C;
+extern u8 gOvl11ActionEntry8Keyframes;
 
 /* D_80127AAC - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127AAC (0x10 bytes after D_80127A9C), passed by address to
  * ovl_11_func_800D04D4 from ovl_11_func_8010A254. Absolute-addressed from
  * the overlay. */
-extern u8 D_80127AAC;
+extern u8 gOvl11ActionEntry11Keyframes;
 
 /* D_80127AB4 - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127AB4 (8 bytes after D_80127AAC), passed by address to
  * ovl_11_func_800D04D4 from ovl_11_func_8010A30C. Absolute-addressed from
  * the overlay. */
-extern u8 D_80127AB4;
+extern u8 gOvl11ActionEntry12Keyframes;
 
 /* D_80127AC0 - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127AC0 (12 bytes after D_80127AB4), passed by address to
  * ovl_11_func_800D04D4 from ovl_11_func_8010A3C4. Absolute-addressed from
  * the overlay. */
-extern u8 D_80127AC0;
+extern u8 gOvl11ActionEntry13Keyframes;
 
 /* D_80127AFC - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127AFC (0x10 bytes after D_80127AAC... 0x14 after D_80127AE8),
  * passed by address to ovl_11_func_800D04D4 from
  * ovl_11_func_8010ABAC. Absolute-addressed from the overlay. */
-extern u8 D_80127AFC;
+extern u8 gOvl11ActionEntry14Keyframes;
 
 /* D_80127B0C - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127B0C (0x10 bytes after D_80127AFC), passed by address to
  * ovl_11_func_800D04D4 from ovl_11_func_8010AC64. Absolute-addressed from
  * the overlay. */
-extern u8 D_80127B0C;
+extern u8 gOvl11ActionEntry15Keyframes;
 
 /* D_80127B1C - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127B1C (0x10 bytes after D_80127B0C), passed by address to
  * ovl_11_func_800D04D4 from ovl_11_func_8010AD1C. Absolute-addressed from
  * the overlay. */
-extern u8 D_80127B1C;
+extern u8 gOvl11ActionEntry16Keyframes;
 
 /* 8010E2C4 passes this byte anchor at 80127D48 to the packed-keyframe stepper. */
 extern u8 gOvl11Mode0Keyframes;
@@ -5209,27 +5212,27 @@ extern s32 gOvl11SceneTripletProgress;
 extern s32 gSequenceNumber;
 
 /* 80109D08 clears/passes this record pointer, then forwards its +0x38 vector. */
-extern s32 *D_8012D078;
+extern s32 *gOvl11ActionFoundRecord;
 /* 801096FC writes a word through this output passed by 80109D08. */
-extern s32 D_8012D07C;
+extern s32 gOvl11ActionFoundRecordCategory;
 
 /* D_8012D080 - ovl_11 absolute-addressed pointer cell (outside $gp range).
  * ovl_11_func_801098B0 passes its address as the out pointer of the
  * D_80075BC4 record scan and clears it to 0 when the scan fails;
  * ovl_11_func_80109E04 reads it as the current cluster record. */
-extern s32 *D_8012D080;
+extern s32 *gOvl11ActionProbedRecord;
 
 /* D_8012D084 - ovl_11 absolute-addressed s32 state cell. Cleared to 0 by
  * ovl_11_func_801090A4 at the end of every handler step; written by
  * ovl_11_func_8010A850 (three sites). Accessed with lui + %lo from ovl_11
  * code, i.e. outside the $gp range. */
-extern s32 D_8012D084;
+extern s32 gOvl11ActionMotionVariant;
 
 /* D_800BA894 - ovl_11 absolute-addressed pointer table indexed by the
  * handler object's u16 state field (obj+0x26). ovl_11_func_801090A4 reads
  * an entry, null-tests it and calls it; ovl_11_func_80109188 null-tests an
  * entry and clears state through it. Absolute-addressed main-RAM table. */
-extern s32 D_800BA894[];
+extern s32 gOvl11ActionEntryHandlers[];
 
 /* D_80070D30 and D_800719F8 - the ovl_11 file-status flag word and its
  * status sibling (reached as &D_800719F8 - 0xCC8). Both are >8-byte-view
@@ -7639,17 +7642,22 @@ extern s16 gOvl11StateValueDebit;
 extern s16 gOvl11StateEntryDirection;
 
 /* 8010AE64 selects one of two triples; 69960.data.s contains six halfwords. */
-extern u16 D_80127B2C[6];
+extern u16 gOvl11ActionMotionAnimations[6];
 
+/* Entry callbacks 0/2/1/10 pass these private packed scripts to 800D04D4. */
+extern u8 gOvl11ActionEntry0Keyframes;
+extern u8 gOvl11ActionEntry2Keyframes;
+extern u8 gOvl11ActionEntry1Keyframes;
+extern u8 gOvl11ActionEntry10Keyframes;
 /* 8010A47C passes this 12-byte sequence from 69960.data.s to 800D04D4. */
-extern u8 D_80127AD0[12];
+extern u8 gOvl11FoundRecordActionKeyframes[12];
 /* 8010A47C clears this halfword and passes it as the 800D04D4 frame timer. */
-extern u16 D_8012D070;
+extern u16 gOvl11FoundRecordActionTimer;
 
 /* 8010A654 passes this 12-byte sequence from 69960.data.s to 800D04D4. */
-extern u8 D_80127ADC[12];
+extern u8 gOvl11ProbedRecordActionKeyframes[12];
 /* 8010A654 clears this halfword and passes it as the 800D04D4 frame timer. */
-extern u16 D_8012D072;
+extern u16 gOvl11ProbedRecordActionTimer;
 
 /* 8010A850 passes the four-word position +52C8 and reads a pointer +DDD4. */
 struct Ovl11A850State {
@@ -7666,11 +7674,11 @@ struct Ovl11FEF8State {
 };
 
 /* 8010A850 passes this 20-byte state sequence in 69960.data.s to 800D04D4. */
-extern u8 D_80127AE8[20];
+extern u8 gOvl11RecordHandoffKeyframes[20];
 /* 8010A850 clears this u16 timer and passes its address to 800D04D4. */
-extern u16 D_8012D074;
+extern u16 gOvl11RecordHandoffTimer;
 /* 8010A850 reads this signed halfword as the previous action state. */
-extern s16 D_8012D076;
+extern s16 gOvl11RecordHandoffPhase;
 
 /* 8010DE68 indexes eight lh entries, and two rows of five signed deltas. */
 extern s16 gOvl11ObjectItemResponseMessages[8];

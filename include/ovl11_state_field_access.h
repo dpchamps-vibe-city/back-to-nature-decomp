@@ -10,14 +10,19 @@
  * to boolean, and add one for IDs 0xC/0xE only.
  *
  * Ovl11ReadStateField implements that read operation, but is deliberately
- * not declared here: three existing callers have incompatible 1/4-argument
- * contracts. Their original argument setup is retained pending ABI recovery;
- * publishing a fixed prototype here would either reject or change them. */
+ * not declared here: the distant 800EEBF4 adapter still has a one-argument
+ * contract with an unrecovered element-index input. The operand-command
+ * module uses the matched two-argument definition; its former four-argument
+ * calls have been reconciled with unchanged bytes. */
 
 /* Masked descriptors set/clear their bits according to operand!=0, ignoring
  * operation. Unmasked fields apply operation, clamp to signed min/max, then
  * truncate to the access width. Engine flag writes bypass descriptors. */
 void Ovl11UpdateStateField(s32 fieldId, s32 elementIndex, s32 operand, s32 operation);
+
+/* Rule comparisons: conditions 0..4 are >=, >, <=, <, == respectively.
+ * Unknown codes return true; the result is always 0 or 1. */
+s32 Ovl11TestStateFieldCondition(s32 value, s32 operand, s32 condition);
 
 /* Resolve descriptor IDs only. kindOut may be null. A null data pointer enters
  * the resumable breakpoint loop; there is no recoverable error return. */

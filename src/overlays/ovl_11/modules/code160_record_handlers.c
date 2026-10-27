@@ -756,9 +756,9 @@ s32 Ovl11StepCode160Handler13(Ovl11SetFieldsView *record) {
     }
     work = (u8 *) D_8006C838;
     Ovl11SetDirectionVector(*(u16 *) (work + 0x5200), (Recon800D0408A1View *) &position, 0x320);
-    position.field_0 = position.field_0 + *(s32 *) ((u8 *) record + 0x38);
-    position.field_4 = position.field_4 + *(s32 *) ((u8 *) record + 0x3C);
-    position.field_8 = position.field_8 + *(s32 *) ((u8 *) record + 0x40);
+    position.vx = position.vx + *(s32 *) ((u8 *) record + 0x38);
+    position.vy = position.vy + *(s32 *) ((u8 *) record + 0x3C);
+    position.vz = position.vz + *(s32 *) ((u8 *) record + 0x40);
     ovl_11_func_800D05D0(record, position);
     *(u16 *) ((u8 *) record + 0x22) = *(u16 *) (work + 0x5200);
     return 0;

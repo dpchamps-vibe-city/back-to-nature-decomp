@@ -321,18 +321,154 @@ scope for a controller-only route).
 
 ## Practical priority (updated)
 
-1. First runtime test unchanged but narrower: only the player (80071A12
+1. **Test the section-9 chain first** — it is the only input-driven
+   memory-safety primitive found. At a naming screen: cursor to 0x24 (or
+   0x40), L1+L2, X; watch the name buffer and the D_8005F0C8 fallback load
+   in 80018B98 during name-printing dialogues. Enumerate _spu_tsa values by
+   naming in different areas.
+2. First runtime test unchanged but narrower: only the player (80071A12
    stamina) and dog (800759FA affection) writes can do anything; the farm
    write is proven inert. Watch those two addresses plus the first
    status-delta clamp.
-2. Debug-menu reachability is now settled: no input path exists. Stop
+3. Debug-menu reachability is now settled: no input path exists. Stop
    searching for a button code; the remaining route is a corruption
    primitive that hits gCurrentSceneId (0x8005E39C) or WORK.state
-   (0x800A0490).
-3. For approach 3, the open surface is a *producer*: any input-reachable
+   (0x800A0490) — the section-9 stack-overflow variant passes through both.
+4. For approach 3, the open surface is a *producer*: any input-reachable
    write into the record buffer, the program base/cursor, the object id, or
    the scene id. Everything downstream of those (opcode/branch/field
-   indices) is already wide open.
-4. Verify the desired ending/event trigger independently of the displayed
+   indices) is already wide open. The section-9 stack overflow passes
+   through the asset scratch where event programs load; a
+   terminating-at-a-useful-depth variant would corrupt program records and
+   hand control to the interpreter's unchecked indices.
+5. Verify the desired ending/event trigger independently of the displayed
    date. A raw date write skips daily side effects and may miss exact-date
    triggers or leave required flags/counters inconsistent.
+
+## 9. Follow-up: a real input-driven OOB chain in the name-entry palette
+   (the "kana-table" read)
+
+**A player-controllable out-of-bounds read puts arbitrary .data/.bss
+halfwords — including live libspu state — into any name, and the message
+renderer then treats those halfwords as string-reference control codes.**
+
+### The OOB read
+
+`GetTextEntryCodeSet1` (exe:800245C8) computes the character code as
+`gTextEntryCodeTableSet1[row * 10 + column]`, with `row = cursor / 14` and
+`column = cursor % 14`. **The table has 28 entries** (0x800559D4, size 0x38;
+bounded by math_errno at 0x80055A14), but the cursor grid is 14 columns wide,
+so rows 3+ can compute indices up to 63.
+
+The set-1 movement bounds confine the cursor to in-bounds cells — but the
+character-set toggle does not:
+
+```c
+case 0x40: {                       /* X pressed */
+    d0 = (s16)gTextEntryCursor;
+    ...
+    if (d0 != 0xD) { ... append via GetTextEntryCode ... }
+    else {
+    case 0x5:                      /* Duff's-device fall-through: L1+L2 */
+    case 0xA:                      /* R1+R2 */
+        gTextEntryCharacterSet = ((u16)gTextEntryCharacterSet + 1) & 1;
+    }
+```
+
+Buttons 0x5/0xA are **L1+L2 / R1+R2** (the game's button word is
+`byte3 | (directionByte << 8)`: 0x01=L2, 0x04=L1, 0x02=R2, 0x08=R1,
+0x40=X, 0x20=CIRCLE, 0x800=START). The toggle **does not reset or revalidate
+the cursor**, and the set-0 grid is wider (row bounds per column: 5,4,4,4,4,5,
+4,4,4,4,3,2,2,5; column bounds per row: 13,13,12,10,9,13). So:
+
+1. In the hiragana set, move the cursor to any cell whose set-1 index is
+   past 28 — e.g. (row 2, col 8) = cursor 0x24, or (row 4, col 8) = 0x40.
+2. Press **L1+L2** (or R1+R2) — same frame — the set flips to 1, cursor stays.
+3. Press **X** — the append calls `GetTextEntryCodeSet1(col, row)` and writes
+   the OOB halfword into the name buffer.
+
+Reachable OOB indices: 28..51 (plus 33/43/53 from column 13 rows 2-4 which
+are reachable inside set 1 itself). The harvested halfwords are EXE
+data/bss at 0x80055A0C..0x80055A54:
+
+| index | cursor | address | value |
+|---|---|---|---|
+| 28 | 0x24 | 0x80055A0C | **0x7350 (static; bit 0x4000 set!)** |
+| 29-31 | 0x25-0x27 | 0x80055A0E-14 | 0x000B / 0x0000 / 0x0047 (gap) |
+| 32-35 | row 3 | 0x80055A14-1C | math_errno / math_err_point (runtime) |
+| 36-47 | rows 3-4 | 0x80055A1C-34 | libspu pointers 0x1F801C00 / 0x1F8010C8 / 0x1F8010F0 / 0x1F801014 |
+| **48** | **0x40** | **0x80055A34** | **_spu_tsa — libspu's live 16-bit SPU transfer address** |
+| 49-51 | 0x41-0x47 | 0x80055A36-40 | _spu_tsa high (0) / _spu_transMode / _spu_addrMode |
+
+`_spu_tsa` is written by `SpuSetTransferStartAddr` (800329B0),
+`SpuWritePartly` (80032A74) and libsnd's `_spu_t` (80026824) on every sound
+bank transfer — and the game loads per-area sound banks
+(`StepSoundBankBodyTransfer` → `SsVabTransBodyPartly`), so the last
+transferred SPU address is **player-influenced (which area you are in)** and
+lands in the name at cursor 0x40.
+
+### The sink: the renderer trusts name halfwords as reference codes
+
+Every name character with bit 0x4000 is treated as a string reference by the
+message renderer (the names are substituted into dialogues — the fixed EXE
+text bank contains 0x400A (player name), 0x400C (dog), 0x400D (farm), and
+25 uses of slot 0):
+
+- `func_8001A284` resolves ids 10-16 to the name buffers (case 10 = the
+  **player's own name** at 80071A00, 12 = dog, 13 = farm).
+- Everything else falls through to `D_8005F0C8[code & 0xFFF]` — **a table
+  whose real extent is 0x8005F0C8..0x8005F2B8 (124 words, next symbol
+  gAuxSpriteSource), of which only slots 0-10 are ever written**
+  (func_80017A08 clamps ids >= 0xB to 0xA). Ids 0x07C..0xFFF read **live
+  .bss as pointers**: the aux-sprite OT/packet buffers (8005F2E8-800605E8),
+  the pad input state (80060000+), the sprite packet pool cursor, etc.
+- The draw path `func_80018B98` (80018B98: `work1 & 0x4000` → resolve →
+  **recurse with no depth limit**; arg8 only gates typewriter pacing), the
+  counters `func_8001929C` / `func_8001945C`, and the width measurer
+  `func_800198E0` (`(code & 0xF000) == 0x4000`) all follow those pointers.
+
+So a name character of 0x4xxx-0x7xxx becomes:
+
+- **id 0x00A** (the harvested value ends in 0x00A): func_8001A284 case 10
+  resolves to the player's own name → the walk hits the same code again →
+  **unbounded recursion → stack overflow**, smashing downward from
+  0x801FFF80 through the graphics heap, the asset scratch (where event
+  programs are loaded), the ovl_11 overlay, the game state (calendar at
+  80070CF0), gCurrentSceneId (8005E39C) and the scene function pointer
+  (8005E384), before crashing.
+- ids 0x00B-0x010: another name (horse/dog/farm) rendered inside yours —
+  bounded recursion; a mutual pair (player name carries 0x4x0C, dog name
+  carries 0x4x0A) is also unbounded.
+- ids 0x000-0x009: the runtime string slots (set by the save menu;
+  otherwise 0 → skipped).
+- ids 0x07C-0xFFF: OOB reads of live .bss pointers → the renderer walks
+  sprite packets / pad state as text; packet halfwords like tpage words
+  (0xE1xx) themselves carry bit 0x4000, so the walk can cascade through
+  further OOB table reads — a self-sustaining pointer-chaos walk with
+  unbounded recursion and unbounded glyph-packet writes (func_80019070
+  writes raw packets at an advancing cursor with no bound of its own).
+
+### Status
+
+Everything above is verified statically from the original EXE/overlay bytes
+and the matched sources (table sizes, bounds tables, the toggle fall-through,
+the button mapping, the resolver/fallback paths, the missing depth limit,
+_spu_tsa's writers). What is NOT yet established:
+
+- Whether _spu_tsa is in [0x4000, 0x7FFF] at any naming screen in practice
+  (it depends on the accumulated bank layout; the initial load address is
+  0x1010 and banks advance it).
+- Whether the 0x7350 static value (id 0x350 → the word at 0x8005FE08, in the
+  aux-sprite packet area) is nonzero in practice.
+- Whether any pointer-chaos walk terminates anywhere useful.
+
+The runtime tests are cheap: at the new-game naming, set the cursor to 0x24
+(or 0x40), press L1+L2, press X, and watch the name buffer (80071A00) plus a
+breakpoint on the D_8005F0C8 fallback load in 80018B98 during the first
+dialogue that prints the name.
+
+This is the first input→memory-safety chain found in this audit: it reads
+live .data/.bss into a name, and the renderer follows the result as pointers
+with unbounded recursion. It is not yet a controlled write — but it is the
+class of primitive approach 3 needed, and its self-reference variant
+(id 0x00A) is a guaranteed stack-overflow engine.

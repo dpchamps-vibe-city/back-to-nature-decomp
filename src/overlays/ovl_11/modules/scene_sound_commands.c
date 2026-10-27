@@ -10,8 +10,10 @@
 #include "sound_commands.h"
 #include "screen_fade.h"
 #include "ovl11_scene_sound_commands.h"
-
-s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/abs.h"
+#include "ovl11_camera_position_control.h"
 
 /* The original command dispatch and EC52C both pass four operands; reserved
  * is unread. Publishing that complete contract also covers direct callers. */
@@ -95,7 +97,7 @@ s32 Ovl11ScreenFadeCommand(s16 mode, s16 ticks, s32 begin, s32 additiveBlend) {
                 }
             }
         } else {
-            ovl_11_func_800E63C8(0, 0, 0, 0);
+            Ovl11SetPositionControlFlags(0, 0, 0, 0);
 sceneTarget:
             sceneOt = 1;
             blendMode = 2;

@@ -138,7 +138,7 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
             *(s16 *)((u8 *)arg0 + 0x28) = 0;
             return 1;
         }
-        Ovl11LookupActionPosition(arg0, arg1 == 0, &sp18.field_0, *(s16 *)((u8 *)arg0 + 0x30));
+        Ovl11LookupActionPosition(arg0, arg1 == 0, &sp18.vx, *(s16 *)((u8 *)arg0 + 0x30));
         ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
         *(s16 *)((u8 *)arg0 + 0x28) = 1;
         *(u16 *)((u8 *)arg0 + 0xB8) |= 0x200;
@@ -172,9 +172,9 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
             if (selected != -1) {
                 *(s16 *)((u8 *)arg0 + 0xBA) = selected;
                 if (arg1 == 1) {
-                    Ovl11GetSlotPositionZ600(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionZ600(&sp18.vx, selected);
                 } else {
-                    Ovl11GetSlotPositionX400(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionX400(&sp18.vx, selected);
                 }
                 ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
                 *(s16 *)((u8 *)arg0 + 0x28) = 4;
@@ -197,9 +197,9 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
             } else {
                 *(s16 *)((u8 *)arg0 + 0xBA) = selected;
                 if (arg1 == 1) {
-                    Ovl11GetSlotPositionZ600(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionZ600(&sp18.vx, selected);
                 } else {
-                    Ovl11GetSlotPositionX400(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionX400(&sp18.vx, selected);
                 }
                 ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
                 *(s16 *)((u8 *)arg0 + 0x28) = 4;
@@ -212,9 +212,9 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
         break;
     case 7:
         if (arg1 == 1) {
-            Ovl11LookupActionPosition(arg0, 0, &sp18.field_0, *(s16 *)((u8 *)arg0 + 0x30));
+            Ovl11LookupActionPosition(arg0, 0, &sp18.vx, *(s16 *)((u8 *)arg0 + 0x30));
         } else {
-            Ovl11LookupActionPosition(arg0, 1, &sp18.field_0, *(s16 *)((u8 *)arg0 + 0x30));
+            Ovl11LookupActionPosition(arg0, 1, &sp18.vx, *(s16 *)((u8 *)arg0 + 0x30));
         }
         ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
         *(s16 *)((u8 *)arg0 + 0x28) = 8;
@@ -328,7 +328,7 @@ s32 Ovl11StepTaggedRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
         /* fall through */
     case 7:
         if (Ovl11TestActionKey5((s32)arg0, *(s16 *)((u8 *)arg0 + 0xB6)) != 0) {
-            Ovl11LookupActionPosition((Ovl11StateArg0 *)arg0, 2, &position.field_0, arg0->field_30);
+            Ovl11LookupActionPosition((Ovl11StateArg0 *)arg0, 2, &position.vx, arg0->field_30);
             ovl_11_func_800D05D0(arg0, position);
             *(s16 *)((u8 *)arg0 + 0x28) = 5;
         }
@@ -363,7 +363,7 @@ s32 Ovl11StepSeasonalRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
             (*(s16 *) ((u8 *) arg0 + 0x28)) = 0;
             return 1;
         }
-        temp_v0_2 = Ovl11ReadSpawnRecord(0x123, &sp18.field_0, &sp28, temp_v0);
+        temp_v0_2 = Ovl11ReadSpawnRecord(0x123, &sp18.vx, &sp28, temp_v0);
         if ((temp_v0_2 == 1) && (sp28 == arg0->field_30)) {
             ovl_11_func_800D05D0(arg0, sp18);
             (*(s16 *) ((u8 *) arg0 + 0x28)) = temp_v0_2;
@@ -393,7 +393,7 @@ s32 Ovl11StepSeasonalRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
         }
         break;
     case 4:
-        if (Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 2, &sp18.field_0, arg0->field_30) == 1) {
+        if (Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 2, &sp18.vx, arg0->field_30) == 1) {
             ovl_11_func_800D05D0(arg0, sp18);
         }
         (*(s16 *) ((u8 *) arg0 + 0x28)) = 5;

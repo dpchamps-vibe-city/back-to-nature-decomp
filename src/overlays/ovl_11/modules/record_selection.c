@@ -93,10 +93,10 @@ s32 Ovl11FindTaggedRecordInBox(Ovl11PaddedVec3 position, s16 key,
     largeBase = (u8 *)&gTaggedRecordBase;
     requiredKey = key;
     extent = radius;
-    minX = position.field_0 - extent;
-    maxX = position.field_0 + extent;
-    minZ = position.field_8 - extent;
-    maxZ = position.field_8 + extent;
+    minX = position.vx - extent;
+    maxX = position.vx + extent;
+    minZ = position.vz - extent;
+    maxZ = position.vz + extent;
     do {
         do {
             record = largeBase + index * 0xB8;

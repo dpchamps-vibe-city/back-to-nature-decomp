@@ -1,6 +1,8 @@
 #include "common.h"
-
-s32 ovl_11_func_800E60A0(s16 arg0, s32 height, s32 arg2, s32 arg3);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/abs.h"
+#include "ovl11_camera_position_control.h"
 
 s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 result;
@@ -29,7 +31,7 @@ s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
             position = (u8 *)gObjectPositionRecordCoordinates + index * 0x1D4;
         }
-        result = ovl_11_func_800E60A0(arg3, *(s16 *)(position + 4),
+        result = Ovl11MoveCameraTarget(arg3, *(s16 *)(position + 4),
                                     *(s32 *)position, *(s32 *)(position + 8));
     }
     if (result == 1) {

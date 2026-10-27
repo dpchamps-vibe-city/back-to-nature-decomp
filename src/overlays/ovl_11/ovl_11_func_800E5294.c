@@ -5,9 +5,10 @@
 #include "game_flags.h"
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "psyq/abs.h"
+#include "ovl11_camera_position_control.h"
 
 /* These calls explicitly zero the unused trailing argument slots. */
-s32 ovl_11_func_800E63C8();
 u16 ovl_11_func_800EAF5C();
 
 void ovl_11_func_800E5294(void) {
@@ -15,7 +16,7 @@ void ovl_11_func_800E5294(void) {
 
     SetGameFlag(3U, 1U);
     if (!(((struct Ovl11E5294State *) D_8006C838)->status & 0x20000010)) {
-        ovl_11_func_800E63C8(0, 0, 0, 0);
+        Ovl11SetPositionControlFlags(0, 0, 0, 0);
     }
     if (!(((u16 *) ((struct Ovl11SpriteWork *) &D_8007AFF0)->header)[4] & 0x1000)) {
         if ((u32) (((struct Ovl11E5294State *) D_8006C838)->current[1] - 0x15F) >= 0x32U) {

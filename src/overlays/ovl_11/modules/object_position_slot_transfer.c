@@ -5,11 +5,13 @@
  * Original entries: ovl_11:800E9724/9778/9838. Conservative -G0 membership
  * and boundaries: notes/file-groupings.md. */
 #include "ovl11_object_position_slot_transfer.h"
-
-s32 ovl_11_func_800E60A0(s16 recordId, s32 height, s32 x, s32 z);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/abs.h"
+#include "ovl11_camera_position_control.h"
 
 s32 Ovl11ApplySlotPositionTriple(s16 recordId, s16 heightSlot, s32 xSlot, s32 zSlot) {
-    return ovl_11_func_800E60A0(recordId, *(s16 *)&gOvl11ValueSlots[heightSlot],
+    return Ovl11MoveCameraTarget(recordId, *(s16 *)&gOvl11ValueSlots[heightSlot],
                               gOvl11ValueSlots[xSlot], gOvl11ValueSlots[zSlot]);
 }
 

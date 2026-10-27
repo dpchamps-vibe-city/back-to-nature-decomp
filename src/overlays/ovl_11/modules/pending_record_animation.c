@@ -11,9 +11,10 @@
 #include "psyq/libgte.h"
 #include "ovl11_state_record_commands.h"
 #include "ovl11_pending_record_animation.h"
+#include "psyq/abs.h"
+#include "ovl11_camera_position_control.h"
+#include "ovl11_state_value_operand_commands.h"
 
-s32 ovl_11_func_800E698C(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800F06D8(s32 *arg0, s32 *arg1);
 
 s32 Ovl11CommitPendingRecordSelection(s16 resultSlot, s16 animationPlusOne, s32 updateField, s32 requireFlag46) {
@@ -35,7 +36,7 @@ s32 Ovl11CommitPendingRecordSelection(s16 resultSlot, s16 animationPlusOne, s32 
                 Ovl11OrientAndAnimateStateRecord(pendingRecord, 0, animationPlusOne - 1, 0);
             }
             if (updateField != 0) {
-                ovl_11_func_800E698C(0x2C, pendingRecord, 1, 0);
+                Ovl11UpdateStateFieldFromLiteral(0x2C, pendingRecord, 1, 0);
             }
         }
     }
@@ -43,7 +44,7 @@ s32 Ovl11CommitPendingRecordSelection(s16 resultSlot, s16 animationPlusOne, s32 
         ((struct Ovl11PendingSelectionWorkView *)D_8006C838)->pendingRecord = -1;
         SetGameFlag(0x46U, 0U);
     }
-    ovl_11_func_800E63C8(accepted == 0, 1, 0, 0);
+    Ovl11SetPositionControlFlags(accepted == 0, 1, 0, 0);
     return accepted;
 }
 

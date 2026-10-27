@@ -20,7 +20,7 @@ s32 ovl_11_func_801090A4(Ovl11HandlerObj *arg0) {
     if (arg0->unk0 == 0) {
         return -1;
     }
-    handler = (void (*)(Ovl11HandlerObj *)) D_800BA894[arg0->unk26];
+    handler = (void (*)(Ovl11HandlerObj *)) gOvl11ActionEntryHandlers[arg0->unk26];
     if (handler != 0) {
         handler(arg0);
     }
@@ -34,6 +34,6 @@ s32 ovl_11_func_801090A4(Ovl11HandlerObj *arg0) {
     } else {
         arg0->unk34 &= 0xFFEFFFFF;
     }
-    D_8012D084 = 0;
+    gOvl11ActionMotionVariant = 0;
     return 0;
 }

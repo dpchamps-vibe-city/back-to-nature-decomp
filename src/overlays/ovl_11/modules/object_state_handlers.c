@@ -583,9 +583,9 @@ s32 Ovl11StepState18RecordSelection(Ovl11SetFieldsView *arg0) {
         *(s16 *)((u8 *)arg0 + 0x28) = 1;
         *(s16 *)((u8 *)arg0 + 0x22) = 2;
         arg0->field_34 |= 0x800;
-        position.field_0 = -0x1324;
-        position.field_4 = 0;
-        position.field_8 = -0x2198;
+        position.vx = -0x1324;
+        position.vy = 0;
+        position.vz = -0x2198;
         ovl_11_func_800D05D0(arg0, position);
         *(s32 *)((u8 *)arg0 + 0x38) = -0x12C0;
         *(s32 *)((u8 *)arg0 + 0x3C) = -0x12C;
@@ -645,9 +645,9 @@ s32 Ovl11StepState19ExitMotion(Ovl11SetFieldsView *arg0) {
         ((Ovl11ProgressState *) D_8006C838)->flags &= ~0x800000;
         (*(s16 *) ((u8 *) arg0 + 0x28)) = 1;
         arg0->field_34 |= 0x800;
-        position.field_0 = -0x1324;
-        position.field_4 = 0;
-        position.field_8 = -0x22C4;
+        position.vx = -0x1324;
+        position.vy = 0;
+        position.vz = -0x22C4;
         ovl_11_func_800D05D0(arg0, position);
         break;
     case 1:

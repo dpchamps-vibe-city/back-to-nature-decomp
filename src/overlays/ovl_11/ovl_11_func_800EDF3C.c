@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_flags.h"
+#include "ovl11_record_action_predicate.h"
 
 /* Existing address-prefix exception, kept local to its authorized caller.
  * Computes a byte-pointer offset using an unsigned 16-bit constant.
@@ -18,7 +19,9 @@
  * preserves the match in this source; this is not a clean-C impossibility
  * or proof of an original macro. See notes/asm-exception-evidence.md. */
 
-s32 ovl_11_func_800EDF3C(s16 arg0, s32 arg1) {
+/* EB85C sets a1/a2/a3 to zero at 800EB860..868 before this call;
+ * retain both unread command operands in the public ABI. */
+s32 ovl_11_func_800EDF3C(s16 arg0, s32 arg1, s32 unused2, s32 unused3) {
     s16 var_a0;
     s32 temp_v0;
     register char *p asm("$3");

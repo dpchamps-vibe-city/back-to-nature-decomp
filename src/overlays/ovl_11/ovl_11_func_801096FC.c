@@ -22,10 +22,10 @@ s32 ovl_11_func_801096FC(Ovl11PaddedVec3 position, s16 key, s32 radius, s32 *fla
     base = (Ovl11RecD749F4 *)&gTaggedRecordBase;
     sel = key;
     r = radius;
-    lo0 = position.field_0 - r;
-    hi0 = position.field_0 + r;
-    lo1 = position.field_8 - r;
-    hi1 = position.field_8 + r;
+    lo0 = position.vx - r;
+    hi0 = position.vx + r;
+    lo1 = position.vz - r;
+    hi1 = position.vz + r;
     one = 1;
     do {
         if (base[i].unk0 != 0 && sel == base[i].unk30 && base[i].unk26 != notmatch && lo0 < base[i].unk38 && base[i].unk38 < hi0 && lo1 < base[i].unk40 && base[i].unk40 < hi1) {

@@ -27,7 +27,7 @@ typedef struct {
 void Ovl11SetDirectionVector(s32 direction, Recon800D0408A1View *arg1, s32 arg2);
 
 extern s32 (*D_800BA848[])(Ovl11D04D4Obj *);
-extern s32 D_800BA894[];
+extern s32 gOvl11ActionEntryHandlers[];
 
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1) {
     s32 var_s1;
@@ -59,7 +59,7 @@ s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1) {
             var_s3 = D_800BA848[var_s1](arg0);
         }
     }
-    if (D_800BA894[var_s1] != 0) {
+    if (gOvl11ActionEntryHandlers[var_s1] != 0) {
         if (var_s3 != -1) {
             arg0->unk26 = var_s1;
             arg0->unk28 = 0;

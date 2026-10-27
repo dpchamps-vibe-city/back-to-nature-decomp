@@ -2876,7 +2876,62 @@ checked fold preserved every member and the overlay with no new exception.
 
 ## `ovl_11` D_8012D0xx tiny-global cluster / state-probe run — 0x80108104–0x8010AFCC (confidence: low)
 
-A checked complete action-state attempt at 80109EC4–8010B05C exclusive
+**Reconstructed `modules/action_state_handlers.c`, 80109EC4–8010B05C
+exclusive, all 17 entries:** the sixteen distinct callbacks of the 19-slot
+800BA894 bank plus AFCC's private handoff helper. The former declaration
+blocker is resolved without call-site copies or casts: Ovl11PaddedVec3 is now
+a typedef of the existing four-word Ovl11CC7CCPosition. Both already carry
+three signed coordinates plus a fourth ABI word; the writer ignores that
+word, but callers still pass it. The alias preserves one C type identity for
+the work-area aggregate and parameter/local vectors. Their field uses were
+renamed to vx/vy/vz across the affected callers. The checked complete fold
+then passed **all 17 members and the overlay** at baseline -O2/-G0. No flag,
+private linkage, storage, assembly or exception was added.
+
+Membership: decoding 800BA894 gives slots 9EC4/A02C/9F7C/null/AE64/A47C/
+A654/A850/A0E4/A0E4/A19C/A254/A30C/A3C4/ABAC/AC64/AD1C/AE64/ADD4.
+Thus every non-null bank target is in the module. The scripts at
+80127A78..80127B1C occur in callback order; the compound handlers share their
+three timers and handoff phase at D070/72/74/76, the AE64 motion helper and
+its six-halfword animation table. Only A850 calls AFCC, so it is included,
+not cut off at the old type conflict. The A850 jump table is owned by the
+module in the original member order. The address-word callback bank remains
+in its extracted rodata object; it is named and verified, not newly defined.
+
+Left 80109E64 belongs to the other, update-phase bank (800BA848) and runs the
+timed sprite-effect protocol, not an entry script or internal helper of this
+bank. Right 8010B05C is a shared spawn writer used by both the entry handler
+and the earlier 80108D84 update dispatcher. It is a public service, not AFCC's
+exclusive-helper case. The earlier bank also produces the found/probed record
+results consumed here: these are now explicitly named shared interfaces, not
+claimed private ownership. Complete bank membership and the distinct
+entry/update roles support this service cut; the absence of GP evidence at
+-G0 means neither edge proves a historical linker-object boundary. A larger
+original file containing both banks remains possible, not established merely
+by their use of the same object/work area.
+
+The module and header name keyframe callbacks by their demonstrated bank
+slots (8 also serves slot 9), found/probed-record actions, record handoff and
+motion refresh. Scripts, timers, shared record results, category and motion
+variant have canonical overlay-scoped data names. Locals describe phase,
+completion, motion flags, animation rows and world-coordinate step size.
+The duplicate A19C object view was replaced by the established Ovl11D04D4Obj
+with the same accessed offsets/widths. Redundant source-local data externs
+were removed; the four missing script declarations were published in
+globals_override.h with their observed call evidence. The header documents
+non-reentrancy, lock/phase/timer effects, the one callback that does not reset
+the 300-tick timer and completion delayed until the next call. Linkage and
+all pointer/return ABIs are retained. Interface audit reports no failing
+published interface. After naming, local cleanup and canonical header export,
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes all
+eight integrity gates: **2227 folded functions, 382/382 valid modules**.
+Every EXE/overlay byte, callback address, jump table and data placement is
+unchanged, including all callers reached by the shared vector-type change.
+No tool, test, compiler flag or policy-exception change was needed. The
+command exits 1 solely because 398 eligible functions remain outside modules.
+
+Historical failed attempt (before canonical type unification): a checked
+complete action-state attempt at 80109EC4–8010B05C exclusive
 (17 members: the sixteen distinct 800BA894 callbacks plus AFCC's private
 handoff helper) reached compilation and rolled back. Private packed scripts,
 compound-action timers D070/72/74/76, shared motion refresh AE64 and its D084
@@ -2892,10 +2947,12 @@ The compiler reports both declarations, at merged lines 371/610. The earlier
 public-vector experiment recorded below at the vector-writer note already
 showed that a cast/direct view alone changes A850; that spelling was not
 repeated. The trial's independent B05C pointer-prototype/cast correction was
-also restored, so no experimental source, module, flag or exception remains.
-Next useful work is one corroborated four-word position representation across
-these callers and the writer, retaining the ignored fourth word; neither a
-new TU cut nor an incompatible declaration would resolve it.
+also restored, so that historical attempt left no experimental source,
+module, flag or exception. Its proposed next step was one corroborated
+four-word position representation across these callers and the writer,
+retaining the ignored fourth word. The canonical type unification above now
+settles this 17-member fold; it does not settle the other bank's pre-existing
+scalar-versus-aggregate call declarations.
 
 **Reconstructed: `modules/choice_messages.c`, 80107F18–80108BE8 exclusive,
 24 functions.** The broad D0xx-family hypothesis below is not a single-TU
@@ -7237,6 +7294,56 @@ Members:
 ---
 
 ## `ovl_11` D_801295C6 setter/getter run — 0x800E60A0–0x800EEBC8 (confidence: medium)
+
+**Reconstructed `modules/camera_position_control.c`, E60A0–E648C
+exclusive, both entries.** The mover explicitly enters the adjacent helper's
+position-control protocol (0,0,0,0), sets the same work +C bit 400000 that
+release clears, and publishes camera-target XYZ at far work +253B4/6/8.
+The mover's active flag 80124908 and full-word position cache 801294F0 have
+no other source users; its single switch table is pooled with the unit.
+These call/flag-protocol and private-scratch witnesses, corroborated by
+original link order, support the pair rather than the older dispersed
+selected-position-index family. There is no GP ownership proof under -G0;
+the helper remains a public service with other scene-command clients, not
+an invented static helper.
+
+Left E5E98 selects a message/area code using the default-area/calendar/flag
+protocol and writes far-work +25480/+254A0. It uses neither the movement
+scratch nor the control helper. Right pending_record_animation (E648C)
+resolves/installs pending record animations and calls the flag service as
+an external client; it uses neither target XYZ nor the movement cache.
+A public helper call and the broadly shared scene flags do not establish
+one original file containing every client. These are evidence-limited
+responsibility/private-scratch cuts, not proven historical object edges
+or boundaries invented for flags. Wider original provenance is uncertain.
+
+Names: Ovl11MoveCameraTarget (E60A0), Ovl11SetPositionControlFlags (E63C8),
+gOvl11CameraMoveActive and gOvl11CameraMovePosition. The 16-byte cache
+extent is retained even though only its first three words are accessed.
+No storage, private linkage, coordinate scale conversion or disputed type
+is added. Locals distinguish the distance/divisor/nominal step and XYZ;
+block structure, narrowing and axis-store order remain unchanged.
+`ovl11_camera_position_control.h` publishes both external interfaces,
+including low-halfword Y, caller-driven timing, the extra arrival-acknowledge
+call, snap's deliberately stale cache, retained release flags, and the two
+unused command ABI operands. Camera naming is corroborated by the existing
+scene_camera_lighting/map_texture_camera/selected_record_camera users of
+these exact XYZ offsets, not inferred from address adjacency.
+
+The first checked fold rolled back on E60A0's old-style helper declaration
+conflicting with its signed-halfword definition. Publishing the actual
+four-argument prototype (the call already supplies four zeros) fixes that
+concrete visibility conflict; the complete baseline -O2/-G0 fold then
+proved both members and linked ovl_11 byte identity. No flag override,
+allowlist entry or source-policy exception was added or retired. Symbol
+configuration/canonicalization preserves the original overlay identities;
+batch interface publication replaced all eight callers' local declarations
+with the module header without changing their objects. The full campaign
+gate passes all eight integrity checks at **2229/2625 folded, 383/383 valid
+modules** (2227 folded on entering this run; the earlier 17-entry action
+module was already present). Every linked executable/overlay byte, associated
+data/table and affected interface remains unchanged; no exception grew.
+Exit 1 denotes the 396 remaining eligible functions, not an integrity failure.
 
 **Reconstructed `modules/scene_value_commands.c`, 800EE604–800EEBF4
 exclusive, all six consecutive entries.** The camera callback, condition
@@ -16211,6 +16318,58 @@ with different widths and far-apart addresses.
 
 ## `ovl_11` D_80129560 s32-table accessor family — 0x800E5A1C–0x800EE944 + 0x800EC490 (confidence: medium)
 
+**Reconstructed `modules/state_value_operand_commands.c`, E6744–E6AB0
+exclusive, all ten entries.** The complete operand-adapter protocol contains
+paired literal/slot field comparisons, literal/slot value comparisons,
+field/value inclusive ranges, literal/slot field updates, and slot operations
+from literal-or-slot versus descriptor values. The same read/compare/update/
+arithmetic service family and complementary operand encodings support the
+whole run. The ten consecutive object-opcode rows corroborate its order but
+are not independent TU proof: that generic table spans many services.
+There is no private data/helper or GP proof (-G0), and a larger historical
+command source remains possible. This is a protocol-closure reconstruction,
+not a claim that the twenty-word value bank belongs to this TU.
+
+Left pending_record_animation (ending E6744) resolves and animates records,
+not generic operand comparisons/arithmetic. Its call to E698C updates field
+2C through a public service, without using the other operand adapters.
+Right E6AB0 gates CD audio against message-window state and uses neither
+the descriptor leaves nor value slots. These protocol discontinuities bound
+the supported unit; no flag or mechanical limit creates an internal slice.
+The distant EB700/EB760 adapters are external clients of the same descriptor
+service, not evidence joining all intervening heterogeneous handlers.
+
+The two old four-argument reads (E67D4/E6A50) now call the matched reader's
+actual two-argument contract. E686C explicitly receives and forwards the
+interpreter's incoming third operand as its condition; no guessed constant
+or register binding replaces it. The complete baseline checked fold proves
+all TEN corrected members and linked ovl_11 bytes. It needs no override,
+allowlist addition, unprototyped workaround, new storage or private linkage.
+Read still has a separate unresolved one-argument adapter at EEBF4; that debt
+is retained explicitly in the service header, not silently claimed solved.
+
+All ten entries have behavior names at their original overlay identities,
+propagated through callers and callback relocation names by canonicalNames.
+`ovl11_state_value_operand_commands.h` documents operand encodings, unchecked
+indices, each actual ABI width, inclusive bounds, the literal-only field-14/
+flag-1B suppression, operator codes, and no-op return behavior. Updates are
+named UPDATE, not ASSIGN: their operation operand also permits arithmetic.
+Parameters/locals now name field/index/slot/condition/range/operation roles;
+expression order and fused signed-halfword slot indexing remain unchanged.
+The repaired comparator is published through ovl11_state_field_access.h;
+its earlier two-argument caller debt is removed, without changing the helper.
+Interface publication reconciles six caller units across the ten commands
+and newly published comparator, preserving their objects. Pre-existing
+read-declaration conflicts fall from three to one, and the comparator's
+arity/implicit-declaration defect is gone. No newly published interface has
+a failing caller. Full `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates at
+**2239/2625 folded, 384/384 valid module TUs**, including all executable/
+overlay code/data/table bytes, policy, canonical interfaces, configuration
+convergence and exception non-growth. This run adds twelve folded functions
+in two units (2227 on entry); the pre-existing action-state changes remain.
+Exit 1 denotes the 386 remaining functions, not an integrity failure.
+
 **Additional complete command services reconstructed:**
 
 - `modules/message_command.c`, E58DC–E5A1C exclusive, is
@@ -16278,12 +16437,11 @@ Batch acceptance for pending_record_animation, scene_sound_commands and
 stage_mode2_record_command: tuProgress --verify against the campaign baseline
 passes all eight integrity gates at 2206/2625 folded, 379/379 valid modules.
 All executable/overlay bytes, associated data/tables and affected caller
-objects remain identical; no exception grew. The broader E6744–E6AB0
-state-field wrapper candidate is not folded: its existing calls disagree
-on Ovl11ReadStateField/Ovl11TestStateFieldCondition arity. A shared header
-must be reconciled with those original call operands first; retaining known
-conflicting prototypes or adding a fresh unprototyped workaround is not an
-accepted integration path.
+objects remain identical; no exception grew. The former E6744–E6AB0 arity
+blocker has since been resolved by the complete operand-adapter fold above:
+actual read operands and the incoming comparator condition are explicit,
+without retaining conflicting declarations or adding an unprototyped
+workaround.
 
 **Reconstructed two complete command services in this family:**
 
@@ -16585,7 +16743,38 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   0x3FFF payload and re-sets 0x8000 (`arg1 == 0`) / 0x4000 (`arg1 == 2`) via a
   case-0/1/2 switch; returns 1. Reader-side counterpart of the writer members:
   the table slot it consumes is what `800E8BA0`/`800E8D00`/`800E9778` fill.
-- ovl_11_func_800EB85C (m, candidate same TU; [evidence](research/ovl_11_func_800EB85C-grouping.md)) — five-ID position/action sequencer using the shared state slots and accessor-helper cluster.
+- **Reconstructed `modules/five_record_sequence.c`, EB85C–EBF18 exclusive,
+  one complete table-backed sequencer.** This is not a join of the dispersed
+  accessor family: EB85C alone consumes the five IDs at 80124984 and the
+  parallel five-word X/Z rows at 80124990. Its switch contains the entire
+  phase-0 initialization and phase-1..16 repeating animation/motion protocol;
+  its one jump table is pooled with that code. Left EB79C updates record flag
+  payloads, while right EBF18 performs bulk descriptor updates. Neither uses
+  these parameter tables, calls this sequencer or shares its phase protocol.
+  The generic value-slot bank and public record helpers do not join those
+  neighbors or the distant EB010/EB328 users. These are evidence-limited
+  private-table/responsibility cuts under -G0, not proved original object
+  boundaries; a larger historical file remains possible.
+
+  Ovl11StepFiveRecordSequence and gOvl11FiveRecordSequenceIds/XZ name the
+  observed behavior, not a guessed event. The ID label keeps its twelve-byte
+  original span (five IDs plus alignment), and the X/Z label keeps all forty
+  bytes; C views and blob ownership are unchanged. phaseSlot/phase expose
+  the signed-halfword read/full-word writeback. The header documents raw
+  units, no position integration, last-record-only completion, conditional
+  index-0 skipping, phase-7 skip and 16-to-1 looping, and the always-1 API
+  result. No static linkage, state allocation or behavior is inferred.
+  The first full gate rejected the old EDF3C arity debt inside the new module.
+  Original instructions at EB860/864/868 explicitly clear a1/a2/a3 before
+  EB8B0's probe call, corroborating the four supplied operands at all five
+  existing call sites. EDF3C now retains two unused trailing s32 operands;
+  ovl11_record_action_predicate.h publishes that witnessed contract. Interface
+  reconciliation proves all three other caller units unchanged, and the final
+  full gate proves the probe's own bytes unchanged too. Its pre-existing
+  register/address-prefix exception and legacy identity are untouched; no
+  forbidden construct or exception is added. Baseline checked fold proves
+  the sequencer and linked overlay. Original broader research:
+  [EB85C](research/ovl_11_func_800EB85C-grouping.md).
 - ovl_11_func_800EC490 (m, matched 2026-11 — this session, 0x9C, byte-exact) —
   four-slot default restore: for each of four args, if `!= -1`, writes
   `D_80129560[arg] = D_80070D06/08/0A/0C` (four adjacent engine-rodata u16s,
@@ -25827,15 +26016,16 @@ establish membership in the service's source file.
 Ovl11StateField names data, kind, byte stride, signed minimum/maximum and
 mask without changing any width. The redundant assembler-label macro view
 was replaced by one 48-entry extern; data remains in the overlay blob.
-Resolve/update/arithmetic have a typed service header. Read's 1/4-argument
-caller declarations and the comparator's two-argument call at E686C are
-**pre-existing unresolved ABI debt**: publishing their fixed definitions
-made interfaceAudit reject the callers. Their original argument setup and
-local declarations are preserved, not coerced by casts, invented arguments
-or new prototype workarounds. Correct two-argument read callers retain their
-local declarations. This is explicitly incomplete interface recovery, not
-new silent declaration conflict. The public service header explains why the
-read entry is not declared there. The checked whole fold passed baseline
+Resolve/update/arithmetic and the comparator have a typed service header.
+The operand-command reconstruction at E6744–E6AB0 resolved both four-argument
+read declarations and E686C's comparator call with unchanged original bytes:
+the reader consumes two arguments, and the slot/slot command passes its
+incoming third operand as condition. The distant EEBF4 one-argument read
+adapter remains **pre-existing unresolved ABI debt**. Its element-index
+input is not recovered here; correct two-argument callers retain local
+prototypes until that remaining adapter permits global publication. No
+casts, invented operands or new prototype workarounds hide that limit.
+The public service header explains why the read entry is still absent. The checked whole fold passed baseline
 with all six members and overlay bytes; no flag/exception was involved.
 
 Historical candidate (superseded membership interpretation):
@@ -26609,6 +26799,52 @@ loop calls F0380 for selectors 0..3 before conditionally resetting their pairs.
 These are additional local adjacency/call/data fingerprints, not grounds to
 merge the distant status-reader and copy clusters into a proved original TU.
 
+
+## `ovl_11` signed record adjustment — 0x800F0734–0x800F07EC (confidence: medium for service, unproved original object edges)
+
+**Reconstructed `modules/record_adjustment.c`, one complete table-backed
+lookup service**, Ovl11LookupRecordAdjustment. F0734 is the sole user of
+801248CC's four rows of five signed halfwords, now gOvl11RecordAdjustmentRows.
+Its sole caller EDAA4 selects rows 0/2 and applies the returned signed value
+to a record's +16 halfword, capped above at 255. This establishes an adjustment,
+NOT a direction offset or a named gameplay statistic. The table, item bias
+and record/work-pair multiplier form the complete service; no helper or
+member from another module was absorbed on adjacency alone.
+
+Left F06D8 is the stateless direction classifier used by three independent
+position services; it calls no function and reads no adjustment table or
+held item. Right F07EC is a position/animation sequencer with its own switch
+table and coordinate state, not this lookup/table/item protocol. These are
+conservative private-table/responsibility cuts under -G0; shared absolute
+work/record access and the distant caller do not prove a larger source file.
+No known supported multi-member group was sliced, and no flag limit creates
+either edge. Historical object provenance is not claimed proved.
+
+`ovl11_record_adjustment.h` publishes the actual s16/s32/s16 ABI, unchecked
+4x5 indices, +2/+20 held-item bias, pair-match x5 multiplier, intermediate
+s16 narrowing and no writes. Parameters/locals name row, column, record and
+adjustment rather than speculative direction/gameplay meaning. The missing
+table declaration is now in globals_override.h with its access evidence.
+The competing C scalar extern for 80071A8A is removed in favor of the existing
+Ovl11Item_80071A8A canonical typed view and its established linker identity;
+no new alias, field interpretation or storage is invented. The 40-byte table
+extent and external linkage/ownership remain unchanged. The baseline checked
+fold proves the entry and overlay; no override or exception was added or
+retired. Header publication replaces EDAA4's local declaration with an
+unchanged caller object. The final `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates at
+**2241/2625 folded, 386/386 valid module TUs**. This run reconstructs fourteen
+functions in four modules from its 2227-entry working-tree start; the earlier
+17-entry action module and unrelated changes are preserved. All executable/
+overlay code, data, callback pointers, jump tables and placement remain byte
+identical. Canonical/public interfaces, source policy, configuration
+convergence, stability and exception non-growth pass; no tool, flag or
+allowlist change was needed. Exit 1 reflects the 384 remaining functions,
+not an integrity failure. The other researched bands have no additional
+ready whole unit: their larger positive closures remain limited by existing
+compiler-setting/declaration/literal-ownership problems, or their neighbors
+have no connecting private-state/helper/protocol witness. No narrower group
+was folded to shelter a flag and no discovery queue was added.
 
 ## ovl_11 D_801295D0 status-record copy cluster — 0x800E729C / 0x800F0474 (confidence: low)
 

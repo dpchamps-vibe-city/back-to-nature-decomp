@@ -1,9 +1,9 @@
 #include "common.h"
 #include "random.h"
 #include "game_flags.h"
+#include "ovl11_record_action_predicate.h"
 
 s32 ovl_11_func_800EFA1C(s16 arg0);
-s32 ovl_11_func_800EDF3C();
 
 s32 ovl_11_func_800ED7E0(s16 arg0, s16 arg1) {
     struct Ovl11CandidateList choices = D_800B9DB0;

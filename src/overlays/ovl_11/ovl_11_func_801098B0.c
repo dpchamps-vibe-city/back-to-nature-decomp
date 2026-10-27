@@ -29,11 +29,11 @@ s32 ovl_11_func_801098B0(Ovl11Func801098B0Arg *arg0) {
                     }
                 }
             }
-            if (ovl_11_func_801097F4(arg0->unk38, arg0->unk3C, arg0->unk40, arg0->unk44, arg0->unk30, var_a0, &D_8012D080) == 1) {
+            if (ovl_11_func_801097F4(arg0->unk38, arg0->unk3C, arg0->unk40, arg0->unk44, arg0->unk30, var_a0, &gOvl11ActionProbedRecord) == 1) {
                 var_v0 = 1;
             } else {
                 var_v0 = 0;
-                D_8012D080 = 0;
+                gOvl11ActionProbedRecord = 0;
             }
             return var_v0;
         }

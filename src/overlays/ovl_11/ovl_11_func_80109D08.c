@@ -30,15 +30,15 @@ s32 ovl_11_func_80109D08(Ovl11SetFieldsView *arg0) {
             }
         }
     }
-    D_8012D078 = NULL;
+    gOvl11ActionFoundRecord = NULL;
     found = ovl_11_func_801096FC(
         *(Ovl11PaddedVec3 *) ((u8 *) arg0 + 0x38), arg0->field_30,
-        var_t0, &D_8012D07C, &D_8012D078);
+        var_t0, &gOvl11ActionFoundRecordCategory, &gOvl11ActionFoundRecord);
     if (found != 1) {
         found = -1;
     } else {
         ovl_11_func_800D05D0(arg0,
-            *(Ovl11PaddedVec3 *) ((u8 *) D_8012D078 + 0x38));
+            *(Ovl11PaddedVec3 *) ((u8 *) gOvl11ActionFoundRecord + 0x38));
         found = 0;
     }
     return found;
