@@ -2136,6 +2136,7 @@ Ovl11TryBeginIdleState54 = 0x800C97D0;
 gOvl11FacingStepSoundDelay = 0x80123150; // type:data size:0x4
 gOvl11MotionHoldCount = 0x80128C68; // type:data size:0x4
 Ovl11DispatchScenePhase = 0x800BBC34; // type:func
+Ovl11EmptyScenePhase = 0x800BCF20; // type:func
 gOvl11ScenePhaseCallbacks = 0x80121780; // type:data size:0x20
 Ovl11FindNearbyActiveActor = 0x800BF1D0; // type:func
 Ovl11FindNearbyItemId = 0x800BF2F4; // type:func
@@ -2156,6 +2157,9 @@ Ovl11WriteConditionCodeSlots = 0x800EE944; // type:func
 Ovl11WriteConditionTripleSlots = 0x800EEAB8; // type:func
 Ovl11GetSelectedPositionRecord = 0x800EEBB8; // type:func
 Ovl11ClearValueSlotsCommand = 0x800EEBC8; // type:func
+
+// Two-input state-field adapter used by the condition-range predicate.
+Ovl11ReadConditionField = 0x800EEBF4; // type:func
 gOvl11CameraCommandStartHeight = 0x80129540; // type:data size:0x4
 gOvl11CameraCommandStartDistance = 0x80129544; // type:data size:0x4
 gOvl11CameraCommandStartTargetY = 0x80129548; // type:data size:0x2

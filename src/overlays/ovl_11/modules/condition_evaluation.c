@@ -22,6 +22,7 @@
 #include "ovl11_object_events.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_pending_item_command.h"
+#include "ovl11_condition_field_read.h"
 
 s32 Ovl11EvaluateConditionRecords(Ovl11ConditionRecord *arg0, s32 arg1);
 
@@ -240,50 +241,50 @@ s32 Ovl11ConditionHeaderKindMatches(u16 arg0, s32 arg1) {
                       : (kind == ((Ovl11WorkHeaderView *)&D_8007AFF0)->header->unk2);
 }
 
-s32 ovl_11_func_800EEBF4(s32 arg0);
+/* Encoded inputs use byte-sized field/index IDs and 0xFF open bounds.
+ * Only the read result's low byte participates; bit 0x400 negates the test. */
+s32 Ovl11ConditionValueRangeMatches(s32 fieldId, s32 elementIndex, s32 minimum, s32 maximum, s32 flags) {
+    s32 matches;
+    s32 valueForComparison;
+    u32 field;
+    u32 element;
+    u32 lower;
+    u32 upper;
+    u32 value;
 
-s32 Ovl11ConditionValueRangeMatches(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 var_v1;
-    s32 temp_a3;
-    u32 temp_a0;
-    u32 temp_a1;
-    u32 temp_s0;
-    u32 temp_s1;
-    u32 temp_v0;
-
-    temp_a0 = arg0 & 0xFF;
-    temp_a1 = arg1 & 0xFF;
-    temp_s0 = arg2 & 0xFFFF;
-    temp_s1 = arg3 & 0xFFFF;
-    if ((temp_a0 == 0xFF) || (temp_a1 == 0xFF)) {
-        temp_v0 = arg4 & 0x400;
-        return temp_v0 == 0;
+    field = fieldId & 0xFF;
+    element = elementIndex & 0xFF;
+    lower = minimum & 0xFFFF;
+    upper = maximum & 0xFFFF;
+    if ((field == 0xFF) || (element == 0xFF)) {
+        value = flags & 0x400;
+        return value == 0;
     }
-    temp_v0 = ovl_11_func_800EEBF4(temp_a0);
-    var_v1 = 0;
-    temp_v0 = temp_v0 & 0xFF;
-    if (temp_s0 == 0xFF) {
-        if (temp_s1 == temp_s0) {
-            var_v1 = 1;
-        } else if (temp_s1 >= temp_v0) {
-            var_v1 = 1;
+    value = Ovl11ReadConditionField(field, element);
+    matches = 0;
+    value = value & 0xFF;
+    if (lower == 0xFF) {
+        if (upper == lower) {
+            matches = 1;
+        } else if (upper >= value) {
+            matches = 1;
         }
-    } else if (temp_s1 == 0xFF) {
-        if (temp_v0 >= temp_s0) {
-            var_v1 = 1;
+    } else if (upper == 0xFF) {
+        if (value >= lower) {
+            matches = 1;
         }
     } else {
-        temp_a3 = (u16)temp_v0;
-        if (temp_a3 >= temp_s0) {
-            if (temp_s1 >= temp_a3) {
-                var_v1 = 1;
+        valueForComparison = (u16)value;
+        if (valueForComparison >= lower) {
+            if (upper >= valueForComparison) {
+                matches = 1;
             }
         }
     }
-    if (arg4 & 0x400) {
-        return var_v1 ^ 1;
+    if (flags & 0x400) {
+        return matches ^ 1;
     }
-    return var_v1;
+    return matches;
 }
 
 s32 Ovl11ConditionSelectionFlagsMatch(u8 arg0) {

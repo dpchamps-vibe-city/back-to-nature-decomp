@@ -9,10 +9,6 @@
 #include "common.h"
 #include "ovl11_state_field_access.h"
 
-/* Keep this matched two-argument contract local: the separate EEBF4 adapter
- * still has an unresolved one-argument interface (see the service header). */
-s32 Ovl11ReadStateField(s32 fieldId, s32 elementIndex);
-
 /* The full word slot argument is narrowed BEFORE indexing. Conditions 0..4
  * mean >=, >, <=, <, ==; other codes return true. A read is not a mutation. */
 s32 Ovl11TestStateFieldFromSlot(s16 fieldId, s32 slot, s32 condition, s32 operand) {

@@ -54,6 +54,7 @@
 #include "ovl11_record_family_lookup.h"
 #include "ovl11_progress_gate.h"
 #include "selected_threshold_interaction.h"
+#include "ovl11_condition_field_read.h"
 
 typedef struct {
     s16 unk0;
@@ -127,7 +128,6 @@ s32 Ovl11ConditionFlagIdsMatch (u32 arg0, s32 arg1);
 s32 Ovl11ConditionFlagPairMatches (s32 arg0);
 s32 Ovl11ConditionCodeIsAvailable (s32 arg0);
 s32 Ovl11QueueConditionResultFirstSlot (s32 arg0, s32 arg1);
-s32 ovl_11_func_800EEBF4 (s32 arg0);
 s32 Ovl11ConditionObjectStateMatches (s32 arg0);
 s32 Ovl11HasInactiveConditionRowCode (u16 arg0);
 void Ovl11QueueImmediateEvent (s16 kind, s16 value);

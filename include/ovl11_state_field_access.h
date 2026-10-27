@@ -8,12 +8,9 @@
  * bytes: zero means scalar, otherwise elementIndex selects a record.
  * Reads use u8/u16/s16/s32 according to the descriptor, collapse a nonzero mask
  * to boolean, and add one for IDs 0xC/0xE only.
- *
- * Ovl11ReadStateField implements that read operation, but is deliberately
- * not declared here: the distant 800EEBF4 adapter still has a one-argument
- * contract with an unrecovered element-index input. The operand-command
- * module uses the matched two-argument definition; its former four-argument
- * calls have been reconciled with unchanged bytes. */
+ * Reads leave state unchanged. The condition adapter and operand commands
+ * share this two-input contract; the adapter does not narrow either input. */
+s32 Ovl11ReadStateField(s32 fieldId, s32 elementIndex);
 
 /* Masked descriptors set/clear their bits according to operand!=0, ignoring
  * operation. Unmasked fields apply operation, clamp to signed min/max, then

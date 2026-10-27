@@ -10251,7 +10251,22 @@ Boundaries: the start rests on that group's end. The end at 80014494 is a
 **mechanical limit, not evidence**: 80014494 carries the per-function
 `-fno-cse-skip-blocks` override, and a module compiles under one command line.
 80014494 shares the gate word and mode IDs through $gp. Folding it needs the
-module-wide flag decision in plans/flag-review-report.md. The former claim
+module-wide flag decision in plans/flag-review-report.md. A fresh complete
+17-member baseline experiment (existing pad module plus 80014494, unchanged
+C, only that function's override temporarily removed) passed the dry fold
+and compiled, but failed the linked EXE check: original SHA-256
+`5da12747…`, merged baseline `6c486a6a…`. The checked helper rolled back the
+fold; its restoration build also failed while the intentionally removed
+setting was still absent. Restoring the exact override and running
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` recovered
+all eight integrity gates, with 2339 folded and 468/468 valid modules. This
+is a failing whole-unit baseline for the current source/context, not an
+impossibility proof or evidence for a flag-created boundary. The next useful
+experiment must change the output formatter's source/CSE context, not repeat
+this unchanged full-pad baseline or flag-invariant tiny neighbors. No flag,
+allowlist, source, interface or module change was retained.
+
+The former claim
 that 80014554 also belonged here rested only on adjacency and flag invariance,
 not membership evidence; it is withdrawn. Its sole caller is the CD archive
 index initializer 800147BC, it operates on CdlFILE, and it has no pad-state
@@ -13287,7 +13302,9 @@ Members (address order):
   operation: clear work +0x0C bits 26/27, set +0x51FE bit 6, retain every
   other bit. The name describes those callers, not a newly inferred scene
   transition. There is no private menu state or helper to absorb. Left
-  800BCF20 is an empty unused hook, with no data/call witness connecting it;
+  800BCF20 is the empty phase-3 callback in gOvl11ScenePhaseCallbacks,
+  not unused; its table is a cross-module registry and supplies no private
+  state/helper tie to this flag service. It is now empty_scene_phase below;
   right area_resource_load starts the archive descriptor/range and staging
   protocol, with neither a call to this leaf nor these flag effects. Existing
   area-mode callers use many public services and do not join all of them.
@@ -15724,6 +15741,41 @@ the broader exclusive-helper/state closure, not this adjacency alone, joins
 it. F1678's no-skip exception was retired after a checked whole-27 baseline
 fold. See the private state-pair section for the full evidence and limitation.
 
+**Reconstructed `modules/condition_field_read.c`, 800EEBF4–800EEC14
+exclusive**, the single externally used adapter now named
+`Ovl11ReadConditionField`. Its demonstrated role is the bridge from
+Ovl11ConditionValueRangeMatches to Ovl11ReadStateField. Original caller
+F15B8/F15C4 masks a0/a1 independently; the call at F15FC preserves BOTH
+registers. EEBFC then calls the two-input reader without rewriting either.
+The former one-argument C declaration hid that element-index flow despite
+matching its bytes. The adapter and caller now explicitly pass field ID and
+element index, retaining the full signed return; only the caller masks it
+to a byte for its inclusive range/open-bound/inversion logic. Parameter and
+local names in that predicate now describe those operations, with all
+widths, signedness, casts and control flow preserved.
+
+The adapter has no private state, table or helper closure. Left
+scene_value_commands ends with EEBC8's value-slot clearing protocol; the adapter neither reads its private slots nor participates in
+its command protocol. Right EEC14 is an unreferenced constant-one leaf,
+with no call/data tie; EEC1C begins the separate item-bank service. The
+distant condition evaluator is a client and the field reader is a shared
+service, not grounds to absorb the intervening code. These are
+responsibility/absence-of-extension cuts under -G0, NOT proven historical
+object boundaries. No wider group is asserted or sliced around a flag.
+
+`ovl11_condition_field_read.h` publishes the two-input contract. Recovering
+that input also allows `ovl11_state_field_access.h` finally to publish
+Ovl11ReadStateField, previously withheld because of this caller ambiguity.
+Interface reconciliation removes redundant reader declarations from the
+two operand/slot-command modules and replaces adapter declarations in the
+evaluator and two other context-bearing files with its header. Both checked
+folds in this batch (adapter and empty_scene_phase) pass baseline -O2/-G0;
+the second also checks the explicit two-input caller against the complete
+overlay bytes. Neither function has a flag override, storage definition,
+private linkage change or new policy exception. Original overlay addresses
+are retained by the canonical symbol configuration; full batch acceptance
+is recorded with empty_scene_phase below.
+
 Evidence: one unbroken link-order run — `ovl_11_func_800F144C` (0x8C, ends
 0x800F14D8), `ovl_11_func_800F14D8` (0x68), `ovl_11_func_800F1540` (0x74),
 `ovl_11_func_800F15B4` (0xC4, ends 0x800F1678), `ovl_11_func_800F1678` (0xCC,
@@ -15743,7 +15795,7 @@ matched 0x800EFF9C, through the shared callee `ovl_11_func_800C3548`.
 
 Members:
 - ovl_11_func_800F15B4 (m, matched this session, 0xC4, byte-exact) — masked
-  sentinel-window predicate over `ovl_11_func_800EEBF4(arg0) & 0xFF`
+  sentinel-window predicate over `Ovl11ReadConditionField(arg0, arg1) & 0xFF`
   (arg2/arg3 `0xFF` sentinels; result inverted by the 0x400 bit of the stack
   argument); call edge into the matched 0x800EEBF4 run.
 - ovl_11_func_800F144C (m) — see the record-halfword sibling pair entry above.
@@ -17317,8 +17369,10 @@ interpreter's incoming third operand as its condition; no guessed constant
 or register binding replaces it. The complete baseline checked fold proves
 all TEN corrected members and linked ovl_11 bytes. It needs no override,
 allowlist addition, unprototyped workaround, new storage or private linkage.
-Read still has a separate unresolved one-argument adapter at EEBF4; that debt
-is retained explicitly in the service header, not silently claimed solved.
+At that fold EEBF4's element input was still unresolved. The later
+condition_field_read reconstruction above recovers it from the original
+F15FC caller, explicitly forwards both inputs and publishes the reader in
+the shared service header; these operand modules now include that contract.
 
 All ten entries have behavior names at their original overlay identities,
 propagated through callers and callback relocation names by canonicalNames.
@@ -17779,9 +17833,11 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   operand; UPDATE takes operand then operation. The test retains its s32 slot
   parameter and explicit s16 narrowing; update retains s16. No direct C caller
   exists, so no new public header is needed; external opcode linkage remains.
-  The matched two-argument Ovl11ReadStateField declaration stays module-local,
-  preserving the separate EEBF4 one-argument debt rather than silently exposing
-  an incompatible header. No override, storage or exception was added.
+  The matched two-argument Ovl11ReadStateField declaration initially stayed
+  module-local. condition_field_read has now recovered EEBF4's second input
+  and permitted publication in ovl11_state_field_access.h; interfaceAudit
+  removed this module's redundant declaration with unchanged object bytes.
+  No override, storage or exception was added.
 - ovl_11_func_800EB760 (m, matched this session, 0x3C, byte-exact) —
   guarded-slot forwarder: `ovl_11_func_800EFABC(arg0, D_80129560[(s16)arg1],
   arg2, arg3); return 1;`, the argument-position mirror of family member
@@ -27766,12 +27822,13 @@ Resolve/update/arithmetic and the comparator have a typed service header.
 The operand-command reconstruction at E6744–E6AB0 resolved both four-argument
 read declarations and E686C's comparator call with unchanged original bytes:
 the reader consumes two arguments, and the slot/slot command passes its
-incoming third operand as condition. The distant EEBF4 one-argument read
-adapter remains **pre-existing unresolved ABI debt**. Its element-index
-input is not recovered here; correct two-argument callers retain local
-prototypes until that remaining adapter permits global publication. No
-casts, invented operands or new prototype workarounds hide that limit.
-The public service header explains why the read entry is still absent. The checked whole fold passed baseline
+incoming third operand as condition. EEBF4's second input was still
+unresolved when this service was folded; condition_field_read above now
+recovers it from the original caller's a1 and forwards it explicitly.
+Ovl11ReadStateField is consequently published in the shared service header,
+and interfaceAudit removed redundant operand/slot-command declarations
+without changing caller objects. No cast, invented operand or prototype
+workaround hides the input. The checked whole service fold passed baseline
 with all six members and overlay bytes; no flag/exception was involved.
 
 Historical candidate (superseded membership interpretation):
@@ -30838,6 +30895,42 @@ data, canonical interfaces, source policy, scope and zero exception growth.
 ---
 
 ## `ovl_11` D_801287F4 counter-state run — 0x800BBC74–0x800BCF20 exclusive (confidence: medium)
+
+**Reconstructed `modules/empty_scene_phase.c`, 800BCF20–800BCF28
+exclusive**, named `Ovl11EmptyScenePhase`. Original data at 8012178C is
+slot 3 of gOvl11ScenePhaseCallbacks and contains 800BCF20. The dispatcher
+passes the table base and calls it indirectly; the original `jr ra; nop`
+body ignores that context. This proves a retail empty scene phase, rather
+than an unused hook. The header documents that it does not change state,
+draw, wait, or advance the phase. The existing no-parameter contract and
+external linkage are retained, as with the neighboring frame-phase entry.
+
+The phase registry also contains implementations in area_mode_sequence,
+area_frame_update and area_scene_load; table membership does not put their
+intervening code in one TU. Left area_mode_sequence owns its A0/A4/E8/EC
+sequencer and helpers; this callback accesses none of them. Right
+menu_exit_flags changes work-area bits and is not called by this entry.
+No private state/helper/table witness extends either edge. This singleton
+is a conservative responsibility boundary, not recovered -G0 ownership or
+an invented grouping of otherwise unknown no-ops. Its canonical name is
+recorded at ovl_11:800BCF20; `ovl11_empty_scene_phase.h` publishes the callback
+contract without changing the raw-word registry. Baseline checked folding
+passes the member and all overlay bytes, with no flag/exception change.
+
+Batch acceptance (condition_field_read, empty_scene_phase and their affected
+interfaces): `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates, including
+the EXE and all 13 overlays' complete bytes/data/callback/table placement,
+source policy, config convergence and exception non-growth. Folded count
+**2339 → 2341**, with **470/470 valid modules** and 284 remaining. Exit 1
+means the overall campaign is incomplete, not an integrity failure.
+Canonical names are clean; published interfaces have zero failures. The
+separate source-policy/scope audit reports no hard failures and no files
+outside the integration roots. The project-wide audit now has five rather
+than six pre-existing prototype
+conflicts; the remaining conflicts and implicit declaration are outside
+this batch and unchanged. No tooling, compiler setting, allowlist, owned
+global or linkage change was retained.
 
 The preceding overlay entry is now **`modules/scene_phase_dispatch.c`,
 BBC34–BBC74**, a one-function unit named `Ovl11DispatchScenePhase`. Its

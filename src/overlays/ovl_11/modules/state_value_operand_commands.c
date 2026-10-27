@@ -8,10 +8,6 @@
 #include "ovl11_state_field_access.h"
 #include "ovl11_state_value_operand_commands.h"
 
-/* The descriptor reader consumes exactly two operands. Its remaining distant
- * one-argument caller prevents publishing it in the service header for now. */
-s32 Ovl11ReadStateField(s32 fieldId, s32 elementIndex);
-
 s32 Ovl11TestStateFieldAgainstLiteral(s16 fieldId, s16 elementIndex, s32 condition, s32 operand) {
     s32 value;
 
