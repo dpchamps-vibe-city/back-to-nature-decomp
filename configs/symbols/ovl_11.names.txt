@@ -2218,3 +2218,25 @@ Ovl11WriteStateRecordPosition = 0x800E5ADC; // type:func
 Ovl11StateRecordAnimationCommand = 0x800E5B84; // type:func
 Ovl11ChangeStateRecordFlag800 = 0x800E5C60; // type:func
 Ovl11ResetMatchingStateRecords = 0x800E5D00; // type:func
+
+// Complete mode-frame callback bank and its private table run.
+Ovl11StepObjectMode0Keyframes = 0x8010E2C4; // type:func
+Ovl11StepObjectMode1Keyframes = 0x8010E37C; // type:func
+Ovl11StepObjectMode2Keyframes = 0x8010E434; // type:func
+Ovl11StepObjectMode3Keyframes = 0x8010E4E4; // type:func
+Ovl11StepObjectMode4Keyframes = 0x8010E594; // type:func
+Ovl11StepObjectMode7Movement = 0x8010E644; // type:func
+Ovl11RunObjectMode6ChoiceMessage = 0x8010E6E8; // type:func
+Ovl11StepObjectMode5Keyframes = 0x8010EA6C; // type:func
+Ovl11StepObjectMode8GridAction = 0x8010EB24; // type:func
+Ovl11StepObjectMode9GridAction = 0x8010ECC0; // type:func
+Ovl11StepObjectMode11ActionSelect = 0x8010F324; // type:func
+Ovl11StepObjectMode12PlacementReturn = 0x8010F4CC; // type:func
+// Keyframe streams retain byte-anchor C views; sizes delimit the data run.
+gOvl11Mode0Keyframes = 0x80127D48; // type:data size:0x8
+gOvl11Mode1Keyframes = 0x80127D50; // type:data size:0xC
+gOvl11Mode2Keyframes = 0x80127D5C; // type:data size:0xC
+gOvl11Mode3Keyframes = 0x80127D68; // type:data size:0x8
+gOvl11Mode4Keyframes = 0x80127D70; // type:data size:0x8
+gOvl11Mode6MessageIds = 0x80127D78; // type:data size:0x10
+gOvl11Mode5Keyframes = 0x80127D88; // type:data size:0x8

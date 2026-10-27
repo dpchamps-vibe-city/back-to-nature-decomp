@@ -2389,6 +2389,56 @@ above, not a separate dispatcher slice. Its admission and frame banks are
 gOvl11ObjectModeEntryGuards/gOvl11ObjectModeHandlers; their public callbacks
 alone do not prove all callback implementations share this original TU.
 
+**Complete frame bank reconstructed as `modules/object_mode_handlers.c`,
+8010E2C4–8010F6C0 exclusive, fourteen original entries.** It absorbs the whole
+two-entry object_mode_transition module, including the real nested resolver.
+Membership is supported by the entire non-null mode bank (modes 0..12), its
+one shared state/lock/release protocol, the internal mode-11-to-mode-7 calls,
+and the private 80127D48–80127D90 keyframe/message-table run consumed only
+inside the band. The mode-6 switch tables at file 2CF4 pool in code-member
+order. No non-member sits inside the range. Table membership alone was not
+the premise: the exclusive contiguous data run and protocol complete the
+wider evidence missing from the earlier two-function reconstruction.
+
+Names at their original identities are Ovl11StepObjectMode0/1/2/3/4/5Keyframes,
+StepObjectMode7Movement, RunObjectMode6ChoiceMessage, StepObjectMode8/9GridAction,
+StepObjectMode11ActionSelect and StepObjectMode12PlacementReturn, retaining
+the existing mode-10 parent/resolver names. The six keyframe functions share
+the established Ovl11D04D4Obj view instead of five duplicate local structs;
+accessed offsets, types, widths and signedness are unchanged. Their local
+names identify object/state/release, and the movement entry identifies idle
+and moving animation choices. The six streams and eight-entry message lookup
+are gOvl11Mode0..5Keyframes and gOvl11Mode6MessageIds. Byte-anchor declarations
+remain byte anchors, not new allocations. Four formerly local externs now
+live in globals_override.h with consumer evidence; none becomes static or a
+TU-owned tentative definition in this -G0 overlay.
+
+The interface is the existing gOvl11ObjectModeHandlers bank; the new header
+ovl11_object_mode_handlers.h documents mode indices, state/lock updates,
+return semantics and delayed keyframe release, and publishes only the mode-7
+movement service used directly by action_sequences. The detailed mode-10
+header remains. interfaceAudit publishes mode 7 to action_sequences and
+proves unchanged caller objects. Shared work and the existing vector-by-value
+callee ABI remain intact; no conflicting or implicit declaration is added.
+
+Left E2C4 follows the complete admission-guard bank, whose contract tests
+entry rather than stepping current state; its message tables and non-null
+callbacks are distinct. Right F6C0 begins the separately dispatched action
+programs and their own pooled switch-table block. Neither neighboring bank
+uses the private 27D48–27D90 data or contains a frame-bank callback. These
+are conservative -G0 boundaries, not GP-proven original seams. A larger
+historical module containing both admission and frame banks is not excluded,
+but no private-state/helper witness currently establishes it. No override
+motivated either boundary. The whole fourteen-entry checked fold passes
+baseline -O2/-G0 and the complete overlay, with no new policy exception.
+Final batch `tuProgress.ts --verify --no-cache --full-convergence --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates at
+**2130/2625 folded, 363/363 valid modules**. It regenerates canonical callback
+words and context, verifies all EXE/overlay code/data/tables/placement and
+all affected callers, source policy, convergence and exception non-growth.
+No compiler setting was added or retired. Exit 1 denotes only the incomplete
+campaign. The restored ovl_17 experiments are excluded from these counts.
+
 Historical candidate same-TU family of `ovl_11` around the two function-pointer
 dispatch tables `D_800BAA84` (sparse, 14 slots, entries `8010DD38`/`8010DA04`/
 `8010DDC8`) and `D_800BAABC` (dense, 14 slots, entries 0x8010E2C4–0x8010F4CC),
@@ -2496,7 +2546,11 @@ proved all four and the overlay without any override or new exception.
 
 [Static-chain and gapless-link evidence; wider-TU limits](research/ovl_11_func_8010EE5C-grouping.md).
 
-**Module: `src/overlays/ovl_11/modules/object_mode_transition.c`**, both original
+**Now absorbed whole into `modules/object_mode_handlers.c`, above.** The
+following records the earlier pair's reconstruction; its conservative cuts
+are superseded by the private-table/full-frame-bank evidence above.
+
+**Earlier module: `src/overlays/ovl_11/modules/object_mode_transition.c`**, both original
 entries through exclusive end 8010F324. The original parent seeds the helper's
 static chain from its frame; the helper dereferences that chain to recover the
 parent's object argument. Thus their same-TU membership is proved under the
@@ -18524,6 +18578,15 @@ under `plans/flag-review-report.md`; do not infer a boundary at the override.
 The dry refusal says nothing about whether a clean baseline whole-TU source
 can match. The live matching setting and sources were left unchanged.
 
+A later research report proposed an 18-entry callback prefix through 8F28
+and a ten-entry simulation run 92B0–9CAC, excluding the queue triple. Both
+checked folds passed baseline and their complete overlay bytes. They were
+then explicitly restored: the earlier closure evidence above joins those
+pieces through the queue, and compatible baseline compilation is not evidence
+for separate original files. No 18/10 slice is retained to avoid 9158's flag.
+The next useful experiment remains a baseline source/context reconstruction
+of the complete 31-entry union, not another cut around the queue.
+
 **Reconstructed `src/overlays/ovl_17/modules/record_sprite_animation.c`,
 ovl_17:800BAFAC–800BB0C4 exclusive**, all five entries in original order:
 Ovl17SelectRecordAnimation2, Ovl17SelectAllRecordAnimations2,
@@ -20069,6 +20132,42 @@ or new policy exceptions.
   -0x1F4) to `ovl_21_func_800BAFFC(obj + 0x684, vec, &D_800BCC48[arg0])`.
   Membership rests on that callee pair, the shared `D_800C0448` cluster and
   the gapless adjacency to `ovl_21_func_800BAEA0`.
+**Reconstructed `modules/scene_draw.c`, 800BA4C0–800BA698 exclusive:**
+all five entries, Ovl21DrawSceneSprites, DrawSceneFrame, DrawRecordSprites,
+DrawActiveSlotSprites and DrawPrimarySpriteAtSelectedOffset. The composite
+calls the three walkers in fixed order; those walkers have no other call
+clients. The separate frame wrapper is paired with the composite by the
+interaction controller, implementing the same scene drawing pass. These
+exclusive traversal calls and shared record/slot protocol support the group,
+not simple adjacency or the large scene state alone. Left A300 advances
+projectile positions/lifetimes and clears expired slots; it neither calls this
+traversal nor is called by it. The scene controller coordinates update and
+drawing. Right A698 scans the same slots for a nearby active entry, but has
+no drawing/helper role. These neighbors corroborate the shared scene format,
+not exclusive membership in the drawing closure. These are
+conservative -G0 reconstruction cuts, not original-file proofs, and do not
+rest on A698's outstanding compiler flag. The wider scene file is uncertain.
+
+ovl21_scene_draw.h publishes the two scene-level entries and documents six
+records, three slots, marker triggering/offset, draw order, source mutation
+and render-state prerequisites. Internal walkers retain external linkage;
+locals name record/slot cursors without changing types or arithmetic. The
+signed-halfword primary offset selector is gOvl21PrimarySpriteOffsetIndex;
+its extern moves from C into globals_override.h with load-width evidence.
+The earlier gOvl21RecordObjectBase rename required explicit reconciliation
+of its shared-header extern after canonicalization; the initial checked fold
+reported that undeclared anchor and rolled back. With that declaration fixed,
+the whole five-entry fold and overlay pass at baseline -O2/-G0. No flags,
+new exceptions, storage or scope collisions were introduced.
+
+Batch acceptance for scene_draw and sprite_pause: interfaceAudit published
+both headers to scene_state_machine with unchanged caller objects; canonical
+names and affected interfaces are clean. `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates at
+**2118/2625 folded, 363/363 valid modules**, including every EXE/overlay byte,
+data/tables/placement, source policy, configuration convergence and exception
+non-growth. Exit 1 reflects the incomplete campaign, not a verification failure.
+
 - ovl_21_func_800BA510 (m, matched this session, byte-exact) — walks the
   `D_800C0448` record table over the six-record outer loop (0x108 stride),
   calling `ovl_21_func_800BAE20` on each record's +0x10 object-state sub-view
@@ -20079,6 +20178,31 @@ or new policy exceptions.
   0x6D4` (the `D_800C0B2C` label). Membership rests on the shared global,
   that callee pair, and `ovl_21_func_800BA4C0`'s dispatch.
 - ovl_21_func_800BAA38 (m, byte-exact, finalized) — bulk flag-4 toggle for the shared `D_800C0ACC` sprites and `D_800C0458` sprite subrecords ([grouping evidence](research/ovl_21_func_800BAA38-grouping.md)).
+
+  **Reconstructed `modules/sprite_pause.c`, 800BA9F8–800BAB28 exclusive:**
+  all three entries, now Ovl21PauseSceneSprites, Ovl21ResumeSceneSprites and
+  Ovl21SetSceneSpritePauseMode. The wrappers are the bulk helper's only
+  callers and differ only in set/clear selection; scene interaction invokes
+  the wrappers as a pair. The complete helper closure is the membership
+  witness, not the broadly shared scene aggregate. Left BA944 selects a
+  random inactive record and has no pause/source-flag protocol. Right BAB28
+  begins the independently reconstructed entity-value service; neither uses
+  this helper. These are conservative -G0 service cuts, not GP-proven original
+  file boundaries. The larger historical scene file remains uncertain; shared
+  state and a common scene controller alone do not establish it.
+
+  The header ovl21_sprite_pause.h publishes the two wrappers, documenting
+  initialization, sixteen primary plus eighteen slot sources, and animation
+  pause rather than hiding/drawing suppression. UpdateSpriteAnimation's flag-4
+  guard establishes the meaning. The helper stays externally linked and keeps
+  its word argument; loops, callback selection and unrolled first three calls
+  remain intact. The record-table +0x10 byte anchor is now
+  gOvl21RecordObjectBase, retaining its unsized byte-array view; its configured
+  one-byte anchor is not an allocation-size claim. Existing sprite identities
+  are retained. No ownership, linkage or declaration-width change was made.
+  The checked fold passes all three members and the linked overlay under
+  baseline -O2/-G0. No override or policy exception is involved.
+
 - ovl_21_func_800BA5D0 (m, matched this session, byte-exact) — walks the
   `D_800C0448` record table over the six-record outer loop (0x108 stride),
   stepping three +0x34 sub-records (0x4C stride) per record and calling

@@ -57,6 +57,21 @@ gOvl21SceneDiscPositions = 0x800BC894; // type:data size:0x1E4
 gOvl21PrimarySceneSprite = 0x800C0ACC; // type:data size:0x30
 gOvl21UiSpriteAnchor = 0x800C0B2C; // type:data size:0x30
 
+// Complete scene-drawing traversal and its exclusive walkers.
+Ovl21DrawSceneSprites = 0x800BA4C0; // type:func
+Ovl21DrawSceneFrame = 0x800BA4F0; // type:func
+Ovl21DrawRecordSprites = 0x800BA510; // type:func
+Ovl21DrawActiveSlotSprites = 0x800BA5D0; // type:func
+Ovl21DrawPrimarySpriteAtSelectedOffset = 0x800BA670; // type:func
+gOvl21PrimarySpriteOffsetIndex = 0x800C0474; // type:data size:0x2
+
+// Bulk animation-pause service and its exclusive flag writer.
+Ovl21PauseSceneSprites = 0x800BA9F8; // type:func
+Ovl21ResumeSceneSprites = 0x800BAA18; // type:func
+Ovl21SetSceneSpritePauseMode = 0x800BAA38; // type:func
+// Interior byte anchor at record-table +0x10, not an inferred allocation extent.
+gOvl21RecordObjectBase = 0x800C0458; // type:data size:0x1
+
 // Phase/state dispatch and its exclusive interaction helpers.
 Ovl21StepScene = 0x800B7E3C; // type:func
 Ovl21LoadScenePhase = 0x800B7E98; // type:func

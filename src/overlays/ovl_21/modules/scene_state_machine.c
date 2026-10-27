@@ -31,6 +31,8 @@
 #include "ovl21_scene_resources.h"
 #include "ovl21_entity_record_views.h"
 #include "random.h"
+#include "ovl21_scene_draw.h"
+#include "ovl21_sprite_pause.h"
 
 void func_80017A48(u32 arg0);
 
@@ -97,7 +99,6 @@ void Ovl21LoadScenePhase(void) {
 
 void Ovl21ResetSceneState(void);
 void Ovl21SetRecordGroupState(s16 arg0, s16 arg1);
-void ovl_21_func_800BA4C0(void);
 
 void Ovl21WaitSceneFadeIn(void) {
     u8 var_s0;
@@ -109,7 +110,7 @@ void Ovl21WaitSceneFadeIn(void) {
     Ovl21ResetSceneState();
     Ovl21SetRecordGroupState(0, 0);
     Ovl21SetRecordGroupState(1, 0);
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     var_s0 = IsScreenFadeComplete() == 1;
     if (GetMasterVolumeRampState() == 0) {
         var_s0++;
@@ -133,7 +134,7 @@ void Ovl21BeginSceneExit(void) {
     Ovl21ApplySceneCamera();
     ApplyGteSceneState();
     Ovl21DrawSceneGeometry();
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     BeginScreenFadeFeedback(0xA);
     BeginMasterVolumeFadeOut(0xA);
     ((Ovl21MainStateView *) D_8006C838)->state++;
@@ -146,7 +147,7 @@ void Ovl21FinishSceneExit(void) {
     Ovl21ApplySceneCamera();
     ApplyGteSceneState();
     Ovl21DrawSceneGeometry();
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     var_s0 = IsScreenFadeComplete() == 1;
     if (GetMasterVolumeRampState() == 0) {
         var_s0 = (var_s0 + 1) & 0xFF;
@@ -290,7 +291,7 @@ void Ovl21PromptSceneConfirm(void) {
     Ovl21ResetSceneState();
     Ovl21SetRecordGroupState(0, 0);
     Ovl21SetRecordGroupState(1, 0);
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     ready = IsScreenFadeComplete();
     if (ready == 1) {
         if ((s16) D_800C0448_init.records[0].unk2 != 0) {
@@ -312,7 +313,7 @@ void Ovl21PromptSceneConfirm(void) {
 void Ovl21PromptMessageChoice(void) {
     s32 temp_v0;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     RequestMessageWindow(4, 0x18);
     temp_v0 = GetMessageWindowStatus();
     if (temp_v0 == 2) {
@@ -328,7 +329,7 @@ void Ovl21ShowOpeningMessage(void) {
     u8 *base;
 
     Ovl21ResetSceneState();
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     RequestMessageWindow(4, 0x19);
     if (GetMessageWindowStatus() == 2) {
         CloseMessageWindow();
@@ -346,7 +347,7 @@ void Ovl21RunFirstGroupVoiceMessage(void) {
     u8 *q;
     u8 *r;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     base = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(base + 0x988) == -1) {
         if (GetMessageWindowStatus() == 2) {
@@ -394,7 +395,7 @@ void Ovl21RunSecondGroupVoiceMessage(void) {
     u8 *q;
     u8 *r;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     base = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(base + 0x988) == -1) {
         if (GetMessageWindowStatus() == 2) {
@@ -442,7 +443,7 @@ void Ovl21ShowPromptMessage(void) {
     u8 *base;
 
     Ovl21ResetSceneState();
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     CloseMessageWindow();
     SetVal8005E2BC(0);
     SetMessagePortraitEnabled(0);
@@ -462,7 +463,7 @@ void Ovl21DelayMessageThenPlaySound(void) {
     for (i = 5; i >= 0; i--) {
         ((UnkStruct800C0448 *)gOvl21SceneControl)[i].unk18 = fill;
     }
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     if (GetMessageWindowStatus() == 5) {
         base = (u8 *)gOvl21SceneControl;
         tmp = *(u16 *)(base + 0x988);
@@ -479,9 +480,6 @@ void Ovl21DelayMessageThenPlaySound(void) {
     }
 }
 
-void ovl_21_func_800BA9F8(void);
-void ovl_21_func_800BAA18(void);
-void ovl_21_func_800BA4F0(void);
 s32 ovl_21_func_800B98CC(Ovl21Func800B98CCArg *arg0);
 void ovl_21_func_800B9A20(void);
 void ovl_21_func_800B9CA4(void);
@@ -500,15 +498,15 @@ void Ovl21UpdateSceneInteraction(void) {
         temp = ((Ovl21C0448View *)gOvl21SceneControl)->unk4 != 1;
         ((Ovl21C0448View *)gOvl21SceneControl)->unk4 = temp;
         if (temp == 1) {
-            ovl_21_func_800BA9F8();
+            Ovl21PauseSceneSprites();
             ((Ovl21C0448View *)gOvl21SceneControl)->unk984 = PlaySoundEffect(0x36);
         } else {
-            ovl_21_func_800BAA18();
+            Ovl21ResumeSceneSprites();
         }
     }
     if (((Ovl21C0448View *)gOvl21SceneControl)->unk4 == 1) {
-        ovl_21_func_800BA4C0();
-        ovl_21_func_800BA4F0();
+        Ovl21DrawSceneSprites();
+        Ovl21DrawSceneFrame();
         return;
     }
     if (((UnkStruct800C0448 *)gOvl21SceneControl)->unk14 == 1) {
@@ -576,7 +574,7 @@ void Ovl21UpdateSceneInteraction(void) {
             }
         }
     }
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     if (((Ovl21C0448View *)gOvl21SceneControl)->unk988 != 0) {
         if (*(void **)((u8 *)gOvl21SceneControl + 0xC) != NULL) {
             text = gActiveRenderContext->field_D8;
@@ -615,7 +613,7 @@ void Ovl21WaitVoiceCooldown(void) {
             }
         }
     }
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     base = (u8 *)gOvl21SceneControl;
     (*(s16 *)(base + 0x988))++;
     if (SpuGetKeyStatus(gOvl21SceneVoiceMasks[*(s16 *)(base + 0x986)]) == 0 ||
@@ -639,7 +637,7 @@ void Ovl21SelectTargetGroup(void) {
     s32 slot;
     s32 next;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     slot = Ovl21SelectLargerRecordGroup();
     if (slot == -1) {
         RequestMessageWindow(4, 0x26);
@@ -661,7 +659,7 @@ void Ovl21WaitFirstGroupVoice(void) {
     u8 *base;
     u8 *p;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     base = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(base + 0x988) == -1) {
         if (GetMessageWindowStatus() == 2) {
@@ -704,7 +702,7 @@ void Ovl21WaitSecondGroupVoice(void) {
     u8 *p;
     u8 *q;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     base = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(base + 0x988) == -1) {
         if (GetMessageWindowStatus() == 2) {
@@ -741,7 +739,7 @@ void Ovl21WaitFinalVoice(void) {
     u8 *base;
     u8 *p;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     base = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(base + 0x988) > 0) {
         s32 status;
@@ -765,15 +763,11 @@ void Ovl21WaitFinalVoice(void) {
     }
 }
 
-void ovl_21_func_800BA4C0 (void);
 void Ovl21ResetSceneState (void);
 void Ovl21InitSceneRecords (void);
-void ovl_21_func_800BA510 (void);
-void ovl_21_func_800BA5D0 (void);
-void ovl_21_func_800BA670 (void);
 
 void Ovl21PromptCloseMessage(void) {
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     if (IsScreenFadeComplete() == 1) {
         Ovl21ResetSceneState();
         BeginScreenFadeDecrease(0xA, 0, 2);
@@ -790,7 +784,7 @@ void Ovl21ResolveChoice(void) {
             gOvl21SceneControl[0] = 0xF;
         }
     }
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
 }
 
 void Ovl21PromptRetryChoice(void) {
@@ -800,11 +794,11 @@ void Ovl21PromptRetryChoice(void) {
             gOvl21SceneControl[0] = 5;
         }
     }
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
 }
 
 void Ovl21FadeInAndAdvanceRound(void) {
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     if (IsScreenFadeComplete() == 1) {
         BeginScreenFadeDecrease(10, 0, 2);
         gOvl21SceneControl[0] = 0;
@@ -816,7 +810,7 @@ void Ovl21ApplyRecordResult(void) {
     u8 *base;
     u8 *p;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     Ovl21RaiseEntityRangeValue(((Ovl21ResultEntityView *) gOvl21SceneControl)->firstEntityId);
     Ovl21RaiseEntityRangeValue(((Ovl21ResultEntityView *) gOvl21SceneControl)->secondEntityId);
     base = (u8 *) D_8006C838;
@@ -831,7 +825,7 @@ void Ovl21PickRandomResult(void) {
     s32 *words;
     s16 selector;
 
-    ovl_21_func_800BA4C0();
+    Ovl21DrawSceneSprites();
     state = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(state + 2) == 0) {
         selector = Rand(4);

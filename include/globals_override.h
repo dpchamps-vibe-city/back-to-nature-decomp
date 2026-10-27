@@ -2914,8 +2914,8 @@ extern u8 D_80071C90[];
  * s16 fields at +6/+8/+A/+C. */
 extern u8 D_801248BC[];
 
-/* 8010E6E8: signed halfword lookup, eight entries before D_80127D88. */
-extern s16 D_80127D78[8];
+/* 8010E6E8: eight signed-halfword base message IDs at ovl_11:80127D78. */
+extern s16 gOvl11Mode6MessageIds[8];
 
 /* 8010E6E8 retains this base for sh +51EE, lhu +5200 and words +522C..+5234. */
 typedef struct {
@@ -3948,17 +3948,18 @@ extern u8 D_80127B0C;
  * the overlay. */
 extern u8 D_80127B1C;
 
-/* D_80127D48 - overlay-local 16-bit state-table base in ovl_11 data at
- * 0x80127D48 (0x2AC bytes after D_80127A9C), passed by address to
- * ovl_11_func_800D04D4 from ovl_11_func_8010E2C4. Absolute-addressed from
- * the overlay. */
-extern u8 D_80127D48;
-
-/* D_80127D88 - overlay-local 16-bit state-table base in ovl_11 data at
- * 0x80127D88 (0x40 bytes after D_80127D48), passed by address to
- * ovl_11_func_800D04D4 from ovl_11_func_8010EA6C. Absolute-addressed from
- * the overlay. */
-extern u8 D_80127D88;
+/* 8010E2C4 passes this byte anchor at 80127D48 to the packed-keyframe stepper. */
+extern u8 gOvl11Mode0Keyframes;
+/* 8010E37C passes the absolute 80127D50 keyframe-table anchor. */
+extern u8 gOvl11Mode1Keyframes;
+/* 8010E434 passes the absolute 80127D5C keyframe-table anchor. */
+extern u8 gOvl11Mode2Keyframes;
+/* 8010E4E4 passes the absolute 80127D68 keyframe-table anchor. */
+extern u8 gOvl11Mode3Keyframes;
+/* 8010E594 passes the absolute 80127D70 keyframe-table anchor. */
+extern u8 gOvl11Mode4Keyframes;
+/* 8010EA6C passes the absolute 80127D88 keyframe-table anchor. */
+extern u8 gOvl11Mode5Keyframes;
 
 /* 800E30FC passes this 12-byte state table at 801240B0 to 800D04D4. */
 extern u8 gOvl11SmallRecordHandler3Keyframes[12];
@@ -5585,12 +5586,13 @@ extern u8 gOvl21UiSpriteData[0x233C];
 /* 800BB648 initializes this 0x30-byte sprite and its adjacent records. */
 extern struct SpriteSourceData gOvl21UiSpriteAnchor;
 
-/* D_800C0458 - ovl_21 object-state base at D_800C0448 + 0x10, the sub-view
- * handed to ovl_21_func_800BAE20. ovl_21_func_800BA510 walks it at stride
- * 0x108 and derives the record base (D_800C0458 - 0x10) and the projection
- * object (D_800C0458 + 0x6D4, which is the D_800C0B2C label) from it.
- * Absolute-addressed (extern-only, lui + %lo) in the -G0 overlay build. */
-extern u8 D_800C0458[];
+/* ovl_21:800C0458, record-table +0x10 object-state anchor. The drawing
+ * traversal walks six records at stride 0x108; the pause service walks
+ * three slot sources at +0x40 with stride 0x4C in each record.
+ * An interior label, not a separate allocation; absolute extern access. */
+extern u8 gOvl21RecordObjectBase[];
+/* ovl_21:800BA670 loads the signed-halfword primary-sprite offset selector. */
+extern s16 gOvl21PrimarySpriteOffsetIndex;
 
 /* 800CA24C writes three projection-input halfwords and passes them to 8001DFD4. */
 extern s16 gOvl11PrimaryDrawWorldPoint[4];

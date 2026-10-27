@@ -152,7 +152,7 @@ void Ovl21LoadUiAndObjectSprites(void) {
     }
     /* All eighteen embedded sources intentionally reuse table entry zero. */
     for (index = 0; index < 6; index++) {
-        record = D_800C0458 + index * 0x108;
+        record = gOvl21RecordObjectBase + index * 0x108;
         for (spriteIndex = 0; spriteIndex < 3; spriteIndex++) {
             sprite = (SpriteSourceData *)(record + spriteIndex * 0x4C + 0x40);
             InitSpriteSourceData(sprite, header);

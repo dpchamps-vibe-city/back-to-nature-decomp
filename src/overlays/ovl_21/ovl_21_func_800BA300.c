@@ -70,7 +70,7 @@ void ovl_21_func_800BA300(void) {
         slot = 0;
         raw = (u8 *) gOvl21SceneControl;
         if ((*(s16 *) (raw + 0x64A)) > 0) {
-            base = (u8 *) D_800C0458 - 0x10;
+            base = (u8 *) gOvl21RecordObjectBase - 0x10;
             offset = group * 0x108;
             state = (Ovl21Func800BA300Rec *) (base + offset);
             flags = (s32 *) (base + 0x34);
