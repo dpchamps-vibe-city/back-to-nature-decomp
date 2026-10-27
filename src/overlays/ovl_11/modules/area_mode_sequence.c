@@ -65,6 +65,7 @@
 #include "ovl11_primary_work_counter_reset.h"
 #include "ovl11_menu_exit_flags.h"
 #include "ovl11_record_pool_setup.h"
+#include "ovl11_secondary_gauge_clock_advance.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -78,7 +79,6 @@ void Ovl11UpdateAreaMode(void) {
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
 void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
-void ovl_11_func_800CD624(void);
 
 #define WORK ((Ovl11BBCB8Work *)&D_8007AFF0)
 #define STATUS ((Ovl11BBCB8Status *)D_8006C838)
@@ -243,7 +243,7 @@ void Ovl11StepAreaModeState(void) {
                 } else {
                     WORK->state = 13;
                 }
-                ovl_11_func_800CD624();
+                Ovl11ApplySecondaryGaugeClockAdvance();
                 break;
             case 5:
                 if (gOvl11AreaSoundEffectPending != 0) {

@@ -547,6 +547,12 @@ gOvl11AreaItemSpawnRules = 0x80123940; // type:data size:0x90
 gOvl11ItemSpawnRuleMask = 0x80128D66; // type:data size:0x2
 
 // Four clock-hour entries feeding the primary-object +0x16 counter.
+Ovl11ProbeCurrentRecordBounds = 0x800F4994; // type:func
+Ovl11DecayCurrentRecordSpriteOffset = 0x800F4A58; // type:func
+Ovl11IsThresholdInteractionInactive = 0x801165C8; // type:func
+Ovl11GetSecondaryGaugeClockOffset = 0x800CD4E4; // type:func
+Ovl11ApplySecondaryGaugeClockAdvance = 0x800CD624; // type:func
+
 Ovl11ApplyHourCounterDeltas = 0x800CD45C; // type:func
 gOvl11HourCounterDeltas = 0x801232A4; // type:data size:0x10
 Ovl11DrawStateObjectRecord = 0x800D2E6C; // type:func

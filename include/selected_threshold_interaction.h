@@ -17,4 +17,9 @@
  * completion. This is an update-call interface, not a blocking operation. */
 s32 Ovl11UpdateThresholdInteraction(void);
 
+/* Return 0 exactly while dispatcher ID 0x1A is current, otherwise 1.
+ * This read-only query does not start or update the interaction, and is true
+ * even if it has never run; it is not a latched completion result. */
+s32 Ovl11IsThresholdInteractionInactive(void);
+
 #endif

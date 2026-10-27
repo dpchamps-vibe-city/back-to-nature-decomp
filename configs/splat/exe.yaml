@@ -190,7 +190,7 @@ segments:
       - [0x104E4, c, modules/master_volume]
       - [0x1067C, c, modules/sound_driver]
       - [0x120C4, c, modules/cd_audio]
-      - [0x12564, c, func_80021D64]       # 0x80021D64 func_80021D64
+      - [0x12564, c, modules/area_scene_prepare_hook]
       - [0x12570, c, func_80021D70]       # 0x80021D70 func_80021D70
       - [0x12578, c, func_80021D78]       # 0x80021D78 func_80021D78
       - [0x12580, c, func_80021D80]       # 0x80021D80 func_80021D80

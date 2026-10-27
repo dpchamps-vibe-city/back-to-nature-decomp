@@ -51,6 +51,7 @@
 #include "ovl11_interaction_state_access.h"
 #include "ovl11_record_family_lookup.h"
 #include "ovl11_progress_gate.h"
+#include "selected_threshold_interaction.h"
 
 typedef struct {
                char pad0[0x38];
@@ -116,7 +117,6 @@ s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
-s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
 void ClearActiveOrderingTables (void);
 void ovl_11_func_800EF870 (s16 arg0);

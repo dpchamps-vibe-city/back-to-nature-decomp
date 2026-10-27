@@ -11,13 +11,12 @@
 #include "ovl11_scene_record_frame.h"
 #include "ovl11_projected_record_sprites.h"
 #include "ovl11_record_pool_refresh.h"
-
-void ovl_11_func_800F4A58(void);
+#include "ovl11_record_sprite_offset_decay.h"
 
 void Ovl11ServiceSceneRecordFrame(void) {
     if (!(gSharedWorkFlags & 0x4000)) {
         Ovl11RefreshDispatchRecordPools();
         Ovl11DrawSceneRecordSprites();
-        ovl_11_func_800F4A58();
+        Ovl11DecayCurrentRecordSpriteOffset();
     }
 }

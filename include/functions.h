@@ -12,6 +12,7 @@ s32 AnimateMessageWindowRect(s32 packet, s32 unused, s16 x, s16 y, s16 width, s1
 u16 *AppendU16String(u16 *destination, u16 *source);
 void ApplyGteSceneState(void);
 void ApplyProjectedRotationScale(void);
+void AreaScenePrepareHook(void);
 void BeginIndexedSelection(s32 recordAddress);
 void BeginMasterVolumeFadeIn(s32 ticks);
 void BeginMasterVolumeFadeOut(s32 ticks);
@@ -195,7 +196,6 @@ void func_8001AF34(void);
 void func_8001FCDC(void);
 s32 func_8002040C(void);
 s32 func_800207DC(void);
-void func_80021D64(void);
 void func_80021D70(void);
 s32 func_80021D78(void);
 void func_80021D80(void);

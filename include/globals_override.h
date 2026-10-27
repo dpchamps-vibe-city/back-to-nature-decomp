@@ -7329,6 +7329,13 @@ extern s16 gOvl11RecordSpriteYOffsets[4];
 /* ovl_11:800F4994 arms index 3; 800F4A58 counts down to zero. */
 extern s32 gOvl11RecordSpriteYOffsetIndex;
 
+/* F4994 reads the current record pointer at +DDD4; its signed selector
+ * and coordinate view is shared with its callers through game_types.h. */
+typedef struct {
+    char pad0[0xDDD4];
+    struct Ovl11CurrentRecordBoundsEntry *current;
+} Ovl11CurrentRecordBoundsWork;
+
 /* F3FF4 reads lh season +44BA, lh mode-1 selector +91DC and lw +DDD4.
  * Record+0 is read as a signed ID/state code here; the publishers' unsigned
  * state store and the general dispatch-record ID view retain their own ABI. */
@@ -7359,6 +7366,13 @@ typedef struct {
     u16 flags;
     char pad6[0x18 - 6];
 } Ovl11PoolCompletionEntry;
+/* F4A58 reads word flags +C and current-record flags +4 through +DDD4. */
+typedef struct {
+    char pad0[0x0C];
+    s32 flags;
+    char pad10[0xDDD4 - 0x10];
+    Ovl11PoolCompletionEntry *current;
+} Ovl11CurrentRecordSpriteWork;
 /* F4FC8's shared-work view; keep the independent entry halfword signedness. */
 typedef struct {
     char pad0[0x44F8];

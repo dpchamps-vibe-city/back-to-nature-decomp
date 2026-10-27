@@ -44,6 +44,7 @@
 #include "ovl11_held_item_replacement.h"
 #include "ovl11_surface_height_probe.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_current_record_bounds.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -357,7 +358,6 @@ store1:
 }
 
 s32 Ovl11HandleMovingItemGeometryHit(Ovl11CC4E0Object *arg0, Vec3 *arg1);
-Ovl11CC7CCSpawn *ovl_11_func_800F4994(Vec3 *arg0);
 s32 ovl_11_func_800F3E44(s16 arg0);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11CheckMovingItemCellContact(Ovl11MovingItemRecord *arg0);
@@ -417,7 +417,8 @@ s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0) {
             goto remove;
         }
         {
-            spawn = ovl_11_func_800F4994((Vec3 *)&next);
+            /* The probe's signed-selector view aliases this spawn record. */
+            spawn = (Ovl11CC7CCSpawn *)Ovl11ProbeCurrentRecordBounds((Vec3 *)&next);
             if (spawn != NULL) {
                 spawn->flags |= 0x100;
                 if (gItemDataTable[arg0->itemId].field_12 != 0 && ovl_11_func_800F3E44(arg0->itemId) != 0) {

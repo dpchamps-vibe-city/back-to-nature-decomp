@@ -71,8 +71,8 @@
 #include "ovl11_object_record_state.h"
 #include "ovl11_condition_evaluation.h"
 #include "ovl11_area_setup_hook.h"
+#include "area_scene_prepare_hook.h"
 
-void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
 void Ovl11ResetAreaSlotRecords (void);
 void Ovl11AreaResetEffectsHook (void);
@@ -84,7 +84,7 @@ void Ovl11PrepareAreaScene(void) {
     Ovl11StartupView *base;
     Ovl11FarInitView *far;
 
-    func_80021D64();
+    AreaScenePrepareHook();
     base = (Ovl11StartupView *)D_8006C838;
     if (base->flags & 0x8000) {
         *base->reset = 0;

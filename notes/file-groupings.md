@@ -3586,7 +3586,22 @@ that proposed shortcut was not adopted or compiled. A correctly typed
 aggregate construction at the sole caller is the next useful experiment,
 inside the complete canonical context, not another scalar-callee rewrite.
 No narrower fold or new permission was retained. The unrelated ten modules
-completed in this run pass the final all-container campaign gate.
+completed in that run passed its final all-container campaign gate.
+
+Current six-service batch follow-up: another complete 24-member dry fold
+accepted the table pool. The first checked attempt exposed the still-live
+C-local duplicates of Ovl11D04D4Obj/Recon800D0408A1View and the two different
+Ovl11HandlerObj views. Reusing the canonical signed/unsigned views and the
+real direction-vector header removed those compile errors. With the same
+four-word-position/selector/radius/output contract described above, the
+complete fold then compiled but again produced b8bf3c29, as did its modified
+split rollback control. This confirms the earlier conditioned result; it is
+NOT new evidence that the original unit was split or that a flag is needed.
+All six experimental per-function edits were restored. The preserved control
+before and after the experiment passes tuProgress's full EXE/overlay gate.
+No partial mode-1 module or header, altered ABI, or exception remains. A
+correctly typed complete-aggregate caller is still untested; the old scalar
+and split-position declarations must not be repeated as a new experiment.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence:
 - shared data-table cluster: the dispatcher's two parallel rodata tables,
@@ -4507,15 +4522,61 @@ Members:
   copies the D_8006C838 u16 at +0x44CA to +0x51F4 — joins the D_80071A00 pool
   sub-base idiom
 
-Whole-unit follow-up: CD4E4's only original call client is CD624; the private
-classifier/caller pair is supported, but it is not one contiguous configured
-interval. The independently supported sixty_step_deltas pair and indexed_progress
-service lie between them and share no private helper/table with this pair.
-The checked fold's one-contiguous-subsegment model therefore blocks combining
-just the pair. Absorbing those intervening services merely to cross the gap
-would manufacture membership. Both per-function sources remain intact; the
-limit here is noncontiguous source/link placement, not a new original boundary,
-flag conflict, or reason to split the supported pair into unrelated modules.
+**Clock-offset/helper follow-up: both operations now have named C service
+modules**, `secondary_gauge_clock_offset.c` (CD4E4–CD534) and
+`primary_object_clock_advance.c` (CD624–CD670). They share the public header
+ovl11_secondary_gauge_clock_advance.h rather than duplicate anonymous types
+and local declarations. Ovl11GetSecondaryGaugeClockOffset reads the signed
+secondary gauge at object+16 (the same cell D622C clamps); its results are
+clock offsets in minutes, not an unidentified tier statistic. It maps 50..69
+to 120, 70..79 to 240, 80..99 to 360, all other signed values to zero.
+Ovl11ApplySecondaryGaugeClockAdvance snapshots work+44CA into primary-object
++2C and passes that offset to RequestClockAdvanceToSix. Only area_mode_sequence
+calls the adapter; the adapter is the classifier's only original caller.
+The original unreachable -1 fallback and two-base address expression remain.
+No interior work cell was promoted to a new global or speculative name.
+
+The sole-client classifier/caller protocol supports the pair as a candidate
+unit, NOT proof of original co-compilation. A fresh whole-pair dry fold
+refuses: `members are not contiguous: Ovl11ComputeSixtyStepDecrease lies
+between ...`. Thus the boundary between these two source modules is an
+explicit **noncontiguous-placement mechanical limit**, not evidence for
+separate original files. The interposed sixty_step_deltas and indexed_progress
+services have disjoint actual clients and no private helper/table relation to
+this pair; their inclusion merely to satisfy contiguity is not supported.
+Gapless code order is non-discriminating across this -G0 overlay, and none of
+these entries has a pooled literal/table or GP ownership witness to settle a
+wider TU. The earlier wider six-function hypothesis remains unproved.
+
+Outer cuts retain concrete neighbor evidence: hour_counter_adjustment on the
+left owns its four-entry hour/delta table and has a different clock-update
+client; right primary_object_input_override has the paired flag-8/countdown
+producer/consumer and private held-button table. Neither uses this classifier
+or snapshot/request protocol. The inner cuts at CD534 and CD624 are the
+mechanical placement limit above, not arbitrary flags or dead-stub cuts.
+The two complete singleton folds passed baseline -O2/-G0 and the linked
+overlay; no flag override, ownership, linkage or policy exception changed.
+The signed +16 partial view is canonical in game_types.h, and both callers
+are reconciled through the header.
+
+Six-service batch acceptance (these two clock operations, current_record_bounds,
+record_sprite_offset_decay, threshold_interaction_query and the resident
+area_scene_prepare_hook): `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json --json` reports **2333 -> 2339 / 2625 folded,
+468/468 valid modules, 286 remaining, no invalid/undetermined units**.
+All eight integrity categories pass, with no failures or exception growth:
+EXE/all thirteen overlays and associated data/callback/table placement,
+configuration convergence, source policy, whitespace and stable inputs.
+Canonical names are clean; all 1327 published interfaces have zero failing
+sites. The six pre-existing general prototype conflicts and one implicit
+callee declaration remain outside these interfaces and were not silently
+claimed fixed. No shared tooling, compiler flag, allowlist permission,
+register binding, embedded assembly or stub was added; no commit was made.
+The final receipt after restoring the failed mode-1 experiment is
+build/tu-campaign/source-module-final-verify.json; interface reconciliation
+logs are record-hook-query-interfaces.log and gauge-clock-interfaces.log
+in the same directory. Exit 1 denotes the unfinished campaign, not a failed
+integrity gate.
 
 **Reconstructed `src/overlays/ovl_11/modules/primary_object_grid_actions.c`,
 800C4A2C–800C6A24 exclusive, all sixteen entries.** Original address suffixes
@@ -11272,6 +11333,26 @@ present, added or retired. After names, declarations and readability edits,
 `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passed all
 container bytes, configuration convergence, canonical interfaces, ownership,
 policy and exception non-growth: 136 folded functions, 17 valid modules.
+
+**Adjacent independent hook reconstructed as
+`src/modules/area_scene_prepare_hook.c`, exe:80021D64–80021D70 exclusive.**
+AreaScenePrepareHook is named from its single original call at
+ovl_11:801044EC, first in Ovl11PrepareAreaScene before the work-flag tests.
+It takes no arguments, returns no value and has no retail memory effects;
+the existing local array preserves the original sixteen-byte empty frame.
+The public header explicitly says it does not initialize or validate work
+storage. The overlay caller now uses that header rather than its own prototype.
+This is a complete singleton retail hook, not an inferred eight-hook TU.
+
+Left cd_audio owns the playback protocol above, which this hook never touches.
+Right 21D70 and the following six trivial entries have no original caller,
+address-table entry, state, helper or literal relationship to this hook or to
+each other. Their adjacency/trivial bodies establish no membership, and they
+remain outside. The next state_memory_init service starts at 21DA8 with its
+own table initialization. These are evidence-limited cuts, not proven original
+object edges; no dead stub or compiler flag was used as a boundary.
+The checked singleton fold passed the member and linked EXE at baseline.
+No ownership, linkage, flag, source exception or ABI changed.
 
 ## master-volume ramps — 0x8001FCE4–0x8001FE7C (confidence: medium)
 
@@ -19010,15 +19091,49 @@ Members:
 
 ## `ovl_11` D_8006C838 pool-entry run — 0x800F4994 / 0x800F4A58 / 0x800F4CAC–0x800F4FC8 (confidence: medium within local groups, low between groups)
 
-Read-only whole-unit review did not promote the 4994/4A58 pair (with empty
-4A50 between) as a complete TU. The named Y-offset index is not private:
-primary_object_grid_actions also sets it to 3 in state 6F while setting the
-same record flag 100, and projected_record_sprites consumes it through the
-four-entry offset table. Thus the arm/decay relationship is useful behavioral
-evidence, but its narrow protocol has another producer as well as the renderer;
-the earlier three-user account was incomplete. These specialized cross-links
-need accounting for before claiming a whole original interval. No fold or
-source change was applied merely on the pair's adjacency and counter use.
+**Reconstructed two complete, independently called services:**
+`modules/current_record_bounds.c` (F4994–F4A50 exclusive),
+Ovl11ProbeCurrentRecordBounds, and `modules/record_sprite_offset_decay.c`
+(F4A58–F4AC0 exclusive), Ovl11DecayCurrentRecordSpriteOffset. These are
+conservative singleton service units, NOT a claim that the earlier candidate
+pair or either original object boundary is proved. No supported private
+closure is being sliced: the named Y-offset index is not private.
+primary_object_grid_actions also arms index 3 and record flag 100 in state
+6F; projected_record_sprites consumes the four-entry offset table;
+scene_record_frame calls decay after drawing. The bounds probe's only client
+is moving_items, which separately sets flag 100 on a returned record.
+These specialized cross-links establish each public operation and explain
+the shared state without asserting that all its users compiled together.
+
+Outer and intervening cuts rest on responsibility/private-artifact evidence,
+not flags or GP proof (-G0). Left spawn_effect_consume resolves item IDs,
+checks budgets and appends effects; it neither calls the probe nor uses its
+bounds/index operation. Middle F4A50 is an unused empty entry, with no call,
+state or table witness tying it to either service; its presence alone is NOT
+a boundary. Right record_partition_flags traverses sixteen records through
++DDA4 with mask 4000, not the current record through +DDD4 or mask 100.
+The probe and decay share public record/index state but no private helper,
+owned storage, table or exclusive caller protocol; no larger original TU is
+established. Future positive ownership evidence could require merging these
+units and the empty entry; adjacency alone cannot.
+
+The public headers document strict +/-200 X/Z and +/-20 Y bounds in the
+caller's coordinate units, signed selector equality, non-null/overflow
+preconditions, index-3 arming without setting flag 100, draw-before-decay,
+suppression, and clearing the flag one call after index reaches zero.
+Parameters/locals and partial fields now describe their behavior. The input
+uses canonical Vec3; the signed-selector 0x14-byte returned view is in
+game_types.h, and the original +DDD4/+C work views are in globals_override.h.
+The moving-item caller explicitly casts the returned partial view to its
+existing spawn view; signedness, touched offsets and pool stride are not
+silently conflated. Redundant C-local externs were removed; no storage,
+linkage, compiler override or source-policy exception changed. Each initial
+baseline checked fold passed its member and linked overlay; interfaceAudit
+published both headers to the two caller modules with identical objects.
+The first full campaign batch passed every integrity gate at 2335/2625 folded
+(up 2), 464/464 valid modules. The later six-service gate also verifies the
+explicit alias-view cast: 2339/2625 folded, 468/468 valid modules, no failures
+or exception growth. All executable/overlay bytes, data and placement match.
 
 Candidate same-TU pair `800F4994`/`800F4A58` and local transition/probe run
 `800F4CAC`–`800F4FC8`; a common TU spanning both remains low-confidence.
@@ -31384,7 +31499,7 @@ alone supplies membership. The full checked fold matches at baseline -O2/-G0,
 including its pooled controller jump table; no member override exists.
 
 Names are Ovl11UpdateThresholdInteraction, Ovl11CanApplySelectedThreshold and
-Ovl11ApplySelectedThreshold. Only the controller is published in
+Ovl11ApplySelectedThreshold. The controller is published in
 selected_threshold_interaction.h; the helpers retain external linkage, not
 invented static linkage. 80071A60 is gSelectedThresholdBalance, propagated
 through its other renderer user and the canonical override extern. It is
@@ -31393,9 +31508,9 @@ not a resource identity. The canonical state view's `balance` field denotes
 the same address. The header records update-call timing, unchecked selection,
 shared-state effects, signed narrowing and the absence of a debit clamp.
 
-Left boundary: 801165C8 tests a separate mode word against 0x1A; preceding
-801164F8 maps ratios/levels through 80128214. Neither uses this threshold
-lookup/debit protocol or calls these helpers. Right boundary: 80116980 starts
+Left boundary: 801165C8 tests the public interaction ID against 0x1A;
+preceding 801164F8 maps ratios/levels through 80128214. Neither uses this
+threshold lookup/debit protocol or calls these helpers. Right boundary: 80116980 starts
 a list renderer with private cursor/scroll state at 8012D518/51A, numeric
 formatting and row-drawing helpers; it does not invoke this pair. Those are
 conservative protocol edges: no positive membership witness joins either
@@ -31405,6 +31520,28 @@ No supported same-unit member is intentionally left outside.
 
 Final six-unit batch acceptance is recorded in the gradient-interpolation
 section above.
+
+**Adjacent query reconstructed independently as
+`modules/threshold_interaction_query.c`, 801165C8–801165E0 exclusive.**
+Ovl11IsThresholdInteractionInactive is exactly `gOvl11InteractionId != 0x1A`.
+The original state-command call at 800EA55C pairs this query with
+BeginInteraction(0x1A); the original update-callback bank's entry 1A is
+Ovl11UpdateThresholdInteraction. That establishes its name and read-only
+interface, not private ownership of the dispatch word or bank. It has no
+other client, private helper, table, storage or rodata. Left record_offer's
+ratio selector reads its private table, while the right threshold controller
+owns its lookup/debit helper protocol; neither asset is used by the query.
+The shared ID/constant alone does not join the neighboring TUs. These are
+whole operation-scoped services with evidence-limited -G0 cuts, not a
+flag-motivated slice or proven original source-file boundary.
+
+The existing selected_threshold_interaction.h now also publishes the query,
+with explicit documentation that it returns 1 even before a first start,
+not only after completion. State-command clients use that header rather
+than a local declaration. Canonical naming preserves ovl_11:801165C8,
+without changing the dispatch word's type or ownership. The initial baseline
+checked fold passed the query and the linked overlay; no compiler setting,
+linkage or policy exception changed.
 
 Earlier evidence and limits:
 [evidence](research/ovl_11_func_80116878-grouping.md).

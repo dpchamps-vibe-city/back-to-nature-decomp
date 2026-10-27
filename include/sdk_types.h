@@ -18,6 +18,10 @@ struct SpriteSourceData;
 
 typedef struct SpriteSourceData SpriteSourceData;
 
+struct Ovl11CurrentRecordBoundsEntry;
+
+typedef struct Ovl11CurrentRecordBoundsEntry Ovl11CurrentRecordBoundsEntry;
+
 struct Ovl11DispatchRecord;
 
 typedef struct Ovl11DispatchRecord Ovl11DispatchRecord;
@@ -196,20 +200,6 @@ typedef struct {
 } M2C_3f22cd297a83_CopyStruct_8480;
 
 typedef struct {
-               s32 field_00;
-               s32 field_04;
-               s32 field_08;
-} M2C_4df042861e66_BoundsArgs4994;
-
-typedef struct {
-               s16 field_00;
-               char pad_02[0x08 - 0x02];
-               s32 field_08;
-               s32 field_0C;
-               s32 field_10;
-} M2C_4df042861e66_BoundsEntry4994;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -382,11 +372,6 @@ typedef struct {
                char pad_32[0x2];
                s32 unk34;
 } M2C_7b06bd92cdbb_Struct_80109A70;
-
-typedef struct {
-               char pad00[0x16];
-               s16 unk16;
-} M2C_7d34f504fd33_UnkStruct800CD4E4;
 
 typedef struct {
                u16 unk0;
@@ -1034,6 +1019,14 @@ typedef struct {
     u8 stateArgument;
 } Ovl11ConditionRecord;
 
+struct Ovl11CurrentRecordBoundsEntry {
+    s16 selector;
+    char pad2[6];
+    s32 x;
+    s32 y;
+    s32 z;
+};
+
 typedef struct {
     u16 unk0;
     char pad_02[0x24 - 2];
@@ -1649,6 +1642,11 @@ typedef struct {
     s16 kind;
     u16 flags;
 } Ovl11SeasonalRecordView;
+
+typedef struct {
+    char pad0[0x16];
+    s16 secondaryGauge;
+} Ovl11SecondaryGaugeView;
 
 typedef struct {
     s32 pulseTicks;

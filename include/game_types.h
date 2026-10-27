@@ -523,6 +523,22 @@ typedef struct {
     s32 z;
 } Vec3;
 
+/* 800F4994 returns the current record at work+DDD4: signed selector +0
+ * and word coordinates +8/C/10. This is a partial view, not its pool stride. */
+typedef struct Ovl11CurrentRecordBoundsEntry {
+    s16 selector;
+    char pad2[6];
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11CurrentRecordBoundsEntry;
+
+/* 800CD4E4 reads the same signed +0x16 secondary gauge that D622C clamps. */
+typedef struct {
+    char pad0[0x16];
+    s16 secondaryGauge;
+} Ovl11SecondaryGaugeView;
+
 /* Sprite projection reads the unsigned low halfword of each XYZ word.
  * Keep the interleaved high-halfword padding and unsigned promotion. */
 typedef struct {
