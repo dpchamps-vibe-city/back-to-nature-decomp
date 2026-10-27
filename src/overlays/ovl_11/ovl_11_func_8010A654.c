@@ -4,9 +4,9 @@
 #include "psyq/abs.h"
 #include "ovl11_record_pair_order.h"
 #include "ovl11_object_state_dispatch.h"
+#include "ovl11_keyframe_step.h"
 
 s32 ovl_11_func_80109188 (Ovl11D04D4Obj *arg0, s32 arg1);
-s32 ovl_11_func_800D04D4 (Ovl11A47CObject *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_8010AE64 (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D31EC (u16 arg0, u16 arg1);
 s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
@@ -32,7 +32,7 @@ s32 ovl_11_func_8010A654(Ovl11A654Object *arg0) {
         break;
     case 1:
     default:
-        if (ovl_11_func_800D04D4((Ovl11A47CObject *) arg0, D_80127ADC, &arg0->unk28, -1, &D_8012D072) != 0) {
+        if (Ovl11StepPackedKeyframes((Ovl11A47CObject *) arg0, D_80127ADC, &arg0->unk28, -1, &D_8012D072) != 0) {
             arg0->unk28 = -1;
         }
         if (arg0->unk34 & 0x2000) {

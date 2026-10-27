@@ -13,8 +13,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
-
-void ovl_11_func_800CBD78(Ovl11C7010Object *);
+#include "ovl11_held_item_replacement.h"
 
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
     s32 key;
@@ -80,7 +79,7 @@ s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
                         if (which != 0) {
                             ((struct Ovl11E8250State *)D_8006C838)->flags &= 0xEFFF7FFF;
                             Ovl11ResetPrimaryObjectRequest();
-                            ovl_11_func_800CBD78((Ovl11C7010Object *)((u8 *)D_8006C838 + 0x51C8));
+                            Ovl11ReleaseHeldItem((Ovl11C7010Object *)((u8 *)D_8006C838 + 0x51C8));
                         } else {
                             Ovl11RemoveSlotSprite(slot->id);
                             Ovl11ClearHalfwordTriplet((s16 *)slot);

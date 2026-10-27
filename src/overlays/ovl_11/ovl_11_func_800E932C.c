@@ -1,8 +1,6 @@
 #include "common.h"
 #include "game_types.h"
-
-/* This call forwards the full word; the callee stores its low halfword. */
-void ovl_11_func_800CBB9C();
+#include "ovl11_held_item_replacement.h"
 
 s32 ovl_11_func_800E932C(s16 arg0, s16 arg1, s32 arg2) {
     s32 value;
@@ -13,6 +11,6 @@ s32 ovl_11_func_800E932C(s16 arg0, s16 arg1, s32 arg2) {
     } else {
         value = arg0;
     }
-    ovl_11_func_800CBB9C(object, value, arg2);
+    Ovl11ReplaceHeldItem(object, value, arg2);
     return 1;
 }

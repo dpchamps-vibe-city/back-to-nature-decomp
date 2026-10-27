@@ -41,6 +41,7 @@
 #include "ovl11_shared_animation_icon.h"
 #include "ovl11_flagged_volume_code.h"
 #include "ovl11_spawn_record_access.h"
+#include "ovl11_held_item_replacement.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -478,8 +479,6 @@ void Ovl11UpdateMovingItemRecords(void) {
     } while (var_s1 < 3U);
 }
 
-void ovl_11_func_800CBD78(Ovl11C7010Object *arg0);
-
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0) {
     s16 temp_a0;
 
@@ -492,5 +491,5 @@ void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0) {
         gOvl11HeldActionSpritePosition.z = *(u16 *) ((u8 *) arg0 + 0x2C);
         return;
     }
-    ovl_11_func_800CBD78((Ovl11C7010Object *) ((u8 *) D_8006C838 + 0x51C8));
+    Ovl11ReleaseHeldItem((Ovl11C7010Object *) ((u8 *) D_8006C838 + 0x51C8));
 }

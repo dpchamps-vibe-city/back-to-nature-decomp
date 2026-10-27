@@ -135,6 +135,21 @@ function identifiers(root: Node): Set<string> {
  * function's carrier — contributes nothing.
  */
 export function mergeSources(files: Array<{ path: string; text: string }>, header: string): { text: string; notes: string[] } {
+  /* A one-unit move has nothing to union. Preserve preprocessing order:
+     source-local header selectors must still precede their includes. */
+  if (files.length === 1) {
+    const file = files[0]!;
+    const tree = parseC(file.text);
+    try {
+      if (tree.rootNode.hasError) refuse(`${file.path} does not parse as C`);
+      return {
+        text: file.path.includes(`/${MODULE_DIR}/`) ? file.text : `${header}\n\n${file.text.trim()}\n`,
+        notes: [],
+      };
+    } finally {
+      tree.delete();
+    }
+  }
   const includes: string[] = [];
   const seen = new Set<string>();
   const macros = new Map<string, { text: string; from: string }>();
@@ -549,7 +564,12 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
     }
     log(`rolled back: ${why}`);
     const resplit = run("make", [splitTarget(plan.container)]);
-    if (resplit.code !== 0) log(`warning: re-split after rollback failed:\n${resplit.output.split("\n").slice(-6).join("\n")}`);
+    if (resplit.code !== 0) return { ok: false, detail: `${why}\nRe-split after rollback failed:\n${failureLines(resplit.output, 8).join("\n")}` };
+    /* Restoring bytes rewrites source mtimes, and an extended module may
+       have overwritten its old object. Restore the built container too. */
+    log(`make ${checkTarget(plan.container)} (restore objects and linked bytes after rollback)`);
+    const restored = run("make", [`-j${Math.max(1, availableParallelism() - 2)}`, checkTarget(plan.container)]);
+    if (restored.code !== 0) return { ok: false, detail: `${why}\nBuild after rollback failed:\n${failureLines(restored.output, 8).join("\n")}` };
     return { ok: false, detail: why };
   };
 

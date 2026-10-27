@@ -1,5 +1,6 @@
 #include "common.h"
 #include "ovl11_object_record_clear.h"
+#include "ovl11_keyframe_step.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -15,8 +16,6 @@ typedef struct {
     char pad_38[0x7A - 0x38];
     /* 0x7A */ u16 unk7A;
 } Ovl11D4624Obj;
-
-s32 ovl_11_func_800D04D4(Ovl11D4624Obj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 
 extern u8 D_80123BF8;
 
@@ -37,7 +36,7 @@ s32 ovl_11_func_800D4624(Ovl11D4624Obj *arg0) {
         break;
     case 1:
     default:
-        if (ovl_11_func_800D04D4(arg0, &D_80123BF8, &arg0->unk28, -1, (u16 *)&arg0->unk2A) != 0) {
+        if (Ovl11StepPackedKeyframes(arg0, &D_80123BF8, &arg0->unk28, -1, (u16 *)&arg0->unk2A) != 0) {
             arg0->unk28 = -1;
         }
         break;

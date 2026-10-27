@@ -34,7 +34,7 @@ s32 ovl_17_func_800B986C(void);
 s16 ovl_17_func_800B9940(s32 arg0);
 s16 ovl_17_func_800B9C48(s16 arg0);
 void ovl_17_func_800B9CAC(void);
-void ovl_17_func_800BAF50(void);
+void Ovl17DrawDisplaySpriteFrameRects(void);
 void Ovl17DrawRecordBackdrop(s32 scrollQ12);
 void Ovl17DrawRecordSpriteQuads(Recon_ovl_17_func_800BAD9C_A0View *record, s32 viewOriginX);
 void Ovl17DrawRecordSpriteRects(Recon_ovl_17_func_800BAD9C_A0View *record, s32 viewOriginX);

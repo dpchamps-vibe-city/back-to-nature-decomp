@@ -31,6 +31,7 @@
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_balance_accounting.h"
+#include "ovl11_held_item_replacement.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
 
@@ -164,7 +165,6 @@ s32 Ovl11InitFixedCatalog(void) {
     return 1;
 }
 
-void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D6014(u16 arg0);
 s32 Ovl11RequestCatalogPanelMessage(s32 arg0);
 s32 ovl_11_func_8011D06C(s32 arg0);
@@ -247,9 +247,9 @@ s32 Ovl11UpdateCatalogPurchasePanel(void) {
     default:
         if (gOvl11CatalogSelectedId != 0) {
             if ((((Ovl11CBB9CGlobals *)D_8006C838)->items[gOvl11CatalogSelectedId].u0.flags & 0x400) != 0) {
-                ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11CBB9CGlobals *)D_8006C838)->object, gOvl11CatalogSelectedId, 3);
+                Ovl11ReplaceHeldItem((Ovl11C7010Object *)((Ovl11CBB9CGlobals *)D_8006C838)->object, gOvl11CatalogSelectedId, 3);
             } else {
-                ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11CBB9CGlobals *)D_8006C838)->object, gOvl11CatalogSelectedId, 2);
+                Ovl11ReplaceHeldItem((Ovl11C7010Object *)((Ovl11CBB9CGlobals *)D_8006C838)->object, gOvl11CatalogSelectedId, 2);
             }
         }
         ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 &= ~0x800000;

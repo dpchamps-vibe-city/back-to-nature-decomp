@@ -7,11 +7,10 @@
 #include "game_flags.h"
 #include "ovl11_weather_effect.h"
 #include "ovl11_record_slot_table.h"
+#include "ovl11_held_item_replacement.h"
 
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
-/* 800CBB9C consumes argument 1 with sh; its upper bits are immaterial. */
-void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 
 void ovl_11_func_800DE4C0(void) {
     char *base;
@@ -52,7 +51,7 @@ void ovl_11_func_800DE4C0(void) {
         }
         base = (char *)D_8006C838;
         if ((*(s32 *)(base + 0x4450) & 4) == 0 && GetGameFlag(2) == 0) {
-            ovl_11_func_800CBB9C((Ovl11C7010Object *)(base + 0x51C8), Rand(4) + 0x11B, 0);
+            Ovl11ReplaceHeldItem((Ovl11C7010Object *)(base + 0x51C8), Rand(4) + 0x11B, 0);
             if (*(s16 *)(base + 0x44C0) >= 7) {
                 SetGameFlag(0xAD, 1);
             }

@@ -3506,7 +3506,8 @@ typedef struct {
     u8 unk2[2];
     s16 unk4;
 } Ovl11ItemState;
-extern Ovl11ItemState D_80128C58;
+/* CBB9C saves the +8A held record before replacement; C6770 restores it. */
+extern Ovl11ItemState gOvl11SavedHeldItem;
 /* EXE 1A284 exposes fields 19/18/21/20; ovl_11 F3898..F3BA0 add/take them.
  * Preserve the pre-existing five-halfword array-backed lvalue views. These
  * are not four new allocations or evidence that the logical counters overlap. */
@@ -7215,7 +7216,8 @@ extern Ovl11DirectionOffset gOvl11DirectionOffsetsFlag100[];
 /* 800C498C reads signed halfword pairs indexed by u16 direction * 4. */
 extern s16 gOvl11FacingProbeOffsets[][2];
 /* 800CB114 uses lw/sw and unsigned comparison for the saturating counter. */
-extern u32 D_80123158;
+/* CB114 counts qualifying hits to 51; primary_object_update resets on exit. */
+extern u32 gOvl11InteractionDispatchCount;
 
 /* 800C580C uses the D_8006C838 base for u16 counters and the +DDD4 record pointer. */
 struct Ovl11C580CState {
@@ -7498,7 +7500,9 @@ extern u8 gOvl11Animation8Sequence;
 extern u8 D_80123FDC[12];
 /* 800D55F8 passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
 extern u8 D_80123C94[12];
-/* 800D31EC stores a signed halfword; 800D55F8 copies it as u16 to +0x22. */
+/* 800D31EC stores both halfwords; D3FEC reads the first unsigned for a
+ * wrapping debit, and D55F8 copies the second as u16 to object+22. */
+extern s16 gOvl11StateValueDebit;
 extern s16 D_80128D7A;
 
 /* 8010AE64 selects one of two triples; 69960.data.s contains six halfwords. */

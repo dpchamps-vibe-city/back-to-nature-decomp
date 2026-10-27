@@ -5,8 +5,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl17_record_backdrop.h"
-
-void ovl_17_func_800BAF50(void);
+#include "ovl17_display_sprite_frame.h"
 
 void ovl_17_func_800B92B0(void) {
     s32 i;
@@ -15,7 +14,7 @@ void ovl_17_func_800B92B0(void) {
     u8 *work;
     u8 *display;
 
-    ovl_17_func_800BAF50();
+    Ovl17DrawDisplaySpriteFrameRects();
     base = gOvl17AnimatedRecordBase;
     work = base - 0x28;
     record = base;

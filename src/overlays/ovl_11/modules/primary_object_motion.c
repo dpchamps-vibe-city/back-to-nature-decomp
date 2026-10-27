@@ -16,8 +16,8 @@
 #include "pad_actuator_sequences.h"
 #include "ovl11_coordinate_clamp.h"
 #include "point_projection.h"
+#include "ovl11_primary_object_collision_action.h"
 
-s32 ovl_11_func_800CB114(Ovl11CB114Object *, s32 *, s16);
 s32 GetVal8005E524(void);
 void SetVal8005E51C(s32);
 
@@ -59,7 +59,7 @@ void Ovl11ProbePrimaryObjectMotion(void) {
     }
     position.vx += xAhead;
     position.vz += zAhead;
-    collisionClass = ovl_11_func_800CB114((Ovl11CB114Object *)player, (s32 *)&position, 0x38);
+    collisionClass = Ovl11QueryPrimaryObjectCollisionAction((Ovl11CB114Object *)player, (s32 *)&position, 0x38);
     if (collisionClass == 0x3E7) {
         if ((gOvl11InteractionHitFlags & 0x20) &&
             (player->velocity[0] != 0 || player->velocity[2] != 0) &&
@@ -113,7 +113,7 @@ probe_sides:
             probe.vx += dx;
             probe.vz += dz;
             if (Ovl11ResolveSurfaceHeight((s32 *)&probe, 0xE080) == 0 &&
-                ovl_11_func_800CB114((Ovl11CB114Object *)player, (s32 *)&probe, 0) != 4) {
+                Ovl11QueryPrimaryObjectCollisionAction((Ovl11CB114Object *)player, (s32 *)&probe, 0) != 4) {
                 clearSides |= 1 << probeIndex;
             }
             probeIndex += 1;

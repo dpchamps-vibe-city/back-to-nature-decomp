@@ -51,6 +51,8 @@
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_spawn_record_access.h"
+#include "ovl11_held_item_replacement.h"
+#include "ovl11_primary_object_collision_action.h"
 
 s32 ovl_11_func_800C9D64(void);
 
@@ -373,8 +375,6 @@ void Ovl11PlaceObjectCellTexture(Ovl11CE034Object *arg0) {
     }
 }
 
-s32 ovl_11_func_800CB114(Ovl11CB114Object *arg0, s32 *arg1, s16 arg2);
-
 void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
     VECTOR position;
     s32 result;
@@ -388,7 +388,7 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
         Ovl11ComputeGridOffsetPosition((Ovl11CE034Object *)arg0,
                            (Ovl11CE034Position *)&position, 2);
         result = Ovl11ResolveSurfaceHeight((s32 *)&position, 0xC080);
-        if ((result | ovl_11_func_800CB114((Ovl11CB114Object *)arg0,
+        if ((result | Ovl11QueryPrimaryObjectCollisionAction((Ovl11CB114Object *)arg0,
                                         (s32 *)&position, 0x18)) == 0) {
             *(VECTOR *)arg0->position = position;
             return;
@@ -407,7 +407,6 @@ void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 void ovl_11_func_800CD670 (s16 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
-void ovl_11_func_800CBD78 (Ovl11C7010Object *arg0);
 void ovl_11_func_800CF314 (u8 *arg0, C580C_b6c4596908ca_Ovl11CF314Arg1 *arg1, C580C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
@@ -638,7 +637,7 @@ state_done:
                 RequestMessageWindow(3, 0x383);
             }
             arg0->unk6C &= 0xE7FF3FFF;
-            ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);
+            Ovl11ReleaseHeldItem((Ovl11C7010Object *) arg0);
             Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x3A:
@@ -800,7 +799,7 @@ finish_action:
             }
             arg0->unk6C &= 0xE7FF3FFF;
             if (arg0->state == 9) {
-                ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);
+                Ovl11ReleaseHeldItem((Ovl11C7010Object *) arg0);
             }
             Ovl11ResetPrimaryObjectRequest();
             return 0;
@@ -808,7 +807,7 @@ finish_action:
             PlaySoundEffect(9);
             Ovl11PlaceObjectCellTexture((Ovl11CE034Object *) arg0);
             arg0->unk6C &= 0xE7FF3FFF;
-            ovl_11_func_800CBD78((Ovl11C7010Object *) arg0);
+            Ovl11ReleaseHeldItem((Ovl11C7010Object *) arg0);
             Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0xC:
@@ -975,7 +974,7 @@ void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *arg0) {
     }
     ovl_11_func_800CCF14((Ovl11TripletTailView *)temp_s1);
     if (arg0->unk3C == 0x31) {
-        arg0->item = D_80128C58;
+        arg0->item = gOvl11SavedHeldItem;
         Ovl11InstallSlotSprite(arg0->item.id);
         arg0->unk6C &= ~0x4000;
         arg0->unk6C |= 0x8000;

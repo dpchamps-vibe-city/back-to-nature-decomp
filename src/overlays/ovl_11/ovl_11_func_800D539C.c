@@ -6,6 +6,7 @@
 #include "psyq/memory.h"
 #include "ovl11_record_selection.h"
 #include "ovl11_object_state_dispatch.h"
+#include "ovl11_keyframe_step.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -19,7 +20,6 @@ typedef struct {
 void ovl_11_func_800D0408();
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
-s32 ovl_11_func_800D04D4(Ovl11D539CStepObj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_800E0C24(Ovl11SetFieldsView *arg0, s32 arg1);
 s32 ovl_11_func_800DF010(Ovl11SetFieldsView *arg0, s32 arg1);
 
@@ -107,7 +107,7 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
         break;
     case 1:
     default:
-        if (ovl_11_func_800D04D4((Ovl11D539CStepObj *) arg0, &D_80123C88, (s16 *) ((u8 *)arg0 + 0x28), -1, (u16 *)((u8 *)arg0 + 0x2A)) != 0) {
+        if (Ovl11StepPackedKeyframes((Ovl11D539CStepObj *) arg0, &D_80123C88, (s16 *) ((u8 *)arg0 + 0x28), -1, (u16 *)((u8 *)arg0 + 0x2A)) != 0) {
             (arg0->state) = -1;
         }
         break;

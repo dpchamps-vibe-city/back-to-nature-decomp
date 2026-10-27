@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_surface_height.h"
+#include "ovl11_primary_object_collision_action.h"
 
-s32 ovl_11_func_800CB114(Ovl11CB114Object *, s32 *, s16);
 /* Overlay name for the matched GetVal8005E524 word-returning getter. */
 s32 GetVal8005E524(void);
 
@@ -10,7 +10,7 @@ void ovl_11_func_800C498C(Ovl11C498CObject *arg0) {
     s32 position[4];
     s16 *offset;
 
-    ovl_11_func_800CB114((Ovl11CB114Object *)arg0, arg0->position, 0x18);
+    Ovl11QueryPrimaryObjectCollisionAction((Ovl11CB114Object *)arg0, arg0->position, 0x18);
     position[0] = arg0->position[0];
     position[1] = arg0->position[1];
     position[2] = arg0->position[2];

@@ -716,14 +716,20 @@ function whitespaceGate(): { state: GateState; detail: string } {
  * The terminal gate, in order. Every step runs; a failure is recorded and the
  * remaining steps still report, so one run names every broken invariant. A
  * tree already judged under the same HEAD, index, options and baseline gets
- * the same verdict back with only the whitespace gate re-run.
+ * the same verdict back only while its object inventory is still fresh;
+ * the whitespace gate is always re-run.
  */
 export async function verify(options: Options): Promise<TuProgressReport> {
   const tree = treeOf("worktree");
   const key = tree ? verdictKey(options, tree) : null;
   const cache = readJson<CachedVerdict[]>(VERIFY_CACHE) ?? [];
   const hit = key ? cache.find((entry) => entry.key === key) : undefined;
-  if (hit && !options.noCache) {
+  /* Build artifacts are not part of the input tree. A rolled-back fold or
+     restored source can leave newer mtimes with the same content hash. */
+  const fresh = hit && !options.noCache
+    ? structuralReport({ container: options.container, limit: options.limit }).integrity.inventory === "pass"
+    : false;
+  if (hit && !options.noCache && fresh && hit.report.gates.every((gate) => gate.state === "pass")) {
     console.error(`tuProgress: this tree (${hit.tree.slice(0, 12)}) was verified at ${hit.at}; reusing that verdict (--no-cache re-runs it)`);
     const whitespace = whitespaceGate();
     const gates = hit.report.gates.map((gate) => gate.gate === "git diff --check" ? { ...gate, ...whitespace } : gate);
@@ -732,6 +738,8 @@ export async function verify(options: Options): Promise<TuProgressReport> {
       complete: hit.structuralComplete && gates.every((gate) => gate.state === "pass"), verifiedTree: hit.tree, cachedFrom: hit.at,
     };
   }
+
+  if (hit && !options.noCache) console.error("tuProgress: cached verdict cannot be reused; object inventory is no longer valid/fresh or a prior gate failed — re-verifying");
 
   const gates: TuProgressReport["gates"] = [];
   const record = (gate: string, state: GateState, detail: string) => gates.push({ gate, state, detail });

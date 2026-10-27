@@ -1548,3 +1548,21 @@ Ovl11SceneHeaderKeyDiffers = 0x800DD1D0; // type:func
 // Shared record-prefix season gating, presentation mapping and consumption.
 Ovl11ConsumeSeasonalRecord = 0x800F413C; // type:func
 Ovl11GetSeasonalRecordId = 0x800F4240; // type:func
+
+// Held-item replacement saves the six-byte +8A record; 800C6770 restores it.
+Ovl11ReplaceHeldItem = 0x800CBB9C; // type:func
+Ovl11ReleaseHeldItem = 0x800CBD78; // type:func
+gOvl11SavedHeldItem = 0x80128C58; // type:data size:0x6
+
+// Four-byte code/duration rows; the next row's code is the -1 terminator.
+Ovl11StepPackedKeyframes = 0x800D04D4; // type:func
+
+// Complete non-null object-state entry-callback set (table slots 5..7).
+Ovl11ApplyStateValueDebit = 0x800D3FEC; // type:func
+Ovl11StateEntryNoop = 0x800D4028; // type:func
+Ovl11RequestObjectStateMessage = 0x800D4030; // type:func
+gOvl11StateValueDebit = 0x80128D78; // type:data size:0x2
+
+// Publish the directional interaction probe and its dispatch-delay counter.
+Ovl11QueryPrimaryObjectCollisionAction = 0x800CB114; // type:func
+gOvl11InteractionDispatchCount = 0x80123158; // type:data size:0x4

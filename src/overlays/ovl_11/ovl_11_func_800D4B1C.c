@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_object_record_clear.h"
+#include "ovl11_keyframe_step.h"
 
 typedef struct {
     char pad_00[0x22];
@@ -20,7 +21,6 @@ typedef struct {
     /* 0x7A */ u16 unk7A;
 } Ovl11D4B1CObj;
 
-s32 ovl_11_func_800D04D4(Ovl11D4B1CObj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 void ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
 extern u8 D_80123C50;
@@ -42,7 +42,7 @@ s32 ovl_11_func_800D4B1C(Ovl11D4B1CObj *arg0) {
         break;
     case 1:
     default:
-        if (ovl_11_func_800D04D4(arg0, &D_80123C50, &arg0->unk28, -1, (u16 *)&arg0->unk2A) != 0) {
+        if (Ovl11StepPackedKeyframes(arg0, &D_80123C50, &arg0->unk28, -1, (u16 *)&arg0->unk2A) != 0) {
             arg0->unk28 = -1;
         } else {
             switch (arg0->unk28) {

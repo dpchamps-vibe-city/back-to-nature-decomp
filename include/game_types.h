@@ -1983,6 +1983,13 @@ typedef struct {
     /* 0xAC */ s16 unkAC;
 } Ovl11Func801098B0Arg;
 
+/* 800D3FEC loads/stores an unsigned halfword at +AC before testing its
+ * signed low-halfword difference against zero. No larger layout is inferred. */
+typedef struct {
+    u8 pad_0[0xAC];
+    u16 value;
+} Ovl11StateValueView;
+
 /* Object viewed by the D_800B8E6C state-handler ovl_11_func_800D4030: the u16
  * state id at +0x00 and the s16 selector at +0x30. Only the two fields the
  * handler reads are named. */
@@ -2469,9 +2476,11 @@ typedef struct {
 
 /* Shared animation/handler view. 800D04D4 reads +24/+30/+7A; the fixed
  * sequence callbacks and 80109188 also maintain +26..+2C and +34.
- * The halfword widths/signedness are retained across these partial views. */
+ * E2F58/E32E4 additionally read the leading ID. All existing field offsets,
+ * halfword widths and signedness are retained across these partial views. */
 typedef struct {
-    char pad_00[0x24];
+    u16 unk0;
+    char pad_02[0x24 - 2];
     s16 unk24;                  /* selected animation */
     s16 unk26;                  /* selected handler */
     s16 unk28;                  /* keyframe cursor / handler sub-state */

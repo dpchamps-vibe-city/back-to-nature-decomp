@@ -4182,7 +4182,47 @@ share the object-ID case set and `SystemError(0x45, ...)` convention;
 idiom supports candidate membership, not a proven TU boundary. Evidence and
 limits: [grouping research](research/ovl_11_func_800D3574-grouping.md).
 
-Corroborated handler run (match of ovl_11_func_800D4030): the three populated
+**Reconstructed `modules/object_state_callbacks.c`, D3FEC–D41A4
+exclusive, all three entry callbacks.** The only non-null slots of
+gOvl11ObjectStateEntryCallbacks (B8E6C, slots 5/6/7) are exactly these
+three consecutive entries, in a different table order from link order.
+That closed callback protocol, not adjacency alone, supports the unit.
+The external dispatcher/table storage stays in object_state_dispatch and
+the extracted data; linkage and ownership are unchanged. D3FEC additionally
+serves frame slot 6. Left record_selection ends with the two-bank scan
+protocol, not these entry gates. That cut is evidence-limited under -G0.
+
+The right edge is a MECHANICAL limit on the wider callback family, not an
+asserted original-file boundary. All 20 non-null frame callbacks form the
+consecutive D41A4–D5740-exclusive span. Sixteen private keyframe tables at
+123BCC..123CA0 follow their users' address order; D425C is also called by
+D4EA0/D506C/D5224 inside the span. The adjacent entry/frame callback tables
+and connected lifecycle support a complete 23-entry extension experiment.
+Its baseline dry run passed. The first checked write rolled back on SDK
+include ordering; with stddef/libgte/libgpu ordered in the candidate
+preamble, the second reached cc1 and rolled back on conflicting D0408
+return/signedness declarations (lines 157/233/726/820 of the merged file).
+The temporary preamble change was restored too. This confirms the existing
+interface recovery blocker, rather than licensing slices of the frame run.
+The earlier canonical-prototype caller trial changed bytes (see direction
+vector section). Next useful experiment: recover one byte-preserving common
+D0408 contract/source shape across the whole callback family, then repeat
+the complete extension. No flag is involved. D5740 only clears a three-
+halfword record for remote item-transfer clients; no member/table witness
+joins it to this callback family.
+
+Names: Ovl11ApplyStateValueDebit, Ovl11StateEntryNoop,
+Ovl11RequestObjectStateMessage, and gOvl11StateValueDebit (128D78, two
+bytes). The debit loads +AC and the debit unsigned, then tests the signed
+LOW halfword of their difference; it is not a wide saturating subtract.
+The setter's existing signed storage declaration is now header-owned, and
+the callback explicitly reads its u16 view. Both widths remain unchanged.
+The message header documents IDs/selectors, first/repeat flags 9E/9F and
+the unconditional -1 result. The no-op retains its no-consumed-argument ABI;
+no dummy object parameter or private linkage was inferred. All three passed
+the checked baseline fold; no override or policy exception was added.
+
+Historical corroborated handler run (match of ovl_11_func_800D4030): the three populated
 `D_800B8E6C` handlers are also a gapless link-order run — 0x800D3FEC (0x3C) →
 0x800D4028 (0x8) → 0x800D4030 (0x174) in `build/ovl_11/ovl_11.map`, the head
 being the D_80128D78 cluster member above. The table's index order (5: 800D4030,
@@ -12942,6 +12982,37 @@ Members:
 
 ## `ovl_11` D_801230B0/D0/F0 {s16,s16} pair-table selector run — 0x800C9938 / 0x800CB114 (confidence: low)
 
+**Separate service reconstructed as `modules/primary_object_collision_action.c`,
+CB114–CB4E0 exclusive, one entry.** Ovl11QueryPrimaryObjectCollisionAction
+builds the directional offset probe, consumes the shared collision budget,
+updates action/contact flags and publishes the shared hit pointer/flags.
+Its two offset-table readers are remote public clients, not a private
+helper closure requiring absorption of the intervening code.
+Left grouped_value_mapping is a two-range integer mapper, without a
+collision query or output publication. Right primary_object_requests owns
+request triplets/completion cleanup, not the directional probe. Neither
+neighbor calls this service or shares its particular probe protocol; these
+are evidence-limited service boundaries under -G0, not historic object proofs.
+
+The header documents raw engine position units, unchecked indices, budget,
+probe-0/38 publication exceptions, result overrides, and flag/state changes.
+gOvl11InteractionDispatchCount (123158, u32) counts qualifying hit-dispatch
+attempts to 51; primary_object_update resets it on exit. It is not a frame
+count: a query can increment it for multiple hit bits. Existing hit/output
+aliases and collision tag ABI remain unchanged. Parameters/locals now name
+the probe, hit flags, query mask and dispatch classification.
+
+The first single-entry fold exposed a helper bug: unioning even one source's
+includes moved OVL11_COLLISION_OUTPUT_VIEW below common.h and hid the hit
+pointer declaration. It rolled back without changing the live source.
+foldTranslationUnit.mergeSources now preserves the exact preprocessing order
+for a one-input move (there is no include union to perform). All five existing
+fold-helper tests pass; no tests were added. The repeated baseline fold then
+proved this member and the full overlay. The required header selector remains
+before common.h; no alias or source-policy workaround was added.
+
+Historical data-family evidence (the former stub status is obsolete):
+
 Evidence: `ovl_11_func_800C9938` (matched, byte-exact clean C, 0x90) is the
 first matched reader of the contiguous 0x20-apart {s16,s16} pair tables
 `D_801230B0`/`D_801230D0`/`D_801230F0` (0x80123xxx data body) — absolute
@@ -13716,6 +13787,74 @@ canonical-prototype trial changed caller bytes. Those trials were restored.
 The direction entry therefore remains unpublished with its historical local
 caller declarations; no casts, wrapper ABI or new workaround was introduced.
 This is explicitly unresolved interface recovery, not a retyped return.
+
+**Separate service reconstructed as `modules/keyframe_step.c`,
+800D04D4–800D05D0 exclusive (one entry).** Ovl11StepPackedKeyframes is the
+shared sequencer used by the many state-handler/table families elsewhere
+in ovl_11, not a member of the adjacent vector pair. The table advances in
+FOUR-byte code/duration rows: the local six-byte window's +4 halfword is
+the following row's code, not evidence of a six-byte array stride. A -1
+next code ends playback; a mode match adds the +7A mask-300 expiry gate.
+The public header documents signed-duration comparison, index/tick wrapping,
+terminal current-code preservation and unchecked table bounds. Locals name
+those operations without changing the asymmetric branch construction.
+
+Left D049C starts the separate timed-sprite effect at +A8 on a +16 threshold;
+it reads no keyframe table, counter or mode gate and calls no sequencer.
+Right D05D0 is a by-value three-word setter at +58, with no keyframe/timer
+protocol. No private helper/state/table witness extends this single-entry
+service across either neighbor. These are evidence-limited boundaries, not
+-G0 proofs of original file size. Remote handler tables are clients, not
+permission to absorb every intervening handler into one giant TU.
+
+The checked baseline fold proves this entry and the overlay. Publication
+exposed 25 source-local duplicates of the established Ovl11D04D4Obj view;
+they now use game_types.h. Two additionally read u16 +0, so that witnessed
+field replaces padding in the shared view without moving or retyping any
+existing field. interfaceAudit reconciles all 54 declaring caller units
+(29 then 25), with identical caller objects and zero failing published
+interfaces. The unrelated direction-vector conflicts above remain unchanged.
+No flag, linkage, storage or exception was added.
+
+Run acceptance for held_item_replacement, keyframe_step,
+object_state_callbacks, primary_object_collision_action and ovl_17's
+display_sprite_frame: two batches passed full tuProgress --verify against
+build/tu-campaign/baseline.json. Folded membership rose **1598 -> 1606**
+(eight compiled functions), all **267/267 module TUs valid**. All eight
+integrity gates pass: original inventory, completeness, source policy,
+linked EXE/all 13 overlays including data/callbacks/tables/placement,
+configuration convergence, whitespace, input stability and exception
+non-growth. Published interfaces have zero failing sites; unrelated legacy
+prototype/arity disputes remain visible. Existing flag settings and all
+allowlist entries are unchanged. No pin, assembly construct or stub was
+added. The initial shared-tool change was the single-input preprocessing-
+order fix in tools/build/foldTranslationUnit.ts, necessitated by the collision
+fold's compiler refusal.
+
+Controller/recovery correction: the later failed ovl_25 ten-entry fold
+restored identical source bytes with newer mtimes but did not rebuild the
+old objects. The final verifier reused its input-tree cache, whereas the
+controller's uncached structural oracle found ten stale objects and rejected
+the dispatch (2026-10-27T00:33:10Z), archiving/restoring 100 files. Thus the
+initial final report was premature despite the earlier passing byte gates.
+The archived patch and ten new files have now been recovered without
+changing the guard or its recorded failed outcome. foldTranslationUnit
+rollback now rebuilds/byte-checks the restored container; tuProgress only
+reuses a passing verdict while its object inventory is still valid/fresh.
+These two tools are the necessary changes outside integration roots,
+authorized by this run's concrete fold/check scope rule; the tool guide
+records their behavior. No tests were added: all ten existing tests pass.
+
+Recovery measurements: uncached full verification passes every integrity
+gate at 1606 folded / 267 valid modules. Replaying the same failed ten-entry
+fold now leaves zero invalid/undetermined units. A same-content source touch
+makes the cached verifier explicitly reject its cache, rebuild and pass all
+gates with cachedFrom absent. The final controller-equivalent --json
+structural read independently reports 1606 folded, 1019 remaining, zero
+invalid/undetermined and no failures. No commit was made. Exit 1 denotes
+remaining campaign work, not an invariant failure.
+
+Historical pair description follows:
 
 Two link-contiguous leaf functions operating on the identical 12-byte record
 (three s32 components at 0/4/8), followed by a function run the symbol map
@@ -15013,6 +15152,37 @@ Members:
 - ovl_11_func_800C8D24 (s) — reads D_80128C54 only.
 
 ## `ovl_11` D_80128C58 item-snapshot save/restore pair — 0x800C6770 / 0x800CBB9C (confidence: low)
+
+**Reconstructed `modules/held_item_replacement.c`, CBB9C–CBDFC
+exclusive, both entries CBB9C/CBD78.** Replacement and release operate on
+exactly the +8A six-byte held-item triplet and its slot-sprite lifetime:
+both remove the current slot and clear that triplet, replacement installs
+the new slot through +F0, while release optionally refreshes its placed
+record using the +FC tag. This complementary lifecycle and original order
+support the pair; shared primary-object RAM alone would not. The checked
+baseline fold proves both entries and all ovl_11 bytes, without an override.
+
+Left item_action_gate owns a separate cell-classifier/output-pointer protocol
+and neither calls these operations nor uses their snapshot. Right CBDFC is
+only a bit-29 predicate on the global primary-object flags, without item or
+sprite-slot effects. These are evidence-limited service cuts under -G0, not
+GP proofs of historical object boundaries. The remote C6770 snapshot restore
+is already part of primary_object_grid_actions: snapshot transfer across
+these public services supplies no evidence for absorbing the intervening
+code. No supported private helper has been omitted from this two-entry unit.
+
+Names: Ovl11ReplaceHeldItem, Ovl11ReleaseHeldItem and the six-byte
+gOvl11SavedHeldItem (80128C58; existing Ovl11ItemState view). The snapshot
+is the same +8A record subsequently cleared, not an auxiliary item inferred
+from the nearby +84 field. The header preserves full-word itemId and
+presentation inputs, narrowing only at the original triplet store; records
+remain the canonical existing views. It documents flag overrides, the
+otherwise-empty held slot for unsupported presentations, shared snapshot/
+cache effects and unchecked indexing. Parameter/local names describe IDs,
+triplets, presentation and flags; no ABI, layout, linkage or ownership changes.
+Interface publication reconciles both operations' declaring callers.
+
+Historical broader snapshot relationship, not an asserted contiguous TU:
 
 Shared-global evidence: the verified reader restores the six-byte snapshot
 that the writer saves from the same object offset. This supports candidate
@@ -16362,6 +16532,24 @@ has no overlay identity from which to resolve those unprefixed data aliases.
 No generated header was hand-edited, storage added or private linkage inferred.
 The second and final batch gates pass all integrity checks; final progress is
 1598 folded and 262/262 valid modules, including every original EXE/overlay byte.
+
+**`modules/display_sprite_frame.c`, ovl_17:BAF50–BAFAC exclusive,
+Ovl17DrawDisplaySpriteFrameRects (one entry).** SelectSpriteAnimation(4)
+unconditionally resets the shared display source's frame/tick and clears
+flags 300, even when 4 was already selected; the rectangular draw then uses
+its +4/+5 bytes at screen (0,0), OT+4. The public header states that reset
+and initialization prerequisites. The source remains the already
+canonical gOvl17DisplaySpriteSource; no new storage/view is introduced.
+
+Left record_sprite_draw's three-member closure draws six record/indicator
+sprites, not this separate display source. Right record_sprite_animation
+selects/steps the same six records, again without this source. Its sharing
+with remote record_backdrop establishes a source-service relationship, not
+private ownership or a same-TU witness across the interposed record-draw
+family. Thus both cuts are responsibility/evidence-limited boundaries,
+not GP proofs (-G0), and no flag dictates them. The checked baseline fold
+proves the entry and full overlay; its sole scene-callback caller publishes
+through ovl17_display_sprite_frame.h with unchanged bytes.
 
 Historical broader-cluster observation: 800BA808 shares 800BAF50's
 `D_800BDA74` work-area alias and renderer callees, and precedes 800BAC24.
@@ -17896,6 +18084,33 @@ Members (link order):
   `ovl_25_func_800B9C90` over `D_800C0124`
 
 ## `ovl_25` record-reset transform-caller run — 0x800B9B28–0x800B9E84 (confidence: medium)
+
+Whole-service experiment (no slice accepted): the five callers below,
+A2E8/A40C/A530 visibility/base-record operations and both A5BC/A758
+transform helpers form a ten-entry candidate, 9B28–A7F0 exclusive.
+Repository call search finds no transform-helper clients outside that run;
+the visibility pair operates on the same four C024C records plus the C0334
+sequence records used by the callers. Thus A2E8 is not an independently
+supported boundary merely because a historical section starts there.
+9B00 is the separately used state/timer setter, with many earlier callers
+but no renderer/helper use; A7F0 begins the separately recorded six-entry
+state-handler table. These are service/evidence-limited candidate edges
+under -G0, not proven historical cuts.
+
+The complete baseline dry run passed and pooled 9B28's switch table.
+The checked write reached cc1, then rolled back on conflicting declarations
+of C024C (u16 in the flag walkers versus ObjectState in A530) and C0334
+(u16 in the walkers versus ObjectState in A5BC). No partial module, new
+alias, flag or exception remains. Existing override-header identities
+Ovl25Sprite800C024C/Ovl25Sprite800C0334 already provide SpriteSourceData
+views bound to the same storage. Next useful experiment: express every
+walker's halfword-address view and renderer's ObjectState view explicitly
+through those established identities, preserving the existing byte offsets,
+then repeat the whole ten-entry fold. Do not invent distinct storage or
+stop before the helpers just to avoid the declaration collision.
+The historical (s) tags below do NOT establish present-day mismatches:
+this run's linked gate verifies the current overlay; the measured obstacle
+here is compilation of the merged declarations, not three unverified bodies.
 
 Candidate same-TU run of `ovl_25` handlers that reset an object record with
 `func_80015840` and immediately hand the record plus a source buffer to the

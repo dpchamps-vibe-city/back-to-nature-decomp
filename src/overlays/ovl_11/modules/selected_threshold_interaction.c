@@ -17,6 +17,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
+#include "ovl11_held_item_replacement.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 Ovl11CanApplySelectedThreshold(StructD548 *arg0);
@@ -118,8 +119,6 @@ s32 Ovl11CanApplySelectedThreshold(StructD548 *record) {
     return gSelectedThresholdBalance >= threshold;
 }
 
-void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
-
 /* The caller checks eligibility first; this operation does not clamp or
  * repeat the balance test. The selector also chooses the completion action. */
 void Ovl11ApplySelectedThreshold(StructD548 *record) {
@@ -132,7 +131,7 @@ void Ovl11ApplySelectedThreshold(StructD548 *record) {
     selection = record->index;
     if (selection == 0) {
         ((Ovl11SelectedThresholdState *)D_8006C838)->flags |= 0x10;
-        ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11SelectedThresholdState *)D_8006C838)->object, 0x67, 2);
+        Ovl11ReplaceHeldItem((Ovl11C7010Object *)((Ovl11SelectedThresholdState *)D_8006C838)->object, 0x67, 2);
         Ovl11SetInteractionSteps(9, 0xB);
     } else if (selection == 1) {
         Ovl11AddSaveCounter19(3, 0x1F4);

@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_primary_object_requests.h"
+#include "ovl11_held_item_replacement.h"
 
 void ovl_11_func_800DF0F8 (s32 arg0);
-void ovl_11_func_800CBD78 (Ovl11C7010Object *arg0);
 void ovl_11_func_800E2904 (s32 arg0);
 
 void ovl_11_func_800CFC20(void) {
@@ -33,7 +33,7 @@ void ovl_11_func_800CFC20(void) {
             if (temp_v1_2 & 0x20000) {
                 ((struct Ovl11CFC20Status *) D_8006C838)->flags &= 0xEFFF7FFF;
                 Ovl11ResetPrimaryObjectRequest();
-                ovl_11_func_800CBD78((Ovl11C7010Object *) ((struct Ovl11CFC20Status *) D_8006C838)->object);
+                Ovl11ReleaseHeldItem((Ovl11C7010Object *) ((struct Ovl11CFC20Status *) D_8006C838)->object);
             }
             ovl_11_func_800E2904((s32) var_s1);
             if ((s16) ++((struct Ovl11CFC20Status *) D_8006C838)->count >= 0x10) {

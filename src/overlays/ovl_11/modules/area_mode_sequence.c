@@ -57,6 +57,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_held_item_replacement.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -305,7 +306,6 @@ void ovl_11_func_800F4114(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 /* The callee stores argument 1 as a halfword; no caller-side narrowing. */
-void ovl_11_func_800CBB9C(Ovl11C7010Object *arg0, s32 arg1, s32 arg2);
 void ovl_11_func_800F1038(u16 arg0, s32 arg1);
 
 /* Cases 0/9 and 2/10 deliberately share tails. Calls may wait for sound
@@ -418,7 +418,7 @@ void Ovl11RunAreaEntrySteps(void) {
                 }
             }
             if (!(((Ovl11AreaInitView *)D_8006C838)->field_4450 & 4) && !GetGameFlag(2)) {
-                ovl_11_func_800CBB9C((Ovl11C7010Object *)((Ovl11AreaInitView *)D_8006C838)->field_51C8, Rand(4) + 0x11B, 0);
+                Ovl11ReplaceHeldItem((Ovl11C7010Object *)((Ovl11AreaInitView *)D_8006C838)->field_51C8, Rand(4) + 0x11B, 0);
             }
         } else {
             if (((Ovl11MovementState *)D_8006C838)->flagsC & 0x2000) {

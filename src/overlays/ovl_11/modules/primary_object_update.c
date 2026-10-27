@@ -66,7 +66,7 @@ void Ovl11UpdatePrimaryObject(void) {
         cachedValue = obj->flags;
         if ((cachedValue & 0x20000) && !(obj->flags & 0x20000010)) {
             Ovl11ResetPrimaryObjectRequest();
-            D_80123158 = 0;
+            gOvl11InteractionDispatchCount = 0;
             obj->flags = (s32) (obj->flags & 0xFFFDFFFF);
         }
         obj->flags36 = (u16) (obj->flags36 & 0xFFFB);

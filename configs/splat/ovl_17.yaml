@@ -70,7 +70,7 @@ segments:
       - [0x272C, c, modules/record_work_init]
       - [0x29E8, c, modules/record_backdrop]
       - [0x2E04, c, modules/record_sprite_draw]
-      - [0x3130, c, ovl_17_func_800BAF50]
+      - [0x3130, c, modules/display_sprite_frame]
       - [0x318C, c, modules/record_sprite_animation]
       - [0x32A4, c, modules/timer_hud]
       - [0x3574, c, modules/record_value_increments]

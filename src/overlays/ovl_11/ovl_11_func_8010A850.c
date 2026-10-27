@@ -3,9 +3,9 @@
 #include "psyq/stddef.h"
 #include "sound_commands.h"
 #include "ovl11_seasonal_record_ids.h"
+#include "ovl11_keyframe_step.h"
 
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
-s32 ovl_11_func_800D04D4(Ovl11A47CObject *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 s32 ovl_11_func_8010AFCC(Ovl11SetFieldsView *arg0);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11CC7CCPosition v);
 s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
@@ -41,7 +41,7 @@ s32 ovl_11_func_8010A850(Ovl11A47CObject *arg0) {
         break;
     case 1:
     default:
-        if (ovl_11_func_800D04D4(arg0, D_80127AE8, &arg0->unk28, -1, &D_8012D074)) {
+        if (Ovl11StepPackedKeyframes(arg0, D_80127AE8, &arg0->unk28, -1, &D_8012D074)) {
             arg0->unk28 = -2;
         }
         switch (arg0->unk28) {

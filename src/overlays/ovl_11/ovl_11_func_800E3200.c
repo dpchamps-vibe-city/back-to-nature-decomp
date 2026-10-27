@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_keyframe_step.h"
 
-s32 ovl_11_func_800D04D4(Ovl11D04D4Obj *arg0, u8 *arg1, s16 *arg2, s32 arg3, u16 *arg4);
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
 
 s32 ovl_11_func_800E3200(Ovl11D04D4Obj *arg0) {
@@ -24,7 +24,7 @@ s32 ovl_11_func_800E3200(Ovl11D04D4Obj *arg0) {
         break;
     case 1:
     default:
-        if (ovl_11_func_800D04D4(arg0, D_801240BC, &arg0->unk28, -1, (u16 *)&arg0->unk2A) != 0) {
+        if (Ovl11StepPackedKeyframes(arg0, D_801240BC, &arg0->unk28, -1, (u16 *)&arg0->unk2A) != 0) {
             arg0->unk28 = -1;
         } else {
             temp_s0 = arg0->unk2A;

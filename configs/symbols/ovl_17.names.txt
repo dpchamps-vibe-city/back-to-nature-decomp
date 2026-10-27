@@ -66,3 +66,6 @@ gOvl17RecordWorkBase = 0x800BD848; // type:data size:0x4
 Ovl17DrawRecordBackdrop = 0x800BA808; // type:func
 gOvl17BackdropProps = 0x800BB5F0; // type:data size:0xF8
 gOvl17BackdropPropAnimations = 0x800BB5D4; // type:data size:0x1C
+
+// The scene callback selects animation 4 on the separate display sprite.
+Ovl17DrawDisplaySpriteFrameRects = 0x800BAF50; // type:func
