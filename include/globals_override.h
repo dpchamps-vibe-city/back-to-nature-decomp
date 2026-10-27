@@ -4397,44 +4397,44 @@ extern s32 gOvl11ItemTransferMenuState; /* 0 inactive, 1 browse, 2 inspect, 3 cl
 /* ovl_11 800FB648 tests this word flag with lw; 800FB608/800FB628 set and clear it. */
 extern s32 gOvl11ClockHudEnabled; /* ovl_11:80127208, zero hides the clock HUD */
 
-extern s16 D_8012720C;
+/* ovl_11: status-page lifecycle state, 0 idle and 1..6 fade/setup/display. */
+extern s16 gOvl11StatusPageState;
 
-/* D_8012720E - u16 countdown timer decremented by ovl_11_func_800FEA00 and
- * compared as s16; runs 4,3,2 and wraps to 7 when it goes negative. */
-extern u16 D_8012720E;
+/* Eight-page selector; signed comparisons implement wrap and empty-page skips. */
+extern u16 gOvl11StatusPageIndex;
 
 /* D_80127210 - first visible row of the seven-row scrolling list drawn by
  * ovl_11_func_800FD034. Signed: scrolling wraps at both ends, and the
  * negative test reads it with lh. */
-extern s16 D_80127210;
+extern s16 gOvl11StatusRowScroll;
 
-extern u16 D_80127212;
+extern u16 gOvl11StatusAnimationTick;
 
 /* D_8012CDC8 - 14-halfword scratch list (0x1C bytes, sh at +0x1A) written by
  * ovl_11_func_800FB908 and passed by address to func_80017B3C from
  * ovl_11_func_800FC1AC. Absolute-addressed from ovl_11 code. */
-extern u16 D_8012CDC8[14];
+extern u16 gOvl11StatusHeadingText[14];
 
 /* D_80127308 - 8-entry function-pointer table indexed by the s16 D_8012720E
  * and called from ovl_11_func_800FC1AC; the entries name
  * ovl_11_func_800FC358/800FC998/800FCB80/800FCD0C/800FCEA0/800FD33C/800FD5E8/
  * 800FDD74. Absolute-addressed from ovl_11 code. */
-extern void (*D_80127308[8])(void);
+extern void (*gOvl11StatusPageDrawers[8])(void);
 
 /* D_80127214 - 6-halfword threshold table (0x0000, 0x1770, 0x4650, 0x8CA0,
  * 0xFFFF, 0x0000) read by ovl_11_func_800FE068 (entries 1..3, absolute
  * addressing) and ovl_11_func_800FE3A0/ovl_11_func_800FE14C. */
-extern u16 D_80127214[];
+extern u16 gOvl11StatusLevelThresholds[];
 /* 800FE14C loads five original 32-bit RGB colors at (abs(level)-1)*4. */
-extern s32 D_80127388[5];
+extern s32 gOvl11StatusLevelLightColors[5];
 /* 800FE14C uses this parallel five-word RGB table for the gradient endpoints. */
-extern s32 D_8012739C[5];
+extern s32 gOvl11StatusLevelDarkColors[5];
 
-extern s16 D_80127222;
+extern s16 gOvl11StatusSmallRecordCount;
 
-extern s16 D_80127226;
+extern s16 gOvl11StatusTaggedRecordCountA;
 
-extern s16 D_8012722A;
+extern s16 gOvl11StatusTaggedRecordCountB;
 
 /* D_80127220 - 5-entry table of 4-byte records walked by
  * ovl_11_func_800FC6A4: u8 at +0x00 (lbu), u8 at +0x01 (lbu), s16 at +0x02
@@ -4446,9 +4446,9 @@ typedef struct {
     /* 0x01 */ u8 unk1;
     /* 0x02 */ s16 unk2;
 } Ovl11D80127220Entry;
-extern Ovl11D80127220Entry D_80127220[];
+extern Ovl11D80127220Entry gOvl11StatusPoolCounts[];
 /* 800FB908 writes +2/+6/+A/+E; 800FC5F4 walks four pairs of signed halfwords. */
-extern s16 D_80127264[];
+extern s16 gOvl11StatusFourCounters[];
 
 /* 800FB908 accesses these fields through D_8006C838, retaining its base. */
 typedef struct {
@@ -4496,7 +4496,7 @@ typedef struct {
     /* 0x09 */ u8 unk9;
     /* 0x0A */ char pad_A[0x2];
 } Ovl11D80127234Entry;
-extern Ovl11D80127234Entry D_80127234[];
+extern Ovl11D80127234Entry gOvl11StatusNamedRecords[];
 
 /* D_80127328 - 6-entry table of 8-byte records walked by
  * ovl_11_func_800FC8C8: s32 flag mask at +0x00 (lw, ANDed against the
@@ -4508,7 +4508,7 @@ typedef struct {
     /* 0x04 */ u8 unk4;
     /* 0x05 */ char pad_5[0x3];
 } Ovl11D80127328Entry;
-extern Ovl11D80127328Entry D_80127328[];
+extern Ovl11D80127328Entry gOvl11StatusFlagIcons[];
 
 /* D_80127274 - 21-entry table of 6-byte records walked by
  * ovl_11_func_800FC998: s16 at +0x02 (lh) passed to ovl_11_func_800FCAF4
@@ -4520,7 +4520,12 @@ typedef struct {
     /* 0x04 */ u8 unk4;
     /* 0x05 */ char pad_5;
 } Ovl11D80127274Entry;
-extern Ovl11D80127274Entry D_80127274[];
+extern Ovl11D80127274Entry gOvl11StatusValueGrid[];
+/* 800FD194/800FDE98 index original byte/s16 tables; CE28 is an interior
+ * word anchor in the five 0x30-byte sprite sources, not separate storage. */
+extern u8 gOvl11StatusRecordPageIcons[];
+extern s16 gOvl11StatusLevelEntryBases[];
+extern s32 gOvl11StatusRecordSpriteSource;
 
 /* ovl_11: base of shared formatted-number scratch, passed to 8001A970
  * and 800FC544. The scalar label does not specify the whole buffer extent. */
@@ -4600,25 +4605,25 @@ extern u16 D_80053618[];
 extern u16 D_8005362C[];
 
 /* ovl_11_func_800FC358 reads each display counter with lh. */
-extern s16 D_8012CDE4;
-extern s16 D_8012CDE6;
-extern s16 D_8012CDE8;
+extern s16 gOvl11StatusScore;
+extern s16 gOvl11StatusFlagScore;
+extern s16 gOvl11StatusOccupiedRecordCount;
 /* ovl_11_func_800FC358 passes this buffer to func_80015EE8; 800FC544 uses 0x30-byte rows. */
 /* 800FBE88 copies 0x2D74 sprite-header bytes here before indexing its offsets. */
-extern u8 D_8012A048[];
+extern u8 gOvl11StatusSpriteBank[];
 /* 800FBE88 walks five lw offsets into D_8012A048 (original data: five words). */
-extern s32 D_801272F4[5];
-extern u8 D_8012CDF8[];
+extern s32 gOvl11StatusSpriteOffsets[5];
+extern u8 gOvl11StatusSpriteSources[];
 
-extern u8 D_8012737C[];
+extern u8 gOvl11StatusLevelIconFrames[];
 
-extern u8 D_8012CE88[];
+extern u8 gOvl11StatusIndicatorSpriteSource[];
 
 /* D_8012CE58 - 0x30-byte scratch/display buffer in ovl_11 bss passed by
  * address to func_80015EE8 by ovl_11_func_800FC998. Absolute-addressed. */
-extern u8 D_8012CE58[];
+extern u8 gOvl11StatusValueGridSpriteSource[];
 
-extern u8 D_8012CEB8[];
+extern u8 gOvl11StatusLevelSpriteSource[];
 
 /* Shared 0x60-byte selection record; panels reuse its parallel arrays. */
 extern u8 gOvl11PrimarySelectionRecord[];

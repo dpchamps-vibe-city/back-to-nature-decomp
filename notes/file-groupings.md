@@ -2552,6 +2552,27 @@ checked fold preserved every member and the overlay with no new exception.
 
 ## `ovl_11` D_8012D0xx tiny-global cluster / state-probe run — 0x80108104–0x8010AFCC (confidence: low)
 
+A checked complete action-state attempt at 80109EC4–8010B05C exclusive
+(17 members: the sixteen distinct 800BA894 callbacks plus AFCC's private
+handoff helper) reached compilation and rolled back. Private packed scripts,
+compound-action timers D070/72/74/76, shared motion refresh AE64 and its D084
+selector corroborate the complete callback/helper block. The immediate left
+9E64 uses the other dispatch bank and a timed sprite-effect protocol; right
+B05C is an independently used spawn-record writer. These are candidate
+protocol cuts, not GP boundaries. The experiment did not fold a script-only
+slice around the compound handlers.
+
+Concrete blocker: the merged source exposes incompatible declarations of
+800D05D0 (A47C/A654's padded-vector view versus A850's CC7CCPosition view).
+The compiler reports both declarations, at merged lines 371/610. The earlier
+public-vector experiment recorded below at the vector-writer note already
+showed that a cast/direct view alone changes A850; that spelling was not
+repeated. The trial's independent B05C pointer-prototype/cast correction was
+also restored, so no experimental source, module, flag or exception remains.
+Next useful work is one corroborated four-word position representation across
+these callers and the writer, retaining the ignored fourth word; neither a
+new TU cut nor an incompatible declaration would resolve it.
+
 **Reconstructed: `modules/choice_messages.c`, 80107F18–80108BE8 exclusive,
 24 functions.** The broad D0xx-family hypothesis below is not a single-TU
 claim. This unit closes the private 8012D040/44/50/60/68/6C writer/reader
@@ -17923,8 +17944,81 @@ Members (link order):
 - ovl_27_func_800BABD4 (m) — `D_8006C838 + 0xE4CC` s16 field writer, calls `func_80020A40`
 - ovl_27_func_800BAC14 (m, matched this session) — leaf: 5×6-byte record copy `D_800BCFF0` → `D_8006C838 + 0x468A`
 
-## `ovl_11` D_8012720C state-control run — 0x800FBE4C–0x800FC320 (confidence: low)
+## `ovl_11` status-page lifecycle and render closure — 0x800FB908–0x800FEBF8 (confidence: medium)
 
+**Reconstructed `modules/status_pages.c`, all 53 original functions,
+800FB908–800FEBF8 exclusive**, absorbing the three-member paired_value_panel
+module rather than leaving it as a slice. Membership is the complete eight-page
+callback/lifecycle/resource closure, not the broad formatted-number scratch
+fingerprint: the sole page dispatcher reads the eight callbacks at 80127308;
+those callbacks and their row/helper callees cover the whole renderer band.
+The loader initializes exactly the five 0x30-byte sprite sources at
+8012CDF8..8012CEB8 from archive 14 and the private 801272F4 offset table.
+Those sources feed the summary/grid/record/paired-value/level pages, their
+icons, marks and arrows. The snapshot writer populates the same count/name/
+value tables the pages read. Next/previous-page helpers share the count
+predicates that suppress empty pages 2..4. State/page/scroll/tick cells at
+8012720C/0E/10/12 are confined to this closure; the level thresholds,
+entry-base/icon/color tables are likewise specific to these pages. This
+connects every member through private protocol/tables/helpers, beyond text
+adjacency. The lifecycle's six-way jump table remains at overlay offset 26D8.
+
+Left clock_hud ends at FB908: it owns a separate enable word and private
+clock text, reads live date/clock state, and never uses the page callbacks,
+resource bank or lifecycle cells. Right options_menu starts at FEBF8: its
+settings snapshot/commit and separate four-choice protocol use different
+state/tables, not this page/resource closure. Neither edge has a positive
+private-state/helper extension. These are evidence-limited responsibility
+cuts under -G0, not GP-proven original object boundaries; no compiler flag
+or mechanical limit motivated them. The external number/sprite services
+and shared work-area base are not evidence for absorbing their units.
+
+The module now has behavior-grounded Status names for all fifty previously
+anonymous members; the three PairedValue names remain. Thirty state/table/
+resource anchors have container-qualified semantic data names at original
+addresses. In particular 80127222/26/2A remain interior count halfwords in
+the five-record pool-count table; its 80127220 symbol is a two-byte anchor,
+NOT the array extent. Likewise CDF8 is the first of five sources, not a new
+allocation overlapping the four later named source anchors. All types,
+widths, ownership and external linkages remain unchanged except the explicit
+return-contract correction below. No storage or static linkage was added.
+
+The public ovl11_status_pages.h publishes Open/Update and the two live tagged-
+record counts used by pending_event_queue. It documents the legacy Open result
+(defined only when already active), blocking load/scratch effects, state/fade
+timing, live versus snapshotted values, skipped pages, seven-row wrap and shared-
+resource non-reentrancy. The count queries require no display resources and
+scan twenty stride-B8 records for tags 160..163 and 164..166 respectively.
+Interface reconciliation replaced the event queue's local declarations with
+the header. The panel has no external consumer: its obsolete standalone header
+was retired and its rendering contract moved next to the implementation.
+Parameters/locals now name lifecycle, input, icon/text and scroll operations;
+canonical PadInputState fields replace raw offset views. The same-update
+close/draw behavior and signed-halfword row wrap are explicit.
+
+The first checked whole fold exposed the existing FD21C arg3 s32/s16
+prototype conflict, and rolled back. Its three row clients now use the
+matched s16 contract. The value reader FE54C returns exactly `lh v0,0(a0)`;
+its result is now declared s16 consistently in the definition and all three
+clients. This removes manufactured caller narrowing without changing the
+callee, any caller or the overlay: the second checked baseline fold proved
+all 53 members and linked bytes exact. No incompatible prototype workaround,
+flag override or policy exception was introduced. Named-data generation also
+rejected overlapping aggregate extents; the configuration now describes the
+original interior anchors explicitly, while retaining the complete C array
+views. No shared tool change was needed.
+
+Final batch acceptance with purchase_transactions: `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` reports 1815/2625 eligible functions
+folded (1763 at campaign start), 299/299 module TUs valid. Original inventory,
+completeness, source policy, linked executable and all overlay bytes, config
+convergence, whitespace, input stability and exception non-growth all PASS.
+Canonical names are clean; the six published functions across the two modules
+have no failing interfaces. Unrelated pre-existing audit findings remain.
+No flags, policy exceptions, tools or tests changed. The command exits 1 because
+810 eligible functions remain outside modules, not because integrity failed.
+
+Historical state-control subset (now inside the complete module):
 Candidate same-TU members ([controller-extension evidence and limits](research/ovl_11_func_800FC054-grouping.md)), in link order:
 
 - ovl_11_func_800FBE4C (s) — first-time guard that starts the transition when the state is idle.
@@ -26202,7 +26296,46 @@ Candidate same-TU membership; original TU boundaries remain unproven.
 
 ## `ovl_11` adjacent transaction-handler pair — 0x8011C298 / 0x8011C6CC (confidence: low)
 
-Candidate same-TU membership: consecutive text/jump tables, shared state-global
+**Reconstructed `modules/purchase_transactions.c`, both entries
+8011C298–8011CBC8 exclusive.** The pair implements the same non-reentrant
+transaction protocol: clear work +522C/+5230, hold +5234 bit 0x800000,
+advance/resume the interaction step, check the price through 8011D06C,
+and debit through Ovl11AdjustSpendableBalance(-cost, 1). The exclusive
+clients are the single-item and quantity wrappers in purchase_actions.c;
+these supply item IDs/modes and three message pairs, respectively. Their
+contiguous 14/17-word switch tables pool in function order. This specific
+transaction template/client interface and table emission corroborate the
+text order; shared overlay UI globals alone would not establish membership.
+
+Left selection_prompt_steps implements reusable descriptor selection and
+quantity prompts, without the pair's mode-dependent completion/reset logic.
+Right value_panels draws values but performs no transaction, step protocol
+or balance debit. Neither neighbor shares a private helper/table witness
+extending this pair. These are evidence-limited service cuts under -G0,
+not GP-proven historical object boundaries; no flag or tooling limit
+motivates either edge. Remote transaction wrappers do not establish that
+the intervening UI code belonged to this file.
+
+Names Ovl11StepSingleItemPurchase and Ovl11StepQuantityPurchase retain the
+original overlay/address identities in the semantic symbol configuration.
+The public ovl11_purchase_transactions.h describes stable inputs, message
+pairs, modes, quantity cap, pending/completion returns (not purchase success),
+shared state and the secondary-capacity warning that still commits a debit
+and insertion. Parameters now name catalog/message/mode/selection inputs;
+the same-call confirmation fall-through is explicit. Existing widths,
+by-value descriptor ABI, ownership and external linkage are unchanged.
+The checked baseline fold preserved both functions and the complete overlay;
+neither member has a flag override or needs a new exception. Canonicalization
+and interface reconciliation propagated both names into purchase_actions and
+replaced its local prototypes with the public header. The full campaign gate
+passed all integrity checks (including all executable/overlay bytes, config
+convergence, source policy and exception non-growth), initially with 1765/2625
+eligible functions folded. Final acceptance with status_pages is recorded in
+its lifecycle/render-closure section above (1815/2625, all 299 modules valid). No ownership, linkage or new declaration conflict was
+introduced; pre-existing unrelated interface findings remain visible to the
+auditor.
+
+Historical hypothesis: consecutive text/jump tables, shared state-global
 cluster and transaction-helper idiom; original TU boundaries remain unproven.
 [Evidence and limits](research/ovl_11_func_8011C6CC-grouping.md).
 
@@ -26211,8 +26344,13 @@ cluster and transaction-helper idiom; original TU boundaries remain unproven.
 
 ## `ovl_11` paired-value row renderer caller/callee run — 0x800FD5E8 / 0x800FD7B4 / 0x800FD968 (confidence: low)
 
-**Reconstructed `src/overlays/ovl_11/modules/paired_value_panel.c`,
-800FD5E8–800FDD74 exclusive, three compiled members.** The panel dispatches
+**Originally reconstructed `modules/paired_value_panel.c`,
+800FD5E8–800FDD74 exclusive, three compiled members; now absorbed whole by
+`modules/status_pages.c`.** The eight-page callback bank, loader's five
+sprite sources and shared page/arrow protocol supply the wider membership
+witness absent from the original panel-only review. The three function names
+remain; the unused standalone panel header was retired and its contract moved
+to status_pages.c. Historical panel-closure evidence follows. The panel dispatches
 four rows; each row selects an eight-byte pair from work-area +49C4, passes
 it to the bar renderer and selects its label through the private 3x3 offset
 table at 8012735C. The panel's two totals read that very first pair. Direct
@@ -26224,20 +26362,19 @@ Names: Ovl11DrawPairedValuePanel/Row/Bars, private-table label
 `gOvl11PairedValueLabelOffsets`, and shared scratch base
 `gOvl11NumberTextScratch`. Names propagate through all scratch users without
 changing its scalar extern or assuming a two-byte usable buffer extent.
-Only the panel is published in paired_value_panel.h; helper linkage is
-unchanged. The header distinguishes clamped seven-digit totals from signed,
-unclamped modulo-10000 bar widths and the >=2000/>=5000 label bands. Locals
-now identify ordering-table slots, rows, threshold bands and edges; the
+The panel was originally published in paired_value_panel.h; the current
+larger module needs no external panel interface. Linkage remains external.
+The implementation comment distinguishes clamped seven-digit totals from
+signed, unclamped modulo-10000 bar widths and the >=2000/>=5000 label bands.
+Locals identify ordering-table slots, rows, threshold bands and edges; the
 four-edge loop and signed arithmetic remain intact.
 
-Left boundary: 800FD3CC formats/draws individual 0xF8-byte records and their
-status icons, not these pairs or the private label table. Right boundary:
-800FDD74 starts a five-entry u16 display at work-area +5208 and dispatches
-FDFF4/FE068/FDE98/FE14C/FE3A0, none of this row hierarchy. Shared text/sprite
-services alone do not join either neighbor. These are conservative protocol
-edges, not GP-proven original object edges under -G0; no larger supported
-same-unit group is split. The whole checked fold passed all three members
-and overlay bytes at baseline; no active override exists.
+The original left/right cuts at FD3CC/FDD74 described different page
+responsibilities, not original object edges: FD3CC draws 0xF8-byte records,
+and FDD74 draws the five-entry u16 level page. The later private callback/
+resource closure joins both neighbors and this panel in status_pages.c,
+superseding those cuts. The original three-member fold and the later whole-
+unit fold both preserved overlay bytes at baseline; no active override exists.
 
 Final six-unit batch acceptance is recorded in the gradient-interpolation
 section above.

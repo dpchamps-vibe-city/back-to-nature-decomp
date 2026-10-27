@@ -13,6 +13,7 @@
 #include "message_window.h"
 #include "psyq/memory.h"
 #include "game_flags.h"
+#include "ovl11_status_pages.h"
 
 s32 Ovl11PopEventMessageEntry(void);
 void Ovl11CompleteLatchedEventMessage(void);
@@ -228,8 +229,6 @@ void Ovl11RemoveQueuedEvent(s16 entryIndex, s32 immediateQueue) {
 s32 ovl_11_func_800EFA1C(s16);
 s32 Ovl11GetEventEligibilityFlag(void);
 s32 ovl_11_func_800F3C9C(u16);
-s32 ovl_11_func_800FEB68(void);
-s32 ovl_11_func_800FEBB0(void);
 void Ovl11QueueDatedEvent(s16, s16, s16);
 
 void Ovl11EvaluateEventRequests(void) {
@@ -467,15 +466,15 @@ void Ovl11EvaluateEventRequests(void) {
         Ovl11QueueDatedEvent(2, 0x3F, 0);
         events->flags = (s32) (events->flags | 0x80);
     }
-    if (!(events->flags & 0x100) && ((((Ovl11EventStateView *)D_8006C838)->field_51C0) & 0x40000) && ((ovl_11_func_800FEB68() > 0) || (ovl_11_func_800FEBB0() > 0) || ((((Ovl11EventStateView *)D_8006C838)->field_929C) != 0))) {
+    if (!(events->flags & 0x100) && ((((Ovl11EventStateView *)D_8006C838)->field_51C0) & 0x40000) && ((Ovl11CountStatusTaggedRecordsA() > 0) || (Ovl11CountStatusTaggedRecordsB() > 0) || ((((Ovl11EventStateView *)D_8006C838)->field_929C) != 0))) {
         Ovl11QueueDatedEvent(2, 0x40, 0);
         events->flags = (s32) (events->flags | 0x100);
     }
-    if (!(events->flags & 0x200) && ((((Ovl11EventStateView *)D_8006C838)->field_51C0) & 0x80000) && (ovl_11_func_800FEB68() > 0)) {
+    if (!(events->flags & 0x200) && ((((Ovl11EventStateView *)D_8006C838)->field_51C0) & 0x80000) && (Ovl11CountStatusTaggedRecordsA() > 0)) {
         Ovl11QueueDatedEvent(2, 0x41, 0);
         events->flags = (s32) (events->flags | 0x200);
     }
-    if (!(events->flags & 0x400) && ((((Ovl11EventStateView *)D_8006C838)->field_51C0) & 0x100000) && (ovl_11_func_800FEBB0() > 0)) {
+    if (!(events->flags & 0x400) && ((((Ovl11EventStateView *)D_8006C838)->field_51C0) & 0x100000) && (Ovl11CountStatusTaggedRecordsB() > 0)) {
         Ovl11QueueDatedEvent(2, 0x42, 0);
         events->flags = (s32) (events->flags | 0x400);
     }

@@ -8,10 +8,9 @@
 #include "ovl11_interaction_sequence.h"
 #include "ovl11_selection_mode_state.h"
 #include "ovl11_options_menu.h"
+#include "ovl11_status_pages.h"
 
 void func_8002470C(s16 arg0);
-
-void ovl_11_func_800FC054(void);
 
 void ovl_11_func_801038E4(void);
 
@@ -24,7 +23,7 @@ void ovl_11_func_800F65B8(void) {
     Ovl11DrawOptionsMenu();
     Ovl11ServiceSelectionMode();
     Ovl11ServiceMenuChoice();
-    ovl_11_func_800FC054();
+    Ovl11UpdateStatusPages();
     ovl_11_func_801038E4();
     Ovl11UpdateSelectionPanel();
     Ovl11UpdateCounterChoice();

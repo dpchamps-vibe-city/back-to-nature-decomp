@@ -37,6 +37,7 @@
 #include "ovl11_save_counters.h"
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_options_menu.h"
+#include "ovl11_status_pages.h"
 
 s32 ovl_11_func_800F4B5C (s16 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
@@ -672,7 +673,6 @@ fail:
     }
 }
 
-s32 ovl_11_func_800FBE4C(void);
 s32 Ovl11DispatchInteractionVolumeAction(Recon_ovl_11_func_800C7270_A0View *arg0);
 
 s32 Ovl11DispatchPrimaryInteractionInput(Recon_ovl_11_func_800C7270_A0View *arg0, u16 arg1) {
@@ -692,7 +692,7 @@ s32 Ovl11DispatchPrimaryInteractionInput(Recon_ovl_11_func_800C7270_A0View *arg0
         return 1;
     }
     if (arg1 & 0x800) {
-        ovl_11_func_800FBE4C();
+        Ovl11OpenStatusPages();
         state->field_0C |= 0x10000000;
         state->field_0C |= 0x08000000;
         return 1;

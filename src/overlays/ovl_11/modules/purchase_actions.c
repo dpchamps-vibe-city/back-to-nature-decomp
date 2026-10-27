@@ -7,38 +7,36 @@
 #include "message_window.h"
 #include "game_types.h"
 #include "ovl11_purchase_actions.h"
-
-s32 ovl_11_func_8011C298(s16 catalogId, s16 messageBank, s16 promptId, s16 mode);
-s32 ovl_11_func_8011C6CC(s16 *start, s16 *next, s16 *cancel, Ovl11D8012D7B8 params);
+#include "ovl11_purchase_transactions.h"
 
 /* The dispatcher consumes the transaction helper's returned completion word.
  * Explicit returns preserve the original v0 pass-through, not a void ABI. */
 s32 Ovl11PurchaseCatalogEntry99(void) {
-    return ovl_11_func_8011C298(0x99, 2, 0x1DD, 0);
+    return Ovl11StepSingleItemPurchase(0x99, 2, 0x1DD, 0);
 }
 
 s32 Ovl11PurchaseCatalogEntry9A(void) {
-    return ovl_11_func_8011C298(0x9A, 2, 0x1DE, 0);
+    return Ovl11StepSingleItemPurchase(0x9A, 2, 0x1DE, 0);
 }
 
 s32 Ovl11PurchaseCatalogEntryA5(void) {
-    return ovl_11_func_8011C298(0xA5, 2, 0xD9, 0);
+    return Ovl11StepSingleItemPurchase(0xA5, 2, 0xD9, 0);
 }
 
 s32 Ovl11PurchaseCatalogEntryA6(void) {
-    return ovl_11_func_8011C298(0xA6, 2, 0xDA, 0);
+    return Ovl11StepSingleItemPurchase(0xA6, 2, 0xDA, 0);
 }
 
 s32 Ovl11PurchaseCatalogEntryA7(void) {
-    return ovl_11_func_8011C298(0xA7, 2, 0xDB, 0);
+    return Ovl11StepSingleItemPurchase(0xA7, 2, 0xDB, 0);
 }
 
 s32 Ovl11PurchaseFlagSelectedEntry(void) {
     if (gProgressDerivedFlags & 0x40) {
-        return ovl_11_func_8011C298(0x6D, 2, 0xD4, 1);
+        return Ovl11StepSingleItemPurchase(0x6D, 2, 0xD4, 1);
     }
     if (gProgressDerivedFlags & 0x80) {
-        return ovl_11_func_8011C298(0x6E, 2, 0x248, 1);
+        return Ovl11StepSingleItemPurchase(0x6E, 2, 0x248, 1);
     }
     return 1;
 }
@@ -49,7 +47,7 @@ s32 Ovl11PurchaseGatedEntry64(void) {
             RequestMessageWindow(2, 0xD6);
             return 1;
         }
-        return ovl_11_func_8011C298(0x64, 2, 0xD5, 2);
+        return Ovl11StepSingleItemPurchase(0x64, 2, 0xD5, 2);
     }
     return 1;
 }
@@ -84,7 +82,7 @@ s32 Ovl11PurchaseQuantityOption0(void) {
         params.unk4 = 2;
         params.unk6 = 0x275;
     }
-    return ovl_11_func_8011C6CC(start, next, cancel, params);
+    return Ovl11StepQuantityPurchase(start, next, cancel, params);
 }
 
 s32 Ovl11PurchaseQuantityOption1(void) {
@@ -115,7 +113,7 @@ s32 Ovl11PurchaseQuantityOption1(void) {
         params.unk4 = 2;
         params.unk6 = 0x275;
     }
-    return ovl_11_func_8011C6CC(start, next, cancel, params);
+    return Ovl11StepQuantityPurchase(start, next, cancel, params);
 }
 
 s32 Ovl11PurchaseQuantityOption2(void) {
@@ -146,7 +144,7 @@ s32 Ovl11PurchaseQuantityOption2(void) {
         params.unk4 = 2;
         params.unk6 = 0x275;
     }
-    return ovl_11_func_8011C6CC(start, next, cancel, params);
+    return Ovl11StepQuantityPurchase(start, next, cancel, params);
 }
 
 s32 Ovl11PurchaseQuantityFixed(void) {
@@ -169,5 +167,5 @@ s32 Ovl11PurchaseQuantityFixed(void) {
     params.unkE = 0x16F;
     params.unk10 = 4;
     params.unk0 = gOvl11PrimarySelectionRecord;
-    return ovl_11_func_8011C6CC(start, next, cancel, params);
+    return Ovl11StepQuantityPurchase(start, next, cancel, params);
 }
