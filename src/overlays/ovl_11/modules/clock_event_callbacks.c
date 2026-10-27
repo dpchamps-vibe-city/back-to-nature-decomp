@@ -54,6 +54,7 @@
 #include "ovl11_scene_header_capture.h"
 #include "ovl11_primary_object_day_reset.h"
 #include "ovl11_object_record_state.h"
+#include "ovl11_record_pool_setup.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -81,7 +82,6 @@ s32 Ovl11ClockShiftValueHistory(void) {
 }
 
 void ovl_11_func_800EEECC (void);
-void ovl_11_func_800F40A4 (void);
 void ovl_11_func_800F3D40 (void);
 
 s32 Ovl11ClockRebuildDayScene(void) {
@@ -184,7 +184,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
         Ovl11UpdateQueuedItemInteraction();
         Ovl11AdvanceTrackedRecordCounters();
         Ovl11AdvanceObjectPoolCounters();
-        ovl_11_func_800F40A4();
+        Ovl11ApplyPoolRecordFlagRules();
         ovl_11_func_800F3D40();
         Ovl11ServiceEventQueues();
         Ovl11UpdateCalendarRecordGate();
@@ -221,11 +221,9 @@ s32 Ovl11ClockRebuildDayScene(void) {
     return result;
 }
 
-void ovl_11_func_800F3FF4(s16 arg0);
-
 s32 Ovl11ClockRefreshAreaSprites(void) {
     Ovl11LoadOffsetSpriteSet(((struct struct_8006C838_button *)D_8006C838)->field_44BA);
-    ovl_11_func_800F3FF4(((struct struct_8006C838_button *)D_8006C838)->field_44BA);
+    Ovl11SetupRecordRowsAndGates(((struct struct_8006C838_button *)D_8006C838)->field_44BA);
     Ovl11ClearQueuedItemInteraction();
     return 1;
 }

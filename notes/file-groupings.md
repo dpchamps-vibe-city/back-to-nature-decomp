@@ -18873,6 +18873,74 @@ Members (address order):
 
 ## `ovl_11` D_8006C838 +0xDD8C pool-walk pair — 0x800F40A4 / 0x800F508C (confidence: medium)
 
+**Four complete service adapters are now reconstructed individually:**
+`scene_record_frame.c` (800F3FB4–800F3FF4), `record_row_gate_setup.c`
+(800F3FF4–800F40A4), `dispatch_pool_flag_setup.c` (800F40A4–800F4114),
+and `seasonal_record_gates.c` (800F4114–800F413C), under modules/.
+These are not asserted to be a recovered four-entry original TU. The
+nineteen-list table and delegated record services are public across several
+modules; no private table, helper closure or ownership witness joins all four.
+Their externally used operations are complete at these individual entries:
+
+- Ovl11ServiceSceneRecordFrame, called by the area-frame update, skips the
+  entire refresh/draw/offset-decay sequence on work+10 bit 4000. Otherwise
+  it draws with the old offset before decay. `ovl11_scene_record_frame.h`
+  publishes frame order, render-context/storage requirements and suppression.
+- Ovl11SetupRecordRowsAndGates, used by the clock's sprite-refresh callback,
+  forwards one signed row to gates and row assignment in that order. In live
+  season zero, state D or 38..42 on the current pool record republishes it;
+  the same range on the mode-1 record installs selector 1 and position
+  (-1800,0,3100). The work view is now in globals_override.h, retaining all
+  signed-halfword fields and pointer offsets; local state/row names replace
+  numeric names. There is no new shared-work ownership or linkage change.
+- Ovl11ApplyPoolRecordFlagRules visits all nineteen list/count cells and
+  delegates the public mask-20/mask-40 rule, then disables partition 6. Its
+  independent clients are spawn-pool setup and clock events, not the adjacent
+  row adapter. The unused SDK include bundle was removed; pointer/count/index
+  names explain the original traversal without rewriting its shape.
+- Ovl11RefreshCurrentDispatchRecordGates is the mode loader's season-forwarding
+  adapter. The downstream gate service ignores that parameter and reads live
+  season/variant/progress itself; the public documentation says so rather than
+  inventing a selection effect. The obsolete family-transfer log is removed
+  from C. `ovl11_record_pool_setup.h` publishes these three setup contracts.
+
+Boundary evidence: before 3FB4, progress_trigger_latch is a one-shot counter
+predicate with its own latch, not a renderer or list setup operation. Between
+3FB4 and 3FF4, frame refresh/draw/decay and row assignment/state publication
+share neither private state nor helpers. Between 3FF4 and 40A4, one selects
+row-table values and handles two state codes, while the other walks count/list
+pairs and applies mask rules; their common lists are externally installed,
+not private. Between 40A4 and 4114, only the former traverses all nineteen
+lists or disables partition 6; only the latter supplies the calendar argument
+to the independently callable gate service. After 4114, seasonal_record_ids
+consumes/resolves caller-supplied item records and does not operate these
+list/count tables. These are evidence-limited service cuts under -G0, not
+proved historical object edges; no flag/mechanical limit forces any cut.
+The distant row/gate/mask helpers remain their already documented complete
+services; their public call edges do not join all intervening functions.
+
+The resident absolute word at exe:8006C848 is canonically gSharedWorkFlags:
+object-event, action-result, sprite-effect and frame services test independent
+bits. Naming it preserves its signed-word declaration and all callers; no
+new storage is allocated. Every initial fold passed baseline -O2/-G0 and the
+linked overlay, with no override or policy exception added or removed.
+
+Final six-service batch acceptance (these four plus pair_slot_record_refresh
+and pair_slot_record_update): **2315 -> 2321 / 2625 folded, 461/461 valid
+modules, 304 remaining, no invalid/undetermined units**. The final
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json --json`
+reports no failures: source/config and object inventories, decompilation,
+source policy, linked EXE/all thirteen overlays, generated-config convergence,
+whitespace, stable inputs and exception non-growth all pass. All 1341 published
+module interfaces have zero failing sites; unrelated standing interface debt
+is unchanged. Canonical renames reach callers and generated m2c context;
+all generated changes came from the supported tools. No compiler flag,
+allowlist entry, pin, embedded assembly or stub was added, no shared tool
+changed, and no commit was made. Exit 1 reflects the unfinished campaign,
+not a failed verification gate. Larger researched families remain at their
+already documented context/literal/compiler-setting limits, without invented
+internal boundaries.
+
 **Two independent complete leaf services reconstructed at 800F5210–800F5404
 exclusive:** `modules/dispatch_record_gates.c` (5210) and
 `modules/dispatch_record_flag_rules.c` (53BC). Their public contract is
@@ -28289,6 +28357,39 @@ ovl_11_func_800F0474 to the D_8006C838+44D2 status readers above.
 
 
 ## ovl_11 D_8006C838+99D2 s16 lookup consumers (confidence: low)
+
+**Reconstructed two nonadjacent service units, not one contiguous TU:**
+`modules/pair_slot_record_refresh.c` (800F4618–800F46A4) and
+`modules/pair_slot_record_update.c` (800F501C–800F508C). Their shared public
+contract is `ovl11_pair_slot_records.h`; canonical names are
+Ovl11RefreshPairSlotRecords and Ovl11UpdatePairSlotRecord. The refresh visits
+pair slots 2/3, normalizes the stride-four signed selectors at work+99D2/99D6
+to exact-one Booleans, and supplies those plus slot-state==1 to the writer.
+The writer changes only kind and enable bit 0 of dispatch-list 3 entries
+10/11, at work+DD98 plus F0/108. Its nonzero kind selector is intentionally
+broader than the refresh's exact-one test. Signed kind storage and all other
+ABI widths are retained; the local partial view now names kind/flags.
+
+Each service is complete in one entry. Their call dependency does not
+establish co-compilation across the intervening spawn-effect consumers,
+pool-bound query/decay, partition flags, queued interactions and gate probes.
+Those intervening units operate on separate records/protocols and are not
+absorbed merely to make these nonadjacent functions contiguous. These are
+conservative service cuts, not claimed original one-function object edges
+(-G0 gives no GP ownership witness). At F4618's left, dispatch_record_enable
+selects by kind in a different list (work+DDB4), not pair slots or list-3
+entries 10/11; at its right the spawn-effect consumers resolve and consume
+item records rather than refreshing these two entries. At F501C's left,
+pool_record_transition uses work+DDD4, its private published pointer and
+0x02000000 gate protocol; at its right record_row_values owns a nested
+row-selection helper and private triple table, neither read here. No private
+helper, table or state witness extends either service across those cuts.
+
+The existing shared work remains externally owned; no new storage, linkage,
+flag override or policy exception is introduced. Both baseline checked folds
+passed their member and the linked overlay. The header documents unchecked
+indices, required resident storage, preserved bits and the asymmetric selector
+semantics. Public callers are reconciled through the interface audit.
 
 - ovl_11_func_800F4618 (m, byte-exact this session): loops i=2..3 reading the
   s16 at D_8006C838+0x99D2+(i-2)*4, gates each on `!= 1` (else 0), and calls

@@ -755,8 +755,9 @@ extern void (*gOvl11LastSelectionHandler)(void);
 extern s8 D_801273EB;
 extern s16 D_80127424;
 
-/* ovl_11_func_800F3FB4 reads this absolute-addressed flag word with lw. */
-extern s32 D_8006C848;
+/* Shared work+0x10: record-frame, object-event, action-result and effect
+ * services test independent bits with word loads; storage remains resident. */
+extern s32 gSharedWorkFlags;
 
 /* 8012135C scans 25 effect records at stride 0x18; named view preserves existing pool types. */
 /* 801212C4/80121318 visit 25 effects at 0x18-byte stride; +14 is the free marker. */
@@ -7313,6 +7314,18 @@ extern s16 gOvl11RecordSpriteYOffsets[4];
 /* 800F5944 indexes that table with this absolute-addressed word. */
 /* ovl_11:800F4994 arms index 3; 800F4A58 counts down to zero. */
 extern s32 gOvl11RecordSpriteYOffsetIndex;
+
+/* F3FF4 reads lh season +44BA, lh mode-1 selector +91DC and lw +DDD4.
+ * Record+0 is read as a signed ID/state code here; the publishers' unsigned
+ * state store and the general dispatch-record ID view retain their own ABI. */
+typedef struct {
+    char pad0[0x44BA];
+    s16 season;
+    char pad44BC[0x91DC - 0x44BC];
+    s16 mode1Selector;
+    char pad91DE[0xDDD4 - 0x91DE];
+    s16 *currentRecordState;
+} Ovl11RecordRowGateWork;
 
 /* F4CAC/F4CEC publish a partial record view: state +0, coordinates +8/C/10;
  * records are 0x18 apart, but this original view covers only 0x14 bytes. */

@@ -43,7 +43,7 @@ s32 Ovl11ResolveActionResultOrRotate(s16 actionId, u16 direction,
             *resultOut = 0x209;
             goto result_ready;
         }
-        if (D_8006C848 & 0x04000000) {
+        if (gSharedWorkFlags & 0x04000000) {
             guardResult = -1;
         }
         if (guardResult != -1) {

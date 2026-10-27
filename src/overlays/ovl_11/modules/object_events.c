@@ -787,7 +787,7 @@ void Ovl11UpdateObjectEvents(void) {
 
     object = &gObjectEventSlotBase;
     gOvl11ObjectScriptTick++;
-    if (!(D_8006C848 & 0x02000000)) {
+    if (!(gSharedWorkFlags & 0x02000000)) {
         for (index = 0; index < 37; index++) {
             Ovl11StepObjectEvent((Ovl11C3B78Arg0 *) object);
             if (!(object->unk1E & 0x1000)) {

@@ -54,6 +54,7 @@
 #include "ovl11_interaction_volume_activation.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_scene_record_frame.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -93,8 +94,6 @@ void Ovl11RunAreaFramePhase(void) {
         ((struct Ovl11FrameState *) D_8006C838)->flags = (((struct Ovl11FrameState *) D_8006C838)->flags & 0xFFFDFFFF) | 0x800000;
     }
 }
-
-void ovl_11_func_800F3FB4 (void);
 
 void Ovl11UpdateAreaFrame(void) {
     gOvl11AreaFrameResult = 2;
@@ -148,7 +147,7 @@ void Ovl11UpdateAreaFrame(void) {
     Ovl11UpdateObjectRecordPool();
     Ovl11RunAreaFrameUpdates();
     Ovl11UpdateInteractionDispatch();
-    ovl_11_func_800F3FB4();
+    Ovl11ServiceSceneRecordFrame();
     Ovl11UpdateSpriteEffects();
     Ovl11UpdateEventQueueGate();
     UpdateMessageWindow();

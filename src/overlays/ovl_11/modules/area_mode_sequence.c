@@ -64,6 +64,7 @@
 #include "ovl11_condition_evaluation.h"
 #include "ovl11_primary_work_counter_reset.h"
 #include "ovl11_menu_exit_flags.h"
+#include "ovl11_record_pool_setup.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -304,7 +305,6 @@ void Ovl11ResetAreaScene(void);
 void Ovl11RefreshAreaSoundBank(void);
 /* Resident sprite-display disable at exe:8001B100. */
 void Ovl11ApplyAreaSoundVolume(void);
-void ovl_11_func_800F4114(void);
 
 /* Cases 0/9 and 2/10 deliberately share tails. Calls may wait for sound
  * transfers or repeatedly drive the state updater; this is not reentrant. */
@@ -394,7 +394,7 @@ void Ovl11RunAreaEntrySteps(void) {
         Ovl11ClearEligibleStateObjects(0);
         Ovl11SpawnTimedItemPlacements();
         Ovl11ClearEventSlotScheduleChanges();
-        ovl_11_func_800F4114();
+        Ovl11RefreshCurrentDispatchRecordGates();
         Ovl11ClearSpriteEffects();
         if (((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x40) {
             ((Ovl11AreaInitView *)D_8006C838)->field_4450 &= ~0x40;

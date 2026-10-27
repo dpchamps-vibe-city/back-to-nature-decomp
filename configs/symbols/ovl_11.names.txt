@@ -2501,6 +2501,16 @@ Ovl11DrawActiveRecordSpritePacket = 0x800E559C; // type:func
 // Four-word position input; assigns XYZ and updates the record's position flags.
 Ovl11SetRecordPosition = 0x800D05D0; // type:func
 
+// Independent scene-record frame and dispatch-list setup services.
+Ovl11ServiceSceneRecordFrame = 0x800F3FB4; // type:func
+Ovl11SetupRecordRowsAndGates = 0x800F3FF4; // type:func
+Ovl11ApplyPoolRecordFlagRules = 0x800F40A4; // type:func
+Ovl11RefreshCurrentDispatchRecordGates = 0x800F4114; // type:func
+
+// Pair-slot record services; separate nonadjacent entry points.
+Ovl11RefreshPairSlotRecords = 0x800F4618; // type:func
+Ovl11UpdatePairSlotRecord = 0x800F501C; // type:func
+
 // Independent command services: archive-slot polling and slot-sourced positions.
 Ovl11PollTextSlotOrInvalidate = 0x800E8D7C; // type:func
 Ovl11WriteStateRecordPositionFromSlots = 0x800E8DC8; // type:func

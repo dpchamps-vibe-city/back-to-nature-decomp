@@ -12,9 +12,9 @@
 
 #include "common.h"
 #include "ovl11_record_pool_refresh.h"
+#include "ovl11_pair_slot_records.h"
 
 void Ovl11SetDispatchRecordEnabledByMask(s16 arg0, Ovl11DispatchRecord arg1[], s32 arg2, s32 arg3, s32 arg4);
-void ovl_11_func_800F4618(void);
 void Ovl11ApplyDispatchRecordCoordinateRules(void);
 
 void Ovl11RefreshDispatchRecordPools(void) {
@@ -65,7 +65,7 @@ void Ovl11RefreshDispatchRecordPools(void) {
             entries[j].flags &= 0xFFFE;
         }
     }
-    ovl_11_func_800F4618();
+    Ovl11RefreshPairSlotRecords();
     far_base = (char *) &D_8007AFF0;
     if (*(s16 *) (far_base + 0x25476) == 2) {
         Ovl11ApplyDispatchRecordCoordinateRules();

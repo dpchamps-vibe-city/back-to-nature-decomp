@@ -33,7 +33,7 @@ void Ovl11UpdateSpriteEffects(void) {
     Ovl11SpriteEffect *effect;
     s32 remaining;
 
-    if (!(D_8006C848 & 0x400)) {
+    if (!(gSharedWorkFlags & 0x400)) {
         effect = (Ovl11SpriteEffect *)gOvl11SpriteEffects;
         remaining = 0x18;
         do {
