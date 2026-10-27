@@ -7374,6 +7374,24 @@ struct Ovl11FlagRefreshState {
     u8 padDD9C[0xDDD8 - 0xDD9C];
     s16 counts[4];
 };
+/* 800F5210 starts its cursor at record+2 (kind, then flags), stride 0x18.
+ * Keep the signed kind read and shifted partial view, not a second pool. */
+typedef struct {
+    s16 kind;
+    u16 flags;
+    u8 pad4[0x18 - 4];
+} Ovl11DispatchGateCursor;
+/* 800F5210: lh season, lhu variant, lw derived flags and pool slot 10. */
+struct Ovl11DispatchGateWork {
+    u8 pad0[0x44BA];
+    s16 season;
+    u8 pad44BC[0x44D4 - 0x44BC];
+    u16 indexedVariant;
+    u8 pad44D6[0x51C0 - 0x44D6];
+    s32 derivedFlags;
+    u8 pad51C4[0xDDB4 - 0x51C4];
+    Ovl11DispatchGateCursor *records;
+};
 /* 800F5944: pointer table, two fixed lists and lh counts through D_8006C838. */
 struct Ovl11DispatchState {
     char pad0[0xDD8C];

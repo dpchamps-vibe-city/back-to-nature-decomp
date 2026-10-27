@@ -15,8 +15,7 @@
 #include "psyq/stdlib.h"
 #include "sound_commands.h"
 #include "ovl11_scene_record_render.h"
-
-void ovl_11_func_800E54C8(void);
+#include "ovl11_object_load_resets.h"
 
 /* Private views of the externally supplied sprite pool, not new storage. */
 typedef struct {
@@ -51,7 +50,7 @@ void Ovl11ResetSpriteRotations(void) {
         Ovl11ResetSpriteRotationEntry(entry);
         entry++;
     }
-    ovl_11_func_800E54C8();
+    Ovl11ResetObjectWorkPairs();
 }
 
 void Ovl11RegisterSpriteRotation(Ovl11RotationSource *source) {

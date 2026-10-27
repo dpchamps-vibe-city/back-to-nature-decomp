@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_dispatch_record_flags.h"
 /* Family transfer: ovl_21_func_800BA670 → ovl_11_func_800F4114.
  * Same flexible signature over the original words.
  * CROSS-CONTAINER: donor built in a different link; verify the flag column.
@@ -10,8 +11,6 @@
  * Verified only by the relocated-byte oracle; similarity proves nothing.
  */
 
-void ovl_11_func_800F5210(s16 arg0);
-
 void ovl_11_func_800F4114(void) {
-    ovl_11_func_800F5210(gCalendarSeason);
+    Ovl11UpdateList10RecordGates(gCalendarSeason);
 }

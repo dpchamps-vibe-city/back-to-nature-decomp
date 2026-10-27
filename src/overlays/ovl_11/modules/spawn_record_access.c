@@ -16,12 +16,11 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_spawn_record_access.h"
+#include "ovl11_dispatch_record_flags.h"
 
 void Ovl11ClearSpawnRecords(Ovl11DispatchRecord *records, s32 count);
 
 void ovl_11_func_800F40A4(void);
-/* This caller forwards the signed identifier; the callee leaves it unread. */
-void ovl_11_func_800F5210();
 
 /* The partial-reset path retains the indexed list and both fixed records. */
 void Ovl11PrepareSpawnRecordPools(u16 selector, s32 preserveIndexed) {
@@ -31,7 +30,7 @@ void Ovl11PrepareSpawnRecordPools(u16 selector, s32 preserveIndexed) {
 
     ovl_11_func_800F40A4();
     Ovl11RefreshDispatchRecordPools();
-    ovl_11_func_800F5210((s16) selector);
+    Ovl11UpdateList10RecordGates((s16) selector);
     Ovl11AssignPoolRowValues((s16) selector);
     initialBase = (u8 *) D_8006C838;
     base = initialBase + 0x8000;

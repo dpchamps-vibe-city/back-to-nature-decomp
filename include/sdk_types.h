@@ -177,13 +177,6 @@ typedef struct {
 } M2C_0ced4ee09ea5_Ov11FlagSet;
 
 typedef struct {
-               u16 field_0;
-               u16 field_2;
-               u16 field_4;
-               char pad_06[0x12];
-} M2C_246e28f7bc90_Entry_800F53BC;
-
-typedef struct {
     char pad_0[0x2];
     s16 unk2;
 } M2C_32ba532776b0_ReconA0View;

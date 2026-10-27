@@ -32,6 +32,7 @@
 #include "ovl11_byte_run_decode.h"
 #include "ovl11_object_load_context.h"
 #include "ovl11_object_sprite_recovery.h"
+#include "ovl11_object_load_resets.h"
 
 s32 Ovl11DispatchObjectLoadPhase(void) {
     char *work;
@@ -170,7 +171,6 @@ s32 Ovl11GetCurrentObjectId(void) {
 void ovl_11_func_800E5230(void);
 void ovl_11_func_800E499C(s32 arg0);
 void ovl_11_func_800E5078(void);
-void ovl_11_func_800E54C8(void);
 
 s32 Ovl11StartObjectArchiveLoad(void) {
     s16 id;
@@ -237,7 +237,7 @@ s32 Ovl11StartObjectArchiveLoad(void) {
     gOvl11ObjectProgramIndex = 0;
     Ovl11ClearValueSlotsCommand(0, 0, 0, 0);
     base = (u8 *)gOvl11ObjectProgramRecords - 0x20D8;
-    ovl_11_func_800E54C8();
+    Ovl11ResetObjectWorkPairs();
     ((struct Ovl11ObjectSoundRequestView *)base)->bankId = -1;
     ((struct Ovl11E4280State *)base)->selector = 1;
     return 0;
@@ -289,14 +289,12 @@ s32 Ovl11RunObjectRecordProgram(void) {
     return 0;
 }
 
-void ovl_11_func_800E549C(void);
-
 s32 Ovl11ReleaseObjectLoad(void) {
     ((struct Ovl11E4280State *)D_8006C838)->flags_C &= ~0x400000;
     Ovl11DrawAttachmentRecordSprites();
     Ovl11FollowSelectedRecordCamera();
-    ovl_11_func_800E54C8();
-    ovl_11_func_800E549C();
+    Ovl11ResetObjectWorkPairs();
+    Ovl11ClearEventRecordLoadFlags();
     ((struct Ovl11E4280State *)D_8006C838)->field_5214 = 0;
     ((struct Ovl11E4280State *)D_8006C838)->field_448C = 0;
     ((struct Ovl11E4280State *)D_8006C838)->flags_4450 &= ~0x10;
@@ -334,7 +332,7 @@ s32 Ovl11PollObjectArchiveLoad(void) {
     gOvl11ObjectProgramIndex = 0;
     Ovl11ClearValueSlotsCommand(0, 0, 0, 0);
     base = (u8 *)gOvl11ObjectProgramRecords - 0x20D8;
-    ovl_11_func_800E54C8();
+    Ovl11ResetObjectWorkPairs();
     *(s16 *)(base + 0x4438) = -1;
     *(s32 *)(base + 0x7A74) = 1;
     return 0;

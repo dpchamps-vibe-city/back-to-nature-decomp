@@ -13223,6 +13223,44 @@ overlay with no flag or exception change.
   two D_80071Axx symbols into this cluster; link-sits in the 0x800E5A1C–
   0x800EExxx accessor band between D_8006C858-member 0x800E93CC and
   0x800E95FC
+**Independent reset services reconstructed at ovl_11:800E549C–800E54F8
+exclusive:** `modules/event_record_flag_reset.c` contains
+Ovl11ClearEventRecordLoadFlags (549C), and `modules/object_work_pair_reset.c`
+contains Ovl11ResetObjectWorkPairs (54C8). Each singleton is the complete
+supported service, not an assertion of recovered original one-function files.
+The first walks all 37 0x1D4-byte event records and clears ONLY +1E mask 1800;
+object_archive_pipeline's release phase is its sole compiled caller. The
+second writes -1 to ten shared-work halfwords at +443A..444C (five pairs),
+leaving +4438 untouched. Archive start/poll/release and sprite_rotation reset
+call it. These concrete call/effect contracts support their names; the pair
+roles and the meanings of the two flag bits remain unnamed.
+
+Boundaries: left object_load_context enters/exits flag-3/position-control
+state and does not perform either reset. Between the two reset services,
+the event-record flags and ten work halfwords are disjoint: neither routine
+calls the other, neither owns a private table, and the shared loader caller
+alone does not establish co-compilation. Right 54F8 adapts an object-resource
+ID to the retained sprite-block bank's GPU readback service, with no access
+to these flags/halfwords. Thus no helper/private-state/table evidence joins
+any edge; these are evidence-limited -G0 cuts, not GP-proven original TU
+boundaries. No slice was taken from a supported larger reset family.
+
+`ovl11_object_load_resets.h` publishes both unchanged void ABIs to the two
+caller modules, with storage prerequisites, exact ranges, preserved state
+and no speculative pair semantics. Locals are named for records, remaining
+count, work/pair and sentinel; the existing shared record type, +1E field,
+array-backed first-record binding and raw shared-work view are retained.
+No data symbol, ownership, layout, private linkage or declaration conflict
+was introduced. Symbol configuration records both original overlay identities;
+canonicalNames propagated them and interfaceAudit measured unchanged callers.
+Both checked folds passed first at baseline -O2/-G0, each member and the
+linked overlay byte-identical. Neither has a flag override, and none was
+added or retired. Batch acceptance with random_value_slot_command passed
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`: all eight
+integrity gates PASS, 2300/2625 folded, 441/441 valid modules, no previously
+folded regression or exception growth. Executable/overlay code, data, callback
+pointers, tables and placement remain byte-identical.
+
 **Reconstructed `modules/object_load_context.c`, both entries
 800E5294–800E549C exclusive:** `Ovl11EnterObjectLoadContext` and
 `Ovl11LeaveObjectLoadContext`. Source/caller review strengthens the old
@@ -17576,7 +17614,40 @@ private-helper/state or pooled-emission witness establishes a larger unit.
   conflated. Baseline fold, final caller/type changes and all linked bytes
   pass the full campaign gate (2042 folded/352 valid modules); no override,
   ownership, linkage or source-policy exception was added.
-- ovl_11_func_800E78E4 (m, matched 2026-11 — this session, 0x70, byte-exact) —
+**Reconstructed `modules/random_value_slot_command.c`, ovl_11:800E78E4–
+800E7954 exclusive**, as Ovl11RandomValueSlotCommand. This complete opcode
+service advances the canonical Rand generator with the limit's low sixteen
+bits, optionally writes its result to a signed-indexed value slot, then calls
+the canonical comparison operation with (value, operand, condition). Slot -1
+suppresses only the store. The broader slot array is interpreter-wide, not
+TU-private; it does not establish a single file containing every slot user.
+Left E7798 performs mode/clock/event transitions; right E7954 selects scene
+modes and resets mode-specific work. Neither calls this service or shares a
+private helper/table with it. These are evidence-limited -G0 service edges,
+not GP-proven original boundaries, and are not flag-convenience slices.
+
+Parameters/locals name limit, slot, condition, operand and value; unused SDK
+includes were removed. Canonical names already identify the RNG state and
+value-slot table. No new data view, ownership, linkage or width was introduced.
+The initial fold preserved its old void definition; that batch with the two
+reset services passed all eight campaign integrity gates at 2300/2625 folded,
+441/441 valid modules. A subsequent explicit interface investigation found
+the original final comparison call's v0 untouched through the epilogue and
+the interpreter's s32-returning opcode table consuming that result (exactly
+1 selects the success target). The definition now explicitly RETURNS the
+comparison's 0/1 result, rather than retaining the misleading void contract.
+`ovl11_random_value_slot_command.h` publishes limit/slot/result behavior and
+RNG effects. Parameter widths and call/operation order are unchanged. This
+is a separately documented result-contract correction, not an unmentioned
+type change during renaming. A checked re-fold of the explicit-result source
+also passed the member and overlay, and final campaign verification with the
+dispatch-record services passed all eight integrity gates: 2302/2625 folded,
+443/443 valid modules, zero exception growth, all EXE/overlay code/data/tables
+unchanged. The first checked fold passed the member and linked overlay at baseline
+-O2/-G0; no override or exception applies or was added. Canonicalization
+updated the symbol at its original overlay identity.
+
+Historical implementation evidence for 800E78E4:
   guarded-slot random writer: `temp = func_80012A34(arg0 & 0xFFFF)` (exe
   `Rand`), then if `arg1 != -1` stores `D_80129560[(s16)arg1] = temp` via the
   sibling `lui`+`addiu %lo` base (the s16 index materialised once and scaled by
@@ -18559,6 +18630,64 @@ Members (address order):
 - ovl_11_func_800F4FC8 (m) — clears the active pool gate and deactivates the next record.
 
 ## `ovl_11` D_8006C838 +0xDD8C pool-walk pair — 0x800F40A4 / 0x800F508C (confidence: medium)
+
+**Two independent complete leaf services reconstructed at 800F5210–800F5404
+exclusive:** `modules/dispatch_record_gates.c` (5210) and
+`modules/dispatch_record_flag_rules.c` (53BC). Their public contract is
+ovl11_dispatch_record_flags.h; names are Ovl11UpdateList10RecordGates and
+Ovl11ApplyDispatchRecordFlagRules. The first owns the entire thirteen-record
+slot-10 gating operation; the second the complete count-driven mask-priority
+operation used by the external nineteen-list walker F40A4. No linkage is made
+private and no pool ownership is inferred from either traversal.
+
+A read-only proposal to extend record_row_values through these two entries
+was checked against the sources and NOT accepted as membership evidence.
+The row-value triple table and nested-helper/static-chain closure belong
+only to 508C/5108/5160. The two leaves neither read that private table nor
+call that closure or each other. The common 0x18 record format and nineteen-
+slot pool are public to entity_pool_access, record_pool_refresh and other
+services, so those facts plus adjacency do not establish a five-entry TU.
+F40A4's external use of the flag leaf does not establish a shared original
+file through all intervening unrelated services either. No stronger
+private-state/helper/pooled-emission witness currently joins those edges.
+
+Boundaries: left row_values ends its exclusive nested/table operation at
+5210; 5210's shared-work season/variant/progress gates are unrelated to the
+row selection. Between 5210 and 53BC, only the former selects fixed pool
+slot 10, reads live season/variant/derived state, or rewrites kinds. The
+latter is a stateless count/pointer operation with an independent caller.
+Right 5404 begins the existing kind-keyed pool-refresh/lookup helper closure;
+53BC performs no lookup and has no private table/callee in it. All are
+conservative evidence-limited -G0 service cuts, not recovered GP object edges;
+a larger original record file remains uncertain, not ruled out or sliced on
+a flag/mechanical convenience boundary.
+
+Important source correction to the research reading: 5210 adds TWO to the
+pool-list base before walking. Its first halfword is therefore record KIND
+(+2), its second FLAGS (+4), NOT ID/kind. It updates flags bit 0 and may
+rewrite kind to 6D/6E; the +0 ID never changes. The shifted signed-kind
+cursor and global work view now live in globals_override.h, preserving
+the original widths, stride and base formation. Canonical existing globals
+gCalendarSeason/gAreaIndexedVariant/gProgressDerivedFlags corroborate the
+work-field names; no interior alias or storage definition was added.
+53BC and its external walker now use existing Ovl11DispatchRecord instead
+of duplicate local record types; only the same unsigned +4 flags are read.
+The header documents mask-0x20 priority over mask-0x40, nonpositive counts, exactly
+thirteen records, second-rule precedence and the unused s16 selector. No
+speculative gameplay names are assigned to the masks or kinds. Both initial
+checked folds passed at baseline -O2/-G0 with identical member/overlay bytes;
+no override or source-policy exception applies or was added/retired.
+
+Canonicalization propagated both container/address identities, and
+interfaceAudit published the shared header to F3FF4/F40A4/F4114 and
+spawn_record_access with unchanged callers and zero failing published
+interfaces. `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`
+then passed all eight integrity gates at **2302/2625 folded, 443/443 valid
+modules**, zero invalid/undetermined units, no regression and no exception
+growth. Executable and all overlay code/data/callback pointers/tables and
+placement remain byte-identical. Canonical-name and whitespace checks are
+clean; unrelated pre-existing unpublished interface findings remain unchanged.
+Exit 1 reports the remaining 323 campaign functions, not a failed gate.
 
 **Reconstructed `modules/record_row_values.c`, 800F508C–800F5210
 exclusive, the complete three-entry row-value service.** Additional
@@ -22706,6 +22835,32 @@ Members (link order):
 - ovl_25_func_800B97E4 (s) — unclassified
 
 ## `ovl_25` fixed-point threshold-lookup run — 0x800B9A10–0x800B9A84 (confidence: medium-low)
+
+**General state/timer setter fold attempted, not integrated**, ovl_25:
+800B9B00–800B9B28 exclusive. It changes signed halfword +2 and initializes
+the +4 timer ONLY on a state change. Ovl25TickSceneRecords decrements that
++4 field once per call, establishing update-tick units. It has no private
+helper/data. Left fixed_point_tier_lookup alone reads the eight private tier
+constants; right sprite_set_service owns the projection-helper closure and
+never calls the setter. The setter's clients are earlier record drivers;
+there is no narrow witness joining either neighbor. These remain evidence-
+limited -G0 service cuts, not a boundary invented for 95B0's flag.
+
+Two complete baseline singleton folds passed member and linked-overlay bytes,
+but interface publication blocks acceptance. Keeping the existing void
+contract refuses 9480: it RETURNS the setter call on one path (`void value
+not ignored`). The target leaves signed `lh v0,2(a0)` previous state untouched
+on both paths, and an explicit s32-return-previous-state definition also
+passes the checked fold. Publishing that contract reconciles 9480/95B0/97E4,
+but interfaceAudit refuses scene_mode_handlers: its object changes even with
+all preservation casts, and two void declarations remain there. Thus neither
+consistent header has passed every client. Both attempts, names, header and
+all caller/config/source edits were restored; no partial module or exception
+remains. The old claim that all clients discard the value is contradicted by
+9480, but the incidental v0 observation alone does not settle the source-level
+contract across all clients. Next useful experiment is localizing the scene
+module's declaration-visibility change and reconstructing a consistent caller
+context, not retaining incompatible declarations to force the fold.
 
 **Reconstructed `modules/fixed_point_tier_lookup.c`, 800B9A10–800B9B00
 exclusive, both lookup entries.** The two functions are the only users of
