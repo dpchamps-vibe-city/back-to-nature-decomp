@@ -47,6 +47,9 @@
 #include "ovl11_season_mask.h"
 #include "ovl11_selected_record_pair_commands.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_record_pair_slot_output.h"
+#include "ovl11_interaction_state_access.h"
+#include "ovl11_record_family_lookup.h"
 
 typedef struct {
                char pad0[0x38];
@@ -108,7 +111,6 @@ void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0,
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
-s32 ovl_11_func_80118C6C (void);
 s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
@@ -116,7 +118,6 @@ void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
 s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
-s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 void ovl_11_func_800EF870 (s16 arg0);
 s32 Ovl11ConditionDayWindowMatches (s32 arg0, s32 arg1, s32 arg2);
@@ -132,7 +133,6 @@ s32 Ovl11ConditionObjectStateMatches (s32 arg0);
 s32 Ovl11HasInactiveConditionRowCode (u16 arg0);
 void Ovl11QueueImmediateEvent (s16 kind, s16 value);
 void ovl_11_func_801037EC (void);
-s32 ovl_11_func_800EC354 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 void ovl_11_func_800EEFB8(s16 arg0, M2C_800EEFB8_Arg1 *arg1) {
     s16 var_s0;

@@ -1,5 +1,17 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+Ovl11DispatchStateCommand = 0x800E9D28; // type:func
+Ovl11RequestAreaSelectionCommand = 0x800E5E98; // type:func
+Ovl11SetSceneModeCommand = 0x800E7954; // type:func
+Ovl11TestStateFieldFromSlot = 0x800EB700; // type:func
+Ovl11UpdateStateFieldFromSlot = 0x800EB760; // type:func
+Ovl11StoreRecordPairToSlots = 0x800EC354; // type:func
+Ovl11StoreLayoutStateToSlots = 0x800EC490; // type:func
+Ovl11AnimateStateRecordMotion20 = 0x800EADB8; // type:func
+Ovl11GetInteractionId = 0x80118C6C; // type:func
+Ovl11QueryFamilyRecord = 0x80118C7C; // type:func
+Ovl11ResetInteractionState = 0x80118CB0; // type:func
+
 // Camera-position record selector and shared movement/cache adapter.
 Ovl11SelectCameraPositionRecord = 0x800E880C; // type:func
 Ovl11PollRecordTimedSpriteCommand = 0x800E7C2C; // type:func

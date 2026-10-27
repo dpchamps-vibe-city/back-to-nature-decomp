@@ -28,9 +28,9 @@
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_object_event_slot_reset_command.h"
 #include "ovl11_object_state_selection_command.h"
+#include "ovl11_area_selection_command.h"
 
 void SetVal8005E2BC(s32 value);
-s32 ovl_11_func_800E5E98(s16 a, s16 b, s32 c, s32 d);
 
 s32 Ovl11StepSelectionPrompt(s32 *step, s32 baseStep, Ovl11D8012D7B8 descriptor) {
     s32 result;
@@ -302,7 +302,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             Ovl11SetInteractionStepsOffset(10, 0, baseStep);
         case 10:
             if (IsScreenFadeComplete() == 1) {
-                ovl_11_func_800E5E98(32, 0, 0, 0);
+                Ovl11RequestAreaSelectionCommand(32, 0, 0, 0);
                 ((Ovl11A25CState *)D_8006C838)->x = 1000;
                 ((Ovl11A25CState *)D_8006C838)->z = -2800;
                 ((Ovl11A25CState *)D_8006C838)->y = 0;

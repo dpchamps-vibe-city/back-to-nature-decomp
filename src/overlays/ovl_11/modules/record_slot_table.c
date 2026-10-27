@@ -13,8 +13,8 @@
 #include "psyq/libgte.h"
 #include "game_flags.h"
 #include "ovl11_clock_calendar.h"
+#include "ovl11_interaction_state_access.h"
 
-s32 ovl_11_func_80118C6C(void);
 s32 ovl_11_func_800EF0E8(s16 index);
 s32 Ovl11ResetStaleRecordSlot(s32 unused);
 s32 Ovl11ServiceRecordSlot(s32 tag);
@@ -79,7 +79,7 @@ void Ovl11ServiceActiveRecordSlot(void) {
         *(void **)(work + 0x30) = (void *)(work + 0x7A78);
         if (tag == -1) {
             SetGameFlag(2U, 0U);
-            if ((ovl_11_func_80118C6C() == 0) && (*(s16 *)(work + 0x51EE) == 0)) {
+            if ((Ovl11GetInteractionId() == 0) && (*(s16 *)(work + 0x51EE) == 0)) {
                 *(s32 *)(work + 0x5234) &= 0xFF7FFFFF;
             }
             flagWork = (u8 *)D_8006C838;

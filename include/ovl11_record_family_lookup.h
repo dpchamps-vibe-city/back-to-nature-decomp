@@ -19,4 +19,10 @@
  * No mutation, allocation, callbacks or random-state consumption. */
 s32 Ovl11FindFamilyRecordIndex(s16 family, s16 filter, s16 ordinal);
 
+/* ovl_11:80118C7C forwarding facade with exactly the same contract above.
+ * Its caller in the state-command multiplexer tests the narrowed index for
+ * nonzero; that caller therefore treats physical index zero as false, even
+ * when a record was found. This facade does not normalize or correct that. */
+s32 Ovl11QueryFamilyRecord(s16 family, s16 filter, s16 ordinal);
+
 #endif

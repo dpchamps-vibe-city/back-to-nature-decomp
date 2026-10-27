@@ -13,7 +13,7 @@
 void Ovl11ReadDefaultPosition(s32 *position) {
     s16 *pair;
 
-    pair = &gOvl11DefaultPositionPairs[D_80070D06 * 2];
+    pair = &gOvl11DefaultPositionPairs[gAreaPrimaryVariant * 2];
     position[0] = pair[0];
     position[2] = pair[1];
     position[1] = 0;

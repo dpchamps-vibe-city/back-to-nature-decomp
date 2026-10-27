@@ -2168,12 +2168,33 @@ struct Ovl11MessageState {
     u16 variant80;
 };
 
+/* ovl_11:800EC354 compares its resolved pair to these two signed halfwords. */
+typedef struct {
+    char pad_000[0x44BA];
+    s16 first;
+    s16 second;
+} Ovl11CurrentRecordPairView;
+/* The same resolver's special record ID 29 reads the pair at 5246/5248. */
+typedef struct {
+    char pad_000[0x5246];
+    s16 first;
+    s16 second;
+} Ovl11SpecialRecordPairView;
+
+/* ovl_11:800E7954 clears word 448C and sets flag 400 in word 5234. */
+typedef struct {
+    char pad_000[0x448C];
+    s32 field_448C;
+    char pad_4490[0x5234 - 0x4490];
+    s32 field_5234;
+} Ovl11SceneModeCommandWork;
+
 /* 800E5E98: lw/sw +4450, lh +44BA, lhu +44CE, and lw +44F8. */
-struct Ovl11MessageSelectState {
+struct Ovl11AreaSelectionCommandWork {
     char pad0[0x4450];
     s32 flags;
     char pad4454[0x44BA - 0x4454];
-    s16 base;
+    s16 season;
     char pad44BC[0x44CE - 0x44BC];
     u16 variant;
     char pad44D0[0x44F8 - 0x44D0];
@@ -3131,6 +3152,14 @@ typedef struct {
 } env_struct_0x134;
 
 extern env_struct_0x134 gRenderContexts[2];
+/* ovl_11:800E7954 clears exactly bytes 19..1B of both 134-byte contexts. */
+typedef struct {
+    char pad_000[0x19];
+    s8 field_19;
+    s8 field_1A;
+    s8 field_1B;
+    char pad_01C[0x134 - 0x1C];
+} Ovl11SceneModeRenderContextView;
 /* exe:8001DCB0 caches the computed ordering-table depth; 8001DFC8 reads it. */
 extern s32 gProjectedQuadOtDepth;
 /* exe:8001DCB0/8001DE4C preserve their render context across the quad gate. */
@@ -4796,6 +4825,9 @@ extern s32 gOvl11ResourceOptionIndex;
 extern s16 D_8012D51C;
 /* 801180F0 passes this state word by address and clears the adjacent word. */
 extern s32 gOvl11InteractionStep;
+/* ovl_11:80118CB0 stores word 1 here during the interaction reset callback;
+ * no wider meaning is established, so retain the neutral data identity. */
+extern s32 D_80128210;
 extern s32 gOvl11InteractionResumeStep;
 /* ovl_11 801189C8 indexes these callback-bank anchors; retain scalar views. */
 extern s32 gOvl11InteractionDrawCallbacks;
@@ -6853,8 +6885,9 @@ extern Ovl11ActionPositionRow gOvl11ActionPositionsMode5[2];
  * other matched ovl_11 leaves. Absolute-addressed from the -G0 overlay. */
 extern u16 gTaggedRecordPoolExpanded;
 extern u16 gB4RecordPoolExpanded;
-/* 800D0FB4 reads this absolute-addressed status halfword with lhu. */
-extern u16 D_80070D0C;
+/* Default area selection uses work +44D4 as the variant80 offset-table index;
+ * 800D0FB4 also reads it with lhu. This is not a normalized boolean. */
+extern u16 gAreaIndexedVariant;
 
 /* ovl_11:800CE210/800CE37C capture and interpolate these position endpoints.
  * Absolute-addressed overlay state, not small-data definitions. */
@@ -7799,7 +7832,9 @@ extern u16 D_80051F26[];
 extern s16 gCalendarYear;
 extern s16 D_80071A22;
 /* 80104EC8, 800CD0C0 and 800EC490 read this unsigned state halfword. */
-extern u16 D_80070D06;
+/* Default area selection's primary variant50 at work +44CE; default-position
+ * selection also uses it to index pairs. EC490 exports the raw u16. */
+extern u16 gAreaPrimaryVariant;
 /* 800CD0C0 indexes three X/Z halfword pairs; original data spans 80125F18..24. */
 extern s16 gOvl11DefaultPositionPairs[6];
 /* 800CD45C walks four 4-byte records: signed hour +0 and signed byte delta +2. */

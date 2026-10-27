@@ -17,9 +17,9 @@
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_object_event_slot_reset_command.h"
 #include "ovl11_object_state_selection_command.h"
+#include "ovl11_area_selection_command.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_8011A25C(void) {
     s32 result;
@@ -133,7 +133,7 @@ s32 ovl_11_func_8011A25C(void) {
         Ovl11SetInteractionSteps(9, 0);
     case 9:
         if (IsScreenFadeComplete() == 1) {
-            ovl_11_func_800E5E98(32, 0, 0, 0);
+            Ovl11RequestAreaSelectionCommand(32, 0, 0, 0);
             ((Ovl11A25CState *)D_8006C838)->x = 1000;
             ((Ovl11A25CState *)D_8006C838)->z = -2800;
             ((Ovl11A25CState *)D_8006C838)->y = 0;

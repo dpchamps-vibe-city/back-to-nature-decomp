@@ -1,4 +1,18 @@
+/*
+ * State-command multiplexer used by object programs and direct clients.
+ * Command IDs are ONE-based; the implementation switches on command - 1.
+ * Operands can be immediate values, value-slot indices, masks or record IDs,
+ * depending on the command. See ovl11_state_command_dispatch.h.
+ *
+ * Keep the switch fall-throughs: several operations intentionally continue
+ * into another command's action. Return values are not uniformly boolean.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
+
 #include "common.h"
+#include "ovl11_state_command_dispatch.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -20,20 +34,20 @@
 #include "ovl11_flagged_record_retirement.h"
 #include "ovl11_selected_record_pair_commands.h"
 #include "ovl11_object_sprite_animation_command.h"
+#include "ovl11_interaction_state_access.h"
+#include "ovl11_record_family_lookup.h"
 
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
 void ovl_11_func_800EF6E4 ();
-s32 ovl_11_func_80118C6C (void);
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
 s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
-s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 
-s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
-    s32 sp10;
+s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
+    s32 adjustedValue;
     s32 work;
     u32 upperOffset;
     s32 poolOffset;
@@ -44,16 +58,16 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 var_a0;
     s32 temp_a1;
     s32 temp_v0;
-    s32 temp_v1;
+    s32 commandIndex;
     u16 var_s3;
     E9State *temp_v0_2;
     E9State *temp_v0_3;
 
     var_s3 = 0;
     temp_a1 = arg1 << 0x10;
-    temp_v1 = (s16)(arg0 - 1);
-    sp10 = 0;
-    switch (temp_v1) {
+    commandIndex = (s16)(command - 1);
+    adjustedValue = 0;
+    switch (commandIndex) {
     case 0:
         if (arg1 == 1) {
             Ovl11SetPartition6Enabled(arg2 == 1);
@@ -138,7 +152,6 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             Ovl11QueueDatedEvent(2, var_s3, 7);
             return 1;
         }
-        /* Duplicate return node #205. Try simplifying control flow for better match */
         return 1;
     case 3:
         var_s3 = ((E9State *)D_8006C838)->f5492;
@@ -205,7 +218,7 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             SetGameFlag(0x6E, 0);
             goto block_204;
         case 8:
-            ovl_11_func_800E9D28(6, 4, 0, 0);
+            Ovl11DispatchStateCommand(6, 4, 0, 0);
             SetGameFlag(0x6F, 0);
             return 1;
         }
@@ -255,7 +268,7 @@ block_118:
                 return 1;
             }
         } else {
-            return ovl_11_func_80118C6C() == 0;
+            return Ovl11GetInteractionId() == 0;
         }
         return 0;
     case 8:
@@ -317,6 +330,7 @@ block_118:
                 return gSceneSubphase == 0xFF;
             }
             gSceneSubphase = 0;
+            /* Setting the subphase also selects the first flagged record. */
         case 7:
             for (var_s3 = 0; var_s3 < 10; var_s3++) {
                 if (((E9RecordsView *)D_8006C838)->records[var_s3].flags & 0x20000) {
@@ -378,7 +392,7 @@ block_118:
             return Ovl11AnyRecordFlagMatch(1 << arg2, 1 << arg3);
         case 1:
             Ovl11RetireFlaggedRecords();
-            break;
+            break; /* Continue into command 15's flag operation. */
         default:
             return 0;
         }
@@ -394,6 +408,7 @@ block_118:
             return 0;
         }
     case 15:
+        /* Also reached after command 15 sets a work flag. */
         poolOffset = 0x1F0;
         for (var_s3 = 0; var_s3 < 20; var_s3++) {
             byteOffset = var_s3 * 0xB8;
@@ -444,7 +459,8 @@ block_118:
             return 1;
         }
     case 20:
-        var_s3 = ovl_11_func_80118C7C(arg1, 1, -1);
+        /* Command 20 falls here for an unrecognized subcommand. */
+        var_s3 = Ovl11QueryFamilyRecord(arg1, 1, -1);
         return var_s3 != 0;
     case 21:
         if (((E9State *)D_8006C838)->f523A < 0xF) {
@@ -462,7 +478,6 @@ block_118:
             Ovl11LoadCalendarSpriteSet(temp_a0_3, 0);
             return 1;
         }
-        /* Duplicate return node #205. Try simplifying control flow for better match */
         return 1;
     case 24:
         ((E9State *)D_8006C838)->f44F8 |= 0x200000;
@@ -491,15 +506,15 @@ block_118:
         Ovl11ApplyStateFieldOperation((s32 *) ((u8 *) gOvl11ValueSlots + (arg1 * 4)), arg2 / 2, arg3);
         return 1;
     case 30:
-        sp10 = (s32) ((E9State *)D_8006C838)->f91C2;
-        Ovl11ApplyStateFieldOperation(&sp10, arg2, arg3);
-        if (sp10 >= 0x100) {
-            sp10 = 0xFF;
+        adjustedValue = (s32) ((E9State *)D_8006C838)->f91C2;
+        Ovl11ApplyStateFieldOperation(&adjustedValue, arg2, arg3);
+        if (adjustedValue >= 0x100) {
+            adjustedValue = 0xFF;
         }
-        if (sp10 < 0) {
-            sp10 = 0;
+        if (adjustedValue < 0) {
+            adjustedValue = 0;
         }
-        ((E9State *)D_8006C838)->f91C2 = (s16) (u16) sp10;
+        ((E9State *)D_8006C838)->f91C2 = (s16) (u16) adjustedValue;
         goto block_204;
     default:
         return 0;

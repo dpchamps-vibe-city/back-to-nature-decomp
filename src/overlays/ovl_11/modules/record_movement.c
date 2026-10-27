@@ -899,7 +899,7 @@ void Ovl11TryRecordRegionExit(Recon_ovl_11_func_800D2594_A0View *arg0) {
             var_s4 = 2;
             break;
         case 2:
-            if (D_80070D0C == 0) {
+            if (gAreaIndexedVariant == 0) {
                 continue;
             }
             var_v1 = 0x10000000;

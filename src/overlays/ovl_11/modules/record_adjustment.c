@@ -4,8 +4,7 @@
 #include "common.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_record_adjustment.h"
-
-s32 ovl_11_func_800EC354(s16 recordId, s16 fromValueSlot, s32 firstOutputSlot, s32 secondOutputSlot);
+#include "ovl11_record_pair_slot_output.h"
 
 s16 Ovl11LookupRecordAdjustment(s16 recordId, s32 row, s16 column) {
     s16 adjustment;
@@ -20,7 +19,7 @@ s16 Ovl11LookupRecordAdjustment(s16 recordId, s32 row, s16 column) {
         }
         adjustment = biasedAdjustment;
     }
-    if (ovl_11_func_800EC354(recordId, 0, -1, -1) != 0) {
+    if (Ovl11StoreRecordPairToSlots(recordId, 0, -1, -1) != 0) {
         adjustment *= 5;
     }
     return adjustment;

@@ -22,4 +22,11 @@ s32 Ovl11LimitStateRecordMotion(s16 recordId, s16 direction,
 s32 Ovl11AnimateStateRecordMotion12(s16 recordId, s16 direction,
                                    s32 limit, s16 animation);
 
+/* ovl_11:0x800EADB8. Same animation-first composition at magnitude 20
+ * (increment magnitude 40), but the existing void ABI discards both results.
+ * This does not wait for animation or integrate the position. All resolver,
+ * direction and raw-unit constraints of the core above still apply. */
+void Ovl11AnimateStateRecordMotion20(s16 recordId, s16 direction,
+                                    s32 limit, s16 animation);
+
 #endif

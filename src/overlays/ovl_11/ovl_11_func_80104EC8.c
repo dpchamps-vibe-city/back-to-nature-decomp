@@ -10,10 +10,10 @@
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_item_record_search.h"
+#include "ovl11_state_command_dispatch.h"
+#include "ovl11_record_pair_slot_output.h"
 
-s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EF0E8(s16 arg0);
-s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_80104EC8(s16 arg0) {
     Ovl11D124Entry record18;
@@ -193,7 +193,7 @@ enough_slots:
         if (temp_v0 == 1) {
             if (((Ovl11ConditionState *) D_8006C838)->field_E6CB ==
                 ((Ovl11ConditionState *) D_8006C838)->date[0] + 1) {
-                if (ovl_11_func_800EC354(7, 0, -1, -1) == temp_v0) {
+                if (Ovl11StoreRecordPairToSlots(7, 0, -1, -1) == temp_v0) {
                     return 1;
                 }
             }
@@ -887,8 +887,8 @@ block_305:
     case 0x5F:
         return (s32) (((Ovl11ConditionState *) D_8006C838)->field_91E1 >> 7);
     case 0x61:
-        if ((ovl_11_func_800E9D28(0xD, 1, 0, 0) != 1) && (ovl_11_func_800E9D28(0xD, 1, 1, 0) != 1) && (ovl_11_func_800E9D28(0xD, 1, 2, 0) != 1)) {
-            var_v0_3 = ovl_11_func_800E9D28(0xD, 1, 3, 0) ^ 1;
+        if ((Ovl11DispatchStateCommand(0xD, 1, 0, 0) != 1) && (Ovl11DispatchStateCommand(0xD, 1, 1, 0) != 1) && (Ovl11DispatchStateCommand(0xD, 1, 2, 0) != 1)) {
+            var_v0_3 = Ovl11DispatchStateCommand(0xD, 1, 3, 0) ^ 1;
             return var_v0_3 == 0;
         }
         return 1;
@@ -912,7 +912,7 @@ block_305:
         return GetGameFlag(var_a0_10) == 1;
     case 0x68:
         var_a0_4 = 0x38;
-        if (D_80070D06 == 0) {
+        if (gAreaPrimaryVariant == 0) {
             return GetGameFlag(var_a0_4) != 1;
         }
         return 0;

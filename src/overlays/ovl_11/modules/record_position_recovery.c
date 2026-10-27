@@ -18,7 +18,7 @@ void Ovl11RecoverRecordPositions(void) {
 
     flags = 0x30;
     record = &((Ovl11Status99C8View *)D_8006C838)->record_91AC;
-    if (record->collision.field_2 == 6 && D_80070D0C == 0) {
+    if (record->collision.field_2 == 6 && gAreaIndexedVariant == 0) {
         record->position[0] = -1800;
         record->position[1] = 0;
         record->position[2] = 3100;
