@@ -2514,3 +2514,14 @@ Ovl11UpdatePairSlotRecord = 0x800F501C; // type:func
 // Independent command services: archive-slot polling and slot-sourced positions.
 Ovl11PollTextSlotOrInvalidate = 0x800E8D7C; // type:func
 Ovl11WriteStateRecordPositionFromSlots = 0x800E8DC8; // type:func
+
+// Independent repeated-tick purchase interactions (callback-table interfaces).
+Ovl11UpdateItem21Purchase = 0x80119820; // type:func
+Ovl11UpdateSelectedItemRequestPurchase = 0x80119AF0; // type:func
+Ovl11UpdateTwoStageSelectionPurchase = 0x80119DF8; // type:func
+Ovl11UpdateTierUpgradePurchase = 0x8011A25C; // type:func
+gOvl11UpgradeFailureMessages = 0x801282D0; // type:data size:0xC
+Ovl11TestProgressGate = 0x800EFA1C; // type:func
+Ovl11UpdateCounter21Purchase = 0x80118CE4; // type:func
+Ovl11UpdateA4ItemRequestPurchase = 0x80119008; // type:func
+gOvl11A4RequestItemId = 0x8012D51C; // type:data size:0x2

@@ -158,7 +158,7 @@ complete:
     }
     var_a2_2 = 0x3E7;
     counts[3] = var_a0_2;
-    clamp_value = ((Ovl11FB908State *) D_8006C838)->field_4506;
+    clamp_value = ((Ovl11FB908State *) D_8006C838)->saveCounter21;
     if (clamp_value < 0x3E8U) {
         var_a2_2 = clamp_value;
     }

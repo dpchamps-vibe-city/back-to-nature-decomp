@@ -10,12 +10,12 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_record_flag_counters.h"
+#include "ovl11_progress_gate.h"
 
 
 s32 ovl_11_func_800EF0E8 (s16 arg0);
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800EFA1C (s16 arg0);
 
 void ovl_11_func_800EEECC(void) {
     s16 var_s0;

@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "game_flags.h"
+#include "ovl11_progress_gate.h"
 
 s32 ovl_11_func_800EF8BC(s16 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800EFA1C(s16 arg0);
 
 s32 ovl_11_func_800EF0E8(s16 arg0) {
     u32 first;
@@ -37,7 +37,7 @@ s32 ovl_11_func_800EF0E8(s16 arg0) {
         if (GetGameFlag(0x2A) == 1) {
             return 1;
         }
-        if (ovl_11_func_800EFA1C(0) == 1) {
+        if (Ovl11TestProgressGate(0) == 1) {
             return 0;
         }
         break;

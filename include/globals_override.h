@@ -2391,23 +2391,23 @@ struct struct_8006C838_800E8F78 {
     s32 field_5234;         /* 0x5234 */
 };
 
-/* 8011A25C: signed selections at 524C/5252, flag word and position stores. */
+/* 8011A25C: signed category/item IDs, interaction flags and raw position. */
 typedef struct {
     u8 pad0[0x522C];
     s32 field_522C;
     s32 field_5230;
-    s32 field_5234;
+    s32 flags;
     u8 pad5238[0x524C - 0x5238];
-    s16 field_524C;
+    s16 categoryItemId;
     u8 pad524E[4];
-    s16 field_5252;
+    s16 selectedItemId;
     u8 pad5254[0x52C8 - 0x5254];
     s32 x;
     s32 y;
     s32 z;
-} Ovl11A25CState;
-/* 8011A25C indexes this six-halfword message table with a signed load. */
-extern s16 D_801282D0[6];
+} Ovl11TierUpgradeWork;
+/* 8011A25C indexes these bank-2 message IDs by validation status minus one. */
+extern s16 gOvl11UpgradeFailureMessages[6];
 
 /* 80102B6C: lw/sw flags at +0x5234 and sh fields at +0x5252/+0x5254/+0x5256. */
 struct Ovl11SpriteRequestState {
@@ -4567,7 +4567,7 @@ typedef struct {
     u16 field_4500;
     u16 field_4502;
     u16 field_4504;
-    u16 field_4506;
+    u16 saveCounter21; /* work+4506 is gSaveCounter21 (80070D3E). */
     u16 field_4508;
     u8 pad450A[0x498C - 0x450A];
     u16 values[170];
@@ -4833,7 +4833,8 @@ extern s32 gOvl11ResourcePanelState;
 extern s32 gOvl11ResourcePanelResumeState;
 extern s32 gOvl11ResourceOptionIndex;
 /* 80119008 stores the selected ID with sh and reads it with lh/lhu. */
-extern s16 D_8012D51C;
+/* 80119008 snapshots secondTag for the later A4 item request and slot match. */
+extern s16 gOvl11A4RequestItemId;
 /* 801180F0 passes this state word by address and clears the adjacent word. */
 extern s32 gOvl11InteractionStep;
 /* ovl_11:80118CB0 stores word 1 here during the interaction reset callback;

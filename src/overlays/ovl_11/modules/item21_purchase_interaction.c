@@ -1,18 +1,33 @@
+/* Fixed-ID 0x21 purchase callback (ovl_11:80119820).
+ *
+ * Interaction-table s32(void) interface, called once per update. Requires
+ * resident ovl_11 and initialized message, selection and render services.
+ * Returns 0 while waiting, 1 after completion/cancellation, or immediately
+ * when shared-work flags bit 100 is clear. Item identity beyond ID 21 is unknown.
+ * Uses global step/resume/draw state; only one interaction may run at a time.
+ *
+ * Acceptance checks capacity, then balance. Commit disables dispatch record 21,
+ * debits its current price, delivers one item, sets status bit 200000 and clears
+ * availability bit 100. The price is read afresh each update. Work+522C/+5230
+ * are cleared and +5234 bit 800000 asserted while active, cleared on exit.
+ * Cancellation does not consume availability or debit funds. The callback
+ * table is the public interface; no direct C caller needs a separate header.
+ * Membership/boundaries: notes/file-groupings.md.
+ */
+
 #include "common.h"
 #include "message_window.h"
 #include "two_choice_prompt.h"
 #include "ovl11_interaction_steps.h"
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_balance_accounting.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_dispatch_record_enable.h"
 
 void SetVal8005E2BC(s32 arg0);
 
-s32 ovl_11_func_80119820(void) {
+s32 Ovl11UpdateItem21Purchase(void) {
     s32 result;
     s16 price;
 
@@ -49,6 +64,7 @@ s32 ovl_11_func_80119820(void) {
         gOvl11InteractionDrawMode = 3;
         Ovl11SetInteractionSteps(8, 0);
         Ovl11UpdateWideChoicePrompt(0, -1, 0);
+        /* Initialize and draw the choice in the same update. */
     case 8:
         switch (Ovl11UpdateWideChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
         case 0:

@@ -8,8 +8,7 @@
 #include "game_flags.h"
 #include "ovl11_record_action_predicate.h"
 #include "ovl11_special_counter_slot_command.h"
-
-s32 ovl_11_func_800EFA1C(s16 arg0);
+#include "ovl11_progress_gate.h"
 
 s32 Ovl11ChooseSpecialCounterSlotCommand(s16 skipFlagFilter, s16 resultSlot) {
     struct Ovl11CounterSlotCandidates choices = gOvl11SpecialCounterSlotCandidates;
@@ -29,7 +28,7 @@ s32 Ovl11ChooseSpecialCounterSlotCommand(s16 skipFlagFilter, s16 resultSlot) {
                 count++;
             }
         }
-        if (ovl_11_func_800EFA1C(0) == 1) {
+        if (Ovl11TestProgressGate(0) == 1) {
             choices.slots[4] = -1;
             count++;
         }

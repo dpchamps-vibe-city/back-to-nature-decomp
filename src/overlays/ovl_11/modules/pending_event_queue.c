@@ -15,6 +15,7 @@
 #include "game_flags.h"
 #include "ovl11_status_pages.h"
 #include "ovl11_item_slot_commands.h"
+#include "ovl11_progress_gate.h"
 
 s32 Ovl11PopEventMessageEntry(void);
 void Ovl11CompleteLatchedEventMessage(void);
@@ -227,7 +228,6 @@ void Ovl11RemoveQueuedEvent(s16 entryIndex, s32 immediateQueue) {
     q->day = 0;
 }
 
-s32 ovl_11_func_800EFA1C(s16);
 s32 Ovl11GetEventEligibilityFlag(void);
 s32 ovl_11_func_800F3C9C(u16);
 void Ovl11QueueDatedEvent(s16, s16, s16);
@@ -308,7 +308,7 @@ void Ovl11EvaluateEventRequests(void) {
             if ((((Ovl11EventStateView *)D_8006C838)->field_C79E) >= 0xC8) {
                 temp_v0 = GetGameFlag(0x25U);
                 if (temp_v0 == 1) {
-                    if (ovl_11_func_800EFA1C(0) == temp_v0) {
+                    if (Ovl11TestProgressGate(0) == temp_v0) {
                         var_s1 = 0xE;
                     } else if (GetGameFlag(0x11EU) == temp_v0) {
                         var_s1 = 0xD;

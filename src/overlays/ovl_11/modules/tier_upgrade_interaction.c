@@ -1,16 +1,24 @@
+/* Tier-upgrade purchase callback (ovl_11:8011A25C).
+ *
+ * Table-driven s32(void) interface: call once per update with resident ovl_11,
+ * initialized messages/render context and valid selected category/item IDs.
+ * Returns 0 while waiting, 1 on completion or rejection. Uses the GLOBAL
+ * interaction step/resume/draw state; cannot run alongside another interaction.
+ * Prices and validation are re-read on every call: selections must stay stable.
+ *
+ * Two confirmations precede debit, progress action and slot replacement.
+ * Success fades for 20 updates each way, requests area 32, and installs raw
+ * position (1000,0,-2800). Rejection still runs the message/flag cleanup path.
+ * Entry clears work+522C/+5230 and asserts +5234 bit 800000; completion clears
+ * that bit. State 12 is a debit phase, not a repeat-safe public entry point.
+ * Membership/boundaries: notes/file-groupings.md. No private linkage inferred.
+ */
+
 #include "common.h"
 #include "screen_fade.h"
 #include "message_window.h"
 #include "ovl11_tier_upgrade_rules.h"
 #include "ovl11_interaction_steps.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
-#include "psyq/libgpu.h"
-#include "psyq/libcd.h"
-#include "psyq/libetc.h"
-#include "psyq/memory.h"
-#include "psyq/abs.h"
-#include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_balance_accounting.h"
 #include "two_choice_prompt.h"
@@ -21,7 +29,7 @@
 
 void SetVal8005E2BC(s32 arg0);
 
-s32 ovl_11_func_8011A25C(void) {
+s32 Ovl11UpdateTierUpgradePurchase(void) {
     s32 result;
     s16 item;
     s16 group;
@@ -31,11 +39,11 @@ s32 ovl_11_func_8011A25C(void) {
     s16 message;
 
     result = 0;
-    item = ((Ovl11A25CState *)D_8006C838)->field_5252;
-    group = ((Ovl11A25CState *)D_8006C838)->field_524C;
-    ((Ovl11A25CState *)D_8006C838)->field_522C = 0;
-    ((Ovl11A25CState *)D_8006C838)->field_5230 = 0;
-    ((Ovl11A25CState *)D_8006C838)->field_5234 |= 0x800000;
+    item = ((Ovl11TierUpgradeWork *)D_8006C838)->selectedItemId;
+    group = ((Ovl11TierUpgradeWork *)D_8006C838)->categoryItemId;
+    ((Ovl11TierUpgradeWork *)D_8006C838)->field_522C = 0;
+    ((Ovl11TierUpgradeWork *)D_8006C838)->field_5230 = 0;
+    ((Ovl11TierUpgradeWork *)D_8006C838)->flags |= 0x800000;
     row = (s16)Ovl11GetUpgradeTierForItem(item);
     price = Ovl11GetUpgradeValue(row, 1);
     switch (gOvl11InteractionStep) {
@@ -54,14 +62,14 @@ s32 ovl_11_func_8011A25C(void) {
         }
         break;
     case 15:
-        if (((Ovl11A25CState *)D_8006C838)->field_5234 & 0x10000000) {
+        if (((Ovl11TierUpgradeWork *)D_8006C838)->flags & 0x10000000) {
             Ovl11ResumeInteractionStep();
         }
         break;
     case 3:
         message = Ovl11CheckTierUpgrade();
         if (message != 0) {
-            RequestMessageWindow(2, D_801282D0[message - 1]);
+            RequestMessageWindow(2, gOvl11UpgradeFailureMessages[message - 1]);
             Ovl11SetInteractionSteps(1, 4);
         } else {
             gOvl11InteractionDrawMode = 2;
@@ -73,6 +81,7 @@ s32 ovl_11_func_8011A25C(void) {
     case 5:
         Ovl11SetInteractionSteps(6, 0);
         Ovl11UpdateCompactChoicePrompt(0, -1, 0);
+        /* Start and poll the first confirmation in the same update. */
     case 6:
         switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
         case 0:
@@ -98,6 +107,7 @@ s32 ovl_11_func_8011A25C(void) {
     case 13:
         Ovl11SetInteractionSteps(14, 0);
         Ovl11UpdateCompactChoicePrompt(0, -1, 0);
+        /* The second confirmation uses a separate prompt position. */
     case 14:
         switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
         case 0:
@@ -134,9 +144,9 @@ s32 ovl_11_func_8011A25C(void) {
     case 9:
         if (IsScreenFadeComplete() == 1) {
             Ovl11RequestAreaSelectionCommand(32, 0, 0, 0);
-            ((Ovl11A25CState *)D_8006C838)->x = 1000;
-            ((Ovl11A25CState *)D_8006C838)->z = -2800;
-            ((Ovl11A25CState *)D_8006C838)->y = 0;
+            ((Ovl11TierUpgradeWork *)D_8006C838)->x = 1000;
+            ((Ovl11TierUpgradeWork *)D_8006C838)->z = -2800;
+            ((Ovl11TierUpgradeWork *)D_8006C838)->y = 0;
             Ovl11SelectObjectStateOrDirectionCommand(3, 0, 0, 0);
             BeginScreenFadeDecrease(20, 0, 2);
             Ovl11SetInteractionSteps(8, 0);
@@ -153,7 +163,7 @@ s32 ovl_11_func_8011A25C(void) {
         Ovl11ResetObjectEventSlotCommand(4, 0, 0, 0);
         Ovl11SetInteractionSteps(7, 0);
     case 7:
-        ((Ovl11A25CState *)D_8006C838)->field_5234 &= ~0x800000;
+        ((Ovl11TierUpgradeWork *)D_8006C838)->flags &= ~0x800000;
         result = 1;
         break;
     }

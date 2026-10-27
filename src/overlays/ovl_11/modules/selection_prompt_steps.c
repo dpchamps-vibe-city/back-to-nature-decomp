@@ -303,9 +303,9 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
         case 10:
             if (IsScreenFadeComplete() == 1) {
                 Ovl11RequestAreaSelectionCommand(32, 0, 0, 0);
-                ((Ovl11A25CState *)D_8006C838)->x = 1000;
-                ((Ovl11A25CState *)D_8006C838)->z = -2800;
-                ((Ovl11A25CState *)D_8006C838)->y = 0;
+                ((Ovl11TierUpgradeWork *)D_8006C838)->x = 1000;
+                ((Ovl11TierUpgradeWork *)D_8006C838)->z = -2800;
+                ((Ovl11TierUpgradeWork *)D_8006C838)->y = 0;
                 Ovl11SelectObjectStateOrDirectionCommand(3, 0, 0, 0);
                 BeginScreenFadeDecrease(20, 0, 2);
                 Ovl11SetInteractionStepsOffset(11, 0, baseStep);

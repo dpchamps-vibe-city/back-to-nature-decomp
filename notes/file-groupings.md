@@ -4507,6 +4507,16 @@ Members:
   copies the D_8006C838 u16 at +0x44CA to +0x51F4 — joins the D_80071A00 pool
   sub-base idiom
 
+Whole-unit follow-up: CD4E4's only original call client is CD624; the private
+classifier/caller pair is supported, but it is not one contiguous configured
+interval. The independently supported sixty_step_deltas pair and indexed_progress
+service lie between them and share no private helper/table with this pair.
+The checked fold's one-contiguous-subsegment model therefore blocks combining
+just the pair. Absorbing those intervening services merely to cross the gap
+would manufacture membership. Both per-function sources remain intact; the
+limit here is noncontiguous source/link placement, not a new original boundary,
+flag conflict, or reason to split the supported pair into unrelated modules.
+
 **Reconstructed `src/overlays/ovl_11/modules/primary_object_grid_actions.c`,
 800C4A2C–800C6A24 exclusive, all sixteen entries.** Original address suffixes
 in order: 4A2C/4B6C/4C94/4DE0/4F44/4FDC/5048/5098/523C/541C/55FC/5738/
@@ -11847,7 +11857,57 @@ Members (address order):
     private state joins the pair, and the adjacent purchase_actions band uses
     the same broader update table. A two-slot slice was therefore not accepted
     as another original unit. A private protocol/table or pooled-emission
-    witness distinguishing that boundary is still needed. No code changed.
+    witness distinguishing that boundary is still needed. No code changed
+    in that earlier pair review.
+
+  **The two complete callbacks are now reconstructed as independent services,**
+  not as that unsupported pair: `modules/counter21_quantity_purchase.c`
+  (80118CE4–80119008) and `modules/a4_item_request_purchase.c`
+  (80119008–80119338). The former owns a counter-21 quantity/edit/debit/cleanup
+  state machine. It disables dispatch record 84, requests item 6C, checks the
+  existing count plus edited quantity against 999, then restores the record
+  and removes a secondary-slot 6C match on either acceptance or cancellation.
+  The latter instead snapshots the secondary tag into its private signed
+  halfword, validates held-item class, charges A4's price and waits through the
+  saved-ID A4 request handshake. That otherwise unshared scratch halfword is
+  now `gOvl11A4RequestItemId` (ovl_11:8012D51C), not a newly allocated object.
+
+  Both are complete s32(void) repeated-update operations published through
+  update-bank slots 2/3; there are no direct C clients needing a new header.
+  Names Ovl11UpdateCounter21Purchase/Ovl11UpdateA4ItemRequestPurchase preserve
+  those original overlay identities. Source docs cover initialization, shared
+  step/draw non-reentrancy, current-price/quantity prerequisites, debit and
+  cleanup timing, and intentional same-call fall-throughs. Numeric item/message
+  IDs remain numeric. Work+4506 is exactly exe:80070D3E, gSaveCounter21;
+  the existing unsigned field is now saveCounter21 in the shared view and both
+  consumers (this purchase and status_pages), with no layout/type change.
+
+  Boundaries: left 18CB0 is the generic five-write interaction reset, not a
+  purchase step and not a consumer of this count or saved tag. Between 18CE4
+  and 19008 there is no private helper/data link: count/quantity/record-84
+  restoration and saved-secondary-tag/A4 submission are different protocols.
+  Right 19338 begins purchase_actions' closed eleven-client transaction-helper
+  window; neither of these callbacks calls those transaction helpers. All
+  three cuts rest on responsibility/private-protocol distinctions and absence
+  of a positive joining witness, not flags or mechanical constraints. They
+  are evidence-limited -G0 service cuts, not proved original singleton objects;
+  the shared callback bank/global steps do not prove a larger original TU.
+
+  Both whole singleton folds passed their member and linked-overlay oracle
+  at baseline -O2/-G0. There are no member overrides and no flags, linkage,
+  ownership, storage or source-policy exceptions were added or retired.
+  Canonicalization and generated callback/data references carry the names;
+  globals_override.h holds the one canonical saved-ID extern. The interface
+  audit confirms no direct C declaration sites for either callback (zero
+  caller edits). Final `tuProgress.ts --verify --baseline
+  build/tu-campaign/baseline.json` passes every integrity gate at
+  **2328/2625 folded, 468/468 valid modules** (run entry 2321/461). All linked
+  EXE and thirteen-overlay bytes, callback pointers, switch tables and data
+  remain identical. Canonical published interfaces, generated convergence,
+  clean-source policy, whitespace, stability and exception non-growth pass;
+  no prior module regressed. Exit 1 denotes the remaining 297 campaign
+  functions, not a failed integrity check. No tooling, tests or exceptions
+  were added, and no compiler setting was changed.
 - **Reconstructed `modules/selection_record_access.c`, five entries
   8011D734–8011D9DC exclusive.** The input controller and wrapped occupied-slot
   search belong with the count/ID/message readers: all use the same ten-word
@@ -13756,6 +13816,39 @@ are unchanged. No policy exception was introduced.
   member 0x800BFD04), gates on the +0x44BA s16 (the +0x44BA/+0x44BC pair) and
   on `func_80012A34(0xA)`, then ORs 0x800000 into the s32 at +0x44F8 (new
   offset); byte-exact clean C, baseline flags
+**Independent progress-gate service reconstructed as
+`modules/progress_gate.c`, 800EFA1C–800EFABC exclusive**, now
+Ovl11TestProgressGate. The complete predicate reads flags 25/C9 and work's
+unsigned byte E642, with an optional independent flag-20 test. It has no
+private scratch, table, helper or write effect. Condition classification,
+command dispatch, pending-event selection and the five-slot counter chooser
+are distinct public clients; the preceding condition-record engine is not
+its exclusive owner. The older adjacency-only membership suggestion below
+is not evidence for extending that engine through this entry.
+
+Left EF8BC operates the selected condition/date duplicate-suppression protocol
+(+5246/+5248, +5492 and per-record keys), not E642 or these three flags.
+Right EFABC starts the closed descriptor-driven state-field accessor/arithmetic
+unit and its private descriptor table; this predicate does not use it.
+Broad shared work and public GetGameFlag calls do not establish one private
+TU across either edge. These are evidence-limited -G0 service cuts, not proven
+original-object edges and not flag-derived boundaries. The setting-sensitive
+EF8BC remains with its whole seven-member family; no supported group was cut
+to evade its override.
+
+`ovl11_progress_gate.h` publishes the exact s16/0-or-1 read-only contract and
+which test the parameter enables. Source locals now identify flag25/work,
+while retaining the two-stage E642 address and branch structure. The byte's
+units/gameplay meaning remain unspecified; no interior-global alias, storage
+claim or private linkage was added. The checked baseline fold passed both
+member and overlay; there was no member override and no setting/exception
+change. Interface reconciliation replaced seven declaration sites with the
+public header while preserving their objects. The batch all-container
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passed
+at **2326/2625 folded, 466/466 valid modules**: all EXE/13-overlay bytes and
+data/tables unchanged, every integrity gate PASS, no exception growth. Exit
+1 denotes the unfinished campaign, not a failed gate.
+
 - ovl_11_func_800EFA1C (m, matched this session) — progress-gate leaf: reads
   the u8 at +0xE642 (new offset) through the cluster's +0x8000 two-stage split
   (base+0x8000, disp +0x6642) and gates it on `func_8001AF44(0xC9)` and
@@ -28783,6 +28876,32 @@ these selected-ID tests or tables. These responsibility/protocol separations
 are evidence-limited cuts, not proven original object boundaries. The broad
 D_8006C838 work area does not establish a larger unit.
 
+The external caller 8011A25C is now the complete singleton service
+`modules/tier_upgrade_interaction.c`, `Ovl11UpdateTierUpgradePurchase`.
+It uses all four rule operations but does not own their threshold/price tables;
+its own six-message failure table is now `gOvl11UpgradeFailureMessages`
+(ovl_11:801282D0). The table is a signed six-halfword array, unchanged in
+size and layout. The shared work view is now `Ovl11TierUpgradeWork`, with
+categoryItemId, selectedItemId and flags named from the actual signed loads,
+five-tier arithmetic and mask operations; x/y/z and every field width/offset
+remain unchanged. The other position-setting user uses the same renamed view.
+
+This is a supported independent interaction service, not a proved original
+one-function object (-G0). Its left neighbor 80119DF8 runs two selection
+prompts and an item-stack transaction, with no upgrade-failure table, tier
+validation or slot-replacement protocol. Its right neighbor 8011A648 begins
+the closed draw-callback bank: it composes panels and does not advance steps
+or debit funds. Their broad interaction globals and public services do not
+establish one private TU. The distant rules are public dependencies, not
+evidence for absorbing every intervening function. No mechanical/flag limit
+forced these cuts. The callback bank at 800BB248 exposes s32(void), so its
+source documents the repeated-update contract rather than adding an unused
+header. Two confirmations, per-update price reads, slot replacement, 20-tick
+fades and area-32 raw position stores are documented without gameplay guesses.
+The checked baseline fold passed the member and overlay; no flags/exceptions
+were added or retired. Full batch verification is recorded with the independent
+purchase interactions below.
+
 Names: Ovl11CheckTierUpgrade, Ovl11GetItemTier, Ovl11GetUpgradeValue and
 Ovl11GetUpgradeTierForItem at their original overlay identities. The private
 tables are gOvl11UpgradeThresholds/Prices; globals_override.h owns their
@@ -31632,3 +31751,56 @@ preceding catalog callbacks. [Earlier evidence and limits](research/ovl_11_func_
 - ovl_11_func_801195BC (s, candidate same TU) — state-gated item/quantity purchase wrapper for variant 1.
 - ovl_11_func_8011969C (s, candidate same TU) — state-gated item/quantity purchase wrapper for variant 2.
 - ovl_11_func_8011977C (m, candidate same TU) — fixed-message item/quantity purchase wrapper using the shared record.
+
+**Independent interaction services reconstructed at 80119820–8011A648:**
+`item21_purchase_interaction.c` (19820–19AF0),
+`selected_item_request_interaction.c` (19AF0–19DF8),
+`two_stage_purchase_interaction.c` (19DF8–1A25C), and
+`tier_upgrade_interaction.c` (1A25C–1A648), under ovl_11/modules.
+Each is one complete externally dispatched state machine, not a proposed
+slice of a demonstrated private closure. The four distinct switch tables
+at BB390/BB3C8/BB400/BB4A8 and callback-table entries supply their actual
+interfaces; the bank spans many independently reconstructed services and is
+not TU-ownership evidence. All use widely shared step/draw/message state,
+but none calls another or shares private state/table/helper ownership with
+another. The four-way original-object interpretation remains unproved under
+-G0: these are evidence-limited service cuts, not newly recovered object edges.
+
+Boundaries, independently of flags: before 19820 the eleven purchase_actions
+callbacks delegate the two transaction helpers, while 19820 owns its fixed-ID
+21 prompt/debit/delivery and availability-bit protocol. Between 19820 and
+19AF0 the latter owns primary-selection request/wait rather than capacity/
+stack delivery or the availability bit. Between 19AF0 and 19DF8 the latter
+owns two selection descriptors and routes primary indices to a separate
+transaction or secondary stack purchase; it never submits the former's
+primary-object request. Between 19DF8 and 1A25C the latter uses the private
+failure-message table, tier-rule validation, replacement IDs and area/fade
+protocol, not either selection prompt. After 1A25C the draw callbacks form
+their own closed seven-entry panel-composition bank, with no transaction
+advancement. No positive private ownership/helper/table edge extends these
+services into a neighbor, and no flag or mechanical limit dictated a cut.
+
+Canonical names at the original ovl_11 identities are
+Ovl11UpdateItem21Purchase, Ovl11UpdateSelectedItemRequestPurchase,
+Ovl11UpdateTwoStageSelectionPurchase and Ovl11UpdateTierUpgradePurchase.
+Their externally linked s32(void) ABI is published by the existing interaction
+callback bank; no direct C clients require a new header. Source documentation
+records initialization, global-state non-reentrancy, current-price/selection
+requirements, completion conventions, deliberate same-call fall-throughs and
+transaction effects. In particular 19AF0 leaves work+5234 bit 800000 set even
+on completion; the other three clear it on their exit paths. Numeric item,
+message and area IDs are retained where their gameplay identity is uncertain.
+Unused SDK include bundles were removed without changing control, descriptors,
+partial initialization, storage, linkage or compiler options.
+
+Each checked fold passed its member and entire overlay at baseline -O2/-G0.
+There were no active overrides here and none were added or retired. Naming
+is carried through symbol configuration/canonicalization and regenerated
+callback/data references; the existing shared work view and signed message
+extern are reconciled in globals_override.h. The batch `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`
+passes all integrity gates: **2325/2625 folded, 465/465 valid modules**, up
+from 2321. Every EXE/13-overlay byte, callback pointer, switch table and data
+region is unchanged; configuration convergence, canonical interfaces, policy,
+whitespace, stability and exception non-growth pass. Interface reconciliation
+found no direct C declarations of these four callbacks (zero caller edits).
+Exit 1 denotes the still-incomplete TU campaign, not an integrity failure.

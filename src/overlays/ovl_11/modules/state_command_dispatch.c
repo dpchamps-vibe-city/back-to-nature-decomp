@@ -36,9 +36,9 @@
 #include "ovl11_object_sprite_animation_command.h"
 #include "ovl11_interaction_state_access.h"
 #include "ovl11_record_family_lookup.h"
+#include "ovl11_progress_gate.h"
 
 void ovl_11_func_800EF488 (s16 arg0);
-s32 ovl_11_func_800EFA1C (s16 arg0);
 void ovl_11_func_800EF6E4 ();
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
@@ -95,7 +95,7 @@ s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
             case 3: var_s3 = 0x23; break;
             case 4: var_s3 = 0x24; break;
             case 5: var_s3 = 0x25; break;
-            case -1: return ovl_11_func_800EFA1C((s16)arg3);
+            case -1: return Ovl11TestProgressGate((s16)arg3);
             }
             return GetGameFlag(var_s3);
         case 2:
@@ -134,7 +134,7 @@ s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
                 }
             }
         }
-        temp_v0 = ovl_11_func_800EFA1C(0);
+        temp_v0 = Ovl11TestProgressGate(0);
         if ((temp_v0 == 1) && (((E9State *)D_8006C838)->fC79E >= 0xC8)) {
             if (((E9State *)D_8006C838)->f44BA == temp_v0) {
                 var_s3 = 0x32;

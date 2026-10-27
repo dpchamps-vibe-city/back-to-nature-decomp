@@ -52,6 +52,7 @@
 #include "ovl11_record_pair_slot_output.h"
 #include "ovl11_interaction_state_access.h"
 #include "ovl11_record_family_lookup.h"
+#include "ovl11_progress_gate.h"
 
 typedef struct {
     s16 unk0;
@@ -112,7 +113,6 @@ s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);
-s32 ovl_11_func_800EFA1C (s16 arg0);
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
 s32 ovl_11_func_801165C8 (void);

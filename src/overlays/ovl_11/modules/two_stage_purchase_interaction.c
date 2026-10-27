@@ -1,15 +1,25 @@
+/* Two-stage selection purchase callback (ovl_11:80119DF8).
+ *
+ * Interaction-table s32(void) interface: call once per update, returning 0
+ * while pending and 1 on exit. Requires resident ovl_11, initialized messages/
+ * rendering and valid primary/secondary selection records. Global interaction
+ * steps and draw mode make it non-reentrant; selections must remain stable.
+ *
+ * Primary indices 1..4 delegate the selected-item transaction. Index 5 opens
+ * secondary selection only when shared flags 1C0000 permit it; index 0 reports
+ * rejection. Secondary acceptance checks capacity then balance, debits its
+ * current price, inserts one item and refreshes progress and selection state.
+ * Cancellation returns to the primary menu or exits according to prompt phase.
+ * Each call clears work+522C/+5230 and sets +5234 bit 800000; exit clears it.
+ * Descriptors retain their by-value ABI, partial initialization and store order.
+ * Callback-table entry is the public interface, not a new direct-call header.
+ * Membership/boundaries: notes/file-groupings.md.
+ */
+
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
 #include "ovl11_interaction_steps.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
-#include "psyq/libgpu.h"
-#include "psyq/libcd.h"
-#include "psyq/libetc.h"
-#include "psyq/memory.h"
-#include "psyq/abs.h"
-#include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_selection_record_access.h"
@@ -19,7 +29,7 @@
 
 s32 ovl_11_func_8011B2B0(void);
 
-s32 ovl_11_func_80119DF8(void) {
+s32 Ovl11UpdateTwoStageSelectionPurchase(void) {
     Ovl11D8012D7B8 first;
     Ovl11D8012D7B8 second;
     s32 result;
@@ -59,6 +69,7 @@ s32 ovl_11_func_80119DF8(void) {
         first.unk4 = -1;
         first.unk6 = 0xB5;
         Ovl11SetInteractionSteps(6, 0);
+        /* Retry the first prompt without a one-update gap. */
     case 6:
     case 7:
     case 8:
@@ -131,6 +142,7 @@ s32 ovl_11_func_80119DF8(void) {
             break;
         }
         break;
+    /* The descriptor's leading pointer is the selection-record argument. */
     case 20:
     case 21:
     case 22:
