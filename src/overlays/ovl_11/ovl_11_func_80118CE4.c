@@ -6,9 +6,9 @@
 #include "ovl11_balance_accounting.h"
 #include "ovl11_quantity_input.h"
 #include "ovl11_item_slot_commands.h"
+#include "ovl11_dispatch_record_enable.h"
 
 void SetVal8005E2BC(s32 arg0);
-void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 
 s32 ovl_11_func_80118CE4(void) {
     s32 result;
@@ -20,7 +20,7 @@ s32 ovl_11_func_80118CE4(void) {
     switch (gOvl11InteractionStep) {
     case 0:
         Ovl11SetInteractionSteps(9, 0);
-        ovl_11_func_800F45A4(0x84, 0);
+        Ovl11SetDispatchRecordEnabled(0x84, 0);
         break;
     case 9:
     case 10:
@@ -91,7 +91,7 @@ s32 ovl_11_func_80118CE4(void) {
         Ovl11AddSaveCounter21(1, (u16)gOvl11QuantityPrompt.unk8);
         Ovl11AdjustSpendableBalance(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
     case 7:
-        ovl_11_func_800F45A4(0x84, 1);
+        Ovl11SetDispatchRecordEnabled(0x84, 1);
         Ovl11MatchItemSlotsCommand(0x6C, 1, 0, 1);
         Ovl11SetInteractionSteps(8, 0);
         break;

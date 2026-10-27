@@ -8,9 +8,9 @@
 #include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_slot_commands.h"
+#include "ovl11_dispatch_record_enable.h"
 
 void SetVal8005E2BC(s32 arg0);
-void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 
 s32 ovl_11_func_80119820(void) {
     s32 result;
@@ -76,7 +76,7 @@ s32 ovl_11_func_80119820(void) {
         }
         break;
     case 6:
-        ovl_11_func_800F45A4(0x21, 0);
+        Ovl11SetDispatchRecordEnabled(0x21, 0);
         Ovl11AdjustSpendableBalance(-price, 1);
         Ovl11InsertHeldGridOrOverflowItem(0x21, 0, 1, 1);
         ((struct Ovl11CallbackGateState *)D_8006C838)->status |= 0x200000;

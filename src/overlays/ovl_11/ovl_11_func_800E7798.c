@@ -7,9 +7,9 @@
 #include "ovl11_condition_evaluation.h"
 #include "ovl11_object_event_slot_flags_command.h"
 #include "ovl11_clock_advance_command.h"
+#include "ovl11_flag_group_command.h"
 
 
-u16 ovl_11_func_800EAF5C (s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 Ovl11QueueConditionResultAnySlot (s32 arg0, s32 arg1);
 
 struct struct_8006C838_800E7798 {
@@ -46,7 +46,7 @@ s32 ovl_11_func_800E7798(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (var_v0 != 0) {
         Ovl11ClearObjectEventSlotFlags(0x2A, 2, 0, 0);
     }
-    ovl_11_func_800EAF5C(2, arg3 & 1, 0, 0);
+    Ovl11SetFlagGroupMode(2, arg3 & 1, 0, 0);
     if (arg2 != 0) {
         ((struct struct_8006C838_800E7798 *)D_8006C838)->field_4450 |= 8;
     }

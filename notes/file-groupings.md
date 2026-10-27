@@ -13710,6 +13710,77 @@ Members (address order):
 
 ## `ovl_11` 0x800E6AB0–0x800E6DFC var/return state run (confidence: low)
 
+**Reconstructed `modules/cd_audio_command.c`, E6AB0–E6B18 exclusive:**
+`Ovl11CdAudioCommand` is the message-window-gated CD/XA command adapter.
+The direct scene caller EC52C requests track 3 and later polls the same
+adapter; the object-command table supplies the same four-word operand ABI.
+The formerly absent fourth, unread operand is now explicit, matching those
+calls; the signed-low-halfword track conversion is retained rather than
+silently narrowing the public word parameter. The header documents the
+non-obvious active-message-window success bypass, request-versus-poll result,
+unchecked track and separate playback polling requirement. All state remains
+external and no linkage or ownership was inferred from the move.
+
+This is a singleton service, not a slice of an established six-member TU.
+Left state-field access uses the far-work flag/slot protocol rather than
+CD/XA playback; right E6B18 begins the separate sound-bank/sequence/fade
+closure described below. Neither neighbor uses this CD handshake, calls this
+adapter or owns its state; common command-table membership and the widely
+shared message-window phase do not establish a wider source file. These are
+evidence-limited service cuts under -G0, not proven original object edges.
+The checked baseline fold preserved the function and complete overlay. No
+compiler setting or source-policy exception was added or retired.
+
+Batch acceptance for cd_audio_command, message_window_gate_command,
+scene_mode_query and dispatch_record_enable: `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` reports **2295/2625 folded,
+436/436 valid modules**, up from 2291/432. All eight integrity gates PASS:
+original inventory, decompilation completeness, source policy, complete
+linked EXE/13-overlay bytes (including data and callback/table placement),
+config convergence, whitespace, stable inputs and exception non-growth.
+Canonical names are clean; interfaceAudit published the CD header to EC52C
+and the enable header to all three caller units with unchanged objects.
+No new published-interface conflict, implicit declaration or obsolete alias
+was introduced. Existing unrelated unpublished conflicts remain outside
+this batch. Exit 1 means eligible functions remain, not a failed gate.
+
+**Reconstructed `modules/message_window_gate_command.c`, E6DFC–E6EAC
+exclusive:** `Ovl11MessageWindowGateCommand` sets game flag 3, or waits for
+the message window to become idle before clearing it, and optionally calls
+the independent EAF5C mode service. `ovl11_message_window_gate_command.h`
+documents the exact release/result protocol, the -1/2 mode overrides, and
+the fact that this does not itself close the window. The opcode table at
+800B97CC is its public client; the table's four-operand ABI now has explicit
+ignored trailing operands. Parameters and locals name the implemented gate
+and mode request without assigning gameplay meanings to flag 3 or mode 2.
+No state, storage, callee contract or linkage was changed.
+
+Left E6D2C ends the separate sound-bank/fade closure and does not use this
+game flag/mode protocol. Right E6EAC begins the item-slot command closure,
+which neither calls this gate nor uses its flag/mode service. EAF5C is a
+public mode service also called from unrelated command paths, not an exclusive
+helper that joins all intervening commands. These are evidence-limited -G0
+service edges, not proven historical object boundaries; adjacency in the
+public opcode table alone is not a wider-TU witness. The complete singleton
+fold passed baseline and the linked overlay; no setting/exception changed.
+
+**Reconstructed `modules/flag_group_command.c`, EAF5C–EB010 exclusive:**
+`Ovl11SetFlagGroupMode` is the independently used flag-combination service
+called by the message gate, object_load_context and E7798. It assigns exactly
+flags 4/5/B0: mode 0 selects 0/1/1, mode 1 selects 1/0/0, all others select
+0/0/0, and always returns u16 1. `ovl11_flag_group_command.h` publishes that
+unchanged four-operand ABI and leaves gameplay meaning unspecified. The three
+caller units now use the header; neither their return interpretation nor the
+callee's widths, switch, calls, storage or linkage was changed.
+
+Left EAE24 operates the 22/23 record animation protocol, without these flags;
+right ten_record_template_sequence begins EB010 and owns a distinct ID/
+position template. Neither supplies a private helper or state link to this
+flag service. The message gate is a remote client, not evidence for absorbing
+all intervening commands. These are evidence-limited -G0 service cuts, not
+proven original object boundaries. The checked baseline fold preserved this
+entry and the full overlay; no override/exception was added or retired.
+
 **Reconstructed `modules/scene_sound_commands.c`, the four-entry
 E6B18–E6DFC exclusive controller/helper closure.** Ovl11RequestSceneSoundBank
 calls all three adjacent entries: Ovl11StartSceneSoundSequence,
@@ -17309,7 +17380,47 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   Zero-gap link-order successor of the now-matched
   `ovl_11_func_800EC354` (0x800EC354 + 0x13C), so that edge is
   matched-to-matched.
-- ovl_11_func_800EC52C (m, candidate same TU; [evidence](research/ovl_11_func_800EC52C-grouping.md)) — score-based actor selector and scene sequencer using the shared state slots and accessor-helper cluster.
+- **Reconstructed `modules/scored_scene_sequence.c`, EC52C–ED4A8
+  exclusive**, as `Ovl11StepScoredSceneSequence`. The entire admission,
+  randomized selection, staging, message/movement/audio/fade phase machine
+  and its switch-table block (1DE8–1F90) form one operation. The two five-by-five
+  tables are now gOvl11SceneSequenceBaseScores (B9BD4, signed halfwords) and
+  gOvl11SceneSequenceRandomRanges (1249B8, unsigned halfwords), each retaining
+  its 0x34-byte original span, including two alignment bytes. Their existing
+  override-header types and raw-container ownership are unchanged: naming
+  does not turn the preceding generic score data into emitted C storage.
+  No neighboring command uses these tables or the sequencer's slot phases.
+
+  The four operands now name phaseSlot, itemIdSlot, itemValueSlot and
+  selectedRecordSlot; locals describe phase, nextPhase and scoreRow. The
+  public opcode interface documents the signed-low-halfword phase read/full-
+  word write, -1 entity initialization, phase-0 early return without advance,
+  upper-only score-row clamp, candidate-1 missing assignment, phase-13 skip,
+  and NEW-phase-20/28 return checkpoints. Position/animation call order and
+  the per-call aggregate copy are preserved. Obsolete m2c SDK includes and
+  indentation noise are removed; no state, numeric type, linkage or control
+  construction was changed.
+
+  Left layout_state_slot_output ends at EC52C and exports four layout words;
+  right state_field_broadcast_command begins ED4A8 and implements its public
+  flagged-record loop. The sequencer calls the broadcast service once but
+  does not share a private helper, table or phase state with either neighbor.
+  General value slots and engine services are not wider-TU evidence. These
+  are conservative -G0 responsibility/table cuts, not original-object proofs.
+  The checked baseline fold preserved this complete entry, pooled switch
+  tables and linked overlay. No override or exception applies or changed.
+  Final batch acceptance, including flag_group_command and the preceding
+  four service modules: `tuProgress.ts --verify --baseline
+  build/tu-campaign/baseline.json` reports **2297/2625 folded, 438/438 valid
+  modules** (2291/432 at entry). All eight integrity gates PASS, including
+  complete EXE/13-overlay bytes, associated data/tables/callback placement,
+  canonical interfaces, source policy, configuration convergence and exception
+  non-growth. The score declarations were reconciled in the hand-maintained
+  override header; no obsolete data aliases or hand-edited generated headers
+  remain.
+  Existing unrelated unpublished interface debt was not changed. Exit 1
+  denotes the 328 remaining eligible functions, not a gate failure.
+  Historical candidate: [EC52C](research/ovl_11_func_800EC52C-grouping.md).
 - ovl_11_func_800EC064 (m, candidate same TU; [evidence](research/ovl_11_func_800EC064-grouping.md)) — optionally slot-resolved object flag/sub-state dispatcher.
 - ovl_11_func_800EC304 (m) — forwards two `D_80129560` values and a mutable table-slot pointer to `ovl_11_func_800F07EC`; zero-gap predecessor of family member 800EC354.
 - **Reconstructed `modules/record_pair_slot_output.c`, 800EC354–800EC490
@@ -25388,6 +25499,27 @@ Its source comment records the necessary construction, not a flag workaround.
 
 ## `ovl_11` 0x800F5700 entry-lookup callers — 0x800F45A4 / 0x800F5404 / 0x800F5698 / 0x800F5700 (confidence: medium)
 
+**Reconstructed `modules/dispatch_record_enable.c`, F45A4–F4618 exclusive:**
+`Ovl11SetDispatchRecordEnabled` is the public kind-based enable operation for
+the thirteen-record list at shared work +DDB4. The purchase and interaction
+clients pass a catalog kind and explicit 0/1 enable value; the implementation
+preserves all flag bits except bit 0, and treats every value other than 1 as
+clear. Its header documents first-match/no-match behavior, signed-halfword
+kind, exact list/stride, and initialized-list requirement. The existing
+Ovl11DispatchRecord type and shared lookup header are reused, not duplicated.
+Locals now name their work/upper-work/record roles. No storage or linkage
+changed, and the general lookup's other clients remain independent.
+
+Left spawn_record_access ends with F44B4's fixed spawn-record read, using a
+different source/record protocol rather than this thirteen-record list.
+Right F4618 synchronizes two record-pair slots through its exclusive F501C
+helper; it neither looks up this list by kind nor uses this setter. The
+remote refresh unit owns the general lookup/coordinate-rule closure, not all
+of its public list clients or all intervening code. These responsibility/
+list boundaries are evidence-limited -G0 cuts, not original-object proofs.
+The complete singleton fold passed baseline and the linked overlay, with
+no compiler setting or policy-exception change.
+
 **Reconstructed `modules/record_pool_refresh.c`, 800F5404–800F581C
 exclusive, four compiled entries through 800F5740.** The orchestrator calls
 the adjacent keyed flag writer eleven times and is the only caller of both
@@ -29818,6 +29950,23 @@ applies or changes. Canonical naming preserves the overlay/address identity;
 interfaceAudit publishes the header to all three caller units without
 changing their objects. Full batch acceptance is recorded in the
 condition_value_queries section (2250/2625 folded, all integrity gates PASS).
+
+**Reconstructed `modules/scene_mode_query.c`, E8BF0–E8C14 exclusive:**
+`Ovl11IsSceneMode3` publishes the read-only predicate in
+`ovl11_scene_mode_query.h`. Its public opcode-table entry is at 800B983C;
+the implementation compares exactly the shared far-work mode word +254A0
+with 3. The meaning of that mode is deliberately unspecified. The existing
+word access and external work-area ownership remain; no new interior global,
+private linkage or type reinterpretation was introduced.
+
+Left entity_pool_access implements the disjoint 24-byte entity pool. Right
+E8C14 (Ovl11StoreItemPropertyCode) maps an item property to a value slot and
+does not read this mode word. Neither calls the predicate or supplies a
+private state/helper/table witness across an edge. Other +254A0 writers are
+public scene-mode clients spread across the overlay, not grounds for merging
+the intervening code. Thus this is an evidence-limited singleton service,
+not a GP-proven original TU. The checked fold preserved the predicate and
+complete overlay under baseline settings; no override or exception applies.
 
 **Reconstructed module: `src/overlays/ovl_11/modules/entity_pool_access.c`**
 (800E8960..800E8BF0, four compiled entries). The whole specialized accessor

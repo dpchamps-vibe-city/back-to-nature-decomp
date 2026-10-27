@@ -1,5 +1,15 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+Ovl11CdAudioCommand = 0x800E6AB0; // type:func
+Ovl11MessageWindowGateCommand = 0x800E6DFC; // type:func
+Ovl11IsSceneMode3 = 0x800E8BF0; // type:func
+Ovl11SetDispatchRecordEnabled = 0x800F45A4; // type:func
+Ovl11SetFlagGroupMode = 0x800EAF5C; // type:func
+Ovl11StepScoredSceneSequence = 0x800EC52C; // type:func
+// Five-by-five score tables with their original two-byte alignment tails.
+gOvl11SceneSequenceBaseScores = 0x800B9BD4; // type:data size:0x34
+gOvl11SceneSequenceRandomRanges = 0x801249B8; // type:data size:0x34
+
 Ovl11DispatchStateCommand = 0x800E9D28; // type:func
 Ovl11RequestAreaSelectionCommand = 0x800E5E98; // type:func
 Ovl11SetSceneModeCommand = 0x800E7954; // type:func

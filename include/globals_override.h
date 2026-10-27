@@ -3897,8 +3897,8 @@ extern struct Ovl11ColorTriple gOvl11ColorFlashBaseRGB;
 struct Ovl11SceneScores {
     s16 values[5][5];
 };
-extern struct Ovl11SceneScores D_800B9BD4;
-extern u16 D_801249B8[5][5];
+extern struct Ovl11SceneScores gOvl11SceneSequenceBaseScores;
+extern u16 gOvl11SceneSequenceRandomRanges[5][5];
 /* 800EC52C writes this word to 1000 before starting the item operation. */
 extern s32 D_80070CB4;
 /* 800EC52C uses signed word coordinates and a signed halfword at +44B8. */

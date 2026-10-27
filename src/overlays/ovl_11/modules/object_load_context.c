@@ -14,8 +14,8 @@
 #include "ovl11_camera_position_control.h"
 #include "ovl11_object_load_context.h"
 #include "ovl11_camera_record_selection.h"
+#include "ovl11_flag_group_command.h"
 
-u16 ovl_11_func_800EAF5C(s16 mode, s32 unused1, s32 unused2, s32 unused3);
 void ovl_11_func_8010941C(s32 mode);
 
 void Ovl11EnterObjectLoadContext(void) {
@@ -27,7 +27,7 @@ void Ovl11EnterObjectLoadContext(void) {
     }
     if (!(((u16 *) ((struct Ovl11SpriteWork *) &D_8007AFF0)->header)[4] & 0x1000)) {
         if ((u32) (((struct Ovl11ObjectLoadEntryView *) D_8006C838)->currentObject[1] - 0x15F) >= 0x32U) {
-            ovl_11_func_800EAF5C(0, 0, 0, 0);
+            Ovl11SetFlagGroupMode(0, 0, 0, 0);
         }
     }
     Ovl11ResetTimedSpriteEffect(gObjectWorkTimedSpriteEffect);
