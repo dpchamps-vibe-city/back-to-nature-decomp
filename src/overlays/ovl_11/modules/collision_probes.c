@@ -428,7 +428,7 @@ after_actor:
     }
     if (queryMask & 0x800) {
         query.field_18 = 0x2800;
-        entry = (u16 *) D_80075BC4_reset;
+        entry = (u16 *) gStateObjectPoolBytes;
         for (i = 0; i < 6U; i++, entry += 0x58) {
             if (*entry && Ovl11ProbePlacedRecord((s32 **) &query, entry)) {
                 return 1;

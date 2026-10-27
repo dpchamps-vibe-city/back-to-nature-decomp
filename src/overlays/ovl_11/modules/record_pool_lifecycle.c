@@ -61,7 +61,7 @@ void Ovl11ResetRecordPools(void) {
     for (index = 98; index >= 0; index--) {
         ((struct Ovl11PoolResetView *) D_8006C838)->cells_901C[index][0] = 0;
     }
-    memset(D_80075BC4_reset, 0, 0x420);
+    memset(gStateObjectPoolBytes, 0, 0x420);
     for (index = 0; index < 6; index++) {
         slotRecord = (struct Ovl11PoolResetView *) ((u8 *) D_8006C838 + index * 0xB0);
         slotRecord->records_938C[0].type = 0;
@@ -123,7 +123,7 @@ void Ovl11RunRecordPoolFirstPass(void) {
             }
         }
         for (index = 0; index < 6; index++) {
-            record = (u16 *) (D_80075BC4_reset + index * 0xB0);
+            record = (u16 *) (gStateObjectPoolBytes + index * 0xB0);
             Ovl11ApplyTaggedRecordValueAdjustment(record);
         }
     }

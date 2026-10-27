@@ -32,10 +32,10 @@
 #include "ovl11_object_action_input.h"
 #include "ovl11_primary_object_action_phase.h"
 #include "ovl11_scene_header_key.h"
+#include "ovl11_primary_object_input_override.h"
 
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
-void ovl_11_func_800CD6F4 (void *arg0);
 s32 ovl_11_func_800CE654(void);
 void Ovl11RemapPrimaryDirectionButtons(void);
 
@@ -94,7 +94,7 @@ block_22:
             if (!(obj->flags & 0x20000000)) {
                 switch ((u32)obj->flags & 0x800010) {
                 case 0x800000:
-                    ovl_11_func_800CD6F4(obj);
+                    Ovl11ApplyPrimaryObjectInputOverride(obj);
                     if (Ovl11DispatchPrimaryObjectAction() != 0) {
                         D_80128C64 = 0;
                     }
@@ -112,7 +112,7 @@ block_22:
                     Ovl11UpdateHeldSelectionAction((Ovl11SelectionObject *)obj);
                     return;
                 case 0:
-                    ovl_11_func_800CD6F4(obj);
+                    Ovl11ApplyPrimaryObjectInputOverride(obj);
                     D_80128CB0 = Ovl11DispatchPrimaryObjectAction();
                     if (D_80128CB0 != 0) {
                         D_80128C64 = 0;

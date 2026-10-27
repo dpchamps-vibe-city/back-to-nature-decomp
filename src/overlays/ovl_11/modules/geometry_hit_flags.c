@@ -6,13 +6,17 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_geometry_hit_flags.h"
-
-s32 GetVal8005E524(void);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "surface_collision.h"
 
 s32 Ovl11GetGeometryHitHighBit(void) {
     u8 *hit;
 
-    hit = (u8 *)GetVal8005E524();
+    hit = (u8 *)GetSurfaceHitPolygonAddress();
     return ((u32)hit[0]) >> 7;
 }
 
@@ -21,7 +25,7 @@ s32 Ovl11ClassifyGeometryHit(void) {
     u32 v;
     u32 r;
 
-    p = GetVal8005E524();
+    p = GetSurfaceHitPolygonAddress();
     if (p == 0) {
         return 0;
     }
@@ -68,7 +72,7 @@ unsigned long long Ovl11CacheGeometryHit(void) {
     u32 low;
     unsigned long long result;
 
-    p = GetVal8005E524();
+    p = GetSurfaceHitPolygonAddress();
     gOvl11CachedGeometryHit = p;
     if (p == 0) {
         return status_result(1);

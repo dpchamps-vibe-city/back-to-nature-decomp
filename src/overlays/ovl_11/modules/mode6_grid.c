@@ -15,9 +15,9 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-
-/* Last polygon-query record, returned through the original word ABI. */
-s32 GetVal8005E524(void);
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "surface_collision.h"
 
 s32 Ovl11BuildMode6SurfaceGrid(s32 resume) {
     s32 *entry;
@@ -37,7 +37,7 @@ s32 Ovl11BuildMode6SurfaceGrid(s32 resume) {
         for (gOvl11Mode6GridScanColumn = 0; gOvl11Mode6GridScanColumn < 7;) {
             grid = (s32 **)(base + 0x3608);
             Ovl11ResolveSurfaceHeight(gOvl11Mode6GridProbePosition, 0xC000);
-            entry = (s32 *)GetVal8005E524();
+            entry = (s32 *)GetSurfaceHitPolygonAddress();
             if (*entry & 8) {
                 cell = grid;
                 cell += gOvl11Mode6GridScanRow * 45 + gOvl11Mode6GridScanColumn;

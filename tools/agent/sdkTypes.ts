@@ -20,6 +20,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join, relative } from "node:path";
 import { emptyDeclarationIndex, indexDeclarations, projectDeclarations } from "./declarationContext.js";
+import { sourceFacts } from "../lib/translationUnitAudit.js";
 import { parseC, walk, children, namedChildren, field, isTrivia, subtreeIsBroken, type Node } from "./residual-source-search/tree-sitter-c.js";
 
 /**
@@ -215,7 +216,7 @@ export function declaredFunction(declarator: Node): Node | undefined {
 }
 
 /** Build a prototype from a declaration's type and declarator nodes. */
-function signatureFrom(returnType: Node, declarator: Node): ExtractedSignature | undefined {
+function signatureFrom(returnType: Node, declarator: Node, publishedName?: string): ExtractedSignature | undefined {
   /* Brokenness is checked on the declaration alone, never on a whole function
    * definition. Bodies legitimately carry constructs the grammar rejects —
    * `register s32 x asm("$16")` pinning, for one — and the signature is fully
@@ -235,8 +236,9 @@ function signatureFrom(returnType: Node, declarator: Node): ExtractedSignature |
   const owner = returnType.parent;
   const prefix = owner ? children(owner).filter((n) => n.endIndex <= declarator.startIndex &&
     n.type !== "storage_class_specifier" && !isTrivia(n)).map(flatten).join(" ") : flatten(returnType);
-  const rendered = flatten(declarator).replace(new RegExp(`\\b${nameNode.text}\\s+\\(`), `${nameNode.text}(`);
-  return { name: nameNode.text, signature: `${prefix} ${rendered};` };
+  const name = publishedName ?? nameNode.text;
+  const rendered = flatten(declarator).replace(new RegExp(`\\b${nameNode.text}\\s*\\(`), `${name}(`);
+  return { name, signature: `${prefix} ${rendered};` };
 }
 
 /**
@@ -258,15 +260,18 @@ export function extractSignaturesFromSource(source: string): ExtractedSignature[
     return found;
   }
 
+  /* Nested helpers are original binary members too. Reuse the source audit's
+   * AST identities, including an auto declaration's assembler symbol label,
+   * rather than publishing a local C spelling such as testTriangle. */
+  const definitions = new Map(sourceFacts(source).definitions.map((definition) => [definition.startIndex, definition.name]));
   walk(tree.rootNode, (node) => {
     if (node.type !== "function_definition") return true;
     const returnType = field(node, "type");
     const declarator = field(node, "declarator");
-    if (!returnType || !declarator) return false;
-    const extracted = signatureFrom(returnType, declarator);
+    if (!returnType || !declarator) return true;
+    const extracted = signatureFrom(returnType, declarator, definitions.get(node.startIndex));
     if (extracted) found.push(extracted);
-    /* Do not descend: a nested definition is not valid C89 here. */
-    return false;
+    return true;
   });
 
   tree.delete();

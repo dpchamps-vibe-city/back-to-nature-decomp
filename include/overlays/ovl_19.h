@@ -44,6 +44,7 @@ void Ovl19DrawProjectedSpriteState(s32 orderingTable, ObjectState *sprite, s16 *
 void Ovl19DrawSceneGeometry(void);
 void Ovl19DrawUiAnimation9(void);
 void Ovl19DrawValueTable(void);
+void Ovl19DrawValueTableSpriteState(s32 animation, s32 frame);
 void Ovl19FinishSceneExit(void);
 s32 Ovl19GetValueLabelOffset(s16 arg0);
 void Ovl19InitActorPair(void);

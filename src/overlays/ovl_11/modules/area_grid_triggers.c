@@ -22,6 +22,11 @@
 #include "random.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_surface_height.h"
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "surface_collision.h"
+#include "ovl11_primary_object_input_override.h"
 
 void Ovl11ResetAreaGridState(void) {
     u8 *b;
@@ -102,9 +107,6 @@ s32 Ovl11LatchAreaGridTrigger(s32 currentPlane, s32 plane, s16 column, s16 row) 
     return 0;
 }
 
-/* Overlay alias of the matched word-returning GetVal8005E524. */
-s32 GetVal8005E524(void);
-
 s32 Ovl11BuildAreaGrid(s32 resumeWord) {
     s32 *entry;
     u8 *base;
@@ -125,7 +127,7 @@ s32 Ovl11BuildAreaGrid(s32 resumeWord) {
         for (gOvl11AreaGridScanColumn = 0; gOvl11AreaGridScanColumn < 10;) {
             grid = (s32 **)(base + 0x3608);
             Ovl11ResolveSurfaceHeight(gOvl11AreaGridProbePosition, 0xC000);
-            entry = (s32 *)GetVal8005E524();
+            entry = (s32 *)GetSurfaceHitPolygonAddress();
             if (*entry & 8) {
                 cell = grid;
                 cell += gOvl11AreaGridScanRow * 45 + gOvl11AreaGridScanColumn;
@@ -326,7 +328,6 @@ s32 Ovl11AreaGridCellFromPosition(s32 *position, u16 *column, u16 *row) {
 }
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-void ovl_11_func_800CD670(s16 arg0);
 void Ovl11UpdateAreaGridTrigger(void) {
     Ovl11TriggerWorkView *work;
     s16 mode;
@@ -373,7 +374,7 @@ void Ovl11UpdateAreaGridTrigger(void) {
             ((struct struct_8006C838_view *)D_8006C838)->field_0C &= ~0x10000000;
             ((struct struct_8006C838_view *)D_8006C838)->field_0C &= ~0x08000000;
             SetGameFlag(3, 0);
-            ovl_11_func_800CD670(0xA);
+            Ovl11BeginPrimaryObjectInputOverride(0xA);
         }
     }
 }

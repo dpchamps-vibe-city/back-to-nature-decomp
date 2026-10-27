@@ -22,10 +22,10 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_event_schedule.h"
+#include "ovl11_action_minute_counter.h"
 
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800DE4C0(void);
-void ovl_11_func_800CA6C4(void *arg0);
 void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 
@@ -210,7 +210,7 @@ void Ovl11TickClock(void) {
             CLOCK_STATE->elapsed++;
             CLOCK_STATE->flags |= 0x100000;
             if (gOvl11ClockAdvanceActive == 0) {
-                ovl_11_func_800CA6C4((u8 *)D_8006C838 + 0x51C8);
+                Ovl11UpdateActionMinuteCounter((u8 *)D_8006C838 + 0x51C8);
             }
             CLOCK_STATE->flags &= 0xFDFFFFFF;
             if (time->minute >= 60) {

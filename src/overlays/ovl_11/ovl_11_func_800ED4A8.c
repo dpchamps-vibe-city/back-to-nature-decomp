@@ -53,6 +53,8 @@
 #include "ovl11_balance_accounting.h"
 #include "ovl11_scene_header_key.h"
 #include "ovl11_seasonal_record_ids.h"
+#include "surface_collision.h"
+#include "ovl11_primary_object_input_override.h"
 
 typedef struct {
                s16 field_0;
@@ -173,11 +175,7 @@ int MoveImage2 (RECT *rect, int x, int y);
 int csin (int a);
 void SetPadActuatorSequenceAddress (s32 arg0, s32 arg1);
 void ResetPadActuatorSequence (s32 arg0);
-void SetVal8005E2E8 (s32 arg0);
-s32 func_8001E38C (void);
 void Ovl11RemapPrimaryDirectionButtons (void);
-void ovl_11_func_800CD6F4 (void *arg0);
-s32 GetVal8005E524 (void);
 void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800CCF14 (M2C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);

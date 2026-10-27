@@ -2,7 +2,6 @@
 #include "game_types.h"
 #include "ovl11_object_record_clear.h"
 
-extern UnkStruct80075BC4 D_80075BC4[6];
 
 void ovl_11_func_800CF36C(s32 arg0) {
     UnkStruct80075BC4 *ptr;
@@ -11,7 +10,7 @@ void ovl_11_func_800CF36C(s32 arg0) {
     s32 i;
     s32 flagMask;
 
-    ptr = D_80075BC4;
+    ptr = gStateObjectPool;
     mask = 0x20000;
     base = (char *)&D_8006C838;
     i = 5;

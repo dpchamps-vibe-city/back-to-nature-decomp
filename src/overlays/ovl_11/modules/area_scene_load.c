@@ -62,6 +62,7 @@
 #include "ovl11_options_menu.h"
 #include "ovl11_spawn_record_access.h"
 #include "ovl11_held_item_replacement.h"
+#include "surface_collision.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
@@ -401,7 +402,6 @@ void Ovl11LoadAreaScene(void) {
     Ovl11ApplyWorkSettings();
 }
 
-void func_8001E340(Ovl11SceneGrid **arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
 
@@ -416,7 +416,7 @@ void Ovl11InstallAreaScene(void) {
     ((Ovl11FarInitView *)&D_8007AFF0)->field_2548C = 0;
     InitProjectedPrimitiveSource(gOvl11SceneGeometry, (u8 *)D_8007AFF0 + 0x2000);
     Ovl11SetCoordinateClamp(&gLoadedAreaClampFirstCorner, &gLoadedAreaClampSecondCorner);
-    func_8001E340((Ovl11SceneGrid **)gOvl11SceneGeometry);
+    EnableSurfaceCells((Ovl11SceneGrid **)gOvl11SceneGeometry);
     Ovl11InitVramAnimationSlots();
     Ovl11ResetVertexBlendPool();
     Ovl11ClearSceneRecords();

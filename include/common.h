@@ -36,7 +36,9 @@ typedef volatile signed int vs32;
  * -> save/forward (func_8001E9F8), whose stores survive and whose $v0 stays
  * reserved for the rest of the TU. The original static-chain sites are GNU
  * nested-function codegen; these declarations emulate their separate-file
- * layout, not the historical spelling. Other proven post-call captures
+ * layout, not the historical spelling. surface_collision now restores both
+ * actual nested definitions and no longer uses these two emulations.
+ * Other proven post-call captures
  * still use the block-scope form. The byte-only census and prep injector
  * are tools/diagnostics/nestedFunctionScan.ts and
  * tools/agent/staticChainInjection.ts; use no sub-form without its proof. */

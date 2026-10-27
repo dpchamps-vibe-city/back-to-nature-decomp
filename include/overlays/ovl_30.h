@@ -33,6 +33,7 @@ void Ovl30ResetDebugMenu(void);
 void Ovl30StepDebugSetting(void);
 void Ovl30StepFieldValue(u8 *value, s32 width, s32 upper, s32 lower, s32 delta);
 s32 Ovl30StepSelectedValue(s32 value);
+void Ovl30TransferDebugDisplay(s32 restore);
 s32 Ovl30UpdateDebugFlagsAndSound(s32 state);
 void Ovl30UpdateDebugMenu(void);
 s32 Ovl30WriteDebugFlagBit(s32 bitIndex, s32 value);

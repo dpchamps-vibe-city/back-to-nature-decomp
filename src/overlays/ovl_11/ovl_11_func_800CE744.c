@@ -28,6 +28,7 @@
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_shared_animation_icon.h"
 #include "ovl11_object_id_state.h"
+#include "ovl11_object_record_lifecycle.h"
 
 typedef struct {
                s16 unk0;
@@ -147,7 +148,6 @@ int CdPosToInt (CdlLOC *p);
 void SsSetSerialVol (char, short, short);
 void SystemError (char, long);
 s16 *ovl_11_func_800E1F9C (s32 arg0, s32 arg1, s32 arg2);
-Ovl11ObjectInitRecord *ovl_11_func_800D2F48 (s32 arg0);
 struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
 u16 *ovl_11_func_8010B1C4 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
@@ -162,7 +162,6 @@ void ovl_11_func_800E2904 (s32 arg0);
 void ovl_11_func_800E0450 (s32 arg0);
 s32 ovl_11_func_800E276C (s16 *arg0);
 void ovl_11_func_800E1F70 (s32 arg0);
-void ovl_11_func_800D2F1C (s32 arg0);
 void ovl_11_func_800D266C (M2C_d59586abe320_Ov11D266CFields *arg0, u16 *arg1, s32 arg2);
 void ovl_11_func_80108CA4 (s32 arg0);
 void ovl_11_func_8010B198 (s32 arg0);
@@ -243,7 +242,7 @@ u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1) {
     case 0x17B:
         var_a0 = arg0;
 block_8:
-        var_s0 = ovl_11_func_800D2F48(var_a0);
+        var_s0 = Ovl11AllocateStateObjectRecord(var_a0);
         break;
     default:
         break;

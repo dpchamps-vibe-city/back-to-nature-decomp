@@ -21,17 +21,14 @@
 #include "ovl11_area_resource_load.h"
 #include "ovl11_time_of_day_fade.h"
 #include "ovl11_scene_triplet_interpolation.h"
-
-void SetVal8005E51C(s32 arg0);
+#include "surface_collision.h"
 
 void Ovl11SetSceneCollisionTolerance(void) {
-    SetVal8005E51C(0xC8);
+    SetSurfaceHeightTolerance(0xC8);
 }
 
 void Ovl11SceneSetupNoOp(void) {
 }
-
-void func_8001E340(Ovl11SceneGrid **arg0);
 
 void Ovl11InstallSceneSetup(u16 resourceIndex, u16 unused, s32 alreadyLoaded) {
     u8 *base = (u8 *)&D_8007AFF0;
@@ -47,7 +44,7 @@ void Ovl11InstallSceneSetup(u16 resourceIndex, u16 unused, s32 alreadyLoaded) {
     Ovl11LoadAreaResourceSet(resourceIndex, alreadyLoaded & 0xFFFF);
     InitProjectedPrimitiveSource(gOvl11SceneGeometry, (u8 *)D_8007AFF0 + 0x2000);
     Ovl11SetCoordinateClamp(&gLoadedAreaClampFirstCorner, &gLoadedAreaClampSecondCorner);
-    func_8001E340((Ovl11SceneGrid **)gOvl11SceneGeometry);
+    EnableSurfaceCells((Ovl11SceneGrid **)gOvl11SceneGeometry);
     Ovl11SetRenderContextColor(0, 0, 0);
     header = *(struct Ovl11SceneHeader **)(base + 0x25388);
     switch (header->kind) {

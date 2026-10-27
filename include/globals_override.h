@@ -1616,8 +1616,22 @@ extern Ovl11ItemCell gAgedItemCells[99];
 extern u8 gAgedItemCellsResetSpan[0x18E] __asm__("gAgedItemCells");
 /* 8010C330 stores occupancy here only after a successful add. */
 extern s16 gAgedItemLastAddCount;
-/* 800CE96C clears six 0xB0-byte records; named view preserves the existing record type. */
-extern u8 D_80075BC4_reset[0x420] __asm__("D_80075BC4");
+/* Six 0xB0 state-object records. D2F48 allocates by zero tag; D2240 updates
+ * all six, CF36C clears them and 1097F4 scans tag/selector/X/Z. Keep the
+ * established partial layout; unexposed sprite/motion fields use byte views. */
+typedef struct {
+    /* 0x00 */ u16 unk0;
+    /* 0x02 */ char pad_02[0x2E];
+    /* 0x30 */ s16 unk30;
+    /* 0x32 */ char pad_32[6];
+    /* 0x38 */ s32 unk38;
+    /* 0x3C */ char pad_3C[4];
+    /* 0x40 */ s32 unk40;
+    /* 0x44 */ char pad_44[0x6C];
+} UnkStruct80075BC4;
+extern UnkStruct80075BC4 gStateObjectPool[6];
+/* CE96C's reset span and the generic record clients use these same bytes. */
+#define gStateObjectPoolBytes ((u8 *)gStateObjectPool)
 
 /* 800CE96C resets +0/+4 in these records; 800CFC20 tests flags at +34. */
 struct Ovl11ResetB4 {
@@ -2433,57 +2447,37 @@ extern u16 D_80049050[5];
 /* D_8005E43C - GP-relative update flag */
 extern s32 gSpriteAnimationUpdateLatch;
 
-/* D_8005E500..D_8005E528 - GP-relative scalars used by func_8001E878
- * D_8005E500, D_8005E504, D_8005E508: cross-product results (sw gp_rel)
- * D_8005E50C, D_8005E510: bounds coordinates (sw gp_rel)
- * D_8005E514: average/difference (sw gp_rel, written twice)
- * D_8005E518: pointer to bounds struct (lw gp_rel, dereferenced at +0,+4,+8)
- * D_8005E51C: threshold value (lw gp_rel)
- * D_8005E528: flag (sw gp_rel)
- *
- * UNVERIFIED semantic hypotheses (2026-07-31) - floor/surface collision
- * query. func_8001E878 reads as a point-in-triangle test in the horizontal
- * plane plus a vertical tolerance check; the triangle vertices stride by 8
- * bytes in callers and use s16 fields at +0/+2/+4, i.e. SVECTOR-shaped
- * {vx, vy, vz, pad} with the cross products taken over (vx, vz) and vy
- * averaged as height (research note S5.4/S9).
- *   D_8005E500/504/508: edge cross products of query point vs triangle
- *     in the x-z plane
- *   D_8005E50C/510: cached query x and z ("bounds coords" = projected
- *     query position)
- *   D_8005E514: kept value is queryY - triangleAvgY, the signed height
- *     delta to the candidate triangle (avg written transiently first)
- *   D_8005E518: query position record {s32 x@0, y@4, z@8}, VECTOR-shaped;
- *     installed from a saved register by the driver func_8001E4C0
- *     (0x8001E534: sw s5) before the scan
- *   D_8005E51C: max |height delta| to accept (step-height tolerance)
- *   D_8005E528: hit flag - cleared by func_8001E4C0 (0x8001E508),
- *     set to 1 by func_8001E878, early-out guard in func_8001E38C
- *     (0x8001E38C reads it, then loads the three hit-triangle vertex
- *     pointers from the array at 0x80061EF8 and calls the SDK OuterProduct0
- *     with the query pointer)
- * Related, not declared here (addresses written 0x-style on purpose:
- * classifyGlobals treats any D_-token in this file as overridden):
- *   0x80061EF8: SVECTOR *[3], the hit triangle's vertex pointers
- *   0x8005E524: second flag cleared alongside the hit flag by the driver
- * Evidence: src/func_8001E878.c;
- * build/asm/nonmatchings/func_8001E4C0/func_8001E4C0.s (0x8001E504-538);
- * build/asm/nonmatchings/func_8001E38C/func_8001E38C.s (0x8001E38C-43C);
- * notes/research/func_8001E878-dead-spill-allocation.md */
+/* Surface-query state, 8005E4F0..8005E528. Original GP accesses establish
+ * surface_collision's tentative ownership. Triangle tests cache X/Z cross
+ * products and queryY-averageY; the retained vertices supply plane height.
+ * The historical bounds type is the query's three signed world coordinates.
+ * See surface_collision.h and the original-address record in file-groupings. */
 typedef struct {
     s32 field_0;
     s32 field_4;
     s32 field_8;
 } BoundsStruct_8001E878;
-extern s32 D_8005E500;
-extern s32 D_8005E504;
-extern s32 D_8005E508;
-extern s32 D_8005E50C;
-extern s32 D_8005E510;
-extern s32 D_8005E514;
-extern BoundsStruct_8001E878 *D_8005E518;
-extern s32 D_8005E51C;
-extern s32 D_8005E528;
+extern s32 gSurfaceCrossAB;
+extern s32 gSurfaceCrossBC;
+extern s32 gSurfaceCrossCA;
+extern s32 gSurfaceQueryX;
+extern s32 gSurfaceQueryZ;
+extern s32 gSurfaceHeightDelta;
+extern BoundsStruct_8001E878 *gSurfaceQueryPoint;
+extern s32 gSurfaceHeightTolerance;
+extern s32 gSurfaceTriangleHit;
+/* EF8C setter and EAE4 scan snapshot the polygon-header reject mask. */
+extern s32 gSurfacePolygonRejectMask;
+/* EAE4 stores the vertex base address, remaining count and current polygon. */
+extern s32 gSurfaceVertexBase;
+extern s32 gSurfacePolygonsRemaining;
+extern s32 gSurfacePolygonCursor;
+/* EAE4 snapshots the public reject mask before its eight format runs. */
+extern s32 gSurfaceActiveRejectMask;
+/* E4C0 installs the cell-center extent used as (extent >> 1) + 600. */
+extern s32 gSurfaceProximityExtent;
+/* EAE4 publishes the accepted polygon address; EF98 returns its raw word. */
+extern s32 gSurfaceHitPolygonAddress;
 
 /* D_8005E540, D_8005E54C, D_8005E550, D_8005E554, D_8005E560 - GP-relative s32 scalars
  * Accessed by func_8001FF98 with sw %gp_rel; D_8005E54C by func_800214FC */
@@ -3261,16 +3255,10 @@ extern s32 _gCameraOffsetOrigin[3] __asm__("gCameraOffsetOrigin");
 extern s32 _gCameraOffsetBackup[3] __asm__("gCameraOffsetBackup");
 #define gCameraOffsetBackup (*((s32*)_gCameraOffsetBackup))
 
-/* D_80061EF8 — array of 3 pointers to vertex coordinate structs (s16 at 0, 2, 4).
- * Absolute addressing (lui/addiu). Array of 3 pointers = 12 bytes > -G8.
- * Used by func_8001E38C for hit-triangle vertex coordinates. */
-typedef struct {
-    s16 f0;
-    s16 f2;
-    s16 f4;
-} Coord3;
-extern Coord3 *_D_80061EF8[3] __asm__("D_80061EF8");
-#define D_80061EF8 (_D_80061EF8)
+/* E878 retains three vertex pointers; E38C interpolates their triangle.
+ * SurfaceVertex's three signed halfwords are defined in game_types.h. */
+struct SurfaceVertex;
+extern struct SurfaceVertex *gSurfaceHitVertices[3];
 
 /* exe:8005E850 — snapshot of the last submitted VAB transfer chunk.
  * StepSoundBankBodyTransfer copies fields 0..0x1C before advancing.
@@ -6732,6 +6720,8 @@ extern s16 gOvl11PositionTransitionTargets[3][2];
 extern u32 gOvl11FacingStepSoundDelay;
 extern s32 gOvl11PrimaryHeldButtons;
 extern s32 gOvl11PrimaryPressedButtons;
+/* CD6F4 indexes the four u16 d-pad masks at 801232B4 by saved direction +30. */
+extern u16 gOvl11ForcedDirectionButtons[4];
 /* 800C6C24 loads this word and scales it by ten for the state timer. */
 extern s32 gOvl11ClockMinutePeriodTwice;
 

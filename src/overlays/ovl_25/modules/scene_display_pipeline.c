@@ -24,6 +24,7 @@
 #include "sprite_upload.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
+#include "surface_collision.h"
 
 void Ovl25InitSceneCamera(void) {
     char *base;
@@ -156,9 +157,6 @@ void Ovl25LoadObjectSpriteSet(void) {
     }
 }
 
-void func_8001E340(void **arg0);
-void SetVal8005E51C(s32 arg0);
-
 /* Streams two CD-sector runs from the D_800BBED0 position table, copies the
  * 0xBDC-byte D_8007AFF0 work area into D_8009F78C, then publishes that copy
  * and a 0x39 value into the D_8007AFF0+0x25388/0x2547C far-buffer slots. The
@@ -180,8 +178,8 @@ void Ovl25LoadSceneGeometry(void) {
     far_base = (char *)&D_8007AFF0;
     *(s32 *)(far_base + 0x2547C) = 0x39;
     *(s32 *)(far_base + 0x25388) = (s32)&gLoadedAreaHeaderCopy;
-    func_8001E340((void **)dst);
-    SetVal8005E51C(0xC8);
+    EnableSurfaceCells((void **)dst);
+    SetSurfaceHeightTolerance(0xC8);
 }
 
 void Ovl25QueueSceneSoundLoads(void) {

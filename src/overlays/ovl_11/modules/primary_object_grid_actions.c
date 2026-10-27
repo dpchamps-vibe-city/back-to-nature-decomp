@@ -53,8 +53,8 @@
 #include "ovl11_spawn_record_access.h"
 #include "ovl11_held_item_replacement.h"
 #include "ovl11_primary_object_collision_action.h"
-
-s32 ovl_11_func_800C9D64(void);
+#include "ovl11_cell_grid_selection.h"
+#include "ovl11_primary_object_input_override.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -65,7 +65,7 @@ void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     s32 temp_s3;
     u32 var_s1;
 
-    temp_s3 = ovl_11_func_800C9D64();
+    temp_s3 = Ovl11GetCellGridSelection();
     sp18.unk0 = arg0->unk100;
     sp18.unk4 = arg0->unk104;
     sp18.unk8 = arg0->unk108;
@@ -98,7 +98,7 @@ s32 Ovl11BeginCellResetAction(Ovl11C7010Object *arg0) {
     s32 mode;
     s32 result;
 
-    mode = ovl_11_func_800C9D64();
+    mode = Ovl11GetCellGridSelection();
     if (mode != 2) {
         pos = *(Ovl11CE034Position *)((u8 *)arg0 + 0x100);
         tier = (s16)((s16)*(u16 *)((u8 *)arg0 + 0x18) / 20);
@@ -126,7 +126,7 @@ s32 Ovl11BeginCellPromotionAction(Ovl11C7010Object *arg0) {
     s32 var_s0;
     s32 temp_v0;
 
-    temp_v0 = ovl_11_func_800C9D64();
+    temp_v0 = Ovl11GetCellGridSelection();
     if (temp_v0 == 2) {
         ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, 0x28);
         return 0;
@@ -160,7 +160,7 @@ s32 Ovl11BeginCellEffectAction(Ovl11C7010Object *arg0) {
     s32 mode;
     s32 result;
 
-    mode = ovl_11_func_800C9D64();
+    mode = Ovl11GetCellGridSelection();
     if (mode == 2) {
         if (gOvl11InteractionHitFlags & 0x8000) {
             if (Ovl11ConsumeSpawnEffect(gOvl11InteractionHitRecordView) != 0) {
@@ -274,7 +274,7 @@ void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *arg0) {
     s32 var_s4;
 
     var_s4 = 0x28;
-    temp_s0 = ovl_11_func_800C9D64();
+    temp_s0 = Ovl11GetCellGridSelection();
     sp18.unk0 = arg0->x;
     sp18.unk4 = arg0->y;
     sp18.unk8 = arg0->z;
@@ -313,7 +313,7 @@ void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
     s32 var_s4;
 
     var_s4 = 0x28;
-    temp_s0 = ovl_11_func_800C9D64();
+    temp_s0 = Ovl11GetCellGridSelection();
     sp18.unk0 = arg0->x;
     sp18.unk4 = arg0->y;
     sp18.unk8 = arg0->z;
@@ -347,7 +347,7 @@ void Ovl11PlaceObjectCellTexture(Ovl11CE034Object *arg0) {
     s32 temp_s0;
     Ovl11D124Entry *var_s0;
 
-    temp_s0 = ovl_11_func_800C9D64();
+    temp_s0 = Ovl11GetCellGridSelection();
     Ovl11ComputeGridOffsetPosition(arg0, &sp10, 1);
     if (temp_s0 != 2) {
         gOvl11AreaCellConverters[temp_s0](&sp10, &sp20, &sp22);
@@ -405,7 +405,6 @@ s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
 void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
-void ovl_11_func_800CD670 (s16 arg0);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 void ovl_11_func_800CF314 (u8 *arg0, C580C_b6c4596908ca_Ovl11CF314Arg1 *arg1, C580C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
@@ -602,7 +601,7 @@ state_done:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             ovl_11_func_80107C80(0x2F, 0U, NULL, 1);
             arg0->direction = (u16) ((arg0->direction + 2) & 3);
-            ovl_11_func_800CD670(0x14);
+            Ovl11BeginPrimaryObjectInputOverride(0x14);
             return 0;
         case 0x4A:
             temp_v1 = arg0->phase;

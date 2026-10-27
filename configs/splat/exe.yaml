@@ -178,18 +178,7 @@ segments:
       - [0xE7D4, c, modules/point_projection]
       - [0xE8B8, c, modules/render_packet_pool]
       - [0xEA6C, c, func_8001E26C]       # 0x8001E26C func_8001E26C
-      - [0xEB34, c, SetVal8005E51C]       # 0x8001E334 SetVal8005E51C
-      - [0xEB40, c, func_8001E340]       # 0x8001E340 func_8001E340
-      - [0xEB8C, c, func_8001E38C]       # 0x8001E38C func_8001E38C
-      - [0xECC0, c, func_8001E4C0]       # 0x8001E4C0 func_8001E4C0
-      - [0xEEFC, c, func_8001E6FC]       # 0x8001E6FC func_8001E6FC
-      - [0xEF8C, c, func_8001E78C]       # 0x8001E78C func_8001E78C
-      - [0xEFDC, c, func_8001E7DC]       # 0x8001E7DC func_8001E7DC
-      - [0xF078, c, func_8001E878]       # 0x8001E878 func_8001E878
-      - [0xF1F8, c, func_8001E9F8]       # 0x8001E9F8 func_8001E9F8
-      - [0xF2E4, c, func_8001EAE4]       # 0x8001EAE4 func_8001EAE4
-      - [0xF78C, c, SetVal8005E2E8]       # 0x8001EF8C SetVal8005E2E8
-      - [0xF798, c, GetVal8005E524]       # 0x8001EF98 GetVal8005E524
+      - [0xEB34, c, modules/surface_collision]
       - [0xF7A4, c, modules/camera_offset]
       - [0xFA50, c, modules/integer_power]
       - [0xFA78, c, modules/word_interpolation]

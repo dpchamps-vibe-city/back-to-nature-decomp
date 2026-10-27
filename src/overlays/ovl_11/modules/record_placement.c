@@ -67,7 +67,7 @@ place_selected:
         return 1;
     }
     /* Unlike the first three paths, update every flagged matching B0 record. */
-    record = (Ovl11PlacedRecordView *) D_80075BC4_reset;
+    record = (Ovl11PlacedRecordView *) gStateObjectPoolBytes;
     recordIndex = 0;
     do {
         if (((*(u16 *) ((u8 *) record + 0)) == itemId) && (record->flags & 0x20000)) {

@@ -1,9 +1,9 @@
 #include "common.h"
 #include "psyq/abs.h"
+#include "ovl11_primary_object_input_override.h"
 
 /* The callee consumes two arguments; this legacy call supplies four. */
 s32 ovl_11_func_800E9284();
-void ovl_11_func_800CD670(s16 arg0);
 
 s32 ovl_11_func_800ED634(s16 arg0, s16 arg1) {
     s16 var_a0_2;
@@ -33,7 +33,7 @@ s32 ovl_11_func_800ED634(s16 arg0, s16 arg1) {
             var_a0_3 = 0xC;
         }
         ((struct struct_8006C838_800E8F78 *) D_8006C838)->field_5234 |= 0x800000;
-        ovl_11_func_800CD670((s16) var_a0_3);
+        Ovl11BeginPrimaryObjectInputOverride((s16) var_a0_3);
         var_a1 = 1;
         break;
     case -1:

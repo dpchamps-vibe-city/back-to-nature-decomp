@@ -13,10 +13,10 @@
  *
  * A unit is valid when the two agree with the configuration: every member is
  * defined and emitted exactly once, in original address order, at the offset
- * its original address implies, and nothing else is emitted. A GCC nested
- * function is the one sanctioned exception: it is emitted by its parent's
- * object, immediately before the parent, so a per-function file that carries
- * one defines nothing and its parent's object starts one function early. That
+ * its original address implies, and nothing else is emitted. GCC nested
+ * functions are the sanctioned exception: their parent's object emits them
+ * immediately before the parent. Their consecutive per-function carrier files
+ * define nothing; the parent's object starts at the first carried function. That
  * pairing is recognised explicitly rather than tolerated in general.
  *
  * An artifact that is missing or older than its source makes the object view
@@ -336,21 +336,30 @@ export function auditUnits(input: UnitAuditInput): ContainerAudit {
     }
   }
 
-  /* A nested-function carrier: a unit whose one member its own source does not
-     define, defined instead as a nested function inside the next unit's
-     member. Recognised only in that exact shape. */
+  /* Consecutive empty carriers may precede one parent with several nested
+     helpers. Admit only an unbroken run of single-member, code-free sources,
+     each defined directly inside a member of that parent's actual source.
+     The object check below still proves every emitted offset and the order. */
   const carriedBy = new Map<string, string>();
-  units.forEach((unit, index) => {
-    const next = units[index + 1];
-    const own = facts.get(unit.segmentName);
-    if (!next || !own || unit.members.length !== 1) return;
-    const member = unit.members[0]!;
-    if (own.definitions.some((d) => d.name === member.name) || own.includeAsm.includes(member.name)) return;
-    const following = facts.get(next.segmentName);
-    const nested = following?.definitions.find((d) => d.name === member.name && d.nested);
-    if (nested && next.members.some((m) => m.name === nested.parent)) carriedBy.set(unit.segmentName, next.segmentName);
+  const carriersOf = new Map<string, TranslationUnit[]>();
+  units.forEach((parent, index) => {
+    const parentFacts = facts.get(parent.segmentName);
+    const carriers: TranslationUnit[] = [];
+    let start = parent.startVram;
+    for (let i = index - 1; i >= 0; i--) {
+      const unit = units[i]!;
+      const own = facts.get(unit.segmentName);
+      if (unit.endVram !== start || !own || unit.members.length !== 1 ||
+          own.definitions.length !== 0 || own.includeAsm.length !== 0) break;
+      const member = unit.members[0]!;
+      const nested = parentFacts?.definitions.find((d) => d.name === member.name && d.nested);
+      if (!nested || !parent.members.some((m) => m.name === nested.parent)) break;
+      carriedBy.set(unit.segmentName, parent.segmentName);
+      carriers.unshift(unit);
+      start = unit.startVram;
+    }
+    if (carriers.length > 0) carriersOf.set(parent.segmentName, carriers);
   });
-  const carrierOf = new Map([...carriedBy].map(([carrier, parent]) => [parent, carrier]));
 
   /* Top-level definitions across the container, for duplicate ownership. */
   const definers = new Map<string, string[]>();
@@ -371,10 +380,10 @@ export function auditUnits(input: UnitAuditInput): ContainerAudit {
     const source = sources.get(unit.segmentName) ?? null;
     const view = facts.get(unit.segmentName) ?? null;
     const memberNames = new Set(unit.members.map((m) => m.name));
-    const carrier = carrierOf.get(unit.segmentName);
-    const carrierUnit = carrier ? units[index - 1] : undefined;
+    const carrierUnits = carriersOf.get(unit.segmentName) ?? [];
     /* Functions this unit's object is expected to emit, in address order. */
-    const emitted = [...(carrierUnit?.members ?? []), ...unit.members];
+    const carriedMembers = carrierUnits.flatMap((carrier) => carrier.members);
+    const emitted = [...carriedMembers, ...unit.members];
 
     if (unit.members.length === 0) unitFindings.push(`${unit.segmentName}: the interval ${hex(unit.startVram)}..${hex(unit.endVram)} holds no original function`);
     for (const member of unit.members) {
@@ -399,7 +408,7 @@ export function auditUnits(input: UnitAuditInput): ContainerAudit {
           unitFindings.push(`${unit.sourcePath} defines ${member.name} ${count + stubs} times`);
         }
       }
-      const carried = new Set(carrierUnit?.members.map((m) => m.name) ?? []);
+      const carried = new Set(carriedMembers.map((m) => m.name));
       for (const definition of view.definitions) {
         if (memberNames.has(definition.name) || (definition.nested && carried.has(definition.name))) continue;
         if (originalNames.has(definition.name)) unitFindings.push(`${unit.sourcePath} defines ${definition.name}, an original function outside its interval`);

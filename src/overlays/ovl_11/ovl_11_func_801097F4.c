@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_types.h"
 
-extern UnkStruct80075BC4 D_80075BC4[6];
 
 s32 ovl_11_func_801097F4(Ovl11Func801097F4Arg x) {
     s32 result;
@@ -17,7 +16,7 @@ s32 ovl_11_func_801097F4(Ovl11Func801097F4Arg x) {
 
     result = 0;
     i = 0;
-    rec = D_80075BC4;
+    rec = gStateObjectPool;
     out = x.unk18;
     sel = x.unk10;
     r = x.unk14;

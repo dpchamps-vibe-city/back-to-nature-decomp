@@ -150,6 +150,13 @@ gOvl11ItemSpawnRuleMask = 0x80128D66; // type:data size:0x2
 // Four clock-hour entries feeding the primary-object +0x16 counter.
 Ovl11ApplyHourCounterDeltas = 0x800CD45C; // type:func
 gOvl11HourCounterDeltas = 0x801232A4; // type:data size:0x10
+Ovl11DrawStateObjectRecord = 0x800D2E6C; // type:func
+Ovl11AdvanceStateObjectPosition = 0x800D2F1C; // type:func
+Ovl11AllocateStateObjectRecord = 0x800D2F48; // type:func
+Ovl11BeginPrimaryObjectInputOverride = 0x800CD670; // type:func
+Ovl11ApplyPrimaryObjectInputOverride = 0x800CD6F4; // type:func
+// Four saved-direction d-pad masks; next object starts at 801232BC.
+gOvl11ForcedDirectionButtons = 0x801232B4; // type:data size:0x8
 
 // Selected X/Z default position; three signed-halfword pairs in original data.
 Ovl11ReadDefaultPosition = 0x800CD0C0; // type:func
@@ -316,6 +323,8 @@ gOvl11LoadedSpriteBankSelector = 0x80128800; // type:data size:0x2
 Ovl11DrawPrimaryObjectCompanion = 0x800C9F20; // type:func
 Ovl11DrawPrimaryObjectSprite = 0x800CA044; // type:func
 Ovl11DrawPrimaryObjectFrame = 0x800CA24C; // type:func
+Ovl11UpdateActionMinuteCounter = 0x800CA6C4; // type:func
+Ovl11GetCellGridSelection = 0x800C9D64; // type:func
 Ovl11CopyAndDrawSavedObject = 0x800CA580; // type:func
 Ovl11SyncSavedObjectAnimation = 0x800CA5D4; // type:func
 Ovl11SavedInteractionObject = 0x80128CF4; // type:data size:0x4

@@ -3524,6 +3524,36 @@ Members:
 
 ## `ovl_11` tier-lookup leaf + `/60` clamp run — 0x800CD45C–0x800CD670 (confidence: low)
 
+**Adjacent input-override unit reconstructed in
+`modules/primary_object_input_override.c`, 800CD670–800CD734 exclusive.**
+The two entries are connected by a private saved-direction protocol, not merely
+by the widely shared input globals. CD670 writes primary object +30 from +38,
+sets flag 8 and a +2E countdown, then enters state 2. CD6F4 tests exactly flag 8,
+reads signed +30 and indexes the private four-halfword table at 801232B4, clears
+the pressed mask and replaces the held mask. The original masks are
+1000/2000/4000/8000; the next independent object starts at 801232BC.
+Whole-overlay resolved-address and primary-object source checks find no other
+reader of that saved-direction cell. The primary-object updater calls the
+applicator before action dispatch, decrements +2E and clears flags 0xA on
+completion. This verifies update-count units, not clock minutes or milliseconds.
+
+Left CD624 classifies +16 into a clock request and copies the shared angle;
+it neither establishes nor consumes the saved-direction/flag-8 protocol.
+Right CD734 updates +36 level-band flags and optionally requests a level state;
+it does not access +30, the override masks or their table. No private state or
+helper witness extends either edge. These are evidence-supported service cuts,
+not historical GP proofs (-G0). The wider tier/clock hypothesis remains unproved.
+
+Names retain original overlay identities: Ovl11BeginPrimaryObjectInputOverride,
+Ovl11ApplyPrimaryObjectInputOverride and gOvl11ForcedDirectionButtons. The two
+public contracts are in ovl11_primary_object_input_override.h, including guards,
+signed tick storage, unsigned saved-direction store versus signed table-index
+read, bounds prerequisites and shared-mask effects. The missing table extern
+was published in globals_override.h; redundant local externs were removed.
+No record layout, private linkage, type/width, ownership or flag override changed.
+The complete two-member fold and overlay passed at baseline -O2/-G0; interface
+publication reconciled eight callers without changing their objects.
+
 **Reconstructed `modules/sixty_step_deltas.c`, 800CD534–800CD5BC
 exclusive, the complete complementary two-function service.** The sole
 caller 800CCCC0 evaluates both with the same computed scalar and passes
@@ -6750,6 +6780,61 @@ Members (address order):
 ---
 
 ## `exe` "collision.c" — 0x8001E334–0x8001EFA4 (confidence: high)
+
+**Reconstructed as `src/modules/surface_collision.c`: the complete twelve-entry
+run, including dead 8001E6FC.** The historical scope/type blockers below are
+resolved, not used as boundaries. Both 8001E878 and 8001E9F8 are now actual GNU
+nested definitions inside 8001EAE4. Ordinary returns and direct sibling calls
+reproduce their original static-chain saves/forwarding and the triangle's dead
+chain spill; both `CAPTURE_PREV_RET` emulations were removed. The whole fold
+passed at baseline -O2/-G8: all eleven compiled members and the EXE are exact.
+No flag was involved and no new exception or stub was added.
+
+Membership: the connected original-byte GP cluster 8005E4F0–8005E528 links the
+driver, proximity tests, triangle/quad/iterator and hit getter. The reject-mask
+setter at EF8C shares GP 8005E2E8 with the iterator; E334 shares GP E51C with
+the triangle. The grid initializer E340 has no GP accesses: it joins through
+the driver's same count/+0C/0x1C-cell layout and the scene loaders' paired grid
+enable/tolerance setup, not adjacency alone. The dead stub remains between
+the driver and its proximity helpers. There is no member rodata to pool.
+
+Left E26C is a GTE vector-length service calling SquareRoot0, with no state or
+helper edge into this run; no positive witness extends the unit left. Right
+EFA4 begins camera_offset's disjoint GP-owned radius/height/yaw/dirty state;
+neither side uses the other's private protocol. These are supported service
+edges, not a claimed GP-versus-absolute proof at either outer boundary.
+
+The public `surface_collision.h` publishes cell enable, tolerance and reject
+mask setters, the driver, retained-hit height and raw polygon-address getters.
+It documents geometry integer units, residency, shared non-reentrancy, opposite
+hit conventions in driver versus polygon helpers, average-Y gating versus plane
+interpolation, and strict 2D versus inclusive 3D proximity. Six public and five
+support functions receive behavior names at their original EXE identities;
+all sixteen small state words are named by their demonstrated role. Types,
+signedness, address-as-word ABIs and tentative ownership are retained. The
+initializer uses the existing Grid_1E4C0, not a duplicate local grid type;
+SurfaceVertexView publishes only the three accessed halfwords and now also
+types the canonical gSurfaceHitVertices pointer array (the duplicate Coord3
+view and its address-alias macro were removed). Nested symbol
+labels preserve identities without instruction injection or register pinning.
+Callers were reconciled through interfaceAudit with unchanged objects.
+
+A concrete fold-helper refusal exposed a tooling assumption: the audit admitted
+only ONE empty nested carrier immediately before a parent. It now admits an
+unbroken run of code-free single-member carriers only when every entry is
+defined directly inside that parent's source; the object gate still checks all
+names, offsets and order. This necessary change is in
+`tools/lib/translationUnitAudit.ts`, outside the source integration roots.
+An existing translation-unit test then exposed context publication dropping
+nested definitions altogether. `tools/agent/sdkTypes.ts` now harvests them,
+reusing the same AST symbol-label identities instead of leaking local C names.
+Both fixes preserve the byte/object gates and add no policy exception or test.
+The first full batch gate passed all eight integrity checks at 1619 folded
+functions / 270 valid modules. Removing the driver's empty loop-note nesting
+was separately rejected by its concrete +4-byte extent change; the nesting is
+retained with a source comment, not silently dismissed as cosmetic.
+
+Historical experiments and evidence follow (superseded where noted above).
 
 Floor/surface collision subsystem: walkmesh quads split into triangle
 tests against a query point, hit recorded in globals.
@@ -15252,6 +15337,68 @@ Members:
 - ovl_11_func_800CFA48 (m) — conditional 0x800000 spawn-state flag setter.
 
 ## `ovl_11` D_80075BC4 record-table consumers — 0x801097F4 / 0x801098B0 / 0x800CF36C (confidence: low)
+
+**Reconstructed the complete adjacent presentation/advance/allocation run as
+`modules/object_record_lifecycle.c`, 800D2E6C–800D3048 exclusive.** The first
+two entries are the exclusive draw/motion leaves of D2240's six-slot 0xB0
+updater; their paired protocol is corroborated by the tagged-record presentation
+twins. D2F48 joins rather than leaving an allocator-shaped slice: it claims the
+first zero-tag slot of exactly the same six-record bank, initializes the sprite/
+motion record those leaves consume, stamps the shared selector and +AC value,
+and applies the same object's initial state. This is lifecycle/field-flow and
+helper-cohort evidence, not ownership inferred from the shared pool or -G0.
+The distant updater remains a client; intervening functions are not absorbed
+merely because its call sequence also services other banks.
+
+Left D2E20 is a reusable calendar-season mask lookup, with no record, sprite or
+pool access. Right D3048 begins the generic 21-slot state-callback dispatcher
+and entry service, which has many record-family clients and does not allocate
+or traverse this bank. No private protocol/table witness joins either neighbor.
+D3424's animation-pair lookup is a dependency, separated by the state-dispatch,
+clear, choice and initialization services; its sole draw client does not prove
+those intervening services belonged here. These are conservative service
+boundaries, not recovered historical object edges or a flag-based cut.
+
+Public names at original overlay identities: Ovl11DrawStateObjectRecord,
+Ovl11AdvanceStateObjectPosition and Ovl11AllocateStateObjectRecord.
+`ovl11_object_record_lifecycle.h` documents first-free/full behavior, ID narrowing,
+resident storage lifetime, the address-as-s32 advance ABI, native word deltas,
+frame-zero preservation, sprite flags and renderer prerequisites. The packed
+8-byte copy at unaligned +1A is retained and explained. Locals now name the
+scan, slot, selector and animation roles without inventing gameplay meaning.
+
+The resident EXE storage is canonically named gStateObjectPool at 80075BC4.
+Its existing six-by-0xB0 partial record layout is now declared with its extern
+in globals_override.h, rather than repeated C-local array declarations.
+`gStateObjectPoolBytes` is a byte view of that SAME backing array, replacing
+D_80075BC4_reset's assembly-label alias. Reset, placement, collision, update,
+clear and scan clients preserve their typed/byte views and original strides;
+there is no new storage, ownership definition, enlarged declaration or linkage.
+The initial whole fold passed all three members and the overlay at baseline
+-O2/-G0, with no flag or source-policy exception. Interface publication replaced
+both callers' declarations with the public header and preserved their objects.
+
+Final acceptance for this five-module run (surface_collision,
+action_minute_counter, cell_grid_selection, primary_object_input_override and
+object_record_lifecycle): **1606 -> 1624 folded / 2625, 272/272 valid modules**.
+`tuProgress.ts --verify --no-cache --baseline build/tu-campaign/baseline.json`
+passes all eight integrity gates: every linked EXE/overlay code/data/callback/
+table/placement byte, canonical names, published interfaces, ownership, source
+policy, convergence, whitespace, input stability and exception non-growth.
+The existing translation-unit suite passes **20/20**; no test was added.
+Canonical-name check is clean; all 955 published interfaces have zero failing
+sites. The broad interface audit still reports unrelated standing debt
+(31 conflicts, 13 arity sites, 4 implicit declarations); it was not silently
+rewritten in this scope. No compiler flag, allowlist entry or new assembly
+construct/stub was added. The collision fold removes two register-capture
+emulations; its existing dead stub stays at its original position.
+
+The first final-batch gate attempt stopped in macro encoding's object-section
+reader before an integrity verdict. The on-disk probe objects subsequently
+contained the expected section; the unchanged-tree --no-cache retry above
+passed. This is a recorded tool-read failure, not a claimed byte mismatch or
+compiler-setting result. The gate's usual exit 1 denotes the incomplete overall
+TU campaign (1001 eligible functions remain), not a failed integrity check.
 
 Whole-unit fold experiment for the 801097F4/801098B0 pair: the existing
 callee takes one 0x1C-byte aggregate while its sole caller declares seven
@@ -25071,6 +25218,46 @@ are recorded in area_resource_load's CD asset-load section above.
 - ovl_11_func_800C9F20 (s) — flag/type-selected companion sprite draw with table-selected coordinate offsets.
 - ovl_11_func_800CA044 (m) — object sprite submission with optional signed-halfword substitutions.
 - ovl_11_func_800CA24C (s) — object drawing dispatcher that selects the order of the two preceding draw helpers.
+
+### Adjacent action-minute counter — 0x800CA6C4–0x800CA708
+
+Reconstructed as `modules/action_minute_counter.c`, publishing
+`Ovl11UpdateActionMinuteCounter` through `ovl11_action_minute_counter.h`.
+The clock/calendar's normal minute-rollover path is its sole caller and skips
+it during accelerated clock advance. The leaf resets or increments the +1A
+halfword from +6C flags; increment wraps at 16 bits. This establishes minute
+update units but not a speculative stamina/idle gameplay interpretation.
+Both fields remain accessed with their original widths through the void*
+ABI. Parameters and counter locals now describe their demonstrated roles.
+There is no small-data ownership or new type/layout/linkage claim.
+
+The left primary_object_draw run owns projection/companion tables and a saved
+record protocol; the right primary_object_motion pair owns side-slide offset
+and velocity tables and calls collision services. Neither calls this counter,
+reads its value in this protocol, or supplies a private helper/state edge.
+Those supported service edges delimit the singleton; no historical object
+boundary is claimed from adjacency or -G0 absolute addressing. Checked fold
+passed at baseline with no override. Header publication preserves the clock
+caller's object. The first batch's full campaign gate passes all eight
+integrity checks at 1619 folded functions / 270 valid modules.
+
+## `ovl_11` cell-grid selector — 0x800C9D64–0x800C9D98 (evidence-limited service boundary)
+
+Reconstructed `modules/cell_grid_selection.c` publishes
+`Ovl11GetCellGridSelection` in `ovl11_cell_grid_selection.h`. Its seven direct
+uses in primary_object_grid_actions interpret 0/1 as slots in
+`gOvl11AreaCellConverters` and 2 as no cell grid: shared signed selector 1
+maps to 0, 6 to 1, every other value to 2. The broader shared selector retains
+its neutral identity because its other uses do not establish a grid-only role.
+
+Left C9D38 clears primary-object flags and three work words, never this selector
+or converter protocol. Right item_record_lists compacts/exchanges fixed eight-
+record object lists through the shared triple-record service, with no selector
+read or call edge. Neither provides a private membership witness extending this
+read-only adapter. These are conservative service cuts, not proven historical
+TU edges. No static linkage, ownership or signedness changes were introduced.
+The baseline fold, caller-preserving interface publication and full first-batch
+gate pass; no flag or source-policy exception applies.
 
 ## `ovl_11` D_80128CF4 saved-object helper pair — 0x800CA580 / 0x800CA5D4 (confidence: low)
 

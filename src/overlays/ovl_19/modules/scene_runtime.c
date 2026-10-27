@@ -45,6 +45,7 @@
 #include "ovl19_projected_actor_render.h"
 #include "random.h"
 #include "point_projection.h"
+#include "surface_collision.h"
 
 void func_80017A48(u32 arg0);
 u32 func_80017A64(void);
@@ -1785,11 +1786,6 @@ enum {
     CAMERA_TARGET_Z = 0x253B8
 };
 
-/* Collision engine contracts; no linkage changes are inferred by folding. */
-void SetVal8005E2E8(s32 tolerance);
-s32 func_8001E4C0(void *geometry, s32 *position);
-s32 func_8001E38C(void);
-
 void Ovl19InitSceneCamera(void) {
     char *camera = (char *)&D_8007AFF0;
 
@@ -1865,9 +1861,9 @@ void Ovl19AdjustPositionToSurface(s16 *position) {
     query[1] = position[1];
     query[2] = position[2];
     query[3] = position[3];
-    SetVal8005E2E8(0xC000);
-    if (func_8001E4C0(gOvl19SceneGeometry, query)) {
-        query[1] = func_8001E38C();
+    SetSurfacePolygonRejectMask(0xC000);
+    if (QuerySurfaceCells(gOvl19SceneGeometry, query)) {
+        query[1] = GetSurfaceHitHeight();
     }
     position[0] = query[0];
     position[1] = query[1];
@@ -1916,9 +1912,6 @@ void Ovl19LoadUiAndActorSprites(void) {
     InitSpriteSourceData(&gOvl19AuxSceneSpriteSource, (SpriteDataHeader *)(gOvl19UiSpriteData + gOvl19UiSpriteOffsets[5]));
 }
 
-void func_8001E340(void **arg0);
-void SetVal8005E51C(s32 arg0);
-
 /* Keep the descriptor address live across the copy. The existing compiler
  * barrier preserves publication after the complete asset-data transfer. */
 void Ovl19LoadSceneGeometry(void) {
@@ -1933,8 +1926,8 @@ void Ovl19LoadSceneGeometry(void) {
     geometry = &gOvl19SceneGeometry;
     __asm__("" : : : "memory");
     InitProjectedPrimitiveSource(geometry, (void *)(D_8007AFF0 + 0x2000));
-    func_8001E340((void **)geometry);
-    SetVal8005E51C(0xC8);
+    EnableSurfaceCells((void **)geometry);
+    SetSurfaceHeightTolerance(0xC8);
 }
 
 void Ovl19QueueSceneSound(void) {

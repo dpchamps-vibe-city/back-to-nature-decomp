@@ -17,9 +17,10 @@
 #include "ovl11_coordinate_clamp.h"
 #include "point_projection.h"
 #include "ovl11_primary_object_collision_action.h"
-
-s32 GetVal8005E524(void);
-void SetVal8005E51C(s32);
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "surface_collision.h"
 
 void Ovl11ProbePrimaryObjectMotion(void) {
     Ovl11PrimaryMotionObject *player;
@@ -154,7 +155,7 @@ void Ovl11UpdatePrimaryObjectMotion(void) {
     if (!(player->flags & 2) && !(((Ovl11MovementState *)((u8 *)player - 0x51C8))->flags10 & 0x40000000)) {
         Ovl11ProbePrimaryObjectMotion();
     }
-    D_80128C50 = *(s32 *)GetVal8005E524();
+    D_80128C50 = *(s32 *)GetSurfaceHitPolygonAddress();
     position = player->position;
     if (player->flags & 0x40000000) {
         if (!(player->flags & 1)) {
@@ -168,7 +169,7 @@ void Ovl11UpdatePrimaryObjectMotion(void) {
             }
             player->velocity[0] += offset->x;
             player->velocity[2] += offset->z;
-            SetVal8005E51C(0x32);
+            SetSurfaceHeightTolerance(0x32);
         }
     }
     position.vx += player->velocity[0];
@@ -192,7 +193,7 @@ void Ovl11UpdatePrimaryObjectMotion(void) {
     } else {
         Ovl11ResolveSurfaceHeight((s32 *)&position, 0xC080);
     }
-    SetVal8005E51C(0xC8);
+    SetSurfaceHeightTolerance(0xC8);
     player->position = position;
     state = (Ovl11MovementState *)D_8006C838;
     if (!(state->flagsC & 0x400000)) {

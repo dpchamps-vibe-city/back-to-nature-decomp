@@ -933,6 +933,13 @@ typedef struct {
     s32 field_14;
 } EAE4Query;
 
+/* Surface-query vertex components at +0/+2/+4; records have an 8-byte stride. */
+typedef struct SurfaceVertex {
+    s16 x;
+    s16 y;
+    s16 z;
+} SurfaceVertexView;
+
 /* 8001E4C0/8001E340: 0x1C-byte cells, query prefix at +0 and flag at +0x18. */
 typedef struct {
     u8 filler[0x18];
@@ -1743,21 +1750,6 @@ typedef struct ColorRowBlend {
     /* 0x10 */ u16 width;
     /* 0x12 */ u16 height;
 } ColorRowBlend;
-
-/* Records of the table at D_80075BC4, scanned by ovl_11_func_801097F4:
- * six 0xB0-byte entries; entry u16 tag 0x15B at 0x00, an s16 selector at
- * 0x30, and two s32 coordinates at 0x38/0x40 range-tested against an
- * arg0/arg2 window of half-width arg5. Only the witnessed fields are named. */
-typedef struct {
-    /* 0x00 */ u16 unk0;
-    /* 0x02 */ char pad_02[0x2E];
-    /* 0x30 */ s16 unk30;
-    /* 0x32 */ char pad_32[6];
-    /* 0x38 */ s32 unk38;
-    /* 0x3C */ char pad_3C[4];
-    /* 0x40 */ s32 unk40;
-    /* 0x44 */ char pad_44[0x6C];
-} UnkStruct80075BC4;
 
 /* Element of the D_800C0448 state table, stride 0x108. The two leading
  * halfwords are the state pair written by ovl_21_func_800B9538 /

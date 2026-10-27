@@ -54,6 +54,10 @@ struct PadInputState;
 
 typedef struct PadInputState PadInputState;
 
+struct SurfaceVertex;
+
+typedef struct SurfaceVertex SurfaceVertexView;
+
 typedef signed int s32;
 
 typedef struct {
@@ -369,12 +373,6 @@ typedef struct {
 } M2C_269c1560d5f5_Unk80110E34;
 
 typedef struct {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-} M2C_2bc7a43223fd_CoordTri;
-
-typedef struct {
                char pad_00[0x26];
                s16 unk26;
                s16 unk28;
@@ -613,24 +611,19 @@ typedef struct {
 } M2C_61e5363592bf_Ovl11D4C1CObj;
 
 typedef struct {
-    u8 filler[0x18];
-    s32 flag;
-} M2C_64b5d3016a4e_Cell8001E340;
-
-typedef struct {
-    s32 field_0;
-    s32 field_4;
-    s32 count;
-    M2C_64b5d3016a4e_Cell8001E340 cells[1];
-} M2C_64b5d3016a4e_Grid8001E340;
-
-typedef struct {
                u16 unk0;
                char pad_2[0x2E];
                s16 unk30;
                char pad_32[0x2];
                s32 unk34;
 } M2C_6a900543412a_UnkStruct800DF6A8;
+
+typedef struct {
+    char pad[0x28];
+    u16 flags;
+    char pad2[2];
+    void *blend;
+} M2C_6acdeb54e179_CycleRecord;
 
 typedef struct {
                char pad_00[0x16];
@@ -824,6 +817,12 @@ typedef struct {
     s32 unk4;
     s32 unk8;
 } M2C_ac15726e4209_E2654;
+
+typedef struct {
+               u16 field0;
+               char reserved[0x34 - 0x02];
+               s32 flags;
+} M2C_ad00b4a12930_Ovl11RecordFlagView;
 
 typedef struct {
                s16 unk0;
@@ -2735,6 +2734,12 @@ typedef struct {
                s16 field_14;
                s16 field_16;
 } Struct_800154CC;
+
+struct SurfaceVertex {
+    s16 x;
+    s16 y;
+    s16 z;
+};
 
 typedef struct {
  u_long tag;

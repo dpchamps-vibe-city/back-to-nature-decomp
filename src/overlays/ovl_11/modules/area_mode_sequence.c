@@ -58,6 +58,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_held_item_replacement.h"
+#include "ovl11_primary_object_input_override.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -73,7 +74,6 @@ void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CD624(void);
-void ovl_11_func_800CD670(s16 arg0);
 
 #define WORK ((Ovl11BBCB8Work *)&D_8007AFF0)
 #define STATUS ((Ovl11BBCB8Status *)D_8006C838)
@@ -99,9 +99,9 @@ void Ovl11StepAreaModeState(void) {
         if (!(STATUS->objectFlags & 8)) {
             WORK->state = 2;
             if (D_801287F0->unk2 != 0xFFFE) {
-                ovl_11_func_800CD670(20);
+                Ovl11BeginPrimaryObjectInputOverride(20);
             } else {
-                ovl_11_func_800CD670(27);
+                Ovl11BeginPrimaryObjectInputOverride(27);
             }
         } else if (STATUS->objectFlags & 0x800000) {
             WORK->state = 3;

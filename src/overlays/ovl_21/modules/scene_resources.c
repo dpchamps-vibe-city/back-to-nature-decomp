@@ -22,6 +22,7 @@
 #include "sound_commands.h"
 #include "ovl21_scene_camera_geometry.h"
 #include "ovl21_scene_resources.h"
+#include "surface_collision.h"
 
 /* Offsets from D_8007AFF0. Word resets and low-halfword reads intentionally
  * retain their original widths; computed eye coordinates wrap to halfwords.
@@ -159,9 +160,6 @@ void Ovl21LoadUiAndObjectSprites(void) {
     }
 }
 
-void func_8001E340(void **arg0);
-void SetVal8005E51C(s32 arg0);
-
 /* The name-bound descriptor address and existing compiler barrier preserve
  * the target's copy/binding sequence without changing the descriptor view. */
 void Ovl21LoadSceneGeometry(void) {
@@ -176,8 +174,8 @@ void Ovl21LoadSceneGeometry(void) {
     geometry = &gOvl21SceneGeometry;
     __asm__("" : : : "memory");
     InitProjectedPrimitiveSource(geometry, (void *)(D_8007AFF0 + 0x2000));
-    func_8001E340((void **)geometry);
-    SetVal8005E51C(0xC8);
+    EnableSurfaceCells((void **)geometry);
+    SetSurfaceHeightTolerance(0xC8);
 }
 
 void Ovl21QueueSceneSound(void) {

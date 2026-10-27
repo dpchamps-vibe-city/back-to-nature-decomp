@@ -8,10 +8,10 @@
 #include "psyq/libgte.h"
 #include "ovl11_collision_query_budget.h"
 #include "ovl11_surface_height.h"
-
-void SetVal8005E2E8(s32 mode);
-s32 func_8001E4C0(void *geometry, BoundsStruct_8001E878 *position);
-s32 func_8001E38C(void);
+#include "psyq/libgpu.h"
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "surface_collision.h"
 
 s32 Ovl11ResolveSurfaceHeight(s32 *position, s32 mode) {
     void *firstObject;
@@ -41,9 +41,9 @@ s32 Ovl11ResolveSurfaceHeight(s32 *position, s32 mode) {
         position[1] = 0;
         result = 0;
     } else {
-        SetVal8005E2E8(mode);
-        found = func_8001E4C0(gOvl11SceneGeometry, (BoundsStruct_8001E878 *)position);
-        height = func_8001E38C();
+        SetSurfacePolygonRejectMask(mode);
+        found = QuerySurfaceCells(gOvl11SceneGeometry, (BoundsStruct_8001E878 *)position);
+        height = GetSurfaceHitHeight();
         if (found == 0) {
             result = 1;
         } else {
