@@ -39,6 +39,8 @@
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_object_record_clear.h"
 #include "surface_collision.h"
+#include "ovl11_direction_vector.h"
+#include "ovl11_small_record_handlers.h"
 
 typedef struct {
     s16 unk0;
@@ -100,8 +102,6 @@ s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 s32 ovl_11_func_800D2E20 (void);
 void ovl_11_func_800DF0F8 (s32 arg0);
-void ovl_11_func_800E2904 (s32 arg0);
-s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_80118C6C (void);
 s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);

@@ -4,8 +4,7 @@
 #include "psyq/libgte.h"
 #include "ovl11_collision_query_budget.h"
 #include "ovl11_cell_actions.h"
-
-s32 ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_8011031C(Ovl11ActionProbeObject *arg0) {
     Recon800D0408A1View sp20;
@@ -13,7 +12,7 @@ s32 ovl_11_func_8011031C(Ovl11ActionProbeObject *arg0) {
     s32 sp34;
     s32 result;
 
-    ovl_11_func_800D0408(arg0->unk22, &sp20, 0x64);
+    Ovl11SetDirectionVector(arg0->unk22, &sp20, 0x64);
     result = 0;
     arg0->unkDC = 0;
     sp34 = 0;

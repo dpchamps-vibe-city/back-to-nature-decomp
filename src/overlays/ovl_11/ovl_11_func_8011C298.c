@@ -16,10 +16,10 @@
 #include "ovl11_primary_object_grid_actions.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_spawn_record_access.h"
+#include "ovl11_cell_grid_lookup.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
@@ -35,7 +35,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    price = ovl_11_func_800D6014(arg0);
+    price = Ovl11GetItemPrice(arg0);
     message = 0xBA;
     if (arg3 == 0) {
         message = 0xD8;

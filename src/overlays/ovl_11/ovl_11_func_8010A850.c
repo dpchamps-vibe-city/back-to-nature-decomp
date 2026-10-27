@@ -4,11 +4,11 @@
 #include "sound_commands.h"
 #include "ovl11_seasonal_record_ids.h"
 #include "ovl11_keyframe_step.h"
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_8010AFCC(Ovl11SetFieldsView *arg0);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11CC7CCPosition v);
-s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void ovl_11_func_8010B05C(Recon_ovl_11_func_800D2594_A0View *arg0);
 
 s32 ovl_11_func_8010A850(Ovl11A47CObject *arg0) {
@@ -82,7 +82,7 @@ s32 ovl_11_func_8010A850(Ovl11A47CObject *arg0) {
                     ovl_11_func_8010AE64((Recon_ovl_11_func_800D2594_A0View *) arg0);
                 } else {
                     if (!flag) {
-                        ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+                        Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
                     }
                     arg0->unk28++;
                     D_8012D074 = 0;

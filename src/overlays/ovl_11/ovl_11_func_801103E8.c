@@ -13,8 +13,8 @@ typedef struct {
     /* 0x40 */ s32 unk40;
 } Ovl11Func801103E8Obj;
 
-s32 ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 #include "ovl11_grid_position.h"
+#include "ovl11_direction_vector.h"
 
 void ovl_11_func_801103E8(Ovl11Func801103E8Obj *arg0, s32 arg1) {
     Recon800D0408A1View sp10;
@@ -30,7 +30,7 @@ void ovl_11_func_801103E8(Ovl11Func801103E8Obj *arg0, s32 arg1) {
         var_s2 = 1;
         var_s1 = Ovl11LookupMode6GridPosition;
     }
-    ovl_11_func_800D0408(arg0->unk22, &sp10, 0x64);
+    Ovl11SetDirectionVector(arg0->unk22, &sp10, 0x64);
     sp10.unk0 += arg0->unk38;
     sp10.unk8 += arg0->unk40;
     if (var_s1((s32 *)&sp10, (u16 *)&sp20, (u16 *)&sp22) == 0) {

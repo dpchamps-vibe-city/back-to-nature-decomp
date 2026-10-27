@@ -7,8 +7,7 @@
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
 #include "ovl11_state_field_access.h"
-
-s32 ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_800E5704(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 index;
@@ -59,9 +58,9 @@ s32 ovl_11_func_800E5704(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         break;
     }
     if (changed != 0) {
-        ovl_11_func_800D0408(4, (Recon800D0408A1View *) other, 0);
+        Ovl11SetDirectionVector(4, (Recon800D0408A1View *) other, 0);
         return 1;
     }
-    ovl_11_func_800D0408(arg1, (Recon800D0408A1View *) other, arg3 * 2);
+    Ovl11SetDirectionVector((u16)arg1, (Recon800D0408A1View *) other, arg3 * 2);
     return 0;
 }

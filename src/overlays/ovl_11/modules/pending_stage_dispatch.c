@@ -13,6 +13,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_pending_stage_dispatch.h"
+#include "ovl11_tagged_record_handlers.h"
 
 s32 ovl_11_func_800CBDFC(void);
 void Ovl11DispatchStageMode(s32 mode);
@@ -26,7 +27,6 @@ void Ovl11ProcessPendingStageMode(void) {
 
 s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
-s32 ovl_11_func_800E0C24(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
 #define CURRENT_STAGE (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476)
@@ -54,7 +54,7 @@ void Ovl11DispatchStageMode(s32 mode) {
                         }
                     }
                 } else if (CURRENT_STAGE == *(s16 *)((u8 *)object + 0x30)) {
-                    if (ovl_11_func_800E0C24(object, 0xB) == 0) {
+                    if (Ovl11DispatchTaggedRecordHandler(object, 0xB) == 0) {
                         gOvl11Mode0DispatchCounter = 0;
                     }
                 }

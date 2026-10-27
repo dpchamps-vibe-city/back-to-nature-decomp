@@ -1,4 +1,7 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 extern s32 D_8005182A;
 extern s32 gOvl11InteractionDrawMode;
@@ -10,15 +13,13 @@ typedef struct {
     /* 0x0A */ s16 field_A;
 } ovl_11_A9DC_arg0;
 
-s32 ovl_11_func_800D6014(u16 arg0);
-
 s32 ovl_11_func_8011A9DC(void) {
     ovl_11_A9DC_arg0 *p;
 
     p = (ovl_11_A9DC_arg0 *)&gOvl11QuantityPrompt;
     p->field_0 = D_80054BC0[0] + (s32)&D_8005182A;
     p->field_4 = D_80054BC0[0] + (s32)&D_8005182A - 0x10;
-    p->field_A = ovl_11_func_800D6014(0x6C);
+    p->field_A = Ovl11GetItemPrice(0x6C);
     p->field_8 = 1;
     gOvl11InteractionDrawMode = 0;
     return 1;

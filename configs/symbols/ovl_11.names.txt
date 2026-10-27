@@ -1575,3 +1575,121 @@ gOvl11StateValueDebit = 0x80128D78; // type:data size:0x2
 // Publish the directional interaction probe and its dispatch-delay counter.
 Ovl11QueryPrimaryObjectCollisionAction = 0x800CB114; // type:func
 gOvl11InteractionDispatchCount = 0x80123158; // type:data size:0x4
+
+// Direction-vector protocol and the independent threshold-gated sprite effect.
+Ovl11AccumulateDirectionVector = 0x800D03B4; // type:func
+Ovl11SetDirectionVector = 0x800D0408; // type:func
+Ovl11StartRecordEffectAboveThreshold = 0x800D049C; // type:func
+
+// Complete 0xB8-byte tagged-record handler bank, including creation facades.
+Ovl11SelectAndDrawTaggedRecordSprite = 0x800E03A0; // type:func
+Ovl11ApplyTaggedRecordDisplacement = 0x800E0450; // type:func
+Ovl11UpdateTaggedRecordActivity = 0x800E05A8; // type:func
+Ovl11UpdateTaggedRecordCounters = 0x800E06E0; // type:func
+Ovl11GetTaggedRecordCode = 0x800E0AFC; // type:func
+Ovl11StepTaggedRecordHandler = 0x800E0B40; // type:func
+Ovl11DispatchTaggedRecordHandler = 0x800E0C24; // type:func
+Ovl11ClearTaggedRecord = 0x800E0D0C; // type:func
+Ovl11InitTaggedRecord = 0x800E0D3C; // type:func
+Ovl11InitTaggedRecordSpriteSource = 0x800E0E38; // type:func
+Ovl11GetTaggedRecordSpriteDescriptor = 0x800E0F8C; // type:func
+Ovl11SelectIdleTaggedRecordHandler = 0x800E0FD0; // type:func
+Ovl11IsTaggedRecordActive = 0x800E109C; // type:func
+Ovl11RequestTaggedRecordEffect24 = 0x800E10C8; // type:func
+Ovl11RequestTaggedRecordEffect1F = 0x800E1158; // type:func
+Ovl11ClearTaggedRecordAuxLatch = 0x800E11C0; // type:func
+Ovl11RequestTaggedRecordFlag4 = 0x800E1254; // type:func
+Ovl11ReserveTaggedRecordPair = 0x800E12D8; // type:func
+Ovl11SubmitTaggedRecordRequest = 0x800E1404; // type:func
+Ovl11RequestTaggedRecordFlag2 = 0x800E15C8; // type:func
+Ovl11TryCaptureTaggedRecordWorkState = 0x800E1654; // type:func
+Ovl11CaptureTaggedRecordWorkState = 0x800E1714; // type:func
+Ovl11OffsetTaggedRecordWorkPosition = 0x800E1770; // type:func
+Ovl11TaggedRecordHandlerNoop = 0x800E1804; // type:func
+Ovl11StepTaggedRecordHandler0 = 0x800E180C; // type:func
+Ovl11StepTaggedRecordHandler1 = 0x800E18C4; // type:func
+Ovl11StepTaggedRecordHandler2 = 0x800E1974; // type:func
+Ovl11StepTaggedRecordHandler3 = 0x800E1A3C; // type:func
+Ovl11StepTaggedRecordHandler4 = 0x800E1B38; // type:func
+Ovl11StepTaggedRecordHandler5 = 0x800E1BF0; // type:func
+Ovl11StepTaggedRecordHandler14 = 0x800E1CA8; // type:func
+Ovl11SubmitDeferredTaggedRecordPose = 0x800E1D48; // type:func
+Ovl11SubmitTaggedRecordPose = 0x800E1DA8; // type:func
+
+gOvl11TaggedRecordRequestHandlers = 0x800B961C; // type:data size:0x50
+gOvl11TaggedRecordStepHandlers = 0x800B966C; // type:data size:0x50
+gOvl11TaggedRecordSpriteDescriptors = 0x80123F58; // type:data size:0x60
+gOvl11TaggedRecordHandler0Keyframes = 0x80123FB8; // type:data size:0x8
+gOvl11TaggedRecordHandler1Keyframes = 0x80123FC0; // type:data size:0x10
+gOvl11TaggedRecordHandler2Keyframes = 0x80123FD0; // type:data size:0xC
+gOvl11TaggedRecordHandler3Keyframes = 0x80123FDC; // type:data size:0xC
+gOvl11TaggedRecordHandler4Keyframes = 0x80123FE8; // type:data size:0xC
+gOvl11TaggedRecordHandler5Keyframes = 0x80123FF4; // type:data size:0xC
+gOvl11TaggedRecordHandler14Keyframes = 0x80124000; // type:data size:0x8
+
+// Complete record-table query tail and adjacent status/13x13-grid services.
+Ovl11DecodeItemCode = 0x800D5FA8; // type:func
+Ovl11GetItemPrice = 0x800D6014; // type:func
+Ovl11GetItemSellValue = 0x800D603C; // type:func
+Ovl11ClassifyHeldItemType = 0x800D6090; // type:func
+Ovl11GetRecordItemId = 0x800D60D4; // type:func
+Ovl11GetItemPackedProperty = 0x800D60F0; // type:func
+Ovl11ReadRecordTypeProperty00 = 0x800D61D8; // type:func
+Ovl11ApplyStatusDelta = 0x800D622C; // type:func
+Ovl11AdjustBalanceAndReport = 0x800D6380; // type:func
+Ovl11ApplyStatusLimitDelta = 0x800D63C4; // type:func
+Ovl11TransformGridCells = 0x800D6488; // type:func
+
+// Whole 0xB4 tagged-record lifecycle and callback-bank unit.
+Ovl11SelectAndDrawSmallRecordSprite = 0x800E1EC0; // type:func
+Ovl11ApplySmallRecordDisplacement = 0x800E1F70; // type:func
+Ovl11AllocateSmallRecord = 0x800E1F9C; // type:func
+Ovl11CountSmallRecords = 0x800E20B8; // type:func
+Ovl11UpdateSmallRecordKind1 = 0x800E20F0; // type:func
+Ovl11UpdateSmallRecordState = 0x800E21E4; // type:func
+Ovl11RandomizeSmallRecordPosition = 0x800E2654; // type:func
+Ovl11GetSmallRecordCode = 0x800E2718; // type:func
+Ovl11StepSmallRecordHandler = 0x800E276C; // type:func
+Ovl11DispatchSmallRecordHandler = 0x800E2824; // type:func
+Ovl11ClearSmallRecord = 0x800E2904; // type:func
+Ovl11GetSmallRecordIndex = 0x800E2934; // type:func
+Ovl11InitSmallRecord = 0x800E2968; // type:func
+Ovl11RefreshSmallRecordSprite = 0x800E2A30; // type:func
+Ovl11GetSmallRecordSpriteDescriptor = 0x800E2AAC; // type:func
+Ovl11SelectSmallRecordHandler = 0x800E2AF0; // type:func
+Ovl11ApplySmallRecordRowPlacements = 0x800E2BE8; // type:func
+Ovl11StartSmallRecordHandler3 = 0x800E2C64; // type:func
+Ovl11StartSmallRecordHandler4 = 0x800E2D3C; // type:func
+Ovl11StartSmallRecordHandler9 = 0x800E2E4C; // type:func
+Ovl11StartSmallRecordHandler14 = 0x800E2E98; // type:func
+Ovl11StepSmallRecordHandler0 = 0x800E2EA0; // type:func
+Ovl11StepSmallRecordHandler1 = 0x800E2F58; // type:func
+Ovl11StepSmallRecordHandler2 = 0x800E3020; // type:func
+Ovl11StepSmallRecordHandler3 = 0x800E30FC; // type:func
+Ovl11StepSmallRecordHandler4 = 0x800E3200; // type:func
+Ovl11StepSmallRecordHandler14 = 0x800E32E4; // type:func
+Ovl11StepSmallRecordHandler18 = 0x800E33E8; // type:func
+Ovl11StepSmallRecordHandler19 = 0x800E3464; // type:func
+
+gOvl11SmallRecordEnterHandlers = 0x800B96BC; // type:data size:0x50
+gOvl11SmallRecordStepHandlers = 0x800B970C; // type:data size:0x50
+gOvl11SmallRecordSpriteDescriptors = 0x80124008; // type:data size:0x70
+gOvl11SmallRecordHandler0Keyframes = 0x80124078; // type:data size:0x8
+gOvl11SmallRecordHandler1Code109Keyframes = 0x80124080; // type:data size:0x10
+gOvl11SmallRecordHandler1Code10AKeyframes = 0x80124090; // type:data size:0xC
+gOvl11SmallRecordHandler2Code109Keyframes = 0x8012409C; // type:data size:0xC
+gOvl11SmallRecordHandler2Code10AKeyframes = 0x801240A8; // type:data size:0x8
+gOvl11SmallRecordHandler3Keyframes = 0x801240B0; // type:data size:0xC
+gOvl11SmallRecordHandler4Keyframes = 0x801240BC; // type:data size:0xC
+gOvl11SmallRecordHandler14Keyframes = 0x801240C8; // type:data size:0x8
+gOvl11SmallRecordHandler19Keyframes = 0x801240D0; // type:data size:0x8
+
+// The separate VRAM-backed sprite-block snapshot/cache service.
+Ovl11UploadSpriteBlockBank = 0x800E351C; // type:func
+Ovl11ReadSpriteBlock = 0x800E36CC; // type:func
+Ovl11GetSpriteBlockSize = 0x800E3978; // type:func
+Ovl11SumSpriteBlockWords = 0x800E39B8; // type:func
+gOvl11SpriteBlockOffsets = 0x801247E8; // type:data size:0xCC
+gOvl11SpriteBlockBankRect = 0x801248B4; // type:data size:0x8
+gOvl11SpriteBlockChecksums = 0x80129420; // type:data size:0xC8
+gOvl11SpriteBlockScratchBase = 0x801294E8; // type:data size:0x4

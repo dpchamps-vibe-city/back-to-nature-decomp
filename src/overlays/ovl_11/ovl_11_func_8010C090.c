@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_direction_vector.h"
 
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
-s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
 s32 ovl_11_func_8010C090(Recon_ovl_11_func_800D2594_A0View *arg0) {
     s32 temp_a0;
@@ -37,7 +37,7 @@ s32 ovl_11_func_8010C090(Recon_ovl_11_func_800D2594_A0View *arg0) {
     if (!(temp_a0 & 0x2000)) {
         (*(s16 *) ((u8 *) arg0 + 0x2C)) = 0x12C;
         if (((*(u16 *) ((u8 *) arg0 + 0x7A)) & 0x300) && !(temp_a0 & 0x01000000)) {
-            ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+            Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         }
     }
     return 1;

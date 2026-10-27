@@ -1,7 +1,8 @@
 #include "common.h"
 #include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
-s32 ovl_11_func_800D6014(u16 arg0);
 void ovl_11_func_8011D400(s32 *arg0);
 
 s32 ovl_11_func_8011AFB4(void) {
@@ -15,7 +16,7 @@ s32 ovl_11_func_8011AFB4(void) {
     gOvl11QuantityPrompt.unk0 = 0;
     *(s32 *) ((u8 *) &gOvl11QuantityPrompt + 4) = (s32) &D_8005181A + gTextBankOffsets[1];
     flags = gProgressDerivedFlags;
-    gOvl11QuantityPrompt.unkA = ovl_11_func_800D6014(0x6CU);
+    gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x6CU);
     gOvl11QuantityPrompt.unk8 = 1;
     ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
 

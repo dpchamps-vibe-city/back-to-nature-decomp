@@ -21,9 +21,9 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_balance_accounting.h"
+#include "ovl11_cell_grid_lookup.h"
 
 void SetVal8005E2BC(s32 value);
-s32 ovl_11_func_800D6014(u16 id);
 s32 ovl_11_func_8011CF40(s16 limit, u16 *value);
 void ovl_11_func_8011DD48(ovl_11_DD48_arg0 *prompt, s32 value, s16 a, s16 b, s16 c);
 s32 ovl_11_func_800E5E98(s16 a, s16 b, s32 c, s32 d);
@@ -145,7 +145,7 @@ s32 Ovl11StepQuantityPrompt(s32 *step, s32 baseStep, s32 drawMode,
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
         ovl_11_func_8011DD48(prompt, 0, 0,
-            (s16)ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*record)), 0);
+            (s16)Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*record)), 0);
         gOvl11InteractionDrawMode = drawMode;
         Ovl11SetInteractionStepsOffset(2, 4, baseStep);
         break;
@@ -216,7 +216,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
         switch ((u32)state) {
         case 0:
             if (ovl_11_func_800E6EE0(mode, 1, 1, 0) == 1) {
-                if (ovl_11_func_8011D06C(ovl_11_func_800D6014(item)) == 1) {
+                if (ovl_11_func_8011D06C(Ovl11GetItemPrice(item)) == 1) {
                     SetMessagePortraitEnabled(0);
                     RequestMessageWindow(messages[0][0], messages[0][1]);
                     Ovl11SetInteractionStepsOffset(2, 4, baseStep);
@@ -292,7 +292,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             Ovl11SetInteractionStepsOffset(13, 14, baseStep);
             break;
         case 14:
-            Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014(item), 1);
+            Ovl11AdjustSpendableBalance(-Ovl11GetItemPrice(item), 1);
             Ovl11RequestProgressAction(item);
             CloseMessageWindow();
             RequestMessageWindow(2, 0x9F);

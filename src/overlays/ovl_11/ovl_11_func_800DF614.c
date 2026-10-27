@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
+#include "ovl11_record_effect_threshold.h"
 
 typedef struct {
     /* 0x00 */ char pad_00[0x16];
@@ -27,7 +28,6 @@ typedef struct {
 } Struct_800D049C;
 
 s32 ovl_11_func_800DF4F0(UnkStruct800DF4F0 *arg0);
-void ovl_11_func_800D049C(Struct_800D049C *arg0);
 void ovl_11_func_800D12A0(s16 arg0);
 
 s32 ovl_11_func_800DF614(Struct_800DF614 *arg0) {
@@ -41,7 +41,7 @@ s32 ovl_11_func_800DF614(Struct_800DF614 *arg0) {
     }
     arg0->unkAE = 0;
     SetSpriteSourceTextureOffsets((Struct_800154CC *)((s32)arg0 + 0x78), 0, 0, 0, 0);
-    ovl_11_func_800D049C((Struct_800D049C *)arg0);
+    Ovl11StartRecordEffectAboveThreshold((Struct_800D049C *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
         ovl_11_func_800D12A0(9);

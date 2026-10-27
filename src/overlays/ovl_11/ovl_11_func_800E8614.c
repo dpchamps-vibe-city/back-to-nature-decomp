@@ -4,6 +4,7 @@
 #include "psyq/libgte.h"
 #include "psyq/memory.h"
 #include "aged_item_pool.h"
+#include "ovl11_small_record_handlers.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -15,7 +16,6 @@ typedef struct __attribute__((packed)) {
 } Ovl11Rec800E8614;
 
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
-void ovl_11_func_800E2904(s32 arg0);
 void ovl_11_func_800D2D54(void *arg0);
 
 s32 ovl_11_func_800E8614(s32 arg0) {
@@ -45,7 +45,7 @@ s32 ovl_11_func_800E8614(s32 arg0) {
         var_s0_2 = 9;
         do {
             if (*var_s1_2 & mask) {
-                ovl_11_func_800E2904((s32)var_s2);
+                Ovl11ClearSmallRecord((s32)var_s2);
             }
             var_s2 += 0xB4;
             var_s0_2 -= 1;

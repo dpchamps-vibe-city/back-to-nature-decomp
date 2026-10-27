@@ -3,10 +3,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_collision_query_budget.h"
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_800D1CFC(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D1C18(s32 arg0, s32 arg1, s32 arg2);
-void ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D2DB8(Ovl11Func800BDCE8Arg1 *arg0);
 s32 ovl_11_func_800D24FC(Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
 
@@ -56,7 +56,7 @@ s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 
         result = turn;
     } else {
         direction = direction < 2 ? direction + 2 : direction - 2;
-        ovl_11_func_800D0408(direction, (Recon800D0408A1View *)&position, 400);
+        Ovl11SetDirectionVector(direction, (Recon800D0408A1View *)&position, 400);
         position.vx += *(s32 *)((u8 *)arg0 + 0x38);
         position.vz += *(s32 *)((u8 *)arg0 + 0x40);
         width = *(u16 *)((u8 *)&gItemDataTable[*(u16 *)arg0] + 0x24);

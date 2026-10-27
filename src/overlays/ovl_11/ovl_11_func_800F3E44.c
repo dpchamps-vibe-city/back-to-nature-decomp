@@ -1,4 +1,7 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 /* View of the absolute-addressed D_800712C0 record reached by this function:
  * a u16 counter at 0x00, a table of u16 entries starting at 0x02, and an s32
@@ -9,7 +12,6 @@ typedef struct {
     /* 0x34 */ s32 unk34;
 } Unk800712C0;
 
-s32 ovl_11_func_800D603C(s32 arg0);
 s32 ovl_11_func_800F3C9C(u16 arg0);
 
 s32 ovl_11_func_800F3E44(s16 arg0) {
@@ -20,7 +22,7 @@ s32 ovl_11_func_800F3E44(s16 arg0) {
     s = (Unk800712C0 *)&D_800712C0;
     if (s->unk0 < 0x1E) {
         temp = arg0 & 0xFFFF;
-        s->unk34 += ovl_11_func_800D603C(temp);
+        s->unk34 += Ovl11GetItemSellValue(temp);
         s->unk0 += 1;
         idx = ovl_11_func_800F3C9C((u16)temp);
         if (idx == -1) {

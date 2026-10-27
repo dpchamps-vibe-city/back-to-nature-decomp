@@ -55,6 +55,7 @@
 #include "ovl11_primary_object_collision_action.h"
 #include "ovl11_cell_grid_selection.h"
 #include "ovl11_primary_object_input_override.h"
+#include "ovl11_status_gauge_deltas.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -401,7 +402,6 @@ void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 void ovl_11_func_800CCF14(Ovl11TripletTailView *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
-s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
 void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
@@ -483,7 +483,7 @@ reset_done:
             ovl_11_func_800CCF14(temp_s0);
             arg0->unk6C &= 0xFFFF7FFB;
             Ovl11ResetPrimaryObjectRequest();
-            ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x50:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -492,7 +492,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             Ovl11ResetPrimaryObjectRequest();
-            ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x51:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -505,7 +505,7 @@ reset_done:
             ovl_11_func_800CCF14(temp_s0_2);
             arg0->unk6C &= 0xFFFF7FFB;
             Ovl11ResetPrimaryObjectRequest();
-            ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x4E:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -514,7 +514,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             arg0->unk6C &= ~4;
-            ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x4F:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -523,7 +523,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             Ovl11ResetPrimaryObjectRequest();
-            ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
         case 0x4D:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -532,7 +532,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             arg0->unk6C &= ~4;
-            ovl_11_func_800D622C(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
             return 0;
 
         case 0x53:
@@ -545,7 +545,7 @@ reset_done:
             ovl_11_func_800CCF14((Ovl11TripletTailView *) ((u8 *) arg0 + 0x84));
             Ovl11ResetPrimaryObjectRequest();
 negative_action:
-            ovl_11_func_800D622C(-1, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(-1, ovl_11_func_800CD3C4(0), 0, 0);
             break;
         case 0x54:
             Ovl11ChangeObjectStateDirect((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x2D, 1, -2);
@@ -690,7 +690,7 @@ state_done:
                 temp_v0_2 = ((struct Ovl11C580CState *)D_8006C838)->count + 1;
                 ((struct Ovl11C580CState *)D_8006C838)->count = temp_v0_2;
                 if ((s16) temp_v0_2 < 2) {
-                    ovl_11_func_800D622C(0, -5, 0, 0);
+                    Ovl11ApplyStatusDelta(0, -5, 0, 0);
                 }
             }
             if (arg0->state == 0x59) {
@@ -930,7 +930,7 @@ advance_action:
             }
             column = (s16)arg0->power / 20;
             temp_s0_5 = gOvl11ItemActionTierValues[(s16)((s16)(arg0->value - 1) / 5)][column];
-            ovl_11_func_800D622C((s8) temp_s0_5, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta((s8) temp_s0_5, ovl_11_func_800CD3C4(0), 0, 0);
         }
         var_v0 = 0;
         if (waitForAction == 1) {

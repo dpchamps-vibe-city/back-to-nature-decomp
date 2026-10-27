@@ -16,6 +16,7 @@
 #include "ovl11_area_record_claims.h"
 #include "ovl11_save_counters.h"
 #include "ovl11_seasonal_record_ids.h"
+#include "ovl11_tagged_record_handlers.h"
 
 s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void ovl_11_func_80110E28(u8 *arg0);
@@ -141,7 +142,6 @@ s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area) {
 }
 
 s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
-s32 ovl_11_func_800E0C24(Ovl11ActionDispatchView *arg0, s32 arg1);
 
 /* Mode-2 selections receive action 6 through the flag-selected dispatcher. */
 s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area) {
@@ -171,7 +171,7 @@ s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area) {
         if (!(*(s32 *)((u8 *)flags + offset) & 0x10000)) {
             ovl_11_func_800DF010((Ovl11ActionDispatchView *)(offset + (u32)records), 6);
         } else {
-            ovl_11_func_800E0C24((Ovl11ActionDispatchView *)(offset + (u32)records), 6);
+            Ovl11DispatchTaggedRecordHandler((Ovl11ActionDispatchView *)(offset + (u32)records), 6);
         }
     }
     return failed;
@@ -207,7 +207,7 @@ s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area) {
         if (!(*(s32 *)(record + 0x34) & 0x10000)) {
             ovl_11_func_800DF010((Ovl11ActionDispatchView *)record, 7);
         } else {
-            ovl_11_func_800E0C24((Ovl11ActionDispatchView *)record, 8);
+            Ovl11DispatchTaggedRecordHandler((Ovl11ActionDispatchView *)record, 8);
         }
         if (*(u16 *)(object + 0xB6) == 0) {
             failed = 1;

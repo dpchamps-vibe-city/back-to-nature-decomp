@@ -32,6 +32,7 @@
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_held_item_replacement.h"
+#include "ovl11_cell_grid_lookup.h"
 
 void ovl_11_func_8011D400(s32 *arg0);
 
@@ -165,7 +166,6 @@ s32 Ovl11InitFixedCatalog(void) {
     return 1;
 }
 
-s32 ovl_11_func_800D6014(u16 arg0);
 s32 Ovl11RequestCatalogPanelMessage(s32 arg0);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -197,7 +197,7 @@ s32 Ovl11UpdateCatalogPurchasePanel(void) {
             break;
         case 1:
             gOvl11CatalogSelectedId = Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord);
-            cost = ovl_11_func_800D6014(*(u16 *)&gOvl11CatalogSelectedId);
+            cost = Ovl11GetItemPrice(*(u16 *)&gOvl11CatalogSelectedId);
             if (ovl_11_func_8011D06C(cost) == 1) {
                 Ovl11AdjustSpendableBalance(-cost, 1);
                 gOvl11CatalogPanelState = 5;
@@ -272,7 +272,6 @@ s32 Ovl11RequestCatalogPanelMessage(s32 messageIndex) {
 
 s32 Ovl11FindFirstUnsetResourceOption (void);
 void ovl_11_func_8011D400 (s32 *arg0);
-s32 ovl_11_func_800D6014 (u16 arg0);
 
 s32 Ovl11InitResourcePurchasePanel(void) {
     s32 firstUnset;
@@ -305,7 +304,7 @@ s32 Ovl11InitResourcePurchasePanel(void) {
     (*(void **) ((u8 *) gOvl11PrimarySelectionRecord + 0)) = (void *) ((u8 *) &D_80051D34 + *D_80054BC0);
     (*(void **) ((u8 *) gOvl11PrimarySelectionRecord + 4)) = (void *) ((u8 *) ((u8 *) &D_80051D34 - 0x5D8) + (*D_80054BC0 + gOvl11ResourceOptionTextOffsets[option]));
     gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &D_80051D34 + 0x98 + *D_80054BC0);
-    gOvl11QuantityPrompt.unkA = ovl_11_func_800D6014(0x3FU);
+    gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x3FU);
     gOvl11QuantityPrompt.unk8 = 1;
     ovl_11_func_8011D400((s32 *) gOvl11SecondarySelectionRecord);
     (*(s16 *) ((u8 *) gOvl11SecondarySelectionRecord + 0x46)) = 0x133;
@@ -534,7 +533,7 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
         ovl_11_func_8011DD48(prompt, (s32)(D_80051DBE + gTextBankOffsets[1]), 1,
-            (s16)ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*record)), 0);
+            (s16)Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*record)), 0);
         gOvl11InteractionDrawMode = drawMode;
         Ovl11SetInteractionStepsOffset(2, 4, baseStep);
         break;

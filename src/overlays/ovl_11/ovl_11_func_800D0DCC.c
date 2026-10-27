@@ -5,7 +5,9 @@
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 void func_80017A08(s32 arg0, s32 arg1);
 
-s32 ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0) {
+/* Both clients ignore the message request's result; this service only
+ * publishes the selected message and the two text substitution records. */
+void ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0) {
     s16 temp_a0;
     s32 var_a1;
     u16 temp_v1;
@@ -41,5 +43,5 @@ s32 ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0) {
             }
         }
     }
-    return RequestMessageWindow(0, var_a1);
+    RequestMessageWindow(0, var_a1);
 }

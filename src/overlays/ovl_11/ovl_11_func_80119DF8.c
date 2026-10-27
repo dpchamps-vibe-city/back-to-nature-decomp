@@ -15,8 +15,8 @@
 #include "ovl11_selection_record_access.h"
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_balance_accounting.h"
+#include "ovl11_cell_grid_lookup.h"
 
-s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_8011B2B0(void);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
@@ -42,7 +42,7 @@ s32 ovl_11_func_80119DF8(void) {
     second.unk10 = 6;
     second.unk0 = gOvl11SecondarySelectionRecord;
     item = Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11SecondarySelectionRecord);
-    price = ovl_11_func_800D6014(item);
+    price = Ovl11GetItemPrice(item);
     result = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;

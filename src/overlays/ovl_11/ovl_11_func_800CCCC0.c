@@ -17,11 +17,11 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_status_gauge_deltas.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
-s32 ovl_11_func_800D622C (s8 arg0, s8 arg1, s16 arg2, s32 arg3);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 void ovl_11_func_800DE3A0 (void);
 
@@ -48,19 +48,19 @@ void ovl_11_func_800CCCC0(void) {
     SetGameFlag(0x40U, 0U);
     if (!(temp_s0->flags & 4)) {
         if (GetGameFlag(0x47U) != 1) {
-            ovl_11_func_800D622C(0, 0xA, 0, 0);
+            Ovl11ApplyStatusDelta(0, 0xA, 0, 0);
         } else {
             temp_s1 = temp_s0->angle + 0x5A0;
             temp_s1 -= player->unk2C;
             temp_s0_2 = Ovl11ComputeSixtyStepIncrease(temp_s1);
-            ovl_11_func_800D622C(temp_s0_2, Ovl11ComputeSixtyStepDecrease(temp_s1), 0, 0);
+            Ovl11ApplyStatusDelta(temp_s0_2, Ovl11ComputeSixtyStepDecrease(temp_s1), 0, 0);
         }
     } else {
         if ((u32) ((u16) player->unk2C - 0x168) < 0x2D0U) {
-            ovl_11_func_800D622C(0x64, -0x19, 0, 0);
-            ovl_11_func_800D622C(0x64, 0, 0, 0);
+            Ovl11ApplyStatusDelta(0x64, -0x19, 0, 0);
+            Ovl11ApplyStatusDelta(0x64, 0, 0, 0);
         } else {
-            ovl_11_func_800D622C(0x32, -0x16, 0, 0);
+            Ovl11ApplyStatusDelta(0x32, -0x16, 0, 0);
         }
         ((struct Ovl11CCCC0State *)D_8006C838)->flags = (s32) (((struct Ovl11CCCC0State *)D_8006C838)->flags & ~4);
     }

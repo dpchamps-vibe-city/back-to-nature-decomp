@@ -4,8 +4,8 @@
 #include "psyq/libgte.h"
 #include "sprite_rotation.h"
 #include "ovl11_region_exit_query.h"
+#include "ovl11_direction_vector.h"
 
-void ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 
 void ovl_11_func_800D2B40(Recon_ovl_11_func_800D2594_A0View *arg0) {
@@ -65,13 +65,13 @@ void ovl_11_func_800D2B40(Recon_ovl_11_func_800D2594_A0View *arg0) {
                 if ((*(s16 *) ((u8 *) arg0 + 0x30)) == temp_s0) {
                     (*(s16 *) ((u8 *) arg0 + 0x22)) = var_s4;
                 } else {
-                    ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+                    Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
                 }
                 if (Ovl11GetSpriteRotationState((s32) var_s2) == 3) {
                     (*(s32 *) ((u8 *) arg0 + 0x38)) = sp20.vx;
                     (*(s32 *) ((u8 *) arg0 + 0x40)) = sp20.vz;
                     (*(s16 *) ((u8 *) arg0 + 0x30)) = (s16) sp30;
-                    ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+                    Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
                     arg0->unk34 &= ~0x2000;
                     (*(s16 *) ((u8 *) arg0 + 0x18)) = 0x5A;
                 }
@@ -79,7 +79,7 @@ void ovl_11_func_800D2B40(Recon_ovl_11_func_800D2594_A0View *arg0) {
                 (*(s32 *) ((u8 *) arg0 + 0x38)) = sp20.vx;
                 (*(s32 *) ((u8 *) arg0 + 0x40)) = sp20.vz;
                 (*(s16 *) ((u8 *) arg0 + 0x30)) = (s16) sp30;
-                ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+                Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
                 arg0->unk34 &= ~0x2000;
             }
             break;

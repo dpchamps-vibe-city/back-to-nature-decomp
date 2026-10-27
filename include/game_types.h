@@ -1248,9 +1248,10 @@ typedef struct {
     /* 0xAC */ char pad_AC[0x4];
 } Ovl11ObjectInitRecord;
 
+/* Ovl11AdjustBalanceAndReport optionally writes the balance service result. */
 typedef struct {
-    s32 unk0;
-} Recon_ovl_11_func_800D6380_A3View;
+    s32 result;
+} Ovl11BalanceAdjustmentResult;
 
 /* Argument view of ovl_11_func_800D85F8: the item id at 0x00 is read both
  * unsigned (lhu) for the returned default and signed (lh) by the flag guards

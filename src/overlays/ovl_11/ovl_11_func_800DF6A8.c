@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ovl11_record_effect_threshold.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -9,7 +10,6 @@ typedef struct {
 } UnkStruct800DF6A8;
 
 s32 ovl_11_func_800DF4F0(UnkStruct800DF6A8 *arg0);
-void ovl_11_func_800D049C(UnkStruct800DF6A8 *arg0);
 void ovl_11_func_800D12A0(s16 arg0);
 
 s32 ovl_11_func_800DF6A8(UnkStruct800DF6A8 *arg0) {
@@ -19,7 +19,7 @@ s32 ovl_11_func_800DF6A8(UnkStruct800DF6A8 *arg0) {
         return -1;
     }
     if (!(arg0->unk34 & 4)) {
-        ovl_11_func_800D049C(arg0);
+        Ovl11StartRecordEffectAboveThreshold(arg0);
     }
     arg0->unk34 |= 4;
     far_base = (char *)&D_8007AFF0;

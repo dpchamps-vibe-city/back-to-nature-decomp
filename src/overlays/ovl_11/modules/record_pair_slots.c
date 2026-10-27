@@ -9,8 +9,8 @@
 #include "ovl11_row_placement.h"
 #include "ovl11_tagged_record_creation.h"
 #include "ovl11_code160_record_creation.h"
+#include "ovl11_small_record_handlers.h"
 
-void ovl_11_func_800E2904(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 
 void Ovl11ApplyRecordRowPlacement(s32 record, s16 rowSlot, s32 poolKind) {
@@ -183,7 +183,7 @@ restore_b4_slot:
         offset = recordIndex * 0xB4;
         recordFlags = offset;
         if (((struct Ovl11PoolResetView *) (offset + (s32)recordBase))->records_7AB4[0].type == 0x10A) {
-            ovl_11_func_800E2904(recordFlags + (s32) b4Pool);
+            Ovl11ClearSmallRecord(recordFlags + (s32) b4Pool);
             restored = (Ovl11D09E0Object *) ovl_11_func_800CE744(0x10A, (s32) recordIndex);
             if (*(s16 *)work == 2) {
                 restored->flags |= 0x40000000;

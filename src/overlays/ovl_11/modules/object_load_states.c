@@ -32,6 +32,8 @@
 #include "game_flags.h"
 #include "ovl11_record_slot_table.h"
 #include "ovl11_scene_value_commands.h"
+#include "psyq/memory.h"
+#include "ovl11_sprite_block_bank.h"
 
 void ClearActiveOrderingTables(void);
 /* The callee's four-byte flag aggregates use the scalar word calling ABI. */
@@ -39,7 +41,6 @@ void ovl_11_func_800E5230(void);
 void ovl_11_func_800E5294(void);
 u8 *ovl_11_func_800E54F8(u16 *arg0, s32 arg1);
 void ovl_11_func_800E499C(s32 arg0);
-s32 ovl_11_func_800E3978(s32 arg0);
 void ovl_11_func_800E5524(u8 *arg0, u8 *arg1, s32 arg2);
 void ovl_11_func_800E5078(void);
 void ovl_11_func_800E54C8(void);
@@ -99,8 +100,8 @@ s32 Ovl11StartObjectArchiveLoad(void) {
         } while (result == NULL);
         ovl_11_func_800E499C((s32)result);
     } else {
-        ovl_11_func_800E5524((u8 *)D_8006C838 + 0x20D8, data, ovl_11_func_800E3978(id));
-        if (ovl_11_func_800E3978(id) >= 0xCE1U) {
+        ovl_11_func_800E5524((u8 *)D_8006C838 + 0x20D8, data, Ovl11GetSpriteBlockSize(id));
+        if (Ovl11GetSpriteBlockSize(id) >= 0xCE1U) {
             SystemError(0x53, ((struct Ovl11CurrentObjectView *)D_8006C838)->current[1]);
         }
         ovl_11_func_800E5078();

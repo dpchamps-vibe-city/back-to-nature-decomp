@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_record_effect_threshold.h"
 
 typedef struct {
     /* 0x00 */ char pad_00[0x30];
@@ -21,7 +22,6 @@ typedef struct {
 } Struct_800D049C;
 
 s32 ovl_11_func_800DF4F0(UnkStruct800DF4F0 *arg0);
-void ovl_11_func_800D049C(Struct_800D049C *arg0);
 void ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0);
 void ovl_11_func_800D12A0(s16 arg0);
 
@@ -32,7 +32,7 @@ s32 ovl_11_func_800DF9F0(Struct_800DF9F0 *arg0) {
         return -1;
     }
     if (!(arg0->unk34 & 2)) {
-        ovl_11_func_800D049C((Struct_800D049C *)arg0);
+        Ovl11StartRecordEffectAboveThreshold((Struct_800D049C *)arg0);
     }
     arg0->unk34 |= 2;
     ovl_11_func_800D0DCC((UnkStruct800DF4F0 *)arg0);

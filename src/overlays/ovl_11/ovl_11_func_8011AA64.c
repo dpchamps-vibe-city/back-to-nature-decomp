@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 
-s32 ovl_11_func_800D6014 (u16 arg0);
 void ovl_11_func_8011D400 (s32 *arg0);
 
 s32 ovl_11_func_8011AA64(void) {
@@ -20,7 +20,7 @@ s32 ovl_11_func_8011AA64(void) {
     temp_s4 = gProgressDerivedFlags & 4;
     gOvl11QuantityPrompt.unk0 = 0;
     gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &D_8005181A + gTextBankOffsets[1]);
-    gOvl11QuantityPrompt.unkA = ovl_11_func_800D6014(0x6CU);
+    gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x6CU);
     gOvl11QuantityPrompt.unk8 = 1;
     p = gOvl11PrimarySelectionRecord;
     ovl_11_func_8011D400((s32 *) p);

@@ -1,7 +1,7 @@
 #include "common.h"
-
-/* The callee sign-extends both incoming halfwords and returns an s32. */
-s32 ovl_11_func_800D60F0(s16 arg0, s16 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_800E93CC(s16 arg0, s16 arg1) {
     ItemData *item;
@@ -20,7 +20,7 @@ s32 ovl_11_func_800E93CC(s16 arg0, s16 arg1) {
     flags = item->u0.flags;
     flags &= 0x1C00;
     if (flags) {
-        flags = ovl_11_func_800D60F0(arg1, 3);
+        flags = Ovl11GetItemPackedProperty(arg1, 3);
         if ((u16)flags < 3) {
             return 1;
         }

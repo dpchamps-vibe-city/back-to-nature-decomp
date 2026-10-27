@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "ovl11_tagged_record_handlers.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
 s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
 s32 ovl_11_func_80110494(Ovl11StateKeyProbeView *arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
-s32 ovl_11_func_800E0C24(Ovl11ActionDispatchView *arg0, s32 arg1);
 s32 ovl_11_func_80110520(s32 arg0, s16 arg1);
 s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 u16 ovl_11_func_80110118(Ovl11ActionCompletionView *arg0);
@@ -63,7 +63,7 @@ s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0, s32 arg1) {
             if (!(record->unk34 & 0x10000)) {
                 ovl_11_func_800DF010(animal, 6);
             } else {
-                ovl_11_func_800E0C24(animal, 6);
+                Ovl11DispatchTaggedRecordHandler(animal, 6);
             }
             ovl_11_func_800D05D0(arg0,
                 ((Ovl11D5224LargeView *)((u8 *)D_8006C838 + *(s16 *)((u8 *)arg0 + 0xBA) * 0xB8))->position);
@@ -89,7 +89,7 @@ s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0, s32 arg1) {
             if (!(record->unk34 & 0x10000)) {
                 ovl_11_func_800DF010(animal, 7);
             } else {
-                ovl_11_func_800E0C24(animal, 8);
+                Ovl11DispatchTaggedRecordHandler(animal, 8);
             }
             if (*(u16 *)((u8 *)arg0 + 0xB6) != 0) {
                 *(s16 *)((u8 *)arg0 + 0x28) = 7;

@@ -443,8 +443,25 @@ extern s16 gOvl11TextureStreamCursor;
 /* ovl_11 80116878 loads this word with lw for a signed threshold comparison. */
 extern s32 gSelectedThresholdBalance;
 
-/* ovl_11 800E0B40 indexes 20 rodata callbacks; matched members take an object and return s32. */
-extern s32 (*D_800B966C[20])(void *);
+/* ovl_11 E0B40/E0C24 index complementary 20-word request/update tables. */
+extern s32 (*gOvl11TaggedRecordRequestHandlers[20])(void *);
+extern s32 (*gOvl11TaggedRecordStepHandlers[20])(void *);
+
+/* E0F8C reads animation/frame halfwords: six rows, four descriptors per row. */
+typedef struct {
+    u16 animation;
+    u16 frame;
+} Ovl11TaggedRecordSpriteDescriptor;
+extern Ovl11TaggedRecordSpriteDescriptor gOvl11TaggedRecordSpriteDescriptors[6][4];
+
+/* E180C..E1CA8 step these private packed code/duration tables in member order. */
+extern u8 gOvl11TaggedRecordHandler0Keyframes[8];
+extern u8 gOvl11TaggedRecordHandler1Keyframes[16];
+extern u8 gOvl11TaggedRecordHandler2Keyframes[12];
+extern u8 gOvl11TaggedRecordHandler3Keyframes[12];
+extern u8 gOvl11TaggedRecordHandler4Keyframes[12];
+extern u8 gOvl11TaggedRecordHandler5Keyframes[12];
+extern u8 gOvl11TaggedRecordHandler14Keyframes[8];
 
 /* ovl_11 8010B4D8 indexes these 20 rodata handler-address words at +0x26. */
 extern s32 D_800BAA34[20];
@@ -3607,6 +3624,14 @@ typedef struct {
     s32 (*properties)[4];
 } Ovl11PackedItemGlobals;
 
+/* 800D603C reads item pointer +20, signed sale value +12 and flags +44F8. */
+typedef struct {
+    /* 0x00 */ char pad_00[0x20];
+    /* 0x20 */ void *items;
+    /* 0x24 */ char pad_24[0x44F8 - 0x24];
+    /* 0x44F8 */ s32 statusFlags;
+} Ovl11ItemSaleState;
+
 /* 800CBE2C passes the halfword-aligned tag at +52C4 and reads u16 +929C. */
 typedef struct {
     char pad0[0x52C4];
@@ -3663,8 +3688,7 @@ extern u16 (*D_8006C860)[4];
 /* D_801247E8 - 51-entry s32 delta table (0xCC bytes, 0x801247E8-0x801248B4).
  * Read as adjacent words by ovl_11_func_800E3978 (a delta lookup) and by
  * ovl_11_func_800E351C/800E36CC (sprite-map offsets). Absolute-addressed. */
-extern s32 _D_801247E8[51] __asm__("D_801247E8");
-#define D_801247E8 (*((s32 *)_D_801247E8))
+extern s32 gOvl11SpriteBlockOffsets[51];
 
 /* 800EC064 scans ten flag words at stride 0xB4, starting at this address. */
 extern s32 D_80074320;
@@ -3878,7 +3902,7 @@ extern u8 D_80127D48;
 extern u8 D_80127D88;
 
 /* 800E30FC passes this 12-byte state table at 801240B0 to 800D04D4. */
-extern u8 D_801240B0[12];
+extern u8 gOvl11SmallRecordHandler3Keyframes[12];
 
 /* D_801281D0 - overlay-local 10-byte (0xA-stride) record table in ovl_11
  * data at 0x801281D0, indexed by a signed s16 selector in
@@ -6220,7 +6244,7 @@ extern Ovl11E910Entry _D_8006E910[] __asm__("D_8006E910");
 #define D_8006E910 ((Ovl11E910Entry *)_D_8006E910)
 
 /* 800E3200 passes this 12-byte animation table to 800D04D4's byte-pointer parameter. */
-extern u8 D_801240BC[];
+extern u8 gOvl11SmallRecordHandler4Keyframes[12];
 
 /* 800E4330 indexes consecutive lw offsets by the current object's signed id. */
 extern s32 gOvl11ObjectArchiveOffsets[];
@@ -6483,20 +6507,28 @@ extern Ovl11ClockHudText gOvl11ClockHudText;
  * returned pointer into this table. Absolute-addressed from the overlay. */
 extern s16 D_80128D70;
 
-/* D_800B96BC - ovl_11 dispatch table of 19 function-pointer slots (0x4C
- * bytes, absolute-addressed). ovl_11_func_800E2824 indexes it by an s16 id,
- * tests a slot against NULL and calls through it with the id's object. The
- * rodata run at 0x800B96BC holds ovl_11_func_800E2C64/800E2D3C/800E2E4C/
- * 800E2E98 at slots 3/4/8/14. */
-typedef s32 (*Ovl11B96BCFunc)(u16 *);
-extern Ovl11B96BCFunc _D_800B96BC[19] __asm__("D_800B96BC");
-#define D_800B96BC _D_800B96BC
+/* E2824: twenty enter slots, live at 3/4/9/14; original 800B96BC..800B970C. */
+typedef s32 (*Ovl11SmallRecordEnterHandler)(u16 *);
+extern Ovl11SmallRecordEnterHandler gOvl11SmallRecordEnterHandlers[20];
 
-/* D_800B970C - ovl_11 dispatch table of 20 function-pointer slots (0x50
- * bytes, absolute-addressed). ovl_11_func_800E2824 indexes it by the same
- * s16 id and only tests the slot against NULL. */
-extern s32 _D_800B970C[20] __asm__("D_800B970C");
-#define D_800B970C _D_800B970C
+/* E276C calls these twenty handler-address words; E2824 tests for presence. */
+extern s32 gOvl11SmallRecordStepHandlers[20];
+
+/* E2AAC: seven rows of four unsigned animation/frame pairs at 80124008. */
+typedef struct {
+    u16 animation;
+    u16 frame;
+} Ovl11SmallRecordSpriteDescriptor;
+extern Ovl11SmallRecordSpriteDescriptor gOvl11SmallRecordSpriteDescriptors[7][4];
+
+/* E2EA0..E3464: packed keyframe arrays, bounded by the next label/sentinel. */
+extern u8 gOvl11SmallRecordHandler0Keyframes[8];
+extern u8 gOvl11SmallRecordHandler1Code109Keyframes[16];
+extern u8 gOvl11SmallRecordHandler1Code10AKeyframes[12];
+extern u8 gOvl11SmallRecordHandler2Code109Keyframes[12];
+extern u8 gOvl11SmallRecordHandler2Code10AKeyframes[8];
+extern u8 gOvl11SmallRecordHandler14Keyframes[8];
+extern u8 gOvl11SmallRecordHandler19Keyframes[8];
 
 /* ovl_27_func_800B80B0 copies 0x1800 bytes from this three-pointer table. */
 extern void *D_800C4A40[3];
@@ -6643,17 +6675,17 @@ typedef struct {
     /* 0x02 */ s16 y;
     /* 0x04 */ s16 w;
     /* 0x06 */ s16 h;
-} Ovl11Rect801248B4;
+} Ovl11SpriteBlockRect;
 
-extern Ovl11Rect801248B4 D_801248B4;
+extern Ovl11SpriteBlockRect gOvl11SpriteBlockBankRect;
 
 /* D_80129420 - 50-entry s32 array filled by ovl_11_func_800E351C with the
  * per-segment word sums produced by ovl_11_func_800E39B8. Absolute-addressed. */
-extern s32 D_80129420[50];
+extern s32 gOvl11SpriteBlockChecksums[50];
 
 /* D_801294E8 - s32 destination base stored by ovl_11_func_800E351C (aligned
  * down to a 4-byte boundary) and handed to memcpy. Absolute-addressed. */
-extern s32 D_801294E8;
+extern s32 gOvl11SpriteBlockScratchBase;
 
 /* D_8006F5F0 - 0xE10-byte main-RAM buffer. ovl_11_func_800F0E00 clears and
  * block-copies 0xE10 bytes into it, then scans it as a 0x24-stride array of
@@ -7487,7 +7519,7 @@ extern u8 gOvl11Animation60Sequence;
 extern u8 gOvl11Animation3Sequence;
 extern u8 gOvl11Animation8Sequence;
 /* 800E1A3C passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
-extern u8 D_80123FDC[12];
+
 /* 800D55F8 passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
 extern u8 D_80123C94[12];
 /* 800D31EC stores both halfwords; D3FEC reads the first unsigned for a

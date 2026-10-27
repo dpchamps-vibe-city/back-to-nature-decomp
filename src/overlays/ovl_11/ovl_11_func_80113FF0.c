@@ -9,9 +9,9 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
+#include "ovl11_cell_grid_lookup.h"
 
 
-s32 ovl_11_func_800D6014(u16 arg0);
 void ovl_11_func_8011D400(s32 *arg0);
 
 s32 ovl_11_func_80113FF0(void) {
@@ -26,7 +26,7 @@ s32 ovl_11_func_80113FF0(void) {
     gOvl11QuantityPrompt.unk0 = (s32) ((void *) ((u8 *) &D_80051E26 + gTextBankOffsets[1]));
     *(s32 *) ((u8 *) &gOvl11QuantityPrompt + 4) = (s32) D_80051E26 - 0x60C + gTextBankOffsets[1];
     temp_s3 = gProgressDerivedFlags;
-    gOvl11QuantityPrompt.unkA = ovl_11_func_800D6014(0x69U);
+    gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x69U);
     gOvl11QuantityPrompt.unk8 = 1;
     ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
 

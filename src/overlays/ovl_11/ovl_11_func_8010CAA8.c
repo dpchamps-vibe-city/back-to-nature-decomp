@@ -1,6 +1,6 @@
 #include "common.h"
-void ovl_11_func_800D03B4(void *, void *, s32 arg2);
+#include "ovl11_direction_vector.h"
 
 void ovl_11_func_8010CAA8(s32 arg0) {
-    ovl_11_func_800D03B4(arg0 + 0x38, arg0 + 0x48, 0);
+    Ovl11AccumulateDirectionVector(arg0 + 0x38, arg0 + 0x48, 0);
 }

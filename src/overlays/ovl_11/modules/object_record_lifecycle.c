@@ -11,6 +11,7 @@
 #include "ovl11_object_render.h"
 #include "ovl11_object_record_init.h"
 #include "ovl11_object_state_dispatch.h"
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_800D3424(u16 state, u16 variant, u16 *animation, u16 *frame);
 
@@ -33,10 +34,8 @@ void Ovl11DrawStateObjectRecord(u8 *record) {
     }
 }
 
-void ovl_11_func_800D03B4(void *, void *, s32 preserveDelta);
-
 void Ovl11AdvanceStateObjectPosition(s32 recordAddress) {
-    ovl_11_func_800D03B4(recordAddress + 0x38, recordAddress + 0x48, 0);
+    Ovl11AccumulateDirectionVector(recordAddress + 0x38, recordAddress + 0x48, 0);
 }
 
 /* The destination begins at +1A, not a word boundary. Packed assignment

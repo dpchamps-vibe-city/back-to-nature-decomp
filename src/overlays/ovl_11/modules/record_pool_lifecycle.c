@@ -14,15 +14,13 @@
 #include "ovl11_record_pair_slots.h"
 #include "ovl11_item_spawn_placement.h"
 #include "ovl11_tagged_record_choice.h"
+#include "ovl11_tagged_record_handlers.h"
+#include "ovl11_small_record_handlers.h"
 
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE9C8(UnkStruct800DF4F0 *arg0);
-s32 ovl_11_func_800E05A8(UnkStruct800E109C *arg0);
-s32 ovl_11_func_800E20F0(u16 *arg0);
-s32 ovl_11_func_800E21E4(E21E4Object *arg0);
 s32 ovl_11_func_800DEB00(Ovl11Deb00Object *arg0);
-s32 ovl_11_func_800E06E0(Ovl11Deb00Object *arg0);
 s32 ovl_11_func_80108D84(s32 *arg0);
 s32 ovl_11_func_8010B264(Ovl11B264Object *arg0);
 void ovl_11_func_800D0FB4(void);
@@ -107,7 +105,7 @@ void Ovl11RunRecordPoolFirstPass(void) {
         for (index = 0; index < 10; index++) {
             record = &((struct Ovl11PoolResetView *) D_8006C838)->records_7AB4[index].type;
             if (*record != 0) {
-                ovl_11_func_800E20F0(record);
+                Ovl11UpdateSmallRecordKind1(record);
             }
         }
         for (index = 0; index < 20; index++) {
@@ -119,7 +117,7 @@ void Ovl11RunRecordPoolFirstPass(void) {
         for (index = 0; index < 20; index++) {
             largeRecord = (u16 *) ((u8 *) &gTaggedRecordBase + index * 0xB8);
             if (*largeRecord != 0) {
-                ovl_11_func_800E05A8((UnkStruct800E109C *) largeRecord);
+                Ovl11UpdateTaggedRecordActivity((UnkStruct800E109C *) largeRecord);
             }
         }
         for (index = 0; index < 6; index++) {
@@ -141,7 +139,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
         for (index = 0; index < 10; index++) {
             smallRecord = (E21E4Object *) &((struct Ovl11PoolResetView *) D_8006C838)->records_7AB4[index];
             if ((smallRecord->type != 0) || (smallRecord->flags & 0x02000000)) {
-                ovl_11_func_800E21E4(smallRecord);
+                Ovl11UpdateSmallRecordState(smallRecord);
             }
         }
         for (index = 0; index < 20; index++) {
@@ -153,7 +151,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
         for (index = 0; index < 20; index++) {
             recordWords = (s32 *) ((u8 *) &gTaggedRecordBase + index * 0xB8);
             if ((*(u16 *) ((u8 *) recordWords + 0)) != 0) {
-                ovl_11_func_800E06E0((Ovl11Deb00Object *) recordWords);
+                Ovl11UpdateTaggedRecordCounters((Ovl11Deb00Object *) recordWords);
             }
         }
         recordWords = (s32 *) &D_800759E4;

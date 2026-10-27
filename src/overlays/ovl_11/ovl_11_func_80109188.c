@@ -24,7 +24,7 @@ typedef struct {
     s16 field_44BC;
 } D8006C838ButtonView;
 
-s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
+void Ovl11SetDirectionVector(s32 direction, Recon800D0408A1View *arg1, s32 arg2);
 
 extern s32 (*D_800BA848[])(Ovl11D04D4Obj *);
 extern s32 D_800BA894[];
@@ -65,7 +65,7 @@ s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1) {
             arg0->unk28 = 0;
             arg0->unk2A = 0;
             arg0->unk2C = 0;
-            ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+            Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         }
     }
     return var_s3;

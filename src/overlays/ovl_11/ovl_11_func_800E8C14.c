@@ -1,7 +1,7 @@
 #include "common.h"
-
-s32 ovl_11_func_800D60D4(s16 *arg0);
-s32 ovl_11_func_800D60F0(s16 arg0, s16 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_800E8C14(s16 arg0, s16 arg1, s32 arg2) {
     s32 value;
@@ -18,11 +18,11 @@ s32 ovl_11_func_800E8C14(s16 arg0, s16 arg1, s32 arg2) {
     if (value == 0) {
         return 0;
     }
-    check_result = ovl_11_func_800D60D4(&((struct Ovl11E8C14State *)D_8006C838)->value);
+    check_result = Ovl11GetRecordItemId(&((struct Ovl11E8C14State *)D_8006C838)->value);
     if (check_result != 0) {
         value = check_result;
     }
-    result = ovl_11_func_800D60F0(value, index);
+    result = Ovl11GetItemPackedProperty(value, index);
     if (result < 7) {
         if (result >= 0) {
             gOvl11ValueSlots[arg1] = result + 1;

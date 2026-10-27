@@ -22,13 +22,15 @@
 #include "message_window.h"
 #include "game_flags.h"
 #include "ovl11_balance_accounting.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s32 Ovl11FindPendingCellStatus(void);
 void Ovl11ResetCellStatusPrompt(void);
 s32 Ovl11PollCellStatusChoice(void);
 s32 Ovl11ConfirmCellStatus(u32 cellIndex);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800D6014(u16 arg0);
 void SetVal8005E2BC(s32 arg0);
 
 s32 Ovl11BeginCellStatusPanel(void) {
@@ -171,7 +173,7 @@ s32 Ovl11ConfirmCellStatus(u32 cellIndex) {
     s32 cost;
     u8 *base;
 
-    if ((cellIndex >= 9U) || (cost = ovl_11_func_800D6014(gOvl11CellStatusItemIds[cellIndex]), base = (u8 *)D_8006C838, (*(s32 *)(base + 0x5224) < cost) != 0)) {
+    if ((cellIndex >= 9U) || (cost = Ovl11GetItemPrice(gOvl11CellStatusItemIds[cellIndex]), base = (u8 *)D_8006C838, (*(s32 *)(base + 0x5224) < cost) != 0)) {
         return 0;
     }
     Ovl11AdjustSpendableBalance(-cost, 1);

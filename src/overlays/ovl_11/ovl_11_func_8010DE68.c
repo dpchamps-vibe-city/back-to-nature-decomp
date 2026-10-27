@@ -1,8 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
-
-s32 ovl_11_func_800D60F0(s16 arg0, s16 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_8010DE68(Ovl11DE68Object *arg0) {
     s16 message;
@@ -32,7 +33,7 @@ s32 ovl_11_func_8010DE68(Ovl11DE68Object *arg0) {
         item = ((Ovl11DE68State *)D_8006C838)->alternateItem;
         arg0->unk16 += 2;
     }
-    switch (ovl_11_func_800D60F0(item, 0x1B)) {
+    switch (Ovl11GetItemPackedProperty(item, 0x1B)) {
     case 0:
         message = D_80127D14[arg0->unkAC];
         arg0->unk16 += D_80127D34[alternate][0] * multiplier;

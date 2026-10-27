@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_held_item_replacement.h"
+#include "ovl11_small_record_handlers.h"
 
 void ovl_11_func_800DF0F8 (s32 arg0);
-void ovl_11_func_800E2904 (s32 arg0);
 
 void ovl_11_func_800CFC20(void) {
     struct Ovl11ResetB8 *var_s0;
@@ -35,7 +35,7 @@ void ovl_11_func_800CFC20(void) {
                 Ovl11ResetPrimaryObjectRequest();
                 Ovl11ReleaseHeldItem((Ovl11C7010Object *) ((struct Ovl11CFC20Status *) D_8006C838)->object);
             }
-            ovl_11_func_800E2904((s32) var_s1);
+            Ovl11ClearSmallRecord((s32) var_s1);
             if ((s16) ++((struct Ovl11CFC20Status *) D_8006C838)->count >= 0x10) {
                 ((struct Ovl11CFC20Status *) D_8006C838)->count = 0xFU;
             }

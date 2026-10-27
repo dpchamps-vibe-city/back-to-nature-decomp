@@ -13,9 +13,9 @@
 #include "sprite_source.h"
 #include "ovl11_object_render.h"
 #include "ovl11_tagged_record_presentation.h"
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_800DF3BC(u16 state, u16 variant, u16 *animation, u16 *frame);
-void ovl_11_func_800D03B4(void *position, void *delta, s32 keepDelta);
 
 void Ovl11DrawTaggedRecordSprite(u8 *record) {
     u16 animation;
@@ -37,6 +37,6 @@ void Ovl11DrawTaggedRecordSprite(u8 *record) {
 }
 
 void Ovl11AdvanceTaggedRecordPosition(s32 recordAddress) {
-    ovl_11_func_800D03B4((void *)(recordAddress + 0x38),
+    Ovl11AccumulateDirectionVector((void *)(recordAddress + 0x38),
                        (void *)(recordAddress + 0x48), 0);
 }

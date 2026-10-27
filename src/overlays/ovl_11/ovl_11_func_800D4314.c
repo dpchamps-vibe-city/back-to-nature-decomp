@@ -4,8 +4,7 @@
 #include "random.h"
 #include "ovl11_object_record_clear.h"
 #include "ovl11_keyframe_step.h"
-
-void ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_800D4314(Ovl11D4314Object *arg0) {
     s16 state;
@@ -50,11 +49,11 @@ s32 ovl_11_func_800D4314(Ovl11D4314Object *arg0) {
                 }
                 break;
             case 4:
-                ovl_11_func_800D0408(arg0->direction, &arg0->velocity, 60);
+                Ovl11SetDirectionVector(arg0->direction, &arg0->velocity, 60);
                 arg0->velocity.unk4 -= 16;
                 break;
             case 5:
-                ovl_11_func_800D0408(arg0->direction, &arg0->velocity, 60);
+                Ovl11SetDirectionVector(arg0->direction, &arg0->velocity, 60);
                 break;
             }
         }

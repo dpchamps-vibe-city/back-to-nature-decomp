@@ -17,8 +17,9 @@
 #include "cd_loader.h"
 #include "game_flags.h"
 #include "ovl11_guarded_sprite_bank.h"
-
-s32 ovl_11_func_800E351C(u8 *buffer, s16 xOffset, s16 yOffset);
+#include "psyq/libapi.h"
+#include "psyq/memory.h"
+#include "ovl11_sprite_block_bank.h"
 
 s32 Ovl11ReloadGuardedSpriteBank(void) {
     s32 bufferAddress;
@@ -47,7 +48,7 @@ void Ovl11UploadGuardedSpriteBank(u8 *buffer) {
             if (*(s16 *)(stageWork + 0x25476) == 0x1B) {
                 xOffset = 0;
             }
-            ovl_11_func_800E351C(buffer, xOffset, 0);
+            Ovl11UploadSpriteBlockBank(buffer, xOffset, 0);
             gOvl11SpriteBankVramXOffset = xOffset;
         }
     }

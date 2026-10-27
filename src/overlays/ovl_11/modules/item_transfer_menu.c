@@ -27,6 +27,7 @@
 #include "ovl11_slot_sprite_cache.h"
 #include "psyq/abs.h"
 #include "ovl11_item_table_queries.h"
+#include "ovl11_cell_grid_lookup.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
@@ -37,7 +38,6 @@ void func_800248B0(s32 ot, s16 x, s16 y);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CCF58(Ovl11C7010Object *object);
 void ovl_11_func_800F6F7C(s32 ot, s16 x, s16 y);
-s32 ovl_11_func_800D60D4(s16 *item);
 void ovl_11_func_800D5740(s16 *item);
 void ovl_11_func_800F7010(s32 ot, s16 x, s16 y);
 void ovl_11_func_800F7094(s32 ot, s16 x, s16 y, s32 count);
@@ -221,7 +221,7 @@ void Ovl11ShowItemTransferEntryMessage(s16 *item) {
     s32 message = item[0];
 
     if (message == 0xA4) {
-        message = ovl_11_func_800D60D4(item) + 0x3E8;
+        message = Ovl11GetRecordItemId(item) + 0x3E8;
     }
     RequestMessageWindow(3, message);
     if (GetMessageWindowStatus() == 2) {

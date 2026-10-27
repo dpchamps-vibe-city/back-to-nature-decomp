@@ -11,9 +11,9 @@
 #include "psyq/stddef.h"
 #include "ovl11_collision_query_budget.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_tagged_record_handlers.h"
 
 s32 ovl_11_func_800DF010(void *, s32);
-s32 ovl_11_func_800E0C24(void *, s32);
 s32 ovl_11_func_8010B57C(u16 *, s32);
 
 s32 Ovl11QueryPrimaryObjectCollisionAction(Ovl11CB114Object *object, s32 *center, s16 probeIndex) {
@@ -80,7 +80,7 @@ s32 Ovl11QueryPrimaryObjectCollisionAction(Ovl11CB114Object *object, s32 *center
                     }
                     if (hitFlags & 4) {
                         if ((u32) gOvl11InteractionDispatchCount >= 0x33U) {
-                            ovl_11_func_800E0C24(hit, 0xD);
+                            Ovl11DispatchTaggedRecordHandler(hit, 0xD);
                         } else {
                             gOvl11InteractionDispatchCount += 1;
                         }

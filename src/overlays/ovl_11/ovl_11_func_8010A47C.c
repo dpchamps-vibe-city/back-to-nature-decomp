@@ -4,11 +4,11 @@
 #include "psyq/abs.h"
 #include "ovl11_record_pair_order.h"
 #include "ovl11_keyframe_step.h"
+#include "ovl11_tagged_record_handlers.h"
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
-s32 ovl_11_func_800E0C24(Ovl11ActionDispatchView *arg0, s32 arg1);
-s32 ovl_11_func_800D0408(s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
 s32 ovl_11_func_8010A47C(Ovl11A47CObject *arg0) {
     s16 temp_v1;
@@ -46,7 +46,7 @@ s32 ovl_11_func_8010A47C(Ovl11A47CObject *arg0) {
             if (D_8012D07C != 0) {
                 ovl_11_func_800DF010((Ovl11ActionDispatchView *) D_8012D078, 0xC);
             } else {
-                ovl_11_func_800E0C24((Ovl11ActionDispatchView *) D_8012D078, 0xC);
+                Ovl11DispatchTaggedRecordHandler((Ovl11ActionDispatchView *) D_8012D078, 0xC);
             }
             if (arg0->unk28 == 1) {
                 D_8012D070 = 0;
@@ -56,7 +56,7 @@ s32 ovl_11_func_8010A47C(Ovl11A47CObject *arg0) {
                 }
             }
             Ovl11SelectRecordPairCode((Recon_ovl_11_func_800D2594_A0View *) arg0);
-            ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+            Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         }
         arg0->unk34 |= 0x800;
         break;

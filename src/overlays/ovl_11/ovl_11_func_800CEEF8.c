@@ -42,6 +42,8 @@
 #include "ovl11_item_table_queries.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_seasonal_record_ids.h"
+#include "ovl11_direction_vector.h"
+#include "ovl11_small_record_handlers.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -131,7 +133,6 @@ int MoveImage (RECT *rect, int x, int y);
 void SsSetSerialVol (char, short, short);
 s32 ovl_11_func_800E6EAC (s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
-s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void SetSpriteSourceHeaderAndRecord (SpriteSourceData *src, s32 header, s32 field_18);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
 s32 Ovl11IsOutsideCollisionRegions (M2C_f90dacf3c1c7_Ovl11CheckArg *arg0);
@@ -146,10 +147,8 @@ s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
-s32 ovl_11_func_800E2824 (u16 *arg0, s32 arg1);
 void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
 void Ovl11CopySlotSpritePieces (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-s32 ovl_11_func_800D603C (s32 arg0);
 s32 ovl_11_func_800F3C9C (u16 arg0);
 s32 ovl_11_func_800F581C (void);
 void ovl_11_func_80110E28 (u8 *arg0);
@@ -178,7 +177,7 @@ s32 ovl_11_func_800CEEF8(M2C_4c1a205b3b09_ReconA0View *arg0) {
     (*(s16 *) ((u8 *) arg0 + 0x28)) = 0;
     (*(s16 *) ((u8 *) arg0 + 0x2A)) = 0;
     (*(s16 *) ((u8 *) arg0 + 0x2C)) = 0;
-    ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((arg0 + 0xC)), 0);
+    Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((arg0 + 0xC)), 0);
     Ovl11ResetTimedSpriteEffect((s16 *) ((arg0 + 0x1C)));
     return 0;
 }

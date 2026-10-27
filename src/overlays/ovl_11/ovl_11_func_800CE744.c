@@ -29,6 +29,9 @@
 #include "ovl11_shared_animation_icon.h"
 #include "ovl11_object_id_state.h"
 #include "ovl11_object_record_lifecycle.h"
+#include "ovl11_direction_vector.h"
+#include "ovl11_tagged_record_handlers.h"
+#include "ovl11_small_record_handlers.h"
 
 typedef struct {
                s16 unk0;
@@ -147,7 +150,6 @@ void CdFlush (void);
 int CdPosToInt (CdlLOC *p);
 void SsSetSerialVol (char, short, short);
 void SystemError (char, long);
-s16 *ovl_11_func_800E1F9C (s32 arg0, s32 arg1, s32 arg2);
 struct_800759E4 *ovl_11_func_80108CD0 (s32 arg0, s32 arg1);
 u16 *ovl_11_func_8010B1C4 (s32 arg0);
 void ovl_11_func_800D2D54 (void *arg0);
@@ -158,10 +160,6 @@ s32 ovl_11_func_800D2950 (s32 arg0);
 void func_80016054 ();
 s32 Ovl11SubmitObjectMarker (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_80015DD4 ();
-void ovl_11_func_800E2904 (s32 arg0);
-void ovl_11_func_800E0450 (s32 arg0);
-s32 ovl_11_func_800E276C (s16 *arg0);
-void ovl_11_func_800E1F70 (s32 arg0);
 void ovl_11_func_800D266C (M2C_d59586abe320_Ov11D266CFields *arg0, u16 *arg1, s32 arg2);
 void ovl_11_func_80108CA4 (s32 arg0);
 void ovl_11_func_8010B198 (s32 arg0);
@@ -170,18 +168,13 @@ s32 ovl_11_func_800CBDFC (void);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 ovl_11_func_800D3424 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-void ovl_11_func_800D03B4 (M2C_057dca34f681_Struct_800D03B4 *arg0, M2C_057dca34f681_Struct_800D03B4 *arg1, s32 arg2);
 s32 ovl_11_func_800DF3BC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_800DF4F0 (M2C_a5df3a0a31de_UnkStruct800DF4F0 *arg0);
-s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s16 ovl_11_func_800DEEE0(Recon_ovl_11_func_800DEEE0_A0View *arg0);
-s32 ovl_11_func_800E0F8C (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-s32 ovl_11_func_800E109C (M2C_1023b6857e0a_UnkStruct800E109C *arg0);
-s32 ovl_11_func_800E0FD0 (Recon_ovl_11_func_8010CE80_A0View *arg0);
-s32 ovl_11_func_800E0AFC ();
-s32 ovl_11_func_800E2AAC (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
-s32 ovl_11_func_800E2A30 (s16 *arg0);
-s32 ovl_11_func_800E2AF0 (M2C_bd4797768b62_Struct_800E2AF0 *arg0);
+s32 Ovl11IsTaggedRecordActive (M2C_1023b6857e0a_UnkStruct800E109C *arg0);
+s32 Ovl11SelectIdleTaggedRecordHandler (Recon_ovl_11_func_8010CE80_A0View *arg0);
+s32 Ovl11GetTaggedRecordCode ();
+s32 Ovl11SelectSmallRecordHandler (M2C_bd4797768b62_Struct_800E2AF0 *arg0);
 void ovl_11_func_8010B64C (s32 arg0);
 s32 ovl_11_func_80109550 (u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 s32 ovl_11_func_801098B0 (Ovl11Func801098B0Arg *arg0);
@@ -213,7 +206,7 @@ u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1) {
         goto block_8;
     case 0x109:
     case 0x10A:
-        var_s0 = ovl_11_func_800E1F9C(arg0, arg1, 1);
+        var_s0 = Ovl11AllocateSmallRecord(arg0, arg1, 1);
         break;
     case 0x108:
     case 0x10B:

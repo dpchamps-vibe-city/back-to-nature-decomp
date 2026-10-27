@@ -6,9 +6,9 @@
 #include "psyq/abs.h"
 #include "ovl11_record_pair_order.h"
 #include "vblank_timer.h"
+#include "ovl11_direction_vector.h"
 
 void ovl_11_func_800D1E1C (Recon_ovl_11_func_800D2594_A0View *arg0);
-void ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 s32 ovl_11_func_800D2DB8 (Ovl11Func800BDCE8Arg1 *arg0);
 s32 ovl_11_func_800D24FC (Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
 s32 ovl_11_func_800D196C (Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 arg2);
@@ -57,7 +57,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
     }
     world = (s16 *) &D_8007AFF0;
     if (((*(s16 *) ((u8 *) arg0 + 0x30)) != world[0x12A3B]) && (arg0->unk34 & 0x200000)) {
-        ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+        Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         return;
     }
     temp_a2 = arg0->unk34;
@@ -71,7 +71,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
     if (((*(s16 *) ((u8 *) arg0 + 0x2E)) >= temp_v0_3) && !(temp_a2 & 0x01000000)) {
         var_s3 = 0;
         (*(u16 *) ((u8 *) arg0 + 0x2E)) = 0U;
-        ovl_11_func_800D0408(*(s16 *) ((u8 *) arg0 + 0x22), (Recon800D0408A1View *) &sp20, arg1);
+        Ovl11SetDirectionVector(*(s16 *) ((u8 *) arg0 + 0x22), (Recon800D0408A1View *) &sp20, arg1);
         sp20.vx +=  (*(s32 *) ((u8 *) arg0 + 0x38));
         sp20.vz += *(s32 *) ((u8 *) arg0 + 0x40);
         if (arg0->unk34 & 0x200000) {
@@ -91,7 +91,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
         if (temp_v0_3 >= 0) {
             var_s1 = temp_v0_3;
         }
-        ovl_11_func_800D0408(var_s1, (Recon800D0408A1View *) &sp20, 0x190);
+        Ovl11SetDirectionVector(var_s1, (Recon800D0408A1View *) &sp20, 0x190);
         sp20.vx +=  (*(s32 *) ((u8 *) arg0 + 0x38));
         sp20.vz += *(s32 *) ((u8 *) arg0 + 0x40);
         if ((arg0->unk34 & 0x200000) && (ovl_11_func_800D2DB8((Ovl11Func800BDCE8Arg1 *) &sp20) == 0)) {
@@ -111,7 +111,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
         if (temp_v0_3 < 4) {
             var_s1 = temp_v0_3;
         }
-        ovl_11_func_800D0408(var_s1, (Recon800D0408A1View *) (Recon800D0408A1View *) &sp20, 0x190);
+        Ovl11SetDirectionVector(var_s1, (Recon800D0408A1View *) (Recon800D0408A1View *) &sp20, 0x190);
         sp20.vx += *(s32 *) ((u8 *) arg0 + 0x38);
         sp20.vz += *(s32 *) ((u8 *) arg0 + 0x40);
         if ((arg0->unk34 & 0x200000) && (ovl_11_func_800D2DB8((Ovl11Func800BDCE8Arg1 *) &sp20) == 0)) {
@@ -126,21 +126,21 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
             var_s3 |= 2;
         }
         temp_v0_3 = (s16) ovl_11_func_800D196C(arg0, var_s3, var_s4);
-        ovl_11_func_800D0408(temp_v0_3, (Recon800D0408A1View *) ((u8 *) arg0 + 0x68), 0x190);
+        Ovl11SetDirectionVector(temp_v0_3, (Recon800D0408A1View *) ((u8 *) arg0 + 0x68), 0x190);
         if (temp_v0_3 != 4) {
             (*(s16 *) ((u8 *) arg0 + 0x22)) = temp_v0_3;
         }
         (*(s32 *) ((u8 *) arg0 + 0x68)) = (s32) ((*(s32 *) ((u8 *) arg0 + 0x68)) + (*(s32 *) ((u8 *) arg0 + 0x38)));
         (*(s32 *) ((u8 *) arg0 + 0x70)) = (s32) ((*(s32 *) ((u8 *) arg0 + 0x70)) + (*(s32 *) ((u8 *) arg0 + 0x40)));
         arg0->unk34 |= 0x4000;
-        ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+        Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
     }
     if ((arg0->unk34 & 0x2000) && (ovl_11_func_800D1CFC(arg0) == 0)) {
-        ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+        Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         Ovl11SelectRecordPairCode(arg0);
         return;
     }
-    ovl_11_func_800D0408(*(s16 *) ((u8 *) arg0 + 0x22), (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), arg1);
+    Ovl11SetDirectionVector(*(s16 *) ((u8 *) arg0 + 0x22), (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), arg1);
     sp20.vx = (*(s32 *) ((u8 *) arg0 + 0x38)) + (*(s32 *) ((u8 *) arg0 + 0x48));
     sp20.vz = (*(s32 *) ((u8 *) arg0 + 0x40)) + (*(s32 *) ((u8 *) arg0 + 0x50));
     sp20.vy = arg0->unk3C;
@@ -159,7 +159,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
             }
         }
         if (var_s1 == 1) {
-            ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+            Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
             (*(u16 *) ((u8 *) arg0 + 0x2E)) = (u16) ((*(u16 *) ((u8 *) arg0 + 0x2E)) + 2);
         }
         arg0->unk3C = sp20.vy;

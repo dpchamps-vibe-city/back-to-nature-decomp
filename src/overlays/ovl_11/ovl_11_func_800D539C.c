@@ -7,6 +7,9 @@
 #include "ovl11_record_selection.h"
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_keyframe_step.h"
+#include "ovl11_tagged_record_handlers.h"
+#include "ovl11_direction_vector.h"
+#include "ovl11_small_record_handlers.h"
 
 typedef struct {
     char pad_00[0x24];
@@ -17,10 +20,7 @@ typedef struct {
     u16 unk7A;
 } Ovl11D539CStepObj;
 
-void ovl_11_func_800D0408();
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
-s32 ovl_11_func_800E0C24(Ovl11SetFieldsView *arg0, s32 arg1);
 s32 ovl_11_func_800DF010(Ovl11SetFieldsView *arg0, s32 arg1);
 
 typedef struct {
@@ -57,14 +57,14 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
     result = 0;
     switch (temp_v1) {
     case 0:
-        ovl_11_func_800D0408(arg0->direction, (Recon800D0408A1View *)&sp18, 0x7D0);
+        Ovl11SetDirectionVector(arg0->direction, (Recon800D0408A1View *)&sp18, 0x7D0);
         sp18[0] += arg0->x;
         sp18[1] += arg0->y;
         sp18[2] += arg0->z;
         if ((arg0->pool) == 0) {
             var_s0 = (Ovl11SetFieldsView *) ((u8 *) &gTaggedRecordBase + ((arg0->index) * 0xB8));
             if (var_s0->field_34 & 0x10000) {
-                var_s2 = ovl_11_func_800E0C24;
+                var_s2 = Ovl11DispatchTaggedRecordHandler;
             } else {
                 var_s2 = ovl_11_func_800DF010;
             }
@@ -78,7 +78,7 @@ s32 ovl_11_func_800D539C(Ovl11D539CObject *arg0) {
             if (var_s2 != 0) {
                 var_s2(var_s0, 3);
             } else {
-                ovl_11_func_800E2824((u16 *) var_s0, 3);
+                Ovl11DispatchSmallRecordHandler((u16 *) var_s0, 3);
             }
         }
         (arg0->state) = 1;

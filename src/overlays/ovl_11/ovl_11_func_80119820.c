@@ -4,9 +4,11 @@
 #include "ovl11_interaction_steps.h"
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_balance_accounting.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800D6014(u16 arg0);
 s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
@@ -21,7 +23,7 @@ s32 ovl_11_func_80119820(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    price = ovl_11_func_800D6014(0x21);
+    price = Ovl11GetItemPrice(0x21);
     result = 0;
     switch (gOvl11InteractionStep) {
     case 0:

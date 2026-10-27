@@ -8,8 +8,7 @@
 #include "ovl11_object_state_dispatch.h"
 #include "game_types.h"
 #include "ovl11_object_id_state.h"
-
-s32 ovl_11_func_800D0408(s16 mode, Recon800D0408A1View *source, s32 value);
+#include "ovl11_direction_vector.h"
 
 s32 Ovl11UpdateObjectState(u16 *record) {
     s32 (*frameCallback)(u16 *);
@@ -53,7 +52,7 @@ run_entry_gate:
         *(s16 *) ((u8 *) record + 0x28) = 0;
         *(s16 *) ((u8 *) record + 0x2A) = 0;
         *(s16 *) ((u8 *) record + 0x2C) = 0;
-        ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) record + 0x48), 0);
+        Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) record + 0x48), 0);
     }
     return gateResult;
 }

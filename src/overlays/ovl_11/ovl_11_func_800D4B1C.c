@@ -2,6 +2,7 @@
 #include "game_types.h"
 #include "ovl11_object_record_clear.h"
 #include "ovl11_keyframe_step.h"
+#include "ovl11_direction_vector.h"
 
 typedef struct {
     char pad_00[0x22];
@@ -20,8 +21,6 @@ typedef struct {
     char pad_54[0x7A - 0x54];
     /* 0x7A */ u16 unk7A;
 } Ovl11D4B1CObj;
-
-void ovl_11_func_800D0408(u16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
 extern u8 D_80123C50;
 
@@ -47,11 +46,11 @@ s32 ovl_11_func_800D4B1C(Ovl11D4B1CObj *arg0) {
         } else {
             switch (arg0->unk28) {
             case 2:
-                ovl_11_func_800D0408(arg0->unk22, &arg0->unk48, 0x3C);
+                Ovl11SetDirectionVector(arg0->unk22, &arg0->unk48, 0x3C);
                 arg0->unk48.unk4 -= 0x10;
                 break;
             case 3:
-                ovl_11_func_800D0408(arg0->unk22, &arg0->unk48, 0x3C);
+                Ovl11SetDirectionVector(arg0->unk22, &arg0->unk48, 0x3C);
                 break;
             }
         }

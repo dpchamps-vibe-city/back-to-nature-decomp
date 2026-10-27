@@ -1,9 +1,6 @@
 #include "common.h"
 #include "ovl11_record_pair_slots.h"
-
-s16 *ovl_11_func_800E1F9C(s32 arg0, s32 arg1, s32 arg2);
-s32 ovl_11_func_800E2934(void *arg0);
-s32 ovl_11_func_800E2968(s16 *arg0, s32 arg1);
+#include "ovl11_small_record_handlers.h"
 
 void ovl_11_func_800CFD9C(void) {
     Ovl11CFD9CEntry *var_s0;
@@ -17,7 +14,7 @@ void ovl_11_func_800CFD9C(void) {
     var_s0 = D_801239D0;
     var_s2 = (s32 *)((u8 *) D_801239D0 + 4);
     do {
-        temp_v0 = ovl_11_func_800E1F9C(0x109, -1, 0);
+        temp_v0 = Ovl11AllocateSmallRecord(0x109, -1, 0);
         if (temp_v0 != 0) {
             (*(s16 *) ((u8 *) temp_v0 + 0x30)) = var_s3;
             (*(s16 *) ((u8 *) temp_v0 + 0x22)) = var_s1;

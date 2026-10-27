@@ -1,7 +1,8 @@
 #include "common.h"
 #include "game_flags.h"
-
-s32 ovl_11_func_800D603C(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_800F3C9C(u16 arg0);
 
@@ -24,7 +25,7 @@ s32 ovl_11_func_800F3BCC(u16 arg0) {
             SetGameFlag(0x5FU, 1U);
         }
     }
-    *(s32 *) ((u8 *) base + 0x34) = *(s32 *) ((u8 *) base + 0x34) + ovl_11_func_800D603C(id);
+    *(s32 *) ((u8 *) base + 0x34) = *(s32 *) ((u8 *) base + 0x34) + Ovl11GetItemSellValue(id);
     res = ovl_11_func_800F3C9C((u16) id);
     if (res == -1) {
         return 0;

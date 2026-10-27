@@ -3,10 +3,10 @@
 #include "cd_audio.h"
 #include "sound_commands.h"
 #include "ovl11_object_state_dispatch.h"
+#include "ovl11_tagged_record_handlers.h"
+#include "ovl11_small_record_handlers.h"
 
 s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
-s32 ovl_11_func_800E0C24(Ovl11StageHandlerObj *arg0, s32 arg1);
-s32 ovl_11_func_800E2824(u16 *arg0, s32 arg1);
 s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 /* Both parameters are stored with sh; this caller zero-extends them. */
@@ -40,7 +40,7 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
             }
             StartCdAudioTrack(12);
         }
-        ovl_11_func_800E0C24(gOvl11InteractionHitRecordView, action);
+        Ovl11DispatchTaggedRecordHandler(gOvl11InteractionHitRecordView, action);
         return 1;
     }
     if (gOvl11InteractionHitFlags & 8) {
@@ -49,11 +49,11 @@ s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1) {
                 ((struct Ovl11ActionCounter *) D_8006C838)->count++;
             }
             if (*(u16 *) gOvl11InteractionHitRecordView == 0x109) {
-                ovl_11_func_800E2824(gOvl11InteractionHitRecordView, 4);
+                Ovl11DispatchSmallRecordHandler(gOvl11InteractionHitRecordView, 4);
                 PlaySoundEffect(24);
             }
         } else if (arg1 == 4) {
-            ovl_11_func_800E2824(gOvl11InteractionHitRecordView, 9);
+            Ovl11DispatchSmallRecordHandler(gOvl11InteractionHitRecordView, 9);
         }
         return 1;
     }

@@ -1,6 +1,0 @@
-#include "common.h"
-void ovl_11_func_800D03B4(void *, void *, s32 arg2);
-
-void ovl_11_func_800E1F70(s32 arg0) {
-    ovl_11_func_800D03B4(arg0 + 0x38, arg0 + 0x48, 0);
-}

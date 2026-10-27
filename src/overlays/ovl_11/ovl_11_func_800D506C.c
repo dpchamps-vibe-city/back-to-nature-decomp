@@ -7,11 +7,11 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_object_id_state.h"
 #include "ovl11_object_record_clear.h"
+#include "ovl11_direction_vector.h"
 
 void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 void ovl_11_func_800D1960 (s16 arg0);
 s32 ovl_11_func_800D425C (u16 *arg0);
-s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 void ovl_11_func_800D12B8 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
 
 s32 ovl_11_func_800D506C(Ovl11SetFieldsView *arg0) {
@@ -48,7 +48,7 @@ s32 ovl_11_func_800D506C(Ovl11SetFieldsView *arg0) {
         arg0->field_34 |= 0x200000;
         ovl_11_func_800D425C((u16 *) arg0);
         if (!(arg0->field_34 & 0x200000)) {
-            ovl_11_func_800D0408(0, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0xC);
+            Ovl11SetDirectionVector(0, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0xC);
         }
         if ((*(s32 *) ((u8 *) arg0 + 0x40)) < -0x2EDF) {
             (*(s16 *) ((u8 *) arg0 + 0x28)) = 3;

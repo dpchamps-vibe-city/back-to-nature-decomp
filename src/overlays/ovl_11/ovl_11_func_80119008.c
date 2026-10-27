@@ -3,10 +3,11 @@
 #include "ovl11_interaction_steps.h"
 #include "ovl11_primary_object_wait_steps.h"
 #include "ovl11_balance_accounting.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ovl11_cell_grid_lookup.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800D6014(u16 arg0);
-s32 ovl_11_func_800D6090(u16 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
@@ -18,7 +19,7 @@ s32 ovl_11_func_80119008(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    price = ovl_11_func_800D6014(0xA4);
+    price = Ovl11GetItemPrice(0xA4);
     result = 0;
     switch (gOvl11InteractionStep) {
     case 0:
@@ -29,7 +30,7 @@ s32 ovl_11_func_80119008(void) {
             if (D_8012D51C == 0xA4) {
                 RequestMessageWindow(2, 0xBC);
                 Ovl11SetInteractionSteps(2, 4);
-            } else if (ovl_11_func_800D6090((u16)D_8012D51C) == 1) {
+            } else if (Ovl11ClassifyHeldItemType((u16)D_8012D51C) == 1) {
                 RequestMessageWindow(2, 0xB6);
                 SetMessagePortraitEnabled(0);
                 Ovl11SetInteractionSteps(3, 5);

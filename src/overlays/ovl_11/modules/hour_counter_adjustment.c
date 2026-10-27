@@ -9,8 +9,7 @@
  */
 
 #include "ovl11_hour_counter_adjustment.h"
-
-s32 ovl_11_func_800D622C(s8 arg0, s8 arg1, s16 arg2, s32 arg3);
+#include "ovl11_status_gauge_deltas.h"
 
 void Ovl11ApplyHourCounterDeltas(void) {
     char *base = (char *)&gPrimaryObjectBase;
@@ -25,7 +24,7 @@ void Ovl11ApplyHourCounterDeltas(void) {
         index = 0;
         do {
             if (*clockHour == entry->hour) {
-                ovl_11_func_800D622C(0, entry->delta, 0, 0);
+                Ovl11ApplyStatusDelta(0, entry->delta, 0, 0);
             }
             index += 1;
             entry++;

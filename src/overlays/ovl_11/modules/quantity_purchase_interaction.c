@@ -26,11 +26,11 @@
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_record_family_lookup.h"
 #include "ovl11_balance_accounting.h"
+#include "ovl11_cell_grid_lookup.h"
+#include "ovl11_small_record_handlers.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
-s32 ovl_11_func_800D6014(u16 arg0);
-void ovl_11_func_800E2904(s32 arg0);
 s32 ovl_11_func_80113FF0(void);
 void Ovl11DebitQuantityCost(void *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
@@ -97,7 +97,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
                 if (Ovl11FindFreeB4Record() == 0) {
                     RequestMessageWindow(2, 0x55);
                     Ovl11SetInteractionSteps(22, 21);
-                } else if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
+                } else if (ovl_11_func_8011D06C(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
                     RequestMessageWindow(2, 0x4F);
                     Ovl11SetInteractionSteps(22, 21);
                 } else {
@@ -117,13 +117,13 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
                 }
                 break;
             case 3:
-                if (ovl_11_func_8011D06C(ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                if (ovl_11_func_8011D06C(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
                     if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
                         Ovl11SetInteractionSteps(22, 21);
                     } else {
                         Ovl11InsertItemStack(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1, 1);
-                        Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+                        Ovl11AdjustSpendableBalance(-Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
                         RequestMessageWindow(2, 0x51);
                         Ovl11SetInteractionSteps(22, 21);
                     }
@@ -191,7 +191,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
             for (i = 0; i < 9; i++) {
                 dest[i] = gOvl11QuantityPurchaseNameRecord.values[i];
             }
-            Ovl11AdjustSpendableBalance(-ovl_11_func_800D6014((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
+            Ovl11AdjustSpendableBalance(-Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x57);
             Ovl11SetInteractionSteps(22, 21);
             break;
@@ -233,7 +233,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
             } else {
                 Ovl11AdjustSpendableBalance(500, 1);
             }
-            ovl_11_func_800E2904((s32)((u8 *)&gSmallTaggedRecordBase + selected * 0xB4));
+            Ovl11ClearSmallRecord((s32)((u8 *)&gSmallTaggedRecordBase + selected * 0xB4));
             Ovl11SetInteractionSteps(22, 21);
             break;
         case 2:

@@ -5,11 +5,11 @@
 #include "ovl11_record_pair_order.h"
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_keyframe_step.h"
+#include "ovl11_direction_vector.h"
 
 s32 ovl_11_func_80109188 (Ovl11D04D4Obj *arg0, s32 arg1);
 s32 ovl_11_func_8010AE64 (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D31EC (u16 arg0, u16 arg1);
-s32 ovl_11_func_800D0408 (s16 arg0, Recon800D0408A1View *arg1, s32 arg2);
 
 s32 ovl_11_func_8010A654(Ovl11A654Object *arg0) {
     s16 temp_v1;
@@ -55,7 +55,7 @@ s32 ovl_11_func_8010A654(Ovl11A654Object *arg0) {
                 arg0->unk28 = (u16) arg0->unk28 + 1;
             }
             Ovl11SelectRecordPairCode((Recon_ovl_11_func_800D2594_A0View *) arg0);
-            ovl_11_func_800D0408(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
+            Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         }
         arg0->unk34 |= 0x800;
         break;

@@ -21,6 +21,7 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_status_gauge_deltas.h"
 
 void Ovl11ReleaseChargedItemAction(Ovl11C7010Object *arg0) {
     s16 temp_s0;
@@ -36,7 +37,6 @@ void Ovl11ReleaseChargedItemAction(Ovl11C7010Object *arg0) {
 }
 
 /* 800C6C64 explicitly supplies an unused fourth argument. */
-s32 ovl_11_func_800D622C();
 void Ovl11ReleaseChargedItemAction(Ovl11C7010Object *arg0);
 
 s32 Ovl11DispatchObjectActionInput(Ovl11C7010Object *arg0) {
@@ -76,7 +76,7 @@ s32 Ovl11DispatchObjectActionInput(Ovl11C7010Object *arg0) {
             }
 block_9:
             if (D_8006C844 & 0x100000) {
-                ovl_11_func_800D622C(2, -1, 0, 0);
+                Ovl11ApplyStatusDelta(2, -1, 0, 0);
             }
             return 0;
         default:
