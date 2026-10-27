@@ -23,6 +23,7 @@
 #include "ovl11_keyframe_step.h"
 #include "ovl11_record_movement.h"
 #include "ovl11_stage_mode2_record.h"
+#include "ovl11_record_position_set.h"
 
 s32 Ovl11GetStageMode2AnimationPair(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -362,8 +363,6 @@ s32 Ovl11ChooseStageMode2State(Ovl11D04D4Obj *arg0) {
     return 0;
 }
 
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-
 s32 Ovl11TryStageMode2PositionRequest(Ovl11StageMode2PositionRequestView *record) {
     char *farWork;
     Ovl11B994PositionView *work;
@@ -380,7 +379,7 @@ s32 Ovl11TryStageMode2PositionRequest(Ovl11StageMode2PositionRequestView *record
     }
     if ((s32)Rand(0xC8) < record->requestValue + 0x64) {
         work = (Ovl11B994PositionView *)D_8006C838;
-        ovl_11_func_800D05D0((Ovl11SetFieldsView *)record,
+        Ovl11SetRecordPosition((Ovl11SetFieldsView *)record,
                             *(Ovl11PaddedVec3 *)work->position);
         record->flags |= 2;
         if (*(s16 *)(farWork + 0x25476) == record->mode) {
@@ -463,7 +462,7 @@ s32 Ovl11RequestStageMode2DirectionOffset(Ovl11SetFieldsView *arg0) {
     sp18.vx = sp18.vx + *(s32 *) ((u8 *) arg0 + 0x38);
     sp18.vy = sp18.vy + *(s32 *) ((u8 *) arg0 + 0x3C);
     sp18.vz = sp18.vz + *(s32 *) ((u8 *) arg0 + 0x40);
-    ovl_11_func_800D05D0(arg0, sp18);
+    Ovl11SetRecordPosition(arg0, sp18);
     selector = *(u16 *) (base + 0x5200);
     *(u16 *) ((u8 *) arg0 + 0x22) = selector;
     return 0;

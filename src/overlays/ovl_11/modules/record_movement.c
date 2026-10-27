@@ -50,6 +50,7 @@
 #include "ovl11_primary_object_flag29.h"
 #include "ovl11_stage_mode2_record.h"
 #include "ovl11_action_result_request.h"
+#include "ovl11_record_position_set.h"
 
 void Ovl11UpdateRecordProbeFlag (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 Ovl11ProbeMovementPosition (Ovl11Func800BDCE8Arg1 *arg0);
@@ -673,9 +674,6 @@ s32 Ovl11StepRecordVerticalOffset(Recon_ovl_11_func_800D2594_A0View *record,
     return active;
 }
 
-/* The matched writer takes a four-word aggregate, including its unused pad. */
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *object, Ovl11PaddedVec3 position);
-
 void Ovl11AdvanceRecordModeCounter(Ov11D266CFields *record,
                                    u16 *counter, s32 mode) {
     char *work;
@@ -685,7 +683,7 @@ void Ovl11AdvanceRecordModeCounter(Ov11D266CFields *record,
     if (*counter < 300) {
         if (record->field_34 & 0x2000) {
             work = (char *)&D_8006C838;
-            ovl_11_func_800D05D0((Ovl11SetFieldsView *)record,
+            Ovl11SetRecordPosition((Ovl11SetFieldsView *)record,
                 *(Ovl11PaddedVec3 *)(work + 0x52C8));
         }
         if (record->field_26 == maskedMode) {

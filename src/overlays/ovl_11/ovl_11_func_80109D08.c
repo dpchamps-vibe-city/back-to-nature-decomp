@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
+#include "ovl11_record_position_set.h"
 
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_801096FC(Ovl11PaddedVec3 position, s16 key, s32 radius, s32 *flag, s32 **record);
 
 s32 ovl_11_func_80109D08(Ovl11SetFieldsView *arg0) {
@@ -37,7 +37,7 @@ s32 ovl_11_func_80109D08(Ovl11SetFieldsView *arg0) {
     if (found != 1) {
         found = -1;
     } else {
-        ovl_11_func_800D05D0(arg0,
+        Ovl11SetRecordPosition(arg0,
             *(Ovl11PaddedVec3 *) ((u8 *) gOvl11ActionFoundRecord + 0x38));
         found = 0;
     }

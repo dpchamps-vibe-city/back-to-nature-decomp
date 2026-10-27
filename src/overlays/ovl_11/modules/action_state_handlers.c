@@ -22,9 +22,9 @@
 #include "ovl11_record_movement.h"
 #include "psyq/stddef.h"
 #include "ovl11_fixed_spawn_record_handoff.h"
+#include "ovl11_record_position_set.h"
 
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *object, s32 mode);
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *object, Ovl11PaddedVec3 position);
 s32 Ovl11TryActionSpawnHandoff(Ovl11SetFieldsView *object);
 
 s32 Ovl11StepActionKeyframes0(Ovl11D04D4Obj *object) {
@@ -397,7 +397,7 @@ s32 Ovl11StepActionRecordHandoff(Ovl11A47CObject *object) {
             }
             gOvl11ActionMotionVariant = 1;
             Ovl11ConsumeSeasonalRecord((Ovl11SeasonalRecordView *)(((struct Ovl11A850State *)D_8006C838)->record + 0x18), NULL);
-            ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, ((struct Ovl11A850State *)D_8006C838)->position);
+            Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, ((struct Ovl11A850State *)D_8006C838)->position);
             if (object->unk7A & 0x300) {
                 if (gOvl11RecordHandoffPhase == 2) {
                     object->unk28++;
@@ -408,7 +408,7 @@ s32 Ovl11StepActionRecordHandoff(Ovl11A47CObject *object) {
         case 3:
             if (gOvl11RecordHandoffPhase == 2) {
                 if (object->unk34 & 0x2000) {
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, ((struct Ovl11A850State *)D_8006C838)->position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, ((struct Ovl11A850State *)D_8006C838)->position);
                     gOvl11ActionMotionVariant = 1;
                     Ovl11RefreshActionMotion((Recon_ovl_11_func_800D2594_A0View *)object);
                 } else {
@@ -579,7 +579,7 @@ s32 Ovl11TryActionSpawnHandoff(Ovl11SetFieldsView *object) {
         if (Ovl11ReadSpawnRecord(0x65, &position.vx, &spawnKind, 0) == 0) {
             return 2;
         }
-        ovl_11_func_800D05D0(object, position);
+        Ovl11SetRecordPosition(object, position);
         Ovl11RefreshActionMotion((Recon_ovl_11_func_800D2594_A0View *)object);
         return 0;
     }

@@ -2418,6 +2418,9 @@ Ovl11LeaveObjectLoadContext = 0x800E537C; // type:func
 Ovl11RecoverObjectSpriteBlock = 0x800E54F8; // type:func
 Ovl11DrawActiveRecordSpritePacket = 0x800E559C; // type:func
 
+// Four-word position input; assigns XYZ and updates the record's position flags.
+Ovl11SetRecordPosition = 0x800D05D0; // type:func
+
 // Independent command services: archive-slot polling and slot-sourced positions.
 Ovl11PollTextSlotOrInvalidate = 0x800E8D7C; // type:func
 Ovl11WriteStateRecordPositionFromSlots = 0x800E8DC8; // type:func

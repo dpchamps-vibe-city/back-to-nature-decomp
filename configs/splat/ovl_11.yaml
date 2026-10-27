@@ -229,7 +229,7 @@ segments:
       - [0x18594, c, modules/direction_vector]
       - [0x1867C, c, modules/record_effect_threshold]
       - [0x186B4, c, modules/keyframe_step]
-      - [0x187B0, c, ovl_11_func_800D05D0]
+      - [0x187B0, c, modules/record_position_set]
       - [0x187E0, c, modules/record_pair_order]
       - [0x1893C, c, modules/record_pair_slots]
       - [0x18FAC, c, modules/record_status_message]

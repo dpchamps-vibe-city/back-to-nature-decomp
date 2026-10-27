@@ -39,6 +39,7 @@
 #include "ovl11_grid_candidate_search.h"
 #include "ovl11_record_movement.h"
 #include "ovl11_object_mode_handlers.h"
+#include "ovl11_record_position_set.h"
 
 /* Internal helpers retain their original external linkage. */
 s32 Ovl11AcquireActionGridTarget(Ovl11SetFieldsView *object, s32 gridMode, s32 option);
@@ -47,8 +48,6 @@ s32 Ovl11TestActionKey5(s32 objectAddress, s16 unusedActionId);
 s32 Ovl11TestActionKeyCounter(Ovl11StateKeyProbeView *object, s16 key, s16 threshold);
 void Ovl11PromoteOffsetGridCell(Ovl11StateDirectionView *object, s32 gridMode);
 u16 Ovl11CompleteActionSequence(Ovl11ActionCompletionView *object);
-
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *object, Ovl11PaddedVec3 position);
 
 s32 Ovl11StepGridTargetAction(Ovl11SetFieldsView *arg0, s32 arg1) {
     Ovl11PaddedVec3 sp18;
@@ -85,7 +84,7 @@ s32 Ovl11StepGridTargetAction(Ovl11SetFieldsView *arg0, s32 arg1) {
         break;
     case 4:
         if (Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 2, (s32 *) &sp18, arg0->field_30) == 1) {
-            ovl_11_func_800D05D0(arg0, sp18);
+            Ovl11SetRecordPosition(arg0, sp18);
         }
         (*(s16 *) ((u8 *) arg0 + 0x28)) = 5;
         break;
@@ -139,7 +138,7 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
             return 1;
         }
         Ovl11LookupActionPosition(arg0, arg1 == 0, &sp18.vx, *(s16 *)((u8 *)arg0 + 0x30));
-        ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
+        Ovl11SetRecordPosition((Ovl11SetFieldsView *)arg0, sp18);
         *(s16 *)((u8 *)arg0 + 0x28) = 1;
         *(u16 *)((u8 *)arg0 + 0xB8) |= 0x200;
         break;
@@ -176,7 +175,7 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
                 } else {
                     Ovl11GetSlotPositionX400(&sp18.vx, selected);
                 }
-                ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
+                Ovl11SetRecordPosition((Ovl11SetFieldsView *)arg0, sp18);
                 *(s16 *)((u8 *)arg0 + 0x28) = 4;
             } else {
                 *(s16 *)((u8 *)arg0 + 0x28) = 6;
@@ -201,7 +200,7 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
                 } else {
                     Ovl11GetSlotPositionX400(&sp18.vx, selected);
                 }
-                ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
+                Ovl11SetRecordPosition((Ovl11SetFieldsView *)arg0, sp18);
                 *(s16 *)((u8 *)arg0 + 0x28) = 4;
             }
         } else {
@@ -216,7 +215,7 @@ s32 Ovl11StepRecordSelectionAction(Ovl11StateArg0 *arg0, s32 arg1) {
         } else {
             Ovl11LookupActionPosition(arg0, 1, &sp18.vx, *(s16 *)((u8 *)arg0 + 0x30));
         }
-        ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
+        Ovl11SetRecordPosition((Ovl11SetFieldsView *)arg0, sp18);
         *(s16 *)((u8 *)arg0 + 0x28) = 8;
         /* fallthrough */
     case 8:
@@ -266,7 +265,7 @@ s32 Ovl11StepTaggedRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
         }
         base = (u8 *)D_8006C838;
         *(s16 *)((u8 *)arg0 + 0xBA) = selected;
-        ovl_11_func_800D05D0(arg0,
+        Ovl11SetRecordPosition(arg0,
             ((Ovl11D5224LargeView *)(base + (s16)selected * 0xB8))->position);
         *(s16 *)((u8 *)arg0 + 0x28) = 1;
         break;
@@ -275,7 +274,7 @@ s32 Ovl11StepTaggedRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
             *(s16 *)((u8 *)arg0 + 0x28) = 2;
         } else {
             if (*(s16 *)((u8 *)record + 0x30) == arg0->field_30) {
-                ovl_11_func_800D05D0(arg0, *(Ovl11PaddedVec3 *)((u8 *)record + 0x38));
+                Ovl11SetRecordPosition(arg0, *(Ovl11PaddedVec3 *)((u8 *)record + 0x38));
                 break;
             } else {
                 *(s16 *)((u8 *)arg0 + 0x28) = 7;
@@ -290,7 +289,7 @@ s32 Ovl11StepTaggedRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
             } else {
                 Ovl11DispatchTaggedRecordHandler(animal, 6);
             }
-            ovl_11_func_800D05D0(arg0,
+            Ovl11SetRecordPosition(arg0,
                 ((Ovl11D5224LargeView *)((u8 *)D_8006C838 + *(s16 *)((u8 *)arg0 + 0xBA) * 0xB8))->position);
             *(s16 *)((u8 *)arg0 + 0x28) = 4;
         }
@@ -300,7 +299,7 @@ s32 Ovl11StepTaggedRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
             *(s16 *)((u8 *)arg0 + 0x28) = 3;
         } else {
             if (*(s16 *)((u8 *)record + 0x30) == arg0->field_30) {
-                ovl_11_func_800D05D0(arg0, *(Ovl11PaddedVec3 *)((u8 *)record + 0x38));
+                Ovl11SetRecordPosition(arg0, *(Ovl11PaddedVec3 *)((u8 *)record + 0x38));
                 break;
             } else {
                 *(s16 *)((u8 *)arg0 + 0x28) = 7;
@@ -329,7 +328,7 @@ s32 Ovl11StepTaggedRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
     case 7:
         if (Ovl11TestActionKey5((s32)arg0, *(s16 *)((u8 *)arg0 + 0xB6)) != 0) {
             Ovl11LookupActionPosition((Ovl11StateArg0 *)arg0, 2, &position.vx, arg0->field_30);
-            ovl_11_func_800D05D0(arg0, position);
+            Ovl11SetRecordPosition(arg0, position);
             *(s16 *)((u8 *)arg0 + 0x28) = 5;
         }
         break;
@@ -365,7 +364,7 @@ s32 Ovl11StepSeasonalRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
         }
         temp_v0_2 = Ovl11ReadSpawnRecord(0x123, &sp18.vx, &sp28, temp_v0);
         if ((temp_v0_2 == 1) && (sp28 == arg0->field_30)) {
-            ovl_11_func_800D05D0(arg0, sp18);
+            Ovl11SetRecordPosition(arg0, sp18);
             (*(s16 *) ((u8 *) arg0 + 0x28)) = temp_v0_2;
         }
         break;
@@ -394,7 +393,7 @@ s32 Ovl11StepSeasonalRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
         break;
     case 4:
         if (Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 2, &sp18.vx, arg0->field_30) == 1) {
-            ovl_11_func_800D05D0(arg0, sp18);
+            Ovl11SetRecordPosition(arg0, sp18);
         }
         (*(s16 *) ((u8 *) arg0 + 0x28)) = 5;
         break;
@@ -590,6 +589,6 @@ s32 Ovl11AcquireActionGridTarget(Ovl11SetFieldsView *arg0, s32 arg1, s32 arg2) {
         return 1;
     }
     Ovl11GetCellCornerPosition(sp28, sp2A, (Vec3 *) &sp18, temp);
-    ovl_11_func_800D05D0(arg0, sp18);
+    Ovl11SetRecordPosition(arg0, sp18);
     return 0;
 }

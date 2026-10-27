@@ -472,3 +472,7 @@ live .data/.bss into a name, and the renderer follows the result as pointers
 with unbounded recursion. It is not yet a controlled write — but it is the
 class of primitive approach 3 needed, and its self-reference variant
 (id 0x00A) is a guaranteed stack-overflow engine.
+
+The full, sourced record of the section-9 chain (original disassembly,
+button mapping, harvest table, sink analysis, test plan) is
+`notes/research/glitches/name-entry-charset-toggle-oob.md`.

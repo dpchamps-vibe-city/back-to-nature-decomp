@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_spawn_record_access.h"
-
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
+#include "ovl11_record_position_set.h"
 
 s32 ovl_11_func_80109974(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 position, s16 arg5, s32 arg6) {
     Ovl11PaddedVec3 found;
@@ -26,7 +25,7 @@ s32 ovl_11_func_80109974(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 position, s16
     }
     if ((minX < found.vx) && (found.vx < maxX) &&
         (minZ < found.vz) && (found.vz < maxZ)) {
-        ovl_11_func_800D05D0(arg0, found);
+        Ovl11SetRecordPosition(arg0, found);
         result = 1;
     }
     return result;

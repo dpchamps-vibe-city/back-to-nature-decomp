@@ -3,6 +3,7 @@
 #include "sound_commands.h"
 #include "ovl11_clock_calendar.h"
 #include "random.h"
+#include "ovl11_record_position_set.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -28,7 +29,6 @@ typedef struct {
     /* 0x52D4 */ s32 field_52D4;
 } D8006C838_52C8View;
 
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80109188(Struct_80109A70 *arg0, s32 arg1);
 
 /* Per-frame state handler for the current stage mode. Rejects the object when
@@ -63,7 +63,7 @@ s32 ovl_11_func_80109A70(Struct_80109A70 *arg0) {
             PlaySoundEffect(0x19);
         }
         base52 = (D8006C838_52C8View *) D_8006C838;
-        ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, *(Ovl11PaddedVec3 *) &base52->field_52C8);
+        Ovl11SetRecordPosition((Ovl11SetFieldsView *) arg0, *(Ovl11PaddedVec3 *) &base52->field_52C8);
         arg0->unk34 |= 0x2;
         ovl_11_func_80109188(arg0, 0x11);
         return 0;

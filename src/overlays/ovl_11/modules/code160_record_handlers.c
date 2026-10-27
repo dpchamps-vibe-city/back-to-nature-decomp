@@ -35,6 +35,7 @@
 #include "ovl11_cd_audio_request.h"
 #include "ovl11_record_status_message.h"
 #include "ovl11_ready_kind36_cell.h"
+#include "ovl11_record_position_set.h"
 
 s32 Ovl11IsCode160RecordActive(UnkStruct800DF4F0 *arg0);
 
@@ -743,8 +744,6 @@ s32 Ovl11StepCode160Handler12(Struct_800DFB3C *arg0) {
     return 0;
 }
 
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *record, Ovl11PaddedVec3 position);
-
 /* The destination setter takes the existing padded vector BY VALUE, not
  * five independent arguments. Its unused fourth word remains untouched. */
 s32 Ovl11StepCode160Handler13(Ovl11SetFieldsView *record) {
@@ -759,7 +758,7 @@ s32 Ovl11StepCode160Handler13(Ovl11SetFieldsView *record) {
     position.vx = position.vx + *(s32 *) ((u8 *) record + 0x38);
     position.vy = position.vy + *(s32 *) ((u8 *) record + 0x3C);
     position.vz = position.vz + *(s32 *) ((u8 *) record + 0x40);
-    ovl_11_func_800D05D0(record, position);
+    Ovl11SetRecordPosition(record, position);
     *(u16 *) ((u8 *) record + 0x22) = *(u16 *) (work + 0x5200);
     return 0;
 }

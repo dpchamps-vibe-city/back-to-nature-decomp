@@ -33,6 +33,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_record_movement.h"
+#include "ovl11_record_position_set.h"
 
 s32 Ovl11GetSmallRecordSpriteDescriptor(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -602,8 +603,6 @@ s32 Ovl11StartSmallRecordHandler3(Struct_800E2C64 *arg0) {
     return 0;
 }
 
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-
 s32 Ovl11StartSmallRecordHandler4(Ovl11SetFieldsView *arg0) {
     Ovl11PaddedVec3 sp18;
     u16 temp_v1;
@@ -636,7 +635,7 @@ s32 Ovl11StartSmallRecordHandler4(Ovl11SetFieldsView *arg0) {
     sp18.vx = sp18.vx + (*(s32 *) ((u8 *) arg0 + 0x38));
     sp18.vy = sp18.vy + (*(s32 *) ((u8 *) arg0 + 0x3C));
     sp18.vz = sp18.vz + (*(s32 *) ((u8 *) arg0 + 0x40));
-    ovl_11_func_800D05D0(arg0, sp18);
+    Ovl11SetRecordPosition(arg0, sp18);
     (*(u16 *) ((u8 *) arg0 + 0x22)) = (*(u16 *) (base + 0x5200));
     Ovl11StartTimedSpriteEffect((UnkStruct80107DE0 *) ((u8 *) arg0 + 0xA8), 0x24, 0x2D);
     return 0;

@@ -33,6 +33,7 @@
 #include "ovl11_eligible_record_selection.h"
 #include "ovl11_action_sequences.h"
 #include "ovl11_object_record_state.h"
+#include "ovl11_record_position_set.h"
 
 s32 Ovl11StepObjectMode0Keyframes(Ovl11D04D4Obj *object) {
     s16 state;
@@ -333,8 +334,6 @@ s32 Ovl11StepObjectMode5Keyframes(Ovl11D04D4Obj *object) {
     return released;
 }
 
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-
 s32 Ovl11StepObjectMode8GridAction(Ovl11E644Object *arg0) {
     Ovl11PaddedVec3 sp18;
     s16 sp28;
@@ -358,7 +357,7 @@ s32 Ovl11StepObjectMode8GridAction(Ovl11E644Object *arg0) {
             if (Ovl11StepGridTargetAction((Ovl11SetFieldsView *) arg0, 1) != 0) {
                 if (Ovl11FindCandidateGridCell(&sp28, &sp2A, 0, 1, 1) == 0) {
                     Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 3, &sp18.vx, *(s16 *) ((u8 *) arg0 + 0x30));
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, sp18);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *) arg0, sp18);
                     (*(s16 *) ((u8 *) arg0 + 0x28)) = -1;
                     arg0->unk34 |= 0x10000000;
                 } else {
@@ -410,7 +409,7 @@ s32 Ovl11StepObjectMode9GridAction(Ovl11E644Object *arg0) {
             if (Ovl11StepGridTargetActionAlternate((Ovl11SetFieldsView *) arg0, 1) != 0) {
                 if (Ovl11FindCandidateGridCell(&sp28, &sp2A, 0, 0, 1) == 0) {
                     Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 3, &sp18.vx, *(s16 *) ((u8 *) arg0 + 0x30));
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, sp18);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *) arg0, sp18);
                     (*(s16 *) ((u8 *) arg0 + 0x28)) = -1;
                     arg0->unk34 |= 0x10000000;
                 } else {
@@ -487,19 +486,19 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
                 if (Ovl11ChooseEligibleRecord(5, 1) != -1 && gSaveCounter18 != 0) {
                     object->unk28 = -1;
                     Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.vx, object->unk30);
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, position);
                 } else if ((selected = Ovl11ChooseEligibleRecord(5, 6)) != -1) {
                     object->unk28 = -1;
                     Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.vx, object->unk30);
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, position);
                 } else if (Ovl11ChooseEligibleRecord(4, 1) != selected && gSaveCounter20 != 0) {
                     object->unk28 = -2;
                     Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 4, &position.vx, object->unk30);
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, position);
                 } else if (Ovl11ChooseEligibleRecord(4, 8) != -1) {
                     object->unk28 = -2;
                     Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 4, &position.vx, object->unk30);
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, position);
                 } else {
                     transition->flags |= 0x100;
                 }
@@ -527,12 +526,12 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
                 if (Ovl11ChooseEligibleRecord(4, 9) != -1) {
                     object->unk28 = -3;
                     Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.vx, object->unk30);
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, position);
                 } else if (Ovl11ChooseEligibleRecord(1, 10) != -1) {
                     object->unk28 = -3;
                     transition->flags |= 0x100;
                     Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.vx, object->unk30);
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, position);
                 } else {
                     active = 0;
                 }
@@ -549,7 +548,7 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
                     object->unk28 = -4;
                     transition->flags |= 0x100;
                     Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 4, &position.vx, object->unk30);
-                    ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
+                    Ovl11SetRecordPosition((Ovl11SetFieldsView *)object, position);
                 } else {
                     active = 0;
                 }
@@ -592,7 +591,7 @@ s32 Ovl11StepObjectMode11ActionSelect(Ovl11SetFieldsView *arg0) {
         position.vx = -0xCE4;
         position.vy = 0;
         position.vz = 0x960;
-        ovl_11_func_800D05D0(arg0, position);
+        Ovl11SetRecordPosition(arg0, position);
         *(s32 *) ((u8 *) arg0 + 0x38) = -0xCE4;
         *(s32 *) ((u8 *) arg0 + 0x3C) = 0;
         arg0->field_30 = 1;
@@ -647,7 +646,7 @@ s32 Ovl11StepObjectMode12PlacementReturn(Ovl11E644Object *arg0) {
                 position.vx = -0xCE4;
                 position.vy = 0;
                 position.vz = 0xFA0;
-                ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
+                Ovl11SetRecordPosition((Ovl11SetFieldsView *) arg0, position);
                 break;
             case 1:
                 if (!Ovl11AdvanceActionMovement(arg0, 0x258)) {
@@ -669,15 +668,15 @@ s32 Ovl11StepObjectMode12PlacementReturn(Ovl11E644Object *arg0) {
             }
         } else if (*(s16 *) ((u8 *) arg0 + 0x30) == 4) {
             Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 4, &position.vx, 4);
-            ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
+            Ovl11SetRecordPosition((Ovl11SetFieldsView *) arg0, position);
             *(s16 *) ((u8 *) arg0 + 0x28) = -1;
         } else if (*(s16 *) ((u8 *) arg0 + 0x30) == 5) {
             Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 5, &position.vx, 5);
-            ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
+            Ovl11SetRecordPosition((Ovl11SetFieldsView *) arg0, position);
             *(s16 *) ((u8 *) arg0 + 0x28) = -1;
         } else if (*(s16 *) ((u8 *) arg0 + 0x30) == 6) {
             Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 3, &position.vx, 6);
-            ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
+            Ovl11SetRecordPosition((Ovl11SetFieldsView *) arg0, position);
             *(s16 *) ((u8 *) arg0 + 0x28) = -1;
         }
     }

@@ -47,8 +47,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_record_movement.h"
-
-void ovl_11_func_800D05D0(Ovl11SetFieldsView *object, Ovl11PaddedVec3 vector);
+#include "ovl11_record_position_set.h"
 
 s32 Ovl11ApplyStateValueDebit(Ovl11StateValueView *object) {
     s32 difference;
@@ -586,7 +585,7 @@ s32 Ovl11StepState18RecordSelection(Ovl11SetFieldsView *arg0) {
         position.vx = -0x1324;
         position.vy = 0;
         position.vz = -0x2198;
-        ovl_11_func_800D05D0(arg0, position);
+        Ovl11SetRecordPosition(arg0, position);
         *(s32 *)((u8 *)arg0 + 0x38) = -0x12C0;
         *(s32 *)((u8 *)arg0 + 0x3C) = -0x12C;
         *(s32 *)((u8 *)arg0 + 0x40) = -0x2EE0;
@@ -648,7 +647,7 @@ s32 Ovl11StepState19ExitMotion(Ovl11SetFieldsView *arg0) {
         position.vx = -0x1324;
         position.vy = 0;
         position.vz = -0x22C4;
-        ovl_11_func_800D05D0(arg0, position);
+        Ovl11SetRecordPosition(arg0, position);
         break;
     case 1:
         Ovl11SetMovementRankThreshold(0xC8);
@@ -698,10 +697,10 @@ s32 Ovl11StepState20RecordFollow(u16 *arg0) {
         }
     }
     if (*(s16 *)((u8 *)arg0 + 0x16) == 0) {
-        ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0,
+        Ovl11SetRecordPosition((Ovl11SetFieldsView *)arg0,
             ((Ovl11D5224LargeView *)((u8 *)D_8006C838 + arg0[1] * 0xB8))->position);
     } else {
-        ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0,
+        Ovl11SetRecordPosition((Ovl11SetFieldsView *)arg0,
             ((Ovl11D5224SmallView *)((u8 *)D_8006C838 + arg0[1] * 0xB4))->position);
     }
     Ovl11StepState01Motion(arg0);
@@ -741,7 +740,7 @@ s32 Ovl11StepState07RecordPlacement(Ovl11RecordPlacementStateObject *arg0) {
             var_s0 = (Ovl11SetFieldsView *) ((u8 *) &gSmallTaggedRecordBase + ((arg0->index) * 0xB4));
         }
         if (var_s0->field_30 == 1) {
-            ovl_11_func_800D05D0(var_s0, *(Ovl11PaddedVec3 *)&sp18);
+            Ovl11SetRecordPosition(var_s0, *(Ovl11PaddedVec3 *)&sp18);
             (*(u16 *) ((u8 *) var_s0 + 0x22)) = (arg0->direction);
             if (var_s2 != 0) {
                 var_s2(var_s0, 3);

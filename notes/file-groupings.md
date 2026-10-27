@@ -3521,6 +3521,42 @@ Candidate same-TU family; [shared-table, call/link-order evidence and limits](re
 
 ## `ovl_11` D_800BA848 / D_800BA894 dual-table dispatcher — 0x80109188 (confidence: medium)
 
+Whole mode-1 record follow-up (80108BE8–80109EC4 exclusive, 24 entries):
+the checked baseline dry run accepts both pooled jump tables, but the first
+--write fails compilation on local copies of Ovl11D04D4Obj and
+Recon800D0408A1View, the resulting direction-vector/dispatcher prototypes,
+and two differently signed local Ovl11HandlerObj views. The trial was the
+complete lifecycle/animation/transition-callback band, not a smaller slice
+around those conflicts. The six non-null 800BA848 targets are all inside it;
+8CD0/946C initialize the record rendered by 8BE8 using 9550's private
+animation table, while the dispatcher/selector/probe helpers consume that
+same initialized layout. The outer predecessor is choice_messages' completed
+slot/image protocol; the successor is the distinct entry-callback bank already
+in action_state_handlers. The shared entry bank and cross-bank result cells
+remain public protocols, not a newly established original TU boundary.
+
+A second complete trial removed duplicate local canonical layouts, preserved
+the unsigned step view separately, used the real direction-vector interface,
+and reconciled pointer declarations with explicit record-view casts. It also
+split 97F4's 28-byte aggregate into the same four-word position plus signed
+selector/radius/output ABI that 96FC already uses, publishing that contract
+to 98B0. Compilation then succeeded, but the linked overlay failed (original
+165c3cca, built b8bf3c29). Replacing 98B0's casted four-word source with an
+embedded canonical position member produced the **same built hash**; those
+are not distinct remaining experiments. The rollback build failed with that
+same hash too, showing the pre-fold context edits themselves were not a
+matching split control. All six pre-fold source edits and the experimental
+shared-type edit were restored exactly. Only the separately verified public
+record-position setter integration is retained.
+
+This is a concrete declaration/aggregate-call reconstruction limit, not a
+reason to invent flag-based or helper-only TU slices. No flag hypothesis was
+tested, no exception added, and no per-member mismatch attribution was made
+from the linked hash. Next useful work is the canonical 97F4/98B0 aggregate
+call representation (and the independently typed step/selector interfaces)
+under a preserved split control before another whole-band fold. The present
+matching source organization is left intact for that work.
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence:
 - shared data-table cluster: the dispatcher's two parallel rodata tables,
   `D_800BA848` (transition handlers variants, 19 slots) and `D_800BA894`
@@ -16167,7 +16203,41 @@ structural read independently reports 1606 folded, 1019 remaining, zero
 invalid/undetermined and no failures. No commit was made. Exit 1 denotes
 remaining campaign work, not an invariant failure.
 
-Adjacent vector-writer experiment (800D05D0–800D0600): the single-entry
+**Reconstructed `modules/record_position_set.c`, 800D05D0–800D0600
+exclusive:** `Ovl11SetRecordPosition` is the complete supported signed-word
+XYZ assignment service. It writes +58/+5C/+60, sets +34 bit 2000 and clears
+4000, retaining every other field/bit. Its many independently used object,
+action and movement clients confirm a shared service, not a helper private to
+one of those callback banks. There is no global, table or owned state here.
+Left D04D4 steps packed keyframes; right D0600 compares signed pairs for the
+record-pair ordering service. Neither uses this assignment/flag protocol or
+supplies an exclusive helper/table tie. These are evidence-limited service
+edges under -G0, not a claim that a historical one-function object is proved.
+No boundary was introduced inside a positively connected larger unit.
+
+The previous aggregate-context obstacle below is now resolved: the earlier
+canonical unification made Ovl11PaddedVec3 an alias of the established
+four-word Ovl11CC7CCPosition. The only remaining five-scalar caller, 109E04,
+now passes its existing contiguous +38..+44 words as that aggregate, with no
+new temporary or dropped fourth word. The full linked verification preserves
+that caller as well as the old A850 trouble case and all other clients.
+`ovl11_record_position_set.h` publishes the unchanged pointer/four-word ABI,
+raw coordinate units, ignored fourth word and exact flag effects; it makes
+no collision, interpolation or gameplay assertion. The record/position
+parameter names replace arg0/v, and unused context typedef aliases were
+removed. Existing partial record field names/types are retained; linkage,
+layout, ownership and flags are unchanged.
+
+The checked singleton fold first passed baseline -O2/-G0. Canonicalization
+propagated the function name from the authored overlay .names.txt identity;
+interfaceAudit published the header to twelve caller units with unchanged
+objects. No generated symbol file was used as the durable rename input.
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` then passed
+all eight integrity gates at **2255 folded / 397 valid modules**, including
+all EXE/overlay bytes/data/tables, canonical interfaces, ownership, policy and
+exception non-growth. No tool, flag override, assembly, pin or stub was added.
+
+Historical adjacent vector-writer experiment (800D05D0–800D0600): the single-entry
 baseline fold passed, but publishing its established four-word
 Ovl11PaddedVec3 ABI exposed three five-scalar caller declarations and
 8010A850's distinct Ovl11CC7CCPosition aggregate. Reconciliation of 22 other
