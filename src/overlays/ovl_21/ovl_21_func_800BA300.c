@@ -68,7 +68,7 @@ void ovl_21_func_800BA300(void) {
     group = 0;
     do {
         slot = 0;
-        raw = (u8 *) D_800C0448;
+        raw = (u8 *) gOvl21SceneControl;
         if ((*(s16 *) (raw + 0x64A)) > 0) {
             base = (u8 *) D_800C0458 - 0x10;
             offset = group * 0x108;
@@ -89,9 +89,9 @@ void ovl_21_func_800BA300(void) {
                         state->unk4A = (u16)(angle < 0x800
                             ? -(ccos(angle) * 0x18 / 0x1000)
                             : state->unk4A + 0xC);
-                        record = (Ovl21Func800BA300Rec *) ((u8 *) D_800C0448 + offset);
+                        record = (Ovl21Func800BA300Rec *) ((u8 *) gOvl21SceneControl + offset);
                         if ((s16) record->unk42 >= 0) {
-                            velocity = (u16 *) ((u8 *) D_800C0448 + 0x48 + offset);
+                            velocity = (u16 *) ((u8 *) gOvl21SceneControl + 0x48 + offset);
                             record->unk42 = 0;
                             velocity[0] = 0;
                             velocity[1] = 0;

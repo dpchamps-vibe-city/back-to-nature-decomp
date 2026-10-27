@@ -545,10 +545,6 @@ typedef struct {
 
 typedef struct {
     s16 unk0;
-} M2C_a070b354da22_Recon800B977CA0View;
-
-typedef struct {
-    s16 unk0;
     s16 unk2;
     s16 unk4;
 } M2C_a34e94965883_M2C_800EEFB8_Arg1;
@@ -2213,6 +2209,10 @@ struct Ovl25ObjectRecord {
                SpriteSourceData record0;
                SpriteSourceData record1;
 };
+
+typedef struct {
+    s16 id;
+} Ovl25RecordIdView;
 
 struct Ovl30FlagMenuEntry {
     void *value;

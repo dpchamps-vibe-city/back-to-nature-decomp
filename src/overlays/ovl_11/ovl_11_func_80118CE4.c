@@ -5,9 +5,9 @@
 #include "ovl11_save_counters.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_quantity_input.h"
+#include "ovl11_item_slot_commands.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 
 s32 ovl_11_func_80118CE4(void) {
@@ -92,7 +92,7 @@ s32 ovl_11_func_80118CE4(void) {
         Ovl11AdjustSpendableBalance(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
     case 7:
         ovl_11_func_800F45A4(0x84, 1);
-        ovl_11_func_800E6EE0(0x6C, 1, 0, 1);
+        Ovl11MatchItemSlotsCommand(0x6C, 1, 0, 1);
         Ovl11SetInteractionSteps(8, 0);
         break;
     case 8:

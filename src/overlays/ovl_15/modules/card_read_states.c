@@ -28,6 +28,7 @@
 #include "beveled_panel.h"
 #include "psyq/libmcx.h"
 #include "ovl15_card_service.h"
+#include "ovl15_save_slot_record_pool.h"
 
 void Ovl15CardReadEnter(void);
 void Ovl15CardReadPollCards(void);
@@ -1051,7 +1052,6 @@ void Ovl15CardTransferChooseSecondSlot(void) {
     }
 }
 
-s16 ovl_15_func_80133538 (u8 *arg0, s16 arg1);
 u32 func_80017A64 (void);
 void func_80017A48 (u32 arg0);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -1093,11 +1093,11 @@ void Ovl15CardTransferValidateCapacity(void) {
         }
         selectedCount[side] = selectedKind0[side] + selectedKind12[side];
     }
-    kind0Count[0] = ovl_15_func_80133538((u8 *) &gSmallTaggedRecordBase, 0);
-    kind0Count[1] = ovl_15_func_80133538(gOvl15SaveWorkBase, 0);
-    kind1Count[0] = ovl_15_func_80133538((u8 *) &gSmallTaggedRecordBase, 1);
+    kind0Count[0] = Ovl15CountOccupiedPoolUnits((u8 *) &gSmallTaggedRecordBase, 0);
+    kind0Count[1] = Ovl15CountOccupiedPoolUnits(gOvl15SaveWorkBase, 0);
+    kind1Count[0] = Ovl15CountOccupiedPoolUnits((u8 *) &gSmallTaggedRecordBase, 1);
     liveState = &gSmallTaggedRecordBase - 0x1EAD;
-    kind1Count[1] = ovl_15_func_80133538(gOvl15SaveWorkBase, 1);
+    kind1Count[1] = Ovl15CountOccupiedPoolUnits(gOvl15SaveWorkBase, 1);
     liveKind0Limit = 0xA;
     if ((*(u16 *) ((u8 *) liveState + 0x44D2)) == 0) {
         liveKind0Limit = 5;
@@ -1242,7 +1242,6 @@ void Ovl15CardTransferConfirmSlots(void) {
 }
 
 void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
-void ovl_15_func_80132C1C(void);
 
 void Ovl15CardTransferShowSummary(void) {
     s32 var_s0;
@@ -1267,15 +1266,13 @@ void Ovl15CardTransferShowSummary(void) {
         gOvl15MenuState = 0x1A;
         return;
     case 0:
-        ovl_15_func_80132C1C();
+        Ovl15StageSelectedSlotTransfers();
         Ovl15InsertSaveChecksumSlots();
         Ovl15WriteSaveChecksums();
         gOvl15MenuState = 0x1D;
         return;
     }
 }
-
-void ovl_15_func_801331C4(void);
 
 void Ovl15CardTransferWriteSaveFile(void) {
     s32 temp_a1;
@@ -1296,7 +1293,7 @@ void Ovl15CardTransferWriteSaveFile(void) {
         gOvl15MenuState = 0x1E;
         break;
     case 0:
-        ovl_15_func_801331C4();
+        Ovl15RestoreStagedSlotRecords();
         gOvl15MenuState = 0x21;
         break;
     }

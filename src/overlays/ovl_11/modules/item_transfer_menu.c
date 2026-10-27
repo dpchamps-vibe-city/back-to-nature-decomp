@@ -31,6 +31,7 @@
 #include "ovl11_slot_decorations.h"
 #include "ovl11_held_item_flags.h"
 #include "ovl11_item_stack_clear.h"
+#include "ovl11_menu_exit_flags.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
@@ -38,7 +39,6 @@ void func_80017A38(s16 x, s16 y);
 void SetVal8005E2BC(s32 value);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 void func_800248B0(s32 ot, s16 x, s16 y);
-void ovl_11_func_800BCF28(void);
 
 /* Internal interfaces retain their original external linkage and word-sized
  * pointer arguments where present. Slot helpers are not a general inventory API. */
@@ -86,7 +86,7 @@ void Ovl11UpdateItemTransferMenu(void) {
             if (GetMessageWindowStatus() == 2) {
                 ResetMessageWindow();
                 gOvl11ItemTransferMenuState = 0;
-                ovl_11_func_800BCF28();
+                Ovl11PostMenuExitFlags();
                 workFlags = (u32 *)D_8006C838;
                 workFlags[3] |= 0x40000;
                 workFlags[0x5234 / 4] |= 0x2000;

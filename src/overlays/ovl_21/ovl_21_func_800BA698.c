@@ -32,14 +32,14 @@ s32 *ovl_21_func_800BA698(Ovl21Func800BA698Arg *arg0, s16 arg1, s16 arg2) {
     u8 *raw;
 
     var_v0 = NULL;
-    raw = (u8 *)D_800C0448;
+    raw = (u8 *)gOvl21SceneControl;
     for (var_s4 = arg2 * 3; var_s4 < arg2 * 3 + 3; var_s4++) {
         var_s3 = var_s4 * 0x108;
         var_s2 = 0;
         if (var_s2 < *(s16 *)(raw + 0x64A)) {
-            var_s5 = (u8 *)D_800C0448;
-            var_s1 = (s32 *)((u8 *)D_800C0448 + 0x34 + var_s3);
-            var_s0 = (Ovl21Func800BA698Rec *)((u8 *)D_800C0448 + var_s3);
+            var_s5 = (u8 *)gOvl21SceneControl;
+            var_s1 = (s32 *)((u8 *)gOvl21SceneControl + 0x34 + var_s3);
+            var_s0 = (Ovl21Func800BA698Rec *)((u8 *)gOvl21SceneControl + var_s3);
             do {
                 if ((var_s0->unk34 != 1) || (temp_v0 = var_s0->unk40 - arg0->unk0, temp_a0 = var_s0->unk44 - arg0->unk4, ((arg1 < (s16)SquareRoot0((temp_v0 * temp_v0) + (temp_a0 * temp_a0))) != 0))) {
                     var_s1 += 0x13;

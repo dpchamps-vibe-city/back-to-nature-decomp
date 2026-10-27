@@ -2201,3 +2201,20 @@ gOvl11MovementVolumeProbeEnabled = 0x80128D6C; // type:data size:0x4
 gOvl11MovementSpeedGear = 0x80128D58; // type:data size:0x4
 gOvl11MovementSpeedTimer = 0x80123A14; // type:data size:0x4
 gOvl11DirectionChoiceWeights = 0x801232D4; // type:data size:0x480
+
+// Shared-work leaves used by menu exit and primary-object reset.
+Ovl11PostMenuExitFlags = 0x800BCF28; // type:func
+Ovl11ClearPrimaryWorkCounters = 0x800C9D38; // type:func
+Ovl11IsPrimaryObjectFlag29Clear = 0x800CBDFC; // type:func
+
+// Empty-slot/match and insertion command protocol.
+Ovl11HasEmptyItemSlot = 0x800E6EAC; // type:func
+Ovl11MatchItemSlotsCommand = 0x800E6EE0; // type:func
+Ovl11InsertSecondaryItemCommand = 0x800E6F34; // type:func
+Ovl11InsertHeldGridOrOverflowItem = 0x800E7088; // type:func
+
+// Resolver-backed record field and reset commands.
+Ovl11WriteStateRecordPosition = 0x800E5ADC; // type:func
+Ovl11StateRecordAnimationCommand = 0x800E5B84; // type:func
+Ovl11ChangeStateRecordFlag800 = 0x800E5C60; // type:func
+Ovl11ResetMatchingStateRecords = 0x800E5D00; // type:func

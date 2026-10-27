@@ -8,7 +8,6 @@ typedef struct {
 } Rec;
 
 extern Rec D_80140F90[2][5];
-extern u8 D_80142550[];
 
 void ovl_15_func_80134724(void);
 
@@ -24,5 +23,5 @@ void ovl_15_func_8013468C(void) {
             D_80140F90[i][j].unk4 = 0;
         }
     }
-    memset(D_80142550, 0, 0x398);
+    memset(gOvl15StagedSlotRecords, 0, 0x398);
 }

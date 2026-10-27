@@ -19,6 +19,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_object_events.h"
+#include "ovl11_item_slot_commands.h"
 
 s32 Ovl11IsActionGuardAreaBlocked(s32 id);
 s32 Ovl11EvaluateActionGuardList(s16 *header);
@@ -30,7 +31,6 @@ s32 Ovl11TestSelectorRangeGuard(u32 selector);
 s32 Ovl11TestStateGuard(s32 selector, s32 limit);
 s32 Ovl11IsOutsideGuardInterval(s32 lower, s32 upper);
 s32 Ovl11HasActionGuardAreaException(s32 id, s16 area, s16 room);
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 Ovl11FindActionGuardResult(s32 id) {
     s16 *record;
@@ -359,7 +359,7 @@ s32 Ovl11TestStateGuard(s32 selector, s32 limit) {
             state = (Ovl11GuardState *)D_8006C838;
             savedRoom = &state->savedRoom;
             if (*savedRoom == state->room) {
-                if ((state->item == 0x103) || (ovl_11_func_800E6EE0(0x103, 1, 1, 0) == 1)) {
+                if ((state->item == 0x103) || (Ovl11MatchItemSlotsCommand(0x103, 1, 1, 0) == 1)) {
                     limit = 0xA;
                 } else {
                     limit = 0x12;

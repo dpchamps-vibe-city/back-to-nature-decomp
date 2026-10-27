@@ -15,7 +15,7 @@ s32 ovl_21_func_800BA7F0(s16 arg0) {
     i = arg0 * 3;
     if (i < arg0 * 3 + 3) {
         one = 1;
-        base = (UnkStruct800C0448 *)D_800C0448;
+        base = (UnkStruct800C0448 *)gOvl21SceneControl;
         p = (s32 *)((u8 *)base + ((((i << 5) + i) << 3) + 0x14));
         pos = 0x10000;
         step = 0x10000;

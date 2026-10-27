@@ -28,6 +28,7 @@
 #include "ovl11_object_render.h"
 #include "ovl11_item_sprite_source.h"
 #include "ovl11_direction_vector.h"
+#include "ovl11_item_slot_commands.h"
 
 /* Byte-aligned bank copies retain the original unaligned load/store ABI. */
 typedef struct __attribute__((packed)) {
@@ -324,13 +325,11 @@ s32 Ovl11SetObjectRecordMode(Recon_ovl_11_func_8010CE80_A0View *object, s32 mode
     return admission;
 }
 
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-
 void Ovl11ResolveObjectRecordMessage(Ovl11CF58Object *arg0) {
     if (arg0->unkB8 & 0x800) {
         if (GetMessageWindowStatus() == 2) {
             arg0->unkB8 &= ~0x800;
-            ovl_11_func_800E6EE0(Ovl11Item_80071A8A.id, 1, 0, 1);
+            Ovl11MatchItemSlotsCommand(Ovl11Item_80071A8A.id, 1, 0, 1);
             if (GetGameFlag(2) == 0 && arg0->unk30 == 0x28 && arg0->unk26 != 6) {
                 Ovl11PlaceRecordFromTable((Ovl11TablePositionObject *)arg0);
             }

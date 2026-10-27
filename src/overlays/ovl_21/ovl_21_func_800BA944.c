@@ -10,7 +10,7 @@ s16 ovl_21_func_800BA944(s16 arg0) {
     count = 0;
     for (i = arg0 * 3; i < arg0 * 3 + 3; i++) {
         buf[count] = 0;
-        if (((UnkStruct800C0448 *)D_800C0448)[i].unk14 == 0) {
+        if (((UnkStruct800C0448 *)gOvl21SceneControl)[i].unk14 == 0) {
             buf[count] = i;
             count++;
         }

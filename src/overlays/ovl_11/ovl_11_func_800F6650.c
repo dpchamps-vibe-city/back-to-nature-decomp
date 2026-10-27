@@ -1,6 +1,6 @@
 #include "common.h"
-void ovl_11_func_800BCF28(void);
+#include "ovl11_menu_exit_flags.h"
 
 void ovl_11_func_800F6650(void) {
-    ovl_11_func_800BCF28();
+    Ovl11PostMenuExitFlags();
 }

@@ -26,13 +26,13 @@
 #include "message_window.h"
 #include "beveled_panel.h"
 #include "ovl11_clock_hud.h"
+#include "ovl11_menu_exit_flags.h"
 
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 void SetVal8005E2BC(s32);
 void func_800248B0(s32, s16, s16);
 void func_80017D9C(s32 *, u16 *, s16, s16, s32);
-void ovl_11_func_800BCF28(void);
 
 void Ovl11UpdateOptionsMenu(void);
 void Ovl11ShowOptionsListRowDescription(s16 column, s16 row);
@@ -86,7 +86,7 @@ void Ovl11UpdateOptionsMenu(void) {
             *(Ovl11MenuSettings *)(work + 0xE4CC) = gOvl11OptionsSettings_menu;
             ResetMessageWindow();
             gOvl11OptionsMenuState = 0;
-            ovl_11_func_800BCF28();
+            Ovl11PostMenuExitFlags();
             *(u32 *)(work + 0xC) |= 0x40000;
             Ovl11ApplyWorkSettings();
         }
@@ -360,7 +360,7 @@ void Ovl11ServiceMenuChoice(void) {
             ResetMessageWindow();
             if (gOvl11MenuChoiceResult == -1 || gOvl11MenuChoiceResult == 3 ||
                 gOvl11MenuChoiceResult == 2 || gOvl11MenuChoiceResult == 1) {
-                ovl_11_func_800BCF28();
+                Ovl11PostMenuExitFlags();
             }
         }
     }

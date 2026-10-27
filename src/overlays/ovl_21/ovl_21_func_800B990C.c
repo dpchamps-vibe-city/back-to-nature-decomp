@@ -27,11 +27,11 @@ void ovl_21_func_800B990C(void) {
     Ovl21C0448View *blk;
 
     for (i = 0; i < 6; i++) {
-        chk = (Ovl21C0448View *)D_800C0448;
+        chk = (Ovl21C0448View *)gOvl21SceneControl;
         if (chk->unk646 != 0 && i == 0) {
             i = 1;
         }
-        blk = (Ovl21C0448View *)D_800C0448;
+        blk = (Ovl21C0448View *)gOvl21SceneControl;
         val = blk->recs[i].unk0;
         if (val == 1) {
             pos = (u8 *)blk->recs[0].unk6;

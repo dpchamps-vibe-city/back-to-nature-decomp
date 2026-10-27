@@ -1,8 +1,0 @@
-#include "common.h"
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-
-s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-    s32 callRet1;
-    callRet1 = ovl_11_func_800E6EE0(0, arg0, arg1, 0);
-    return callRet1;
-}

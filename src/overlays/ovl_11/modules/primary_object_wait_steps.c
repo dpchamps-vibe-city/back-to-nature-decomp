@@ -13,9 +13,7 @@
 #include "ovl11_primary_object_wait_steps.h"
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_primary_object_requests.h"
-
-/* The request service's fourth ABI argument is retained even though unused. */
-s32 ovl_11_func_800E6F34(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+#include "ovl11_item_slot_commands.h"
 
 s32 Ovl11StepPrimaryObjectItemRequest(s32 *step, s32 baseStep, s16 itemId) {
     s32 complete;
@@ -28,7 +26,7 @@ s32 Ovl11StepPrimaryObjectItemRequest(s32 *step, s32 baseStep, s16 itemId) {
     }
     switch (phase) {
     case 0:
-        ovl_11_func_800E6F34(itemId, 0, 0, 0);
+        Ovl11InsertSecondaryItemCommand(itemId, 0, 0, 0);
         phase++;
         break;
     case 1:

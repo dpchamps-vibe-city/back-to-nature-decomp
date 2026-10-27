@@ -89,3 +89,40 @@ gOvl25BackgroundCycleDescending = 0x800BCD50; // type:data size:0x2
 gOvl25BackgroundCycleIndex = 0x800BCD52; // type:data size:0x2
 gOvl25BackgroundCycleLowRgb = 0x800BCDAC; // type:data size:0xC
 gOvl25BackgroundCycleHighRgb = 0x800BCDB8; // type:data size:0xC
+
+// Complete scene-phase lifecycle and its private phase table.
+Ovl25DispatchScenePhase = 0x800B7EB4; // type:func
+Ovl25LoadSceneStageAndInit = 0x800B7F3C; // type:func
+Ovl25UpdateSceneTransition = 0x800B80A4; // type:func
+Ovl25UpdateSceneMode = 0x800B813C; // type:func
+Ovl25BeginSceneExit = 0x800B81B4; // type:func
+Ovl25TeardownScene = 0x800B81F4; // type:func
+gOvl25ScenePhaseTable = 0x800BCBD8; // type:data size:0x14
+gOvl25SceneModeHandlers = 0x800BCBEC; // type:data size:0xC
+gOvl25SceneAssetLoadStep = 0x800BCD20; // type:data size:0x1
+gOvl25SceneEffectVoice = 0x800C030C; // type:data size:0x2
+// Retained halfword anchor; typed views reach the surrounding scene work.
+gOvl25SceneWorkWords = 0x800BFE44; // type:data size:0x2
+
+// Shared initial-record banks and their reset chain.
+Ovl25ResetSceneState = 0x800B82B4; // type:func
+Ovl25InitSceneRecordState = 0x800B8340; // type:func
+Ovl25SeedInitialSceneRecords = 0x800B83A0; // type:func
+Ovl25ResetSceneRecords = 0x800B8478; // type:func
+// Three-mode protocol and its exclusive update/render helpers.
+Ovl25DispatchEventPhase = 0x800B853C; // type:func
+Ovl25RunDialogueMode = 0x800B860C; // type:func
+Ovl25UpdateActiveSceneMode = 0x800B8728; // type:func
+Ovl25UpdatePrimaryRecordFromInput = 0x800B8848; // type:func
+Ovl25UpdateOtherRecordChoices = 0x800B8A30; // type:func
+Ovl25AdvanceSceneTarget = 0x800B8CEC; // type:func
+Ovl25TickSceneRecords = 0x800B8D70; // type:func
+Ovl25UpdateSceneRecord = 0x800B8DF4; // type:func
+Ovl25ScanSceneCompletion = 0x800B9208; // type:func
+Ovl25DrawPausedScene = 0x800B93BC; // type:func
+Ovl25DrawSceneSprites = 0x800B93E4; // type:func
+Ovl25DrawSceneObjectRecords = 0x800B941C; // type:func
+// Leading-halfword anchors, not allocations: record views cross separately
+// named interior sprite storage (e.g. auxiliary +0x18 at 800C013C).
+gOvl25SceneRecordBase = 0x800BFE54; // type:data size:0x2
+gOvl25AuxiliaryRecordBase = 0x800C0124; // type:data size:0x2

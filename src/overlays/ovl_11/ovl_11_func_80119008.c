@@ -7,9 +7,9 @@
 #include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "two_choice_prompt.h"
+#include "ovl11_item_slot_commands.h"
 
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_80119008(void) {
     s32 result;
@@ -82,7 +82,7 @@ s32 ovl_11_func_80119008(void) {
     case 7:
         gOvl11InteractionDrawMode = 0;
         Ovl11AdjustSpendableBalance(-price, 1);
-        ovl_11_func_800E6EE0(D_8012D51C, 1, 0, 1);
+        Ovl11MatchItemSlotsCommand(D_8012D51C, 1, 0, 1);
         Ovl11SetInteractionSteps(8, 4);
         break;
     case 8:

@@ -5470,10 +5470,13 @@ extern s32 gOvl11ObjectInitialRecordOffsets[7];
 extern s32 gOvl11ObjectInitialAreaRoomPairs[7];
 
 /* 800B806C dispatches 19 no-argument state handlers listed in original ovl_21 data at 800BCB6C. */
-extern void (*D_800BCB6C[19])(void);
+/* 800B7E3C indexes five original code-pointer words and forwards the table
+ * address as an ignored legacy argument; retain its word-view dispatch. */
+extern s32 gOvl21ScenePhaseTable[5];
+extern void (*gOvl21SceneStateHandlers[19])(void);
 
 /* ovl_21_func_800B7E98 selects and advances this state with lw/sw. */
-extern u32 D_800BCBB8;
+extern u32 gOvl21SceneLoadStep;
 
 /* 800B836C indexes four u16 triples at stride 6, loading +2/+4 with lhu. */
 extern u16 D_800BCBBC[4][3];
@@ -5511,7 +5514,7 @@ extern UnkStruct800BCC48 gOvl21SceneOffsetPairs[];
  * +0), indexed by a signed halfword read from the D_800C0448 state block.
  * ovl_21_func_800B871C loads it with lh, so it is signed. Absolute-addressed
  * (extern-only, lui + %lo) in the -G0 overlay build. */
-extern s16 D_800BCCC4[];
+extern s16 gOvl21FirstGroupMessages[];
 
 /* D_800BCCCC - ovl_21 table of s16 selector values (0x21/0x1F/0x1E/0x20 at
  * +0), indexed by a signed halfword read from the D_800C0448 state block by
@@ -5519,13 +5522,13 @@ extern s16 D_800BCCC4[];
  * content to D_800BCCC4 but a distinct symbol. Absolute-addressed
  * (extern-only, lui + %lo) in the -G0 overlay build. Not classified in
  * globals.h. */
-extern s16 D_800BCCCC[];
+extern s16 gOvl21SecondGroupMessages[];
 
 /* D_800BCCD4 - ovl_21 table of s16 selector values (0x25/0x23/0x22/0x24 at
  * +0), indexed by a signed halfword read from the D_800C0448 state block.
  * ovl_21_func_800B90C4 loads it with lh, so it is signed. Absolute-addressed
  * (extern-only, lui + %lo) in the -G0 overlay build. */
-extern s16 D_800BCCD4[];
+extern s16 gOvl21ResultMessages[];
 
 /* D_800BCC60 - ovl_21 table of 25 4-byte voice-bit masks (0x1, 0x2, 0x4,
  * ... doubling to 0x800000, then a 0 terminator). ovl_21_func_800B93F0
@@ -5533,7 +5536,7 @@ extern s16 D_800BCCD4[];
  * passes the loaded word to SpuGetKeyStatus as its voice_bit argument, so the
  * element type is u32. Absolute-addressed (extern-only, lui + %lo) in the -G0
  * overlay build. Not classified in globals.h. */
-extern u32 D_800BCC60[];
+extern u32 gOvl21SceneVoiceMasks[];
 
 /* 800B8B3C stores this data object's address at state +0xC; no typed access. */
 extern u8 D_800BCA78[];
@@ -5550,7 +5553,7 @@ extern u8 D_800BCAD8[];
  * second. Unsigned halfwords: the increment target loads with lhu. All the
  * other ovl_21 references are unmatched stubs, so this type is the only one
  * the matched pair shares. Absolute-addressed (extern-only, lui + %lo). */
-extern u16 D_800C0448[2];
+extern u16 gOvl21SceneControl[2];
 /* 800B8134 loads the signed handles at D_800C0448 +0x984/+0x986 with lh. */
 typedef struct {
     u8 pad_0[0x984];
@@ -5566,7 +5569,7 @@ typedef struct {
 } Ovl21SelectorView;
 /* 800B836C's six 0x108-byte records and table selectors at +0x640/+0x642. */
 struct Ovl21InitState;
-#define D_800C0448_init (*(struct Ovl21InitState *) D_800C0448)
+#define D_800C0448_init (*(struct Ovl21InitState *) gOvl21SceneControl)
 
 /* 800BB648 loads fifteen 32-bit sprite-header offsets from original data. */
 extern s32 gOvl21UiSpriteOffsets[15];
@@ -5761,6 +5764,13 @@ extern u16 gOvl25InitialSceneRecords[];
 /* ovl_25 83A0/8478 copy two eight-byte records from BCC70 through their
  * existing byte/record views, separately from the six-record BCC10 table. */
 extern s16 gOvl25InitialAuxRecords[];
+/* 83A0/8478 copy four signed halfwords per eight-byte initial-table record. */
+typedef struct {
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+} Ovl25SeedRecord;
 
 /* D_8009F78C - main-RAM copy destination. ovl_19_func_800BBB48 memcpys
  * 0xBDC bytes here from the D_8007AFF0 work area (absolute lui/addiu). The
@@ -5787,7 +5797,7 @@ extern u8 gOvl25SceneGeometry[];
  * loads it (lh) and, when it is not -1, passes it to func_8001FAE8.
  * Absolute-addressed (lui + lh %lo) from ovl_25 code; the object lives in
  * the overlay data segment, so only an extern declaration belongs here. */
-extern s16 D_800C030C;
+extern s16 gOvl25SceneEffectVoice;
 
 /* ovl_25_func_800BAFCC copies 0x1C88 streamed bytes here and indexes sprite headers. */
 extern u8 gOvl25ObjectSpriteData[];
@@ -5817,24 +5827,30 @@ extern struct SpriteSourceData gOvl25SequenceSpriteBase;
  * records. ovl_25_func_800B941C walks it (lui/addiu %hi/%lo) and hands each
  * entry to ovl_25_func_800B9B28. Absolute-addressed from -G0 overlay code;
  * the record type is defined in game_types.h, forward-declared here. */
-extern struct Ovl25ObjectRecord D_800BFE54;
+extern struct Ovl25ObjectRecord gOvl25SceneRecordBase;
 
 /* 800B813C indexes these three original callbacks; each ignores incoming arguments. */
-extern void (*D_800BCBEC[3])(void);
+extern void (*gOvl25SceneModeHandlers[3])(void);
+/* 7EB4 dispatches the five original pointer words at ovl_25:800BCBD8,
+ * forwarding the table base as an ignored argument to its phase handlers. */
+extern s32 gOvl25ScenePhaseTable[5];
+/* 7F3C increments/resets only the byte at ovl_25:800BCD20. This is NOT
+ * ovl_21's unrelated projection buffer at the same RAM address. */
+extern u8 gOvl25SceneAssetLoadStep[1];
 
 /* 800B813C reads the s16 selector@0; 800B8848 accesses s16@4CC; 800B97E4 reads s16@C,4D4,4DE..4E4. */
 typedef struct {
     s16 selector;
     u8 pad_2[2];
-    s32 unk4; /* 800B8728 loads/stores the pause flag as a word at +4. */
+    s32 paused; /* 800B8728 loads/stores the pause flag as a word at +4. */
     s32 unk8;
     s16 unkC;
     s16 unkE;
     u8 pad_10[0x10];
     s16 unk20;
     u8 pad_22[0x4C8 - 0x22];
-    s16 unk4C8; /* 800B8728 stores the returned sound handle at +4C8. */
-    s16 unk4CA;
+    s16 sceneEffectVoice; /* +4C8: pause/start/end effects; teardown stops it. */
+    s16 recordEffectVoice; /* +4CA: record-0 update starts/stops/sets volume. */
     s16 unk4CC;
     s16 unk4CE;
     s16 unk4D0;
@@ -5849,9 +5865,14 @@ typedef struct {
     s16 unk4E2;
     s16 unk4E4;
 } Ovl25StateView;
-extern Ovl25StateView D_800BFE44_view __asm__("D_800BFE44");
+/* 82B4/8340/83A0/8478 and the mode handlers address the same halfword
+ * work anchor. Keep its established typed view without adding storage. */
+extern s16 gOvl25SceneWorkWords[];
+extern Ovl25StateView D_800BFE44_view __asm__("gOvl25SceneWorkWords");
 /* 800B95B0 reads unsigned halfwords with category*24 + (record-1)*8 + choice*2. */
 extern u16 D_800BCCC0[][3][4];
+/* ovl_25 977C reads signed thresholds at (recordId-1)*5 + choice. */
+extern s16 D_800BCCA0[];
 /* 800B8DF4 reads signed halfwords at +E,+20,+4CA..4DC and a word at +8 in the view above. */
 /* 800B8DF4 compares this signed halfword with state +20. */
 extern s16 D_800BCC40;
@@ -5907,7 +5928,7 @@ extern s16 D_800BFE64;
  * Ovl25ObjectRecord records, walked by ovl_25_func_800B941C after the
  * D_800BFE54 run and handed to ovl_25_func_800B9C90. Same absolute-addressed
  * incomplete-type declaration class as D_800BFE54 above. */
-extern struct Ovl25ObjectRecord D_800C0124;
+extern struct Ovl25ObjectRecord gOvl25AuxiliaryRecordBase;
 
 /* D_800BFE60 - ovl_25 signed level/threshold word. ovl_25_func_800B9D4C
  * loads it once (lw) and selects one of five reset levels by comparing it
@@ -7123,7 +7144,7 @@ typedef struct {
 /* Alternate view preserves the existing local views in other ovl_15 TUs. */
 extern Ovl15Slot Ovl15Slots[2][5] __asm__("D_80140F90");
 /* 80132C1C packs up to five 0xB4/0xB8-byte copies into this byte buffer. */
-extern u8 D_80142550[];
+extern u8 gOvl15StagedSlotRecords[];
 /* 80132C1C clears record words at runtime base +0x7B40/+0x8248. */
 typedef struct {
     u8 pad_0[0x7AB4];
@@ -8026,6 +8047,32 @@ extern s16 gOvl11ObjectMode13Messages[8];
 /* CE80/CD80 call these original 14-entry admission and frame-handler banks. */
 extern s32 (*gOvl11ObjectModeEntryGuards[14])(void *);
 extern s32 (*gOvl11ObjectModeHandlers[14])(void *);
+
+/* E5ADC writes three words at D_80077600 + recordId*0xF8. */
+extern u8 D_80077600[];
+/* E5B84 clears bit 20 in shared work +5234 when animation status is final. */
+typedef struct {
+    char pad0[0x5234];
+    s32 flags;
+} Ovl11AnimationCommandWork;
+/* E5D00 reads shared +52C6 and per-record +99EE/+9A16, stride 0x1D4. */
+typedef struct {
+    char pad0[0x52C6];
+    s16 defaultMatchValue;
+    char pad52C8[0x99EE - 0x52C8];
+    s16 animationFrame;
+    char pad99F0[0x9A16 - 0x99F0];
+    s16 matchValue;
+} Ovl11RecordResetCommandWork;
+
+/* 800B9644 passes the signed entity IDs at scene-work +118/+220 to
+ * Ovl21RaiseEntityRangeValue. This is a view, not separate storage. */
+typedef struct {
+    u8 pad0[0x118];
+    s16 firstEntityId;
+    u8 pad11A[0x220 - 0x11A];
+    s16 secondEntityId;
+} Ovl21ResultEntityView;
 
 #endif /* GLOBALS_OVERRIDE_H */
 

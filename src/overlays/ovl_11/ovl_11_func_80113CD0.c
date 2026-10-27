@@ -10,8 +10,7 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_selection_record_reset.h"
-
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+#include "ovl11_item_slot_commands.h"
 
 s32 ovl_11_func_80113CD0(void) {
     s32 flags;
@@ -90,7 +89,7 @@ s32 ovl_11_func_80113CD0(void) {
     *a++ = 0x1E;
     *c++ = 0;
     *b++ = 0x64;
-    if (ovl_11_func_800E6EE0(0x1D, 0, 2, 0) != 1) {
+    if (Ovl11MatchItemSlotsCommand(0x1D, 0, 2, 0) != 1) {
         *q = (void *) ((s32) D_80051F1C + gTextBankOffsets[1]);
     } else {
         *q = NULL;

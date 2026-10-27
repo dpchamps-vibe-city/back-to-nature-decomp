@@ -19,6 +19,7 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "beveled_panel.h"
+#include "ovl11_menu_exit_flags.h"
 
 /* Engine text/sprite services; their original pointer-as-word ABI is kept. */
 u32 func_80017A64(void);
@@ -37,7 +38,6 @@ u16 *func_8001AAB8(s32 weekday, u16 *text);
 void ovl_11_func_800F6638(void);
 void ovl_11_func_800F6640(void);
 s32 ovl_11_func_800F6648(void);
-void ovl_11_func_800BCF28(void);
 
 /* Module-local interfaces retain external linkage: co-location alone does
  * not establish that the original functions were static. */
@@ -86,7 +86,7 @@ void Ovl11UpdateCalendarPanel(void) {
             if (GetMessageWindowStatus() == 2) {
                 ResetMessageWindow();
                 gOvl11CalendarPanelState = 0;
-                ovl_11_func_800BCF28();
+                Ovl11PostMenuExitFlags();
             }
         } else {
             previousStyle = func_80017A64();

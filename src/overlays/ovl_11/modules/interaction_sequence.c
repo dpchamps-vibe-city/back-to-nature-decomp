@@ -20,6 +20,7 @@
 #include "sound_commands.h"
 #include "ovl11_scene_rotation_ramps.h"
 #include "message_window.h"
+#include "ovl11_menu_exit_flags.h"
 
 void Ovl11ResetInteractionSequence(void) {
     gOvl11InteractionPhase = 0xFF;
@@ -63,7 +64,6 @@ void Ovl11StartMessageInteraction(void) {
     RequestMessageWindow(3, 0x37A);
 }
 
-void ovl_11_func_800BCF28(void);
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void ovl_11_func_800F787C(void);
@@ -117,7 +117,7 @@ void Ovl11ServiceInteractionSequence(void) {
                 if (GetMessageWindowStatus() == 2) {
                     ResetMessageWindow();
                     gOvl11InteractionPhase = 0xFF;
-                    ovl_11_func_800BCF28();
+                    Ovl11PostMenuExitFlags();
                     ((struct struct_8006C838_view *)&D_8006C838)->field_0C |= 0x40000;
                     ((struct struct_8006C838_800E8F78 *)&D_8006C838)->field_5234 |= 0x2000;
                     SetGameFlag(0x71, 0);

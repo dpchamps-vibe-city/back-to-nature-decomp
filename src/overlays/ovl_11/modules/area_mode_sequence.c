@@ -62,6 +62,8 @@
 #include "ovl11_scene_header_capture.h"
 #include "ovl11_state_object_pool_clear.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_primary_work_counter_reset.h"
+#include "ovl11_menu_exit_flags.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -75,7 +77,6 @@ void Ovl11UpdateAreaMode(void) {
 /* Overlay names for the matched setters at 80011F44 and 80011F50. */
 void SetVal8005E278(s32 arg0);
 void SetVal8005E27C(s32 arg0);
-void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CD624(void);
 
 #define WORK ((Ovl11BBCB8Work *)&D_8007AFF0)
@@ -233,7 +234,7 @@ void Ovl11StepAreaModeState(void) {
             case 12:
             case 31:
                 STATUS->objectFlags |= 0x400000;
-                ovl_11_func_800BCF28();
+                Ovl11PostMenuExitFlags();
                 if (WORK->state == 31) {
                     WORK->state = 30;
                     SetGameFlag(0x9D, 1);
@@ -582,8 +583,6 @@ s32 Ovl11ChooseAreaSoundId(void) {
     return 0x1B;
 }
 
-void ovl_11_func_800C9D38 (void);
-
 /* Install projection, lighting, camera and scene pools before mode-specific
  * handlers. Retain their existing scratch-stack regions independently. */
 void Ovl11ResetAreaScene(void) {
@@ -601,7 +600,7 @@ void Ovl11ResetAreaScene(void) {
     } else {
         Ovl11InstallAreaSelection(1, gOvl11AreaReadStarted);
     }
-    ovl_11_func_800C9D38();
+    Ovl11ClearPrimaryWorkCounters();
     Ovl11ResetVertexBlendPool();
     Ovl11ClearSceneRecords();
     Ovl11InstallSceneRecords();

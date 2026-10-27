@@ -45,7 +45,7 @@ void Ovl21DrawPrimarySceneSprite(s16 offsetIndex) {
     s16 position[3];
     u16 x;
 
-    base = (u8 *) D_800C0448;
+    base = (u8 *) gOvl21SceneControl;
     if (base[0x688] != 0xE) {
         SelectSpriteAnimation((ObjectState *) (base + 0x684), 0xE);
     }
@@ -77,10 +77,10 @@ void Ovl21SubmitProjectedSprite(SpriteSourceData *source, u16 *position) {
         *(s16 *) ((u8 *) gOvl21SpriteProjectScreen + 0),
         *(s16 *) ((u8 *) gOvl21SpriteProjectScreen + 4));
     /* Only these four record-owned sources get the additional screen pass. */
-    if ((source == ((UnkStruct800C0448 *) D_800C0448)[0].unk30) ||
-        (source == ((UnkStruct800C0448 *) D_800C0448)[1].unk30) ||
-        (source == ((UnkStruct800C0448 *) D_800C0448)[2].unk30) ||
-        (source == ((UnkStruct800C0448 *) D_800C0448)[5].unk30)) {
+    if ((source == ((UnkStruct800C0448 *) gOvl21SceneControl)[0].unk30) ||
+        (source == ((UnkStruct800C0448 *) gOvl21SceneControl)[1].unk30) ||
+        (source == ((UnkStruct800C0448 *) gOvl21SceneControl)[2].unk30) ||
+        (source == ((UnkStruct800C0448 *) gOvl21SceneControl)[5].unk30)) {
         func_800248E8(otAddress,
             *(s16 *) ((u8 *) gOvl21SpriteProjectScreen + 0),
             *(s16 *) ((u8 *) gOvl21SpriteProjectScreen + 4), 0);

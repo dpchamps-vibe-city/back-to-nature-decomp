@@ -15,7 +15,7 @@ void ovl_21_func_800B9CA4(void) {
     u8 *pos;
 
     for (i = 1; i < 6; i++) {
-        base = (UnkStruct800C0448 *)D_800C0448;
+        base = (UnkStruct800C0448 *)gOvl21SceneControl;
         raw = (u8 *)base;
         pos = raw + 0x1A;
         nearSide = i < 3;

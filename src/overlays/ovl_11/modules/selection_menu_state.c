@@ -52,6 +52,7 @@
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_selection_candidate.h"
 #include "game_flags.h"
+#include "ovl11_menu_exit_flags.h"
 
 void Ovl11ResetSelectionModeState(void) {
     s32 i;
@@ -1633,15 +1634,13 @@ void Ovl11CommitSelection(void) {
     }
 }
 
-void ovl_11_func_800BCF28(void);
-
 void Ovl11FinishSelectionMenu(void) {
     char *base;
 
     gOvl11SelectionModePhase = 0;
     base = (char *)&D_8006C838;
     *(s32 *)(base + 0xC) |= 0x40000;
-    ovl_11_func_800BCF28();
+    Ovl11PostMenuExitFlags();
     PlaySoundEffect(3);
     *(s32 *)(base + 0x5234) |= 0x2000;
     ResetMessageWindow();

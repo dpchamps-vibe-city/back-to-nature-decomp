@@ -14,8 +14,8 @@
 #include "psyq/memory.h"
 #include "psyq/libgs.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_menu_exit_flags.h"
 
-void ovl_11_func_800BCF28(void);
 void Ovl11BuildChoiceMessageSlots(void);
 s32 Ovl11HasUniformChoiceMessages(void);
 s32 Ovl11TryFillUniformChoiceMessages(s16 selectedKind, s16 value);
@@ -105,7 +105,7 @@ void Ovl11UpdateChoiceMessages(void) {
     case 5:
         Ovl11RestoreChoiceImages();
         Ovl11ClearChoiceMessages();
-        ovl_11_func_800BCF28();
+        Ovl11PostMenuExitFlags();
         break;
     case 6:
         if (GetMessageWindowStatus() == 2) {

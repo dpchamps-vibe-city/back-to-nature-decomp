@@ -20,6 +20,7 @@
 #include "ovl11_condition_record_fields.h"
 #include "ovl11_record_slot_table.h"
 #include "ovl11_object_events.h"
+#include "ovl11_item_slot_commands.h"
 
 s32 Ovl11EvaluateConditionRecords(Ovl11ConditionRecord *arg0, s32 arg1);
 
@@ -492,15 +493,6 @@ s32 Ovl11ConditionCodeIsAvailable(s32 arg0) {
     return Ovl11HasInactiveConditionRowCode(var_s0) == 0;
 }
 
-/*
- * Packed calendar/daily-condition allow-lists, ovl_11:800F1B28..800F1D54.
- * The composite predicate combines three selectors and two optional record
- * queries. These helpers only read their borrowed calendar/record state.
- * See ovl11_condition_masks.h for bit assignments and short-circuit behavior,
- * and notes/file-groupings.md for membership and boundary evidence.
- */
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-
 s32 Ovl11TestConditionMask(s32 conditions) {
     if (Ovl11MaskAllowsSeason(conditions) == 0) {
         return 0;
@@ -512,12 +504,12 @@ s32 Ovl11TestConditionMask(s32 conditions) {
         return 0;
     }
     if (conditions & 0x20000) {
-        if (ovl_11_func_800E6EE0(0, 0, 1, 0) == 0) {
+        if (Ovl11MatchItemSlotsCommand(0, 0, 1, 0) == 0) {
             return 0;
         }
     }
     if (conditions & 0x10000) {
-        if (ovl_11_func_800E6EE0(0, 1, 0, 0) == 0) {
+        if (Ovl11MatchItemSlotsCommand(0, 1, 0, 0) == 0) {
             return 0;
         }
     }

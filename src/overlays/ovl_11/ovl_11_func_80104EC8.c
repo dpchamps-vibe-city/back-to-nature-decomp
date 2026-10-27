@@ -8,8 +8,8 @@
 #include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_item_slot_commands.h"
 
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EF0E8(s16 arg0);
 s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount);
@@ -119,7 +119,7 @@ s32 ovl_11_func_80104EC8(s16 arg0) {
         var_a0 = 0xFA;
         var_a2 = 1;
 block_192:
-        return ovl_11_func_800E6EE0(var_a0, 1, var_a2, 0);
+        return Ovl11MatchItemSlotsCommand(var_a0, 1, var_a2, 0);
     case 0x4:
         var_a1_2 = 0;
         for (var_a0_7 = 0; var_a0_7 < 10; var_a0_7++) {
@@ -187,9 +187,9 @@ enough_slots:
     case 0x8:
         var_a0 = 0x104;
         var_a2 = 1;
-        return ovl_11_func_800E6EE0(var_a0, 1, var_a2, 0);
+        return Ovl11MatchItemSlotsCommand(var_a0, 1, var_a2, 0);
     case 0x9:
-        temp_v0 = ovl_11_func_800E6EE0(0x103, 1, 1, 0);
+        temp_v0 = Ovl11MatchItemSlotsCommand(0x103, 1, 1, 0);
         if (temp_v0 == 1) {
             if (((Ovl11ConditionState *) D_8006C838)->field_E6CB ==
                 ((Ovl11ConditionState *) D_8006C838)->date[0] + 1) {
@@ -487,7 +487,7 @@ block_406:
 block_172:
         return GetGameFlag(var_a0_5);
     case 0x21:
-        if (ovl_11_func_800E6EE0(0x47, 1, 1, 0) != 1) {
+        if (Ovl11MatchItemSlotsCommand(0x47, 1, 1, 0) != 1) {
             record28.unk0 = 0x28;
             record28.unk4 = Ovl11ReadRecordTypeProperty02(0x28);
             var_v0 = 1;
@@ -535,7 +535,7 @@ block_172:
     case 0x27:
         var_a0 = 0xCC;
         var_a2 = 0;
-        return ovl_11_func_800E6EE0(var_a0, 1, var_a2, 0);
+        return Ovl11MatchItemSlotsCommand(var_a0, 1, var_a2, 0);
     case 0x28:
         var_a0_10 = 0xE8;
 block_338:
@@ -1062,7 +1062,7 @@ date_ready:
         if (gSpendableBalance >= 0x1F4) {
             var_v0 = 0;
             if (GetGameFlag(0xE7U) == 1) {
-                if (ovl_11_func_800E6EE0(0x38, 0, 2, 0) == 0) {
+                if (Ovl11MatchItemSlotsCommand(0x38, 0, 2, 0) == 0) {
                     return 1;
                 }
             }

@@ -19,6 +19,8 @@
 
 #include "common.h"
 #include "ovl19_scene_runtime.h"
+#include "ovl21_scene_state_machine.h"
+#include "ovl25_scene_phase_lifecycle.h"
 #include "packet_work.h"
 #include "psyq/types.h"
 #include "psyq/stddef.h"
@@ -273,7 +275,7 @@ int main(void) {
             case 5:
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x15, 0x16, D_80010098, D_80010098);
-                D_8005E384 = (void (*)(void))&D_800B7E3C;
+                D_8005E384 = (void (*)(void))&Ovl21StepScene;
                 D_8005E288 = 0;
                 break;
 
@@ -326,7 +328,7 @@ int main(void) {
             case 12:
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x19, 0x1A, D_80010098, D_80010098);
-                D_8005E384 = (void (*)(void))&D_800B7EB4;
+                D_8005E384 = (void (*)(void))&Ovl25DispatchScenePhase;
                 D_8005E288 = 0;
                 break;
 

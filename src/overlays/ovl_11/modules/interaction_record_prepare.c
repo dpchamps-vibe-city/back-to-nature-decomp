@@ -7,8 +7,8 @@
 #include "ovl11_direction_vector.h"
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_interaction_record_prepare.h"
+#include "ovl11_item_slot_commands.h"
 
-s32 ovl_11_func_800E6EAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *object, s32 state);
 
 s32 Ovl11PrepareInteractionRecord(Ovl11InteractionRecord *record) {
@@ -19,7 +19,7 @@ s32 Ovl11PrepareInteractionRecord(Ovl11InteractionRecord *record) {
     }
     flags = *(s32 *)((u8 *)record + 0x34);
     if (flags & 0x100000) {
-        if (ovl_11_func_800E6EAC(1, 0, 0, 0) == 1) {
+        if (Ovl11HasEmptyItemSlot(1, 0, 0, 0) == 1) {
             ovl_11_func_80109188((Ovl11D04D4Obj *)&gStageMode1Record, 0x12);
             (*(s32 *)((u8 *)record + 0x34)) = (s32)((*(s32 *)((u8 *)record + 0x34)) & 0xFFEFFFFF);
         }

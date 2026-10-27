@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "game_flags.h"
+#include "ovl11_item_slot_commands.h"
 
 void ovl_11_func_8010941C(s32 arg0);
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 index;
@@ -85,7 +85,7 @@ s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         ovl_11_func_8010941C(0);
         break;
     case 3:
-        ovl_11_func_800E6EE0(0x106, 1, 0, 1);
+        Ovl11MatchItemSlotsCommand(0x106, 1, 0, 1);
         ((struct Ovl11PoolResetView *)D_8006C838)->field_91E0 &= ~0x20000;
         SetGameFlag(0x74, 1);
         ovl_11_func_8010941C(1);

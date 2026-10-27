@@ -15,11 +15,10 @@
 #include "psyq/libgte.h"
 #include "screen_fade.h"
 #include "message_window.h"
-
-void ovl_25_func_800B8478 (void);
+#include "ovl25_scene_record_seeders.h"
 
 void Ovl25BeginEventPhases(void) {
-    ovl_25_func_800B8478();
+    Ovl25ResetSceneRecords();
     gOvl25EventPhase = 1;
 }
 
@@ -91,13 +90,13 @@ void Ovl25BeginEventFadeIncrease(void) {
     }
 }
 
-void ovl_25_func_800B83A0(void);
+void Ovl25SeedInitialSceneRecords(void);
 
 void Ovl25WaitAndBeginEventFadeDecrease(void) {
     char *far_base;
 
     if (IsScreenFadeComplete() == 1) {
-        ovl_25_func_800B83A0();
+        Ovl25SeedInitialSceneRecords();
         BeginScreenFadeDecrease(0xA, 0, 2);
         far_base = (char *)&D_8007AFF0;
         *(s16 *)(far_base + 0x253B4) = -0x140;

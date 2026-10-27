@@ -56,3 +56,45 @@ gOvl21SceneDiscPositions = 0x800BC894; // type:data size:0x1E4
 // Source lvalues at the first scene entry and second UI entry of the pool.
 gOvl21PrimarySceneSprite = 0x800C0ACC; // type:data size:0x30
 gOvl21UiSpriteAnchor = 0x800C0B2C; // type:data size:0x30
+
+// Phase/state dispatch and its exclusive interaction helpers.
+Ovl21StepScene = 0x800B7E3C; // type:func
+Ovl21LoadScenePhase = 0x800B7E98; // type:func
+Ovl21WaitSceneFadeIn = 0x800B7FC8; // type:func
+Ovl21UpdateScenePhase = 0x800B806C; // type:func
+Ovl21BeginSceneExit = 0x800B80D4; // type:func
+Ovl21FinishSceneExit = 0x800B8134; // type:func
+Ovl21InitSceneState = 0x800B8228; // type:func
+Ovl21ResetSceneState = 0x800B8320; // type:func
+Ovl21InitSceneRecords = 0x800B836C; // type:func
+Ovl21PromptSceneConfirm = 0x800B859C; // type:func
+Ovl21PromptMessageChoice = 0x800B8654; // type:func
+Ovl21ShowOpeningMessage = 0x800B86B8; // type:func
+Ovl21RunFirstGroupVoiceMessage = 0x800B871C; // type:func
+Ovl21RunSecondGroupVoiceMessage = 0x800B88A0; // type:func
+Ovl21ShowPromptMessage = 0x800B8A24; // type:func
+Ovl21DelayMessageThenPlaySound = 0x800B8A80; // type:func
+Ovl21UpdateSceneInteraction = 0x800B8B3C; // type:func
+Ovl21WaitVoiceCooldown = 0x800B8F98; // type:func
+Ovl21SelectTargetGroup = 0x800B90C4; // type:func
+Ovl21WaitFirstGroupVoice = 0x800B9178; // type:func
+Ovl21WaitSecondGroupVoice = 0x800B92C8; // type:func
+Ovl21WaitFinalVoice = 0x800B93F0; // type:func
+Ovl21PromptCloseMessage = 0x800B94D4; // type:func
+Ovl21ResolveChoice = 0x800B9538; // type:func
+Ovl21PromptRetryChoice = 0x800B9590; // type:func
+Ovl21FadeInAndAdvanceRound = 0x800B95EC; // type:func
+Ovl21ApplyRecordResult = 0x800B9644; // type:func
+Ovl21PickRandomResult = 0x800B96B0; // type:func
+Ovl21SetRecordGroupState = 0x800B9798; // type:func
+Ovl21SelectLargerRecordGroup = 0x800B97F4; // type:func
+Ovl21CountActiveRecordSlices = 0x800B9844; // type:func
+// Existing C views; no additional storage or enlarged declaration.
+gOvl21ScenePhaseTable = 0x800BCB58; // type:data size:0x14
+gOvl21SceneStateHandlers = 0x800BCB6C; // type:data size:0x4C
+gOvl21SceneLoadStep = 0x800BCBB8; // type:data size:0x4
+gOvl21SceneVoiceMasks = 0x800BCC60; // type:data size:0x64
+gOvl21SceneControl = 0x800C0448; // type:data size:0x4
+gOvl21FirstGroupMessages = 0x800BCCC4; // type:data size:0x8
+gOvl21SecondGroupMessages = 0x800BCCCC; // type:data size:0x8
+gOvl21ResultMessages = 0x800BCCD4; // type:data size:0x8

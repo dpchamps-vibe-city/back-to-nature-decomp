@@ -12,8 +12,7 @@
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_primary_object_level_bands.h"
 #include "ovl11_object_area_sprite_reset.h"
-
-void ovl_11_func_800C9D38(void);
+#include "ovl11_primary_work_counter_reset.h"
 
 void Ovl11ResetPrimaryObjectForDayTransition(void) {
     struct Ovl11CCCC0State *work;
@@ -32,7 +31,7 @@ void Ovl11ResetPrimaryObjectForDayTransition(void) {
     primaryObject->unk38 = 0;
     primaryObject->unk6C &= 0xBD9B22A4;
     work->status = (s32) (work->status & 0xFFFE3FFF);
-    ovl_11_func_800C9D38();
+    Ovl11ClearPrimaryWorkCounters();
     Ovl11ResetPrimaryObjectRequest();
     SetGameFlag(0x3FU, 0U);
     SetGameFlag(0x40U, 0U);

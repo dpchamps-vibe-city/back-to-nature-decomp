@@ -22,9 +22,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
-
-/* The original caller supplies two additional, unused zero arguments. */
-s32 ovl_11_func_800E6EAC();
+#include "ovl11_item_slot_commands.h"
 
 s16 Ovl11GetItemStackCapacity(s16 id, s32 mode) {
     s32 count;
@@ -33,7 +31,7 @@ s16 Ovl11GetItemStackCapacity(s16 id, s32 mode) {
     s16 *slot;
 
     if (mode == 0) {
-        if (ovl_11_func_800E6EAC(0, 2, 0, 0) == 1) {
+        if (Ovl11HasEmptyItemSlot(0, 2, 0, 0) == 1) {
             return 99;
         }
     }

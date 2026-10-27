@@ -32,10 +32,10 @@
 #include "ovl11_balance_accounting.h"
 #include "ovl11_spawn_record_access.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_item_slot_commands.h"
 
 /* Original overlay labels for the resident setters and state getter. */
 void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
 
 s32 Ovl11StepSingleItemPurchase(s16 catalogId, s16 messageBank, s16 promptId, s16 mode) {
@@ -117,7 +117,7 @@ s32 Ovl11StepSingleItemPurchase(s16 catalogId, s16 messageBank, s16 promptId, s1
         Ovl11SetInteractionSteps(9, 0);
         if (mode == 2) {
             ovl_11_func_800F45A4(catalogId, 1);
-            ovl_11_func_800E6EE0(catalogId, 1, 0, 1);
+            Ovl11MatchItemSlotsCommand(catalogId, 1, 0, 1);
             Ovl11SetInteractionSteps(10, 0);
         } else if (mode == 1) {
             Ovl11SelectHeldPairChangeAnimation((Ovl11C7010Object *)((Ovl11PurchaseState *)D_8006C838)->object);
@@ -132,7 +132,7 @@ s32 Ovl11StepSingleItemPurchase(s16 catalogId, s16 messageBank, s16 promptId, s1
         if (mode != 0) {
             ovl_11_func_800F45A4(catalogId, 1);
         }
-        ovl_11_func_800E6EE0(catalogId, 1, 0, 1);
+        Ovl11MatchItemSlotsCommand(catalogId, 1, 0, 1);
         Ovl11SetInteractionSteps(9, 0);
         break;
     case 9:

@@ -150,3 +150,10 @@ Ovl15CreateSaveFile = 0x80136558; // type:func
 Ovl15WriteSaveFile = 0x80136660; // type:func
 Ovl15ReadSaveFile = 0x801367F8; // type:func
 Ovl15CardFilename = 0x80140EC0; // type:data size:0x20
+
+// Selected-slot transfer, shared allocation and occupied-capacity protocol.
+Ovl15StageSelectedSlotTransfers = 0x80132C1C; // type:func
+Ovl15RestoreStagedSlotRecords = 0x801331C4; // type:func
+Ovl15FindFreePoolRecord = 0x8013345C; // type:func
+Ovl15CountOccupiedPoolUnits = 0x80133538; // type:func
+gOvl15StagedSlotRecords = 0x80142550; // type:data size:0x398

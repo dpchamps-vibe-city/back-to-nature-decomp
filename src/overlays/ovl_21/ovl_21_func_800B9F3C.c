@@ -33,7 +33,7 @@ void ovl_21_func_800B9F3C(void) {
         if (D_800C0448_init.records[i].unk14 != 1) {
             D_800C0448_init.records[i].unk28 = 0;
         } else if (D_800C0448_init.records[i].unk28 == 1) {
-            state = &((UnkStruct800C0448 *)D_800C0448)[i];
+            state = &((UnkStruct800C0448 *)gOvl21SceneControl)[i];
             if (state->unk18 != 2) {
                 state->unk18 = 2;
                 D_800C0448_init.records[i].unk28 = 0;
@@ -50,7 +50,7 @@ void ovl_21_func_800B9F3C(void) {
                     continue;
                 }
                 for (j = 0;
-                    (base = (u8 *)D_800C0448),
+                    (base = (u8 *)gOvl21SceneControl),
                     j < *(s16 *)((u8 *)base + 0x64A) &&
                     ((scanDisplacement = -(j * sizeof(Ovl21InitSubstate) + i * 0x108)),
                     ((UnkStruct800C0448 *)(base - scanDisplacement))->unk34 != 0);
@@ -73,7 +73,7 @@ void ovl_21_func_800B9F3C(void) {
                     lookup = -shotOffset;
                     work = (u16 *)(base - lookup);
                     ((UnkStruct800C0448 *)work)->unk34 = 1;
-                    position = (SVECTOR *)((u8 *)(D_800C0448 + 0x20) + shotOffset);
+                    position = (SVECTOR *)((u8 *)(gOvl21SceneControl + 0x20) + shotOffset);
                     position->vx = record->unk1A;
                     position->vy = -350;
                     position->vz = record->unk1E;
@@ -82,12 +82,12 @@ void ovl_21_func_800B9F3C(void) {
                     triple = quotient + quotient + quotient;
                     target = (s16)*work - triple;
                     target = D_800BCC24[i * 3 + target];
-                    shot = (Ovl21ProjectileView *)((u8 *)D_800C0448 + shotOffset);
+                    shot = (Ovl21ProjectileView *)((u8 *)gOvl21SceneControl + shotOffset);
                     shot->steps = steps;
                     shot->life = life;
                     shot->duration = life;
                     shot->kind = target;
-                    setVector((SVECTOR *)((u8 *)(D_800C0448 + 0x24) + shotOffset), velocityX, 0, velocityZ);
+                    setVector((SVECTOR *)((u8 *)(gOvl21SceneControl + 0x24) + shotOffset), velocityX, 0, velocityZ);
                     *(s16 *)((u8 *)base + 0x984) = PlaySoundEffect(0x40);
                 }
             }

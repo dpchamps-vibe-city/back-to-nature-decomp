@@ -2,11 +2,10 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
+#include "ovl11_state_record_commands.h"
 
 
 s32 ovl_11_func_800F06D8(s32 *arg0, s32 *arg1);
-s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 var_s2;
@@ -41,8 +40,8 @@ s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
         }
         break;
     }
-    ovl_11_func_800E5B84((s16)(var_s0 << 16 >> 16), var_s2, var_a2, 1);
-    ovl_11_func_800E5C60((s16)(var_s0 << 16 >> 16), 0, 0, 0);
+    Ovl11StateRecordAnimationCommand((s16)(var_s0 << 16 >> 16), var_s2, var_a2, 1);
+    Ovl11ChangeStateRecordFlag800((s16)(var_s0 << 16 >> 16), 0, 0, 0);
 done:
     return 1;
 }

@@ -18,7 +18,7 @@ void ovl_21_func_800BA5D0(void) {
     s32 ofs;
 
     i = 0;
-    base = (u8 *)D_800C0448;
+    base = (u8 *)gOvl21SceneControl;
     tbl = (s32 *)(base + 0x34);
     while (i < 6) {
         next = i + 1;

@@ -8,9 +8,9 @@
 #include "psyq/memory.h"
 #include "ovl11_state_field_access.h"
 #include "ovl11_direction_vector.h"
+#include "ovl11_state_record_commands.h"
 
 
-s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800EAE24(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
@@ -22,20 +22,20 @@ s32 ovl_11_func_800EAE24(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     switch (arg3) {
     case 0:
     case 1:
-        ovl_11_func_800E5B84(arg0, arg1, arg2, arg3);
+        Ovl11StateRecordAnimationCommand(arg0, arg1, arg2, arg3);
         break;
     case 2:
         temp_v1 = *(s32 *) ((u8 *) temp_s3 + 8);
         if (temp_v1 < 0) {
-            ovl_11_func_800E5B84(arg0, arg1, 0, 1);
+            Ovl11StateRecordAnimationCommand(arg0, arg1, 0, 1);
         } else {
             temp_v0 = *(s32 *) ((u8 *) temp_s3 + 0);
             if (temp_v0 < 0) {
-                ovl_11_func_800E5B84(arg0, arg1, 1, 1);
+                Ovl11StateRecordAnimationCommand(arg0, arg1, 1, 1);
             } else if (temp_v1 > 0) {
-                ovl_11_func_800E5B84(arg0, arg1, 2, 1);
+                Ovl11StateRecordAnimationCommand(arg0, arg1, 2, 1);
             } else if (temp_v0 > 0) {
-                ovl_11_func_800E5B84(arg0, arg1, 3, 1);
+                Ovl11StateRecordAnimationCommand(arg0, arg1, 3, 1);
             }
         }
         break;

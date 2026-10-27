@@ -14,10 +14,10 @@
 #include "ovl11_progress_status.h"
 #include "ovl11_balance_accounting.h"
 #include "two_choice_prompt.h"
+#include "ovl11_item_slot_commands.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 
@@ -127,8 +127,8 @@ s32 ovl_11_func_8011A25C(void) {
         Ovl11SetInteractionSteps(1, 10);
         break;
     case 10:
-        ovl_11_func_800E6EE0(item, 1, 0, 1);
-        ovl_11_func_800E6EE0(group, 0, 0, 1);
+        Ovl11MatchItemSlotsCommand(item, 1, 0, 1);
+        Ovl11MatchItemSlotsCommand(group, 0, 0, 1);
         BeginScreenFadeIncrease(20, 0, 2);
         Ovl11SetInteractionSteps(9, 0);
     case 9:

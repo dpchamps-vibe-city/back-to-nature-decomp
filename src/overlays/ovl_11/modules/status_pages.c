@@ -26,6 +26,8 @@
 #include "beveled_panel.h"
 #include "sprite_render.h"
 #include "ovl11_slot_decorations.h"
+#include "ovl11_menu_exit_flags.h"
+#include "ovl11_item_slot_commands.h"
 
 s32 Ovl11CountStatusSmallRecords (void);
 s32 Ovl11CountStatusNonzeroEntries (void);
@@ -205,7 +207,6 @@ void Ovl11LoadStatusPageResources(void) {
 
 void Ovl11LoadStatusPageResources(void);
 void Ovl11DrawAndProcessStatusPages(void);
-void ovl_11_func_800BCF28(void);
 
 /* Fade state is sampled before dispatch: transitions take effect next update. */
 void Ovl11UpdateStatusPages(void) {
@@ -248,7 +249,7 @@ void Ovl11UpdateStatusPages(void) {
     case 6:
         if (fadeComplete == 1) {
             gOvl11StatusPageState = 0;
-            ovl_11_func_800BCF28();
+            Ovl11PostMenuExitFlags();
         }
         break;
     }
@@ -963,11 +964,9 @@ s16 Ovl11FindStatusLevel(s16 arg0) {
     return var_s3;
 }
 
-s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-
 s32 Ovl11QueryStatusLevelEntry(s16 arg0) {
     s32 callRet1;
-    callRet1 = ovl_11_func_800E6EE0(arg0, 0, 2, 0);
+    callRet1 = Ovl11MatchItemSlotsCommand(arg0, 0, 2, 0);
     return callRet1;
 }
 

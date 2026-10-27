@@ -18,6 +18,7 @@
 #include "ovl11_default_position.h"
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_record_position_recovery.h"
+#include "ovl11_item_slot_commands.h"
 
 s32 *Ovl11ResetProgressControl(void) {
     Ovl11RefreshProgressStatusEntry();
@@ -357,12 +358,11 @@ void Ovl11RefreshStageProgressFlags(void) {
     }
 }
 
-s32 ovl_11_func_800E6EE0 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EEC1C (s16 id, s16 which, s16 last, s32 amount);
 
 void Ovl11RefreshStageEventFlag(void) {
     gProgressDerivedFlags &= ~0x4000;
-    if (ovl_11_func_800E6EE0(0x1E, 0, 2, 0) == 0) {
+    if (Ovl11MatchItemSlotsCommand(0x1E, 0, 2, 0) == 0) {
         gProgressDerivedFlags |= 0x4000;
     }
 }
@@ -402,23 +402,23 @@ void Ovl11RefreshStageGateFlags(void) {
 
 void Ovl11RefreshEventFlagsHigh(void) {
     gProgressDerivedFlags &= 0xFFE3FFFF;
-    if (ovl_11_func_800E6EE0(0x1C, 0, 2, 0) == 0) {
+    if (Ovl11MatchItemSlotsCommand(0x1C, 0, 2, 0) == 0) {
         gProgressDerivedFlags |= 0x40000;
     }
-    if (ovl_11_func_800E6EE0(0x1A, 0, 2, 0) == 0) {
+    if (Ovl11MatchItemSlotsCommand(0x1A, 0, 2, 0) == 0) {
         gProgressDerivedFlags |= 0x80000;
     }
-    if (ovl_11_func_800E6EE0(0x1B, 0, 2, 0) == 0) {
+    if (Ovl11MatchItemSlotsCommand(0x1B, 0, 2, 0) == 0) {
         gProgressDerivedFlags |= 0x100000;
     }
 }
 
 void Ovl11RefreshEventFlagsTop(void) {
     gProgressDerivedFlags &= 0xFF9FFFFF;
-    if (ovl_11_func_800E6EE0(0x1F, 0, 2, 0) == 0) {
+    if (Ovl11MatchItemSlotsCommand(0x1F, 0, 2, 0) == 0) {
         gProgressDerivedFlags |= 0x200000;
     }
-    if (ovl_11_func_800E6EE0(0x20, 0, 2, 0) == 0) {
+    if (Ovl11MatchItemSlotsCommand(0x20, 0, 2, 0) == 0) {
         gProgressDerivedFlags |= 0x400000;
     }
 }

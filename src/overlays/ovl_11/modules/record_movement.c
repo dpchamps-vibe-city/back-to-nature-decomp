@@ -47,6 +47,7 @@
 #include "ovl11_interaction_volume_query.h"
 #include "ovl11_surface_height.h"
 #include "ovl11_record_movement.h"
+#include "ovl11_primary_object_flag29.h"
 
 void Ovl11UpdateRecordProbeFlag (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 Ovl11ProbeMovementPosition (Ovl11Func800BDCE8Arg1 *arg0);
@@ -708,11 +709,10 @@ void Ovl11AdvanceRecordModeCounter(Ov11D266CFields *record,
  * notes/file-groupings.md.
  */
 
-s32 ovl_11_func_800CBDFC(void);
 void Ovl11DispatchStageMode(s32 mode);
 
 void Ovl11ProcessPendingStageMode(void) {
-    if ((gOvl11PendingStageMode != -1) && (ovl_11_func_800CBDFC() != 0)) {
+    if ((gOvl11PendingStageMode != -1) && (Ovl11IsPrimaryObjectFlag29Clear() != 0)) {
         Ovl11DispatchStageMode((s32) gOvl11PendingStageMode);
         gOvl11PendingStageMode = -1;
     }

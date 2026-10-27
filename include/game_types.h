@@ -2842,4 +2842,9 @@ typedef struct {
     u16 flags;
 } Ovl11WeatherParticle;
 
+/* ovl_25 8A30 passes the leading signed record ID to 977C's choice test. */
+typedef struct {
+    s16 id;
+} Ovl25RecordIdView;
+
 #endif /* GAME_TYPES_H */

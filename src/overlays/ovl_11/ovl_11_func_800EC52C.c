@@ -13,17 +13,16 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_selection_candidate.h"
+#include "ovl11_item_slot_commands.h"
+#include "ovl11_state_record_commands.h"
 
 s32 ovl_11_func_800E5870(s16, s16, s32, s16);
 s32 ovl_11_func_800E58DC(s16, s16, s32, s32);
-s32 ovl_11_func_800E5ADC(s16, s16, s32, s32);
-s32 ovl_11_func_800E5B84(s16, s16, s32, s32);
 s32 ovl_11_func_800E60A0(s16, s32, s32, s32);
 s32 ovl_11_func_800E6AB0();
 s32 ovl_11_func_800E6B18();
 s32 ovl_11_func_800E6BDC();
 s32 ovl_11_func_800E6D2C(s16, s16, s32, s32);
-s32 ovl_11_func_800E6EE0(s16, s16, s32, s32);
 s32 ovl_11_func_800E880C(s16, s16, s32, s32);
 s32 ovl_11_func_800E9284();
 s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
@@ -69,44 +68,44 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             ovl_11_func_800F0A58(item[0]);
             D_80070CB4 = 1000;
             gOvl11ValueSlots[arg1] = item[0];
-            ovl_11_func_800E6EE0(item[0], 1, 0, 1);
+            Ovl11MatchItemSlotsCommand(item[0], 1, 0, 1);
         }
         return result;
     case 1:
         level = ((Ovl11SceneState *)D_8006C838)->level;
-            ovl_11_func_800E5ADC(0x1E, 0, -0x4CB, 0x3F2);
-            ovl_11_func_800E5B84(0x1E, 0, 2, 1);
-            ovl_11_func_800E5ADC(0x16, 0, -0x524, 0x6FE);
-            ovl_11_func_800E5B84(0x16, 0, 0, 1);
-            ovl_11_func_800E5ADC(3, 0, -0x31D, 0x6FE);
-            ovl_11_func_800E5B84(3, 0, 0, 1);
-            ovl_11_func_800E5ADC(0xD, 0, -0x573, -0x3C9);
-            ovl_11_func_800E5B84(0xD, 0, 3, 1);
-            ovl_11_func_800E5ADC(6, 0, 0x57B, -0x54D);
-            ovl_11_func_800E5B84(6, 0, 1, 1);
-            ovl_11_func_800E5ADC(7, 0, 0x57B, -0x338);
-            ovl_11_func_800E5B84(7, 0, 1, 1);
-            ovl_11_func_800E5ADC(0xC, 0, -0x8D0, -0x6A6);
-            ovl_11_func_800E5B84(0xC, 0, 3, 1);
-            ovl_11_func_800E5ADC(0xE, 0, -0x855, -0x8E4);
-            ovl_11_func_800E5B84(0xE, 0, 3, 1);
-            ovl_11_func_800E5ADC(5, 0, -0x6BB, -0xA55);
-            ovl_11_func_800E5B84(5, 0, 2, 1);
-            ovl_11_func_800E5ADC(8, 0, 0x333, -0xA01);
-            ovl_11_func_800E5B84(8, 0, 2, 1);
-            ovl_11_func_800E5ADC(9, 0, 0x70B, -0xA01);
-            ovl_11_func_800E5B84(9, 0, 2, 1);
-            ovl_11_func_800E5ADC(0x18, 0, -0x9A3, 0x5BC);
-            ovl_11_func_800E5B84(0x18, 0, 3, 1);
-            ovl_11_func_800E5ADC(0xA, 0, -0x928, 0x809);
-            ovl_11_func_800E5B84(0xA, 0, 3, 1);
-            ovl_11_func_800E5ADC(0x11, 0, 0x541, 0x8C9);
-            ovl_11_func_800E5B84(0x11, 0, 0, 1);
-            ovl_11_func_800E5ADC(2, 0, -0x843, 0x327);
-            ovl_11_func_800E5B84(2, 0, 3, 1);
+            Ovl11WriteStateRecordPosition(0x1E, 0, -0x4CB, 0x3F2);
+            Ovl11StateRecordAnimationCommand(0x1E, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(0x16, 0, -0x524, 0x6FE);
+            Ovl11StateRecordAnimationCommand(0x16, 0, 0, 1);
+            Ovl11WriteStateRecordPosition(3, 0, -0x31D, 0x6FE);
+            Ovl11StateRecordAnimationCommand(3, 0, 0, 1);
+            Ovl11WriteStateRecordPosition(0xD, 0, -0x573, -0x3C9);
+            Ovl11StateRecordAnimationCommand(0xD, 0, 3, 1);
+            Ovl11WriteStateRecordPosition(6, 0, 0x57B, -0x54D);
+            Ovl11StateRecordAnimationCommand(6, 0, 1, 1);
+            Ovl11WriteStateRecordPosition(7, 0, 0x57B, -0x338);
+            Ovl11StateRecordAnimationCommand(7, 0, 1, 1);
+            Ovl11WriteStateRecordPosition(0xC, 0, -0x8D0, -0x6A6);
+            Ovl11StateRecordAnimationCommand(0xC, 0, 3, 1);
+            Ovl11WriteStateRecordPosition(0xE, 0, -0x855, -0x8E4);
+            Ovl11StateRecordAnimationCommand(0xE, 0, 3, 1);
+            Ovl11WriteStateRecordPosition(5, 0, -0x6BB, -0xA55);
+            Ovl11StateRecordAnimationCommand(5, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(8, 0, 0x333, -0xA01);
+            Ovl11StateRecordAnimationCommand(8, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(9, 0, 0x70B, -0xA01);
+            Ovl11StateRecordAnimationCommand(9, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(0x18, 0, -0x9A3, 0x5BC);
+            Ovl11StateRecordAnimationCommand(0x18, 0, 3, 1);
+            Ovl11WriteStateRecordPosition(0xA, 0, -0x928, 0x809);
+            Ovl11StateRecordAnimationCommand(0xA, 0, 3, 1);
+            Ovl11WriteStateRecordPosition(0x11, 0, 0x541, 0x8C9);
+            Ovl11StateRecordAnimationCommand(0x11, 0, 0, 1);
+            Ovl11WriteStateRecordPosition(2, 0, -0x843, 0x327);
+            Ovl11StateRecordAnimationCommand(2, 0, 3, 1);
             if (ovl_11_func_800EDF3C(0x14, 0, 0, 0) == 1) {
-                ovl_11_func_800E5ADC(0x14, 0, 0x51F, -0xA01);
-                ovl_11_func_800E5B84(0x14, 0, 2, 1);
+                Ovl11WriteStateRecordPosition(0x14, 0, 0x51F, -0xA01);
+                Ovl11StateRecordAnimationCommand(0x14, 0, 2, 1);
             }
 
         best = 0;
@@ -148,21 +147,21 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
             break;
         case 4:                                     
-            ovl_11_func_800E5B84(0x1E, 7, 0, 0);
+            Ovl11StateRecordAnimationCommand(0x1E, 7, 0, 0);
             result = ovl_11_func_800E58DC(1, 0x45C, -1, 0);
             break;
         case 5:                                     
             result = ovl_11_func_800E5870(0x1E, 3, -0x28D, 4);
             break;
         case 6:                                     
-            ovl_11_func_800E5B84(0x1E, 7, 0, 0);
+            Ovl11StateRecordAnimationCommand(0x1E, 7, 0, 0);
             result = ovl_11_func_800E58DC(1, 0x45E, -1, 0);
             break;
         case 7:                                     
             result = ovl_11_func_800E5870(0x1E, 0, -0x3E7, 1);
             break;
         case 8:                                     
-            ovl_11_func_800E5B84(0x1E, 6, 0, 0);
+            Ovl11StateRecordAnimationCommand(0x1E, 6, 0, 0);
             result = ovl_11_func_800E58DC(1, 0x45D, -1, 0);
             break;
         case 9:                                     
@@ -172,14 +171,14 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             result = ovl_11_func_800E5870(0x1E, 3, 0x26A, 4);
             break;
         case 11:                                    
-            ovl_11_func_800E5B84(0x1E, 8, 0, 0);
+            Ovl11StateRecordAnimationCommand(0x1E, 8, 0, 0);
             result = ovl_11_func_800E58DC(1, 0x45F, -1, 0);
             break;
         case 12:                                    
             result = ovl_11_func_800E5870(0x1E, 2, -0x276, 3);
             break;
         case 13:                                    
-            ovl_11_func_800E5B84(0x1E, 8, 0, 0);
+            Ovl11StateRecordAnimationCommand(0x1E, 8, 0, 0);
             result = ovl_11_func_800E58DC(1, 0x460, -1, 0);
             break;
         case 14:                                    
@@ -189,7 +188,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             result = ovl_11_func_800E5870(0x1E, 3, 0x3DB, 4);
             break;
         case 16:                                    
-            ovl_11_func_800E5B84(0x1E, 7, 0, 0);
+            Ovl11StateRecordAnimationCommand(0x1E, 7, 0, 0);
             if (gOvl11ValueSlots[arg3] == 0x29) {
                 result = ovl_11_func_800E58DC(1, 0x461, -1, 0);
             } else {
@@ -197,7 +196,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             }
             break;
         case 17:                                    
-            ovl_11_func_800E5B84(0x1E, 0, 2, 1);
+            Ovl11StateRecordAnimationCommand(0x1E, 0, 2, 1);
             ovl_11_func_800E9AFC(0, 0x3C, 1, 0);
             ovl_11_func_800E6D2C(0, 0x3C, 1, 0);
             result = 1;
@@ -207,20 +206,20 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             break;
         case 19:                                    
             ovl_11_func_800E99EC(0xF, 0, 0, 0);
-            ovl_11_func_800E5ADC(0x1E, 0, 0x4E, 0x8CF);
-            ovl_11_func_800E5B84(0x1E, 0, 0, 1);
-            ovl_11_func_800E5ADC(0x11, 0, -0x14C, 0x8CF);
-            ovl_11_func_800E5B84(0x11, 0, 0, 1);
+            Ovl11WriteStateRecordPosition(0x1E, 0, 0x4E, 0x8CF);
+            Ovl11StateRecordAnimationCommand(0x1E, 0, 0, 1);
+            Ovl11WriteStateRecordPosition(0x11, 0, -0x14C, 0x8CF);
+            Ovl11StateRecordAnimationCommand(0x11, 0, 0, 1);
             if (gOvl11ValueSlots[arg1] != 0) {
                 Ovl11ApplyWorkPositionCommand(0, 0, -0x7F, 0xCD);
             } else {
                 Ovl11ApplyWorkPositionCommand(0, 0, 0x1E8, -0x35D);
             }
             ovl_11_func_800E9284(2, 0, 0, 0);
-            ovl_11_func_800E5ADC(0x16, 0, -0x30F, 0x2E2);
-            ovl_11_func_800E5B84(0x16, 0, 2, 1);
-            ovl_11_func_800E5ADC(3, 0, 0x211, 0xCD);
-            ovl_11_func_800E5B84(3, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(0x16, 0, -0x30F, 0x2E2);
+            Ovl11StateRecordAnimationCommand(0x16, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(3, 0, 0x211, 0xCD);
+            Ovl11StateRecordAnimationCommand(3, 0, 2, 1);
             switch (gOvl11ValueSlots[arg3]) {
             case 0x29: x = -0x7F; z = 0xCD; break;
             case 0x16: x = -0x30F; z = 0x2E2; break;
@@ -228,17 +227,17 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             case 7: x = 0x211; z = 0x2E2; break;
             default: x = -0x7F; z = 0x2E2; break;
             }
-            ovl_11_func_800E5ADC(0xD, 0, x, z);
-            ovl_11_func_800E5B84(0xD, 0, 2, 1);
-            ovl_11_func_800E5ADC(6, 0, -0x30F, 0xCD);
-            ovl_11_func_800E5B84(6, 0, 2, 1);
-            ovl_11_func_800E5ADC(7, 0, 0x211, 0x2E2);
-            ovl_11_func_800E5B84(7, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(0xD, 0, x, z);
+            Ovl11StateRecordAnimationCommand(0xD, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(6, 0, -0x30F, 0xCD);
+            Ovl11StateRecordAnimationCommand(6, 0, 2, 1);
+            Ovl11WriteStateRecordPosition(7, 0, 0x211, 0x2E2);
+            Ovl11StateRecordAnimationCommand(7, 0, 2, 1);
 
             if (gOvl11ValueSlots[arg3] == 0x29) {
                 Ovl11ApplyWorkPositionCommand(0, 0, -0x7F, 0x2E2);
             } else {
-                ovl_11_func_800E5ADC((s16) gOvl11ValueSlots[arg3], 0, -0x7F, 0x2E2);
+                Ovl11WriteStateRecordPosition((s16) gOvl11ValueSlots[arg3], 0, -0x7F, 0x2E2);
             }
             ovl_11_func_800E60A0(-1, 0, 0x29, 0x47C);
             result = ovl_11_func_800E6B18(0xF, 0, 0, 0);
@@ -295,7 +294,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             if (gOvl11ValueSlots[arg3] == 0x29) {
                 ovl_11_func_800E9284(2, 0, 0, 0);
             } else {
-                ovl_11_func_800E5B84((s16) gOvl11ValueSlots[arg3], 0, 2, 1);
+                Ovl11StateRecordAnimationCommand((s16) gOvl11ValueSlots[arg3], 0, 2, 1);
             }
             switch (gOvl11ValueSlots[arg3]) {
             case 22:                                

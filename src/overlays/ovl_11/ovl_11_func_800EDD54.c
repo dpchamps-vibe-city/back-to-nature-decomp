@@ -1,10 +1,9 @@
 #include "common.h"
+#include "ovl11_state_record_commands.h"
 
 s32 ovl_11_func_800F06D8(s32 *arg0, s32 *arg1);
-s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 /* Both original calls explicitly clear all trailing argument slots. */
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800EDD54(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 var_a3;
@@ -37,8 +36,8 @@ s32 ovl_11_func_800EDD54(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     if (var_s0 == 0x29) {
         ovl_11_func_800E9284((s16) temp_a2, 0, 0, 0);
     } else {
-        ovl_11_func_800E5B84(var_s0, (s16)arg2, temp_a2, 1);
-        ovl_11_func_800E5C60(var_s0, 0, 0, 0);
+        Ovl11StateRecordAnimationCommand(var_s0, (s16)arg2, temp_a2, 1);
+        Ovl11ChangeStateRecordFlag800(var_s0, 0, 0, 0);
     }
     return 1;
 }

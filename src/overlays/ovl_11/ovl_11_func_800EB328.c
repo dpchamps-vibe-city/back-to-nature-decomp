@@ -9,8 +9,7 @@
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
 #include "ovl11_state_field_access.h"
-
-s32 ovl_11_func_800E5B84(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+#include "ovl11_state_record_commands.h"
 
 s32 ovl_11_func_800EB328(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 *position;
@@ -78,6 +77,6 @@ s32 ovl_11_func_800EB328(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             direction = 10;
         }
     }
-    ovl_11_func_800E5B84(arg0, direction, 0, 0);
+    Ovl11StateRecordAnimationCommand(arg0, direction, 0, 0);
     return result;
 }

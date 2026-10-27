@@ -25,11 +25,10 @@
 #include "ovl11_quantity_input.h"
 #include "ovl11_quantity_prompt_setup.h"
 #include "two_choice_prompt.h"
+#include "ovl11_item_slot_commands.h"
 
 void SetVal8005E2BC(s32 value);
 s32 ovl_11_func_800E5E98(s16 a, s16 b, s32 c, s32 d);
-s32 ovl_11_func_800E6EE0(s16 a, s16 b, s32 c, s32 d);
-s32 ovl_11_func_800E6F34(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9284(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9B68(s16 a, s32 b, s32 c, s32 d);
 
@@ -214,7 +213,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
     if ((u32)state < 15U) {
         switch ((u32)state) {
         case 0:
-            if (ovl_11_func_800E6EE0(mode, 1, 1, 0) == 1) {
+            if (Ovl11MatchItemSlotsCommand(mode, 1, 1, 0) == 1) {
                 if (Ovl11HasSpendableBalance(Ovl11GetItemPrice(item)) == 1) {
                     SetMessagePortraitEnabled(0);
                     RequestMessageWindow(messages[0][0], messages[0][1]);
@@ -286,8 +285,8 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             break;
         case 8:
             gOvl11InteractionDrawMode = 0;
-            ovl_11_func_800E6EE0(mode, 1, 1, 1);
-            ovl_11_func_800E6F34(mode, 0, 0, 0);
+            Ovl11MatchItemSlotsCommand(mode, 1, 1, 1);
+            Ovl11InsertSecondaryItemCommand(mode, 0, 0, 0);
             Ovl11SetInteractionStepsOffset(13, 14, baseStep);
             break;
         case 14:
@@ -298,7 +297,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             Ovl11SetInteractionStepsOffset(1, 12, baseStep);
             break;
         case 12:
-            ovl_11_func_800E6EE0(mode, 1, 0, 1);
+            Ovl11MatchItemSlotsCommand(mode, 1, 0, 1);
             BeginScreenFadeIncrease(20, 0, 2);
             Ovl11SetInteractionStepsOffset(10, 0, baseStep);
         case 10:

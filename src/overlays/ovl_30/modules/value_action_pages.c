@@ -19,6 +19,7 @@
 #include "ovl11_item_table_queries.h"
 #include "ovl11_item_record_allocation.h"
 #include "ovl11_object_record_state.h"
+#include "ovl11_item_slot_commands.h"
 
 s32 Ovl30EditMainData(s32 cursor) {
     s32 result;
@@ -48,9 +49,6 @@ s32 Ovl30EditPlayerData(s32 cursor) {
     return result;
 }
 
-s32 ovl_11_func_800E6EAC();
-s32 ovl_11_func_800E6F34();
-s32 ovl_11_func_800E7088(s16, s16, s32, s32);
 s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
 void ovl_11_func_800EF488(s16);
 void ovl_11_func_800EF6E4(s16 mode, s16 rivalIndex);
@@ -159,13 +157,13 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             id = (s16)Ovl11ClassifyItemFlags((s16)gOvl30DebugItemId);
             switch (id) {
             case 0:
-                ovl_11_func_800E7088((s16)gOvl30DebugItemId, 0, 1, 0);
+                Ovl11InsertHeldGridOrOverflowItem((s16)gOvl30DebugItemId, 0, 1, 0);
                 break;
             case 1:
-                if (ovl_11_func_800E6EAC(1, -1, 0, 0) == 1) {
-                    ovl_11_func_800E6F34((s16)gOvl30DebugItemId, 0, 1, 0);
+                if (Ovl11HasEmptyItemSlot(1, -1, 0, 0) == 1) {
+                    Ovl11InsertSecondaryItemCommand((s16)gOvl30DebugItemId, 0, 1, 0);
                 } else {
-                    ovl_11_func_800E6F34((s16)gOvl30DebugItemId, 0, 0, 0);
+                    Ovl11InsertSecondaryItemCommand((s16)gOvl30DebugItemId, 0, 0, 0);
                 }
                 break;
             }

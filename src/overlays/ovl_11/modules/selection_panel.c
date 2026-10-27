@@ -25,6 +25,7 @@
 #include "cd_loader.h"
 #include "sprite_source.h"
 #include "sprite_upload.h"
+#include "ovl11_menu_exit_flags.h"
 
 void Ovl11ResetSelectionPanelState(void) {
     gOvl11SelectionPanelState = 0;
@@ -39,7 +40,6 @@ void Ovl11OpenSelectionPanel(void) {
 u32 func_80017A64(void);
 void func_80017A48(u32 arg0);
 void Ovl11ReloadSelectionPanelSprites(void);
-void ovl_11_func_800BCF28(void);
 void Ovl11ProcessSelectionPanelInput(void);
 
 void Ovl11UpdateSelectionPanel(void) {
@@ -88,7 +88,7 @@ void Ovl11UpdateSelectionPanel(void) {
         }
     } else if (gOvl11SelectionPanelState == 10) {
         if (IsScreenFadeComplete() == 1) {
-            ovl_11_func_800BCF28();
+            Ovl11PostMenuExitFlags();
             gOvl11SelectionPanelState = 0;
         }
     } else if (gOvl11SelectionPanelState == 11) {
