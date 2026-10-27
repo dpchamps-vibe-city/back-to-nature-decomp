@@ -74,9 +74,9 @@ async function tuProgress(projectRoot: string, args: string[], timeoutMs: number
 }
 
 export const DEFAULT_FOLD_ORACLES: FoldOracles = {
-  progress: (projectRoot, signal) => tuProgress(projectRoot, ["--json", "--limit", "20"], 15 * 60_000, signal),
+  progress: (projectRoot, signal) => tuProgress(projectRoot, ["--json", "--limit", "100"], 15 * 60_000, signal),
   verify: (projectRoot, baseline, signal, full) =>
-    tuProgress(projectRoot, ["--verify", "--json", "--limit", "20", "--baseline", baseline, ...(full ? ["--full-convergence"] : [])], 3 * 60 * 60_000, signal),
+    tuProgress(projectRoot, ["--verify", "--json", "--limit", "100", "--baseline", baseline, ...(full ? ["--full-convergence"] : [])], 3 * 60 * 60_000, signal),
   captureBaseline: async (projectRoot, path) => {
     const result = await runCommand("npx", ["tsx", "tools/diagnostics/tuProgress.ts", "--write-baseline", path], { cwd: projectRoot, timeoutMs: 15 * 60_000 });
     return { ok: result.code === 0, detail: `${result.stdout}${result.stderr}`.trim() };
