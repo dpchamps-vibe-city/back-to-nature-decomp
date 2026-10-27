@@ -2193,12 +2193,12 @@ struct Ovl11ResetState {
  * at +0x44C0/+0x44C2 plus the s16 status slot at +0x51EA. Reached as struct
  * members so cc1 keeps lui %hi(D_8006C838) followed by lh/sh with the field
  * offset as an immediate instead of folding each offset into the %hi. */
-struct struct_8006C838_800E7660 {
+struct Ovl11PendingSelectionWorkView {
     char pad_000[0x44C0];   /* 0x0000-0x44BF */
     s16 field_44C0;         /* 0x44C0 */
     s16 field_44C2;         /* 0x44C2 */
     char pad_44C4[0xD26];   /* 0x44C4-0x51E9 */
-    s16 field_51EA;         /* 0x51EA */
+    s16 pendingRecord;      /* 0x51EA, -1 means none */
 };
 
 /* Object archive loading clears this signed sound-bank request at work
@@ -2379,16 +2379,16 @@ struct Ovl11SpriteRequestState {
 /* View of D_8006C838 for ovl_11_func_800E65AC: the u8 at +0x9A6C. Reached as
  * a struct member with the base D_80071B00 - 0x52C8 kept live, so cc1 emits
  * addiu -0x52C8, ori 0x8000, addu followed by lbu 0x1A6C. */
-struct struct_8006C838_800E65AC_a {
+struct Ovl11RecordAnimationStateView {
     char pad_000[0x9A6C];   /* 0x0000-0x9A6B */
-    u8 field_9A6C;          /* 0x9A6C */
+    u8 animationState;      /* 0x9A6C */
 };
 
 /* View of D_8006C838 for ovl_11_func_800E65AC: the s16 at +0xDE22. Same
  * base/split form as the +0x9A6C view, ending in sh 0x5E22. */
-struct struct_8006C838_800E65AC_b {
+struct Ovl11CompactRecordDirectionView {
     char pad_000[0xDE22];   /* 0x0000-0xDE21 */
-    s16 field_DE22;         /* 0xDE22 */
+    s16 direction;          /* 0xDE22 */
 };
 
 /* 800DF84C reads/writes u16 at D_8006C838 + index*0xF8 + 0xDEB6. */
@@ -2439,7 +2439,7 @@ struct Ovl11SelectionResetMode {
  * ovl_11_func_800E65AC for arg3 == 1: the target passes (char *)D_8007A670 +
  * idx*0xF8 to ovl_11_func_800F06D8 (lui + addiu %lo(D_8007A670)).
  * Absolute-addressed. */
-extern u8 D_8007A670[];
+extern u8 gCompactObjectPositionCoordinates[];
 
 /* D_80071B00 - s32 triple at 0x80071B00 (absolute, lui+%lo). Fields +0/+8 are
  * the two trackers written by ovl_11_func_800E8F78; p[0..2] are the three
@@ -3904,11 +3904,9 @@ struct Ovl11SelectionPanelSpriteStorage {
 };
 extern struct Ovl11SelectionPanelSpriteStorage gOvl11SelectionPanelSprites[];
 
-/* D_801248F4 - nine-entry s16 table scanned by ovl_11_func_800E58DC: the
- * index of a matching value yields 0x731 + index. Absolute-addressed from the
- * overlay (only declared extern, never GP). */
-extern s16 _D_801248F4[] __asm__("D_801248F4");
-#define D_801248F4 _D_801248F4
+/* ovl_11:801248F4 — Ovl11StepMessageCommand scans nine signed entries;
+ * a match selects message 0x731 + index. Original accesses are absolute. */
+extern s16 gOvl11MessageRemapEntries[9];
 
 /* 8012490C: five bank-1 offsets to the opaque 18-byte payloads copied
  * by Ovl11LoadOrClearCode109Records; original overlay access is absolute. */

@@ -72,6 +72,8 @@
 #include "ovl11_state_record_commands.h"
 #include "ovl11_state_record_motion_limit.h"
 #include "ovl11_stage_mode2_record.h"
+#include "ovl11_message_command.h"
+#include "ovl11_scene_sound_commands.h"
 
 typedef struct {
                s16 field_0;
@@ -202,11 +204,6 @@ s32 Ovl11MapDirectionButtons (u16 arg0, u16 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E6D2C (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_800E6B18 (s16 arg0, s32 arg1, s32 arg2);
-s32 ovl_11_func_800E58DC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9AFC (s16 arg0, s16 arg1, s32 arg2);
 s32 ovl_11_func_800E99EC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6AB0 (s32 arg0, s32 arg1, s32 arg2);

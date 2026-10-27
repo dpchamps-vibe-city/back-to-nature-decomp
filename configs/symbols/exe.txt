@@ -32,6 +32,8 @@ gAreaSetupBuffer = 0x800A0368; // size:0x10
 gObjectWorkPosition = 0x80071B00; // size:0xC
 // Coordinate-field anchor; successive records are 0x1D4 bytes apart.
 gObjectPositionRecordCoordinates = 0x80076280; // size:0xC
+// Coordinate anchor of the F8-stride records selected by ovl_11:800E65AC.
+gCompactObjectPositionCoordinates = 0x8007A670; // size:0xC
 
 // Six-byte {id, variant, quantity} record bases used by stack insertion.
 // Preserve the existing 12-byte C anchor extents; these are not pool sizes.

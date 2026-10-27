@@ -16,13 +16,11 @@
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_state_record_commands.h"
 #include "ovl11_state_record_motion_limit.h"
+#include "ovl11_message_command.h"
+#include "ovl11_scene_sound_commands.h"
 
-s32 ovl_11_func_800E58DC(s16, s16, s32, s32);
 s32 ovl_11_func_800E60A0(s16, s32, s32, s32);
 s32 ovl_11_func_800E6AB0();
-s32 ovl_11_func_800E6B18();
-s32 ovl_11_func_800E6BDC();
-s32 ovl_11_func_800E6D2C(s16, s16, s32, s32);
 s32 ovl_11_func_800E880C(s16, s16, s32, s32);
 s32 ovl_11_func_800E9284();
 s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
@@ -138,31 +136,31 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         result = 1;
         break;
         case 2:                                     
-            result = ovl_11_func_800E6B18(0x13, 1, 0, 0);
+            result = Ovl11RequestSceneSoundBank(0x13, 1, 0, 0);
             break;
         case 3:                                     
-            result = ovl_11_func_800E6D2C(1, 0, 0, 0);
+            result = Ovl11ScreenFadeCommand(1, 0, 0, 0);
             if (result == 1) {
-                ovl_11_func_800E6BDC(0, 0, 0, 0);
+                Ovl11StartSceneSoundSequence(0, 0, 0, 0);
             }
             break;
         case 4:                                     
             Ovl11StateRecordAnimationCommand(0x1E, 7, 0, 0);
-            result = ovl_11_func_800E58DC(1, 0x45C, -1, 0);
+            result = Ovl11StepMessageCommand(1, 0x45C, -1, 0);
             break;
         case 5:                                     
             result = Ovl11AnimateStateRecordMotion12(0x1E, 3, -0x28D, 4);
             break;
         case 6:                                     
             Ovl11StateRecordAnimationCommand(0x1E, 7, 0, 0);
-            result = ovl_11_func_800E58DC(1, 0x45E, -1, 0);
+            result = Ovl11StepMessageCommand(1, 0x45E, -1, 0);
             break;
         case 7:                                     
             result = Ovl11AnimateStateRecordMotion12(0x1E, 0, -0x3E7, 1);
             break;
         case 8:                                     
             Ovl11StateRecordAnimationCommand(0x1E, 6, 0, 0);
-            result = ovl_11_func_800E58DC(1, 0x45D, -1, 0);
+            result = Ovl11StepMessageCommand(1, 0x45D, -1, 0);
             break;
         case 9:                                     
             result = Ovl11AnimateStateRecordMotion12(0x1E, 0, -0x439, 1);
@@ -172,14 +170,14 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             break;
         case 11:                                    
             Ovl11StateRecordAnimationCommand(0x1E, 8, 0, 0);
-            result = ovl_11_func_800E58DC(1, 0x45F, -1, 0);
+            result = Ovl11StepMessageCommand(1, 0x45F, -1, 0);
             break;
         case 12:                                    
             result = Ovl11AnimateStateRecordMotion12(0x1E, 2, -0x276, 3);
             break;
         case 13:                                    
             Ovl11StateRecordAnimationCommand(0x1E, 8, 0, 0);
-            result = ovl_11_func_800E58DC(1, 0x460, -1, 0);
+            result = Ovl11StepMessageCommand(1, 0x460, -1, 0);
             break;
         case 14:                                    
             result = Ovl11AnimateStateRecordMotion12(0x1E, 2, 0x3C9, 3);
@@ -190,19 +188,19 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         case 16:                                    
             Ovl11StateRecordAnimationCommand(0x1E, 7, 0, 0);
             if (gOvl11ValueSlots[arg3] == 0x29) {
-                result = ovl_11_func_800E58DC(1, 0x461, -1, 0);
+                result = Ovl11StepMessageCommand(1, 0x461, -1, 0);
             } else {
-                result = ovl_11_func_800E58DC(1, 0x462, -1, 0);
+                result = Ovl11StepMessageCommand(1, 0x462, -1, 0);
             }
             break;
         case 17:                                    
             Ovl11StateRecordAnimationCommand(0x1E, 0, 2, 1);
             ovl_11_func_800E9AFC(0, 0x3C, 1, 0);
-            ovl_11_func_800E6D2C(0, 0x3C, 1, 0);
+            Ovl11ScreenFadeCommand(0, 0x3C, 1, 0);
             result = 1;
             break;
         case 18:                                    
-            result = ovl_11_func_800E6D2C(0, 0, 0, 0);
+            result = Ovl11ScreenFadeCommand(0, 0, 0, 0);
             break;
         case 19:                                    
             ovl_11_func_800E99EC(0xF, 0, 0, 0);
@@ -240,15 +238,15 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                 Ovl11WriteStateRecordPosition((s16) gOvl11ValueSlots[arg3], 0, -0x7F, 0x2E2);
             }
             ovl_11_func_800E60A0(-1, 0, 0x29, 0x47C);
-            result = ovl_11_func_800E6B18(0xF, 0, 0, 0);
+            result = Ovl11RequestSceneSoundBank(0xF, 0, 0, 0);
             break;
         case 20:                                    
             ovl_11_func_800E9AFC(1, 0x3C, 1, 0);
-            ovl_11_func_800E6D2C(1, 0x3C, 1, 0);
+            Ovl11ScreenFadeCommand(1, 0x3C, 1, 0);
             result = 1;
             break;
         case 21:                                    
-            result = ovl_11_func_800E6D2C(1, 0, 0, 0);
+            result = Ovl11ScreenFadeCommand(1, 0, 0, 0);
             break;
         case 22:                                    
             ovl_11_func_800E6AB0(3, 0, 1, 0);
@@ -257,7 +255,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         case 23:                                    
             result = ovl_11_func_800E6AB0(3, 0, 0, 0);
             if (result == 1) {
-                ovl_11_func_800E6BDC(0, 0, 0, 0);
+                Ovl11StartSceneSoundSequence(0, 0, 0, 0);
             }
             break;
         case 24:                                    
@@ -279,7 +277,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                 message = 0x472;
                 break;
             }
-            result = ovl_11_func_800E58DC(1, message, -1, 0);
+            result = Ovl11StepMessageCommand(1, message, -1, 0);
             break;
         case 25:                                    
 
@@ -314,7 +312,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
                 message = 0x473;
                 break;
             }
-            result = ovl_11_func_800E58DC(1, message, -1, 0);
+            result = Ovl11StepMessageCommand(1, message, -1, 0);
             break;
 
     case 27:

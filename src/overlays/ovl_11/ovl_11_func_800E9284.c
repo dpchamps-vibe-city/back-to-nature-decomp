@@ -12,7 +12,7 @@ s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         index -= 0x32;
         record = base + index * 0xF8;
 
-        ((struct struct_8006C838_800E65AC_b *) record)->field_DE22 = arg0;
+        ((struct Ovl11CompactRecordDirectionView *) record)->direction = arg0;
     } else {
         if (((Ovl11CBB9CGlobals *) D_8006C838)->state != arg0) {
             temp_s0 = ((struct struct_8006C838_800E4608 *) D_8006C838)->field_0C;

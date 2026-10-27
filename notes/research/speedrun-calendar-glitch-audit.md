@@ -163,15 +163,176 @@ record, and excludes the four unresolved nonempty entries and any runtime-
 constructed scripts. It found no literal built-in multi-month/year advance
 in the parsed set. It does not rule out an exploit.
 
-## Practical priority
+## 6. Follow-up: the farm-name victim is dead padding; every other
+   text-entry overflow slot except stamina/affection is dead too
 
-1. Reproduce the length-8 name corruption on the retail image and inspect its
-   first downstream consumers.
-2. Determine whether gameplay can reach debug mode 6 / scene 17 without RAM
-   editing. Do not assume a button code exists.
-3. Look for an actual input-to-event-pointer/buffer corruption chain; existing
-   script commands could then suffice for a date change or event sequence
-   break without full native ACE.
+The length-8 farm-name write at 80070D2A lands on **alignment padding**,
+not a live field:
+
+- The farm name is a standalone 18-byte buffer at 80070D18 (nine halfwords:
+  8 characters + the 0xFFFF terminator). The next named global is
+  gProgressStateFlags at 80070D30; 80070D2A..80070D2F (six bytes) is unnamed
+  in configs/symbols/exe.txt and in every reconstructed typed view
+  (`pad44E0[0x18]` in the D_8006C838 views — exactly 18 name bytes + 6 pad).
+- A constant-address scan of the whole EXE and all 13 runtime-loaded code
+  overlays (the archive members the scene dispatch ever loads: 08, 10, 11,
+  15, 17, 19, 21, 23, 25, 27, 28, 30, 31; the remaining archive members
+  are data, including entry 0xC = the object/event archive)
+  (lui/addiu/addu address formation with correct 16-bit sign extension)
+  found **zero** loads, stores or address formations in
+  [80070D18, 80070D30) other than the known consumers: the name itself.
+  Every pointer-based consumer is bounded — the 0xFFFF-terminator walkers
+  (ovl_15 80133808 display loop, Ovl11DrawClockHud, the func_8001A284
+  case-13 text renderers), the 18-byte aggregate copies
+  (Ovl11Status801295D0, animal naming), Ovl15BuildSaveSlotHeader
+  (reads year 80070CF0, day 80070CF4 and the 18 name bytes), and the
+  0xCFC-byte save block copy (Ovl15SerializeSaveImage/Ovl15RestoreSaveImage,
+  save offsets 0x2364..0x3060).
+- The ovl_30 debug descriptor tables (dumped below) confirm the gap: the
+  main-data rows jump from 80070D0C (ハウスのＬＶ) straight to 80070D38
+  (資材残り). Nothing edits or displays 80070D2A.
+
+So the farm-naming glitch is a functional no-op: the 0xFFFF only round-trips
+through the save image (save offset 0x238A). The contrast rows are real,
+though — the same +0x12 offset in the other two new-game structures is live
+(see the ovl_30 table dump below).
+
+All other text-entry destinations were checked the same way. The +0x12 slot
+(index 9) is dead for every one of them:
+
+| Caller | Destination | +0x12 address | Verdict |
+|---|---|---|---|
+| ovl_27 new game (player) | gPrimaryObjectBase 80071A00 | 80071A12 | **live: 体力 stamina** |
+| ovl_27 new game (dog) | D_800759E8 | 800759FA | **live: 犬・愛情度 dog affection** |
+| ovl_27 new game (farm) | D_80070D18 | 80070D2A | dead padding |
+| ovl_11 800E729C / 800F0474 (horse & animal rename scratch) | D_801295D0 | 801295E2 | dead; the aggregate copy moves exactly nine halfwords |
+| ovl_11 80114604 (animal purchase naming) | D_8012D63C | 8012D64E | dead; copy loop is `for (i = 0; i < 9; i++)` |
+| quantity_purchase_interaction.c | gOvl11QuantityPurchaseNameText 8012D6EC | 8012D6FE | dead; no access anywhere |
+
+Evidence for the ovl_30 labels (decoded as Shift-JIS from the original
+ovl_30.bin, load base 0x8012DDE8, table at 80134018, 20-byte rows):
+
+- gOvl30MainDataMenu rows: 年数 80070CF0, 季節 80070CF2, 日 80070CF4,
+  曜日 80070CF6, 時間 80070CF8, 分 80070CFA, weather 8007AD00/02,
+  家のＬＶ 80070D06, 家畜小屋のＬＶ 80070D08, 鶏小屋のＬＶ 80070D0A,
+  ハウスのＬＶ 80070D0C, 調理道具 80070D04, 資材/飼葉/魚の餌/鶏の餌
+  80070D38/3A/3E/40, 嫁 fields 8007AFA4+.
+- gOvl30PlayerDataMenu rows: 体力 80071A12, 最大体力 80071A14, 疲労度
+  80071A16, リュックＬＶ 80071A1E, 幸せ指数 80071A58, お金 80071A5C,
+  tool experience 80071A40+.
+- gOvl30PetDataMenu rows: 犬・愛情度 800759FA, 馬・愛情度 80075AEA.
+
+The downstream behaviour of the two live writes is unchanged from the
+original audit's limits: stamina is consumed by Ovl11ApplyStatusDelta
+(signed lh reads, clamped against the +0x14 limit), and dog affection is read
+through record pointers, not constant addresses, so its 0xFFFF (−1 signed /
+65535 unsigned) handling still needs the runtime test. Nothing here promotes
+the farm write to a useful primitive.
+
+## 7. Follow-up: scene 0 is a retail DEBUG MODE scene-select; the debug
+   menu cluster is unreachable without corruption
+
+The strongest new fact: **scene 0 is a fully-built debug scene-select menu
+(ovl_08), and its row 19 selects scene 17 — the ovl_30 date editor.**
+
+The menu (ovl_08.bin, loads at 0x800B7E20; all data self-contained at
+0x800B7E24..0x800B8608):
+
+- Heading `ＤＥＢＵＧ　ＭＯＤＥ`, subheading `「プログラム 選択」`, instruction
+  `ＳＴＡＲＴ＝プログラム実行` (START = run program). D-pad moves a 32-row
+  cursor; START runs the selected row's scene.
+- Table gOvl08SceneSelectEntries at 800B8508, 32 rows of {s32 sceneId;
+  s32 label}: row 0 scene 0 `ＤＥＢＵＧ`; row 1 scene 1 `ＰＤＡサンプル`;
+  row 2 scene 13 `自分の家`; rows 3-12 scenes 3-12 (minigames 01-05,
+  `ヒ・ミ・ツ`, セーブ, ロード, ＰＤＡ, 家畜交換); rows 13-17 scene 13
+  (春/夏/秋/冬の家, タイトル — rows 13-16 also set 0x80000/0x40000/0x20000/
+  0x10000 in D_8006C838+0x10); row 18 scene 16 `スタッフロール`;
+  **row 19 scene 17 `ＭＧデバッグ画面`;** row 20 scene 18
+  `メモリーカード云々`; rows 21-22 scenes 19-20 `謎`/`謎2`; rows 23-31
+  sceneId -1 (disabled).
+
+Reachability (from the matched scene dispatch in game_loop.c, cross-checked
+against the original EXE's jtbl_80010008 and every `jal RequestSceneChange`
+site in the original binaries):
+
+- Boot: `main` sets gCurrentSceneId = 0xD (13, the title/ovl_27 scene).
+- Scene 0 is requested only by ovl_10_func_800B889C (scene 1, `ＰＤＡサンプル`)
+  and by the ovl_31 memory-card utility (scene 18, START press in its state
+  0). Scenes 1 and 18 are requested by **nothing** outside the scene-select
+  table itself. {0, 1, 18} is a closed dev cluster.
+- Scene 17's update entry (D_8012F084 / Ovl30UpdateDebugMenu) is installed by
+  exactly one place in the whole binary: main's case 17.
+- The ovl_11 area-mode `case 6 → RequestSceneChange(17)` branch stays dead:
+  an exhaustive store scan of WORK.state (0x800A0490, D_8007AFF0+0x254A0)
+  across the EXE and every overlay finds the written values
+  {0,2,3,5,12,15,17,18,19,20,21,22,23,24,25,26,27,30,31} — **never 6**.
+  (The one variable-valued store, interaction_volume_activation.c:141, only
+  writes on its `result == 1` branch.)
+
+So the audit's earlier phrasing can be sharpened: there is no button code,
+  and the debug menu is not reachable through the retail scene graph at all.
+  Reaching it needs gCurrentSceneId (0x8005E39C, GP-relative) or WORK.state
+  (0x800A0490) to be corrupted to 0/17 or 6 respectively — and no known input
+  primitive writes either location (the text-entry bug writes 0xFFFF to
+  stamina/affection/dead padding only).
+
+Supporting fact established on the way (corrects the implied overlay bases):
+  the overlay load destinations are the EXE .data words D_80010098 =
+  0x800B7E20 and D_8001009C = 0x8012DDE8; no code anywhere rewrites them,
+  and every overlay loads raw at one of those two bases. Scene 15 (the
+  save-return scene) nominally loads ovl_11 through D_8001009C, but the
+  card-write/read cases 7/8 never clear the one-shot flag D_8005E288, so the
+  retail save-return path (gameplay → scene 7 → scene 15) always skips that
+  load and keeps ovl_11 where scene 2/19 loaded it, at 0x800B7E20 via
+  D_80010098. The scene-15 load branch is dead in retail for the same reason
+  the mode-6 branch is: nothing reaches it with the flag cleared.
+
+## 8. Follow-up: approach 3 (script hijack) — sinks re-confirmed, no input
+   chain found
+
+- Program base/cursor 801291B0/801291B4 are written only by the object
+  archive pipeline (Ovl11StartObjectArchiveLoad / Ovl11PollObjectArchiveLoad
+  reset both to gOvl11ObjectProgramRecords after the read), and read by the
+  interpreter driver Ovl11RunObjectRecordProgram.
+- The sinks are as the audit described, now with exact sizes: the opcode
+  handler table gOvl11ObjectOpcodeHandlers at 800B975C holds 0x1C4/4 = 113
+  entries and is indexed by the record's unchecked opcode byte; branch
+  targets are u8 record indices applied to gOvl11ObjectProgramBase; the
+  archive offset table gOvl11ObjectArchiveOffsets (801240D8, 0x710 bytes) is
+  indexed by the current object's id.
+- The state-field service remains script-driven: every caller of
+  Ovl11UpdateStateField is an opcode-handler-shaped function
+  (ovl_11_func_800E648C/800E69B8/800E698C/800EB760/800EBF18/800ED4A8), and
+  the value slots they read (gOvl11ValueSlots, 80129560, 0x50 bytes) are
+  written by script handlers. One writer is menu-selection-driven
+  (ovl_11_func_800E7D4C stores Ovl11ResolveCellItemState(selected) into a
+  slot) — that gives a player influence over a *value*, but the *field id*
+  still comes from the script record, and the section-5 scan found no
+  calendar-field writes in the retail scripts.
+- The only input-driven memory corruption found anywhere (the text-entry
+  +0x12 write) reaches dead padding, stamina and dog affection — none of the
+  interpreter state, the record buffer, the object id, the scene id, or the
+  mode word.
+
+Bottom line for the speedrun goal: with no input→script-control chain and no
+reachable debug menu, the realistic paths to a calendar change remain (a) an
+as-yet-undiscovered corruption primitive, or (b) a save-file edit (out of
+scope for a controller-only route).
+
+## Practical priority (updated)
+
+1. First runtime test unchanged but narrower: only the player (80071A12
+   stamina) and dog (800759FA affection) writes can do anything; the farm
+   write is proven inert. Watch those two addresses plus the first
+   status-delta clamp.
+2. Debug-menu reachability is now settled: no input path exists. Stop
+   searching for a button code; the remaining route is a corruption
+   primitive that hits gCurrentSceneId (0x8005E39C) or WORK.state
+   (0x800A0490).
+3. For approach 3, the open surface is a *producer*: any input-reachable
+   write into the record buffer, the program base/cursor, the object id, or
+   the scene id. Everything downstream of those (opcode/branch/field
+   indices) is already wide open.
 4. Verify the desired ending/event trigger independently of the displayed
    date. A raw date write skips daily side effects and may miss exact-date
    triggers or leave required flags/counters inconsistent.

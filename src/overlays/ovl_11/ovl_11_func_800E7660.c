@@ -42,7 +42,7 @@ s32 ovl_11_func_800E7660(s32 arg0, s32 arg1, s32 arg2) {
     }
     var_v0 = var_s0;
     if (var_s0 == 1) {
-        ((struct struct_8006C838_800E7660 *)D_8006C838)->field_51EA = -1;
+        ((struct Ovl11PendingSelectionWorkView *)D_8006C838)->pendingRecord = -1;
         SetGameFlag(0x46U, 0U);
         var_v0 = var_s0;
     }

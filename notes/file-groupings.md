@@ -11789,6 +11789,34 @@ Members (address order):
   useful experiment is a whole-unit canonical-record baseline reconstruction,
   then the existing setting across all members per flag-review-report.md;
   duplicated binary helpers do not justify new private linkage.
+- Whole-unit baseline follow-up: the driver's direct call chain and
+  gOvl11InteractionPhase readers extend that candidate left through 787C,
+  7AA0 and 7D34: twelve entries 800F787C–800F84F0 exclusive. The driver calls
+  input; input calls the operation dispatcher/compactor/resolver; dispatcher
+  calls transfer/swap/merge, which call the adjacent six-byte copy/swap/
+  accumulate helpers. Left texture_stream services its separate CD-batch
+  request/cursor state and does not touch the interaction phase. Right
+  menu_grid_view uses the resolver/classifier as public services, but does
+  not use that phase or mutate the records through the closed operation
+  helpers. Those are evidence-limited -G0 service cuts; the shared menu-grid
+  state leaves a larger original screen TU uncertain, not ruled out.
+
+  A complete twelve-member baseline dry run passed after the three local
+  CopyStruct types were reconciled to existing Ovl11CopyRecord and F8224's
+  override was temporarily removed. The checked --write compiled but failed
+  the linked overlay oracle (original 165c3cca, built 6eda46d1), before its
+  per-member oracle, then rolled back module/configuration. The three source
+  changes and original -fno-strength-reduce setting were restored exactly;
+  no partial unit, new exception or matching workaround remains. This is a
+  measured failing canonical-record baseline context, not proof every
+  baseline source shape fails or that this setting belongs on the whole TU.
+  Next useful experiment is the existing setting across ALL twelve members,
+  with an independently supported compactor source/flag interpretation and
+  the flag-review evidence bar; unchanged non-loop neighbors alone are not
+  affirmative evidence for the original setting. No narrower fold is ready.
+  Final tuProgress --verify after restoration again passed all eight gates
+  at 2206/2625 folded and 379/379 valid modules; all linked container bytes
+  and the original exception set are preserved.
 - ovl_11_func_800F8224 (m, matched this session, byte-exact, 0xD8) — the
   region's 6-byte-record compaction helper and a zero-gap link member of the
   gapless 0x800F8188 (ends 0x800F8224) → 0x800F8224 (0x800F8224–0x800F82FC) →
@@ -13270,6 +13298,37 @@ Members (address order):
 ---
 
 ## `ovl_11` 0x800E6AB0–0x800E6DFC var/return state run (confidence: low)
+
+**Reconstructed `modules/scene_sound_commands.c`, the four-entry
+E6B18–E6DFC exclusive controller/helper closure.** Ovl11RequestSceneSoundBank
+calls all three adjacent entries: Ovl11StartSceneSoundSequence,
+Ovl11StopSceneSoundSequence and Ovl11ScreenFadeCommand. The requester and
+starter consume the same selected-bank/sequence field at far-work +2549C;
+the starter additionally reads the header flag through +25388. The scene
+client EC52C independently composes these same fade/readiness/start steps.
+This direct local composition, selected-sequence protocol and uninterrupted
+order support the full four, rather than callback-table adjacency alone.
+The fade adapter stays with its caller closure, not a sound-only slice.
+
+Left E6AB0 gates CD/XA playback on message-window state, using neither
+sequence slot 0 nor this bank/readiness handshake. Right E6DFC sets game
+flag 3 and invokes EAF5C's mode service, with no member call or selected-bank
+use. The old six-member var/return and sign-extension fingerprint below is
+not private-state/helper evidence joining those two neighbors. Both edges
+are evidence-limited service cuts (-G0), not GP-proven original object
+boundaries. No flag limit motivates them; a larger historical command file
+is still uncertain.
+
+The public header documents request-vs-ready results, default volume
+selection, fade update-count units, immediate-vs-ramped stop, fade parity,
+mode-2-only command-flag clearing and the need to service fades elsewhere.
+The requester now declares its unread fourth command operand: the original
+opcode dispatcher AND EC52C's direct call demonstrably supply four. This
+reconciles its previous three-argument source definition with those callers,
+not a silent change to operand types or behavior. Other unused parameters
+remain intact. Internal forward declarations are replaced by the header;
+linkage and external ownership remain unchanged. The checked baseline fold
+passed all four and linked ovl_11; no flag or policy exception was added.
 
 Zero-gap link-order run of six ovl_11 functions sitting between the
 +0x5234/+0x51FE flag-byte accessor band and the D_8006C838 accessor band. Three
@@ -16140,6 +16199,80 @@ with different widths and far-apart addresses.
   evidence that the original author used bindings or assembly.
 
 ## `ovl_11` D_80129560 s32-table accessor family — 0x800E5A1C–0x800EE944 + 0x800EC490 (confidence: medium)
+
+**Additional complete command services reconstructed:**
+
+- `modules/message_command.c`, E58DC–E5A1C exclusive, is
+  `Ovl11StepMessageCommand`. The nine signed remap entries at 801248F4 are
+  used only here, now named gOvl11MessageRemapEntries with one canonical
+  extern (the old asm-name/macro alias is removed). The command resolves an
+  optional value-slot operand, remaps only archive 0 in work mode 2, waits
+  for CD audio to be idle, then requests/checks the message window and
+  optionally exports its choice. Its only direct C client EC52C supplies
+  literal archive-1 messages; the broader script dispatch also uses the
+  handler. No neighboring private helper/table joins it to that client.
+- `modules/value_counter_command.c`, E5A1C–E5ADC exclusive, is
+  `Ovl11StepValueCounter`. It compares the OLD counter with a signed
+  threshold divided by two, then conditionally increments the slot. Its
+  compare/increment protocol has no state-record or message helper, no
+  private storage and no table. The header documents pre-increment results,
+  literal/slot threshold modes and the work-flag freeze gate; it is not a
+  saturating completion counter.
+
+Membership/boundaries: the message command's left neighbor E5870 clamps
+state-record motion (state_record_motion_limit), with no message/remap
+operation or helper call. Its right neighbor is the distinct counter
+command above. The counter's right E5ADC starts the four-entry record-field
+closure already documented below; that closure does not call the counter.
+Neither shared value slots nor common command-table placement establishes
+one TU for all of these independent operations. These are evidence-limited
+service cuts under -G0, not GP-proven original boundaries; the historical
+larger command-file organization is still uncertain. No boundary is chosen
+to protect a flag exception. Both checked folds passed their member and
+linked overlay at baseline -O2/-G0. No override, storage, linkage change or
+source-policy exception was added. Parameter/local names retain every width
+and expression/branch shape; their headers publish only the demonstrated
+contracts. Original identities are ovl_11:800E58DC and ovl_11:800E5A1C.
+
+**Reconstructed `modules/pending_record_animation.c`, both entries
+E648C/E65AC through E6744 exclusive.** Ovl11CommitPendingRecordSelection
+passes the pending id to its adjacent Ovl11OrientAndAnimateStateRecord
+worker, optionally exports it, updates field 2C, and clears the pending id
+and game flag 46 according to the documented gate. The worker has just one
+other direct client, EAE24, which uses the same state-record animation
+operation. It resolves either record-space coordinate anchor, classifies
+heading toward gObjectWorkPosition, then updates the direction-only compact
+record or the ordinary animation/flag protocol. This specific caller/worker
+relationship, corroborated by link order, supports both complete entries.
+
+Left E63C8 is a general scene-command flag helper with clients in other
+operations; it has no pending-id/animation operation. Right E6744 reads a
+state field for a condition rule and does not call this worker or use the
+pending id. The distant E7660 shares pending-selection state, but its command
+protocol and intervening unrelated services supply no original-TU closure;
+its existing override is not used to define either edge. These are
+conservative service cuts under -G0, not claimed GP proofs.
+
+The header publishes operand units, export-before-gate ordering, literal/
+slot selection, record spaces, state-dependent animation remapping, ignored
+ranges and results. Three existing struct views now name pendingRecord,
+animationState and direction; their tags and all users are propagated with
+unchanged field widths/offsets. gCompactObjectPositionCoordinates names the
+EXE:8007A670 12-byte coordinate anchor, NOT the whole F8-stride record array;
+the original u8[] view and addressing are retained. Already canonical shared
+work/position/value storage remains external. The checked baseline fold
+passed both entries and linked ovl_11 with no flag or policy exception.
+
+Batch acceptance for pending_record_animation, scene_sound_commands and
+stage_mode2_record_command: tuProgress --verify against the campaign baseline
+passes all eight integrity gates at 2206/2625 folded, 379/379 valid modules.
+All executable/overlay bytes, associated data/tables and affected caller
+objects remain identical; no exception grew. The broader E6744–E6AB0
+state-field wrapper candidate is not folded: its existing calls disagree
+on Ovl11ReadStateField/Ovl11TestStateFieldCondition arity. A shared header
+must be reconciled with those original call operands first; retaining known
+conflicting prototypes or adding a fresh unprototyped workaround is not an
+accepted integration path.
 
 **Reconstructed two complete command services in this family:**
 
@@ -26532,6 +26665,35 @@ its actual frozen-byte-pointer search bounds. No flag change was required.
 
 ## ovl_11 E3DC8 / E5524 byte-decoder caller link (confidence: low)
 
+**Reconstructed `src/overlays/ovl_11/modules/byte_run_decode.c`, the single
+entry 800E5524–800E559C exclusive.** `Ovl11DecodeByteRuns` is a stateless
+buffer-to-buffer service: the first byte selects a delimiter, and each
+following record is a literal or a value/count triple. The only C client,
+Ovl11StartObjectArchiveLoad in object_archive_pipeline, passes recovered
+sprite-block data and the block-size query as the record count. The decoder
+reads no shared state, tables or callbacks and calls no helper. Its header
+publishes the record-count (not byte-count) contract, zero-repeat behavior,
+nonpositive-count delimiter read, and unchecked input/output bounds. Local
+names describe records and repeated bytes; widths, loop form and linkage are
+unchanged. No global is read or written, so none needs naming or ownership.
+
+Left 800E54F8 adapts a resource id to the sprite-block VRAM readback service
+and its retained offset; right 800E559C builds SPRT/DR_TPAGE packets from a
+shared texture descriptor. Neither calls the decoder or shares a private
+representation with it. These are evidence-limited service boundaries, not
+GP-proven historical object edges (-G0). The remote loader's call does not
+establish a single TU across the intervening record-fixup/getter families;
+the broader E351C–E5704 object-program hypothesis remains unproved, not
+silently cut to protect its E4BA4 flag exception. Only the complete evidenced
+stateless service is moved here. Baseline -O2/-G0 checked fold passed the
+member and linked overlay; no override or policy exception applies or was
+added. Canonical identity remains ovl_11:800E5524. Batch acceptance with the
+message/counter commands: tuProgress --verify against the campaign baseline
+passes all eight integrity gates at 2199/2625 folded, 376/376 valid modules;
+all executable/overlay code, tables, pointers and data remain byte-identical.
+The same gate checks canonical identities, published interfaces, ownership,
+configuration convergence and non-growth of policy exceptions.
+
 - ovl_11_func_800E3DC8 (s): original jal at 800E401C calls E5524.
 - ovl_11_func_800E5524 (m): input byte zero supplies a delimiter; each of
   arg2 encoded records emits either one byte or a repeated-byte/count packet.
@@ -28399,6 +28561,27 @@ non-growth passed. No shared tool changed and no commit was made. Exit 1
 is solely the incomplete overall campaign, not a failed integrity gate.
 
 ## `ovl_11` `(arg0 << 0x10) == 0` gate pair — 0x800E8614 / 0x800E8760 (confidence: low)
+
+**The independent adapter is now `modules/stage_mode2_record_command.c`,
+800E8760–800E87A0 exclusive.** `Ovl11LoadOrClearStageMode2Record` requests
+ID 15E through item_record_allocation (whose 15E/15F branch demonstrably
+calls Ovl11AcquireStageMode2Record) or clears the singleton's F0 bytes.
+The allocator's result is ignored: the command always returns 1. The public
+header documents the low-halfword control and unsuccessful-acquisition
+semantics. The word-sized parameter and halfword shift test are retained;
+unneeded SDK/service includes are removed. No storage, type or linkage is
+changed. gStageMode2Record is already canonical and remains external.
+
+This completes the single command service left outside the flagged-code109
+module below, not a flag-motivated slice. Left E8614 uses its own five-payload
+table and flag-40000 small-record pool, not the singleton. Right E87A0 queues
+a condition code then invokes E7798; it neither allocates nor clears this
+record. The distant singleton lifecycle and generic allocator have many
+other clients, so calls to those services alone do not establish a TU across
+all intervening command handlers. These are evidence-limited -G0 service
+boundaries, not GP-proven object edges. The baseline checked fold passed
+the member and linked overlay; no override or source-policy exception was
+added or retired.
 
 **Reconstructed `modules/flagged_code109_records.c`, 800E8614–800E8760
 exclusive.** This is the complete five-payload load/marked-pool-clear service,

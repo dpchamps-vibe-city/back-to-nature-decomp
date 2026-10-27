@@ -1,5 +1,20 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Delimiter/literal and repeated-byte record decoder used by sprite-block recovery.
+Ovl11DecodeByteRuns = 0x800E5524; // type:func
+
+// Object-program commands with distinct message and value-counter contracts.
+Ovl11StepMessageCommand = 0x800E58DC; // type:func
+Ovl11StepValueCounter = 0x800E5A1C; // type:func
+Ovl11LoadOrClearStageMode2Record = 0x800E8760; // type:func
+Ovl11CommitPendingRecordSelection = 0x800E648C; // type:func
+Ovl11OrientAndAnimateStateRecord = 0x800E65AC; // type:func
+Ovl11RequestSceneSoundBank = 0x800E6B18; // type:func
+Ovl11StartSceneSoundSequence = 0x800E6BDC; // type:func
+Ovl11StopSceneSoundSequence = 0x800E6CAC; // type:func
+Ovl11ScreenFadeCommand = 0x800E6D2C; // type:func
+gOvl11MessageRemapEntries = 0x801248F4; // type:data size:0x12
+
 // Connected object-action sequences and their keyed placement/probe helpers.
 Ovl11StepGridTargetAction = 0x8010F6C0; // type:func
 Ovl11StepGridTargetActionAlternate = 0x8010F80C; // type:func

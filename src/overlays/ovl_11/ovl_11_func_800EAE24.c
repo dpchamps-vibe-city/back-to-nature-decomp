@@ -9,9 +9,8 @@
 #include "ovl11_state_field_access.h"
 #include "ovl11_direction_vector.h"
 #include "ovl11_state_record_commands.h"
+#include "ovl11_pending_record_animation.h"
 
-
-s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800EAE24(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 temp_v0;
@@ -40,7 +39,7 @@ s32 ovl_11_func_800EAE24(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         }
         break;
     case 3:
-        ovl_11_func_800E65AC(arg0, 0, arg1, 0);
+        Ovl11OrientAndAnimateStateRecord(arg0, 0, arg1, 0);
         break;
     }
     Ovl11SetDirectionVector(4, (Recon800D0408A1View *) temp_s3, 0);
