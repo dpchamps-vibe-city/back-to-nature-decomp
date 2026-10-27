@@ -1,5 +1,30 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Connected object-action sequences and their keyed placement/probe helpers.
+Ovl11StepGridTargetAction = 0x8010F6C0; // type:func
+Ovl11StepGridTargetActionAlternate = 0x8010F80C; // type:func
+Ovl11StepRecordSelectionAction = 0x8010F8E4; // type:func
+Ovl11StepTaggedRecordAction = 0x8010FBC4; // type:func
+Ovl11StepSeasonalRecordAction = 0x8010FEF8; // type:func
+Ovl11CompleteActionSequence = 0x80110118; // type:func
+Ovl11LookupActionPosition = 0x80110188; // type:func
+Ovl11ProbeOffsetActionKey = 0x8011031C; // type:func
+Ovl11PromoteOffsetGridCell = 0x801103E8; // type:func
+Ovl11TestActionKeyCounter = 0x80110494; // type:func
+Ovl11TestActionKey5 = 0x80110520; // type:func
+Ovl11AdvanceActionMovement = 0x80110544; // type:func
+Ovl11AcquireActionGridTarget = 0x801105C8; // type:func
+// Mutable XYZ/key rows selected by the lookup's raw mode 0..5.
+gOvl11ActionPositionsMode0 = 0x80127D90; // type:data size:0x20
+gOvl11ActionPositionsMode1 = 0x80127DB0; // type:data size:0x20
+gOvl11ActionPositionsMode2 = 0x80127DD0; // type:data size:0x30
+gOvl11ActionPositionsMode3 = 0x80127E00; // type:data size:0x20
+gOvl11ActionPositionsMode4 = 0x80127E20; // type:data size:0x20
+gOvl11ActionPositionsMode5 = 0x80127E40; // type:data size:0x20
+
+// Area/mode-filtered selection across shared small/large/spawn record pools.
+Ovl11ChooseEligibleRecord = 0x80110944; // type:func
+
 // Edge-triggered primary-object level-band service and independent volume activation.
 Ovl11UpdatePrimaryObjectLevelBands = 0x800CD734; // type:func
 Ovl11ActivateInteractionVolume = 0x800CD9A0; // type:func

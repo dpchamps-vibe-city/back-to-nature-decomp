@@ -127,12 +127,12 @@ void Ovl27UpdateEffectSlot0(void) {
     s16 wraps;
     s16 animation;
 
-    nextPhase = (u16)D_800C4A2C + 1;
+    nextPhase = (u16)gOvl27EffectSlot0Ticks + 1;
     wraps = (s16)nextPhase / 1800;
-    D_800C4A2C = nextPhase - wraps * 1800;
+    gOvl27EffectSlot0Ticks = nextPhase - wraps * 1800;
     DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x8C, (SpriteSourceData *)D_800C4A80, 0x11A, 0xAD);
-    if (D_800C4A2C >= 0x5A) {
-        D_800C4A2C = 0;
+    if (gOvl27EffectSlot0Ticks >= 0x5A) {
+        gOvl27EffectSlot0Ticks = 0;
         animation = Rand(0xA);
         if (animation == (animation / 2) * 2) {
             animation -= 1;
@@ -149,12 +149,12 @@ void Ovl27UpdateEffectSlot1(void) {
     s16 wraps;
     s16 animation;
 
-    nextPhase = (u16)D_800C4A2E + 1;
+    nextPhase = (u16)gOvl27EffectSlot1Ticks + 1;
     wraps = (s16)nextPhase / 1800;
-    D_800C4A2E = nextPhase - wraps * 1800;
+    gOvl27EffectSlot1Ticks = nextPhase - wraps * 1800;
     DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x8C, (SpriteSourceData *)D_800C4AB0, 0x21, 0x92);
-    if (D_800C4A2E >= 0x3C) {
-        D_800C4A2E = 0;
+    if (gOvl27EffectSlot1Ticks >= 0x3C) {
+        gOvl27EffectSlot1Ticks = 0;
         animation = Rand(9) + 10;
         if (animation == (animation / 2) * 2) {
             animation -= 1;
@@ -171,15 +171,15 @@ void Ovl27UpdateEffectSlot2(void) {
     s16 wraps;
     s16 animation;
 
-    nextPhase = (u16)D_800C4A30 + 1;
+    nextPhase = (u16)gOvl27EffectSlot2Ticks + 1;
     wraps = (s16)nextPhase / 1800;
-    D_800C4A30 = nextPhase - wraps * 1800;
+    gOvl27EffectSlot2Ticks = nextPhase - wraps * 1800;
     DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x8C, (SpriteSourceData *)D_800C4AE0, 0x33, 0xB6);
-    if (D_800C4A30 >= 0x3C) {
-        D_800C4A30 = 0;
+    if (gOvl27EffectSlot2Ticks >= 0x3C) {
+        gOvl27EffectSlot2Ticks = 0;
         animation = Rand(3) + 0x13;
         if (animation == 0x13) {
-            D_800C4A30 = 0x1E;
+            gOvl27EffectSlot2Ticks = 0x1E;
         }
         SelectSpriteAnimation((ObjectState *)D_800C4AE0, animation);
     }
@@ -200,15 +200,15 @@ void Ovl27UpdateEffectSlot3(void) {
     s16 wraps;
     s32 orderingTable;
 
-    nextPhase = (u16)D_800C4A32 + 1;
+    nextPhase = (u16)gOvl27EffectSlot3Ticks + 1;
     wraps = (s16)nextPhase / 1800;
-    D_800C4A32 = nextPhase - wraps * 1800;
+    gOvl27EffectSlot3Ticks = nextPhase - wraps * 1800;
     orderingTable = gActiveRenderContext->field_D8 + 0x8C;
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B10, 0x127, 0xCD);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B10, 0x102, 0x8A);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B10, 0x118, 0x79);
-    if (D_800C4A32 >= 0xF) {
-        D_800C4A32 = 0;
+    if (gOvl27EffectSlot3Ticks >= 0xF) {
+        gOvl27EffectSlot3Ticks = 0;
         SelectSpriteAnimation((ObjectState *)D_800C4B10, Rand(2) + 0x16);
     }
 }
@@ -218,17 +218,17 @@ void Ovl27UpdateEffectSlot4(void) {
     s16 wraps;
     s32 orderingTable;
 
-    nextPhase = (u16)D_800C4A34 + 1;
+    nextPhase = (u16)gOvl27EffectSlot4Ticks + 1;
     wraps = (s16)nextPhase / 1800;
-    D_800C4A34 = nextPhase - wraps * 1800;
+    gOvl27EffectSlot4Ticks = nextPhase - wraps * 1800;
     orderingTable = gActiveRenderContext->field_D8 + 0x8C;
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B40, 0x3F, 0x95);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B40, 0xA, 0xBC);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B40, 9, 0xD6);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B40, 0x127, 0x34);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B40, 0x126, 0x1E);
-    if (D_800C4A34 >= 0x14) {
-        D_800C4A34 = 0;
+    if (gOvl27EffectSlot4Ticks >= 0x14) {
+        gOvl27EffectSlot4Ticks = 0;
         SelectSpriteAnimation((ObjectState *)D_800C4B40, Rand(2) + 0x18);
     }
 }
@@ -238,15 +238,15 @@ void Ovl27UpdateEffectSlot5(void) {
     s16 wraps;
     s32 orderingTable;
 
-    nextPhase = (u16)D_800C4A36 + 1;
+    nextPhase = (u16)gOvl27EffectSlot5Ticks + 1;
     wraps = (s16)nextPhase / 1800;
-    D_800C4A36 = nextPhase - wraps * 1800;
+    gOvl27EffectSlot5Ticks = nextPhase - wraps * 1800;
     orderingTable = gActiveRenderContext->field_D8 + 0x8C;
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B70, 0x17, 0x1E);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B70, 0x6, 0x6D);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *)D_800C4B70, 0x24, 0xDF);
-    if (D_800C4A36 >= 0x1E) {
-        D_800C4A36 = 0;
+    if (gOvl27EffectSlot5Ticks >= 0x1E) {
+        gOvl27EffectSlot5Ticks = 0;
         SelectSpriteAnimation((ObjectState *)D_800C4B70, Rand(2) + 0x1A);
     }
 }
@@ -260,7 +260,7 @@ void Ovl27DrawBackdropAnim36(void) {
         x = 0x64;
     }
     y = 0xB3;
-    if (D_800C4A1A == 0) {
+    if (gOvl27TitleSelection == 0) {
         y = 0x9B;
     }
     DrawSpriteFrameQuads(gActiveRenderContext->field_D8 + 0x88, (s32)D_800C4BD0, 0x24, 0, (s16)x, (s16)y, 0x1000, 0, 0U);

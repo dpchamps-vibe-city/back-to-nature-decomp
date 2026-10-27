@@ -245,15 +245,6 @@ typedef struct {
 } M2C_4224e215b714_Ov11FlagSet8010B218;
 
 typedef struct {
-               char pad_00[0x30];
-               s16 unk30;
-               char pad_32[0xB6 - 0x32];
-               u16 unkB6;
-               char pad_B8[0xDC - 0xB8];
-               s32 unkDC;
-} M2C_45034dae4597_Struct_80110118;
-
-typedef struct {
                char pad_00[0x16];
                u16 unk16;
                char pad_18[0x30 - 0x18];
@@ -404,15 +395,6 @@ typedef struct {
                char pad_32[0x2];
                s32 unk34;
 } M2C_4ed7769e2366_UnkStruct800E1254;
-
-typedef struct {
-               char pad_0[0x22];
-               u16 unk22;
-               char pad_1[0x38 - 0x24];
-               s32 unk38;
-               char pad_2[0x40 - 0x3C];
-               s32 unk40;
-} M2C_51112120074c_Ovl11Func801103E8Obj;
 
 typedef struct {
     char pad_00[0x24];
@@ -831,17 +813,6 @@ typedef struct {
 } M2C_f8096ae641a3_UnkStruct801152BC;
 
 typedef struct {
-    char pad_0[0x24];
-    u16 unk24;
-    char pad_26[0x4];
-    s16 unk2A;
-    char pad_2C[0x4];
-    s16 unk30;
-    char pad_32[0x48];
-    u16 unk7A;
-} M2C_fcf67812ccd0_Ovl11Func80110494View;
-
-typedef struct {
                u16 unk0;
                char pad_2[0x32];
                s32 unk34;
@@ -902,6 +873,15 @@ typedef struct {
     char pad_68[0xAC - 0x68];
     u16 unkAC;
 } Ovl11A654Object;
+
+typedef struct {
+    char pad_00[0x30];
+    s16 area;
+    char pad_32[0xB6 - 0x32];
+    u16 actionId;
+    char pad_B8[0xDC - 0xB8];
+    s32 actionState;
+} Ovl11ActionCompletionView;
 
 typedef struct {
     char pad_00[0x26];
@@ -1986,6 +1966,26 @@ typedef struct {
                char pad_3C[0x4];
                s32 unk40;
 } Ovl11StateArg0;
+
+typedef struct {
+    char pad0[0x22];
+    u16 direction;
+    char pad24[0x38 - 0x24];
+    s32 x;
+    char pad3C[4];
+    s32 z;
+} Ovl11StateDirectionView;
+
+typedef struct {
+    char pad0[0x24];
+    u16 actionKey;
+    char pad26[4];
+    s16 keyUpdates;
+    char pad2C[4];
+    s16 area;
+    char pad32[0x48];
+    u16 statusFlags;
+} Ovl11StateKeyProbeView;
 
 typedef struct {
     u8 pad_0[0xAC];

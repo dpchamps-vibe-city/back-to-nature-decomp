@@ -2,8 +2,8 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "ovl11_grid_candidate_search.h"
-
-s32 ovl_11_func_80110944(s16 area, u16 mode);
+#include "psyq/memory.h"
+#include "ovl11_eligible_record_selection.h"
 
 s32 ovl_11_func_8010E6E8(Ovl11E6E8Object *obj) {
     s16 x;
@@ -54,10 +54,10 @@ s32 ovl_11_func_8010E6E8(Ovl11E6E8Object *obj) {
             break;
         case 3:
             obj->state = 2;
-            first = ovl_11_func_80110944(1, 0xF);
+            first = Ovl11ChooseEligibleRecord(1, 0xF);
             if (first == -1) {
-                second = ovl_11_func_80110944(4, 0xF);
-                if (second == first && ovl_11_func_80110944(5, 0xF) == second) {
+                second = Ovl11ChooseEligibleRecord(4, 0xF);
+                if (second == first && Ovl11ChooseEligibleRecord(5, 0xF) == second) {
                     obj->state = 4;
                 }
             }

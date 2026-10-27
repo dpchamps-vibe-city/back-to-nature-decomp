@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_action_sequences.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
 s32 ovl_11_func_8010E644(Ovl11E644Object *arg0);
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 
@@ -29,7 +29,7 @@ s32 ovl_11_func_8010F324(Ovl11SetFieldsView *arg0) {
         *(s32 *) ((u8 *) arg0 + 0x40) = 0x16A8 - (*(u16 *) ((u8 *) arg0 + 0xAC) * 0xC8);
         break;
     case 1:
-        if (ovl_11_func_80110544((Ovl11E644Object *) arg0, 0xE6) == 0) {
+        if (Ovl11AdvanceActionMovement((Ovl11E644Object *) arg0, 0xE6) == 0) {
             break;
         }
         *(s16 *) ((u8 *) arg0 + 0x28) = 2;

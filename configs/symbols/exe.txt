@@ -17,6 +17,9 @@ gAreaSpriteWorkBase = 0x8009CBF8; // size:0x4
 gLoadedAreaClampFirstCorner = 0x800A00C4; // size:0x8
 gLoadedAreaClampSecondCorner = 0x800A00CC; // size:0x8
 
+// Shared selection block: 20 large-pool, two special-slot and ten small-pool bytes.
+gRecordSelectionAvailability = 0x800712F8; // size:0x20
+
 // Shared 0x28-byte item table pointer in the main state header (+0x20).
 gItemDataTable = 0x8006C858; // size:0x4
 

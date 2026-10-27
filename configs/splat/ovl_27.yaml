@@ -32,11 +32,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x4, .rodata, modules/scene_setup]
-      - [0x38, rodata]
-      - [0x3C, .rodata, modules/menu_scene]
-      - [0xCC, c, modules/scene_setup]
-      - [0x63C, c, modules/menu_scene]
+      - [0x4, .rodata, modules/title_scene]
+      - [0xCC, c, modules/title_scene]
       - [0x1504, c, modules/backdrop_sprite_pool]
       - [0x26A4, c, modules/scene_resources]
       - [0x2AF4, c, modules/work_area_init]

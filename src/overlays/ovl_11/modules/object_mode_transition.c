@@ -11,15 +11,12 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_object_mode_transition.h"
+#include "psyq/memory.h"
+#include "ovl11_eligible_record_selection.h"
+#include "ovl11_action_sequences.h"
 
-s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0, s32 arg1);
-s32 ovl_11_func_8010FEF8(Ovl11SetFieldsView *arg0, s32 arg1);
-s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1);
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
-s32 ovl_11_func_80110944(s16 area, u16 mode);
 
 s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
     Ovl11PaddedVec3 position;
@@ -40,7 +37,7 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
             return;
         }
         target->field_34 |= flag;
-        ovl_11_func_80110544((Ovl11E644Object *)transition, 0xE6);
+        Ovl11AdvanceActionMovement((Ovl11E644Object *)transition, 0xE6);
     }
 
     active = 1;
@@ -57,21 +54,21 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
     } else {
         if (object->unk30 == 1) {
             if (!(*(u16 *)((u8 *)object + 0xB8) & 0x100)) {
-                if (ovl_11_func_80110944(5, 1) != -1 && gSaveCounter18 != 0) {
+                if (Ovl11ChooseEligibleRecord(5, 1) != -1 && gSaveCounter18 != 0) {
                     object->unk28 = -1;
-                    ovl_11_func_80110188((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
+                    Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
-                } else if ((selected = ovl_11_func_80110944(5, 6)) != -1) {
+                } else if ((selected = Ovl11ChooseEligibleRecord(5, 6)) != -1) {
                     object->unk28 = -1;
-                    ovl_11_func_80110188((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
+                    Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
-                } else if (ovl_11_func_80110944(4, 1) != selected && gSaveCounter20 != 0) {
+                } else if (Ovl11ChooseEligibleRecord(4, 1) != selected && gSaveCounter20 != 0) {
                     object->unk28 = -2;
-                    ovl_11_func_80110188((Ovl11StateArg0 *)transition, 4, &position.field_0, object->unk30);
+                    Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 4, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
-                } else if (ovl_11_func_80110944(4, 8) != -1) {
+                } else if (Ovl11ChooseEligibleRecord(4, 8) != -1) {
                     object->unk28 = -2;
-                    ovl_11_func_80110188((Ovl11StateArg0 *)transition, 4, &position.field_0, object->unk30);
+                    Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 4, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
                 } else {
                     transition->flags |= 0x100;
@@ -81,30 +78,30 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
             } else {
                 object->unk34 &= 0xC3FFFFFF;
                 if (*(u16 *)((u8 *)object + 0xB8) & 0x200) {
-                    if (ovl_11_func_8010FBC4((Ovl11SetFieldsView *)object, 0) != 0) {
+                    if (Ovl11StepTaggedRecordAction((Ovl11SetFieldsView *)object, 0) != 0) {
                         transition->index = -1;
                         transition->flags &= 0xFDFF;
                     }
-                } else if (ovl_11_func_8010FEF8((Ovl11SetFieldsView *)object, 0) != 0) {
+                } else if (Ovl11StepSeasonalRecordAction((Ovl11SetFieldsView *)object, 0) != 0) {
                     active = 0;
                 }
             }
         } else if (object->unk30 == 5) {
             object->unk34 &= 0xC3FFFFFF;
             if (*(u16 *)((u8 *)object + 0xB8) & 0x200) {
-                if (ovl_11_func_8010F8E4((Ovl11StateArg0 *)object, 1) != 0) {
+                if (Ovl11StepRecordSelectionAction((Ovl11StateArg0 *)object, 1) != 0) {
                     transition->index = -1;
                     transition->flags &= 0xFDFF;
                 }
-            } else if (ovl_11_func_8010FBC4((Ovl11SetFieldsView *)object, 1) != 0) {
-                if (ovl_11_func_80110944(4, 9) != -1) {
+            } else if (Ovl11StepTaggedRecordAction((Ovl11SetFieldsView *)object, 1) != 0) {
+                if (Ovl11ChooseEligibleRecord(4, 9) != -1) {
                     object->unk28 = -3;
-                    ovl_11_func_80110188((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
+                    Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
-                } else if (ovl_11_func_80110944(1, 10) != -1) {
+                } else if (Ovl11ChooseEligibleRecord(1, 10) != -1) {
                     object->unk28 = -3;
                     transition->flags |= 0x100;
-                    ovl_11_func_80110188((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
+                    Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 5, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
                 } else {
                     active = 0;
@@ -113,15 +110,15 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
         } else if (object->unk30 == 4) {
             object->unk34 &= 0xC3FFFFFF;
             if (*(u16 *)((u8 *)object + 0xB8) & 0x200) {
-                if (ovl_11_func_8010F8E4((Ovl11StateArg0 *)object, 0) != 0) {
+                if (Ovl11StepRecordSelectionAction((Ovl11StateArg0 *)object, 0) != 0) {
                     transition->index = -1;
                     transition->flags &= 0xFDFF;
                 }
-            } else if (ovl_11_func_8010FEF8((Ovl11SetFieldsView *)object, 0) != 0) {
-                if (ovl_11_func_80110944(1, 10) != -1) {
+            } else if (Ovl11StepSeasonalRecordAction((Ovl11SetFieldsView *)object, 0) != 0) {
+                if (Ovl11ChooseEligibleRecord(1, 10) != -1) {
                     object->unk28 = -4;
                     transition->flags |= 0x100;
-                    ovl_11_func_80110188((Ovl11StateArg0 *)transition, 4, &position.field_0, object->unk30);
+                    Ovl11LookupActionPosition((Ovl11StateArg0 *)transition, 4, &position.field_0, object->unk30);
                     ovl_11_func_800D05D0((Ovl11SetFieldsView *)object, position);
                 } else {
                     active = 0;

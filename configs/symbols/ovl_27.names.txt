@@ -26,6 +26,17 @@ Ovl27InitPrimaryObject = 0x800BAA34; // type:func
 Ovl27InitWorkOptions = 0x800BABD4; // type:func
 Ovl27CopyInitialWorkRecords = 0x800BAC14; // type:func
 
+// Seven resident phase callbacks; setup/menu share the two-way selection.
+gOvl27TitlePhaseCallbacks = 0x800C49F8; // type:data size:0x1C
+gOvl27TitleSelection = 0x800C4A1A; // type:data size:0x2
+// Per-effect update counters, reset here and advanced by backdrop_sprite_pool.
+gOvl27EffectSlot0Ticks = 0x800C4A2C; // type:data size:0x2
+gOvl27EffectSlot1Ticks = 0x800C4A2E; // type:data size:0x2
+gOvl27EffectSlot2Ticks = 0x800C4A30; // type:data size:0x2
+gOvl27EffectSlot3Ticks = 0x800C4A32; // type:data size:0x2
+gOvl27EffectSlot4Ticks = 0x800C4A34; // type:data size:0x2
+gOvl27EffectSlot5Ticks = 0x800C4A36; // type:data size:0x2
+
 gOvl27TitleAnimationCallback = 0x800C4A14; // type:data size:0x4
 gOvl27TitleSetupStage = 0x800C4A18; // type:data size:0x2
 gOvl27TitleAnimationTicks = 0x800C4A1C; // type:data size:0x4

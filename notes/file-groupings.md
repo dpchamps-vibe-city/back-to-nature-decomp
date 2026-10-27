@@ -2265,8 +2265,8 @@ rejected, not adopted as evidence. Trace the following object-mode/helper
 block and its private tables before folding the complete supported unit.
 No partial seven-record module, source change or exception was retained.
 
-Broader closure review now connects the sweeps, mode dispatch, callback
-population and internal lookup/search helpers through 801110CC: 62 functions,
+Historical broader call-closure review connected the sweeps, mode dispatch,
+callback population and lookup/search helpers through 801110CC: 62 functions,
 including area_record_claims, object_mode_transition and grid_candidate_search.
 The internal handler calls cross all three current module edges. The sprite
 installer at 110CC is called only by CA0C, so the closure-clean candidate also
@@ -2288,10 +2288,19 @@ does not apply to this relocated callback table or to a section with a
 not-yet-owned prefix before its first jump table. Restoring this table as a
 production-placed C definition, with its current mutable view reconciled and
 its relocated rodata placement proved, is the next bounded experiment. No
-source/codegen experiment or partial 15/62-member fold was retained. The four
-existing module edges inside this larger candidate are mechanically limited
-intermediate organization, not evidence for separate original files; their
-older responsibility-only boundary claims do not close the broader question.
+source/codegen experiment or partial 15/62-member fold was retained. Under that broader hypothesis the four existing module edges were considered
+mechanically limited intermediate organization, not recovered original-file
+boundaries. Current source review distinguishes the non-exclusive callback /
+public-service closure from the action_sequences helper closure documented
+below: CE80 is a public redispatch service, and grid/record-selection/placement
+services have independent clients and contracts. No private data or captured
+frame ties all 69 entries into one original file. Thus the larger file remains
+an open hypothesis, not authority for merging every service its callbacks use.
+The relocated callback-table representation is still the concrete obstacle
+to testing that larger hypothesis; no padding/flag workaround or partial
+15-member record-frame fold was introduced to evade it. In particular the
+record-frame views retain conflicting signed/unsigned halfword accesses at
++2C/+30, and any future reconciliation must preserve each access explicitly.
 
 Candidate same-TU family over the overlay-local global `D_8007A638` (a
 seven-entry, 0xF8-stride record array, 0x6C8 bytes).
@@ -2928,7 +2937,81 @@ cross-service protocols. No positive private mapper/state witness joins
 standalone 2DE4 callback-table rodata limit; neither that mechanical limit
 nor the same field layout alone proves a historical boundary.
 
-Same-TU candidate band of `ovl_11` (`Obj\GF_FARM.bin`): its previously
+**Reconstructed `modules/eligible_record_selection.c`, 80110944–80110CE8
+exclusive:** Ovl11ChooseEligibleRecord is the complete area/mode-filtered
+selection service. Its callers include area_record_claims (modes 1/2/4/8),
+object_mode_transition and the F8E4/FBC4/FEF8 action handlers; they consume
+indices or the -1 sentinel, not a private shared record/table with either
+neighbor. The service considers ten small or twenty large records, excludes
+seven matching reservation records, substitutes tracked-slot results 20/21
+only for mode 1, and advances the common random generator. The public header
+records the mode bits, area/pool selection, index units and side effects.
+The shared 32-byte availability/selected block at EXE:800712F8 is now
+`gRecordSelectionAvailability`, retaining its existing byte-array anchor and
+views inside the larger shared-state allocation, not creating new storage.
+The reservation-loop local now describes its role; the separate address
+bindings needed for the original HIGH/LOW allocation remain unchanged.
+
+Both edges are evidence-limited -G0 service cuts, not claims of recovered
+historical object boundaries. Left grid_candidate_search ends at 10944: its
+five-member sole-parent/nested-helper coordinate-search closure has a different
+output protocol and never invokes this selector. Right record_position_tables
+starts at 10CE8: it owns the private placement/message maps, none read here.
+The common large/small pools and shared clients are not a private-state join
+across either edge. The much wider band below remains a hypothesis, not an
+established group sliced to protect a flag. The checked fold proved this
+service and the linked overlay at baseline; it has no override or policy
+exception. Canonical names preserve the original container/address identities.
+
+**Reconstructed `modules/action_sequences.c`, 8010F6C0–80110658 exclusive,
+all thirteen entries in original order.** The five grid/record/tagged/seasonal
+action drivers form one connected helper closure: F6C0/ FBC4/ FEF8 share
+completion 10118; F6C0/ F80C share grid acquisition 105C8; 10520/10494 connect
+those drivers to the selection sequence F8E4. The offset probes 1031C/103E8
+have only their respective in-band driver clients. Shared state at object
++28/+B6/+BA/+DC passes the same action/selection protocol through those
+helpers. The five switch tables follow member order, with the three proven
+section-relative alignment words absorbed by the checked fold. Public
+position lookup 10188 and movement step 10544 are interior service members,
+not grounds for an invented boundary inside the connected closure.
+
+Left F324/F4CC use the public lookup/movement services but none of this
+exclusive helper closure; they redispatch via CE80/E644 rather than perform
+its record handoff. Right 10658 begins grid_candidate_search's independently
+established coordinate-search/nested-helper closure. No private helper/table
+extends these edges. These are evidence-limited -G0 cuts, not GP-proven
+historical object boundaries. The wider band below remains a hypothesis;
+shared object layouts/public engine services alone do not establish it.
+
+Names are Ovl11StepGridTargetAction/Alternate, StepRecordSelectionAction,
+StepTaggedRecordAction, StepSeasonalRecordAction, CompleteActionSequence,
+LookupActionPosition, ProbeOffsetActionKey, PromoteOffsetGridCell,
+TestActionKeyCounter, TestActionKey5, AdvanceActionMovement and
+AcquireActionGridTarget (all Ovl11-prefixed). Six mutable XYZ/key tables
+are gOvl11ActionPositionsMode0..5. Ovl11ActionPositionRow and the three
+canonical parameter views now name demonstrated coordinates, key/counter,
+area, status flags, action ID/state, preserving every width/offset/signedness.
+Duplicate local views were replaced by those exact existing game_types views
+before the fold. Movement's argument sets a shared rank threshold, NOT a
+wall-clock or update timer; the public header explicitly says so. The unread
+second word of TestActionKey5 and tagged/seasonal drivers is retained, not
+removed from caller contracts. No function became static or acquired storage.
+Baseline checked fold proved all thirteen and the overlay, with no override,
+new policy exception or shared-tool change. Header reconciliation publishes
+the five drivers and two externally used services without exposing the helpers.
+
+Batch verification (eligible_record_selection, action_sequences and the
+22-member title_scene merge): `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` reports **1974/2625 folded** (1960 at entry),
+**342/342 valid modules**, and PASS for all eight integrity gates, including
+every linked EXE/overlay byte, data/callback tables, configuration convergence,
+source policy and exception non-growth. All previously folded members remain
+folded. Canonical names are clean; interfaceAudit reconciled the public caller
+headers with unchanged caller objects and zero failing published interfaces.
+No compiler override, allowlist entry or shared tool was changed. The CLI
+returns 1 because the overall campaign is incomplete, not an integrity failure.
+
+Historical same-TU candidate band of `ovl_11` (`Obj\GF_FARM.bin`): its previously
 documented core starts with matched `ovl_11_func_80110118` in the unbroken link
 run that opens at 0x582F8 and continues through 0x80110188 / 0x8011031C / 0x801103E8 /
 0x80110494 / 0x80110520 / 0x80110544 / 0x801105C8 / 0x80110658 / 0x80110790 /
@@ -18399,8 +18482,9 @@ Members (link order):
 
 ## `ovl_27` D_800C4A14/D_800C4A1C state-handler cluster — 0x800B845C–0x800B92E4 (confidence: low)
 
-**Reconstructed two neighboring modules: `scene_setup.c` (800B7EEC–800B845C,
-six compiled members) and `menu_scene.c` (800B845C–800B9324, sixteen).** Setup
+**Merged the complete `modules/title_scene.c`, 800B7EEC–800B9324 exclusive,
+22 compiled members in original order.** It absorbs all six scene_setup and
+all sixteen menu_scene members, not a new slice. Setup
 includes the scene entry, both resets, begin/poll and the 13-state resource
 ladder: 7FE8 calls 7F2C, which calls 7F7C; 7FE8/80B0/823C exchange the saved
 work flags and setup stage. The seven-entry phase table links that setup to
@@ -18414,12 +18498,15 @@ protocol and direct driver calls establish their membership, not merely the
 animation slot's users. All 22 members now have behavioral Title-prefixed
 names; no callback/helper was made static.
 
-Left setup edge is the container's first text byte. The setup/menu interior
-cut is a **mechanical limit**, not recovered TU evidence: table 823C at file
-0x4..38 and table 845C at 0x3C..CC have an unattributed zero word at 0x38.
-The fold helper cannot pool it; its owner/emitting source remains unknown.
-Their reset/state sharing makes a larger TU plausible. No flag or invented
-padding declaration was used to force either merge. Right menu edge 9324
+Left setup edge is the container's first text byte. The former setup/menu
+cut was purely mechanical and is now removed: the fold helper proves the
+zero word at file 0x38 is exactly the prior object's extent rounded to the
+next compiler output's section-relative alignment. Both original switch
+tables pool at 0x4; the checked whole-unit fold proves every member and the
+entire overlay at baseline. Shared reset/stage/animation state, the resident
+seven-entry phase protocol and its complete helper closure support the join,
+not adjacency or flag compatibility. No padding declaration, flag or tool
+change was needed. Right menu edge 9324
 starts backdrop_sprite_pool's separately bounded object/effect-pool lifecycle
 and resident source tables. Menu orchestrates those services without directly
 managing their records. That private-layout/protocol edge supports keeping
@@ -18432,12 +18519,18 @@ saved flags, exit variant, backdrop Y/extent, panel X and summary buffer.
 Canonicalization preserves the original overlay identities and pointer-table
 entries; ambiguous shared-header externs were reconciled explicitly rather
 than renaming another overlay at the same RAM address. Types/storage/linkage
-are unchanged, all state remains extern. Redundant source externs and a
+are unchanged, all state remains extern. The merged phase bank is now
+`gOvl27TitlePhaseCallbacks`, the two-way choice is `gOvl27TitleSelection`, and
+the six counters reset by title setup and advanced by the effect pool are
+`gOvl27EffectSlot0Ticks` through `gOvl27EffectSlot5Ticks`. They retain their
+existing scalar views and storage; the two public headers serve the setup
+entry and resident menu callbacks of this one module. The obsolete interior
+boundary comments are removed from C. Redundant source externs and a
 family-transfer experiment comment were removed. Header scene_setup publishes
 entry/shared reset; menu_scene publishes the four phase callbacks, their raw
 return values, timing/flags and exit behavior. Existing resource/pool headers
-stay the service interfaces. Checked folds and the final batch gate pass at
-baseline with no flags or exceptions added/retired: 1052 folded, 165 valid
+stay the service interfaces. The whole-22 fold and final batch gate pass at
+baseline with no flags or exceptions added/retired: 1974 folded, 342/342 valid
 modules, all eight integrity gates and every linked EXE/overlay/data byte pass.
 
 Historical candidate evidence and address spellings follow:

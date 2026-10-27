@@ -28,6 +28,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_record_position_tables.h"
+#include "ovl11_eligible_record_selection.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area);
@@ -113,8 +114,6 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
     return 0;
 }
 
-s32 ovl_11_func_80110944(s16 area, u16 mode);
-
 /* Mode-1 selections update the area-specific availability bit. An unavailable
  * result latches failure but does not cancel earlier effects or later trials. */
 s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area) {
@@ -128,7 +127,7 @@ s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area) {
     count = (u16)(*(u16 *)(object + 0xB2) / 50U) + random;
     failed = 0;
     for (i = 0; i < count; i++) {
-        index = ovl_11_func_80110944(area, 1);
+        index = Ovl11ChooseEligibleRecord(area, 1);
         if (index == -1) {
             failed = 1;
             break;
@@ -169,7 +168,7 @@ s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area) {
     flags = (Ovl11ClearFlagRecord *)(base + 0x1F0);
     records = (Ovl30AnimalRecordB8 *)(base + 0x1BC);
     for (i = 0; i < count; i++) {
-        index = ovl_11_func_80110944(area, 2);
+        index = Ovl11ChooseEligibleRecord(area, 2);
         if (index == -1) {
             failed = 1;
             break;
@@ -204,7 +203,7 @@ s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area) {
     count = (u16)(*(u16 *)(object + 0xB2) / 100U) + random;
     failed = 0;
     for (i = 0; i < count; i++) {
-        index = ovl_11_func_80110944(area, 4);
+        index = Ovl11ChooseEligibleRecord(area, 4);
         if (index == -1) {
             failed = 1;
             break;
@@ -227,7 +226,7 @@ s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area) {
         if (count > 0) {
             base = D_80074838;
             do {
-                result = (s16)ovl_11_func_80110944(area, 8);
+                result = (s16)Ovl11ChooseEligibleRecord(area, 8);
                 status = -1;
                 if (result != status) {
                     status = Ovl11ConsumeSeasonalRecord((Ovl11SeasonalRecordView *)(*(u8 **)(base + 0x5DCC) + result * 0x18), &out);

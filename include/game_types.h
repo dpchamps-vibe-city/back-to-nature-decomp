@@ -2620,26 +2620,26 @@ typedef struct {
                s32 unk8;
 } C580C_f3fe4d9631b5_UnkStruct800CBF70Arg0;
 
-/* 80110494's matched parameter layout, also passed by 8010F80C. */
+/* Action-key counter at 80110494; updates count calls, not elapsed time. */
 typedef struct {
     char pad0[0x24];
-    u16 unk24;
+    u16 actionKey;
     char pad26[4];
-    s16 unk2A;
+    s16 keyUpdates;
     char pad2C[4];
-    s16 unk30;
+    s16 area;
     char pad32[0x48];
-    u16 unk7A;
+    u16 statusFlags;
 } Ovl11StateKeyProbeView;
 
-/* 801103E8's matched parameter layout, also passed by 8010F80C. */
+/* Offset grid-cell probe at 801103E8; raw X/Z coordinates. */
 typedef struct {
     char pad0[0x22];
-    u16 unk22;
+    u16 direction;
     char pad24[0x38 - 0x24];
-    s32 unk38;
+    s32 x;
     char pad3C[4];
-    s32 unk40;
+    s32 z;
 } Ovl11StateDirectionView;
 
 /* 800D55F8: direction +22, state/timers +28/+2A/+2C, map +30 and flags +34. */
@@ -2711,14 +2711,14 @@ typedef struct {
     u16 saved2A;
 } Ovl11ModeTransitionObject;
 
-/* 80110118's matched parameter view, also passed by 8010F6C0. */
+/* Completion at 80110118 consumes the action ID and clears retained state. */
 typedef struct {
     char pad_00[0x30];
-    s16 unk30;
+    s16 area;
     char pad_32[0xB6 - 0x32];
-    u16 unkB6;
+    u16 actionId;
     char pad_B8[0xDC - 0xB8];
-    s32 unkDC;
+    s32 actionState;
 } Ovl11ActionCompletionView;
 
 /* 8010A47C: action state +28, timer +2C, flags +34 and four-word

@@ -1507,8 +1507,8 @@ typedef struct {
     u16 padB6;
 } Ovl11AnimalSelection;
 
-/* 80110944 reads these bytes directly and at +0x16 from the 742EC base. */
-extern u8 D_800712F8[32];
+/* 80110944: shared +4AC0 block, 20 large/2 tracked/10 small selection bytes. */
+extern u8 gRecordSelectionAvailability[32];
 
 /* 80110944 scans seven stride-F8 entries at +DE00 and two selection slots. */
 typedef struct {
@@ -5143,7 +5143,7 @@ extern u8 gOvl23ActorSpriteSourceBase[];
 extern s16 gOvl23RecordAnchorY[6];
 extern s16 gOvl23RecordYBounds[12];
 
-extern s32 D_800C49F8[];
+extern s32 gOvl27TitlePhaseCallbacks[];
 
 /* D_800C4A50 - s32 table indexed by a signed 16-bit index in
  * ovl_27_func_800BA130, which sign-extends and scales it (sll 16 / sra 14)
@@ -6611,7 +6611,7 @@ extern s16 gOvl27TitleBackdropY;
 extern s16 gOvl27TitleBackdropExtent;
 extern s16 gOvl27TitlePanelX;
 /* 800B845C increments this signed halfword and takes its signed remainder. */
-extern s16 D_800C4A1A;
+extern s16 gOvl27TitleSelection;
 /* 800B845C increments and reduces this signed word modulo 108000. */
 extern s32 gOvl27TitleAnimationTicks;
 /* 800B845C increments and thresholds this signed word at 1800. */
@@ -6642,14 +6642,14 @@ typedef struct {
 /* D_800C4A2C - ovl_27 halfword state counter at 0x800C4A2C. Read
  * unsigned to increment and signed to threshold-test; absolute-addressed
  * (overlay build is -G0). */
-extern s16 D_800C4A2C;
+extern s16 gOvl27EffectSlot0Ticks;
 /* 800B9A8C/9CB4/9DBC/9EEC advance the other four ovl_27 effect counters. */
-extern s16 D_800C4A2E;
-extern s16 D_800C4A32;
-extern s16 D_800C4A34;
-extern s16 D_800C4A36;
+extern s16 gOvl27EffectSlot1Ticks;
+extern s16 gOvl27EffectSlot3Ticks;
+extern s16 gOvl27EffectSlot4Ticks;
+extern s16 gOvl27EffectSlot5Ticks;
 /* ovl_27_func_800B9B98 increments with lhu/sh and threshold-tests with lh. */
-extern s16 D_800C4A30;
+extern s16 gOvl27EffectSlot2Ticks;
 
 /* D_800C4A80 - ovl_27 SpriteSourceData block (0x30 bytes) at 0x800C4A80.
  * Only its address is taken (passed to func_80015BF0/func_80015840), so an
@@ -6774,17 +6774,17 @@ extern u16 *gOvl11ProbedObjectCell;
  * arg3. Entry counts are 2/2/3/2/2/2 and the search walks with a 0x10
  * stride. Absolute-addressed from the -G0 overlay. */
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-} Ovl11StateEntry;
-extern Ovl11StateEntry D_80127D90[2];
-extern Ovl11StateEntry D_80127DB0[2];
-extern Ovl11StateEntry D_80127DD0[3];
-extern Ovl11StateEntry D_80127E00[2];
-extern Ovl11StateEntry D_80127E20[2];
-extern Ovl11StateEntry D_80127E40[2];
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ s32 z;
+    /* 0x0C */ s32 key;
+} Ovl11ActionPositionRow;
+extern Ovl11ActionPositionRow gOvl11ActionPositionsMode0[2];
+extern Ovl11ActionPositionRow gOvl11ActionPositionsMode1[2];
+extern Ovl11ActionPositionRow gOvl11ActionPositionsMode2[3];
+extern Ovl11ActionPositionRow gOvl11ActionPositionsMode3[2];
+extern Ovl11ActionPositionRow gOvl11ActionPositionsMode4[2];
+extern Ovl11ActionPositionRow gOvl11ActionPositionsMode5[2];
 
 /* D_80070D08 / D_80070D0A - ovl_11 progress halfwords read with lhu by
  * ovl_11_func_80110188 to choose the alternate table half; also used by

@@ -2,11 +2,10 @@
 #include "game_types.h"
 #include "ovl11_direction_vector.h"
 #include "ovl11_record_position_tables.h"
+#include "ovl11_action_sequences.h"
 
-s32 ovl_11_func_80110544 (Ovl11E644Object *arg0, s16 arg1);
 void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-s32 ovl_11_func_80110188 (Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 
 s32 ovl_11_func_8010F4CC(Ovl11E644Object *arg0) {
     Ovl11PaddedVec3 position;
@@ -15,7 +14,7 @@ s32 ovl_11_func_8010F4CC(Ovl11E644Object *arg0) {
     result = 0;
     arg0->unk34 |= 0x3C000800;
     if (*(s16 *) ((u8 *) arg0 + 0x28) == -1) {
-        ovl_11_func_80110544(arg0, 0xE6);
+        Ovl11AdvanceActionMovement(arg0, 0xE6);
         if (*(s16 *) ((u8 *) arg0 + 0x30) == 1) {
             *(s16 *) ((u8 *) arg0 + 0x28) = 0;
         }
@@ -31,7 +30,7 @@ s32 ovl_11_func_8010F4CC(Ovl11E644Object *arg0) {
                 ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
                 break;
             case 1:
-                if (!ovl_11_func_80110544(arg0, 0x258)) {
+                if (!Ovl11AdvanceActionMovement(arg0, 0x258)) {
                     break;
                 }
                 *(s16 *) ((u8 *) arg0 + 0x28) = 2;
@@ -49,15 +48,15 @@ s32 ovl_11_func_8010F4CC(Ovl11E644Object *arg0) {
                 break;
             }
         } else if (*(s16 *) ((u8 *) arg0 + 0x30) == 4) {
-            ovl_11_func_80110188((Ovl11StateArg0 *) arg0, 4, &position.field_0, 4);
+            Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 4, &position.field_0, 4);
             ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
             *(s16 *) ((u8 *) arg0 + 0x28) = -1;
         } else if (*(s16 *) ((u8 *) arg0 + 0x30) == 5) {
-            ovl_11_func_80110188((Ovl11StateArg0 *) arg0, 5, &position.field_0, 5);
+            Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 5, &position.field_0, 5);
             ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
             *(s16 *) ((u8 *) arg0 + 0x28) = -1;
         } else if (*(s16 *) ((u8 *) arg0 + 0x30) == 6) {
-            ovl_11_func_80110188((Ovl11StateArg0 *) arg0, 3, &position.field_0, 6);
+            Ovl11LookupActionPosition((Ovl11StateArg0 *) arg0, 3, &position.field_0, 6);
             ovl_11_func_800D05D0((Ovl11SetFieldsView *) arg0, position);
             *(s16 *) ((u8 *) arg0 + 0x28) = -1;
         }

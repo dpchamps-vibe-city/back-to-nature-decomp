@@ -1,9 +1,20 @@
+/*
+ * eligible_record_selection — reconstructed translation unit.
+ *
+ * Select an eligible record index from area-filtered small/large record
+ * pools, excluding active reservations.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
+
 #include "common.h"
 #include "psyq/memory.h"
 #include "random.h"
 #include "ovl11_spawn_record_access.h"
+#include "ovl11_eligible_record_selection.h"
 
-s32 ovl_11_func_80110944(s16 area, u16 mode) {
+s32 Ovl11ChooseEligibleRecord(s16 area, u16 mode) {
     u8 choices[20];
     s32 position[3];
     s16 foundArea;
@@ -16,7 +27,7 @@ s32 ovl_11_func_80110944(s16 area, u16 mode) {
     u8 *innerBase;
     Ovl11SelectionState *state;
     Ovl30AnimalRecordB8 *large;
-    s32 flags;
+    s32 reservationIndex;
     s32 recordOffset;
     u8 *available;
 
@@ -29,7 +40,7 @@ s32 ovl_11_func_80110944(s16 area, u16 mode) {
         small = 1;
         limit = 10;
     }
-    available = D_800712F8;
+    available = gRecordSelectionAvailability;
     for (i = 0; i < limit; i++) {
         eligible = 0;
         if ((mode & 8) && i < 10) {
@@ -72,11 +83,12 @@ s32 ovl_11_func_80110944(s16 area, u16 mode) {
             }
         }
         innerBase = (u8 *)D_8006C838;
-        for (flags = 0; flags < 7; flags++) {
-            if (((Ovl11SelectionState *)(innerBase + flags * 0xF8))->entries[0].kind == 10 &&
-                ((Ovl11SelectionState *)(innerBase + flags * 0xF8))->entries[0].area == area &&
-                ((Ovl11SelectionState *)(innerBase + flags * 0xF8))->entries[0].index == i &&
-                !(((mode & 1) + ((((Ovl11SelectionState *)(innerBase + flags * 0xF8))->entries[0].flags >> 9) & 1)) & 1)) {
+        /* A matching active reservation excludes this candidate. */
+        for (reservationIndex = 0; reservationIndex < 7; reservationIndex++) {
+            if (((Ovl11SelectionState *)(innerBase + reservationIndex * 0xF8))->entries[0].kind == 10 &&
+                ((Ovl11SelectionState *)(innerBase + reservationIndex * 0xF8))->entries[0].area == area &&
+                ((Ovl11SelectionState *)(innerBase + reservationIndex * 0xF8))->entries[0].index == i &&
+                !(((mode & 1) + ((((Ovl11SelectionState *)(innerBase + reservationIndex * 0xF8))->entries[0].flags >> 9) & 1)) & 1)) {
                 eligible = 0;
             }
         }

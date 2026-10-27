@@ -3,9 +3,10 @@
 #include "message_window.h"
 #include "ovl11_grid_candidate_search.h"
 #include "ovl11_record_position_tables.h"
+#include "psyq/memory.h"
+#include "ovl11_eligible_record_selection.h"
 
 s32 ovl_11_func_8010DE68(Ovl11DE68Object *arg0);
-s32 ovl_11_func_80110944(s16 area, u16 mode);
 
 s32 ovl_11_func_8010DA04(Ovl11DE68Object *arg0) {
     s16 sp18;
@@ -47,7 +48,7 @@ s32 ovl_11_func_8010DA04(Ovl11DE68Object *arg0) {
             sp1C = 2;
             sp20 = D_80127CF4[arg0->unkAC] + 1;
         } else if (arg0->unkB8 & 8) {
-            if (((s16) arg0->unk16 >= 0x32) && ((Ovl11FindCandidateGridCell(&sp18, &sp1A, 1, 1, 1) == 0) || (Ovl11FindCandidateGridCell(&sp18, &sp1A, 1, 0, 0) == 0) || (Ovl11FindCandidateGridCell(&sp18, &sp1A, 0, 1, 1) == 0) || (Ovl11FindCandidateGridCell(&sp18, &sp1A, 0, 0, 0) == 0) || (temp_v0 = ovl_11_func_80110944(1, 0xF), (temp_v0 != -1)) || (temp_v0_2 = ovl_11_func_80110944(4, 0xF), (temp_v0_2 != temp_v0)) || (ovl_11_func_80110944(5, 0xF) != temp_v0_2))) {
+            if (((s16) arg0->unk16 >= 0x32) && ((Ovl11FindCandidateGridCell(&sp18, &sp1A, 1, 1, 1) == 0) || (Ovl11FindCandidateGridCell(&sp18, &sp1A, 1, 0, 0) == 0) || (Ovl11FindCandidateGridCell(&sp18, &sp1A, 0, 1, 1) == 0) || (Ovl11FindCandidateGridCell(&sp18, &sp1A, 0, 0, 0) == 0) || (temp_v0 = Ovl11ChooseEligibleRecord(1, 0xF), (temp_v0 != -1)) || (temp_v0_2 = Ovl11ChooseEligibleRecord(4, 0xF), (temp_v0_2 != temp_v0)) || (Ovl11ChooseEligibleRecord(5, 0xF) != temp_v0_2))) {
                 var_s3 = 1;
             }
             if (var_s3 == 1) {
