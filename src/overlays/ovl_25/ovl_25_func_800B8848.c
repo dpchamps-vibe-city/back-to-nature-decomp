@@ -29,10 +29,10 @@ void ovl_25_func_800B8848(void) {
                     *(s16 *)(temp_s1 + 0xE) = 0;
                     if ((*(s32 *) ((u8 *) &D_800BFE54 + 0xC)) <= 0x9FFF) {
                         ovl_25_func_800B9B00(&D_800BFE54.unk0, 7, 0x3C);
-                        D_800BCD21 = temp_v0;
-                        D_800BCD48[1] = 0;
-                        D_800BCD48[0] = D_800BFE54.source[0] - 0x320;
-                        D_800BCD48[2] = D_800BFE54.source[2];
+                        gOvl25SequenceCyclePhase = temp_v0;
+                        gOvl25SequenceAnchor4[1] = 0;
+                        gOvl25SequenceAnchor4[0] = D_800BFE54.source[0] - 0x320;
+                        gOvl25SequenceAnchor4[2] = D_800BFE54.source[2];
                     } else {
                         ovl_25_func_800B9B00(&D_800BFE54.unk0, 4, *(s16 *)(temp_s1 + 0x4D4));
                         *(s16 *)(temp_s1 + 0x18) = Ovl25LookupTierValue(*(s32 *)(temp_s1 + 0x1C));

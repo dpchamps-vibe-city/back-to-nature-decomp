@@ -6090,6 +6090,31 @@ Members (address order):
 
 ## `ovl_11` 0x8011A708–0x8011A998 record-handler run (confidence: medium)
 
+**Module `modules/interaction_draw_callbacks.c`, all seven members at
+8011A708–8011A9CC exclusive.** The original draw callback table at 800BB228
+has eight words: null slot 0 followed, in the same order, by all seven
+callbacks. They share the compact/wide value-panel and selection/quantity
+composition protocol and return 0 without advancing interaction state.
+Modes 2/3 are byte-identical but remain distinct table identities. This
+closed table window and common record/draw protocol support the family,
+not adjacency alone. Names now describe the actual composition (value only,
+quantity, primary/secondary selection, wide panel); shared record identities
+and public panel interfaces are retained with explicit pointer casts.
+
+Left A25C is update-table entry 25, the tier-upgrade purchase transaction,
+not a draw callback and not a member of this panel-composition protocol.
+Right A9CC begins the reset-table callbacks (return 1, clear draw mode), not
+the draw table. Their shared selection/prompt records are public state, not
+private ownership joining these separate callback bands. These are table/
+protocol-supported cuts under -G0, not GP-proven object edges. No internal
+slice remains. The table itself is the interface, so no C header is added;
+canonical symbol metadata regenerates its callback pointers. Documentation
+covers render-context/packet and shared-scratch requirements, pixel/row units
+and zero returns. All seven and the overlay passed the baseline checked
+fold, with no override, new exception, ownership or linkage change.
+
+Historical discovery evidence follows:
+
 Candidate same-TU run of `ovl_11` (`Obj\GF_FARM.bin`). Zero-gap link order
 0x8011A708 (0x5C) → 0x8011A764 (0x20) → 0x8011A784 (0x20) → 0x8011A7A4
 (0x34) → 0x8011A7D8 (0xF8) → 0x8011A8D0 (0xC8) → 0x8011A998 (0x34),
@@ -10162,6 +10187,14 @@ Members (address order):
   - ovl_11_func_80118C6C (m) — D_8012D520 state getter.
   - ovl_11_func_80118CB0 (m) — state/busy-flag and quantity reset.
   - ovl_11_func_80118CE4 (m, byte-exact) — quantity-purchase dialogue/state handler.
+  - Read-only callback-bank follow-up: 18CE4/19008 occupy update slots 2/3
+    and have similar purchase/message skeletons. This is not the exhaustive
+    draw-table closure reconstructed at A708: the skeleton and balance/wait
+    helpers recur across many update callbacks, no private helper or shared
+    private state joins the pair, and the adjacent purchase_actions band uses
+    the same broader update table. A two-slot slice was therefore not accepted
+    as another original unit. A private protocol/table or pooled-emission
+    witness distinguishing that boundary is still needed. No code changed.
 - **Reconstructed `modules/selection_record_access.c`, five entries
   8011D734–8011D9DC exclusive.** The input controller and wrapped occupied-slot
   search belong with the count/ID/message readers: all use the same ten-word
@@ -10322,7 +10355,19 @@ Members (address order):
   unchanged. No new storage is defined.
 
   Left boundary: D400 clears generic selection records for many callers and
-  is neither called by this pair nor tied to its nested helper. Right boundary:
+  is neither called by this pair nor tied to its nested helper. D400 is now
+  `modules/selection_record_reset.c` (8011D400–8011D438), published as
+  `Ovl11ClearSelectionRows` through ovl11_selection_record_reset.h. It clears
+  only the ten text words, ten halfword values and ten row-type bytes;
+  widths, selected row and other controls survive. Its eleven external
+  caller units initialize their own records. Shared public record layout
+  alone does not establish shared compilation with this nested renderer.
+  On its left, two_choice_prompt ends at D400 and owns its own two-choice
+  input/draw protocol, with no row-reset call or ten-row payload. Those cuts
+  remain evidence-limited, not GP-proven original boundaries. The singleton
+  has no private state/table or helper edge requiring a larger fold. Its
+  baseline checked fold matched the function and whole overlay; no setting,
+  linkage or exception changed. Right boundary:
   D734 is an input/navigation client of D890, driven from B840, whereas this
   renderer is called by A7A4/A7D8/A8D0/A998. Shared record layout does not
   join those services. CEE0/CF10 are shared string appenders also used by
@@ -10407,6 +10452,20 @@ Members (address order):
   invokes the run's accumulate helper 0x800F8428 on the same two object
   pointers, confirming the 0x800F8404→0x800F8428 call pair recorded above.
   Call-graph + same-region agreement only; TU membership unconfirmed (low).
+- Module-campaign read-only follow-up: the record operation/compaction/
+  resolver/classifier/helper interval is 800F7E38–800F84F0 exclusive (nine
+  compiled functions). Internal copy/swap/merge calls and the shared six-byte
+  record protocol corroborate it; the second swap/merge copies in
+  item_transfer_menu corroborate a separate helper layer but do NOT prove
+  original static linkage or identical original C names. 7D34 remains an
+  outer operation coordinator; 84F0 begins the separate navigation-state
+  graph, though a larger screen TU remains possible under -G0. The whole
+  candidate is blocked by F8224's standing -fno-strength-reduce override and
+  conflicting local record typedefs. No source/flag experiment was run and
+  no three-operation slice was folded to evade that setting. The next
+  useful experiment is a whole-unit canonical-record baseline reconstruction,
+  then the existing setting across all members per flag-review-report.md;
+  duplicated binary helpers do not justify new private linkage.
 - ovl_11_func_800F8224 (m, matched this session, byte-exact, 0xD8) — the
   region's 6-byte-record compaction helper and a zero-gap link member of the
   gapless 0x800F8188 (ends 0x800F8224) → 0x800F8224 (0x800F8224–0x800F82FC) →
@@ -16535,6 +16594,36 @@ Members (link order):
 
 ## `ovl_11` func_8001ABF0 text-copy wrapper twin pair — 0x8011CEE0 / 0x8011CF10 (confidence: medium)
 
+**Adjacent independent service reconstructed as `modules/quantity_input.c`,
+8011CF40–8011D06C exclusive (one compiled function).**
+`Ovl11ProcessQuantityInput` edits caller-owned quantities using pad-0 repeat
+and new-press masks; the selection-prompt, resource-purchase and 18CE4
+interaction clients pass limits 99/999. It calls only PlaySoundEffect and
+owns no prompt storage, text table, draw helper or private pad state. Left
+CF10 belongs to the connected value-panel formatter/copy closure below;
+CF40 uses none of its text bank, formatting scratch or packet paths. Right
+D06C compares an amount against the spendable balance, without input or a
+quantity pointer. These are evidence-limited protocol cuts, not GP-proven
+original object edges; overlay -G0 supplies no ownership test. Shared pad
+and sound APIs do not join the separately supported two-choice service.
+No positive evidence requires absorbing another member on either side.
+
+The public header `ovl11_quantity_input.h` documents direction priority,
++/-1 and +/-10 edits, u16 truncation with signed range tests, wrap rather
+than clamp, return codes and sound effects. The implementation now uses the
+canonical PadInputState fields (repeatButtons/pressedButtons) instead of an
+unrelated partial struct. Locals describe the action and adjusted quantity.
+Original identity is ovl_11_func_8011CF40; canonicalNames and interfaceAudit
+propagate the name/header to all three callers. The checked baseline fold
+matched the function and whole overlay; no flags or exceptions changed.
+Batch acceptance after all three services' naming, shared parameter-view and
+interface edits: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` reports **1707 folded / 281 valid modules**
+(from 1704 / 278), 918 remaining. All integrity gates PASS: linked EXE and
+all overlays/data, canonical interfaces, ownership, source policy, convergence,
+whitespace, stability and exception non-growth. Exit 1 denotes the unfinished
+campaign, not a failed integrity check. No shared tool was changed.
+
 **Whole connected family reconstructed as
 `src/overlays/ovl_11/modules/value_panels.c`, 8011CBC8–8011CF40 exclusive**:
 Ovl11DrawCompactValuePanel (CBC8), Ovl11DrawWideValuePanel (CBE8),
@@ -18413,6 +18502,68 @@ Members (link order):
   `ovl_25_func_800B9C90` over `D_800C0124`
 
 ## `ovl_25` record-reset transform-caller run — 0x800B9B28–0x800B9E84 (confidence: medium)
+
+**Reconstructed whole service: `modules/sprite_set_service.c`,
+800B9B28–800BA7F0 exclusive, all ten compiled members**: 9B28/9C90 select
+and draw the two object-record variants; 9D4C chooses a threshold animation;
+9E20 submits a pair; 9E84 advances sequence sprites; A2E8/A40C pause/resume
+26 sprite sources; A530 draws the primary source; A5BC/A758 project and
+submit the biased/unshifted variants. The original order is retained.
+A5BC/A758 are the only users of both projection scratch pairs at BCD58/60
+and BCDC4/CC; all five selectors use these helpers and neither helper has
+an outside overlay client. The pause/resume mirrors traverse the same source
+sets, and the primary/sequence records they touch are used by the selectors.
+This closes the complete ten-entry service rather than stopping before the
+previous declaration collision. The one switch table remains pooled at
+file 54; the generic zero word at 50 stays outside it.
+
+The old blocker below is resolved: flag walks explicitly use halfword views
+and renderer comparisons use ObjectState views of the established full source
+identities. The three old asm-name aliases are retired in favor of canonical
+container names gOvl25Auxiliary/Primary/SequenceSpriteBase, also used by the
+scene loader. All projection scratch externs live in globals_override.h;
+the two results are correctly two signed words, the inputs four halfwords.
+No data definitions or GP ownership were introduced under overlay -G0.
+Canonical names also cover the sequence anchors, phases, step and effect
+latch, including their earlier updater/event-handler clients.
+
+Boundaries: left 9B00 is the state/timer setter used by eight earlier record
+clients, never by this draw service; it has no projection or source-set edge.
+Right A7F0 starts the separately reconstructed six-entry event-phase callback
+protocol and calls the record seeder, not either projection helper. The scene
+loader initializes these sources as a public producer, not a private helper.
+Shared scene state does not prove common compilation across either cut.
+These are protocol/private-helper-supported, evidence-limited edges, not
+GP-proven historical object boundaries. Earlier core phases remain outside;
+95B0's override is not used to cut this complete helper closure.
+
+The public header ovl25_sprite_set_service.h publishes the eight external
+entries, not the two projection helpers (their linkage remains external).
+It records source/GTE coordinate units, draw-and-update effects, unchecked
+indices/packet space, shared scratch, stale-screen behavior after failed
+projection, call-count sequence timing and the exact pause semantics:
+flag 4 stops animation service, NOT drawing. The threshold anchor now has
+four halfwords; its unused SVECTOR padding remains uninitialized rather than
+reading beyond a three-halfword local. Locals describe animations, sources,
+positions and ordering-table cursors. The checked baseline fold proved all
+ten functions and the whole overlay; there were no member overrides and no
+flag or policy exception was added or retired.
+
+Post-naming batch verification initially exposed four obsolete interior
+labels (C027C/C02DC/C0394/C0424): the newly named full source extents correctly
+subsume them, so the linker no longer exports those D_ aliases. The service
+now addresses primary records 1/3 and sequence records 2/5 through the actual
+canonical bases; obsolete externs were removed, not recreated as asm aliases.
+The rerun of `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes every integrity gate with **1729 folded
+/ 284 valid modules / 896 remaining**. This batch adds the ten-member sprite
+service, five-member grid search and seven draw callbacks (22 members).
+All EXE/overlay code, callback pointers, tables and data remain identical;
+canonical interfaces, ownership, convergence, policy, whitespace, stability
+and exception non-growth pass. Exit 1 means campaign work remains. No shared
+tool, flag, policy permission or assembly placeholder was added.
+
+Historical whole-service experiment (the declaration obstacle is now resolved):
 
 Whole-service experiment (no slice accepted): the five callers below,
 A2E8/A40C/A530 visibility/base-record operations and both A5BC/A758
@@ -20659,6 +20810,39 @@ Members:
 ---
 
 ## `ovl_11` 0x80110790 shared-helper leaf run — 0x80110790–0x80110944 (confidence: medium)
+
+**Whole closure reconstructed as `modules/grid_candidate_search.c`,
+80110658–80110944 exclusive, five compiled members.** 10658 alone takes
+the addresses of 10790/10838/10890; those three predicates are the only
+callers of 108F8. The reference census across original code and pointer
+storage finds no other route to the four helpers. Their canonical cell
+view is the existing eight-byte Ovl11D124Entry; explicit u16 casts preserve
+10790's unsigned item reads and both kind predicates' unsigned +2 reads,
+while the base filter retains its signed item argument. The alternate-grid
+view is the existing Ovl11GridCellSearchView. Its two lookup pointers now
+have a separate evidence-backed override-header view: 0x28 item stride,
+signed type byte +3, then 0x10 mapped-type stride and unsigned halfword +2.
+No unrelated pool type was silently substituted.
+
+Only Ovl11FindCandidateGridCell is published through
+ovl11_grid_candidate_search.h. Six actual caller units use it; unused stale
+helper declarations in CEEF8 were removed. The header documents 0-success/
+1-failure, untouched failure outputs, column/row units, main 45x25 versus
+alternate 7x7, alternate enable gate, one random start per enabled call,
+predicate precedence and unchecked table preconditions. All helpers retain
+external linkage; none is newly static or inlined.
+
+Left 105C8 is a client bridge: search, cell-corner lookup, position writeback,
+called only by two movement drivers. It shares no private search state and
+uses this same public service as five other clients. Right 10944 selects a
+random spawn record through different item/selection pools and helpers,
+with no edge to these predicates. The closed helper graph supplies positive
+membership evidence; these service-level outer cuts are evidence-limited
+under -G0, not proven original object edges. All five and the whole overlay
+passed the checked baseline fold after canonical view reconciliation;
+no member override, data definition, flag or exception was introduced.
+
+Historical discovery evidence follows:
 
 A gapless four-function run whose members all call the same leaf at the tail:
 0x80110790 (size 0xA8, ends 0x80110838) → 0x80110838 (0x58, ends 0x80110890)
@@ -23511,6 +23695,32 @@ draw path (`D_8012CDC8` via `func_80017B3C`); it stages nothing into
 
 
 ## `ovl_11` s16 range-map / store-view run — 0x8011DD48–0x8011DF4C (confidence: medium for four-member core)
+
+**The excluded head is now `modules/quantity_prompt_setup.c`,
+8011DD48–8011DD90 exclusive (one compiled function).** Its public
+`Ovl11SetupQuantityPrompt` stores the caller's primary text address and unit
+value, optionally changes quantity, and optionally installs default secondary
+text. External clients are the selection-prompt and resource-quantity step
+services; no private prompt storage is defined. `Ovl11QuantityPromptView` in
+game_types.h replaces the duplicate local/anonymous parameter identity,
+with word-address text fields and signed quantity/unitValue halfwords.
+The global's pre-existing pointer view is deliberately not retyped.
+The EXE text anchor 8005181A is now gQuantityPromptDefaultTextAnchor;
+its two-byte anchor extent describes a u16 code, not the extent of the bank.
+Its existing address-only s32 C view and every bank-offset calculation remain.
+Canonical name propagation covers all users, including other initializers.
+
+Left item_stack_insert ends at DD48 and performs stack capacity/insertion;
+DD48 neither calls those helpers nor reads the slot/overflow storage. Right
+DD90 begins the closed tier/table protocol below, unused by DD48. This is an
+independently callable descriptor setup API, not part of either neighbor's
+private graph. These are evidence-limited cuts under overlay -G0, not proof
+of original object edges. No same-unit edge supports extending either end.
+The header ovl11_quantity_prompt_setup.h documents zero-as-preserve behavior,
+text lifetime, bank-offset dependency and the absence of input/draw effects.
+Canonicalization and interfaceAudit replace both callers' declarations.
+The baseline fold matched the function and entire overlay; no compiler
+flag, linkage, ownership or exception changed.
 
 **Module: `src/overlays/ovl_11/modules/tier_upgrade_rules.c`**, the complete
 four-member protocol at **8011DD90–8011DF4C exclusive**. DD90 checks selected

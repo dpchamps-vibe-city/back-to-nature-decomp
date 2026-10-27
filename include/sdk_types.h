@@ -296,10 +296,6 @@ typedef struct {
 } M2C_24e7ca662cda_Ov11FlagSet;
 
 typedef struct {
-    s16 unk0;
-} M2C_25616469e147_ReconA0View;
-
-typedef struct {
                char pad_00[0x16];
                s16 unk16;
                char pad_18[0x30 - 0x18];
@@ -338,22 +334,10 @@ typedef struct {
 } M2C_32ba532776b0_ReconA0View;
 
 typedef struct {
-    s16 unk0;
-    u16 unk2;
-} M2C_33501d1b78e1_Recon80110838A0View;
-
-typedef struct {
     char pad0[2];
     s16 unk2;
     u16 unk4;
 } M2C_38c89582ddcb_M2C_4c1a205b3b09_ReconA0View;
-
-typedef struct {
-               s32 field_0;
-               s32 field_4;
-               s16 field_8;
-               s16 field_A;
-} M2C_3bf33f64765e_ovl_11_DD48_arg0;
 
 typedef struct {
     s16 field_0;
@@ -569,12 +553,6 @@ typedef struct {
 } M2C_59c9fee476d6_Ovl11HandlerObj;
 
 typedef struct {
-    u16 unk0;
-    char pad_02[2];
-    u8 unk4;
-} M2C_59ee2b8b632a_ReconA0View;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -705,11 +683,6 @@ typedef struct {
     s16 field_2;
     s16 field_4;
 } M2C_8573ba8bfae4_CopyStruct_84D4;
-
-typedef struct {
-    s16 unk0;
-    u16 unk2;
-} M2C_8740fcdc649a_Recon80110838A0View;
 
 typedef struct {
                u16 field_0;
@@ -1940,6 +1913,13 @@ typedef struct {
 } Ovl11ProjectedRecordView;
 
 typedef struct {
+               s32 primaryTextAddress;
+               s32 secondaryTextAddress;
+               s16 quantity;
+               s16 unitValue;
+} Ovl11QuantityPromptView;
+
+typedef struct {
                char pad_00[0x38];
                s32 unk38;
                char pad_3C[0x4];
@@ -2746,13 +2726,6 @@ typedef struct {
     s32 y;
     s32 z;
 } Vec3;
-
-typedef struct {
-               s32 field_0;
-               s32 field_4;
-               s16 field_8;
-               s16 field_A;
-} ovl_11_DD48_arg0;
 
 typedef struct {
                u16 f00;

@@ -1,9 +1,8 @@
 #include "common.h"
-
-void ovl_11_func_8011D400(s32 *arg0);
+#include "ovl11_selection_record_reset.h"
 
 s32 ovl_11_func_8011B210(void) {
-    ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
+    Ovl11ClearSelectionRows((s32 *) gOvl11PrimarySelectionRecord);
     (*(s8 *) ((u8 *) gOvl11PrimarySelectionRecord + 0x5A)) = 0xB;
     (*(s8 *) ((u8 *) gOvl11PrimarySelectionRecord + 0x5B)) = 0x10;
     (*(s16 *) ((u8 *) gOvl11PrimarySelectionRecord + 0x28)) = 0x9F;

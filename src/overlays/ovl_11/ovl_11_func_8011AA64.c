@@ -3,9 +3,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_selection_record_reset.h"
 
-
-void ovl_11_func_8011D400 (s32 *arg0);
 
 s32 ovl_11_func_8011AA64(void) {
     s32 temp_s4;
@@ -19,11 +18,11 @@ s32 ovl_11_func_8011AA64(void) {
 
     temp_s4 = gProgressDerivedFlags & 4;
     gOvl11QuantityPrompt.unk0 = 0;
-    gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &D_8005181A + gTextBankOffsets[1]);
+    gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &gQuantityPromptDefaultTextAnchor + gTextBankOffsets[1]);
     gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x6CU);
     gOvl11QuantityPrompt.unk8 = 1;
     p = gOvl11PrimarySelectionRecord;
-    ovl_11_func_8011D400((s32 *) p);
+    Ovl11ClearSelectionRows((s32 *) p);
     if (temp_s4 != 0) {
         *(s8 *) (p + 0x5A) = 0x10;
         *(s8 *) (p + 0x5B) = 0x10;

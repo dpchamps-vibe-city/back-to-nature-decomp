@@ -10,9 +10,8 @@
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_selection_record_reset.h"
 
-
-void ovl_11_func_8011D400(s32 *arg0);
 
 s32 ovl_11_func_80113FF0(void) {
     s32 temp_s3;
@@ -28,7 +27,7 @@ s32 ovl_11_func_80113FF0(void) {
     temp_s3 = gProgressDerivedFlags;
     gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x69U);
     gOvl11QuantityPrompt.unk8 = 1;
-    ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
+    Ovl11ClearSelectionRows((s32 *) gOvl11PrimarySelectionRecord);
 
     p = gOvl11PrimarySelectionRecord;
     *(s8 *) (p + 0x5A) = 0xF;

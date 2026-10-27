@@ -1,5 +1,34 @@
 // Semantic labels within ovl_25; original container/address identities retained.
 
+// Sprite-set animation and projected submission service (800B9B28..800BA7F0).
+Ovl25DrawObjectRecordPair = 0x800B9B28; // type:func
+Ovl25DrawAuxiliaryRecord = 0x800B9C90; // type:func
+Ovl25DrawThresholdIndicator = 0x800B9D4C; // type:func
+Ovl25DrawPairedSceneSprites = 0x800B9E20; // type:func
+Ovl25UpdateSequenceSprites = 0x800B9E84; // type:func
+Ovl25PauseSpriteSets = 0x800BA2E8; // type:func
+Ovl25ResumeSpriteSets = 0x800BA40C; // type:func
+Ovl25DrawPrimarySprite = 0x800BA530; // type:func
+Ovl25DrawBiasedProjectedSprite = 0x800BA5BC; // type:func
+Ovl25DrawProjectedSprite = 0x800BA758; // type:func
+gOvl25BiasedProjectionResult = 0x800BCD58; // type:data size:0x8
+gOvl25ProjectionResult = 0x800BCD60; // type:data size:0x8
+gOvl25BiasedProjectionInput = 0x800BCDC4; // type:data size:0x8
+gOvl25ProjectionInput = 0x800BCDCC; // type:data size:0x8
+gOvl25SequenceCyclePhase = 0x800BCD21; // type:data size:0x1
+gOvl25SequenceRecordStage = 0x800BCD22; // type:data size:0x1
+gOvl25SequenceEffectActive = 0x800BCD24; // type:data size:0x1
+gOvl25SequenceStep = 0x800BCD54; // type:data size:0x2
+gOvl25SequenceAnchor0 = 0x800BCD28; // type:data size:0x8
+gOvl25SequenceAnchor1 = 0x800BCD30; // type:data size:0x8
+gOvl25SequenceAnchor2 = 0x800BCD38; // type:data size:0x8
+gOvl25SequenceAnchor3 = 0x800BCD40; // type:data size:0x8
+gOvl25SequenceAnchor4 = 0x800BCD48; // type:data size:0x8
+// First-record anchors; sequence storage contains six consecutive sources.
+gOvl25AuxiliarySpriteBase = 0x800C013C; // type:data size:0x30
+gOvl25PrimarySpriteBase = 0x800C024C; // type:data size:0xC0
+gOvl25SequenceSpriteBase = 0x800C0334; // type:data size:0x120
+
 // Complete six-entry event-phase callback table.
 Ovl25BeginEventPhases = 0x800BA7F0; // type:func
 Ovl25WaitEventPrompt31 = 0x800BA818; // type:func

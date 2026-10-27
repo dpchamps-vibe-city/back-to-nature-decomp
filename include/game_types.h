@@ -997,14 +997,16 @@ typedef struct {
     /* 0x10 */ s32 field_10;
 } Ovl11BAFCParams;
 
-/* State written by 8011DD48 and passed to it by 8011BAFC; the selector
- * at +8 is also used through the unsigned-halfword interface of 8011CF40. */
+/* Quantity-prompt argument view: text addresses remain signed words, as in
+ * the matched setup ABI (the global's existing +4 pointer view is distinct).
+ * The input service edits quantity through an unsigned-halfword pointer;
+ * its range checks and the prompt's quantity/unit-value arithmetic are signed. */
 typedef struct {
-    /* 0x00 */ s32 field_0;
-    /* 0x04 */ s32 field_4;
-    /* 0x08 */ s16 field_8;
-    /* 0x0A */ s16 field_A;
-} ovl_11_DD48_arg0;
+    /* 0x00 */ s32 primaryTextAddress;
+    /* 0x04 */ s32 secondaryTextAddress;
+    /* 0x08 */ s16 quantity;
+    /* 0x0A */ s16 unitValue;
+} Ovl11QuantityPromptView;
 
 /* 0x60-byte record view passed by value from ovl_11_func_8011D734, which
  * supplies the selector word at 0x60 as a separate argument. Same layout

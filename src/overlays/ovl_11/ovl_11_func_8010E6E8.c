@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
+#include "ovl11_grid_candidate_search.h"
 
-s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
 
 s32 ovl_11_func_8010E6E8(Ovl11E6E8Object *obj) {
@@ -38,16 +38,16 @@ s32 ovl_11_func_8010E6E8(Ovl11E6E8Object *obj) {
             break;
         case 1:
             obj->state = 2;
-            if (ovl_11_func_80110658(&x, &y, 1, 1, 1) != 0 &&
-                ovl_11_func_80110658(&x, &y, 0, 1, 1) != 0) {
+            if (Ovl11FindCandidateGridCell(&x, &y, 1, 1, 1) != 0 &&
+                Ovl11FindCandidateGridCell(&x, &y, 0, 1, 1) != 0) {
                 obj->state = 4;
             }
             obj->attributes |= 0x41;
             break;
         case 2:
             obj->state = 2;
-            if (ovl_11_func_80110658(&x, &y, 1, 0, 0) != 0 &&
-                ovl_11_func_80110658(&x, &y, 0, 0, 0) != 0) {
+            if (Ovl11FindCandidateGridCell(&x, &y, 1, 0, 0) != 0 &&
+                Ovl11FindCandidateGridCell(&x, &y, 0, 0, 0) != 0) {
                 obj->state = 4;
             }
             obj->attributes |= 0x42;

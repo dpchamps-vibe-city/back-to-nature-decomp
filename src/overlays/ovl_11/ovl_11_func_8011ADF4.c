@@ -2,8 +2,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
-
-void ovl_11_func_8011D400(s32 *arg0);
+#include "ovl11_selection_record_reset.h"
 
 s32 ovl_11_func_8011ADF4(void) {
     u8 *p;
@@ -13,10 +12,10 @@ s32 ovl_11_func_8011ADF4(void) {
     s16 *b;
 
     gOvl11QuantityPrompt.unk0 = 0;
-    gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &D_8005181A + gTextBankOffsets[1]);
+    gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &gQuantityPromptDefaultTextAnchor + gTextBankOffsets[1]);
     gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x6CU);
     gOvl11QuantityPrompt.unk8 = 1;
-    ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
+    Ovl11ClearSelectionRows((s32 *) gOvl11PrimarySelectionRecord);
 
     p = gOvl11PrimarySelectionRecord;
 
@@ -29,7 +28,7 @@ s32 ovl_11_func_8011ADF4(void) {
     c = (s8 *) ((u8 *) q + 0x3C);
     b = (s16 *) ((u8 *) q + 0x46);
 
-    *q = (void *) ((s32) &D_8005181A + 0x276 + gTextBankOffsets[1]);
+    *q = (void *) ((s32) &gQuantityPromptDefaultTextAnchor + 0x276 + gTextBankOffsets[1]);
     *(s16 *) ((u8 *) q + 0x28) = 0x36;
     *(s8 *) ((u8 *) q + 0x3C) = 1;
     *(s16 *) ((u8 *) q + 0x46) = 0xCF;
@@ -37,20 +36,20 @@ s32 ovl_11_func_8011ADF4(void) {
     a++;
     c++;
     b++;
-    *q++ = (void *) ((s32) &D_8005181A + 0x138 + gTextBankOffsets[1]);
+    *q++ = (void *) ((s32) &gQuantityPromptDefaultTextAnchor + 0x138 + gTextBankOffsets[1]);
     *a++ = 0x2C;
     *c++ = 1;
     *b++ = 0xCB;
-    *q++ = (void *) ((s32) &D_8005181A + 0x156 + gTextBankOffsets[1]);
+    *q++ = (void *) ((s32) &gQuantityPromptDefaultTextAnchor + 0x156 + gTextBankOffsets[1]);
     *a++ = 0x2D;
     *c++ = 1;
     *b++ = 0xCC;
-    *q++ = (void *) ((s32) &D_8005181A + 0x170 + gTextBankOffsets[1]);
+    *q++ = (void *) ((s32) &gQuantityPromptDefaultTextAnchor + 0x170 + gTextBankOffsets[1]);
     *a++ = 0x2E;
     *c++ = 1;
     *b++ = 0xCD;
     if (gProgressDerivedFlags & 0x10) {
-        *q = (void *) ((s32) &D_8005181A + 0x196 + gTextBankOffsets[1]);
+        *q = (void *) ((s32) &gQuantityPromptDefaultTextAnchor + 0x196 + gTextBankOffsets[1]);
     } else {
         *q = NULL;
     }

@@ -4,11 +4,11 @@
 #include "ovl11_primary_object_wait_steps.h"
 #include "ovl11_save_counters.h"
 #include "ovl11_balance_accounting.h"
+#include "ovl11_quantity_input.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
-s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80118CE4(void) {
@@ -56,7 +56,7 @@ s32 ovl_11_func_80118CE4(void) {
         break;
     case 5:
         gOvl11InteractionDrawMode = 1;
-        switch (ovl_11_func_8011CF40(999, (u16 *)&gOvl11QuantityPrompt.unk8)) {
+        switch (Ovl11ProcessQuantityInput(999, (u16 *)&gOvl11QuantityPrompt.unk8)) {
         case 0:
             break;
         case 1:

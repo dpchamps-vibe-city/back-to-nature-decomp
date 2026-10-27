@@ -8,8 +8,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
-
-void ovl_11_func_8011D400(s32 *arg0);
+#include "ovl11_selection_record_reset.h"
 
 s32 ovl_11_func_80114194(void) {
     s32 flags;
@@ -23,7 +22,7 @@ s32 ovl_11_func_80114194(void) {
     Ovl11RefreshProgressStatus();
     flags = gProgressDerivedFlags;
     p = gOvl11PrimarySelectionRecord;
-    ovl_11_func_8011D400((s32 *) p);
+    Ovl11ClearSelectionRows((s32 *) p);
     *(s8 *) (p + 0x5A) = 0xD;
     *(s8 *) (p + 0x5B) = 0xD;
     *(s16 *) (p + 0x5C) = 0;
@@ -45,7 +44,7 @@ s32 ovl_11_func_80114194(void) {
     *b = 0xE0;
 
     p2 = gOvl11SecondarySelectionRecord;
-    ovl_11_func_8011D400((s32 *) p2);
+    Ovl11ClearSelectionRows((s32 *) p2);
     *(s8 *) (p2 + 0x5A) = 0xD;
     *(s8 *) (p2 + 0x5B) = 0x14;
     *(s16 *) (p2 + 0x5C) = 0;

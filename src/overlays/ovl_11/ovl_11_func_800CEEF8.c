@@ -152,11 +152,7 @@ void Ovl11CopySlotSpritePieces (SpriteSourceData *arg0, u16 *arg1, s16 arg2, s16
 s32 ovl_11_func_800F3C9C (u16 arg0);
 s32 ovl_11_func_800F581C (void);
 void ovl_11_func_80110E28 (u8 *arg0);
-s32 ovl_11_func_80110658 (s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 ovl_11_func_800F3BCC (u16 arg0);
-s32 ovl_11_func_80110790 (M2C_59ee2b8b632a_ReconA0View *arg0);
-s32 ovl_11_func_80110838 (M2C_8740fcdc649a_Recon80110838A0View *arg0);
-s32 ovl_11_func_80110890 (M2C_33501d1b78e1_Recon80110838A0View *arg0);
 
 s32 ovl_11_func_800CEEF8(M2C_4c1a205b3b09_ReconA0View *arg0) {
     s32 temp_v1;

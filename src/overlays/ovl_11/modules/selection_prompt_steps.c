@@ -22,10 +22,10 @@
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_quantity_input.h"
+#include "ovl11_quantity_prompt_setup.h"
 
 void SetVal8005E2BC(s32 value);
-s32 ovl_11_func_8011CF40(s16 limit, u16 *value);
-void ovl_11_func_8011DD48(ovl_11_DD48_arg0 *prompt, s32 value, s16 a, s16 b, s16 c);
 s32 ovl_11_func_800E5E98(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E6EE0(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E6F34(s16 a, s16 b, s32 c, s32 d);
@@ -117,7 +117,7 @@ s32 Ovl11StepSelectionPrompt(s32 *step, s32 baseStep, Ovl11D8012D7B8 descriptor)
 }
 
 s32 Ovl11StepQuantityPrompt(s32 *step, s32 baseStep, s32 drawMode,
-                          Ovl11BAFCParams descriptor, ovl_11_DD48_arg0 *prompt) {
+                          Ovl11BAFCParams descriptor, Ovl11QuantityPromptView *prompt) {
     s32 result;
     StructD548 *record;
 
@@ -144,13 +144,13 @@ s32 Ovl11StepQuantityPrompt(s32 *step, s32 baseStep, s32 drawMode,
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
-        ovl_11_func_8011DD48(prompt, 0, 0,
+        Ovl11SetupQuantityPrompt(prompt, 0, 0,
             (s16)Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*record)), 0);
         gOvl11InteractionDrawMode = drawMode;
         Ovl11SetInteractionStepsOffset(2, 4, baseStep);
         break;
     case 4:
-        switch (ovl_11_func_8011CF40(0x63, (u16 *)&prompt->field_8)) {
+        switch (Ovl11ProcessQuantityInput(0x63, (u16 *)&prompt->quantity)) {
         case 0:
             break;
         case 1:

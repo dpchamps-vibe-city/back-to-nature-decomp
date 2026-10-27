@@ -81,7 +81,7 @@ s32 ovl_11_func_8011C6CC(s16 *arg0, s16 *arg1, s16 *arg2, Ovl11D8012D7B8 arg3) {
     case 15:
     case 16:
         recordState = &gOvl11QuantityPrompt;
-        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 11, 5, *(Ovl11BAFCParams *)&arg3, (ovl_11_DD48_arg0 *)recordState)) {
+        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 11, 5, *(Ovl11BAFCParams *)&arg3, (Ovl11QuantityPromptView *)recordState)) {
         case 0:
             break;
         case 1:

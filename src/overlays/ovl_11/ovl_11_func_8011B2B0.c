@@ -2,8 +2,7 @@
 #include "game_types.h"
 #include "random.h"
 #include "ovl11_selection_record_access.h"
-
-void ovl_11_func_8011D400(s32 *arg0);
+#include "ovl11_selection_record_reset.h"
 
 s32 ovl_11_func_8011B2B0(void) {
     s32 flags;
@@ -17,7 +16,7 @@ s32 ovl_11_func_8011B2B0(void) {
 
     flags = gProgressDerivedFlags;
     p = gOvl11PrimarySelectionRecord;
-    ovl_11_func_8011D400((s32 *) p);
+    Ovl11ClearSelectionRows((s32 *) p);
     *(s8 *) (p + 0x5A) = 0xD;
     *(s8 *) (p + 0x5B) = 0xD;
     *(s16 *) (p + 0x5C) = 0;
@@ -72,7 +71,7 @@ s32 ovl_11_func_8011B2B0(void) {
     *b = 0x8C;
 
     p2 = gOvl11SecondarySelectionRecord;
-    ovl_11_func_8011D400((s32 *) p2);
+    Ovl11ClearSelectionRows((s32 *) p2);
     *(s8 *) (p2 + 0x5A) = 0;
     *(s8 *) (p2 + 0x5B) = 0;
     *(s16 *) (p2 + 0x5C) = 0;

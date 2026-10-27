@@ -1,7 +1,9 @@
 #include "common.h"
 #include "sound_commands.h"
-void ovl_25_func_800BA2E8 (void);
-void ovl_25_func_800BA40C (void);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl25_sprite_set_service.h"
 void ovl_25_func_800B93BC (void);
 void ovl_25_func_800B8848 (void);
 void ovl_25_func_800B8CEC (void);
@@ -19,10 +21,10 @@ void ovl_25_func_800B8728(void) {
         temp_v0 = D_800BFE44_view.unk4 != 1;
         D_800BFE44_view.unk4 = temp_v0;
         if (temp_v0 == 1) {
-            ovl_25_func_800BA2E8();
+            Ovl25PauseSpriteSets();
             D_800BFE44_view.unk4C8 = PlaySoundEffect(0x36);
         } else {
-            ovl_25_func_800BA40C();
+            Ovl25ResumeSpriteSets();
         }
     }
     if (D_800BFE44_view.unk4 == 1) {

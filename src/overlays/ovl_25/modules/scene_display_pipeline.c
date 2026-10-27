@@ -135,22 +135,22 @@ void Ovl25LoadObjectSpriteSet(void) {
     } while (CdReadArchiveBytes(0x1A, 0, 0x124D0, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
     UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x5F18));
     memcpy(gOvl25ObjectSpriteData, (u8 *)(gGraphicsHeapBase + 0x4290), 0x1C88);
-    InitSpriteSourceData((SpriteSourceData *)&Ovl25Sprite800C024C, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[0]));
-    InitSpriteSourceData((SpriteSourceData *)&Ovl25Sprite800C024C + 1, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[1]));
-    InitSpriteSourceData((SpriteSourceData *)&Ovl25Sprite800C024C + 2, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[1]));
-    InitSpriteSourceData((SpriteSourceData *)&Ovl25Sprite800C024C + 3, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[2]));
+    InitSpriteSourceData((SpriteSourceData *)&gOvl25PrimarySpriteBase, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[0]));
+    InitSpriteSourceData((SpriteSourceData *)&gOvl25PrimarySpriteBase + 1, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[1]));
+    InitSpriteSourceData((SpriteSourceData *)&gOvl25PrimarySpriteBase + 2, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[1]));
+    InitSpriteSourceData((SpriteSourceData *)&gOvl25PrimarySpriteBase + 3, (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[2]));
     for (i = 0; i < 6; i++) {
         header = (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[i + 3]);
-        InitSpriteSourceData((SpriteSourceData *)((u8 *)&Ovl25Sprite800C024C - 0x3E0 + i * 0x78), header);
-        InitSpriteSourceData((SpriteSourceData *)((u8 *)&Ovl25Sprite800C024C - 0x3B0 + i * 0x78), header);
+        InitSpriteSourceData((SpriteSourceData *)((u8 *)&gOvl25PrimarySpriteBase - 0x3E0 + i * 0x78), header);
+        InitSpriteSourceData((SpriteSourceData *)((u8 *)&gOvl25PrimarySpriteBase - 0x3B0 + i * 0x78), header);
     }
     for (i = 9; i < 11; i++) {
         header = (SpriteDataHeader *)(gOvl25ObjectSpriteData + ((s32 *)D_800BCD68)[i]);
-        InitSpriteSourceData((SpriteSourceData *)((u8 *)&Ovl25Sprite800C013C + (i - 9) * 0x78), header);
-        InitSpriteSourceData((SpriteSourceData *)((u8 *)&Ovl25Sprite800C013C + 0x30 + (i - 9) * 0x78), header);
+        InitSpriteSourceData((SpriteSourceData *)((u8 *)&gOvl25AuxiliarySpriteBase + (i - 9) * 0x78), header);
+        InitSpriteSourceData((SpriteSourceData *)((u8 *)&gOvl25AuxiliarySpriteBase + 0x30 + (i - 9) * 0x78), header);
     }
     i = 0;
-    while ((current = (SpriteSourceData *)&Ovl25Sprite800C0334 + i, (u32)i < 6)) {
+    while ((current = (SpriteSourceData *)&gOvl25SequenceSpriteBase + i, (u32)i < 6)) {
         offsets = (s32 *)D_800BCD68;
         InitSpriteSourceData(current, (SpriteDataHeader *)(gOvl25ObjectSpriteData + offsets[i + 11]));
         i++;

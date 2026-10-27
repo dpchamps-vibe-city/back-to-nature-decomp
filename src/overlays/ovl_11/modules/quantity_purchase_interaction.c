@@ -149,7 +149,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
     case 14:
     case 15:
         state = &gOvl11QuantityPrompt;
-        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (ovl_11_DD48_arg0 *)state)) {
+        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (Ovl11QuantityPromptView *)state)) {
         case 0:
         case 2:
             break;

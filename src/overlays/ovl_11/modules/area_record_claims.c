@@ -17,8 +17,8 @@
 #include "ovl11_save_counters.h"
 #include "ovl11_seasonal_record_ids.h"
 #include "ovl11_tagged_record_handlers.h"
+#include "ovl11_grid_candidate_search.h"
 
-s32 ovl_11_func_80110658(s16 *arg0, s16 *arg1, s32 arg2, s32 arg3, s32 arg4);
 void ovl_11_func_80110E28(u8 *arg0);
 s32 ovl_11_func_800F3BCC(u16 arg0);
 s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area);
@@ -42,8 +42,8 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
                 item = *(u16 *)(object + 0xB6);
                 ovl_11_func_80110E28(object);
             } else {
-                if (ovl_11_func_80110658(&x, &y, 1, 1, 1)) {
-                    if (ovl_11_func_80110658(&x, &y, 0, 1, 1)) {
+                if (Ovl11FindCandidateGridCell(&x, &y, 1, 1, 1)) {
+                    if (Ovl11FindCandidateGridCell(&x, &y, 0, 1, 1)) {
                         return 0;
                     }
                     cell = (u8 *)&gAlternateAreaGrid[y][x];
@@ -58,8 +58,8 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
         random = Rand(5);
         count = (u16)(*(u16 *)(object + 0xB0) / 10U) + random;
         for (i = 0; i < count; i++) {
-            if (ovl_11_func_80110658(&x, &y, 1, 0, 1)) {
-                if (ovl_11_func_80110658(&x, &y, 0, 0, 1)) {
+            if (Ovl11FindCandidateGridCell(&x, &y, 1, 0, 1)) {
+                if (Ovl11FindCandidateGridCell(&x, &y, 0, 0, 1)) {
                     break;
                 }
                 Ovl11TryPromoteCellPendingKind(1, x, y, 0);

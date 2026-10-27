@@ -48,10 +48,10 @@ void Ovl25MoveEventTargetForward(void) {
         RequestMessageWindow(4, 0x32);
         if (GetMessageWindowStatus() == 2) {
             *(s16 *)(ref + 2) = 3;
-            D_800BCD21 = 1;
-            D_800BCD48[0] = 0x10CC;
-            D_800BCD48[1] = 0;
-            D_800BCD48[2] = 0x708;
+            gOvl25SequenceCyclePhase = 1;
+            gOvl25SequenceAnchor4[0] = 0x10CC;
+            gOvl25SequenceAnchor4[1] = 0;
+            gOvl25SequenceAnchor4[2] = 0x708;
         }
     } else {
         *(u16 *)(p + 0x53B4) = *(u16 *)(p + 0x53B4) + 0x21;

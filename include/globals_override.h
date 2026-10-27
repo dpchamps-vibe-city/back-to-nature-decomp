@@ -4033,6 +4033,15 @@ typedef struct {
     Ovl11D124Entry alternateGrid[1];
 } Ovl11GridCellSearchView;
 
+/* 80110790: +20 points at 0x28-byte item rows (signed byte +3);
+ * +2C at 0x10-byte mapped-type rows (unsigned halfword +2). */
+typedef struct {
+    u8 pad_00[0x20];
+    void *itemTable;
+    u8 pad_24[8];
+    void *typeTable;
+} Ovl11CandidateTypeLookupView;
+
 /* 800C9F20 reads halfword coordinate pairs; original data spans 32 halfwords. */
 extern u16 gOvl11CompanionScreenOffsets[32];
 
@@ -4798,7 +4807,7 @@ extern u8 D_80051D0C[];
  * into the ovl_11 D_8012D548 record by ovl_11_func_8011ADF4, and its address
  * is taken by ovl_11_func_8011DD48. Address taken only; typed s32 to match
  * the pre-existing local view in ovl_11_func_8011DD48. */
-extern s32 D_8005181A;
+extern s32 gQuantityPromptDefaultTextAnchor;
 
 /* 8011AFB4 adds D_80054BBC[1] bytes to this address and its +0x1E/+0x3E/+0x60 successors. */
 extern u8 D_80051A10[];
@@ -5502,7 +5511,8 @@ extern s32 gOvl21UiSpriteOffsets[15];
 /* ovl_21:800BB328 copies 0x13DC bytes and uses the leading sprite header. */
 extern u8 gOvl21SceneSpriteData[0x13DC];
 /* ovl_25:800B9E84 uses its own unnamed data at the same RAM address. */
-extern u8 D_800BCD28[0x13DC];
+/* ovl_25:9E84 passes this four-halfword anchor to the projected sprite service. */
+extern u8 gOvl25SequenceAnchor0[8];
 /* ovl_21:800BB328 binds this 0x30-byte source to the scene sprite header. */
 extern struct SpriteSourceData gOvl21PrimarySceneSprite;
 /* ovl_21:800BB648 retains 0x233C bytes for its fifteen source headers. */
@@ -5725,10 +5735,11 @@ extern s16 D_800C030C;
 
 /* ovl_25_func_800BAFCC copies 0x1C88 streamed bytes here and indexes sprite headers. */
 extern u8 gOvl25ObjectSpriteData[];
-/* 800BAFCC initializes full sprites; named views coexist with legacy halfword/ObjectState views. */
-extern struct SpriteSourceData Ovl25Sprite800C013C __asm__("D_800C013C");
-extern struct SpriteSourceData Ovl25Sprite800C024C __asm__("D_800C024C");
-extern struct SpriteSourceData Ovl25Sprite800C0334 __asm__("D_800C0334");
+/* 800BAFCC initializes full 0x30-byte sources. The sprite-set service
+ * explicitly casts their flag/ObjectState views; these are first-record anchors. */
+extern struct SpriteSourceData gOvl25AuxiliarySpriteBase;
+extern struct SpriteSourceData gOvl25PrimarySpriteBase;
+extern struct SpriteSourceData gOvl25SequenceSpriteBase;
 
 /* D_800C027C - ovl_25 object-state base (0x800C027C). ovl_25_func_800B9E20
  * resets it with func_80015840(&base, 0), resets the record 0x30 bytes on as
@@ -5736,7 +5747,7 @@ extern struct SpriteSourceData Ovl25Sprite800C0334 __asm__("D_800C0334");
  * ovl_25_func_800BA5BC/ovl_25_func_800BA758 pair. Absolute-addressed
  * (lui + %lo) from -G0 overlay code, so only an extern declaration belongs
  * here; the caller views the base as ObjectState. */
-extern u8 D_800C027C[];
+/* Accessed as gOvl25PrimarySpriteBase + 1, not separate storage. */
 
 /* D_800C02DC - ovl_25 object-state base (0x800C02DC), the record 0x90 bytes
  * above D_800C024C. ovl_25_func_800B9D4C resets it with func_80015840 and
@@ -5744,7 +5755,7 @@ extern u8 D_800C027C[];
  * 0x78-byte record 0x498 bytes below (0x800BFE44) for the three stacked u16
  * vertex values. Absolute-addressed (lui + %lo) from -G0 overlay code, so
  * only an extern declaration belongs here. */
-extern u8 D_800C02DC[];
+/* Accessed as gOvl25PrimarySpriteBase + 3, not separate storage. */
 
 /* D_800BFE54 - ovl_25 base of a six-entry run of 0x78-byte Ovl25ObjectRecord
  * records. ovl_25_func_800B941C walks it (lui/addiu %hi/%lo) and hands each
@@ -5796,9 +5807,10 @@ extern u16 D_800BCB8E[];
  * 853C indexes the six-address table with the same work-area halfword. */
 extern s16 gOvl25EventPhase;
 extern void (*gOvl25EventPhaseHandlers[6])(void);
-extern u8 D_800BCD21;
+/* ovl_25:9E84 advances 0/1/2; 860C and the event-phase service also write it. */
+extern u8 gOvl25SequenceCyclePhase;
 /* ovl_25_func_800B8848 writes the first three halfwords; original data allocates four. */
-extern s16 D_800BCD48[4];
+extern s16 gOvl25SequenceAnchor4[4];
 /* ovl_25:800B9A10/9A84 select these private s16 values at 40/30/20/10.
  * The delta words initially contain -2; no runtime meaning is inferred. */
 extern s16 gOvl25TierValue40;
@@ -5816,19 +5828,24 @@ extern s16 gOvl25BackgroundCycleIndex;
 extern s32 gOvl25BackgroundCycleLowRgb[3];
 extern s32 gOvl25BackgroundCycleHighRgb[3];
 /* 800B9E84 reads/writes unsigned state and flag bytes; its counter is D_800BCD21 + 2. */
-extern u8 D_800BCD22;
-extern u8 D_800BCD24;
+extern u8 gOvl25SequenceRecordStage;
+extern u8 gOvl25SequenceEffectActive;
 /* 800B9E84 passes these coordinate buffers to BA5BC; signed x comparisons use the first halfword. */
-extern s16 D_800BCD30[4];
-extern s16 D_800BCD38[4];
-extern s16 D_800BCD40[4];
+extern s16 gOvl25SequenceAnchor1[4];
+extern s16 gOvl25SequenceAnchor2[4];
+extern s16 gOvl25SequenceAnchor3[4];
 /* 800B9E84 uses signed division by 3/5 and signed comparisons on this halfword. */
-extern s16 D_800BCD54;
+extern s16 gOvl25SequenceStep;
+/* ovl_25:A5BC/A758 alone write four projection halfwords and receive two
+ * signed screen-coordinate words from ProjectPointToScreen. Extern under -G0. */
+extern s16 gOvl25BiasedProjectionInput[4];
+extern s32 gOvl25BiasedProjectionResult[2];
+extern s16 gOvl25ProjectionInput[4];
+extern s32 gOvl25ProjectionResult[2];
 /* 800B9E84 compares this signed halfword against 0x690. */
 extern s16 D_800BFE64;
-/* 800B9E84 animates full 0x30-byte sprite records at these bases and +30/+60 from 800C0394. */
-extern struct SpriteSourceData D_800C0394;
-extern struct SpriteSourceData D_800C0424;
+/* 800C0394/800C0424 are records 2/5 of gOvl25SequenceSpriteBase;
+ * the service accesses them through that canonical base, not interior aliases. */
 
 /* D_800C0124 - ovl_25 base of a two-entry run of the same 0x78-byte
  * Ovl25ObjectRecord records, walked by ovl_25_func_800B941C after the

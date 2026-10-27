@@ -1,5 +1,26 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Caller-owned bounded quantity editor (no drawing or private selection state).
+Ovl11ProcessQuantityInput = 0x8011CF40; // type:func
+Ovl11ClearSelectionRows = 0x8011D400; // type:func
+Ovl11SetupQuantityPrompt = 0x8011DD48; // type:func
+
+// Circular candidate-grid search and its exclusive predicates.
+Ovl11FindCandidateGridCell = 0x80110658; // type:func
+Ovl11CandidateCellHasMappedItemType = 0x80110790; // type:func
+Ovl11CandidateCellKindIs168Or16A = 0x80110838; // type:func
+Ovl11CandidateCellKindIs168To16B = 0x80110890; // type:func
+Ovl11CandidateItemPassesBaseFilter = 0x801108F8; // type:func
+
+// Non-null interaction draw-mode callbacks, in table order.
+Ovl11DrawValuePanelWithQuantity = 0x8011A708; // type:func
+Ovl11DrawCompactValuePanelOnly = 0x8011A764; // type:func
+Ovl11DrawCompactValuePanelOnlyVariant = 0x8011A784; // type:func
+Ovl11DrawCompactValuePanelWithSelection = 0x8011A7A4; // type:func
+Ovl11DrawCompactValuePanelWithSelectionAndQuantity = 0x8011A7D8; // type:func
+Ovl11DrawCompactValuePanelWithSecondarySelection = 0x8011A8D0; // type:func
+Ovl11DrawWideValuePanelWithSelection = 0x8011A998; // type:func
+
 // Primary-object embedded/shared sprite-slot banks and position utility.
 Ovl11InitObjectSpriteSlots = 0x800CDE3C; // type:func
 Ovl11DrawEmbeddedSpriteSlots = 0x800CDEEC; // type:func

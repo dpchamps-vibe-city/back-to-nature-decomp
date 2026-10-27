@@ -21,7 +21,7 @@ s32 Ovl11StepSelectionPrompt(s32 *step, s32 baseStep, Ovl11D8012D7B8 descriptor)
  * record and cancellation message, prompt receives the edited count at +8.
  * Acceptance here does not debit funds or transfer a record. */
 s32 Ovl11StepQuantityPrompt(s32 *step, s32 baseStep, s32 drawMode,
-                          Ovl11BAFCParams descriptor, ovl_11_DD48_arg0 *prompt);
+                          Ovl11BAFCParams descriptor, Ovl11QuantityPromptView *prompt);
 
 /* Fifteen steps: selected-item eligibility/funds check, two confirmations,
  * request submission, completion wait, debit and progress action, then fade

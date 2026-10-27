@@ -807,6 +807,8 @@ VWD0 = 0x800A3FB4; // size:0x4
 // separately anchored offsets at 54BC0/54BC8; it is not their symbol extent.
 gPrimaryValueLabelTextAnchor = 0x80051808; // size:0x4
 gSecondaryValueLabelTextAnchor = 0x8005180C; // size:0x4
+// Address anchor for the default secondary quantity-prompt text (u16 codes).
+gQuantityPromptDefaultTextAnchor = 0x8005181A; // size:0x2
 gTextBankOffsets = 0x80054BBC; // size:0x4
 func_800245F4 = 0x800245F4; // type:func
 func_8002462C = 0x8002462C; // type:func

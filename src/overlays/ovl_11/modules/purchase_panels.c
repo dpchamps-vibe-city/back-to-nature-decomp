@@ -33,8 +33,9 @@
 #include "ovl11_balance_accounting.h"
 #include "ovl11_held_item_replacement.h"
 #include "ovl11_cell_grid_lookup.h"
-
-void ovl_11_func_8011D400(s32 *arg0);
+#include "ovl11_selection_record_reset.h"
+#include "ovl11_quantity_input.h"
+#include "ovl11_quantity_prompt_setup.h"
 
 s32 Ovl11InitTimeDependentCatalog(void) {
     s16 daytime;
@@ -46,7 +47,7 @@ s32 Ovl11InitTimeDependentCatalog(void) {
 
     daytime = (u32) (D_80070CF8_halfword - 6) < 12U;
     record = gOvl11PrimarySelectionRecord;
-    ovl_11_func_8011D400((s32 *) record);
+    Ovl11ClearSelectionRows((s32 *) record);
     texts = (void **) record;
     itemIds = (s16 *) ((u8 *) texts + 0x28);
     attributes = (s8 *) ((u8 *) texts + 0x3C);
@@ -125,7 +126,7 @@ s32 Ovl11InitTimeDependentCatalog(void) {
 }
 
 s32 Ovl11InitFixedCatalog(void) {
-    ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
+    Ovl11ClearSelectionRows((s32 *) gOvl11PrimarySelectionRecord);
     *(s8 *) (gOvl11PrimarySelectionRecord + 0x5A) = 0xD;
     *(s8 *) (gOvl11PrimarySelectionRecord + 0x5B) = 0x12;
     *(s16 *) (gOvl11PrimarySelectionRecord + 0x28) = 0xAC;
@@ -271,7 +272,6 @@ s32 Ovl11RequestCatalogPanelMessage(s32 messageIndex) {
 }
 
 s32 Ovl11FindFirstUnsetResourceOption (void);
-void ovl_11_func_8011D400 (s32 *arg0);
 
 s32 Ovl11InitResourcePurchasePanel(void) {
     s32 firstUnset;
@@ -283,7 +283,7 @@ s32 Ovl11InitResourcePurchasePanel(void) {
     if (firstUnset != -1) {
         option = firstUnset;
     }
-    ovl_11_func_8011D400((s32 *) gOvl11PrimarySelectionRecord);
+    Ovl11ClearSelectionRows((s32 *) gOvl11PrimarySelectionRecord);
     (*(s16 *) ((u8 *) gOvl11PrimarySelectionRecord + 0x28)) = 0;
     (*(s8 *) ((u8 *) gOvl11PrimarySelectionRecord + 0x3C)) = 1;
     (*(s16 *) ((u8 *) gOvl11PrimarySelectionRecord + 0x46)) = 0x133;
@@ -306,7 +306,7 @@ s32 Ovl11InitResourcePurchasePanel(void) {
     gOvl11QuantityPrompt.unk4 = (void *) ((u8 *) &D_80051D34 + 0x98 + *D_80054BC0);
     gOvl11QuantityPrompt.unkA = Ovl11GetItemPrice(0x3FU);
     gOvl11QuantityPrompt.unk8 = 1;
-    ovl_11_func_8011D400((s32 *) gOvl11SecondarySelectionRecord);
+    Ovl11ClearSelectionRows((s32 *) gOvl11SecondarySelectionRecord);
     (*(s16 *) ((u8 *) gOvl11SecondarySelectionRecord + 0x46)) = 0x133;
     (*(s16 *) ((u8 *) gOvl11SecondarySelectionRecord + 0x28)) = 0x3F;
     (*(s8 *) ((u8 *) gOvl11SecondarySelectionRecord + 0x3C)) = 1;
@@ -318,7 +318,7 @@ s32 Ovl11InitResourcePurchasePanel(void) {
 }
 
 void SetVal8005E2BC(s32 arg0);
-s32 Ovl11UpdateResourceQuantitySelection(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, ovl_11_DD48_arg0 *arg8);
+s32 Ovl11UpdateResourceQuantitySelection(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, Ovl11QuantityPromptView *arg8);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 
 /* Per-unit purchases cap stored units at 999. Option transactions instead
@@ -382,7 +382,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
         gOvl11ResourcePanelDescriptor.unk0 = gOvl11SecondarySelectionRecord;
         return 0;
     case 4:
-        switch (Ovl11UpdateResourceQuantitySelection(&gOvl11InteractionStep, 0, 5, *(Ovl11BAFCParams *)&gOvl11ResourcePanelDescriptor, (ovl_11_DD48_arg0 *)&gOvl11QuantityPrompt)) {
+        switch (Ovl11UpdateResourceQuantitySelection(&gOvl11InteractionStep, 0, 5, *(Ovl11BAFCParams *)&gOvl11ResourcePanelDescriptor, (Ovl11QuantityPromptView *)&gOvl11QuantityPrompt)) {
         case 0:
             break;
         case 1:
@@ -497,15 +497,12 @@ s32 Ovl11FindFirstUnsetResourceOption(void) {
     return -1;
 }
 
-s32 ovl_11_func_8011CF40(s16 arg0, u16 *arg1);
-void ovl_11_func_8011DD48(ovl_11_DD48_arg0 *arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4);
-
 /* Six relative interaction steps. Return 0 while pending, 1 on quantity
  * confirmation, 3 on cancellation, -1 outside the supplied step window.
  * Selection changes return through the detail message before reopening the
  * quantity prompt; keep the by-value descriptor's five-word calling ABI. */
 s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
-                       Ovl11BAFCParams descriptor, ovl_11_DD48_arg0 *prompt) {
+                       Ovl11BAFCParams descriptor, Ovl11QuantityPromptView *prompt) {
     s32 result;
     StructD548 *record;
 
@@ -532,13 +529,13 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x4D);
-        ovl_11_func_8011DD48(prompt, (s32)(D_80051DBE + gTextBankOffsets[1]), 1,
+        Ovl11SetupQuantityPrompt(prompt, (s32)(D_80051DBE + gTextBankOffsets[1]), 1,
             (s16)Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*record)), 0);
         gOvl11InteractionDrawMode = drawMode;
         Ovl11SetInteractionStepsOffset(2, 4, baseStep);
         break;
     case 4:
-        switch (ovl_11_func_8011CF40(0x3E7, (u16 *)&prompt->field_8)) {
+        switch (Ovl11ProcessQuantityInput(0x3E7, (u16 *)&prompt->quantity)) {
         case 0:
             break;
         case 1:
