@@ -1870,7 +1870,28 @@ Members:
   0x24 above the row base; row index comes from ovl_11_func_800D5750
 - ovl_11_func_800D6F78 (m, byte-exact) — looks up an identifier in rows 0–1 and draws its paired sprite record.
 - ovl_11_func_800D7144 (s, candidate via caller/link adjacency) — emits a paired-record sprite and texture-page primitive ([membership evidence](research/ovl_11_func_800D6F78-grouping.md)).
-- ovl_11_func_800F0A58 (m, byte-exact) — activates a paired record from rows 0–1 and relocates its texture and CLUT.
+- **Reconstructed `modules/record_texture_relocation.c`,
+  800F0A58–800F0C70 exclusive**, Ovl11RelocateRecordSlotTexture. This entire
+  search/install/texture-and-CLUT move is a public service of
+  scored_scene_sequence; the distant row-management/draw functions are
+  independent clients of the shared paired-record format, not private helpers
+  requiring an intervening-code merge. Left record_approach_sequence owns a
+  ten-phase movement table, right F0C70 applies disjoint record-remap tables.
+  Neither uses the texture operation or its exclusive Error string. These
+  are evidence-limited -G0 service/data cuts, not GP-proven original edges.
+  Merely abutting table/string pools do not establish co-compilation.
+
+  The header documents the column-first two-row lookup, active-record copy,
+  VRAM word/pixel coordinates, width/4 conversion, CLUT destination, missing
+  ID result and lack of explicit synchronization. The Error message now has
+  canonical ovl_11 identity gOvl11MissingSlotSpriteMessage; its original
+  16-byte extracted label span, including trailing non-string bytes, remains
+  unchanged, with an unsized char extern in globals_override.h. No C string
+  emitter, duplicate literal, storage owner or alias was invented. Supported
+  existing record types are reused, with texture/CLUT field roles explained
+  locally; dimensions and uncertain remaining fields are not retyped. The
+  sole caller consumes the header with identical object bytes. Baseline
+  checked fold passes, with no override or exception change.
 - ovl_11_func_800F9BE4 (m, matched 2026-10-09, byte-exact) — slot
   reconciler: mirrors the 18 six-byte slot records at D_8006C838+0x524C as
   two 9-`s16` rows (row r = slots 2+8r..9+8r, then slot r), then passes each
@@ -11928,7 +11949,37 @@ Members (address order):
   Evidence class: zero-gap link order + matched call edge + shared 0x60-byte
   record family + D_8012D52C reader; data TU ownership unconfirmed,
   confidence low.
-- ovl_11 80114604-hub zero-gap link successor — ovl_11_func_801152BC (m,
+- **Reconstructed `modules/record_trade_interaction.c`, both entries
+  80114604–80115308 exclusive**, Ovl11UpdateRecordTradeInteraction and
+  Ovl11DebitRecordTradeQuantity. The update callback is the debit leaf's only
+  client; it passes the shared quantity prompt after balance/limit checks,
+  and the leaf debits quantity*unitCost then adds quantity to save counter 18.
+  That exact call/data contract and the two member-ordered switch tables
+  support the complete pair. The neighboring quantity_purchase_interaction
+  has its own corresponding leaf and a different counter/name-record path;
+  the twin supports an authored pattern, not one merged TU.
+
+  Left 14398 builds a flag-selected selection prompt, not this update/debit
+  protocol. The earlier 13CD0 builder is also a public reset-table callback;
+  shared UI records and its rebuild call do not establish a TU spanning the
+  intervening builders. Right 15308 starts the separately closed quantity
+  handler/leaf pair. No private state/helper or pooled-emission inversion
+  crosses either edge. These are evidence-limited -G0 protocol cuts, not
+  original-object proofs or cuts to protect a compiler flag. Both members
+  use baseline settings; neither carries an override or new exception.
+
+  The debit's incompatible void*/local-prefix declarations are reconciled
+  to the caller's canonical Ovl11D8012D538 quantity-prompt type, keeping
+  signed +8/+A fields and every access unchanged. No alias or static linkage
+  was introduced. The external callback ABI and dedicated helper remain;
+  no direct external C client needs a new header. Source docs describe
+  selection/quantity/name/sale/message phases, immediate exit result,
+  transaction side effects and unchecked assumptions. Family IDs 1/2 stay
+  neutral rather than claiming species. Quantity/name-copy locals are named;
+  step 1's intentional fallthrough is explained. The whole baseline checked
+  fold preserves both members, both jump tables and linked overlay bytes.
+
+  Historical 80114604-hub zero-gap link successor — ovl_11_func_801152BC (m,
   matched this session) is a small economy leaf that begins exactly where its
   sole caller ovl_11_func_80114604 (stub, above) ends (0x80114604 + 0xCB8 →
   0x801152BC, no unrelated code between), reads s16 +0x8/+0xA of its arg, and
@@ -13342,7 +13393,33 @@ remain provenance, not a claim that the old stub status still applies.
   fragment across the switch and re-splices `%lo` in the mode-5 arm — the same
   shared-base idiom as 0x800E63C8; leaf, byte-exact clean C, baseline flags;
   link-sits in the 0x800E5A1C–0x800EExxx accessor band
-- ovl_11_func_800E7798 (m, matched this session) — arg0 mode dispatcher
+- **Reconstructed `modules/clock_event_transition_command.c`,
+  800E7798–800E78E4 exclusive**, Ovl11ClockEventTransitionCommand. The
+  complete entry combines mode/clock selection, event flag clearing and the
+  common work/flag-group tail; it owns no helper or private state. Left E7660
+  tests a pending time interval and posts a record selection; right
+  random_value_slot_command generates/compares one random operand. Neither
+  calls this entry or shares an exclusive table/helper with it. Broad shared
+  flags/value slots do not establish a larger TU. These are evidence-limited
+  -G0 service cuts, not proven original object edges or flag-protecting cuts.
+  Its header publishes the existing four-operand ABI to the two C clients,
+  condition_code_command and object_archive_pipeline, with byte-identical
+  caller objects measured by interfaceAudit. It documents ignored clock
+  failure, immediate success, control bit 1, and bit 0's forwarding to an
+  ignored operand. The identical work view moved to globals_override.h;
+  flags are named by their offsets and the uncertain 7A74 word stays neutral.
+  Local/parameter names describe demonstrated behavior. Baseline checked
+  fold passed; no override, ownership, linkage or exception was changed.
+  Batch acceptance with record_motion_stop_command, randomized_arc_position_command,
+  record_high_flags_command and all_record_field_update_command: tuProgress
+  --verify against build/tu-campaign/baseline.json passes all eight gates,
+  **2302 -> 2307/2625 folded, 448/448 valid module TUs**. All linked EXE/overlay
+  code, data, callback and table bytes remain identical; canonical interfaces,
+  source policy, convergence and exception non-growth pass. No tools/tests or
+  flags were changed. Existing unrelated unpublished prototype debt remains
+  visible in interfaceAudit (six conflicts/one implicit), not silently hidden.
+
+  Historical ovl_11_func_800E7798 implementation — arg0 mode dispatcher
   (switch on 2 then 1/3): the arg0==1 arm writes the `D_8007AFF0`+0x254A0 mode
   word and sets bit 0x400 of the sibling s32 at +0x5234 (the same
   0x800E953C/0x800E63C8/0x800E7954 cell) before func_8001AF70(0x47,1); modes
@@ -16261,6 +16338,80 @@ Members:
 
 ## `ovl_11` D_80124DD8–D_80124E3C private record-remap data region — 0x800F02C8 / 0x800F0C70 (confidence: medium)
 
+**Reconstructed two complete services independently:**
+`modules/record_counter_category.c` (800F02C8–800F0358 exclusive),
+Ovl11SelectHighestRecordCounter, and `modules/record_remap_tables.c`
+(800F0C70–800F0E00 exclusive), Ovl11ApplyRecordRemapTables.
+The earlier regional grouping below is not a demonstrated whole TU: F02C8
+reads ONLY DD8's five candidate IDs, whereas F0C70 reads ONLY the four
+following assignment tables. They share no table, helper or mutable private
+state and do not call each other. The data labels' adjacency/private readership
+supports a historical-object hypothesis but does not establish it, just as
+code adjacency alone does not. The intervening pair commands, direction
+classifier, private adjustment table and shared approach service have their
+own documented protocols. No positive shared-artifact closure requires
+absorbing them into a single remap object; a larger original file remains
+uncertain, not refuted by interposition or protected by an invented flag cut.
+
+Counter boundaries: left F021C is a stateless item-exclusion predicate used
+by the separate map-percentage service; right selected_record_pair_commands
+snapshots/restores/tests record pairs. Neither uses the candidate IDs/counters
+or calls this selector. Remap boundaries: left record_texture_relocation
+copies a sprite descriptor and moves texture/CLUT data, with its own Error
+string; right F0E00 installs condition records and their count/evaluation
+state. Neither reads the four pair tables or calls the remapper. Thus all
+four edges rest on disjoint private artifacts and public-service protocols,
+not GP proof (-G0), adjacency or the condition installer's flag setting.
+
+The counter header states first-maximum tie handling, threshold 500 and LIST
+POSITION versus record ID; its sole scene_value_commands caller consumes that
+contract. The remap header states the four-pass order, conditional comparison
+against current work+5246/5248 and later-pass overwrite behavior. object_events
+consumes it at both call sites. interfaceAudit proves both caller objects
+unchanged. Parameters/locals and table types/fields describe counter selection
+and pair assignment, without inventing a gameplay/calendar meaning.
+The duplicate current-pair view is replaced by Ovl11SpecialRecordPairView;
+all signedness, offsets, access widths and source arithmetic are retained.
+
+All five tables have scoped canonical names: gOvl11CounterCategoryRecordIds,
+gOvl11ParallelRecordPairDefaults, gOvl11RecordPairDefaults,
+gOvl11ConditionalRecordPairDefaults and gOvl11RecordPairOverrideList.
+Their declarations/types live in globals_override.h, not C. Original label
+extents remain 0xC/0x1C/0x1E/0x1E/0xAC bytes: DD8's unused sixth halfword remains
+uninterpreted, and the override sentinel has only a prefix, whose pair is
+never read. The unsized views retain those facts rather than declaring a
+fabricated full final record. No storage, linkage or GP ownership is added.
+Both baseline checked folds preserve complete members and linked overlay
+bytes, with no overrides or exceptions added or retired.
+
+**Run acceptance (three verified batches): 2302 -> 2315/2625 folded,
+455/455 valid module TUs, 310 remaining.** The twelve new ovl_11 modules
+hold thirteen functions. Six public headers are reconciled into all C clients;
+thirteen function names and six data names retain scoped address identities.
+The final tuProgress --verify against build/tu-campaign/baseline.json passes
+all eight gates: complete EXE/all-overlay code/data/callback/table bytes,
+original inventory, completeness, source policy, generated convergence,
+whitespace, stability and exception non-growth. Canonical names are clean;
+published interfaces have zero failures, and the pre-existing unrelated six
+unpublished conflicts/one implicit declaration are unchanged. Every new unit
+passes baseline settings; no flag, allowlist entry, pin, asm or stub was added,
+and no shared tool or test changed. Nothing was committed. Exit 1 denotes the
+incomplete overall campaign, not a failed integrity gate.
+
+The other researched units are not ready: the GP-connected executable text
+band needs one reconciled whole-TU declaration/source context before its two
+no-GCSE hypotheses can be assessed; the seventeen sprite wrappers/counters
+still have the recorded baseline/source versus scheduling-setting conflict.
+The overlay progress-accounting and prompt-builder bands contain existing
+flag hypotheses that cannot be moved merely because small neighbors would
+be compatible. Nonadjacent classifier/helper and pool-call ties do not by
+themselves establish a TU over intervening independent services. Their
+possible larger object boundaries remain uncertain; no singleton or slice
+was created to bypass those concrete questions. The useful next experiments
+remain those bounded whole-context/whole-unit tests in the relevant sections,
+not redoing the already-recorded failing source shapes.
+
+Historical regional hypothesis:
 Private overlay data region whose only source-level references in the
 container are these two `ovl_11` functions (`ovl_11_func_800F02C8` reads the
 head `D_80124DD8`; `ovl_11_func_800F0C70` reads `D_80124DE4`, `D_80124E00`,
@@ -17324,7 +17475,21 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   artifact/service cuts under -G0; the trace-free neighbors' original object
   membership remains uncertain. Baseline fold preserved code, its jump table
   and linked overlay, with no setting or exception change.
-- ovl_11_func_800EB328 (m, candidate same TU; [evidence](research/ovl_11_func_800EB328-grouping.md)) — randomized trigonometric position updater and direction selector using the shared table and 0x22-record helper cluster.
+- **Reconstructed `modules/randomized_arc_position_command.c`,
+  800EB328–800EB700 exclusive**, Ovl11UpdateRandomizedArcPosition. This is
+  the entire jittered arc/tangent operation and facing selection; it has no
+  private helper/state/table. Left ten_record_template_sequence owns its own
+  ID/coordinate/frame tables and phase switch; right state_field_slot_commands
+  adapts value slots as descriptor element indices, with no trigonometry or
+  motion protocol. Neither calls this entry or uses its arc calculation.
+  Shared public record/value-slot services are not a TU witness. These are
+  evidence-limited -G0 service cuts, not recovered historical file edges.
+  Source docs expose the pi/24 angle unit, two radii, all three random draws
+  even on non-jitter paths, Y limit, truncation in facing selection, tangent
+  return result and unchecked inputs. Parameter/local names now distinguish
+  step slots, origins and animation. No direct C client needs a header;
+  opcode linkage, double constants, expression order and ABI remain intact.
+  Baseline checked fold passed, with no override or exception change.
 - **Reconstructed `modules/state_field_slot_commands.c`, 800EB700–800EB79C
   exclusive**, both complementary adapters: Ovl11TestStateFieldFromSlot and
   Ovl11UpdateStateFieldFromSlot. In each, the value-slot CONTENT is the field
@@ -17350,7 +17515,35 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   arg2, arg3); return 1;`, the argument-position mirror of family member
   800E69B8. Zero-gap link-order predecessor of 800EB79C (0x800EB760 + 0x3C),
   so a shared private table, a shared three-arg leaf and adjacency agree.
-- ovl_11_func_800EB79C (m, matched 2026-09 — this session, 0xC0, byte-exact) —
+- **Reconstructed `modules/record_high_flags_command.c`,
+  800EB79C–800EB85C exclusive**, Ovl11SetRecordHighFlagsCommand. This entire
+  opcode operation retains the record halfword's low 14 bits and chooses its
+  two high bits. Left state_field_slot_commands uses descriptor dispatch;
+  right five_record_sequence owns a private ID/coordinate set and phase
+  protocol. Neither shares a private helper/table/state with this leaf. The
+  general value bank/record array does not establish a larger TU: these are
+  evidence-limited -G0 service cuts. Source docs distinguish signed operand
+  narrowing from FULL-word slot contents, invalid-mode clearing and constant
+  success; locals name record index and flag payload. There is no C caller
+  requiring a header; opcode linkage/types/ownership remain. Baseline checked
+  fold passed without a flag or exception change.
+
+  **Reconstructed `modules/all_record_field_update_command.c`,
+  800EBF18–800EC064 exclusive**, Ovl11UpdateAllRecordFieldsCommand. The complete
+  bulk operation owns both the ordinary-record and seven-element secondary
+  passes; it is not the flag-filtered Ovl11BroadcastStateFieldCommand at its
+  distant address. Both are clients of the PUBLIC descriptor/special-slot
+  services, not each other's helpers. Left five_record_sequence owns its own
+  tables and phase protocol; right EC064 selects tagged record pools and
+  changes bit 400 or dispatches item/flag operations. Neither uses this bulk
+  update or shares private artifacts. No positive closure spans either edge;
+  these are evidence-limited -G0 cuts. Source documentation records excluded
+  IDs, the 1F/20 operand split, field-2B pass and ignored helper results. The
+  different-width guards, ABI and external opcode linkage remain unchanged;
+  no direct C callers need a header. Baseline checked fold passed, with no
+  ownership, flag or policy change.
+
+  Historical ovl_11_func_800EB79C (0xC0, byte-exact) —
   record flag-field setter: index = `D_80129560[(s16)arg0]` when `arg2 != 0`,
   the raw `(s16)arg0` otherwise; then in the 0x1D4-stride record space off
   `D_8006C838` (field u16 @ +0x9A08 + index*0x1D4) clears the halfword to its
@@ -17459,8 +17652,42 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   Existing unrelated unpublished interface debt was not changed. Exit 1
   denotes the 328 remaining eligible functions, not a gate failure.
   Historical candidate: [EC52C](research/ovl_11_func_800EC52C-grouping.md).
-- ovl_11_func_800EC064 (m, candidate same TU; [evidence](research/ovl_11_func_800EC064-grouping.md)) — optionally slot-resolved object flag/sub-state dispatcher.
-- ovl_11_func_800EC304 (m) — forwards two `D_80129560` values and a mutable table-slot pointer to `ovl_11_func_800F07EC`; zero-gap predecessor of family member 800EC354.
+- **Reconstructed `modules/object_group_flag_command.c`,
+  800EC064–800EC304 exclusive**, Ovl11ApplyObjectGroupCommand. The whole
+  group-selection/flag/item-state operation owns its five-word switch table.
+  Its four clock_record_flags clients use the published header; they are
+  public command clients, not exclusive helpers. Left all_record_field_update
+  performs descriptor-based bulk updates; right EC304 adapts coordinate/phase
+  value slots. Neither shares the group switch, private helper or a record
+  selection protocol. The common value bank alone is not membership evidence.
+  These are conservative -G0 service cuts, not proven original object edges.
+  The header records the operation-0 first-enabled scan, signed-low-halfword
+  indirect index, group mappings, unknown-mode behavior and flag/item effects.
+  Parameters/locals name groups, indices and pool walks. Baseline checked fold
+  passes with the table and linked overlay; no flag/ownership/linkage or
+  exception was changed.
+- **Reconstructed `modules/record_approach_command.c`,
+  800EC304–800EC354 exclusive**, Ovl11StepRecordApproachCommand, and the
+  independent shared service **`modules/record_approach_sequence.c`,
+  800F07EC–800F0A58 exclusive**, Ovl11StepRecordApproachSequence. The adapter
+  passes two full-word coordinate values and a writable phase slot. The core
+  is ALSO used by ten_record_template_sequence, so it is not an exclusive
+  helper of EC304; no private artifact establishes a TU over the intervening
+  command band. EC304's left EC064 and right record_pair_slot_output have
+  different group/pair operations and no phase/coordinate closure. The core's
+  left record_adjustment owns its private adjustment table, and right F0A58
+  installs/relocates slot textures. Neither uses this phase protocol or calls
+  the core. Its ten-word jump table followed by F0A58's Error string is
+  consistent with ordinary link-order pooling and does not prove one object.
+  All cuts are evidence-limited -G0 service cuts, not historical file proofs.
+  The public core header is consumed by BOTH callers. It documents raw
+  coordinate units, strict-overshoot clamping (equality waits another update),
+  X/Z phases and the actual completion rule: intermediate completion advances
+  phase and returns 0; only phase-9 completion wraps to 0 and returns 1.
+  Unknown phases return 0 unchanged. Parameters/locals name targets, phase,
+  special-slot class and coordinates; all source widths and operations remain.
+  Both whole baseline folds preserve members/table/linked overlay. No flag,
+  data ownership, linkage or exception was added or changed.
 - **Reconstructed `modules/record_pair_slot_output.c`, 800EC354–800EC490
   exclusive**, as Ovl11StoreRecordPairToSlots. The selected record ID is
   optionally read/narrowed from a value slot, then one of three record layouts
@@ -18170,7 +18397,22 @@ Members (address order):
   likewise does not absorb intervening commands. These are evidence-limited
   -G0 service cuts, not GP-proven historical file boundaries. The checked
   baseline fold passed with no storage/linkage/flag/exception change.
-- ovl_11_func_800EAE24 (m, matched this session, 0x138, byte-exact) —
+- **Reconstructed `modules/record_motion_stop_command.c`,
+  800EAE24–800EAF5C exclusive**, Ovl11StopRecordMotionCommand. This complete
+  opcode service selects animation/frame/orientation then clears field 23's
+  vector, even for an unknown mode. Mode 2's -Z/-X/+Z/+X priority and zero
+  vector behavior are documented, not simplified. Left record_motion20_command
+  calls the public endpoint core; this entry does not. Right flag_group_command
+  only assigns three game flags and uses no vector/animation protocol. No
+  exclusive helper, state or table joins either edge; shared public resolver
+  and animation services alone do not join the distant motion entries. These
+  are evidence-limited -G0 responsibility cuts, not GP-proven source edges.
+  The external opcode linkage and ABI stay unchanged; no C caller requires a
+  new public header. Source docs describe all operands/results/preconditions,
+  and locals name X/Z and the vector. Baseline checked fold passed without
+  flags, data definitions or policy changes.
+
+  Historical ovl_11_func_800EAE24 (0x138, byte-exact) —
   zero-gap successor of twin 800EADB8: dispatches cases 0/1 to `800E5B84`,
   case 3 to `800E65AC` (the overlay's only other caller besides `800E648C`),
   and in case 2 clears the shared `0x23` record via `800D0408(4, record, 0)`,

@@ -26,8 +26,10 @@
 #include "ovl11_clock_advance_command.h"
 #include "ovl11_object_state_selection_command.h"
 #include "ovl11_cd_audio_command.h"
-
-s32 ovl_11_func_800F0A58(s16);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_record_texture_relocation.h"
 
 s32 Ovl11StepScoredSceneSequence(s16 phaseSlot, s16 itemIdSlot,
                        s32 itemValueSlot, s32 selectedRecordSlot) {
@@ -66,7 +68,7 @@ s32 Ovl11StepScoredSceneSequence(s16 phaseSlot, s16 itemIdSlot,
             result = 1;
         }
         if (result == 1) {
-            ovl_11_func_800F0A58(item[0]);
+            Ovl11RelocateRecordSlotTexture(item[0]);
             D_80070CB4 = 1000;
             gOvl11ValueSlots[itemIdSlot] = item[0];
             Ovl11MatchItemSlotsCommand(item[0], 1, 0, 1);

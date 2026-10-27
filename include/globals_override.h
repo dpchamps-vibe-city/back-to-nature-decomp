@@ -1128,28 +1128,28 @@ extern char gOvl30ResidentHeading[];
 /* F1F48 selects one flag-gated stream per event slot; 37 of 40 entries are used. */
 extern u16 *gOvl11EventScheduleStreams[40];
 
-/* D_80124DE4 - seven 4-byte {u16,u16} pairs walked by ovl_11_func_800F0C70,
- * which reads both halfwords with lhu and writes unk0 / unk2-1 into a parallel
- * 0xF8-stride record. Absolute-addressed (outside $gp). */
-typedef struct {
-    /* 0x00 */ u16 unk0;
-    /* 0x02 */ u16 unk2;
-} Ovl11Pair80124DE4;
-extern Ovl11Pair80124DE4 D_80124DE4[7];
+/* ovl_11:800F02C8 reads five signed IDs with lh; the 12-byte label also
+ * includes an unused trailing halfword whose meaning is not established. */
+extern s16 gOvl11CounterCategoryRecordIds[];
 
-/* D_80124E00 / D_80124E1E / D_80124E3C - 6-byte {s16 index, u16 unk2,
- * u16 unk4} records consumed by ovl_11_func_800F0C70, which reads the index
- * with lh (sign-extended into the 0x1D4-stride D_80076220 record select) and
- * the two fields with lhu. The first two are 5-entry arrays; D_80124E3C is a
- * -1-terminated list. Absolute-addressed (outside $gp). */
+/* ovl_11:800F0C70 reads seven unsigned pairs with lhu and writes
+ * first / second-1 into the parallel 0xF8-stride records. */
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ u16 unk2;
-    /* 0x04 */ u16 unk4;
-} Ovl11Rec80124E00;
-extern Ovl11Rec80124E00 D_80124E00[5];
-extern Ovl11Rec80124E00 D_80124E1E[5];
-extern Ovl11Rec80124E00 D_80124E3C[];
+    /* 0x00 */ u16 first;
+    /* 0x02 */ u16 second;
+} Ovl11ParallelRecordPair;
+extern Ovl11ParallelRecordPair gOvl11ParallelRecordPairDefaults[7];
+
+/* ovl_11:800F0C70 uses lh for the index and lhu for each assigned field.
+ * The override list terminates on index -1; its final pair is not read. */
+typedef struct {
+    /* 0x00 */ s16 recordIndex;
+    /* 0x02 */ u16 first;
+    /* 0x04 */ u16 second;
+} Ovl11RecordPairAssignment;
+extern Ovl11RecordPairAssignment gOvl11RecordPairDefaults[5];
+extern Ovl11RecordPairAssignment gOvl11ConditionalRecordPairDefaults[5];
+extern Ovl11RecordPairAssignment gOvl11RecordPairOverrideList[];
 
 /* 800BEF64 scans 0x1D4-byte records, with lh at +A/+2E, lhu at +1E/+20 and lw position triples at +30/+60. */
 typedef struct {
@@ -2188,6 +2188,16 @@ typedef struct {
     char pad_4490[0x5234 - 0x4490];
     s32 field_5234;
 } Ovl11SceneModeCommandWork;
+
+/* ovl_11:800E7798 sets bits in words 4450/5234 and writes word 7A74. */
+typedef struct {
+    char pad0[0x4450];
+    s32 flags4450;
+    char pad4454[0x5234 - 0x4454];
+    s32 flags5234;
+    char pad5238[0x7A74 - 0x5238];
+    s32 field7A74;
+} Ovl11ClockEventTransitionWork;
 
 /* 800E5E98: lw/sw +4450, lh +44BA, lhu +44CE, and lw +44F8. */
 struct Ovl11AreaSelectionCommandWork {
@@ -6573,8 +6583,8 @@ extern u8 D_8006CA10[];
 extern s16 gSlotSpriteIds[288];
 /* D688C: header[5] selects a count-prefixed s16 ID list parallel to sprite offsets. */
 extern s16 *D_80126254[];
-/* ovl_11_func_800F0A58 passes this "Error\n" rodata string to FntPrint. */
-extern char D_800B9F58[];
+/* ovl_11:800F0A58 prints this "Error\n" string when the slot ID is absent. */
+extern char gOvl11MissingSlotSpriteMessage[];
 /* 800F9210 reads and writes the two nine-halfword rows at base +0x254A4. */
 typedef struct {
     u8 pad_0[0x254A4];

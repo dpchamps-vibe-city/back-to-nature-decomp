@@ -36,6 +36,7 @@
 #include "ovl11_shared_animation_icon.h"
 #include "ovl11_scene_header_key.h"
 #include "ovl11_action_result_request.h"
+#include "ovl11_record_remap_tables.h"
 
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2);
 
@@ -100,15 +101,6 @@ void Ovl11RebuildObjectEventsForTime(void) {
     gOvl11ObjectScriptLiveMode = 1;
 }
 
-/*
- * Lifecycle and counter maintenance for 37 shared object-event records.
- * Each slot is 0x1D4 bytes; signed ID -1 marks it free. Allocation raises
- * flag 0x8000, consumed by the event-script update pass below.
- * Original order: ovl_11:800C1BA0..800C1F94 exclusive.
- * Public contracts: ovl11_object_event_pool.h. Grouping: notes/file-groupings.md.
- */
-void ovl_11_func_800F0C70(void);
-
 /* Internal callers only, but original external linkage is retained. The
  * initializer's s32 argument is an ADDRESS, not a numeric slot index. */
 void Ovl11InitEventSlot(s32 slotAddress);
@@ -122,7 +114,7 @@ void Ovl11AllocateAllEventSlots(void) {
         Ovl11AllocateEventSlot(id);
         id += 1;
     } while (id < 0x25);
-    ovl_11_func_800F0C70();
+    Ovl11ApplyRecordRemapTables();
 }
 
 void Ovl11ClearEventSlotTimeOrigins(void) {
@@ -148,7 +140,7 @@ void Ovl11ResetAllEventSlots(void) {
         remaining -= 1;
         slot += 1;
     } while (remaining >= 0);
-    ovl_11_func_800F0C70();
+    Ovl11ApplyRecordRemapTables();
 }
 
 void Ovl11InitEventSlot(s32 slotAddress) {

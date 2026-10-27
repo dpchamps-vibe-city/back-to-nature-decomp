@@ -10,25 +10,25 @@
  */
 
 #include "ovl11_clock_record_flags.h"
-
-s32 ovl_11_func_800EC064(s16 group, s16 index, s32 operation, s32 indirectIndex);
+#include "psyq/stddef.h"
+#include "ovl11_object_group_flag_command.h"
 
 s32 Ovl11ClockClearRecordGroup4(void) {
-    ovl_11_func_800EC064(4, 0, 0, 0);
+    Ovl11ApplyObjectGroupCommand(4, 0, 0, 0);
     return 1;
 }
 
 s32 Ovl11ClockClearRecordGroup1(void) {
-    ovl_11_func_800EC064(1, 0, 0, 0);
+    Ovl11ApplyObjectGroupCommand(1, 0, 0, 0);
     return 1;
 }
 
 s32 Ovl11ClockClearRecordGroup2(void) {
-    ovl_11_func_800EC064(2, 0, 0, 0);
+    Ovl11ApplyObjectGroupCommand(2, 0, 0, 0);
     return 1;
 }
 
 s32 Ovl11ClockClearRecordGroup0(void) {
-    ovl_11_func_800EC064(0, 0, 0, 0);
+    Ovl11ApplyObjectGroupCommand(0, 0, 0, 0);
     return 1;
 }

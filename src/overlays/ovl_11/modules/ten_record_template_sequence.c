@@ -8,8 +8,7 @@
 #include "ovl11_state_record_commands.h"
 #include "ovl11_record_action_predicate.h"
 #include "ovl11_ten_record_template_sequence.h"
-
-s32 ovl_11_func_800F07EC(s16 recordId, s32 x, s32 z, u32 *phase);
+#include "ovl11_record_approach_sequence.h"
 
 s32 Ovl11StepTenRecordTemplateSequence(s16 phaseSlot, s16 templateSlot) {
     u16 value = *(u16 *)&gOvl11ValueSlots[templateSlot];
@@ -70,7 +69,7 @@ s32 Ovl11StepTenRecordTemplateSequence(s16 phaseSlot, s16 templateSlot) {
             if (*recordId != -1) {
                 /* Each record starts from the published phase; last result wins. */
                 state = gOvl11ValueSlots[phaseSlot];
-                ovl_11_func_800F07EC(*recordId, *positionsX, *positionsZ, &state);
+                Ovl11StepRecordApproachSequence(*recordId, *positionsX, *positionsZ, &state);
             }
             i++;
             recordId++;

@@ -1,3 +1,23 @@
+/*
+ * Record trade interaction, ovl_11:80114604 / 801152BC.
+ * The public entry is update callback 17: call once per UI update with the
+ * shared interaction/selection, quantity prompt, message and text-entry state
+ * initialized. It buys selected item stacks, allocates/names selected records,
+ * and offers family-1/2 record sales using the existing balance services.
+ * No species or shop identity is inferred from those family numbers.
+ *
+ * Steps 2..8 process the selection, 10..15 a quantity, 16..17 a name,
+ * 18..23 a family sale, and 25/26 wait for message status 2/5. Step 24 rebuilds
+ * the selection via step 1. Return 1 only at step 27 (exit), 0 otherwise.
+ * This is a single shared UI transaction, not a reentrant independent object.
+ * Successful purchases debit the balance; quantity purchases also add the
+ * quantity to save counter 18. Sale credits depend on flag 40 and the signed
+ * affection bands <=100 / <=200 / >200, then clear the selected record.
+ * Indices, prices and quantity multiplication retain their existing unchecked
+ * assumptions. No new validation, linkage or storage ownership is introduced.
+ * Membership/boundaries: notes/file-groupings.md.
+ */
+
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
@@ -7,16 +27,9 @@
 #include "ovl11_item_stack_insert.h"
 #include "ovl11_record_family_list.h"
 #include "ovl11_selection_record_access.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
-#include "psyq/libgpu.h"
-#include "psyq/libcd.h"
-#include "psyq/libetc.h"
-#include "psyq/memory.h"
-#include "psyq/abs.h"
-#include "psyq/libgs.h"
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_record_family_lookup.h"
+#include "ovl11_save_counters.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_record_allocation.h"
@@ -25,15 +38,15 @@
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_80113CD0(void);
-void ovl_11_func_801152BC(void *arg0);
+void Ovl11DebitRecordTradeQuantity(Ovl11D8012D538 *prompt);
 
-s32 ovl_11_func_80114604(void) {
+s32 Ovl11UpdateRecordTradeInteraction(void) {
     Ovl11D8012D7B8 params;
     s32 result;
     s32 selected;
-    s32 i;
-    u16 *dest;
-    Ovl11D8012D538 *state;
+    s32 character;
+    u16 *nameDestination;
+    Ovl11D8012D538 *quantityPrompt;
     struct struct_8006C838_800E8F78 *resident;
 
     result = 0;
@@ -58,6 +71,7 @@ s32 ovl_11_func_80114604(void) {
         gOvl11InteractionDrawMode = 4;
         params.unk4 = -1;
         Ovl11SetInteractionSteps(2, 0);
+        /* Rebuild and process the selection in the same update. */
     case 2:
     case 3:
     case 4:
@@ -153,8 +167,8 @@ s32 ovl_11_func_80114604(void) {
     case 13:
     case 14:
     case 15:
-        state = &gOvl11QuantityPrompt;
-        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (Ovl11QuantityPromptView *)state)) {
+        quantityPrompt = &gOvl11QuantityPrompt;
+        switch (Ovl11StepQuantityPrompt(&gOvl11InteractionStep, 10, 5, *(Ovl11BAFCParams *)&params, (Ovl11QuantityPromptView *)quantityPrompt)) {
         case 0:
         case 2:
             break;
@@ -163,12 +177,12 @@ s32 ovl_11_func_80114604(void) {
             break;
         case 1:
             CloseMessageWindow();
-            if (Ovl11HasSpendableBalance(state->unk8 * state->unkA) == 1) {
-                if (state->unk8 + ((Ovl11SaleGlobals *)D_8006C838)->amount >= 1000) {
+            if (Ovl11HasSpendableBalance(quantityPrompt->unk8 * quantityPrompt->unkA) == 1) {
+                if (quantityPrompt->unk8 + ((Ovl11SaleGlobals *)D_8006C838)->amount >= 1000) {
                     RequestMessageWindow(2, 0x6D);
                     Ovl11SetInteractionSteps(25, 9);
                 } else {
-                    ovl_11_func_801152BC(state);
+                    Ovl11DebitRecordTradeQuantity(quantityPrompt);
                     RequestMessageWindow(2, 0x70);
                     Ovl11SetInteractionSteps(25, 24);
                 }
@@ -192,9 +206,9 @@ s32 ovl_11_func_80114604(void) {
             Ovl11SetInteractionSteps(25, 24);
             break;
         case 1:
-            dest = Ovl11AllocateItemRecord(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
-            for (i = 0; i < 9; i++) {
-                dest[i] = D_8012D638.values[i];
+            nameDestination = Ovl11AllocateItemRecord(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
+            for (character = 0; character < 9; character++) {
+                nameDestination[character] = D_8012D638.values[character];
             }
             Ovl11AdjustSpendableBalance(-Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x74);
@@ -337,4 +351,11 @@ s32 ovl_11_func_80114604(void) {
         break;
     }
     return result;
+}
+
+/* Dedicated helper: signed quantity (+8) times unit cost (+A), then count.
+ * No balance/limit check here; the update entry performs those gates. */
+void Ovl11DebitRecordTradeQuantity(Ovl11D8012D538 *prompt) {
+    Ovl11AdjustSpendableBalance(-(prompt->unkA * prompt->unk8), 1);
+    Ovl11AddSaveCounter18(2, prompt->unk8);
 }

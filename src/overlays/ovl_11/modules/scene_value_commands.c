@@ -13,6 +13,7 @@
 #include "word_interpolation.h"
 #include "psyq/memory.h"
 #include "ovl11_condition_value_queries.h"
+#include "ovl11_record_counter_category.h"
 
 /* Narrow view starting at work +25394. Keeping the fields in one address
  * web preserves the original far-buffer load order. Target Y is a halfword;
@@ -81,7 +82,6 @@ done:
     return complete;
 }
 
-s32 ovl_11_func_800F02C8(void);
 s32 ovl_11_func_800F00E4(void);
 
 s32 Ovl11UpdateConditionValueCommand(s16 mode, s16 outputSlot,
@@ -95,7 +95,7 @@ s32 Ovl11UpdateConditionValueCommand(s16 mode, s16 outputSlot,
         if (override >= 0) {
             ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = (u16) override;
         } else {
-            category = ovl_11_func_800F02C8();
+            category = Ovl11SelectHighestRecordCounter();
             if ((u8) ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_44CD >= 0xAU) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xAU;
             } else if (Ovl11GetMaxEligibleRecordCounter() < 0x32) {

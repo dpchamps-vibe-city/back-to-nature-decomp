@@ -570,12 +570,6 @@ typedef struct {
 } M2C_e513cdc3a96c_Ovl11DecodedItemCode;
 
 typedef struct {
-               char pad0[0x8];
-               s16 unk8;
-               s16 unkA;
-} M2C_f8096ae641a3_UnkStruct801152BC;
-
-typedef struct {
                u16 unk0;
                char pad_2[0x32];
                s32 unk34;

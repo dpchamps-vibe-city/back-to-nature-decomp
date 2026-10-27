@@ -33,6 +33,7 @@
 #include "ovl11_object_load_context.h"
 #include "ovl11_object_sprite_recovery.h"
 #include "ovl11_object_load_resets.h"
+#include "ovl11_clock_event_transition_command.h"
 
 s32 Ovl11DispatchObjectLoadPhase(void) {
     char *work;
@@ -108,11 +109,10 @@ void Ovl11ReloadObjectSoundBank(void) {
     }
 }
 
-s32 ovl_11_func_800E7798 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void Ovl11RequestObjectProgramRelease(void) {
     u8 *base = (u8 *)D_8006C838;
     (*(s32 *)(base + 0x7A74)) = 2;
-    ovl_11_func_800E7798(0, 0, 0, 0);
+    Ovl11ClockEventTransitionCommand(0, 0, 0, 0);
     (*(s32 *)(base + 0x522C)) = 0;
     (*(s32 *)(base + 0x5230)) = 0;
 }
