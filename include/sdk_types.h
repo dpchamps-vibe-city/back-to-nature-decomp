@@ -722,13 +722,6 @@ typedef struct {
 } M2C_d027372267ea_Ovl11E594Obj;
 
 typedef struct {
-    char pad_00[0x26];
-    s16 field_26;
-    char pad_28[0x34 - 0x28];
-    s32 field_34;
-} M2C_d59586abe320_Ov11D266CFields;
-
-typedef struct {
                u16 unk0;
     char pad_02[0x24 - 0x02];
                s16 unk24;
@@ -832,6 +825,13 @@ typedef struct {
                s8 field_5;
                s16 field_6;
 } ObjectState;
+
+typedef struct {
+    char pad_00[0x26];
+    s16 field_26;
+    char pad_28[0x34 - 0x28];
+    s32 field_34;
+} Ov11D266CFields;
 
 typedef struct {
     char pad_00[0x24];

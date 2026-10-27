@@ -18,10 +18,10 @@
 #include "sprite_source.h"
 #include "ovl11_block_copy.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_record_sprite_sources.h"
 
 void Ovl11LoadPaletteBankTriplet(void);
 void ovl_11_func_800F0E00(void *data);
-void ovl_11_func_800DA588(s32 index);
 
 void Ovl11LoadAreaResourceSet(s32 index, s32 alreadyLoaded) {
     s32 *record;
@@ -171,7 +171,7 @@ void Ovl11LoadIndexedSpriteRecords(s32 index) {
         memcpy(&gLoadedSpriteDataBlob, (void *)(gGraphicsHeapBase + 0x4290), imageOffset);
         imageOffset = imageOffset + 0x4290;
         UploadSpriteImages((u8 *)(gGraphicsHeapBase + imageOffset));
-        ovl_11_func_800DA588(index);
+        Ovl11InstallRecordSpriteSources(index);
     }
 }
 

@@ -2105,3 +2105,23 @@ gOvl11MenuGridPageText = 0x80129FD8; // type:data size:0x18
 
 Ovl11RequestRecordStatusMessage = 0x800D0DCC; // type:func
 gOvl11RecordStatusCountText = 0x80128D70; // type:data size:0x8
+
+// Screen-space timed-effect offset selected by the rendered object ID.
+Ovl11GetObjectEffectYOffset = 0x800D2950; // type:func
+Ovl11InstallRecordSpriteSources = 0x800DA588; // type:func
+Ovl11FollowSelectedRecordCamera = 0x800E4428; // type:func
+Ovl11ResetPrimaryObjectForDayTransition = 0x800CCCC0; // type:func
+
+// Record movement's closed probe/weighted-direction protocol.
+Ovl11StepRecordMovement = 0x800D12B8; // type:func
+Ovl11SetMovementRankThreshold = 0x800D1960; // type:func
+Ovl11ChooseRecordDirection = 0x800D196C; // type:func
+Ovl11ChooseWeightedDirection = 0x800D1C18; // type:func
+Ovl11UpdateRecordProbeFlag = 0x800D1E1C; // type:func
+Ovl11AdvanceRecordModeCounter = 0x800D266C; // type:func
+Ovl11TryRecordRegionExit = 0x800D2B40; // type:func
+Ovl11ProbeMovementPosition = 0x800D2DB8; // type:func
+gOvl11MovementVolumeProbeEnabled = 0x80128D6C; // type:data size:0x4
+gOvl11MovementSpeedGear = 0x80128D58; // type:data size:0x4
+gOvl11MovementSpeedTimer = 0x80123A14; // type:data size:0x4
+gOvl11DirectionChoiceWeights = 0x801232D4; // type:data size:0x480

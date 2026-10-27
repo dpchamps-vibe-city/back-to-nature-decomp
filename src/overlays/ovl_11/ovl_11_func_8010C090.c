@@ -1,8 +1,17 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_direction_vector.h"
-
-void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_record_movement.h"
 
 s32 ovl_11_func_8010C090(Recon_ovl_11_func_800D2594_A0View *arg0) {
     s32 temp_a0;
@@ -13,7 +22,7 @@ s32 ovl_11_func_8010C090(Recon_ovl_11_func_800D2594_A0View *arg0) {
     if (temp_v1 & 0x8000) {
         arg0->unk34 = temp_v1 | 0x800000;
     }
-    ovl_11_func_800D12B8(arg0, 0x18, 0x8031);
+    Ovl11StepRecordMovement(arg0, 0x18, 0x8031);
     arg0->unk34 |= 0x800;
     if (((*(s32 *) ((u8 *) arg0 + 0x48)) == 0) && (arg0->unk4C == 0) && ((*(s32 *) ((u8 *) arg0 + 0x50)) == 0)) {
         (*(s16 *) ((u8 *) arg0 + 0x24)) = 0;

@@ -13,8 +13,8 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_projected_record_sprites.h"
 #include "ovl11_shared_animation_icon.h"
+#include "ovl11_object_effect_offset.h"
 
-s32 ovl_11_func_800D2950(s32 objectId);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 s32 func_80015DD4(s32 *arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3,
@@ -32,7 +32,7 @@ void Ovl11DrawObjectWithMarker(u8 *object) {
         if (Ovl11ProjectRecordSprite((u16 *)gOvl11ObjectDrawPosition, screen) != 0) {
             ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
             Ovl11DrawTimedSpriteEffect(object + 0xA8, ot, (s16)screen[0],
-                (s16)(screen[1] + ovl_11_func_800D2950(*(s16 *)object)));
+                (s16)(screen[1] + Ovl11GetObjectEffectYOffset(*(s16 *)object)));
             func_80016054(ot, gActiveRenderContext->field_118, (s32)(object + 0x78),
                 object[0x7C], object[0x7D], (s16)screen[0], (s16)screen[1],
                 *(s32 *)(object + 0x80), 0, 0x40);
@@ -93,7 +93,7 @@ void Ovl11DrawObjectWithSourceOffsets(u8 *object, s32 textureBase, s32 sourceBia
             ot = gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4);
             func_80015DD4((s32 *)ot, (SpriteSourceData *)(object + 0x78), (s16)screen[0], (s16)screen[1], 0x1000, 0, 0, D_8005E3BC + sourceBias, textureBase);
             Ovl11DrawTimedSpriteEffect(object + 0xA8, ot, (s16)screen[0],
-                (s16)(screen[1] + ovl_11_func_800D2950(*(s16 *)object)));
+                (s16)(screen[1] + Ovl11GetObjectEffectYOffset(*(s16 *)object)));
             if (*(s32 *)(object + 0x34) & 0x01000000) {
                 gOvl11OffsetObjectDrawPosition[0] = *(u16 *)(object + 0x38) + 0x96;
                 gOvl11OffsetObjectDrawPosition[1] = -0x64;

@@ -52,6 +52,7 @@
 #include "ovl11_clock_scene_completion.h"
 #include "ovl11_calendar_record_gate.h"
 #include "ovl11_scene_header_capture.h"
+#include "ovl11_primary_object_day_reset.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -78,7 +79,6 @@ s32 Ovl11ClockShiftValueHistory(void) {
     return 1;
 }
 
-void ovl_11_func_800CCCC0 (void);
 void ovl_11_func_800EEECC (void);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
@@ -133,7 +133,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
         break;
     case 4:
         if (IsScreenFadeComplete() == 1) {
-            ovl_11_func_800CCCC0();
+            Ovl11ResetPrimaryObjectForDayTransition();
             Ovl11ResetSpriteRotations();
             Ovl11UpdateProgressTimers();
             ((Ovl11SetupWorkView *)&D_8007AFF0)->alternateId = -1;

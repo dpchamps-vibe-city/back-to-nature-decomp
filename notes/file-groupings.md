@@ -4331,7 +4331,100 @@ non-growth. Folded membership rose 113 → 122; all fifteen modules are valid.
 
 ---
 
-## `ovl_11` D_80123754 setter/getter run + updater siblings / flag-reader helper — 0x800D12A0–0x800D24FC / 0x800D2DB8 (confidence: medium; extensions: low)
+## `ovl_11` record movement and interposed record services — 0x800D12B8–0x800D2E20 exclusive (confidence: medium)
+
+**Whole-unit reconstruction: `src/overlays/ovl_11/modules/record_movement.c`,
+all 22 entries in original order.** This supersedes the seven service-module
+slices below: movement_cell_rank, area_record_updates, movement_step,
+pending_stage_dispatch, object_effect_offset, row_placement and item_id_flags.
+Their focused public headers remain useful interfaces, not TU boundaries.
+The earlier inner-boundary discussions below are historical and superseded.
+
+Load-bearing membership is the exclusive probe-mode producer/consumer:
+D12B8 writes 80128D6C (zero for ID 15B, one otherwise); D2DB8 alone reads it,
+and D2DB8 is called only by D12B8/D196C. D12B8 alone calls D196C, D1E1C and
+D2B40; D196C alone calls the weighted chooser D1C18. Both callers use the
+rank classifier D1CFC, whose result indexes D1C18's weights; D1CD0 is its
+actual nested comparator. The setter, normal-completion reset and classifier
+consume one threshold. The paired-object sweep D2334 calls D266C, and its
+mode counters are also consumed by D2764. These exclusive value flows,
+helper closure and table protocol support the whole contiguous interval.
+Interposed placement/render/ID-policy entries do not each need to read the
+probe-mode word: if its endpoints compiled together, their original link
+order carries every intervening entry. The earlier rejection incorrectly
+treated independent interior responsibilities as contrary TU evidence.
+
+There is no GP proof under -G0, and this remains an evidence-supported
+source reconstruction, not a recovered build command. Left D12A0 is the
+separate CD-audio request halfword writer; right D2E20 is the calendar-season
+mask adapter. Neither uses any of the interval's probe-mode, weights, rank,
+speed timer/gear or mode-counter protocol, nor provides a private-helper
+extension. Those are responsibility/private-data outer cuts, not proven
+object edges. Shared collision/world/pool APIs are external substrate and
+do not extend either edge. No flag or mechanical limit selects a boundary.
+
+Entries in order (address suffix -> name):
+D12B8 StepRecordMovement; D1960 SetMovementRankThreshold;
+D196C ChooseRecordDirection; D1C18 ChooseWeightedDirection;
+D1CD0 CompareMovementAxis (nested); D1CFC RankMovementCell;
+D1E1C UpdateRecordProbeFlag; D1EB8 UpdateTaggedRecordPools;
+D2160 UpdateSmallRecordTriplet; D2240 UpdateStateObjectPool;
+D2334 UpdatePairedStageObjects; D24FC ProbeRecordStep;
+D2594 StepRecordVerticalOffset; D266C AdvanceRecordModeCounter;
+D2710 ProcessPendingStageMode; D2764 DispatchStageMode;
+D2950 GetObjectEffectYOffset; D29B0 PlaceRowZSlot; D2A88 PlaceRowXSlot;
+D2B40 TryRecordRegionExit; D2D54 ApplyItemIdFlags; D2DB8 ProbeMovementPosition.
+Every name has the Ovl11 prefix and retains its original configured identity.
+Helper linkage stays external; the nested definition stays nested.
+
+New data names are gOvl11MovementVolumeProbeEnabled (80128D6C),
+gOvl11MovementSpeedGear (80128D58), gOvl11MovementSpeedTimer (80123A14) and
+gOvl11DirectionChoiceWeights (801232D4, **0x480 bytes**, not 480 decimal).
+Four direction slabs each hold four groups of nine four-u16 candidate rows:
+4*4*9*4*2 = 0x480, ending exactly at threshold 80123754. The byte-array
+extern view and explicit halfword reads are retained, not silently retyped.
+Its missing canonical extern moved from C to globals_override.h; all other
+externs/storage ownership are unchanged. Canonicalization propagated the
+function/data identities; the four ambiguous header-only old data names
+were explicitly reconciled to the same unique overlay-11 users.
+
+The first whole fold exposed D266C's C-local anonymous typedef duplicating
+its identical game_types.h parameter view. It now uses that canonical type.
+The same caller's obsolete five-scalar D05D0 declaration/call now expresses
+the matched callee's pointer plus four-word Ovl11PaddedVec3 by-value ABI,
+including the ignored fourth word. The checked whole-22 baseline fold then
+proved every member and linked overlay byte unchanged. This resolves an
+actual affected declaration conflict, not a prototype workaround. Both
+switch tables pool in member order with the measured four-byte zero
+alignment gap at file offset D34; no data/table padding was invented.
+
+ovl11_record_movement.h publishes the movement step and signed threshold
+setter, documenting nonzero positive step size, collision-mask forwarding,
+150-VSync-unit gear cadence, shared/non-reentrant probe state, Rand effects
+and threshold restoration only on normal completion. Main-step, weight and
+probe/counter locals now describe their roles. Ordered mask decisions,
+halfword conversions, original coordinate views and existing subinterfaces
+remain intact. No compiler override or policy exception is added/retired;
+all 22 compile together at baseline -O2/-G0.
+
+Final acceptance with record_sprite_sources, selected_record_camera and
+primary_object_day_reset: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates at
+**1986/2625 folded**, up **12** from 1974, with **340/340 valid modules**
+and no folded-function regression. The four final module files cover 25
+original functions; the movement merge absorbs six pre-run modules plus the
+newly reconstructed effect-offset service. All executable/overlay bytes,
+associated data, callback pointers, switch tables and placement are unchanged.
+Canonical names are clean; affected published interfaces have zero failing
+findings, and D266C's affected prototype conflict is resolved. Unrelated
+existing interface debt remains reported, not silently claimed fixed.
+Source policy, generation convergence, whitespace/input stability and
+exception non-growth all pass. No tool, override or allowlist changed, and no
+commit was made. Logs: build/tu-campaign/record-movement-verify.log and
+record-movement-interfaces.log. Exit 1 denotes the 639 remaining eligible
+functions, not an integrity failure.
+
+Historical service-level research follows (inner cuts superseded above).
 
 The head setter is now independent `modules/cd_audio_request.c`,
 Ovl11RequestCdAudioTrack at D12A0–D12B8. The demonstrable consumer is
@@ -4359,7 +4452,7 @@ definer/declarer rule.
 Fingerprints:
 - shared s16 global `D_80123754` (file-scope data at 0x80123754, splat data
   `69960.data.s`, still `nonmatching`): written by `ovl_11_func_800D12B8`
-  (three `sh` sites, `lui v1, %hi`) and `ovl_11_func_800D1960` (single
+  (one `sh` site at 800D192C after converging paths) and `ovl_11_func_800D1960` (single
   `sh a0`), read by `ovl_11_func_800D1CFC` (`lh`);
 - zero-gap link-order contiguity (map): 0x800D12A0 (0x18) → 0x800D12B8
   (0x6A8) → 0x800D1960 (0xC) → 0x800D196C (0x2AC) → 0x800D1C18 (0xB8) →
@@ -4383,7 +4476,7 @@ Fingerprints:
   by distant movement clients. Co-use of that setting does not establish
   the whole hypothesized movement band as one original TU.
 
-  Left D1C18 selects from its different 480-byte random-weight table and
+  Left D1C18 selects from its different 0x480-byte random-weight table and
   neither calls nor uses this pair's private rank table. Right D1E1C is a
   position probe with no rank-table/comparator access. The larger movement
   clients use the public classifier, and the private D6C bridge debated
@@ -4416,7 +4509,7 @@ Members (address order):
   D_8006C838+0x99E6 (flags/state array) via a large-offset split (base+0x8000,
   disp 0x19E6), local-pointer materialization; baseline flags; does not touch
   D_80123754 — role confirmed, shares the run's other data-tie class
-- ovl_11_func_800D12B8 (s) — writes D_80123754 at three sites
+- ovl_11_func_800D12B8 (m) — writes D_80123754 once at 800D192C
 - ovl_11_func_800D1960 (m, matched this session) — leaf setter:
   `D_80123754 = arg0` (single `sh`, delay-slot scheduled); byte-exact clean C,
   baseline flags; confirmed member of the shared-global cluster
@@ -4625,8 +4718,9 @@ Members (address order):
 
 ---
 
-**Reconstructed placement units (module campaign):**
-`src/overlays/ovl_11/modules/row_placement.c` holds the two entries above,
+**Reconstructed placement services (module campaign):**
+Overlay 11's former `modules/row_placement.c`, now absorbed whole into
+`src/overlays/ovl_11/modules/record_movement.c`, holds the two entries above,
 800D29B0–800D2B40 exclusive, as `Ovl11PlaceRowZSlot` / `Ovl11PlaceRowXSlot`.
 `src/overlays/ovl_15/modules/row_placement.c` holds its independent twins,
 80132A8C–80132C1C exclusive, as `Ovl15PlaceRowXSlot` / `Ovl15PlaceRowZSlot`:
@@ -4637,7 +4731,31 @@ caller (800D075C) selects between them; overlay 15's two callers inline that
 selection. The shared layout/protocol and original table adjacency corroborate
 membership; -G0 supplies no GP-based proof of original object boundaries.
 
-Boundary evidence, overlay 11: preceding 800D2950 is a stateless item-code to
+**Object-effect offset service, now inside `modules/record_movement.c`,
+800D2950–800D29B0 exclusive:** its earlier singleton fold was absorbed by
+the whole D12B8–D2E20 probe-mode closure above. Ovl11GetObjectEffectYOffset selects a
+screen-space pixel offset for an object's timed sprite effect. Both callers
+are in object_render_variants: they pass the signed halfword object ID and
+add the result to projected Y for Ovl11DrawTimedSpriteEffect, without offsetting
+the main sprite or marker. Its private switch table and complete stateless
+ID classification define this singleton service; no separate data global
+is read or written. The interface documents the -10/-20/-30/-40 values,
+zero fallback and signed halfword ID normalization. Parameters/locals name
+the object ID and normalized relative ID; the normalization expression and
+all types/linkage remain unchanged.
+
+Left pending_stage_dispatch ends at 800D2950 and consumes a pending mode
+through an exclusive dispatcher/helper protocol, not these IDs or this
+table. Right row_placement starts at 800D29B0 and uses its private X/Z
+coordinate tables, not this switch or effect offsets. The distant rendering
+clients do not establish co-compilation across the intervening services.
+These are evidence-limited -G0 service cuts, not a claim that the historical
+source had only one function. No flag or mechanical obstacle selected the
+edges. Baseline checked fold proved the member and overlay unchanged;
+there is no override, new storage, private-linkage inference or exception.
+
+Historical service-boundary evidence (these are now INTERNAL to the whole
+overlay-11 record_movement TU): preceding 800D2950 is a stateless item-code to
 vertical-offset switch used by object renderers, with no placement table or
 placement call. Following 800D2B40 probes four possible moves through the
 broad collision/object protocol; it neither reads these tables nor invokes
@@ -15983,6 +16101,32 @@ Members (address order):
 
 ## `ovl_11` D_80076280/D_80076300 record-selector run — 0x800E9778 / 0x800EDD54–0x800EDEB8 / 0x800E7C2C / 0x800E4428 (confidence: low)
 
+**Reconstructed `modules/selected_record_camera.c`, 800E4428–800E44D4
+exclusive, Ovl11FollowSelectedRecordCamera.** object_archive_pipeline's
+run/release entries are its only source callers. The far-work halfwords it
+writes are demonstrably camera target XYZ: scene_camera_lighting's
+Ovl11ApplySceneCamera passes them to SetCameraTarget, and uses X/Z with the
+camera orbit offsets for the eye. This establishes camera following rather
+than a generic coordinate-copy label. The public header documents the
+0x400000 enable bit, -2/-1 selections, unchecked other indices, 0x1D4 record
+stride, low-halfword truncation and retained target on a skipped call. It
+neither moves the record nor updates camera matrices/eye. The three selector
+calls and all access widths are retained; locals name the record coordinates
+and camera work. The C-local source-array extern was redundant with the
+canonical globals_override.h entry and was removed; no alias/storage changed.
+
+Left object_archive_pipeline ends at E4428 with its program
+cursor/index/phase banks; this follower uses none of that private state.
+Right E44D4 begins active_record_sprites' scan/attachment/source-record
+lifecycle, with different scan tables and sprite slots. Neither neighbor
+shares private state or helpers with this leaf; their calls and broad object
+work alone do not establish co-compilation. The distant position-record and
+camera services below likewise form a data-system tie, not a TU spanning all
+intervening code. These are conservative singleton service cuts under -G0,
+not proven historical object boundaries. No flag/mechanical obstacle was used
+to select them. The checked baseline fold proved this member and overlay
+unchanged without an override or new exception.
+
 Data-family tie: `ovl_11_func_800E9778`, `ovl_11_func_800EDD54`,
 `ovl_11_func_800EDEB8`, `ovl_11_func_800E7C2C` and
 `ovl_11_func_800E4428` are recorded members. The 800EDD54/800EDEB8 pair
@@ -16226,6 +16370,32 @@ Members (address order):
   *arg2; returns 1/2 on the same nonzero-entry test as 801031E4.
 
 ## `ovl_11` D_80125528/D_80126254 record-table + D_800957F8 blob cluster (confidence: low)
+
+**Reconstructed `modules/record_sprite_sources.c`, 800DA588–800DA638
+exclusive:** Ovl11InstallRecordSpriteSources is the complete loaded-record
+installer. Its only source caller, area_resource_load's
+Ovl11LoadIndexedSpriteRecords, first reads the selected range, copies it to
+gLoadedSpriteDataBlob and uploads its textures, then calls the installer
+with the same record-set index. The installer consumes the count and header
+offsets from gOvl11SpriteRecordSets, initializing consecutive 0x30-byte
+records at gSpriteSourceBankBase. Count >=45 becomes 44, nonpositive count
+writes nothing, and the remainder of the destination bank is not cleared.
+The header states those limits and the unchecked loaded-blob prerequisites.
+Locals describe count/index/destination/entry address; all widths, arithmetic
+and external linkage remain intact. The redundant C-local bank extern was
+removed in favor of globals_override.h's existing canonical declaration;
+no storage or GP ownership was added.
+
+This is a conservative singleton service, not a claim of an original
+one-function file or of private ownership of the shared bank. Left
+DA390–DA588 is grid_entry_transitions' eight-byte cell tag/texture lifecycle,
+with no record-set/blob reads. Right DA638 begins map_grid_cells' two-layer
+grid and neighbor-mask protocol, not record-source initialization. The remote
+loader and accessor below witness a shared data system, not a TU spanning all
+the intervening unrelated services. These -G0 boundaries rest on the distinct
+data/protocol and absence of a supported extension; no flag or mechanical
+limit selected them. The checked fold proved baseline bytes for the member
+and complete overlay, with no override or exception change.
 
 Evidence: a shared global cluster — `D_80125528` (per-index pointer table),
 `D_80126254` (per-index s16 key-list table) and the `D_800957F8` blob base —
@@ -24838,6 +25008,31 @@ tables and placement remain byte-identical. Canonical interfaces have zero
 failing findings; no shared tool or compiler setting changed and no exception
 was added. Exit 1 means the remaining 674 functions are not yet folded.
 
+**Primary-object day reset is now `modules/primary_object_day_reset.c`,
+800CCCC0–800CCF14 exclusive**, Ovl11ResetPrimaryObjectForDayTransition.
+The only source caller is clock_event_callbacks' day-transition phase 4,
+after its fade completes and after the earlier seasonal/day-condition work.
+The implementation resets primary-object action/request state, applies the
+existing conditional gauge deltas, updates level bands and the signed counter,
+and initializes object/shared sprite slots. Its responsibility is not merely
+initialization: repeating it can apply status changes again. The public header
+states that behavior, the game-flag effects, hour-8 accumulation with signed
+upper cap and unchanged halfword truncation/no lower cap. No calendar advance,
+fade or scene load was added. Locals distinguish work, primary object and
+delta arithmetic; the oversized unused SDK include preamble was reduced to
+the actual canonical service/type headers. No existing record type, field
+width, global ownership or linkage changed.
+
+The entire supported reset service is carried. Left scene_header_capture
+uses its distinct header key/+FC/+4012 protocol and no reset fields; right
+triplet_sprite_release takes a six-byte countdown/slot record and neither
+uses the reset state nor participates in the gauge adjustment. Widely shared
+object state and public reset/source services do not prove the earlier broad
+band as one TU. These are evidence-limited -G0 service boundaries, not a
+historical singleton-file claim or a flag-derived cut. The checked baseline
+fold proved the member and overlay unchanged; no override/exception was
+added or retired. The sole caller is reconciled through the new header.
+
 **Two independent service units previously reconstructed in this band:**
 `modules/triplet_sprite_release.c` (800CCF14–800CCF58) and
 `modules/held_item_flags.c` (800CCF58–800CCFF8). These are conservative
@@ -27266,8 +27461,10 @@ Evidence: gapless original link order (0x800D2710 + 0x54 = 0x800D2764;
 `configs/splat/ovl_11.yaml`, offsets 0x1A8F0 → 0x1A944) agrees with the
 predecessor's direct `jal` at 0x800D2744
 (`build/ovl_11/asm/nonmatchings/ovl_11_func_800D2710/ovl_11_func_800D2710.s`).
-**Reconstructed `src/overlays/ovl_11/modules/pending_stage_dispatch.c`:**
-`Ovl11ProcessPendingStageMode` (800D2710) and `Ovl11DispatchStageMode`
+**Pending-stage protocol, formerly `modules/pending_stage_dispatch.c`, now
+inside the whole `src/overlays/ovl_11/modules/record_movement.c`:** its earlier
+inner service cuts below are superseded by the D12B8–D2E20 private-probe
+closure recorded above. `Ovl11ProcessPendingStageMode` (800D2710) and `Ovl11DispatchStageMode`
 (800D2764), ending at 800D2950. The first is the second's only source caller;
 its signed pending value is exactly the helper's mode input, followed by
 unconditional request consumption. This private call/protocol pair, together

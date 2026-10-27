@@ -3,9 +3,17 @@
  * Their boundary to the fixed playlist band is documented in
  * notes/file-groupings.md; the callback contracts are in the public header. */
 #include "ovl11_animation_pose.h"
-
-void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *object,
-                        s32 period, s32 mode);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_record_movement.h"
 
 s32 Ovl11SubmitDeferredAnimationPose(Recon_ovl_11_func_800E0220_A0View *object) {
     object->unk34 = object->unk34 | 0x800;
@@ -42,7 +50,7 @@ s32 Ovl11SubmitAnimationPose(Recon_ovl_11_func_800D2594_A0View *object, s32 unus
     } else {
         object->unk34 &= 0xFBFFFFFF;
     }
-    ovl_11_func_800D12B8(object, period, mode);
+    Ovl11StepRecordMovement(object, period, mode);
     if (((*(s32 *)((u8 *)object + 0x48)) == 0) && (object->unk4C == 0) && ((*(s32 *)((u8 *)object + 0x50)) == 0)) {
         if (isHandler13 != 0) {
             object->unk34 &= ~0x2000;

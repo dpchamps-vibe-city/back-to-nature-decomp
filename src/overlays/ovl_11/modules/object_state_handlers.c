@@ -46,11 +46,9 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
+#include "ovl11_record_movement.h"
 
-void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *object,
-    s32 step, s32 flags);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *object, Ovl11PaddedVec3 vector);
-void ovl_11_func_800D1960(s16 threshold);
 
 s32 Ovl11ApplyStateValueDebit(Ovl11StateValueView *object) {
     s32 difference;
@@ -165,10 +163,10 @@ s32 Ovl11StepState00Keyframes(Ovl11D04D4Obj *arg0) {
 
 s32 Ovl11StepState01Motion(u16 *record) {
     if (*record != 0x15B) {
-        ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *) record,
+        Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *) record,
             Ovl11GetObjectMoveStep(record), 0x8031);
     } else {
-        ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *) record,
+        Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *) record,
             Ovl11GetObjectMoveStep(record), 0x9010);
     }
     if ((*(s32 *) ((u8 *) record + 0x48) == 0) &&
@@ -653,7 +651,7 @@ s32 Ovl11StepState19ExitMotion(Ovl11SetFieldsView *arg0) {
         ovl_11_func_800D05D0(arg0, position);
         break;
     case 1:
-        ovl_11_func_800D1960(0xC8);
+        Ovl11SetMovementRankThreshold(0xC8);
         Ovl11StepState01Motion((u16 *) arg0);
         if (!(arg0->field_34 & 0x2000)) {
             (*(s16 *) ((u8 *) arg0 + 0x28)) = 2;
@@ -798,7 +796,7 @@ s32 Ovl11StepState06TimedSprite(Ovl11D55F8Object *arg0) {
         arg0->unk2A = 0;
         arg0->unk22 = (u16)gOvl11StateEntryDirection;
         arg0->unk34 = (arg0->unk34 & ~0x2000) | 0x800;
-        ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x18, 0x9010);
+        Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x18, 0x9010);
         far_base = (u8 *)&D_8007AFF0;
         if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
             PlaySoundEffect(0x1A);
@@ -817,7 +815,7 @@ s32 Ovl11StepState06TimedSprite(Ovl11D55F8Object *arg0) {
         if (Ovl11StepPackedKeyframes((Ovl11D04D4Obj *)arg0, gOvl11State06Keyframes, &arg0->unk28, -1, (u16 *)&arg0->unk2C) != 0) {
             arg0->unk28 = -1;
         } else {
-            ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x18, 0x9010);
+            Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x18, 0x9010);
         }
         break;
     }

@@ -26,6 +26,13 @@
 #include "ovl11_record_effect_threshold.h"
 #include "ovl11_keyframe_step.h"
 #include "ovl11_selected_record_flag_guard.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_record_movement.h"
 
 s32 Ovl11GetSmallRecordSpriteDescriptor(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -759,8 +766,6 @@ s32 Ovl11StepSmallRecordHandler2(Ovl11E3020Obj *arg0) {
     return var_s1;
 }
 
-void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
-
 s32 Ovl11StepSmallRecordHandler3(Ovl11D04D4Obj *arg0) {
     s16 temp_s0;
     s32 result;
@@ -772,7 +777,7 @@ s32 Ovl11StepSmallRecordHandler3(Ovl11D04D4Obj *arg0) {
         arg0->unk2C = 0;
         arg0->unk34 |= 0x800;
         arg0->unk34 &= ~0x2000;
-        ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x31);
+        Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x31);
         break;
     case -1:
         result = 1;
@@ -786,7 +791,7 @@ s32 Ovl11StepSmallRecordHandler3(Ovl11D04D4Obj *arg0) {
             arg0->unk28 = -1;
         } else {
             temp_s0 = arg0->unk2A;
-            ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x31);
+            Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x31);
             arg0->unk2A = temp_s0;
         }
         break;
@@ -818,7 +823,7 @@ s32 Ovl11StepSmallRecordHandler4(Ovl11D04D4Obj *arg0) {
             arg0->unk28 = -1;
         } else {
             temp_s0 = arg0->unk2A;
-            ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *) arg0, 0x12, 0x31);
+            Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *) arg0, 0x12, 0x31);
             arg0->unk2A = temp_s0;
         }
         break;
@@ -863,7 +868,7 @@ s32 Ovl11StepSmallRecordHandler14(Ovl11D04D4Obj *arg0) {
 }
 
 s32 Ovl11StepSmallRecordHandler18(Recon_ovl_11_func_800D2594_A0View *arg0) {
-    ovl_11_func_800D12B8(arg0, 6, 0x31);
+    Ovl11StepRecordMovement(arg0, 6, 0x31);
     if (((*(s32 *) ((u8 *) arg0 + 0x48)) == 0) && (arg0->unk4C == 0) && ((*(s32 *) ((u8 *) arg0 + 0x50)) == 0)) {
         (*(s16 *) ((u8 *) arg0 + 0x24)) = 0;
     } else {

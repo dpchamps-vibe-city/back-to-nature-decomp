@@ -1,14 +1,23 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_record_position_tables.h"
-
-void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_record_movement.h"
 
 s32 ovl_11_func_8010E644(Ovl11E644Object *arg0) {
     s16 var_a0;
     s16 var_v1;
 
-    ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *) arg0, Ovl11GetRecordMovePeriod((s32) arg0), 0x70);
+    Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *) arg0, Ovl11GetRecordMovePeriod((s32) arg0), 0x70);
     var_a0 = 0xF;
     if (arg0->unkB6 == 0) {
         var_a0 = 0;

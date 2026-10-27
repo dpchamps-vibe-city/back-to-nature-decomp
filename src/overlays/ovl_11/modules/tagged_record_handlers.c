@@ -37,6 +37,13 @@
 #include "ovl11_record_effect_threshold.h"
 #include "ovl11_cd_audio_request.h"
 #include "ovl11_record_status_message.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_record_movement.h"
 
 s32 Ovl11GetTaggedRecordSpriteDescriptor(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -952,8 +959,6 @@ s32 Ovl11StepTaggedRecordHandler2(Ovl11E1974Obj *arg0) {
     return var_s1;
 }
 
-void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
-
 s32 Ovl11StepTaggedRecordHandler3(Ovl11D04D4Obj *arg0) {
     s32 result;
 
@@ -963,7 +968,7 @@ s32 Ovl11StepTaggedRecordHandler3(Ovl11D04D4Obj *arg0) {
         arg0->unk28 = 1;
         arg0->unk2C = 0;
         arg0->unk34 |= 0x800;
-        ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x8031);
+        Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x8031);
         break;
     case -1:
         result = 1;
@@ -979,7 +984,7 @@ s32 Ovl11StepTaggedRecordHandler3(Ovl11D04D4Obj *arg0) {
         if (Ovl11StepPackedKeyframes(arg0, gOvl11TaggedRecordHandler3Keyframes, &arg0->unk28, -1, (u16 *)&arg0->unk2C) != 0) {
             arg0->unk28 = -1;
         } else {
-            ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x8031);
+            Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)arg0, 0x12, 0x8031);
         }
         break;
     }
@@ -1112,7 +1117,7 @@ block_4:
     } else {
         arg0->unk34 &= 0xFBFFFFFF;
     }
-    ovl_11_func_800D12B8(arg0, 6, var_a2);
+    Ovl11StepRecordMovement(arg0, 6, var_a2);
     if (((*(s32 *) ((u8 *) arg0 + 0x48)) == 0) && (arg0->unk4C == 0) && ((*(s32 *) ((u8 *) arg0 + 0x50)) == 0)) {
         if (temp_s1 != 0) {
             arg0->unk34 &= ~0x2000;

@@ -37,6 +37,7 @@
 #include "ovl11_direction_vector.h"
 #include "ovl11_cell_geometry.h"
 #include "ovl11_grid_candidate_search.h"
+#include "ovl11_record_movement.h"
 
 /* Internal helpers retain their original external linkage. */
 s32 Ovl11AcquireActionGridTarget(Ovl11SetFieldsView *object, s32 gridMode, s32 option);
@@ -561,14 +562,13 @@ s32 Ovl11TestActionKey5(s32 objectAddress, s16 unusedActionId) {
     return ((u32)0) < ((u32)result);
 }
 
-void ovl_11_func_800D1960(s16 arg0);
 s32 ovl_11_func_8010E644(Ovl11E644Object *arg0);
 
 s32 Ovl11AdvanceActionMovement(Ovl11E644Object *arg0, s16 arg1) {
     s32 temp_s0;
 
     temp_s0 = arg0->unk34;
-    ovl_11_func_800D1960(arg1);
+    Ovl11SetMovementRankThreshold(arg1);
     ovl_11_func_8010E644(arg0);
     if (temp_s0 & 0x800) {
         arg0->unk34 |= 0x800;

@@ -253,10 +253,12 @@ extern s16 gOvl11PositionHeightTolerances[5];
 extern u16 gOvl11TimedEffectPositionWords[];
 
 /* 800D2DB8 loads this signed word and compares it with 1. */
-extern s32 D_80128D6C;
-/* 800D12B8 passes the word at 80123A14 to 80012CB4 and toggles 80128D58. */
-extern s32 D_80123A14;
-extern s32 D_80128D58;
+extern s32 gOvl11MovementVolumeProbeEnabled;
+/* 800D12B8 passes the timer word to HasVSyncIntervalElapsed and toggles gear. */
+extern s32 gOvl11MovementSpeedTimer;
+extern s32 gOvl11MovementSpeedGear;
+/* D1C18 indexes four 0x120-byte direction slabs of 4x9x4 u16 weights. */
+extern u8 gOvl11DirectionChoiceWeights[];
 
 /* ovl_11 object-state callbacks: exclusive packed {s16 code,duration} tables
  * in text/member order at 80123BCC–80123CA0; scalar byte anchors retain the

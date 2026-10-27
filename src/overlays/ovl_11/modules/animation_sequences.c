@@ -5,9 +5,17 @@
  * header and notes/file-groupings.md for behavior and boundary evidence. */
 #include "ovl11_animation_sequences.h"
 #include "ovl11_keyframe_step.h"
-
-void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *object,
-                        s32 argument, s32 mode);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_record_movement.h"
 
 s32 Ovl11RunAnimation0Sequence(Ovl11D04D4Obj *object) {
     s16 state;
@@ -95,7 +103,7 @@ s32 Ovl11RunAnimation41Sequence(Ovl11D04D4Obj *object) {
         object->unk28 = 1;
         object->unk2C = 0;
         object->unk34 |= 0x800;
-        ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)object, 0x12, 0x8031);
+        Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)object, 0x12, 0x8031);
         break;
     case -1:
         complete = 1;
@@ -111,7 +119,7 @@ s32 Ovl11RunAnimation41Sequence(Ovl11D04D4Obj *object) {
         if (Ovl11StepPackedKeyframes(object, gOvl11Animation41Sequence, &object->unk28, -1, (u16 *)&object->unk2C) != 0) {
             object->unk28 = -1;
         } else {
-            ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *)object, 0x12, 0x8031);
+            Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)object, 0x12, 0x8031);
         }
         break;
     }
