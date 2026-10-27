@@ -7574,6 +7574,25 @@ Members (address order):
   sources under `src/overlays/ovl_11/`). This local pairing does not establish
   a single TU across the wider setter/getter span.
 - ovl_11_func_800E880C (m) — resolves `D_80129560` selectors, applies coordinates through 800E60A0, and caches success in `D_801295C6` ([membership evidence](research/ovl_11_func_800E880C-grouping.md)).
+
+  **Reconstructed `modules/camera_record_selection.c`, E880C–E8960
+  exclusive**, Ovl11SelectCameraPositionRecord. This complete command adapts
+  literal/slot selectors to the position-control service, maps 41 to primary
+  object -2, and caches completed selections. The earlier/later camera helpers
+  share its cache but not a contiguous private closure; the wider state-family
+  hypothesis above remains a data-system tie, not evidence for one TU across
+  all intervening commands. Left E87A0 queues condition codes and configures
+  mode flags; right E8960 starts the entity-pool accessor protocol. Neither
+  uses this selection/movement/cache operation or calls it. These are
+  evidence-limited responsibility cuts under -G0, not GP-proven object edges.
+
+  The header documents unchecked optional slots, moving-only record bounds,
+  mode 2's non-caching behavior, cached early return and the control-bit side
+  effects even on failure. The established position/cache identities and
+  widths remain; parameters name selector/mode/speed rather than inventing
+  gameplay semantics. No private linkage or ownership is inferred. The
+  checked baseline fold preserved the member and linked ovl_11; no flag or
+  exception was added.
 - ovl_11_func_800EE604 (m, matched this session) — run-head state machine: seeds/reads the `D_80129540`..`D_80129554` block and clears `D_801295C6` from the `D_8007AFF0`+0x25394 work area, then steps the `D_80129560[arg0]`/`[arg1]` slot pair through states 0/1/2 via `func_8001F2EC`
 - ovl_11_func_800EE7BC (s) — sandwiched, does not touch the global
 - ovl_11_func_800EE944 (m) — sandwiched `D_80129560` table-writer (calls 800EE7BC(1, arg0, 0, 0)); does not touch `D_801295C6`
@@ -13132,6 +13151,23 @@ the overlay, never GP-relative), and the large-offset writers use the same
   leaf, byte-exact clean C, baseline flags; offsets sit ~0x36 past sibling
   0x800BCF28's +0x51FE u16 in the same state buffer; called by link-adjacent
   0x800BCD28 / 0x800CCCC0
+**Reconstructed `modules/work_flag_bits_command.c`, E953C–E95FC
+exclusive**, Ovl11WorkFlagBitsCommand. This whole mask operation tests or
+modifies the primary work word (+5234) or auxiliary u16 (+51FE). Its header
+states any-bit tests, set/clear polarity and the distinction between full-word
+mask testing and truncated halfword writes. gPrimaryObjectAuxFlags names the
+EXE:80071A36 alias; its old C-local extern moved to globals_override.h.
+Canonical Ovl11ResetState already witnesses both member offsets/widths and
+replaces two duplicate C-local views. Absolute test symbols versus base-view
+writes are intentionally retained; no storage is redefined.
+
+Left E946C resolves arguments for record reset; right E95FC adapts sound
+playback. Neither uses this mask operation or private helper/table. The shared
+work flags have many other users and do not join the broader candidate into
+one supported TU. These are evidence-limited -G0 service edges, not recovered
+object boundaries. The checked baseline fold preserved the member and linked
+overlay with no flag or exception change.
+
 - ovl_11_func_800E953C (m, matched this session) — bit get/set leaf on the
   same two cells the siblings touch: arg0 selects test vs modify, arg1 sets vs
   clears, arg3 picks the cell pair — s32 at +0x5234 / u16 at +0x51FE. Proves
@@ -13235,6 +13271,32 @@ remain provenance, not a claim that the old stub status still applies.
   configs/splat/ovl_11.yaml: 0x31158 + 0x18C = 0x312E4), so membership rests
   on the shared cells, the D_80071B00 alias and the call/link adjacency;
   byte-exact clean C, baseline flags
+**Reconstructed `modules/object_sprite_animation_command.c`, E9104–E9284
+exclusive**, Ovl11ObjectSpriteAnimationCommand. This whole hold/frame/deferred
+operation owns the only reference to its writable record at 801248BC, now
+gOvl11DeferredAnimationRecord. Its signed animation/frame/adjusted-operand/
++0C fields and base-relative work view are named in globals_override.h; the
+existing byte-storage declarations and ObjectState view retain their types.
+E4DAC's InitSpriteSourceData use corroborates the EXE:80071C90 name
+gPrimaryObjectSpriteSource (0x30-byte source prefix), without changing that
+open storage view or its other offset-based clients. The header states full
+animation comparison versus byte selection, nonzero result-flag completion,
+frame reuse and shared deferred-record overwrite. Left work_position_commands
+owns slot/coordinate operations; right E9284 owns state/direction selection.
+Neither uses this private deferred record or this sprite-control operation.
+
+**Reconstructed `modules/object_state_selection_command.c`, E9284–E932C
+exclusive**, Ovl11SelectObjectStateOrDirectionCommand. Its header distinguishes
+compact-record direction from primary state changes, including restoring the
+ENTIRE saved work+C word after the synchronous update, not just one bit. All
+four ABI arguments remain (last two unused); caller declarations now publish
+through the header, replacing legacy comments/prototypes that guessed two.
+Left E9104 controls animation; right held_item_slot_command adapts held-item
+replacement. Neither uses this state-selection/update protocol or a private
+helper/table. These two units' edges are evidence-limited -G0 operation cuts,
+not GP-proven original boundaries. The checked baseline folds preserved both
+members and the linked overlay; no flags, storage definitions or exceptions.
+
 - ovl_11_func_800E9104 (m, matched this session, 0x180, byte-exact) — state-gate
   leaf: arg0 == -1 clears bit 0x100000 of the s32 at +0x5234, arg0 == 1 sets
   that bit (and the arg2 != 0 arm handoffs through the record `u16@+2 & 0x300`
@@ -15744,6 +15806,21 @@ Members (address order):
   0x32 into unk2; confirms the run's shared record type and the 800C1C5C →
   80107DD0 callee pair (same s16 call-cast idiom as the run members)
 - ovl_11_func_800C1D68 (m, byte-exact, finalized) — updates/clamps value/count fields of all 37 D_80076220 records, clears transient flags and sets engine flags.
+**Reconstructed `modules/object_event_slot_flags_command.c`, E9620–E9724
+exclusive**, Ovl11ClearObjectEventSlotFlags. The self-recursive broadcast and
+single-slot operations form one complete public command. Event-slot field
+sharing with distant lifecycle/schedule helpers is data-system evidence, not
+a TU across intervening commands. Left E95FC only plays sound; right
+object_position_slot_transfer reads/writes coordinate triples rather than
+these slot flags. No private helper/table joins either neighbor. These are
+conservative -G0 service cuts, not GP-proven original edges.
+
+The header documents broadcast indices 1..36, mode-specific 1800/100 clearing,
+ignored recursive failures and the unusual upper-bound test on mode rather
+than slot. That test is explicitly retained, not repaired. Parameters/record/
+flag locals are named; shared record layout, linkage and ownership stay the
+same. The checked baseline fold and overlay passed without flags/exceptions.
+
 - ovl_11_func_800E9620 (m, matched this session, 0x104, byte-exact) —
   record-flag driver: when `arg0 == 0x2A` recurses once per index 1..0x24,
   otherwise for `arg0 > 0` and `arg1 < 0x25` indexes `&D_80076220 + arg0`
@@ -15782,6 +15859,19 @@ and linked overlay without a flag or policy exception.
   `D_80076220` member — same 0x1D4 stride, same record type and the run's
   `80107DD0(&record + 0xE0)` callee pair; link-order gapless between
   0x800E74AC and 0x800E7660, but neither neighbour reaches this array.
+**Reconstructed `modules/object_event_slot_reset_command.c`, E9B68–E9C34
+exclusive**, Ovl11ResetObjectEventSlotCommand. The complete per-slot reset
+includes the timed effect and thirty schedule entries, not a whole-record
+memset. The public header enumerates preserved-versus-reset fields, flag mask,
+unchecked signed slot and unused trailing operands. Record/entry/counter/code
+locals now name those roles; record layouts and all halfword writes remain.
+The distant all-slot schedule initializer corroborates meaning, not membership
+across the intervening text. Left master_volume_ramp_command uses only the
+resident ramp; right object_program_branch_slots owns program-cursor branch
+bytes, not event slots. Neither uses this reset protocol or a private helper.
+These are evidence-limited -G0 cuts. Baseline fold and linked overlay passed,
+with no flag, ownership, linkage or exception change.
+
 - ovl_11_func_800E9B68 (m, matched this session, 0xCC, byte-exact) —
   per-record initializer: sets unk2C/unk2E = 0x36, zeroes the record's
   halfword fields, sets unk1E to `(unk1E | 0x8000) & 0x9E48`, calls
@@ -15789,6 +15879,29 @@ and linked overlay without a flag or policy exception.
   the 0xE4 table; returns 1. Non-adjacent member of the same record family
   (not in the 0x800C1Bxx run) — data tie plus the run-head
   initializer→80107DD0(`&record + 0xE0`) callee pair.
+**Reconstructed `modules/state_field_broadcast_command.c`, ED4A8–ED5C0
+exclusive**, Ovl11BroadcastStateFieldCommand. It owns the complete flagged-
+record broadcast, including the special-slot split for either field 1F/20.
+The header states participating slots/flag, operand selection and discarded
+update results. The Q16 next-index accumulator and separate record walk are
+retained and named; unrelated m2c includes, declarations and unused local
+record typedefs are removed. Left EC52C is a separate scoring sequencer with
+its own switch table and uses this published service once; right
+record_family_list_command adapts a browser. Neither shares a private
+broadcast helper/table. The widely used event pool and field service do not
+establish a wider TU.
+
+**Reconstructed `modules/primary_input_override_command.c`, ED634–ED760
+exclusive**, Ovl11PrimaryInputOverrideCommand. The whole face/start/cancel/
+poll adapter documents dominant-axis tie behavior, ticks/2 versus default 12,
+start success despite a declined guard, and no local ticking. Its E9284 call
+now uses that matched four-operand interface instead of a legacy unprototyped
+claim. Left record_family_list_command uses browser state; right
+action_result_override_command inserts ID/result pairs. Neither participates
+in this primary-input lifecycle or private state. Both units' cuts are
+conservative -G0 operation boundaries, not historical object proofs. Checked
+baseline folds preserved each and the overlay; no flags/definitions/exceptions.
+
 - ovl_11_func_800ED4A8 (m, matched this session, 0x118, byte-exact) —
   flagged-record emitter: scans indices 1..0x24 of the same 0x1D4-stride
   array and reads `D_80076220[i].unk1E` (spelled `D_8006C838 + i*0x1D4 +
@@ -16874,6 +16987,28 @@ The checked baseline -O2/-G0 fold passed both members and the whole overlay,
 including its pooled jump table; no flag/exception changed.
 Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
 - ovl_11_func_800E7D4C (m, candidate same TU; [evidence](research/ovl_11_func_800E7D4C-grouping.md)) — grid-item selector that writes the selected item ID to `D_80129560[slot]`.
+
+  **Reconstructed `modules/grid_item_removal_command.c`, E7D4C–E8250
+  exclusive**, Ovl11ProcessGridItemRemovalCommand. The complete reset/bulk/
+  single-item command owns its kind-dispatch table at rodata offset 1B70.
+  It uses shared grid search and item-state resolution services; their far-away
+  definitions do not establish a TU across the intervening code. Left E7CCC
+  adapts balance accounting, not grid removal; right E8250 begins the held/
+  secondary item snapshot lifecycle. Neither uses this reset/removal protocol,
+  kind switch or calls the command. Shared value slots/map cells alone do not
+  extend it. These are conservative private-artifact/service cuts under -G0,
+  not GP-proven original object edges or flag-motivated boundaries.
+
+  The header documents mode-specific grid/slot/random effects, partial removal,
+  field restoration rather than whole-record clearing, and bulk mode's zero
+  return even after fifty successes. The +44D4 unsigned view is now named
+  Ovl11GridRemovalWorkView.alternateAreaAvailable, with unchanged layout/type.
+  Parameters distinguish reset suppression and the unchecked result slot; the
+  never-incremented bulk result counter and original return path are retained.
+  Collapsing that path to `mode == 1` changed the linked overlay in the next
+  checked fold, so that readability experiment was reverted, not promoted.
+  Baseline checked fold preserved the function, its table and linked overlay.
+  No ownership/linkage/flag or exception changed.
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8C14 (m, candidate local same TU with 800E8D00; [evidence](research/ovl_11_func_800E8C14-grouping.md)) — writes a one-based lookup result to a selected `D_80129560` slot.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
@@ -16996,6 +17131,30 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   the unchanged addressing. No manual generated-header edit or new workaround
   remains.
 - ovl_11_func_800EB010 (m, candidate same TU; [evidence](research/ovl_11_func_800EB010-grouping.md)) — ten-ID initializer/updater using the shared state slots and accessor-helper cluster.
+
+  **Reconstructed `modules/ten_record_template_sequence.c`, EB010–EB328
+  exclusive**, Ovl11StepTenRecordTemplateSequence. Its exclusive 20-byte ID
+  template at B9B1C and parallel X/Z/frame rows at 124920/124948/124970 are
+  now gOvl11TenRecordIdTemplate and gOvl11TenRecordTemplateX/Z/Frames. The
+  canonical Ovl11TenRecordIdTemplate keeps the two-by-five aggregate copy,
+  field types and all extracted-data ownership. No blob was redefined or
+  converted to a const object. The 18-entry compiler table at rodata 1D10
+  remains attributed to this module. These private artifacts support the
+  complete patch/initialize/update operation, not the wider shared-value-bank
+  candidate. The header records filtering, raw coordinate/frame inputs,
+  initialization's -1 phase VALUE, and LAST survivor's local phase winning
+  rather than accumulating phase from record to record. Locals now correctly
+  distinguish X/Z pointers from the frame pointer.
+
+  Left EAF5C only sets three literal game flags; right EB328 computes a
+  separate floating-point position sequence. Neither uses this ID template,
+  its parallel tables, its private switch or calls this operation. The later
+  five_record_sequence owns a different ID/position set; abutting rodata/data
+  pools corroborate the separate protocols but are not claimed as proof that
+  a single TU could not emit member pools. These are conservative private-
+  artifact/service cuts under -G0; the trace-free neighbors' original object
+  membership remains uncertain. Baseline fold preserved code, its jump table
+  and linked overlay, with no setting or exception change.
 - ovl_11_func_800EB328 (m, candidate same TU; [evidence](research/ovl_11_func_800EB328-grouping.md)) — randomized trigonometric position updater and direction selector using the shared table and 0x22-record helper cluster.
 - ovl_11_func_800EB700 (m, candidate same TU; [evidence](research/ovl_11_func_800EB700-grouping.md)) — resolves a `D_80129560` slot through `ovl_11_func_800EFC68` and compares the result via `ovl_11_func_800EFDA0`.
 - ovl_11_func_800EB760 (m, matched this session, 0x3C, byte-exact) —
@@ -17063,6 +17222,54 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   pair-equal predicate. Zero-gap matched-to-matched predecessor of 800EC490 and
   shares the 0x1D4 record space and 0x29 special case with
   800EB79C/800E9778, inside the 0x800E5A1C–0x800EExxx accessor band.
+**Reconstructed independent commands in the ED5C0–EDD54 band.** All four
+folds below passed baseline -O2/-G0 and the linked overlay, without overrides,
+storage definitions or linkage changes. These are whole supported operations,
+not a claim that each was historically a one-function object. Shared opcode
+registration order and the ubiquitous value bank do not join the band; no
+private-helper/state or pooled-emission witness establishes a larger unit.
+
+- `modules/record_family_list_command.c`, ED5C0–ED634:
+  Ovl11RunRecordFamilyListCommand adapts the public browser and its reset/
+  waiting/cancel/selected-index results. The header follows the matched browser
+  and scanner: selected indices are ZERO-based physical pool indices, not the
+  ONE-based ordinals supplied to the scanner. -1 means waiting, -2 means
+  cancel/reset; cancellation takes the command success edge. Left ED4A8
+  broadcasts state fields; right ED634 controls primary input. Neither uses
+  browser cursor/scroll or this adapter. The distant browser's own private
+  protocol does not establish a TU spanning intervening code.
+- `modules/action_result_override_command.c`, ED760–ED7E0:
+  Ovl11SetActionResultOverrideCommand is the complete five-entry ID/result
+  insertion operation. Its header states full-word resolved comparison,
+  halfword writes and FIRST free-or-matching entry priority (a free slot can
+  precede a later match). Left ED634 overrides input; right ED7E0 selects a
+  counter maximum. Neither shares the override insertion protocol. The far
+  consumer Ovl11ResolveActionResultOrRotate is a data-system tie, not proof
+  of a TU across the intervening text.
+- `modules/special_counter_slot_command.c`, ED7E0–EDAA4:
+  Ovl11ChooseSpecialCounterSlotCommand owns the only reference to the five-ID
+  seed at B9DB0, now gOvl11SpecialCounterSlotCandidates. Original bytes at
+  file 1F90 are {3,7,9,14,20}, followed by six zero padding bytes; the named
+  field extent remains ten bytes, not a fabricated eight-entry array. Its
+  canonical data view is Ovl11CounterSlotCandidates.slots in the override
+  header. No blob is redefined. The header documents filtering, unsigned
+  maxima, random tie selection and resultSlot -1 still consuming randomness.
+  Left ED760's overrides and right EDAA4's F8-record adjustment use neither
+  this seed nor selection operation. The shared special-slot values in the
+  distant object-events switch are corroborating domain evidence, not a
+  private table/helper tie across the intervening code.
+- `modules/item_property_adjustment_command.c`, EDAA4–EDD54:
+  Ovl11ApplyItemPropertyAdjustmentCommand owns the complete seven-record
+  status/progress protocol. The header distinguishes property CODES from raw
+  properties, first/repeated adjustment rows, upper-only signed saturation,
+  repeated all-complete bonuses, slot aliasing and failure's mode change.
+  Record/index/adjustment/property/status locals replace register names; the
+  established record view and access widths remain. Left ED7E0 selects
+  1D4-record counters; right record_position_commands operates 1D4-coordinate
+  triplets. Neither uses this F8-record/status-window protocol. These four
+  pairs of edges are evidence-limited -G0 responsibility/private-artifact
+  cuts, not GP-proven original object boundaries.
+
 - ovl_11_func_800ED760 (m) — writer-side probe: resolves scan target through
   the table when `arg2 != 0`, then scans `D_80070C72[5]`.
 - ovl_11_func_800ED7E0 (m) — selects an eligible maximum-score record with random tie-breaking and optionally stores its ID in `D_80129560[arg1]`.
@@ -17184,6 +17391,44 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   height/X/Z component order as 800E9778's selected WORD triple, not the same
   physical storage or load width — a narrow complementary-transfer protocol.
 - ovl_11_func_800E9914 (m, candidate local same TU with 800E9838/800E99EC; [evidence](research/ovl_11_func_800E9914-grouping.md)) — consumes a pending halfword with an optional `D_80129560` snapshot, or probes status bit `0x20`.
+
+  **Reconstructed `modules/pending_item_command.c`, E9914–E99EC
+  exclusive**, Ovl11ConsumePendingItemCommand. This complete destructive
+  snapshot/property-test operation is separate from the earlier candidate:
+  pending +51F0 and value slots are widely shared, and opcode-table order is
+  not a private-helper or pooled-emission witness. Left
+  object_position_slot_transfer owns the coordinate-triple protocol; right
+  E99EC adapts clock advancement. Neither uses this latch consumption or calls
+  the command. These are evidence-limited -G0 service cuts, not proof of the
+  historical object edges. The header specifies independent test/snapshot/
+  clear effects, zero snapshots, full-word slot index and the nondestructive
+  mode-1 status query. Names change no widths, ownership or linkage. Baseline
+  checked fold preserved the member and linked overlay; no flag was involved.
+
+  **Reconstructed `modules/master_volume_ramp_command.c`, E9AFC–E9B68
+  exclusive**, Ovl11MasterVolumeRampCommand. It is the whole start/poll adapter
+  for the published resident ramp API; that cross-container service is not a
+  private helper. Left E99EC adapts clock time; right E9B68 initializes event
+  slots. Neither shares the ramp protocol or calls this adapter, so no private
+  evidence extends it. These are conservative -G0 service cuts, not GP proofs.
+  The public header documents signed ticks, start-versus-poll, no local ramp
+  stepping, and constant start success. The fourth unused s32 operand is now
+  explicit: the interpreter and both original EC52C calls supply it. This
+  resolves that pre-existing caller arity conflict without removing argument
+  setup or changing the callee body. Baseline checked fold passed; no flags,
+  storage or linkage changed.
+**Reconstructed `modules/clock_advance_command.c`, E99EC–E9AFC
+exclusive**, Ovl11ClockAdvanceCommand. The whole literal/slot time adapter
+retains signed low-halfword resolution, the 06:00 boundary, and the difference
+between a direct hours*60+minutes request and a guarded target-time delta.
+The header states that requests replace pending time, clear refresh and do
+not themselves tick or wait. Left pending_item_command consumes a pending
+item; right master_volume_ramp_command starts/polls audio volume. Neither
+uses this time conversion or a private artifact. The resident clock service
+and common value bank alone do not extend the unit; these are evidence-limited
+-G0 cuts, not original object proofs. Baseline fold and linked overlay passed
+without overrides, definitions or linkage changes.
+
 - ovl_11_func_800E99EC (m, matched 2026-11 — this session, 0x110, byte-exact) —
   conditional-slot position leaf: `arg3 & 1`/`arg3 & 2` select the low half of
   `D_80129560[arg0]`/`[arg1]` (raw s16 args otherwise), then either calls
@@ -17196,6 +17441,21 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   of the matched `ovl_11_func_800E9AFC` (0x800E99EC + 0x110) and the only family
   member whose table slots feed a `*0x3C` position calculation rather than a
   record write/compare.
+**Reconstructed `modules/balance_adjustment_command.c`, E7CCC–E7D4C
+exclusive**, Ovl11AdjustBalanceCommand. The whole one-entry adapter resolves
+one optional full-word delta, calls the published accounting service, and
+optionally writes its signed-halfword status to a value slot. Its header
+separates boolean command success from accounting status: capped credit can
+change the balance/history yet return false. Input is read before output,
+so aliasing slots is intentional. Parameters/locals now describe that contract.
+Left E7C2C owns the record timed-effect polling command; right E7D4C performs
+map-cell removal/selection. Neither uses the accounting adapter, its status
+protocol or private helpers. Shared value slots alone do not join these
+services or the scattered balance users into one historical TU. These are
+conservative -G0 service cuts, not proven original object boundaries.
+No storage/linkage/type or flag change was made; the checked baseline fold
+preserved this member and linked ovl_11.
+
 - ovl_11_func_800E7CCC (m, matched 2026-11 — this session, 0x80, byte-exact) —
   guarded-slot forwarder/writer: `arg3 != 0` resolves `D_80129560[arg2]` (raw
   `arg2` otherwise), forwards `(selected, (s16)arg0)` to the two-arg accessor
@@ -17307,6 +17567,19 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   motivated them. The whole one-entry baseline fold and linked overlay passed;
   after naming/documentation both new services pass the full campaign gate at
   2018 folded/351 valid modules, with no exception or override growth.
+**Reconstructed `modules/condition_code_command.c`, E87A0–E880C
+exclusive**, Ovl11QueueConditionCodeCommand. The complete adapter resolves a
+literal/value-slot code, queues its low halfword and inverted boolean payload,
+and always forwards control flags to 800E7798. Queue and control helpers are
+published/shared services, not private members of this adapter. Left
+stage_mode2_record_command owns a load/clear lifecycle; right
+camera_record_selection owns movement/selector caching. Neither uses this
+condition-code protocol or calls this entry. The broad value bank alone does
+not establish a larger unit. These are evidence-limited -G0 operation cuts,
+not recovered object boundaries. The header documents unchecked slots,
+queue rejection being discarded, unconditional control forwarding and constant
+success. Baseline checked fold and overlay passed; no flags or exceptions.
+
 - ovl_11_func_800E87A0 (m, matched 2026-11 — this session, 0x6C, byte-exact) —
   conditional-slot dispatcher leaf: `arg2 != 0` resolves `D_80129560[arg0]`
   through the family's s16-scaled index (raw `arg0` otherwise), forwards its low
@@ -17398,6 +17671,59 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   4-byte index and `struct_8006C838_time` view as 800E99EC; a new writer-side
   tie to the `D_80071A22` byte global and a further ovl_11 site carrying the
   `-fno-cse-skip-blocks` override (cf. 80103B24/800F1678).
+**Reconstructed standalone operand adapters around E932C–E9620.** No
+private-state/helper or pooled-data witness joins these operations; in
+particular the earlier 93CC/946C pair rested only on adjacent opcode order
+and the widely shared signed-halfword slot idiom. A callback table does not
+prove all its targets compiled together. These are whole supported services
+with evidence-limited -G0 cuts, not a claim of recovered historical object
+edges. All checked folds passed baseline and linked ovl_11, with no compiler
+setting, data ownership or linkage change.
+
+- `modules/held_item_slot_command.c`, E932C–E9384,
+  Ovl11ReplaceHeldItemCommand: literal/full-word-slot item ID adapter for the
+  primary object's published held-item replacement API. Left E9284 changes
+  state/direction; right E9384 accesses game flags. Neither uses its staging/
+  presentation protocol; the widely used replacement service is not private.
+- `modules/game_flag_command.c`, E9384–E93CC, Ovl11GameFlagCommand:
+  complete low-16-bit flag set/test adapter. Its left held-item and right
+  item-eligibility neighbors do not use its flag protocol; the resident flag
+  bank and API alone do not establish TU membership across either edge.
+- `modules/item_eligibility_command.c`, E93CC–E946C,
+  Ovl11TestItemEligibilityCommand: complete A4-special-case/flags/property-3
+  predicate. Left game flags and right record-reset slot adaptation use no
+  such item test or private artifact. Item/value tables are shared broadly.
+  The header records signed low-halfword resolution and unsigned property
+  comparison; a local names the resolved item separately from the input mode.
+- `modules/object_record_reset_slots_command.c`, E946C–E953C,
+  Ovl11ResetObjectRecordsFromSlotsCommand: four optional-slot resolution before
+  the public record-reset service, retaining halfword versus word ID widths
+  and -1 sentinels. Left item eligibility and right work_flag_bits_command
+  use neither that four-ID protocol nor private helpers. Shared slots alone
+  do not establish the former candidate pair.
+- `modules/sound_effect_command.c`, E95FC–E9620,
+  Ovl11PlaySoundEffectCommand: play and discard the voice, with unconditional
+  command success. Left work_flag_bits_command and right event-slot flag
+  broadcast use no audio protocol. The resident sound API is a public service,
+  not an internal helper to absorb. Only the first command operand is read.
+
+Each public header states initialization/index constraints, side effects and
+return behavior; parameters/locals describe the demonstrated operands. No
+speculative item or sound meaning was assigned.
+
+Run acceptance after naming/interface edits: 25 new operation-scoped ovl_11
+units, 2255 -> 2280 of 2625 eligible functions folded, 422/422 module TUs
+valid. `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`
+passed all eight integrity gates, including every linked EXE/overlay and
+associated data/table placement, source policy, convergence and zero
+exception growth. `canonicalNames.ts` is clean. Published interfaces were
+reconciled in batches; the volume adapter's explicit fourth operand removed
+two pre-existing call-arity findings (global audit 4 -> 2), with no newly
+introduced conflicts. All new units use baseline settings; no override,
+allowlist entry, pin, assembly or stub was added. No build/diagnostic tools
+changed. Singleton service cuts above retain their stated historical grouping
+uncertainty; the progress count is not a claim of 25 proved original objects.
+
 - ovl_11_func_800E93CC (m, candidate same TU with 800E946C; [evidence](research/ovl_11_func_800E93CC-grouping.md)) — optional-slot item eligibility predicate.
 - ovl_11_func_800E946C (m, candidate same TU with 800E93CC; [evidence](research/ovl_11_func_800E93CC-grouping.md)) — resolves four guarded slots and forwards them to the record-reset dispatcher.
 - ovl_11_func_800EE944 (m, 0x174, byte-exact) — prior-value table writer:
@@ -17581,6 +17907,26 @@ Members:
   `D_80129560[arg] = record.field` writes, bounds-checked, returns 1/0.
 - ovl_11_func_800EDEB8 (m) — delta: same record selector, no bounds check,
   adds `arg*2` into record fields +4/+0/+8, returns 1.
+**Reconstructed `modules/record_timed_sprite_command.c`, E7C2C–E7CCC
+exclusive**, Ovl11PollRecordTimedSpriteCommand. Its two-halfword record
+field is the timed sprite service's animation/tick state, not another XYZ
+coordinate anchor. ID 41 selects primary-object state; other IDs use the
+1D4-stride field at EXE:80076300, now gPositionRecordTimedSpriteEffects.
+That canonical data identity has a four-byte field extent, not a fabricated
+whole-pool size; the existing open s16-array extern moved into
+globals_override.h. The duplicate local two-field type/cast is removed in
+favor of the callee's established void-pointer interface. No layout changed.
+
+The public header documents start(30 ticks)/wait/reset semantics, external
+update/draw responsibility and restart on a later poll. Left E7BA8 is the
+independent fullscreen blend command; right E7CCC is the balance accounting
+adapter. Neither uses this timed-effect state or helper chain. Distant
+record/camera services share record geometry but not this complete effect
+polling protocol; no private closure establishes a wider contiguous unit.
+These are evidence-limited -G0 service cuts, not GP-proven original edges.
+The checked baseline fold preserved the member and linked overlay; no flag,
+linkage, tentative ownership or source-policy exception was introduced.
+
 - ovl_11_func_800E7C2C (m, matched 2026-11 — this session, 0xA0, byte-exact) —
   guard: same selector, no bounds check; if s16@+0 == -1 calls
   `80107DE0(record, arg1, 0x1E)` and returns 0, else if s16@+2 == 0 calls

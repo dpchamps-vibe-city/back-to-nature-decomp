@@ -20,6 +20,7 @@
 #include "ovl11_item_record_allocation.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_item_slot_commands.h"
+#include "ovl11_clock_advance_command.h"
 
 s32 Ovl30EditMainData(s32 cursor) {
     s32 result;
@@ -49,7 +50,6 @@ s32 Ovl30EditPlayerData(s32 cursor) {
     return result;
 }
 
-s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
 void ovl_11_func_800EF488(s16);
 void ovl_11_func_800EF6E4(s16 mode, s16 rivalIndex);
 
@@ -249,7 +249,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             EVENT(second)->field_9A06 |= 0x400;
             break;
         case 27:
-            ovl_11_func_800E99EC((s16)gOvl30DebugTimeAdvance, 0, 0, 0);
+            Ovl11ClockAdvanceCommand((s16)gOvl30DebugTimeAdvance, 0, 0, 0);
             gOvl30RecordMenuSelectedId = -1;
             break;
         }

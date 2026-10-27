@@ -1173,6 +1173,8 @@ extern Ovl11ActorCollisionRecord D_800763F4[];
 extern s32 _gPrimaryObjectBase[3] __asm__("gPrimaryObjectBase");
 #define gPrimaryObjectBase (*((s32 *)_gPrimaryObjectBase))
 extern s32 gPrimaryObjectFlags;
+/* EXE:80071A36 - E953C tests this u16 and modifies the same work+51FE cell. */
+extern u16 gPrimaryObjectAuxFlags;
 
 /* EXE:80076280 - coordinate-field anchor, 0x60 past the position-record
  * base at 80076220. E9778 and the resident editor read/write three s32 words
@@ -1383,6 +1385,8 @@ extern char gOvl30NValueFormat[];
 extern s32 D_80070C88;
 /* 800E5294 passes this pair to 80107DD0, which stores s16 -1 and 0. */
 extern s16 gObjectWorkTimedSpriteEffect[2];
+/* EXE:80076300 - E7C2C selects the ID/tick pair at this 0x1D4-stride anchor. */
+extern s16 gPositionRecordTimedSpriteEffects[];
 
 /* D_8006C838 - array of 0x3C-byte structs used for flags
  * Accessed with 0x3C stride but accessed in 4-byte s32 words
@@ -1603,11 +1607,11 @@ struct Ovl11E4280State {
     s32 selector;
 };
 
-/* 800E7D4C loads the unsigned availability halfword at base +0x44D4. */
+/* 800E7D4C: zero u16 at +44D4 suppresses alternate-area bulk removal. */
 typedef struct {
     u8 pad[0x44D4];
-    u16 available;
-} Ovl11E7D4CState;
+    u16 alternateAreaAvailable;
+} Ovl11GridRemovalWorkView;
 
 /* 800E21E4: lh +44BA/+44BC, lw/sw +44F8 and ten lbu/sb cells at +4AD6. */
 typedef struct {
@@ -2916,16 +2920,33 @@ extern s32 gOvl23ActorSpriteHeaderOffsets[4];
 /* ovl_23_func_800BB534 copies 0x29A8 bytes here and resolves sprite headers. */
 extern u8 gOvl23ActorSpriteBank[0x29A8];
 
-/* D_80071C90 - ovl_11 object state base (0x80071C90), absolute addressing
- * (lui + %lo in ovl_11_func_800E9104). That function uses its address as an
- * ObjectState (u16 +2, byte +4) and reads the s16 at -0x258 on the arg2==-1
- * path, so the base is declared as storage and viewed as ObjectState there. */
-extern u8 D_80071C90[];
+/* EXE:80071C90 - E4DAC initializes SpriteSourceData here; E9104 uses its
+ * animation/result fields through the established ObjectState view and reads
+ * s16 at -0x258 for reused frame selection. Keep the existing storage view. */
+extern u8 gPrimaryObjectSpriteSource[];
 
-/* D_801248BC - ovl_11 dispatch record (0x801248BC), absolute addressing.
- * ovl_11_func_800E9104 stores its address at D_8006C838+0x5214 and writes
- * s16 fields at +6/+8/+A/+C. */
-extern u8 D_801248BC[];
+/* ovl_11:801248BC - E9104 publishes this address at work+5214 and writes
+ * animation/frame/adjusted operand/9999 at signed halfwords +6/+8/+A/+C. */
+extern u8 gOvl11DeferredAnimationRecord[];
+
+/* E9104: base-relative lhu/sh +51FE, pointer sw +5214 and lw/sw +5234. */
+struct Ovl11AnimationCommandWorkView {
+    u8 pad0000[0x51FE];
+    u16 auxiliaryFlags;
+    u8 pad5200[0x14];
+    void *deferredRecord;
+    u8 pad5218[0x1C];
+    s32 flags;
+};
+
+/* E9104 writes signed halfwords +6/+8/+A/+C into its deferred record. */
+struct Ovl11DeferredAnimationCommand {
+    u8 pad0[6];
+    s16 animationId;
+    s16 frame;
+    s16 adjustedOperand;
+    s16 value0C;
+};
 
 /* 8010E6E8: eight signed-halfword base message IDs at ovl_11:80127D78. */
 extern s16 gOvl11Mode6MessageIds[8];
@@ -3815,13 +3836,14 @@ extern Ovl11Triple6 _gOvl11ConditionCodeTriples[] __asm__("gOvl11ConditionCodeTr
 extern u8 gOvl11ConditionCodeOffsets[];
 
 /* ovl_11_func_800EB010 copies ten s16 IDs from rodata and walks these parallel ten-entry tables. */
-struct Ovl11IdList {
+struct Ovl11TenRecordIdTemplate {
     s16 values[2][5];
 };
-extern struct Ovl11IdList D_800B9B1C;
-extern s32 D_80124920[10];
-extern s32 D_80124948[10];
-extern s16 D_80124970[10];
+/* EB010 copies the ID template, then walks parallel X/Z/animation-frame rows. */
+extern struct Ovl11TenRecordIdTemplate gOvl11TenRecordIdTemplate;
+extern s32 gOvl11TenRecordTemplateX[10];
+extern s32 gOvl11TenRecordTemplateZ[10];
+extern s16 gOvl11TenRecordTemplateFrames[10];
 
 /* ovl_11:800EB85C walks five record IDs and parallel X/Z arrays; the ID label
  * retains its original trailing alignment halfword outside the five entries. */
@@ -3830,11 +3852,11 @@ extern s32 gOvl11FiveRecordSequenceXZ[2][5];
 /* ovl_11:800F0734 indexes four rows of five signed-halfword adjustments. */
 extern s16 gOvl11RecordAdjustmentRows[4][5];
 
-/* ovl_11_func_800ED7E0 copies five signed halfwords from this rodata object. */
-struct Ovl11CandidateList {
-    s16 values[5];
+/* ovl_11:800ED7E0 copies five signed event-slot IDs (3,7,9,14,20). */
+struct Ovl11CounterSlotCandidates {
+    s16 slots[5];
 };
-extern struct Ovl11CandidateList D_800B9DB0;
+extern struct Ovl11CounterSlotCandidates gOvl11SpecialCounterSlotCandidates;
 
 /* Ovl11UpdateColorFlashCommand copies this private three-s16 RGB seed. */
 struct Ovl11ColorTriple {

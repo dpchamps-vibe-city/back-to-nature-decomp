@@ -37,6 +37,7 @@ gAreaSetupBuffer = 0x800A0368; // size:0x10
 gObjectWorkPosition = 0x80071B00; // size:0xC
 // Coordinate-field anchor; successive records are 0x1D4 bytes apart.
 gObjectPositionRecordCoordinates = 0x80076280; // size:0xC
+gPositionRecordTimedSpriteEffects = 0x80076300; // size:0x4
 // Coordinate anchor of the F8-stride records selected by ovl_11:800E65AC.
 gCompactObjectPositionCoordinates = 0x8007A670; // size:0xC
 
@@ -1612,6 +1613,8 @@ gProjectedQuadFixedDepthContext = 0x8005E4E4; // size:0x4
 gPrimaryObjectBase = 0x80071A00; // size:0xC
 gObjectSoundBankRequest = 0x80070C70; // size:0x2
 gPrimaryObjectFlags = 0x80071A6C; // size:0x4
+gPrimaryObjectAuxFlags = 0x80071A36; // size:0x2
+gPrimaryObjectSpriteSource = 0x80071C90; // size:0x30
 gSmallTaggedRecordBase = 0x800742EC; // size:0xC
 gTaggedRecordBase = 0x800749F4; // size:0xC
 // First large-bank record's +0x16 halfword; indexed by the 0xB8 stride.

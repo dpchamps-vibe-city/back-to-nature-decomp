@@ -9,8 +9,7 @@
 #include "ovl11_work_position_commands.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_default_position.h"
-
-s32 ovl_11_func_800E9284(s16 state, s16 recordIndex, s32 unused2, s32 unused3);
+#include "ovl11_object_state_selection_command.h"
 
 s32 Ovl11ApplyWorkPositionCommand(s16 mode, s16 y, s32 x, s32 z) {
     s32 *position = gObjectWorkPosition;
@@ -28,7 +27,7 @@ s32 Ovl11ApplyWorkPositionCommand(s16 mode, s16 y, s32 x, s32 z) {
         break;
     case 2:
         Ovl11ReadDefaultPosition(position);
-        ovl_11_func_800E9284(0, 0, 0, 0);
+        Ovl11SelectObjectStateOrDirectionCommand(0, 0, 0, 0);
         break;
     }
     Ovl11ResetPrimaryObjectRequest();

@@ -48,6 +48,7 @@
 #include "ovl11_season_mask.h"
 #include "ovl11_selected_record_pair_commands.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_object_sprite_animation_command.h"
 
 typedef struct {
     s16 unk0;
@@ -116,7 +117,6 @@ s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
-s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
 s32 Ovl11ConditionDayWindowMatches (s32 arg0, s32 arg1, s32 arg2);
 s32 Ovl11ConditionHourWindowMatches (u16 arg0, u16 arg1, s16 *arg2);

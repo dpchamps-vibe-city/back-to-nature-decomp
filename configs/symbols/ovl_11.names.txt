@@ -1,5 +1,38 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Camera-position record selector and shared movement/cache adapter.
+Ovl11SelectCameraPositionRecord = 0x800E880C; // type:func
+Ovl11PollRecordTimedSpriteCommand = 0x800E7C2C; // type:func
+Ovl11AdjustBalanceCommand = 0x800E7CCC; // type:func
+Ovl11ProcessGridItemRemovalCommand = 0x800E7D4C; // type:func
+Ovl11QueueConditionCodeCommand = 0x800E87A0; // type:func
+Ovl11MasterVolumeRampCommand = 0x800E9AFC; // type:func
+Ovl11ClearObjectEventSlotFlags = 0x800E9620; // type:func
+Ovl11ConsumePendingItemCommand = 0x800E9914; // type:func
+Ovl11WorkFlagBitsCommand = 0x800E953C; // type:func
+Ovl11SetActionResultOverrideCommand = 0x800ED760; // type:func
+Ovl11RunRecordFamilyListCommand = 0x800ED5C0; // type:func
+Ovl11ChooseSpecialCounterSlotCommand = 0x800ED7E0; // type:func
+Ovl11ApplyItemPropertyAdjustmentCommand = 0x800EDAA4; // type:func
+gOvl11SpecialCounterSlotCandidates = 0x800B9DB0; // type:data size:0xA
+Ovl11ReplaceHeldItemCommand = 0x800E932C; // type:func
+Ovl11GameFlagCommand = 0x800E9384; // type:func
+Ovl11TestItemEligibilityCommand = 0x800E93CC; // type:func
+Ovl11ResetObjectRecordsFromSlotsCommand = 0x800E946C; // type:func
+Ovl11PlaySoundEffectCommand = 0x800E95FC; // type:func
+Ovl11ObjectSpriteAnimationCommand = 0x800E9104; // type:func
+Ovl11SelectObjectStateOrDirectionCommand = 0x800E9284; // type:func
+Ovl11ClockAdvanceCommand = 0x800E99EC; // type:func
+Ovl11ResetObjectEventSlotCommand = 0x800E9B68; // type:func
+Ovl11BroadcastStateFieldCommand = 0x800ED4A8; // type:func
+Ovl11PrimaryInputOverrideCommand = 0x800ED634; // type:func
+Ovl11StepTenRecordTemplateSequence = 0x800EB010; // type:func
+gOvl11DeferredAnimationRecord = 0x801248BC; // type:data size:0xE
+gOvl11TenRecordIdTemplate = 0x800B9B1C; // type:data size:0x14
+gOvl11TenRecordTemplateX = 0x80124920; // type:data size:0x28
+gOvl11TenRecordTemplateZ = 0x80124948; // type:data size:0x28
+gOvl11TenRecordTemplateFrames = 0x80124970; // type:data size:0x14
+
 // Read-only queries serving the condition-value classifier.
 Ovl11GetMaxEligibleRecordCounter = 0x800EFF9C; // type:func
 Ovl11GetConditionFlagOverride = 0x800F002C; // type:func

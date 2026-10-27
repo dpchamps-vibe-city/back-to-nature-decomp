@@ -19,6 +19,7 @@
 #include "ovl11_record_partition_flags.h"
 #include "ovl11_flagged_record_retirement.h"
 #include "ovl11_selected_record_pair_commands.h"
+#include "ovl11_object_sprite_animation_command.h"
 
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
@@ -30,7 +31,6 @@ s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
-s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 sp10;
@@ -475,7 +475,7 @@ block_118:
         goto block_204;
     case 27:
         if (arg1 == 0) {
-            ovl_11_func_800E9104(0, 0x54, 0, 0xB);
+            Ovl11ObjectSpriteAnimationCommand(0, 0x54, 0, 0xB);
             ((E9State *)D_8006C838)->f4450 = (s32) (((E9State *)D_8006C838)->f4450 | 0x1000);
             ((E9State *)D_8006C838)->f5234 = (s32) (((E9State *)D_8006C838)->f5234 | 0x800000);
         } else {

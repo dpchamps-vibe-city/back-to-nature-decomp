@@ -20,13 +20,13 @@
 #include "ovl11_scene_sound_commands.h"
 #include "ovl11_camera_position_control.h"
 #include "ovl11_record_action_predicate.h"
+#include "ovl11_camera_record_selection.h"
+#include "ovl11_master_volume_ramp_command.h"
+#include "ovl11_state_field_broadcast_command.h"
+#include "ovl11_clock_advance_command.h"
+#include "ovl11_object_state_selection_command.h"
 
 s32 ovl_11_func_800E6AB0();
-s32 ovl_11_func_800E880C(s16, s16, s32, s32);
-s32 ovl_11_func_800E9284();
-s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
-s32 ovl_11_func_800E9AFC();
-s32 ovl_11_func_800ED4A8(s16, s16, s32, s32);
 s32 ovl_11_func_800F0A58(s16);
 
 s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
@@ -116,13 +116,13 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         }
         if (gOvl11ValueSlots[arg1] != 0) {
             Ovl11ApplyWorkPositionCommand(0, 0, 1001, 1790);
-            ovl_11_func_800E9284(0, 0, 0, 0);
+            Ovl11SelectObjectStateOrDirectionCommand(0, 0, 0, 0);
             ((Ovl11SceneState *)D_8006C838)->y = -400;
             ((Ovl11SceneState *)D_8006C838)->x = 887;
             ((Ovl11SceneState *)D_8006C838)->z = 1352;
             if (scores.values[level][best] <= gOvl11ValueSlots[arg2]) {
                 best = -1;
-                ovl_11_func_800ED4A8(32, 1, 20, 2000);
+                Ovl11BroadcastStateFieldCommand(32, 1, 20, 2000);
             }
         }
         switch ((s16)(best + 1)) {
@@ -132,7 +132,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         case 4: gOvl11ValueSlots[arg3] = 6; break;
         case 5: gOvl11ValueSlots[arg3] = 7; break;
         }
-        ovl_11_func_800E880C(30, 0, 0, 0);
+        Ovl11SelectCameraPositionRecord(30, 0, 0, 0);
         result = 1;
         break;
         case 2:                                     
@@ -195,7 +195,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             break;
         case 17:                                    
             Ovl11StateRecordAnimationCommand(0x1E, 0, 2, 1);
-            ovl_11_func_800E9AFC(0, 0x3C, 1, 0);
+            Ovl11MasterVolumeRampCommand(0, 0x3C, 1, 0);
             Ovl11ScreenFadeCommand(0, 0x3C, 1, 0);
             result = 1;
             break;
@@ -203,7 +203,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             result = Ovl11ScreenFadeCommand(0, 0, 0, 0);
             break;
         case 19:                                    
-            ovl_11_func_800E99EC(0xF, 0, 0, 0);
+            Ovl11ClockAdvanceCommand(0xF, 0, 0, 0);
             Ovl11WriteStateRecordPosition(0x1E, 0, 0x4E, 0x8CF);
             Ovl11StateRecordAnimationCommand(0x1E, 0, 0, 1);
             Ovl11WriteStateRecordPosition(0x11, 0, -0x14C, 0x8CF);
@@ -213,7 +213,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             } else {
                 Ovl11ApplyWorkPositionCommand(0, 0, 0x1E8, -0x35D);
             }
-            ovl_11_func_800E9284(2, 0, 0, 0);
+            Ovl11SelectObjectStateOrDirectionCommand(2, 0, 0, 0);
             Ovl11WriteStateRecordPosition(0x16, 0, -0x30F, 0x2E2);
             Ovl11StateRecordAnimationCommand(0x16, 0, 2, 1);
             Ovl11WriteStateRecordPosition(3, 0, 0x211, 0xCD);
@@ -241,7 +241,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             result = Ovl11RequestSceneSoundBank(0xF, 0, 0, 0);
             break;
         case 20:                                    
-            ovl_11_func_800E9AFC(1, 0x3C, 1, 0);
+            Ovl11MasterVolumeRampCommand(1, 0x3C, 1, 0);
             Ovl11ScreenFadeCommand(1, 0x3C, 1, 0);
             result = 1;
             break;
@@ -290,7 +290,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         case 26:                                    
 
             if (gOvl11ValueSlots[arg3] == 0x29) {
-                ovl_11_func_800E9284(2, 0, 0, 0);
+                Ovl11SelectObjectStateOrDirectionCommand(2, 0, 0, 0);
             } else {
                 Ovl11StateRecordAnimationCommand((s16) gOvl11ValueSlots[arg3], 0, 2, 1);
             }
@@ -316,7 +316,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             break;
 
     case 27:
-        result = ovl_11_func_800E880C(-2, 0, 1, 2);
+        result = Ovl11SelectCameraPositionRecord(-2, 0, 1, 2);
         break;
     }
     if (result == 1) {

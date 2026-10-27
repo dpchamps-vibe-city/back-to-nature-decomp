@@ -313,7 +313,11 @@ Open (runtime questions, cheapest tests first):
   aux-sprite work area) is nonzero in practice;
 - which end state each OOB id produces (crash, hang, garbage render,
   surviving walk);
-- whether any pointer-chaos walk can be steered into a useful write.
+- what a long walk actually corrupts: the glyph packets march upward
+  through the graphics heap (texture/asset scratch) only — the pool
+  geometry and the post-walk halt are in audit section 10, so "steered
+  into a useful write" now means steered into something *the same frame's
+  walk re-reads* (self-modifying cascade), not into game-state globals.
 
 ## 7. Runtime test plan
 
@@ -339,9 +343,13 @@ Open (runtime questions, cheapest tests first):
 - The farm-name +0x12 write lands on dead padding (audit section 6) —
   unchanged.
 - The debug scene-select cluster (audit section 7) is unreachable by
-  input; the stack-overflow variant of this chain passes through
-  `gCurrentSceneId` and the scene function pointer, which is the first
-  known route that could write them.
+  input, and the scene-17 request site is dead code (audit section 10).
+  Moreover the packet-pool geometry rules the §9 engines out of the scene
+  globals entirely: the pools sit in the graphics heap *above* 0x8005E39C
+  and the cursor only advances upward, and finite overflowing walks halt
+  at the pool bound (ReservePacketWorkBytes) after the corruption lands —
+  so no chain from this bug reaches gCurrentSceneId or WORK.state. See
+  audit section 10 for the full writer census and geometry.
 - The event-interpreter sinks (audit section 8) are the downstream
   consumers if a smash reaches the asset scratch where programs load.
 

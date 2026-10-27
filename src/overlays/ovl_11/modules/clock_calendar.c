@@ -26,8 +26,7 @@
 #include "ovl11_clock_scene_completion.h"
 #include "ovl11_state_object_pool_clear.h"
 #include "ovl11_condition_evaluation.h"
-
-s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
+#include "ovl11_object_event_slot_reset_command.h"
 
 void Ovl11TickClock(void);
 void Ovl11ServiceClockEvent(void);
@@ -65,7 +64,7 @@ void Ovl11RunClockAdvance(void) {
             gOvl11ClockAdvanceTickEnabled = 1;
             if (((struct Ovl11StateInitView *)D_8006C838)->hour < 6) {
                 for (index = 0; index < 0x25; index++) {
-                    ovl_11_func_800E9B68((s16)index, 0, 0, 0);
+                    Ovl11ResetObjectEventSlotCommand((s16)index, 0, 0, 0);
                 }
             } else {
                 Ovl11SelectScheduleEntryForTime(((struct Ovl11StateInitView *)D_8006C838)->field_44CA);

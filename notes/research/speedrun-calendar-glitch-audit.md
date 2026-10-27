@@ -476,3 +476,81 @@ class of primitive approach 3 needed, and its self-reference variant
 The full, sourced record of the section-9 chain (original disassembly,
 button mapping, harvest table, sink analysis, test plan) is
 `notes/research/glitches/name-entry-charset-toggle-oob.md`.
+
+## 10. gCurrentSceneId writer census — the 0x11 question closed by evidence
+
+Question: can play write 17 (the ovl_30 debug/date-editor scene) into
+gCurrentSceneId (0x8005E39C)? Answer: no, and now with receipts.
+
+`RequestSceneChange` (0x80011EF0) writes its argument directly into
+gCurrentSceneId (gp+0x128) and clears gSceneUpdateLoopActive — there is no
+intermediate "next scene" storage:
+
+```
+80011ef0: lw   r2, 0x128(gp)   ; gCurrentSceneId
+80011ef4: sw   r0, 0x12c(gp)   ; gSceneUpdateLoopActive = 0
+80011ef8: sw   r4, 0x128(gp)   ; gCurrentSceneId = argument
+80011efc: sw   r2, 0x120(gp)   ; gPreviousSceneId = old
+```
+
+Writer census (jal-site scan of the EXE + 13 overlays, argument taken from
+the delay slot with a 6-instruction look-back):
+
+- ~35 call sites, **all constants**: scenes {0,2,3,4,5,6,7,8,9,10,11,12,
+  13,14,15,16,19,20,71,157}. Area transitions (ovl_11's two-level dispatch),
+  scene exits (17/19/21/23/25 → 6), ovl_15 save-menu exits, ovl_27 title
+  exits, ovl_28 cutscene exits (record field at +0x67A0 only *selects*
+  between constants 13/20).
+- The ONLY variable-argument site is ovl_08 `Ovl08DrawSceneSelectMenu`
+  (0x800b8330), which reads the selected row of gOvl08SceneSelectEntries —
+  the debug scene-select itself, unreachable (section 7).
+- Boot writers: RunSceneUpdateLoop 0x80011C5C and InitGraphicsHeap
+  0x800126F8 store 13.
+- **`RequestSceneChange(17)` exists at ovl_11 0x800bc354 — and is dead
+  code.** The first-level phase table (0x800B7E24, 32 entries) maps phase 9
+  to 0x800bc340, which lands mid-block on `bne r2, r3` with dispatch-stale
+  registers (r2 = table, r3 = table+4*9 — never equal), so the phase-9 case
+  always exits through the epilogue at 0x800bc35c without effect. An
+  exhaustive scan of every beq/bne/j in ovl_11 finds **zero branches** into
+  the guard blocks (0x800bc2f0 / 0x800bc308 / 0x800bc334), and the
+  preceding blocks all exit via `j 0x800BC394`. The IsScreenFadeComplete
+  guard and the 17-request are unreachable leftovers.
+- No direct `sw/sh/sb` to gp+0x128 exists outside RequestSceneChange and
+  the boot sites; no absolute-address (lui/addiu) store to 0x8005E39C
+  anywhere.
+
+So the value 0x11 has no live producer, and the debug scene-select row 19
+(section 7) remains the only path to scene 17.
+
+**Corruption-route geometry (also now closed):** the render packet pools
+are carved from gGraphicsHeapBase (src/modules/render_packet_pool.c:
+heapBase+0x4290 + i*0x17700, capacity 0x17700 bytes, cursor
+context->field_118). The heap lies at/above the overlay region (its base
+relates to 0x8012DDE8 per GetAssetScratchCapacity), i.e. far ABOVE
+gCurrentSceneId (0x8005E39C), WORK.state (0x800A0490) and ovl_11's
+dispatch tables (0x800B7E24+). The glyph-packet cursor only advances
+*upward* from the pool, so the name-walk packet overflow can never march
+down into the scene globals; and `ReservePacketWorkBytes`
+(src/modules/game_loop.c:563) *halts* (DebugBreakAndReturnTrue loop /
+SystemError(0x50,0)) when a walk returns past the pool end, so finite
+overflowing walks corrupt-then-hang rather than delivering corruption to a
+later frame. Only the never-returning self-reference recursion marches
+unboundedly (stack down, packets up) — a crash, not a targeted write. The
+§9 chain therefore cannot reach gCurrentSceneId by either engine; this
+supersedes the earlier "the stack overflow passes through the scene
+globals" suggestion.
+
+**New fact:** gScenePhase (0x80070CC0) and gSceneSubphase (0x80070CC4)
+persist in the save image at offsets 0x2320/0x2324 and are restored by
+Ovl15SerializeSaveImage (0x80134F28/0x80134F34) on load. A save-image
+corruption near +0x2320 would change the restored dispatch state — but
+phase 9 is the no-op above, and the second-level table (the area-exit
+state word, values 4–31) maps only to scene constants 3–16, so no
+phase/subphase value reaches scene 17 either. The save-image route remains
+interesting for scene *warps* (phases 28–31 → RequestSceneChange(3/4/5) at
+0x800bc13c–0x800bc18c), not for the debug editor.
+
+Verdict: controller-only routes to gCurrentSceneId = 0x11 are exhausted.
+The remaining leads for the calendar goal are the date arithmetic itself
+(section 5) and any *new* write primitive; the only input-driven writes
+found so far are the +1 family (section 1), whose targets are fixed.

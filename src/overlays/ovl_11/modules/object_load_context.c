@@ -13,9 +13,9 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_camera_position_control.h"
 #include "ovl11_object_load_context.h"
+#include "ovl11_camera_record_selection.h"
 
 u16 ovl_11_func_800EAF5C(s16 mode, s32 unused1, s32 unused2, s32 unused3);
-s32 ovl_11_func_800E880C(s16 recordId, s16 fromSlot, s32 move, s32 speed);
 void ovl_11_func_8010941C(s32 mode);
 
 void Ovl11EnterObjectLoadContext(void) {
@@ -39,7 +39,7 @@ void Ovl11EnterObjectLoadContext(void) {
 
 void Ovl11LeaveObjectLoadContext(void) {
     SetGameFlag(3, 0);
-    ovl_11_func_800E880C(-2, 0, 0, 0);
+    Ovl11SelectCameraPositionRecord(-2, 0, 0, 0);
     Ovl11SetPositionControlFlags(1, 0, 0, 0);
     ((struct Ovl11ResetState *) &D_8006C838)->field_51EA = -1;
     ((struct Ovl11ResetState *) &D_8006C838)->field_51F0 = 0;

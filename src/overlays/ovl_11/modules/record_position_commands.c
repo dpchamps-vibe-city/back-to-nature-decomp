@@ -8,8 +8,7 @@
 #include "ovl11_state_record_commands.h"
 #include "ovl11_record_position_commands.h"
 #include "ovl11_dominant_axis_direction.h"
-
-s32 ovl_11_func_800E9284(s16 direction, s16 recordSelector, s32 unused2, s32 unused3);
+#include "ovl11_object_state_selection_command.h"
 
 s32 Ovl11FaceRecordTowardCommand(s16 idOrSlot, s16 resolveFlags,
                                 s32 animation, s32 targetIdOrSlot) {
@@ -41,7 +40,7 @@ s32 Ovl11FaceRecordTowardCommand(s16 idOrSlot, s16 resolveFlags,
     }
     direction = Ovl11GetDominantXZDirection(target, origin);
     if (recordId == 0x29) {
-        ovl_11_func_800E9284((s16)direction, 0, 0, 0);
+        Ovl11SelectObjectStateOrDirectionCommand((s16)direction, 0, 0, 0);
     } else {
         Ovl11StateRecordAnimationCommand(recordId, (s16)animation, direction, 1);
         Ovl11ChangeStateRecordFlag800(recordId, 0, 0, 0);

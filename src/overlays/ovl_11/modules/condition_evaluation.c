@@ -21,6 +21,7 @@
 #include "ovl11_record_slot_table.h"
 #include "ovl11_object_events.h"
 #include "ovl11_item_slot_commands.h"
+#include "ovl11_pending_item_command.h"
 
 s32 Ovl11EvaluateConditionRecords(Ovl11ConditionRecord *arg0, s32 arg1);
 
@@ -427,8 +428,6 @@ s32 Ovl11ConditionObjectStateMatches(s32 arg0) {
 }
 
 s32 Ovl11ConditionObjectStateMatches(s32 arg0);
-/* This caller explicitly supplies an unread fourth argument in $a3. */
-s32 ovl_11_func_800E9914(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 Ovl11ConditionStateMatches(u8 arg0, u8 arg1) {
     s32 result;
@@ -449,7 +448,7 @@ s32 Ovl11ConditionStateMatches(u8 arg0, u8 arg1) {
             break;
         case 4:
             if (((struct Ovl11E9914State *)D_8006C838)->pending != 0x186) {
-                result = ovl_11_func_800E9914(0, arg1, -1, 0);
+                result = Ovl11ConsumePendingItemCommand(0, arg1, -1, 0);
                 ((struct Ovl11E9914State *)D_8006C838)->pending = 0;
             } else {
                 result = 0;
