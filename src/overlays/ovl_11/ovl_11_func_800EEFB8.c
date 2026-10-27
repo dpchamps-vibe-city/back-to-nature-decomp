@@ -43,6 +43,7 @@
 #include "ovl11_primary_object_item_sprite_source.h"
 #include "ovl11_record_partition_flags.h"
 #include "ovl11_code160_record_handlers.h"
+#include "ovl11_condition_record_fields.h"
 
 typedef struct {
                char pad0[0x38];
@@ -128,8 +129,6 @@ s32 ovl_11_func_800F1954 (s32 arg0);
 s32 ovl_11_func_800F1AE0 (s32 arg0);
 s32 ovl_11_func_800F12D0 (s32 arg0, s32 arg1);
 s32 ovl_11_func_800EEBF4 (s32 arg0);
-s32 ovl_11_func_800F1EE4 (s32 arg0);
-void ovl_11_func_800F1E44 (u32 arg0, s16 *arg1, s32 arg2);
 s32 ovl_11_func_800F19C8 (s32 arg0);
 s32 ovl_11_func_800F13D8 (u16 arg0);
 void Ovl11QueueImmediateEvent (s16 kind, s16 value);

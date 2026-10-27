@@ -1074,6 +1074,17 @@ typedef struct {
     u16 unk3C;
 } Recon_ovl_11_func_800C6F0C_A0View;
 
+/* E4568 walks 0x18-byte entity records; E48CC projects only these three
+ * unsigned low halfwords of their position words. This is a partial view. */
+typedef struct {
+    char pad0[8];
+    u16 xLow;
+    u16 padA;
+    u16 yLow;
+    u16 padE;
+    u16 zLow;
+} Ovl11EntitySpritePositionView;
+
 /* 800C7010: halfwords at 38/3C, flags at 6C, animation data at 260.
  * 800C69B8 reads the signed item-table index at 8A.
  * 800CCCC0 resets halfwords at 18/1A/22/24/2A/36 and reads u16 at 2C. */

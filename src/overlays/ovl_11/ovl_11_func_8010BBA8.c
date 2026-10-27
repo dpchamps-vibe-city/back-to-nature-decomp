@@ -1,14 +1,13 @@
 #include "common.h"
 #include "game_types.h"
 #include "message_window.h"
+#include "ovl11_cd_audio_request.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
     /* 0x02 */ char pad_02[0x30 - 0x02];
     /* 0x30 */ s16 unk30;
 } Struct_8010BBA8;
-
-void ovl_11_func_800D12A0(s16 arg0);
 
 s32 ovl_11_func_8010BBA8(Struct_8010BBA8 *arg0) {
     char *far_base;
@@ -25,7 +24,7 @@ s32 ovl_11_func_8010BBA8(Struct_8010BBA8 *arg0) {
     }
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(0xD);
+        Ovl11RequestCdAudioTrack(0xD);
     }
     return -1;
 }

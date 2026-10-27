@@ -19,11 +19,11 @@
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_active_record_slot_drain.h"
+#include "ovl11_primary_object_level_bands.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
-s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 
 void ovl_11_func_800CCCC0(void) {
     struct Ovl11CCCC0State *temp_s0;
@@ -65,7 +65,7 @@ void ovl_11_func_800CCCC0(void) {
         ((struct Ovl11CCCC0State *)D_8006C838)->flags = (s32) (((struct Ovl11CCCC0State *)D_8006C838)->flags & ~4);
     }
     player->unk36 = 0;
-    ovl_11_func_800CD734(player, 1);
+    Ovl11UpdatePrimaryObjectLevelBands(player, 1);
     player->unk2A = (u16) ((struct Ovl11CCCC0State *)D_8006C838)->angle;
     if (((struct Ovl11CCCC0State *)D_8006C838)->time >= 8) {
         ((struct Ovl11CCCC0State *)D_8006C838)->counter = (u16) ((u16) ((struct Ovl11CCCC0State *)D_8006C838)->time + (((struct Ovl11CCCC0State *)D_8006C838)->counter - 8));

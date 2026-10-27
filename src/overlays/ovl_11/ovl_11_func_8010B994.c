@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "random.h"
+#include "ovl11_cd_audio_request.h"
 
 typedef struct {
     u16 field_0;
@@ -13,7 +14,6 @@ typedef struct {
 } Ovl11B994Object;
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-void ovl_11_func_800D12A0(s16 arg0);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
 s32 ovl_11_func_8010B994(Ovl11B994Object *arg0) {
@@ -35,7 +35,7 @@ s32 ovl_11_func_8010B994(Ovl11B994Object *arg0) {
         ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, *(Ovl11PaddedVec3 *)base->position);
         arg0->field_34 |= 2;
         if (*(s16 *)(far_base + 0x25476) == arg0->field_30) {
-            ovl_11_func_800D12A0(0xE);
+            Ovl11RequestCdAudioTrack(0xE);
         }
         ovl_11_func_8010B57C((u16 *)arg0, 0x11);
         return 0;

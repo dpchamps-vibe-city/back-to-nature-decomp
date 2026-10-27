@@ -14,8 +14,7 @@
 #include "ovl11_availability_event_reset.h"
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_grid_growth.h"
-
-void ovl_11_func_800D0FB4(void);
+#include "ovl11_record_position_recovery.h"
 
 void Ovl11TryClearAvailabilityEvent(void) {
     char *state;
@@ -24,7 +23,7 @@ void Ovl11TryClearAvailabilityEvent(void) {
     if (*(u16 *)(state + 0x44D4) != 0 && Rand(100) < 31) {
         *(u16 *)(state + 0x44D4) = 0;
         Ovl11ResetAlternateAreaGrid();
-        ovl_11_func_800D0FB4();
+        Ovl11RecoverRecordPositions();
         Ovl11PublishCurrentPoolRecord();
         Ovl11PublishNextPoolRecord();
         *(s32 *)(state + 0x44F8) &= ~0x2000;

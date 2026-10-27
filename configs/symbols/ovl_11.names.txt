@@ -1,5 +1,29 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Edge-triggered primary-object level-band service and independent volume activation.
+Ovl11UpdatePrimaryObjectLevelBands = 0x800CD734; // type:func
+Ovl11ActivateInteractionVolume = 0x800CD9A0; // type:func
+gOvl11SelectedInteractionVolume = 0x801287F0; // type:data size:0x4
+Ovl11BeginHeldItemEffect = 0x800CDD7C; // type:func
+
+// Independent pair allocation, pool recovery and deferred audio entry points.
+Ovl11ClaimRecordPairSlot = 0x800D0F20; // type:func
+Ovl11RecoverRecordPositions = 0x800D0FB4; // type:func
+Ovl11RequestCdAudioTrack = 0x800D12A0; // type:func
+
+// Active-slot and entity-sprite projection/update helper closure.
+Ovl11TickActiveRecordSprites = 0x800E44D4; // type:func
+Ovl11DrawAttachmentRecordSprites = 0x800E4568; // type:func
+Ovl11DrawCurrentObjectSprite = 0x800E4608; // type:func
+Ovl11UpdateRecordSprite = 0x800E46A8; // type:func
+Ovl11DrawEntityRecordSprite = 0x800E48CC; // type:func
+gOvl11EntitySpriteSources = 0x80129230; // type:data size:0x1E0
+
+// Pure decoders for three fields of the shared condition-record format.
+Ovl11DecodeConditionBounds = 0x800F1D54; // type:func
+Ovl11DecodeConditionFlagIds = 0x800F1E44; // type:func
+Ovl11GetConditionRecordSlot = 0x800F1EE4; // type:func
+
 // Shared clock/record completion services, outside the clock callback table.
 Ovl11DrainActiveRecordSlot = 0x800DE3A0; // type:func
 Ovl11ConsumeDeferredClockAdvance = 0x800DE46C; // type:func

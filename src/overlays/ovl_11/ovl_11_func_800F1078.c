@@ -9,6 +9,7 @@
 #include "psyq/abs.h"
 #include "psyq/libgs.h"
 #include "ovl11_condition_masks.h"
+#include "ovl11_condition_record_fields.h"
 
 s32 ovl_11_func_800F19E0(u8 arg0, u8 arg1);
 s32 ovl_11_func_800F14D8(s32 arg0, s32 arg1, s32 arg2);
@@ -22,8 +23,6 @@ s32 ovl_11_func_800F1954(s32 arg0);
 s32 ovl_11_func_800F1AE0(s32 arg0);
 s32 ovl_11_func_800F1AA8(u8 arg0);
 s32 ovl_11_func_800F12D0(s32 arg0, s32 arg1);
-/* 800F1D54 defines a2 in every switch arm and fills six halfwords through a1. */
-void ovl_11_func_800F1D54(u32 arg0, u16 *arg1);
 
 s32 ovl_11_func_800F1078(Ovl11ConditionRecord *arg0, s32 arg1) {
     u16 bounds[6];
@@ -36,7 +35,7 @@ s32 ovl_11_func_800F1078(Ovl11ConditionRecord *arg0, s32 arg1) {
              !(((struct Ovl11ConditionObjects *)&D_8007AFF0)->first->flags & 0x1000) ||
              ((u32)((arg0->unk0 & 0x3FF) - 0xF0) < 10U)) &&
             (ovl_11_func_800F19E0(arg0->unk22, arg0->unk23) != 0)) {
-            ovl_11_func_800F1D54(arg0->unk8, bounds);
+            Ovl11DecodeConditionBounds(arg0->unk8, bounds);
             if ((((struct Ovl11ConditionState *)D_8006C838)->date[0] >= bounds[0]) &&
                 (bounds[1] >= ((struct Ovl11ConditionState *)D_8006C838)->date[0]) &&
                 (ovl_11_func_800F14D8(bounds[2], bounds[3], (s32)((struct Ovl11ConditionState *)D_8006C838)->date) != 0) &&

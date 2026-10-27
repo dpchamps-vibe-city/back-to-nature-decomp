@@ -51,6 +51,7 @@
 #include "ovl11_scene_setup_install.h"
 #include "psyq/libapi.h"
 #include "ovl11_object_archive_pipeline.h"
+#include "ovl11_interaction_volume_activation.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -91,7 +92,6 @@ void Ovl11RunAreaFramePhase(void) {
     }
 }
 
-s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 s32 ovl_11_func_800F0F50 (void);
 void ovl_11_func_8010C7F0 (void);
 void ovl_11_func_800F3FB4 (void);
@@ -111,7 +111,7 @@ void Ovl11UpdateAreaFrame(void) {
     Ovl11UpdateChoiceMessages();
     Ovl11UpdateSelectionMessage();
     if (((struct Ovl11FrameWork *) &D_8007AFF0)->mode == 0) {
-        gOvl11AreaFrameResult = ovl_11_func_800CD9A0((Ovl11C7010Object *) &gPrimaryObjectBase);
+        gOvl11AreaFrameResult = Ovl11ActivateInteractionVolume((Ovl11C7010Object *) &gPrimaryObjectBase);
     }
     SCRATCH_STACK_END();
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);

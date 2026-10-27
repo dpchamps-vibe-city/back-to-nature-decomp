@@ -27,6 +27,7 @@
 #include "psyq/memory.h"
 #include "ovl11_sprite_block_bank.h"
 #include "ovl11_object_archive_pipeline.h"
+#include "ovl11_active_record_sprites.h"
 
 s32 Ovl11DispatchObjectLoadPhase(void) {
     char *work;
@@ -241,8 +242,6 @@ s32 Ovl11StartObjectArchiveLoad(void) {
     return 0;
 }
 
-void ovl_11_func_800E44D4(void);
-void ovl_11_func_800E4568(void);
 void ovl_11_func_800E4428(void);
 
 s32 Ovl11RunObjectRecordProgram(void) {
@@ -285,8 +284,8 @@ s32 Ovl11RunObjectRecordProgram(void) {
             }
         }
     }
-    ovl_11_func_800E44D4();
-    ovl_11_func_800E4568();
+    Ovl11TickActiveRecordSprites();
+    Ovl11DrawAttachmentRecordSprites();
     ovl_11_func_800E4428();
     return 0;
 }
@@ -296,7 +295,7 @@ void ovl_11_func_800E537C(void);
 
 s32 Ovl11ReleaseObjectLoad(void) {
     ((struct Ovl11E4280State *)D_8006C838)->flags_C &= ~0x400000;
-    ovl_11_func_800E4568();
+    Ovl11DrawAttachmentRecordSprites();
     ovl_11_func_800E4428();
     ovl_11_func_800E54C8();
     ovl_11_func_800E549C();

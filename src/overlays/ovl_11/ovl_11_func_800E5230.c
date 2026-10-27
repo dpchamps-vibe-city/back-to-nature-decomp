@@ -9,7 +9,7 @@ void ovl_11_func_800E5230(void) {
     s32 i;
 
     i = 9;
-    p = (s32 *)D_80129230;
+    p = (s32 *)gOvl11EntitySpriteSources;
     p = (s32 *)((char *)p + 0x1C4);
     while (i >= 0) {
         *p = 0;

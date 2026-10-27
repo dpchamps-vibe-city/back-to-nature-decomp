@@ -1734,7 +1734,7 @@ struct Ovl11PoolResetView {
     s16 pairs_99C8[4][2];
     u16 field_99D8;
     u8 pad_99DA[0x99E6 - 0x99DA];
-    u16 field_99E6;
+    u16 pendingCdAudioTrack;
     /* 800CECB0 branches on the signed halfword at +E4CA. */
     u8 pad_99E8[0xE4CA - 0x99E8];
     s16 field_E4CA;
@@ -1945,7 +1945,7 @@ struct Ovl11CurrentObjectView {
     s16 *current;
 };
 
-/* 800CE834 reads these state fields and reads/clears s16 at D_8006C838+0x99E6. */
+/* 800CE834 reads/clears pending CD-audio track +99E6; D12A0 writes it. */
 struct Ovl11UpdateState {
     u8 pad_0[0x10];
     s32 field_10;
@@ -1957,7 +1957,7 @@ struct Ovl11UpdateState {
     u8 pad_44C4[0x44F8 - 0x44C4];
     s32 field_44F8;
     u8 pad_44FC[0x99E6 - 0x44FC];
-    s16 field_99E6;
+    s16 pendingCdAudioTrack;
 };
 
 /* 800CE834 compares the signed halfword at D_8007AFF0+0x25476 with 1. */
@@ -5622,17 +5622,14 @@ extern u8 gOvl21FrameRectSprite[];
  * 800BB8B8 and consumed by Ovl21DrawSceneGeometry. Preserve opaque storage. */
 extern u8 gOvl21SceneGeometry[];
 
-/* D_80129230 - ovl_11 array of 10 records, stride 0x30. ovl_11_func_800E516C
- * walks it with a 0x30 byte pointer and reads the s32 at +0x14; the same
- * stride appears in ovl_11_func_800E4568. Absolute-addressed (extern-only,
- * lui + %lo). */
+/* E516C initializes ten 0x30-byte sprite sources; E4568 draws them by
+ * entity index and E5230 clears their +14 header-address/free marker. */
 typedef struct {
     /* 0x00 */ char pad_00[0x14];
-    /* 0x14 */ s32 unk14;
+    /* 0x14 */ s32 sourceHeaderAddress;
     /* 0x18 */ char pad_18[0x18];
-} Ovl11E5230Entry; /* 0x30 */
-extern Ovl11E5230Entry _D_80129230[] __asm__("D_80129230");
-#define D_80129230 ((Ovl11E5230Entry *)_D_80129230)
+} Ovl11EntitySpriteSlot; /* 0x30; preserve the existing word-address view. */
+extern Ovl11EntitySpriteSlot gOvl11EntitySpriteSources[10];
 
 /* D_80129410 / D_80129412 - ovl_11 signed halfword display bounds read by
  * the ovl_11 sprite helpers (ovl_11_func_800E516C and ovl_11_func_800E4BA4)
@@ -7502,15 +7499,15 @@ extern s32 gOvl11Mode6GridProbePosition[4];
 extern s32 gOvl11EventMessageActive;
 extern s32 gOvl11EventMessageLatched;
 
-/* 800CD9A0 stores the BDCE8 result here and reads u16 +0/+2, s16 +8/+A. */
+/* 800CD9A0 publishes BDCE8's record+10 result; 800BBCB8 consumes selectionId. */
 typedef struct {
-    u16 unk0;
-    u16 unk2;
+    u16 flags;
+    u16 selectionId;
     char pad4[4];
-    s16 unk8;
-    s16 unkA;
-} Ovl11CD9A0Record;
-extern Ovl11CD9A0Record *D_801287F0;
+    s16 direction;
+    s16 actionCode;
+} Ovl11InteractionVolumeSelection;
+extern Ovl11InteractionVolumeSelection *gOvl11SelectedInteractionVolume;
 /* ovl_11:800BBCB8 saves the descriptor index passed to the BD374 reader. */
 extern s32 gOvl11PendingAreaReadIndex;
 /* ovl_11:800BBCB8 gates effect 0x4C after the selection's fade completes. */
@@ -7539,7 +7536,7 @@ typedef struct {
 /* 800BBCB8: pointer +25390, signed selection +2547C and state +254A0. */
 typedef struct {
     char pad0[0x25390];
-    Ovl11CD9A0Record *object;
+    Ovl11InteractionVolumeSelection *object;
     char pad25394[0x2547C - 0x25394];
     s32 selection;
     s32 savedSelection;

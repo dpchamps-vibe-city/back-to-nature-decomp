@@ -406,15 +406,6 @@ typedef struct {
 } M2C_4ed7769e2366_UnkStruct800E1254;
 
 typedef struct {
-    char pad_0[8];
-    u16 field_8;
-    u16 pad_A;
-    u16 field_C;
-    u16 pad_E;
-    u16 field_10;
-} M2C_4efbdcbf20b5_Recon_ovl_11_func_800E48CC_A0View;
-
-typedef struct {
                char pad_0[0x22];
                u16 unk22;
                char pad_1[0x38 - 0x24];
@@ -1537,6 +1528,15 @@ typedef struct {
     u16 first;
     u16 second;
 } Ovl11EffectRecordPair;
+
+typedef struct {
+    char pad0[8];
+    u16 xLow;
+    u16 padA;
+    u16 yLow;
+    u16 padE;
+    u16 zLow;
+} Ovl11EntitySpritePositionView;
 
 typedef struct {
     s16 time;

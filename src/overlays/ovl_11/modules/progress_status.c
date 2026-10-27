@@ -17,6 +17,7 @@
 #include "psyq/libgte.h"
 #include "ovl11_default_position.h"
 #include "ovl11_pool_record_transition.h"
+#include "ovl11_record_position_recovery.h"
 
 s32 *Ovl11ResetProgressControl(void) {
     Ovl11RefreshProgressStatusEntry();
@@ -92,8 +93,6 @@ void Ovl11RefreshProgressStatus(void) {
     Ovl11RefreshEventFlagsTop();
 }
 
-void ovl_11_func_800D0FB4(void);
-
 void Ovl11UpdateProgressTimers(void) {
     s32 stageFlag;
     Ovl11ProgressState *state;
@@ -106,7 +105,7 @@ void Ovl11UpdateProgressTimers(void) {
     }
     if (GetGameFlag(0x38U) == 1) {
         if (--((Ovl11ProgressState *)D_8006C838)->pendingTimer < 0) {
-            ovl_11_func_800D0FB4();
+            Ovl11RecoverRecordPositions();
             Ovl11PublishCurrentPoolRecord();
             Ovl11PublishNextPoolRecord();
             SetGameFlag(0x38U, 0U);

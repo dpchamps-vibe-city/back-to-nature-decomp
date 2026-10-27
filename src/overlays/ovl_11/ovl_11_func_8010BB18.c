@@ -3,6 +3,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_cd_audio_request.h"
 
 typedef struct {
     /* 0x00 */ u16 unk0;
@@ -17,8 +18,6 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } UnkStruct80107DE0;
 
-void ovl_11_func_800D12A0(s16 arg0);
-
 s32 ovl_11_func_8010BB18(UnkStruct8010BB18 *arg0) {
     char *far_base;
 
@@ -31,7 +30,7 @@ s32 ovl_11_func_8010BB18(UnkStruct8010BB18 *arg0) {
     arg0->unk34 |= 4;
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(0xD);
+        Ovl11RequestCdAudioTrack(0xD);
     }
     return -1;
 }

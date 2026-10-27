@@ -29,6 +29,7 @@
 #include "ovl11_item_request_actions.h"
 #include "ovl11_pending_stage_dispatch.h"
 #include "ovl11_primary_action_helpers.h"
+#include "ovl11_primary_object_level_bands.h"
 
 /* Consume the dispatcher's forced-entry flag with a fixed position/velocity
  * setup. The constants are state-specific, not generic movement defaults. */
@@ -45,7 +46,6 @@ void Ovl11BeginPrimaryObjectState3B(Ovl11C7010Object *object) {
 }
 
 void Ovl11BeginPrimaryObjectState3B (Ovl11C7010Object *arg0);
-s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
 s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 
 s32 Ovl11DispatchPrimaryObjectAction(void) {
@@ -92,7 +92,7 @@ s32 Ovl11DispatchPrimaryObjectAction(void) {
                 ((struct struct_8006C838_time *)D_8006C838)->field_44C0 == 0xC) {
                 return 0;
             }
-            if (ovl_11_func_800CD734(obj, 0)) {
+            if (Ovl11UpdatePrimaryObjectLevelBands(obj, 0)) {
                 return 0;
             }
             if (Ovl11DispatchInteractionRecordInput((Ovl11C8FA8Object *)obj, pressed)) {

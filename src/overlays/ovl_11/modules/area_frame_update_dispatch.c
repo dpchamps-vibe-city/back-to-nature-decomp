@@ -28,11 +28,11 @@ void Ovl11RunAreaFrameUpdates(void) {
                 Ovl11AllocateItemRecord(0x15B, -1);
             }
         }
-        if (((struct Ovl11UpdateState *) D_8006C838)->field_99E6 != 0 &&
+        if (((struct Ovl11UpdateState *) D_8006C838)->pendingCdAudioTrack != 0 &&
             GetCdAudioState() == 0 &&
             ((struct Ovl11UpdateState *) D_8006C838)->field_CC == 0) {
-            StartCdAudioTrack(((struct Ovl11UpdateState *) D_8006C838)->field_99E6);
-            ((struct Ovl11UpdateState *) D_8006C838)->field_99E6 = 0;
+            StartCdAudioTrack(((struct Ovl11UpdateState *) D_8006C838)->pendingCdAudioTrack);
+            ((struct Ovl11UpdateState *) D_8006C838)->pendingCdAudioTrack = 0;
         }
     }
 }

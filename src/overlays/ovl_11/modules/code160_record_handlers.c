@@ -32,6 +32,7 @@
 #include "ovl11_halfword_triplets.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_record_effect_threshold.h"
+#include "ovl11_cd_audio_request.h"
 
 s32 Ovl11IsCode160RecordActive(UnkStruct800DF4F0 *arg0);
 s32 ovl_11_func_800D9108(s32 *arg0);
@@ -423,8 +424,6 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } UnkStruct80107DE0;
 
-void ovl_11_func_800D12A0(s16 arg0);
-
 /* Slots 3/4 fade opacity by ten per update and start different timed
  * effects. Only slot 3 posts the mode-gated work request. */
 s32 Ovl11StepCode160Handler3(Struct_800DF51C *arg0) {
@@ -446,7 +445,7 @@ s32 Ovl11StepCode160Handler3(Struct_800DF51C *arg0) {
     Ovl11StartTimedSpriteEffect((UnkStruct80107DE0 *)((s32)arg0 + 0xA8), 0x24, 0x2D);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(0xA);
+        Ovl11RequestCdAudioTrack(0xA);
     }
     return 0;
 }
@@ -508,7 +507,7 @@ s32 Ovl11StepCode160Handler9(Struct_800DF614 *arg0) {
     Ovl11StartRecordEffectAboveThreshold((Struct_800D049C *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(9);
+        Ovl11RequestCdAudioTrack(9);
     }
     return 0;
 }
@@ -533,7 +532,7 @@ s32 Ovl11StepCode160Handler6(UnkStruct800DF6A8 *arg0) {
     arg0->unk34 |= 4;
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(9);
+        Ovl11RequestCdAudioTrack(9);
     }
     return 0;
 }
@@ -573,7 +572,7 @@ s32 Ovl11StepCode160Handler10(UnkStruct800DF4F0 *arg0) {
     Ovl11StartRecordEffectAboveThreshold((Ovl11DF72CResetView *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == *(s16 *)((u8 *)arg0 + 0x30)) {
-        ovl_11_func_800D12A0(9);
+        Ovl11RequestCdAudioTrack(9);
     }
     return 0;
 }
@@ -640,7 +639,7 @@ s32 Ovl11StepCode160Handler7(UnkStruct800DF4F0 *arg0) {
     if (var_s0 != 0) {
         far_base = (u8 *)&D_8007AFF0;
         if (*(s16 *)(far_base + 0x25476) == *(s16 *)((u8 *)arg0 + 0x30)) {
-            ovl_11_func_800D12A0(9);
+            Ovl11RequestCdAudioTrack(9);
         }
     }
     var_v0 = 0;
@@ -672,7 +671,7 @@ s32 Ovl11StepCode160Handler5(Struct_800DF9F0 *arg0) {
     ovl_11_func_800D0DCC((UnkStruct800DF4F0 *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(9);
+        Ovl11RequestCdAudioTrack(9);
     }
     return 0;
 }

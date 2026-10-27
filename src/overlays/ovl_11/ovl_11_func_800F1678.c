@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 ovl_11_func_800F1EE4(s32 arg0);
+#include "ovl11_condition_record_fields.h"
 
 s32 ovl_11_func_800F1678(u8 arg0) {
     s32 id;
@@ -21,7 +20,7 @@ s32 ovl_11_func_800F1678(u8 arg0) {
     if (id == 7) {
         return 1;
     }
-    index = ovl_11_func_800F1EE4(id);
+    index = Ovl11GetConditionRecordSlot(id);
     base = (char *)&D_8006C838;
     record = base + index * 0x1D4;
     if (!(*(u16 *)(record + 0x9A06) & 8)) {

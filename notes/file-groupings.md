@@ -3751,6 +3751,63 @@ Members:
 
 ---
 
+## `ovl_11` level bands, volume activation and held-item effect — 0x800CD734–0x800CDE3C exclusive
+
+Three independent service units are reconstructed here, not one three-entry
+TU inferred from adjacency. All original accesses are absolute under -G0;
+these are evidence-limited service cuts, not proven historical object edges.
+
+- `modules/primary_object_level_bands.c`, CD734–CD9A0:
+  Ovl11UpdatePrimaryObjectLevelBands refreshes the unsigned +36 flag word
+  from signed +12/+14/+16 levels and requests a state on newly entered bands.
+  Primary-object action-phase calls it normally; CCCC0 suppresses state entry
+  while resetting the object. Suppression still changes flags and can drain
+  the GLOBAL active-record slot at exact level 100. Integer /10 precedes the
+  *3/*5 thresholds. The separate per-band temporaries retain the original
+  reads; the existing parameter view, signedness and unsigned flag accesses
+  were not changed. Its left neighbor CD6F4 consumes a private saved-direction
+  cell/mask table, absent here. Right CD9A0 probes loaded-area volume records,
+  with no level-band or state-entry protocol. No private helper/table/state
+  joins either edge; shared primary-object storage alone does not join them.
+- `modules/interaction_volume_activation.c`, CD9A0–CDD7C:
+  Ovl11ActivateInteractionVolume publishes the BDCE8 probe's record+10 result
+  to the distant area-mode consumer BBCB8. That producer/consumer gives
+  gOvl11SelectedInteractionVolume and its unchanged record view meaningful
+  names: flags, selectionId, direction, actionCode. The external s32 ABI
+  returns 2 to permit normal motion, 0 to consume a frame, 1 on activation;
+  early guards preserve the old selection, whereas a completed miss clears
+  it. Its header documents storage lifetime, prompts and input-override
+  update counts. Left CD734 has no volume query/selection role; right CDD7C
+  starts a fixed effect with no volume query, selected-record access or
+  activation-result protocol. BBCB8 is separated by unrelated services;
+  shared selection exchange establishes an interface, not a contiguous TU.
+- `modules/held_item_effect.c`, CDD7C–CDE3C:
+  Ovl11BeginHeldItemEffect is the state-45/effect-186 initializer called only
+  for item codes 38/39 by the special-item dispatcher. It initializes shared
+  held-action sprite feedback used by moving_items/held_action_selection.
+  Those distant consumers do not establish membership of every intervening
+  service. Left CD9A0 handles volume activation, not this effect. Right CDE3C
+  initializes the embedded five-slot sprite bank from fixed registry offsets;
+  it does not read/write the held-action feedback or call this initializer.
+  The dedicated header records the byte animation versus signed-halfword
+  spawn-direction reads, sound, state/flag effects and unconditional success
+  result. Existing shared-state names already describe every global it uses.
+
+Each entry was first moved by a baseline -O2/-G0 checked fold: its member and
+linked overlay were byte-identical. No existing override applies, and none
+was added or retired. Public symbols retain their ovl_11/address identities
+in .names.txt; canonicalization carries names to callers. The selected-record
+extern/type in globals_override.h was reconciled explicitly (the generic
+shared header cannot itself choose an overlay for an anonymous data name).
+No ownership, extent, field width, linkage or allocation changed. Dedicated
+headers replace all four callers' local declarations; interfaceAudit measured
+unchanged caller objects and reports zero failing published interfaces.
+Batch verification passed every integrity gate at 1935 folded / 329 valid
+modules: EXE and all 13 overlays, policy, completeness, configuration
+convergence, stable inputs, whitespace and exception non-growth. Exit 1 is
+its documented incomplete-project status (690 functions still outside modules),
+not a failed integrity check.
+
 ## `ovl_11` tier-lookup leaf + `/60` clamp run — 0x800CD45C–0x800CD670 (confidence: low)
 
 **Adjacent input-override unit reconstructed in
@@ -4171,6 +4228,22 @@ non-growth. Folded membership rose 113 → 122; all fifteen modules are valid.
 ---
 
 ## `ovl_11` D_80123754 setter/getter run + updater siblings / flag-reader helper — 0x800D12A0–0x800D24FC / 0x800D2DB8 (confidence: medium; extensions: low)
+
+The head setter is now independent `modules/cd_audio_request.c`,
+Ovl11RequestCdAudioTrack at D12A0–D12B8. The demonstrable consumer is
+area_frame_update_dispatch/CE834: when the signed +99E6 halfword is nonzero,
+CD audio is idle and work+CC is zero, it calls StartCdAudioTrack and clears
+that halfword. Seventeen item/record handler call sites request tracks 9..14.
+The two existing signed/unsigned work views now call the field
+pendingCdAudioTrack, with their original types unchanged. The pointer-base
+setter retains its split-offset code shape. Its header documents last-write
+wins, zero cancellation, deferred gating and unchecked indices; it does not
+claim to start playback immediately. Left D0FB4 only recovers record positions;
+right D12B8 implements per-record movement and never reads this pending track.
+No private helper/table/state extends the audio setter into either neighbor.
+This is an evidence-limited service boundary (-G0), not a recovered object edge.
+The checked fold passed baseline with no override; interfaceAudit replaced
+all callers' local declarations without changing their objects.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) in the middle of the
 overlay, sharing a single file-scope s16 global. Evidence is a shared global
@@ -5332,7 +5405,15 @@ no override or policy exception applies.
 
 ---
 
-## `ovl_11` 0x800E48CC–0x800E516C pointer-getter run (confidence: medium)
+## `ovl_11` 0x800E499C–0x800E516C pointer-getter run (confidence: medium)
+
+Boundary correction from caller/source review: E48CC is not an installer
+helper. Its sole caller E4568 passes an entity position and SpriteSourceData;
+it projects/draws/steps that source and calls none of the pointer-getter
+cascade. It now lives with that caller in active_record_sprites, described
+below. The installer remains the complete E499C–E516C candidate, not a slice
+around the standing E4BA4 loop override. No setting was changed or newly
+measured for that unresolved candidate in this batch.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) in the lower-middle of
 the overlay. Evidence is strict link-order adjacency plus an internal call graph
@@ -5340,11 +5421,10 @@ centred on a single shared leaf getter. The tail extension is supported by
 [shared sprite-record evidence](research/ovl_11_func_800E5078-grouping.md).
 
 Fingerprints:
-- zero-gap link-order contiguity (map): 0x800E48CC (0xD0) → 0x800E499C
-  (0x150) → 0x800E4AEC (0x6C) → 0x800E4B58 (0x14) → 0x800E4B6C (0x38) →
+- zero-gap link-order contiguity (map): 0x800E499C (0x150) → 0x800E4AEC (0x6C) → 0x800E4B58 (0x14) → 0x800E4B6C (0x38) →
   0x800E4BA4 (0x8C) → 0x800E4C30 (0x54) → 0x800E4C84 (0x84) → 0x800E4D08
   (0xA4) → 0x800E4DAC (0x2CC) — each starts exactly where the previous ends,
-  the whole span 0x800E48CC–0x800E5078 contiguous with no unrelated code
+  the whole span 0x800E499C–0x800E5078 contiguous with no unrelated code
   between;
 - internal call graph: the leaf `ovl_11_func_800E4B58` is called by four of
   its neighbours — `ovl_11_func_800E4AEC`, `ovl_11_func_800E4B6C`,
@@ -5359,7 +5439,8 @@ Fingerprints:
   same `base+4` s16 array on the 0x8000 bit — three predicates over one array.
 
 Members (address order, matched in bold):
-- ovl_11_func_800E48CC (s) — run head
+- former proposed head E48CC is excluded: its sole caller/draw protocol
+  belongs to active_record_sprites, not this getter cascade.
 - **ovl_11_func_800E499C (m)** — coordinates record copying, sprite-data relocation and shared-state setup for the run's helpers ([grouping evidence](research/ovl_11_func_800E499C-grouping.md)).
 - **ovl_11_func_800E4AEC (m, matched this session)** — scans the s16 array at
   `base+4` for the first entry whose 0x3C00 bit is clear, then returns
@@ -5397,8 +5478,55 @@ link-order run of scan drivers and box testers. The testers feed the GTE/bounds
 hit-test leaf `ovl_11_func_800F5888` a local three-halfword box built by the
 identical `+0x96 / -0x64 / -0x96` fixup from three consecutive `u16` fields,
 then scale the result's third word by `D_8005E3C0->field_120`.
-The tentative `800E44D4` extension has corroborated call/link adjacency and a
-shared gate, not a proven TU boundary; see [evidence](research/ovl_11_func_800E44D4-grouping.md).
+**Reconstructed `modules/active_record_sprites.c`, all five original entries
+E44D4–E499C exclusive.** E44D4 calls only the per-record helper E46A8 in this
+band; E4568 is the sole caller of E4608 and E48CC. These three private helper
+clients, the identical unsigned-halfword (+150,-100,-150) projection and OT
+depth mapping, and original member order support one draw/update closure.
+E44D4's timed-effect service and E46A8's use of the SAME embedded +E0 effect
+join the scan and worker beyond the shared work flags. No new private linkage
+was inferred. The two public scan drivers keep external linkage, as do all
+three helpers; only the drivers are published by ovl11_active_record_sprites.h.
+
+Left E4428 publishes a selected object's position through its own shared
+work-area protocol; it neither uses the draw helpers nor their effect/slot
+scan. Right E499C begins a disjoint offset-table/flag-array installer cascade,
+with no draw-helper or render-context use. The installer populates shared
+resource pools, just as distant E516C/E5230 populate/clear the entity sprite
+sources: that resource interface is not private draw-unit state. No literal
+pool or GP evidence (-G0) proves historical object edges here; these are
+protocol/closed-helper cuts, not a boundary invented around E4BA4's override.
+The former pointer-getter note's inclusion of E48CC rested on adjacency only
+and is corrected above.
+
+The first merged baseline build diagnosed E4568's void* declaration of E48CC
+versus E48CC's typed definition; the checked helper rolled back. The existing
+partial entity-position view was moved to game_types.h as
+Ovl11EntitySpritePositionView and the caller given that exact prototype/cast,
+without changing layout, halfword signedness or ABI. The second baseline
+checked fold proved all five members and the linked overlay byte-identical.
+There is no member flag override and none was added or retired.
+
+gOvl11EntitySpriteSources names the ten shared 0x30-byte sources (E516C
+initializes, E5230 clears +14, E4568 consumes); its 0x1E0 extent ends exactly
+at the next bounds symbol. The legacy _D asm-name/macro alias was removed in
+favor of the canonical extern, with no allocation/ownership change. The
+Ovl11EntitySpriteSlot partial view retains the existing s32 header-address
+field, now sourceHeaderAddress, not a speculative pointer-type change.
+Function/parameter/local names distinguish records, slots, sources, box and
+screen coordinates. The header documents pause-bit differences, culling-time
+animation, surface-resolution and OT effects. Original operation order and
+code-specific pause exceptions are retained.
+
+Batch verification of this five-entry unit and the three independent pair-
+claim/recovery/audio services passed all integrity gates at **1943 folded /
+333 valid modules**, with zero invalid or undetermined units: EXE and all 13
+overlays (including data and placement), policy, completeness, convergence,
+stable inputs, whitespace and no exception growth. Canonical names are clean;
+interfaceAudit reports no failing published interface. All 682 remaining
+functions stay intact; CLI exit 1 indicates only that global incompleteness.
+No tool or flag configuration needed a change. Historical detailed evidence:
+[800E44D4](research/ovl_11_func_800E44D4-grouping.md).
 
 Fingerprints:
 - zero-gap link-order contiguity (map): 0x800E4568 (0xA0) → 0x800E4608
@@ -5424,8 +5552,8 @@ Members (address order, matched in bold):
   the run's largest member
 - **ovl_11_func_800E48CC (m, matched this session)** — record-relative box test
   from u16@+8/+0xC/+0x10; submits through `func_80016054` and advances the
-  sprite via `func_800158E4` when `D_8006C844` bit 0x08000000 is clear; also
-  the documented pointer-getter run head
+  sprite via `func_800158E4` when `D_8006C844` bit 0x08000000 is clear;
+  the final member before the pointer-getter installer
 
 ---
 
@@ -13631,6 +13759,53 @@ Members (link order):
 - ovl_11_func_800F1CC4 (m) — 5-case sibling over the s16 at
   D_8006C838+0xE4C8 (masks 0x80000 / 0x2000 / 0x40000 / 0x1000 / 0x800),
   plus the 0xC3800 all-set early-return guard
+
+## `ovl_11` condition-record field decoders — 0x800F1D54–0x800F1F40 exclusive
+
+**Reconstructed `modules/condition_record_fields.c`, all three original
+entries:** Ovl11DecodeConditionBounds (1D54), Ovl11DecodeConditionFlagIds
+(1E44), Ovl11GetConditionRecordSlot (1EE4). The condition evaluator consumes
+three complementary fields of the SAME Ovl11ConditionRecord: +8 for six
+bounds, +10/+14 for relative game-flag IDs, +C low bits for a record selector.
+The pure decoders have no shared-state effect. This common format/protocol,
+plus the complete member-ordered rodata run at B9FC0/B9FD8/B9FF0, supports a
+unit beyond mere text adjacency. The bounds decoder emits two tables, the
+middle decoder none, the slot mapper one; the checked fold pools the two
+old attributions into one without moving a byte. No helper/table is left out.
+
+Left condition_masks ends at F1D54 and evaluates a different +1C mask against
+live season/weekday/daily state; these decoders only unpack supplied words.
+A shared evaluator caller alone does not absorb that stateful predicate unit.
+Right F1F40 is an empty compiled entry with no calls, data or table relationship,
+then event_schedule starts F1F48 over pending-event/time state. No evidence
+extends the pure field-format protocol into either neighbor. These are
+service/evidence-limited cuts (-G0), not recovered historical object edges;
+a larger evaluator source remains possible, not established here.
+
+The public header records the noninterchangeable bit orders, top-two-bit
+omission, 31-sentinel substitution BEFORE the first three decrements, and
+unsigned-halfword zero underflow. Relative flag IDs retain 1023 for the caller
+to interpret; the decoder does not query game flags. The slot mapper masks
+low SIXTEEN bits, not three (its caller alone supplies a three-bit selector).
+The flag-ID decoder's selector stays in the s32 ABI with identical branches;
+no source simplification or arity repair was folded into naming. Locals and
+parameters describe packed words, outputs, indices and values. All public
+linkage, widths and operation/switch order are unchanged; no globals are owned.
+
+The complete three-member fold passed first at baseline -O2/-G0, including
+all member text and pooled tables plus the linked overlay. No member override
+exists, and none was added/retired. Names retain the original overlay/address
+identities; canonicalization updated all five caller/declaration carriers.
+interfaceAudit replaced their local prototypes with one documented module
+header and measured unchanged objects (including the two stale-prototype-only
+sources), with zero failing published interfaces. Full campaign verification
+passed all integrity gates at **1946 folded / 334 valid modules**, zero invalid
+or undetermined units, against build/tu-campaign/baseline.json. The EXE and
+all 13 overlays, including code/data/pooled tables/placement, remain identical;
+source policy, completeness, convergence, stable inputs, whitespace and
+exception non-growth pass. CLI exit 1 denotes the 679 remaining unfurled
+functions, not a failed integrity gate. Existing unrelated interface-audit
+findings were unchanged; no new affected-interface conflict was introduced.
 
 ## `ovl_11` GTE transform + bounds-gate pair — 0x800F5868 / 0x800F5888 (confidence: medium)
 
@@ -24624,7 +24799,46 @@ Canonical names and the public header were propagated to both callers. Full
 data identity, interfaces, source policy, convergence and exception non-growth.
 
 
+## ovl_11 record-pair claim — 0x800D0F20–0x800D0FB4 exclusive
+
+`modules/record_pair_claim.c` contains Ovl11ClaimRecordPairSlot. It adapts
+pairIndex 0/1 to shared slots 2/3, obtains a free B4-pool record, sets its
+02000000 reservation flag and stores its index plus the caller's linked
+index into the pair. The sole volume-action caller maps failure values 1E6
+and 1A1 directly to message requests. No initializer or heap allocation occurs.
+The header documents slot enablement, halfword narrowing, failure non-mutation
+and unchecked indices. Parameter/local names distinguish pair versus shared
+slot indices. Providers remain record_pair_slots and small_record_handlers;
+sharing those public services does not absorb their distant source modules.
+
+Left D0ED0 (area_slot_flags) tests the separate +4AC0/+4AD6 banks; it neither
+claims a pair nor reserves a record. Right D0FB4 restores positions and neither
+reads nor writes pair-slot membership. No private state/helper/table supports
+extension at either edge. These are conservative service cuts under -G0,
+not proof of original one-function files. Baseline checked fold passed member
+and overlay with no override. Interface publication preserved the caller object.
+
 ## ovl_11 D_8006C838+44D2 status readers (confidence: low)
+
+**Independent position-recovery service now reconstructed as
+`modules/record_position_recovery.c`, D0FB4–D12A0:**
+Ovl11RecoverRecordPositions restores colliding state-1 records and gated or
+colliding state-6 records over the two singletons and ALL 20 B8 / 10 B4
+records, using fixed raw-coordinate rows. This is not the pair-slot provider
+family despite sharing the large state aggregate. Its only callee is the
+public counted collision wrapper; its three clients are progress/status,
+record-pool lifecycle and availability reset. Left D0F20 reserves pair slots,
+not positions; right D12A0 writes only the deferred audio halfword. No private
+helper/table/state requires joining either neighbor. These are -G0
+protocol/evidence-limited cuts, not recovered historical object edges.
+
+The header records unchanged state handling, gates, all fallback coordinates
+and the required collision budget: up to 32 scans pass NULL output pointers,
+so the wrapper's exhausted-budget write would be unsafe. The shared-base pool
+expressions and duplicated state-1/state-6 store arms remain; no coordinate,
+type, collision mask or behavior was repaired as cleanup. Baseline checked
+fold passed member and overlay without an override. Its canonical name/header
+replaced all three callers' local declarations with unchanged caller objects.
 
 - ovl_11_func_800D0BC8 (m): checks u16 fields at 44D0/44D2 for selectors
   1/3, then reads the signed halfword at 99C8 + selector * 4.

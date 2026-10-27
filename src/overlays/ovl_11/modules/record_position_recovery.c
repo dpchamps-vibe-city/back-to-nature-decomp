@@ -1,12 +1,17 @@
+/* Restore colliding or gated records to fixed raw-coordinate placements.
+ * Keep both state-1/state-6 store arms: state 6 also transitions to state 1.
+ * This batch shares the collision budget with the rest of the frame; see
+ * ovl11_record_position_recovery.h for the null-output budget constraint. */
+
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_record_position_recovery.h"
 #include "psyq/stddef.h"
 #include "ovl11_collision_query_budget.h"
 
-/* Puts records that 800BE208 reports as colliding back at fixed positions.
- * A record in state 6 is also set back to state 1, without the collision
- * test when its gate value is zero. */
-void ovl_11_func_800D0FB4(void) {
+/* A zero gate restores state-6 records without querying collision. Other
+ * states outside 1/6 (and outside 1 for the two middle pools) are untouched. */
+void Ovl11RecoverRecordPositions(void) {
     Ovl11ResetRecordB4 *record;
     s32 i;
     s32 flags;

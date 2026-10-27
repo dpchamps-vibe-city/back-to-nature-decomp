@@ -35,6 +35,7 @@
 #include "ovl11_keyframe_step.h"
 #include "ovl11_direction_vector.h"
 #include "ovl11_record_effect_threshold.h"
+#include "ovl11_cd_audio_request.h"
 
 s32 Ovl11GetTaggedRecordSpriteDescriptor(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -494,8 +495,6 @@ typedef struct {
     /* 0x02 */ s16 unk2;
 } UnkStruct80107DE0;
 
-void ovl_11_func_800D12A0(s16 arg0);
-
 s32 Ovl11RequestTaggedRecordEffect24(Struct_800E10C8 *arg0) {
     s32 temp;
     s32 out;
@@ -515,7 +514,7 @@ s32 Ovl11RequestTaggedRecordEffect24(Struct_800E10C8 *arg0) {
     Ovl11StartTimedSpriteEffect((UnkStruct80107DE0 *)((s32)arg0 + 0xA8), 0x24, 0x2D);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(0xC);
+        Ovl11RequestCdAudioTrack(0xC);
     }
     return 0;
 }
@@ -569,7 +568,7 @@ s32 Ovl11ClearTaggedRecordAuxLatch(Struct_800E11C0 *arg0) {
     Ovl11StartRecordEffectAboveThreshold((Ovl11DF72CResetView *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(0xB);
+        Ovl11RequestCdAudioTrack(0xB);
     }
     return 0;
 }
@@ -594,7 +593,7 @@ s32 Ovl11RequestTaggedRecordFlag4(UnkStruct800E1254 *arg0) {
     arg0->unk34 |= 4;
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(0xB);
+        Ovl11RequestCdAudioTrack(0xB);
     }
     return 0;
 }
@@ -637,7 +636,7 @@ s32 Ovl11ReserveTaggedRecordPair(u8 *arg0) {
     Ovl11StartRecordEffectAboveThreshold((Ovl11DF72CResetView *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == *(s16 *)(arg0 + 0x30)) {
-        ovl_11_func_800D12A0(0xB);
+        Ovl11RequestCdAudioTrack(0xB);
     }
     return 0;
 }
@@ -706,7 +705,7 @@ block_19:
         if (var_s1 != 0) {
             far_base = (u8 *)&D_8007AFF0;
             if (*(s16 *)(far_base + 0x25476) == *(s16 *)((u8 *)arg0 + 0x30)) {
-                ovl_11_func_800D12A0(0xB);
+                Ovl11RequestCdAudioTrack(0xB);
             }
         }
     }
@@ -739,7 +738,7 @@ s32 Ovl11RequestTaggedRecordFlag2(Struct_800E15C8 *arg0) {
     ovl_11_func_800D0DCC((UnkStruct800DF4F0 *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
-        ovl_11_func_800D12A0(0xB);
+        Ovl11RequestCdAudioTrack(0xB);
     }
     return 0;
 }

@@ -26,10 +26,10 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
+#include "ovl11_record_position_recovery.h"
 
 s32 ovl_11_func_80108D84(s32 *arg0);
 s32 ovl_11_func_8010B264(Ovl11B264Object *arg0);
-void ovl_11_func_800D0FB4(void);
 
 void Ovl11ResetRecordPools(void) {
     s32 index;
@@ -98,7 +98,7 @@ void Ovl11ResetRecordPools(void) {
     }
     Ovl11ClearAgedItemPool();
     ((struct Ovl11PoolResetView *) D_8006C838)->field_99D8 = 0;
-    ((struct Ovl11PoolResetView *) D_8006C838)->field_99E6 = 0;
+    ((struct Ovl11PoolResetView *) D_8006C838)->pendingCdAudioTrack = 0;
     ((struct Ovl11PoolResetView *) D_8006C838)->flags &= ~8;
 }
 
@@ -186,7 +186,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
     Ovl11RollSpawnWindowLatch();
     Ovl11ResyncRecordRowPlacements(1);
     Ovl11ResyncRecordRowPlacements(0);
-    ovl_11_func_800D0FB4();
+    Ovl11RecoverRecordPositions();
     if (((struct Ovl11PoolResetView *) D_8006C838)->field_E4CA == 0) {
         Ovl11PlaceCode109Records();
     } else {

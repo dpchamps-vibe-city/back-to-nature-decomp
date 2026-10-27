@@ -31,6 +31,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
+#include "ovl11_held_item_effect.h"
 
 s32 Ovl11TryBeginLowCodeItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
     s32 temp_s2;
@@ -89,14 +90,13 @@ s32 Ovl11TryBeginHighCodeItemAction(u8 *arg0, u16 *arg1) {
     return 0;
 }
 
-s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0);
 /* The callee stores only the low byte of the animation selector. */
 
 s32 Ovl11TryBeginSpecialItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
     switch ((s16) *arg1) {
     case 0x38:
     case 0x39:
-        ovl_11_func_800CDD7C(arg0);
+        Ovl11BeginHeldItemEffect(arg0);
         Ovl11InitPrimaryObjectItemSpriteSource((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
         SelectSpriteAnimation((ObjectState *) &arg0->sprite, (u8) arg0->unk38);
         return 1;

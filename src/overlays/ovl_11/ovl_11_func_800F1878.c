@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game_flags.h"
-
-void ovl_11_func_800F1E44(u32 arg0, s16 *arg1, s32 arg2);
+#include "ovl11_condition_record_fields.h"
 
 s32 ovl_11_func_800F1878(u32 arg0, s32 arg1) {
     s16 sp10;
@@ -12,7 +11,7 @@ s32 ovl_11_func_800F1878(u32 arg0, s32 arg1) {
     u16 mask;
     s32 one;
 
-    ovl_11_func_800F1E44(arg0, &sp10, arg1);
+    Ovl11DecodeConditionFlagIds(arg0, &sp10, arg1);
     var_s1 = 1;
     var_s2 = 0;
     mask = 0x3FF;

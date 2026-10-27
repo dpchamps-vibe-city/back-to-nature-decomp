@@ -98,7 +98,7 @@ void Ovl11StepAreaModeState(void) {
     case 1:
         if (!(STATUS->objectFlags & 8)) {
             WORK->state = 2;
-            if (D_801287F0->unk2 != 0xFFFE) {
+            if (gOvl11SelectedInteractionVolume->selectionId != 0xFFFE) {
                 Ovl11BeginPrimaryObjectInputOverride(20);
             } else {
                 Ovl11BeginPrimaryObjectInputOverride(27);
@@ -111,13 +111,13 @@ void Ovl11StepAreaModeState(void) {
         break;
     case 2:
         if (!(STATUS->objectFlags & 8)) {
-            if (D_801287F0 != 0) {
-                if (D_801287F0->unk2 == 0xFFFE) {
+            if (gOvl11SelectedInteractionVolume != 0) {
+                if (gOvl11SelectedInteractionVolume->selectionId == 0xFFFE) {
                     WORK->state = 0;
-                    if (D_801287F0->unkA == 0x2E) {
+                    if (gOvl11SelectedInteractionVolume->actionCode == 0x2E) {
                         STATUS->selectionFlags |= 0x80;
                     }
-                    if (D_801287F0->unkA == 0x20 && D_801287F0->unk8 == 2) {
+                    if (gOvl11SelectedInteractionVolume->actionCode == 0x20 && gOvl11SelectedInteractionVolume->direction == 2) {
                         STATUS->selectionFlags |= 0x20;
                     }
                 } else {
@@ -135,13 +135,13 @@ void Ovl11StepAreaModeState(void) {
         BeginScreenFadeFeedback(20);
         Ovl11ProbeActivePoolGate();
         gOvl11AreaSoundEffectPending = 0;
-        if (D_801287F0->unkA != 99) {
-            if (!(D_801287F0->unk0 & 0x200)) {
+        if (gOvl11SelectedInteractionVolume->actionCode != 99) {
+            if (!(gOvl11SelectedInteractionVolume->flags & 0x200)) {
                 gOvl11AreaSoundEffectPending = 1;
             }
         }
-        selection = D_801287F0->unk2;
-        WORK->object = D_801287F0;
+        selection = gOvl11SelectedInteractionVolume->selectionId;
+        WORK->object = gOvl11SelectedInteractionVolume;
         WORK->state = 5;
         STATUS->objectFlags &= ~0x400;
         WORK->savedSelection = selection;
