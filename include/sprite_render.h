@@ -9,14 +9,16 @@
 
 /* Frame submission through the active packet-work cursor. Source/OT
  * addresses retain their historical s32 ABI. Indices are narrowed to bytes,
- * x/y are signed pixel offsets. Calls append/prepend packets, not GPU submits;
+ * x/y are signed pixel offsets. Rects accepts words and narrows them to s16
+ * inside the implementation, including for old-style overlay callers.
+ * Calls append/prepend packets, not GPU submits;
  * initialize the active render context/cursor and retain packet storage.
  * The Rects path interleaves SPRT and DR_MODE packets through one cursor.
  * The Quads path forwards control6 twice, then control7/control8, to the
  * low-level builder; these controls keep neutral names until established.
  */
 void DrawSpriteFrameRects(s32 otAddress, s32 sourceAddress, s32 animation,
-                          s32 frame, s16 x, s16 y);
+                          s32 frame, s32 x, s32 y);
 void DrawSpriteFrameQuads(s32 otAddress, s32 sourceAddress, s32 animation,
                           s32 frame, s16 x, s16 y, s32 control6,
                           s32 control7, u16 control8);

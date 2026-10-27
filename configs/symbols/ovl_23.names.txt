@@ -80,3 +80,10 @@ Ovl23DrawRecordTrails = 0x800B954C; // type:func
 // Preserve the leading label extent, not the extent of its aggregate views.
 gOvl23RecordRunWork = 0x800BF87C; // type:data size:0x4
 Ovl23AdvanceDecisionRecordPosition = 0x800BA610; // type:func
+
+// Record drawing and its private projection/ordering helper closure.
+Ovl23DrawActorRecord = 0x800BA73C; // type:func
+Ovl23DrawDecisionRecord = 0x800BAA60; // type:func
+Ovl23DrawScrollingRecordBackdrop = 0x800BABD8; // type:func
+Ovl23OrderingTableForRecordY = 0x800BAFFC; // type:func
+Ovl23ProjectRecordX = 0x800BB040; // type:func

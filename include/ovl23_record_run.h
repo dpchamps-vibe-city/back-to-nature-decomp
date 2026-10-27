@@ -17,8 +17,9 @@
  * load slots and requesting scene 6. Requires initialized render/packet work,
  * controller, message and sound services; uses shared state, not reentrant.
  *
- * The trail sub-interface remains in ovl23_record_trails.h. Other scene helper
- * linkage is retained, but those functions are not independent public APIs. */
+ * This is the only public entry. Record, trail, geometry, drawing and loader
+ * helpers remain externally linked at their original addresses but are local
+ * implementation interfaces of the complete scene translation unit. */
 void Ovl23DispatchRecordRunSubphase(void);
 
 #endif

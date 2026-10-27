@@ -2771,16 +2771,21 @@ extern s16 gOvl11Mode1FSpriteSubstituteIds[];
  * its original absolute addressing; animation/frame bytes are at +4/+5. */
 extern u8 gOvl19UiSprite[];
 
-/* 800B8C18 reads these halfwords/position in six 0x44-byte records. */
+/* 800B8C18 updates six 0x44-byte records; BAA60 draws the embedded sprite
+ * at +0x10, reading animation +0x14 and palette-Y offset +0x40. */
 struct Ovl23DecisionRecord {
-    s16 unk0;
+    s16 lane;
     s16 unk2;
-    s16 unk4;
-    s16 unk6;
+    s16 state;
+    s16 direction;
     s16 unk8;
     s16 unkA;
-    s32 unkC;
-    u8 pad10[0x34];
+    s32 xQ12;
+    u8 pad10[4];
+    u8 animation;
+    u8 pad15[0x2B];
+    s16 paletteY;
+    u8 pad42[2];
 };
 
 /* 800B8C18 pairs 0x50-stride fields at +0x2E/+0x38 with records at +0x204. */
@@ -2829,14 +2834,15 @@ struct Ovl23ScreenInitTail {
     u16 unk72;
 };
 
-/* 800B823C writes +4..+414; 800B8584 writes +0; 800B8754 increments s16 +416. */
+/* 800B823C writes +4..+414; 800B8584 writes +0; 800B8754 increments s16 +416.
+ * BB040 projects X relative to the signed Q12 camera word at +0x10. */
 struct Ovl23ScreenHeader {
     s16 unk0;
     u8 pad2[2];
     s32 unk4;
     s32 unk8;
     s32 unkC;
-    s32 unk10;
+    s32 cameraXQ12;
     s16 unk14;
     /* 800B97E0 fills six u16 choices; 800B8644 reads indices 0, 1, 3, 5. */
     u16 unk16[6];
@@ -2846,18 +2852,25 @@ struct Ovl23ScreenHeader {
 };
 extern struct Ovl23ScreenHeader Ovl23_D_800BF87C_header __asm__("gOvl23RecordRunWork");
 
-/* 800B8FA4 reads six 0x50-byte actors at +0x24 and timer/limit fields through +0x3AE. */
+/* 800B8FA4 updates six 0x50-byte actors at +0x24; BA73C draws the sprite
+ * at +0x1C. BB0C8 writes state/direction/timer; texture-offset setup reads
+ * palette X/Y at +0x4C/+0x4E. Both paths use this one record layout. */
 struct Ovl23ActorDecision {
     s16 unk0;
     s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
+    s16 state;
+    s16 direction;
+    s16 timer;
     s16 unkA;
     u8 padC[8];
-    s32 unk14;
-    s32 unk18;
-    u8 pad1C[0x34];
+    s32 xQ12;
+    s32 yQ12;
+    u8 pad1C[4];
+    u8 animation;
+    u8 frame;
+    u8 pad22[0x2A];
+    s16 paletteX;
+    s16 paletteY;
 };
 /* 800B9310 passes six 0x50-byte records at this base to 800BA73C. */
 extern struct Ovl23ActorDecision D_800BF8A0[6];

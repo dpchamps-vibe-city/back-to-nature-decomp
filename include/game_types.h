@@ -2109,42 +2109,11 @@ typedef struct {
     s16 unk3B2;        /* 0x3B2 */
 } Ovl23D87CView39C;
 
-/* ovl_23_func_800BA73C reads these fields in each 0x50-byte record
- * passed by ovl_23_func_800B9310; the sprite begins at +0x1C. */
-typedef struct {
-    u8 pad_00[4];
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    u8 pad_0A[0xA];
-    s32 unk14;
-    s32 unk18;
-    u8 pad_1C[4];
-    u8 unk20;
-    u8 unk21;
-    u8 pad_22[0x2A];
-    s16 unk4C;
-    s16 unk4E;
-} Ovl23BA73CArg;
-
-/* ovl_23_func_800BAA60 argument record: one 0x44-stride entry of the
- * D_800BFA80 array driven by ovl_23_func_800B9310. The s16 selector switched
- * on is at 0x04, the ObjectState-ish block begins at 0x10 (its +0x04 byte is
- * read unsigned), the position word is at 0x0C and the s16 at 0x40 is the
- * fourth func_80015868 argument. Only the fields the function reads are
- * named; the full object extent is not established. */
-typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 unk6;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-    /* 0x10 */ char pad_10[4];
-    /* 0x14 */ u8 unk14;
-    /* 0x15 */ char pad_15[0x2B];
-    /* 0x40 */ s16 unk40;
-} Ovl23BAA60Arg;
+/* The simulation and drawing APIs use the same six 0x50-byte actor and
+ * 0x44-byte decision records. Their complete global-array layouts live in
+ * globals_override.h; these are aliases, not competing partial layouts. */
+typedef struct Ovl23ActorDecision Ovl23ActorRecord;
+typedef struct Ovl23DecisionRecord Ovl23DecisionRecord;
 
 /* D_800BF87C view for ovl_23_func_800BAA60: the s32 state id at 0x04 and the
  * u16 cursor counter at 0x14, both read from the single aggregate base. */

@@ -107,7 +107,7 @@ void DrawScrollingSpriteGridInContext(s32 orderingTable);
 void DrawSpriteAnimationQuadsAndUpdate(s32 otAddress, SpriteSourceData *source, s32 x, s32 y);
 void DrawSpriteAnimationRectsAndUpdate(s32 otAddress, SpriteSourceData *source, s16 x, s16 y);
 void DrawSpriteFrameQuads(s32 otAddress, s32 sourceAddress, s32 animation, s32 frame, s16 x, s16 y, s32 control6, s32 control7, u16 control8);
-void DrawSpriteFrameRects(s32 otAddress, s32 sourceAddress, s32 animation, s32 frame, s16 x, s16 y);
+void DrawSpriteFrameRects(s32 otAddress, s32 sourceAddress, s32 animation, s32 frame, s32 x, s32 y);
 void DrawSpriteGridCell(s32 ot, SpriteSourceData *source, s16 frame, s32 x, s32 y);
 void DrawSpriteGridCellInContext(s32 ot, SpriteSourceData *source, s16 frame, s32 x, s32 y);
 void DrawTextEntryCursor(u16 arg0);

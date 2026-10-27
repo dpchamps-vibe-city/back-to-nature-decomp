@@ -1,28 +1,24 @@
 /*
- * Record-run scene: staged resource setup, a five-subphase/seven-stage
- * dispatch protocol, message prompts, pad-driven simulation and composition.
+ * Complete record-run scene: resource bring-up, five-subphase/seven-stage
+ * dispatch, message prompts, pad-driven simulation, movement and composition.
  * Six 0x50-byte actors and six 0x44-byte decision records share one work
  * aggregate with the trail rings. Positions and movement use Q12 units;
  * stage timers count update calls, not elapsed milliseconds.
  *
- * This is the scene/control half of a larger supported unit. A four-byte
- * unrepresented rodata gap at overlay file offset 0x18 prevents pooling its
- * first switch table with direction_movement's tables. This mechanical cut
- * at 800B9B18 is NOT evidence of an original file boundary. The remaining
- * helpers and resource/movement modules belong to the same closed scene;
- * notes/file-groupings.md records the whole-unit evidence and merge blockers.
+ * ovl23_record_run.h publishes the scene callback. The helpers below retain
+ * external linkage and original entry identities, without becoming separate
+ * public services. All 55 entries and their three switch tables are one TU;
+ * notes/file-groupings.md records membership and the code/data outer edges.
  */
 
 #include "common.h"
 #include "screen_fade.h"
 #include "scene_selection.h"
 #include "master_volume.h"
+#include "sprite_upload.h"
 #include "sound_driver.h"
 #include "sound_commands.h"
 #include "message_window.h"
-#include "ovl23_record_value_increments.h"
-#include "ovl23_sprite_resources.h"
-#include "ovl23_record_trails.h"
 #include "game_types.h"
 #include "random.h"
 #include "psyq/abs.h"
@@ -30,14 +26,40 @@
 #include "psyq/sys/types.h"
 #include "psyq/libgte.h"
 #include "psyq/stdlib.h"
-#include "ovl23_record_random_selection.h"
-#include "ovl23_direction_movement.h"
-#include "ovl23_record_control_fields.h"
 #include "psyq/libgpu.h"
+#include "psyq/memory.h"
+#include "cd_loader.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "ovl23_record_run.h"
-#include "ovl23_record_decision_advance.h"
+
+/* Forward interfaces within this unit, not a claim of original static linkage. */
+void Ovl23LoadSharedSpriteBank(void);
+void Ovl23LoadSpriteImageBank(void);
+void Ovl23LoadActorSpriteBank(void);
+void Ovl23QueueSoundBankLoads(void);
+void Ovl23PauseActorSprites(void);
+void Ovl23ResumeActorSprites(void);
+void Ovl23DrawPausedSpriteFrame(void);
+void Ovl23ResetRecordTrails(void);
+void Ovl23PushDecisionTrailNode(s32 xQ12, s16 laneY, s16 state);
+void Ovl23PushActorTrailNode(s32 xQ12, s16 laneY, s16 state);
+void Ovl23DrawRecordTrails(void);
+s32 Ovl23TestRecordRandomThreshold(s16 trialRow, s16 recordIndex);
+s32 Ovl23ChooseRecordWeightedResult(s16 recordIndex, s16 weightSet);
+void Ovl23StepRecordInDirection(Ovl23PositionedRecord *record);
+s32 Ovl23DirectionFromRecordAnchor(Ovl23PositionedRecord *record);
+s32 Ovl23ChooseRecordDirection(Ovl23PositionedRecord *record);
+void Ovl23SetActorControl(Ovl23Func800BB0C8Arg *record,
+                          s32 state, s32 direction, s32 controlValue);
+void Ovl23SetAnchorRecordControl(Ovl23Func800BB0C8Arg *record,
+                                 s32 state, s32 direction, s32 controlValue);
+void Ovl23AdvanceDecisionRecordPosition(Ovl23Func800BB0C8Arg *record);
+void Ovl23DrawActorRecord(Ovl23ActorRecord *record);
+void Ovl23DrawDecisionRecord(Ovl23DecisionRecord *record);
+void Ovl23DrawScrollingRecordBackdrop(void);
+void Ovl23RaiseRecordByteRangeValue(s16 recordIndex);
+void Ovl23RaiseRecordHalfwordRangeValue(s16 recordIndex);
 
 void func_80017A48(u32 arg0);
 u32 func_80017A64(void);
@@ -189,7 +211,7 @@ void Ovl23ResetRecordRunState(void) {
     state->unk8 = 0;
     state->unkC = 0;
     state->unk414 = -1;
-    state->unk10 = 0x40000;
+    state->cameraXQ12 = 0x40000;
     state->unk14 = 0;
     Ovl23InitDecisionRecords();
     Ovl23InitActorRecords();
@@ -406,7 +428,7 @@ void Ovl23UpdateRecordStage6(void) {
             }
             if (i == 2) {
                 state = &Ovl23_D_800BF87C_header;
-                if (((struct Ovl23ActorDecisionView *)state)->actors[2].unk14 ==
+                if (((struct Ovl23ActorDecisionView *)state)->actors[2].xQ12 ==
                     ((((struct Ovl23ActorDecisionView *)state)->unk39C + 0x37) << 12)) {
                     if (state->unkC == 0) {
                         state->unkC = 1;
@@ -460,15 +482,15 @@ void Ovl23UpdateRecordStage6(void) {
     {
         struct Ovl23ScreenHeader *camera = &Ovl23_D_800BF87C_header;
 
-        if (((struct Ovl23ActorDecisionView *)camera)->records[2].unkC > 0x3FFFF) {
-            camera->unk10 = ((struct Ovl23ActorDecisionView *)camera)->records[2].unkC;
+        if (((struct Ovl23ActorDecisionView *)camera)->records[2].xQ12 > 0x3FFFF) {
+            camera->cameraXQ12 = ((struct Ovl23ActorDecisionView *)camera)->records[2].xQ12;
         }
-        if (camera->unk10 <= 0x40000) {
-            camera->unk10 = 0x40000;
+        if (camera->cameraXQ12 <= 0x40000) {
+            camera->cameraXQ12 = 0x40000;
         } else {
             result = ((struct Ovl23ActorDecisionView *)camera)->unk39C << 12;
-            if (camera->unk10 >= result) {
-                camera->unk10 = result;
+            if (camera->cameraXQ12 >= result) {
+                camera->cameraXQ12 = result;
             }
         }
         Ovl23UpdateRecordRunFrame();
@@ -498,7 +520,6 @@ void Ovl23ApplyPadToAnchorRecord(void) {
     Ovl23SetAnchorRecordControl(&D_800BFB08, var_a1, (s32) var_a2, 0);
     Ovl23AdvanceDecisionRecordPosition(&D_800BFB08);
 }
-/* Warning: struct GfxObj is not defined (only forward-declared) */
 
 void Ovl23ReturnDecisionRecordToAnchor(Ovl23Func800BB0C8Arg *arg0);
 
@@ -525,7 +546,7 @@ void Ovl23StepRecordWindows(void) {
                     record->unk20C--;
                 } else {
                     record->unk20C = record->unk20E;
-                    diff = base->actors[i].unk38 / 4096 - base->records[i].unkC / 4096;
+                    diff = base->actors[i].unk38 / 4096 - base->records[i].xQ12 / 4096;
                     distance = abs(diff);
                     if (distance < base->actors[i].unk2E) {
                         switch (Ovl23ChooseRecordWeightedResult(i, 0)) {
@@ -667,11 +688,11 @@ void Ovl23StepActorDecisions(void) {
     actor = base->actors;
     for (; i < 6; i++) {
         if (actor->unk2 == 1) {
-            if (actor->unk8 > 0) {
-                actor->unk8--;
+            if (actor->timer > 0) {
+                actor->timer--;
             } else if (base->unk14 == (base->unk14 / base->unk3AC) * base->unk3AC) {
-                dx = base->actors[i].unk14 / 4096 - base->records[i].unkC / 4096;
-                dy = base->actors[i].unk18 / 4096 - table[i];
+                dx = base->actors[i].xQ12 / 4096 - base->records[i].xQ12 / 4096;
+                dy = base->actors[i].yQ12 / 4096 - table[i];
                 distance = abs(SquareRoot0(dx * dx + dy * dy));
                 if (abs(dx) < actor->unkA) {
                     if (distance <= base->unk39E) {
@@ -704,14 +725,14 @@ void Ovl23StepActorDecisions(void) {
     window = base2;
     modeRoot = window;
     for (i = 0; i < 6; i++, window = (struct Ovl23ActorDecisionView *)((u8 *)window + 0x50)) {
-        if (window->actors[0].unk4 == walkingState &&
-            window->actors[0].unk8 == (window->actors[0].unk8 / base2->unk3AE) * base2->unk3AE) {
+        if (window->actors[0].state == walkingState &&
+            window->actors[0].timer == (window->actors[0].timer / base2->unk3AE) * base2->unk3AE) {
             sampledDirection = Rand(5) + 4;
             direction = sampledDirection;
             sampledDirection = 8;
             direction = direction == sampledDirection ? 0 : direction;
-            Ovl23SetActorControl((Ovl23Func800BB0C8Arg *)decisionActor, window->actors[0].unk4,
-                direction, window->actors[0].unk8);
+            Ovl23SetActorControl((Ovl23Func800BB0C8Arg *)decisionActor, window->actors[0].state,
+                direction, window->actors[0].timer);
         }
         stateBase = (struct Ovl23ActorDecisionView *)(offset + (u32)modeRoot);
         mode = stateBase->actors[0].unk2;
@@ -732,24 +753,20 @@ void Ovl23DrawPausedRecordFrame(void) {
     Ovl23UpdateRecordRunFrame();
 }
 
-void ovl_23_func_800BABD8(void);
-void ovl_23_func_800BA73C(Ovl23BA73CArg *arg0);
-void ovl_23_func_800BAA60(Ovl23BAA60Arg *arg0);
-
 void Ovl23UpdateRecordRunFrame(void) {
-    Ovl23BA73CArg *actor;
-    Ovl23BAA60Arg *record;
-    Ovl23BA73CArg *base;
+    Ovl23ActorRecord *actor;
+    Ovl23DecisionRecord *record;
+    Ovl23ActorRecord *base;
     s32 i;
 
-    ovl_23_func_800BABD8();
+    Ovl23DrawScrollingRecordBackdrop();
     i = 0;
-    base = (Ovl23BA73CArg *)D_800BF8A0;
-    record = (Ovl23BAA60Arg *)(base + 6);
+    base = (Ovl23ActorRecord *)D_800BF8A0;
+    record = (Ovl23DecisionRecord *)(base + 6);
     actor = base;
     do {
-        ovl_23_func_800BA73C(actor);
-        ovl_23_func_800BAA60(record);
+        Ovl23DrawActorRecord(actor);
+        Ovl23DrawDecisionRecord(record);
         record++;
         i++;
         actor++;
@@ -758,16 +775,14 @@ void Ovl23UpdateRecordRunFrame(void) {
 }
 
 /*
- * record_trails — reconstructed translation unit.
- *
  * Two bounded record-trail rings, with reset, append and drawing services.
  * The 54 decision-record nodes and 12 actor nodes have private cursors and
  * share the same marker-sprite protocol.
  *
  * X positions are Q12; lane Y is a pixel coordinate and -1 disables a node.
  * Drawing uses the scene camera and the shared marker sprite without
- * advancing either ring. Interface: ovl23_record_trails.h.
- * Membership and boundaries: notes/file-groupings.md.
+ * advancing either ring. Push cursors must be initialized and nonnegative;
+ * upper-bound wrap happens before writing, with no lower-bound check.
  */
 
 void Ovl23ResetRecordTrails(void) {
@@ -1000,5 +1015,789 @@ void Ovl23ReturnDecisionRecordToAnchor(Ovl23Func800BB0C8Arg *arg0) {
     }
     if ((*(s32 *)((u8 *)arg0 + 0xC)) == temp_s0) {
         Ovl23SetAnchorRecordControl(arg0, 1, 6, 0);
+    }
+}
+
+/*
+ * Eight-direction movement for the six-record arena. Clearance projects only
+ * Y against per-record bounds, then checks angular sectors of nearby anchors
+ * and actors using the CURRENT position, not the projected position. This is
+ * not a swept collision test. Direction codes: +Y, +Y+X, +X, -Y+X, -Y, -Y-X,
+ * -X, +Y-X. Membership and boundaries: notes/file-groupings.md.
+ */
+s32 Ovl23CheckDirectionalClearance(Ovl23PositionedRecord *record, s32 directionWord, s32 distanceWord);
+s32 Ovl23PlanarDistance(s16 x0, s16 y0, s16 x1, s16 y1);
+s32 Ovl23AngleDegreesFromVector(s32 dx, s32 dy);
+s32 Ovl23DirectionFromAngleDegrees(s32 degrees);
+
+void Ovl23StepRecordInDirection(Ovl23PositionedRecord *record) {
+    s16 state;
+    s16 direction;
+    s32 x;
+    s32 diagonal;
+    s32 limit;
+    s32 dy;
+    s32 dx;
+    s32 speed;
+
+    state = *(s16 *)((u8 *)record + 4);
+    switch (state) {
+    case 1:
+        speed = *(s32 *)((u8 *)record + 0x10);
+        break;
+    case 3:
+        speed = (Ovl23_D_800BF87C_bounds.unk3B2 << 12) / 10;
+        break;
+    default:
+        return;
+    }
+    diagonal = (speed * 1000) / 1414;
+    if (Ovl23CheckDirectionalClearance(record, *(s16 *)((u8 *)record + 6),
+            Ovl23_D_800BF87C_bounds.unk39E) == 1) {
+        dx = 0;
+        direction = *(s16 *)((u8 *)record + 6);
+        dy = 0;
+        switch (direction) {
+        case 0:
+            dy = speed;
+            break;
+        case 1:
+            dy = diagonal;
+            dx = dy;
+            break;
+        case 2:
+            dx = speed;
+            break;
+        case 3:
+            dy = -diagonal;
+            dx = diagonal;
+            break;
+        case 4:
+            dy = -speed;
+            break;
+        case 5:
+            dy = -diagonal;
+            dx = dy;
+            break;
+        case 6:
+            dx = -speed;
+            break;
+        case 7:
+            dy = diagonal;
+            dx = -dy;
+            break;
+        }
+        x = record->xQ12 + dx;
+        record->xQ12 = x;
+        record->yQ12 += dy;
+        limit = (Ovl23_D_800BF87C_bounds.unk39C + 0x37) << 12;
+        if (x >= limit) {
+            record->xQ12 = limit;
+        }
+        if (record->xQ12 <= -0x30000) {
+            record->xQ12 = -0x30000;
+        }
+    }
+}
+
+s32 Ovl23ChooseRecordDirection(Ovl23PositionedRecord *record) {
+    s32 x;
+    s32 dx;
+    s32 dy;
+    s32 direction;
+    Ovl23D87CView210 *arena;
+
+    x = record->xQ12 / 4096;
+    arena = (Ovl23D87CView210 *)Ovl23_D_800BF87C_draw;
+    dx = x - arena->unk210[record->index].unk0 / 4096;
+    dy = record->yQ12 / 4096 - ((s16 *)&gOvl23RecordAnchorY)[record->index];
+    /* The discarded square-root call is present in the original. */
+    SquareRoot0(dx * dx + dy * dy);
+    direction = Ovl23DirectionFromRecordAnchor(record);
+    if (Ovl23CheckDirectionalClearance(record, direction, (s16)(*(s16 *)((u8 *)arena + 0x39E) * 3 / 2)) != 1) {
+        direction = (s16)(direction + 2 + Rand(2) * 2);
+        direction = (s16)(direction % 8);
+    }
+    return direction;
+}
+
+s32 Ovl23CheckDirectionalClearance(Ovl23PositionedRecord *record, s32 directionWord, s32 distanceWord) {
+    /* Callers pass promoted words; narrowing belongs here, not at every call. */
+    s16 direction = directionWord;
+    s16 distance = distanceWord;
+    s16 y;
+    s32 i;
+
+    switch (direction) {
+    case 3:
+    case 5:
+        y = record->yQ12 / 4096 - distance * 1000 / 1414;
+        break;
+    case 4:
+        y = record->yQ12 / 4096 - distance;
+        break;
+    case 1:
+    case 7:
+        y = record->yQ12 / 4096 + distance * 1000 / 1414;
+        break;
+    case 0:
+        y = distance + record->yQ12 / 4096;
+        break;
+    default:
+        y = record->yQ12 / 4096;
+        break;
+    }
+    if (y < ((s16 *)gOvl23RecordYBounds)[record->index * 2]) {
+        return 0;
+    }
+    if (((s16 *)gOvl23RecordYBounds)[record->index * 2 + 1] < y) {
+        return 0;
+    }
+    for (i = 0; i < 6; i++) {
+        if (i != record->index) {
+            if (distance >= Ovl23PlanarDistance(record->xQ12 / 4096,
+                    record->yQ12 / 4096, Ovl23_D_800BF87C_movement.records[i].xQ12 / 4096,
+                    ((s16 *)&gOvl23RecordAnchorY)[i])) {
+                if (direction == Ovl23DirectionFromAngleDegrees(Ovl23AngleDegreesFromVector(
+                        record->xQ12 / 4096 - Ovl23_D_800BF87C_movement.records[i].xQ12 / 4096,
+                        record->yQ12 / 4096 - ((s16 *)&gOvl23RecordAnchorY)[i]))) {
+                    return 0;
+                }
+            }
+        }
+    }
+    for (i = 0; i < 6; i++) {
+        if (i != record->index) {
+            if (distance >= Ovl23PlanarDistance(record->xQ12 / 4096,
+                    record->yQ12 / 4096,
+                    Ovl23_D_800BF87C_movement.actors[i].unk38 / 4096,
+                    Ovl23_D_800BF87C_movement.actors[i].unk3C / 4096)) {
+                if (direction == Ovl23DirectionFromAngleDegrees(Ovl23AngleDegreesFromVector(
+                        record->xQ12 / 4096 - Ovl23_D_800BF87C_movement.actors[i].unk38 / 4096,
+                        record->yQ12 / 4096 - Ovl23_D_800BF87C_movement.actors[i].unk3C / 4096))) {
+                    return 0;
+                }
+            }
+        }
+    }
+    return 1;
+}
+
+s32 Ovl23DirectionFromRecordAnchor(Ovl23PositionedRecord *record) {
+    s16 index;
+    s32 adjustedY;
+    s32 adjustedX;
+    s32 adjustedAnchorX;
+    s32 x;
+    s32 anchorX;
+    s32 dx;
+
+    adjustedX = record->xQ12;
+    if (adjustedX < 0) {
+        adjustedX += 0xFFF;
+    }
+    x = adjustedX >> 12;
+    index = record->index;
+    adjustedAnchorX = Ovl23_D_800BF87C_movement.records[index].xQ12;
+    if (adjustedAnchorX < 0) {
+        adjustedAnchorX += 0xFFF;
+    }
+    anchorX = adjustedAnchorX >> 12;
+    dx = x - anchorX;
+    adjustedY = record->yQ12;
+    if (adjustedY < 0) {
+        adjustedY += 0xFFF;
+    }
+    return Ovl23DirectionFromAngleDegrees(Ovl23AngleDegreesFromVector(dx,
+        (adjustedY >> 12) - *(s16 *)((u8 *)&gOvl23RecordAnchorY + (index * 2))));
+}
+
+/* Seven 45-degree sectors starting at 23; the wraparound sector returns 4. */
+s32 Ovl23DirectionFromAngleDegrees(s32 degrees) {
+    if ((u32)(degrees - 0x17) < (u32)0x2D) {
+        return 5;
+    }
+    if ((u32)(degrees - 0x44) < (u32)0x2D) {
+        return 6;
+    }
+    if ((u32)(degrees - 0x71) < (u32)0x2D) {
+        return 7;
+    }
+    if ((u32)(degrees - 0x9E) < (u32)0x2D) {
+        return 0;
+    }
+    if ((u32)(degrees - 0xCB) < (u32)0x2D) {
+        return 1;
+    }
+    if ((u32)(degrees - 0xF8) < (u32)0x2D) {
+        return 2;
+    }
+    if ((u32)(degrees - 0x125) < (u32)0x2D) {
+        return 3;
+    }
+    return 4;
+}
+
+s32 Ovl23PlanarDistance(s16 x0, s16 y0, s16 x1, s16 y1) {
+    s32 distance;
+
+    distance = SquareRoot0((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1));
+    return ((s16)distance);
+}
+
+s32 Ovl23AngleDegreesFromVector(s32 dx, s32 dy) {
+    s32 angle;
+
+    angle = ratan2(dx, dy);
+    if (angle < 0) {
+        angle += 0x1000;
+    }
+    return (angle * 0x168) / 0x1000;
+}
+
+/*
+ * Table-driven random decisions for overlay 23's record controller.
+ * The two private probability tables serve its weighted result selection
+ * and subsequent threshold-bucket trials. No record state is modified.
+ * Trial rows 0..3, record indices 0..5 and weight sets 0..1 are unchecked.
+ * Each decision consumes one Rand(100); cumulative weights narrow to s16,
+ * need not sum to 100, and select only when strictly greater than the draw.
+ */
+
+s32 Ovl23TestRecordRandomThreshold(s16 trialRow, s16 recordIndex) {
+    s16 difference;
+    s16 threshold;
+    s32 bucket;
+    u8 *state;
+
+    state = Ovl23_D_800BF87C_draw;
+    difference = (s16)(*(u16 *)(state + recordIndex * 0x50 + 0x30) -
+                       *(u16 *)(state + recordIndex * 0x50 + 0x32));
+    if (*(s16 *)(state + 0x3A4) < difference) {
+        bucket = 0;
+    } else if (*(s16 *)(state + 0x3A6) < difference) {
+        bucket = 1;
+    } else if (*(s16 *)(state + 0x3A8) < difference) {
+        bucket = 2;
+    } else if (*(s16 *)(state + 0x3AA) < difference) {
+        bucket = 3;
+    } else {
+        bucket = 4;
+    }
+    threshold = gOvl23RecordRandomTrialThresholds[trialRow * 5 + bucket];
+    return threshold > (s32)Rand(0x64);
+}
+
+s32 Ovl23ChooseRecordWeightedResult(s16 recordIndex, s16 weightSet) {
+    s32 row;
+    s16 cumulativeWeight;
+    s16 draw;
+    s32 i;
+    s32 weight;
+    u8 *state;
+    s32 recordPositionQ12;
+    s32 actorPositionQ12;
+    s32 distance;
+    s32 recordPosition;
+    s32 distanceThreshold;
+    u8 *categoryState;
+
+    cumulativeWeight = 0;
+    draw = (s16)Rand(0x64);
+    if (weightSet == 0) {
+        categoryState = Ovl23_D_800BF87C_draw;
+        row = (u16)(((Ovl23D87CView50 *)categoryState)->unk0[recordIndex].unk28 - 1) < 2;
+    } else {
+        state = Ovl23_D_800BF87C_draw;
+        recordPositionQ12 = ((Ovl23D87CView210 *)state)->unk210[recordIndex].unk0;
+        /* Add the fractional mask before shifting negative Q12 values:
+         * these conversions truncate toward zero, not toward minus infinity. */
+        if (recordPositionQ12 < 0) {
+            recordPositionQ12 += 0xFFF;
+        }
+        recordPosition = recordPositionQ12 >> 12;
+        distanceThreshold = recordIndex * 0x50;
+        actorPositionQ12 = ((Ovl23D87CView50 *)state)->unk0[recordIndex].unk38;
+        if (actorPositionQ12 < 0) {
+            actorPositionQ12 += 0xFFF;
+        }
+        distance = recordPosition - (actorPositionQ12 >> 12);
+        distanceThreshold = *(s16 *)((u8 *)state + distanceThreshold + 0x2E);
+        if (distance < 0) {
+            distance = -distance;
+        }
+        row = (distance - distanceThreshold) < 0x65;
+    }
+    for (i = 0; i < 3; i++) {
+        weight = *(u16 *)((u8 *)gOvl23RecordRandomWeights + row * 6 + weightSet * 12 + i * 2);
+        cumulativeWeight = (s16)(cumulativeWeight + weight);
+        if (draw < cumulativeWeight) {
+            break;
+        }
+    }
+    if (i == 0) {
+        return 3;
+    }
+    if (i == 1) {
+        return 2;
+    }
+    if (i == 2) {
+        return 1;
+    }
+    return -1;
+}
+
+/*
+ * Advance a decision record along the track in signed Q12 coordinates.
+ * State 2/3 selects one of two speeds; direction 6 moves toward the lower end.
+ * The endpoint tests are deliberately independent, and record 2 keeps its
+ * control fields when clamped. Endpoints are -48 and trackExtent+119 world
+ * units. Arithmetic must remain in signed s32 range.
+ */
+void Ovl23AdvanceDecisionRecordPosition(Ovl23Func800BB0C8Arg *record) {
+    s32 step12;
+    s32 upperEndpoint12;
+
+    switch (record->unk4) {
+    case 0:
+        return;
+    case 2:
+        step12 = (Ovl23_D_800BF87C_bounds.unk3A0 << 0xC) / 10;
+        break;
+    case 3:
+        step12 = (Ovl23_D_800BF87C_bounds.unk3A2 << 0xC) / 10;
+        break;
+    default:
+        return;
+    }
+
+    if (record->unk6 == 6) {
+        *(s32 *)((u8 *)record + 0xC) -= step12;
+    } else {
+        *(s32 *)((u8 *)record + 0xC) += step12;
+    }
+    upperEndpoint12 = (Ovl23_D_800BF87C_bounds.unk39C + 0x77) << 0xC;
+    if (*(s32 *)((u8 *)record + 0xC) >= upperEndpoint12) {
+        *(s32 *)((u8 *)record + 0xC) = upperEndpoint12;
+        if (*(s16 *)((u8 *)record + 0) != 2) {
+            Ovl23SetAnchorRecordControl(record, 1, 6, record->unk8);
+        }
+    }
+    if (*(s32 *)((u8 *)record + 0xC) <= -0x30000) {
+        *(s32 *)((u8 *)record + 0xC) = -0x30000;
+        if (*(s16 *)((u8 *)record + 0) != 2) {
+            Ovl23SetAnchorRecordControl(record, 1, 2, record->unk8);
+        }
+    }
+}
+
+/*
+ * Record-scene drawing: select actor/decision animations, submit their
+ * sprites and marker, sample trails, and tile the scrolling backdrop.
+ * Projection and ordering-table selection are shared by the two record
+ * drawers. Signed Q12 division truncates toward zero; projected X narrows
+ * to s16 before testing +/-screenWidth, mapping outside values to -width.
+ * Drawing still emits packets for that sentinel. Initialized sprite sources,
+ * render context and sufficient packet/OT storage are required.
+ * Actor states 1..10 and decision states 1..3 draw; others do nothing.
+ * Ordinary draws advance animation once; fixed-frame actor states do not.
+ * Palette offsets change, but positions and the shared tick do not. Outside
+ * mode 1, sample actor trails at tick%30==29 and decision trails at tick%10==9.
+ */
+
+/* Internal helpers retain external linkage; original static linkage is unknown. */
+s32 Ovl23ProjectRecordX(s32 xQ12);
+s32 Ovl23OrderingTableForRecordY(s32 yQ12);
+void func_800248E8(s32 orderingTable, s32 x, s32 y, s32 frame);
+
+void Ovl23DrawActorRecord(Ovl23ActorRecord *record) {
+    ObjectState *sprite;
+    s16 stateIndex;
+    s16 animation;
+    s32 orderingTable;
+    s32 screenX;
+    s32 screenY;
+    s32 fixedFrame;
+
+    stateIndex = record->state - 1;
+    fixedFrame = -1;
+    switch (stateIndex) {
+    case 0:
+        animation = record->direction + 0xD;
+        break;
+    case 1:
+        animation = record->direction + 0x15;
+        break;
+    case 2:
+        animation = record->direction + 1;
+        break;
+    case 3:
+        if (record->timer >= 0x1F) {
+            animation = 0x29;
+            fixedFrame = record->direction / 2;
+        } else {
+            animation = record->direction / 2 + 9;
+        }
+        break;
+    case 4:
+        animation = record->direction / 2 + 0x1D;
+        break;
+    case 5:
+        animation = record->direction / 2 + 0x21;
+        break;
+    case 6:
+        animation = 0x29;
+        fixedFrame = record->direction / 2;
+        break;
+    case 7:
+        if (record->timer >= 0x1F) {
+            animation = 0x29;
+            fixedFrame = record->direction / 2;
+        } else {
+            animation = record->direction / 2 + 0x2A;
+        }
+        break;
+    case 8:
+        animation = 0x32;
+        fixedFrame = record->direction / 2;
+        break;
+    case 9:
+        if (record->timer >= 0x1F) {
+            animation = 0x32;
+            fixedFrame = record->direction / 2;
+        } else {
+            animation = record->direction / 2 + 0x33;
+        }
+        break;
+    default:
+        return;
+    }
+    sprite = (ObjectState *) ((u8 *) record + 0x1C);
+    if (record->animation != animation) {
+        SelectSpriteAnimation(sprite, animation & 0xFF);
+    }
+    if (fixedFrame != -1) {
+        SelectSpriteAnimationFrame(sprite, fixedFrame & 0xFF);
+    }
+    screenX = Ovl23ProjectRecordX(record->xQ12);
+    screenY = (s16) (record->yQ12 / 0x1000);
+    SetSpriteSourceTextureOffsets((Struct_800154CC *) sprite, 0, 0, record->paletteX, record->paletteY);
+    orderingTable = Ovl23OrderingTableForRecordY(record->yQ12);
+    /* Fixed-frame states do not advance the sprite's animation clock. */
+    if (fixedFrame == -1) {
+        DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *) sprite, screenX, screenY);
+    } else {
+        DrawSpriteFrameRects(orderingTable, (s32) sprite, record->animation, record->frame, screenX, screenY);
+    }
+    func_800248E8(orderingTable, screenX, screenY, 0);
+    if ((((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk4 != 1) &&
+        (((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk14 ==
+         (((((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk14 + 1) / 30) * 30) - 1)) {
+        Ovl23PushActorTrailNode(record->xQ12, screenY, record->direction);
+    }
+}
+
+void Ovl23DrawDecisionRecord(Ovl23DecisionRecord *record) {
+    ObjectState *sprite;
+    s16 screenY;
+    s32 orderingTable;
+    s32 screenX;
+    u8 animation;
+
+    if (record->state == 1) {
+        animation = 0;
+    } else if (record->state == 2) {
+        animation = 2;
+    } else if (record->state == 3) {
+        animation = 4;
+    } else {
+        return;
+    }
+    if (record->direction == 6) {
+        animation = (animation + 1) & 0xFF;
+    }
+    sprite = (ObjectState *) ((u8 *) record + 0x10);
+    if (record->animation != animation) {
+        SelectSpriteAnimation(sprite, animation);
+    }
+    screenX = Ovl23ProjectRecordX(record->xQ12);
+    screenY = *((s16 *) ((u8 *) &gOvl23RecordAnchorY + (record->lane * 2)));
+    orderingTable = Ovl23OrderingTableForRecordY(screenY << 0xC);
+    SetSpriteSourceTextureOffsets((Struct_800154CC *) sprite, 0, 0, 0, record->paletteY);
+    DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *) sprite, screenX, screenY);
+    func_800248E8(orderingTable, screenX, screenY, 0);
+    if ((((Ovl23D87CViewBAA60 *)Ovl23_D_800BF87C_draw)->unk4 != 1) &&
+        (((Ovl23D87CViewBAA60 *)Ovl23_D_800BF87C_draw)->unk14 ==
+         (((((Ovl23D87CViewBAA60 *)Ovl23_D_800BF87C_draw)->unk14 + 1) / 10) * 10) - 1)) {
+        Ovl23PushDecisionTrailNode(record->xQ12, screenY, record->direction);
+    }
+}
+
+void Ovl23DrawScrollingRecordBackdrop(void) {
+    s16 x;
+    s16 tileX64;
+    s16 tileX76;
+    s32 position;
+    s32 screenWidth;
+    s32 lowerOffset;
+    s32 upperOffset;
+    u8 *base;
+    u8 *tiles64;
+    u8 *tiles76;
+    u8 *endBase;
+    u8 *loopBase;
+    ObjectState *sprite;
+    ObjectState *sprite64;
+    ObjectState *sprite76;
+    ObjectState *endSprite;
+    ObjectState *loopSprite;
+
+    /* Keep the two tile walks separate: 64-pixel and 76-pixel layers use
+     * different scroll rates and ordering-table slots. */
+    sprite64 = (ObjectState *)gOvl23SceneSpriteSource;
+    SelectSpriteAnimation(sprite64, 0);
+    SelectSpriteAnimationFrame(sprite64, 0);
+    tiles64 = (u8 *)sprite64 - 0x3B4;
+    position = *(s32 *)(tiles64 + 0x10);
+    tileX64 = position / 4096 - (position / 262144) * 64 - 64;
+    if (tileX64 < HWD0 + 64) {
+        do {
+            s32 packet = gActiveRenderContext->field_D8 + 0xD8;
+            loopSprite = sprite64;
+            loopBase = tiles64;
+            DrawSpriteFrameRects(packet, (s32)loopSprite,
+                         loopBase[0x3B8], loopBase[0x3B9], tileX64, 0);
+            tileX64 += 64;
+        } while (tileX64 < HWD0 + 64);
+    }
+    sprite76 = (ObjectState *)gOvl23SceneSpriteSource;
+    SelectSpriteAnimation(sprite76, 1);
+    tiles76 = (u8 *)sprite76 - 0x3B4;
+    tileX76 = (*(s32 *)(tiles76 + 0x10) / 4096 * 3) -
+        (*(s32 *)(tiles76 + 0x10) / 4096 * 3 / 76) * 76 - 76;
+    if (tileX76 < HWD0 + 76) {
+        do {
+            s32 packet = gActiveRenderContext->field_D8 + 0xCC;
+            loopSprite = sprite76;
+            loopBase = tiles76;
+            DrawSpriteFrameRects(packet, (s32)loopSprite,
+                         loopBase[0x3B8], loopBase[0x3B9], tileX76, 0);
+            tileX76 += 76;
+        } while (tileX76 < HWD0 + 76);
+    }
+    base = Ovl23_D_800BF87C_draw;
+    screenWidth = HWD0;
+    if (-screenWidth / 2 - 32 < *(s32 *)(base + 0x10) / 4096 &&
+        *(s32 *)(base + 0x10) / 4096 < screenWidth / 2 + 32) {
+        sprite = (ObjectState *)(base + 0x3B4);
+        SelectSpriteAnimation(sprite, 0);
+        SelectSpriteAnimationFrame(sprite, 1);
+        /* Unlike record X, marker X narrows again after subtracting 32. */
+        x = HWD0 / 2 + *(s32 *)(base + 0x10) / 4096;
+        DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0xD4, (s32)sprite,
+                     base[0x3B8], base[0x3B9], (s16)(x - 32), 0);
+        SelectSpriteAnimation(sprite, 2);
+        x = HWD0 / 2 + *(s32 *)(base + 0x10) / 4096 + 64;
+        DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0xD4, (s32)sprite,
+                     base[0x3B8], base[0x3B9], (s16)(x - 32), 0);
+    }
+    endBase = Ovl23_D_800BF87C_draw;
+    screenWidth = HWD0;
+    if (-screenWidth / 2 + (lowerOffset = ((Ovl23D87CView39C *)endBase)->unk39C - 32) <
+        *(s32 *)(endBase + 0x10) / 4096 &&
+        *(s32 *)(endBase + 0x10) / 4096 <
+        screenWidth / 2 + (upperOffset = ((Ovl23D87CView39C *)endBase)->unk39C + 32)) {
+        endSprite = (ObjectState *)(endBase + 0x3B4);
+        SelectSpriteAnimation(endSprite, 0);
+        SelectSpriteAnimationFrame(endSprite, 1);
+        x = HWD0 / 2 + *(s32 *)(endBase + 0x10) / 4096 -
+            ((Ovl23D87CView39C *)endBase)->unk39C;
+        DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0xD4, (s32)endSprite,
+                     endBase[0x3B8], endBase[0x3B9], (s16)(x - 32), 0);
+    }
+}
+
+/* Return an OT-slot address, not an index; valid Y/OT storage is required. */
+s32 Ovl23OrderingTableForRecordY(s32 yQ12) {
+    s32 byteOffset;
+
+    byteOffset = (0x28 - (yQ12 / 4096 - 0x40) / 4) * 4;
+    return gActiveRenderContext->field_D8 + byteOffset;
+}
+
+s32 Ovl23ProjectRecordX(s32 xQ12) {
+    s32 screenX;
+
+    screenX = (s16)((HWD0 / 2) - (xQ12 / 4096 - Ovl23_D_800BF87C_header.cameraXQ12 / 4096));
+    if (screenX < -HWD0 || screenX > HWD0) {
+        return (s16)(-(u16)HWD0);
+    }
+    return screenX;
+}
+
+/* Actor/anchor-record control-prefix writers. Both store state, direction
+ * and a caller-defined timer/control value, but remain distinct external
+ * entries for their different client families. No private linkage is inferred.
+ * Inputs narrow to low 16 bits; record prefixes and other fields are untouched. */
+
+void Ovl23SetActorControl(Ovl23Func800BB0C8Arg *record,
+                          s32 state, s32 direction, s32 controlValue) {
+    record->unk4 = state;
+    record->unk6 = direction;
+    record->unk8 = controlValue;
+}
+
+void Ovl23SetAnchorRecordControl(Ovl23Func800BB0C8Arg *record,
+                                 s32 state, s32 direction, s32 controlValue) {
+    record->unk4 = state;
+    record->unk6 = direction;
+    record->unk8 = controlValue;
+}
+
+/*
+ * Sprite-bank bring-up and pause services for this overlay's record arena.
+ * Per-record sources live at arena+0x40 (six, stride 0x50) and arena+0x214
+ * (six, stride 0x44); the scene source is arena+0x3B4. The loader and flag
+ * walkers deliberately retain their different base-relative expressions.
+ * Loads block on CD completion, clear the active OT and share graphics-heap
+ * scratch at +0x4290. The scene source and both arrays must be initialized
+ * before drawing or toggling pause. Mask 4 suppresses animation updates,
+ * not drawing of already-selected frames; the scene source is not paused.
+ */
+void Ovl23PauseActorSprites(void) {
+    u8 *sources44;
+    u8 *sources50;
+    u32 base;
+    s32 i;
+
+    base = (u32)gOvl23ActorSpriteSourceBase;
+    sources50 = (u8 *)(base - 0x1D4);
+    sources44 = (u8 *)base;
+    for (i = 5; i >= 0; i--) {
+        AddSpriteSourceFlags((u16 *)sources44, 4);
+        AddSpriteSourceFlags((u16 *)sources50, 4);
+        sources50 += 0x50;
+        sources44 += 0x44;
+    }
+}
+
+void Ovl23ResumeActorSprites(void) {
+    u8 *sources44;
+    u8 *sources50;
+    u32 base;
+    s32 i;
+
+    base = (u32)gOvl23ActorSpriteSourceBase;
+    sources50 = (u8 *)(base - 0x1D4);
+    sources44 = (u8 *)base;
+    for (i = 5; i >= 0; i--) {
+        ClearSpriteSourceFlags((u16 *)sources44, 4);
+        ClearSpriteSourceFlags((u16 *)sources50, 4);
+        sources50 += 0x50;
+        sources44 += 0x44;
+    }
+}
+
+void Ovl23DrawPausedSpriteFrame(void) {
+    u8 *arena;
+
+    SelectSpriteAnimation((ObjectState *)&gOvl23SceneSpriteSource, 5);
+    arena = gOvl23SceneSpriteSource - 0x3B4;
+    DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 4, (s32)&gOvl23SceneSpriteSource, arena[0x3B8],
+                  arena[0x3B9], 0, 0);
+}
+
+void Ovl23LoadSharedSpriteBank(void) {
+    DrawSync(0);
+    ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
+    CdReadArchiveBytes(0, 0x25000, 0x5800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
+    do {
+    } while (CdReadArchiveBytes(0, 0x25000, 0x5800, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x566C));
+    memcpy(gOvl23SharedSpriteBank, (void *)(gGraphicsHeapBase + 0x4290), 0x13DC);
+    memcpy(&gSharedSpriteData, (void *)(gGraphicsHeapBase + 0x4290), 0x13DC);
+    InitSpriteSourceData(&gOvl23SharedBankSpriteSource, (SpriteDataHeader *)gOvl23SharedSpriteBank);
+}
+
+void Ovl23LoadSpriteImageBank(void) {
+    DrawSync(0);
+    ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
+    CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
+    do {
+    } while (CdReadArchiveBytes(0, 0, 0x2000, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
+}
+
+/* Byte-aligned bank assignment preserves the original unaligned copy, unlike
+ * the shared bank's two separately bounded memcpy operations above. */
+typedef struct {
+    u8 bytes[0x29A8];
+} Ovl23SpriteBankBlob;
+
+void Ovl23LoadActorSpriteBank(void) {
+    s32 i;
+    s32 headerOffsetIndex;
+
+    DrawSync(0);
+    ClearOTagR((u_long *)gActiveRenderContext->field_120, 0x800);
+    CdReadArchiveBytes(0x18, 0, 0x1EC1C, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 1);
+    do {
+    } while (CdReadArchiveBytes(0x18, 0, 0x1EC1C, (u8 *)(gGraphicsHeapBase + 0x4290), 1, 0) == 0);
+    UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x6C38));
+    *(Ovl23SpriteBankBlob *)gOvl23ActorSpriteBank = *(Ovl23SpriteBankBlob *)(gGraphicsHeapBase + 0x4290);
+    InitSpriteSourceData((SpriteSourceData *)gOvl23SceneSpriteSource, (SpriteDataHeader *)(gOvl23ActorSpriteBank + gOvl23ActorSpriteHeaderOffsets[3]));
+    for (i = 0; i < 6; i++) {
+        InitSpriteSourceData((SpriteSourceData *)(gOvl23SceneSpriteSource + i * 0x50 - 0x374), (SpriteDataHeader *)(gOvl23ActorSpriteBank + gOvl23ActorSpriteHeaderOffsets[0]));
+        headerOffsetIndex = 8;
+        if (i == 2) {
+            headerOffsetIndex = 4;
+        }
+        InitSpriteSourceData((SpriteSourceData *)(gOvl23SceneSpriteSource + i * 0x44 - 0x1A0), (SpriteDataHeader *)(gOvl23ActorSpriteBank + *(s32 *)((u8 *)gOvl23ActorSpriteHeaderOffsets + headerOffsetIndex)));
+    }
+}
+
+void Ovl23QueueSoundBankLoads(void) {
+    RewindSoundLoadSlots(2, 0);
+    RewindSoundLoadSlots(1, 0);
+    QueueSoundLoadCommand(0x3E7, 0);
+    QueueSoundLoadCommand(0x12, 1);
+}
+
+/*
+ * Bounded increments of adjacent halfwords in indexed 0x1D4-byte work
+ * records. B87F8 calls both services for its two lists of record indices.
+ * The gameplay meaning of the values is not established.
+ *
+ * At +0x19EA a signed value below 235 gains 20 (low 16 bits), otherwise
+ * becomes 255: ordinary saturation assumes nonnegative byte-range input.
+ * At +0x19EC an unsigned value <=65034 gains 500, otherwise becomes 65535.
+ * Record indices are unchecked. The ovl_25 twins are separate identities.
+ */
+
+void Ovl23RaiseRecordByteRangeValue(s16 recordIndex) {
+    char *work;
+    char *record;
+
+    work = (char *)&D_8006C838;
+    record = work + recordIndex * 0x1D4;
+    if (*(s16 *)(record + 0x8000 + 0x19EA) < 0xEB) {
+        *(s16 *)(record + 0x8000 + 0x19EA) = (s16)(0x14 + *(u16 *)(record + 0x8000 + 0x19EA));
+    } else {
+        *(s16 *)(record + 0x8000 + 0x19EA) = 0xFF;
+    }
+}
+
+void Ovl23RaiseRecordHalfwordRangeValue(s16 recordIndex) {
+    char *work;
+    char *record;
+    u16 value;
+
+    work = (char *)&D_8006C838;
+    record = work + recordIndex * 0x1D4;
+    value = *(u16 *)(record + 0x8000 + 0x19EC);
+    if (value <= 0xFE0Au) {
+        *(u16 *)(record + 0x8000 + 0x19EC) = value + 0x1F4;
+    } else {
+        *(u16 *)(record + 0x8000 + 0x19EC) = 0xFFFF;
     }
 }

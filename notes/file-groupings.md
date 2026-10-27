@@ -10487,6 +10487,15 @@ private helpers or record protocol. These are conservative edges on absence
 of a same-unit witness, not claimed GP-proven original boundaries. No
 internal slice is retained solely for mechanics.
 
+Renderer-ABI follow-up from record_sprite_render: DrawSpriteFrameRects
+(exe:80015EE8) accepts word-sized x/y and explicitly narrows inside the
+implementation. Original incoming `lh` loads and ovl_23's full-word caller
+corroborate that conversion boundary. The shared header and generated context
+now agree; explicit caller narrowing is retained where the original caller
+performs it (ovl_23 backdrop markers and two ovl_11 services). Full campaign
+verification passes with unchanged renderer and caller bytes; no setting,
+policy exception, linkage or storage changed.
+
 The previous whole fold stopped at publication of local SourceData types.
 This run reconciled that concrete context limit: game_types.h now supplies
 0x30-byte SpriteRectSourceView/SpriteQuadSourceView/SpriteEntrySourceView
@@ -14457,6 +14466,10 @@ Historical identities:
 
 ## `ovl_23` shared arg-record setters — 0x800BB0C8 / 0x800BB0D8 (confidence: medium)
 
+Now absorbed whole into `modules/record_run_scene.c` (55 entries); see the
+dispatch-index section for membership and outer edges. The subunit/header
+history below no longer describes a TU boundary or public interface.
+
 **Reconstructed `modules/record_control_fields.c`, 800BB0C8–800BB0E8
 exclusive, both entries.** Identical +4/+6/+8 signed-halfword writes serve
 two distinct record families: C8 is called by actor decision/clearance clients
@@ -14519,10 +14532,12 @@ agrees (0x800BB0E8 + 0x68 = 0x800BB150).
 
 ## `ovl_23` D_800BF87C dispatch-index cluster — 0x800B7EA4–0x800B87F8 (confidence: medium)
 
-**Reconstructed `modules/scene_record_run.c`, 800B7EA4–800B9B18 exclusive,
-29 compiled members**, absorbing record_trails whole. This is the maximal
-mechanically foldable scene/control prefix, NOT an asserted complete original
-TU. The supported larger unit is the 55-entry closed scene through 800BB860:
+**Reconstructed the complete `modules/record_run_scene.c`,
+ovl_23:800B7EA4–800BB860 exclusive, all 55 compiled entries.** The earlier
+29-entry scene_record_run prefix, the seven-entry direction_movement module,
+the two random selectors, decision-position updater, five render entries,
+two control setters, seven sprite/resource services and two value increments
+are now one source, in original order. Membership is the closed scene:
 five subphase callbacks and seven stage callbacks occupy the consecutive
 BB9E4/BB9F8 tables in code order; state transitions name the next table slot.
 The stage controller alone calls pad/window/actor steps and compositor 9310;
@@ -14534,27 +14549,33 @@ separate slices. The remaining direction, random, render, setter and resource
 helpers close that same scene graph and private aggregate protocol. This is
 corroboration under -G0, not GP-based proof that every function was one file.
 
-Outer edges are the overlay's first text byte and the 800BB860 code/data edge.
-The live prefix ends at 800B9B18 ONLY for a mechanical reason: the whole-55
-dry run refuses the unattributed four zero bytes at file 0x18 between the
-setup table (0x4..18) and direction tables (0x1C..5C). It is not the supported
-mod-8 compiler alignment case, and no C construct currently emits it. No
-literal, storage item or override was invented to bypass that check. Next
-useful experiment: establish ownership/source emission of that word before
-pooling the complete scene. Neither a table's owning function nor the overlay
-header word at file 0 proves where its text object begins.
+Outer edges are the overlay's first text byte and the 800BB860 code/data
+edge; no scene function remains outside and no internal boundary is retained.
+The three jump tables pool at file 4..84 in member order. A fresh whole-55
+baseline dry run now accepts the four zero bytes at file 18: the checked fold
+proves the next table's compiler alignment RELATIVE TO THE POOLED SECTION
+(starting at file 4), not relative to absolute file zero. The prior claim that
+this was not the supported mod-8 alignment case was too strong. The helper
+absorbs that verified alignment gap; no padding object, guessed literal or
+new source construct is emitted. Whole-55 --write passes every member and
+all overlay bytes.
 
-A separate checked merge of the remaining 26 entries (absorbing the five
-existing modules whole) rolled back. BA73C's old-style DrawSpriteFrameRects
-redeclaration leaks into BABD8: the merged latter becomes 0x418 rather than
-0x424. Restoring the typed header restores BABD8 but grows BA73C from 0x324
-to 0x32C; changing BB040's result declaration to s16 did not change that
-merged output. All three attempts were rolled back, including the experimental
-return/prototype changes. These measured declaration-visibility constraints,
-not new historical cuts, leave the five existing modules and six standalone
-render helpers intact. The next bounded question is BA73C's screen-coordinate
-narrowing contract with the canonical sprite renderer; do not repeat the
-closed return-type-only experiment or weaken the renderer's public prototype.
+The second historical blocker was renderer declaration visibility, now
+resolved from the incoming/caller words: DrawSpriteFrameRects accepts s32
+coordinates and narrows them internally. BA73C passes whole words; BABD8
+explicitly narrows marker coordinates after subtraction. See the render
+section below for addresses, canonical record layouts and cross-container
+caller preservation. Returning s16 from BB040 was not the missing contract.
+No flag override, pin, assembly, stub, ownership or linkage exception changed.
+
+The sole public interface is ovl23_record_run.h's scene callback. The eight
+former helper headers had no clients outside this full unit and were retired;
+typed local forward declarations keep their original external linkage. Their
+useful units/constraints now live beside the relevant implementation sections,
+not in public headers for private implementation protocols. Existing canonical
+names and all container/address identities survive the merge. The new five
+render names and the camera/record field names are documented below. Full
+campaign acceptance after the merge is recorded at the end of that section.
 
 Twenty-five formerly address-named prefix functions now name the setup,
 message-stage, pad/window/actor, compositor and anchor-return operations.
@@ -14564,8 +14585,8 @@ makes no uniqueness promise: resetting its retry index then incrementing skips
 index zero on that retry. The original algorithm is retained and documented.
 Subphase/stage tables and the setup byte have scoped canonical data names.
 `ovl23_record_run.h` publishes the scene entry and its indices, update-call/Q12
-units, resources, effects and non-reentrancy; the four trail services retain
-their existing sub-interface. Original addresses/callback pointers regenerate
+units, resources, effects and non-reentrancy; trail services are now internal
+to the same source. Original addresses/callback pointers regenerate
 from configuration. Local conflicting aggregate externs were reconciled to
 existing header/draw/bounds views, preserving every field width and offset;
 no new asm alias, ownership, storage or linkage was added.
@@ -14578,9 +14599,9 @@ and original conversion order. All six other declaring callers reconciled
 without byte changes. This is a concrete integration-required contract fix,
 not a change to rendered values or an optimization workaround.
 
-The checked 29-member fold and EXE/overlay-wide context/name/interface gates
-passed baseline settings; no flag override applies or changed. Final batch
-acceptance: 1052/2625 folded, 165/165 valid modules, every integrity gate PASS,
+At the earlier 29-member stage, the fold and context/name/interface gates
+passed baseline settings; no flag override applied or changed. That historical
+batch passed at 1052/2625 folded, 165/165 valid modules, every integrity gate PASS,
 all EXE/13-overlay bytes/data/tables/placement unchanged, no exception growth.
 Historical candidate evidence follows (address spellings preserve provenance).
 
@@ -14738,6 +14759,10 @@ Members (link order):
 
 ## `ovl_23` D_800BF87C movement-clamp family — 0x800B989C / 0x800B9A00 / 0x800BA610 (confidence: medium)
 
+All three are now inside the complete `modules/record_run_scene.c`;
+intervening services are absorbed too. Earlier singleton cuts below are
+historical, not current TU boundaries. See the dispatch-index section.
+
 **`modules/record_decision_advance.c`, BA610–BA73C exclusive**, now names
 its single member `Ovl23AdvanceDecisionRecordPosition`. This is the two-speed
 advance operation complementary to the earlier return-to-anchor controller:
@@ -14823,6 +14848,11 @@ Members (link order):
 
 ## `ovl_23` sprite-state/display-setup run — 0x800BB0E8–0x800BB758 (confidence: medium)
 
+Now absorbed whole into the 55-entry `modules/record_run_scene.c`; its
+initializer, paused-frame client and record arrays are in that same unit.
+The earlier subunit/header discussion below is historical. See the
+dispatch-index section for the only remaining boundaries.
+
 **Reconstructed `modules/sprite_resources.c`, BB0E8–BB7A0 exclusive,
 all seven compiled members.** The initializer BB534 writes the exact two
 six-source arrays paused/resumed by BB0E8/BB150: arena+40 at stride 50 and
@@ -14903,6 +14933,10 @@ the dispatcher call graph and the gapless link run are.
 
 ## `ovl_23` D_8006C838 record-field setter pair — 0x800BB7A0 / 0x800BB800 (confidence: medium)
 
+Now absorbed with their B87F8 client into `modules/record_run_scene.c`.
+The following pair/header history is superseded as source organization;
+the outer right boundary remains the code/data edge at BB860.
+
 **Module: `src/overlays/ovl_23/modules/record_value_increments.c`**, both
 entries, named `Ovl23RaiseRecordByteRangeValue` and
 `Ovl23RaiseRecordHalfwordRangeValue`. Shared record addressing, adjacent
@@ -14941,6 +14975,11 @@ audio-setup twin note above, that relation is not TU-membership evidence; here
 only the gapless link run and the shared caller are.
 
 ## `ovl_23` 2D vector math helper/client run — 0x800B9B18–0x800BA368 (confidence: medium)
+
+Now absorbed whole into `modules/record_run_scene.c` with the scene's
+simulation and direction clients. The prior B9B18 alignment-driven cut is
+retired by section-relative padding proof; the earlier subunit cuts/header
+below are historical. See the dispatch-index section.
 
 **Reconstructed `modules/direction_movement.c`, B9B18–BA3B4 exclusive,
 all seven members.** Movement and direction choice both call the clearance
@@ -15006,6 +15045,10 @@ Members (link order):
 
 ## `ovl_23` D_800BF87C/D_800BBAB4 threshold-selector run — 0x800BA3B4 / 0x800BA494 (confidence: medium)
 
+Now absorbed whole into the 55-entry `modules/record_run_scene.c` with
+its private-table consumers. Earlier standalone cuts/header below are
+historical; see the dispatch-index section for whole-unit evidence.
+
 **Reconstructed `src/overlays/ovl_23/modules/record_random_selection.c`,
 ovl_23:800BA3B4–800BA610 exclusive.** Both members implement the two-stage
 random decision used only by 800B8C18: weighted result selection followed by
@@ -15057,6 +15100,61 @@ Members (link order):
   else -1).
 
 ## `ovl_23` D_800BF8A0/D_800BFA80 record-pair/render driver run — 0x800B9310 / 0x800BA73C–0x800BABD8 (confidence: medium)
+
+**All five render entries at ovl_23:800BA73C–800BB0C8 are now inside the
+complete 55-entry `modules/record_run_scene.c`.** A checked five-entry fold
+first resolved the declaration context; the subsequent whole-scene fold
+absorbed it rather than retaining another internal slice. Ovl23DrawActorRecord and
+Ovl23DrawDecisionRecord are the only callers of Ovl23OrderingTableForRecordY
+(BAFFC) and Ovl23ProjectRecordX (BB040). Original call sites are BA934/BAAE4
+for X and BA978/BAB08 for OT selection. Ovl23DrawScrollingRecordBackdrop
+(BABD8) joins through the single composition client Ovl23UpdateRecordRunFrame
+(9310), the scene sprite and the same camera/render protocol. The actor's
+10-word switch table is the unit's sole rodata pool, at overlay offset 5C.
+No data definition, static linkage, flag override or exception was added.
+
+BA610's position updater, BB0C8/BB0D8's control setters and the 9310
+composition driver are all in the same full scene module. The earlier
+render-only service cuts described distinct responsibilities but were not
+original file boundaries: the callback/private-work/helper closure above
+supports the wider unit. Its outer limits are the first code and the
+800BB860 code/data edge, not those internal service interfaces.
+
+The former visibility blocker below is resolved by corroborating the renderer
+ABI instead of hiding its declaration. DrawSpriteFrameRects at exe:80015EE8
+loads incoming word slots with `lh` (15EF0/15F00); BA73C passes full coordinate
+words at BA9B8 without narrowing. Its canonical parameters are now s32 with
+explicit internal s16 conversions, matching the already-word-sized Quads and
+248E8 interfaces. BABD8 instead narrows marker X AFTER subtracting 32; those
+three casts are explicit. The same header change required preserving two
+`(s16)(y - 0x18)` status-page calls and the sprite-effect projector's two
+halfword reads in ovl_11. No incompatible/old-style renderer declaration remains
+in the reconstructed unit. All affected callers and the renderer pass the full
+linked oracle, not just the five-member fold.
+
+The render section documents signed Q12/pixel inputs, unchecked indices/storage,
+projection's s16-before-visibility behavior, fixed-frame versus advancing draws,
+trail sampling and shared-sprite/packet mutations. The temporary render header
+was retired with the other internal service headers after the full merge. Locals describe animation,
+direction, frame, projection and OT roles. Ovl23ActorRecord/Ovl23DecisionRecord
+alias the existing global-array record types, replacing two competing partial
+parameter layouts; their strides remain 50/44 hex and their signedness is
+unchanged. Simulation and drawing now share named state/direction/timer,
+Q12-position, animation/frame and palette-offset fields. The former local
+D_800BF88C extern is replaced by the existing backing header's cameraXQ12
+field at +10, not a new data symbol or ownership claim.
+
+Final whole-scene acceptance: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates at
+**2333/2625 folded (up from 2328), 462/462 valid modules**. Seven existing
+module sources plus five loose functions became one 55-entry source, with
+no previously folded regression. Every EXE/13-overlay code/data byte,
+callback/table placement, canonical interface, source-policy/scope and exception
+non-growth check passes. Exit 1 denotes 292 remaining eligible functions,
+not a failed gate. The checked whole-55 fold separately proves all members.
+Generated contexts are regenerated; no shared tool or compiler setting changed.
+The earlier five-member intermediate gate passed at 469/469 modules before
+the merge. The following failed experiments are historical, not current blockers:
 
 Whole render/helper closure experiment: five entries BA73C, BAA60, BABD8,
 BAFFC and BB040 were planned as record_sprite_render. The first two share

@@ -894,12 +894,12 @@ void Ovl11DrawPairedValueBars(s32 *pair, s16 y) {
     x1 = ((pair[1] % 10000) * 64) / 10000;
     DrawScreenGradientRect((s32 *)fillOt, 0x69 - x1, fillY, x1, 7, 0xE8A0B8, 0xD14070, 0xE8A0B8, 0xD14070, 0);
     if (pair[1] / 10000 != 0) {
-        DrawSpriteFrameRects(labelOt, (s32)gOvl11StatusIndicatorSpriteSource, 0xA, 0, 0x28, y - 0x18);
+        DrawSpriteFrameRects(labelOt, (s32)gOvl11StatusIndicatorSpriteSource, 0xA, 0, 0x28, (s16)(y - 0x18));
         Ovl11DrawSlotQuantity(labelOt, 0x40, y - 0x20, pair[1] / 10000 - (pair[1] / 1000000) * 100);
     }
     DrawScreenGradientRect((s32 *)fillOt, 0x69, fillY, ((pair[0] % 10000) * 64) / 10000, 7, 0x4D70A0, 0xA6B8D0, 0x4D70A0, 0xA6B8D0, 0);
     if (pair[0] / 10000 != 0) {
-        DrawSpriteFrameRects(labelOt, (s32)gOvl11StatusIndicatorSpriteSource, 0xA, 0, 0x68, y - 0x18);
+        DrawSpriteFrameRects(labelOt, (s32)gOvl11StatusIndicatorSpriteSource, 0xA, 0, 0x68, (s16)(y - 0x18));
         Ovl11DrawSlotQuantity(labelOt, 0x80, y - 0x20, pair[0] / 10000 - (pair[0] / 1000000) * 100);
     }
 }

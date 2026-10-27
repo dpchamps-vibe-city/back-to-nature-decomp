@@ -101,7 +101,7 @@ void Ovl11DrawAndStepSpriteEffect(Ovl11SpriteEffect *effect) {
             position[2] = (u16)effect->z - 0x96;
             if (Ovl11ProjectRecordSprite(position, screen) != 0) {
                 DrawSpriteFrameRects(gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4), (s32)effect->sprite,
-                                     (u8)effect->animation, frame & 0xFF, screen[0], screen[1]);
+                                     (u8)effect->animation, frame & 0xFF, (s16)screen[0], (s16)screen[1]);
             }
         } else {
             Ovl11ReleaseSpriteEffect(effect);

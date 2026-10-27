@@ -2,11 +2,6 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-void ovl_23_func_800BA73C(Ovl23BA73CArg *arg0);
-void ovl_23_func_800BAA60(Ovl23BAA60Arg *arg0);
-void ovl_23_func_800BABD8(void);
-s32 ovl_23_func_800BAFFC(s32 arg0);
-s32 ovl_23_func_800BB040(s32 arg0);
 void Ovl23AdvanceDecisionRecordPosition(Ovl23Func800BB0C8Arg *record);
 s32 Ovl23AngleDegreesFromVector(s32 dx, s32 dy);
 void Ovl23ApplyPadToAnchorRecord(void);
@@ -18,9 +13,12 @@ s32 Ovl23DirectionFromAngleDegrees(s32 degrees);
 s32 Ovl23DirectionFromRecordAnchor(Ovl23PositionedRecord *record);
 void Ovl23DispatchRecordRunStage(void);
 void Ovl23DispatchRecordRunSubphase(void);
+void Ovl23DrawActorRecord(Ovl23ActorRecord *record);
+void Ovl23DrawDecisionRecord(Ovl23DecisionRecord *record);
 void Ovl23DrawPausedRecordFrame(void);
 void Ovl23DrawPausedSpriteFrame(void);
 void Ovl23DrawRecordTrails(void);
+void Ovl23DrawScrollingRecordBackdrop(void);
 void Ovl23EnterRecordRunStages(void);
 void Ovl23FinishRecordRunExit(void);
 void Ovl23InitActorRecords(void);
@@ -30,8 +28,10 @@ void Ovl23InitRecordRunBounds(void);
 void Ovl23LoadActorSpriteBank(void);
 void Ovl23LoadSharedSpriteBank(void);
 void Ovl23LoadSpriteImageBank(void);
+s32 Ovl23OrderingTableForRecordY(s32 yQ12);
 void Ovl23PauseActorSprites(void);
 s32 Ovl23PlanarDistance(s16 x0, s16 y0, s16 x1, s16 y1);
+s32 Ovl23ProjectRecordX(s32 xQ12);
 void Ovl23PushActorTrailNode(s32 xQ12, s16 laneY, s16 state);
 void Ovl23PushDecisionTrailNode(s32 xQ12, s16 laneY, s16 state);
 void Ovl23QueueSoundBankLoads(void);

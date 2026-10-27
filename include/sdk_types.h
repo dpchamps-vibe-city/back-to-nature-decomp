@@ -6,6 +6,10 @@ struct Ovl11ResetB4;
 
 struct Ovl11ResetB8;
 
+struct Ovl23ActorDecision;
+
+struct Ovl23DecisionRecord;
+
 struct ColorRowBlend;
 
 typedef struct ColorRowBlend ColorRowBlend;
@@ -33,6 +37,10 @@ typedef struct Ovl11SceneCoordinates Ovl11SceneCoordinates;
 struct Ovl11TextureCoordinates;
 
 typedef struct Ovl11TextureCoordinates Ovl11TextureCoordinates;
+
+typedef struct Ovl23ActorDecision Ovl23ActorRecord;
+
+typedef struct Ovl23DecisionRecord Ovl23DecisionRecord;
 
 struct Ovl23Func800BB0C8Arg;
 
@@ -1951,34 +1959,38 @@ typedef struct {
                u16 unk1C;
 } Ovl21Func800B98CCArg;
 
-typedef struct {
-    u8 pad_00[4];
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    u8 pad_0A[0xA];
-    s32 unk14;
-    s32 unk18;
-    u8 pad_1C[4];
-    u8 unk20;
-    u8 unk21;
-    u8 pad_22[0x2A];
-    s16 unk4C;
-    s16 unk4E;
-} Ovl23BA73CArg;
+struct Ovl23ActorDecision {
+    s16 unk0;
+    s16 unk2;
+    s16 state;
+    s16 direction;
+    s16 timer;
+    s16 unkA;
+    u8 padC[8];
+    s32 xQ12;
+    s32 yQ12;
+    u8 pad1C[4];
+    u8 animation;
+    u8 frame;
+    u8 pad22[0x2A];
+    s16 paletteX;
+    s16 paletteY;
+};
 
-typedef struct {
-               s16 unk0;
-               s16 unk2;
-               s16 unk4;
-               s16 unk6;
-               s32 unk8;
-               s32 unkC;
-               char pad_10[4];
-               u8 unk14;
-               char pad_15[0x2B];
-               s16 unk40;
-} Ovl23BAA60Arg;
+struct Ovl23DecisionRecord {
+    s16 lane;
+    s16 unk2;
+    s16 state;
+    s16 direction;
+    s16 unk8;
+    s16 unkA;
+    s32 xQ12;
+    u8 pad10[4];
+    u8 animation;
+    u8 pad15[0x2B];
+    s16 paletteY;
+    u8 pad42[2];
+};
 
 struct Ovl23Func800BB0C8Arg {
                char pad_0[0x4];

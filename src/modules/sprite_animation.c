@@ -375,7 +375,7 @@ void DrawSpriteAnimationQuadsAndUpdate(s32 otAddress, SpriteSourceData *source, 
     UpdateSpriteAnimation(source);
 }
 
-void DrawSpriteFrameRects(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s16 arg5);
+void DrawSpriteFrameRects(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 void DrawSpriteAnimationRectsAndUpdate(s32 otAddress, SpriteSourceData *source, s16 x, s16 y) {
     DrawSpriteFrameRects(otAddress, (s32) source, (s32) source->field_4,
@@ -417,7 +417,7 @@ void func_80015E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5, s1
 }
 
 void DrawSpriteFrameRects(s32 otAddress, s32 sourceAddress, s32 animation,
-                   s32 frame, s16 x, s16 y) {
+                   s32 frame, s32 x, s32 y) {
     s32 animationByte;
     s32 frameByte;
     s32 xWord;
@@ -427,8 +427,8 @@ void DrawSpriteFrameRects(s32 otAddress, s32 sourceAddress, s32 animation,
     s32 packetCursor;
 
     otWord = otAddress;
-    xWord = x;
-    yWord = y;
+    xWord = (s16)x;
+    yWord = (s16)y;
     sourceWord = sourceAddress;
     animationByte = animation & 0xFF;
     frameByte = frame & 0xFF;
