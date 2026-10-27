@@ -21,6 +21,7 @@
 #include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
+#include "ovl11_item_record_search.h"
 
 s32 Ovl11HasEmptyItemSlot(s16 which, s16 lastGroup, s16 unused2, s16 unused3) {
     s32 found;
@@ -29,8 +30,6 @@ s32 Ovl11HasEmptyItemSlot(s16 which, s16 lastGroup, s16 unused2, s16 unused3) {
     return found;
 }
 
-s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount);
-
 s32 Ovl11MatchItemSlotsCommand(s16 itemOrSlot, s16 which, s32 lastGroup, s32 flags) {
     s16 itemId;
 
@@ -38,7 +37,7 @@ s32 Ovl11MatchItemSlotsCommand(s16 itemOrSlot, s16 which, s32 lastGroup, s32 fla
     if (flags & 2) {
         itemId = *((s16 *)&gOvl11ValueSlots[itemId]);
     }
-    return ovl_11_func_800EEC1C(itemId, which, lastGroup, flags & 1) != 0;
+    return Ovl11CountOrRemoveItemRecords(itemId, which, lastGroup, flags & 1) != 0;
 }
 
 s32 Ovl11InsertSecondaryItemCommand(s16 itemOrSlot, s16 fromValueSlot,

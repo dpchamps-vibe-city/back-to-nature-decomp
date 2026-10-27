@@ -14,8 +14,7 @@
 #include "psyq/abs.h"
 #include "ovl11_camera_position_control.h"
 #include "ovl11_state_value_operand_commands.h"
-
-s32 ovl_11_func_800F06D8(s32 *arg0, s32 *arg1);
+#include "ovl11_dominant_axis_direction.h"
 
 s32 Ovl11CommitPendingRecordSelection(s16 resultSlot, s16 animationPlusOne, s32 updateField, s32 requireFlag46) {
     s16 pendingRecord;
@@ -66,7 +65,7 @@ s32 Ovl11OrientAndAnimateStateRecord(s16 recordOrSlot, s32 resolveSlot, s32 anim
     } else {
         position = (s32 *)((char *)gObjectPositionRecordCoordinates + recordIndex * 0x1D4);
     }
-    direction = ovl_11_func_800F06D8(gObjectWorkPosition, position);
+    direction = Ovl11GetDominantXZDirection(gObjectWorkPosition, position);
     switch (recordSpace) {
     case 1:
         ((struct Ovl11CompactRecordDirectionView *)((u8 *)gObjectWorkPosition - 0x52C8 + recordIndex * 0xF8))->direction = (s16)direction;

@@ -9,10 +9,10 @@
 #include "ovl11_map_grid_cells.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_slot_commands.h"
+#include "ovl11_item_record_search.h"
 
 s32 ovl_11_func_800EC354(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800EF0E8(s16 arg0);
-s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount);
 s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 
 s32 ovl_11_func_80104EC8(s16 arg0) {
@@ -572,11 +572,11 @@ block_339:
         return var_a3_3 >= 3;
     case 0x31:
         if (((Ovl11ConditionState *) D_8006C838)->field_E641 != 0) {
-            temp_s0_6 = ovl_11_func_800EEC1C(0x122, 1, 1, 0);
-            temp_s0_7 = temp_s0_6 + ovl_11_func_800EEC1C(0x123, 1, 1, 0);
-            temp_s0_8 = temp_s0_7 + ovl_11_func_800EEC1C(0x124, 1, 1, 0);
-            temp_s0_2 = temp_s0_8 + ovl_11_func_800EEC1C(0xE8, 1, 1, 0);
-            return ((temp_s0_2 + ovl_11_func_800EEC1C(0x125, 1, 1, 0)) << 0x10) > 0x20000;
+            temp_s0_6 = Ovl11CountOrRemoveItemRecords(0x122, 1, 1, 0);
+            temp_s0_7 = temp_s0_6 + Ovl11CountOrRemoveItemRecords(0x123, 1, 1, 0);
+            temp_s0_8 = temp_s0_7 + Ovl11CountOrRemoveItemRecords(0x124, 1, 1, 0);
+            temp_s0_2 = temp_s0_8 + Ovl11CountOrRemoveItemRecords(0xE8, 1, 1, 0);
+            return ((temp_s0_2 + Ovl11CountOrRemoveItemRecords(0x125, 1, 1, 0)) << 0x10) > 0x20000;
         }
         return 0;
     case 0x32:
@@ -821,20 +821,20 @@ block_258:
             var_s1 = 0x4D;
             break;
         case 4:
-            var_s0_2 = ovl_11_func_800EEC1C(0x122, 1, 1, 0);
-            var_s0_2 = var_s0_2 + ovl_11_func_800EEC1C(0x123, 1, 1, 0);
-            var_s0_2 = var_s0_2 + ovl_11_func_800EEC1C(0x124, 1, 1, 0);
-            var_s0_2 = var_s0_2 + ovl_11_func_800EEC1C(0xE8, 1, 1, 0);
+            var_s0_2 = Ovl11CountOrRemoveItemRecords(0x122, 1, 1, 0);
+            var_s0_2 = var_s0_2 + Ovl11CountOrRemoveItemRecords(0x123, 1, 1, 0);
+            var_s0_2 = var_s0_2 + Ovl11CountOrRemoveItemRecords(0x124, 1, 1, 0);
+            var_s0_2 = var_s0_2 + Ovl11CountOrRemoveItemRecords(0xE8, 1, 1, 0);
             var_a0_13 = 0x125;
 block_305:
-            var_s0_2 = var_s0_2 + ovl_11_func_800EEC1C(var_a0_13, 1, 1, 0);
+            var_s0_2 = var_s0_2 + Ovl11CountOrRemoveItemRecords(var_a0_13, 1, 1, 0);
             break;
         case 5:
-            var_s0_2 = ovl_11_func_800EEC1C(0x8B, 1, 1, 0);
-            var_s0_2 = var_s0_2 + ovl_11_func_800EEC1C(0x8C, 1, 1, 0);
-            var_s0_2 = var_s0_2 + ovl_11_func_800EEC1C(0x8D, 1, 1, 0);
+            var_s0_2 = Ovl11CountOrRemoveItemRecords(0x8B, 1, 1, 0);
+            var_s0_2 = var_s0_2 + Ovl11CountOrRemoveItemRecords(0x8C, 1, 1, 0);
+            var_s0_2 = var_s0_2 + Ovl11CountOrRemoveItemRecords(0x8D, 1, 1, 0);
             var_a0_13 = 0xE3;
-            var_s0_2 = var_s0_2 + ovl_11_func_800EEC1C(var_a0_13, 1, 1, 0);
+            var_s0_2 = var_s0_2 + Ovl11CountOrRemoveItemRecords(var_a0_13, 1, 1, 0);
             break;
         case 6:
             var_s1 = 0xA2;
@@ -849,7 +849,7 @@ block_305:
         if (var_s0_2 < 3) {
             var_v0 = 0;
             if (var_s1 != 0) {
-                if (ovl_11_func_800EEC1C(var_s1, 1, 1, 0) >= 3) {
+                if (Ovl11CountOrRemoveItemRecords(var_s1, 1, 1, 0) >= 3) {
                     return 1;
                 }
             }

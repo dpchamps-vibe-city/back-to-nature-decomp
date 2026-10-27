@@ -8,6 +8,7 @@
  */
 #include "common.h"
 #include "ovl11_entity_pool_access.h"
+#include "ovl11_dominant_axis_direction.h"
 
 s32 Ovl11ActivateEntityAtPosition(s16 entityIndex, s16 height, s32 x, s32 z) {
     s32 *work;
@@ -57,9 +58,6 @@ s32 Ovl11SetEntityActive(s16 entityIndex, s32 active) {
     return 1;
 }
 
-/* Direction classifier shared with other object operations. */
-s32 ovl_11_func_800F06D8(s32 *arg0, s32 *arg1);
-
 s32 Ovl11ActivateEntityNearRecord(s16 entityIndex, s16 recordIndex,
                                  s32 direction, s32 classifyDirection) {
     s32 offset[3];
@@ -82,7 +80,7 @@ s32 Ovl11ActivateEntityNearRecord(s16 entityIndex, s16 recordIndex,
     *(u16 *)entity = sourceTag;
 
     if (classifyDirection != 0) {
-        selectedDirection = ovl_11_func_800F06D8((s32 *)((char *)work + 0x52C8), position);
+        selectedDirection = Ovl11GetDominantXZDirection((s32 *)((char *)work + 0x52C8), position);
     } else {
         selectedDirection = direction & 0xFFFF;
     }

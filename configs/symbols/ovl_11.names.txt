@@ -1,5 +1,14 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Read-only queries serving the condition-value classifier.
+Ovl11GetMaxEligibleRecordCounter = 0x800EFF9C; // type:func
+Ovl11GetConditionFlagOverride = 0x800F002C; // type:func
+Ovl11GetConditionCounterTotal = 0x800F00AC; // type:func
+
+// Independent item-bank search and stateless XZ direction service.
+Ovl11CountOrRemoveItemRecords = 0x800EEC1C; // type:func
+Ovl11GetDominantXZDirection = 0x800F06D8; // type:func
+
 // One-shot progress trigger consumed by the interaction request dispatcher.
 Ovl11TryLatchProgressTrigger = 0x800F3F7C; // type:func
 

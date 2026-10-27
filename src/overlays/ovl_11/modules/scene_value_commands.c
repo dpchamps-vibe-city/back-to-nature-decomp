@@ -12,6 +12,7 @@
 #include "ovl11_scene_camera_lighting.h"
 #include "word_interpolation.h"
 #include "psyq/memory.h"
+#include "ovl11_condition_value_queries.h"
 
 /* Narrow view starting at work +25394. Keeping the fields in one address
  * web preserves the original far-buffer load order. Target Y is a halfword;
@@ -80,10 +81,7 @@ done:
     return complete;
 }
 
-s32 ovl_11_func_800F002C(void);
 s32 ovl_11_func_800F02C8(void);
-s16 ovl_11_func_800EFF9C(void);
-s32 ovl_11_func_800F00AC(void);
 s32 ovl_11_func_800F00E4(void);
 
 s32 Ovl11UpdateConditionValueCommand(s16 mode, s16 outputSlot,
@@ -93,16 +91,16 @@ s32 Ovl11UpdateConditionValueCommand(s16 mode, s16 outputSlot,
     u16 code;
 
     if (mode == 0) {
-        override = ovl_11_func_800F002C();
+        override = Ovl11GetConditionFlagOverride();
         if (override >= 0) {
             ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = (u16) override;
         } else {
             category = ovl_11_func_800F02C8();
             if ((u8) ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_44CD >= 0xAU) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xAU;
-            } else if (ovl_11_func_800EFF9C() < 0x32) {
+            } else if (Ovl11GetMaxEligibleRecordCounter() < 0x32) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xCU;
-            } else if (ovl_11_func_800F00AC() < 0xB) {
+            } else if (Ovl11GetConditionCounterTotal() < 0xB) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xDU;
             } else if (ovl_11_func_800F00E4() < 6) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xEU;

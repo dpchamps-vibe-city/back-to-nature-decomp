@@ -1778,6 +1778,13 @@ typedef struct {
     u8 pad_0[0xE4D8];
     Ovl11EF488Record records[5];
 } Ovl11EF488RecordsView;
+/* 800F00AC adds the signed halfword at +44DC to 25 unsigned counters
+ * at +498C. Keep this narrow view's signedness distinct from the counters. */
+typedef struct {
+    char pad0[0x44DC];
+    s16 additionalCounter;
+} Ovl11ConditionCounterTotalWork;
+
 /* 800EF0E8 reads lh +0x99EA and lhu +0x99EC after a signed index * 0x1D4. */
 typedef struct {
     u8 pad_0[0x99EA];

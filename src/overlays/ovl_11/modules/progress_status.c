@@ -19,6 +19,7 @@
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_record_position_recovery.h"
 #include "ovl11_item_slot_commands.h"
+#include "ovl11_item_record_search.h"
 
 s32 *Ovl11ResetProgressControl(void) {
     Ovl11RefreshProgressStatusEntry();
@@ -357,8 +358,6 @@ void Ovl11RefreshStageProgressFlags(void) {
         *base = v | 0x2000;
     }
 }
-
-s32 ovl_11_func_800EEC1C (s16 id, s16 which, s16 last, s32 amount);
 
 void Ovl11RefreshStageEventFlag(void) {
     gProgressDerivedFlags &= ~0x4000;

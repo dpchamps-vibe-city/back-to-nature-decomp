@@ -7346,6 +7346,33 @@ Members:
 
 ## `ovl_11` D_801295C6 setter/getter run — 0x800E60A0–0x800EEBC8 (confidence: medium)
 
+**Independent item-bank service reconstructed at 800EEC1C–800EEECC:
+`modules/item_record_search.c`, `Ovl11CountOrRemoveItemRecords`.** This
+single entry is the whole supported search/removal operation, not a slice of
+the command family. Item-slot insertion commands, progress tests and the
+rule dispatcher call it over the same held/list/64-record bank protocol.
+It owns no storage, descriptor table, value-command scratch or date state.
+The left neighbor EEC14 is a constant-one leaf; EEBF4 before it is the
+unresolved state-field read adapter. Neither participates in item traversal.
+The right neighbor EEECC begins the scheduled-date record/flag protocol,
+which uses neither the item banks nor this service. These are responsibility
+and call/data-protocol cuts; -G0 leaves the original object edges unproved.
+The old wide link-run hypothesis supplied no stronger membership evidence.
+
+The header documents the actual nonstandard semantics: count matching
+RECORDS rather than quantities, keep counting after a positive removal quota
+is exhausted, negative quota removes all, lastGroup=-1 skips record zero of
+group 1, and group-0 removal deliberately falls through group 1's cleanup.
+Inputs/locals now name bank, group, record and quota roles without changing
+widths or control. Existing bank/held views remain unchanged; their uncertain
+storage/gameplay roles are not renamed speculatively. No tentative definition
+or private linkage is added. Baseline checked fold proves the member and
+linked overlay; no flag applies or changes. Public naming is recorded at its
+ovl_11 address, propagated with canonicalNames, and interfaceAudit publishes
+`ovl11_item_record_search.h` to all three active caller units with identical
+objects. Full batch acceptance is recorded in the condition_value_queries
+section (2250/2625 folded, all integrity gates PASS).
+
 **Reconstructed `modules/camera_position_control.c`, E60A0–E648C
 exclusive, both entries.** The mover explicitly enters the adjacent helper's
 position-control protocol (0,0,0,0), sets the same work +C bit 400000 that
@@ -15374,6 +15401,57 @@ no flag override was needed or retired.
   link order agree — same-TU hint only).
 
 ## `ovl_11` gapless link run head at 0x800EFF9C — 0x800EFF9C / 0x800F002C / 0x800F00AC / 0x800F00E4 / 0x800F021C (confidence: low)
+
+**Reconstructed local query service: `modules/condition_value_queries.c`,
+800EFF9C–800F00E4 exclusive, all three entries.** Beyond adjacency, the
+complete active call set puts each query's sole site in the same
+`Ovl11UpdateConditionValueCommand`: the flag query overrides its category,
+then the maximum and total supply successive thresholds. They are the
+read-only counter/flag inputs to that one protocol. This is modest
+single-client service evidence, not shared-private-storage or GP proof of
+an original source file. No query allocates, mutates or tentatively defines
+state. The broader work buffer alone is not a membership witness.
+
+Left state_field_access has its own exclusive 48-entry descriptor-table
+and read/write helper closure; none of these queries reaches it. Right
+F00E4/F021C is the map-percentage/exclusion-set pair with an exclusive
+helper, not a counter/flag query implementation. The earlier five-entry
+link-run hypothesis was explicitly adjacency-only. There is also a concrete
+mechanical limit on extending this reconstruction: F00E4's standing
+no-GCSE setting changes predecessor F00AC (flag-review-report.md), whereas
+the current three-query fold passes baseline. That contrary witness is
+conditional on the present sources, not evidence of a historical flag or
+an original object edge; the flagged pair remains unresolved, not carved
+into flag-compatible singleton modules. No supported private-helper or
+state closure is split by this service cut. Wider historical provenance
+remains uncertain under -G0.
+
+Names and unchanged ABIs: `Ovl11GetMaxEligibleRecordCounter` (s16, starts
+at zero and excludes special slots), `Ovl11GetConditionFlagOverride`
+(s32 index/-1, not a flag ID), `Ovl11GetConditionCounterTotal` (25 unsigned
+halfwords plus a signed extra halfword). The narrow global-storage view
+moved from the C file into globals_override.h as
+Ovl11ConditionCounterTotalWork; signedness/layout are unchanged. Header
+`ovl11_condition_value_queries.h` publishes units, zero/negative cases and
+initialization preconditions; locals describe the actual scan roles.
+Canonical names remain tied to ovl_11 addresses. interfaceAudit installs
+the header in the sole client with an identical object. The checked whole
+three-entry fold proves all members and linked overlay at baseline; no
+flag/allowlist entry or source-policy exception is added or retired.
+
+Batch acceptance with item_record_search and dominant_axis_direction:
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes
+all eight integrity gates: original inventory, decompilation completeness,
+source policy, linked EXE/all overlay bytes (code/data/tables/placement),
+configuration convergence, whitespace, input stability and exception
+non-growth. Progress rises **2245 -> 2250 of 2625**, all **393/393** module
+TUs valid; no previously folded member regresses. Canonical-name check is
+clean after supported regeneration. Five published interfaces have no failing
+sites; interfaceAudit preserves all seven affected caller objects and leaves
+unrelated pre-existing unpublished contract debt visible. No shared tool or
+test changed, no flags or policy permissions changed, no new asm/stub/pin
+was added, and no commit was made. Exit 1 denotes the 375 remaining eligible
+functions, not an integrity failure.
 
 One unbroken ovl_11 link-order run: 0x800EFF9C (0x90, ends exactly at
 0x800F002C) → 0x800F002C (0x80, ends exactly at 0x800F00AC) → 0x800F00AC
@@ -29049,6 +29127,27 @@ Members (address order):
   (or `arg2 & 0xFFFF`).
 - ovl_11_func_800E8BA0 (m) — entity-record reader: copies `u16@+2` of the
   record into `D_80129560[arg1]`.
+
+**Independent direction service reconstructed at 800F06D8–800F0734:
+`modules/dominant_axis_direction.c`, `Ovl11GetDominantXZDirection`.** The
+entity accessor above, pending-record animation and facing commands all call
+this stateless two-position classifier; none of those caller protocols is
+implemented inside it. It reads X/Z only, chooses Z on ties and returns the
+established 0=-Z/1=-X/2=+Z/3=+X codes. It owns no table or state and retains
+its pointer ABI/external linkage. `ovl11_dominant_axis_direction.h` publishes
+raw coordinate units, overflow preconditions and coincident-position result.
+Left selected_record_pair_commands ends at 06D8 and owns pair restoration,
+marking and text editing, not coordinate classification. Right
+record_adjustment starts at 0734 and uses its exclusive adjustment table and
+item/record predicate, not this classifier. Neither neighbor calls it; the
+three actual clients are elsewhere. These independent service/data cuts
+support the singleton scope, not a GP-proven historical object edge under
+-G0. No wider contiguous helper closure was found or cut. The checked
+baseline fold proves the entry and linked overlay; no compiler exception
+applies or changes. Canonical naming preserves the overlay/address identity;
+interfaceAudit publishes the header to all three caller units without
+changing their objects. Full batch acceptance is recorded in the
+condition_value_queries section (2250/2625 folded, all integrity gates PASS).
 
 **Reconstructed module: `src/overlays/ovl_11/modules/entity_pool_access.c`**
 (800E8960..800E8BF0, four compiled entries). The whole specialized accessor
