@@ -28,9 +28,9 @@
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_small_record_handlers.h"
+#include "ovl11_item_record_allocation.h"
 
 void SetVal8005E2BC(s32 arg0);
-u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 s32 ovl_11_func_80113FF0(void);
 void Ovl11DebitQuantityCost(void *arg0);
 s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
@@ -187,7 +187,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
             Ovl11SetInteractionSteps(22, 21);
             break;
         case 1:
-            dest = ovl_11_func_800CE744(0x109, -1) + 2;
+            dest = Ovl11AllocateItemRecord(0x109, -1) + 2;
             for (i = 0; i < 9; i++) {
                 dest[i] = gOvl11QuantityPurchaseNameRecord.values[i];
             }

@@ -57,6 +57,8 @@
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_small_record_handlers.h"
+#include "ovl11_timed_effect_record_fill.h"
+#include "ovl11_interaction_record_prepare.h"
 
 typedef struct {
                s16 field_0;
@@ -181,7 +183,6 @@ void Ovl11RemapPrimaryDirectionButtons (void);
 void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800CCF14 (M2C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
-void ovl_11_func_800CF314 (u8 *arg0, M2C_b6c4596908ca_Ovl11CF314Arg1 *arg1, M2C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
 void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
@@ -191,7 +192,6 @@ void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0,
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_800FBE4C (void);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
-s32 ovl_11_func_800CEEF8 (M2C_38c89582ddcb_M2C_4c1a205b3b09_ReconA0View *arg0);
 s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
 void ovl_11_func_800CBE14 (s32 arg0);
 s32 Ovl11MapDirectionButtons (u16 arg0, u16 arg1);

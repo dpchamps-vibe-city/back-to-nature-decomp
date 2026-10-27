@@ -5,6 +5,7 @@
 #include "psyq/memory.h"
 #include "aged_item_pool.h"
 #include "ovl11_small_record_handlers.h"
+#include "ovl11_item_record_allocation.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -15,7 +16,6 @@ typedef struct __attribute__((packed)) {
     s8 unk11;
 } Ovl11Rec800E8614;
 
-u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800D2D54(void *arg0);
 
 s32 ovl_11_func_800E8614(s32 arg0) {
@@ -30,7 +30,7 @@ s32 ovl_11_func_800E8614(s32 arg0) {
 
     if ((arg0 << 0x10) == 0) {
         for (i = 0; i < 5; i++) {
-            temp_v0 = ovl_11_func_800CE744(0x109, -1);
+            temp_v0 = Ovl11AllocateItemRecord(0x109, -1);
             if (temp_v0 != NULL) {
                 *(s32 *)((u8 *)temp_v0 + 0x34) |= 0x40000;
                 temp_v1 = (u8 *)D_8005175C + (gTextBankOffsets[1] + D_8012490C[i]);

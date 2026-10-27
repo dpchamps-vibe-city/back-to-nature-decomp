@@ -1,5 +1,21 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Independently bounded area/record services at their original entries.
+Ovl11ProbePositionHeight = 0x800CE550; // type:func
+Ovl11RefreshSharedSlotSpriteSource = 0x800CE5FC; // type:func
+Ovl11StepRecordedInputPlayback = 0x800CE654; // type:func
+Ovl11AllocateItemRecord = 0x800CE744; // type:func
+Ovl11RunAreaFrameUpdates = 0x800CE834; // type:func
+Ovl11PrepareInteractionRecord = 0x800CEEF8; // type:func
+Ovl11DeactivateUnselectedRecord = 0x800CF2C8; // type:func
+Ovl11FillTimedEffectRecord = 0x800CF314; // type:func
+gOvl11PositionHeightTolerances = 0x801232C8; // type:data size:0xA
+
+// Action-dispatch dependencies at their original overlay entries.
+Ovl11TryItemActionButton = 0x800C77D8; // type:func
+Ovl11TriggerNearbyReactions = 0x800C7838; // type:func
+Ovl11ResolveInteractionHitResult = 0x800C7878; // type:func
+
 // Caller-owned bounded quantity editor (no drawing or private selection state).
 Ovl11ProcessQuantityInput = 0x8011CF40; // type:func
 Ovl11ClearSelectionRows = 0x8011D400; // type:func

@@ -63,6 +63,7 @@
 #include "ovl11_spawn_record_access.h"
 #include "ovl11_held_item_replacement.h"
 #include "surface_collision.h"
+#include "ovl11_item_record_allocation.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
@@ -74,7 +75,6 @@ void ovl_11_func_8010C6A0 (void);
 void Ovl11AreaResetEffectsHook (void);
 void Ovl11ClearAreaSpriteWork (void);
 void Ovl11AreaResetEndHook (void);
-u16 *ovl_11_func_800CE744 (s32 arg0, s32 arg1);
 void Ovl11ClearAreaRowRecords(void);
 
 void Ovl11PrepareAreaScene(void) {
@@ -137,17 +137,17 @@ void Ovl11PrepareAreaScene(void) {
     Ovl11ChooseNextDayCondition();
     Ovl11AreaResetEndHook();
     if (base->flags & 0x8000) {
-        ovl_11_func_800CE744(0x162, -1);
-        ovl_11_func_800CE744(0x160, -1);
-        ovl_11_func_800CE744(0x161, -1);
-        ovl_11_func_800CE744(0x162, -1);
-        ovl_11_func_800CE744(0x164, -1);
-        ovl_11_func_800CE744(0x165, -1);
-        ovl_11_func_800CE744(0x10A, -1);
-        ovl_11_func_800CE744(0x109, -1);
-        ovl_11_func_800CE744(0x109, -1);
-        ovl_11_func_800CE744(0x10A, -1);
-        ovl_11_func_800CE744(0x109, -1);
+        Ovl11AllocateItemRecord(0x162, -1);
+        Ovl11AllocateItemRecord(0x160, -1);
+        Ovl11AllocateItemRecord(0x161, -1);
+        Ovl11AllocateItemRecord(0x162, -1);
+        Ovl11AllocateItemRecord(0x164, -1);
+        Ovl11AllocateItemRecord(0x165, -1);
+        Ovl11AllocateItemRecord(0x10A, -1);
+        Ovl11AllocateItemRecord(0x109, -1);
+        Ovl11AllocateItemRecord(0x109, -1);
+        Ovl11AllocateItemRecord(0x10A, -1);
+        Ovl11AllocateItemRecord(0x109, -1);
         base->field_4502 = 0x32;
         base->field_4508 = 0x32;
     }

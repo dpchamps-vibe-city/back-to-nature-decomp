@@ -1,4 +1,7 @@
 
+// Interior XYZ-word anchor (+0x38) of the existing 0xF0 effect record.
+gOvl11TimedEffectPositionWords = 0x80075B0C; // size:0xC
+
 // Bank anchors selected by object ID; retain their existing word views.
 gSeasonalObjectSpriteBankBase = 0x80098BF8; // size:0x4
 gFixedIdSpriteBankBase = 0x8009A3F8; // size:0x4

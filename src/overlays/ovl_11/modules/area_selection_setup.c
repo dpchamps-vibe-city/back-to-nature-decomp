@@ -28,6 +28,7 @@
 #include "psyq/libetc.h"
 #include "ovl11_area_scene_load.h"
 #include "ovl11_default_area_selection.h"
+#include "ovl11_slot_sprite_source_refresh.h"
 
 #define WORK ((Ovl11SetupWorkView *)&D_8007AFF0)
 #define RESIDENT ((Ovl11SetupResidentView *)D_8006C838)
@@ -76,7 +77,6 @@ s32 Ovl11ResolveAreaSelection(s32 selection) {
 }
 
 void ovl_11_func_8010B67C(void);
-void ovl_11_func_800CE5FC(void);
 
 void Ovl11InstallAreaSelection(s32 restorePosition, s32 loadOptions) {
     s16 headerMusic;
@@ -191,5 +191,5 @@ load_conditional_set:
         Ovl11LoadRenderContextSpriteBank();
         SetGameFlag(0x40U, 1U);
     }
-    ovl_11_func_800CE5FC();
+    Ovl11RefreshSharedSlotSpriteSource();
 }

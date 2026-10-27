@@ -1272,20 +1272,13 @@ typedef struct {
     /* 0x06 */ u16 unk6;
 } Ovl11CellActionEntry;
 
-/* 800C7878 stores the selected item pointer at +0x50 and flags at +0x54;
- * 800C8CC8 passes this same object to it. */
+/* 800C7878 snapshots the interaction hit at +50/+54 before consuming it;
+ * 800C8CC8 passes the primary object through this prefix view. */
 typedef struct {
     char pad0[0x50];
-    Ovl11CellActionEntry *unk50;
-    s32 unk54;
-} M2C_15512f31231d_Func800C7878Arg0;
-
-/* 800C7878 writes the six-byte result's id, state and count at +0/+2/+4. */
-typedef struct {
-    s16 unk0;
-    char pad2[2];
-    u16 unk4;
-} M2C_15512f31231d_F413CArg1;
+    Ovl11CellActionEntry *hitRecord;
+    s32 hitFlags;
+} Ovl11InteractionHitObject;
 
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 
@@ -2569,17 +2562,12 @@ typedef struct {
     u8 phase;
 } Ovl11C580CObject;
 
-/* Parameter views used by 800C580C: layouts from the selected callee access witnesses. */
+/* 800CF314 copies these unsigned halves to effect-record +2E/+30;
+ * 800C580C supplies the pair at its object +FC. No signed tag view implied. */
 typedef struct {
-               u16 unk0;
-               u16 unk2;
-} C580C_b6c4596908ca_Ovl11CF314Arg1;
-
-typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-} C580C_b6c4596908ca_Ovl11CF314Arg2;
+    u16 first;
+    u16 second;
+} Ovl11EffectRecordPair;
 
 typedef struct {
                s16 unk0;

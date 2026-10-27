@@ -33,10 +33,10 @@
 #include "ovl11_primary_object_action_phase.h"
 #include "ovl11_scene_header_key.h"
 #include "ovl11_primary_object_input_override.h"
+#include "ovl11_recorded_input_playback.h"
 
 void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
-s32 ovl_11_func_800CE654(void);
 void Ovl11RemapPrimaryDirectionButtons(void);
 
 void Ovl11UpdatePrimaryObject(void) {
@@ -78,7 +78,7 @@ void Ovl11UpdatePrimaryObject(void) {
         input = gPad0Input;
         gOvl11PrimaryHeldButtons = input->heldButtons;
         gOvl11PrimaryPressedButtons = input->pressedButtons;
-        if (ovl_11_func_800CE654() == 0) {
+        if (Ovl11StepRecordedInputPlayback() == 0) {
             Ovl11RemapPrimaryDirectionButtons();
             if (obj->flags36 & 0x40) {
                 if (gOvl11PrimaryHeldButtons & 0x20) {

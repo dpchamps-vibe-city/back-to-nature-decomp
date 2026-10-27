@@ -25,6 +25,7 @@
 #include "psyq/memory.h"
 #include "ovl11_record_effect_threshold.h"
 #include "ovl11_keyframe_step.h"
+#include "ovl11_selected_record_flag_guard.h"
 
 s32 Ovl11GetSmallRecordSpriteDescriptor(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -163,7 +164,6 @@ s32 Ovl11UpdateSmallRecordKind1(u16 *arg0) {
 s32 Ovl11RefreshSmallRecordSprite(s16 *arg0);
 void Ovl11ApplySmallRecordRowPlacements(s32 arg0);
 s32 Ovl11RandomizeSmallRecordPosition(E21E4Position *src, E21E4Position *dst);
-void ovl_11_func_800CF2C8(s32 *arg0);
 
 s32 Ovl11UpdateSmallRecordState(E21E4Object *arg0) {
     s32 index;
@@ -287,7 +287,7 @@ s32 Ovl11UpdateSmallRecordState(E21E4Object *arg0) {
     if (!(arg0->flags & 1)) {
         ((E21E4State *)D_8006C838)->flags |= 0x8000000;
     }
-    ovl_11_func_800CF2C8((s32 *)arg0);
+    Ovl11DeactivateUnselectedRecord((s32 *)arg0);
     arg0->fieldAC = 0;
     arg0->flags &= ~1;
     arg0->flags &= ~0x2000;

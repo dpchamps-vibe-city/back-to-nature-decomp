@@ -11,8 +11,8 @@
 #include "ovl11_item_spawn_placement.h"
 #include "random.h"
 #include "ovl11_tagged_record_choice.h"
+#include "ovl11_item_record_allocation.h"
 
-u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void Ovl11SpawnArea108Item(void);
 void Ovl11SpawnGatedAreaItems(void);
 s32 ovl_11_func_800D2E20(void);
@@ -51,7 +51,7 @@ void Ovl11SpawnTimedItemPlacements(void) {
                     entry += 12;
                     continue;
                 }
-                object = (char *)ovl_11_func_800CE744(entry[0], -1);
+                object = (char *)Ovl11AllocateItemRecord(entry[0], -1);
                 if (object != 0) {
                     *(s32 *)(object + 0x38) = *(s32 *)(entry + 4);
                     *(s32 *)(object + 0x3C) = *(s32 *)(entry + 6);
@@ -95,7 +95,7 @@ void Ovl11SpawnTimedItemPlacements(void) {
             i = 0;
             base = object;
             for (; i < 3; i++) {
-                object = (char *)ovl_11_func_800CE744(0x154, -1);
+                object = (char *)Ovl11AllocateItemRecord(0x154, -1);
                 if (object != 0) {
                     *(s32 *)(object + 0x38) = gOvl11Timed154SpawnPositions[i][0];
                     *(s32 *)(object + 0x3C) = gOvl11Timed154SpawnPositions[i][1];
@@ -119,7 +119,7 @@ special_done:
             return;
         }
         if ((*(s32 *)(final_base + 0x44F8) & 0x1800000) == 0x800000) {
-            ovl_11_func_800CE744(0x15B, -1);
+            Ovl11AllocateItemRecord(0x15B, -1);
         }
     }
 }
@@ -148,7 +148,7 @@ void Ovl11SpawnArea108Item(void) {
     default:
         return;
     }
-    s0 = (char *)ovl_11_func_800CE744(0x108, -1);
+    s0 = (char *)Ovl11AllocateItemRecord(0x108, -1);
     if (s0 == 0) {
         return;
     }
@@ -182,7 +182,7 @@ void Ovl11SpawnGatedAreaItems(void) {
         }
         if (*entry != 0x17A || ((v = *(u16 *)(base + 0x99D8)) != 0 &&
             (entry[2] == 0 || *(u16 *)(base + 0x99D8) == a2))) {
-            s0 = (char *)ovl_11_func_800CE744((s16)*(u16 *)entry, -1);
+            s0 = (char *)Ovl11AllocateItemRecord((s16)*(u16 *)entry, -1);
             if (s0 != 0) {
                 *(s32 *)(s0 + 0x38) = *(s32 *)(entry + 4);
                 *(s32 *)(s0 + 0x3C) = *(s32 *)(entry + 6);
@@ -212,7 +212,7 @@ void Ovl11TrySpawnPositionedItem(Ovl11ItemSpawnPosition position, s32 mode) {
     if (*(s16 *)(work + 0x44BA) == 3) {
         return;
     }
-    spawned = (char *)ovl_11_func_800CE744(mode == 1 ? 0x156 : 0x157, -1);
+    spawned = (char *)Ovl11AllocateItemRecord(mode == 1 ? 0x156 : 0x157, -1);
     if (spawned == 0) {
         return;
     }

@@ -16,8 +16,8 @@
 #include "ovl11_tagged_record_choice.h"
 #include "ovl11_tagged_record_handlers.h"
 #include "ovl11_small_record_handlers.h"
+#include "ovl11_item_record_allocation.h"
 
-u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE9C8(UnkStruct800DF4F0 *arg0);
 s32 ovl_11_func_800DEB00(Ovl11Deb00Object *arg0);
@@ -72,7 +72,7 @@ void Ovl11ResetRecordPools(void) {
     }
     ((struct Ovl11PoolResetView *) D_8006C838)->field_91AC = 0;
     ((struct Ovl11PoolResetView *) D_8006C838)->field_91E0 = 0;
-    seedRecord = ovl_11_func_800CE744(0x107, 0);
+    seedRecord = Ovl11AllocateItemRecord(0x107, 0);
     *(s32 *) ((u8 *) seedRecord + 0x38) = -0x708;
     *(s32 *) ((u8 *) seedRecord + 0x3C) = 0;
     *(s32 *) ((u8 *) seedRecord + 0x40) = 0xC1C;

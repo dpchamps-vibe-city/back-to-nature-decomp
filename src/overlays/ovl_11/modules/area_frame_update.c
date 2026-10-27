@@ -45,6 +45,7 @@
 #include "ovl11_record_slot_table.h"
 #include "ovl11_primary_object_motion.h"
 #include "ovl11_pending_event_queue.h"
+#include "ovl11_area_frame_update_dispatch.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -91,7 +92,6 @@ s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800DC148 (void);
 s32 ovl_11_func_800F0F50 (void);
 void ovl_11_func_8010C7F0 (void);
-void ovl_11_func_800CE834 (void);
 void ovl_11_func_800F3FB4 (void);
 void ovl_11_func_800DE46C (void);
 
@@ -145,7 +145,7 @@ void Ovl11UpdateAreaFrame(void) {
     Ovl11ServiceActiveRecordSlot();
     Ovl11UpdateObjectEvents();
     ovl_11_func_8010C7F0();
-    ovl_11_func_800CE834();
+    Ovl11RunAreaFrameUpdates();
     Ovl11UpdateInteractionDispatch();
     ovl_11_func_800F3FB4();
     Ovl11UpdateSpriteEffects();

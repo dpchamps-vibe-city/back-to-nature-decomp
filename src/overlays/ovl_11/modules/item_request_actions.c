@@ -9,9 +9,7 @@
 #include "ovl11_item_request_actions.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_item_action_gate.h"
-
-s32 ovl_11_func_800C7878(M2C_15512f31231d_Func800C7878Arg0 *object,
-                       M2C_15512f31231d_F413CArg1 *result);
+#include "ovl11_interaction_hit_result.h"
 
 s32 Ovl11CommitSelectedItemRequest(Ovl11C7010Object *object) {
     s16 request[3];
@@ -19,8 +17,8 @@ s32 Ovl11CommitSelectedItemRequest(Ovl11C7010Object *object) {
     /* Only the ID is initialized: the resolver fills the remaining halfwords
      * when it produces a nonzero ID. Keep the original halfword storage. */
     request[0] = 0;
-    ovl_11_func_800C7878((M2C_15512f31231d_Func800C7878Arg0 *)object,
-                       (M2C_15512f31231d_F413CArg1 *)request);
+    Ovl11ResolveInteractionHitResult((Ovl11InteractionHitObject *)object,
+                                    (Ovl11RecordPresentation *)request);
     if (request[0] != 0) {
         Ovl11InstallPrimaryObjectRequest((u16 *)request);
         object->unk6C &= ~0x200000;

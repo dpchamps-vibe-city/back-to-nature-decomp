@@ -234,31 +234,6 @@ typedef struct {
 } M2C_10d75516ede6_Struct_800DF5AC;
 
 typedef struct {
-    s16 unk0;
-    char pad2[2];
-    u16 unk4;
-} M2C_15512f31231d_F413CArg1;
-
-typedef signed char s8;
-
-typedef struct {
-    union {
-                   u16 unk0;
-                   s16 unk0_s;
-    } u0;
-               u16 unk2;
-               u8 unk4;
-               s8 unk5;
-               u16 unk6;
-} Ovl11CellActionEntry;
-
-typedef struct {
-    char pad0[0x50];
-    Ovl11CellActionEntry *unk50;
-    s32 unk54;
-} M2C_15512f31231d_Func800C7878Arg0;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -332,12 +307,6 @@ typedef struct {
     char pad_0[0x2];
     s16 unk2;
 } M2C_32ba532776b0_ReconA0View;
-
-typedef struct {
-    char pad0[2];
-    s16 unk2;
-    u16 unk4;
-} M2C_38c89582ddcb_M2C_4c1a205b3b09_ReconA0View;
 
 typedef struct {
     s16 field_0;
@@ -802,17 +771,6 @@ typedef struct {
 } M2C_b5b2a1d87535_Ovl11BE24Obj;
 
 typedef struct {
-               u16 unk0;
-               u16 unk2;
-} M2C_b6c4596908ca_Ovl11CF314Arg1;
-
-typedef struct {
-               s32 unk0;
-               s32 unk4;
-               s32 unk8;
-} M2C_b6c4596908ca_Ovl11CF314Arg2;
-
-typedef struct {
     char pad_00[0x22];
                u16 unk22;
                s16 unk24;
@@ -1053,6 +1011,8 @@ typedef struct {
  short m[3][3];
         long t[3];
 } MATRIX;
+
+typedef signed char s8;
 
 typedef struct {
                char pad_00[0x02];
@@ -1448,6 +1408,17 @@ typedef struct {
 } Ovl11CalendarPanelDate;
 
 typedef struct {
+    union {
+                   u16 unk0;
+                   s16 unk0_s;
+    } u0;
+               u16 unk2;
+               u8 unk4;
+               s8 unk5;
+               u16 unk6;
+} Ovl11CellActionEntry;
+
+typedef struct {
     s32 *position;
     Ovl11CollisionTag *object;
     void **tile;
@@ -1678,6 +1649,11 @@ typedef struct {
 } Ovl11E6E8Object;
 
 typedef struct {
+    u16 first;
+    u16 second;
+} Ovl11EffectRecordPair;
+
+typedef struct {
     s16 time;
     u16 data[3];
 } Ovl11EventEntry;
@@ -1780,6 +1756,18 @@ struct Ovl11IdAdjustmentObject {
     u8 pad1A[2];
     Ovl11IdAdjustment *adjustments;
 };
+
+typedef struct {
+    char pad0[0x50];
+    Ovl11CellActionEntry *hitRecord;
+    s32 hitFlags;
+} Ovl11InteractionHitObject;
+
+typedef struct {
+    char pad0[2];
+    s16 unk2;
+    u16 unk4;
+} Ovl11InteractionRecord;
 
 typedef struct {
     u16 id;

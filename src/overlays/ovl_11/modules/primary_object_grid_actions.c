@@ -56,6 +56,7 @@
 #include "ovl11_cell_grid_selection.h"
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_status_gauge_deltas.h"
+#include "ovl11_timed_effect_record_fill.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -406,7 +407,6 @@ void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
 void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 s32 ovl_11_func_800F3E44 (s16 arg0);
-void ovl_11_func_800CF314 (u8 *arg0, C580C_b6c4596908ca_Ovl11CF314Arg1 *arg1, C580C_b6c4596908ca_Ovl11CF314Arg2 *arg2);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
@@ -643,7 +643,7 @@ state_done:
             if (arg0->unk6C & 0x80) {
                 Ovl11RefreshRecordById(*(s16 *)Ovl11SavedInteractionObject, (Ovl25SetupStatePair *) ((u8 *) arg0 + 0xFC), (VECTOR *) ((u8 *) arg0 + 0x100));
             } else {
-                ovl_11_func_800CF314((u8 *)&D_80075AD4, (C580C_b6c4596908ca_Ovl11CF314Arg1 *) ((u8 *) arg0 + 0xFC), (C580C_b6c4596908ca_Ovl11CF314Arg2 *) ((u8 *) arg0 + 0x100));
+                Ovl11FillTimedEffectRecord((u8 *)&D_80075AD4, (Ovl11EffectRecordPair *)((u8 *)arg0 + 0xFC), (Vec3 *)((u8 *)arg0 + 0x100));
             }
             arg0->unk6C &= ~0x180;
             Ovl11InitSharedSpriteSlots((u8 *) arg0);

@@ -14,6 +14,7 @@
 #include "ovl11_primary_object_state_change.h"
 #include "psyq/stddef.h"
 #include "ovl11_seasonal_record_ids.h"
+#include "ovl11_interaction_record_prepare.h"
 
 void ovl_11_func_800F0FB0(s32 response);
 
@@ -50,7 +51,6 @@ s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
 
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *object, s32 mode);
 s32 ovl_11_func_8010B57C(u16 *object, s32 mode);
-s32 ovl_11_func_800CEEF8(Ovl11InteractionRecord *record);
 s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *object, s32 mode);
 
 s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
@@ -95,7 +95,7 @@ s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
             object->unk38 = responseId;
             Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)object, 0x39U, object->unk38 + 0x32, -2);
             object->unk6C = (object->unk6C | 0x180) & 0xFFDDFFFF;
-            ovl_11_func_800CEEF8((Ovl11InteractionRecord *)Ovl11SavedInteractionObject);
+            Ovl11PrepareInteractionRecord((Ovl11InteractionRecord *)Ovl11SavedInteractionObject);
             return 1;
         }
         messageId = -1;

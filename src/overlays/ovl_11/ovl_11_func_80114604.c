@@ -19,9 +19,9 @@
 #include "ovl11_record_family_lookup.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_item_record_allocation.h"
 
 void SetVal8005E2BC(s32 arg0);
-u16 *ovl_11_func_800CE744(s32 arg0, s32 arg1);
 void ovl_11_func_800DF0F8(s32 arg0);
 s32 ovl_11_func_80113CD0(void);
 void ovl_11_func_801152BC(void *arg0);
@@ -193,7 +193,7 @@ s32 ovl_11_func_80114604(void) {
             Ovl11SetInteractionSteps(25, 24);
             break;
         case 1:
-            dest = ovl_11_func_800CE744(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
+            dest = Ovl11AllocateItemRecord(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
             for (i = 0; i < 9; i++) {
                 dest[i] = D_8012D638.values[i];
             }

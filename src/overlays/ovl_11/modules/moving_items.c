@@ -42,6 +42,7 @@
 #include "ovl11_flagged_volume_code.h"
 #include "ovl11_spawn_record_access.h"
 #include "ovl11_held_item_replacement.h"
+#include "ovl11_surface_height_probe.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -144,7 +145,6 @@ Ovl11MovingItemRecord *Ovl11SpawnMovingItemRecord(Vec3 *position, u16 *itemId, s
 
 s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0);
 s32 Ovl11ProbeMovingItemHit(Ovl11CC4E0Object *arg0);
-s32 ovl_11_func_800CE550(Vec3 *arg0);
 
 void Ovl11UpdateMovingItemRecord(Ovl11MovingItemRecord *arg0) {
     VECTOR next;
@@ -235,7 +235,7 @@ void Ovl11UpdateMovingItemRecord(Ovl11MovingItemRecord *arg0) {
             next.vx = arg0->position.vx;
             next.vy = arg0->height;
             next.vz = arg0->position.vz;
-            ovl_11_func_800CE550((Vec3 *) &next);
+            Ovl11ProbePositionHeight((Vec3 *) &next);
             if ((var_s3 == 2) && ((s32)Ovl11CacheGeometryHit() == 0)) {
                 arg0->height = next.vy;
             }
@@ -379,7 +379,7 @@ s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0) {
     next.vx = arg0->position.vx + arg0->velocity.vx / 4096;
     next.vy = arg0->position.vy;
     next.vz = arg0->position.vz + arg0->velocity.vz / 4096;
-    ovl_11_func_800CE550((Vec3 *)&next);
+    Ovl11ProbePositionHeight((Vec3 *)&next);
     if (arg0->position.vy >= 5001) {
         high = 1;
     }

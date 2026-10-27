@@ -248,7 +248,9 @@ extern u8 gOvl11MovingItemDirectionVelocity[0x20];
 extern u16 D_80071AFE;
 
 /* 800CE550 reads five signed halfwords at D_801232C8 with stride two. */
-extern s16 D_801232C8[5];
+extern s16 gOvl11PositionHeightTolerances[5];
+/* CF314 writes XYZ words here and the record's two preceding halfwords. */
+extern u16 gOvl11TimedEffectPositionWords[];
 
 /* 800D2DB8 loads this signed word and compares it with 1. */
 extern s32 D_80128D6C;
@@ -1365,18 +1367,18 @@ struct struct_8006C838 {
 extern struct struct_8006C838 D_8006C838[];
 
 /* 800CE654: unsigned cursor +0, current halfword +4, samples +6, bound 0x738. */
-struct Ovl11CE654Input {
+struct Ovl11RecordedInput {
     u32 index;
     u16 current;
     u16 samples[0x738];
 };
 
 /* 800CE654 reads/writes flags +0xC and follows the word pointer at +0x1C. */
-struct Ovl11CE654State {
+struct Ovl11InputPlaybackState {
     u8 pad0[0xC];
     s32 flags;
     u8 pad10[0xC];
-    struct Ovl11CE654Input *input;
+    struct Ovl11RecordedInput *input;
 };
 
 /* 800DDDFC: resident flags, signed phase/mode and unsigned ID component. */

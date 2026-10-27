@@ -17,6 +17,7 @@
 #include "ovl30_record_menus.h"
 #include "ovl11_cell_actions.h"
 #include "ovl11_item_table_queries.h"
+#include "ovl11_item_record_allocation.h"
 
 s32 Ovl30EditMainData(s32 cursor) {
     s32 result;
@@ -46,7 +47,6 @@ s32 Ovl30EditPlayerData(s32 cursor) {
     return result;
 }
 
-u16 *ovl_11_func_800CE744(s32, s32);
 s32 ovl_11_func_800E6EAC();
 s32 ovl_11_func_800E6F34();
 s32 ovl_11_func_800E7088(s16, s16, s32, s32);
@@ -101,7 +101,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
         case 10:
             id = 0x15F;
         spawn:
-            object = ovl_11_func_800CE744(id, -1);
+            object = Ovl11AllocateItemRecord(id, -1);
             gOvl30RecordMenuSelectedId = -1;
             for (i = 0; i < 8; i++) {
                 object[i + 2] = Rand(0x94);
@@ -117,27 +117,27 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             ACTION->flagsC &= ~0x400000;
             break;
         case 13:
-            object = ovl_11_func_800CE744(0x162, -1);
+            object = Ovl11AllocateItemRecord(0x162, -1);
             ((Ovl30AnimalRecord *)object)->elapsed[1] = 1;
             ((Ovl30AnimalRecord *)object)->position[0] = -2000;
             ((Ovl30AnimalRecord *)object)->position[2] = 0;
-            object = ovl_11_func_800CE744(0x161, -1);
+            object = Ovl11AllocateItemRecord(0x161, -1);
             ((Ovl30AnimalRecord *)object)->elapsed[1] = 1;
             ((Ovl30AnimalRecord *)object)->position[0] = -1000;
             ((Ovl30AnimalRecord *)object)->position[2] = 0;
-            object = ovl_11_func_800CE744(0x160, -1);
+            object = Ovl11AllocateItemRecord(0x160, -1);
             ((Ovl30AnimalRecord *)object)->elapsed[1] = 1;
             ((Ovl30AnimalRecord *)object)->position[0] = 0;
             ((Ovl30AnimalRecord *)object)->position[2] = 0;
-            object = ovl_11_func_800CE744(0x160, -1);
+            object = Ovl11AllocateItemRecord(0x160, -1);
             ((Ovl30AnimalRecord *)object)->elapsed[1] = 1;
             ((Ovl30AnimalRecord *)object)->position[0] = 1000;
             ((Ovl30AnimalRecord *)object)->position[2] = 0;
-            object = ovl_11_func_800CE744(0x164, -1);
+            object = Ovl11AllocateItemRecord(0x164, -1);
             ((Ovl30AnimalRecord *)object)->elapsed[1] = 1;
             ((Ovl30AnimalRecord *)object)->position[0] = 2000;
             ((Ovl30AnimalRecord *)object)->position[2] = 0;
-            object = ovl_11_func_800CE744(0x165, -1);
+            object = Ovl11AllocateItemRecord(0x165, -1);
             ((Ovl30AnimalRecord *)object)->elapsed[1] = 1;
             ((Ovl30AnimalRecord *)object)->position[0] = 3000;
             ((Ovl30AnimalRecord *)object)->position[2] = 0;

@@ -4074,6 +4074,20 @@ private TU state. No flag or match failure supplies a boundary here. The
 live split build remains unchanged; no slice or speculative exception was
 introduced.
 
+The full 1EB8–2DB8 footprint was rechecked in this run. Making D6C private
+would require the entire 22-entry 12B8–2E20 interval, absorbing row_placement
+and pending_stage_dispatch as well as updaters/table policies with no walk
+call or private-state tie. Contiguity does NOT prove those intervening
+services came from other TUs; it only constrains the interval if privacy is
+established. Neither a seven-entry cut nor the broad absorption is supported
+by the new census. Only 2950 and 2D54 in that tail emit rodata (their own
+switch tables); the intervening zero words are table-alignment padding, not
+a discriminating literal pool. With -G0 and extracted aggregate data, the
+available witnesses still do not distinguish a published probe-mode word
+from private file state. No source/config change was made for this family;
+its boundary question stays open rather than treating an unobserved owner
+as proof in either direction.
+
 ---
 
 ## `ovl_11` D_80123A2C/D_80123A8C /5 row-table sibling pair — 0x800D29B0 / 0x800D2A88 (confidence: medium)
@@ -4537,6 +4551,90 @@ Members (address order, all matched, baseline flags):
   twin of 0x800CE514 with constant 0x7D, `(u32)(arg0 - 0x7D) < 6U`
   (`sll`/`sra`/`addiu`/`jr`/`sltiu` delay slot)
 
+## `ovl_11` independently bounded area/record services — 0x800CE550–0x800CF308 (reconstructed; historical object edges unproven)
+
+The following are individual complete services, NOT one proposed TU. Source
+and original-call census support no multi-member grouping across this band.
+The overlay uses -G0, so these are evidence-limited responsibility cuts, not
+GP proofs. Each checked fold passed at baseline; no override, private linkage,
+new storage or exception was introduced. Public names keep their original
+ovl_11 entry identities in the symbol configuration, and matching module
+headers describe the actual inputs, effects, return codes and constraints.
+
+- **modules/surface_height_probe.c, CE550–CE5FC**:
+  Ovl11ProbePositionHeight alone consumes the private five-s16 table at
+  801232C8, now gOvl11PositionHeightTolerances. moving_items is its client.
+  It copies position, tries tolerances in order and copies back only a hit Y;
+  every path resets the shared tolerance to 200, not the saved value.
+  Left paired_item_ids classifies IDs, without geometry/tolerance access;
+  right CE5FC binds a seasonal sprite header. No private policy or helper
+  crosses either edge. The table's array shape and signedness are unchanged.
+- **modules/recorded_input_playback.c, CE654–CE744**:
+  Ovl11StepRecordedInputPlayback is the sole consumer of its 0x738-sample
+  stream protocol. The primary_object_update caller invokes it per update.
+  Its start flag clears held/pressed input and consumes a sample without a
+  bounds check; active stepping checks the cursor and requests mode 1A on
+  exhaustion only from mode zero. Left CE5FC binds sprites; right CE744
+  allocates records. Neither uses this stream/cursor protocol. Existing
+  override-header views are now Ovl11RecordedInput/Ovl11InputPlaybackState,
+  with every width, offset and sample bound retained.
+- **modules/item_record_allocation.c, CE744–CE834**:
+  Ovl11AllocateItemRecord owns the 219-word switch table at overlay file
+  650–9BC, whose entries target only this body. It routes codes to several
+  existing public allocators, normalizes 163/166 for the state-object path,
+  queues A1–A3 without returning a record and post-initializes non-null
+  records. The nine external caller units establish a public routing service,
+  not a private helper of adjacent CE834. Left is input playback, right is a
+  per-frame update/audio sequencer; neither owns this table or code policy.
+  The table attribution moved with the unit; the generic zero word at 9BC
+  and following record_placement table were not changed. Unused copied m2c
+  types/prototypes/includes were removed; address-valued locals and the
+  common state-object tail remain, with no ABI change.
+- **modules/area_frame_update_dispatch.c, CE834–CE96C**:
+  Ovl11RunAreaFrameUpdates sequences public record/stage updates and deferred
+  audio for area_frame_update, including the stage/hour/minute/flag-gated
+  code15B request. Left CE744 is the public allocator; the right
+  record_pool_lifecycle unit performs its separate 44F0-bit-8 pool passes,
+  not these four D2xxx updaters or the pending audio protocol. Neither shares
+  private sequencing state or a local helper. The remote updater cohort is
+  an external dependency; a call sequence alone does not join the interval.
+- **modules/interaction_record_prepare.c, CEEF8–CEFCC**:
+  Ovl11PrepareInteractionRecord returns 1 for an ineligible ID, 2 for its
+  special selection path (even on failed request), and 0 after ordinary
+  flag/halfword/direction/effect reset. The public Ovl11InteractionRecord
+  is deliberately only the existing six-byte prefix. Its old pointer strides
+  +C/+1C mean BYTE offsets +48/+A8, not +C/+1C; they are preserved. The ID
+  test reads +0, not prefix field +2. The hit-result and interaction-action
+  services are clients. Left record_pool_lifecycle manages pool passes;
+  right record_placement installs tag/position and probes placement. Neither
+  uses this preparation/return-code protocol, so no extension is supported.
+- **modules/selected_record_flag_guard.c, CF2C8–CF308**:
+  Ovl11DeactivateUnselectedRecord only clears flag 20000 for a record whose
+  unsigned leading ID differs from the signed selected-item ID. It uses the
+  established Ovl11Item_80071A8A.id view, replacing a competing C-local extern.
+  Clients are small_record_handlers and 80108D84. Left record_placement does
+  not call it or share its selection guard; right pending_stage_request
+  writes a stage-mode latch, not record flags. Shared selection RAM is not
+  private membership evidence. The signed/unsigned comparison is retained.
+
+CE5FC and CF314 have their evidence in their pre-existing sections below.
+All eight interfaces were reconciled together by interfaceAudit; 18 caller
+units changed declarations/includes with unchanged objects, including the
+ovl_30 imported allocation reference. Generated contexts are regenerated by
+the full campaign gate, not edited. No original-object boundary is claimed
+merely because a service currently has a one-member module.
+
+Final two-batch acceptance (these eight plus the three action/hit adapters):
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` reports
+**1740/2625 folded, 295/295 valid module TUs**, up eleven functions/modules
+from the run's 1729/284 start. All eight integrity gates PASS: inventory,
+completeness, source policy, every linked EXE/overlay byte (including data,
+tables and caller effects), configuration convergence, whitespace, stable
+inputs and zero exception growth. Published interfaces have zero failing
+sites. Baseline -O2/-G0 sufficed throughout; no flag/allowlist changed. Exit
+1 is only the incomplete overall campaign (885 functions remain), not a
+failed integrity check. No tool change, new stub or commit was made.
+
 ## `ovl_11` func_80015704 two-argument caller set — 0x800BD168 / 0x800CCFF8 / 0x800CDE3C / 0x800CE5FC (confidence: low)
 
 Candidate same-TU callers of the sprite-source loader `func_80015704`.
@@ -4565,6 +4663,18 @@ Members:
   expression as the already-documented sibling ovl_11_func_800E2A30, and the
   two also share the D_8009A3F8 base, witnessing a shared sprite-data base
   cluster in addition to the two-argument loader idiom.
+**Reconstructed CE5FC–CE654 as modules/slot_sprite_source_refresh.c**,
+Ovl11RefreshSharedSlotSpriteSource. area_selection_setup is its sole caller;
+it disables the shared source first, then season 3 rebinds/enables only when
+resident header 187 exists. Source contents remain stale-but-disabled on
+failure. The source and enable latch belong to the external slot-sprite
+protocol; they are not made private or redefined. Left CE550's private height
+tolerance policy and right CE654's recorded-input cursor protocol share no
+header-binding/helper/table witness. These are conservative -G0 cuts, not
+historical object proofs. The scattered loader callers above remain an idiom
+set, not one TU. Its named header documents lifetime/load requirements and
+no-upload behavior; baseline checked fold passed without flags/exceptions.
+
 - ovl_11_func_800CE5FC (m, matched this session) — guard leaf: zeroes the
   D_80123154 flag, and when D_80070CF2 == 3 calls `ovl_11_func_800D688C(0x187)`
   and, if non-NULL, sets the flag and calls `func_80015704(&D_80128D00, r)`
@@ -11296,6 +11406,57 @@ identities inferred from the RAM address. Direction-table extents cover the
 four accessed pairs, preserving the separately referenced following symbol
 at 80123100. No tool or policy change was necessary.
 
+**Adjacent dependencies reconstructed at their evidence-limited extent:**
+`modules/item_button_gate.c` (800C77D8–800C7838) and
+`modules/nearby_reaction_query.c` (800C7838–800C7878), one entry each.
+The first gates input bit 80, object flag 10000000 and a nonzero item index
+before invoking the shared item-action service in mode 1. The second adapts
+the nearby-event scan and preserves its dormant pointer/+1A state test;
+the matched scan returns zero unconditionally, so the adapter also returns
+zero while retaining reaction/RNG effects. Their only caller is the remote
+primary_object_action_phase dispatcher, at distinct input phases. That
+client relationship does not establish one original file across intervening
+held-item handlers. These are complete currently supported adapter units,
+not a claim that each original TU contained a single function.
+
+Boundaries: left 76EC completes held_item_actions' private code-recognition
+try-chain; 77D8 neither joins that chain nor calls its cleanup helper. Between
+77D8 and 7838 there is no shared private state/helper/table: one gates item
+actions, the other invokes the object-event pool. Right 7878 commits the
+shared collision hit into an item result and clears the hit pair; neither
+adapter reads that protocol. No positive witness extends either adapter.
+These are responsibility-based conservative cuts under -G0, not GP proofs,
+flag boundaries or compiler-mechanics limits. No global ownership or linkage
+changed. Names Ovl11TryItemActionButton and Ovl11TriggerNearbyReactions are
+recorded at their original ovl_11 addresses; ovl11_primary_action_helpers.h
+publishes their caller-facing contracts, initialization and side effects.
+The checked folds passed at baseline without overrides or exceptions.
+
+`modules/interaction_hit_result.c` reconstructs the next entry,
+800C7878–800C79F8, as Ovl11ResolveInteractionHitResult. Its sole caller is
+item_request_actions' commit wrapper (800C8CC8); it snapshots hit +50/+54,
+resolves exact masked categories 8000/100/800/8/20 and consumes both shared
+hit words even on unsupported combinations. The seasonal path preserves the
+output's +2 word, unlike the cell paths. This distinct latch-to-result
+protocol is the complete supported service; widely shared hit storage does
+not join all probe, motion and item services into one historical file.
+Left 7838 invokes only nearby object reactions; right 79F8 queries a flagged
+volume code using its own saved raw address. Neither shares this service's
+result construction or latch-consumption helper relationship. These are
+again evidence-limited -G0 cuts, not historical object proofs or flag limits.
+
+The shared +50/+54 prefix is Ovl11InteractionHitObject, with hitRecord and
+hitFlags fields. The six-byte result reuses the already canonical
+Ovl11RecordPresentation (same s16/padding/u16 layout), replacing the duplicate
+M2C caller view. Seasonal inputs use Ovl11SeasonalRecordView. Existing
+opaque global view gOvl11InteractionHitRecordView replaces the C-local
+pointer redeclaration, preserving absolute addressing and its established
+assembler identity; no new alias, storage, ownership or linkage is added.
+ovl11_interaction_hit_result.h documents categories, untouched output paths,
+mutation, sound, null constraints and always-zero return. The original switch
+and stores are retained. Baseline checked fold passed with no override;
+readability/interface changes are covered by the full batch gate.
+
 Local placement of 800C74AC and its candidate same-TU family (confidence:
 medium; distinct from membership in this accessor TU;
 [evidence and limits](research/ovl_11_func_800C74AC-grouping.md)):
@@ -15267,8 +15428,9 @@ Members:
 - shared-global fingerprint: D_80075AD4 is the record base reached absolutely
   by 0x800C580C (passed as arg0), by 0x8010C1FC (fields +0x22, +0x78) and by
   0x8010B1C4 (u16@+0x0 zero-test, passed as arg0 to the initializer);
-  0x800CF314 writes the same record through its interior view anchors
-  D_80075AEA (+0x18/+0x1A) and D_80075B0C (+0/+4/+8, base minus 0xA/−8).
+  0x800CF314 writes the same record through interior anchor D_80075B0C
+  (+0/+4/+8 for XYZ, minus 0xA/8 for record +0x2E/+0x30). The earlier
+  +0x18/+0x1A claim was incorrect; those are not this function's pair stores.
 - record extent: D_80075BC4 follows D_80075AD4 by exactly 0xF0, the same 0xF0
   struct size the memset-clear family records for 0x8010B64C / 0x801092E0 — so
   this is the 0xF0-byte record that precedes the D_80075BC4 0xB0-stride table
@@ -15289,9 +15451,27 @@ Members:
   (0x42C gap before the 0x8010B64C band); callers/siblings are container-local,
   so no cross-container tie.
 
+**Reconstructed CF314–CF36C as modules/timed_effect_record_fill.c**,
+Ovl11FillTimedEffectRecord. The shared 0xF0 record has many external users;
+that broad data-tie cluster is not same-TU evidence across their distant
+addresses. The sole live caller primary_object_grid_actions supplies its
+unsigned +FC pair and XYZ at +100. Existing pair/triple caller views now use
+Ovl11EffectRecordPair and canonical Vec3, preserving every width/offset and
+the original store order. The interior XYZ anchor at EXE:80075B0C is named
+gOvl11TimedEffectPositionWords, with its missing extern moved to the override
+header; this remains an interior view, not a second record or new storage.
+The reset pointer is independent of the fixed shared-store destination.
+
+Left pending_stage_request only sets a mode latch; right CF36C filters and
+clears six B0-byte state-object records. Neither consumes this pair/XYZ fill
+protocol or its fixed output anchor. These are evidence-limited -G0 cuts,
+not private ownership proofs or mechanical/flag limits. The public header
+documents the fixed destination, independently passed reset record, aliasing
+and unchecked pointers. Baseline checked fold passed; no override applies.
+
 Members:
 - ovl_11_func_800CF314 (m, matched this session, byte-exact) — record fill:
-  copies an arg1 u16 pair into the record's +0x18/+0x1A and an arg2 s32 triple
+  copies an arg1 u16 pair into the record's +0x2E/+0x30 and an arg2 s32 triple
   into +0x38/+0x3C/+0x40, then calls ovl_11_func_80107DD0(arg0 + 0xA8).
 - ovl_11_func_800C580C (s) — caller: passes &D_80075AD4 as arg0 (arg1/arg2 are
   s1+0xFC / s1+0x100).
