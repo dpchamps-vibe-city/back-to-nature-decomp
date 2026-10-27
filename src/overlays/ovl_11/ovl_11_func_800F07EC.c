@@ -17,7 +17,7 @@ s32 ovl_11_func_800F07EC(s16 arg0, s32 arg1, s32 arg2, u32 *arg3) {
     u32 temp_v1;
     s32 *temp_s1;
 
-    temp_s1 = (s32 *) ((u8 *) D_80076280 + (arg0 * 0x1D4));
+    temp_s1 = (s32 *) ((u8 *) gObjectPositionRecordCoordinates + (arg0 * 0x1D4));
     temp_a2 = Ovl11IsSpecialCounterSlot((s32) arg0);
     temp_v1 = *arg3;
     var_s2 = 0;

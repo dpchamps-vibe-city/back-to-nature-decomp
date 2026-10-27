@@ -1166,11 +1166,11 @@ extern s32 _gPrimaryObjectBase[3] __asm__("gPrimaryObjectBase");
 #define gPrimaryObjectBase (*((s32 *)_gPrimaryObjectBase))
 extern s32 gPrimaryObjectFlags;
 
-/* D_80076280 - second absolute-addressed array of 0x1D4-byte records, 0x60
- * bytes past D_80076220. ovl_11_func_800E8A24 and ovl_11_func_800E9778 index
- * it by a sign-extended s16 as (char *)D_80076280 + idx * 0x1D4 and read s32
- * fields at +0/+4/+8; the target materializes lui + addiu %lo(D_80076280). */
-extern s32 D_80076280[];
+/* EXE:80076280 - coordinate-field anchor, 0x60 past the position-record
+ * base at 80076220. E9778 and the resident editor read/write three s32 words
+ * (X/height/Z); successive records are 0x1D4 bytes apart. Keep the incomplete
+ * extern and original absolute address formation, not a new storage owner. */
+extern s32 gObjectPositionRecordCoordinates[];
 
 /* ovl_11_func_800E5078 copies 0x30-byte sprites at stride 0x1D4 from base-0x30. */
 extern u8 D_800762D0[];
@@ -1693,10 +1693,11 @@ struct Ovl11ResetB0 {
     u16 id;
     u8 pad_6[0xB0 - 6];
 };
-/* 800CFC20 updates the byte at +44CD, flags at +5234 and count at +523E. */
-struct Ovl11CFC20Status {
+/* 800CFC20 retires marked B8/B4 records and increments these counters.
+ * The byte increment wraps before its upper clamp; keep its u8 width. */
+struct Ovl11RecordRetirementWork {
     u8 pad_0[0x44CD];
-    u8 field_44CD;
+    u8 byteCount;
     u8 pad_44CE[0x51C8 - 0x44CE];
     u8 object[0x5234 - 0x51C8];
     s32 flags;
@@ -5652,20 +5653,17 @@ extern u8 _gMessageWindowPhase[9] __asm__("gMessageWindowPhase");
  * original address-formation behavior; overlay data, not module storage. */
 extern u16 gOvl11RecordPairOrderCodes[];
 
-/* D_801239D0 - ovl_11 table of 0x10-byte records (3 s32 fields plus a
- * trailing pad) walked by ovl_11_func_800CFD9C. Each iteration copies the
- * record's +0x0/+0x4/+0x8 words into the +0x38/+0x3C/+0x40 sub-record of a
- * 0xB4-byte entry returned by ovl_11_func_800E1F9C, then advances by 0x10.
- * Absolute-addressed (lui + %lo, split two-register form): declared as an
- * aggregate wider than -G8, and owned by the ovl_11 data image (this TU only
- * declares it). */
+/* ovl_11:801239D0 - 800CFD9C copies three 16-byte rows' X/Y/Z words
+ * into code-109 records at +38/+3C/+40; the fourth word is not read.
+ * Keep the incomplete extern and split two-register address formation.
+ * Storage belongs to the overlay data image, not to this C unit. */
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-} Ovl11CFD9CEntry; /* 0x10 */
-extern Ovl11CFD9CEntry D_801239D0[];
+    /* 0x00 */ s32 x;
+    /* 0x04 */ s32 y;
+    /* 0x08 */ s32 z;
+    /* 0x0C */ s32 reserved;
+} Ovl11Code109Position; /* 0x10 */
+extern Ovl11Code109Position gOvl11Code109Positions[];
 
 /* ovl_11:800CF258 scans 17 item-ID/mask rules; 800CF428 also compares
  * mode and copies the three coordinate words into spawned records.
@@ -7447,8 +7445,11 @@ extern u8 D_8005346A[];
 /* ovl_11_func_8011D35C reads/writes this selection state with lh/sh. */
 extern s16 gOvl11WideChoiceSelection;
 
+/* ovl_11:800DF010 dispatches this 20-entry action bank; original table
+ * relocations target the DE9C8..DFC44 record-handler unit. */
+extern s32 (*gOvl11Code160Handlers[20])(void *);
 /* ovl_11 800DEF30 dispatches the 20-word table; matched 800DFC44/800DFCFC take one object and return s32. */
-extern s32 (*D_800B95CC[20])(void *);
+extern s32 (*gOvl11RecordAnimationHandlers[20])(void *);
 
 /* 8011FFA8 reads/writes the three selection words at +0/+4/+8. */
 extern s32 gOvl11HeldActionState[3];
@@ -7953,6 +7954,18 @@ extern void *gProjectedPrimitiveBatch;
  * pair table used by 800D3424. Fourth words of placement rows are unused. */
 extern s32 gOvl11RowZPlacementTable[][4];
 extern s32 gOvl11RowXPlacementTable[][4];
+
+/* ovl_11:800D3424 indexes state*16 + variant*4; D2E6C applies the
+ * first halfword as animation and the optional second halfword as frame.
+ * The 0x120-byte original table holds 18 rows of four pairs. */
+typedef struct {
+    u16 animation;
+    u16 frame;
+} Ovl11StateSpriteFrame;
+extern Ovl11StateSpriteFrame gOvl11StateSpriteFrames[][4];
+/* ovl_11:800DF3BC and its presentation caller establish the same pair
+ * contract. Original 0x90-byte data window: nine rows of four pairs. */
+extern Ovl11StateSpriteFrame gOvl11Code160SpriteDescriptors[][4];
 /* Overlay-15 twins use separate 2-row X / 6-row Z tables at 801375D8/F8. */
 extern s32 gOvl15RowXPlacementTable[][4];
 extern s32 gOvl15RowZPlacementTable[][4];

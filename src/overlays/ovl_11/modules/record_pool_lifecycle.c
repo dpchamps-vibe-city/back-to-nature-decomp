@@ -17,10 +17,16 @@
 #include "ovl11_tagged_record_handlers.h"
 #include "ovl11_small_record_handlers.h"
 #include "ovl11_item_record_allocation.h"
+#include "ovl11_code109_record_placement.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
-void ovl_11_func_800CFD9C(void);
-s32 ovl_11_func_800DE9C8(UnkStruct800DF4F0 *arg0);
-s32 ovl_11_func_800DEB00(Ovl11Deb00Object *arg0);
 s32 ovl_11_func_80108D84(s32 *arg0);
 s32 ovl_11_func_8010B264(Ovl11B264Object *arg0);
 void ovl_11_func_800D0FB4(void);
@@ -81,7 +87,7 @@ void Ovl11ResetRecordPools(void) {
     memset(&D_80075AD4, 0, 0xF0);
     ((struct Ovl11PoolResetView *) D_8006C838)->field_929C = 0;
     ((struct Ovl11PoolResetView *) D_8006C838)->field_92A0 = 0xFFFF;
-    ovl_11_func_800CFD9C();
+    Ovl11PlaceCode109Records();
     for (counterIndex = 0; counterIndex < 3U; counterIndex++) {
         (&gOvl11Mode0DispatchCounter)[counterIndex] = 0x12C;
     }
@@ -111,7 +117,7 @@ void Ovl11RunRecordPoolFirstPass(void) {
         for (index = 0; index < 20; index++) {
             largeRecord = (u16 *) ((u8 *) &gTaggedRecordBase + index * 0xB8);
             if (*largeRecord != 0) {
-                ovl_11_func_800DE9C8((UnkStruct800DF4F0 *) largeRecord);
+                Ovl11UpdateCode160RecordLiveness((UnkStruct800DF4F0 *) largeRecord);
             }
         }
         for (index = 0; index < 20; index++) {
@@ -145,7 +151,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
         for (index = 0; index < 20; index++) {
             largeRecord = (s32 *) ((u8 *) &gTaggedRecordBase + index * 0xB8);
             if ((*(u16 *) ((u8 *) largeRecord + 0)) != 0) {
-                ovl_11_func_800DEB00((Ovl11Deb00Object *) largeRecord);
+                Ovl11StepCode160RecordFrame((Ovl11Deb00Object *) largeRecord);
             }
         }
         for (index = 0; index < 20; index++) {
@@ -182,7 +188,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
     Ovl11ResyncRecordRowPlacements(0);
     ovl_11_func_800D0FB4();
     if (((struct Ovl11PoolResetView *) D_8006C838)->field_E4CA == 0) {
-        ovl_11_func_800CFD9C();
+        Ovl11PlaceCode109Records();
     } else {
         for (index = 0; index < 3; index++) {
             tailRecord = (struct Ovl11PoolResetView *) ((u8 *) D_8006C838 + index * 0xB4);

@@ -12,14 +12,13 @@
 #include "ovl11_object_record_init.h"
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_direction_vector.h"
-
-s32 ovl_11_func_800D3424(u16 state, u16 variant, u16 *animation, u16 *frame);
+#include "ovl11_state_animation_table.h"
 
 void Ovl11DrawStateObjectRecord(u8 *record) {
     u16 animation;
     u16 frame;
 
-    ovl_11_func_800D3424(*(u16 *)(record + 0x24), *(u16 *)(record + 0x22),
+    Ovl11ReadStateSpriteAnimation(*(u16 *)(record + 0x24), *(u16 *)(record + 0x22),
                         &animation, &frame);
     if (animation != record[0x7C]) {
         SelectSpriteAnimation((ObjectState *)(record + 0x78), (u8)animation);

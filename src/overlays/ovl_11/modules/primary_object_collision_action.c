@@ -12,8 +12,17 @@
 #include "ovl11_collision_query_budget.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_tagged_record_handlers.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
-s32 ovl_11_func_800DF010(void *, s32);
 s32 ovl_11_func_8010B57C(u16 *, s32);
 
 s32 Ovl11QueryPrimaryObjectCollisionAction(Ovl11CB114Object *object, s32 *center, s16 probeIndex) {
@@ -73,7 +82,7 @@ s32 Ovl11QueryPrimaryObjectCollisionAction(Ovl11CB114Object *object, s32 *center
                 if (hit != NULL) {
                     if (hitFlags & 2) {
                         if ((u32) gOvl11InteractionDispatchCount >= 0x33U) {
-                            ovl_11_func_800DF010(hit, 0xD);
+                            Ovl11DispatchCode160Handler(hit, 0xD);
                         } else {
                             gOvl11InteractionDispatchCount += 1;
                         }

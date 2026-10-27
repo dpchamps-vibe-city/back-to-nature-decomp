@@ -305,7 +305,7 @@ typedef struct {
     u16 flags;
     s16 direction;
     char pad3A[0x40 - 0x3A];
-    u16 vals[(0x84 - 0x40) / 2];
+    u16 progress[(0x84 - 0x40) / 2];
     s16 value;
     s16 amount;
     char pad88[0x100 - 0x88];
@@ -1282,7 +1282,21 @@ typedef struct {
     s32 hitFlags;
 } Ovl11InteractionHitObject;
 
+/* 800DF4F0's active-record test reads this prefix and the word at +34. */
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
+
+/* 800DF010: handler selection/reset fields, preserving the partial view. */
+typedef struct {
+    char pad_00[0x26];
+    s16 handlerId;
+    s16 step;
+    s16 counter;
+    s16 timer;
+    char pad_2E[0x34 - 0x2E];
+    s32 flags;
+    char pad_38[0xB6 - 0x38];
+    s16 fieldB6;
+} Ovl11Code160HandlerRecord;
 
 /* 800D0DB0 stores the two signed indices passed by 800DF72C. */
 /* Four selection slots at 80076200 (work+99C8). A -1 recordIndex is

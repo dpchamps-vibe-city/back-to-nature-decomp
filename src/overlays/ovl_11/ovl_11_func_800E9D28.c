@@ -17,6 +17,7 @@
 #include "ovl11_interaction_dispatch.h"
 #include "ovl11_pending_event_queue.h"
 #include "ovl11_record_partition_flags.h"
+#include "ovl11_flagged_record_retirement.h"
 
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
@@ -29,7 +30,6 @@ s32 ovl_11_func_80103770 (void);
 void ovl_11_func_800F0358 (void);
 s32 ovl_11_func_800F0474 (s16 arg0);
 void ovl_11_func_800F05C0 (void);
-void ovl_11_func_800CFC20 (void);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
@@ -382,7 +382,7 @@ block_118:
         case 0:
             return Ovl11AnyRecordFlagMatch(1 << arg2, 1 << arg3);
         case 1:
-            ovl_11_func_800CFC20();
+            Ovl11RetireFlaggedRecords();
             break;
         default:
             return 0;

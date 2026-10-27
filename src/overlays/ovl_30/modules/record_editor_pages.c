@@ -157,7 +157,7 @@ s32 Ovl30EditCoopChickenData(s32 cursor) {
 s32 Ovl30EditResidentData(s32 cursor) {
     s32 *position = (s32 *)((u8 *)D_80076250 + Ovl30_ResidentSelection->resident * 0x1D4);
     u16 *flags = (u16 *)((u8 *)D_8007624C + Ovl30_ResidentSelection->resident * 0x1D4);
-    s32 *destination = (s32 *)((u8 *)D_80076280 + Ovl30_ResidentSelection->resident * 0x1D4);
+    s32 *destination = (s32 *)((u8 *)gObjectPositionRecordCoordinates + Ovl30_ResidentSelection->resident * 0x1D4);
     s32 *destinationSpeed = (s32 *)((u8 *)D_80076290 + Ovl30_ResidentSelection->resident * 0x1D4);
     s16 *birth = (s16 *)((u8 *)D_80076244 + Ovl30_ResidentSelection->resident * 0x1D4);
     Ovl30ValueMenuEntry entries[32] = {

@@ -78,7 +78,7 @@ s32 Ovl11ActivateEntityNearRecord(s16 entityIndex, s16 recordIndex,
     sourceTag = *(u16 *)(farWork + 0x25476);
 
     *(u16 *)(entity + 0x4) |= 1;
-    position = (s32 *)((char *)D_80076280 + recordIndex * 0x1D4);
+    position = (s32 *)((char *)gObjectPositionRecordCoordinates + recordIndex * 0x1D4);
     *(u16 *)entity = sourceTag;
 
     if (classifyDirection != 0) {

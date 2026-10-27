@@ -64,12 +64,13 @@
 #include "ovl11_held_item_replacement.h"
 #include "surface_collision.h"
 #include "ovl11_item_record_allocation.h"
+#include "ovl11_code109_record_placement.h"
+#include "ovl11_grid_growth.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
 void Ovl11ResetAreaSlotRecords (void);
 void ovl_11_func_800DBFA0 (void);
-void ovl_11_func_800D7B24 (void);
 void ovl_11_func_800F6630 (void);
 void ovl_11_func_8010C6A0 (void);
 void Ovl11AreaResetEffectsHook (void);
@@ -101,7 +102,7 @@ void Ovl11PrepareAreaScene(void) {
     Ovl11ResetCoordinateClamp();
     Ovl11InitVramAnimationSlots();
     Ovl11SetSceneCollisionTolerance();
-    ovl_11_func_800D7B24();
+    Ovl11ResetAlternateAreaGrid();
     Ovl11ClearResourceIndex();
     Ovl11AreaSpriteBankHook();
     Ovl11LoadFixedAreaSpriteBank();
@@ -333,7 +334,6 @@ void Ovl11AreaResetEndHook(void) {
 
 /* These two sprite-loader wrappers use their matched definition signatures;
  * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
-void ovl_11_func_800CFD9C(void);
 s32 ovl_11_func_800DE76C(void);
 s32 ovl_11_func_80109310(s32 *arg0);
 
@@ -385,7 +385,7 @@ void Ovl11LoadAreaScene(void) {
     Ovl11RefreshProgressStatusEntry();
     Ovl11ClearSpriteEffects();
     Ovl11ResetMenuChoiceState();
-    ovl_11_func_800CFD9C();
+    Ovl11PlaceCode109Records();
     ovl_11_func_800DE76C();
     ovl_11_func_80109310((s32 *) &D_800759E4);
     Ovl11StageFixedSpriteBank();

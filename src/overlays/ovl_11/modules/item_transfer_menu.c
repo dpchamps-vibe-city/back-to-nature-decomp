@@ -29,6 +29,8 @@
 #include "ovl11_item_table_queries.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_slot_decorations.h"
+#include "ovl11_held_item_flags.h"
+#include "ovl11_item_stack_clear.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
@@ -37,8 +39,6 @@ void SetVal8005E2BC(s32 value);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 void func_800248B0(s32 ot, s16 x, s16 y);
 void ovl_11_func_800BCF28(void);
-void ovl_11_func_800CCF58(Ovl11C7010Object *object);
-void ovl_11_func_800D5740(s16 *item);
 
 /* Internal interfaces retain their original external linkage and word-sized
  * pointer arguments where present. Slot helpers are not a general inventory API. */
@@ -96,7 +96,7 @@ void Ovl11UpdateItemTransferMenu(void) {
             func_80017A48(3);
             Ovl11DrawAndProcessItemTransferMenu();
             func_80017A48(previousStyle);
-            ovl_11_func_800CCF58((Ovl11C7010Object *)&gPrimaryObjectBase);
+            Ovl11SyncHeldItemFlags((Ovl11C7010Object *)&gPrimaryObjectBase);
         }
     }
 }
@@ -342,7 +342,7 @@ void Ovl11MergeItemTransferStacks(u16 *source, u16 *destination) {
         destination[2] = 99;
         source[2] = sum - 99;
     } else {
-        ovl_11_func_800D5740((s16 *)source);
+        Ovl11ClearItemStackEntry((s16 *)source);
     }
 }
 

@@ -23,6 +23,14 @@
 #include "map_texture_camera.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_primary_object_item_sprite_source.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 s32 Ovl11TryBeginLowCodeItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
     s32 temp_s2;
@@ -133,7 +141,6 @@ typedef struct {
     /* 0xB6 */ s16 unkB6;
 } Struct_800DF010;
 
-s32 ovl_11_func_800DF010(Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
 void Ovl11ResetItemActionCollisionDispatch(void) {
@@ -145,7 +152,7 @@ void Ovl11ResetItemActionCollisionDispatch(void) {
         /* fallthrough */
     case 0x2:
         if (gOvl11InteractionHitRecordView != NULL) {
-            ovl_11_func_800DF010((Struct_800DF010 *)gOvl11InteractionHitRecordView, 0);
+            Ovl11DispatchCode160Handler((Struct_800DF010 *)gOvl11InteractionHitRecordView, 0);
             return;
         }
         return;

@@ -19,6 +19,7 @@
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_held_item_replacement.h"
 #include "two_choice_prompt.h"
+#include "ovl11_item_selection_value.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 Ovl11CanApplySelectedThreshold(StructD548 *arg0);
@@ -109,13 +110,11 @@ s32 Ovl11UpdateThresholdInteraction(void) {
     return complete;
 }
 
-s32 ovl_11_func_800D740C(u16 arg0);
-
 /* Lookup results are narrowed to s16 before either comparison or debit. */
 s32 Ovl11CanApplySelectedThreshold(StructD548 *record) {
     s16 threshold;
 
-    threshold = ovl_11_func_800D740C((u16) record->data[record->index]);
+    threshold = Ovl11LookupItemSelectionValue((u16) record->data[record->index]);
     return gSelectedThresholdBalance >= threshold;
 }
 
@@ -126,7 +125,7 @@ void Ovl11ApplySelectedThreshold(StructD548 *record) {
     s16 threshold;
 
     gOvl11InteractionDrawMode = 0;
-    threshold = ovl_11_func_800D740C((u16)record->data[record->index]);
+    threshold = Ovl11LookupItemSelectionValue((u16)record->data[record->index]);
     ((Ovl11SelectedThresholdState *)D_8006C838)->balance -= threshold;
     selection = record->index;
     if (selection == 0) {

@@ -39,12 +39,18 @@
 #include "ovl11_record_selection.h"
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_small_record_handlers.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *object,
     s32 step, s32 flags);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *object, Ovl11PaddedVec3 vector);
 void ovl_11_func_800D1960(s16 threshold);
-s32 ovl_11_func_800DF010(Ovl11SetFieldsView *object, s32 action);
 
 s32 Ovl11ApplyStateValueDebit(Ovl11StateValueView *object) {
     s32 difference;
@@ -730,7 +736,7 @@ s32 Ovl11StepState07RecordPlacement(Ovl11RecordPlacementStateObject *arg0) {
             if (var_s0->field_34 & 0x10000) {
                 var_s2 = Ovl11DispatchTaggedRecordHandler;
             } else {
-                var_s2 = ovl_11_func_800DF010;
+                var_s2 = Ovl11DispatchCode160Handler;
             }
         } else {
             var_s2 = 0;

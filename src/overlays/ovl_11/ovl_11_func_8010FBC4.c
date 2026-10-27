@@ -2,12 +2,21 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "ovl11_tagged_record_handlers.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
 s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
 s32 ovl_11_func_80110494(Ovl11StateKeyProbeView *arg0, s16 arg1, s16 arg2);
-s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
 s32 ovl_11_func_80110520(s32 arg0, s16 arg1);
 s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 u16 ovl_11_func_80110118(Ovl11ActionCompletionView *arg0);
@@ -61,7 +70,7 @@ s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0, s32 arg1) {
     case 2:
         if (ovl_11_func_80110494((Ovl11StateKeyProbeView *)arg0, 9, 0x3C) != 0) {
             if (!(record->unk34 & 0x10000)) {
-                ovl_11_func_800DF010(animal, 6);
+                Ovl11DispatchCode160Handler(animal, 6);
             } else {
                 Ovl11DispatchTaggedRecordHandler(animal, 6);
             }
@@ -87,7 +96,7 @@ s32 ovl_11_func_8010FBC4(Ovl11SetFieldsView *arg0, s32 arg1) {
         if (ovl_11_func_80110494((Ovl11StateKeyProbeView *)arg0, 0xA, 0x3C) != 0) {
             animal->unkB6 = *(u16 *)((u8 *)arg0 + 0xAC);
             if (!(record->unk34 & 0x10000)) {
-                ovl_11_func_800DF010(animal, 7);
+                Ovl11DispatchCode160Handler(animal, 7);
             } else {
                 Ovl11DispatchTaggedRecordHandler(animal, 8);
             }

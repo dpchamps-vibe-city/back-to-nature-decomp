@@ -58,6 +58,10 @@
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_timed_effect_record_fill.h"
 #include "ovl11_interaction_hit_action.h"
+#include "ovl11_indexed_progress.h"
+#include "ovl11_action_status_delta.h"
+#include "ovl11_triplet_sprite_release.h"
+#include "ovl11_held_item_flags.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -89,7 +93,6 @@ void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
 }
 
 void Ovl11BeginCellActionRequest(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-void ovl_11_func_800CD5BC(Ovl11CD5BCObject *arg0, s32 arg1);
 
 s32 Ovl11BeginCellResetAction(Ovl11C7010Object *arg0) {
     Ovl11CE034Position pos;
@@ -113,7 +116,7 @@ s32 Ovl11BeginCellResetAction(Ovl11C7010Object *arg0) {
         Ovl11ChangePrimaryObjectState(arg0, 0x68, 0, -2);
         result = 1;
     } else {
-        ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, 0x28);
+        Ovl11AddIndexedProgress((Ovl11CD5BCObject *)arg0, 0x28);
         result = 0;
     }
     return result;
@@ -131,7 +134,7 @@ s32 Ovl11BeginCellPromotionAction(Ovl11C7010Object *arg0) {
 
     temp_v0 = Ovl11GetCellGridSelection();
     if (temp_v0 == 2) {
-        ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, 0x28);
+        Ovl11AddIndexedProgress((Ovl11CD5BCObject *)arg0, 0x28);
         return 0;
     }
     pos = *(Ovl11CE034Position *)((u8 *)arg0 + 0x100);
@@ -167,10 +170,10 @@ s32 Ovl11BeginCellEffectAction(Ovl11C7010Object *arg0) {
     if (mode == 2) {
         if (gOvl11InteractionHitFlags & 0x8000) {
             if (Ovl11ConsumeSpawnEffect(gOvl11InteractionHitRecordView) != 0) {
-                ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, 0x96);
+                Ovl11AddIndexedProgress((Ovl11CD5BCObject *)arg0, 0x96);
             }
         } else {
-            ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, 0x28);
+            Ovl11AddIndexedProgress((Ovl11CD5BCObject *)arg0, 0x28);
         }
         result = 0;
     } else {
@@ -258,7 +261,7 @@ s32 Ovl11StepCellActionRequest(Ovl11CD5BCObject *arg0) {
             }
         }
     } else {
-        ovl_11_func_800CD5BC(arg0, gOvl11CellActionScore);
+        Ovl11AddIndexedProgress(arg0, gOvl11CellActionScore);
         return 1;
     }
     gOvl11CellActionProgress += 1;
@@ -301,7 +304,7 @@ void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *arg0) {
             var_s4 = 0x96;
         }
     }
-    ovl_11_func_800CD5BC(arg0, var_s4);
+    Ovl11AddIndexedProgress(arg0, var_s4);
 }
 
 void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
@@ -340,7 +343,7 @@ void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
             var_s4 = 0x96;
         }
     }
-    ovl_11_func_800CD5BC(arg0, var_s4);
+    Ovl11AddIndexedProgress(arg0, var_s4);
 }
 
 void Ovl11PlaceObjectCellTexture(Ovl11CE034Object *arg0) {
@@ -401,8 +404,6 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
 }
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
-void ovl_11_func_800CCF14(Ovl11TripletTailView *arg0);
-s32 ovl_11_func_800CD3C4 (s32 arg0);
 void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
 void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
@@ -412,7 +413,6 @@ void ovl_11_func_800F0FB0 (s32 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
 s32 Ovl11CommitPendingItemRecord (Ovl11C7010Object *arg0);
-void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 s32 Ovl11BeginCellEffectAction (Ovl11C7010Object *arg0);
 s32 Ovl11BeginCellResetAction (Ovl11C7010Object *arg0);
 s32 Ovl11BeginCellPromotionAction (Ovl11C7010Object *arg0);
@@ -480,10 +480,10 @@ reset_done:
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction(temp_s0);
             }
-            ovl_11_func_800CCF14(temp_s0);
+            Ovl11StepTripletSpriteRelease(temp_s0);
             arg0->unk6C &= 0xFFFF7FFB;
             Ovl11ResetPrimaryObjectRequest();
-            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x50:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -492,7 +492,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             Ovl11ResetPrimaryObjectRequest();
-            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x51:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -502,10 +502,10 @@ reset_done:
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction(temp_s0_2);
             }
-            ovl_11_func_800CCF14(temp_s0_2);
+            Ovl11StepTripletSpriteRelease(temp_s0_2);
             arg0->unk6C &= 0xFFFF7FFB;
             Ovl11ResetPrimaryObjectRequest();
-            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x4E:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -514,7 +514,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             arg0->unk6C &= ~4;
-            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x4F:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -523,7 +523,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             Ovl11ResetPrimaryObjectRequest();
-            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x4D:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
@@ -532,7 +532,7 @@ reset_done:
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
             arg0->unk6C &= ~4;
-            Ovl11ApplyStatusDelta(0, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
 
         case 0x53:
@@ -542,10 +542,10 @@ reset_done:
             status = arg0->unk6C;
             status &= 0xEFFFFFFF;
             arg0->unk6C = status;
-            ovl_11_func_800CCF14((Ovl11TripletTailView *) ((u8 *) arg0 + 0x84));
+            Ovl11StepTripletSpriteRelease((Ovl11TripletTailView *) ((u8 *) arg0 + 0x84));
             Ovl11ResetPrimaryObjectRequest();
 negative_action:
-            Ovl11ApplyStatusDelta(-1, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta(-1, Ovl11AdjustActionStatusDelta(0), 0, 0);
             break;
         case 0x54:
             Ovl11ChangeObjectStateDirect((Recon_ovl_11_func_800C7270_A0View *) arg0, 0x2D, 1, -2);
@@ -585,7 +585,7 @@ state_done:
             temp_s0_3 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x8A);
             arg0->unk6C &= 0xEFFF3FFF;
             Ovl11InvokeItemAction(temp_s0_3);
-            ovl_11_func_800CCF14(temp_s0_3);
+            Ovl11StepTripletSpriteRelease(temp_s0_3);
             Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x46:
@@ -852,11 +852,11 @@ tool_done:
         case 0x31:
             arg0->unk6C &= ~0x4000;
             Ovl11FinalizePrimaryItemAction((Ovl11C6770Object *) arg0);
-            ovl_11_func_800CCF58((Ovl11C7010Object *) arg0);
+            Ovl11SyncHeldItemFlags((Ovl11C7010Object *) arg0);
             Ovl11ResetPrimaryObjectRequest();
             goto advance_action;
         case 0x28:
-            ovl_11_func_800CCF14((Ovl11TripletTailView *) ((u8 *) arg0 + 0x8A));
+            Ovl11StepTripletSpriteRelease((Ovl11TripletTailView *) ((u8 *) arg0 + 0x8A));
             Ovl11ResetPrimaryObjectRequest();
             goto advance_action;
         case 0x17:
@@ -876,7 +876,7 @@ tool_done:
                 if (waitForAction != 0) {
                     var_s0 = 0x96;
                 }
-                ovl_11_func_800CD5BC((Ovl11CD5BCObject *)arg0, var_s0);
+                Ovl11AddIndexedProgress((Ovl11CD5BCObject *)arg0, var_s0);
                 applyCost = 1;
             } else {
                 if (Ovl11BeginCellResetAction((Ovl11C7010Object *) arg0) == 1) {
@@ -930,7 +930,7 @@ advance_action:
             }
             column = (s16)arg0->power / 20;
             temp_s0_5 = gOvl11ItemActionTierValues[(s16)((s16)(arg0->value - 1) / 5)][column];
-            Ovl11ApplyStatusDelta((s8) temp_s0_5, ovl_11_func_800CD3C4(0), 0, 0);
+            Ovl11ApplyStatusDelta((s8) temp_s0_5, Ovl11AdjustActionStatusDelta(0), 0, 0);
         }
         var_v0 = 0;
         if (waitForAction == 1) {
@@ -971,7 +971,7 @@ void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *arg0) {
     if (arg0->item.id == 0x126) {
         arg0->unk6C |= 0x200;
     }
-    ovl_11_func_800CCF14((Ovl11TripletTailView *)temp_s1);
+    Ovl11StepTripletSpriteRelease((Ovl11TripletTailView *)temp_s1);
     if (arg0->unk3C == 0x31) {
         arg0->item = gOvl11SavedHeldItem;
         Ovl11InstallSlotSprite(arg0->item.id);

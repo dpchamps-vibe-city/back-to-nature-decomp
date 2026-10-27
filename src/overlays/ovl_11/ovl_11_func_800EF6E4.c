@@ -43,6 +43,7 @@
 #include "ovl11_small_record_handlers.h"
 #include "ovl11_primary_object_item_sprite_source.h"
 #include "ovl11_record_partition_flags.h"
+#include "ovl11_code160_record_handlers.h"
 
 typedef struct {
     s16 unk0;
@@ -102,7 +103,6 @@ void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *a
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 s32 ovl_11_func_800D2E20 (void);
-void ovl_11_func_800DF0F8 (s32 arg0);
 s32 ovl_11_func_80118C6C (void);
 s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);

@@ -7,8 +7,14 @@
 #include "ovl11_tagged_record_presentation.h"
 #include "ovl11_tagged_record_handlers.h"
 #include "ovl11_small_record_handlers.h"
-
-s32 ovl_11_func_800DEF30(UnkStruct800DF4F0 *arg0);
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 void ovl_11_func_800D1EB8(void) {
     Recon_ovl_11_func_8010CE80_A0View *entry;
@@ -48,11 +54,11 @@ void ovl_11_func_800D1EB8(void) {
                 if (!(*(s32 *)(base + 0xC) & 0x08000000)) {
                     if (!(*(s32 *)(base + 0xC) & 0x40000000)) {
                         if (*(s16 *)(far_base + 0x5476) == *(s16 *)((u8 *)entry + 0x30)) {
-                            ovl_11_func_800DEF30((UnkStruct800DF4F0 *)entry);
+                            Ovl11TickCode160Record((UnkStruct800DF4F0 *)entry);
                             Ovl11AdvanceTaggedRecordPosition((s32)entry);
                         }
                     } else {
-                        ovl_11_func_800DEF30((UnkStruct800DF4F0 *)entry);
+                        Ovl11TickCode160Record((UnkStruct800DF4F0 *)entry);
                         Ovl11AdvanceTaggedRecordPosition((s32)entry);
                     }
                     Ovl11TickTimedSpriteEffect((Ov11Timer *)((u8 *)entry + 0xA8));

@@ -48,6 +48,7 @@
 #include "ovl11_record_pool_lifecycle.h"
 #include "ovl11_event_schedule.h"
 #include "ovl11_queued_item_interaction.h"
+#include "ovl11_grid_growth.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -74,7 +75,6 @@ s32 Ovl11ClockShiftValueHistory(void) {
     return 1;
 }
 
-void ovl_11_func_800D7B8C (void);
 void ovl_11_func_800CCCC0 (void);
 void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
@@ -122,7 +122,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
         break;
     case 2:
         SetGameFlag(0x73, ((Ovl11DDDFCState *)D_8006C838)->mode == 3);
-        ovl_11_func_800D7B8C();
+        Ovl11AdvanceSeasonalGridGrowth();
         Ovl11RunRecordPoolSecondPass();
         Ovl11ApplyCurrentDayCondition();
         Ovl11ChooseNextDayCondition();

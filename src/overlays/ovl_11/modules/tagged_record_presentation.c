@@ -14,15 +14,21 @@
 #include "ovl11_object_render.h"
 #include "ovl11_tagged_record_presentation.h"
 #include "ovl11_direction_vector.h"
-
-s32 ovl_11_func_800DF3BC(u16 state, u16 variant, u16 *animation, u16 *frame);
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 void Ovl11DrawTaggedRecordSprite(u8 *record) {
     u16 animation;
     u16 frame;
     u16 state;
 
-    ovl_11_func_800DF3BC(*(u16 *)(record + 0x24), *(u16 *)(record + 0x22), &animation, &frame);
+    Ovl11ReadCode160SpriteDescriptor(*(u16 *)(record + 0x24), *(u16 *)(record + 0x22), &animation, &frame);
     if (animation != *(u8 *)(record + 0x7C)) {
         SelectSpriteAnimation((ObjectState *)(record + 0x78), (u8)animation);
     }

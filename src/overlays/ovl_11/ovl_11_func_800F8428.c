@@ -1,6 +1,5 @@
 #include "common.h"
-
-void ovl_11_func_800D5740(s16 *arg0);
+#include "ovl11_item_stack_clear.h"
 
 void ovl_11_func_800F8428(u16 *arg0, u16 *arg1) {
     s32 sum;
@@ -11,6 +10,6 @@ void ovl_11_func_800F8428(u16 *arg0, u16 *arg1) {
         arg1[2] = 99;
         arg0[2] = sum - 99;
     } else {
-        ovl_11_func_800D5740((s16 *)arg0);
+        Ovl11ClearItemStackEntry((s16 *)arg0);
     }
 }

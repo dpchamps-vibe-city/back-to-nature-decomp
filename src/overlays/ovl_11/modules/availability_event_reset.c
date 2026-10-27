@@ -13,8 +13,8 @@
 #include "game_flags.h"
 #include "ovl11_availability_event_reset.h"
 #include "ovl11_pool_record_transition.h"
+#include "ovl11_grid_growth.h"
 
-void ovl_11_func_800D7B24(void);
 void ovl_11_func_800D0FB4(void);
 
 void Ovl11TryClearAvailabilityEvent(void) {
@@ -23,7 +23,7 @@ void Ovl11TryClearAvailabilityEvent(void) {
     state = (char *)D_8006C838;
     if (*(u16 *)(state + 0x44D4) != 0 && Rand(100) < 31) {
         *(u16 *)(state + 0x44D4) = 0;
-        ovl_11_func_800D7B24();
+        Ovl11ResetAlternateAreaGrid();
         ovl_11_func_800D0FB4();
         Ovl11PublishCurrentPoolRecord();
         Ovl11PublishNextPoolRecord();

@@ -15,8 +15,18 @@
 #include "ovl11_tagged_record_handlers.h"
 #include "ovl11_small_record_handlers.h"
 #include "ovl11_object_state_callbacks.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
-s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
@@ -38,7 +48,7 @@ s32 Ovl11DispatchInteractionHitAction(
             }
             StartCdAudioTrack(10);
         }
-        ovl_11_func_800DF010(gOvl11InteractionHitRecordView, action);
+        Ovl11DispatchCode160Handler(gOvl11InteractionHitRecordView, action);
         return 1;
     }
     if (gOvl11InteractionHitFlags & 4) {

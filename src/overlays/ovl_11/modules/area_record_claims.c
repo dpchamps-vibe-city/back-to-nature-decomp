@@ -18,6 +18,15 @@
 #include "ovl11_seasonal_record_ids.h"
 #include "ovl11_tagged_record_handlers.h"
 #include "ovl11_grid_candidate_search.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 void ovl_11_func_80110E28(u8 *arg0);
 s32 ovl_11_func_800F3BCC(u16 arg0);
@@ -141,8 +150,6 @@ s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area) {
     return failed;
 }
 
-s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
-
 /* Mode-2 selections receive action 6 through the flag-selected dispatcher. */
 s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area) {
     s32 random;
@@ -169,7 +176,7 @@ s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area) {
         }
         offset = index * 0xB8;
         if (!(*(s32 *)((u8 *)flags + offset) & 0x10000)) {
-            ovl_11_func_800DF010((Ovl11ActionDispatchView *)(offset + (u32)records), 6);
+            Ovl11DispatchCode160Handler((Ovl11ActionDispatchView *)(offset + (u32)records), 6);
         } else {
             Ovl11DispatchTaggedRecordHandler((Ovl11ActionDispatchView *)(offset + (u32)records), 6);
         }
@@ -205,7 +212,7 @@ s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area) {
         record = (u8 *)&gTaggedRecordBase + index * 0xB8;
         *(u16 *)(record + 0xB6) = *(u16 *)(object + 0xAC);
         if (!(*(s32 *)(record + 0x34) & 0x10000)) {
-            ovl_11_func_800DF010((Ovl11ActionDispatchView *)record, 7);
+            Ovl11DispatchCode160Handler((Ovl11ActionDispatchView *)record, 7);
         } else {
             Ovl11DispatchTaggedRecordHandler((Ovl11ActionDispatchView *)record, 8);
         }

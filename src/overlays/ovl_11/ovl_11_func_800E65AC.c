@@ -24,7 +24,7 @@ s32 ovl_11_func_800E65AC(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg3 == 1) {
         var_a1 = (s32 *)((char *)D_8007A670 + var_s0 * 0xF8);
     } else {
-        var_a1 = (s32 *)((char *)D_80076280 + var_s0 * 0x1D4);
+        var_a1 = (s32 *)((char *)gObjectPositionRecordCoordinates + var_s0 * 0x1D4);
     }
     var_a2 = ovl_11_func_800F06D8(gObjectWorkPosition, var_a1);
     switch (arg3) {

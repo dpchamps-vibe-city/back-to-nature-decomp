@@ -34,8 +34,8 @@
 #include "ovl11_scene_header_key.h"
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_recorded_input_playback.h"
+#include "ovl11_held_item_flags.h"
 
-void ovl_11_func_800CCF58 (Ovl11C7010Object *arg0);
 void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
 void Ovl11RemapPrimaryDirectionButtons(void);
 
@@ -55,7 +55,7 @@ void Ovl11UpdatePrimaryObject(void) {
         }
     } else if ((Ovl11IsClockAdvanceActive() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (Ovl11SceneHeaderKeyDiffers(obj->collision) == 0)) {
         if (obj->flags & 0x2000) {
-            ovl_11_func_800CCF58((Ovl11C7010Object *) obj);
+            Ovl11SyncHeldItemFlags((Ovl11C7010Object *) obj);
             obj->flags = (s32) (obj->flags & ~0x2000);
         }
         if (GetGameFlag(0xADU) == 1) {

@@ -17,11 +17,11 @@
 #include "ovl11_value_panels.h"
 #include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_item_selection_value.h"
 
 void func_80019E14(s32 arg0, s16 arg1, s16 arg2);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
-s32 ovl_11_func_800D740C(u16 arg0);
 
 void Ovl11DrawSelectionListPanel(s32 *record, s16 x, s16 y) {
     s32 Ovl11HasRowTypeTwo(u8 *categories) {
@@ -78,7 +78,7 @@ void Ovl11DrawSelectionListPanel(s32 *record, s16 x, s16 y) {
             if (rowType == 0) {
                 Ovl11CopyPrimaryValueLabel(func_8001A970(Ovl11GetItemPrice(*(u16 *) ((u8 *) rowValues + 0)), &gOvl11TextFormatScratch, numberWidth));
             } else if (rowType == 2) {
-                Ovl11CopySecondaryValueLabel(func_8001A970(ovl_11_func_800D740C(*(u16 *) ((u8 *) rowValues + 0)), &gOvl11TextFormatScratch, numberWidth));
+                Ovl11CopySecondaryValueLabel(func_8001A970(Ovl11LookupItemSelectionValue(*(u16 *) ((u8 *) rowValues + 0)), &gOvl11TextFormatScratch, numberWidth));
             } else {
                 if (rowType == 3) {
                     fillCount = numberWidth + 1;

@@ -1,25 +1,46 @@
-#include "common.h"
+/* Whole-grid initialization and day-stage growth maintenance.
+ * Keep both grids' loaded item/group views and the normalization joins:
+ * seasonal invalidation and ordinary day advancement share those exits.
+ * Original entries: ovl_11:800D7B24/7B84/7B8C. The middle, unused zero-return
+ * hook has no demonstrated purpose and retains its neutral identity.
+ * Membership and evidence-limited boundaries: notes/file-groupings.md. */
+#include "ovl11_grid_growth.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "ovl11_grid_entry_transitions.h"
-#include "psyq/libgte.h"
 #include "ovl11_map_grid_cells.h"
-#include "psyq/libgpu.h"
-#include "psyq/libcd.h"
-#include "psyq/libetc.h"
-#include "psyq/memory.h"
-#include "psyq/abs.h"
-#include "psyq/libgs.h"
-#include "psyq/libsnd.h"
-#include "psyq/libapi.h"
 #include "ovl11_item_table_queries.h"
 
-void ovl_11_func_800D7B8C(void) {
+void Ovl11ResetAlternateAreaGrid(void) {
+    s32 rowIndex;
+    s32 column;
+    char *base;
+    Ovl11D124Entry *row;
+
+    rowIndex = 0;
+    base = (char *)&gAlternateAreaGrid[0][0];
+    for (; rowIndex < 7; rowIndex++) {
+        row = (Ovl11D124Entry *)(base + rowIndex * 56);
+        for (column = 0; column < 7; column++) {
+            row[column].unk0 = 0x167;
+            row[column].unk2 = 0x167;
+            row[column].unk4 = 0;
+            row[column].unk5 = 0;
+            row[column].unk6 = 0;
+        }
+    }
+}
+
+s32 ovl_11_func_800D7B84(void) {
+    return 0;
+}
+
+void Ovl11AdvanceSeasonalGridGrowth(void) {
     u16 rows;
     u16 columns;
     Ovl11D124Entry *entry;
     s32 column;
-    s32 isCrop;
+    s32 hasGrowthFlag;
     s32 layer;
     s32 row;
     s32 value;
@@ -60,7 +81,7 @@ void ovl_11_func_800D7B8C(void) {
                             Ovl11TrySeasonalGridTransition(entry);
                         }
                         value = entry->unk0;
-                        isCrop = Ovl11ItemHasFlag40(value);
+                        hasGrowthFlag = Ovl11ItemHasFlag40(value);
                         if (layer == 0) {
                             if (((Ovl11GrowthGlobals *) D_8006C838)->season == 3) {
                                 tag = (u16) entry->unk0;
@@ -72,7 +93,7 @@ void ovl_11_func_800D7B8C(void) {
                                     state->flags = 0;
                                 }
                             }
-                            if (isCrop != 0) {
+                            if (hasGrowthFlag != 0) {
                                 value = growth[0];
                                 if (value != ((Ovl11GrowthGlobals *) D_8006C838)->season) {
                                     if (((Ovl11GrowthGlobals *) D_8006C838)->season == 3) {
@@ -103,7 +124,7 @@ void ovl_11_func_800D7B8C(void) {
                             }
                             goto normalizeEntry;
                         }
-                        if (isCrop == 0) {
+                        if (hasGrowthFlag == 0) {
 normalizeEntry:
                             Ovl11NormalizeCellKindPair((u16 *) entry);
                         } else {

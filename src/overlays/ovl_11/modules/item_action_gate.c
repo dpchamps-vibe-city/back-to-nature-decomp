@@ -19,6 +19,7 @@
 #include "sprite_source.h"
 #include "ovl11_primary_object_state_change.h"
 #include "ovl11_primary_object_sprite_slots.h"
+#include "ovl11_item_use_response.h"
 
 /* Leave a selected cell pointer (or NULL) as well as returning its class:
  * 0 = empty/tag 167..169, 2 = other tag, 3 = unavailable/mode mismatch. */
@@ -62,8 +63,6 @@ classify:
     }
     goto outside;
 }
-
-s32 ovl_11_func_800D736C(s16 *itemId);
 
 s32 Ovl11TryBeginItemAction(s32 inputMode) {
     Ovl11C7010Object *obj;
@@ -156,7 +155,7 @@ common_action:
         obj->unk6C |= 0x4000;
         return 1;
     }
-    switch ((u32)ovl_11_func_800D736C(&obj->itemIndex)) {
+    switch ((u32)Ovl11ClassifyItemUseResponse(&obj->itemIndex)) {
     case 1:
         return 1;
     case 3:

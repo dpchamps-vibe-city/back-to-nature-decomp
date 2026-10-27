@@ -14,6 +14,17 @@
 #include "game_types.h"
 #include "ovl11_pending_stage_dispatch.h"
 #include "ovl11_tagged_record_handlers.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 s32 ovl_11_func_800CBDFC(void);
 void Ovl11DispatchStageMode(s32 mode);
@@ -26,7 +37,6 @@ void Ovl11ProcessPendingStageMode(void) {
 }
 
 s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
-s32 ovl_11_func_800DF010(Ovl11StageHandlerObj *arg0, s32 arg1);
 s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
 #define CURRENT_STAGE (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476)
@@ -49,7 +59,7 @@ void Ovl11DispatchStageMode(s32 mode) {
             if (*(u16 *)object != 0) {
                 if (object->unk34 & 0x10000) {
                     if (CURRENT_STAGE == *(s16 *)((u8 *)object + 0x30)) {
-                        if (ovl_11_func_800DF010(object, 0xB) == 0) {
+                        if (Ovl11DispatchCode160Handler(object, 0xB) == 0) {
                             gOvl11Mode0DispatchCounter = 0;
                         }
                     }

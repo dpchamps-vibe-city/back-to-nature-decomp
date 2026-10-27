@@ -21,9 +21,9 @@
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_record_allocation.h"
 #include "two_choice_prompt.h"
+#include "ovl11_code160_record_handlers.h"
 
 void SetVal8005E2BC(s32 arg0);
-void ovl_11_func_800DF0F8(s32 arg0);
 s32 ovl_11_func_80113CD0(void);
 void ovl_11_func_801152BC(void *arg0);
 
@@ -246,7 +246,7 @@ s32 ovl_11_func_80114604(void) {
             } else {
                 Ovl11AdjustSpendableBalance(5000, 1);
             }
-            ovl_11_func_800DF0F8((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
+            Ovl11ClearCode160Record((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
             Ovl11SetInteractionSteps(25, 24);
             break;
         case 2:
@@ -300,7 +300,7 @@ s32 ovl_11_func_80114604(void) {
             } else {
                 Ovl11AdjustSpendableBalance(3500, 1);
             }
-            ovl_11_func_800DF0F8((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
+            Ovl11ClearCode160Record((s32)((u8 *)&gTaggedRecordBase + selected * 0xB8));
             Ovl11SetInteractionSteps(25, 24);
             break;
         case 2:

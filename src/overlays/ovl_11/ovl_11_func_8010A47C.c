@@ -6,9 +6,18 @@
 #include "ovl11_keyframe_step.h"
 #include "ovl11_tagged_record_handlers.h"
 #include "ovl11_direction_vector.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_code160_record_handlers.h"
 
 s32 ovl_11_func_8010AE64(Recon_ovl_11_func_800D2594_A0View *arg0);
-s32 ovl_11_func_800DF010(Ovl11ActionDispatchView *arg0, s32 arg1);
 
 s32 ovl_11_func_8010A47C(Ovl11A47CObject *arg0) {
     s16 temp_v1;
@@ -44,7 +53,7 @@ s32 ovl_11_func_8010A47C(Ovl11A47CObject *arg0) {
             }
         } else {
             if (D_8012D07C != 0) {
-                ovl_11_func_800DF010((Ovl11ActionDispatchView *) D_8012D078, 0xC);
+                Ovl11DispatchCode160Handler((Ovl11ActionDispatchView *) D_8012D078, 0xC);
             } else {
                 Ovl11DispatchTaggedRecordHandler((Ovl11ActionDispatchView *) D_8012D078, 0xC);
             }

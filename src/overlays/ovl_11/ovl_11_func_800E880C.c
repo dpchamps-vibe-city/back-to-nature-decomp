@@ -27,7 +27,7 @@ s32 ovl_11_func_800E880C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             if ((u32)(index - 1) >= 0x24U) {
                 return 0;
             }
-            position = (u8 *)D_80076280 + index * 0x1D4;
+            position = (u8 *)gObjectPositionRecordCoordinates + index * 0x1D4;
         }
         result = ovl_11_func_800E60A0(arg3, *(s16 *)(position + 4),
                                     *(s32 *)position, *(s32 *)(position + 8));

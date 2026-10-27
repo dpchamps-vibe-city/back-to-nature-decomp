@@ -1,9 +1,11 @@
-#include "common.h"
+/* Fixed item selection values; no general item-table/price lookup.
+ * Original entry: ovl_11:800D740C. Boundaries: notes/file-groupings.md. */
+#include "ovl11_item_selection_value.h"
 
-s32 ovl_11_func_800D740C(u16 arg0) {
+s32 Ovl11LookupItemSelectionValue(u16 itemId) {
     s32 result = 0;
 
-    switch (arg0) {
+    switch (itemId) {
     case 0x67:
         result = 0x3E9;
         break;

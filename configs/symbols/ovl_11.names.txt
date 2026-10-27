@@ -46,6 +46,60 @@ gOvl11State06Keyframes = 0x80123C94; // type:data size:0xC
 // Compact prompt controller at its original overlay entry.
 Ovl11UpdateCompactChoicePrompt = 0x80118B84; // type:func
 
+// Independent item-action and selection-threshold lookups.
+Ovl11ClassifyItemUseResponse = 0x800D736C; // type:func
+Ovl11LookupItemSelectionValue = 0x800D740C; // type:func
+
+// Complementary height/X/Z transfers between records and script slots.
+Ovl11ApplySlotPositionTriple = 0x800E9724; // type:func
+Ovl11SaveRecordPositionToSlots = 0x800E9778; // type:func
+Ovl11SaveLivePositionToSlots = 0x800E9838; // type:func
+
+// Code-0x160..0x162 record lifecycle and action callback bank.
+Ovl11UpdateCode160RecordLiveness = 0x800DE9C8; // type:func
+Ovl11StepCode160RecordFrame = 0x800DEB00; // type:func
+Ovl11GetCode160RecordStateCode = 0x800DEEE0; // type:func
+Ovl11TickCode160Record = 0x800DEF30; // type:func
+Ovl11DispatchCode160Handler = 0x800DF010; // type:func
+Ovl11ClearCode160Record = 0x800DF0F8; // type:func
+Ovl11InitCode160Record = 0x800DF128; // type:func
+Ovl11SelectCode160RecordSpriteSource = 0x800DF228; // type:func
+Ovl11ReadCode160SpriteDescriptor = 0x800DF3BC; // type:func
+Ovl11SelectCode160Handler = 0x800DF400; // type:func
+Ovl11IsCode160RecordActive = 0x800DF4F0; // type:func
+Ovl11StepCode160Handler3 = 0x800DF51C; // type:func
+Ovl11StepCode160Handler4 = 0x800DF5AC; // type:func
+Ovl11StepCode160Handler9 = 0x800DF614; // type:func
+Ovl11StepCode160Handler6 = 0x800DF6A8; // type:func
+Ovl11StepCode160Handler10 = 0x800DF72C; // type:func
+Ovl11StepCode160Handler7 = 0x800DF84C; // type:func
+Ovl11StepCode160Handler5 = 0x800DF9F0; // type:func
+Ovl11StepCode160Handler11 = 0x800DFA7C; // type:func
+Ovl11StepCode160Handler12 = 0x800DFB3C; // type:func
+Ovl11StepCode160Handler13 = 0x800DFB98; // type:func
+Ovl11StepCode160Handler14 = 0x800DFC3C; // type:func
+gOvl11Code160Handlers = 0x800B957C; // type:data size:0x50
+gOvl11RecordAnimationHandlers = 0x800B95CC; // type:data size:0x50
+gOvl11Code160SpriteDescriptors = 0x80123E70; // type:data size:0x90
+
+// Whole-grid lifecycle; the interleaved dead hook retains a neutral identity.
+Ovl11ResetAlternateAreaGrid = 0x800D7B24; // type:func
+Ovl11AdvanceSeasonalGridGrowth = 0x800D7B8C; // type:func
+
+// State-object animation pairs and item-stack clear services.
+Ovl11ReadStateSpriteAnimation = 0x800D3424; // type:func
+gOvl11StateSpriteFrames = 0x80123AAC; // type:data size:0x120
+Ovl11ClearItemStackEntry = 0x800D5740; // type:func
+
+// Independent object utilities; original entry identities remain overlay-local.
+Ovl11StepTripletSpriteRelease = 0x800CCF14; // type:func
+Ovl11SyncHeldItemFlags = 0x800CCF58; // type:func
+Ovl11AdjustActionStatusDelta = 0x800CD3C4; // type:func
+Ovl11AddIndexedProgress = 0x800CD5BC; // type:func
+Ovl11RetireFlaggedRecords = 0x800CFC20; // type:func
+Ovl11PlaceCode109Records = 0x800CFD9C; // type:func
+gOvl11Code109Positions = 0x801239D0; // type:data size:0x30
+
 // Independent embedded-sprite binding and hit-action dispatch services.
 Ovl11InitPrimaryObjectItemSpriteSource = 0x800CCFF8; // type:func
 Ovl11DispatchInteractionHitAction = 0x800CD0F4; // type:func
