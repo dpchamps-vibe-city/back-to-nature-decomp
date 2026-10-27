@@ -15,6 +15,7 @@
 #include "ovl11_state_field_access.h"
 #include "sprite_source.h"
 #include "ovl11_state_object_pool_clear.h"
+#include "ovl11_object_record_reset_command.h"
 
 s32 Ovl11WriteStateRecordPosition(s16 recordId, s16 y, s32 x, s32 z) {
     u8 *position;
@@ -75,8 +76,6 @@ s32 Ovl11ChangeStateRecordFlag800(s16 recordOrSlot, s16 clearFlag, s32 fromValue
     return 1;
 }
 
-s32 ovl_11_func_800E7504(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-
 s32 Ovl11ResetMatchingStateRecords(s16 recordId, s16 requestedMatch, s32 resultSlot, s32 resetDepth) {
     s16 nextRecord;
     s16 matchValue;
@@ -115,7 +114,7 @@ s32 Ovl11ResetMatchingStateRecords(s16 recordId, s16 requestedMatch, s32 resultS
     result = 0;
     if (currentValue == matchValue) {
         if (resetDepth > 0) {
-            ovl_11_func_800E7504(recordId, -1, -1, -1);
+            Ovl11ResetObjectRecordCommand(recordId, -1, -1, -1);
             result = 1;
             if (resetDepth >= 2) {
                 Ovl11ChangeStateRecordFlag800(recordId, 0, 0, 0);

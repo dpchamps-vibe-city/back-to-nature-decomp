@@ -1,9 +1,9 @@
 #include "common.h"
 #include "ovl11_state_record_commands.h"
-
-s32 ovl_11_func_800E5704(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+#include "psyq/stddef.h"
+#include "ovl11_state_record_motion_limit.h"
 
 void ovl_11_func_800EADB8(s16 arg0, s16 arg1, s32 arg2, s16 arg3) {
     Ovl11StateRecordAnimationCommand(arg0, arg3, 0, 0);
-    ovl_11_func_800E5704(arg0, arg1, arg2, 0x14);
+    Ovl11LimitStateRecordMotion(arg0, arg1, arg2, 0x14);
 }

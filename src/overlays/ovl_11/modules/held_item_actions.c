@@ -32,6 +32,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_held_item_effect.h"
+#include "ovl11_stage_mode2_record.h"
 
 s32 Ovl11TryBeginLowCodeItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
     s32 temp_s2;
@@ -141,8 +142,6 @@ typedef struct {
     /* 0xB6 */ s16 unkB6;
 } Struct_800DF010;
 
-s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
-
 void Ovl11ResetItemActionCollisionDispatch(void) {
     u32 temp_v1;
 
@@ -158,7 +157,7 @@ void Ovl11ResetItemActionCollisionDispatch(void) {
         return;
     case 0x200:
         if (gOvl11InteractionHitRecordView != NULL) {
-            ovl_11_func_8010B57C(&gStageMode2Record, 0);
+            Ovl11ChangeStageMode2State(&gStageMode2Record, 0);
         }
         break;
     }

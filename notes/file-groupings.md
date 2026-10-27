@@ -3242,6 +3242,11 @@ Members:
 
 ## `ovl_11` 0x8010B64C gapless run (0xF0 far-state initializer band) — 0x8010B64C–0x8010B898 (confidence: medium-low)
 
+This whole initializer run is now inside `modules/stage_mode2_record.c`,
+B0E8–C330 exclusive. The connected lifecycle/dispatcher/animation evidence
+and conservative outer edges are recorded in the following dual-table section;
+B64C/B898 are no longer proposed module boundaries.
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence:
 - zero-gap link-order contiguity (original ovl_11 functions.csv): 0x8010B64C
   (0x30) → 0x8010B67C (0xFC) → 0x8010B778 (0xB8) → 0x8010B830 (0x68) →
@@ -3275,6 +3280,68 @@ Members (link order):
 ---
 
 ## `ovl_11` D_800BA9E4 / D_800BAA34 dual-table dispatcher family — 0x8010B4D8 / 0x8010B57C (confidence: medium)
+
+**Reconstructed `modules/stage_mode2_record.c`, all 29 entries from B0E8
+through C2EC, ending C330 exclusive.** The earlier twenty-entry experiment
+below was not the whole connected service. record_movement drives exactly
+this slot through the B4D8 state step, B198 direction accumulation and B0E8
+sprite presentation; its parallel mode-1 slot uses different entries. B1C4
+acquires the single F0-byte slot for IDs 15E/15F via B778; B264 updates its
+counters/stamp/ID, B830 sets ID flags and B67C refreshes its embedded +78
+source. B898's only caller is B0E8 and its private 5x4 animation/frame table
+at 127B38 is exactly 50 bytes, followed by the three private keyframe streams
+at 127B88/90/9C. The two twenty-slot entry/step tables at BA9E4/BAA34 name the
+complete local callback closure and corroborate the lifecycle, rather than
+serving as the only membership evidence. Empty/otherwise-unreferenced gate
+leaves B218/B49C are carried with this record protocol, not used as cuts.
+C1FC writes the same singleton's direction/source; C1C0/C2EC are the adjacent
+primary-draw adapters paired by primary_object_draw. C1C0's provenance is the
+weakest membership: it copies the primary object's coordinate triple plus
+an opaque word, not the F0 record. The whole supported presentation tail is
+retained rather than carving it out solely because the core compiles.
+
+Left B05C is the preceding mode-1 keyframe/spawn closure's ID-65 spawn writer,
+called by A850/08D84, with no stage-mode-2 table or singleton operation.
+Right C330 begins aged_item_pool's cell/age/pool lifecycle; C2EC draws and
+resets an embedded timed effect, with no such pool access. These are
+protocol/private-artifact and absence-of-extension cuts under -G0, NOT
+GP-proven historical object edges. No internal flag/mechanical cut remains.
+
+The first 29-member baseline attempt rolled back on exactly two pointer-view
+conflicts (B830 and B8DC). Reconciliation used B264's existing ID/flag view
+and the established handler view, with explicit same-address casts; the next
+checked fold passed ALL 29 functions and linked ovl_11 at baseline -O2/-G0.
+No compiler setting or source-policy permission was added or retired.
+
+All 29 functions and six private data anchors now have behavior-based names.
+`ovl11_stage_mode2_record.h` publishes eleven independently called entries,
+not every callback. It documents acquisition/loading separation, F0 extent,
+entry rejection versus installation, forced state 17, the 300-call refresh
+counter, raw address ABIs, frame-zero retention and draw/reset side effects.
+The counter view is now Ovl11StageMode2RecordView; the request callback keeps
+its DISTINCT signed +16 view. Canonical Ovl11D04D4Obj replaces three duplicate
+keyframe views, and Ovl11EffectPositionWords preserves the opaque fourth word.
+Local parameter/global redeclarations are removed; the two raw/typed callback
+bank views, animation pairs and byte streams live in globals_override.h with
+witness comments, without defining storage or inferring static linkage.
+Source constructors retain packed eight-byte stamp copies and the separate
+signed-halfword clamp stages; they are not silently replaced by wider math.
+Callers are reconciled through the header with object-preserving casts only.
+
+Batch acceptance after naming, canonical data declarations, interface and
+readability changes: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates. The seven
+new modules (stage_mode2_record, color_flash_command, state_record_motion_limit,
+record_position_commands, object_record_reset_command,
+position_halfword_bounds and screen_blend_command) add **37 folded functions:
+2156 -> 2193 of 2625**, with **370/370 valid modules**, 432 remaining. The
+EXE, all thirteen overlays and associated data/callback/jump-table placement
+are unchanged. Canonical/published interfaces, source policy, convergence,
+whitespace/scope and exception non-growth pass. All seven use baseline
+settings; no overrides, permissions or shared tooling changed. The verifier's
+exit 1 denotes remaining campaign work, not an integrity failure. No commit.
+
+The historical experiment follows for provenance, not as a remaining blocker.
 
 Whole-unit campaign experiment: the two private 20-entry tables join the
 dispatchers to their complete callback/constructor band through 8010C090
@@ -15236,6 +15303,26 @@ Members (address order):
   family: identical `&D_80076220 + arg0` record index and the same u16
   unk1E 800C1C90/800E9B68 touch; its link-order neighbours
   800E95FC/800E9724 do not reach the array, so this is data-only evidence.
+**Reconstructed `modules/object_record_reset_command.c`, E7504–E7660
+exclusive, Ovl11ResetObjectRecordCommand.** This is the complete four-ID
+copy/reset command, including selector 42's recursive all-36 batching and
+selector 45's independent work-flag operation. The opcode and external slot-
+resolving adapter 946C use a public operation; neither the general record
+pool nor the distant constructor/timed-effect service proves one historical
+file across the intervening commands. Left position_halfword_bounds reads
+only the primary coordinate low halves; right E7660 compares calendar-time
+values and edits a game flag, with no record reset. No private helper/table
+extends either edge: these are conservative -G0 service cuts, not original
+object proofs or boundaries selected to shelter an override.
+
+The public header documents valid IDs, repeated IDs, all field effects and
+both selector exceptions. ID/batch/record locals are named. The redundant
+C-local work struct is replaced by canonical Ovl11AreaInitView's identical
++4450 word; existing gObjectEventSlotBase and timed-effect declarations keep
+their canonical identities. Unused includes are removed; no type width,
+linkage or ownership changes. The checked baseline fold passed the member
+and linked overlay without a flag or policy exception.
+
 - ovl_11_func_800E7504 (m, matched this session, 0x15C, byte-exact) —
   multi-record reset dispatcher: for each of up to four argument indices in
   1..0x24 copies the record's +0x30/+0x34/+0x38/+0x3C words to
@@ -15956,7 +16043,47 @@ Candidate same-TU membership, separate from the D_8012D110 pair above
 - ovl_11_func_800DBFEC (m, candidate same TU) — scene setup, render-context reset and header-selected initialization.
 - ovl_11_func_800DC114 (m, candidate same TU) — sets both render contexts' color bytes and update flags.
 
+## `ovl_11` fullscreen blend command — 0x800E7BA8–0x800E7C2C exclusive
+
+**Reconstructed `modules/screen_blend_command.c`, one complete stateless
+command, Ovl11DrawScreenBlendCommand.** It submits one semitransparent
+320x240 flat rectangle through the published screen-primitives API, using
+active OT word 0 or 5. Its opcode-table reference establishes command use,
+not same-TU membership with every opcode. It has no private state, helper,
+literal or jump table supporting a larger unit. This is a conservative
+single-service reconstruction, not a claim that original file size is known.
+
+Left sprite_rotation_commands is the rotation-request/query wrapper closure,
+with no color-packet protocol; right E7C2C starts/queries a timed sprite effect
+in a selected object record and does not use this rectangle/OT operation.
+Neither supplies a private-state/helper/table extension. These are absence-of-
+extension cuts under -G0, not proven original object boundaries or flag limits.
+
+The header documents OT selection, packet lifetime/current blend-mode
+requirements and the unusual sixteen-bit green contribution overlapping red.
+Parameters/OT local are named; the existing shared render context remains
+external and unchanged. The checked baseline fold passed the member and
+linked ovl_11. No override, linkage, storage or policy exception changed.
+
 ## `ovl_11` work-area +0x52C8/+0x52D0 producer/predicate family (confidence: low)
+
+**Reconstructed the predicate alone as `modules/position_halfword_bounds.c`,
+E74AC–E7504 exclusive, Ovl11TestPositionHalfwordBounds.** Its complete
+read-only operation has no internal helpers or private tables. The distant
+full-word producer below remains outside: shared work coordinates are a data
+relationship, not evidence joining all intervening functions into one TU.
+Left status_text_command drives the independent text-entry/scratch-copy
+protocol; right E7504 copies/resets selected object-record state and does not
+perform this coordinate query. Neither provides private membership evidence.
+The cuts are evidence-limited -G0 service boundaries, not GP-proven original
+objects; a larger historical file remains unknown, with no mechanical cut.
+
+The public header and named X/Z locals explicitly retain signed LOW-halfword
+reads, strict radii and raw units, rather than silently converting the full
+position words. Nonpositive radii cannot pass. No globals are renamed or
+retyped: the broad work aggregate retains its canonical identity and ownership.
+The checked baseline fold passed this member and linked ovl_11; no override,
+linkage or policy exception changed.
 
 A data-only relation, not original-TU evidence: both matched functions use
 `D_8006C838`'s absolute base and touch the same two work-area offsets, but
@@ -16513,7 +16640,26 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   `(0, 0, 0, arg1)` to the matched mode dispatcher `ovl_11_func_800E7798` and
   returns 1. Same `arg2 != 0` conditional table-resolve shape as
   800ED760/800E7CCC, inside the accessor band.
-- ovl_11_func_800EE240 (m) — randomized fullscreen colour-flash updater using the family's shared `D_80129560` timer/RGB slots.
+- **Reconstructed `modules/color_flash_command.c`, EE240–EE528 exclusive,
+  Ovl11UpdateColorFlashCommand.** Its private six-byte RGB seed at B9E38
+  (three 160 halfwords plus separate two-byte alignment padding) has this
+  sole reader. The complete timer/sound/random-channel/draw/decay operation
+  uses four caller-selected value slots. No other entry participates in this
+  flash protocol. Left EE000 maps slot categories to presentation codes with
+  its separate switch; right EE528 selects/draws a resolved state-record
+  animation. Neither uses the seed, timer phases or this RGB decay. Shared
+  slots and generic screen drawing do not join them. These are conservative
+  -G0 private-artifact/service cuts, not proven original file edges or cuts
+  introduced to protect flags.
+
+  gOvl11ColorFlashBaseRGB names the extracted seed without defining it anew.
+  Parameters/channel/slot/packet locals are named; the header documents the
+  five-unit timer steps, two possibly identical random channels, red-only
+  draw/decay gate, halfword green packing and additive blend-mode side effect.
+  Raw slot ABI and all stores/Rand calls remain. The checked baseline fold
+  passed the member and linked overlay; no override or policy exception is
+  involved. The broader value-bank family is a shared-data relation, not an
+  unfinished whole TU around this service.
 - ovl_11_func_800EE528 (m, matched this session, 0xDC, byte-exact) —
   0x24-record load-and-compare: rejects `(u32)(arg1 & 0xFFFF) >= 0xA`, resolves
   the 0x24 record through `ovl_11_func_800EFF04(0x24, (s16)arg0, NULL)`, then
@@ -16543,6 +16689,33 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   adjacent private-table region with family member 800EEAB8.
 
 ## `ovl_11` 0x22-record clamp and its caller/twin pair — 0x800E5704 / 0x800E5870 / 0x800EADB8 / 0x800EAE24 (confidence: medium)
+
+**Reconstructed `modules/state_record_motion_limit.c`, E5704–E58DC
+exclusive, both adjacent entries.** The animation facade directly invokes
+its neighboring endpoint core; both participate in the same position-field
+22/increment-field 23 continuation protocol, with the facade fixing magnitude
+12. The core's switch table at B9930 is pooled with unchanged member order.
+This specialized call/protocol relation supports the pair, not the broadly
+shared opcode or value-slot bank alone. EADB8 is another external client
+(magnitude 20 and discarded result); EAE24 uses the general animation/vector
+services, not the endpoint test. Their distant call/data relationship does
+not establish one original TU over every intervening command.
+
+Left E559C emits a sprite packet through its separate draw protocol, with no
+endpoint/core call or field-22/23 operation; right E58DC manages message-window
+requests/choices and CD-audio readiness, with no motion records. Neither
+extends the pair by private helper/state/table evidence. These are conservative
+-G0 protocol cuts, not GP-proven original boundaries. The historical four-
+entry candidate below is not evidence for a larger contiguous unit.
+
+Ovl11LimitStateRecordMotion and Ovl11AnimateStateRecordMotion12 publish raw
+position units, six directional comparisons (equality completes), clamp and
+ALL-increment-clear effects, doubled magnitude and resolver preconditions.
+Parameter/position/increment locals are named; redundant declarations and
+unneeded includes are removed. Canonical direction-vector types and original
+casts/widths/switch order are retained; no linkage or ownership is inferred.
+The checked baseline fold passed both members and linked ovl_11, with no
+compiler override, mechanical internal cut or added policy permission.
 
 Candidate same-TU pair in `ovl_11` (`Obj\GF_FARM.bin`): the target is a
 two-call-body caller's zero-gap callee, and the caller has a duplicate-body
@@ -16618,6 +16791,31 @@ intervening code. These are conservative singleton service cuts under -G0,
 not proven historical object boundaries. No flag/mechanical obstacle was used
 to select them. The checked baseline fold proved this member and overlay
 unchanged without an override or new exception.
+
+**Reconstructed `modules/record_position_commands.c`, EDD54–EDF3C
+exclusive, both facing/offset commands.** The exact shared selector contract
+is ID 29 -> primary work triplet, otherwise unchecked signed ID times 1D4 at
+the coordinate-field anchor. The adjacent entries operate complementary
+facing and delta-update commands on that same selected X/Y/Z triplet. No C
+caller embeds either in another closure; opcode slots 103/104 are the public
+entry references, not independent evidence of co-compilation. This protocol
+and link order support a modest local unit; -G0 supplies no GP witness.
+
+Left EDAA4 updates item-property countdowns in a DIFFERENT F8-stride record
+pool; right EDF3C tests flags/season/eligibility without position selection.
+Neither uses this selector or either command. Distant checked snapshot and
+camera clients use related coordinates but do not establish a TU across the
+intervening services. These are evidence-limited protocol cuts, not claims
+that the historical object edges are proved, and not mechanical/flag cuts.
+
+Ovl11FaceRecordTowardCommand/Ovl11OffsetRecordPositionCommand have a public
+opcode-contract header documenting optional low-halfword slot resolution,
+unguarded IDs, cardinal/tie behavior, primary-update side effects, doubled
+raw deltas and signed-range requirements. All parameters and position/direction
+locals are named. Redundant local global externs are removed in favor of the
+canonical override declarations; no tentative definitions, aliases, linkage
+or width changes are introduced. The checked baseline fold passed both members
+and linked ovl_11 with no compiler override or new policy permission.
 
 Data-family tie: `ovl_11_func_800E9778`, `ovl_11_func_800EDD54`,
 `ovl_11_func_800EDEB8`, `ovl_11_func_800E7C2C` and

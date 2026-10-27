@@ -1,6 +1,5 @@
 #include "common.h"
-
-s32 ovl_11_func_800E7504(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+#include "ovl11_object_record_reset_command.h"
 
 s32 ovl_11_func_800E946C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s16 var_a0;
@@ -28,6 +27,6 @@ s32 ovl_11_func_800E946C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     } else {
         var_a3 = -1;
     }
-    ovl_11_func_800E7504(var_a0, var_a1, var_a2, var_a3);
+    Ovl11ResetObjectRecordCommand(var_a0, var_a1, var_a2, var_a3);
     return 1;
 }

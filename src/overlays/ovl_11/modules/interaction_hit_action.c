@@ -26,9 +26,9 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
+#include "ovl11_stage_mode2_record.h"
 
 s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
-s32 ovl_11_func_8010B57C(u16 *arg0, s32 arg1);
 
 s32 Ovl11DispatchInteractionHitAction(
     Recon_ovl_11_func_800CCFF8_A0View *object, s32 mode) {
@@ -90,7 +90,7 @@ s32 Ovl11DispatchInteractionHitAction(
             }
             StartCdAudioTrack(14);
         } else {
-            ovl_11_func_8010B57C(gOvl11InteractionHitRecordView, gOvl11InteractionHitActions[mode]);
+            Ovl11ChangeStageMode2State(gOvl11InteractionHitRecordView, gOvl11InteractionHitActions[mode]);
         }
         return 1;
     }

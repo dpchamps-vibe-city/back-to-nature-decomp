@@ -26,6 +26,7 @@
 #include "psyq/abs.h"
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_scene_header_key.h"
+#include "ovl11_stage_mode2_record.h"
 
 void Ovl11DrawPrimaryObjectCompanion(Ovl11C7010Object *object, s32 depth, s32 *screenPosition) {
     s16 spriteId;
@@ -117,8 +118,6 @@ void Ovl11DrawPrimaryObjectSprite(Recon_ovl_11_func_800CD08C_A0View *arg0, s32 a
 }
 
 void Ovl11CopyAndDrawSavedObject (Ovl11DrawState *arg0);
-void ovl_11_func_8010C1C0 (Ovl11DrawState *arg0);
-void ovl_11_func_8010C2EC (u8 *arg0);
 
 /* The area-frame caller supplies a trailing 1 in a1; it is unread here. */
 void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *origin, s32 unused) {
@@ -179,8 +178,8 @@ void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *origin, s32 unused) {
                     if ((*(s32 *) (object + 0x6C)) & 0x80) {
                         Ovl11CopyAndDrawSavedObject((Ovl11DrawState *) object);
                     } else {
-                        ovl_11_func_8010C1C0((Ovl11DrawState *) object);
-                        ovl_11_func_8010C2EC((u8 *) &gStageMode2Record);
+                        Ovl11CopyObjectEffectPositionWords((Ovl11DrawState *) object);
+                        Ovl11DrawObjectAndResetTimedEffect((u8 *) &gStageMode2Record);
                     }
                 }
                 if ((gOvl11SharedSlotSpriteEnabled != 0) && (*((s16 *) ((u8 *) &D_80125F24 + ((*(s16 *) (object + 0xFE)) * 2))) == 0)) {

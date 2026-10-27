@@ -2240,3 +2240,58 @@ gOvl11Mode3Keyframes = 0x80127D68; // type:data size:0x8
 gOvl11Mode4Keyframes = 0x80127D70; // type:data size:0x8
 gOvl11Mode6MessageIds = 0x80127D78; // type:data size:0x10
 gOvl11Mode5Keyframes = 0x80127D88; // type:data size:0x8
+
+// Stateless object-program fullscreen blend command.
+Ovl11DrawScreenBlendCommand = 0x800E7BA8; // type:func
+
+// Position-word queries and endpoint/direction-vector command pair.
+Ovl11TestPositionHalfwordBounds = 0x800E74AC; // type:func
+Ovl11LimitStateRecordMotion = 0x800E5704; // type:func
+Ovl11AnimateStateRecordMotion12 = 0x800E5870; // type:func
+Ovl11ResetObjectRecordCommand = 0x800E7504; // type:func
+
+// Unguarded X/Y/Z record selector shared by the facing and offset commands.
+Ovl11FaceRecordTowardCommand = 0x800EDD54; // type:func
+Ovl11OffsetRecordPositionCommand = 0x800EDEB8; // type:func
+
+// Complete stage-mode-2 record lifecycle, dispatch and presentation service.
+Ovl11DrawStageMode2Record = 0x8010B0E8; // type:func
+Ovl11AccumulateStageMode2Direction = 0x8010B198; // type:func
+Ovl11AcquireStageMode2Record = 0x8010B1C4; // type:func
+Ovl11RefreshStageMode2HourGate = 0x8010B218; // type:func
+Ovl11UpdateStageMode2Counters = 0x8010B264; // type:func
+Ovl11PropagateStageMode2Flag8000 = 0x8010B49C; // type:func
+Ovl11UpdateStageMode2State = 0x8010B4D8; // type:func
+Ovl11ChangeStageMode2State = 0x8010B57C; // type:func
+Ovl11ClearStageMode2Record = 0x8010B64C; // type:func
+Ovl11RefreshStageMode2SpriteSource = 0x8010B67C; // type:func
+Ovl11InitStageMode2Record = 0x8010B778; // type:func
+Ovl11ApplyStageMode2IdFlags = 0x8010B830; // type:func
+Ovl11GetStageMode2AnimationPair = 0x8010B898; // type:func
+Ovl11ChooseStageMode2State = 0x8010B8DC; // type:func
+Ovl11TryStageMode2PositionRequest = 0x8010B994; // type:func
+Ovl11StartStageMode2Effect31 = 0x8010BA84; // type:func
+Ovl11StartStageMode2Effect37 = 0x8010BB18; // type:func
+Ovl11RequestStageMode2Message = 0x8010BBA8; // type:func
+Ovl11RequestStageMode2DirectionOffset = 0x8010BC54; // type:func
+Ovl11StartStageMode2Effect36 = 0x8010BCE8; // type:func
+Ovl11StepStageMode2KeyframesA = 0x8010BD6C; // type:func
+Ovl11StepStageMode2KeyframesB = 0x8010BE24; // type:func
+Ovl11StepStageMode2KeyframesC = 0x8010BED4; // type:func
+Ovl11GateStageMode2Movement = 0x8010BF8C; // type:func
+Ovl11StepStageMode2Movement = 0x8010BFEC; // type:func
+Ovl11StepStageMode2Movement24 = 0x8010C090; // type:func
+Ovl11CopyObjectEffectPositionWords = 0x8010C1C0; // type:func
+Ovl11SelectStageMode2AnimationFromObject = 0x8010C1FC; // type:func
+Ovl11DrawObjectAndResetTimedEffect = 0x8010C2EC; // type:func
+// Callback words and source streams remain external extracted data.
+gOvl11StageMode2EntryHandlers = 0x800BA9E4; // type:data size:0x50
+gOvl11StageMode2StepHandlers = 0x800BAA34; // type:data size:0x50
+gOvl11StageMode2AnimationPairs = 0x80127B38; // type:data size:0x50
+gOvl11StageMode2KeyframesA = 0x80127B88; // type:data size:0x8
+gOvl11StageMode2KeyframesB = 0x80127B90; // type:data size:0xC
+gOvl11StageMode2KeyframesC = 0x80127B9C; // type:data size:0x8
+
+// Four-slot additive flash sequencer and its three-halfword RGB seed.
+Ovl11UpdateColorFlashCommand = 0x800EE240; // type:func
+gOvl11ColorFlashBaseRGB = 0x800B9E38; // type:data size:0x6

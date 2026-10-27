@@ -10,9 +10,19 @@
 #include "ovl11_object_record_lifecycle.h"
 #include "ovl11_item_record_allocation.h"
 #include "ovl11_item_id_flags.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode2_record.h"
 
 struct_800759E4 *ovl_11_func_80108CD0(s32 itemCode, s32 mode);
-u16 *ovl_11_func_8010B1C4(s32 itemCode);
 
 u16 *Ovl11AllocateItemRecord(s32 itemCode, s32 mode) {
     s32 stateCode;
@@ -77,7 +87,7 @@ allocate_state_object:
         break;
     case 0x15E:
     case 0x15F:
-        recordAddress = ovl_11_func_8010B1C4(itemCode);
+        recordAddress = Ovl11AcquireStageMode2Record(itemCode);
         break;
     case 0xA1:
     case 0xA2:

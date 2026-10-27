@@ -22,8 +22,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
-
-s32 ovl_11_func_8010B57C(u16 *, s32);
+#include "ovl11_stage_mode2_record.h"
 
 s32 Ovl11QueryPrimaryObjectCollisionAction(Ovl11CB114Object *object, s32 *center, s16 probeIndex) {
     s32 position[4];
@@ -96,7 +95,7 @@ s32 Ovl11QueryPrimaryObjectCollisionAction(Ovl11CB114Object *object, s32 *center
                     }
                     if (hitFlags & 0x200) {
                         if ((u32) gOvl11InteractionDispatchCount >= 0x33U) {
-                            ovl_11_func_8010B57C((u16 *) hit, 0xD);
+                            Ovl11ChangeStageMode2State((u16 *) hit, 0xD);
                         } else {
                             gOvl11InteractionDispatchCount += 1;
                         }

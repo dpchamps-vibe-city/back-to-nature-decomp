@@ -1,8 +1,9 @@
 #include "common.h"
 #include "ovl11_state_record_commands.h"
+#include "psyq/stddef.h"
+#include "ovl11_state_record_motion_limit.h"
 
 s32 ovl_11_func_800EDF3C();
-s32 ovl_11_func_800E5870(s16 arg0, s16 arg1, s32 arg2, s16 arg3);
 
 s32 ovl_11_func_800EB85C(s16 arg0) {
     s16 i;
@@ -31,13 +32,13 @@ s32 ovl_11_func_800EB85C(s16 arg0) {
         break;
     case 5:
         for (i = start; i < 3; i++) {
-            result = ovl_11_func_800E5870(D_80124984[i], 0, 500, 11);
+            result = Ovl11AnimateStateRecordMotion12(D_80124984[i], 0, 500, 11);
             if (result == 1) {
                 Ovl11StateRecordAnimationCommand(D_80124984[i], 5, 0, 1);
             }
         }
         for (; i < 5; i++) {
-            result = ovl_11_func_800E5870(D_80124984[i], 2, 2200, 6);
+            result = Ovl11AnimateStateRecordMotion12(D_80124984[i], 2, 2200, 6);
             if (result == 1) {
                 Ovl11StateRecordAnimationCommand(D_80124984[i], 5, 0, 11);
             }
@@ -68,13 +69,13 @@ s32 ovl_11_func_800EB85C(s16 arg0) {
         break;
     case 11:
         for (i = start; i < 3; i++) {
-            result = ovl_11_func_800E5870(D_80124984[i], 2, 1350, 11);
+            result = Ovl11AnimateStateRecordMotion12(D_80124984[i], 2, 1350, 11);
             if (result == 1) {
                 Ovl11StateRecordAnimationCommand(D_80124984[i], 5, 0, 1);
             }
         }
         for (; i < 5; i++) {
-            result = ovl_11_func_800E5870(D_80124984[i], 0, 1350, 11);
+            result = Ovl11AnimateStateRecordMotion12(D_80124984[i], 0, 1350, 11);
             if (result == 1) {
                 Ovl11StateRecordAnimationCommand(D_80124984[i], 5, 0, 1);
             }
@@ -94,13 +95,13 @@ s32 ovl_11_func_800EB85C(s16 arg0) {
         break;
     case 16:
         for (i = start; i < 3; i++) {
-            result = ovl_11_func_800E5870(D_80124984[i], 2, D_80124990[1][i], 8);
+            result = Ovl11AnimateStateRecordMotion12(D_80124984[i], 2, D_80124990[1][i], 8);
             if (result == 1) {
                 Ovl11StateRecordAnimationCommand(D_80124984[i], 5, 0, 1);
             }
         }
         for (; i < 5; i++) {
-            result = ovl_11_func_800E5870(D_80124984[i], 0, D_80124990[1][i], 6);
+            result = Ovl11AnimateStateRecordMotion12(D_80124984[i], 0, D_80124990[1][i], 6);
             if (result == 1) {
                 Ovl11StateRecordAnimationCommand(D_80124984[i], 5, 0, 1);
             }

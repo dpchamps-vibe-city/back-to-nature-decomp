@@ -484,8 +484,14 @@ extern u8 gOvl11TaggedRecordHandler4Keyframes[12];
 extern u8 gOvl11TaggedRecordHandler5Keyframes[12];
 extern u8 gOvl11TaggedRecordHandler14Keyframes[8];
 
-/* ovl_11 8010B4D8 indexes these 20 rodata handler-address words at +0x26. */
-extern s32 D_800BAA34[20];
+/* 8010B57C calls nullable entry gates; 8010B4D8 indexes raw step-handler
+ * address words by the record's +26. Keep the original raw-word step view. */
+extern s32 (*gOvl11StageMode2EntryHandlers[20])(u16 *);
+extern s32 gOvl11StageMode2StepHandlers[20];
+/* BD6C/BE24/BED4 pass these private packed code/duration streams to D04D4. */
+extern u8 gOvl11StageMode2KeyframesA[8];
+extern u8 gOvl11StageMode2KeyframesB[12];
+extern u8 gOvl11StageMode2KeyframesC[8];
 
 /* 800D3104 calls a nullable entry gate with the same u16-record pointer. */
 extern s32 (*gOvl11ObjectStateEntryCallbacks[21])(u16 *);
@@ -3820,11 +3826,11 @@ struct Ovl11CandidateList {
 };
 extern struct Ovl11CandidateList D_800B9DB0;
 
-/* ovl_11_func_800EE240 copies three s16s from this rodata object. */
+/* Ovl11UpdateColorFlashCommand copies this private three-s16 RGB seed. */
 struct Ovl11ColorTriple {
     s16 values[3];
 };
-extern struct Ovl11ColorTriple D_800B9E38;
+extern struct Ovl11ColorTriple gOvl11ColorFlashBaseRGB;
 
 /* 800EC52C copies 25 signed halfwords and adds values from a 5x5 unsigned table. */
 struct Ovl11SceneScores {
@@ -8049,6 +8055,8 @@ typedef struct {
     u16 frame;
 } Ovl11ObjectAnimationPair;
 extern Ovl11ObjectAnimationPair gOvl11ObjectAnimationPairs[][4];
+/* 8010B898: five modes by four directions, unsigned animation/frame pairs. */
+extern Ovl11ObjectAnimationPair gOvl11StageMode2AnimationPairs[5][4];
 /* 8010D0EC installs the selected halfword as the sprite palette-Y offset. */
 extern s16 gOvl11ObjectPaletteYOffsets[8];
 /* 8010D250 selects one of four signed modes with Rand(4). */

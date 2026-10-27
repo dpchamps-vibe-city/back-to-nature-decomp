@@ -18,6 +18,16 @@
 #include "ovl11_interaction_hit_action.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_condition_evaluation.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode2_record.h"
 
 s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
     u16 *hitRecord;
@@ -50,8 +60,6 @@ s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
     return 0;
 }
 
-s32 ovl_11_func_8010B57C(u16 *object, s32 mode);
-
 s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
     s32 messageId;
     s32 itemId;
@@ -81,7 +89,7 @@ s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
                     Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)object, 0x39U, object->unk38 + 0x32, -2);
                     object->unk6C |= 0x100;
                 } else if (recordId == 0x15E) {
-                    ovl_11_func_8010B57C(&gStageMode2Record, 5);
+                    Ovl11ChangeStageMode2State(&gStageMode2Record, 5);
                 }
                 return 1;
             }

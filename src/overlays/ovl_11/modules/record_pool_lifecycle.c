@@ -27,9 +27,9 @@
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_record_position_recovery.h"
+#include "ovl11_stage_mode2_record.h"
 
 s32 ovl_11_func_80108D84(s32 *arg0);
-s32 ovl_11_func_8010B264(Ovl11B264Object *arg0);
 
 void Ovl11ResetRecordPools(void) {
     s32 index;
@@ -166,7 +166,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
         }
         recordWords = (s32 *) ((u8 *) recordWords + 0xF0);
         if (*(u16 *) recordWords != 0) {
-            ovl_11_func_8010B264((Ovl11B264Object *) recordWords);
+            Ovl11UpdateStageMode2Counters((Ovl11StageMode2RecordView *) recordWords);
         }
         Ovl11UpdateAgedItemPool();
     }

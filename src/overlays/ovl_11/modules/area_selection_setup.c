@@ -31,6 +31,8 @@
 #include "ovl11_slot_sprite_source_refresh.h"
 #include "psyq/libapi.h"
 #include "ovl11_object_archive_pipeline.h"
+#include "psyq/libsnd.h"
+#include "ovl11_stage_mode2_record.h"
 
 #define WORK ((Ovl11SetupWorkView *)&D_8007AFF0)
 #define RESIDENT ((Ovl11SetupResidentView *)D_8006C838)
@@ -75,8 +77,6 @@ s32 Ovl11ResolveAreaSelection(s32 selection) {
     }
     return Ovl11RemapCalendarValue((s16)id);
 }
-
-void ovl_11_func_8010B67C(void);
 
 void Ovl11InstallAreaSelection(s32 restorePosition, s32 loadOptions) {
     s16 headerMusic;
@@ -184,7 +184,7 @@ load_conditional_set:
     if (WORK->current.field_2 == 5) {
         Ovl11LoadIndexedSpriteSet(1);
     }
-    ovl_11_func_8010B67C();
+    Ovl11RefreshStageMode2SpriteSource();
     Ovl11RebuildObjectEventsForTime();
     Ovl11RegisterPoolSpriteRotations((s32)WORK->header);
     if ((*(s16 *)((u8 *)WORK->header + 2) == 1) && (RESIDENT->time >= 0x438)) {

@@ -423,7 +423,28 @@ typedef struct {
     u8 pad_38[0xA8 - 0x38];
     s16 field_A8[2];
     u16 field_AC;
-} Ovl11B264Object;
+} Ovl11StageMode2RecordView;
+
+/* The position-request callback reads +16 SIGNED, unlike the counter
+ * updater's unsigned halfword view. Preserve that distinction. */
+typedef struct {
+    u16 id;
+    u8 pad02[0x16 - 2];
+    s16 requestValue;
+    u8 pad18[0x30 - 0x18];
+    s16 mode;
+    u8 pad32[2];
+    s32 flags;
+} Ovl11StageMode2PositionRequestView;
+
+/* 8010C1C0 copies a coordinate triple and one opaque following word. */
+typedef struct {
+    u8 pad000[0x100];
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 word10C;
+} Ovl11EffectPositionWords;
 
 /* 800DEB00: lhu/sh counters at +16/+2C/+AC..+B2, lh state at
  * +1A/+1C/+1E/+30, lw/sw flags at +34, and the cleared word at +8C. */
