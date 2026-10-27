@@ -14,6 +14,14 @@
  */
 s32 Ovl11WriteStateRecordPosition(s16 recordId, s16 y, s32 x, s32 z);
 
+/* Copy full words from valueSlots[xSlot/ySlot/zSlot] to field 0x22 in that
+ * order, after the flag-0x800 operation. No >=0x32 alternate table path.
+ * The flag operation's special ID 0x2C still clears eligible objects first;
+ * resolution and all slot indices are unchecked. ySlot is a signed s16 index,
+ * NOT a narrowed y coordinate. Position units remain unknown. Return 1. */
+s32 Ovl11WriteStateRecordPositionFromSlots(s16 recordId, s16 ySlot,
+                                         s32 xSlot, s32 zSlot);
+
 /* Resolve sprite field 0x24. With forceFrame==0, change animation and return 0
  * if needed; otherwise return 1 only for sprite status bits 0x300, also clearing
  * shared work flag 0x100000. With forceFrame!=0, select animation/frame and

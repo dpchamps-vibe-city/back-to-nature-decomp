@@ -2743,6 +2743,45 @@ passed every integrity gate: 299 folded, 38 valid modules, complete linked
 EXE/overlay/data/placement identity, canonical interfaces, ownership, policy,
 configuration convergence and exception non-growth.
 
+**Adjacent action-result service reconstructed as
+`modules/action_result_request.c`, 80107C80–80107DE0 exclusive.** Its one
+entry is now Ovl11ResolveActionResultOrRotate. The implementation reads five
+signed-halfword {ID, result} slots, falls back to the public guard lookup,
+and otherwise requests sprite rotation. Interaction-volume activation uses
+the output as an archive-2 message entry; command and movement clients use
+forced rotation. The five word slots at EXE:80070C72 are now
+`gActionResultOverrides`, preserving the existing s32[5] storage view and
+halfword accesses. ED760 is their distant writer; that shared public state
+establishes the protocol, not a contiguous unit spanning the intervening
+command, condition and interaction services.
+
+This singleton is the complete supported request service, not a claim of a
+recovered one-function original object. The left guard unit has its separate
+private selector/lists; this entry calls its public lookup but accesses none
+of them. The right timed_sprite_effect unit uses its own timer/state and
+sprite record, not the five-slot override or result-resolution path. No
+private helper, table or ownership evidence extends this service into either
+neighbor. These are evidence-limited responsibility cuts under -G0, not
+GP-proven boundaries or boundaries chosen to protect flags.
+
+The public header documents the last-match rule, non-boolean return value,
+forced/query modes, output left unchanged on rotation, idle-state rejection,
+and the ID-20/flag-76 path that unconditionally dereferences the output even
+in forced mode. Locals name IDs, signed results, direction and mode without
+changing their types, control flow or external linkage. The canonical data
+extern stays in globals_override.h; ED760's redundant local extern is removed.
+The checked baseline fold passed the member and linked overlay; no override
+or policy exception was present or added. Interface reconciliation replaced
+six callers' local declarations with ovl11_action_result_request.h and
+confirmed unchanged caller objects. Together with text_slot_marker and
+state_record_slot_position, the batch passed tuProgress --verify against
+build/tu-campaign/baseline.json: 2193 -> 2196 folded functions, 373/373 valid
+modules, and all eight integrity gates PASS (EXE/all overlays and their data,
+configuration, inventory/completeness, policy, whitespace, stability and
+exception non-growth). Canonical names are clean; no new failing interface,
+flag override, pin, assembly or stub was introduced. Exit 1 denotes the
+unfinished campaign (429 remaining), not an integrity failure.
+
 Earlier evidence references (address identities retained below):
 See [lookup-entry membership evidence](research/ovl_11_func_80107390-grouping.md),
 [list-evaluator membership evidence](research/ovl_11_func_80107418-grouping.md),
@@ -16300,6 +16339,41 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   indices, different empty-tag/substitution-zero cases and output sentinels.
   Both members and ovl_11 passed the checked baseline fold before renaming;
   no override or policy exception was added.
+  **The next two independent services are now reconstructed as
+  `modules/text_slot_marker.c` (800E8D7C–800E8DC8) and
+  `modules/state_record_slot_position.c` (800E8DC8–800E8E78).**
+  Ovl11PollTextSlotOrInvalidate calls the EXE marker getter and, only for a
+  nonmatching signed -1, its invalidator (which writes 1000). This is not a
+  load/completion request. The getter's u16 result cannot equal a negative
+  request. No current C client is known; no speculative public header or
+  private linkage is introduced.
+
+  Ovl11WriteStateRecordPositionFromSlots applies the public flag-800
+  operation, resolves descriptor 22, then copies three full value-slot words
+  in x/y/z order. Its signed s16 second argument indexes y; it is not a
+  narrowed coordinate. The existing state-record command header publishes
+  this complementary form and documents unchecked indices/resolution and
+  the flag helper's special record-ID-2C clearing side effect. The nearby
+  direct writer is a published dependency, not a private helper: it and the
+  flag command also serve other reset/command clients. The slot form has no
+  private state or helper that requires absorbing the intervening commands.
+
+  These are complete supported singleton operations, not asserted historical
+  one-function objects (-G0 gives no ownership proof). The left tagged-item
+  service neither calls the marker APIs nor resolves position 22. Across the
+  middle cut, marker polling shares no table, state or helper with the
+  slot-position write. On the right, work_position_commands changes the
+  separate work-position cell at 80071B00, not the descriptor-22 record.
+  Thus there is no narrow protocol/private-state evidence extending either
+  unit; these responsibility cuts protect no flag or tooling workaround.
+  All existing ABI widths, linkage, storage, call order and store order stay
+  unchanged. Both baseline checked folds passed their member and linked
+  overlay. No flags or policy exceptions were added or retired. The completed
+  three-module batch passes tuProgress --verify against the campaign baseline:
+  2196/2625 folded, 373/373 valid modules, all eight integrity gates PASS,
+  including every linked EXE/overlay byte, data, callbacks and placement.
+  Canonical/interface, scope, policy and exception-non-growth checks pass.
+
 - ovl_11_func_800E8E78 (m, candidate local same TU with 800E8F78; [shared-global/link-adjacency evidence](research/ovl_11_func_800E8E78-grouping.md)) — sets or resets the position triple from raw coordinates or table slots, then refreshes collision state.
 
   **Reconstructed both complementary commands as

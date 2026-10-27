@@ -31,11 +31,11 @@
 #include "random.h"
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_menu_exit_flags.h"
+#include "ovl11_action_result_request.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 context);
 void func_80017A08(s32 slot, s32 textAddress);
-s32 ovl_11_func_80107C80(s16 id, u16 flags, s32 *position, s32 mode);
 
 void Ovl11StepCounterChoice(void);
 void Ovl11FinishCounterChoice(void);
@@ -177,7 +177,7 @@ void Ovl11FinishCounterChoice(void) {
     Ovl11PostMenuExitFlags();
     object->unk6C = (s32) (object->unk6C & ~0x400);
     Ovl11BeginPrimaryObjectInputOverride(0x14);
-    ovl_11_func_80107C80(0x20, 0U, NULL, 1);
+    Ovl11ResolveActionResultOrRotate(0x20, 0U, NULL, 1);
     ((struct Ovl11SelectionResetMode *) &D_8007AFF0)->mode = 2;
     SetGameFlag(0x76U, 1U);
 }

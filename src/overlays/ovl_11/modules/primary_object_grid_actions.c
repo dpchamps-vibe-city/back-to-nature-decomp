@@ -65,6 +65,7 @@
 #include "ovl11_object_area_sprite_reset.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_action_result_request.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -408,7 +409,6 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
 
 void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
 void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
-s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
@@ -599,7 +599,7 @@ state_done:
             return 0;
         case 0x4B:
             Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            ovl_11_func_80107C80(0x2F, 0U, NULL, 1);
+            Ovl11ResolveActionResultOrRotate(0x2F, 0U, NULL, 1);
             arg0->direction = (u16) ((arg0->direction + 2) & 3);
             Ovl11BeginPrimaryObjectInputOverride(0x14);
             return 0;

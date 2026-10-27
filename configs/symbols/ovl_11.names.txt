@@ -2295,3 +2295,10 @@ gOvl11StageMode2KeyframesC = 0x80127B9C; // type:data size:0x8
 // Four-slot additive flash sequencer and its three-halfword RGB seed.
 Ovl11UpdateColorFlashCommand = 0x800EE240; // type:func
 gOvl11ColorFlashBaseRGB = 0x800B9E38; // type:data size:0x6
+
+// Resolve an action-result override/guard, or request the registered sprite rotation.
+Ovl11ResolveActionResultOrRotate = 0x80107C80; // type:func
+
+// Independent command services: archive-slot polling and slot-sourced positions.
+Ovl11PollTextSlotOrInvalidate = 0x800E8D7C; // type:func
+Ovl11WriteStateRecordPositionFromSlots = 0x800E8DC8; // type:func

@@ -35,6 +35,7 @@
 #include "ovl11_surface_height.h"
 #include "ovl11_shared_animation_icon.h"
 #include "ovl11_scene_header_key.h"
+#include "ovl11_action_result_request.h"
 
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2);
 
@@ -1228,8 +1229,6 @@ void Ovl11TriggerTimedObjectEvents(void) {
     }
 }
 
-s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
-
 s32 Ovl11TryStartCommandReaction(Ovl11AnimationObject *object, u16 *commandWords) {
     u16 flags;
     s32 result;
@@ -1238,7 +1237,7 @@ s32 Ovl11TryStartCommandReaction(Ovl11AnimationObject *object, u16 *commandWords
     if (!(flags & 0x100)) {
         result = 1;
     } else if (!(flags & 2)) {
-        ovl_11_func_80107C80(*(s16 *)((u8 *)commandWords + 2), (u16)object->field_6, NULL, 1);
+        Ovl11ResolveActionResultOrRotate(*(s16 *)((u8 *)commandWords + 2), (u16)object->field_6, NULL, 1);
         object->flags |= 3;
         Ovl11SelectObjectEventAnimation(object, 5, object->field_6 + 1, -2);
         result = 1;

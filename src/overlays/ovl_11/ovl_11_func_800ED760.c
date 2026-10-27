@@ -1,7 +1,5 @@
 #include "common.h"
 
-extern s32 D_80070C72[5];
-
 s32 ovl_11_func_800ED760(s16 arg0, s16 arg1, s32 arg2) {
     s32 target;
     s32 *slot;
@@ -13,7 +11,7 @@ s32 ovl_11_func_800ED760(s16 arg0, s16 arg1, s32 arg2) {
     } else {
         target = arg0;
     }
-    slot = D_80070C72;
+    slot = gActionResultOverrides;
     i = 0;
     do {
         v = *(s16 *)slot;

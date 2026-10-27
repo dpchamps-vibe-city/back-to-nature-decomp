@@ -12,8 +12,7 @@
 #include "ovl11_sprite_rotation_commands.h"
 #include "psyq/stddef.h"
 #include "sprite_rotation.h"
-
-s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
+#include "ovl11_action_result_request.h"
 
 s32 Ovl11SpriteRotationCommand(s16 idOrSlot, s16 operation, s32 direction,
                          s32 fromValueSlot) {
@@ -29,7 +28,7 @@ s32 Ovl11SpriteRotationCommand(s16 idOrSlot, s16 operation, s32 direction,
     }
     switch (operation) {
     case 0:
-        ovl_11_func_80107C80(id, direction & 0xFFFF, NULL, 1);
+        Ovl11ResolveActionResultOrRotate(id, direction & 0xFFFF, NULL, 1);
         break;
     case 1:
         result = Ovl11GetSpriteRotationState(id) == OVL11_ROTATION_IDLE;

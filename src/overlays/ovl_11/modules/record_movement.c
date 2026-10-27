@@ -49,6 +49,7 @@
 #include "ovl11_record_movement.h"
 #include "ovl11_primary_object_flag29.h"
 #include "ovl11_stage_mode2_record.h"
+#include "ovl11_action_result_request.h"
 
 void Ovl11UpdateRecordProbeFlag (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 Ovl11ProbeMovementPosition (Ovl11Func800BDCE8Arg1 *arg0);
@@ -870,8 +871,6 @@ void Ovl11PlaceRowXSlot(RowXPlacement *output, s16 slot) {
     output->mode = 4;
 }
 
-s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
-
 void Ovl11TryRecordRegionExit(Recon_ovl_11_func_800D2594_A0View *arg0) {
     VECTOR sp20;
     u16 sp30;
@@ -924,7 +923,7 @@ void Ovl11TryRecordRegionExit(Recon_ovl_11_func_800D2594_A0View *arg0) {
         if ((arg0->unk34 & var_v1) && (Ovl11FindRegionExit(*(VECTOR *) ((u8 *) arg0 + 0x38), *(s16 *) ((u8 *) arg0 + 0x30), &sp20, &sp30, var_t0) != 0)) {
             temp_s0 = *(s16 *) (work + 0x25476);
             if (temp_s0 == 1) {
-                ovl_11_func_80107C80(var_s2, var_s3, NULL, 1);
+                Ovl11ResolveActionResultOrRotate(var_s2, var_s3, NULL, 1);
                 (*(s16 *) ((u8 *) arg0 + 0x2C)) = 0;
                 if ((*(s16 *) ((u8 *) arg0 + 0x30)) == temp_s0) {
                     (*(s16 *) ((u8 *) arg0 + 0x22)) = var_s4;

@@ -16,8 +16,7 @@
 #include "game_flags.h"
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_primary_object_input_override.h"
-
-s32 ovl_11_func_80107C80(s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
+#include "ovl11_action_result_request.h"
 
 s32 Ovl11ActivateInteractionVolume(Ovl11C7010Object *object) {
     s32 messages[2];
@@ -76,7 +75,7 @@ s32 Ovl11ActivateInteractionVolume(Ovl11C7010Object *object) {
                 if (gOvl11SelectedInteractionVolume->flags & 0x200) {
                     lookupCode = gOvl11SelectedInteractionVolume->actionCode;
                     if ((lookupCode != 0x63) &&
-                        (ovl_11_func_80107C80(lookupCode,
+                        (Ovl11ResolveActionResultOrRotate(lookupCode,
                             (u16)gOvl11SelectedInteractionVolume->direction,
                             &messages[0], 0) != 1)) {
                         if (messages[0] != -1) {
@@ -134,7 +133,7 @@ s32 Ovl11ActivateInteractionVolume(Ovl11C7010Object *object) {
                         return 0;
                     }
                 }
-                result = ovl_11_func_80107C80(gOvl11SelectedInteractionVolume->actionCode,
+                result = Ovl11ResolveActionResultOrRotate(gOvl11SelectedInteractionVolume->actionCode,
                             (u16)gOvl11SelectedInteractionVolume->direction,
                             &messages[1], 0);
                 if (result == 1) {

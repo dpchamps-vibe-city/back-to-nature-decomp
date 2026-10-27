@@ -1645,3 +1645,6 @@ gObjectRecordPool = 0x8007A638; // size:0x6C8
 
 // Object-program records: 800E9C34 scans 206 sixteen-byte entries.
 gOvl11ObjectProgramRecords = 0x8006E910; // size:0xCE0
+
+// Five signed-halfword {action ID, result} slots written by 800ED760, read by 80107C80.
+gActionResultOverrides = 0x80070C72; // size:0x14
