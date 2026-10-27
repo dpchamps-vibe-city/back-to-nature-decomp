@@ -25,7 +25,7 @@ s32 Ovl11UpdateSelectedRecordRelease(void) {
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230 = 0;
     ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 |= 0x800000;
-    interactionId = ((struct Ovl11E8C14State *)D_8006C838)->value;
+    interactionId = ((struct Ovl11TaggedItemState *)D_8006C838)->secondTag;
     switch (gOvl11InteractionStep) {
     case 0:
         Ovl11SetInteractionSteps(1, 0);

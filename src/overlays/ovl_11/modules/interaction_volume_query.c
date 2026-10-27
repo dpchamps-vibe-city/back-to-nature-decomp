@@ -12,14 +12,13 @@
 #include "psyq/memory.h"
 #include "psyq/libgs.h"
 #include "ovl11_area_resource_load.h"
+#include "ovl11_condition_evaluation.h"
 
 typedef struct {
     s16 x;
     s16 y;
     s16 z;
 } VolumeCorner;
-
-void ovl_11_func_800F0FB0(s32 event);
 
 void *Ovl11ProbeInteractionVolume(u8 *volumes, Ovl11Func800BDCE8Arg1 *point,
                                 s32 applyEffects) {
@@ -46,7 +45,7 @@ void *Ovl11ProbeInteractionVolume(u8 *volumes, Ovl11Func800BDCE8Arg1 *point,
                 minimum.z < point->unk8 && point->unk8 < maximum.z) {
                 if (flags & 0x100) {
                     if (applyEffects != 0) {
-                        ovl_11_func_800F0FB0(7);
+                        Ovl11SetConditionState(7);
                     }
                     continue;
                 }

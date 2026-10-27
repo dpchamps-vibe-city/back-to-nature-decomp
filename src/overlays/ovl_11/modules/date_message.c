@@ -6,7 +6,7 @@
 #include "ovl11_date_message.h"
 
 s32 Ovl11GetDateMessageEntry(void) {
-    struct Ovl11ConditionState *state;
+    struct Ovl11ConditionEvaluationWork *state;
     s16 *threshold;
     s16 previous;
     s16 current;
@@ -14,7 +14,7 @@ s32 Ovl11GetDateMessageEntry(void) {
     s32 entry;
     u32 index;
 
-    state = (struct Ovl11ConditionState *)D_8006C838;
+    state = (struct Ovl11ConditionEvaluationWork *)D_8006C838;
     shiftedDay = (state->date[1] * 30 + state->date[2] + 20) % 120;
     index = 0;
     previous = -1;

@@ -20,10 +20,8 @@
 #include "psyq/libapi.h"
 #include "psyq/memory.h"
 #include "ovl11_object_archive_pipeline.h"
+#include "ovl11_condition_evaluation.h"
 
-
-void ovl_11_func_800F1038(u16 code, s32 value);
-s32 ovl_11_func_800F0F50(void);
 
 void Ovl11DrainActiveRecordSlot(void) {
     if (GetGameFlag(2U) == 1) {
@@ -32,8 +30,8 @@ void Ovl11DrainActiveRecordSlot(void) {
             Ovl11ServiceActiveRecordSlot();
         }
     }
-    ovl_11_func_800F1038(0x12DU, 0);
-    ovl_11_func_800F0F50();
+    Ovl11QueueConditionCodeAnySlot(0x12DU, 0);
+    Ovl11EvaluatePendingConditions();
     Ovl11ServiceActiveRecordSlot();
     /* State 1 permits the next action; service it once more before return. */
     if (GetGameFlag(2U) == 1) {

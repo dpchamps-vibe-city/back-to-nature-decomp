@@ -1566,10 +1566,15 @@ typedef struct {
     s16 savedRoom;
 } Ovl11GuardState;
 
-/* 800E8C14 reads a signed halfword at D_8006C838 + 0x5252 and passes its address. */
-struct Ovl11E8C14State {
-    u8 pad_0[0x5252];
-    s16 value;
+/* 800E8C14/800E8D00 read two signed tag/item pairs at work+524C/+5252.
+ * The property command passes the second tag's address to GetRecordItemId. */
+struct Ovl11TaggedItemState {
+    u8 pad0[0x524C];
+    s16 firstTag;
+    s16 firstItemId;
+    u8 pad5250[2];
+    s16 secondTag;
+    s16 secondItemId;
 };
 
 /* 800E9914 reads and clears a signed halfword through D_8006C838 + 0x51F0. */
@@ -3898,10 +3903,9 @@ extern struct Ovl11SelectionPanelSpriteStorage gOvl11SelectionPanelSprites[];
 extern s16 _D_801248F4[] __asm__("D_801248F4");
 #define D_801248F4 _D_801248F4
 
-/* D_8012490C - five-entry s32 offset table walked at +4 stride by
- * ovl_11_func_800E8614 to index an 18-byte source record per entry.
- * Absolute-addressed from the overlay (only declared extern, never GP). */
-extern s32 D_8012490C[5];
+/* 8012490C: five bank-1 offsets to the opaque 18-byte payloads copied
+ * by Ovl11LoadOrClearCode109Records; original overlay access is absolute. */
+extern s32 gOvl11Code109PayloadOffsets[5];
 
 /* D_80127A9C - overlay-local 16-bit state-table base in ovl_11 data at
  * 0x80127A9C, passed by address to ovl_11_func_800D04D4 from
@@ -3974,11 +3978,10 @@ typedef struct {
     u16 clut;
 } Ovl11GridUvRecord;
 
-/* D_801295B0 - 11 halfword scratch buffer (0x16 bytes, ovl_11) that
- * ovl_11_func_800E8550 fills via func_8001A970 and then scans for the
- * 0xFFD blank marker (lh reads). Absolute-addressed from the overlay
- * (only ever declared extern, never GP). */
-extern s16 D_801295B0;
+/* 801295B0: ten number-character halfwords plus FFFF, filled and bound by
+ * Ovl11BindIntegerText. Keep the existing scalar-anchor view of this scratch;
+ * original accesses are absolute and the binding retains its address. */
+extern s16 gOvl11IntegerBindingText;
 
 /* 800F8B4C formats page digits plus FFFF into this 12-halfword buffer. */
 extern s16 gOvl11MenuGridPageText[12];
@@ -6299,28 +6302,26 @@ extern u8 gOvl19DirectionWeights[];
 extern u16 D_800BCEE8[];
 extern s16 D_800BCEFC[];
 
-/* D_8006E910 - base of a 0xCE-entry array of 0x10-byte records (ovl_11).
- * ovl_11_func_800E9C34 walks it with a +0x10 stride comparing the cursor
- * returned by ovl_11_func_800E3A94 against each entry and reads the u8 at
- * +0x2; ovl_11_func_800E499C memcpys into it. Absolute-addressed (outside the
- * -G8 small-data window); only ever declared extern, never GP. */
+/* EXE 8006E910: 206 sixteen-byte object-program records, loaded by 800E499C.
+ * The interpreter branches on handler result == 1; FF advances sequentially.
+ * payload[0] is the yield-control byte; operands begin at record+4.
+ * The branch-slot service scans this array by cursor equality. */
 typedef struct {
-    /* 0x00 */ u8 unk0;
-    /* 0x01 */ u8 unk1;
-    /* 0x02 */ u8 unk2;
-    /* 0x03 */ u8 unk3[0xD];
-} Ovl11E910Entry;
-extern Ovl11E910Entry _D_8006E910[] __asm__("D_8006E910");
-#define D_8006E910 ((Ovl11E910Entry *)_D_8006E910)
+    /* 0x00 */ u8 opcode;
+    /* 0x01 */ u8 successTarget;
+    /* 0x02 */ u8 failureTarget;
+    /* 0x03 */ u8 payload[0xD];
+} Ovl11ObjectProgramRecord;
+extern Ovl11ObjectProgramRecord gOvl11ObjectProgramRecords[];
 
 /* 800E3200 passes this 12-byte animation table to 800D04D4's byte-pointer parameter. */
 extern u8 gOvl11SmallRecordHandler4Keyframes[12];
 
 /* 800E4330 indexes consecutive lw offsets by the current object's signed id. */
 extern s32 gOvl11ObjectArchiveOffsets[];
-/* 800E4330 initializes both cursors to the D_8006E910 record-array base. */
-extern Ovl11E910Entry *gOvl11ObjectProgramBase;
-extern Ovl11E910Entry *Ovl11RecordCursor __asm__("D_801291B4");
+/* 800E4330 initializes both cursors to the resident program-record array. */
+extern Ovl11ObjectProgramRecord *gOvl11ObjectProgramBase;
+extern Ovl11ObjectProgramRecord *gOvl11ObjectProgramCursor;
 /* 800E4330 clears this word before initializing the scene. */
 extern s32 gOvl11ObjectProgramIndex;
 /* 800E40CC dispatches this 113-entry table with lh +4/+6 and lw +8/+C arguments. */
@@ -6760,11 +6761,10 @@ extern s32 gOvl11SpriteBlockScratchBase;
  * overlay; the overlay only declares it, so an extern scalar belongs here. */
 extern u16 D_8006F5F0;
 
-/* D_80129618 / D_8012961C - ovl_11 private state pair in the overlay data
- * segment: a list count and a state code. Both absolute-addressed (lui + %lo)
- * from -G0 overlay code; only extern declarations belong here. */
-extern s32 D_80129618;
-extern s32 D_8012961C;
+/* 80129618/1C: installed condition count and evaluation state, shared by
+ * the installer, pending evaluator and state predicate; original -G0 accesses. */
+extern s32 gOvl11ConditionRecordCount;
+extern s32 gOvl11ConditionEvaluationState;
 
 /* D_80128C60 - ovl_11 pointer to a u16 record, cleared and re-pointed by
  * ovl_11_func_800CB730. Absolute-addressed (lui %hi + sw/lw %lo) from the -G0
@@ -7654,7 +7654,7 @@ typedef struct {
 } Ovl11DE68State;
 
 /* 800F1078 stores a record pointer +4454 and reads/passes s16 +44B8/+44C0. */
-struct Ovl11ConditionState {
+struct Ovl11ConditionEvaluationWork {
     u8 pad0[0x4454];
     void *current;
     u8 pad4458[0x44B8 - 0x4458];

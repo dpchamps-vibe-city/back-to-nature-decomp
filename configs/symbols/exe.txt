@@ -1642,3 +1642,6 @@ gMenuGridLayoutIndex = 0x80071A1E; // size:0x2
 
 // 8010C6A0 initializes seven 0xF8-byte object records.
 gObjectRecordPool = 0x8007A638; // size:0x6C8
+
+// Object-program records: 800E9C34 scans 206 sixteen-byte entries.
+gOvl11ObjectProgramRecords = 0x8006E910; // size:0xCE0

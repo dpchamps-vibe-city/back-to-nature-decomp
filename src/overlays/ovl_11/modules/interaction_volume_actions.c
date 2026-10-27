@@ -41,8 +41,8 @@
 #include "ovl11_item_interaction_map.h"
 #include "ovl11_queued_item_interaction.h"
 #include "ovl11_record_pair_claim.h"
+#include "ovl11_condition_evaluation.h"
 
-void ovl_11_func_800F0FB0 (s32 arg0);
 void Ovl11TryBeginItem68VolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
 void Ovl11TryBeginSetBVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 s32 Ovl11TryBeginClassifiedItemVolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0, s16 arg1, s16 arg2);
@@ -236,7 +236,7 @@ block_28:
                 }
                 return var_v0;
             case 39:
-                ovl_11_func_800F0FB0(7);
+                Ovl11SetConditionState(7);
                 return 0x27;
             case 9:
                 Ovl11TryBeginItem68VolumeAction(arg0);
@@ -554,8 +554,6 @@ void Ovl11TryBeginFlaggedItemVolumeAction(Recon_ovl_11_func_800C8334_A0View *arg
     }
 }
 
-void ovl_11_func_800F0FB0(s32 arg0);
-
 s32 Ovl11TryBeginProbedObjectVolumeAction(Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2) {
     s16 temp_v1;
     struct_80076220 *temp_v0;
@@ -577,7 +575,7 @@ s32 Ovl11TryBeginProbedObjectVolumeAction(Ovl11C8808Object *arg0, s16 *arg1, s16
                 return 1;
             }
             arg0->unk6C |= 0x800000;
-            ovl_11_func_800F0FB0(3);
+            Ovl11SetConditionState(3);
             arg0->unk22 = *(u16 *) temp_v0;
             SetGameFlag(0x46U, 1U);
             return 1;

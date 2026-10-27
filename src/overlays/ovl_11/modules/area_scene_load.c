@@ -69,6 +69,7 @@
 #include "ovl11_calendar_record_gate.h"
 #include "ovl11_area_entry_cache.h"
 #include "ovl11_object_record_state.h"
+#include "ovl11_condition_evaluation.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
@@ -402,9 +403,6 @@ void Ovl11LoadAreaScene(void) {
     Ovl11ApplyWorkSettings();
 }
 
-void ovl_11_func_800F0FB0(s32 arg0);
-s32 ovl_11_func_800F0F50(void);
-
 void Ovl11InstallAreaScene(void) {
     ((Ovl11AreaInitView *)D_8006C838)->flags &= 0xFF7FFFFF;
     Ovl11ResetWeatherParticles();
@@ -430,8 +428,8 @@ void Ovl11InstallAreaScene(void) {
     OpenSoundSequencesAndStart();
     Ovl11ApplyAreaSoundVolume();
     if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
-        ovl_11_func_800F0FB0(8);
-        ovl_11_func_800F0F50();
+        Ovl11SetConditionState(8);
+        Ovl11EvaluatePendingConditions();
         Ovl11ServiceActiveRecordSlot();
         Ovl11ServiceActiveRecordSlot();
     }

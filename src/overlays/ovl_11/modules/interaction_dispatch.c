@@ -13,6 +13,7 @@
 #include "game_flags.h"
 #include "ovl11_interaction_dispatch.h"
 #include "ovl11_record_slot_table.h"
+#include "ovl11_condition_evaluation.h"
 
 s32 Ovl11UpdateInteractionDispatch(void) {
     s32 (*updateOrDraw)(void);
@@ -40,17 +41,14 @@ s32 Ovl11UpdateInteractionDispatch(void) {
     return complete;
 }
 
-void ovl_11_func_800F0FB0(s32 arg0);
-s32 ovl_11_func_800F0F50(void);
-
 s32 Ovl11BeginInteraction(s32 interactionId) {
     s32 (*begin)(void);
     s32 result = 1;
 
     if ((gOvl11InteractionId == 0) || (interactionId == 1)) {
         if ((interactionId == 0x16) && (GetGameFlag(2U) == 0)) {
-            ovl_11_func_800F0FB0(0xA);
-            ovl_11_func_800F0F50();
+            Ovl11SetConditionState(0xA);
+            Ovl11EvaluatePendingConditions();
             Ovl11ServiceActiveRecordSlot();
             if (GetGameFlag(2U) == 1) {
                 do {

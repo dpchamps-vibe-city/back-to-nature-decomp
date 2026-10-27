@@ -1256,23 +1256,23 @@ typedef struct {
 typedef unsigned int u32;
 
 typedef struct {
-    u16 unk0;
-    u8 unk2;
-    u8 unk3;
-    u16 unk4;
-    u16 unk6;
-    u32 unk8;
-    u8 unkC;
-    u8 unkD;
-    u16 unkE;
-    u32 unk10;
-    u32 unk14;
-    s32 unk18;
-    s32 unk1C;
-    u8 unk20;
-    u8 unk21;
-    u8 unk22;
-    u8 unk23;
+    u16 codeAndKind;
+    u8 valueField;
+    u8 valueGuard;
+    u16 lowerBound;
+    u16 upperBound;
+    u32 packedBounds;
+    u8 selectionFlags;
+    u8 counterSelector;
+    u16 counterThreshold;
+    u32 requiredFlags;
+    u32 clearFlags;
+    s32 flagPair;
+    s32 conditions;
+    u8 reserved20;
+    u8 itemListSelector;
+    u8 stateCode;
+    u8 stateArgument;
 } Ovl11ConditionRecord;
 
 typedef struct {

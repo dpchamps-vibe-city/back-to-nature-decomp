@@ -1230,6 +1230,10 @@ block(s)\n"` (0xD0), `800B8490`'s table (0xEC), then `800B8600`'s strings —
 exactly the order one file compiled in address order emits literals and tables.
 A module object pools only what its C emits, so the driver joins once the
 members' `D_800B7Exx`/`D_800B7Fxx` string externs are written as literals.
+A fresh whole-six dry fold in this campaign still refuses at `[0xD0, rodata]`
+between the table attributions. No source/config writes or narrower slice were
+retained. The mixed literal/table-emission reconstruction remains the next
+useful experiment, not evidence for a boundary before the driver.
 
 ---
 
@@ -8808,6 +8812,23 @@ flags, support leaving them outside; the exact historical object cuts
 remain uncertain. A later larger TU reconstruction may absorb this unit
 if new evidence joins it, rather than treating this fold as proof.
 
+Whole-band ownership review now supplies a stronger competing reading:
+E440–E4B8 interleaves small words reached through GP by 17Axx/17Cxx and by
+17F88/183E0/18B98/19030–1AF34. The original-byte ownership scan finds no
+absolute access to those forty small symbols in the EXE. Conditional on the
+original linker allocating commons in object/encounter order (corroborated,
+not proved, by neighboring ownership blocks), that interleaving supports one
+text-engine interval 179E8–1AF44, with these string primitives INSIDE it.
+This is stronger than the old local lack-of-extension argument; the string
+module is not evidence of an original object boundary. The candidate must
+carry the dead 17C4C/17CF4/17F88/CopyU16String stubs and absorb this whole
+module, not create separately convenient rendering slices. Current concrete
+limits are 183E0/18B98's no-GCSE overrides and incompatible declaration views;
+plans/flag-review-report.md already records contrary members for applying
+no-GCSE throughout (1A018/1A8D0/1A970). These flag conflicts do not justify
+new historical boundaries. No flag, source or partial text-engine fold was
+attempted during this read-only review.
+
 Append has EXE and overlay callers (1A808 and ovl_11:8011CD2C);
 17F30 has two original calls from ovl_11_func_80104EC8, at 801050CC and
 80105180. The old claim that all these routines were unreachable is
@@ -12929,6 +12950,22 @@ are unchanged. No policy exception was introduced.
 
 ## `ovl_11` D_8006C838 +0x44B8/+0x44BA/+0x44BC button-state gapless run — 0x800EEECC / 0x800EEFB8 / 0x800EF0E8 (confidence: medium)
 
+The older button-state interpretation below is superseded: these are the
+established calendar year/season/day halfwords. A whole-protocol review joins
+EEECC, EEFB8, EF0E8, EF488, EF6E4, EF870 AND EF8BC (exclusive end EFA1C):
+refresh/classify, date search, snapshot, set/reset and date-availability helper
+over the same five six-halfword condition records. EEFB8 and EF870's sole
+clients are within this closure; EF8BC's date predicate is used by its search
+and classifier. The record block is shared with area initialization, not
+private ownership proof. No GP discriminator exists under -G0.
+
+No six-member slice was folded to evade EF8BC's standing no-skip override.
+The whole seven-member setting remains unresolved, together with competing
+EF6E4 local versus override-header record views. Those are concrete compiler/
+context limits, not evidence for a TU cut at EF8BC. The useful experiment is
+one canonical six-halfword record view and a whole-seven baseline/flag review,
+not a flag-compatible subset. No new setting or source change was applied.
+
 Gapless link-order run in `ovl_11` (`Obj\GF_FARM.bin`) — splat
 `configs/splat/ovl_11.yaml` offsets 0x370AC → 0x37198 → 0x372C8 — all reading
 the same main-binary `D_8006C838` u16/s16 trio at +0x44B8/+0x44BA/+0x44BC
@@ -14062,6 +14099,13 @@ Members:
 
 ## `ovl_11` mask-check caller/leaf run — 0x800F1B28 / 0x800F1BD0 / 0x800F1C48 / 0x800F1CC4 (confidence: medium)
 
+**Now absorbed whole into modules/condition_evaluation.c**, 800F0F50–F1F40.
+The exclusive evaluator/helper call closure supersedes the earlier left cut;
+see the D_80129618/D_8012961C section for all membership, boundaries, the
+installer's mechanical setting limit and final whole-build verification.
+ovl11_condition_masks.h remains its published packed-mask contract. The
+following is the earlier four-entry fold history, not a current TU boundary.
+
 **Reconstructed `src/overlays/ovl_11/modules/condition_masks.c`, all four
 entries 800F1B28–800F1D54 exclusive.** The composite calls all three adjacent
 selectors, passing the same packed condition word, in season/weekday/current
@@ -14146,6 +14190,12 @@ Members (link order):
   plus the 0xC3800 all-set early-return guard
 
 ## `ovl_11` condition-record field decoders — 0x800F1D54–0x800F1F40 exclusive
+
+**Now absorbed whole into modules/condition_evaluation.c.** The evaluator's
+exclusive helper/record-format closure establishes the wider membership;
+these three routines and their header remain intact inside it. The private
+state-pair section records boundaries and acceptance. Earlier stand-alone
+boundary claims below are superseded, not reasons to preserve a slice.
 
 **Reconstructed `modules/condition_record_fields.c`, all three original
 entries:** Ovl11DecodeConditionBounds (1D54), Ovl11DecodeConditionFlagIds
@@ -14456,6 +14506,11 @@ Members:
   `one == 1` selecting `!= arg1` over `!= 0`.
 
 ## `ovl_11` 0x800F144C–0x800F1878 gapless link run, shared caller 0x800F1078 (confidence: low)
+
+This complete helper run is now inside modules/condition_evaluation.c;
+the broader exclusive-helper/state closure, not this adjacency alone, joins
+it. F1678's no-skip exception was retired after a checked whole-27 baseline
+fold. See the private state-pair section for the full evidence and limitation.
 
 Evidence: one unbroken link-order run — `ovl_11_func_800F144C` (0x8C, ends
 0x800F14D8), `ovl_11_func_800F14D8` (0x68), `ovl_11_func_800F1540` (0x74),
@@ -15867,6 +15922,37 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8C14 (m, candidate local same TU with 800E8D00; [evidence](research/ovl_11_func_800E8C14-grouping.md)) — writes a one-based lookup result to a selected `D_80129560` slot.
 - ovl_11_func_800E8D00 (m) — writer: stores the store-view s16 pair into slots.
+
+  **Reconstructed `modules/tagged_item_codes.c`, 800E8C14–800E8D7C
+  exclusive**, the two-entry tagged-item export service. Both consume the
+  tag/item pair at work+5252/+5254: 8C14 passes its address to the tag-A4
+  resolver before a packed-property lookup, and 8D00 performs that same
+  substitution itself (optionally on the pair at +524C/+524E). This narrow
+  record protocol and common output operation, corroborated by gapless link
+  order, join them; the widely used value slots alone would not. Neither
+  mutates the records. The property path maps results 0..6 to codes 1..7,
+  otherwise zero; the direct-code path has its distinct -1 output bypass.
+
+  Left 8BF0 only tests the shared scene-mode word for 3 and reads neither
+  tagged record nor output slots. Right 8D7C polls/invalidates the EXE's
+  shared archive-slot marker, with no tagged-item/property operation. Earlier
+  entity_pool_access uses a different pool and the unrelated 8BF0 intervenes;
+  the distant property/record-item lookup is a published general dependency.
+  No narrow protocol/helper/table extends either edge. These are conservative
+  service boundaries under -G0, not GP-proven historical object cuts. The
+  all-command pointer table merely preserves linkage/order and is not itself
+  evidence of one TU. No mechanical or flag limit motivated these cuts.
+
+  Names: Ovl11StoreItemPropertyCode and Ovl11StoreTaggedItemCode. The shared
+  Ovl11TaggedItemState override view names first/second tag and item ID at the
+  same signed-halfword offsets, replacing two partial/address-named views.
+  No global ownership or data type width changed. The property function's
+  public contract now explicitly retains the unused fourth word supplied by
+  800EDAA4's original call; interfaceAudit publishes the header to that caller
+  and confirms unchanged compiled bytes. The header documents unchecked
+  indices, different empty-tag/substitution-zero cases and output sentinels.
+  Both members and ovl_11 passed the checked baseline fold before renaming;
+  no override or policy exception was added.
 - ovl_11_func_800E8E78 (m, candidate local same TU with 800E8F78; [shared-global/link-adjacency evidence](research/ovl_11_func_800E8E78-grouping.md)) — sets or resets the position triple from raw coordinates or table slots, then refreshes collision state.
 
   **Reconstructed both complementary commands as
@@ -15979,6 +16065,36 @@ Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
   800E9CE4 (0x800E9C34 + 0xB0) and the second family member consuming the
   `ovl_11_func_800E3A94` cursor, inside the 0x800E5A1C–0x800EExxx band; also
   the first family tie to the `D_8006E910` record array.
+
+  **Reconstructed `modules/object_program_branch_slots.c`, 800E9C34–800E9D28
+  exclusive**, both exclusive clients of Ovl11GetObjectProgramCursor. The
+  interpreter independently establishes that byte +1 is the success target
+  (handler returns exactly 1), byte +2 the failure target, and FF advances
+  sequentially. This makes the adjacent pair a complementary branch-target
+  export/edit service, not arbitrary value-slot users. The accessor's remote
+  archive pipeline is a public service, not a reason to absorb unrelated
+  handlers between it and these clients.
+
+  Left E9B68 initializes an event slot and resets a timed sprite effect; right
+  E9D28 dispatches state-field commands. Neither calls the cursor accessor or
+  reads/edits these program targets. No narrow helper/state/table extends
+  either edge; these are evidence-limited -G0 protocol cuts, not historical
+  GP proofs. No flag or mechanical limit motivated them.
+
+  Names are Ovl11StoreProgramFailureTargetToSlot and
+  Ovl11SetProgramSuccessTargetFromSlot. A 0xFF failure target resolves to the
+  current index PLUS ONE (the next zero-based target), not an always-one-based
+  record ID. The header records failed-scan output preservation, unchecked
+  slots/targets, byte truncation and immediate interpreter consumption.
+  Ovl11ObjectProgramRecord names opcode/successTarget/failureTarget with the
+  same sixteen-byte layout; the duplicate four-byte view was removed. Shared
+  resident EXE storage is gOvl11ObjectProgramRecords at 8006E910; overlay cursor
+  gOvl11ObjectProgramCursor remains at ovl_11:801291B4. The old asm-name/macro
+  aliases were removed, and the archive pipeline/loader references and fields
+  were propagated. Other overlay identities at those RAM addresses were not
+  conflated. Baseline fold, final caller/type changes and all linked bytes
+  pass the full campaign gate (2042 folded/352 valid modules); no override,
+  ownership, linkage or source-policy exception was added.
 - ovl_11_func_800E78E4 (m, matched 2026-11 — this session, 0x70, byte-exact) —
   guarded-slot random writer: `temp = func_80012A34(arg0 & 0xFFFF)` (exe
   `Rand`), then if `arg1 != -1` stores `D_80129560[(s16)arg1] = temp` via the
@@ -16148,6 +16264,28 @@ assembly or tools were added; exit 1 denotes the incomplete overall campaign.
   band; the `D_801295B0` staging buffer is the second `func_8001A970` + `0xFFD`
   scan site (idiom sibling of the D_8012A028 cluster, different buffer and draw
   call).
+
+  **Reconstructed `modules/integer_text_binding.c`, 800E8550–800E8614
+  exclusive**, as Ovl11BindIntegerText. Its exclusive eleven-halfword scratch
+  at 801295B0 is gOvl11IntegerBindingText (the established scalar-anchor type
+  remains unchanged). The decimal formatter returns the terminator location;
+  the command appends FFFF, skips leading 0FFD and passes the remaining address
+  to EXE 17A08. That callee stores, rather than copies, the pointer into an
+  eleven-slot substitution table, clamping its u16 index to ten. This proves
+  the binding/lifetime purpose, not merely a draw idiom. The header documents
+  optional unchecked value-slot resolution, ten-character formatting, clamped
+  target slot, shared-buffer invalidation and constant success result.
+
+  Both boundaries have different complete protocols: left item_slot_snapshot
+  (800E8250–800E8550) saves/restores held and secondary items and sprite
+  registrations; right 8614 owns the separate five-payload ID-109 load/clear
+  lifecycle. Neither uses this scratch, the formatter-to-binding chain or
+  this entry. The ubiquitous value slots do not join unrelated command
+  services. These absence-of-extension cuts are evidence-limited under -G0,
+  not claimed historical object-map proofs; no mechanical or flag limit
+  motivated them. The whole one-entry baseline fold and linked overlay passed;
+  after naming/documentation both new services pass the full campaign gate at
+  2018 folded/351 valid modules, with no exception or override growth.
 - ovl_11_func_800E87A0 (m, matched 2026-11 — this session, 0x6C, byte-exact) —
   conditional-slot dispatcher leaf: `arg2 != 0` resolves `D_80129560[arg0]`
   through the family's s16-scaled index (raw `arg0` otherwise), forwards its low
@@ -16588,6 +16726,16 @@ Members:
 - ovl_11_func_80113310 (m, candidate member of the local 80113124–801136D0 TU run; [evidence](research/ovl_11_func_80113310-grouping.md)) — classifies and textures an empty grid cell, optionally awarding an item.
 
 ## `ovl_11` D_8006C838 pool-entry run — 0x800F4994 / 0x800F4A58 / 0x800F4CAC–0x800F4FC8 (confidence: medium within local groups, low between groups)
+
+Read-only whole-unit review did not promote the 4994/4A58 pair (with empty
+4A50 between) as a complete TU. The named Y-offset index is not private:
+primary_object_grid_actions also sets it to 3 in state 6F while setting the
+same record flag 100, and projected_record_sprites consumes it through the
+four-entry offset table. Thus the arm/decay relationship is useful behavioral
+evidence, but its narrow protocol has another producer as well as the renderer;
+the earlier three-user account was incomplete. These specialized cross-links
+need accounting for before claiming a whole original interval. No fold or
+source change was applied merely on the pair's adjacency and counter use.
 
 Candidate same-TU pair `800F4994`/`800F4A58` and local transition/probe run
 `800F4CAC`–`800F4FC8`; a common TU spanning both remains low-confidence.
@@ -24492,6 +24640,75 @@ Members (link order; addresses are contiguous 0x801128B4, 0x80112904,
 
 ## `ovl_11` D_80129618/D_8012961C private state pair — 0x800F0E00 / 0x800F0F50 / 0x800F0FB0 / 0x800F19E0 (confidence: medium)
 
+**Reconstructed `modules/condition_evaluation.c`, 800F0F50–800F1F40
+exclusive: 27 compiled members, absorbing ALL of condition_masks and
+condition_record_fields.** The supported data protocol starts one function
+earlier at 800F0E00; that installer remains separate only at the mechanical
+limit explained below. This is not a claim of a historical boundary there.
+
+Membership: the installer copies the 0xE10-byte list to work+2DB8 and
+publishes count/state at 80129618/1C. The pending driver evaluates that exact
+buffer/count, the setter publishes its state, and the state predicate consumes
+it. F1078 is the sole caller of its adjacent window/kind/value/selection/
+counter/flag/item predicates. Their closed helper chains reach F13D8 via
+F1AE0, F19C8 via F19E0, the mask selectors via TestConditionMask, and all
+three field decoders via F1078/F1678/F1878. The two result wrappers and
+reservation helpers complete the same queueing protocol, including dead
+F1058's call into it. Thus every member belongs to a private-state or exclusive
+helper/record-format closure, not just the broad work buffer or link order.
+The three pooled table attributions occur in member order at 2148..21E4;
+the fold proved the two four-byte zero alignment gaps at 2164/219C.
+
+The earlier mask/decoder modules were incomplete slices: the whole sole-caller
+closure establishes their membership here beyond the older shared-caller
+hypothesis. Both existing headers remain valid interfaces for their formats;
+ovl11_condition_evaluation.h publishes only EvaluatePendingConditions,
+SetConditionState and QueueConditionCodeAnySlot. Helpers retain external
+linkage. All twenty formerly anonymous entries now describe their predicates,
+queue operations or lifecycle. Ovl11ConditionRecord fields name the packed
+selectors, bounds and flags without changing widths/signedness. The count and
+state are gOvl11ConditionRecordCount/gOvl11ConditionEvaluationState. The narrow
+work view is Ovl11ConditionEvaluationWork, distinct from the unrelated large
+typedef formerly sharing its tag spelling. Date-message's user was propagated.
+The three decoded flag IDs now have an actual three-halfword array rather
+than a scalar address used as a three-element output. Full bytes remain exact.
+
+Boundary/flag experiment: with BOTH F0E00's no-strength-reduce and F1678's
+no-skip overrides removed, the checked whole-28 baseline fold planned cleanly
+but failed the linked overlay oracle (original 165c3cca, built 34926a76), and
+rolled back. Its recovery also failed until the external flag edits were
+restored. A full campaign gate then passed again. The failed linked result
+was not attributed to an individual member. With the installer's original
+setting restored, the whole 27-member baseline fold passes every member and
+the overlay WITHOUT F1678's flag. This independently confirms the baseline
+finding in plans/flag-review-report.md: the F1678 override, its obsolete
+impossibility comment and only its flag-allowlist permission were retired.
+No module flag or new exception replaced it. Unchanged neighbors do not prove
+an original flag. Next useful whole-protocol experiment is a consistently
+represented 28-member source with a uniform baseline/no-strength-reduce
+comparison; the current left cut records this unresolved setting, not evidence
+for separate original units. F0C70 before the installer uses a different
+private lookup/counter block and supplies no evaluator-helper extension.
+
+Right F1F40 is an empty compiled function with no call/state/table tie; F1F48
+begins the separate event-schedule stream service. No evaluator helper or
+private count/state access extends beyond F1F40. This edge is evidence-limited
+under -G0, not a GP-proven original object edge or a cut to protect a flag.
+The installer, not an invented internal cut, is the sole mechanical limit.
+
+Final batch acceptance with object_program_branch_slots:
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes
+all eight integrity gates at **2042/2625 folded, 352/352 valid modules,
+583 remaining** (2016/349 at run start). The five new module files organize
+33 functions, including seven already-folded members absorbed whole (+26
+newly folded). EXE/all configured overlays retain linked code/data/callback/
+jump-table/placement identity. Interfaces reconciled seventeen caller units
+for this evaluator, with zero failing published interfaces; standing unrelated
+unpublished debt remains visible. No shared tool/test, pin, asm or stub was
+added, no ownership or linkage changed, and no commit was made.
+
+Historical private-cluster evidence follows:
+
 Shared-private-cluster tie in `ovl_11` (`Obj\GF_FARM.bin`) around the adjacent
 file-scope `.word` pair `D_80129618` (0x80129618, list count) and `D_8012961C`
 (0x8012961C, state code), both emitted as s32 in the overlay's own data blob
@@ -27363,6 +27580,34 @@ non-growth passed. No shared tool changed and no commit was made. Exit 1
 is solely the incomplete overall campaign, not a failed integrity gate.
 
 ## `ovl_11` `(arg0 << 0x10) == 0` gate pair — 0x800E8614 / 0x800E8760 (confidence: low)
+
+**Reconstructed `modules/flagged_code109_records.c`, 800E8614–800E8760
+exclusive.** This is the complete five-payload load/marked-pool-clear service,
+not an established two-member TU with 8760. Its private five-word offset table
+at 8012490C has no other source reader. Both branches operate on the records
+identified by flag 40000: load independently attempts five ID-109 allocations
+and copies eighteen opaque bytes to each +4, whereas clear visits all ten
+small-record slots and removes any carrying that flag, regardless of ID.
+The table is now gOvl11Code109PayloadOffsets; the entry is
+Ovl11LoadOrClearCode109Records. The packed copy is retained because the payload
+is eighteen bytes, not a padded twenty; uninterpreted fields receive neutral
+word/byte-offset names. The public header documents the low-halfword control,
+partial allocation failures, duplicate loads and broader clear semantics.
+
+Boundaries: left 8550 formats a number into its separate private scratch and
+binds a substitution-text slot; it neither reads this offset table nor touches
+the marked pool. Right 8760 allocates ID 15E or forwards the separate
+stage-mode-2 record to 8010B64C, with neither flag 40000 nor payload-table use.
+The old shared gate/allocator idiom is not a private protocol joining them.
+No private state, helper or table extends this service into either neighbor;
+these are evidence-limited responsibility cuts, not GP/absolute proofs under
+this overlay's -G0. No compiler-setting limit motivated either cut.
+
+The checked baseline fold passed the member and linked ovl_11. After names,
+local readability and interface edits, the two-module batch with
+integer_text_binding passes tuProgress --verify against the campaign baseline:
+2018 folded, 351/351 valid modules, all eight integrity gates PASS. No flags,
+policy exceptions, linkage changes or tooling changes were introduced.
 
 Evidence: zero-gap link order plus a shared entry idiom, not a shared private
 global. `ovl_11_func_800E8614` (0x14C) ends exactly at

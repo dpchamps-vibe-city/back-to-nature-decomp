@@ -64,6 +64,7 @@
 #include "ovl11_held_item_flags.h"
 #include "ovl11_object_area_sprite_reset.h"
 #include "ovl11_object_record_state.h"
+#include "ovl11_condition_evaluation.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -410,7 +411,6 @@ void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
-void ovl_11_func_800F0FB0 (s32 arg0);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
 s32 Ovl11CommitPendingItemRecord (Ovl11C7010Object *arg0);
 s32 Ovl11BeginCellEffectAction (Ovl11C7010Object *arg0);
@@ -680,7 +680,7 @@ state_done:
                 if (arg0->item == 0xA4) {
                     ((struct Ovl11C580CState *)D_8006C838)->selected = (u16) ((struct Ovl11C580CState *)D_8006C838)->fallback;
                 }
-                ovl_11_func_800F0FB0(4);
+                Ovl11SetConditionState(4);
             }
             arg0->unk6C &= 0xEFFF3FFF;
             Ovl11RemoveSlotSprite(arg0->item);

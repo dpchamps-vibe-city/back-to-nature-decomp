@@ -53,6 +53,7 @@
 #include "ovl11_object_archive_pipeline.h"
 #include "ovl11_interaction_volume_activation.h"
 #include "ovl11_object_record_state.h"
+#include "ovl11_condition_evaluation.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -93,7 +94,6 @@ void Ovl11RunAreaFramePhase(void) {
     }
 }
 
-s32 ovl_11_func_800F0F50 (void);
 void ovl_11_func_800F3FB4 (void);
 
 void Ovl11UpdateAreaFrame(void) {
@@ -142,7 +142,7 @@ void Ovl11UpdateAreaFrame(void) {
         SCRATCH_STACK_END();
     }
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
-    ovl_11_func_800F0F50();
+    Ovl11EvaluatePendingConditions();
     Ovl11ServiceActiveRecordSlot();
     Ovl11UpdateObjectEvents();
     Ovl11UpdateObjectRecordPool();

@@ -25,9 +25,9 @@
 #include "ovl11_action_minute_counter.h"
 #include "ovl11_clock_scene_completion.h"
 #include "ovl11_state_object_pool_clear.h"
+#include "ovl11_condition_evaluation.h"
 
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800F0FB0(s32 arg0);
 
 void Ovl11TickClock(void);
 void Ovl11ServiceClockEvent(void);
@@ -261,7 +261,7 @@ void Ovl11TickClock(void) {
                 ruleIndex++;
                 rule += 7;
             } while (ruleIndex < 10);
-            ovl_11_func_800F0FB0(1);
+            Ovl11SetConditionState(1);
         }
     }
 }

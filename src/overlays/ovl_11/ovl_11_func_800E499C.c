@@ -35,7 +35,7 @@ void ovl_11_func_800E499C(s32 arg0) {
         SystemError(0x53, Ovl11CurrentObjectId[1]);
     }
     index = ovl_11_func_800E4C84(arg0);
-    memcpy(D_8006E910, (void *)ovl_11_func_800E4B6C(arg0, index), recordSize);
+    memcpy(gOvl11ObjectProgramRecords, (void *)ovl_11_func_800E4B6C(arg0, index), recordSize);
     ovl_11_func_800E4BA4(arg0);
     if (size != 0) {
         memmove(destination, (u8 *)ovl_11_func_800E4B6C(arg0, 0), size);

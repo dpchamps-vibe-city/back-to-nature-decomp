@@ -17,8 +17,7 @@
 #include "ovl11_interaction_record_prepare.h"
 #include "ovl11_interaction_hit_action.h"
 #include "ovl11_object_record_state.h"
-
-void ovl_11_func_800F0FB0(s32 response);
+#include "ovl11_condition_evaluation.h"
 
 s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
     u16 *hitRecord;
@@ -32,7 +31,7 @@ s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
              * the dispatcher must still consider the remaining categories. */
             if (object->unk3C == 0x32) {
                 if (GetGameFlag(2U) == 0) {
-                    ovl_11_func_800F0FB0(9);
+                    Ovl11SetConditionState(9);
                     object->unk22 = hitRecord[0];
                     object->unk6C |= 0x800000;
                 }
@@ -41,7 +40,7 @@ s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
             if (!(recordFlags & 0x1000)) {
                 object->unk6C |= 0x800000;
             }
-            ovl_11_func_800F0FB0(3);
+            Ovl11SetConditionState(3);
             object->unk22 = hitRecord[0];
             Ovl11ResetPrimaryObjectRequest();
             return 1;

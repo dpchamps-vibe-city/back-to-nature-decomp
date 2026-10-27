@@ -10,8 +10,7 @@
 #include "ovl11_save_counters.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_seasonal_record_ids.h"
-
-void ovl_11_func_800F0FB0(s32 value);
+#include "ovl11_condition_evaluation.h"
 
 s32 Ovl11ConsumeSpawnEffect(Ovl11SpawnEffectRecord *record) {
     s32 consumed;
@@ -72,7 +71,7 @@ s32 Ovl11ConsumeTieredSpawnEffect(Ovl11SpawnEffectRecord *record,
     ((struct Ovl11PoolResetView *) D_8006C838)->flags = flags;
     if (id == 0x174) {
         ((struct Ovl11PoolResetView *) D_8006C838)->flags = flags | 0x20;
-        ovl_11_func_800F0FB0(5);
+        Ovl11SetConditionState(5);
         return 0;
     }
     if (Ovl11RecordPropertyHasFlag4000(id, 0) == 1) {

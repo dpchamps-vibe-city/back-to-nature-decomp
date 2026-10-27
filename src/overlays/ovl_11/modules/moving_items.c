@@ -43,6 +43,7 @@
 #include "ovl11_spawn_record_access.h"
 #include "ovl11_held_item_replacement.h"
 #include "ovl11_surface_height_probe.h"
+#include "ovl11_condition_evaluation.h"
 
 s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
@@ -251,8 +252,6 @@ void Ovl11UpdateMovingItemRecord(Ovl11MovingItemRecord *arg0) {
         }
 }
 
-void ovl_11_func_800F0FB0(s32 arg0);
-
 s32 Ovl11HandleMovingItemGeometryHit(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
     s32 temp_v0;
     s32 temp_v0_2;
@@ -300,7 +299,7 @@ s32 Ovl11HandleMovingItemGeometryHit(Ovl11CC4E0Object *arg0, Vec3 *arg1) {
             if ((s16) (*(u16 *) ((u8 *) arg0 + 2)) == 0xA4) {
                 (*(u16 *) (main_base + 0x51F0)) = (u16) (*(u16 *) (main_base + 0x5254));
             }
-            ovl_11_func_800F0FB0(4);
+            Ovl11SetConditionState(4);
             break;
         default:
             return 1;

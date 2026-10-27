@@ -22,7 +22,7 @@ s32 ovl_11_func_80119008(void) {
     result = 0;
     switch (gOvl11InteractionStep) {
     case 0:
-        D_8012D51C = ((struct Ovl11E8C14State *)D_8006C838)->value;
+        D_8012D51C = ((struct Ovl11TaggedItemState *)D_8006C838)->secondTag;
         Ovl11SetInteractionSteps(1, 0);
     case 1:
         if (((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5234 & 0x10000000) {

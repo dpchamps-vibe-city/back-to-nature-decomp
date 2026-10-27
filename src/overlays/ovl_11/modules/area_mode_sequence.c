@@ -61,6 +61,7 @@
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_scene_header_capture.h"
 #include "ovl11_state_object_pool_clear.h"
+#include "ovl11_condition_evaluation.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -303,10 +304,6 @@ void Ovl11RefreshAreaSoundBank(void);
 /* Resident sprite-display disable at exe:8001B100. */
 void Ovl11ApplyAreaSoundVolume(void);
 void ovl_11_func_800F4114(void);
-void ovl_11_func_800F0FB0(s32 arg0);
-s32 ovl_11_func_800F0F50(void);
-/* The callee stores argument 1 as a halfword; no caller-side narrowing. */
-void ovl_11_func_800F1038(u16 arg0, s32 arg1);
 
 /* Cases 0/9 and 2/10 deliberately share tails. Calls may wait for sound
  * transfers or repeatedly drive the state updater; this is not reentrant. */
@@ -401,8 +398,8 @@ void Ovl11RunAreaEntrySteps(void) {
         if (((Ovl11AreaInitView *)D_8006C838)->field_4450 & 0x40) {
             ((Ovl11AreaInitView *)D_8006C838)->field_4450 &= ~0x40;
             if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
-                ovl_11_func_800F0FB0(8);
-                ovl_11_func_800F0F50();
+                Ovl11SetConditionState(8);
+                Ovl11EvaluatePendingConditions();
                 Ovl11ServiceActiveRecordSlot();
                 if (GetGameFlag(2) == 1) {
                     for (;;) {
@@ -422,13 +419,13 @@ void Ovl11RunAreaEntrySteps(void) {
             }
         } else {
             if (((Ovl11MovementState *)D_8006C838)->flagsC & 0x2000) {
-                ovl_11_func_800F1038(0x74, 1);
+                Ovl11QueueConditionCodeAnySlot(0x74, 1);
                 value = ((Ovl11MovementState *)D_8006C838)->flagsC & ~0x2000;
                 ((Ovl11MovementState *)D_8006C838)->flagsC = value;
             } else {
-                ovl_11_func_800F0FB0(2);
+                Ovl11SetConditionState(2);
             }
-            ovl_11_func_800F0F50();
+            Ovl11EvaluatePendingConditions();
             Ovl11ServiceActiveRecordSlot();
             if (GetGameFlag(2) == 1) {
                 for (;;) {

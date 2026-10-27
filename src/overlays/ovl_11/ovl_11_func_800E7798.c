@@ -4,13 +4,13 @@
 #include "psyq/libgte.h"
 #include "ovl11_clock_calendar.h"
 #include "game_flags.h"
+#include "ovl11_condition_evaluation.h"
 
 
 s32 ovl_11_func_800E99EC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9620 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 u16 ovl_11_func_800EAF5C (s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800F1038 (u16 arg0, s32 arg1);
-s32 ovl_11_func_800F1354 (s32 arg0, s32 arg1);
+s32 Ovl11QueueConditionResultAnySlot (s32 arg0, s32 arg1);
 
 struct struct_8006C838_800E7798 {
     char pad_000[0x4450];

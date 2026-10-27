@@ -47,7 +47,7 @@ s32 Ovl11DispatchObjectLoadPhase(void) {
 }
 
 s32 Ovl11GetObjectProgramCursor(void) {
-    return (s32)Ovl11RecordCursor;
+    return (s32)gOvl11ObjectProgramCursor;
 }
 
 void ClearActiveOrderingTables(void);
@@ -233,10 +233,10 @@ s32 Ovl11StartObjectArchiveLoad(void) {
         }
         ovl_11_func_800E5078();
     }
-    gOvl11ObjectProgramBase = Ovl11RecordCursor = D_8006E910;
+    gOvl11ObjectProgramBase = gOvl11ObjectProgramCursor = gOvl11ObjectProgramRecords;
     gOvl11ObjectProgramIndex = 0;
     Ovl11ClearValueSlotsCommand(0, 0, 0, 0);
-    base = (u8 *)D_8006E910 - 0x20D8;
+    base = (u8 *)gOvl11ObjectProgramRecords - 0x20D8;
     ovl_11_func_800E54C8();
     ((struct Ovl11ObjectSoundRequestView *)base)->bankId = -1;
     ((struct Ovl11E4280State *)base)->selector = 1;
@@ -244,41 +244,41 @@ s32 Ovl11StartObjectArchiveLoad(void) {
 }
 
 s32 Ovl11RunObjectRecordProgram(void) {
-    Ovl11E910Entry *record;
+    Ovl11ObjectProgramRecord *record;
 
     if (((Ovl11FarInitView *)&D_8007AFF0)->field_254A0 == 0x18) {
         return 0;
     }
     if (!(((struct Ovl11E4280State *)D_8006C838)->flags_C & 0x10000000)) {
         for (;;) {
-            if (Ovl11RecordCursor->unk0 == 0xFF) {
+            if (gOvl11ObjectProgramCursor->opcode == 0xFF) {
                 ((struct Ovl11E4280State *)D_8006C838)->selector = 2;
                 break;
             }
-            record = Ovl11RecordCursor;
-            if (gOvl11ObjectOpcodeHandlers[record->unk0](
+            record = gOvl11ObjectProgramCursor;
+            if (gOvl11ObjectOpcodeHandlers[record->opcode](
                     *(s16 *)((u8 *)record + 4),
                     *(s16 *)((u8 *)record + 6),
                     *(s32 *)((u8 *)record + 8),
                     *(s32 *)((u8 *)record + 0xC)) == 1) {
-                if (Ovl11RecordCursor->unk1 == 0xFF) {
-                    Ovl11RecordCursor++;
+                if (gOvl11ObjectProgramCursor->successTarget == 0xFF) {
+                    gOvl11ObjectProgramCursor++;
                     gOvl11ObjectProgramIndex++;
                 } else {
-                    Ovl11RecordCursor = &gOvl11ObjectProgramBase[Ovl11RecordCursor->unk1];
+                    gOvl11ObjectProgramCursor = &gOvl11ObjectProgramBase[gOvl11ObjectProgramCursor->successTarget];
                     /* Bookkeeping reads the NEW record's branch byte. */
-                    gOvl11ObjectProgramIndex = Ovl11RecordCursor->unk1;
+                    gOvl11ObjectProgramIndex = gOvl11ObjectProgramCursor->successTarget;
                 }
             } else {
-                if (Ovl11RecordCursor->unk2 == 0xFF) {
-                    Ovl11RecordCursor++;
+                if (gOvl11ObjectProgramCursor->failureTarget == 0xFF) {
+                    gOvl11ObjectProgramCursor++;
                     gOvl11ObjectProgramIndex++;
                 } else {
-                    Ovl11RecordCursor = &gOvl11ObjectProgramBase[Ovl11RecordCursor->unk2];
-                    gOvl11ObjectProgramIndex = Ovl11RecordCursor->unk2;
+                    gOvl11ObjectProgramCursor = &gOvl11ObjectProgramBase[gOvl11ObjectProgramCursor->failureTarget];
+                    gOvl11ObjectProgramIndex = gOvl11ObjectProgramCursor->failureTarget;
                 }
             }
-            if (record->unk3[0] & 1) {
+            if (record->payload[0] & 1) {
                 break;
             }
         }
@@ -330,11 +330,11 @@ s32 Ovl11PollObjectArchiveLoad(void) {
         }
     } while (data == 0);
     ovl_11_func_800E499C((s32)data);
-    Ovl11RecordCursor = D_8006E910;
-    gOvl11ObjectProgramBase = D_8006E910;
+    gOvl11ObjectProgramCursor = gOvl11ObjectProgramRecords;
+    gOvl11ObjectProgramBase = gOvl11ObjectProgramRecords;
     gOvl11ObjectProgramIndex = 0;
     Ovl11ClearValueSlotsCommand(0, 0, 0, 0);
-    base = (u8 *)D_8006E910 - 0x20D8;
+    base = (u8 *)gOvl11ObjectProgramRecords - 0x20D8;
     ovl_11_func_800E54C8();
     *(s16 *)(base + 0x4438) = -1;
     *(s32 *)(base + 0x7A74) = 1;

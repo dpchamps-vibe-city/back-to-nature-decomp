@@ -1,9 +1,8 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_object_record_state.h"
+#include "ovl11_tagged_item_codes.h"
 
-/* This call also supplies an unused fourth word, zero, in the original. */
-s32 ovl_11_func_800E8C14();
 s16 ovl_11_func_800F0734(s16 arg0, s32 arg1, s16 arg2);
 
 s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
@@ -20,7 +19,7 @@ s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
     temp_s5 = (s16) gOvl11ValueSlots[arg1];
     temp_s2 = (Recon_ovl_11_func_8010CE80_A0View *)(gObjectRecordPool + temp_s5 * 0xF8);
     temp_s2->unk34 |= 8;
-    if (ovl_11_func_800E8C14(0x1B, arg0, 0, 0) == 0 || (table = &gOvl11ValueSlots[arg0], temp_v1 = *table) == 0) {
+    if (Ovl11StoreItemPropertyCode(0x1B, arg0, 0, 0) == 0 || (table = &gOvl11ValueSlots[arg0], temp_v1 = *table) == 0) {
         index = temp_s5 + 0xB;
         entry = &gOvl11ValueSlots[index];
         if (*entry != 2) {

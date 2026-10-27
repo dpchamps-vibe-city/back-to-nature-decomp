@@ -16,6 +16,7 @@
 #include "ovl11_weather_effect.h"
 #include "ovl11_record_slot_table.h"
 #include "ovl11_held_item_replacement.h"
+#include "ovl11_condition_evaluation.h"
 
 void Ovl11ConsumeDeferredClockAdvance(void) {
     char *state;
@@ -28,9 +29,6 @@ void Ovl11ConsumeDeferredClockAdvance(void) {
         SetGameFlag(0x49, 0);
     }
 }
-
-void ovl_11_func_800F0FB0(s32 arg0);
-s32 ovl_11_func_800F0F50(void);
 
 void Ovl11CompleteClockSceneEvent(void) {
     char *state;
@@ -48,8 +46,8 @@ void Ovl11CompleteClockSceneEvent(void) {
     } else if (GetGameFlag(0x48) != 1) {
         SetGameFlag(0x47, 0);
         if (((struct Ovl11UpdateWork *)&D_8007AFF0)->field_25476 == 2) {
-            ovl_11_func_800F0FB0(8);
-            ovl_11_func_800F0F50();
+            Ovl11SetConditionState(8);
+            Ovl11EvaluatePendingConditions();
             Ovl11ServiceActiveRecordSlot();
             if (GetGameFlag(2) == 1) {
                 for (;;) {
