@@ -2254,7 +2254,51 @@ separate same-family entries, not same-TU members.
 
 ## `ovl_11` D_8007A638 seven-record state run — 0x8010C6A0 / 0x8010C7F0 / 0x8010C95C / 0x8010C9B4 / 0x8010CAD4 (confidence: medium; CAD4 low)
 
-Module-campaign review: the closed sweep/helper core also includes CA0C and
+**Reconstructed the complete fifteen-entry C6A0–D314 interval as
+`modules/object_record_state.c`.** Original suffixes in order: C6A0/C7F0/
+C95C/C9B4/CA0C/CAA8/CAD4/CB6C/CD80/CE80/CF58/D04C/D0EC/D20C/D250.
+The initializer, frame/counter/area sweeps, mode admission/service, sprite
+selection, message completion and reset form a closed local helper graph:
+C7F0 calls CF58/CD80/CAA8/D0EC/CA0C; CA0C calls D20C; CD80 calls D250/CE80;
+C9B4 calls CB6C, which calls CE80; C6A0 calls D04C; C95C calls CAD4.
+The nine sweep/sprite/mode helpers have no clients outside this block.
+The private animation-pair, palette-Y, initial-location/record-offset and
+random-mode tables at 127BA4/CA4/CB4/CD0/CEC corroborate the closure. Their
+order is corroboration, not a claim that every table's sole consumer proves
+its defining object. The seven-record storage itself is NOT private.
+
+Left aged_item_pool maintains 99 different cells and shares no local helper
+or table. Right area_record_claims has its own exclusive request/claim helper
+closure; CAD4 calls its published dispatch service, not a shared private
+helper. The sparse admission callbacks and later mode/placement/sprite
+services similarly cross published protocol interfaces; their non-exclusive
+call closure does not establish one original 69-entry file. Thus both cuts
+are evidence-limited -G0 service boundaries, not GP-derived object proofs.
+This supported fifteen-entry closure supersedes the earlier eight-member
+slice; it does not bypass the rodata limit of the still-unproved larger
+69-entry hypothesis recorded below.
+
+All fifteen functions now have behavior-based names. `gObjectRecordPool`
+is the EXE identity, propagated through collision/status/save/editor users;
+its seven-F8-byte byte-array view is retained. Five private tables and both
+14-entry callback banks have canonical overlay identities and central externs.
+The two callback banks stay in their original raw rodata, without a new C
+allocation or private-linkage inference. Public `ovl11_object_record_state.h`
+documents initialization, frame/clock gates, counter/RNG units, unchecked
+mode indices, guard side effects, staged mode triples and the full F8 reset.
+Local packed initialization views, loop/result names and comments explain
+unaligned copies and the retained shared-constant/address webs. Per-site
+signedness at +16/+2C/+30/+34 is deliberately not unified.
+
+The first whole baseline fold exposed only D0EC's duplicate anonymous view:
+its caller already used the layout-identical game_types.h identity. Reusing
+that canonical view in the definition, instead of adding a pointer-prototype
+workaround, let all fifteen and the complete overlay pass the checked fold
+at -O2/-G0. No flag override or policy exception applied or changed. The
+later naming/interface/readability changes passed the full batch gate
+recorded with the status-text modules below.
+
+Historical module-campaign review: the closed sweep/helper core also includes CA0C and
 CAA8 (sole callers C7F0), plus CB6C (sole caller C9B4, consuming the +AC index
 initialized by C6A0). An eight-member dry fold through CB6C is mechanically
 possible, but was **not written**: a boundary at CD80 is not established.
@@ -2298,7 +2342,8 @@ frame ties all 69 entries into one original file. Thus the larger file remains
 an open hypothesis, not authority for merging every service its callbacks use.
 The relocated callback-table representation is still the concrete obstacle
 to testing that larger hypothesis; no padding/flag workaround or partial
-15-member record-frame fold was introduced to evade it. In particular the
+15-member record-frame fold was introduced by that earlier attempt to evade
+it. The independently supported current closure is described above. In particular the
 record-frame views retain conflicting signed/unsigned halfword accesses at
 +2C/+30, and any future reconciliation must preserve each access explicitly.
 
@@ -2306,7 +2351,7 @@ Candidate same-TU family over the overlay-local global `D_8007A638` (a
 seven-entry, 0xF8-stride record array, 0x6C8 bytes).
 
 Evidence:
-- shared private global: `grep D_8007A638 build/ovl_11/asm/nonmatchings/`
+- shared record storage (NOT TU-private): `grep D_8007A638 build/ovl_11/asm/nonmatchings/`
   returns exactly these four functions inside the 0x8010C6xx run; the only
   other readers sit far apart (800BEB28, 800EDAA4, 800FD3CC), so exclusion
   other than distance is not claimed.
@@ -2335,7 +2380,12 @@ Members (link order):
 
 ## `ovl_11` object-mode dispatch run — 0x8010CB6C–0x8010CE80 (confidence: medium)
 
-Candidate same-TU family of `ovl_11` around the two function-pointer
+These entries and D250 now belong to the complete object_record_state unit
+above, not a separate dispatcher slice. Its admission and frame banks are
+gOvl11ObjectModeEntryGuards/gOvl11ObjectModeHandlers; their public callbacks
+alone do not prove all callback implementations share this original TU.
+
+Historical candidate same-TU family of `ovl_11` around the two function-pointer
 dispatch tables `D_800BAA84` (sparse, 14 slots, entries `8010DD38`/`8010DA04`/
 `8010DDC8`) and `D_800BAABC` (dense, 14 slots, entries 0x8010E2C4–0x8010F4CC),
 both sitting adjacent in the same rodata dlabel run (2A28.rodata.s, after the
@@ -2492,7 +2542,36 @@ Members (link order):
 
 ## `ovl_11` D_800BAA84 handler run — 0x8010DA04–0x8010DE68 (confidence: medium-low)
 
-Evidence: the three `D_800BAA84` function-pointer table entries named in the
+**Reconstructed the complete DA04–E2C4 interval as
+`modules/object_mode_entry_guards.c`: Ovl11GuardObjectMode6,
+Ovl11GuardObjectMode5, Ovl11GuardObjectMode13 and the local
+Ovl11HandleObjectItemResponse helper.** The three callbacks cover the entire
+non-null sparse admission bank (slots 6/5/13), and DA04 is the only caller
+of DE68. The five private message/delta tables CF4/D04/D14/D24/D34 and the
+common admission-side value/facing/response protocol corroborate the whole
+family, beyond table membership or adjacency alone. DE68's switch table is
+pooled into the module without moving the raw admission/frame banks.
+
+Left area_record_claims has independent request/claim state and its own
+exclusive helper chain. Right E2C4 begins the dense per-frame mode-handler
+population, not admission or this private message-selector chain; its
+separate keyframe tables do not extend this private family. The callbacks
+are externally linked interfaces to object_record_state, not captured-frame
+helpers forcing a merge across the claims module. These are evidence-limited
+-G0 protocol cuts, not proven original object boundaries.
+
+`ovl11_object_mode_entry_guards.h` publishes the three callbacks and explains
+that -1 rejects admission WITHOUT undoing messages/value/flag/effect changes.
+Mode 5's unsigned +16 load and signed clamp sequence remain intact in the
+named Ovl11Mode5GuardObject view, shared through game_types.h. Its obsolete
+local view/timed-effect duplicate were replaced by canonical identities,
+without merging the disputed signed views used elsewhere. Five tables have
+canonical overlay names and central declarations; no storage or static
+linkage was introduced. Baseline checked fold passed all four and the full
+overlay; the later names/view/header changes passed the full batch gate.
+No override or source-policy exception was involved.
+
+Historical evidence (adjacency alone is not the membership proof): the three `D_800BAA84` function-pointer table entries named in the
 object-mode dispatch run above (`8010DD38`/`8010DA04`/`8010DDC8`) are gapless in
 link order and the band closes with `8010DE68`: 0x8010DA04 (0x334) → 0x8010DD38
 (0x90) → 0x8010DDC8 (0xA0) → 0x8010DE68 (0x45C), each starting exactly where the
@@ -5684,7 +5763,25 @@ it projects/draws/steps that source and calls none of the pointer-getter
 cascade. It now lives with that caller in active_record_sprites, described
 below. The installer remains the complete E499C–E516C candidate, not a slice
 around the standing E4BA4 loop override. No setting was changed or newly
-measured for that unresolved candidate in this batch.
+measured for that unresolved candidate in that earlier batch.
+
+Fresh whole-unit baseline experiment: all ELEVEN E499C–E5230 entries
+(499C/4AEC/4B58/4B6C/4BA4/4C30/4C84/4D08/4DAC/5078/516C) were dry-planned,
+then tested through the checked fold with E4BA4's override temporarily
+removed. The closure is corroborated by the sole-use 801291B8/291C0/29410/
+29412/29414 state and the local offset-getter/record-relocation call graph.
+The whole -O2/-G0 module compiled but failed the linked overlay oracle
+(original SHA-256 165c3cca, built fcc5fa78); the helper rolled back all
+module/config edits. The standing per-function override was restored
+exactly, and no module-wide setting or internal boundary was invented.
+This measures a failing complete baseline context, not an impossibility
+proof for every source shape or affirmative proof of original flags.
+The right E5230 uses the separately shared entity-sprite-source protocol,
+not this installer's offset/state closure. The next useful experiment is
+reconcile E4BA4's source-side hoist premises over this whole unit, then
+measure the minimal existing setting against every loop-bearing member;
+neutral getter neighbors alone cannot establish that setting. The unit
+remains unfurled because of that concrete source/compiler-setting limit.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) in the lower-middle of
 the overlay. Evidence is strict link-order adjacency plus an internal call graph
@@ -12914,6 +13011,23 @@ Left scene_camera_lighting owns the separate orbit/light/geometry protocol;
 right DBFA0 resets area-entry far-state fields and touches neither slots nor
 counters. These are evidence-limited -G0 cuts, not GP-derived object proofs.
 
+**DBFA0–DBFC4 is now the single-service `modules/area_entry_cache.c`,
+Ovl11ResetAreaEntryCache.** area_scene_load calls it at startup; its light
+and full entry paths repeat the same three stores among broader resets.
+It clears far-work +25390 and writes the positive word sentinel 65535 to
++25484/+25488. The existing Ovl11FarInitView is reused, without new storage,
+interior global aliases, field-type changes or invented private linkage.
+Left record_slot_table uses the separate five-slot tags/counters, none of
+these far-cache fields. Right scene_dispatch installs geometry and pairs
+header-selected effect initialization/update; it neither calls this reset
+nor uses these three fields. The shared startup coordinator does not prove
+one TU with either neighbor or with the distant area loader. These are
+evidence-limited service boundaries at -G0, not original-object proofs.
+`ovl11_area_entry_cache.h` states the exact stores and limits; the still
+uncertain meanings of the two reload slots retain neutral field identities.
+The checked baseline fold preserved this entry and the complete overlay;
+no flag override or policy exception was present, added or retired.
+
 `ovl11_record_slot_table.h` publishes initialization, active servicing,
 two pointer-returning reservations, counter advancement and the slots-1..4
 query. F12D0/F1354 immediately dereference the reservation return pointers;
@@ -15727,8 +15841,28 @@ Members:
 - ovl_11_func_800E6EE0 (m, accessor family; candidate local same TU with 800E6EAC; [evidence](research/ovl_11_func_800E6EE0-grouping.md)) — optionally resolves an item ID from `D_80129560` and returns whether `ovl_11_func_800EEC1C` finds it.
 - ovl_11_func_800E6F34 (m, candidate local same TU with 800E6EE0; [evidence](research/ovl_11_func_800E6F34-grouping.md)) — inserts an optionally slot-resolved item through the item helper or into the first empty item-grid slot.
 - ovl_11_func_800E7088 (m, candidate local same TU with 800E6F34/800E6EE0; [evidence](research/ovl_11_func_800E7088-grouping.md)) — inserts an optionally slot-resolved item into held, grid or overflow storage, with optional UI feedback.
-- ovl_11_func_800E7A74 (m, candidate local same TU with 800E7B78; [evidence](research/ovl_11_func_800E7A74-grouping.md)) — optionally resolves an ID through `D_80129560` and starts an operation or tests its state.
-- ovl_11_func_800E7B78 (candidate local same TU with 800E7A74; [evidence](research/ovl_11_func_800E7A74-grouping.md)) — forwards a raw ID to the adjacent target's mode-4 state predicate, discarding its result.
+**Reconstructed the complete E7A74–E7BA8 pair as
+`modules/sprite_rotation_commands.c`.** Ovl11SpriteRotationCommand resolves
+an optional value-slot ID and starts/queries the rotation service;
+Ovl11DiscardSpriteRotationActiveQuery is its raw-ID mode-4 wrapper. The
+direct adjacent call and exact specialized command protocol join both,
+corroborated by consecutive callback entries and the command's one pooled
+jump table. Both remain externally linked/address-taken; no static linkage
+is inferred. Left E7954 selects scene modes and resets render colors;
+right E7BA8 emits a full-screen flat rectangle. Neither uses this rotation
+command/query protocol or a private helper/state shared with the pair.
+The broad value-slot table and callback table are shared interfaces, not
+proof of a larger TU; these are evidence-limited -G0 protocol cuts.
+
+`ovl11_sprite_rotation_commands.h` documents the signed low-halfword slot
+read, five operations, default/request return 1, retained double lookup,
+discard-only wrapper and the underlying request helper's NULL-result
+constraint for ID 20/game flag 76 (hex). Existing canonical rotation-state
+enumerators replace raw state numbers, and parameter/result locals name
+their roles. Widths, linkage, control flow and calls remain unchanged.
+The checked baseline -O2/-G0 fold passed both members and the whole overlay,
+including its pooled jump table; no flag/exception changed.
+Original research: [E7A74 pair](research/ovl_11_func_800E7A74-grouping.md).
 - ovl_11_func_800E7D4C (m, candidate same TU; [evidence](research/ovl_11_func_800E7D4C-grouping.md)) — grid-item selector that writes the selected item ID to `D_80129560[slot]`.
 - ovl_11_func_800E8BA0 (m) — writer: `D_80129560[arg1] = entity->u16@+2`.
 - ovl_11_func_800E8C14 (m, candidate local same TU with 800E8D00; [evidence](research/ovl_11_func_800E8C14-grouping.md)) — writes a one-based lookup result to a selected `D_80129560` slot.
@@ -17178,13 +17312,7 @@ Members:
   s32 flags@+0x34, s32 coords@+0x38/+0x3C/+0x40/+0x44) plus an extra s16
   radius source@+0xAC, gated on tag != 0 and flags & 0x8000; passes
   &D_8012D080 as the out pointer and clears it on scan failure.
-- ovl_11_func_800CF36C (m, matched this session, byte-exact) — conditional
-  batch clearer: for each of the six 0xB0 records, calls
-  ovl_11_func_800D3200 (the 0xB0 memset-clearer of the idiom family) when
-  (s32@+0x34 & 0x20000 == 0 or arg0) and (u16 tag@+0x0 & 0x15B == 0 or the
-  global D_8006C838+0x44F8 bit 0x01000000 is set); the tag test covers the
-  same +0x00 field the scan above equality-matches, and callers pass arg0
-  0/1 (800BC3E0, 800C0A4C, 800E499C, 800E5C60).
+- Ovl11ClearEligibleStateObjects (800CF36C, m) — reconstructed as the complete single-service `modules/state_object_pool_clear.c`, CF36C–CF428 exclusive. Calls the shared Ovl11ClearB0ObjectRecord on each eligible one of six B0-byte gStateObjectPool records, without compaction. The argument bypasses the record's +34 bit 20000 guard only; the independent tag-mask 15B/shared-status bit 01000000 guard still applies. Correction to the historical prose: that status bit must be CLEAR for a masked tag to be cleared, not set; the tag test is a bit mask, not equality to kind 15B. The five caller units (area mode, clock, E499C, E5C60 and E7504's declaration) use this batch-reset service rather than a private local helper. Left timed_effect_record_fill fills a separate timed-effect record and right item_spawn_placement uses rule/time tables and allocation, without a direct helper edge or private state joining this clearer. The wider state-object pool is shared across many services and does not prove one TU. These are evidence-limited -G0 service cuts. `ovl11_state_object_pool_clear.h` records exact guard precedence, all-six iteration and absence of compaction; locals name the two independent protection masks. Existing record type, widths, linkage and storage are unchanged. The checked baseline fold preserved the member and full overlay with no override or new policy exception.
 - ovl_11_func_800D2F48 (m, matched this session, byte-exact) — first-free-slot
   allocator over the same six 0xB0 records: scans D_80075BC4 for tag 0,
   initialises the slot through 800D3390, then stamps the shared unaligned
@@ -24076,7 +24204,7 @@ Members:
   0x20 : 0x10)` on each.
 - ovl_11_func_800D9064 (m, byte-exact) — walks all 25x45 `D_80071DFC` entries
   and applies the `800DA49C`/`800DA518`/`800DA454` tag-update trio to each.
-- ovl_11_func_800D9108 (m, candidate same TU; [evidence](research/ovl_11_func_800D9108-grouping.md)) — searches nearby then all main-grid cells for a threshold-ready tag-0x36 entry and dispatches its update.
+- Ovl11RefreshFirstReadyKind36Cell (800D9108, m; [original research](research/ovl_11_func_800D9108-grouping.md)) — reconstructed as the complete single-entry `modules/ready_kind36_cell.c`, 800D9108–800D92FC exclusive. This is a service cut, not proof of an original one-function file. Both tagged_record_handlers and code160_record_handlers supply their object's XYZ words and test the 1/0 result. It prefers a clipped 3x3 window, then falls back to the full 25x45 main grid, calling the shared refresh service only on the first threshold-ready kind-36 cell. The left grid_transition_passes module implements whole-grid random-transition profiles with a different phase/mode caller; the right cell_sprite_dispatch module computes layer bounds and emits selected/fixed sprite grids. No private helper/state/table connects this selector to either neighbor. The old table-type grouping is a cross-service relationship, not evidence that all grid users compiled together (-G0 supplies no ownership proof). The header documents window-origin clamping, type-threshold narrowing, first-match order, fallback and ignored refresh result; parameters/locals name position and row/column roles. Existing canonical grid storage/types remain external and unchanged. The checked baseline -O2/-G0 fold preserved the member and whole overlay; no override was present, added or retired.
 - ovl_11_func_800DADB0 (m, matched this session, byte-exact) — search entry
   in the same gapless link-order run as 800DACD4/800DAF60 (800DACD4 ends
   0x800DADB0; 800DADB0 ends 0x800DAF24; 800DAF60 follows 800DAF24): scans the
@@ -25273,6 +25401,59 @@ merge the distant status-reader and copy clusters into a proved original TU.
 
 ## ovl_11 D_801295D0 status-record copy cluster — 0x800E729C / 0x800F0474 (confidence: low)
 
+**Reconstructed all four F0358–F06D8 entries as
+`modules/selected_record_pair_commands.c`.** The load-bearing new witness
+is E9D28's opcode 12: its four subcommands call F0358, F0380, F0474 and F05C0
+in exactly restore/test/edit/clear order. Thus F0474 is NOT an uncalled
+interloper; it edits the first member of those same signed-index pairs.
+F05C0 also directly calls F0380 for all four selectors. The pair-table and
+B8/B4 record-pool protocol joins all four, rather than merely forcing a
+contiguous interval around one helper. They are now Ovl11RestoreSelectedRecordPairs,
+Ovl11IsSelectedRecordPairMarked, Ovl11EditSelectedRecordText and
+Ovl11ClearMarkedRecordPairs. The public header documents first-versus-second
+record asymmetry, selectors 1/3 availability guards, required text-service
+results, flag masks, unchecked indices and bank order 1 then 0.
+
+Left F02C8 scans for the highest record counter, without pair mutation or
+text editing. Right F06D8 compares relative direction and is used by entity
+position commands; it does not use the pair selection/restore/text/clear
+protocol. The lower-level record_pair_slots service is a published dependency,
+not proof of one file with its distant callers. These are evidence-limited
+-G0 protocol cuts. Shared work alone does not extend either edge.
+
+**E729C–E74AC is the complete single-service `modules/status_text_command.c`,
+Ovl11StatusTextCommand.** It selects required/cancelable text entry, reports
+confirmation/cancellation in a value slot, and copies the same 18-byte status
+scratch to one of two fixed destinations. Left E7088 inserts an item into
+held/secondary/overflow slots and invokes transfer; right E74AC tests strict
+coordinate-distance limits. Neither shares a private helper or text-service
+handoff with this command. The shared value slots and opcode dispatch table
+are not membership evidence; these too are evidence-limited service cuts.
+Its header explains target-specific copy/start behavior, optional result-slot
+sentinel, cancellation output, unchecked indexing and non-reentrancy.
+
+The shared buffer now has overlay identity gOvl11StatusTextScratch and its
+existing nine-halfword aggregate view is Ovl11StatusTextRecord. Both modules
+retain exactly the 18-byte copies, signedness, external storage and control
+flow; parameter/loop/result names reflect roles. The buffer's cross-service
+use is NOT evidence of one giant intervening TU. Both whole folds passed
+baseline -O2/-G0 and the full overlay. No flag/exception was present or changed.
+
+Final four-module batch acceptance (these two services, object_record_state
+and object_mode_entry_guards): `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates at
+**2016/2625 folded, 349/349 valid modules, 609 remaining**. This run totals
+**+30 functions in nine modules**. All EXE/13-overlay code, data, callback
+pointers, switch tables, caller bytes and placement remain exact. The second
+interface publication reconciled 16 caller units for 14 published functions;
+all published interfaces pass, while unrelated standing debt is unchanged.
+Source policy/scope, convergence, whitespace, input stability and exception
+non-growth pass. No shared tool, override, allowlist, asm/pin or INCLUDE_ASM
+was added, and no commit was made. Exit 1 denotes the unfinished campaign.
+The separate eleven-member installer baseline experiment above failed and
+was restored; a fresh no-cache full gate confirmed the restored settings.
+
+Historical copy-cluster evidence:
 - ovl_11_func_800F0474 (m, byte-exact this session): resolves a destination
   record slot from arg0 (0-1: D_800749F8 + idx*0xB8; 2-3: D_8006C838+0x7AB8 +
   idx*0xB4; else &D_801295D0, where idx is the s16 at D_8006C838+0x99C8 +
@@ -27134,6 +27315,52 @@ Local texture-update observations (original identities;
 - ovl_11_func_80121134 (s) — scans the 25×45 grid and applies generated tile textures.
 
 ---
+
+## `ovl_11` held/secondary item snapshot — 0x800E8250–0x800E8550 (service cut)
+
+**Reconstructed `modules/item_slot_snapshot.c`, Ovl11SnapshotItemSlots.**
+The entire single-entry save/detach/restore protocol owns the sole uses of
+its six-byte held snapshot at 80129500 and 48-byte secondary snapshot at
+80129510; those private bytes now have container-qualified canonical names
+`gOvl11SnapshotHeldItem` and `gOvl11SnapshotSecondaryItems`. The callback
+saves exactly one held record and eight secondary records, detaches live
+sprite registrations, then later restores either by the request installer
+or by a direct record/sprite/flag path. The two branches belong together;
+this is not a slice around a difficult source shape.
+
+Left E7D4C resets/selects grid entries and resolves records, without touching
+these snapshots or participating in item save/restore. Right E8550 formats
+a scalar into its own number-text scratch buffer. Neither calls this
+callback or shares its private snapshot state/helper protocol. These are
+evidence-limited -G0 service cuts, not claims of proven original one-entry
+objects. The overlay-wide dispatch table alone does not merge the neighbors.
+
+`ovl11_item_slot_snapshot.h` documents non-nesting, save-before-restore,
+empty-held asymmetry, special displaced-item cleanup, request versus direct
+restoration, unchecked IDs/capacity and unconditional result 1. The existing
+work view is now Ovl11ItemSlotSnapshotWork with heldItem, secondaryItems,
+itemDefinitions and effectHalfwords fields, retaining every width/offset.
+Source-local names identify restore mode, slot index and displaced ID;
+unused SDK includes were removed, not replaced by local declarations.
+The word-array snapshot storage/copy construction is retained, as are all
+external linkage and absolute accesses. The checked baseline fold passed
+this member and the entire overlay; no flag or policy exception changed.
+
+Five-module batch acceptance (ready_kind36_cell, area_entry_cache,
+state_object_pool_clear, sprite_rotation_commands and item_slot_snapshot):
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passed
+all eight integrity gates at **1992/2625 folded, 345/345 valid modules**
+(+6 functions, +5 modules). EXE and all 13 overlays, associated data,
+callbacks, pooled jump tables, caller bytes and placement remain exact.
+interfaceAudit published all six interfaces with unchanged caller objects
+and zero failing published sites; unrelated standing interface debt remains.
+The overlay-local snapshot externs were explicitly reconciled in the shared
+override header after canonicalization (an unprefixed shared-header address
+cannot identify an overlay by itself); the work-view rename was propagated
+to its other user EEC1C. No alias, storage, linkage or flag workaround was
+introduced. Policy/scope, convergence, whitespace, stability and exception
+non-growth passed. No shared tool changed and no commit was made. Exit 1
+is solely the incomplete overall campaign, not a failed integrity gate.
 
 ## `ovl_11` `(arg0 << 0x10) == 0` gate pair — 0x800E8614 / 0x800E8760 (confidence: low)
 

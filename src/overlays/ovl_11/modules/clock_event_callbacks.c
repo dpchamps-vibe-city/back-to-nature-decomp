@@ -53,6 +53,7 @@
 #include "ovl11_calendar_record_gate.h"
 #include "ovl11_scene_header_capture.h"
 #include "ovl11_primary_object_day_reset.h"
+#include "ovl11_object_record_state.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -80,7 +81,6 @@ s32 Ovl11ClockShiftValueHistory(void) {
 }
 
 void ovl_11_func_800EEECC (void);
-void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
 void ovl_11_func_800F3D40 (void);
 
@@ -183,7 +183,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
     case 5:
         Ovl11UpdateQueuedItemInteraction();
         Ovl11AdvanceTrackedRecordCounters();
-        ovl_11_func_8010C9B4();
+        Ovl11AdvanceObjectPoolCounters();
         ovl_11_func_800F40A4();
         ovl_11_func_800F3D40();
         Ovl11ServiceEventQueues();
@@ -230,11 +230,9 @@ s32 Ovl11ClockRefreshAreaSprites(void) {
     return 1;
 }
 
-void ovl_11_func_8010C95C(void);
-
 s32 Ovl11ClockApplyHourUpdates(void) {
     Ovl11RunRecordPoolFirstPass();
-    ovl_11_func_8010C95C();
+    Ovl11DispatchObjectPoolAreaActions();
     Ovl11ApplyHourCounterDeltas();
     if (((struct struct_8006C838_time *) D_8006C838)->field_44C0 == 0xC) {
         Ovl11ClearEventSlotTimeOrigins();

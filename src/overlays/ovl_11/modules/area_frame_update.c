@@ -52,6 +52,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_object_archive_pipeline.h"
 #include "ovl11_interaction_volume_activation.h"
+#include "ovl11_object_record_state.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -93,7 +94,6 @@ void Ovl11RunAreaFramePhase(void) {
 }
 
 s32 ovl_11_func_800F0F50 (void);
-void ovl_11_func_8010C7F0 (void);
 void ovl_11_func_800F3FB4 (void);
 
 void Ovl11UpdateAreaFrame(void) {
@@ -145,7 +145,7 @@ void Ovl11UpdateAreaFrame(void) {
     ovl_11_func_800F0F50();
     Ovl11ServiceActiveRecordSlot();
     Ovl11UpdateObjectEvents();
-    ovl_11_func_8010C7F0();
+    Ovl11UpdateObjectRecordPool();
     Ovl11RunAreaFrameUpdates();
     Ovl11UpdateInteractionDispatch();
     ovl_11_func_800F3FB4();

@@ -63,6 +63,7 @@
 #include "ovl11_triplet_sprite_release.h"
 #include "ovl11_held_item_flags.h"
 #include "ovl11_object_area_sprite_reset.h"
+#include "ovl11_object_record_state.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -410,7 +411,6 @@ s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
 s32 ovl_11_func_800F3E44 (s16 arg0);
 void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
-s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
 s32 Ovl11CommitPendingItemRecord (Ovl11C7010Object *arg0);
 s32 Ovl11BeginCellEffectAction (Ovl11C7010Object *arg0);
@@ -771,7 +771,7 @@ finish_action:
             goto advance_action;
         case 0x32:
             if ((Ovl11HandleInteractionRequest80((Ovl11C8FA8Object *) arg0) == 0) && (gOvl11InteractionHitFlags & 0x400)) {
-                ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) gOvl11InteractionHitRecordView, 0xD);
+                Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *) gOvl11InteractionHitRecordView, 0xD);
                 Ovl11ResetPrimaryObjectRequest();
             }
             Ovl11ClearHalfwordTriplet((s16 *) ((u8 *) arg0 + 0xF0));

@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_object_record_state.h"
 
 /* This call also supplies an unused fourth word, zero, in the original. */
 s32 ovl_11_func_800E8C14();
 s16 ovl_11_func_800F0734(s16 arg0, s32 arg1, s16 arg2);
-s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
     Recon_ovl_11_func_8010CE80_A0View *temp_s2;
@@ -18,7 +18,7 @@ s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
     s32 *entry;
 
     temp_s5 = (s16) gOvl11ValueSlots[arg1];
-    temp_s2 = (Recon_ovl_11_func_8010CE80_A0View *)(D_8007A638 + temp_s5 * 0xF8);
+    temp_s2 = (Recon_ovl_11_func_8010CE80_A0View *)(gObjectRecordPool + temp_s5 * 0xF8);
     temp_s2->unk34 |= 8;
     if (ovl_11_func_800E8C14(0x1B, arg0, 0, 0) == 0 || (table = &gOvl11ValueSlots[arg0], temp_v1 = *table) == 0) {
         index = temp_s5 + 0xB;
@@ -62,7 +62,7 @@ s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
             gOvl11ValueSlots[arg0] = 0xD;
         } else {
             gOvl11ValueSlots[arg0] = 0xE;
-            temp_s2 = (Recon_ovl_11_func_8010CE80_A0View *)D_8007A638;
+            temp_s2 = (Recon_ovl_11_func_8010CE80_A0View *)gObjectRecordPool;
             for (i = 0; i < 7; i++, temp_s2 = (Recon_ovl_11_func_8010CE80_A0View *)((u8 *)temp_s2 + 0xF8)) {
                 if (*(s16 *)((u8 *)temp_s2 + 0x16) < 0xF5) {
                     *(s16 *)((u8 *)temp_s2 + 0x16) += 0xA;
@@ -74,6 +74,6 @@ s32 ovl_11_func_800EDAA4(s16 arg0, s16 arg1, s32 arg2) {
         return 1;
     }
 failure:
-    ovl_11_func_8010CE80(temp_s2, 6);
+    Ovl11SetObjectRecordMode(temp_s2, 6);
     return 0;
 }

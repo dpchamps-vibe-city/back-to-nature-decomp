@@ -34,9 +34,9 @@
 #include "ovl11_record_effect_threshold.h"
 #include "ovl11_cd_audio_request.h"
 #include "ovl11_record_status_message.h"
+#include "ovl11_ready_kind36_cell.h"
 
 s32 Ovl11IsCode160RecordActive(UnkStruct800DF4F0 *arg0);
-s32 ovl_11_func_800D9108(s32 *arg0);
 
 s32 Ovl11UpdateCode160RecordLiveness(UnkStruct800DF4F0 *arg0) {
     s16 temp_s1;
@@ -58,7 +58,7 @@ s32 Ovl11UpdateCode160RecordLiveness(UnkStruct800DF4F0 *arg0) {
         if (((struct Ovl11HandlerState *)D_8006C838)->field_E4C8 == 0) {
             if ((++(*(u16 *)((u8 *)arg0 + 0xAC)) >= 5U) &&
                 !(temp_a1 & 1) &&
-                (ovl_11_func_800D9108((s32 *)(arg0 + 0x1C)) == temp_s1)) {
+                (Ovl11RefreshFirstReadyKind36Cell((s32 *)(arg0 + 0x1C)) == temp_s1)) {
                 *(s32 *)((u8 *)arg0 + 0x34) |= 1;
             }
         } else {

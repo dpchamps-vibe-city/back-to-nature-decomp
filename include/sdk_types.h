@@ -534,13 +534,13 @@ struct SpriteSourceData {
 };
 
 typedef struct {
-               s16 field_0;
-               char pad_02[0x30 - 0x02];
-               s16 unk30;
-               char pad_32[0x78 - 0x32];
-               SpriteSourceData sprite;
-               char pad_A8[0xAC - 0xA8];
-               u16 unkAC;
+    s16 field_0;
+    char pad_02[0x30 - 0x02];
+    s16 unk30;
+    char pad_32[0x78 - 0x32];
+    SpriteSourceData sprite;
+    char pad_A8[0xAC - 0xA8];
+    u16 unkAC;
 } M2C_90bbdd1382f9_Struct_8010D0EC;
 
 typedef struct {
@@ -598,19 +598,6 @@ typedef struct {
     char pad_38[0x7A - 0x38];
                u16 unk7A;
 } M2C_b5b2a1d87535_Ovl11BE24Obj;
-
-typedef unsigned int u32;
-
-typedef struct {
-               char pad_00[0x16];
-               u16 unk16;
-               char pad_18[0x30 - 0x18];
-               s16 unk30;
-               char pad_32[0x34 - 0x32];
-               u32 unk34;
-               char pad_38[0xA8 - 0x38];
-               char unkA8[0];
-} M2C_bfa40a22ddcd_Struct_8010DD38;
 
 typedef struct {
     char pad_00[0x24];
@@ -1266,6 +1253,8 @@ typedef struct {
     s16 day;
 } Ovl11ConditionDate;
 
+typedef unsigned int u32;
+
 typedef struct {
     u16 unk0;
     u8 unk2;
@@ -1660,6 +1649,16 @@ typedef struct {
     char pad_B8[0xDC - 0xB8];
     s32 spriteHeader;
 } Ovl11ItemSpriteObject;
+
+typedef struct {
+    char pad00[0x16];
+    u16 value;
+    char pad18[0x30 - 0x18];
+    s16 area;
+    char pad32[0x34 - 0x32];
+    u32 flags;
+    char pad38[0xA8 - 0x38];
+} Ovl11Mode5GuardObject;
 
 typedef struct {
     char pad0[0xB8];

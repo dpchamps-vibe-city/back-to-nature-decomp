@@ -45,6 +45,7 @@
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_condition_record_fields.h"
 #include "ovl11_season_mask.h"
+#include "ovl11_selected_record_pair_commands.h"
 
 typedef struct {
                char pad0[0x38];
@@ -114,8 +115,6 @@ void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
 s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
-void ovl_11_func_800F0358 (void);
-s32 ovl_11_func_800F0474 (s16 arg0);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);

@@ -2,6 +2,7 @@
 #include "psyq/libapi.h"
 #include "psyq/memory.h"
 #include "asset_scratch.h"
+#include "ovl11_state_object_pool_clear.h"
 
 s32 ovl_11_func_800E4AEC(s32 arg0);
 void ovl_11_func_800E5078(void);
@@ -11,7 +12,6 @@ s32 ovl_11_func_800E4B6C(s32 arg0, s32 arg1);
 void ovl_11_func_800E4BA4(s32 arg0);
 void ovl_11_func_800E4D08(s32 arg0);
 void ovl_11_func_800E4DAC(s32 arg0);
-void ovl_11_func_800CF36C(s32 arg0);
 
 void ovl_11_func_800E499C(s32 arg0) {
     s32 size;
@@ -42,7 +42,7 @@ void ovl_11_func_800E499C(s32 arg0) {
         D_801291B8 = destination;
         ovl_11_func_800E4D08(arg0);
         ovl_11_func_800E4DAC(arg0);
-        ovl_11_func_800CF36C(1);
+        Ovl11ClearEligibleStateObjects(1);
     } else {
         D_801291B8 = 0;
     }

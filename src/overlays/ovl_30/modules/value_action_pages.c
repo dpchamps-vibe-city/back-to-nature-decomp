@@ -18,6 +18,7 @@
 #include "ovl11_cell_actions.h"
 #include "ovl11_item_table_queries.h"
 #include "ovl11_item_record_allocation.h"
+#include "ovl11_object_record_state.h"
 
 s32 Ovl30EditMainData(s32 cursor) {
     s32 result;
@@ -53,7 +54,6 @@ s32 ovl_11_func_800E7088(s16, s16, s32, s32);
 s32 ovl_11_func_800E99EC(s16, s16, s32, s32);
 void ovl_11_func_800EF488(s16);
 void ovl_11_func_800EF6E4(s16 mode, s16 rivalIndex);
-s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *, s32);
 
 #define ACTION ((Ovl30ActionState *)D_8006C838)
 #define EVENT(index) ((Ovl30EventRecordView *)((u8 *)D_8006C838 + (index) * 0x1D4))
@@ -175,7 +175,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             entry = Ovl30_RecordsA638;
             for (id = 0; id < 7; id++, entry++) {
                 entry->field_B8 |= 1;
-                ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *)entry, 11);
+                Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *)entry, 11);
             }
             gOvl30RecordMenuSelectedId = -1;
             break;
@@ -183,7 +183,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             entry = Ovl30_RecordsA638;
             for (id = 0; id < 7; id++, entry++) {
                 entry->field_B8 |= 2;
-                ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *)entry, 11);
+                Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *)entry, 11);
             }
             gOvl30RecordMenuSelectedId = -1;
             break;
@@ -191,7 +191,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             entry = Ovl30_RecordsA638;
             for (id = 0; id < 7; id++, entry++) {
                 entry->field_B8 |= 4;
-                ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *)entry, 11);
+                Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *)entry, 11);
             }
             gOvl30RecordMenuSelectedId = -1;
             break;

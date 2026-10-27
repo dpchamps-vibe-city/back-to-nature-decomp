@@ -14,9 +14,9 @@
 #include "psyq/memory.h"
 #include "ovl11_eligible_record_selection.h"
 #include "ovl11_action_sequences.h"
+#include "ovl11_object_record_state.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 
 s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
     Ovl11PaddedVec3 position;
@@ -138,7 +138,7 @@ s32 Ovl11UpdateObjectModeTransition(Ovl11ModeTransitionObject *transition) {
         transition->saved26 = 0;
         object->unk34 &= ~0x800;
         transition->flags |= 0x40;
-        ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *)transition, 7);
+        Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *)transition, 7);
         object->unk34 |= 0x3C000000;
         transition->flags &= 0xFCFF;
     }

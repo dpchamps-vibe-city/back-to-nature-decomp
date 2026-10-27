@@ -60,6 +60,7 @@
 #include "ovl11_held_item_replacement.h"
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_scene_header_capture.h"
+#include "ovl11_state_object_pool_clear.h"
 
 void Ovl11StepAreaModeState(void);
 
@@ -301,7 +302,6 @@ void Ovl11ResetAreaScene(void);
 void Ovl11RefreshAreaSoundBank(void);
 /* Resident sprite-display disable at exe:8001B100. */
 void Ovl11ApplyAreaSoundVolume(void);
-void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800F4114(void);
 void ovl_11_func_800F0FB0(s32 arg0);
 s32 ovl_11_func_800F0F50(void);
@@ -393,7 +393,7 @@ void Ovl11RunAreaEntrySteps(void) {
         }
         Ovl11CaptureSceneHeaderKey();
         Ovl11ApplyAreaSoundVolume();
-        ovl_11_func_800CF36C(0);
+        Ovl11ClearEligibleStateObjects(0);
         Ovl11SpawnTimedItemPlacements();
         Ovl11ClearEventSlotScheduleChanges();
         ovl_11_func_800F4114();

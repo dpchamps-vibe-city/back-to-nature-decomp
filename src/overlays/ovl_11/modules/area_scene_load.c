@@ -67,13 +67,13 @@
 #include "ovl11_code109_record_placement.h"
 #include "ovl11_grid_growth.h"
 #include "ovl11_calendar_record_gate.h"
+#include "ovl11_area_entry_cache.h"
+#include "ovl11_object_record_state.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
 void Ovl11ResetAreaSlotRecords (void);
-void ovl_11_func_800DBFA0 (void);
 void ovl_11_func_800F6630 (void);
-void ovl_11_func_8010C6A0 (void);
 void Ovl11AreaResetEffectsHook (void);
 void Ovl11ClearAreaSpriteWork (void);
 void Ovl11AreaResetEndHook (void);
@@ -99,7 +99,7 @@ void Ovl11PrepareAreaScene(void) {
     Ovl11AllocateAllEventSlots();
     Ovl11ResetWeatherParticles();
     Ovl11ResetAmbientTintFromTable();
-    ovl_11_func_800DBFA0();
+    Ovl11ResetAreaEntryCache();
     Ovl11ResetCoordinateClamp();
     Ovl11InitVramAnimationSlots();
     Ovl11SetSceneCollisionTolerance();
@@ -118,7 +118,7 @@ void Ovl11PrepareAreaScene(void) {
     Ovl11ResetChoiceMessages();
     ovl_11_func_800F6630();
     Ovl11ResetSelectionMessage();
-    ovl_11_func_8010C6A0();
+    Ovl11InitObjectRecordPool();
     ResetMessageWindow();
     Ovl11ResetProgressControl();
     Ovl11ResetEventQueues();

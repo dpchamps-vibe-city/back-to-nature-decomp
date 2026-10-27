@@ -44,6 +44,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_record_movement.h"
+#include "ovl11_ready_kind36_cell.h"
 
 s32 Ovl11GetTaggedRecordSpriteDescriptor(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -115,7 +116,6 @@ UnkStruct800E109C *Ovl11InitOffsetRecordCopy(s32 sourceSlot, s32 destinationSlot
 }
 
 s32 Ovl11IsTaggedRecordActive(UnkStruct800E109C *arg0);
-s32 ovl_11_func_800D9108(s32 *arg0);
 
 s32 Ovl11UpdateTaggedRecordActivity(UnkStruct800E109C *arg0) {
     s16 temp_s1;
@@ -137,7 +137,7 @@ s32 Ovl11UpdateTaggedRecordActivity(UnkStruct800E109C *arg0) {
         if (((struct Ovl11HandlerState *)D_8006C838)->field_E4C8 != temp_s1) {
             if ((++(*(u16 *)((u8 *)arg0 + 0xAC)) >= 5U) &&
                 !(temp_a1 & 1) &&
-                (ovl_11_func_800D9108((s32 *)((u8 *)arg0 + 0x38)) == temp_s1)) {
+                (Ovl11RefreshFirstReadyKind36Cell((s32 *)((u8 *)arg0 + 0x38)) == temp_s1)) {
                 *(s32 *)((u8 *)arg0 + 0x34) |= 1;
             }
         } else {

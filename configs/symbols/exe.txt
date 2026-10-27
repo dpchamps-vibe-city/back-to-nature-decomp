@@ -1639,3 +1639,6 @@ gB4RecordPoolExpanded = 0x80070D0A; // size:0x2
 
 // Menu grid: navigation-link column and 2^(index+1) auxiliary-slot count.
 gMenuGridLayoutIndex = 0x80071A1E; // size:0x2
+
+// 8010C6A0 initializes seven 0xF8-byte object records.
+gObjectRecordPool = 0x8007A638; // size:0x6C8

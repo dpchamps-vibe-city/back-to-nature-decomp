@@ -350,11 +350,11 @@ s32 Ovl30EditKorobokkuruData(s32 cursor) {
         {(u8 *)&Ovl30_RecordsA638[gOvl30KorobokkuruIndex].target[0], 0, 0, 4, -2, gOvl30AnimalDestinationXLabel},
         {(u8 *)&Ovl30_RecordsA638[gOvl30KorobokkuruIndex].target[1], 0, 0, 4, -2, gOvl30AnimalDestinationYLabel},
         {(u8 *)&Ovl30_RecordsA638[gOvl30KorobokkuruIndex].target[2], 0, 0, 4, -2, gOvl30AnimalDestinationZLabel},
-        {(D_8007A638 - 0x4426), 0, 999, 2, -1, gOvl30MoveSp0Label},
-        {(D_8007A638 - 0x4424), 0, 999, 2, -1, gOvl30MoveSp1Label},
-        {(D_8007A638 - 0x4422), 0, 999, 2, -1, gOvl30MoveSp2Label},
-        {(D_8007A638 - 0x4420), 0, 999, 2, -1, gOvl30MoveSp3Label},
-        {(D_8007A638 - 0x441E), 0, 999, 2, -1, gOvl30MoveSp4Label}
+        {(gObjectRecordPool - 0x4426), 0, 999, 2, -1, gOvl30MoveSp0Label},
+        {(gObjectRecordPool - 0x4424), 0, 999, 2, -1, gOvl30MoveSp1Label},
+        {(gObjectRecordPool - 0x4422), 0, 999, 2, -1, gOvl30MoveSp2Label},
+        {(gObjectRecordPool - 0x4420), 0, 999, 2, -1, gOvl30MoveSp3Label},
+        {(gObjectRecordPool - 0x441E), 0, 999, 2, -1, gOvl30MoveSp4Label}
     };
     s32 buttons;
 

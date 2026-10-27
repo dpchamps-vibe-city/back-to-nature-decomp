@@ -9,9 +9,9 @@
 #include "psyq/memory.h"
 #include "ovl11_state_field_access.h"
 #include "ovl11_timed_sprite_effect.h"
+#include "ovl11_state_object_pool_clear.h"
 
 
-void ovl_11_func_800CF36C (s32 arg0);
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 

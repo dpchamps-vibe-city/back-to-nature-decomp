@@ -6,8 +6,7 @@
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
 #include "ovl11_state_field_access.h"
-
-void ovl_11_func_800CF36C(s32 arg0);
+#include "ovl11_state_object_pool_clear.h"
 
 s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 var_a1;
@@ -26,7 +25,7 @@ s32 ovl_11_func_800E5C60(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
             *(u16 *)temp_v0 &= 0xF7FF;
         }
     } else {
-        ovl_11_func_800CF36C(0);
+        Ovl11ClearEligibleStateObjects(0);
     }
     return 1;
 }

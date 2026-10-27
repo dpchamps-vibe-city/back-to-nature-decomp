@@ -16,6 +16,7 @@
 #include "ovl11_seasonal_record_ids.h"
 #include "ovl11_interaction_record_prepare.h"
 #include "ovl11_interaction_hit_action.h"
+#include "ovl11_object_record_state.h"
 
 void ovl_11_func_800F0FB0(s32 response);
 
@@ -50,7 +51,6 @@ s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
     return 0;
 }
 
-s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *object, s32 mode);
 s32 ovl_11_func_8010B57C(u16 *object, s32 mode);
 
 s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
@@ -65,7 +65,7 @@ s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
         }
         if (gOvl11InteractionHitFlags & 0x400) {
             if (!(D_80070C88 & 2)) {
-                ovl_11_func_8010CE80(gOvl11InteractionHitRecordView, 6);
+                Ovl11SetObjectRecordMode(gOvl11InteractionHitRecordView, 6);
                 Ovl11ResetPrimaryObjectRequest();
                 return 1;
             }

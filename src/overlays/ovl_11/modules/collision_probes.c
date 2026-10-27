@@ -486,7 +486,7 @@ after_actor:
     }
     if (queryMask & 0x400) {
         query.field_18 = 0x400;
-        entry = (u16 *) D_8007A638;
+        entry = (u16 *) gObjectRecordPool;
         for (i = 0; i < 7U; i++, entry += 0x7C) {
             if (!(entry[0x5C] & 0x20) &&
                 Ovl11ProbePlacedRecord((s32 **) &query, entry)) {

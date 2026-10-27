@@ -18,6 +18,7 @@
 #include "ovl11_pending_event_queue.h"
 #include "ovl11_record_partition_flags.h"
 #include "ovl11_flagged_record_retirement.h"
+#include "ovl11_selected_record_pair_commands.h"
 
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
@@ -27,15 +28,10 @@ void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
 s32 ovl_11_func_801165C8 (void);
 s32 ovl_11_func_80103770 (void);
-void ovl_11_func_800F0358 (void);
-s32 ovl_11_func_800F0474 (s16 arg0);
-void ovl_11_func_800F05C0 (void);
 s32 ovl_11_func_80118C7C (s16 arg0, s16 arg1, s16 arg2);
 void ClearActiveOrderingTables (void);
 s32 ovl_11_func_800E9104 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 Ovl11TestStateFieldCondition (s32 arg0, s32 arg1, s32 arg2);
-
-s32 ovl_11_func_800F0380(s16 arg0);
 
 s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     s32 sp10;
@@ -365,15 +361,15 @@ block_118:
         switch (arg1) {
         case 0:
             ((E9State *)D_8006C838)->fC |= 0x08000000;
-            ovl_11_func_800F0358();
+            Ovl11RestoreSelectedRecordPairs();
             return 1;
         case 1:
-            return ovl_11_func_800F0380((s16)arg2);
+            return Ovl11IsSelectedRecordPairMarked((s16)arg2);
         case 2:
-            return ovl_11_func_800F0474((s16)arg2);
+            return Ovl11EditSelectedRecordText((s16)arg2);
         case 3:
             ((E9State *)D_8006C838)->fC &= 0xF7FFFFFF;
-            ovl_11_func_800F05C0();
+            Ovl11ClearMarkedRecordPairs();
             return 1;
         }
         return 0;

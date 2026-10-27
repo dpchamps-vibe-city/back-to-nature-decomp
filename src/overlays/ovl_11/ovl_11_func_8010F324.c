@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_action_sequences.h"
+#include "ovl11_object_record_state.h"
 
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_8010E644(Ovl11E644Object *arg0);
-s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_8010F324(Ovl11SetFieldsView *arg0) {
     s16 temp_v1;
@@ -39,17 +39,17 @@ s32 ovl_11_func_8010F324(Ovl11SetFieldsView *arg0) {
         arg0->field_34 &= ~0x800;
         if (temp_a0 & 1) {
             ovl_11_func_8010E644((Ovl11E644Object *) arg0);
-            ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) arg0, 8);
+            Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *) arg0, 8);
         } else if (temp_a0 & 2) {
             ovl_11_func_8010E644((Ovl11E644Object *) arg0);
-            ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) arg0, 9);
+            Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *) arg0, 9);
         } else if (temp_a0 & 4) {
             *(s16 *) ((u8 *) arg0 + 0x22) = 3;
             ovl_11_func_8010E644((Ovl11E644Object *) arg0);
-            ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) arg0, 0xA);
+            Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *) arg0, 0xA);
         } else {
             ovl_11_func_8010E644((Ovl11E644Object *) arg0);
-            ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) arg0, 7);
+            Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *) arg0, 7);
         }
         var_s3 = 1;
         break;

@@ -713,7 +713,7 @@ void Ovl11DrawStatusSevenRecordRow(s16 arg0, s16 arg1) {
     u16 temp_v1;
     u8 *temp_s2;
 
-    temp_s2 = D_8007A638 + (arg0 * 0xF8);
+    temp_s2 = gObjectRecordPool + (arg0 * 0xF8);
     temp_s4 = gActiveRenderContext->field_D8 + 0x68;
     Ovl11DrawStatusUnpaddedNumber((s16) (arg0 + 1), 0x18, (s16) (arg1 + 4));
     Ovl11DrawStatusNamedRecordRow((s32) (s16) (((s16) *(u16 *) (temp_s2 + 0x16)) / 25), 0, 7U, arg0, (s32) ((void *) ((u8 *) temp_s2 + 4)), 0x28, (s16) (s32) arg1);

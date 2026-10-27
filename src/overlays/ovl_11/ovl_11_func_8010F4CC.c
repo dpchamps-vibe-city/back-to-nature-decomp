@@ -3,9 +3,9 @@
 #include "ovl11_direction_vector.h"
 #include "ovl11_record_position_tables.h"
 #include "ovl11_action_sequences.h"
+#include "ovl11_object_record_state.h"
 
 void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_8010F4CC(Ovl11E644Object *arg0) {
     Ovl11PaddedVec3 position;
@@ -42,7 +42,7 @@ s32 ovl_11_func_8010F4CC(Ovl11E644Object *arg0) {
                 if (*(s32 *) ((u8 *) arg0 + 0x40) >= 0x1A2D) {
                     Ovl11PlaceRecordFromTable((Ovl11TablePositionObject *) arg0);
                     arg0->unk34 &= ~0x800;
-                    ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) arg0, 0);
+                    Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *) arg0, 0);
                     result = 1;
                 }
                 break;

@@ -77,7 +77,7 @@ s32 ovl_11_func_800EEC1C(s16 id, s16 which, s16 last, s32 amount) {
                     switch (group) {
                     case 0:
                         if (which != 0) {
-                            ((struct Ovl11E8250State *)D_8006C838)->flags &= 0xEFFF7FFF;
+                            ((struct Ovl11ItemSlotSnapshotWork *)D_8006C838)->flags &= 0xEFFF7FFF;
                             Ovl11ResetPrimaryObjectRequest();
                             Ovl11ReleaseHeldItem((Ovl11C7010Object *)((u8 *)D_8006C838 + 0x51C8));
                         } else {

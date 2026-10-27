@@ -24,9 +24,9 @@
 #include "ovl11_event_schedule.h"
 #include "ovl11_action_minute_counter.h"
 #include "ovl11_clock_scene_completion.h"
+#include "ovl11_state_object_pool_clear.h"
 
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 
 void Ovl11TickClock(void);
@@ -237,7 +237,7 @@ void Ovl11TickClock(void) {
             if (date->day >= 30) {
                 date->day = 0;
                 date->season++;
-                ovl_11_func_800CF36C(1);
+                Ovl11ClearEligibleStateObjects(1);
             }
             if (date->season >= 4) {
                 date->season = 0;

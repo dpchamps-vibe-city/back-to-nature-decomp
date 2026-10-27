@@ -48,7 +48,7 @@ void Ovl15SerializeSaveImage(void)
     SAVE(Ovl15SaveBlock188, gAlternateAreaGrid, 0x5784);
     SAVE(Ovl15SaveBlock40, &gRecordSlotPhase, 0x590C);
     SAVE(Ovl15SaveBlock74, D_8007A5C4, 0x594C);
-    SAVE(Ovl15SaveBlock6C8, D_8007A638, 0x59C0);
+    SAVE(Ovl15SaveBlock6C8, gObjectRecordPool, 0x59C0);
     ((Ovl15SaveBufferWords *)gOvl15SaveWorkBase)->field_6088 = D_8007AD00[0];
     SAVE(Ovl15SaveBlockC, (u8 *)D_8007AD00 + 4, 0x608C);
     SAVE(Ovl15SaveBlock3C, (u8 *)D_8007AD00 + 0x10, 0x6098);
@@ -120,7 +120,7 @@ void Ovl15RestoreSaveImage(void)
     RESTORE(Ovl15SaveBlock2328, gMainAreaGrid, 0x345C);
     RESTORE(Ovl15SaveBlock188, gAlternateAreaGrid, 0x5784);
     RESTORE(Ovl15SaveBlock40, &gRecordSlotPhase, 0x590C);
-    RESTORE(Ovl15SaveBlock6C8, D_8007A638, 0x59C0);
+    RESTORE(Ovl15SaveBlock6C8, gObjectRecordPool, 0x59C0);
     D_8007AD00[0] = *(s32 *)(gOvl15SaveWorkBase + 0x6088);
     RESTORE(Ovl15SaveBlockC, (u8 *)D_8007AD00 + 4, 0x608C);
     RESTORE(Ovl15SaveBlock3C, (u8 *)D_8007AD00 + 0x10, 0x6098);

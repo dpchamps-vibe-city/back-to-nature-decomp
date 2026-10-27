@@ -821,6 +821,18 @@ typedef struct {
     u16 unkAC;
 } M2C_90bbdd1382f9_Struct_8010D0EC;
 
+/* Mode-5 admission uses an UNSIGNED +16 value before signed clamp tests.
+ * Keep this separate from the other F8-object views' signed +16 accesses. */
+typedef struct {
+    char pad00[0x16];
+    u16 value;
+    char pad18[0x30 - 0x18];
+    s16 area;
+    char pad32[0x34 - 0x32];
+    u32 flags;
+    char pad38[0xA8 - 0x38];
+} Ovl11Mode5GuardObject;
+
 /* Low-halfword view of the two words at the start of an Ovl15SaveHeader.
  * The title builder reads year and season; the remaining date fields stay
  * neutral. The underlying record keeps its canonical 0x3C-byte word view. */

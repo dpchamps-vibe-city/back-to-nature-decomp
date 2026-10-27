@@ -687,7 +687,7 @@ typedef struct Ovl30RecordF8 {
     u16 field_BA;
     u8 padBC[0xF8 - 0xBC];
 } Ovl30RecordF8;
-#define Ovl30_RecordsA638 ((Ovl30RecordF8 *)D_8007A638)
+#define Ovl30_RecordsA638 ((Ovl30RecordF8 *)gObjectRecordPool)
 /* 801320C8 loads this record selector with lw and edits it with width four. */
 extern s32 gOvl30KorobokkuruIndex;
 /* 801320C8 installs these NUL-terminated rodata labels and print format. */
@@ -2925,7 +2925,7 @@ typedef struct {
 } Ovl11E6E8State;
 
 /* 8010DA04: signed halfword lookup, eight entries in original 69960.data. */
-extern s16 D_80127CF4[8];
+extern s16 gOvl11ObjectMode6Messages[8];
 
 /* 8010DA04 retains D_8006C838 as the base for these halfword/word fields. */
 typedef struct {
@@ -3572,24 +3572,26 @@ typedef struct {
 extern Ovl11ItemState Ovl11Item_80071A8A __asm__("D_80071A8A");
 /* C9D98/C9DE8 operate on eight six-byte records; E8250 copies all 48 bytes. */
 extern Ovl11ItemSnapshot gPrimaryObjectSecondaryItemList;
-extern Ovl11ItemState D_80129500;
-extern s32 D_80129510[12];
+/* 800E8250 copies the six-byte held item here before detaching it. */
+extern Ovl11ItemState gOvl11SnapshotHeldItem;
+/* 800E8250 saves/restores eight six-byte secondary items with word copies. */
+extern s32 gOvl11SnapshotSecondaryItems[12];
 
 /* 800E8250: item-table pointer +20, flags +5234/+91E0, six-byte items,
  * and a pointer +DDD4 whose unsigned halfwords +4/+1C are updated. */
-struct Ovl11E8250State {
+struct Ovl11ItemSlotSnapshotWork {
     u8 pad0[0x20];
-    void *items;
+    void *itemDefinitions;
     u8 pad24[0x5234 - 0x24];
     s32 flags;
     u8 pad5238[0x5252 - 0x5238];
-    Ovl11ItemState item;
+    Ovl11ItemState heldItem;
     u8 pad5258[0x5288 - 0x5258];
-    Ovl11ItemState slots[8];
+    Ovl11ItemState secondaryItems[8];
     u8 pad52B8[0x91E0 - 0x52B8];
     s32 effectFlags;
     u8 pad91E4[0xDDD4 - 0x91E4];
-    u16 *effect;
+    u16 *effectHalfwords;
 };
 
 /* Selection-menu search reads signed IDs in both six-byte item tables. */
@@ -5460,9 +5462,9 @@ extern struct Ovl11RotationState gOvl11SpriteRotations[10];
  * records (0x6C8 bytes) zeroed by that function and populated one record at
  * a time; D_80127CD0 and D_80127CB4 are the two 7-entry parallel arrays it
  * walks alongside them. All are absolute-addressed (outside $gp). */
-extern u8 D_8007A638[0x6C8];
-extern s32 D_80127CD0[7];
-extern s32 D_80127CB4[7];
+extern u8 gObjectRecordPool[0x6C8];
+extern s32 gOvl11ObjectInitialRecordOffsets[7];
+extern s32 gOvl11ObjectInitialAreaRoomPairs[7];
 
 /* 800B806C dispatches 19 no-argument state handlers listed in original ovl_21 data at 800BCB6C. */
 extern void (*D_800BCB6C[19])(void);
@@ -6715,9 +6717,9 @@ typedef struct {
     s16 unkC;
     s16 unkE;
     s16 unk10;
-} Ovl11Status801295D0;
+} Ovl11StatusTextRecord;
 
-extern Ovl11Status801295D0 D_801295D0;
+extern Ovl11StatusTextRecord gOvl11StatusTextScratch;
 
 /* Ovl11CopySlotSpritePieces stages its two MoveImage source rectangles here.
  * Original ovl_11:80128D80, matching the PSY-Q RECT layout. */
@@ -7635,9 +7637,9 @@ extern u16 D_8012D074;
 extern s16 D_8012D076;
 
 /* 8010DE68 indexes eight lh entries, and two rows of five signed deltas. */
-extern s16 D_80127D14[8];
-extern s16 D_80127D24[8];
-extern s16 D_80127D34[2][5];
+extern s16 gOvl11ObjectItemResponseMessages[8];
+extern s16 gOvl11ObjectLocalItemResponseMessages[8];
+extern s16 gOvl11ObjectItemResponseDeltas[2][5];
 
 /* 8010DE68 reads the signed location/item fields and the unsigned event flag. */
 typedef struct {
@@ -8008,6 +8010,22 @@ extern u8 gOvl21EntitySprite16[];
 extern u8 gOvl21EntitySprite11[];
 /* Ovl21GetEntityObjectRecord maps entity 5 to this 0x30-byte sprite. */
 extern u8 gOvl21EntitySprite5[];
+
+/* 8010D20C maps each state/direction pair to unsigned animation/frame IDs. */
+typedef struct {
+    u16 animation;
+    u16 frame;
+} Ovl11ObjectAnimationPair;
+extern Ovl11ObjectAnimationPair gOvl11ObjectAnimationPairs[][4];
+/* 8010D0EC installs the selected halfword as the sprite palette-Y offset. */
+extern s16 gOvl11ObjectPaletteYOffsets[8];
+/* 8010D250 selects one of four signed modes with Rand(4). */
+extern s16 gOvl11ObjectRandomModes[4];
+/* 8010DDC8 requests the indexed mode-13 message; eight original halfwords. */
+extern s16 gOvl11ObjectMode13Messages[8];
+/* CE80/CD80 call these original 14-entry admission and frame-handler banks. */
+extern s32 (*gOvl11ObjectModeEntryGuards[14])(void *);
+extern s32 (*gOvl11ObjectModeHandlers[14])(void *);
 
 #endif /* GLOBALS_OVERRIDE_H */
 

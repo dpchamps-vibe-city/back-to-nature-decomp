@@ -2,9 +2,9 @@
 #include "game_types.h"
 #include "ovl11_grid_candidate_search.h"
 #include "ovl11_action_sequences.h"
+#include "ovl11_object_record_state.h"
 
 void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 
 s32 ovl_11_func_8010ECC0(Ovl11E644Object *arg0) {
     Ovl11PaddedVec3 sp18;
@@ -51,7 +51,7 @@ block_9:
         (*(u16 *) ((u8 *) arg0 + 0xBE)) = 0U;
         arg0->unk34 &= ~0x800;
         (*(u16 *) ((u8 *) arg0 + 0xB8)) = (u16) ((*(u16 *) ((u8 *) arg0 + 0xB8)) | 0x40);
-        ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) arg0, 7);
+        Ovl11SetObjectRecordMode((Recon_ovl_11_func_8010CE80_A0View *) arg0, 7);
         arg0->unk34 |= 0x3C000000;
     }
     return var_s1_2;
