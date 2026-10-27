@@ -20,6 +20,7 @@
 #include "sprite_render.h"
 #include "beveled_panel.h"
 #include "ovl11_menu_exit_flags.h"
+#include "ovl11_calendar_hooks.h"
 
 /* Engine text/sprite services; their original pointer-as-word ABI is kept. */
 u32 func_80017A64(void);
@@ -32,12 +33,6 @@ void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 void func_80024A10(s32 ot, s16 x, s16 y, s16 frame);
 u16 *func_8001AA7C(s32 value, u16 *text);
 u16 *func_8001AAB8(s32 weekday, u16 *text);
-
-/* Entry/exit hooks are empty in the retail build; the query returns 1.
- * Keep the calls, since they are part of the original lifecycle. */
-void ovl_11_func_800F6638(void);
-void ovl_11_func_800F6640(void);
-s32 ovl_11_func_800F6648(void);
 
 /* Module-local interfaces retain external linkage: co-location alone does
  * not establish that the original functions were static. */
@@ -69,9 +64,9 @@ void Ovl11OpenCalendarPanel(void) {
     s32 closeHookEnabled;
 
     Ovl11ResetCalendarPanel();
-    closeHookEnabled = ovl_11_func_800F6648();
+    closeHookEnabled = Ovl11CalendarCloseHookEnabled();
     gOvl11CalendarCloseHookEnabled = closeHookEnabled;
-    ovl_11_func_800F6638();
+    Ovl11CalendarOpenHook();
     PlaySoundEffect(3);
     gOvl11CalendarPanelState = 1;
     gOvl11CalendarSelectedDay = gCalendarDay;
@@ -104,7 +99,7 @@ void Ovl11DrawAndProcessCalendarPanel(void) {
 
     if (IsMessageWindowStatusFinal() && (((GfxObj *)gPad0Input)->field_8 & 0x800)) {
         if (gOvl11CalendarCloseHookEnabled == 1) {
-            ovl_11_func_800F6640();
+            Ovl11CalendarCloseHook();
         }
         CloseMessageWindow();
         gOvl11CalendarPanelState = 2;
@@ -144,7 +139,7 @@ void Ovl11ProcessCalendarCloseInput(void) {
         }
         if (buttons & 0x20) {
             if (gOvl11CalendarCloseHookEnabled == 1) {
-                ovl_11_func_800F6640();
+                Ovl11CalendarCloseHook();
             }
             CloseMessageWindow();
             gOvl11CalendarPanelState = 2;

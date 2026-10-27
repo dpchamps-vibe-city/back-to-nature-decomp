@@ -1,5 +1,13 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// No-op extension point retained by all area-scene setup paths.
+Ovl11AreaSetupHook = 0x800F6630; // type:func
+
+// Retail calendar lifecycle: no-op entry/exit and close-hook enable query.
+Ovl11CalendarOpenHook = 0x800F6638; // type:func
+Ovl11CalendarCloseHook = 0x800F6640; // type:func
+Ovl11CalendarCloseHookEnabled = 0x800F6648; // type:func
+
 // Delimiter/literal and repeated-byte record decoder used by sprite-block recovery.
 Ovl11DecodeByteRuns = 0x800E5524; // type:func
 

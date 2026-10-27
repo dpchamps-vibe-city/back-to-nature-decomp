@@ -70,11 +70,11 @@
 #include "ovl11_area_entry_cache.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_condition_evaluation.h"
+#include "ovl11_area_setup_hook.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
 void Ovl11ResetAreaSlotRecords (void);
-void ovl_11_func_800F6630 (void);
 void Ovl11AreaResetEffectsHook (void);
 void Ovl11ClearAreaSpriteWork (void);
 void Ovl11AreaResetEndHook (void);
@@ -112,12 +112,12 @@ void Ovl11PrepareAreaScene(void) {
     Ovl11LoadOffsetSpriteSet((s32) base->field_44BA);
     Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
-    ovl_11_func_800F6630();
+    Ovl11AreaSetupHook();
     Ovl11PrepareSpawnRecordPools((u16) base->field_44BA, 0);
     Ovl11ResetRecordPools();
     Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
-    ovl_11_func_800F6630();
+    Ovl11AreaSetupHook();
     Ovl11ResetSelectionMessage();
     Ovl11InitObjectRecordPool();
     ResetMessageWindow();
@@ -248,8 +248,6 @@ void Ovl11ResetAreaSlotRecords(void) {
 void Ovl11AreaResetEffectsHook(void) {
 }
 
-void ovl_11_func_800F6630(void);
-
 typedef struct {
     char pad_000[0xC];
     s32 field_0C;
@@ -280,7 +278,7 @@ void Ovl11BeginLightAreaEntry(void) {
     Ovl11SetWeatherParticleMode(base->field_E4C8);
     Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
-    ovl_11_func_800F6630();
+    Ovl11AreaSetupHook();
 
     base->field_4488 = 1;
     gOvl11AreaEntryStep = 10;
@@ -375,12 +373,12 @@ void Ovl11LoadAreaScene(void) {
     Ovl11LoadOffsetSpriteSet((s32) base->field_44BA);
     Ovl11ClearSceneRecords();
     Ovl11ResetVertexBlendPool();
-    ovl_11_func_800F6630();
+    Ovl11AreaSetupHook();
     Ovl11PrepareSpawnRecordPools((u16) base->field_44BA, 1);
     Ovl11ResetClockEvents();
     Ovl11ResetMovingItemRecords();
     Ovl11ResetChoiceMessages();
-    ovl_11_func_800F6630();
+    Ovl11AreaSetupHook();
     Ovl11ResetSelectionMessage();
     ResetMessageWindow();
     Ovl11RefreshProgressStatusEntry();

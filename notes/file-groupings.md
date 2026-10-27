@@ -14616,8 +14616,19 @@ menu services in their existing order. `ovl11_menu_frame_update.h` publishes
 its once-per-tick, initialized-UI/render-context contract and state/drawing
 side effects. No data is owned here and no external service is made private.
 The right neighbor 6630 is an empty area-setup hook, with no calls/state/
-tables linking it to this frame coordinator. The following calendar hooks
-serve another public protocol. Neither those hooks nor the preceding closed
+tables linking it to this frame coordinator. It is now the complete supported
+singleton service in `modules/area_setup_hook.c` (800F6630–800F6638), named
+Ovl11AreaSetupHook at its original overlay identity. All five original call
+sites are in area_scene_load's resource/setup paths (801044E4, 801048A0 and
+80104A90), not the frame updater or calendar. The public header states its
+no-op effects and retains the out-of-line void(void) ABI; no state, private
+linkage or behavior is invented. The checked baseline -O2/-G0 fold matched
+the entry and overlay without flags or new exceptions. The left boundary is
+the separate per-frame menu-service coordinator; the right F6638 begins the
+calendar open/close/query protocol, which has different callers. Neither
+edge has a private call/state/table witness joining the services; both remain
+evidence-limited -G0 cuts, not proof of original singleton source files.
+The following calendar hooks serve another public protocol. Neither those hooks nor the preceding closed
 projection family have a private membership edge to this coordinator; shared
 higher-level area clients alone do not prove a larger TU. Both boundaries
 are evidence-limited -G0 cuts, not original linker-object claims. The checked
@@ -23479,8 +23490,39 @@ outer limits rest on the change in state/protocol and absence of a positive
 extension, not on flags, address proximity, or the presence of dead code.
 Original source-file provenance remains a hypothesis; a future original
 ownership witness could widen it. Empty F6638/F6640 hooks and the constant-1
-F6648 query remain outside: they serve multiple UIs, share no private calendar
-state and are not adjacent. External calls alone do not absorb the whole UI.
+F6648 query remain outside the panel: they share no private calendar state
+and are not adjacent. The current compiled call census finds only the calendar
+panel as their client; the older multiple-UI claim had no cited witness.
+External calls alone do not absorb the intervening code into the panel.
+
+**Reconstructed `modules/calendar_hooks.c`, 800F6638–800F6650 exclusive:**
+all three retail lifecycle entries, now Ovl11CalendarOpenHook,
+Ovl11CalendarCloseHook and Ovl11CalendarCloseHookEnabled. Membership rests on
+one complete public protocol: OpenCalendarPanel samples the query and calls
+the open hook; both panel closing paths call the close hook only when that
+sample is exactly 1. Original listings show two empty functions followed by a
+constant-1 return; there is no owned state, table or GP evidence (-G0).
+The header documents this behavior without inventing replacement behavior or
+private linkage. This is the whole supported hook service, not a claim that
+its original object boundaries are proved.
+
+Left F6630 is a distinct empty area-setup hook called by area_scene_load,
+not by the calendar panel. Right F6650 forwards to PostMenuExitFlags; neither
+it nor its following unused no-op/constant hooks participates in the sampled
+calendar open/close protocol. No private call/state/table witness extends
+either edge. These are evidence-limited responsibility boundaries, not
+adjacency- or flag-derived original file edges. The checked fold passed all
+three members and the overlay at baseline -O2/-G0, with no flag or exception
+change; canonicalization records each name at its original overlay identity.
+`ovl11_calendar_hooks.h` publishes the unchanged callable void/s32 interface.
+Interface reconciliation replaced local prototypes in calendar_panel and
+area_scene_load with the two hook headers, preserving both caller objects.
+The batch gate `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity checks, including
+all linked EXE/overlay bytes, source policy, config convergence and exception
+non-growth: **2210 folded functions, 381/381 valid modules** (up from 2206).
+Exit 1 reflects the remaining 415 ungrouped functions, not a failed integrity
+gate. No tool, flag, storage, ABI, or policy-exception change was needed.
 
 Canonical function names (ovl_11 addresses): F9D3C ResetCalendarPanel,
 F9D5C OpenCalendarPanel, F9DB0 UpdateCalendarPanel, F9E4C
