@@ -36,6 +36,7 @@
 #include "ovl11_direction_vector.h"
 #include "ovl11_record_effect_threshold.h"
 #include "ovl11_cd_audio_request.h"
+#include "ovl11_record_status_message.h"
 
 s32 Ovl11GetTaggedRecordSpriteDescriptor(u16 arg0, u16 arg1, u16 *arg2, u16 *arg3);
 
@@ -723,8 +724,6 @@ typedef struct {
     /* 0x34 */ s32 unk34;
 } Struct_800E15C8;
 
-void ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0);
-
 s32 Ovl11RequestTaggedRecordFlag2(Struct_800E15C8 *arg0) {
     char *far_base;
 
@@ -735,7 +734,7 @@ s32 Ovl11RequestTaggedRecordFlag2(Struct_800E15C8 *arg0) {
         Ovl11StartRecordEffectAboveThreshold((Ovl11DF72CResetView *)arg0);
     }
     arg0->unk34 |= 2;
-    ovl_11_func_800D0DCC((UnkStruct800DF4F0 *)arg0);
+    Ovl11RequestRecordStatusMessage((UnkStruct800DF4F0 *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
         Ovl11RequestCdAudioTrack(0xB);

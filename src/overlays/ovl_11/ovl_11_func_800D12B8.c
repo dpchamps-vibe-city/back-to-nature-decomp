@@ -8,13 +8,12 @@
 #include "vblank_timer.h"
 #include "ovl11_direction_vector.h"
 #include "ovl11_movement_cell_rank.h"
+#include "ovl11_movement_step.h"
 
 void ovl_11_func_800D1E1C (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D2DB8 (Ovl11Func800BDCE8Arg1 *arg0);
-s32 ovl_11_func_800D24FC (Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
 s32 ovl_11_func_800D196C (Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 arg2);
 void ovl_11_func_800D2B40 (Recon_ovl_11_func_800D2594_A0View *arg0);
-s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2) {
     VECTOR sp20;                       /* compiler-managed */
@@ -78,7 +77,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
             var_s3 = ovl_11_func_800D2DB8((Ovl11Func800BDCE8Arg1 *) &sp20) == 0;
         }
         if (arg0->unk34 & 0x800000) {
-            if (ovl_11_func_800D24FC(arg0, sp20, (s16) (s32) (*(s16 *) ((u8 *) arg0 + 0x22)), 0) != 1) {
+            if (Ovl11ProbeRecordStep(arg0, sp20, (s16) (s32) (*(s16 *) ((u8 *) arg0 + 0x22)), 0) != 1) {
                 var_s3 |= 1;
             }
         }
@@ -98,7 +97,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
             var_s3 |= 4;
         }
         if (arg0->unk34 & 0x800000) {
-            if (ovl_11_func_800D24FC(arg0, sp20, (s16) (s32) var_s1, 0) != 1) {
+            if (Ovl11ProbeRecordStep(arg0, sp20, (s16) (s32) var_s1, 0) != 1) {
                 var_s3 |= 4;
             }
         }
@@ -118,7 +117,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
             var_s3 |= 2;
         }
         if (arg0->unk34 & 0x800000) {
-            if (ovl_11_func_800D24FC(arg0, sp20, (s16) (s32) var_s1, 0) != 1) {
+            if (Ovl11ProbeRecordStep(arg0, sp20, (s16) (s32) var_s1, 0) != 1) {
                 var_s3 |= 2;
             }
         }
@@ -154,7 +153,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
             var_s1 = 1;
         }
         if (arg0->unk34 & 0x800000) {
-            if (ovl_11_func_800D24FC(arg0, sp20, (s16) (s32) (*(s16 *) ((u8 *) arg0 + 0x22)), 1) == 1) {
+            if (Ovl11ProbeRecordStep(arg0, sp20, (s16) (s32) (*(s16 *) ((u8 *) arg0 + 0x22)), 1) == 1) {
                 var_s1 = 1;
             }
         }
@@ -165,7 +164,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
         arg0->unk3C = sp20.vy;
         ovl_11_func_800D2B40(arg0);
     } else {
-        ovl_11_func_800D2594(arg0, arg1);
+        Ovl11StepRecordVerticalOffset(arg0, arg1);
     }
     gOvl11MovementRankThreshold = 0x258;
 }

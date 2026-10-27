@@ -12,10 +12,10 @@
 #include "random.h"
 #include "ovl11_tagged_record_choice.h"
 #include "ovl11_item_record_allocation.h"
+#include "ovl11_season_mask.h"
 
 void Ovl11SpawnArea108Item(void);
 void Ovl11SpawnGatedAreaItems(void);
-s32 ovl_11_func_800D2E20(void);
 
 void Ovl11SpawnTimedItemPlacements(void) {
     char *base;
@@ -38,7 +38,7 @@ void Ovl11SpawnTimedItemPlacements(void) {
     if (*(s16 *)(initial_base + 0xE4C8) != 0) {
         return;
     }
-    mask = ovl_11_func_800D2E20();
+    mask = Ovl11GetCalendarSeasonMask();
     entry = (s16 *)gOvl11ItemPlacementRules;
     i = 0;
     for (; i < 17; i++) {

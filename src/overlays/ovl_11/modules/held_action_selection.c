@@ -30,8 +30,8 @@
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_action_status_delta.h"
+#include "ovl11_object_area_sprite_reset.h"
 
-void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
 s16 Ovl11SelectHeldActionDelay(Ovl11SelectArg *state);
 s16 Ovl11SelectHeldActionOutcome(s32 *state);
 void Ovl11DrawHeldActionSprite(s32 arg0);
@@ -101,14 +101,14 @@ s32 Ovl11UpdateHeldSelectionAction(Ovl11SelectionObject *obj) {
     case 2:
         if (obj->animation.field_2 & 0x100) {
             obj->flags &= ~0x30;
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *)obj);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *)obj);
         }
         break;
     case 3:
         if (obj->animation.field_2 & 0x100) {
             item[2] = 1;
             obj->flags &= ~0x30;
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *)obj);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *)obj);
             if (state[2] != -1) {
                 item[0] = Ovl11SelectHeldActionOutcome(state);
                 if (item[0] != 0) Ovl11InstallPrimaryObjectRequest((u16 *)item);

@@ -5,10 +5,10 @@
 #include "ovl11_collision_query_budget.h"
 #include "ovl11_direction_vector.h"
 #include "ovl11_movement_cell_rank.h"
+#include "ovl11_movement_step.h"
 
 s32 ovl_11_func_800D1C18(s32 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800D2DB8(Ovl11Func800BDCE8Arg1 *arg0);
-s32 ovl_11_func_800D24FC(Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
 
 s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 arg2) {
     VECTOR position;
@@ -85,7 +85,7 @@ s32 ovl_11_func_800D196C(Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 
                 result = 4;
             }
             if (arg0->unk34 & 0x800000) {
-                if (ovl_11_func_800D24FC(arg0, position, direction, 0) != 1) {
+                if (Ovl11ProbeRecordStep(arg0, position, direction, 0) != 1) {
                     result = original;
                 }
             }

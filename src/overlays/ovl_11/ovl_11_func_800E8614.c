@@ -6,6 +6,7 @@
 #include "aged_item_pool.h"
 #include "ovl11_small_record_handlers.h"
 #include "ovl11_item_record_allocation.h"
+#include "ovl11_item_id_flags.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -15,8 +16,6 @@ typedef struct __attribute__((packed)) {
     s8 unk10;
     s8 unk11;
 } Ovl11Rec800E8614;
-
-void ovl_11_func_800D2D54(void *arg0);
 
 s32 ovl_11_func_800E8614(s32 arg0) {
     s32 *var_s1_2;

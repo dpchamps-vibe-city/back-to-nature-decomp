@@ -33,6 +33,7 @@
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_record_effect_threshold.h"
 #include "ovl11_cd_audio_request.h"
+#include "ovl11_record_status_message.h"
 
 s32 Ovl11IsCode160RecordActive(UnkStruct800DF4F0 *arg0);
 s32 ovl_11_func_800D9108(s32 *arg0);
@@ -656,8 +657,6 @@ typedef struct {
     /* 0x34 */ s32 unk34;
 } Struct_800DF9F0;
 
-void ovl_11_func_800D0DCC(UnkStruct800DF4F0 *arg0);
-
 s32 Ovl11StepCode160Handler5(Struct_800DF9F0 *arg0) {
     char *far_base;
 
@@ -668,7 +667,7 @@ s32 Ovl11StepCode160Handler5(Struct_800DF9F0 *arg0) {
         Ovl11StartRecordEffectAboveThreshold((Struct_800D049C *)arg0);
     }
     arg0->unk34 |= 2;
-    ovl_11_func_800D0DCC((UnkStruct800DF4F0 *)arg0);
+    Ovl11RequestRecordStatusMessage((UnkStruct800DF4F0 *)arg0);
     far_base = (char *)&D_8007AFF0;
     if (*(s16 *)(far_base + 0x25476) == arg0->unk30) {
         Ovl11RequestCdAudioTrack(9);

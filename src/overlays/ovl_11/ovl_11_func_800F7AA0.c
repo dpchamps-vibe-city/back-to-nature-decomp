@@ -13,55 +13,55 @@ s32 ovl_11_func_800F7AA0(void) {
     s32 temp_s0_2;
     s32 temp_v1;
 
-    temp_s0 = D_80126E4E;
+    temp_s0 = gOvl11MenuGridMessageState;
     if ((temp_s0 == 0xFF) && (IsMessageWindowStatusFinal() != 0)) {
         temp_v1 = *(s32 *) ((u8 *) gPad0Input + 8);
         if (temp_v1 & 0x10) {
-            if (*ovl_11_func_800F82FC((s32) D_80126E44, (s32) D_80126E4A) != 0) {
+            if (*ovl_11_func_800F82FC((s32) gOvl11MenuGridCursorSlot, (s32) gOvl11MenuGridPageIndex) != 0) {
                 CloseMessageWindow();
                 PlaySoundEffect(0);
-                D_80126E4E = 0;
+                gOvl11MenuGridMessageState = 0;
                 goto block_32;
             }
             PlaySoundEffect(2);
             return 0;
         }
         if (temp_v1 & 0x20) {
-            if (D_80126E48 == temp_s0) {
+            if (gOvl11MenuGridSelectedSlot == temp_s0) {
                 CloseMessageWindow();
                 gOvl11InteractionPhase = 0xFE;
                 PlaySoundEffect(3);
                 return 0;
             }
             PlaySoundEffect(1);
-            D_80126E48 = temp_s0;
+            gOvl11MenuGridSelectedSlot = temp_s0;
             goto block_32;
         }
         if (temp_v1 & 0x40) {
-            if (D_80126E48 == temp_s0) {
+            if (gOvl11MenuGridSelectedSlot == temp_s0) {
                 PlaySoundEffect(0);
-                D_80126E48 = (s16) (u16) D_80126E44;
-                D_80126E4C = (s16) (u16) D_80126E4A;
+                gOvl11MenuGridSelectedSlot = (s16) (u16) gOvl11MenuGridCursorSlot;
+                gOvl11MenuGridSelectedPageIndex = (s16) (u16) gOvl11MenuGridPageIndex;
                 goto block_32;
             }
-            D_80126E46 = (u16) D_80126E44;
-            if ((D_80126E48 == (s16) (u16) D_80126E44) && ((D_80126E4C == D_80126E4A) || (D_80126E48 < 9))) {
-                D_80126E44 = 0;
+            gOvl11MenuGridSavedCursorSlot = (u16) gOvl11MenuGridCursorSlot;
+            if ((gOvl11MenuGridSelectedSlot == (s16) (u16) gOvl11MenuGridCursorSlot) && ((gOvl11MenuGridSelectedPageIndex == gOvl11MenuGridPageIndex) || (gOvl11MenuGridSelectedSlot < 9))) {
+                gOvl11MenuGridCursorSlot = 0;
             }
             Ovl11ReleaseUnusedSelectionTextures();
-            temp_s0_2 = ovl_11_func_800F7D34((s32) D_80126E48, (s32) D_80126E44, (s32) D_80126E4C, (s32) D_80126E4A);
+            temp_s0_2 = ovl_11_func_800F7D34((s32) gOvl11MenuGridSelectedSlot, (s32) gOvl11MenuGridCursorSlot, (s32) gOvl11MenuGridSelectedPageIndex, (s32) gOvl11MenuGridPageIndex);
             Ovl11ReleaseUnusedSelectionTextures();
-            D_80126E44 = (s16) D_80126E46;
+            gOvl11MenuGridCursorSlot = (s16) gOvl11MenuGridSavedCursorSlot;
             if (temp_s0_2 == 1) {
                 PlaySoundEffect(0);
-                D_80126E48 = 0xFF;
+                gOvl11MenuGridSelectedSlot = 0xFF;
                 return 1;
             }
             PlaySoundEffect(2);
             return 0;
         }
         if (temp_v1 & 0x100) {
-            if (D_80126E48 == temp_s0) {
+            if (gOvl11MenuGridSelectedSlot == temp_s0) {
                 PlaySoundEffect(0);
                 switch (gOvl11InteractionPhase) {
                 case 0:

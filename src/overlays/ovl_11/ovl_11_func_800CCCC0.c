@@ -20,9 +20,9 @@
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_active_record_slot_drain.h"
 #include "ovl11_primary_object_level_bands.h"
+#include "ovl11_object_area_sprite_reset.h"
 
 
-void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
 
 void ovl_11_func_800CCCC0(void) {
@@ -32,7 +32,7 @@ void ovl_11_func_800CCCC0(void) {
     s8 temp_s0_2;
 
     if (player->unk6C & 0x1000) {
-        ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *)player);
+        Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *)player);
     }
     player->unk22 = -1;
     temp_s0 = (struct Ovl11CCCC0State *)((u8 *)player - 0x51C8);

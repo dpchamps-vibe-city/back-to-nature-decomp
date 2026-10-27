@@ -51,6 +51,7 @@
 #include "ovl11_grid_growth.h"
 #include "ovl11_clock_scene_completion.h"
 #include "ovl11_calendar_record_gate.h"
+#include "ovl11_scene_header_capture.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -78,7 +79,6 @@ s32 Ovl11ClockShiftValueHistory(void) {
 }
 
 void ovl_11_func_800CCCC0 (void);
-void ovl_11_func_800CCC5C (void);
 void ovl_11_func_800EEECC (void);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
@@ -159,7 +159,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
             Ovl11ReadDefaultPosition(((Ovl11DDDFCState *)D_8006C838)->position);
             Ovl11ResetMovingItemRecords();
             ((Ovl11DDDFCState *)D_8006C838)->status = (((Ovl11DDDFCState *)D_8006C838)->status | 0x4000) & 0xFFF07FFF;
-            ovl_11_func_800CCC5C();
+            Ovl11CaptureSceneHeaderKey();
             ovl_11_func_800EEECC();
             Ovl11StageFixedSpriteBank();
             Ovl11InitEventSchedules(gGraphicsHeapBase + 0x4290);

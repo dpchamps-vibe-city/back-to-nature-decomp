@@ -9,10 +9,10 @@
 #include "ovl11_small_record_handlers.h"
 #include "ovl11_object_record_lifecycle.h"
 #include "ovl11_item_record_allocation.h"
+#include "ovl11_item_id_flags.h"
 
 struct_800759E4 *ovl_11_func_80108CD0(s32 itemCode, s32 mode);
 u16 *ovl_11_func_8010B1C4(s32 itemCode);
-void ovl_11_func_800D2D54(void *record);
 
 u16 *Ovl11AllocateItemRecord(s32 itemCode, s32 mode) {
     s32 stateCode;
@@ -87,7 +87,7 @@ allocate_state_object:
     }
     resultAddress = 0;
     if (recordAddress != 0) {
-        ovl_11_func_800D2D54((void *)recordAddress);
+        Ovl11ApplyItemIdFlags((void *)recordAddress);
         resultAddress = recordAddress;
     }
     return (u16 *)resultAddress;

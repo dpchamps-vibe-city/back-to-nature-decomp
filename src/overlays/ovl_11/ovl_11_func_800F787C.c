@@ -3,16 +3,11 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "integer_power.h"
+#include "ovl11_menu_grid_view.h"
 
 void func_80017A38(s16 arg0, s16 arg1);
 void SetVal8005E2BC(s32 arg0);
-void ovl_11_func_800F8C1C(u32 *arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800F8B4C(s32 arg0, s32 arg1);
 s32 ovl_11_func_800F7AA0(void);
-void ovl_11_func_800F889C(s32 *arg0, s32 arg1, s16 *arg2);
-void ovl_11_func_800F882C(s32 *arg0, s32 arg1, s32 arg2, s16 *arg3);
-void ovl_11_func_800F84F0(s32 arg0);
-void ovl_11_func_800F87AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void ovl_11_func_800F787C(void) {
     s32 firstText;
@@ -64,16 +59,16 @@ void ovl_11_func_800F787C(void) {
     panel = (u32 *)(object + 0x68);
     text = object + 0x64;
     display = (s32 *)(object + 0x5C);
-    ovl_11_func_800F8C1C(panel, text, firstText, secondText);
-    ovl_11_func_800F8B4C(text, 0x40);
+    Ovl11DrawMenuGridPanels(panel, text, firstText, secondText);
+    Ovl11DrawMenuGridPageCount(text, 0x40);
     ovl_11_func_800F7AA0();
-    ovl_11_func_800F889C(display, 0, (s16 *)selected);
-    ovl_11_func_800F882C(display, 1, pow_int(2, D_80071A1E + 1), (s16 *)snapshot);
-    ovl_11_func_800F84F0(0x40);
-    items += D_80126E4A * 48;
-    ovl_11_func_800F882C(display, 9, 8, (s16 *)items);
-    ovl_11_func_800F87AC(text, (s32)panel, D_80126E44, D_80126E4A);
-    if (D_80126E4E == 0xFF) {
+    Ovl11DrawMenuGridSlot(display, 0, (s16 *)selected);
+    Ovl11DrawMenuGridSlots(display, 1, pow_int(2, gMenuGridLayoutIndex + 1), (s16 *)snapshot);
+    Ovl11UpdateMenuGridNavigation(0x40);
+    items += gOvl11MenuGridPageIndex * 48;
+    Ovl11DrawMenuGridSlots(display, 9, 8, (s16 *)items);
+    Ovl11UpdateMenuGridMessage(text, (s32)panel, gOvl11MenuGridCursorSlot, gOvl11MenuGridPageIndex);
+    if (gOvl11MenuGridMessageState == 0xFF) {
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(3, message);

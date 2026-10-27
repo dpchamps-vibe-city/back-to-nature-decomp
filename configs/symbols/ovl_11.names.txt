@@ -2053,3 +2053,30 @@ gOvl11SpriteBlockOffsets = 0x801247E8; // type:data size:0xCC
 gOvl11SpriteBlockBankRect = 0x801248B4; // type:data size:0x8
 gOvl11SpriteBlockChecksums = 0x80129420; // type:data size:0xC8
 gOvl11SpriteBlockScratchBase = 0x801294E8; // type:data size:0x4
+
+Ovl11CaptureSceneHeaderKey = 0x800CCC5C; // type:func
+Ovl11ProbeRecordStep = 0x800D24FC; // type:func
+Ovl11StepRecordVerticalOffset = 0x800D2594; // type:func
+Ovl11ApplyItemIdFlags = 0x800D2D54; // type:func
+Ovl11GetCalendarSeasonMask = 0x800D2E20; // type:func
+Ovl11ResetObjectAreaSpriteSource = 0x800CD08C; // type:func
+
+Ovl11UpdateMenuGridNavigation = 0x800F84F0; // type:func
+Ovl11UpdateMenuGridMessage = 0x800F87AC; // type:func
+Ovl11DrawMenuGridSlots = 0x800F882C; // type:func
+Ovl11DrawMenuGridSlot = 0x800F889C; // type:func
+Ovl11DrawMenuGridIndicators = 0x800F8A3C; // type:func
+Ovl11DrawMenuGridPageCount = 0x800F8B4C; // type:func
+Ovl11DrawMenuGridPanels = 0x800F8C1C; // type:func
+
+gOvl11MenuGridCursorSlot = 0x80126E44; // type:data size:0x2
+gOvl11MenuGridSavedCursorSlot = 0x80126E46; // type:data size:0x2
+gOvl11MenuGridSelectedSlot = 0x80126E48; // type:data size:0x2
+gOvl11MenuGridPageIndex = 0x80126E4A; // type:data size:0x2
+gOvl11MenuGridSelectedPageIndex = 0x80126E4C; // type:data size:0x2
+gOvl11MenuGridMessageState = 0x80126E4E; // type:data size:0x2
+gOvl11MenuGridNavigation = 0x80126E54; // type:data size:0x110
+gOvl11MenuGridPageText = 0x80129FD8; // type:data size:0x18
+
+Ovl11RequestRecordStatusMessage = 0x800D0DCC; // type:func
+gOvl11RecordStatusCountText = 0x80128D70; // type:data size:0x8

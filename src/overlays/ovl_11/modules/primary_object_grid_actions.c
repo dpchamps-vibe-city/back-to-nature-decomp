@@ -62,6 +62,7 @@
 #include "ovl11_action_status_delta.h"
 #include "ovl11_triplet_sprite_release.h"
 #include "ovl11_held_item_flags.h"
+#include "ovl11_object_area_sprite_reset.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -403,7 +404,6 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
     arg0->direction = direction;
 }
 
-void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
 void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
 s32 ovl_11_func_80107C80 (s16 arg0, u16 arg1, s32 *arg2, s32 arg3);
@@ -464,16 +464,16 @@ s32 Ovl11StepPrimaryObjectAction(Ovl11C580CObject *arg0) {
         case 0x42:
         case 0x43:
             arg0->unk6C &= ~0x4000;
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
 reset_done:
             return 0;
         case 0x52:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             PlaySoundEffect(0x15);
             arg0->timer = 0x64;
             goto negative_action;
         case 0x55:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             PlaySoundEffect(0x11);
             Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 8);
             temp_s0 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x84);
@@ -486,7 +486,7 @@ reset_done:
             Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x50:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             Ovl11SetPendingStageMode(0);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
@@ -495,7 +495,7 @@ reset_done:
             Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x51:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             PlaySoundEffect(0x11);
             Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 4);
             temp_s0_2 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x84);
@@ -508,7 +508,7 @@ reset_done:
             Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x4E:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 6);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
@@ -517,7 +517,7 @@ reset_done:
             Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x4F:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 2);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
@@ -526,7 +526,7 @@ reset_done:
             Ovl11ApplyStatusDelta(0, Ovl11AdjustActionStatusDelta(0), 0, 0);
             return 0;
         case 0x4D:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 5);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
@@ -536,7 +536,7 @@ reset_done:
             return 0;
 
         case 0x53:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             PlaySoundEffect(0xE);
             Ovl11InstallObjectCellItems((Ovl11C4A2CObject *) arg0);
             status = arg0->unk6C;
@@ -553,7 +553,7 @@ negative_action:
         case 0x4C:
             arg0->state = 0x31U;
             Ovl11FinalizePrimaryItemAction((Ovl11C6770Object *) arg0);
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             arg0->unk6C &= ~0x4000;
             Ovl11ResetPrimaryObjectRequest();
             return 0;
@@ -581,7 +581,7 @@ state_done:
             arg0->unk6C = (arg0->unk6C | 0x10) & 0xDFFFFFFF;
             goto state_done;
         case 0x49:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             temp_s0_3 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x8A);
             arg0->unk6C &= 0xEFFF3FFF;
             Ovl11InvokeItemAction(temp_s0_3);
@@ -594,11 +594,11 @@ state_done:
                 SetGameFlag(7U, 1U);
             }
             arg0->unk6C &= ~0x4000;
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x4B:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             ovl_11_func_80107C80(0x2F, 0U, NULL, 1);
             arg0->direction = (u16) ((arg0->direction + 2) & 3);
             Ovl11BeginPrimaryObjectInputOverride(0x14);
@@ -620,7 +620,7 @@ state_done:
             return 0;
 
         default:
-            ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
+            Ovl11ResetObjectAreaSpriteSource((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             goto reset_done;
         }
         return 0;

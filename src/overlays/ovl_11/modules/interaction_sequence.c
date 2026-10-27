@@ -23,12 +23,12 @@
 
 void Ovl11ResetInteractionSequence(void) {
     gOvl11InteractionPhase = 0xFF;
-    D_80126E44 = 0;
-    D_80126E46 = 0;
-    D_80126E48 = 0xFF;
-    D_80126E4A = 0;
-    D_80126E4C = 0;
-    D_80126E4E = 0xFF;
+    gOvl11MenuGridCursorSlot = 0;
+    gOvl11MenuGridSavedCursorSlot = 0;
+    gOvl11MenuGridSelectedSlot = 0xFF;
+    gOvl11MenuGridPageIndex = 0;
+    gOvl11MenuGridSelectedPageIndex = 0;
+    gOvl11MenuGridMessageState = 0xFF;
     gOvl11SharedSpriteFrame = 0;
     gOvl11SharedSpriteFrameTicks = 0;
     gOvl11TextureStreamCursor = 0;

@@ -67,6 +67,7 @@
 #include "ovl11_triplet_sprite_release.h"
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_facing_history.h"
+#include "ovl11_object_area_sprite_reset.h"
 
 typedef struct {
                s16 field_0;
@@ -188,7 +189,6 @@ int csin (int a);
 void SetPadActuatorSequenceAddress (s32 arg0, s32 arg1);
 void ResetPadActuatorSequence (s32 arg0);
 void Ovl11RemapPrimaryDirectionButtons (void);
-void ovl_11_func_800CD08C(Recon_ovl_11_func_800CD08C_A0View *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void Ovl11SelectPrimaryAnimationForFlag10000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryAnimationForFlag08000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);

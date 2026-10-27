@@ -15,9 +15,9 @@
 #include "ovl11_surface_height.h"
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_object_record_clear.h"
+#include "ovl11_season_mask.h"
 
 s32 ovl_11_func_80109188(Ovl11D04D4Obj *record, s32 mode);
-s32 ovl_11_func_800D2E20(void);
 s32 Ovl11IsItemIdEnabled(s32 itemId);
 
 s32 Ovl11UpdateRecordPlacement(Ovl11PlacedRecordView *record,
@@ -107,7 +107,7 @@ s32 Ovl11IsItemIdEnabled(s32 itemId) {
     s16 mask;
     s32 i;
 
-    mask = ovl_11_func_800D2E20();
+    mask = Ovl11GetCalendarSeasonMask();
     entry = gOvl11ItemPlacementRules;
     for (i = 0; i < 0x11; i++) {
         if (entry->itemId == itemId) {

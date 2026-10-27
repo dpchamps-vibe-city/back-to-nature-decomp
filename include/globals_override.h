@@ -3557,8 +3557,8 @@ extern u16 gSaveCounter20Storage[5] __asm__("gSaveCounter20");
 extern Ovl11ItemState D_80070D42_slots[][8] __asm__("D_80070D42");
 /* 800F7AA0 passes this base to 800F8224's 64-record, six-byte compaction scan. */
 extern Ovl11ItemState D_80071042[64];
-/* 800F7AA0 saves/restores D_80126E44 here using sh/lhu across the transfer calls. */
-extern s16 D_80126E46;
+/* 800F7AA0 saves/restores the menu cursor using sh/lhu across transfers. */
+extern s16 gOvl11MenuGridSavedCursorSlot;
 /* 801024D8 reads the table selector with lb. */
 extern s8 D_801273EA_table __asm__("D_801273EA");
 
@@ -3976,30 +3976,26 @@ typedef struct {
  * (only ever declared extern, never GP). */
 extern s16 D_801295B0;
 
-/* D_80129FD8 - 12-halfword (0x18 byte) scratch buffer in ovl_11 data,
- * filled by ovl_11_func_800F8B4C via func_8001A970 (digit halfwords plus
- * a 0xFFFF terminator) and passed to func_80017B3C. Absolute-addressed
- * from the overlay; >8-byte declaration keeps the address split. */
-extern s16 D_80129FD8[12];
+/* 800F8B4C formats page digits plus FFFF into this 12-halfword buffer. */
+extern s16 gOvl11MenuGridPageText[12];
 
-/* D_80126E4A - s16 digit count / index in ovl_11 data at 0x80126E4A,
- * read by ovl_11_func_800F8B4C and cleared by ovl_11_func_800F6680.
- * Absolute-addressed from the overlay. */
-extern s16 D_80126E4A;
-/* ovl_11_func_800F84F0 uses these lh/sh menu indices and sentinels. */
-extern s16 D_80126E44;
-extern s16 D_80126E48;
-extern s16 D_80126E4C;
-extern s16 D_80126E4E;
-/* ovl_11_func_800F84F0 reads this lh byte-selector for the navigation table. */
-extern s16 D_80071A1E;
-/* ovl_11_func_800F84F0: 0x10-byte rows, lh x/y at +0/+2, lbu links at +4. */
+/* 800F84F0 wraps this zero-based page index; 800F8B4C displays index+1. */
+extern s16 gOvl11MenuGridPageIndex;
+/* 800F84F0/7AA0 use these lh/sh slot/page indices; FF means no selection. */
+extern s16 gOvl11MenuGridCursorSlot;
+extern s16 gOvl11MenuGridSelectedSlot;
+extern s16 gOvl11MenuGridSelectedPageIndex;
+/* 800F7AA0 sets 0 to request a slot message; 800F87AC restores FF on close. */
+extern s16 gOvl11MenuGridMessageState;
+/* 800F84F0 selects links[direction][index]; 787C draws 2^(index+1) slots. */
+extern s16 gMenuGridLayoutIndex;
+/* 800F84F0/889C: 17 0x10-byte rows, lh x/y at +0/+2, lbu links at +4. */
 struct Ovl11MenuNavigation {
     s16 x;
     s16 y;
     u8 links[4][3];
 };
-extern struct Ovl11MenuNavigation D_80126E54[];
+extern struct Ovl11MenuNavigation gOvl11MenuGridNavigation[];
 
 /* D_80051B9A - base of a data table in the PS-X EXE, indexed by
  * D_80054BBC and passed to func_80017B3C by ovl_11_func_800FA6CC.
@@ -6572,10 +6568,9 @@ typedef struct {
 } Ovl11ClockHudText;
 extern Ovl11ClockHudText gOvl11ClockHudText;
 
-/* ovl_11 indexed halfword table indexed by ovl_11_func_800D0DCC: the target
- * computes 0x15 - obj->unkB2 and stores 0xFFFF through func_8001A970's
- * returned pointer into this table. Absolute-addressed from the overlay. */
-extern s16 D_80128D70;
+/* 800D0DCC: eight-byte text span, two formatted glyphs for 21-u16@+B2
+ * followed by FFFF. Preserve the original first-halfword address view. */
+extern s16 gOvl11RecordStatusCountText;
 
 /* E2824: twenty enter slots, live at 3/4/9/14; original 800B96BC..800B970C. */
 typedef s32 (*Ovl11SmallRecordEnterHandler)(u16 *);

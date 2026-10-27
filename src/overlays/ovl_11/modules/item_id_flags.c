@@ -1,10 +1,20 @@
-#include "common.h"
+/*
+ * item_id_flags — reconstructed translation unit.
+ *
+ * Add item-code-specific bits to a record flag word at +0x34, preserving all
+ * existing bits. Shared by allocation and item transitions; it owns no state.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
+ */
 
-void ovl_11_func_800D2D54(void *arg0) {
-    u16 v = *(u16 *)arg0;
-    u32 *flags = (u32 *)((char *)arg0 + 0x34);
+#include "ovl11_item_id_flags.h"
 
-    switch (v) {
+void Ovl11ApplyItemIdFlags(void *record) {
+    u16 itemId = *(u16 *)record;
+    u32 *flags = (u32 *)((char *)record + 0x34);
+
+    switch (itemId) {
     case 0xA1:
     case 0x108:
     case 0x10B:

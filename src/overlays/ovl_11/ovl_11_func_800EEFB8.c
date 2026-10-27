@@ -44,6 +44,7 @@
 #include "ovl11_record_partition_flags.h"
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_condition_record_fields.h"
+#include "ovl11_season_mask.h"
 
 typedef struct {
                char pad0[0x38];
@@ -105,7 +106,6 @@ void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0,
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
-s32 ovl_11_func_800D2E20 (void);
 s32 ovl_11_func_80118C6C (void);
 s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);
