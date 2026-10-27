@@ -27,8 +27,8 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
+#include "ovl11_record_position_tables.h"
 
-void ovl_11_func_80110E28(u8 *arg0);
 s32 ovl_11_func_800F3BCC(u16 arg0);
 s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area);
 s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area);
@@ -49,7 +49,7 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
         for (i = 0; i < count; i++) {
             if (*(u16 *)(object + 0xB6) != 0) {
                 item = *(u16 *)(object + 0xB6);
-                ovl_11_func_80110E28(object);
+                Ovl11ClearRecordItemSprite(object);
             } else {
                 if (Ovl11FindCandidateGridCell(&x, &y, 1, 1, 1)) {
                     if (Ovl11FindCandidateGridCell(&x, &y, 0, 1, 1)) {
@@ -90,7 +90,7 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
             ovl_11_func_800F3BCC(*(u16 *)(object + 0xB6));
             break;
         }
-        ovl_11_func_80110E28(object);
+        Ovl11ClearRecordItemSprite(object);
         /* A nonzero helper result opens the next fallback. Preserve the
          * distinct success/failure tests and area order, not a flat retry loop. */
         if (Ovl11ProcessAreaSlotActions(object, 5)) {
@@ -246,7 +246,7 @@ fallback_done:
     }
     if (*(u16 *)(object + 0xB6) != 0) {
         ovl_11_func_800F3BCC(*(u16 *)(object + 0xB6));
-        ovl_11_func_80110E28(object);
+        Ovl11ClearRecordItemSprite(object);
     }
     return failed;
 }

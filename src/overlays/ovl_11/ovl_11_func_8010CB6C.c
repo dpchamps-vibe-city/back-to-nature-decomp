@@ -1,10 +1,9 @@
 #include "common.h"
 #include "game_types.h"
 #include "random.h"
+#include "ovl11_record_position_tables.h"
 
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
-void ovl_11_func_80110E28(u8 *arg0);
-void ovl_11_func_80110E34(Ovl11MotionState *arg0);
 
 s32 ovl_11_func_8010CB6C(Ovl11ObjectCB6C *arg0) {
     s32 increment;
@@ -40,7 +39,7 @@ s32 ovl_11_func_8010CB6C(Ovl11ObjectCB6C *arg0) {
     }
     arg0->unk16 = arg0->unk16 < 0 ? 0 : arg0->unk16;
     arg0->unk16 = arg0->unk16 > 255 ? 255 : arg0->unk16;
-    ovl_11_func_80110E28((u8 *)arg0);
+    Ovl11ClearRecordItemSprite((u8 *)arg0);
     if (arg0->unkB4 != 0) {
         arg0->unkB4 -= 1;
     }
@@ -60,7 +59,7 @@ s32 ovl_11_func_8010CB6C(Ovl11ObjectCB6C *arg0) {
         arg0->unkB8 &= 0xFFF8;
         ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *)arg0, 0);
         arg0->unkBE = 0;
-        ovl_11_func_80110E34((Ovl11MotionState *)arg0);
+        Ovl11PlaceRecordFromTable((Ovl11TablePositionObject *)arg0);
     }
     arg0->unk2C = Rand(300);
     arg0->unkB8 &= 0xFCA7;

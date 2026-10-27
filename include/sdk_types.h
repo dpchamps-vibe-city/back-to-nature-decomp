@@ -220,19 +220,6 @@ typedef struct {
 } M2C_24e7ca662cda_Ov11FlagSet;
 
 typedef struct {
-               char pad[0x22];
-               u16 unk22;
-               char pad2[0x30 - 0x24];
-               u16 unk30;
-               char pad3[0x38 - 0x32];
-               s32 unk38;
-               s32 unk3C;
-               s32 unk40;
-               char pad4[0xAC - 0x44];
-               u16 unkAC;
-} M2C_269c1560d5f5_Unk80110E34;
-
-typedef struct {
                u16 field_0;
                char pad_02[0x34 - 0x02];
                s32 field_34;
@@ -2004,6 +1991,19 @@ typedef struct {
     u8 pad_0[0xAC];
     u16 value;
 } Ovl11StateValueView;
+
+typedef struct {
+    char pad[0x22];
+    u16 facing;
+    char pad2[0x30 - 0x24];
+    u16 placementKind;
+    char pad3[0x38 - 0x32];
+    s32 x;
+    s32 y;
+    s32 z;
+    char pad4[0xAC - 0x44];
+    u16 tableIndex;
+} Ovl11TablePositionObject;
 
 struct Ovl11TextureCoordinates {
     u8 u0, v0;

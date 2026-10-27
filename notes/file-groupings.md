@@ -15,20 +15,72 @@ Evidence paths and limits: [grouping research](research/ovl_11_func_800CC4E0-gro
 - ovl_11_func_800CCB90 (s) — three-entry `D_80128BB0` update driver calling `800CC0F8` for occupied slots.
 - ovl_11_func_800CCBE8 (m) — clears an object's item slot, then records effect coordinates or invokes item cleanup.
 
-## `ovl_11` D_800B9920 four-state dispatch cluster — 0x800E3A3C–0x800E4330 (confidence: medium)
+## `ovl_11` object archive/program pipeline — 0x800E3A3C–0x800E4428 exclusive (confidence: medium)
 
-**Reconstructed handler unit: `src/overlays/ovl_11/modules/object_load_states.c`,
-800E3DC8–800E4428 exclusive**, all four consecutive table entries:
-Ovl11StartObjectArchiveLoad (E3DC8), Ovl11RunObjectRecordProgram (E40CC),
-Ovl11ReleaseObjectLoad (E4280), Ovl11PollObjectArchiveLoad (E4330). The
-private four-entry dispatch table and exact selector writes close the handler
-set. Start/poll share offset/size calculation and cursor-reset tails; run
-consumes exactly that base/cursor/index. The selector order is **0 start,
-1 run, 2 release, 3 poll**, not a proposed chronological ordering. Deferred
-start selects 3, completion selects 1, opcode FF selects 2, release selects 0.
-The source documents scratch/OT effects, unchecked ids/opcodes and unbounded
-run-to-yield behavior. Callback results are 0 except release's 1. The table
-is the external interface; no unused callback header was manufactured.
+**Reconstructed `src/overlays/ovl_11/modules/object_archive_pipeline.c`,
+all eleven entries in original order**, merging guarded_sprite_bank and
+object_load_states rather than retaining protocol slices:
+
+- E3A3C Ovl11DispatchObjectLoadPhase: sole reader of the four-handler bank,
+  entered through record-slot action table element 0 at 800B94AC.
+- E3A94 Ovl11GetObjectProgramCursor: exposes exactly the cursor reset by
+  start/poll and stepped by run, to two opcode clients.
+- E3AA4 Ovl11ReloadObjectSoundBank: consumes work +4438, which start/poll
+  explicitly clear; shares current-object/far-work and graphics scratch.
+- E3C04 Ovl11RequestObjectProgramRelease: selects the same phase 2 and
+  clears the same dispatch scratch, through the existing reset opcode.
+- E3C4C/E3CDC Ovl11ReloadGuardedSpriteBank/Ovl11UploadGuardedSpriteBank:
+  complete reload/upload pair inside that pipeline interval, still published
+  through its focused sprite header.
+- E3D88 Ovl11GetCurrentObjectId: guarded query of the same signed id used by
+  both archive-offset calculations.
+- E3DC8 Ovl11StartObjectArchiveLoad, E40CC Ovl11RunObjectRecordProgram,
+  E4280 Ovl11ReleaseObjectLoad, E4330 Ovl11PollObjectArchiveLoad: complete
+  four-handler cycle, with private base/cursor/index and offset-table uses.
+
+Membership is supported by that closed dispatch/state/cursor cycle and
+resource-reset protocol, corroborated by contiguous original code and table
+order. In the original 175C rodata blob, the sole-reader 113-opcode bank at
+800B975C precedes the four-phase bank at 800B9920 without a gap. The former's
+reader is E40CC, the latter's E3A3C: that reverse consumer order is consistent
+with one unit emitting both tables and hence the intervening functions.
+This corroboration is conditional on consumer-owned tables; an externally
+compiled table-only source cannot be excluded from -G0 bytes. It is NOT a
+GP ownership proof, nor does table adjacency alone prove the merge. The
+sprite pair is the most independent interior service; the supported pipeline
+extent carries it whole rather than manufacturing another inner boundary.
+Both callback banks remain external extracted storage, not re-emitted C.
+
+Selector order is **0 start, 1 run, 2 release, 3 poll**, not chronological
+phase order: deferred start selects 3, completion 1, FF opcode 2, release 0.
+Return is 0 except release's 1. The new object-archive header documents valid
+indices, blocking/scratch effects, unbounded run-to-yield execution, borrowed
+cursor lifetime (unchanged s32 address ABI), deferred release and the
+non-boolean flag distinctions. Sound refresh restores BOTH contexts from
+context zero's saved color; a cached request is left pending. The existing
+sprite header stays separate for its own callers, not as a TU boundary.
+
+EXE:80070C70 is now gObjectSoundBankRequest, with its signed halfword type
+and shared-work +4438 alias retained. Its view names bankId; the descriptor
++E value remains neutral. The cursor accessor and current-id getter now use
+the established Ovl11RecordCursor/Ovl11CurrentObjectId identities instead of
+competing C-local extern views; no storage, pointer ABI, linkage or new alias
+was introduced. Local source-global views moved to globals_override.h.
+The whole-eleven checked fold first proved baseline -O2/-G0, every member
+and overlay. None has an override and none was added or retired.
+
+Final batch acceptance (this eleven-member merge, movement_cell_rank,
+record_position_tables and facing_history): `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes all eight integrity gates
+at **1932/2625 folded**, up **14** from the run's 1918; **326/326 modules
+valid**, no previously folded regression. Every linked executable/overlay
+byte, associated data, callback and table placement is unchanged. Canonical
+names are clean; all published interfaces have zero failing findings, with
+unrelated pre-existing interface debt still reported. No compiler override,
+allowlist entry, pin, asm, or INCLUDE_ASM exception was added or retired; no
+shared tool changed and no commit was made. Gate log:
+`build/tu-campaign/record-pipeline-verify.log`. Exit 1 denotes the 693 remaining
+eligible functions, not a failed integrity gate.
 
 Names: gOvl11ObjectLoadHandlers (800B9920, four pointers),
 gOvl11ObjectOpcodeHandlers (800B975C, 0x71 pointers),
@@ -39,15 +91,18 @@ only the first word of the inherited 12-byte symbol extent. Branch bookkeeping
 still reads a branch byte from the NEW cursor after changing it; no pointer
 subtraction or presumed bug fix replaced that behavior.
 
-Boundaries: left E3D88 is a current-object-id/GameFlag accessor with neither
-selector nor cursor protocol. Right E4428 is a shared record-selector callee
-using flags+76280 stride-1D4 records, not a handler-table member. The earlier
-dispatcher E3A3C and initializer E3C04 remain causally connected but are
-separated by the cursor accessor, sound-bank update, guarded_sprite_bank
-module and E3D88. This is a **link-order/mechanical limit on the wider
-protocol group**, not evidence that shared selector state proves different
-original objects. The four-handler component is folded whole; no boundary is
-invented between table members. Overlay -G0 offers no GP proof.
+Boundaries: left E351C–E3A3C is sprite_block_bank's exclusive
+checksum/offset/retained-scratch service; the pipeline calls its public
+upload/size API but shares none of its private representation. Right E4428
+starts the selected-position/event-slot and sprite-record services, with
+76280 stride-1D4 records, event slots and distinct scan tables, not the
+program cursor/index/phase banks. Calls into those services (including some
+single-client helpers) do not themselves prove another original same-source
+member. No private pipeline state/table witness extends the right edge.
+These are evidence-limited -G0 service cuts, not recovered object boundaries;
+a still larger historical resource/program file remains uncertain. The old
+E3D88/four-handler cut and E3C4C/guarded-pair cuts are superseded by this
+whole pipeline merge, not preserved as mechanical limits.
 
 The baseline checked fold preserved all four and the complete overlay.
 The first campaign gate exposed two calls to 800EEBC8 carrying four zero
@@ -173,8 +228,9 @@ half of the guard and is not adjacent, so it is cited as callee, not member.
   from a sprite-bank state word and forwards its buffer to
   `ovl_11_func_800E351C`.
 
-**Reconstructed `modules/guarded_sprite_bank.c`:** both entries, now
-`Ovl11ReloadGuardedSpriteBank` and `Ovl11UploadGuardedSpriteBank`.
+**Guarded sprite interface, now inside `modules/object_archive_pipeline.c`:**
+both entries, `Ovl11ReloadGuardedSpriteBank` and
+`Ovl11UploadGuardedSpriteBank`.
 The original upload adds its two selector arguments to RECT.x/y before
 LoadImage, establishing **VRAM-word x offset** rather than a bank index.
 `gOvl11SpriteBankVramXOffset` (80129418, s16) records 0 or 256 for the later
@@ -186,15 +242,13 @@ exact guards, GPU wait/OT clear, range [0x1D,0x1E), and always-zero reload
 result. Unused SDK redeclarations/includes were removed; live SDK and CD
 interfaces come from their canonical headers.
 
-Both boundaries have protocol evidence: 800E3C04 initializes mode 2 and calls
-800E7798 with four zero arguments, touching different work fields; it neither
-loads this archive nor invokes the guarded uploader. 800E3D88 queries the
-flag-2-selected object's +2 halfword and uses the opposite flag polarity;
-it does not implement this upload gate or touch its offset/buffer. The distant
-800E351C uploader is shared by other callers and lacks this pair's work-bit
-guard, so its call edge alone does not absorb intervening code. These are
-supported reconstruction cuts under -G0, not compiler-proven object cuts.
-The complete two-member fold passed at baseline; no override applies.
+The former pair boundaries distinguished protocols, not original objects.
+They are now retired: the complete E3A3C–E4428 pipeline above carries this
+pair and its neighbors together, with the dispatcher/cursor/phase and table
+order evidence recorded there. The distant E351C uploader remains a separate
+private checksum/offset service, not absorbed solely for its call edge.
+Both the earlier pair fold and the new eleven-member fold pass baseline;
+no override applies.
 
 **Related service reconstructed as `modules/sprite_block_bank.c`, all four
 entries 800E351C–800E3A3C exclusive.** Ovl11UploadSpriteBlockBank,
@@ -2798,6 +2852,52 @@ that documented cluster. Members (address order):
 
 ## `ovl_11` far-state/reset band — 0x8010FBC4 → 0x801110CC (confidence: medium-low; 8010FBC4/8010FEF8 extensions: low)
 
+**Reconstructed `modules/record_position_tables.c`, 80110CE8–801110CC
+exclusive, six entries in original order:** Ovl11GetSlotPositionZ600,
+Ovl11GetSlotPositionX400, Ovl11ClearRecordItemSprite,
+Ovl11PlaceRecordFromTable, Ovl11SelectRecordMessage and
+Ovl11GetRecordMovePeriod. The paired slot-position maps are used together
+only by F8E4's position/clear sequence; that client calls the reset leaf on
+completion. Place installs kind 0x28, which the adjacent message selector
+explicitly tests, and both index by unsigned +AC. The final period selector
+complements the message selector's +26/+AE/+B0/+B2 record protocol (kinds
+8/9/10 versus 2/3/4/7), retaining its deliberately unsigned value reads.
+These protocol edges, the otherwise unreferenced position/message table
+cluster and gapless link order support the whole six, not adjacency alone.
+The reset is the weakest member: shared client sequencing and its interior
+position support it, not exclusive ownership of the embedded sprite source.
+
+The four tables are named at their original overlay identities:
+gOvl11SlotPositionsZ600 (six 16-byte rows, E60–EC0),
+gOvl11SlotPositionsX400 (EC0–EE0), gOvl11RecordPlacementTable
+(EE0–F50, seven position/facing rows), and gOvl11RecordMessageBases
+(F50–F60, eight signed halfwords). EC0+20 is EE0: the second position map
+may index across the separately labeled placement rows, so its declaration
+remains unbounded rather than silently imposing an inferred row limit.
+Ovl11TablePositionObject replaces the duplicate local/generated view;
+positions, facing, placementKind and tableIndex name the demonstrated fields
+without changing widths, signedness or offsets. The three-word position
+outputs deliberately leave the padded fourth word unchanged. Header
+ovl11_record_position_tables.h documents valid-index obligations, raw units,
+message-selection side effects, source invalidation and period behavior.
+
+Left 80110944 searches shared pools and has no reference to these maps or
+selectors; its 22 clients do not establish a private helper join to this
+unit. Right 801110CC begins item_sprite_source's complete private mapper
+closure and its distinct dispatch table. Sharing the public item/header
+layout does not join those maps to these position/message tables. These
+are evidence-limited -G0 boundaries, not GP-proven historical object edges;
+no mechanical or flag limit motivated them. The much wider candidate band
+below remains unproven, rather than being sliced to evade its rodata limit.
+The checked baseline fold proved all six and the linked overlay; no member
+has an override, none was added, and no ownership/linkage or policy exception
+changed. Shared data declarations moved from C into globals_override.h;
+no new data definitions or aliases were manufactured. Canonicalization
+propagated the original-address names; the overlay-only declarations in the
+shared override header were explicitly reconciled because their owner is
+not inferable from that header's location. Caller headers are published by
+interfaceAudit, preserving their compiled objects.
+
 Module-campaign follow-up: the installer's complete private mapper closure,
 801110CC–80111A60, is now item_sprite_source (see the s16 dispatch-map
 section). The earlier reset/keyed-lookup/probe band is still a hypothesis,
@@ -4093,11 +4193,40 @@ Fingerprints:
 - the two `D_80123754` writers and the reader sit at the run's nodes
   (12B8 / 1960 at the front, 1CFC later), with the untouched members
   sandwiched between them — a single global threading one contiguous file.
-- confirmed same-TU nested pair: ovl_11_func_800D1CD0 is defined inside
-  ovl_11_func_800D1CFC. The analogous 800D0600/800D062C pair is now also
-  integrated and fully verified; this shared nesting idiom does not prove
-  that the two pairs belong to one TU
-  ([evidence and limits](research/ovl_11_func_800D062C-grouping.md)).
+- **Reconstructed `modules/movement_cell_rank.c`, 800D1CD0–800D1E1C
+  exclusive, both original entries:** Ovl11CompareMovementAxis is defined
+  inside its sole parent Ovl11RankMovementCell. Original static-chain
+  setup/spill and compiler state establish same-source nesting, the strongest
+  membership witness here. The formerly empty nested carrier is removed;
+  the nested definition is retained, not replaced by asm or a new stub.
+  Its sole-reader nine-cell rank table is gOvl11MovementCellRanks at
+  80123A18 (original 14-byte extent includes a padding halfword).
+  gOvl11MovementRankThreshold at 80123754 is an externally set signed input,
+  NOT private pair state: D12B8 resets it and D1960 publishes a setter used
+  by distant movement clients. Co-use of that setting does not establish
+  the whole hypothesized movement band as one original TU.
+
+  Left D1C18 selects from its different 480-byte random-weight table and
+  neither calls nor uses this pair's private rank table. Right D1E1C is a
+  position probe with no rank-table/comparator access. The larger movement
+  clients use the public classifier, and the private D6C bridge debated
+  below is not referenced by this pair. No positive private-helper/table
+  witness extends these edges. These are conservative evidence-limited
+  -G0 cuts, not recovered historical object edges; the nested pair is the
+  entire *established* same-source component, not a seven-entry movement
+  core claimed from the shared threshold. The analogous 800D0600/800D062C
+  nesting idiom likewise does not prove a join across intervening code.
+
+  ovl11_movement_cell_rank.h publishes only the parent: X/Z rank ordering,
+  raw coordinate units, strict short-move thresholds, flag clearing and the
+  ambiguous zero result. Local names distinguish X/Z coordinates and ranks;
+  original signed arithmetic, halfword table reads and parameter view stay
+  intact. The nested comparator has no independent public interface or new
+  private-linkage declaration. Shared globals retain extern ownership, their
+  original extents and addressing; the setter's duplicate extern is removed.
+  The checked baseline fold proved both entries and the overlay with no flag
+  override or policy change.
+  [Original nesting evidence](research/ovl_11_func_800D1CFC-nested-function-cse-not-expected.md).
 - updater sibling extension from verified `800D1EB8`: its gapless successor
   `800D2160` shares the 0xB4-record update/reset/timer callee cluster, and
   `800CE834` calls them consecutively at 0x800CE868 / 0x800CE870 (original
@@ -4120,13 +4249,11 @@ Members (address order):
   the global; scans a u16 table at D_801232D4 with index
   `(arg2 + arg1*9)*8 + arg0*288` against a `func_80012A34(0x65)` threshold;
   called by the adjacent ovl_11_func_800D196C
-- ovl_11_func_800D1CD0 (m) — rank-compare leaf, nested function of
-  800D1CFC and defined inside it in ovl_11_func_800D1CFC.c (its own file
-  defines nothing); byte-identical to ovl_11_func_800D0600; does not touch
-  the global
-- ovl_11_func_800D1CFC (m, matched 2026-10-08) — reads D_80123754 (`lh`), the
-  run's getter; parent of nested 800D1CD0, seeds $v0 with $sp+0x10 before
-  each call
+- Ovl11CompareMovementAxis (800D1CD0, m) — nested signed rank comparator,
+  now inside modules/movement_cell_rank.c; no separate carrier remains.
+- Ovl11RankMovementCell (800D1CFC, m) — reads the shared signed threshold
+  (`lh`), maps X/Z ranks and clears flag 2000 on short moves; parent of the
+  nested comparator, supplying its original static chain before each call
 - ovl_11_func_800D1E1C (s) — does not touch the global
 - ovl_11_func_800D1EB8 (m) — updates D_800749F4's 20 records and D_800742EC's 10 records; updater sibling of 800D2160.
 - ovl_11_func_800D2160 (m) — updates D_80075FE4's three 0xB4 records using the shared update/reset/timer helpers.
@@ -11311,8 +11438,14 @@ all-container byte identity; the older suspended/unmatched status below is
 historical. Research across 179E8..1AF44 finds the same GP-owned text-state
 cluster spanning accessors, wrappers, renderer, archive-slot and formatting
 helpers, enclosing the existing u16_string module. No GP-versus-absolute
-boundary was established inside that band. A suggested accessor-only set
-was rejected: it skipped interposed wrappers and had no independent cut
+boundary was established inside that band. Independent original-byte
+research in this run agrees with deriveTuOwnedGlobals: E450 joins 17A48 /
+17A64 to 18B98 across u16_string, E2BC joins 17B18 / 17B24 to 183E0, E444
+joins 183E0 / 18B98 to the later render helpers, and E460/E468 reaches
+through 1AF34. No absolute outsider or GP owner outside the band was found
+for that text-state cluster. 179E8 is additionally joined by its call to
+the E4B0 clearer; there is no supported slice to fold around the flags.
+A suggested accessor-only set was rejected: it skipped interposed wrappers and had no independent cut
 against the pen-offset consumers. No artificial text_state slice was folded.
 
 The wider reconstruction remains concretely blocked by the two standing
@@ -11871,7 +12004,28 @@ the overlay, never GP-relative), and the large-offset writers use the same
   flags
 - ovl_11_func_800BFD04 (m) — s16 setter at +0xE4C8 via the +0x8000 split
   (base+0x8000, disp +0x64C8)
-- ovl_11_func_800CBE14 (m) — swaps u16 pair at +0x5800/+0x5802
+- **Reconstructed `modules/facing_history.c`, 800CBE14–800CBE2C
+  exclusive:** `Ovl11PushFacingHistory` stores the supplied low halfword at
+  shared work +5800 and copies its previous value to +5802; it does not swap
+  the pair. The direction controller 800C99C8 supplies the primary object's
+  facing before changing it, establishing a facing-history operation without
+  assigning speculative gameplay meaning to the two work cells. The public
+  ovl11_facing_history.h documents truncation, repeated values and effects.
+  The unused declaration in ED4A8 is reconciled as an interface reference,
+  not treated as a caller. No independent global symbol or storage is added
+  for these interior work cells.
+
+  This is the complete evidenced one-entry service. Left CBDFC tests flag
+  20000000 in the primary-object flags and neither calls this leaf nor uses
+  its two history cells. Right CBE2C starts moving_items' closed ten-entry
+  pool/velocity/sprite lifecycle; none of those members uses these cells.
+  The distant direction controller uses its public operation, not a private
+  helper/state join across intervening code. No positive witness extends
+  either edge; these are evidence-limited -G0 cuts, not GP-proven original
+  object boundaries. The broader scattered work-buffer list is not one TU.
+  The checked baseline fold proved this member and the overlay with no
+  override, linkage, ownership or policy change. Parameters/locals now name
+  the facing, work view and previous value; widths and source form remain.
 - ovl_11_func_800CD3C4 (m, matched this session) — evaluation leaf: masks bit
   0x200 of the u16 at +0x44C0 (= 0x80070CF8) into a running score (via sub-base
   base-0x51C8 formed from `&D_80071A00`; see the D_80071A00 pool cluster

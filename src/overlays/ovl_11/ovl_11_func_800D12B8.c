@@ -7,12 +7,12 @@
 #include "ovl11_record_pair_order.h"
 #include "vblank_timer.h"
 #include "ovl11_direction_vector.h"
+#include "ovl11_movement_cell_rank.h"
 
 void ovl_11_func_800D1E1C (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D2DB8 (Ovl11Func800BDCE8Arg1 *arg0);
 s32 ovl_11_func_800D24FC (Recon_ovl_11_func_800D2594_A0View *arg0, VECTOR position, s16 arg5, s32 arg6);
 s32 ovl_11_func_800D196C (Recon_ovl_11_func_800D2594_A0View *arg0, u16 arg1, s32 arg2);
-s32 ovl_11_func_800D1CFC (Recon_ovl_11_func_800D2594_A0View *arg0);
 void ovl_11_func_800D2B40 (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 ovl_11_func_800D2594 (Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1);
 
@@ -135,7 +135,7 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
         arg0->unk34 |= 0x4000;
         Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
     }
-    if ((arg0->unk34 & 0x2000) && (ovl_11_func_800D1CFC(arg0) == 0)) {
+    if ((arg0->unk34 & 0x2000) && (Ovl11RankMovementCell(arg0) == 0)) {
         Ovl11SetDirectionVector(4, (Recon800D0408A1View *) ((u8 *) arg0 + 0x48), 0);
         Ovl11SelectRecordPairCode(arg0);
         return;
@@ -167,5 +167,5 @@ void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32
     } else {
         ovl_11_func_800D2594(arg0, arg1);
     }
-    D_80123754 = 0x258;
+    gOvl11MovementRankThreshold = 0x258;
 }

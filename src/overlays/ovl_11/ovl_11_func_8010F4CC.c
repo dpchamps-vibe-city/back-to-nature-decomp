@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_direction_vector.h"
+#include "ovl11_record_position_tables.h"
 
 s32 ovl_11_func_80110544 (Ovl11E644Object *arg0, s16 arg1);
 void ovl_11_func_800D05D0 (Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
-void ovl_11_func_80110E34 (M2C_269c1560d5f5_Unk80110E34 *arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 s32 ovl_11_func_80110188 (Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 
@@ -41,7 +41,7 @@ s32 ovl_11_func_8010F4CC(Ovl11E644Object *arg0) {
                 *(s16 *) ((u8 *) arg0 + 0x22) = 2;
                 Ovl11SetDirectionVector(2, (Recon800D0408A1View *) &arg0->unk48, 0x18);
                 if (*(s32 *) ((u8 *) arg0 + 0x40) >= 0x1A2D) {
-                    ovl_11_func_80110E34((M2C_269c1560d5f5_Unk80110E34 *) arg0);
+                    Ovl11PlaceRecordFromTable((Ovl11TablePositionObject *) arg0);
                     arg0->unk34 &= ~0x800;
                     ovl_11_func_8010CE80((Recon_ovl_11_func_8010CE80_A0View *) arg0, 0);
                     result = 1;

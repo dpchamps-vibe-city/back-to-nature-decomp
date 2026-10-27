@@ -95,20 +95,20 @@ typedef struct {
     u16 unkB6;
 } Ovl11E644Object;
 
-/* 80110E34's matched object view, also passed by 8010F4CC: direction +22,
- * map +30, position +38/+3C/+40 and unsigned table index +AC. */
+/* 80110E34/8010F4CC: table-selected position and facing. These are raw
+ * world-coordinate words, not screen pixels; kind 0x28 selects this table. */
 typedef struct {
     char pad[0x22];
-    u16 unk22;
+    u16 facing;
     char pad2[0x30 - 0x24];
-    u16 unk30;
+    u16 placementKind;
     char pad3[0x38 - 0x32];
-    s32 unk38;
-    s32 unk3C;
-    s32 unk40;
+    s32 x;
+    s32 y;
+    s32 z;
     char pad4[0xAC - 0x44];
-    u16 unkAC;
-} M2C_269c1560d5f5_Unk80110E34;
+    u16 tableIndex;
+} Ovl11TablePositionObject;
 
 /* 801110CC's partial object view, also passed by 8010C7F0/8010CA0C.
  * The embedded SpriteSourceData begins at +C8; +DC is its header address. */

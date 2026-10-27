@@ -1655,6 +1655,32 @@ gOvl11Area37RewardItems = 0x80128138; // type:data size:0x10
 gOvl11AreaGridRewardWeights = 0x80127FE8; // type:data size:0xA0
 gOvl11Area37RewardWeights = 0x80128088; // type:data size:0xA0
 
+// Complete object-archive load/execute/release pipeline and resource services.
+Ovl11DispatchObjectLoadPhase = 0x800E3A3C; // type:func
+Ovl11GetObjectProgramCursor = 0x800E3A94; // type:func
+Ovl11ReloadObjectSoundBank = 0x800E3AA4; // type:func
+Ovl11RequestObjectProgramRelease = 0x800E3C04; // type:func
+Ovl11GetCurrentObjectId = 0x800E3D88; // type:func
+
+// Nested movement comparator and its sole parent, with their shared inputs.
+Ovl11CompareMovementAxis = 0x800D1CD0; // type:func
+Ovl11RankMovementCell = 0x800D1CFC; // type:func
+gOvl11MovementRankThreshold = 0x80123754; // type:data size:0x2
+gOvl11MovementCellRanks = 0x80123A18; // type:data size:0x14
+
+// Facing history and table-driven record placement/message/period services.
+Ovl11PushFacingHistory = 0x800CBE14; // type:func
+Ovl11GetSlotPositionZ600 = 0x80110CE8; // type:func
+Ovl11GetSlotPositionX400 = 0x80110DA0; // type:func
+Ovl11ClearRecordItemSprite = 0x80110E28; // type:func
+Ovl11PlaceRecordFromTable = 0x80110E34; // type:func
+Ovl11SelectRecordMessage = 0x80110E98; // type:func
+Ovl11GetRecordMovePeriod = 0x80111030; // type:func
+gOvl11SlotPositionsZ600 = 0x80127E60; // type:data size:0x60
+gOvl11SlotPositionsX400 = 0x80127EC0; // type:data size:0x20
+gOvl11RecordPlacementTable = 0x80127EE0; // type:data size:0x70
+gOvl11RecordMessageBases = 0x80127F50; // type:data size:0x10
+
 // Counter-driven message choices and the complete local effect-helper closure.
 Ovl11ResetCounterChoice = 0x8011F52C; // type:func
 Ovl11BeginCounterChoice = 0x8011F574; // type:func

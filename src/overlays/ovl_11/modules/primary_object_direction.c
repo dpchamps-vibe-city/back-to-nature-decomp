@@ -8,6 +8,7 @@
 #include "game_types.h"
 #include "ovl11_primary_object_direction.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_facing_history.h"
 
 s32 Ovl11MapDirectionButtons(u16 buttons, u16 facing) {
     switch (buttons) {
@@ -54,8 +55,6 @@ s32 Ovl11AccumulateFacingOffset(Ovl11FacingOffsetObject *object) {
     return object->offsetZ;
 }
 
-void ovl_11_func_800CBE14(s32 facing);
-
 s32 Ovl11UpdatePrimaryObjectDirection(void) {
     Ovl11C7010Object *object;
     s32 actionModifier;
@@ -73,7 +72,7 @@ s32 Ovl11UpdatePrimaryObjectDirection(void) {
         }
     }
     directionButtons &= 0xF000;
-    ovl_11_func_800CBE14((s32) (s16) object->unk38);
+    Ovl11PushFacingHistory((s32) (s16) object->unk38);
     object->unk38 = Ovl11MapDirectionButtons(directionButtons, object->unk38);
     if ((object->unk6C & 0x200000) && (actionModifier != 0)) {
         actionModifier = 0;

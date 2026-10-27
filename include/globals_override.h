@@ -2188,13 +2188,18 @@ struct struct_8006C838_800E7660 {
     s16 field_51EA;         /* 0x51EA */
 };
 
-/* View of D_8006C838 for ovl_11_func_800E3AA4: the s16 at +0x4438. Reached
- * as a struct member so cc1 keeps lui %hi(D_8006C838) followed by lh/sh with
- * 0x4438 as an immediate instead of folding the offset into the %hi. */
-struct struct_8006C838_800E3AA4 {
-    char pad_000[0x4438];   /* 0x0000-0x4437 */
-    s16 field_4438;         /* 0x4438 */
+/* Object archive loading clears this signed sound-bank request at work
+ * +4438; E3AA4 sends a changed request other than -1 to the sound driver. */
+struct Ovl11ObjectSoundRequestView {
+    char pad_000[0x4438];
+    s16 bankId;
 };
+/* E3AA4 copies descriptor +E through the shared far-work descriptor pointer
+ * to far-work +25498; its broader interpretation remains neutral. */
+typedef struct {
+    char pad[0xE];
+    s16 valueE;
+} Ovl11ObjectSoundDescriptorView;
 
 /* 800C2B04 reads the flag word at +0xC and signed time at +0x44CA. */
 typedef struct {
@@ -4309,7 +4314,7 @@ extern u8 gLoadedSpriteDataBlob[];
 /* D_80070C70 - s16 slot aliased with D_8006C838 + 0x4438. ovl_11_func_800E3AA4
  * compares it against D_8007AFF0 + 0x2549C, stores -1 in its early-out arm,
  * and ovl_11_func_800E6B18 writes its argument here. Absolute-addressed. */
-extern s16 D_80070C70;
+extern s16 gObjectSoundBankRequest;
 
 /* 800ED760 writes five word slots; 80107C80 reads each as two signed halfwords. */
 extern s32 D_80070C72[5];
@@ -6674,15 +6679,13 @@ extern u8 D_800C4C00[0xD1C];
  * it absolutely (split lui/%lo). */
 extern u16 gSmallRecordTripletBase;
 
-/* D_80123754 - ovl_11 s16 threshold (initial value 0x258) compared against
- * the two absolute rank distances in ovl_11_func_800D1CFC and written by
- * ovl_11_func_800D1960. Absolute-addressed (-G0 overlay build, lui/%lo). */
-extern s16 D_80123754;
+/* ovl_11:80123754 - signed movement-rank threshold, set by 800D1960 and
+ * reset to 600 by 800D12B8; compared against both absolute X/Z distances. */
+extern s16 gOvl11MovementRankThreshold;
 
-/* D_80123A18 - ovl_11 u16 lookup table indexed by (rank1 * 3 + rank2) * 2
- * in ovl_11_func_800D1CFC and read with `lhu`. Declared as an incomplete
- * array so cc1 emits the split two-register absolute address form. */
-extern u16 D_80123A18[];
+/* ovl_11:80123A18 - nine u16 movement-cell codes indexed by xRank*3+zRank,
+ * followed by one padding halfword in the original 0x14-byte extent. */
+extern u16 gOvl11MovementCellRanks[];
 
 /* ovl_11:800DD5B0/800DD6F0 install/step this pair. Renderer 800DCFEC
  * forwards progress/duration to 800DD060's vertex interpolation. Preserve
@@ -7895,8 +7898,19 @@ extern s16 gOvl11DefaultAreaVariant70NonzeroOffset;
 /* 800DD274 indexes signed halfwords at 80123E50 by the +44D4 selector. */
 extern s16 gOvl11DefaultAreaVariant80Offsets[];
 
-/* 80110E98 indexes this signed-halfword table by the object's u16 field at +0xAC. */
-extern s16 D_80127F50[];
+/* 80110CE8/80110DA0 index 16-byte rows and add a column offset to Z/X. */
+extern s32 gOvl11SlotPositionsZ600[][4];
+extern s32 gOvl11SlotPositionsX400[][4];
+/* 80110E34 copies three coordinate words and the +C facing halfword. */
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 z;
+    u16 facing;
+} Ovl11RecordPlacementEntry;
+extern Ovl11RecordPlacementEntry gOvl11RecordPlacementTable[];
+/* 80110E98 adds the indexed signed halfword to a message-window entry. */
+extern s16 gOvl11RecordMessageBases[];
 
 /* Sound-driver cursors are single words/halfwords in the original GP window. */
 extern s32 gSoundSpuLoadAddress;

@@ -1,14 +1,14 @@
 #include "common.h"
 #include "game_types.h"
+#include "ovl11_record_position_tables.h"
 
-s32 ovl_11_func_80111030(s32 arg0);
 void ovl_11_func_800D12B8(Recon_ovl_11_func_800D2594_A0View *arg0, s32 arg1, s32 arg2);
 
 s32 ovl_11_func_8010E644(Ovl11E644Object *arg0) {
     s16 var_a0;
     s16 var_v1;
 
-    ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *) arg0, ovl_11_func_80111030((s32) arg0), 0x70);
+    ovl_11_func_800D12B8((Recon_ovl_11_func_800D2594_A0View *) arg0, Ovl11GetRecordMovePeriod((s32) arg0), 0x70);
     var_a0 = 0xF;
     if (arg0->unkB6 == 0) {
         var_a0 = 0;

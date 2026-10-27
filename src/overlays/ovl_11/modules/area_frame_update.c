@@ -49,10 +49,11 @@
 #include "ovl11_menu_frame_update.h"
 #include "ovl11_clock_scene_completion.h"
 #include "ovl11_scene_setup_install.h"
+#include "psyq/libapi.h"
+#include "ovl11_object_archive_pipeline.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
-void ovl_11_func_800E3AA4(void);
 
 void Ovl11RunAreaFramePhase(void) {
     if (((struct Ovl11FrameState *) D_8006C838)->flags & 0x18000) {
@@ -65,7 +66,7 @@ void Ovl11RunAreaFramePhase(void) {
             Ovl11UpdateAreaFrame();
         }
         Ovl11UpdateAreaMode();
-        ovl_11_func_800E3AA4();
+        Ovl11ReloadObjectSoundBank();
         PollCdAudio();
         break;
     case 1:

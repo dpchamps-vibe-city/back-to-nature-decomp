@@ -14,15 +14,20 @@
 #include "ovl11_active_record_slot_drain.h"
 #include "game_flags.h"
 #include "ovl11_record_slot_table.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libapi.h"
+#include "psyq/memory.h"
+#include "ovl11_object_archive_pipeline.h"
 
 
-void ovl_11_func_800E3C04(void);
 void ovl_11_func_800F1038(u16 code, s32 value);
 s32 ovl_11_func_800F0F50(void);
 
 void Ovl11DrainActiveRecordSlot(void) {
     if (GetGameFlag(2U) == 1) {
-        ovl_11_func_800E3C04();
+        Ovl11RequestObjectProgramRelease();
         if (gRecordSlotPhase == 2) {
             Ovl11ServiceActiveRecordSlot();
         }

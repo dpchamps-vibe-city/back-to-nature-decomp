@@ -2,14 +2,12 @@
 #include "game_types.h"
 #include "ovl11_area_slot_flags.h"
 #include "ovl11_save_counters.h"
+#include "ovl11_record_position_tables.h"
 
 s32 ovl_11_func_80110188(Ovl11StateArg0 *arg0, s16 arg1, s32 *arg2, s16 arg3);
 void ovl_11_func_800D05D0(Ovl11SetFieldsView *arg0, Ovl11PaddedVec3 v);
 s32 ovl_11_func_80110544(Ovl11E644Object *arg0, s16 arg1);
 s32 ovl_11_func_80110520(s32 arg0, s16 arg1);
-void ovl_11_func_80110CE8(s32 *dst, s16 arg1);
-void ovl_11_func_80110DA0(s32 *arg0, s16 arg1);
-void ovl_11_func_80110E28(u8 *arg0);
 s32 ovl_11_func_80110944(s16 arg0, u16 arg1);
 
 s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
@@ -57,9 +55,9 @@ s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
             if (selected != -1) {
                 *(s16 *)((u8 *)arg0 + 0xBA) = selected;
                 if (arg1 == 1) {
-                    ovl_11_func_80110CE8(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionZ600(&sp18.field_0, selected);
                 } else {
-                    ovl_11_func_80110DA0(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionX400(&sp18.field_0, selected);
                 }
                 ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
                 *(s16 *)((u8 *)arg0 + 0x28) = 4;
@@ -82,16 +80,16 @@ s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
             } else {
                 *(s16 *)((u8 *)arg0 + 0xBA) = selected;
                 if (arg1 == 1) {
-                    ovl_11_func_80110CE8(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionZ600(&sp18.field_0, selected);
                 } else {
-                    ovl_11_func_80110DA0(&sp18.field_0, selected);
+                    Ovl11GetSlotPositionX400(&sp18.field_0, selected);
                 }
                 ovl_11_func_800D05D0((Ovl11SetFieldsView *)arg0, sp18);
                 *(s16 *)((u8 *)arg0 + 0x28) = 4;
             }
         } else {
             Ovl11SetAreaSlotFlag(*(s16 *)((u8 *)arg0 + 0xBA), arg1);
-            ovl_11_func_80110E28((u8 *)arg0);
+            Ovl11ClearRecordItemSprite((u8 *)arg0);
             *(s16 *)((u8 *)arg0 + 0x28) = 0;
         }
         break;
@@ -115,7 +113,7 @@ s32 ovl_11_func_8010F8E4(Ovl11StateArg0 *arg0, s32 arg1) {
         } else {
             Ovl11AddSaveCounter20(0, 1);
         }
-        ovl_11_func_80110E28((u8 *)arg0);
+        Ovl11ClearRecordItemSprite((u8 *)arg0);
         *(s16 *)((u8 *)arg0 + 0x28) = 0;
         return 1;
     }

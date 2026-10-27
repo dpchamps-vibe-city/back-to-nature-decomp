@@ -1,5 +1,6 @@
 #include "common.h"
 #include "psyq/memory.h"
+#include "ovl11_record_position_tables.h"
 
 typedef struct __attribute__((packed)) {
     s32 unk0;
@@ -25,7 +26,6 @@ typedef struct {
 } Ovl11Rec8010C6A0;
 
 s32 ovl_11_func_8010D04C(s32 arg0);
-void ovl_11_func_80110E34(void *arg0);
 
 void ovl_11_func_8010C6A0(void) {
     Ovl11Rec8010C6A0 *rec;
@@ -48,7 +48,7 @@ void ovl_11_func_8010C6A0(void) {
         src = (char *)(off + D_80127CD0[i]) + p5175c;
         rec->src = *(Ovl11PackedSrc8010C6A0 *)src;
         rec->unkAC = i;
-        ovl_11_func_80110E34(rec);
+        Ovl11PlaceRecordFromTable((Ovl11TablePositionObject *)rec);
         rec->word = *(Ovl11PackedWord8010C6A0 *)&D_80127CB4[i];
     }
     i = 4;

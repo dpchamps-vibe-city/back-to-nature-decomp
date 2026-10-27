@@ -2,10 +2,10 @@
 #include "game_types.h"
 #include "message_window.h"
 #include "ovl11_grid_candidate_search.h"
+#include "ovl11_record_position_tables.h"
 
 s32 ovl_11_func_8010DE68(Ovl11DE68Object *arg0);
 s32 ovl_11_func_80110944(s16 area, u16 mode);
-void ovl_11_func_80110E98(Ovl11DE68Object *arg0, s32 *arg1, s32 *arg2);
 
 s32 ovl_11_func_8010DA04(Ovl11DE68Object *arg0) {
     s16 sp18;
@@ -71,7 +71,7 @@ s32 ovl_11_func_8010DA04(Ovl11DE68Object *arg0) {
         }
     }
     if (var_s5 == 1) {
-        ovl_11_func_80110E98(arg0, &sp1C, &sp20);
+        Ovl11SelectRecordMessage(arg0, &sp1C, &sp20);
     }
     RequestMessageWindow(sp1C, sp20);
     temp_v1 = arg0->unkB8;

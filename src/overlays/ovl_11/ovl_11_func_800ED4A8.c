@@ -66,6 +66,7 @@
 #include "ovl11_action_status_delta.h"
 #include "ovl11_triplet_sprite_release.h"
 #include "ovl11_code160_record_handlers.h"
+#include "ovl11_facing_history.h"
 
 typedef struct {
                s16 field_0;
@@ -195,7 +196,6 @@ void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0,
 void Ovl11SelectPrimaryAnimationForFlag100 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 s32 ovl_11_func_8010B57C (u16 *arg0, s32 arg1);
 s32 Ovl11TryBeginIdleState54 (Recon_ovl_11_func_800C97D0_A0View *arg0);
-void ovl_11_func_800CBE14 (s32 arg0);
 s32 Ovl11MapDirectionButtons (u16 arg0, u16 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);

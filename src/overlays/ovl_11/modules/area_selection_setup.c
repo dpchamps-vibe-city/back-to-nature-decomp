@@ -29,19 +29,19 @@
 #include "ovl11_area_scene_load.h"
 #include "ovl11_default_area_selection.h"
 #include "ovl11_slot_sprite_source_refresh.h"
+#include "psyq/libapi.h"
+#include "ovl11_object_archive_pipeline.h"
 
 #define WORK ((Ovl11SetupWorkView *)&D_8007AFF0)
 #define RESIDENT ((Ovl11SetupResidentView *)D_8006C838)
 #define VARIANTS ((struct Ovl11MessageState *)D_8006C838)
 #define SELECTION_HEADER ((struct Ovl11SpriteWork *)&D_8007AFF0)
 
-s32 ovl_11_func_800E3D88(void);
-
 s32 Ovl11ResolveAreaSelection(s32 selection) {
     s32 id;
 
     id = selection;
-    if (ovl_11_func_800E3D88() == 0x12D) {
+    if (Ovl11GetCurrentObjectId() == 0x12D) {
         return gCalendarSeason + 0xBC;
     }
     if (id == 0) {

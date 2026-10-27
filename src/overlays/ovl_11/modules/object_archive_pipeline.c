@@ -1,42 +1,167 @@
 /*
- * object_load_states — reconstructed translation unit.
+ * Object-archive pipeline: dispatch/load, execute 16-byte records, release.
+ * The same unit provides the program cursor, guarded sprite-bank transfer
+ * and blocking object sound-bank refresh. These share the current-object
+ * and graphics/sound work areas; they are not reentrant services.
  *
- * Four table-selected handlers for object-archive load, record-program
- * execution, release and asynchronous load completion. The selector at
- * primary state +0x7A74 and shared program cursor bind the handlers; table
- * order is original function order. Selector 0 starts a load (possibly
- * synchronous), 3 polls the scratch-buffer read, 1 runs the record program,
- * and 2 releases it. Start/poll/run return zero; release returns one.
- *
- * Requires valid current-object id, archive-offset pairs and record/opcode
- * indices. No record bound or instruction budget is imposed: execution runs
- * to opcode 0xFF or a record yield bit. Load completion resets the shared
- * program base/cursor/index and publishes selector 1. GPU/OT clearing and
- * asset-scratch reuse are observable effects, not private allocations.
- * Branch bookkeeping deliberately reads the new cursor's branch byte after
- * the cursor changes; it is not replaced by a computed array index.
- * The table is the external interface, so no new callback header is needed.
- *
- * The evidence for its membership and boundaries is in
- * notes/file-groupings.md.
+ * Public contracts: ovl11_object_archive_pipeline.h and
+ * ovl11_guarded_sprite_bank.h. Membership/boundaries: notes/file-groupings.md.
  */
 
 #include "common.h"
+#include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-#include "psyq/libapi.h"
+#include "master_volume.h"
+#include "sound_driver.h"
+#include "sound_commands.h"
 #include "asset_scratch.h"
 #include "screen_fade.h"
 #include "cd_loader.h"
 #include "game_flags.h"
+#include "ovl11_guarded_sprite_bank.h"
+#include "psyq/libapi.h"
 #include "ovl11_record_slot_table.h"
 #include "ovl11_scene_value_commands.h"
 #include "psyq/memory.h"
 #include "ovl11_sprite_block_bank.h"
+#include "ovl11_object_archive_pipeline.h"
+
+s32 Ovl11DispatchObjectLoadPhase(void) {
+    char *work;
+    s32 phase;
+    s32 result;
+    s32 (**handler)(void);
+
+    work = (char *)&D_8006C838;
+    *(s32 *)(work + 0x522C) = 0;
+    *(s32 *)(work + 0x5230) = 0;
+    phase = *(s32 *)(work + 0x7A74);
+    handler = &gOvl11ObjectLoadHandlers[phase];
+    result = (*handler)();
+    *(s32 *)(work + 0x4450) &= ~0x20;
+    return result;
+}
+
+s32 Ovl11GetObjectProgramCursor(void) {
+    return (s32)Ovl11RecordCursor;
+}
 
 void ClearActiveOrderingTables(void);
-/* The callee's four-byte flag aggregates use the scalar word calling ABI. */
+
+void Ovl11ReloadObjectSoundBank(void) {
+    s16 bankId;
+    u8 savedRed;
+    u8 savedGreen;
+    u8 savedBlue;
+    u8 *farWork;
+    env_struct_0x134 *context;
+    env_struct_0x134 *otherContext;
+
+    if (GetGameFlag(2U) == 1) {
+        bankId = ((struct Ovl11ObjectSoundRequestView *)D_8006C838)->bankId;
+        farWork = (u8 *)&D_8007AFF0;
+        if ((*(s32 *)(farWork + 0x2549C) != bankId) && (bankId != -1)) {
+            context = gRenderContexts;
+            savedRed = context->unk19;
+            savedGreen = context->unk1A;
+            savedBlue = context->unk1B;
+            context->unk19 = 0;
+            context->unk1A = 0;
+            context->unk1B = 0;
+            otherContext = context + 1;
+            otherContext->unk19 = 0;
+            otherContext->unk1A = 0;
+            otherContext->unk1B = 0;
+            DrawSync(0);
+            ClearActiveOrderingTables();
+            SetSoundCommandReadBuffer(0, gGraphicsHeapBase + 0x4290);
+            StopSoundSequence(0);
+            RewindSoundLoadSlots(2, 0);
+            *(s32 *)(farWork + 0x25498) = (s32)((Ovl11ObjectSoundDescriptorView *)(*(u8 **)(farWork + 0x25388)))->valueE;
+            QueueSoundLoadCommand(bankId, 0);
+            *(s32 *)(farWork + 0x2549C) = (s32)bankId;
+            ((struct Ovl11ObjectSoundRequestView *)D_8006C838)->bankId = -1;
+            do {
+                UpdateMasterVolumeAndSoundTransfer();
+            } while (IsSoundTransferComplete() == 0);
+            /* Both contexts receive context zero's saved color, not their
+             * separate pre-transfer colors. */
+            context = gRenderContexts;
+            context->unk19 = savedRed;
+            context->unk1A = savedGreen;
+            context->unk1B = savedBlue;
+            context++;
+            context->unk19 = savedRed;
+            context->unk1A = savedGreen;
+            context->unk1B = savedBlue;
+        }
+    } else {
+        gObjectSoundBankRequest = -1;
+    }
+}
+
+s32 ovl_11_func_800E7798 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+void Ovl11RequestObjectProgramRelease(void) {
+    u8 *base = (u8 *)D_8006C838;
+    (*(s32 *)(base + 0x7A74)) = 2;
+    ovl_11_func_800E7798(0, 0, 0, 0);
+    (*(s32 *)(base + 0x522C)) = 0;
+    (*(s32 *)(base + 0x5230)) = 0;
+}
+
+/* The sprite path is complementary to sound refresh: it is suppressed
+ * when game flag 2 is exactly 1, rather than enabled by that value. */
+
+s32 Ovl11ReloadGuardedSpriteBank(void) {
+    s32 bufferAddress;
+
+    if (GetGameFlag(2U) != 1) {
+        if (D_8006C844 & 0x18000) {
+            return 0;
+        }
+        DrawSync(0);
+        ClearOTagR((u32 *) gActiveRenderContext->field_120, 0x800);
+        bufferAddress = gSpriteBankArchiveBuffer;
+        CdLoadArchiveRangeBlocking(0x1D, 0x1E, bufferAddress, bufferAddress);
+        Ovl11UploadGuardedSpriteBank((u8 *) bufferAddress);
+    }
+    return 0;
+}
+
+void Ovl11UploadGuardedSpriteBank(u8 *buffer) {
+    char *stageWork;
+    s16 xOffset;
+
+    if ((GetGameFlag(2U) != 1) && !(D_8006C844 & 0x18000)) {
+        stageWork = (char *)&D_8007AFF0;
+        if (*(s16 *)(stageWork + 0x25476) != 0x2C) {
+            xOffset = ((*(u16 *)(*(s32 *)(stageWork + 0x25388) + 8) & 0x8000) == 0) << 8;
+            if (*(s16 *)(stageWork + 0x25476) == 0x1B) {
+                xOffset = 0;
+            }
+            Ovl11UploadSpriteBlockBank(buffer, xOffset, 0);
+            gOvl11SpriteBankVramXOffset = xOffset;
+        }
+    }
+}
+
+s32 Ovl11GetCurrentObjectId(void) {
+    s32 enabled;
+
+    enabled = GetGameFlag(2);
+    if (enabled == 0) {
+        return 0;
+    } else {
+        return Ovl11CurrentObjectId[1];
+    }
+}
+
+/* The four handlers retain original table/function order, NOT chronological
+ * phase order: 0 start, 1 run, 2 release, 3 poll. A deferred start selects 3,
+ * completion selects 1, opcode FF selects 2, and release selects 0. */
+
 void ovl_11_func_800E5230(void);
 void ovl_11_func_800E5294(void);
 u8 *ovl_11_func_800E54F8(u16 *arg0, s32 arg1);
@@ -111,7 +236,7 @@ s32 Ovl11StartObjectArchiveLoad(void) {
     Ovl11ClearValueSlotsCommand(0, 0, 0, 0);
     base = (u8 *)D_8006E910 - 0x20D8;
     ovl_11_func_800E54C8();
-    ((struct struct_8006C838_800E3AA4 *)base)->field_4438 = -1;
+    ((struct Ovl11ObjectSoundRequestView *)base)->bankId = -1;
     ((struct Ovl11E4280State *)base)->selector = 1;
     return 0;
 }
@@ -143,6 +268,7 @@ s32 Ovl11RunObjectRecordProgram(void) {
                     gOvl11ObjectProgramIndex++;
                 } else {
                     Ovl11RecordCursor = &gOvl11ObjectProgramBase[Ovl11RecordCursor->unk1];
+                    /* Bookkeeping reads the NEW record's branch byte. */
                     gOvl11ObjectProgramIndex = Ovl11RecordCursor->unk1;
                 }
             } else {

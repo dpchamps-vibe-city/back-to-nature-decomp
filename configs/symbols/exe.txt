@@ -1600,6 +1600,7 @@ gProjectedQuadFixedDepthContext = 0x8005E4E4; // size:0x4
 
 // Base of the shared twenty 0xB8 tagged records; preserve the extracted label extent.
 gPrimaryObjectBase = 0x80071A00; // size:0xC
+gObjectSoundBankRequest = 0x80070C70; // size:0x2
 gPrimaryObjectFlags = 0x80071A6C; // size:0x4
 gSmallTaggedRecordBase = 0x800742EC; // size:0xC
 gTaggedRecordBase = 0x800749F4; // size:0xC
