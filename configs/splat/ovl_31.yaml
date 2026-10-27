@@ -29,14 +29,11 @@ segments:
     start: 0x0
     vram: 0x800B7E20
     align: 4
-    subalign: 4
+    subalign: 1
     subsegments:
       - [0x0, rodata]
-      - [0xB4, .rodata, ovl_31_func_800B7FCC]
-      - [0xD0, rodata]
-      - [0xEC, .rodata, modules/memcard_service]
-      - [0x100, rodata]
-      - [0x1AC, c, ovl_31_func_800B7FCC]
-      - [0x4C8, c, modules/memcard_service]
+      - [0x4, .rodata, modules/memcard_service]
+      - [0x1AB, rodata]
+      - [0x1AC, c, modules/memcard_service]
       - [0x9D0, data]
   - [0x1000]

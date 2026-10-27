@@ -24,6 +24,9 @@
  * A relocation-free literal-only section may instead be placed at a unique
  * original lui/addiu reference whose bytes equal the entire emitted section.
  * This bounded fallback never treats an unverified string address as a table.
+ * Mixed literal/table sections may start before the first table: a unique
+ * full-section byte match, with R_MIPS_32 text pointers relocated against
+ * every member's independently agreeing original position, proves that base.
  * Stub functions get no attribution: their tables stay in generic rodata.
  *
  * This is per *container*, not per project. Every container the project
@@ -38,9 +41,9 @@
  *   npx tsx tools/build/deriveRodataSplits.ts --all --write
  */
 
-import { readFileSync, writeFileSync, existsSync } from "fs";
-import { join } from "path";
-import { elf32Sections } from "../lib/elfSections.js";
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import { dirname, join } from "path";
+import { elf32Sections, elf32Symbols } from "../lib/elfSections.js";
 import { ROOT } from "../lib/psxExeInfo.ts";
 import {
   EXE_CONTAINER_ID,
@@ -167,6 +170,52 @@ function literalRodataAddress(
   return matches.size === 1 ? [...matches][0]! : null;
 }
 
+/** A mixed literal/table pool can start before its first table. Establish its
+ * base by matching the ENTIRE emitted section, relocating only R_MIPS_32
+ * pointers into the unit's own text. Every member independently has to imply
+ * the same text base. Unknown relocation kinds/targets refuse this proof;
+ * unique bytes, not an extracted string label, establish the placement. */
+export function mixedRodataAddress(
+  buf: Buffer, object: Buffer, members: FuncExtent[], window: RodataWindow,
+): number | null {
+  const sections = elf32Sections(object);
+  const rodata = sections.get(".rodata"), text = sections.get(".text");
+  if (!rodata || !text || members.length === 0) return null;
+  const symbols = elf32Symbols(object);
+  const bases = new Set<number>();
+  for (const member of members) {
+    const symbol = symbols.find((s) => s.name === member.name && s.section === ".text" && s.type === 2);
+    if (!symbol) return null;
+    bases.add(member.start - symbol.value);
+  }
+  if (bases.size !== 1) return null;
+  const textBase = [...bases][0]!;
+  const data = Buffer.from(rodata.data);
+  let relocated = 0;
+  const offsets = new Set<number>();
+  for (const section of sections.values()) {
+    if (![4, 9].includes(section.type) || section.info !== rodata.index || section.size === 0) continue;
+    if (section.type !== 9 || section.entsize !== 8 || section.size % 8 !== 0) return null;
+    for (let i = 0; i < section.size; i += 8) {
+      const offset = section.data.readUInt32LE(i), info = section.data.readUInt32LE(i + 4);
+      const symbol = symbols[info >>> 8];
+      if ((info & 255) !== 2 || symbol?.section !== ".text" ||
+          offset % 4 !== 0 || offset + 4 > data.length || offsets.has(offset)) return null;
+      offsets.add(offset);
+      const target = symbol.value + data.readUInt32LE(offset);
+      if (target >= text.size) return null;
+      data.writeUInt32LE((textBase + target) >>> 0, offset);
+      relocated++;
+    }
+  }
+  if (relocated === 0) return null;
+  const matches: number[] = [];
+  for (let at = window.start; at + data.length <= window.endAddr; at += 4) {
+    if (buf.subarray(at, at + data.length).equals(data)) matches.push(at);
+  }
+  return matches.length === 1 ? matches[0]! : null;
+}
+
 /** Members of a unit its source compiles rather than hands to the assembler. */
 function compiledMembers(unit: TranslationUnit): string[] {
   const src = join(ROOT, unit.sourcePath);
@@ -208,7 +257,8 @@ export function deriveContainer(container: Container): Derivation {
     if (!existsSync(obj)) {
       throw new Error(`${unit.segmentName}: compiled C but ${unit.objectPath} is missing — run make first`);
     }
-    const sections = elf32Sections(readFileSync(obj));
+    const object = readFileSync(obj);
+    const sections = elf32Sections(object);
     const rodata = sections.get(".rodata");
     const size = rodata?.size ?? 0;
     if (!rodata || size === 0) continue;
@@ -219,7 +269,11 @@ export function deriveContainer(container: Container): Derivation {
       if (vramAddr !== null) tables.push({ name, vram: vramAddr });
     }
     let addr: number;
-    if (tables.length === 0) {
+    const mixed = mixedRodataAddress(buf, object,
+      compiled.flatMap((name) => funcs.has(name) ? [funcs.get(name)!] : []), window);
+    if (mixed !== null) {
+      addr = mixed;
+    } else if (tables.length === 0) {
       const relocated = [...sections.values()].some((section) =>
         [4, 9].includes(section.type) && section.info === rodata.index && section.size > 0);
       const literal = relocated ? null : literalRodataAddress(buf, container,
@@ -283,6 +337,33 @@ function applyDerivation(d: Derivation): void {
   writeFileSync(path, [...before, ...d.derived, ...after].join("\n"));
 }
 
+/** spimdisasm's word-based rodata writer drops a final 1–3 byte residue.
+ * Keep those extracted bytes as data, not invented C padding. This runs AFTER
+ * splat and only replaces an unnamed, sub-word generic rodata segment. */
+function writeSubwordResidues(container: Container): void {
+  const lines = readFileSync(containerPath(container, "splat"), "utf8").split("\n");
+  const window = findWindow(parseSubsegments(lines));
+  const original = readFileSync(containerTargetPath(container));
+  for (const [i, segment] of window.members.entries()) {
+    const end = window.members[i + 1]?.addr ?? window.endAddr;
+    const size = end - segment.addr;
+    if (segment.kind !== "rodata" || segment.name || size < 1 || size > 3 || segment.addr % 4 === 0) continue;
+    const bytes = original.subarray(segment.addr, end);
+    if (bytes.length !== size) throw new Error("rodata residue outside original image");
+    const path = join(ROOT, container.paths.asmDir, "data", `${hex(segment.addr)}.rodata.s`);
+    if (!existsSync(path)) throw new Error(`missing splat residue output: ${path}`);
+    const extracted = readFileSync(path, "utf8");
+    const emitted = `/* Generated original sub-word rodata residue. */\n.section .rodata, "a"\n.byte ${[...bytes].map((b) => `0x${b.toString(16).padStart(2, "0")}`).join(", ")}\n`;
+    if (extracted === emitted) continue;
+    if (/^\s*(?:dlabel|glabel|\.byte|\.half|\.word|\.ascii|\.asciz)\b/m.test(extracted)) {
+      throw new Error(`sub-word residue already has labels/data; refusing to replace ${path}`);
+    }
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, emitted);
+    console.log(`${container.id}: preserved ${size} original rodata byte(s) at 0x${hex(segment.addr)}`);
+  }
+}
+
 function main(): void {
   const argv = process.argv.slice(2);
   const write = argv.includes("--write");
@@ -295,6 +376,10 @@ function main(): void {
   let drift = false;
   for (const id of ids) {
     const container = requireContainer(id);
+    if (argv.includes("--write-subword-residues")) {
+      writeSubwordResidues(container);
+      continue;
+    }
     const d = deriveContainer(container);
     const label = `${container.id} rodata window (0x${hex(d.window.start)}..0x${hex(d.window.endAddr)})`;
 

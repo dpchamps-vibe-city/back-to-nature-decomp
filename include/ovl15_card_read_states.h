@@ -15,7 +15,7 @@
  * No arguments/return value. Do not step the write or transfer scene in the
  * same frame: they share all menu/card state. The transfer scene's separate
  * public frame entry is documented in ovl15_card_read_sprite_states.h; both
- * complete handler sets now compile together in modules/card_read_states.c.
+ * write/read/transfer handler sets compile together in modules/card_menu_states.c.
  * Internal stages retain linkage but are not supported external entry points. */
 void Ovl15StepCardReadMenu(void);
 

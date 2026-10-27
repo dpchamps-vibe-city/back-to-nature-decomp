@@ -51,6 +51,7 @@
 #include "sound_driver.h"
 #include "ovl08_scene_select_menu.h"
 #include "ovl28_sprite_sequence_scene.h"
+#include "ovl31_memcard_utility.h"
 #include "random.h"
 #include "vram_clear.h"
 #include "display_mask.h"
@@ -385,7 +386,7 @@ int main(void) {
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x1F, 0x20, D_80010098, D_80010098);
                 ResetSceneDispatchState();
-                D_8005E384 = (void (*)(void))&D_800B7FCC;
+                D_8005E384 = Ovl31UpdateMemoryCardUtility;
                 D_8005E288 = 0;
                 break;
 

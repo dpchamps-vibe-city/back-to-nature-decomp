@@ -26,6 +26,9 @@
 #include "ovl15_save_sprite_resources.h"
 #include "ovl15_card_read_sprite_states.h"
 #include "ovl15_card_read_states.h"
+#include "psyq/libmcx.h"
+#include "psyq/strings.h"
+#include "ovl15_card_write_states.h"
 
 void ovl_15_func_8013468C(void);
 
@@ -81,7 +84,6 @@ void Ovl15ResetSaveMenuState(void) {
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
 void func_8002495C(s16);
-void ovl_15_func_8012EA18(void);
 
 void Ovl15UpdateCardWriteScene(void) {
     s32 sprite;
@@ -118,7 +120,7 @@ void Ovl15UpdateCardWriteScene(void) {
             gOvl15MenuStateTimer++;
         }
         func_80017A38(0, 2);
-        ovl_15_func_8012EA18();
+        Ovl15StepCardWriteMenu();
         func_80017A38(0, 0);
         switch (gOvl15MenuExitRequest) {
         case 2:

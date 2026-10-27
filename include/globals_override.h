@@ -960,9 +960,9 @@ extern char D_800B7FA4[18];
 /* ovl_31 rodata: NUL-terminated new FARMP memory-card filename. */
 extern char D_800B7FB8[18];
 /* ovl_31 data allocates 32 bytes for the first sprintf/rename path buffer. */
-extern char D_800B8870[32];
+extern char gOvl31RenameSourcePath[32];
 /* ovl_31 data allocates 32 bytes for the second sprintf/rename path buffer. */
-extern char D_800B8890[32];
+extern char gOvl31RenameDestinationPath[32];
 
 /* Complete per-pad input layout is in game_types.h. */
 struct PadInputState;
@@ -3481,9 +3481,9 @@ extern char D_800B7EA8[];
 extern char D_800B7EB0[];
 extern char D_800B7EC0[];
 extern char D_800B7EC8[];
-/* ovl_31 driver: six menu strings at stride 20, and word status loads/stores. */
-extern char D_800B87F0[][20];
-extern s32 D_800B886C;
+/* ovl_31 driver: six 20-byte menu rows and the latched operation result. */
+extern char gOvl31MemoryCardMenuRows[][20];
+extern s32 gOvl31MemoryCardResult;
 
 /* ovl_31 memory-card directory listing.  D_800B7EF0 is the "*" name
  * pattern and D_800B7EF4 the "%d file(s) %d block(s)\n" format;
@@ -3493,10 +3493,11 @@ extern s32 D_800B886C;
 struct DIRENTRY;
 extern char D_800B7EF0[];
 extern char D_800B7EF4[];
-extern struct DIRENTRY D_800B88B0;
-extern char D_800B8B10[];
-/* 800B83B8 receives the file count here; ovl_10 reads a string at this address. */
-extern s32 D_800B8868_fileCount __asm__("D_800B8868");
+extern struct DIRENTRY gOvl31DirectoryEntries[];
+extern char gOvl31DirectorySummary[];
+/* ovl_31:800B83B8 passes this word to libmcrd's long* output; ovl_10's
+ * unrelated string at the same RAM address retains its own D_800B8868. */
+extern long gOvl31DirectoryFileCount;
 extern s32 D_800BB8A4;
 extern s32 D_800BB8A8;
 extern s32 D_800BB8AC;
@@ -6027,7 +6028,7 @@ extern u8 D_800533C8[];
 /* ovl_15_func_80130FF0 reads this state with lh and compares it against 0x5B. */
 extern s16 gOvl15MenuStateTimer;
 /* ovl_15_func_8012F4F4 clears this state with sh; 8012F6C0 reads it with lh. */
-extern s16 D_8013759C;
+extern s16 gOvl15FormatPromptStep;
 
 /* ovl_15_func_80130B04 adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_80053596[];
@@ -7429,10 +7430,18 @@ typedef struct {
     u8 field_4AC0[22];
 } Ovl11Deb00State;
 
-/* 8012FAE0 copies the aligned "SC" signature with lh + lb (three bytes). */
-extern const s16 D_8012DEBC[4];
+/* 8012F6C0 adds the text relocation base to these two format-confirmation prompts. */
+extern u8 D_80051FA8[];
+extern u8 D_80053114[];
+/* 8012F86C, 8012FA00 and 8012FA70 respectively relocate these write-menu prompts. */
+extern u8 D_800531B8[];
+extern u8 D_8005321A[];
+extern u8 D_80053294[];
+/* 80130048 and 8013010C relocate the write-menu exit and completion prompts. */
+extern u8 D_80051DCC[];
+extern u8 D_800534DC[];
 /* 8012FAE0 selects nine word offsets in three 12-byte rows. */
-extern u32 D_801375B4[3][3];
+extern u32 gOvl15CardIconFrameOffsets[3][3];
 /* 8012E15C publishes this pointer; 80137300 loads archive 0x10 here and
  * 8012FAE0 reads its card-icon palette and frames. */
 extern u8 *gOvl15CardIconResourceBuffer;

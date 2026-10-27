@@ -330,6 +330,7 @@ $(1): $(BUILD_DIR)/$(1)/$(1).bin
 split-$(1): $(ENGINE_SYMS)
 	npx tsx tools/build/bootstrapOverlay.ts --container $(1) --write
 	SPIMDISASM_ARCHLEVEL=1 splat split configs/splat/$(1).yaml
+	npx tsx tools/build/deriveRodataSplits.ts --container $(1) --write-subword-residues
 	@cat $(BUILD_DIR)/$(1)/ld_includes.txt >> $(BUILD_DIR)/$(1)/$(1).ld
 
 # Rebuild one overlay's config from nothing without touching any other container.

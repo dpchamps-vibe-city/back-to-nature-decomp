@@ -209,7 +209,17 @@ function renderSplatConfig(
      every re-split, and the link rule's self-healing rederive would then loop
      forever. So carry the existing block whenever it still describes this
      layout, and fall back to the generic line only when it does not. */
-  for (const line of rodataBlock(container, layout, indent)) subsegments.push(line);
+  const rodata = rodataBlock(container, layout, indent);
+  for (const line of rodata) subsegments.push(line);
+  /* A literal pool can end mid-word, leaving extracted original tail bytes.
+     SUBALIGN(4) would insert bytes BEFORE that residue and move all the code.
+     Derive the largest safe input alignment from the actual split positions;
+     section transitions still receive the linker's explicit ALIGN(., 4). */
+  let subalign = 4;
+  for (const line of rodata) {
+    const at = Number(line.match(/- \[(0x[0-9A-Fa-f]+),/)?.[1]);
+    while (subalign > 1 && at % subalign !== 0) subalign /= 2;
+  }
   /* One `c` line per function, except that every function a reconstructed
      module defines is placed in that module: the source tree is the record of
      a fold, so a re-split preserves it instead of expanding it back. A module
@@ -261,7 +271,7 @@ function renderSplatConfig(
     `    start: ${hex(0)}`,
     `    vram: ${hex(container.loadAddr)}`,
     "    align: 4",
-    "    subalign: 4",
+    `    subalign: ${subalign}`,
     "    subsegments:",
     ...subsegments,
     `  - [${hex(layout.fileEnd)}]`,

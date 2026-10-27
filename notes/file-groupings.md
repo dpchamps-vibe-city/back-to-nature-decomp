@@ -1189,6 +1189,42 @@ Members:
 
 ## `ovl_31` memory-card service — 0x800B7FCC–0x800B87F0 (confidence: high)
 
+**Completed whole six-entry `modules/memcard_service.c`.** The driver now
+joins all five helpers; the old cut before 82E8 below was a representation
+limit, not an original boundary. Its private result latch, directory output,
+rename buffers and sole-caller helper star are joined by the exact original
+pool order: driver literals/table, directory literals, card-probe table,
+rename literals. Overlays use -G0, so this is call/private-state/pool evidence,
+not a GP proof. Both text edges are the container's independently recovered
+rodata/text and text/data transitions; there is no omitted game function.
+
+All six retain external linkage and have Ovl31 operation names in the overlay's
+names configuration. Only Ovl31UpdateMemoryCardUtility is published, through
+ovl31_memcard_utility.h; EXE scene 18 loads archive member 31 and installs this
+callback explicitly, without conflating ovl_10's unrelated data at 800B7FCC.
+Data names cover the six menu rows, result latch, directory count/entries/
+summary and the source/destination rename paths. The count is libmcrd's long
+output, replacing its old asm-bound alternate view; ovl_10's different string
+at 800B8868 keeps its own identity. Locals and pad access use demonstrated
+command/status/index/retry and pressed-button roles. Documentation preserves
+exact-button dispatch, per-file 8192-byte rounding, four rename attempts per
+path and unconditional completion after exhausted retries.
+
+The checked baseline fold proves all six functions and the complete overlay.
+No compiler override or source-policy exception was added. Literals now emit
+in C; the complete 4..1AB mixed pool is uniquely byte-proved after relocating
+its own text-pointer entries. The original nonzero trailing byte at 1AB is
+extracted data, NOT a C padding object: the splitter previously dropped it.
+The rodata generator now preserves such unnamed sub-word residues and the
+overlay bootstrap derives input alignment from split positions. The fold
+helper permits an interior generic pool gap only after the whole merged pool
+has that exact proof. These bounded tool changes resolve the old D0 refusal.
+Final all-container campaign verification passes all eight integrity gates,
+with 2156 folded functions and 363/363 valid modules (see the card-menu union
+batch record).
+
+The following is the earlier membership/fold history.
+
 The whole container is one translation unit: six functions, one of which calls
 the other five and nothing else calls it.
 
@@ -7750,6 +7786,24 @@ Members (address order):
 ---
 
 ## `ovl_10` debug/status string-table cluster — 0x800B814C–0x800B821C (confidence: low)
+
+Current campaign follow-up: ovl_31's completed fold now supplies bounded
+mixed literal/table whole-pool proof in deriveRodataSplits/foldTranslationUnit;
+the older literal-only tooling limitation below is superseded. This does NOT
+make the present ovl_10 sources foldable unchanged. The generic 32C..8AC
+range still contains externally referenced strings plus label-less tx/rx/
+weekday text at 340..374 and "dis" at 6B8..6BC, with no current C emitters.
+A guessed padding object is not a reconstruction of that ownership. The
+shared 800B7EE8 newline identity must also remain coherent if its callers'
+literals are reconstructed. Independent source checks confirm two merged
+context conflicts: BB7BC is s32 in 8A5C/8C14 but u32 in 9108; BBAFC is
+McData28 in 8A5C, McSaveData in 9AA8 and char[] in 8C14. The 9AA8 source
+also aggregate-copies the embedded text record at 8438. Next useful work is
+recovering the literal/named-data emitters and a single corroborated record/
+selector declaration context for all 22, then one baseline whole-pool fold.
+No narrower cut, flag override or source workaround was introduced here.
+The read-only recipe's predicted full-pool result has NOT been compiled and
+is not reported as a measured match.
 
 Whole-overlay fold check (800B889C through 800BB728, all 22 C members): the helper's
 baseline dry run refuses pooling because `- [0x32C, rodata]` separates the
@@ -21630,6 +21684,59 @@ Members (link order):
   to `arg1`
 
 ## `ovl_15` D_80053350/func_8001AC10 shared-prologue cluster — 0x8012EA18–0x80132934 (confidence: medium)
+
+**Completed wider `modules/card_menu_states.c`, 8012EA18–80132A8C exclusive:
+all 81 write/read/slot-transfer entries, in original order.** The 25 write
+stages absorb the entire previous 56-entry card_read_states module. These
+are three complete dispatcher/stage closures, not just the repeated text
+prologue: each dispatcher has one scene-controller caller, each internal
+stage belongs to its dispatcher's table, and the workflows share card-cache,
+selection, prompt and timer protocols. The interleaved SC literal and all
+switch tables emit one exactly reproduced pool at file 4..22C. Overlays are
+-G0; this is closure/private-protocol/pool evidence, not a GP ownership proof.
+
+The old 301A0 cut was solely a literal-representation limit. Writing the
+consumer-owned three-byte "SC" signature as a literal gives the full merged
+source its original emission; the following type store overwrites its NUL.
+No artificial padding data was added. Unique relocated whole-pool proof
+allows the checked fold to absorb the D4 signature/alignment gap and both
+old zero alignment gaps; all 81 functions and ovl_15 bytes pass at baseline.
+No override or policy exception was added or removed.
+
+Left EA18 is an evidence-limited interface cut against save_menu_lifecycle:
+the three outward scene controllers own last-stage tracking and lifecycle
+state (gOvl15LastMenuState and 80137590), resource/fade/draw/exit pacing and
+call only the three stage dispatchers. The 81 own the format-prompt substate,
+icon-offset consumer and SC literal; none joins lifecycle's exclusive state
+or emitted data. The shared remaining menu words also serve UI/card/save
+services and alone do not extend the unit. No original compiler boundary is
+proved here, but there is no private-helper/state/pool witness to extend it.
+Right 32A8C starts the separately published row-placement/record-pool service;
+all dispatcher targets/stages end before it, and transfers call its allocation,
+staging and restore operations through that service, not as additional stages.
+The later 335F8 no-GCSE issue is NOT the reason for this boundary. A stronger
+future link-order/private-data witness may still justify a larger unit.
+
+Write functions now have scoped Ovl15CardWrite names paralleling read and
+transfer, with numeric PromptStateNN names only where prompt meaning is
+undecoded. The shared format-confirmation step and three-by-three icon frame
+offsets are named without changing widths or storage. Seven missing text
+externs moved to globals_override.h with consumer evidence; duplicate C
+externs were removed. All text calls use EXE:8001AC10's matched u32* contract,
+not incompatible per-function void*/u32* declarations. Only the new write
+frame entry is published in ovl15_card_write_states.h; existing read/transfer
+headers remain the other two interfaces. interfaceAudit reconciled the one
+lifecycle caller and proved its object unchanged. Internal stages retain
+external linkage; folding was not used to invent static linkage.
+
+**Batch verification:** tuProgress --verify --baseline
+build/tu-campaign/baseline.json passes all eight integrity gates, the EXE and
+all 13 overlays including data, callbacks, tables and placement. All 363
+modules are valid; folded count rises 2130 → 2156 (469 remain). The same
+batch completes ovl_31's six-entry module. Canonical names, published
+interfaces, source policy and exception non-growth pass. No commit made.
+
+The following is the earlier partial-fold history, superseded by this union.
 
 **Expanded/merged as `modules/card_read_states.c`, 801301A0–80132A8C
 exclusive, all 56 entries in original order.** It absorbs the initially

@@ -1,0 +1,18 @@
+// Memory-card diagnostic overlay (obj\gf_mcard.bin), original entry identities.
+Ovl31UpdateMemoryCardUtility = 0x800B7FCC; // type:func
+Ovl31FormatMemoryCard = 0x800B82E8; // type:func
+Ovl31UnformatMemoryCard = 0x800B8348; // type:func
+Ovl31ReadMemoryCardDirectory = 0x800B83B8; // type:func
+Ovl31ProbeMemoryCard = 0x800B8490; // type:func
+Ovl31RenameLegacySaveFiles = 0x800B8600; // type:func
+
+// Six fixed-width menu rows; directory count and latched UI result.
+gOvl31MemoryCardMenuRows = 0x800B87F0; // type:data size:0x78
+gOvl31DirectoryFileCount = 0x800B8868; // type:data size:0x4
+gOvl31MemoryCardResult = 0x800B886C; // type:data size:0x4
+// sprintf destinations and the 15 DIRENTRY records requested from libmcrd.
+gOvl31RenameSourcePath = 0x800B8870; // type:data size:0x20
+gOvl31RenameDestinationPath = 0x800B8890; // type:data size:0x20
+gOvl31DirectoryEntries = 0x800B88B0; // type:data size:0x258
+// Incomplete char buffer: only its first byte is assigned a symbol extent.
+gOvl31DirectorySummary = 0x800B8B10; // type:data size:0x1

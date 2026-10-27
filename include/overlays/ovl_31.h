@@ -2,9 +2,9 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-void ovl_31_func_800B7FCC(void);
-s32 ovl_31_func_800B82E8(void);
-s32 ovl_31_func_800B8348(void);
-s32 ovl_31_func_800B83B8(void);
-s32 ovl_31_func_800B8490(void);
-s32 ovl_31_func_800B8600(void);
+s32 Ovl31FormatMemoryCard(void);
+s32 Ovl31ProbeMemoryCard(void);
+s32 Ovl31ReadMemoryCardDirectory(void);
+s32 Ovl31RenameLegacySaveFiles(void);
+s32 Ovl31UnformatMemoryCard(void);
+void Ovl31UpdateMemoryCardUtility(void);

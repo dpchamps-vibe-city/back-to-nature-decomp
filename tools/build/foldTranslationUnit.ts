@@ -53,6 +53,9 @@ import { auditContainer, loadFlagOverrideKeys } from "../lib/translationUnitAudi
 import { field, namedChildren, parseC, type Node } from "../agent/residual-source-search/tree-sitter-c.js";
 import { compareFunction } from "../lib/functionOracle.js";
 import { computeLiveness } from "../lib/liveness.js";
+import { compileSource } from "../agent/decompToolchain.js";
+import { findWindow, mixedRodataAddress, parseSubsegments } from "./deriveRodataSplits.js";
+import { parseFuncExtents } from "../lib/jumpTables.js";
 
 export interface FoldRequest {
   container: string;
@@ -259,7 +262,7 @@ export function mergeSources(files: Array<{ path: string; text: string }>, heade
  * tables are out of member order or separated by another subsegment, except
  * the original-byte/compiler-witnessed alignment gaps supplied by planFold.
  */
-export function foldConfigLines(lines: readonly string[], unitStems: readonly string[], stem: string, alignmentPadding: ReadonlySet<number> = new Set()): { lines: string[]; notes: string[] } {
+export function foldConfigLines(lines: readonly string[], unitStems: readonly string[], stem: string, alignmentPadding: ReadonlySet<number> = new Set(), mixedPoolGaps: ReadonlySet<number> = new Set()): { lines: string[]; notes: string[] } {
   const entry = (line: string) => line.match(/^(\s*)- \[(0x[0-9A-Fa-f]+), ([^,\]]+)(?:, ([^,\]]+))?/);
   const stems = new Set(unitStems);
   const rodata = lines.map((line, index) => ({ line, index, m: entry(line) }))
@@ -270,7 +273,7 @@ export function foldConfigLines(lines: readonly string[], unitStems: readonly st
     if (order.some((value, i) => i > 0 && value < order[i - 1]!)) refuse("the members' jump tables are not in member order in the rodata window; one pooled .rodata cannot reproduce that");
     for (let i = 1; i < rodata.length; i++) {
       const between = lines.slice(rodata[i - 1]!.index + 1, rodata[i]!.index)
-        .filter((line) => { const m = entry(line); return m && !alignmentPadding.has(Number(m[2])); });
+        .filter((line) => { const m = entry(line); return m && !alignmentPadding.has(Number(m[2])) && !mixedPoolGaps.has(Number(m[2])); });
       if (between.length > 0) refuse(`the members' jump tables are not contiguous: ${between[0]!.trim()} lies between them`);
     }
   }
@@ -279,6 +282,10 @@ export function foldConfigLines(lines: readonly string[], unitStems: readonly st
   let placedRodata = false;
   for (const [index, line] of lines.entries()) {
     const m = entry(line);
+    if (m && mixedPoolGaps.has(Number(m[2]))) {
+      notes.push(`${m[2]}: literal/table gap absorbed by unique relocated whole-pool byte proof`);
+      continue;
+    }
     if (m && alignmentPadding.has(Number(m[2]))) {
       notes.push(`${m[2]}: verified zero alignment gap absorbed into the pooled .rodata`);
       continue;
@@ -496,10 +503,36 @@ export function planFold(request: FoldRequest): FoldPlan {
     const bytes = original.subarray(segment.rom, next.rom);
     if (bytes.length === segment.size && bytes.every((byte) => byte === 0)) alignmentPadding.add(segment.rom);
   });
-  const rewritten = foldConfigLines(readFileSync(join(ROOT, configPath), "utf8").split("\n"), touched.map((u) => u.segmentName), stem, alignmentPadding);
-  const notes = [...rewritten.notes];
-
+  const configLines = readFileSync(join(ROOT, configPath), "utf8").split("\n");
   const files = touched.map((unit) => ({ path: unit.sourcePath, text: retargetStubs(readFileSync(join(ROOT, unit.sourcePath), "utf8"), unit.segmentName, stem) }));
+  const merged = mergeSources(files, moduleHeader(request.module, request.summary));
+  const mixedPoolGaps = new Set<number>();
+  const owned = segments.filter((s) => s.type === ".rodata" && touched.some((u) => u.segmentName === s.name));
+  const gaps = owned.length > 1 ? segments.filter((s) => s.rom > owned[0]!.rom &&
+    s.rom < owned[owned.length - 1]!.rom && s.type === "rodata" && !s.name && !alignmentPadding.has(s.rom)) : [];
+  if (gaps.length > 0 && stubs.length === 0) {
+    /* Mixed literals and tables must be reconstructed in C first. Prove the
+       complete merged pool, including relocated table entries, before relaxing
+       the gap guard. This never admits an unknown/nonmember attribution. */
+    const dir = join(ROOT, "build/foldTranslationUnit", container.id, request.module);
+    mkdirSync(dir, { recursive: true });
+    const source = join(dir, "pool-proof.c");
+    writeFileSync(source, merged.text);
+    const compiled = compileSource(source, dir, "pool-proof", {
+      assemble: true, useOverrides: false, containerKind: container.kind,
+    });
+    const object = readFileSync(compiled.object!);
+    const extents = parseFuncExtents(container).filter((fn) => wanted.includes(fn.name));
+    const base = mixedRodataAddress(original, object, extents, findWindow(parseSubsegments(configLines)));
+    const size = elf32SectionSizes(object).get(".rodata") ?? 0;
+    if (extents.length === members.length && base === owned[0]!.rom) {
+      for (const gap of gaps) {
+        if (gap.rom + gap.size <= base + size) mixedPoolGaps.add(gap.rom);
+      }
+    }
+  }
+  const rewritten = foldConfigLines(configLines, touched.map((u) => u.segmentName), stem, alignmentPadding, mixedPoolGaps);
+  const notes = [...rewritten.notes];
 
   /* Embedded asm that names a cc1 label: read the labels its unit's own
      assembly defines now, to renumber them once the module is compiled. */
@@ -515,7 +548,6 @@ export function planFold(request: FoldRequest): FoldPlan {
     }
   }
 
-  const merged = mergeSources(files, moduleHeader(request.module, request.summary));
   const absorbed = touched.filter((unit) => unit.foldedModule && unit.segmentName !== stem).map((unit) => unit.segmentName);
   if (absorbed.length > 0) notes.push(`absorbs ${absorbed.join(", ")}; their headers still publish the members they declare`);
   if (stubs.length > 0) notes.push(`carries the dead stub(s) ${stubs.join(", ")}, extracted under ${stem}`);
@@ -620,6 +652,10 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
 
   log(`make ${checkTarget(plan.container)}`);
   const check = run("make", [`-j${Math.max(1, availableParallelism() - 2)}`, checkTarget(plan.container)]);
+  /* Preserve full diagnostics before rollback regenerates the failed link. */
+  const reportDir = join(ROOT, "build/foldTranslationUnit", plan.container.id, plan.stem.slice(`${MODULE_DIR}/`.length));
+  mkdirSync(reportDir, { recursive: true });
+  writeFileSync(join(reportDir, "check.log"), check.output);
   /* The tools' own diagnostics name the cause; make's tail only names the target. */
   if (check.code !== 0) return rollback(`make ${checkTarget(plan.container)} failed:\n${failureLines(check.output).join("\n")}`);
 
