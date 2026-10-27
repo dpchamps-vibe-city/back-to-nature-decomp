@@ -82,7 +82,7 @@ s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
                     Ovl11ChangePrimaryObjectState((Ovl11C7010Object *)object, 0x39U, object->unk38 + 0x32, -2);
                     object->unk6C |= 0x100;
                 } else if (recordId == 0x15E) {
-                    ovl_11_func_8010B57C(&D_80075AD4, 5);
+                    ovl_11_func_8010B57C(&gStageMode2Record, 5);
                 }
                 return 1;
             }

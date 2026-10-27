@@ -58,9 +58,9 @@ s32 Ovl11RefreshRecordById(s16 itemId, Ovl11CollisionTag *tag, VECTOR *position)
         return 1;
     }
     if ((u32) (itemId - 0x106) < 2U) {
-        if (D_800759E4.f34 & 0x20000) {
-            ovl_11_func_80109188((Ovl11D04D4Obj *) &D_800759E4, 9);
-            recordWords = (s32 *) &D_800759E4;
+        if (gStageMode1Record.f34 & 0x20000) {
+            ovl_11_func_80109188((Ovl11D04D4Obj *) &gStageMode1Record, 9);
+            recordWords = (s32 *) &gStageMode1Record;
 place_selected:
             return Ovl11UpdateRecordPlacement((Ovl11PlacedRecordView *) recordWords, tag, position);
         }

@@ -8,7 +8,7 @@
 void ovl_11_func_8010C1FC(Ovl11C7010Object *arg0) {
     u8 *record;
 
-    record = (u8 *) &D_80075AD4;
+    record = (u8 *) &gStageMode2Record;
     *(u16 *) (record + 0x22) = arg0->unk38;
     if (arg0->unk3C == 1) {
         SelectSpriteAnimation((ObjectState *) (record + 0x78), 0);

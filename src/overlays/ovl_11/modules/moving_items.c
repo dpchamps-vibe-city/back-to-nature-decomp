@@ -441,7 +441,7 @@ remove:
                 position.vz = arg0->position.vz;
                 Ovl11ReleaseMovingItemRecord((Ovl11CC4E0Object *)arg0);
                 Ovl11SetSpawnRecord(0x65, position, D_80071AFE, 0);
-                ovl_11_func_80109188((Ovl11D04D4Obj *)&D_800759E4, 7);
+                ovl_11_func_80109188((Ovl11D04D4Obj *)&gStageMode1Record, 7);
                 return 1;
             }
             result = Ovl11CheckMovingItemCellContact(arg0);

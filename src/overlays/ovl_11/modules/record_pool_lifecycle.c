@@ -84,7 +84,7 @@ void Ovl11ResetRecordPools(void) {
     *(s32 *) ((u8 *) seedRecord + 0x40) = 0xC1C;
     *(s16 *) ((u8 *) seedRecord + 0x2E) = 0;
     *(s16 *) ((u8 *) seedRecord + 0x30) = 1;
-    memset(&D_80075AD4, 0, 0xF0);
+    memset(&gStageMode2Record, 0, 0xF0);
     ((struct Ovl11PoolResetView *) D_8006C838)->field_929C = 0;
     ((struct Ovl11PoolResetView *) D_8006C838)->field_92A0 = 0xFFFF;
     Ovl11PlaceCode109Records();
@@ -160,7 +160,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
                 Ovl11UpdateTaggedRecordCounters((Ovl11Deb00Object *) recordWords);
             }
         }
-        recordWords = (s32 *) &D_800759E4;
+        recordWords = (s32 *) &gStageMode1Record;
         if (*(u16 *) recordWords != 0) {
             ovl_11_func_80108D84(recordWords);
         }

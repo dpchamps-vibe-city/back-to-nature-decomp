@@ -52,7 +52,7 @@ void Ovl11DispatchStageMode(s32 mode) {
     switch (mode) {
     case 0:
         if (CURRENT_STAGE == MAIN_STAGE) {
-            ovl_11_func_80109188((Ovl11PrimaryStageHandlerObj *)&D_800759E4, 5);
+            ovl_11_func_80109188((Ovl11PrimaryStageHandlerObj *)&gStageMode1Record, 5);
         }
         for (slot = 0; slot < 20; slot++) {
             object = (Ovl11StageHandlerObj *)((u8 *)&gTaggedRecordBase + slot * 0xB8);
@@ -73,14 +73,14 @@ void Ovl11DispatchStageMode(s32 mode) {
         return;
     case 1:
         if ((CURRENT_STAGE == MAIN_STAGE) &&
-            (ovl_11_func_80109188((Ovl11PrimaryStageHandlerObj *)&D_800759E4, 4) == 0)) {
+            (ovl_11_func_80109188((Ovl11PrimaryStageHandlerObj *)&gStageMode1Record, 4) == 0)) {
             gOvl11Mode1DispatchCounter = 0;
             return;
         }
         return;
     case 2:
         if ((CURRENT_STAGE == OTHER_STAGE) &&
-            (ovl_11_func_8010B57C(&D_80075AD4, 0x13) == 0)) {
+            (ovl_11_func_8010B57C(&gStageMode2Record, 0x13) == 0)) {
             gOvl11Mode2DispatchCounter = 0;
         }
         break;

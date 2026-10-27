@@ -1,5 +1,20 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Shared clock/record completion services, outside the clock callback table.
+Ovl11DrainActiveRecordSlot = 0x800DE3A0; // type:func
+Ovl11ConsumeDeferredClockAdvance = 0x800DE46C; // type:func
+Ovl11CompleteClockSceneEvent = 0x800DE4C0; // type:func
+Ovl11UpdateCalendarRecordGate = 0x800DE76C; // type:func
+Ovl11UpdateSceneEffects = 0x800DC148; // type:func
+Ovl11ProbePrimaryObjectSurface = 0x800C498C; // type:func
+gOvl11PrimarySurfaceFlags = 0x80128C50; // type:data size:0x4
+
+// Ordered pool sweeps called by RunAreaFrameUpdates.
+Ovl11UpdateTaggedRecordPools = 0x800D1EB8; // type:func
+Ovl11UpdateSmallRecordTriplet = 0x800D2160; // type:func
+Ovl11UpdateStateObjectPool = 0x800D2240; // type:func
+Ovl11UpdatePairedStageObjects = 0x800D2334; // type:func
+
 // State-entry parameters: setter writes both halfwords; state06 uses direction.
 Ovl11SetStateDebitAndDirection = 0x800D31EC; // type:func
 gOvl11StateEntryDirection = 0x80128D7A; // type:data size:0x2

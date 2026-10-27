@@ -7,18 +7,14 @@
 #include "ovl11_pending_stage_dispatch.h"
 #include "ovl11_item_record_allocation.h"
 #include "ovl11_area_frame_update_dispatch.h"
-
-void ovl_11_func_800D2240(void);
-void ovl_11_func_800D2160(void);
-void ovl_11_func_800D1EB8(void);
-void ovl_11_func_800D2334(void);
+#include "ovl11_area_record_updates.h"
 
 void Ovl11RunAreaFrameUpdates(void) {
     if (!(((struct Ovl11UpdateState *) D_8006C838)->field_10 & 0x2000)) {
-        ovl_11_func_800D2240();
-        ovl_11_func_800D2160();
-        ovl_11_func_800D1EB8();
-        ovl_11_func_800D2334();
+        Ovl11UpdateStateObjectPool();
+        Ovl11UpdateSmallRecordTriplet();
+        Ovl11UpdateTaggedRecordPools();
+        Ovl11UpdatePairedStageObjects();
         Ovl11ProcessPendingStageMode();
         if (((struct Ovl11UpdateWork *) &D_8007AFF0)->field_25476 == 1 &&
             ((struct Ovl11UpdateState *) D_8006C838)->field_44C0 >= 0x12 &&

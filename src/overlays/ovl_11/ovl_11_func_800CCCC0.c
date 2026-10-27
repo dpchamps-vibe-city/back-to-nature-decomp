@@ -18,12 +18,12 @@
 #include "psyq/libapi.h"
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_status_gauge_deltas.h"
+#include "ovl11_active_record_slot_drain.h"
 
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
 void ovl_11_func_800C9D38 (void);
 s32 ovl_11_func_800CD734 (Ovl11C7010Object *arg0, s32 arg1);
-void ovl_11_func_800DE3A0 (void);
 
 void ovl_11_func_800CCCC0(void) {
     struct Ovl11CCCC0State *temp_s0;

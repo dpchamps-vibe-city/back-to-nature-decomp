@@ -44,7 +44,7 @@ s32 Ovl11TryBeginLowCodeItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
         temp_s2 = Ovl11GetGroupedValueIndex(item);
         var_a2 = Ovl11MapGroupedValueCode((s16) arg1[0]) + (arg0->unk38 * 5);
         if ((u32) (arg1[0] - 0x15) < 5U) {
-            if (D_80128C50 & 3) {
+            if (gOvl11PrimarySurfaceFlags & 3) {
                 arg0->unk6C |= 0x1800;
                 Ovl11ChangePrimaryObjectState(arg0, 0x52,
                     (arg0->unk38 * 5) + *(s16 *) (arg1 + 1), -2);
@@ -158,7 +158,7 @@ void Ovl11ResetItemActionCollisionDispatch(void) {
         return;
     case 0x200:
         if (gOvl11InteractionHitRecordView != NULL) {
-            ovl_11_func_8010B57C(&D_80075AD4, 0);
+            ovl_11_func_8010B57C(&gStageMode2Record, 0);
         }
         break;
     }

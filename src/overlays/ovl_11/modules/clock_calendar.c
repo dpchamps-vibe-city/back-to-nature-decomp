@@ -23,9 +23,9 @@
 #include "psyq/libapi.h"
 #include "ovl11_event_schedule.h"
 #include "ovl11_action_minute_counter.h"
+#include "ovl11_clock_scene_completion.h"
 
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-void ovl_11_func_800DE4C0(void);
 void ovl_11_func_800CF36C(s32 arg0);
 void ovl_11_func_800F0FB0(s32 arg0);
 
@@ -72,7 +72,7 @@ void Ovl11RunClockAdvance(void) {
                 Ovl11RebuildObjectEventsForTime();
             }
             if (gOvl11ClockAdvanceRefreshRequested == 1) {
-                ovl_11_func_800DE4C0();
+                Ovl11CompleteClockSceneEvent();
                 gOvl11ClockAdvanceRefreshRequested = 0;
             }
             Ovl11SelectCurrentHourTint();

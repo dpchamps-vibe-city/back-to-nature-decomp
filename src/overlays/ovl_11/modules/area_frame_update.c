@@ -47,6 +47,8 @@
 #include "ovl11_pending_event_queue.h"
 #include "ovl11_area_frame_update_dispatch.h"
 #include "ovl11_menu_frame_update.h"
+#include "ovl11_clock_scene_completion.h"
+#include "ovl11_scene_setup_install.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -89,11 +91,9 @@ void Ovl11RunAreaFramePhase(void) {
 }
 
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
-void ovl_11_func_800DC148 (void);
 s32 ovl_11_func_800F0F50 (void);
 void ovl_11_func_8010C7F0 (void);
 void ovl_11_func_800F3FB4 (void);
-void ovl_11_func_800DE46C (void);
 
 void Ovl11UpdateAreaFrame(void) {
     gOvl11AreaFrameResult = 2;
@@ -137,7 +137,7 @@ void Ovl11UpdateAreaFrame(void) {
         SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
         Ovl11DrawPrimaryObjectFrame((Ovl11SpritePositionView *) ((struct Ovl11FrameState *) D_8006C838)->position, 1);
         Ovl11UpdateMovingItemRecords();
-        ovl_11_func_800DC148();
+        Ovl11UpdateSceneEffects();
         SCRATCH_STACK_END();
     }
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
@@ -151,7 +151,7 @@ void Ovl11UpdateAreaFrame(void) {
     Ovl11UpdateSpriteEffects();
     Ovl11UpdateEventQueueGate();
     UpdateMessageWindow();
-    ovl_11_func_800DE46C();
+    Ovl11ConsumeDeferredClockAdvance();
     SCRATCH_STACK_END();
 }
 

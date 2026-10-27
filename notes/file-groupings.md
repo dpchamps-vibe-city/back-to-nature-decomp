@@ -4166,6 +4166,63 @@ from private file state. No source/config change was made for this family;
 its boundary question stays open rather than treating an unobserved owner
 as proof in either direction.
 
+**Reconstructed `modules/area_record_updates.c`, 1EB8–24FC exclusive, all
+four ordered sweeps**: Ovl11UpdateTaggedRecordPools (20 B8 records then ten
+B4 records), Ovl11UpdateSmallRecordTriplet (three B4 records),
+Ovl11UpdateStateObjectPool (six B0 records), and
+Ovl11UpdatePairedStageObjects (the mode-1/mode-2 singletons). CE834 is their
+sole caller, at CE860/CE868/CE870/CE878 with no intervening calls. No stored
+function-pointer reference was found. Their complete ordered call set, pool
+iteration, stage comparison, handler/position dispatch, +A8 timer reset/tick
+and draw protocol support the four-member unit beyond adjacency. The gates
+are NOT interchangeable: small handlers precede stage tests; the six-object
+pool skips flag 20000 entirely; paired mode 1 has the date-row-8 exception.
+The public header documents those differences, work freeze bits, capacities,
+callback prerequisites, side effects and update-call rather than elapsed-time
+units. Register-style locals and opaque join labels in the last two sweeps
+have descriptive names; original block/control shape and widths are retained.
+
+Boundaries: left 1E1C is the movement-position probe called only by 12B8,
+with no record sweep or stage-presentation role; right 24FC starts the
+movement-direction tile probe called only by 12B8/196C. Neither participates
+in CE834's sweep call set or its record handler/draw lifecycle. They are
+external movement services, not evidence that the sweeps share the movement
+threshold/private D6C state. The parameterized D266C counter helper serves
+the last sweep through the existing external ABI; its mode counters are also
+initialized/cleared by independent services, so the call alone does not absorb
+the intervening movement helpers. These are evidence-limited -G0 protocol
+boundaries; the broader 22-entry TU hypothesis above remains unproved.
+
+The new whole-22 dry fold is mechanically legal: both switch tables request
+.align 3, so the four-byte gap is verified alignment, not a boundary or refusal.
+It was NOT applied because no new witness joins the distinct table/protocol
+services. No seven-entry movement-core slice was accepted either. The closed
+four-sweep component, by contrast, passes its baseline checked fold, every
+member and the linked overlay without compiler flags or policy exceptions.
+Canonical names gStageMode1Record/gStageMode2Record/gSmallRecordTripletBase
+retain EXE addresses 759E4/75AD4/75FE4. Their existing partial 44-byte view,
+F0-byte halfword-backed lvalue and two-byte base anchor are unchanged, not
+new full-record declarations. Existing array-backed assembler-name wrappers
+were explicitly renamed, not added; canonicalization propagates the data
+names through other overlay users, including debug views. No storage,
+private linkage, ownership, field width or source-policy exception changed.
+
+Current batch acceptance (area_record_updates, primary_object_update,
+scene_dispatch, clock_scene_completion, active_record_slot_drain,
+calendar_record_gate and state_entry_parameters): `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes all eight integrity gates
+at **1918/2625 folded**, up **11** from 1907; **324/324 modules valid**, no
+previously folded regression, no invalid/undetermined units. EXE and every
+overlay remain byte-identical, including data, callback pointers, jump tables
+and placement. Canonical names are clean and published interfaces have zero
+failing findings; unrelated pre-existing interface debt is unchanged. No
+compiler override, allowlist entry, register pin, asm or INCLUDE_ASM exception
+was added or retired. No shared tool was changed and no commit was made.
+Exit 1 denotes the still-incomplete campaign (707 remaining), not a gate
+failure. The remaining researched broad text/UI/sprite-bank/controller groups
+retain their known flag/context or membership obstacles rather than new
+convenience cuts.
+
 ---
 
 ## `ovl_11` D_80123A2C/D_80123A8C /5 row-table sibling pair — 0x800D29B0 / 0x800D2A88 (confidence: medium)
@@ -4381,8 +4438,19 @@ by DECIMAL bank slot, preserving their original addresses. All sixteen
 keyframe globals are gOvl11StateNNKeyframes. The direction halfword at
 80128D7A is now gOvl11StateEntryDirection: its setter receives current facing
 from CD0F4 (or object +22 from 8010A654), and state06 copies it to +22.
-The associated two-halfword setter, now Ovl11SetStateDebitAndDirection,
-remains a separate TU at D31EC, published through the entry-parameter header.
+The associated two-halfword setter, Ovl11SetStateDebitAndDirection,
+is now reconstructed as `modules/state_entry_parameters.c` at D31EC,
+published through the existing `ovl11_object_state_callbacks.h` interface.
+This is the full supported parameter-latch service: its raw debit and direction
+are consumed by the remote state-entry gate and state06 callback. Left D3104
+ends the paired-table state dispatcher and reads neither latch; right D3200
+is the B0-byte record clearer, using only its passed record address. Neither
+neighbor shares the latch protocol or has an internal helper edge to it.
+The nonadjacent handlers do not establish ownership of intervening record
+services, and -G0 supplies no historical object cut. These evidence-limited
+boundaries preserve the external setter ABI and canonical data identities;
+no private linkage or storage was inferred. Baseline checked fold passes the
+member and complete overlay, without compiler-setting or exception changes.
 Its three declaring clients are object-identically reconciled. Overlay
 re-splitting canonicalizes that standalone source stem too: the compiling
 implementation was moved to Ovl11SetStateDebitAndDirection.c after the gate
@@ -12076,6 +12144,22 @@ There was no compiler override or carried stub and no exception changed.
   (see the D_80071A00 pool cluster entry); 0xC4, byte-exact clean C, baseline
   flags; zero-gap link order between 0x800D6380 (which calls cluster member
   0x800F2354) and 0x800D6488
+**Reconstructed `modules/calendar_record_gate.c`, DE76C–DE7C8 exclusive,**
+public `Ovl11UpdateCalendarRecordGate`. Scene initialization and day-rebuild
+call it after date setup. The first-fourteen-row calendar lookup sets/clears
+resident+4450 bit 0; request services F12D0/F1354 reject codes below 12C while
+that bit is set. Return 1 is an unconditional completion indication, not the
+lookup result. The header publishes that distinction and preserves the
+signed season/day view and every other flag bit. The calendar table belongs
+to the remote clock service; this member claims no new data ownership.
+Left DE740 ends the four-entry clock record-reset callback bank, which uses
+different record arrays and does not set this date-derived gate. Right DE7C8
+starts the tagged-record sprite presenter with a private source/animation
+protocol. No helper/table/ownership witness extends the gate across either
+edge; these are conservative -G0 service cuts, not recovered compiler-object
+boundaries. Baseline checked fold passes the member and linked overlay with
+no flag/exception changes. Canonical names retain the original address.
+
 - ovl_11_func_800DE76C (m, matched this session) — flag-bit set/clear leaf:
   tests the +0x44BA/+0x44BC s16 pair through ovl_11_func_800C1224, then sets
   or clears bit 0 of the s32 at +0x4450, via the cluster's shared
@@ -12136,6 +12220,38 @@ all five and the linked overlay; no flags, private linkage, owned storage or
 policy exceptions were added. Batch verification passes all linked executable/overlay bytes, inventory,
 convergence, policy, whitespace, stability and exception non-growth; the final
 batch stands at 1567/2625 folded and 253/253 valid module TUs.
+**Clock/record completion services reconstructed in the current campaign.**
+DE3A0 is now `modules/active_record_slot_drain.c`, public
+`Ovl11DrainActiveRecordSlot`. Its sole caller CD734 invokes this blocking
+service before a dependent action (CCCC0 only carried an unused declaration). It requests program release via E3C04, posts
+record code 12D through F1038/F1354, processes pending conditions through F0F50,
+and drives the same active-slot service until selector 1 or flag 2 clears.
+It is not a clock-table callback. The left edge is the exact end of the five
+clock callbacks above; DE46C on its right is a per-frame flag-49 consumer with
+no record-code posting or slot drain. Neither adjacency nor use of the broadly
+shared resident state proves a larger TU here. This is the complete supported
+singleton service, not a compiler-proven historical one-function object.
+
+**`modules/clock_scene_completion.c` contains BOTH DE46C and DE4C0**, in
+original order, and exposes `Ovl11ConsumeDeferredClockAdvance` and
+`Ovl11CompleteClockSceneEvent` through `ovl11_clock_scene_completion.h`.
+The initial separate carriers were merged; there is no cut at DE4C0.
+The former snapshots +44CA to +51F4 and sets work+4450 bit 4 before requesting
+the distance to the next 06:00 PLUS 360 minutes. The latter tests that very
+suppression bit before held-item replacement when the clock operation finishes;
+clock_calendar and the day-rebuild callback call it. The bit is NOT private
+(object_events and other scene services also use it), and the time snapshot
+has remote consumers. The pairing rests on the complementary request/completion
+operations and zero-gap phase ordering, not ownership of either resident field. DE4C0
+also handles scene flags 48/9D, condition/record draining and fade setup.
+The right neighbor DE6BC starts the four-entry record-reset callback set,
+with different table membership and no snapshot/completion protocol. Under
+-G0 these responsibility/protocol cuts are evidence-limited, not GP-proven
+object edges. The public headers document blocking waits, state effects,
+flag precedence and minute/step units without gameplay speculation. Baseline
+checked folds passed; linkage, ownership, field widths and compiler settings
+are unchanged. No policy exception was introduced.
+
 - ovl_11_func_800CFA48 (m, matched this session) — gated bit-set leaf: after
   two `ovl_11_func_800D3230` probes, reads the s16 at +0xE4C8 via the
   cluster's +0x8000 two-stage split (base+0x8000, disp +0x64C8; same cell as
@@ -13761,11 +13877,13 @@ Members:
 
 ## `ovl_11` D_80128CF8 / D_801231F4-D_801231F8 shared-flag pair and adjacent probe helper — 0x800C401C–0x800C498C (confidence: medium for pair; low for helper)
 
-**Reconstructed `modules/primary_object_update.c`:** 800C401C and 800C47F0,
-now `Ovl11UpdatePrimaryObject` and `Ovl11RemapPrimaryDirectionButtons`.
+**Extended `modules/primary_object_update.c`:** all three entries
+800C401C/800C47F0/800C498C, now `Ovl11UpdatePrimaryObject`,
+`Ovl11RemapPrimaryDirectionButtons` and `Ovl11ProbePrimaryObjectSurface`.
 The pair-private 80128CF8 latch (all source references checked), its sole
 writer/caller relationship, and the adjacent remapper's consumption of the
-same held/pressed masks support the two-member unit, not adjacency alone.
+same held/pressed masks support the input pair, not adjacency alone; the
+surface helper extension is justified separately below.
 The masks are `gOvl11PrimaryHeldButtons`/`gOvl11PrimaryPressedButtons`; their
 source is pad 0 or stored substitutes and later object services may alter
 them. `gOvl11PrimaryDirectionRemap` names the private latch, without assigning
@@ -13774,11 +13892,14 @@ same signed halfword and padded layout. No linkage/storage/ownership changed.
 
 The left neighbor is object_events' command-message service (800C3F6C),
 which neither touches this latch nor participates in its input/history
-protocol. The right neighbor 800C498C is a position-offset collision probe,
-with a separate 80128C50 result and table 80123110; this update calls it,
-but so do other object paths. That external-service call alone does not
-extend the latch/remap unit. Wider primary-object code shares the input
-masks, not the private latch. These are protocol/private-state boundaries
+protocol. The former cut at 800C498C rested on an incorrect other-caller
+claim. A byte-level jal/address-word census finds only the update's call at
+C4118, and no stored pointer to this helper in the EXE or any overlay.
+It is the adjacent frame service's own ground-contact step, just as C47F0
+is its adjacent input remapper. The result at 80128C50 is broadcast, NOT
+private membership evidence. The new right edge C4A2C opens the separately
+closed cell-action request/table protocol, with no helper edge extending this
+unit. Wider primary-object code shares input/results, not the private latch. These are protocol/private-state boundaries
 under overlay -G0, not a GP proof of original object-file boundaries;
 no supported larger TU is being cut to accommodate flags or mechanics.
 
@@ -13795,7 +13916,17 @@ masks and stick magnitude, replacing its duplicate partial input view without
 changing widths. After canonical propagation, the three overlay data externs
 in the shared override header needed explicit renaming (the namespace-aware
 tool left those shared-header declarations unchanged); the first full gate
-caught the undeclared names. The corrected batch passed all campaign gates.
+caught the undeclared names. The corrected historical batch passed all campaign gates.
+
+The three-member baseline checked fold now passes all three and linked ovl_11.
+The helper retains its pointer/void ABI and external linkage, with meaningful
+object/probePosition/offset names. The public frame header documents its copied
+position and exact sentinel substitution without publishing an unused helper
+interface. gOvl11PrimarySurfaceFlags names 80128C50 through both publishers and
+all action consumers; its s32 extern is explicitly reconciled in the shared
+override header, where overlay-local canonicalization intentionally does not
+rewrite ambiguous unqualified identities. No storage, layout, type or flag
+change was needed.
 
 Evidence: `ovl_11_func_800C401C` is the sole caller of `ovl_11_func_800C47F0`
 (jal 0x800C41D4) and ends exactly at 0x800C47F0 (head + 0x7D4), so the call
@@ -14843,8 +14974,8 @@ Members:
 
 ### Separate `ovl_11` scene-setup/render-context helper pair — 0x800DBFEC / 0x800DC114 (confidence: low)
 
-**Reconstructed `modules/scene_setup_install.c`, DBFC4–DC148 exclusive,
-all four entries including the empty DBFE4 hook.** BFEC installs scene
+**Extended/renamed to `modules/scene_dispatch.c`, DBFC4–DC388 exclusive,
+all FIVE entries including the empty DBFE4 hook and the DC148 updater.** BFEC installs scene
 geometry and calls C114 to clear both render-context colors. BFC4 supplies
 the complementary 200-unit collision tolerance: the corresponding ovl_19
 and ovl_21 geometry installers end with precisely that setter call, supporting
@@ -14852,10 +14983,18 @@ this local scene-install family beyond adjacency. The intervening empty
 function has no separate state/protocol and is not used as a boundary.
 This is weaker membership evidence for the two small entries than the
 BFEC/C114 direct call; it is a reconstruction inference, not a GP proof.
-Left DBFA0 resets area-entry far-state fields without this installation
-protocol. Right DC148 is the per-frame update dispatcher with its own pooled
-jump table, not a loaded-scene installer or color writer. No private-state
-or helper evidence requires either neighbor to join.
+The earlier cut at DC148 omitted a complementary protocol witness: BOTH
+installation and update select header kind 15 and distinguish id E5 to reset/
+step the triplet interpolator, otherwise initialize/update the time-of-day
+fade; both select kind 44 for the color-cycle reset/step. These paired choices
+and adjacent phase drivers support the five-entry whole scene-dispatch unit,
+not two arbitrary slices around a jump-table owner. DC148's table is now
+pooled into the module, with unchanged table bytes and original member order.
+Left DBFA0 resets far-state reload identifiers, without the scene-kind/effect
+installation protocol; right DC388 begins the two-word selection state API,
+which neither selects these effects nor participates in their reset/update
+pairing. Neither edge has a helper/private-state witness extending the unit.
+These are evidence-limited -G0 protocol cuts, not GP-proven original objects.
 
 The public header names installation, the separate tolerance setter and the
 both-context RGB writer; it documents loader prerequisites, unused second
@@ -14864,8 +15003,16 @@ RGB and update flags. The empty hook keeps external linkage without becoming
 a public interface. Existing canonical scene geometry/render contexts retain
 their declarations and ownership. All four and the complete overlay passed
 the checked baseline fold; no flag or source-policy exception was involved.
-Final full campaign acceptance passes at 1421 folded / 219 valid modules,
-including render-color callers, loaded geometry data, interfaces and policy.
+Historical four-entry acceptance passed at 1421 folded / 219 valid modules.
+The five-entry baseline checked fold also passes all members and linked ovl_11.
+DC148 is now Ovl11UpdateSceneEffects, published through the same scene header;
+track/record-index locals clarify its ten-record sound selection. The existing
+0x3C-array-origin expression is retained: a records[] rewrite changed the
+loop/address construction in compiled assembly and failed linked verification,
+so it was reverted rather than protected with a flag. The source explains that
+necessary construction and scopes its two local macros with undef. No types,
+linkage, ownership, override or policy exception changed. Final acceptance is
+the current full campaign gate, including all scene/effect clients.
 
 Candidate same-TU membership, separate from the D_8012D110 pair above
 ([call/link-order evidence and limits](research/ovl_11_func_800DBFEC-grouping.md)).

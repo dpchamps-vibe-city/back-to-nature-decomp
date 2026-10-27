@@ -24,7 +24,7 @@ s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     object = NULL;
     switch (arg0) {
     case 0:
-        object = (struct_800759E4 *)&D_80075AD4;
+        object = (struct_800759E4 *)&gStageMode2Record;
         break;
     case 1:
     case 2:
@@ -68,7 +68,7 @@ s32 ovl_11_func_800EC064(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
         }
         break;
     case 4:
-        object = &D_800759E4;
+        object = &gStageMode1Record;
         break;
     default:
         return 0;

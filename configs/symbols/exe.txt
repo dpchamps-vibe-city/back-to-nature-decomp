@@ -1,4 +1,10 @@
 
+// Area-frame mode-1/mode-2 record anchors; keep the existing partial views.
+gStageMode1Record = 0x800759E4; // size:0x44
+gStageMode2Record = 0x80075AD4; // size:0xF0
+// Three 0xB4-stride small records; this symbol remains a halfword base anchor.
+gSmallRecordTripletBase = 0x80075FE4; // size:0x2
+
 // Interior XYZ-word anchor (+0x38) of the existing 0xF0 effect record.
 gOvl11TimedEffectPositionWords = 0x80075B0C; // size:0xC
 

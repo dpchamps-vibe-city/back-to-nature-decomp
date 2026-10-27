@@ -155,7 +155,7 @@ void Ovl11UpdatePrimaryObjectMotion(void) {
     if (!(player->flags & 2) && !(((Ovl11MovementState *)((u8 *)player - 0x51C8))->flags10 & 0x40000000)) {
         Ovl11ProbePrimaryObjectMotion();
     }
-    D_80128C50 = *(s32 *)GetSurfaceHitPolygonAddress();
+    gOvl11PrimarySurfaceFlags = *(s32 *)GetSurfaceHitPolygonAddress();
     position = player->position;
     if (player->flags & 0x40000000) {
         if (!(player->flags & 1)) {

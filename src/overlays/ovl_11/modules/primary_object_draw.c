@@ -180,7 +180,7 @@ void Ovl11DrawPrimaryObjectFrame(Ovl11SpritePositionView *origin, s32 unused) {
                         Ovl11CopyAndDrawSavedObject((Ovl11DrawState *) object);
                     } else {
                         ovl_11_func_8010C1C0((Ovl11DrawState *) object);
-                        ovl_11_func_8010C2EC((u8 *) &D_80075AD4);
+                        ovl_11_func_8010C2EC((u8 *) &gStageMode2Record);
                     }
                 }
                 if ((gOvl11SharedSlotSpriteEnabled != 0) && (*((s16 *) ((u8 *) &D_80125F24 + ((*(s16 *) (object + 0xFE)) * 2))) == 0)) {

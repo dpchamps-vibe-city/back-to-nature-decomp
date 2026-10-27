@@ -82,7 +82,7 @@ s32 Ovl11TryBeginItemAction(s32 inputMode) {
             }
             goto common_action;
         } else if (obj->itemIndex == 0x64) {
-            if (D_80128C50 & 0xC087) {
+            if (gOvl11PrimarySurfaceFlags & 0xC087) {
                 return 0;
             }
             if (gOvl11InteractionHitFlags != 0) {
@@ -98,7 +98,7 @@ s32 Ovl11TryBeginItemAction(s32 inputMode) {
         } else {
             flags = item->u0.flags;
             if (flags & 0x100) {
-                if (D_80128C50 & 0xC087) {
+                if (gOvl11PrimarySurfaceFlags & 0xC087) {
                     return 0;
                 }
                 if (gOvl11InteractionHitFlags == 0 || result == 0) {

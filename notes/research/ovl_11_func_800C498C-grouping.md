@@ -6,7 +6,8 @@ this notes-only pass does not repeat or modify that verification.
 
 ## Caller/link extension
 
-- Verified source: `src/overlays/ovl_11/ovl_11_func_800C498C.c`.
+- Current source: `src/overlays/ovl_11/modules/primary_object_update.c`,
+  `Ovl11ProbePrimaryObjectSurface` (original ovl_11:800C498C).
   It calls `800CB114` with the object's position and selector 0x18, probes
   a direction-offset position through `800BDB88`, and caches the getter's
   flags in `D_80128C50`, substituting 0x8000 when the upper half is zero.
@@ -23,8 +24,12 @@ this notes-only pass does not repeat or modify that verification.
   `configs/splat/ovl_11.yaml` records the same order. Thus the caller and
   its two helpers form a gapless run, not merely a distant call edge.
 
-This supports adding `800C498C` as a low-confidence candidate member of
-its caller's existing `800C401C`/`800C47F0` group.
+The current campaign additionally checked original jal targets and stored
+address words throughout the EXE and all overlay payloads: the C4118 call is
+the only reference found, with no stored pointer to C498C. Together with the
+zero-gap helper run and its in-frame ground-contact role, this supports the
+three-member update unit. The baseline checked fold passes all three and the
+complete overlay. The broadcast result word is now gOvl11PrimarySurfaceFlags.
 
 ## Limits
 
@@ -33,6 +38,8 @@ The target does not reference the pair-private `D_80128CF8` or the
 call/link run, conditional on the existing caller/helper grouping; it does
 not raise the pair's confidence or establish original TU boundaries.
 Neither the shared offset table nor calls to distant helpers establish
-same-TU ownership for their other users. The successor `800C4A2C` is not
-added on adjacency alone. Generated assembly names are not proof that
-indirect callers are absent.
+same-TU ownership for their other users. The successor `800C4A2C` starts the
+closed cell-action table/request protocol and is not added on adjacency alone.
+The original-byte census improves on a generated-name grep, but cannot exclude
+an indirect address computed without a literal. Overlay -G0 leaves this a
+supported reconstruction inference, not proof of historical object boundaries.

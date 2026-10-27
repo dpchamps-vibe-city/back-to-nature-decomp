@@ -17,7 +17,7 @@ void ovl_11_func_8010B67C(void) {
     char *state;
     s32 var_a0;
 
-    base = (char *)&D_80075AD4;
+    base = (char *)&gStageMode2Record;
     *(s32 *)(base + 0x34) |= 0x8000000;
     far0 = (char *)&D_8007AFF0;
     if ((*(s16 *)(far0 + 0x25476) != 3) && (*(s16 *)(far0 + 0x25476) != 1)) {

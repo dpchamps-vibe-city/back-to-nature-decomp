@@ -651,7 +651,7 @@ extern char gOvl30AnimalDestinationZLabel[];
 /* 80130C20 passes this NUL-terminated Shift-JIS format to KanjiFntPrint. */
 extern char gOvl30ChickenHeading[];
 /* 80131100 forms the same stride-B4 menu fields from this second record base. */
-#define Ovl30_AnimalRecords75FE4 ((Ovl30AnimalRecord *)&D_80075FE4)
+#define Ovl30_AnimalRecords75FE4 ((Ovl30AnimalRecord *)&gSmallRecordTripletBase)
 /* 80131100 reads this selector with lw and edits it as a four-byte value. */
 extern s32 gOvl30CoopChickenIndex;
 /* 80131100 passes this NUL-terminated Shift-JIS format to KanjiFntPrint. */
@@ -3755,8 +3755,8 @@ typedef struct {
     /* 0x3C */ s32 f3C;
     /* 0x40 */ s32 f40;
 } struct_800759E4;
-extern struct_800759E4 _D_800759E4[1] __asm__("D_800759E4");
-#define D_800759E4 (*((struct_800759E4 *)_D_800759E4))
+extern struct_800759E4 gStageMode1RecordStorage[1] __asm__("gStageMode1Record");
+#define gStageMode1Record (*((struct_800759E4 *)gStageMode1RecordStorage))
 
 /* EFABC..EFF04 resolve/read/write/clamp these 48 descriptors, stride 0x14.
  * Access kinds 0/1 are u8, 2 u16, 3 s16, all others s32. */
@@ -6379,8 +6379,8 @@ extern s16 D_80075AEA;
  * to ovl_11_func_8010B778. */
 /* 800D0FB4 accesses fields through +40; 8010C1FC uses the sprite at +78,
  * and 8010B778 clears the complete 0xF0-byte record. */
-extern u16 _D_80075AD4[0xF0 / 2] __asm__("D_80075AD4");
-#define D_80075AD4 (_D_80075AD4[0])
+extern u16 gStageMode2RecordStorage[0xF0 / 2] __asm__("gStageMode2Record");
+#define gStageMode2Record (gStageMode2RecordStorage[0])
 
 /* 80120358 walks four 0xE-byte rows, with inclusive signed bounds and
  * five category values. Overlay -G0 supplies no GP ownership witness. */
@@ -6672,7 +6672,7 @@ extern u8 D_800C4C00[0xD1C];
  * u16, lhu) by ovl_11_func_800E1F9C and ovl_11_func_800D2160. Undefined in
  * the overlay (undefined_syms_auto.txt, 2B); the -G0 overlay build addresses
  * it absolutely (split lui/%lo). */
-extern u16 D_80075FE4;
+extern u16 gSmallRecordTripletBase;
 
 /* D_80123754 - ovl_11 s16 threshold (initial value 0x258) compared against
  * the two absolute rank distances in ovl_11_func_800D1CFC and written by
@@ -7363,8 +7363,8 @@ extern s32 Ovl11CollisionFlags __asm__("gOvl11InteractionHitFlags");
 extern u16 D_80128C64;
 /* 800C907C saves the dispatched object pointer here and reads its u16 +0x22. */
 extern void *Ovl11SavedInteractionObject;
-/* 800C72F8 reads this absolute-addressed word and tests its low two bits. */
-extern s32 D_80128C50;
+/* 800C498C/800CAADC cache the surface polygon word; action services test its flags. */
+extern s32 gOvl11PrimarySurfaceFlags;
 /* 800C9C60 clears these three absolute-addressed words with sw. */
 extern s32 gOvl11MotionHoldCount;
 extern s32 gOvl11ItemActionChargeFrames;

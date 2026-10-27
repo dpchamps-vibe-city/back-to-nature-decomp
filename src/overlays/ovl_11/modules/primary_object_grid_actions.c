@@ -589,7 +589,7 @@ state_done:
             Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x46:
-            if ((D_80128C50 & 0x80) && (ovl_11_func_800F3EF0() != 0)) {
+            if ((gOvl11PrimarySurfaceFlags & 0x80) && (ovl_11_func_800F3EF0() != 0)) {
                 PlaySoundEffect(0x13);
                 SetGameFlag(7U, 1U);
             }
@@ -643,7 +643,7 @@ state_done:
             if (arg0->unk6C & 0x80) {
                 Ovl11RefreshRecordById(*(s16 *)Ovl11SavedInteractionObject, (Ovl25SetupStatePair *) ((u8 *) arg0 + 0xFC), (VECTOR *) ((u8 *) arg0 + 0x100));
             } else {
-                Ovl11FillTimedEffectRecord((u8 *)&D_80075AD4, (Ovl11EffectRecordPair *)((u8 *)arg0 + 0xFC), (Vec3 *)((u8 *)arg0 + 0x100));
+                Ovl11FillTimedEffectRecord((u8 *)&gStageMode2Record, (Ovl11EffectRecordPair *)((u8 *)arg0 + 0xFC), (Vec3 *)((u8 *)arg0 + 0x100));
             }
             arg0->unk6C &= ~0x180;
             Ovl11InitSharedSpriteSlots((u8 *) arg0);

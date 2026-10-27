@@ -1,13 +1,14 @@
 /*
  * Primary-object frame service: select live or substituted button masks,
  * dispatch object actions, advance timers/effects, and retain position history.
- * The adjacent direction remapper consumes a latch maintained only here.
+ * The adjacent direction remapper consumes a latch maintained only here;
+ * the adjacent surface probe supplies this frame's ground-contact flags.
  * History A samples on odd ticks; history B and direction tags sample when
  * tick % 8 == 7. Early exits deliberately skip those samples.
  *
  * Public contract: ovl11_primary_object_update.h. Object-specific movement,
- * collision and action services remain separately linked; co-location does
- * not give either entry private linkage.
+ * collision and action dependencies remain separately linked; all three
+ * entries here retain external linkage.
  *
  * The evidence for its membership and boundaries is in
  * notes/file-groupings.md.
@@ -21,6 +22,8 @@
 #include "ovl11_clock_calendar.h"
 #include "message_window.h"
 #include "game_flags.h"
+#include "ovl11_surface_height.h"
+#include "ovl11_primary_object_collision_action.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
@@ -35,8 +38,11 @@
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_recorded_input_playback.h"
 #include "ovl11_held_item_flags.h"
+#include "psyq/libgs.h"
+#include "psyq/memory.h"
+#include "surface_collision.h"
 
-void ovl_11_func_800C498C (Ovl11C498CObject *arg0);
+void Ovl11ProbePrimaryObjectSurface(Ovl11C498CObject *object);
 void Ovl11RemapPrimaryDirectionButtons(void);
 
 void Ovl11UpdatePrimaryObject(void) {
@@ -62,7 +68,7 @@ void Ovl11UpdatePrimaryObject(void) {
             SetGameFlag(0xADU, 0U);
             RequestMessageWindow(0, 0x724);
         }
-        ovl_11_func_800C498C((Ovl11C498CObject *) obj);
+        Ovl11ProbePrimaryObjectSurface((Ovl11C498CObject *) obj);
         cachedValue = obj->flags;
         if ((cachedValue & 0x20000) && !(obj->flags & 0x20000010)) {
             Ovl11ResetPrimaryObjectRequest();
@@ -258,5 +264,27 @@ void Ovl11RemapPrimaryDirectionButtons(void) {
         if (pressed & 0x2000) {
             gOvl11PrimaryPressedButtons |= 0x1000;
         }
+    }
+}
+
+/* The frame updater's ground-contact step. The offset is applied only to
+ * the copied probe position, not committed to the object's coordinates. */
+void Ovl11ProbePrimaryObjectSurface(Ovl11C498CObject *object) {
+    s32 probePosition[4];
+    s16 *offset;
+
+    Ovl11QueryPrimaryObjectCollisionAction((Ovl11CB114Object *)object, object->position, 0x18);
+    probePosition[0] = object->position[0];
+    probePosition[1] = object->position[1];
+    probePosition[2] = object->position[2];
+    probePosition[3] = object->position[3];
+    offset = gOvl11FacingProbeOffsets[object->direction];
+    probePosition[0] += offset[0];
+    probePosition[2] += offset[1];
+    Ovl11ResolveSurfaceHeight(probePosition, 0);
+    gOvl11PrimarySurfaceFlags = *(s32 *)GetSurfaceHitPolygonAddress();
+    /* Preserve the sentinel substitution when the polygon's upper half is 0. */
+    if (!(gOvl11PrimarySurfaceFlags & 0xFFFF0000)) {
+        gOvl11PrimarySurfaceFlags = 0x8000;
     }
 }

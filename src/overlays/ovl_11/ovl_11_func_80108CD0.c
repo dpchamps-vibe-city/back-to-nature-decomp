@@ -11,8 +11,8 @@ struct_800759E4 *ovl_11_func_80108CD0(s32 arg0, s32 arg1) {
         return NULL;
     }
     if (arg1 == 1) {
-        var_v0 = &D_800759E4;
-        if (D_800759E4.f00 != 0) {
+        var_v0 = &gStageMode1Record;
+        if (gStageMode1Record.f00 != 0) {
             return NULL;
         }
         ovl_11_func_8010946C((s32) var_v0, arg0);

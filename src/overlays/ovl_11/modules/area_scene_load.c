@@ -66,6 +66,7 @@
 #include "ovl11_item_record_allocation.h"
 #include "ovl11_code109_record_placement.h"
 #include "ovl11_grid_growth.h"
+#include "ovl11_calendar_record_gate.h"
 
 void func_80021D64 (void);
 void Ovl11AreaResetBeginHook (void);
@@ -334,7 +335,6 @@ void Ovl11AreaResetEndHook(void) {
 
 /* These two sprite-loader wrappers use their matched definition signatures;
  * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
-s32 ovl_11_func_800DE76C(void);
 s32 ovl_11_func_80109310(s32 *arg0);
 
 void Ovl11LoadAreaScene(void) {
@@ -386,8 +386,8 @@ void Ovl11LoadAreaScene(void) {
     Ovl11ClearSpriteEffects();
     Ovl11ResetMenuChoiceState();
     Ovl11PlaceCode109Records();
-    ovl_11_func_800DE76C();
-    ovl_11_func_80109310((s32 *) &D_800759E4);
+    Ovl11UpdateCalendarRecordGate();
+    ovl_11_func_80109310((s32 *) &gStageMode1Record);
     Ovl11StageFixedSpriteBank();
     Ovl11InitEventSchedules(gGraphicsHeapBase + 0x4290);
     base->field_4488 = 1;

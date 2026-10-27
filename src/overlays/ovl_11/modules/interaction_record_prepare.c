@@ -20,7 +20,7 @@ s32 Ovl11PrepareInteractionRecord(Ovl11InteractionRecord *record) {
     flags = *(s32 *)((u8 *)record + 0x34);
     if (flags & 0x100000) {
         if (ovl_11_func_800E6EAC(1, 0, 0, 0) == 1) {
-            ovl_11_func_80109188((Ovl11D04D4Obj *)&D_800759E4, 0x12);
+            ovl_11_func_80109188((Ovl11D04D4Obj *)&gStageMode1Record, 0x12);
             (*(s32 *)((u8 *)record + 0x34)) = (s32)((*(s32 *)((u8 *)record + 0x34)) & 0xFFEFFFFF);
         }
         return 2;

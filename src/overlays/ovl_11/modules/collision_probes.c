@@ -470,7 +470,7 @@ after_actor:
     }
     if (queryMask & 0x200) {
         query.field_18 = 0x200;
-        if (Ovl11ProbePlacedRecord((s32 **) &query, &D_80075AD4)) {
+        if (Ovl11ProbePlacedRecord((s32 **) &query, &gStageMode2Record)) {
             *hitFlags = 0x14200;
             goto collision_hit;
         }
@@ -479,7 +479,7 @@ after_actor:
         if (!(((struct Ovl11CollisionDispatchState *) D_8006C838)->flags & 0x20000) &&
             ((struct Ovl11CollisionDispatchState *) D_8006C838)->region == query.object->field_2) {
             query.field_18 = 0x2100;
-            if (Ovl11ProbePlacedRecord((s32 **) &query, &D_800759E4.f00)) {
+            if (Ovl11ProbePlacedRecord((s32 **) &query, &gStageMode1Record.f00)) {
                 goto collision_hit;
             }
         }

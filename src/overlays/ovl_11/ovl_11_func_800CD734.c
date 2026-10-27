@@ -1,8 +1,7 @@
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_primary_object_state_change.h"
-
-void ovl_11_func_800DE3A0(void);
+#include "ovl11_active_record_slot_drain.h"
 
 s32 ovl_11_func_800CD734(Ovl11C7010Object *arg0, s32 arg1) {
     s32 temp_a1;
@@ -61,7 +60,7 @@ s32 ovl_11_func_800CD734(Ovl11C7010Object *arg0, s32 arg1) {
         if (!(temp_v1_5 & 0x200)) {
             (*(u16 *) ((u8 *) arg0 + 0x36)) = (u16) (temp_v1_5 | 0x200);
             var_s1 = 0x40;
-            ovl_11_func_800DE3A0();
+            Ovl11DrainActiveRecordSlot();
         }
     } else {
         (*(u16 *) ((u8 *) arg0 + 0x36)) = (u16) ((*(u16 *) ((u8 *) arg0 + 0x36)) & 0xFDFF);

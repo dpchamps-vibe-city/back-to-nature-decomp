@@ -1,7 +1,7 @@
 #include "common.h"
 
 void ovl_11_func_8010941C(s32 arg0) {
-    struct_800759E4 *t = &D_800759E4;
+    struct_800759E4 *t = &gStageMode1Record;
 
     switch (arg0) {
     case 0:

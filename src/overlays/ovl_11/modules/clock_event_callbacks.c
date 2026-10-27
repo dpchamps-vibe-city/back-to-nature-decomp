@@ -49,6 +49,8 @@
 #include "ovl11_event_schedule.h"
 #include "ovl11_queued_item_interaction.h"
 #include "ovl11_grid_growth.h"
+#include "ovl11_clock_scene_completion.h"
+#include "ovl11_calendar_record_gate.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -81,8 +83,6 @@ void ovl_11_func_800EEECC (void);
 void ovl_11_func_8010C9B4 (void);
 void ovl_11_func_800F40A4 (void);
 void ovl_11_func_800F3D40 (void);
-s32 ovl_11_func_800DE76C (void);
-void ovl_11_func_800DE4C0 (void);
 
 s32 Ovl11ClockRebuildDayScene(void) {
     s32 result;
@@ -187,7 +187,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
         ovl_11_func_800F40A4();
         ovl_11_func_800F3D40();
         Ovl11ServiceEventQueues();
-        ovl_11_func_800DE76C();
+        Ovl11UpdateCalendarRecordGate();
         Ovl11ProbePoolRecordTransitions();
         ((Ovl11DDDFCState *)D_8006C838)->status &= 0xFBFFFFFF;
         switch (((Ovl11DDDFCState *)D_8006C838)->mode) {
@@ -207,7 +207,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
         ((Ovl11DDDFCState *)D_8006C838)->phase++;
         if (Ovl11IsClockAdvanceActive() == 0) {
             Ovl11SetClockAdvanceRefresh(0);
-            ovl_11_func_800DE4C0();
+            Ovl11CompleteClockSceneEvent();
         } else {
             Ovl11SetClockAdvanceRefresh(1);
         }

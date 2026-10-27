@@ -84,7 +84,7 @@ s32 ovl_11_func_800CD9A0(Ovl11C7010Object *arg0) {
                 }
                 return 2;
             }
-            if (D_80128C50 & 0x2000) {
+            if (gOvl11PrimarySurfaceFlags & 0x2000) {
                 if (recordDirection == arg0->unk38) {
                     if (!(gOvl11PrimaryPressedButtons & 0x40)) {
                         return 0;

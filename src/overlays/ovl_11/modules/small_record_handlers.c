@@ -81,10 +81,10 @@ s16 *Ovl11AllocateSmallRecord(s32 code, s32 index, s32 mainPool) {
         Ovl11ApplyRecordRowPlacement((s32) record, (s16) slot, 0);
         return (s16 *) record;
     }
-    auxiliaryRecord = &D_80075FE4;
-    if (D_80075FE4 != 0) {
-        tagCursor = &D_80075FE4;
-        nextRecord = &D_80075FE4;
+    auxiliaryRecord = &gSmallRecordTripletBase;
+    if (gSmallRecordTripletBase != 0) {
+        tagCursor = &gSmallRecordTripletBase;
+        nextRecord = &gSmallRecordTripletBase;
 next_slot:
         tagCursor += 0x5A;
         slot += 1;

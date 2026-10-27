@@ -14,7 +14,7 @@ s32 ovl_11_func_800E8760(s32 arg0) {
     if ((arg0 << 0x10) == 0) {
         Ovl11AllocateItemRecord(0x15E, -1);
     } else {
-        ovl_11_func_8010B64C((s32) &D_80075AD4);
+        ovl_11_func_8010B64C((s32) &gStageMode2Record);
     }
     return 1;
 }
