@@ -22,6 +22,7 @@
 #include "ovl11_halfword_triplets.h"
 #include "map_texture_camera.h"
 #include "ovl11_primary_object_state_change.h"
+#include "ovl11_primary_object_item_sprite_source.h"
 
 s32 Ovl11TryBeginLowCodeItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
     s32 temp_s2;
@@ -81,7 +82,6 @@ s32 Ovl11TryBeginHighCodeItemAction(u8 *arg0, u16 *arg1) {
 }
 
 s32 ovl_11_func_800CDD7C(Ovl11C7010Object *arg0);
-void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *object, s32 loadBank);
 /* The callee stores only the low byte of the animation selector. */
 
 s32 Ovl11TryBeginSpecialItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
@@ -89,7 +89,7 @@ s32 Ovl11TryBeginSpecialItemAction(Ovl11C7010Object *arg0, u16 *arg1) {
     case 0x38:
     case 0x39:
         ovl_11_func_800CDD7C(arg0);
-        ovl_11_func_800CCFF8((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
+        Ovl11InitPrimaryObjectItemSpriteSource((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
         SelectSpriteAnimation((ObjectState *) &arg0->sprite, (u8) arg0->unk38);
         return 1;
     case 0x21:

@@ -22,7 +22,6 @@
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
@@ -75,7 +74,7 @@ s32 ovl_11_func_8011C298(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     case 4:
         gOvl11InteractionDrawMode = 3;
         Ovl11SetInteractionSteps(8, 0);
-        ovl_11_func_80118B84(0, -1, 0);
+        Ovl11UpdateCompactChoicePrompt(0, -1, 0);
     case 8:
         switch (Ovl11UpdateWideChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
         case 0:

@@ -36,6 +36,7 @@
 #include "ovl11_selection_record_reset.h"
 #include "ovl11_quantity_input.h"
 #include "ovl11_quantity_prompt_setup.h"
+#include "two_choice_prompt.h"
 
 s32 Ovl11InitTimeDependentCatalog(void) {
     s16 daytime;
@@ -319,7 +320,6 @@ s32 Ovl11InitResourcePurchasePanel(void) {
 
 void SetVal8005E2BC(s32 arg0);
 s32 Ovl11UpdateResourceQuantitySelection(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, Ovl11QuantityPromptView *arg8);
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 
 /* Per-unit purchases cap stored units at 999. Option transactions instead
  * deduct both entries of the signed {money, units} table, then set flag 0x38.
@@ -413,7 +413,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
         }
         return 0;
     case 5:
-        ovl_11_func_80118B84(0, -1, 0);
+        Ovl11UpdateCompactChoicePrompt(0, -1, 0);
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(2, 0x5F);
@@ -425,7 +425,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
         }
         return 0;
     case 7:
-        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
+        switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
         case 1:
             choice = 4;
             if (gOvl11ResourceOptionIndex != -1) {

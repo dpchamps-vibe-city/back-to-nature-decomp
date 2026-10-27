@@ -22,10 +22,10 @@
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "two_choice_prompt.h"
 
 void SetVal8005E2BC(s32 arg0);
 u16 Ovl11SelectOfferConditionMessage(void);
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 Ovl11UpdateRecordOfferInteraction(void) {
@@ -88,7 +88,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
         }
         break;
     case 9:
-        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
+        switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
         case 0:
             break;
         case 1:

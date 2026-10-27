@@ -11,11 +11,11 @@
 #include "ovl11_item_action_gate.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_small_record_handlers.h"
+#include "two_choice_prompt.h"
 
 void SetVal8005E2BC(s32 arg0);
 s16 Ovl11FindLastFlaggedSmallRecord(void);
 s32 Ovl11SelectedSmallRecordHasFlag40(void);
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 
 s32 Ovl11UpdateSelectedRecordRelease(void) {
     s32 result;
@@ -45,7 +45,7 @@ s32 Ovl11UpdateSelectedRecordRelease(void) {
         }
         break;
     case 2:
-        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 200, 128)) {
+        switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 128)) {
         case 0:
             break;
         case 1:

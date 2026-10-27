@@ -57,6 +57,7 @@
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_timed_effect_record_fill.h"
+#include "ovl11_interaction_hit_action.h"
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -400,7 +401,6 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
 }
 
 void ovl_11_func_800CD08C (Recon_ovl_11_func_800CD08C_A0View *arg0);
-s32 ovl_11_func_800CD0F4 (Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 void ovl_11_func_800CCF14(Ovl11TripletTailView *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
@@ -475,7 +475,7 @@ reset_done:
         case 0x55:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             PlaySoundEffect(0x11);
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 8);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 8);
             temp_s0 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x84);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction(temp_s0);
@@ -497,7 +497,7 @@ reset_done:
         case 0x51:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
             PlaySoundEffect(0x11);
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 4);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 4);
             temp_s0_2 = (Ovl11TripletTailView *) ((u8 *) arg0 + 0x84);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction(temp_s0_2);
@@ -509,7 +509,7 @@ reset_done:
             return 0;
         case 0x4E:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 6);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 6);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
@@ -518,7 +518,7 @@ reset_done:
             return 0;
         case 0x4F:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 2);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 2);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
@@ -527,7 +527,7 @@ reset_done:
             return 0;
         case 0x4D:
             ovl_11_func_800CD08C((Recon_ovl_11_func_800CD08C_A0View *) arg0);
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 5);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 5);
             if (arg0->attributes & 8) {
                 Ovl11InvokeItemAction((void *) ((u8 *) arg0 + 0x84));
             }
@@ -866,7 +866,7 @@ tool_done:
             } else {
                 applyCost = 1;
             }
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
             goto advance_action;
         case 0x19:
             temp_v1_4 = *((struct Ovl11C580CWork *)&D_8007AFF0)->header;
@@ -886,7 +886,7 @@ tool_done:
                     applyCost = 1;
                 }
             }
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
             RequestPadActuatorSequence(0, 2);
             goto advance_action;
         case 0x1F:
@@ -908,13 +908,13 @@ tool_done:
             }
             goto finish_action;
         case 0x1D:
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
             Ovl11ApplyCellFootprint((Ovl11CD5BCObject *) arg0);
             RequestPadActuatorSequence(0, 2);
             applyCost = 1;
             goto finish_action;
         case 0x1B:
-            ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
+            Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *) arg0, 0);
             Ovl11ApplyScoredCellFootprint((Ovl11CD5BCObject *) arg0);
             RequestPadActuatorSequence(0, 2);
             applyCost = 1;

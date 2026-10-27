@@ -15,6 +15,7 @@
 #include "psyq/stddef.h"
 #include "ovl11_seasonal_record_ids.h"
 #include "ovl11_interaction_record_prepare.h"
+#include "ovl11_interaction_hit_action.h"
 
 void ovl_11_func_800F0FB0(s32 response);
 
@@ -51,7 +52,6 @@ s32 Ovl11HandleInteractionRequest80(Ovl11C8FA8Object *object) {
 
 s32 ovl_11_func_8010CE80(Recon_ovl_11_func_8010CE80_A0View *object, s32 mode);
 s32 ovl_11_func_8010B57C(u16 *object, s32 mode);
-s32 ovl_11_func_800CD0F4(Recon_ovl_11_func_800CCFF8_A0View *object, s32 mode);
 
 s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
     s32 messageId;
@@ -140,7 +140,7 @@ s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
                 return 1;
             }
         }
-        ovl_11_func_800CD0F4((Recon_ovl_11_func_800CCFF8_A0View *)object, 1);
+        Ovl11DispatchInteractionHitAction((Recon_ovl_11_func_800CCFF8_A0View *)object, 1);
     }
     return 0;
 }

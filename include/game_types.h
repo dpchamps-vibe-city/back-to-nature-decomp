@@ -1214,9 +1214,10 @@ typedef struct {
     s32 unk6C;
 } Recon_ovl_11_func_800C97D0_A0View;
 
+/* CCFF8/CD0F4 use the unsigned object code for bank/placement indexing. */
 typedef struct {
     char pad_0[0x3C];
-    /* 0x3C */ u16 unk3C;
+    /* 0x3C */ u16 objectCode;
 } Recon_ovl_11_func_800CCFF8_A0View;
 
 typedef struct {
@@ -2629,6 +2630,47 @@ typedef struct {
     char pad32[2];
     s32 unk34;
 } Ovl11D55F8Object;
+
+/* Object-state callbacks 03/14/15/16: the shared directed-keyframe view.
+ * Widths/signs are retained from the four matched definitions. */
+typedef struct {
+    char pad_00[0x22];
+    u16 unk22;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[2];
+    s16 unk30;
+    char pad_32[2];
+    s32 unk34;
+    char pad_38[0x10];
+    Recon800D0408A1View unk48;
+    char pad_54[0x26];
+    u16 unk7A;
+} Ovl11DirectedKeyframeObject;
+
+/* Object-state 07 places a selected tagged record before playing keyframes. */
+typedef struct {
+    char pad_00[2];
+    u16 index;
+    char pad_04[0x12];
+    s16 pool;
+    char pad_18[0xA];
+    u16 direction;
+    char pad_24[4];
+    s16 state;
+    u16 step;
+    s16 timer;
+    char pad_2E[2];
+    s16 map;
+    char pad_32[2];
+    s32 flags;
+    s32 x;
+    s32 y;
+    s32 z;
+} Ovl11RecordPlacementStateObject;
 
 /* Object-mode transition handler (ovl_11:8010EEE4): flags/index +B8/+BA
  * and retained action-state halfwords +BE/+C0/+C2. Prefix is also accessed

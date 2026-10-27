@@ -13,13 +13,13 @@
 #include "psyq/libgs.h"
 #include "ovl11_progress_status.h"
 #include "ovl11_balance_accounting.h"
+#include "two_choice_prompt.h"
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_8011A25C(void) {
@@ -73,9 +73,9 @@ s32 ovl_11_func_8011A25C(void) {
         break;
     case 5:
         Ovl11SetInteractionSteps(6, 0);
-        ovl_11_func_80118B84(0, -1, 0);
+        Ovl11UpdateCompactChoicePrompt(0, -1, 0);
     case 6:
-        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
+        switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
         case 0:
             break;
         case 1:
@@ -98,9 +98,9 @@ s32 ovl_11_func_8011A25C(void) {
         break;
     case 13:
         Ovl11SetInteractionSteps(14, 0);
-        ovl_11_func_80118B84(0, -1, 0);
+        Ovl11UpdateCompactChoicePrompt(0, -1, 0);
     case 14:
-        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
+        switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
         case 0:
             break;
         case 1:

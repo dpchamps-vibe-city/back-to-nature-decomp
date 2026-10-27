@@ -22,4 +22,10 @@ s32 Ovl11ProcessTwoChoiceInput(u16 *selection);
  * Normal coordinates are screen pixels. Non-reentrant shared prompt state. */
 s32 Ovl11UpdateWideChoicePrompt(s32 ot, s16 x, s16 y);
 
+/* Same sentinel/return/input protocol for the 40-pixel-wide compact prompt.
+ * Uses a separate persistent selection from the wide controller. Drawing
+ * precedes input processing, so a moved cursor is displayed on the next call.
+ * Accept/cancel resets the compact selection to zero. */
+s32 Ovl11UpdateCompactChoicePrompt(s32 ot, s16 x, s16 y);
+
 #endif

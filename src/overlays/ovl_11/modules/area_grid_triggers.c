@@ -27,6 +27,7 @@
 #include "psyq/memory.h"
 #include "surface_collision.h"
 #include "ovl11_primary_object_input_override.h"
+#include "two_choice_prompt.h"
 
 void Ovl11ResetAreaGridState(void) {
     u8 *b;
@@ -91,15 +92,13 @@ s32 Ovl11CheckAreaGridContact(Ovl11C7010Object *object) {
     return 0;
 }
 
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
-
 s32 Ovl11LatchAreaGridTrigger(s32 currentPlane, s32 plane, s16 column, s16 row) {
     if (((Ovl11GridState *)gOvl11AreaGridState)->grid[plane][column][row] == 2) {
         ((struct struct_8006C838_view *)D_8006C838)->field_0C |= 0x18000000;
         ((Ovl11GridState *)gOvl11AreaGridState)->flags |= currentPlane != 0 ? 0x8000 : 0x4000;
         SetGameFlag(3, 1);
         if (currentPlane == 0) {
-            ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x3C, -1, 0);
+            Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x3C, -1, 0);
         }
         Ovl11ResetPrimaryObjectRequest();
         return 1;
@@ -340,7 +339,7 @@ void Ovl11UpdateAreaGridTrigger(void) {
         if (((Ovl11GridState *)gOvl11AreaGridState)->flags & 0x4000) {
             dataOffset = 0x34;
         }
-        result = ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x3C, 0x20, 0x20);
+        result = Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x3C, 0x20, 0x20);
         object = gActiveRenderContext->field_D8;
         func_8001AC10((u32 *)(object + 0x3C), object + 0x28,
                       (s32)(gOvl11AreaGridTriggerText + dataOffset));

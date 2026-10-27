@@ -258,8 +258,25 @@ extern s32 D_80128D6C;
 extern s32 D_80123A14;
 extern s32 D_80128D58;
 
-/* 800D4314 passes this six-word keyframe table to 800D04D4. */
-extern u8 D_80123BD4;
+/* ovl_11 object-state callbacks: exclusive packed {s16 code,duration} tables
+ * in text/member order at 80123BCC–80123CA0; scalar byte anchors retain the
+ * existing address-taking view. State06 retains its 12-byte array view. */
+extern u8 gOvl11State00Keyframes;
+extern u8 gOvl11State02Keyframes;
+extern u8 gOvl11State03Keyframes;
+extern u8 gOvl11State04Keyframes;
+extern u8 gOvl11State08Keyframes;
+extern u8 gOvl11State09Keyframes;
+extern u8 gOvl11State11Keyframes;
+extern u8 gOvl11State12Keyframes;
+extern u8 gOvl11State10Keyframes;
+extern u8 gOvl11State13Keyframes;
+extern u8 gOvl11State14Keyframes;
+extern u8 gOvl11State15Keyframes;
+extern u8 gOvl11State16Keyframes;
+extern u8 gOvl11State17Keyframes;
+extern u8 gOvl11State07Keyframes;
+extern u8 gOvl11State06Keyframes[12];
 
 /* ovl_11:0x80128810: counted collision queries since the last frame-driver reset.
  * Storage remains in the overlay's original data section, not in the C module. */
@@ -4364,6 +4381,8 @@ extern s32 gGraphicsHeapBase;
 extern s16 gOvl11LoadedSpriteBankSelector;
 
 extern u8 D_8007BFF8[];
+/* CCFF8 loads unsigned halfword byte offsets for its embedded sprite record. */
+extern u16 gOvl11ItemSpriteRecordOffsets[];
 
 /* ovl_11:6680 resets the shared menu/interaction phase to 0xFF;
  * 66F0/6734/6778 install phases serviced by 67E0. */
@@ -7284,9 +7303,9 @@ struct Ovl11C580CWork {
 extern u16 gOvl11ItemKindSlots[4];
 extern s32 gOvl11ActionPhaseDelays[3];
 
-/* 800CD0F4 indexes signed halfword actions at 80123290 and reads 80123292. */
-extern s16 D_80123290[];
-extern s16 D_80123292;
+/* ovl_11 CD0F4: ten signed actions at 80123290; +2 retains its scalar anchor. */
+extern s16 gOvl11InteractionHitActions[];
+extern s16 gOvl11InteractionHitSecondaryAction;
 /* 800CD0F4 dispatches an object pointer and tests this absolute flag word. */
 extern void *gOvl11InteractionHitRecordView __asm__("gOvl11InteractionHitRecord");
 /* 800CB114 publishes an opaque pointer; legacy readers still have private
@@ -7408,9 +7427,6 @@ struct Ovl11EventDispatchState {
     u8 pad_44FC[0x7AB4 - 0x44FC];
     struct Ovl11EventDispatchRecord records[10];
 };
-
-/* 800D539C passes this byte-table address to the state-step helper D04D4. */
-extern u8 D_80123C88;
 
 /* 800D79E8 uses these signed word counters for the 25-by-45 scan. */
 extern s32 gOvl11MapGridScanColumn;
@@ -7539,12 +7555,10 @@ extern u8 gOvl11Animation3Sequence;
 extern u8 gOvl11Animation8Sequence;
 /* 800E1A3C passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
 
-/* 800D55F8 passes this 12-byte frame sequence to 800D04D4 (69960.data.s). */
-extern u8 D_80123C94[12];
 /* 800D31EC stores both halfwords; D3FEC reads the first unsigned for a
  * wrapping debit, and D55F8 copies the second as u16 to object+22. */
 extern s16 gOvl11StateValueDebit;
-extern s16 D_80128D7A;
+extern s16 gOvl11StateEntryDirection;
 
 /* 8010AE64 selects one of two triples; 69960.data.s contains six halfwords. */
 extern u16 D_80127B2C[6];

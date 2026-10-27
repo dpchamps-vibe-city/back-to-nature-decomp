@@ -1,8 +1,0 @@
-#include "common.h"
-
-extern s16 D_80128D7A;
-
-void ovl_11_func_800D31EC(u16 arg0, u16 arg1) {
-    gOvl11StateValueDebit = arg0;
-    D_80128D7A = arg1;
-}

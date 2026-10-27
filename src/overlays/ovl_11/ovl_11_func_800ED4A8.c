@@ -59,6 +59,8 @@
 #include "ovl11_small_record_handlers.h"
 #include "ovl11_timed_effect_record_fill.h"
 #include "ovl11_interaction_record_prepare.h"
+#include "ovl11_primary_object_item_sprite_source.h"
+#include "ovl11_object_state_callbacks.h"
 
 typedef struct {
                s16 field_0;
@@ -185,7 +187,6 @@ void ovl_11_func_800CCF14 (M2C_7f0a9cc905ed_UnkStruct800D72E8 *arg0);
 s32 ovl_11_func_800CD3C4 (s32 arg0);
 s32 ovl_11_func_8010CE80 (Recon_ovl_11_func_8010CE80_A0View *arg0, s32 arg1);
 void ovl_11_func_800CD5BC (M2C_583b0b68ff5a_UnkStruct800CD5BC *arg0, s32 arg1);
-void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 void Ovl11SelectPrimaryAnimationForFlag10000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryAnimationForFlag08000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -197,7 +198,6 @@ void ovl_11_func_800CBE14 (s32 arg0);
 s32 Ovl11MapDirectionButtons (u16 arg0, u16 arg1);
 s32 ovl_11_func_800DF010 (M2C_8d3156bb36aa_Struct_800DF010 *arg0, s32 arg1);
 s32 ovl_11_func_80109188 (M2C_708e65b63435_Ovl11D04D4Obj *arg0, s32 arg1);
-void ovl_11_func_800D31EC(u16 arg0, u16 arg1);
 s32 Ovl11IsItemIdEnabled (s32 arg0);
 s32 ovl_11_func_800E5B84 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E5704 (s16 arg0, s16 arg1, s32 arg2, s32 arg3);

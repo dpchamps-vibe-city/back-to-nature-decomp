@@ -4254,24 +4254,93 @@ register-based locals without changing types, layout or the shared gate label.
 Baseline checked fold passed both members and the overlay; no override or
 policy exception changed.
 
-A whole 23-member handler-bank experiment (D3FEC–D5740 exclusive,
-including all entry gates and frame handlers of these tables) reached cc1
-and rolled back. The merged scope exposes a duplicate local Ovl11D04D4Obj
-against game_types.h and incompatible D04D4/D0408 callee declarations across
-handlers. This is a measured source/context integration limit, not evidence
-for splitting the handler bank or changing flags. Next useful experiment:
-reconcile the shared object view and actual D04D4/D0408 contracts, with
-byte-preserving caller conversions, before repeating the whole-bank fold.
-No partial handler module or new exception was retained. A later read-only
-census distinguishes the three entry gates (3FEC/4028/4030) from the exact
-20-function frame-table closure (41A4–5740 exclusive, frame slot 5 null).
-The sixteen sole-use step tables BCC..C94 occur in handler address order;
-425C is additionally called by 4EA0/506C/5224. This strengthens the frame
-bank's membership evidence, but does not settle the shared D04D4/D0408
-prototype and object-view conflicts exposed by the prior whole-bank compile.
-The existing definition of D0408 and its disagreeing callers must be reconciled
-with byte-preserving interfaces before another accepted bank fold. No source
-or flag slice was made from the new census.
+**Whole callback family now reconstructed as
+`src/overlays/ovl_11/modules/object_state_handlers.c`, D3FEC–D5740
+exclusive, all 23 entries.** This absorbs the former three-entry
+object_state_callbacks module rather than preserving its mechanical cut.
+Earlier duplicate-view/D0408 declaration blockers below were resolved by
+intervening canonical-interface work; the current whole-unit baseline fold
+proves the resulting common context, not a new compiler-setting hypothesis.
+
+Membership is the complete entry/frame callback protocol, corroborated by
+private data and internal helper use, not merely adjacency or a shared object:
+
+- Entry bank B8E6C slots 5/6/7 are RequestObjectStateMessage (D4030),
+  ApplyStateValueDebit (D3FEC) and StateEntryNoop (D4028). No other entry
+  gate is populated. Frame bank B8EC0 has slot 5 null and exactly the twenty
+  following functions. The banks remain in the separate dispatcher/data;
+  this module does not claim their storage.
+- Frame slots **00/08/09/11/12/10/13/17** are D41A4/D46CC/D4784/D483C/
+  D48F4/D49AC/D4A64/D4DE8, now Ovl11StepStateNNKeyframes. Their private
+  tables BCC/C08/C14/C20/C2C/C38/C44/C7C are exclusive to the corresponding
+  callbacks. Each arms 800, steps its own packed sequence, and releases the
+  arm with outer timer 300 on the call after phase becomes -1.
+- Slots **02/03/04/14/15/16/07/06** are D4314/D4558/D4624/D4B1C/D4C1C/
+  D4D1C/D539C/D55F8, now named CollisionSequence, DirectedKeyframes,
+  KeyframesAndClear, DirectedKeyframes (14–16), RecordPlacement and
+  TimedSprite respectively. Their sole-use tables BD4/BEC/BF8/C50/C60/C70/
+  C88/C94 complete the uninterrupted 80123BCC–80123CA0 data run in MEMBER
+  order, including the nonnumeric frame-slot ordering. Collision/direction,
+  record clearing and timed-effect differences remain explicit functions.
+- Tableless frame **01** (D425C, StepState01Motion) is also called ONLY by
+  tableless slots **18/19/20** (D4EA0/D506C/D5224: RecordSelection,
+  ExitMotion, RecordFollow). These calls connect the remaining four members
+  to the same movement/flag/selection lifecycle, rather than attaching
+  arbitrary users of the general object layout.
+
+Left record_selection ends in its two-bank search/selection protocol; its
+helpers have other consumers and none is an entry/frame-bank member. Right
+D5740 clears a three-halfword record for remote item-transfer clients; no
+callback-bank, keyframe-table or internal-helper witness extends into it.
+The core dispatcher is earlier in link order with intervening independent
+record services and a different rodata emission window. Its external table
+references alone do not absorb those services. These are conservative -G0
+protocol/private-table boundaries, not GP-proven historical object edges.
+No inner boundary in the supported 23-member family is retained.
+
+All twenty frame symbols now have container-qualified semantic names keyed
+by DECIMAL bank slot, preserving their original addresses. All sixteen
+keyframe globals are gOvl11StateNNKeyframes. The direction halfword at
+80128D7A is now gOvl11StateEntryDirection: its setter receives current facing
+from CD0F4 (or object +22 from 8010A654), and state06 copies it to +22.
+The associated two-halfword setter, now Ovl11SetStateDebitAndDirection,
+remains a separate TU at D31EC, published through the entry-parameter header.
+Its three declaring clients are object-identically reconciled. Overlay
+re-splitting canonicalizes that standalone source stem too: the compiling
+implementation was moved to Ovl11SetStateDebitAndDirection.c after the gate
+caught a newly generated placeholder at that path. The placeholder was
+replaced, not accepted or allowlisted; final completeness and exception
+non-growth both pass. Storage stays
+s16 and all consumer u16 views remain explicit. The keyframe globals' unchanged
+byte-anchor externs (state06 keeps its existing 12-byte array view) live in
+`globals_override.h`, not C. Four identical directed-record typedefs became
+one Ovl11DirectedKeyframeObject; the placement view is
+Ovl11RecordPlacementStateObject, both in game_types.h. The clear-only and
+step-only partial views use the established Ovl11D04D4Obj instead. No member
+width, sign, offset, global ownership or linkage was changed. Function
+prototypes are deduplicated; explicit partial-view pointer conversions keep
+the canonical sequencer contract. No gameplay meaning is invented for slots.
+
+`ovl11_object_state_frames.h` publishes the complete indirect callback
+interface; the existing entry-gate header remains valid. The old header's
+claim that the debit gate is also frame slot 6 is corrected against the
+original bank: that frame entry is the separate timed-sprite callback.
+State06's unusual pre-decrement and keyframe ticking of the SAME +2C cell
+(rather than +2A) is documented and preserved. Documentation states
+phase/tick/timer units and termination timing, side effects, unchecked record
+and table prerequisites and, importantly, that the dispatcher IGNORES frame
+return values. A callback returning 1 does not itself retire a record.
+
+The checked fold first rolled back on an SDK include-order error. Explicit
+stddef/libgte/libgpu order in the first member fixed that source dependency;
+the second fold proved all 23 member bytes and the linked overlay at baseline
+-O2/-G0. No flag override was present, added or retired. The sole five-word
+switch table remains pooled at ROM 1664. Final uncached campaign verification
+also proves the semantic names, shared-view cleanup, callback pointers and
+all linked EXE/overlay data/placement: **1763/2625 folded (up 23 this run),
+298/298 module TUs valid, all eight integrity gates PASS**, with no exception
+growth. Interface audit finds zero failing published sites. No shared tool
+or test changed.
 
 Final run acceptance covers nine new ovl_11 modules: default_position,
 hour_counter_adjustment, sixty_step_deltas, item_spawn_placement,
@@ -4291,7 +4360,7 @@ exit code 1 denotes the still-incomplete campaign, not a failed integrity gate.
 
 Two absolute-addressed (-G0) tables in `build/ovl_11/asm/data/104C.rodata.s`
 tie `800D3048` and `800D3104` together. `D_800B8EC0` is a 21-word table of
-per-state handlers (index 5 null; entries include 800D3FEC, 800D55F8, 800D539C)
+per-state handlers (index 5 null; entries include 800D41A4, 800D55F8, 800D539C)
 and `D_800B8E6C` is a parallel 21-word table with only indices 5–7 populated
 (800D4030 / 800D3FEC / 800D4028). Shared fingerprint: both functions read the
 struct state id from +0x26 and index a table by it, dispatch a word from the
@@ -4306,34 +4375,14 @@ share the object-ID case set and `SystemError(0x45, ...)` convention;
 idiom supports candidate membership, not a proven TU boundary. Evidence and
 limits: [grouping research](research/ovl_11_func_800D3574-grouping.md).
 
-**Reconstructed `modules/object_state_callbacks.c`, D3FEC–D41A4
-exclusive, all three entry callbacks.** The only non-null slots of
-gOvl11ObjectStateEntryCallbacks (B8E6C, slots 5/6/7) are exactly these
-three consecutive entries, in a different table order from link order.
-That closed callback protocol, not adjacency alone, supports the unit.
-The external dispatcher/table storage stays in object_state_dispatch and
-the extracted data; linkage and ownership are unchanged. D3FEC additionally
-serves frame slot 6. Left record_selection ends with the two-bank scan
-protocol, not these entry gates. That cut is evidence-limited under -G0.
-
-The right edge is a MECHANICAL limit on the wider callback family, not an
-asserted original-file boundary. All 20 non-null frame callbacks form the
-consecutive D41A4–D5740-exclusive span. Sixteen private keyframe tables at
-123BCC..123CA0 follow their users' address order; D425C is also called by
-D4EA0/D506C/D5224 inside the span. The adjacent entry/frame callback tables
-and connected lifecycle support a complete 23-entry extension experiment.
-Its baseline dry run passed. The first checked write rolled back on SDK
-include ordering; with stddef/libgte/libgpu ordered in the candidate
-preamble, the second reached cc1 and rolled back on conflicting D0408
-return/signedness declarations (lines 157/233/726/820 of the merged file).
-The temporary preamble change was restored too. This confirms the existing
-interface recovery blocker, rather than licensing slices of the frame run.
-The earlier canonical-prototype caller trial changed bytes (see direction
-vector section). Next useful experiment: recover one byte-preserving common
-D0408 contract/source shape across the whole callback family, then repeat
-the complete extension. No flag is involved. D5740 only clears a three-
-halfword record for remote item-transfer clients; no member/table witness
-joins it to this callback family.
+**The former `modules/object_state_callbacks.c` slice, D3FEC–D41A4,
+is now absorbed whole into `modules/object_state_handlers.c`.** The three
+non-null entry slots 5/6/7 and all twenty non-null frame slots form the complete
+23-member reconstruction described above. The earlier mechanical right cut
+and declaration-blocked attempts are superseded by its checked baseline fold
+and full campaign verification. Correction to the old table reading: D3FEC
+is entry slot 6; FRAME slot 6 is D55F8, not the debit callback. Original link
+order and external linkages are retained.
 
 Names: Ovl11ApplyStateValueDebit, Ovl11StateEntryNoop,
 Ovl11RequestObjectStateMessage, and gOvl11StateValueDebit (128D78, two
@@ -14291,6 +14340,31 @@ structural read independently reports 1606 folded, 1019 remaining, zero
 invalid/undetermined and no failures. No commit was made. Exit 1 denotes
 remaining campaign work, not an invariant failure.
 
+Adjacent vector-writer experiment (800D05D0–800D0600): the single-entry
+baseline fold passed, but publishing its established four-word
+Ovl11PaddedVec3 ABI exposed three five-scalar caller declarations and
+8010A850's distinct Ovl11CC7CCPosition aggregate. Reconciliation of 22 other
+caller units was object-identical. The three scalar callers were rewritten
+to pass their contiguous four-word source by value, preserving the ignored
+fourth word. The full campaign gate then identified 8010A850 alone as
+0x360 bytes where its interval requires 0x35C, and rejected the linked overlay
+(original 165c3cca, built 30b17f52). Both a cast of the existing position member
+and a direct base+52C8 aggregate view emitted the SAME built hash. Neither is
+an experiment to repeat. The fold, name, header and all its caller edits were
+restored; no incompatible-prototype workaround or type/flag change was kept.
+
+The writer stores three signed words at +58/+5C/+60 and sets +34 bit 2000,
+clearing bit 4000. Coordinate units and larger flag semantics remain unknown.
+Left D04D4 is the separate packed-keyframe sequencer; right D0600 begins
+record_pair_order's independent signed-pair comparator/adaptor protocol.
+Neither neighbor provides a private helper/table/state extension: a possible
+single-entry service, not a GP-proven original boundary (-G0). The concrete
+obstacle is now caller aggregate representation/visibility, not grouping or
+a compiler override. Next useful experiment is a consistent canonical
+four-word position representation across this caller and writer, with the
+padding word and all existing member widths retained, before retrying the
+public interface. Do not silently retype the existing position records.
+
 Historical pair description follows:
 
 Two link-contiguous leaf functions operating on the identical 12-byte record
@@ -15511,6 +15585,36 @@ Members:
   writes on the D_80075AD4 record.
 
 ## `ovl_11` D_80128C4C / D_80128C54 state-pair cluster — 0x800C4DE0–0x800CD0F4 (confidence: medium)
+
+**Independent service reconstructed as `modules/interaction_hit_action.c`,
+800CD0F4–800CD3C4 exclusive (one entry).**
+`Ovl11DispatchInteractionHitAction` is the sole consumer of the ten-halfword
+80123290 action table. Its first-hit flag priority dispatches the already
+named interaction-hit record to category handlers, with mode-zero counter
+(cap 15), sound and state effects. Return 1 means consumed, not necessarily
+changed: several category/mode combinations deliberately do nothing. The
+800 category returns 0 unless its particular guards succeed. The source and
+`ovl11_interaction_hit_action.h` document these non-obvious distinctions,
+unchecked table modes, non-clearing shared result and object-code use.
+
+The table has canonical base `gOvl11InteractionHitActions` and the existing
++2 scalar anchor `gOvl11InteractionHitSecondaryAction`. Both symbol extents
+remain two-byte anchors into ONE table; they are not new storage or two
+owned arrays. The existing s16 array/scalar extern views are unchanged.
+The common header cannot infer an overlay identity for raw D-address names,
+so those two established ovl_11 extern names were updated explicitly after
+container-scoped canonicalization; no shared-address cross-overlay alias
+was inferred.
+
+Left CD0C0 is the independently reconstructed default-position reader over
+its private six-halfword table. Right CD3C4 is a score evaluator over record
+and shared-work fields, with no action-table use or hit dispatch. Neither
+neighbor calls this service or shares its private action table, and the
+widely used hit-result globals do not join the distant detection/consumer
+families into this file. These are conservative -G0 service cuts, not GP
+proofs or flag limits. No private linkage or global ownership was inferred.
+The checked baseline fold passes without an override; the public interface
+is reconciled to both existing caller modules with identical caller objects.
 
 Two additional complete local protocols are now reconstructed; the broad
 shared hit latch is not itself evidence to merge the entire band.
@@ -23480,10 +23584,12 @@ Members (address order):
 
 ## `ovl_11` 0x800CCC5C–0x800CD08C gapless caller run — 0x800CCC5C / 0x800CCCC0 / 0x800CCF14 / 0x800CCF58 / 0x800CCFF8 / 0x800CD08C (confidence: low)
 
-Candidate same-TU run; [call/link and shared object-reset evidence](research/ovl_11_func_800CCCC0-grouping.md)
-supports extending membership to 800CD08C. Outer TU boundaries and membership
-of the whole intervening run remain unproven; the other candidate clusters
-are not merged.
+Historical candidate same-TU run; [call/link and shared object-reset evidence](research/ovl_11_func_800CCCC0-grouping.md)
+connects CCCC0 to CD08C, but does not establish the intervening functions as
+one file. Re-review: the object/request fields are used widely across the
+overlay, not private to this run; CCFF8 alone consumes its sprite-offset
+table, and neither neighbor participates in that binding protocol. Adjacency
+and the common large object are not grounds to merge the entire band.
 
 Members (address order):
 - ovl_11_func_800CCC5C (m) — D_80071A00 pool leaf copy/mirror (see that entry)
@@ -23492,6 +23598,34 @@ Members (address order):
 - ovl_11_func_800CCF58 (s) — scattered D_8006C858 sibling
 - ovl_11_func_800CCFF8 (m) — func_80015704 two-argument caller set
 - ovl_11_func_800CD08C (candidate same TU) — clears object flag 0x1000 and runs the shared reset helpers.
+
+**Reconstructed `modules/primary_object_item_sprite_source.c`,
+800CCFF8–800CD08C exclusive (one entry).**
+`Ovl11InitPrimaryObjectItemSpriteSource` optionally loads bank
+(s16)(objectCode-3B), initializes the embedded +260 SpriteSourceData, binds
+a record by a u16 BYTE offset, and selects animation zero. The private
+801231FC–80123234 table is its sole-consumer witness; it is now
+`gOvl11ItemSpriteRecordOffsets`. Its extern moved from C into
+`globals_override.h` with unchanged unsigned-halfword view. Its recorded
+0x38-byte extent includes the final zero halfword; no new runtime bound or
+claim that every code is valid was introduced.
+
+The left CCF58 updates item/request flags using gItemDataTable, not this
+bank or offset table. The right CD08C clears +6C bit 1000 and calls the
+separate common sprite/request reset services; it neither calls this binder
+nor uses its table or +260 source. No exclusive helper/state protocol extends
+either cut. These are evidence-limited -G0 service boundaries, not proven
+original object edges, and not flag/mechanical limits. The distant
+item_sprite_source module is a different shared-source lookup protocol, not
+permission to absorb every intervening function.
+
+The header documents the code-to-bank narrowing, load/reuse distinction,
+byte-offset units, embedded-storage and current-bank prerequisites, unchecked
+indices and two-argument ABI. Parameter/local names distinguish object,
+loadBank, bankIndex and source; the shared +3C field is now objectCode with
+its u16 type unchanged. Redundant SDK includes and the local global extern
+were removed. Public linkage and absolute overlay addressing are preserved.
+The checked fold passes at baseline -O2/-G0 without an override.
 
 **Adjacent position service reconstructed independently as
 `modules/default_position.c`, 800CD0C0–800CD0F4 exclusive.** This singleton
@@ -25034,6 +25168,26 @@ This is the full rendering/input/controller protocol, not a slice at D150.
 The compact controller at nonadjacent 80118B84 calls both the compact wrapper
 and input helper; its external use does not disprove the five-member unit.
 It is not absorbed across intervening unrelated code on that dependency alone.
+
+That complete single-entry controller is now reconstructed separately as
+`modules/compact_choice_prompt.c`, 80118B84–80118C28 exclusive, named
+`Ovl11UpdateCompactChoicePrompt` at its original overlay identity. Its sole
+state is the already named signed halfword gOvl11CompactChoiceSelection;
+the wide controller uses a different halfword. The existing public
+`two_choice_prompt.h` publishes both controllers and documents their shared
+sentinel-x, one-based completion, cancel and draw-before-input protocol.
+Parameters name ordering table and pixel coordinates; signed-state storage
+and the unsigned input-service view are unchanged.
+
+The left neighbor is interaction_dispatch's private callback-bank updater,
+whose two-member boundary is documented in its own section. Right 18C28
+searches the independent fourteen-pair 80128298 table and neither uses this
+selection nor calls a prompt service. There is no private-state/helper/table
+extension across either immediate neighbor; these conservative -G0 cuts do
+not claim a recovered historical object boundary. Distant prompt drawing
+clients do not establish co-compilation across the intervening state handlers.
+The baseline checked fold proved this entry and overlay without overrides.
+No linkage or ownership was inferred from the move.
 
 Names: Ovl11DrawCompactChoicePrompt/DrawWideChoicePrompt,
 Ovl11DrawChoicePromptVariant, Ovl11ProcessTwoChoiceInput and

@@ -19,6 +19,7 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "ovl11_primary_object_draw.h"
+#include "ovl11_primary_object_item_sprite_source.h"
 
 /* Each selector updates an overlaid word/byte view of the caller's animation
  * parameter. Unlisted states retain the input animation. Flag-selected calls
@@ -114,7 +115,6 @@ void Ovl11SelectPrimaryFlaggedAnimation(Ovl11C7010Object *arg0, Recon_ovl_11_fun
 /* This state-switch family passes unsigned animation bytes; the callee
  * stores only the low byte (as in 800C7010 and 800C7270). */
 void Ovl11SelectPrimaryFlaggedAnimation(Ovl11C7010Object *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
-void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *object, s32 loadBank);
 void Ovl11SelectPrimaryAnimationForFlag10000000(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryAnimationForFlag08000000(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryState2Animation(Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
@@ -134,7 +134,7 @@ void Ovl11ChangePrimaryObjectState(Ovl11C7010Object *arg0, s32 arg1, s32 arg2, s
         return;
     }
     if (arg0->unk6C & 0x800) {
-        ovl_11_func_800CCFF8((Recon_ovl_11_func_800CCFF8_A0View *)arg0, 1);
+        Ovl11InitPrimaryObjectItemSpriteSource((Recon_ovl_11_func_800CCFF8_A0View *)arg0, 1);
         SelectSpriteAnimation((ObjectState *)&arg0->sprite, (u8)arg2);
         arg0->unk6C &= ~0x800;
         return;

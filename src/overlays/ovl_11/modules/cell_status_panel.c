@@ -25,12 +25,12 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "two_choice_prompt.h"
 
 s32 Ovl11FindPendingCellStatus(void);
 void Ovl11ResetCellStatusPrompt(void);
 s32 Ovl11PollCellStatusChoice(void);
 s32 Ovl11ConfirmCellStatus(u32 cellIndex);
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 void SetVal8005E2BC(s32 arg0);
 
 s32 Ovl11BeginCellStatusPanel(void) {
@@ -39,7 +39,7 @@ s32 Ovl11BeginCellStatusPanel(void) {
     selectedCell = Ovl11FindPendingCellStatus();
     gOvl11CellStatusSelection = selectedCell;
     gOvl11InteractionDrawMode = 0;
-    ovl_11_func_80118B84(0, -1, 0);
+    Ovl11UpdateCompactChoicePrompt(0, -1, 0);
     return 1;
 }
 
@@ -162,7 +162,7 @@ void Ovl11ResetCellStatusPrompt(void) {
 
 s32 Ovl11PollCellStatusChoice(void) {
     if (GetMessageWindowStatus() == 5) {
-        return ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x28, 0x83, 0x48);
+        return Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x28, 0x83, 0x48);
     }
     return 0;
 }

@@ -1,5 +1,59 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// State-entry parameters: setter writes both halfwords; state06 uses direction.
+Ovl11SetStateDebitAndDirection = 0x800D31EC; // type:func
+gOvl11StateEntryDirection = 0x80128D7A; // type:data size:0x2
+
+// Object-state frame callbacks: decimal slots in the original 21-entry bank.
+Ovl11StepState00Keyframes = 0x800D41A4; // type:func
+Ovl11StepState01Motion = 0x800D425C; // type:func
+Ovl11StepState02CollisionSequence = 0x800D4314; // type:func
+Ovl11StepState03DirectedKeyframes = 0x800D4558; // type:func
+Ovl11StepState04KeyframesAndClear = 0x800D4624; // type:func
+Ovl11StepState08Keyframes = 0x800D46CC; // type:func
+Ovl11StepState09Keyframes = 0x800D4784; // type:func
+Ovl11StepState11Keyframes = 0x800D483C; // type:func
+Ovl11StepState12Keyframes = 0x800D48F4; // type:func
+Ovl11StepState10Keyframes = 0x800D49AC; // type:func
+Ovl11StepState13Keyframes = 0x800D4A64; // type:func
+Ovl11StepState14DirectedKeyframes = 0x800D4B1C; // type:func
+Ovl11StepState15DirectedKeyframes = 0x800D4C1C; // type:func
+Ovl11StepState16DirectedKeyframes = 0x800D4D1C; // type:func
+Ovl11StepState17Keyframes = 0x800D4DE8; // type:func
+Ovl11StepState18RecordSelection = 0x800D4EA0; // type:func
+Ovl11StepState19ExitMotion = 0x800D506C; // type:func
+Ovl11StepState20RecordFollow = 0x800D5224; // type:func
+Ovl11StepState07RecordPlacement = 0x800D539C; // type:func
+Ovl11StepState06TimedSprite = 0x800D55F8; // type:func
+
+gOvl11State00Keyframes = 0x80123BCC; // type:data size:0x8
+gOvl11State02Keyframes = 0x80123BD4; // type:data size:0x18
+gOvl11State03Keyframes = 0x80123BEC; // type:data size:0xC
+gOvl11State04Keyframes = 0x80123BF8; // type:data size:0x10
+gOvl11State08Keyframes = 0x80123C08; // type:data size:0xC
+gOvl11State09Keyframes = 0x80123C14; // type:data size:0xC
+gOvl11State11Keyframes = 0x80123C20; // type:data size:0xC
+gOvl11State12Keyframes = 0x80123C2C; // type:data size:0xC
+gOvl11State10Keyframes = 0x80123C38; // type:data size:0xC
+gOvl11State13Keyframes = 0x80123C44; // type:data size:0xC
+gOvl11State14Keyframes = 0x80123C50; // type:data size:0x10
+gOvl11State15Keyframes = 0x80123C60; // type:data size:0x10
+gOvl11State16Keyframes = 0x80123C70; // type:data size:0xC
+gOvl11State17Keyframes = 0x80123C7C; // type:data size:0xC
+gOvl11State07Keyframes = 0x80123C88; // type:data size:0xC
+gOvl11State06Keyframes = 0x80123C94; // type:data size:0xC
+
+// Compact prompt controller at its original overlay entry.
+Ovl11UpdateCompactChoicePrompt = 0x80118B84; // type:func
+
+// Independent embedded-sprite binding and hit-action dispatch services.
+Ovl11InitPrimaryObjectItemSpriteSource = 0x800CCFF8; // type:func
+Ovl11DispatchInteractionHitAction = 0x800CD0F4; // type:func
+gOvl11ItemSpriteRecordOffsets = 0x801231FC; // type:data size:0x38
+// Anchors of one ten-halfword action table, not two independently owned arrays.
+gOvl11InteractionHitActions = 0x80123290; // type:data size:0x2
+gOvl11InteractionHitSecondaryAction = 0x80123292; // type:data size:0x2
+
 // Independently bounded area/record services at their original entries.
 Ovl11ProbePositionHeight = 0x800CE550; // type:func
 Ovl11RefreshSharedSlotSpriteSource = 0x800CE5FC; // type:func

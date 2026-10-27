@@ -40,6 +40,7 @@
 #include "surface_collision.h"
 #include "ovl11_direction_vector.h"
 #include "ovl11_small_record_handlers.h"
+#include "ovl11_primary_object_item_sprite_source.h"
 
 typedef struct {
                char pad0[0x38];
@@ -95,7 +96,6 @@ int CdSync (int mode, u_char *result);
 void *memmove (unsigned char *, const unsigned char *, int);
 s32 ovl_11_func_800EF8BC (s16 arg0, s16 arg1, s16 arg2);
 void DecodeAndUploadSpriteImages (u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
-void ovl_11_func_800CCFF8(Recon_ovl_11_func_800CCFF8_A0View *arg0, s32 arg1);
 void Ovl11SelectPrimaryAnimationForFlag10000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryAnimationForFlag08000000 (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);
 void Ovl11SelectPrimaryState2Animation (Recon_ovl_11_func_800C6F0C_A0View *arg0, Recon_ovl_11_func_800C6F0C_A1View *arg1);

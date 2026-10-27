@@ -20,12 +20,12 @@
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_record_allocation.h"
+#include "two_choice_prompt.h"
 
 void SetVal8005E2BC(s32 arg0);
 void ovl_11_func_800DF0F8(s32 arg0);
 s32 ovl_11_func_80113CD0(void);
 void ovl_11_func_801152BC(void *arg0);
-s32 ovl_11_func_80118B84(s32 arg0, s16 arg1, s16 arg2);
 s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80114604(void) {
@@ -232,7 +232,7 @@ s32 ovl_11_func_80114604(void) {
         break;
     case 20:
         selected = Ovl11DrawAndProcessRecordFamilyList(1, 0, 1);
-        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
+        switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
         case 0:
             break;
         case 1:
@@ -286,7 +286,7 @@ s32 ovl_11_func_80114604(void) {
         break;
     case 23:
         selected = Ovl11DrawAndProcessRecordFamilyList(2, 0, 1);
-        switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
+        switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 0xC8, 0x80)) {
         case 0:
             break;
         case 1:

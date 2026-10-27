@@ -24,6 +24,7 @@
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_quantity_input.h"
 #include "ovl11_quantity_prompt_setup.h"
+#include "two_choice_prompt.h"
 
 void SetVal8005E2BC(s32 value);
 s32 ovl_11_func_800E5E98(s16 a, s16 b, s32 c, s32 d);
@@ -31,7 +32,6 @@ s32 ovl_11_func_800E6EE0(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E6F34(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9284(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9B68(s16 a, s32 b, s32 c, s32 d);
-s32 ovl_11_func_80118B84(s32 orderingTable, s16 x, s16 y);
 s32 ovl_11_func_8011D06C(s32 amount);
 
 s32 Ovl11StepSelectionPrompt(s32 *step, s32 baseStep, Ovl11D8012D7B8 descriptor) {
@@ -247,10 +247,10 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             break;
         case 4:
             Ovl11SetInteractionStepsOffset(5, 0, baseStep);
-            ovl_11_func_80118B84(0, -1, 0);
+            Ovl11UpdateCompactChoicePrompt(0, -1, 0);
             /* Initialize and poll the first confirmation in the same call. */
         case 5:
-            switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
+            switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 200, 0x80)) {
             case 0:
                 break;
             case 1:
@@ -268,10 +268,10 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             break;
         case 6:
             Ovl11SetInteractionStepsOffset(7, 0, baseStep);
-            ovl_11_func_80118B84(0, -1, 0);
+            Ovl11UpdateCompactChoicePrompt(0, -1, 0);
             /* Likewise for the second confirmation. */
         case 7:
-            switch (ovl_11_func_80118B84(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
+            switch (Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x2C, 0xE0, 0x80)) {
             case 0:
                 break;
             case 1:
