@@ -4,7 +4,6 @@
 #include "psyq/libgpu.h"
 #include "ovl11_timed_sprite_effect.h"
 
-extern s16 D_80071CCC[];
 extern s16 D_80076300[];
 
 typedef struct {
@@ -16,7 +15,7 @@ s32 ovl_11_func_800E7C2C(s16 arg0, s16 arg1) {
     s16 *p;
 
     if (arg0 == 0x29) {
-        p = D_80071CCC;
+        p = gObjectWorkTimedSpriteEffect;
     } else {
         p = (s16 *)((char *)D_80076300 + arg0 * 0x1D4);
     }

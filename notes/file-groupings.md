@@ -284,6 +284,30 @@ canonical function/data names remove the old offset-array asm-name alias.
 No ownership, override or exception was added. Final linked verification is
 the batch campaign gate, not a per-function score.
 
+**Resource-ID adapter reconstructed as `modules/object_sprite_recovery.c`,
+800E54F8–800E5524 exclusive:** `Ovl11RecoverObjectSpriteBlock` subtracts
+15F and calls the bank's read entry with the guarded uploader's retained
+VRAM-word X offset and Y zero. Its only compiled client is the object archive
+start path, which uses a non-NULL borrowed result instead of an archive read.
+This completes the one-entry recovery adapter, not a new checksum/storage
+owner. It does not absorb the distant bank solely because it calls its API.
+Left E54C8 resets five pairs of work halfwords to -1; right E5524 is the
+stateless count/byte run decoder. Neither uses the retained bank offset,
+checksums or recovery call. There is no positive helper/private-state/table
+witness extending this adapter into either neighbor; these are conservative
+service cuts under -G0, not proved original object edges. The broader object-
+program TU hypothesis above remains unresolved, not silently ruled out.
+
+The header `ovl11_object_sprite_recovery.h` documents resource IDs 15F..190,
+word-aligned covering-row scratch capacity, GPU readback (not upload), borrowed
+scratch/tail lifetimes and possible writes before checksum failure. Parameters
+are scratch/resourceId; the retained offset keeps its established canonical
+name, type and external ownership. Unused SDK includes were removed, and the
+loader now includes the public header. The checked baseline fold and the
+three-module batch campaign gate pass (2254 folded, all 396 modules valid,
+all EXE/overlay bytes/data and policy checks unchanged). No flags or new
+exceptions were needed.
+
 ---
 
 ## `ovl_11` s16 range-map helper pair — 0x800CB020–0x800CB114 exclusive (confidence: medium)
@@ -13082,8 +13106,52 @@ the overlay, never GP-relative), and the large-offset writers use the same
   two D_80071Axx symbols into this cluster; link-sits in the 0x800E5A1C–
   0x800EExxx accessor band between D_8006C858-member 0x800E93CC and
   0x800E95FC
-- ovl_11_func_800E5294 (s) — low-confidence same-TU setup sibling of 800E537C; updates shared flags and work-area state ([pair evidence](research/ovl_11_func_800E537C-grouping.md)).
-- ovl_11_func_800E537C (m) — low-confidence same-TU reset sibling of 800E5294; resets shared status/flags and conditionally dispatches follow-up calls ([pair evidence](research/ovl_11_func_800E537C-grouping.md)).
+**Reconstructed `modules/object_load_context.c`, both entries
+800E5294–800E549C exclusive:** `Ovl11EnterObjectLoadContext` and
+`Ovl11LeaveObjectLoadContext`. Source/caller review strengthens the old
+setup/reset hypothesis: object_archive_pipeline is their only compiled
+client. Start enters before choosing archive/readback; Release chooses entry
+again when record slots remain queued, otherwise exit. Their complementary
+flag-3 writes, position-control enter/release and work-flag transitions are
+one caller-selected context protocol, not two arbitrary users of the large
+shared work buffer. Gapless original link order corroborates that closure.
+There is no GP provenance claim for this -G0 overlay.
+
+Left E5230 clears ten entity sprite sources and calls the general spawn-record
+clearer; it neither selects flag 3 nor enters/releases position control.
+Right E549C clears mask 1800 across 37 event records, without the context
+transition or current-object selection. Both are also called by the loader:
+that alone does not join every loader dependency into this file. No private
+helper/state/table or pooled literal witness extends the pair across either
+edge. These are evidence-limited protocol cuts, NOT proved original object
+boundaries or cuts invented to protect E4BA4's distant loop override. A larger
+historical object-program file remains uncertain, as in the bank note.
+
+`ovl11_object_load_context.h` publishes the unchanged void ABI, initialized
+pointer prerequisites, shared-state mutations, the queue-dependent call
+pattern, and the fact that exit is not a saved-state restore. Entry's partial
+view is now Ovl11ObjectLoadEntryView with named current-object, work/control
+flags and sprite-source state; the separate exit view and all field widths,
+signedness and offsets remain intact. Exact existing callee prototypes replace
+an old-style declaration; all explicit zero argument slots are retained.
+`gObjectWorkTimedSpriteEffect` names the existing two-halfword state at
+exe:80071CCC, work +5494: E7C2C selects it for slot 29, tests its effect/timer
+and uses the same timed-effect API. Its extent and declaration are unchanged;
+no shared work allocation is newly owned or made private.
+
+The complete pair first passed the checked baseline -O2/-G0 fold. No member
+flag override applies, was added or retired. Canonical identities remain at
+the original overlay addresses; interfaceAudit published the header to the
+loader with unchanged caller output. Together with object_sprite_recovery
+and active_record_sprite_packet, the full campaign gate passed all eight
+integrity checks: **2254/2625 folded, 396/396 valid modules**, EXE and all 13
+overlay payloads/data unchanged, no exception growth. Exit 1 reports only
+the still-incomplete campaign (371 remaining). No shared tool was changed.
+
+Earlier [pair evidence and its original limitations](research/ovl_11_func_800E537C-grouping.md)
+remain provenance, not a claim that the old stub status still applies.
+- ovl_11_func_800E5294 (m, now Ovl11EnterObjectLoadContext) — object-load context entry.
+- ovl_11_func_800E537C (m, now Ovl11LeaveObjectLoadContext) — object-load context exit.
 - ovl_11_func_800E63C8 (m, matched this session) — flag set/clear leaf on the
   sibling cells: arg0 picks mask path vs set path — s32 at +0xC cleared of
   0x400000 and s32 at +0x5234 cleared of 0x08000400 vs s32 at +0x5234 set of
@@ -17280,6 +17348,39 @@ shared opcode or value-slot bank alone. EADB8 is another external client
 (magnitude 20 and discarded result); EAE24 uses the general animation/vector
 services, not the endpoint test. Their distant call/data relationship does
 not establish one original TU over every intervening command.
+
+**Independent packet service reconstructed as
+`modules/active_record_sprite_packet.c`, 800E559C–800E5704 exclusive:**
+`Ovl11DrawActiveRecordSpritePacket` is the complete one-entry SPRT/DR_TPAGE
+builder used by active_record_sprites' fixed-position draw helper. Its
+texture/size/CLUT input is the active work record at +445A, copied and
+relocated by the separate slot-texture selector F0A58. It has no motion-
+record resolver, private helper or dispatch table. Left E5524 is the byte-run
+decoder; right E5704/E5870 is the complete motion-limit pair below. Neither
+neighbor uses this packet descriptor or draw interface. These responsibility/
+representation cuts are evidence-limited -G0 boundaries, not GP-proven
+historical object edges; the broad object-program hypothesis is not promoted
+merely from a closed client list.
+
+`ovl11_active_record_sprite_packet.h` publishes the unchanged void*/s16 ABI,
+screen-pixel position, initialized OT/context/descriptor prerequisites and
+32-byte packet-work reservation. It explains neutral color, no semitransparency,
+command-before-sprite list traversal and the unusual page derivation from the
+CLUT origin. The twelve-byte reservation for an eight-byte DR_TPAGE is retained.
+`gActiveRecordSpriteDescriptor` is named at exe:80070C92 (the original
+0x1E-byte record); its partial packet view names textureWordX/textureY,
+width/height and clutX/clutY. The packet view's byte V, unsigned dimensions
+and signed CLUT reads deliberately remain distinct from the existing copy
+view. No disputed signedness/layout was reconciled by guesswork. The redundant
+array/asm-name macro binding was replaced by its canonical scalar extern,
+without defining new storage or changing absolute addressing. No helper was
+made static.
+
+The checked fold first proved the service and overlay at baseline -O2/-G0.
+Canonicalization, caller-header publication and the subsequent full batch
+campaign gate pass: 2254 folded, all 396 modules valid, EXE plus all 13
+overlays/data unchanged, all eight integrity checks pass, no flag or exception
+added. No shared tooling change was needed.
 
 Left E559C emits a sprite packet through its separate draw protocol, with no
 endpoint/core call or field-22/23 operation; right E58DC manages message-window

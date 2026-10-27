@@ -30,6 +30,8 @@
 #include "ovl11_active_record_sprites.h"
 #include "ovl11_selected_record_camera.h"
 #include "ovl11_byte_run_decode.h"
+#include "ovl11_object_load_context.h"
+#include "ovl11_object_sprite_recovery.h"
 
 s32 Ovl11DispatchObjectLoadPhase(void) {
     char *work;
@@ -166,8 +168,6 @@ s32 Ovl11GetCurrentObjectId(void) {
  * completion selects 1, opcode FF selects 2, and release selects 0. */
 
 void ovl_11_func_800E5230(void);
-void ovl_11_func_800E5294(void);
-u8 *ovl_11_func_800E54F8(u16 *arg0, s32 arg1);
 void ovl_11_func_800E499C(s32 arg0);
 void ovl_11_func_800E5078(void);
 void ovl_11_func_800E54C8(void);
@@ -194,9 +194,9 @@ s32 Ovl11StartObjectArchiveLoad(void) {
     needsRead = 1;
     size = gOvl11ObjectArchiveOffsets[id + 1] - offset;
     ovl_11_func_800E5230();
-    ovl_11_func_800E5294();
+    Ovl11EnterObjectLoadContext();
     if ((u32)(id - 0x15F) < 0x32U) {
-        data = ovl_11_func_800E54F8((u16 *)((u8 *)D_8006C838 + 0xD8), id);
+        data = Ovl11RecoverObjectSpriteBlock((u16 *)((u8 *)D_8006C838 + 0xD8), id);
         needsRead = data == NULL;
     }
     useAsync = 0;
@@ -290,7 +290,6 @@ s32 Ovl11RunObjectRecordProgram(void) {
 }
 
 void ovl_11_func_800E549C(void);
-void ovl_11_func_800E537C(void);
 
 s32 Ovl11ReleaseObjectLoad(void) {
     ((struct Ovl11E4280State *)D_8006C838)->flags_C &= ~0x400000;
@@ -303,9 +302,9 @@ s32 Ovl11ReleaseObjectLoad(void) {
     ((struct Ovl11E4280State *)D_8006C838)->flags_4450 &= ~0x10;
     ovl_11_func_800E5230();
     if (Ovl11HasQueuedRecordSlots() == 1) {
-        ovl_11_func_800E5294();
+        Ovl11EnterObjectLoadContext();
     } else {
-        ovl_11_func_800E537C();
+        Ovl11LeaveObjectLoadContext();
     }
     ((struct Ovl11E4280State *)D_8006C838)->selector = 0;
     return 1;

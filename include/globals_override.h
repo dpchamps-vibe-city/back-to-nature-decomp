@@ -1382,7 +1382,7 @@ extern char gOvl30NValueFormat[];
 /* ovl_11_func_800E9914 tests bit 0x20 of this word with lw. */
 extern s32 D_80070C88;
 /* 800E5294 passes this pair to 80107DD0, which stores s16 -1 and 0. */
-extern s16 D_80071CCC[2];
+extern s16 gObjectWorkTimedSpriteEffect[2];
 
 /* D_8006C838 - array of 0x3C-byte structs used for flags
  * Accessed with 0x3C stride but accessed in 4-byte s32 words
@@ -2245,16 +2245,16 @@ struct struct_8006C838_800E4608 {
     u16 field_4480;         /* 0x4480 */
 };
 
-/* 800E5294: lw pointer +30, lw flags +4450/+5234 and sh state +4476. */
-struct Ovl11E5294State {
+/* Object-load entry: pointer +30, flags +4450/+5234, state +4476. */
+struct Ovl11ObjectLoadEntryView {
     char pad0[0x30];
-    u16 *current;
+    u16 *currentObject;
     char pad34[0x4450 - 0x34];
-    s32 flags;
+    s32 workFlags;
     char pad4454[0x4476 - 0x4454];
-    s16 state;
+    s16 spriteSourceState;
     char pad4478[0x5234 - 0x4478];
-    s32 status;
+    s32 controlFlags;
 };
 
 /* 800E46A8 reads flags +0xC, an s16-record pointer +0x30 and s16 +0xE778. */
@@ -4338,22 +4338,20 @@ extern s16 gObjectSoundBankRequest;
 /* 800ED760 writes five word slots; 80107C80 reads each as two signed halfwords. */
 extern s32 gActionResultOverrides[5];
 
-/* D_80070C92 - ovl_11 sprite descriptor read by ovl_11_func_800E559C. It
- * passes the signed halfwords at +0x18/+0x1A to GetClut, reads the unsigned
- * frame size at +0x8/+0xA, a signed scroll value at +0 and a frame byte at
- * +2. Absolute-addressed (lui/addiu, not %gp_rel). */
+/* 80070C92, work +445A: F0A58 copies the active 0x1E-byte record here;
+ * E559C reads this partial packet view. Keep its witnessed unsigned size,
+ * byte V coordinate and signed CLUT loads, distinct from the copy view. */
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ u8 unk2;
+    /* 0x00 */ s16 textureWordX;
+    /* 0x02 */ u8 textureY;
     /* 0x03 */ u8 pad3[0x08 - 0x03];
-    /* 0x08 */ u16 unk8;
-    /* 0x0A */ u16 unkA;
+    /* 0x08 */ u16 width;
+    /* 0x0A */ u16 height;
     /* 0x0C */ u8 padC[0x18 - 0x0C];
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 unk1A;
-} struct_80070C92;
-extern struct_80070C92 _D_80070C92[1] __asm__("D_80070C92");
-#define D_80070C92 (*((struct_80070C92 *)_D_80070C92))
+    /* 0x18 */ s16 clutX;
+    /* 0x1A */ s16 clutY;
+} Ovl11ActiveRecordSpritePacketView;
+extern Ovl11ActiveRecordSpritePacketView gActiveRecordSpriteDescriptor;
 
 /* D_800A0384 - ovl_11_func_800C009C reads unsigned halfwords at +0x14/+0x16. */
 typedef struct {

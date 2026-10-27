@@ -17,12 +17,12 @@
 #include "ovl11_projected_record_sprites.h"
 #include "ovl11_surface_height.h"
 #include "ovl11_shared_animation_icon.h"
+#include "ovl11_active_record_sprite_packet.h"
 
 void Ovl11UpdateRecordSprite(u8 *record);
 void Ovl11DrawEntityRecordSprite(Ovl11EntitySpritePositionView *position,
                                 SpriteSourceData *source);
 void Ovl11DrawCurrentObjectSprite(void);
-void ovl_11_func_800E559C(void *ot, s16 x, s16 y);
 void func_80016054(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4,
                   s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9);
 
@@ -77,7 +77,7 @@ void Ovl11DrawCurrentObjectSprite(void) {
         box[1] = state->field_447C - 0x64;
         box[2] = state->field_4480 - 0x96;
         if (Ovl11ProjectRecordSprite(box, screen) != 0) {
-            ovl_11_func_800E559C(gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4),
+            Ovl11DrawActiveRecordSpritePacket(gActiveRenderContext->field_120 + ((screen[2] >> 2) * 4),
                                (s16)screen[0], (s16)screen[1]);
         }
     }

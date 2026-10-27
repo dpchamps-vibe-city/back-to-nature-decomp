@@ -17,6 +17,11 @@ gAreaSpriteWorkBase = 0x8009CBF8; // size:0x4
 gLoadedAreaClampFirstCorner = 0x800A00C4; // size:0x8
 gLoadedAreaClampSecondCorner = 0x800A00CC; // size:0x8
 
+// Active 0x1E-byte sprite record, copied by ovl_11:F0A58; packet view at E559C.
+gActiveRecordSpriteDescriptor = 0x80070C92; // size:0x1E
+// Work +5494: special slot 0x29's {effect id, remaining ticks} pair.
+gObjectWorkTimedSpriteEffect = 0x80071CCC; // size:0x4
+
 // Shared selection block: 20 large-pool, two special-slot and ten small-pool bytes.
 gRecordSelectionAvailability = 0x800712F8; // size:0x20
 
