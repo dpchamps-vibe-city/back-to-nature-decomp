@@ -4,6 +4,10 @@
 #include "common.h"
 #include "game_types.h"
 
+/* Return the current season's record eligibility bit: 0..3 -> 2/4/8/0x10.
+ * Any other signed season also returns 2. Reads gCalendarSeason only. */
+s32 Ovl11GetSeasonRecordMask(void);
+
 /* Require active bit 0 plus the current season's bit (0..3 => 2/4/8/0x10;
  * other seasons use mask 0x2). Return 0 if unavailable, otherwise signed kind,
  * except kind 0x40 becomes 0x13A in season 2. No state changes. A returned

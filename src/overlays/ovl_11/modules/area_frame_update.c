@@ -46,6 +46,7 @@
 #include "ovl11_primary_object_motion.h"
 #include "ovl11_pending_event_queue.h"
 #include "ovl11_area_frame_update_dispatch.h"
+#include "ovl11_menu_frame_update.h"
 
 void Ovl11UpdateClockHudVisibility(void);
 void Ovl11UpdateAreaFrame(void);
@@ -87,7 +88,6 @@ void Ovl11RunAreaFramePhase(void) {
     }
 }
 
-void ovl_11_func_800F65B8 (void);
 s32 ovl_11_func_800CD9A0 (Ovl11C7010Object *arg0);
 void ovl_11_func_800DC148 (void);
 s32 ovl_11_func_800F0F50 (void);
@@ -103,7 +103,7 @@ void Ovl11UpdateAreaFrame(void) {
     SCRATCH_STACK_BEGIN(SCRATCH_STACK_SLOT);
     Ovl11ResetCollisionQueryCount();
     Ovl11UpdateWeatherEffect();
-    ovl_11_func_800F65B8();
+    Ovl11UpdateMenuFrame();
     Ovl11UpdateAreaGridTrigger();
     Ovl11UpdateSceneCameraOffset();
     Ovl11UpdatePrimaryObject();

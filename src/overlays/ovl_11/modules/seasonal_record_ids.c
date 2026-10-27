@@ -13,13 +13,11 @@
 #include "psyq/stddef.h"
 #include "ovl11_seasonal_record_ids.h"
 
-s32 ovl_11_func_800F581C(void);
-
 s32 Ovl11ConsumeSeasonalRecord(Ovl11SeasonalRecordView *record, Ovl11RecordPresentation *out) {
     s32 requiredFlags;
     u16 flags;
 
-    requiredFlags = (ovl_11_func_800F581C() | 0x81) & 0xFFFF;
+    requiredFlags = (Ovl11GetSeasonRecordMask() | 0x81) & 0xFFFF;
     flags = record->flags;
     if (requiredFlags != (flags & requiredFlags)) {
         return 0;
@@ -59,7 +57,7 @@ s16 Ovl11GetSeasonalRecordId(Ovl11SeasonalRecordView *record) {
     s16 id;
     u16 requiredFlags;
 
-    requiredFlags = (ovl_11_func_800F581C() | 1) & 0xFFFF;
+    requiredFlags = (Ovl11GetSeasonRecordMask() | 1) & 0xFFFF;
     if (requiredFlags != (record->flags & requiredFlags)) {
         return 0;
     }

@@ -5,7 +5,7 @@
 
 /* Queue a cache record as an opaque, neutral-color SPRT plus DR_MODE pair.
  * (x,y) is a 32x32 screen-pixel cell origin: dimensions below 32 are centered;
- * larger dimensions are NOT cropped or centered. Also draws the 800F7010
+ * larger dimensions are NOT cropped or centered. Also draws the Ovl11DrawEmptySlot
  * backing at the original cell origin, using ot+1. Commits packet_work cursor.
  * textureIndex is unchecked (cache has 72 entries); data must be resident. */
 void Ovl11DrawTextureSpriteInCell(s32 *ot, s16 textureIndex, s16 x, s16 y);

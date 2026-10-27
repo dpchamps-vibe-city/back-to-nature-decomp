@@ -169,7 +169,6 @@ s32 Ovl11InitFixedCatalog(void) {
 }
 
 s32 Ovl11RequestCatalogPanelMessage(s32 arg0);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 /* State 5 waits for message status 2 before resuming. A selected item is
  * charged here and handed to the object only on the terminal update. */
@@ -200,7 +199,7 @@ s32 Ovl11UpdateCatalogPurchasePanel(void) {
         case 1:
             gOvl11CatalogSelectedId = Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord);
             cost = Ovl11GetItemPrice(*(u16 *)&gOvl11CatalogSelectedId);
-            if (ovl_11_func_8011D06C(cost) == 1) {
+            if (Ovl11HasSpendableBalance(cost) == 1) {
                 Ovl11AdjustSpendableBalance(-cost, 1);
                 gOvl11CatalogPanelState = 5;
                 gOvl11CatalogPanelResumeState = 4;
@@ -388,7 +387,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
         case 1:
             gOvl11ResourcePanelState = 8;
             gOvl11ResourcePanelResumeState = 9;
-            if (ovl_11_func_8011D06C(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA) == 1) {
+            if (Ovl11HasSpendableBalance(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA) == 1) {
                 if (gOvl11QuantityPrompt.unk8 + ((Ovl11ResourceGlobals *)D_8006C838)->amount < 1000) {
                     Ovl11AdjustSpendableBalance(-(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA), 1);
                     gOvl11ResourceResultMessage = 0x143;
@@ -431,7 +430,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
             if (gOvl11ResourceOptionIndex != -1) {
                 choice = gOvl11ResourceOptionIndex;
             }
-            if (ovl_11_func_8011D06C(gOvl11ResourceOptionCosts[choice][0]) == 1) {
+            if (Ovl11HasSpendableBalance(gOvl11ResourceOptionCosts[choice][0]) == 1) {
                 if (((Ovl11ResourceGlobals *)D_8006C838)->amount >= gOvl11ResourceOptionCosts[choice][1]) {
                     gOvl11ResourceResultMessage = 0x144;
                     gOvl11ResourcePanelState = 8;

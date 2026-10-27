@@ -26,7 +26,6 @@ void SetVal8005E2BC(s32 arg0);
 void ovl_11_func_800DF0F8(s32 arg0);
 s32 ovl_11_func_80113CD0(void);
 void ovl_11_func_801152BC(void *arg0);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80114604(void) {
     Ovl11D8012D7B8 params;
@@ -88,7 +87,7 @@ s32 ovl_11_func_80114604(void) {
             case 2:
             case 7:
             case 8:
-                if (ovl_11_func_8011D06C(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                if (Ovl11HasSpendableBalance(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
                     if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
                         Ovl11SetInteractionSteps(25, 24);
@@ -108,7 +107,7 @@ s32 ovl_11_func_80114604(void) {
                 if (Ovl11FindFreeTaggedRecord() == 0) {
                     RequestMessageWindow(2, 0x72);
                     Ovl11SetInteractionSteps(25, 24);
-                } else if (ovl_11_func_8011D06C(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
+                } else if (Ovl11HasSpendableBalance(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
                     RequestMessageWindow(2, 0x4F);
                     Ovl11SetInteractionSteps(25, 24);
                 } else {
@@ -164,7 +163,7 @@ s32 ovl_11_func_80114604(void) {
             break;
         case 1:
             CloseMessageWindow();
-            if (ovl_11_func_8011D06C(state->unk8 * state->unkA) == 1) {
+            if (Ovl11HasSpendableBalance(state->unk8 * state->unkA) == 1) {
                 if (state->unk8 + ((Ovl11SaleGlobals *)D_8006C838)->amount >= 1000) {
                     RequestMessageWindow(2, 0x6D);
                     Ovl11SetInteractionSteps(25, 9);

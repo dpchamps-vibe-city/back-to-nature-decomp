@@ -18,6 +18,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "sprite_render.h"
+#include "ovl11_seasonal_record_ids.h"
 
 s32 Ovl11IsRecordSpriteOnScreen(s32 x, s32 y) {
     s32 visible;
@@ -170,7 +171,6 @@ void Ovl11DrawSceneRecordSprites(void) {
         callback);
 }
 
-s32 ovl_11_func_800F581C(void);
 void Ovl11DrawProjectedRecordList(s32 count, Ovl11ProjectedRecordView *records, s32 (*selectSprite)(s32, s32 *, s32 *)) {
     u16 position[3];
     s32 screen[3];
@@ -181,7 +181,7 @@ void Ovl11DrawProjectedRecordList(s32 count, Ovl11ProjectedRecordView *records, 
     char *workBase;
     s32 (*callback)(s32, s32 *, s32 *);
 
-    requiredFlags = (ovl_11_func_800F581C() | 1) & 0xFFFF;
+    requiredFlags = (Ovl11GetSeasonRecordMask() | 1) & 0xFFFF;
     if ((selectSprite != 0) && (count > 0)) {
         callback = selectSprite;
         workBase = (char *) D_8009AFF0;
@@ -480,7 +480,7 @@ s32 Ovl11SelectKind6Sprite(s32 arg0, s32 *arg1, s32 *arg2) {
     case 0x71:
         var_a0 = 0;
         var_a3 = 0x13;
-        switch ((u16)D_80070D0E) {
+        switch ((u16)gQueuedItemInteractionId) {
         case 0x51:
             var_a0 = 0;
             break;

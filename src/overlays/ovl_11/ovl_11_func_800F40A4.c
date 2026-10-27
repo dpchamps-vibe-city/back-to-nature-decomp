@@ -1,4 +1,15 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_record_partition_flags.h"
 
 typedef struct {
     u16 field_0;
@@ -8,7 +19,6 @@ typedef struct {
 } Entry_800F53BC;
 
 void ovl_11_func_800F53BC(s16 arg0, Entry_800F53BC *arg1);
-void ovl_11_func_800F4AC0(s32 arg0);
 
 void ovl_11_func_800F40A4(void) {
     char *base;
@@ -24,5 +34,5 @@ void ovl_11_func_800F40A4(void) {
         p1++;
         p2++;
     }
-    ovl_11_func_800F4AC0(0);
+    Ovl11SetPartition6Enabled(0);
 }

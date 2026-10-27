@@ -7,15 +7,14 @@
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 #include "packet_work.h"
-
-void ovl_11_func_800F7010(s32 ot, s16 x, s16 y);
+#include "ovl11_slot_decorations.h"
 
 void Ovl11DrawTextureSpriteInCell(s32 *ot, s16 textureIndex, s16 x, s16 y) {
     SPRT *packet;
     s32 textureX;
     s32 textureY;
 
-    ovl_11_func_800F7010((s32) (ot + 1), x, y);
+    Ovl11DrawEmptySlot((s32) (ot + 1), x, y);
     if (gOvl11TextureCache[textureIndex].width < 32) {
         x += (32 - gOvl11TextureCache[textureIndex].width) / 2;
     }

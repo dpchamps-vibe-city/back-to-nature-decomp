@@ -736,9 +736,9 @@ typedef struct {
     Ovl11SelectionRecord records[80];
 } Ovl11SelectionRecordArray;
 /* 80100644 loads this selector with lbu; 800FFDCC clears the same byte. */
-extern s8 D_801273EC;
+extern s8 gOvl11SelectionRecordIndex;
 /* 801007AC copies the selected record into this byte with sb. */
-extern u8 D_801273E6;
+extern u8 gOvl11SelectionConfirmedRecord;
 /* 80100644 installs void handlers called by 800FFF7C; named view preserves legacy declarations. */
 extern void (*Ovl11_D_801273DC)(void) __asm__("gOvl11SelectionHandler");
 /* 800FFF7C compares/latches the installed handler; 800FFDCC clears it. */
@@ -780,7 +780,8 @@ extern u8 gOvl17SharedBankSpriteSource[0x30];
 extern u16 gOvl11MapTileTextureCodes[48];
 
 /* ovl_11_func_800F4CA0 clears this s16; 800F62D8 reads its unsigned value with lhu. */
-extern s16 D_80070D0E;
+/* Item-interaction latch: the same storage as resident work+0x44D6. */
+extern s16 gQueuedItemInteractionId;
 
 /* Minimal SPU types for the D_8006C368 override below. Do not include
  * psyq/libspu.h here: its `void SpuGetAllKeysStatus` prototype reaches every
@@ -2112,7 +2113,10 @@ struct struct_8006C838_button {
     /* 800F4BB4 reads u16 +44D6 and decrements/clamps s16 +51DE. */
     char pad_44C4[0x44D6 - 0x44C4];
     u16 field_44D6;
-    char pad_44D8[0x51DE - 0x44D8];
+    char pad_44D8[0x44F8 - 0x44D8];
+    /* 800F4B5C gates queue submission on this word's bit 1. */
+    s32 field_44F8;
+    char pad_44FC[0x51DE - 0x44FC];
     s16 field_51DE;
 };
 
@@ -3580,6 +3584,28 @@ struct Ovl11E8250State {
     u16 *effect;
 };
 
+/* Selection-menu search reads signed IDs in both six-byte item tables. */
+typedef struct {
+    s16 id;
+    s16 detail;
+    s16 count;
+} SelectionSearchItem;
+typedef struct {
+    char pad0[0x450A];
+    SelectionSearchItem storedItems[0x40];
+    char pad468A[0xB5C];
+    s16 capacityExponent;
+    char pad51E8[0xA0];
+    SelectionSearchItem secondaryItems[0x40];
+} SelectionItemSearchView;
+/* 80102A64 decrements the same +4 count as an unsigned halfword, then
+ * interprets the truncated result as signed before clearing an exhausted ID. */
+typedef struct {
+    s16 id;
+    s16 detail;
+    u16 count;
+} Ovl11SelectionItemCounter;
+
 /* 80102368 reads lh +51E6 and scans signed IDs in six-byte records at +5288. */
 struct Ovl11ItemGridState {
     u8 pad0[0x51E6];
@@ -4337,12 +4363,6 @@ typedef struct {
     /* 0x2C */ void *typeProperties;
 } Ovl11CellGridTables;
 
-typedef struct {
-    char pad_0[0x4];
-    u8 unk4;
-    u8 unk5;
-} Recon_ovl_11_func_800F7010_D_800A0728View;
-
 /* ovl_11:80126F8C — eighteen season/day/message records; both the marker
  * scan and the message scan traverse the entire table. Keep its existing
  * object-shaped view while documenting the independently witnessed extent. */
@@ -4736,6 +4756,13 @@ extern s32 gOvl11InteractionResumeStep;
 extern s32 gOvl11InteractionDrawCallbacks;
 extern s32 gOvl11InteractionUpdateCallbacks;
 extern s32 gOvl11InteractionResetCallback;
+/* 80118C28 scans fourteen signed {item ID, interaction ID} pairs, stride 4. */
+typedef struct {
+    s16 itemId;
+    s16 interactionId;
+} Ovl11ItemInteractionEntry;
+extern Ovl11ItemInteractionEntry gOvl11ItemInteractionMap[14];
+
 /* ovl_11 80118A68 installs this ID; 8011C6CC compares it with 14. */
 extern s32 gOvl11InteractionId;
 /* ovl_11 80118A68 indexes no-argument callbacks; element 1 is also the reset word. */
@@ -6807,7 +6834,7 @@ extern s32 gOvl11PrimaryDirectionRemap;
 /* D_80071318 - ovl_11 u16 record table read with lhu at 0x16-byte stride by
  * ovl_11_func_80100898, ovl_11_func_80100A8C and ovl_11_func_80100F9C.
  * Absolute-addressed from the -G0 overlay. */
-extern u16 D_80071318[11];
+extern u16 gSelectionRecordTable[11];
 
 /* ovl_11:800BC868 sets this flag; 800BC9AC stops/replays the sequence when
  * nonzero, otherwise only adjusts volume. Absolute-addressed overlay state. */
@@ -6943,13 +6970,9 @@ struct Ovl11BCB5CState {
     s16 fieldE4C8;
 };
 
-/* ovl_15_func_80136288: lh/lhu/sh retry counter at 80137598;
- * named view avoids the signed/unsigned legacy declarations in sibling TUs. */
-/* gOvl15CardRetryCount is declared with the shared menu controls above. */
-/* ovl_15 filename builder writes this 0x20-byte data object via strcpy. */
-extern char Ovl15CardFilename[0x20] __asm__("D_80140EC0");
-/* ovl_15_func_80135FF0 passes this original .asciz "*" to MemCardGetDirentry. */
-extern char Ovl15CardWildcard[] __asm__("D_8012E0A0");
+/* Card service uses the shared u16 retry counter above, with signed limits. */
+/* Ovl15BuildCardFilename writes this 0x20-byte object via strcpy. */
+extern char Ovl15CardFilename[0x20];
 
 /* 800C907C reads lhu +0x92BE and updates lw/sw flags at +0x92D0. */
 struct Ovl11C907CStateView {
@@ -7144,8 +7167,19 @@ extern s32 gOvl30ToolParameterIndex;
 /* ovl_30 data contains five string pointers, indexed by gOvl30ToolIndex. */
 extern char *gOvl30ToolNames[5];
 
+/* Selection handlers store callback addresses as words; the existing
+ * function-pointer view below addresses the same word for indirect calls. */
+extern s32 gOvl11SelectionHandler;
+/* 80102268/80103714 read and store this phase with signed-byte operations;
+ * the pre-existing unsigned view retains the other controllers' accesses. */
+extern s8 gOvl11SelectionModePhase;
+/* 80100F9C copies the selected record's unsigned required-flag halfword. */
+extern u16 gOvl11SelectionWorkFlags;
+/* 80102844 forms byte addresses into the same item-list storage as _slots. */
+extern u8 D_80070D42;
+
 /* 80100FFC loads the unlocked-menu bitset with lbu. */
-extern u8 D_80070D04;
+extern u8 gSelectionUnlockedFlags;
 /* 80100FFC tests this menu-origin byte with lbu; unsigned view preserves legacy declarations. */
 extern u8 D_801273E5_origin __asm__("gOvl11SelectionOriginVariant");
 /* 80100FFC clears this halfword before installing the next handler. */
@@ -7160,17 +7194,20 @@ extern u8 D_8005399A[];
 /* 80101B9C adds D_80054BBC[0] to this text base and its +0x16/+0x28/+0x36 labels. */
 extern u8 D_800539E8[];
 
-/* 80102BCC walks 0x20-byte objects, reading the ID at +4 and value at +6. */
-extern u8 D_80050B5C_objects[] __asm__("D_80050B5C");
+/* 801000D4/80100A34/80102BCC share this 0x20-stride selection catalog;
+ * original row 95 is the 0xE2 sentinel, ending exactly at 8005175C. */
+extern struct Ovl11IdAdjustmentObject gSelectionCatalog[96];
 
 /* 80101814 tests lhu flag bits; the unsigned view preserves legacy signed declarations. */
 extern u16 D_801273EE_flags __asm__("gOvl11SelectionWorkFlags");
+/* 80102A10 walks eight lhu work IDs and passes each nonzero ID to release. */
+extern u16 gOvl11SelectionWorkIds[8];
 /* 80102F14 walks eight lhu IDs; unsigned view preserves legacy signed declarations. */
 extern u16 D_8012CF00_ids[8] __asm__("gOvl11SelectionWorkIds");
 /* 801031E4 compares those IDs against one four-entry row selected by 0x181..0x184. */
 extern u16 gOvl11RequiredIdClasses[][4];
 /* 80101814 walks seven consecutive u16 IDs; 801014A4 also indexes this table with lhu. */
-extern u16 D_801273F4[];
+extern u16 gOvl11SelectionFlagSlotIds[];
 
 /* 800F5944 loads signed halfwords from the original four-entry data table. */
 /* ovl_11:800F5944 adds these offsets to the selected record's y. */

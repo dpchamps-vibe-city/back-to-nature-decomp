@@ -1659,7 +1659,7 @@ typedef struct {
 } Ovl11IdAdjustment;
 
 struct Ovl11IdAdjustmentObject {
-    u8 pad0[4];
+    s32 textOffset;
     u16 id;
     u8 value;
     u8 pad7[3];

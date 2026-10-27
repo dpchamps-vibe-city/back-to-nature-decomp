@@ -25,6 +25,7 @@
 #include "sprite_grid.h"
 #include "beveled_panel.h"
 #include "sprite_render.h"
+#include "ovl11_slot_decorations.h"
 
 s32 Ovl11CountStatusSmallRecords (void);
 s32 Ovl11CountStatusNonzeroEntries (void);
@@ -760,7 +761,6 @@ void Ovl11DrawStatusSevenRecordRow(s16 arg0, s16 arg1) {
  * module's number-text scratch (its two-byte symbol is only a base anchor). */
 void Ovl11DrawPairedValueRow(s16 row, s16 y);
 void Ovl11DrawPairedValueBars(s32 *pair, s16 y);
-void ovl_11_func_800F7094(s32 arg0, s16 arg1, s16 arg2, s32 arg3);
 
 void Ovl11DrawPairedValuePanel(void) {
     s16 rowY;
@@ -894,12 +894,12 @@ void Ovl11DrawPairedValueBars(s32 *pair, s16 y) {
     DrawScreenGradientRect((s32 *)fillOt, 0x69 - x1, fillY, x1, 7, 0xE8A0B8, 0xD14070, 0xE8A0B8, 0xD14070, 0);
     if (pair[1] / 10000 != 0) {
         DrawSpriteFrameRects(labelOt, (s32)gOvl11StatusIndicatorSpriteSource, 0xA, 0, 0x28, y - 0x18);
-        ovl_11_func_800F7094(labelOt, 0x40, y - 0x20, pair[1] / 10000 - (pair[1] / 1000000) * 100);
+        Ovl11DrawSlotQuantity(labelOt, 0x40, y - 0x20, pair[1] / 10000 - (pair[1] / 1000000) * 100);
     }
     DrawScreenGradientRect((s32 *)fillOt, 0x69, fillY, ((pair[0] % 10000) * 64) / 10000, 7, 0x4D70A0, 0xA6B8D0, 0x4D70A0, 0xA6B8D0, 0);
     if (pair[0] / 10000 != 0) {
         DrawSpriteFrameRects(labelOt, (s32)gOvl11StatusIndicatorSpriteSource, 0xA, 0, 0x68, y - 0x18);
-        ovl_11_func_800F7094(labelOt, 0x80, y - 0x20, pair[0] / 10000 - (pair[0] / 1000000) * 100);
+        Ovl11DrawSlotQuantity(labelOt, 0x80, y - 0x20, pair[0] / 10000 - (pair[0] / 1000000) * 100);
     }
 }
 

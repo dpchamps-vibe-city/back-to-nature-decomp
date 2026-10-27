@@ -20,7 +20,6 @@ s32 ovl_11_func_800E5E98(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9284(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E9B68(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_8011A25C(void) {
     s32 result;
@@ -80,7 +79,7 @@ s32 ovl_11_func_8011A25C(void) {
             break;
         case 1:
             CloseMessageWindow();
-            if (ovl_11_func_8011D06C(price) == 1) {
+            if (Ovl11HasSpendableBalance(price) == 1) {
                 SetMessagePortraitEnabled(0);
                 RequestMessageWindow(2, 0x9E);
                 Ovl11SetInteractionSteps(2, 13);

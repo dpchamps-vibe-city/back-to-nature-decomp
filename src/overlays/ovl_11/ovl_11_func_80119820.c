@@ -11,7 +11,6 @@
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E7088(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80119820(void) {
     s32 result;
@@ -59,7 +58,7 @@ s32 ovl_11_func_80119820(void) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
                 Ovl11SetInteractionSteps(2, 7);
-            } else if (ovl_11_func_8011D06C(price) == 1) {
+            } else if (Ovl11HasSpendableBalance(price) == 1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xBB);
                 Ovl11SetInteractionSteps(2, 6);

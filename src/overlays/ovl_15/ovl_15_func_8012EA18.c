@@ -1,4 +1,11 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/memory.h"
+#include "psyq/libmcrd.h"
+#include "psyq/libmcx.h"
+#include "psyq/strings.h"
+#include "ovl15_card_service.h"
 
 void ovl_15_func_8012ED18 (void);
 void ovl_15_func_8012ED6C (void);
@@ -24,7 +31,6 @@ s32 ovl_15_func_8012FFD8 (void);
 void ovl_15_func_80130048 (void);
 void ovl_15_func_801300E4 (void);
 void ovl_15_func_8013010C (void);
-s32 ovl_15_func_80135E9C (s16 arg0);
 
 void ovl_15_func_8012EA18(void) {
     s16 *temp_v0_2;
@@ -104,7 +110,7 @@ void ovl_15_func_8012EA18(void) {
         ovl_15_func_8013010C();
         return;
     }
-    temp_v0 = ovl_15_func_80135E9C(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard);
+    temp_v0 = Ovl15PollCardPresence(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard);
     if (temp_v0 != 3) {
         if (temp_v0 != gOvl15CardStates[gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard]) {
             if (temp_v0 == 5) {

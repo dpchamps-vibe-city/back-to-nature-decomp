@@ -280,7 +280,7 @@ export function foldConfigLines(lines: readonly string[], unitStems: readonly st
   for (const [index, line] of lines.entries()) {
     const m = entry(line);
     if (m && alignmentPadding.has(Number(m[2]))) {
-      notes.push(`${m[2]}: verified four-byte zero alignment gap absorbed into the pooled .rodata`);
+      notes.push(`${m[2]}: verified zero alignment gap absorbed into the pooled .rodata`);
       continue;
     }
     if (m && m[3]!.trim() === "c" && stems.has(m[4]!.trim())) {
@@ -465,12 +465,12 @@ export function planFold(request: FoldRequest): FoldPlan {
 
   /* Rewrite the configuration: one `c` line, one pooled `.rodata` line. */
   const configPath = container.paths.splat;
-  /* A per-function object's .rodata stops at its last table word; the next
-     function's .align 3 may leave four zero bytes extracted as generic rodata.
+  /* A per-function object's .rodata stops at its last emitted byte; the next
+     function's .align 2/3 may leave zero bytes extracted as generic rodata.
      In a pooled object that SAME directive emits the gap internally. Admit
-     only that exact case, witnessed by both original bytes and the existing
-     compiler output. The checked write still proves the merged section's size,
-     all table positions and the complete container bytes. */
+     only the exact round-up, witnessed by the prior object's extent, original
+     bytes and the next compiler output's first rodata alignment. The checked
+     write still proves every pooled position and the complete container. */
   const segments = loadSubsegments(container);
   /* .align is section-relative, not ROM-relative. Some overlays' pooled
      table run starts four bytes into the file (ovl_19 is one witness). */
@@ -479,17 +479,22 @@ export function planFold(request: FoldRequest): FoldPlan {
   const original = readFileSync(containerTargetPath(container));
   segments.forEach((segment, i) => {
     const previous = segments[i - 1], next = segments[i + 1];
-    if (segment.type !== "rodata" || segment.name || segment.size !== 4 || pooledRodataBase === undefined || (segment.rom - pooledRodataBase) % 8 !== 4) return;
-    if (previous?.type !== ".rodata" || next?.type !== ".rodata" || next.rom !== segment.rom + 4) return;
+    if (segment.type !== "rodata" || segment.name || segment.size < 1 || segment.size > 7 || pooledRodataBase === undefined) return;
+    if (previous?.type !== ".rodata" || next?.type !== ".rodata" || next.rom !== segment.rom + segment.size) return;
     const left = touched.find((u) => u.segmentName === previous.name);
     const right = touched.find((u) => u.segmentName === next.name);
     if (!left || !right || !existsSync(join(ROOT, left.objectPath))) return;
     const size = elf32SectionSizes(readFileSync(join(ROOT, left.objectPath))).get(".rodata");
     if (size === undefined || previous.rom + size !== segment.rom) return;
     const asm = join(ROOT, right.objectPath.replace(/\.c\.o$/, ".s"));
-    if (!existsSync(asm) || !/\.(?:rdata|section\s+\.rodata)\s*\n\s*\.align\s+3\b/.test(readFileSync(asm, "utf8"))) return;
+    if (!existsSync(asm)) return;
+    const directive = readFileSync(asm, "utf8").match(/\.(?:rdata|section\s+\.rodata)\s*\n\s*\.align\s+(\d+)\b/);
+    if (!directive || ![2, 3].includes(Number(directive[1]))) return;
+    const alignment = 2 ** Number(directive[1]);
+    const rounded = pooledRodataBase + Math.ceil((segment.rom - pooledRodataBase) / alignment) * alignment;
+    if (rounded !== next.rom) return;
     const bytes = original.subarray(segment.rom, next.rom);
-    if (bytes.length === 4 && bytes.every((byte) => byte === 0)) alignmentPadding.add(segment.rom);
+    if (bytes.length === segment.size && bytes.every((byte) => byte === 0)) alignmentPadding.add(segment.rom);
   });
   const rewritten = foldConfigLines(readFileSync(join(ROOT, configPath), "utf8").split("\n"), touched.map((u) => u.segmentName), stem, alignmentPadding);
   const notes = [...rewritten.notes];

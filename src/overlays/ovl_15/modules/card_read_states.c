@@ -26,6 +26,8 @@
 #include "ovl15_card_filename.h"
 #include "ovl15_save_checksums.h"
 #include "beveled_panel.h"
+#include "psyq/libmcx.h"
+#include "ovl15_card_service.h"
 
 void Ovl15CardReadEnter(void);
 void Ovl15CardReadPollCards(void);
@@ -47,7 +49,6 @@ s32 Ovl15CardReadPromptState16(void);
 void Ovl15CardReadConfirmExit(void);
 void Ovl15CardReadReset(void);
 void Ovl15CardReadRestoreImage(void);
-s32 ovl_15_func_80135E9C(s16 arg0);
 
 void Ovl15StepCardReadMenu(void) {
     s16 *temp_v0_2;
@@ -116,7 +117,7 @@ void Ovl15StepCardReadMenu(void) {
         return;
     }
 
-    temp_v0 = ovl_15_func_80135E9C(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard);
+    temp_v0 = Ovl15PollCardPresence(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard);
     if (temp_v0 != 3) {
         if (temp_v0 != gOvl15CardStates[gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard]) {
             if (temp_v0 == 5) {
@@ -157,8 +158,6 @@ void Ovl15CardReadEnter(void) {
     gOvl15MenuState = 1;
 }
 
-s16 ovl_15_func_80135C20(s32 arg0);
-
 void Ovl15CardReadPollCards(void) {
     s16 *var_s0;
     s32 var_s1;
@@ -170,7 +169,7 @@ void Ovl15CardReadPollCards(void) {
     if (gOvl15MenuStateTimer >= 2) {
         for (var_s1 = 0; var_s1 < 2; var_s1++) {
             var_s0 = &gOvl15CardStates[var_s1];
-            var_v1 = ovl_15_func_80135C20((s16)var_s1);
+            var_v1 = Ovl15ProbeCard((s16)var_s1);
             if (var_v1 == 1) {
                 var_v1 = 0;
             }
@@ -222,7 +221,7 @@ void Ovl15CardReadCheckSelectedCard(void) {
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*gTextBankOffsets]);
     if (gOvl15MenuStateTimer >= 2) {
-        temp_v0 = ovl_15_func_80135C20(gOvl15SelectedCard) - 4;
+        temp_v0 = Ovl15ProbeCard(gOvl15SelectedCard) - 4;
         switch (temp_v0) {
         case 0:
             if (gOvl15CardStates[gOvl15SelectedCard] == 0) {
@@ -276,9 +275,6 @@ s32 Ovl15CardReadPromptState06(void) {
     return ret;
 }
 
-s32 ovl_15_func_80136288(s16 arg0, s16 arg1, Ovl15SaveSummary *arg2);
-s32 ovl_15_func_80135FF0(s16 arg0, s16 arg1);
-
 void Ovl15CardReadScanSlots(void) {
     s16 *cardStates;
     s32 slot;
@@ -291,7 +287,7 @@ void Ovl15CardReadScanSlots(void) {
     cardStates = gOvl15CardStates;
     for (slot = 0; slot < 3; slot++) {
         gOvl15SaveSlotStatus[slot] = 2;
-        status = ovl_15_func_80136288(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &gOvl15SaveSlotHeaders[slot]);
+        status = Ovl15ReadSaveSummary(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &gOvl15SaveSlotHeaders[slot]);
         if (status == 8) {
             gOvl15MenuState = 6;
             return;
@@ -301,7 +297,7 @@ void Ovl15CardReadScanSlots(void) {
             return;
         }
         if (status == 9) {
-            fileStatus = ovl_15_func_80135FF0(gOvl15SelectedCard, (s16) slot);
+            fileStatus = Ovl15CheckSaveCapacity(gOvl15SelectedCard, (s16) slot);
             if (fileStatus == 0) {
                 gOvl15SaveSlotStatus[slot] = 1;
             } else if (fileStatus == 0xF) {
@@ -382,15 +378,13 @@ void Ovl15CardReadBuildFilename(void) {
     gOvl15MenuState = 12;
 }
 
-s32 ovl_15_func_801367F8(s16 arg0, s16 arg1, u32 *arg2);
-
 void Ovl15CardReadReadSaveFile(void) {
     s32 temp_a1;
     u32 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
-    temp_v0 = ovl_15_func_801367F8(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
+    temp_v0 = Ovl15ReadSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
     switch (temp_v0) {
     case 1:
     case 3:
@@ -543,7 +537,6 @@ s32 Ovl15CardTransferPromptState28 (void);
 void Ovl15CardTransferConfirmExit (void);
 void Ovl15CardTransferReset (void);
 void Ovl15CardTransferFinish (void);
-s32 ovl_15_func_80135E9C (s16 arg0);
 
 void Ovl15StepCardTransferMenu(void) {
     s16 *cardStatus;
@@ -656,7 +649,7 @@ void Ovl15StepCardTransferMenu(void) {
         break;
     }
 
-    status = ovl_15_func_80135E9C(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard);
+    status = Ovl15PollCardPresence(gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard);
     if (status != 3) {
         if (status != gOvl15CardStates[gOvl15SelectedCard != 2 ? gOvl15SelectedCard : gOvl15MonitoredCard]) {
             if (status == 5) {
@@ -710,7 +703,7 @@ void Ovl15CardTransferPollCards(void) {
     if (gOvl15MenuStateTimer >= 2) {
         for (var_s1 = 0; var_s1 < 2; var_s1++) {
             var_s0 = &gOvl15CardStates[var_s1];
-            var_v1 = ovl_15_func_80135C20((s16)var_s1);
+            var_v1 = Ovl15ProbeCard((s16)var_s1);
             if (var_v1 == 1) {
                 var_v1 = 0;
             }
@@ -761,7 +754,7 @@ void Ovl15CardTransferCheckSelectedCard(void) {
     text = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (text + 0x18), text + 0x14, (s32) &D_80052FC4[gTextBankOffsets[0]]);
     if (gOvl15MenuStateTimer >= 2) {
-        switch (ovl_15_func_80135C20(gOvl15SelectedCard)) {
+        switch (Ovl15ProbeCard(gOvl15SelectedCard)) {
         case 4:
             if (gOvl15CardStates[gOvl15SelectedCard] == 0) {
                 gOvl15MenuState = 0x1E;
@@ -820,7 +813,7 @@ void Ovl15CardTransferScanSlots(void) {
     cardStates = gOvl15CardStates;
     for (; slot < 3; slot++) {
         gOvl15SaveSlotStatus[slot] = 2;
-        status = ovl_15_func_80136288(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &gOvl15SaveSlotHeaders[slot]);
+        status = Ovl15ReadSaveSummary(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &gOvl15SaveSlotHeaders[slot]);
         if (status == 8) {
             gOvl15MenuState = 6;
             return;
@@ -830,7 +823,7 @@ void Ovl15CardTransferScanSlots(void) {
             return;
         }
         if (status == 9) {
-            fileStatus = ovl_15_func_80135FF0(gOvl15SelectedCard, (s16) slot);
+            fileStatus = Ovl15CheckSaveCapacity(gOvl15SelectedCard, (s16) slot);
             if (fileStatus == 0) {
                 gOvl15SaveSlotStatus[slot] = 1;
             } else if (fileStatus == 0xF) {
@@ -917,7 +910,7 @@ void Ovl15CardTransferReadSaveFile(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
-    temp_v0 = ovl_15_func_801367F8(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
+    temp_v0 = Ovl15ReadSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
     switch (temp_v0) {
     case 1:
     case 3:
@@ -1282,7 +1275,6 @@ void Ovl15CardTransferShowSummary(void) {
     }
 }
 
-s32 ovl_15_func_80136660(s16 arg0, s16 arg1, u32 *arg2);
 void ovl_15_func_801331C4(void);
 
 void Ovl15CardTransferWriteSaveFile(void) {
@@ -1291,7 +1283,7 @@ void Ovl15CardTransferWriteSaveFile(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_8005346A[*gTextBankOffsets]);
-    temp_v0 = ovl_15_func_80136660(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
+    temp_v0 = Ovl15WriteSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
     switch (temp_v0) {
     case 1:
     case 3:

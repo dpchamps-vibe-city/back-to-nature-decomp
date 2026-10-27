@@ -1,12 +1,20 @@
 #ifndef OVL11_SELECTION_MODE_STATE_H
 #define OVL11_SELECTION_MODE_STATE_H
 
+#include "common.h"
+
 /*
- * Selection-mode lifecycle, ovl_11:800FFDCC..801000D4.
+ * Public entries to selection_menu_state (ovl_11:800FFDCC..80103770).
+ * The module owns the record-grid, flag-slot and item-grid handler chain;
+ * ovl11_selection_candidate.h publishes its query/trial/result interface.
+ * Only one selection transaction may be active: cursor, phase and work-set
+ * storage is shared, not supplied by the caller.
  * Both entries mark resident control bit 0x20000, reset the mode work state
  * and texture-cell cache, disable portraits/text input, then request archive
  * 3 message 0x3B5. Default/Alternate differ only in the origin byte (0/1)
- * and initial handler (80100128/8010021C); no gameplay interpretation implied.
+ * and initial handler (entry prompt/record grid); no gameplay interpretation
+ * implied. Exiting clears the phase, sets resident control bit 0x40000 and
+ * work request bit 0x2000, runs the area refresh hook and resets messages.
  * Requires initialized message, texture-stream, render and resident work state.
  */
 void Ovl11EnterSelectionModeDefault(void);

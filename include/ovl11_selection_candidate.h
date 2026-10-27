@@ -3,6 +3,11 @@
 
 #include "common.h"
 
+/* Return 1 iff signed id matches an entry before the catalog's 0xE2 sentinel,
+ * else 0. The catalog's u16 IDs compare after integer promotion, so a negative
+ * id does not match. No selection/work state changes. */
+s32 Ovl11SelectionCatalogContainsId(s16 id);
+
 /* Scan the sentinel-terminated 0x20-byte candidate table in order. Required
  * flags/IDs and signed-byte adjustments are evaluated transactionally: shared
  * selection work IDs/flags are restored before each trial and on return.

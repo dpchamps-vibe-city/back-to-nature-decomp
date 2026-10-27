@@ -42,6 +42,7 @@
 #include "ovl11_direction_vector.h"
 #include "ovl11_small_record_handlers.h"
 #include "ovl11_primary_object_item_sprite_source.h"
+#include "ovl11_record_partition_flags.h"
 
 typedef struct {
     s16 unk0;
@@ -105,8 +106,6 @@ void ovl_11_func_800DF0F8 (s32 arg0);
 s32 ovl_11_func_80118C6C (void);
 s32 Ovl11ResetStaleRecordSlot(s32 arg0);
 s32 Ovl11ServiceRecordSlot (s32 arg0);
-void ovl_11_func_800F4AC0 (s32 arg0);
-s32 ovl_11_func_800F4B14 (void);
 s32 ovl_11_func_800EFA1C (s16 arg0);
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);

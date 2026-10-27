@@ -1,3 +1,9 @@
+/* Resident menu frame coordinator, ovl_11:800F65B8–800F6630.
+ * Called by the area-frame updater. Order is significant: advance the shared
+ * animation clock before any controller can submit its menu packets.
+ * Individual controllers own their state and decide whether they are active.
+ * Membership and evidence-limited boundaries: notes/file-groupings.md. */
+
 #include "common.h"
 #include "game_types.h"
 #include "ovl11_calendar_panel.h"
@@ -9,12 +15,13 @@
 #include "ovl11_selection_mode_state.h"
 #include "ovl11_options_menu.h"
 #include "ovl11_status_pages.h"
+#include "ovl11_menu_frame_update.h"
 
 void func_8002470C(s16 arg0);
 
 void ovl_11_func_801038E4(void);
 
-void ovl_11_func_800F65B8(void) {
+void Ovl11UpdateMenuFrame(void) {
     func_8002470C(0);
     Ovl11ServiceInteractionSequence();
     Ovl11UpdateCalendarPanel();

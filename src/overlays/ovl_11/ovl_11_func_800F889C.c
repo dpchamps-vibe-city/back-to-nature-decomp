@@ -12,14 +12,13 @@
 #include "ovl11_slot_sprite_cache.h"
 #include "psyq/abs.h"
 #include "ovl11_item_table_queries.h"
+#include "ovl11_slot_decorations.h"
 
-void ovl_11_func_800F7010(s32 arg0, s16 arg1, s16 arg2);
-void ovl_11_func_800F7094(s32 arg0, s16 arg1, s16 arg2, s32 arg3);
 s32 ovl_11_func_800F8404(s32 arg0);
 
 void ovl_11_func_800F889C(s32 *arg0, s32 arg1, s16 *arg2) {
     if (arg2[0] == 0) {
-        ovl_11_func_800F7010((s32) (arg0 + 1), D_80126E54[arg1].x, D_80126E54[arg1].y);
+        Ovl11DrawEmptySlot((s32) (arg0 + 1), D_80126E54[arg1].x, D_80126E54[arg1].y);
         return;
     }
     if (arg1 < 9) {
@@ -29,11 +28,11 @@ void ovl_11_func_800F889C(s32 *arg0, s32 arg1, s16 *arg2) {
     }
     switch (Ovl11GetItemType(arg2[0])) {
     case 2:
-        ovl_11_func_800F7094(gActiveRenderContext->field_D8 + 0x58, D_80126E54[arg1].x, D_80126E54[arg1].y, arg2[2]);
+        Ovl11DrawSlotQuantity(gActiveRenderContext->field_D8 + 0x58, D_80126E54[arg1].x, D_80126E54[arg1].y, arg2[2]);
         return;
     case 0:
         if (ovl_11_func_800F8404(arg1) == 2) {
-            ovl_11_func_800F7094(gActiveRenderContext->field_D8 + 0x58, D_80126E54[arg1].x, D_80126E54[arg1].y, arg2[2]);
+            Ovl11DrawSlotQuantity(gActiveRenderContext->field_D8 + 0x58, D_80126E54[arg1].x, D_80126E54[arg1].y, arg2[2]);
         }
         /* fallthrough */
     case 1:

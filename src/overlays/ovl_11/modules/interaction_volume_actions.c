@@ -38,8 +38,9 @@
 #include "ovl11_primary_object_sprite_slots.h"
 #include "ovl11_options_menu.h"
 #include "ovl11_status_pages.h"
+#include "ovl11_item_interaction_map.h"
+#include "ovl11_queued_item_interaction.h"
 
-s32 ovl_11_func_800F4B5C (s16 arg0);
 void ovl_11_func_800F0FB0 (s32 arg0);
 void Ovl11TryBeginItem68VolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
 void Ovl11TryBeginSetBVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
@@ -49,7 +50,6 @@ void Ovl11TryBeginItem47VolumeAction(Recon_ovl_11_func_800C8334_A0View *arg0, s1
 void Ovl11TryBeginSetAVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 void Ovl11TryBeginSetCVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0, s16 *arg1);
 s32 Ovl11TryBeginProbedObjectVolumeAction (Ovl11C8808Object *arg0, s16 *arg1, s16 *arg2);
-s32 ovl_11_func_80118C28 (s16 id);
 void Ovl11TryBeginFlaggedItemVolumeAction (Recon_ovl_11_func_800C8334_A0View *arg0);
 void Ovl11TryBeginItem3FVolumeAction (Recon_ovl_11_func_800C7270_A0View *arg0);
 s32 ovl_11_func_800F3F7C (void);
@@ -197,7 +197,7 @@ block_28:
                             Ovl11InstallPrimaryObjectRequest(item);
                             ((struct Ovl11InteractionState *) D_8006C838)->queuedItem = 0;
                         }
-                    } else if (ovl_11_func_800F4B5C(temp_a0) != 0) {
+                    } else if (Ovl11QueueItemInteraction(temp_a0) != 0) {
                         arg0->unk6C |= 0x4000;
                         Ovl11ChangeObjectStateDirect(arg0, 0x6B, (*(u16 *) ((u8 *) arg0 + 0x38)) + 0x17, -2);
                     }
@@ -326,7 +326,7 @@ block_28:
                 temp_v0_3 = Ovl11FindNearbyItemId(coord, (s16 *) ((u8 *) arg0 + 0xFC));
                 if (temp_v0_3 != 0) {
                     if ((temp_v0_3 == 0x177) || ((*(s16 *) ((u8 *) arg0 + 0x8A)) == 0)) {
-                        Ovl11BeginInteraction((s16) ovl_11_func_80118C28(temp_v0_3));
+                        Ovl11BeginInteraction((s16) Ovl11GetItemInteractionId(temp_v0_3));
                         Ovl11ResetPrimaryObjectRequest();
                         goto block_78;
                     }

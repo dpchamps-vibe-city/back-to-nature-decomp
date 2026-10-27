@@ -10,7 +10,6 @@
 
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80119008(void) {
     s32 result;
@@ -63,7 +62,7 @@ s32 ovl_11_func_80119008(void) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D06C(price) == 1) {
+            if (Ovl11HasSpendableBalance(price) == 1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xBB);
                 Ovl11SetInteractionSteps(2, 7);

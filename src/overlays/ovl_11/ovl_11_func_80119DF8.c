@@ -18,7 +18,6 @@
 #include "ovl11_cell_grid_lookup.h"
 
 s32 ovl_11_func_8011B2B0(void);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80119DF8(void) {
     Ovl11D8012D7B8 first;
@@ -116,7 +115,7 @@ s32 ovl_11_func_80119DF8(void) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0x54);
                 Ovl11SetInteractionSteps(1, 3);
-            } else if (ovl_11_func_8011D06C(price) == 1) {
+            } else if (Ovl11HasSpendableBalance(price) == 1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xAE);
                 Ovl11SetInteractionSteps(1, 5);

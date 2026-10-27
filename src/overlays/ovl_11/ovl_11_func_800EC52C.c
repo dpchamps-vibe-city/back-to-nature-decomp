@@ -2,6 +2,17 @@
 #include "ovl11_entity_pool_access.h"
 #include "random.h"
 #include "ovl11_work_position_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_selection_candidate.h"
 
 s32 ovl_11_func_800E5870(s16, s16, s32, s16);
 s32 ovl_11_func_800E58DC(s16, s16, s32, s32);
@@ -20,7 +31,6 @@ s32 ovl_11_func_800E9AFC();
 s32 ovl_11_func_800ED4A8(s16, s16, s32, s32);
 s32 ovl_11_func_800EDF3C();
 s32 ovl_11_func_800F0A58(s16);
-s32 ovl_11_func_801000D4(s16);
 
 s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     struct Ovl11SceneScores scores = D_800B9BD4;
@@ -48,7 +58,7 @@ s32 ovl_11_func_800EC52C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     switch (state) {
     case 0:
         item = (s16 *)&Ovl11Item_80071A8A;
-        if (ovl_11_func_801000D4(item[0]) == 1) {
+        if (Ovl11SelectionCatalogContainsId(item[0]) == 1) {
             result = 1;
             gOvl11ValueSlots[arg2] = item[1];
         } else if (item[0] == 0x87) {

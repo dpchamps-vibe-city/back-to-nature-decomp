@@ -15,8 +15,7 @@
 #include "sprite_source.h"
 #include "sprite_upload.h"
 #include "texture_sprite_draw.h"
-
-void ovl_11_func_800F7010(s32 packetAddress, s16 x, s16 y);
+#include "ovl11_slot_decorations.h"
 
 /* Clear occupancy and activity without erasing texture geometry. */
 void Ovl11ResetTextureCellCache(void) {
@@ -91,7 +90,7 @@ void Ovl11DrawCachedTextureCell(s32 *ot, u16 textureId, s16 x, s16 y) {
 
     id = textureId & 0xFFFF;
     if (id == 0) {
-        ovl_11_func_800F7010((s32) (ot + 1), x, y);
+        Ovl11DrawEmptySlot((s32) (ot + 1), x, y);
         return;
     }
     for (i = 0; i < 0x48; i++) {
@@ -109,7 +108,7 @@ void Ovl11DrawTextureCell(s32 *ot, u16 textureId, s16 x, s16 y) {
 
     id = textureId & 0xFFFF;
     if (id == 0) {
-        ovl_11_func_800F7010((s32)(ot + 1), x, y);
+        Ovl11DrawEmptySlot((s32)(ot + 1), x, y);
         return;
     }
     for (i = 0; i < 0x48; i++) {

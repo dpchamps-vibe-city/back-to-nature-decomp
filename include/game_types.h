@@ -341,10 +341,11 @@ typedef struct {
     u8 pad3;
 } Ovl11IdAdjustment;
 
-/* 80102BCC scans 0x20-byte objects: u16 ID at +4, u8 value at +6.
- * 80102E1C scans eight u16 IDs at +0xA; 80102F14 uses +0x1C. */
+/* Selection catalog, stride 0x20: 80100A34 reads the text-bank byte offset,
+ * 80102BCC reads u16 ID at +4 and u8 value at +6. 80102E1C scans eight
+ * u16 IDs at +0xA; 80102F14 uses +0x1C. ID 0xE2 terminates the table. */
 typedef struct Ovl11IdAdjustmentObject {
-    u8 pad0[4];
+    s32 textOffset;
     u16 id;
     u8 value;
     u8 pad7[3];

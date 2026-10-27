@@ -37,7 +37,6 @@
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 Ovl11StepSingleItemPurchase(s16 catalogId, s16 messageBank, s16 promptId, s16 mode) {
     VECTOR position;
@@ -96,7 +95,7 @@ s32 Ovl11StepSingleItemPurchase(s16 catalogId, s16 messageBank, s16 promptId, s1
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D06C(price) == 1) {
+            if (Ovl11HasSpendableBalance(price) == 1) {
                 CloseMessageWindow();
                 RequestMessageWindow(2, 0xBB);
                 Ovl11SetInteractionSteps(2, 6);
@@ -229,7 +228,7 @@ s32 Ovl11StepQuantityPurchase(s16 *startMessage, s16 *nextMessage, s16 *cancelMe
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D06C(recordState->unk8 * recordState->unkA) == 1) {
+            if (Ovl11HasSpendableBalance(recordState->unk8 * recordState->unkA) == 1) {
                 if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 0) < recordState->unk8) {
                     RequestMessageWindow(2, 0xC1);
                     Ovl11SetInteractionSteps(1, 11);

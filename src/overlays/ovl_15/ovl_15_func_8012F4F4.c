@@ -1,8 +1,13 @@
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/memory.h"
+#include "psyq/libmcrd.h"
+#include "psyq/libmcx.h"
+#include "psyq/strings.h"
+#include "ovl15_card_service.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-s16 ovl_15_func_80135C20(s32 arg0);
-s32 ovl_15_func_80135FF0(s16 arg0, s16 arg1);
 
 void ovl_15_func_8012F4F4(void) {
     s32 temp_a1;
@@ -12,7 +17,7 @@ void ovl_15_func_8012F4F4(void) {
     func_8001AC10((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14,
                  (s32) &D_80052FC4[gTextBankOffsets[0]]);
     if (gOvl15MenuStateTimer >= 2) {
-        status = ovl_15_func_80135C20(gOvl15SelectedCard);
+        status = Ovl15ProbeCard(gOvl15SelectedCard);
         if (status == 1) {
             status = 0;
         }
@@ -21,7 +26,7 @@ void ovl_15_func_8012F4F4(void) {
         }
         switch (status) {
         case 0:
-            switch (ovl_15_func_80135FF0(gOvl15SelectedCard, gOvl15SelectedSlot)) {
+            switch (Ovl15CheckSaveCapacity(gOvl15SelectedCard, gOvl15SelectedSlot)) {
             case 0:
                 gOvl15MenuState = 0xF;
                 return;

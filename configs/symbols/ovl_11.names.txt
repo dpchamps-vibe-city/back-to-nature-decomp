@@ -858,6 +858,69 @@ Ovl11UpdateWideChoicePrompt = 0x8011D35C; // type:func
 gOvl11WideChoiceSelection = 0x801282E2; // type:data size:0x2
 gOvl11CompactChoiceSelection = 0x80128294; // type:data size:0x2
 
+// Fourteen item-to-interaction pairs consumed by the nearby-item action.
+Ovl11GetItemInteractionId = 0x80118C28; // type:func
+gOvl11ItemInteractionMap = 0x80128298; // type:data size:0x38
+
+// Initial pool partition 6's shared disabled-bit accessors.
+Ovl11SetPartition6Enabled = 0x800F4AC0; // type:func
+Ovl11CountEnabledPartition6Records = 0x800F4B14; // type:func
+
+// Resident-work item-interaction latch producer, validator and clearer.
+Ovl11QueueItemInteraction = 0x800F4B5C; // type:func
+Ovl11UpdateQueuedItemInteraction = 0x800F4BB4; // type:func
+Ovl11ClearQueuedItemInteraction = 0x800F4CA0; // type:func
+
+// Shared season eligibility bit for record query/draw clients.
+Ovl11GetSeasonRecordMask = 0x800F581C; // type:func
+
+// Complete selection-menu lifecycle: record grid, flag slots and item grid.
+Ovl11SelectionCatalogContainsId = 0x801000D4; // type:func
+Ovl11PromptRecordGridEntry = 0x80100128; // type:func
+Ovl11PromptSelectionGridMode = 0x80100194; // type:func
+Ovl11ServiceSelectionRecordGrid = 0x8010021C; // type:func
+Ovl11ShowSelectionRecord = 0x80100644; // type:func
+Ovl11ShowSelectionRecordRequirements = 0x801006F8; // type:func
+Ovl11ChooseSelectionRecordAction = 0x801007AC; // type:func
+Ovl11DrawSelectionRecordNames = 0x80100898; // type:func
+Ovl11LookupSelectionTextOffset = 0x80100A34; // type:func
+Ovl11TestSelectionRecordRequirements = 0x80100A8C; // type:func
+Ovl11DrawSelectionRecordSlots = 0x80100B50; // type:func
+Ovl11TestSelectionUnlockedMask = 0x80100E68; // type:func
+Ovl11SelectionItemExists = 0x80100EB8; // type:func
+Ovl11LoadSelectionWorkSet = 0x80100F9C; // type:func
+Ovl11ServiceSelectionFlagSlots = 0x80100FFC; // type:func
+Ovl11ShowSelectionFlagMessage = 0x801014A4; // type:func
+Ovl11ServiceSelectionAggregateFlags = 0x801014F8; // type:func
+Ovl11DrawSelectionFlagSlots = 0x80101814; // type:func
+Ovl11DrawSelectionWorkItems = 0x80101964; // type:func
+Ovl11TestSelectionSlotFlag = 0x80101B28; // type:func
+Ovl11SelectionSlotMask = 0x80101B84; // type:func
+Ovl11ServiceSelectionItemGrid = 0x80101B9C; // type:func
+Ovl11ShowSelectionGridItemMessage = 0x80102268; // type:func
+Ovl11ConfirmSelectionItemGrid = 0x801022E8; // type:func
+Ovl11DrawSelectionWorkIdRow = 0x80102368; // type:func
+Ovl11DrawSelectionItemGridPage = 0x801024D8; // type:func
+Ovl11SelectionWorkSetContainsItem = 0x801027D4; // type:func
+Ovl11GetSelectionGridItem = 0x80102844; // type:func
+Ovl11CommitSelectionItemGrid = 0x8010289C; // type:func
+Ovl11ReleaseSelectionWorkItems = 0x80102A10; // type:func
+Ovl11ConsumeSelectionItem = 0x80102A64; // type:func
+Ovl11PublishSelectionSpriteRequest = 0x80102B6C; // type:func
+Ovl11FinishSelectionMenu = 0x80103714; // type:func
+gOvl11SelectionConfirmedRecord = 0x801273E6; // type:data size:0x1
+gOvl11SelectionRecordIndex = 0x801273EC; // type:data size:0x1
+gOvl11SelectionFlagSlotIds = 0x801273F4; // type:data size:0xE
+
+// Per-frame resident-menu service coordinator.
+Ovl11UpdateMenuFrame = 0x800F65B8; // type:func
+
+// Menu-cell cursor, selected/empty markers, and decimal quantity label.
+Ovl11DrawSlotCursor = 0x800F6F40; // type:func
+Ovl11DrawSelectedSlotMarker = 0x800F6F7C; // type:func
+Ovl11DrawEmptySlot = 0x800F7010; // type:func
+Ovl11DrawSlotQuantity = 0x800F7094; // type:func
+
 // Existing texture-cache records drawn as sprites or integer-scaled quads.
 Ovl11DrawTextureSpriteInCell = 0x800F8CF8; // type:func
 Ovl11DrawScaledTextureQuad = 0x800F8F3C; // type:func
@@ -1720,6 +1783,7 @@ Ovl11FindFamilyRecordIndex = 0x80117178; // type:func
 
 // Spendable-balance mutation and newest credit/debit history totals.
 Ovl11AdjustSpendableBalance = 0x800F2354; // type:func
+Ovl11HasSpendableBalance = 0x8011D06C; // type:func
 
 // Positioned spawn-slot reset, active-bit writes and readback.
 Ovl11PrepareSpawnRecordPools = 0x800F42A8; // type:func

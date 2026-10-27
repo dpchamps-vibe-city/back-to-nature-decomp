@@ -61,6 +61,7 @@
 #include "ovl11_interaction_record_prepare.h"
 #include "ovl11_primary_object_item_sprite_source.h"
 #include "ovl11_object_state_callbacks.h"
+#include "ovl11_selection_candidate.h"
 
 typedef struct {
                s16 field_0;
@@ -205,7 +206,6 @@ s32 ovl_11_func_800E63C8(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6D2C (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6BDC(s16 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6CAC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 ovl_11_func_801000D4 (s16 arg0);
 s32 ovl_11_func_800E5ADC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 s32 ovl_11_func_800E6B18 (s16 arg0, s32 arg1, s32 arg2);
 s32 ovl_11_func_800E58DC (s16 arg0, s16 arg1, s32 arg2, s32 arg3);

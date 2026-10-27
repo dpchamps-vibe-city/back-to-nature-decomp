@@ -9,7 +9,6 @@
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_800E6EE0(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_800F45A4(s16 arg0, s32 arg1);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 ovl_11_func_80118CE4(void) {
     s32 result;
@@ -60,7 +59,7 @@ s32 ovl_11_func_80118CE4(void) {
         case 0:
             break;
         case 1:
-            if (ovl_11_func_8011D06C(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA) == 1) {
+            if (Ovl11HasSpendableBalance(gOvl11QuantityPrompt.unk8 * gOvl11QuantityPrompt.unkA) == 1) {
                 if (gOvl11QuantityPrompt.unk8 + ((Ovl11FB908State *)D_8006C838)->field_4506 >= 1000) {
                     CloseMessageWindow();
                     RequestMessageWindow(2, 0xD2);

@@ -47,6 +47,7 @@
 #include "ovl11_hour_counter_adjustment.h"
 #include "ovl11_record_pool_lifecycle.h"
 #include "ovl11_event_schedule.h"
+#include "ovl11_queued_item_interaction.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -82,7 +83,6 @@ void ovl_11_func_800F40A4 (void);
 void ovl_11_func_800F3D40 (void);
 s32 ovl_11_func_800DE76C (void);
 void ovl_11_func_800DE4C0 (void);
-void ovl_11_func_800F4BB4(void);
 
 s32 Ovl11ClockRebuildDayScene(void) {
     s32 result;
@@ -181,7 +181,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
         }
         break;
     case 5:
-        ovl_11_func_800F4BB4();
+        Ovl11UpdateQueuedItemInteraction();
         Ovl11AdvanceTrackedRecordCounters();
         ovl_11_func_8010C9B4();
         ovl_11_func_800F40A4();
@@ -222,12 +222,11 @@ s32 Ovl11ClockRebuildDayScene(void) {
 }
 
 void ovl_11_func_800F3FF4(s16 arg0);
-void ovl_11_func_800F4CA0(void);
 
 s32 Ovl11ClockRefreshAreaSprites(void) {
     Ovl11LoadOffsetSpriteSet(((struct struct_8006C838_button *)D_8006C838)->field_44BA);
     ovl_11_func_800F3FF4(((struct struct_8006C838_button *)D_8006C838)->field_44BA);
-    ovl_11_func_800F4CA0();
+    Ovl11ClearQueuedItemInteraction();
     return 1;
 }
 

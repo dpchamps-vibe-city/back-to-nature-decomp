@@ -1,9 +1,14 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/memory.h"
+#include "psyq/libmcrd.h"
+#include "psyq/libmcx.h"
+#include "psyq/strings.h"
+#include "ovl15_card_service.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
-s32 ovl_15_func_80136288(s16 arg0, s16 arg1, Ovl15SaveSummary *arg2);
-s32 ovl_15_func_80135FF0(s16 arg0, s16 arg1);
 
 void ovl_15_func_8012F158(void) {
     s16 *slotState;
@@ -19,7 +24,7 @@ void ovl_15_func_8012F158(void) {
     slotState = gOvl15SaveSlotStatus;
     for (slot = 0; slot < 3; slot++, slotState++) {
         *slotState = 2;
-        status = ovl_15_func_80136288(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &gOvl15SaveSlotHeaders[slot]);
+        status = Ovl15ReadSaveSummary(gOvl15SelectedCard, (s16) slot, (Ovl15SaveSummary *) &gOvl15SaveSlotHeaders[slot]);
         if (status == 8) {
             gOvl15MenuState = 6;
             return;
@@ -29,7 +34,7 @@ void ovl_15_func_8012F158(void) {
             return;
         }
         if (status == 9) {
-            fileStatus = ovl_15_func_80135FF0(gOvl15SelectedCard, (s16) slot);
+            fileStatus = Ovl15CheckSaveCapacity(gOvl15SelectedCard, (s16) slot);
             if (fileStatus == 0) {
                 *slotState = 1;
             } else if (fileStatus == 0xF) {

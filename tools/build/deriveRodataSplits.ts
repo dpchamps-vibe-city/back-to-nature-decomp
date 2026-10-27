@@ -21,6 +21,9 @@
  *     member's table must lie inside [A, A+S);
  *   - attribution line `[A, .rodata, <unit stem>]`, and a generic `[A+S, rodata]`
  *     residue line when A+S does not coincide with the next subsegment.
+ * A relocation-free literal-only section may instead be placed at a unique
+ * original lui/addiu reference whose bytes equal the entire emitted section.
+ * This bounded fallback never treats an unverified string address as a table.
  * Stub functions get no attribution: their tables stay in generic rodata.
  *
  * This is per *container*, not per project. Every container the project
@@ -37,7 +40,7 @@
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
-import { elf32SectionSizes } from "../lib/elfSections.js";
+import { elf32Sections } from "../lib/elfSections.js";
 import { ROOT } from "../lib/psxExeInfo.ts";
 import {
   EXE_CONTAINER_ID,
@@ -49,7 +52,7 @@ import {
   type Container,
 } from "../lib/container.ts";
 import { loadTranslationUnits, type TranslationUnit } from "../lib/translationUnits.ts";
-import { parseFuncExtents, scanTableAddr } from "../lib/jumpTables.ts";
+import { parseFuncExtents, scanTableAddr, type FuncExtent } from "../lib/jumpTables.ts";
 
 
 interface SubsegLine {
@@ -125,10 +128,43 @@ export function existingRodataBlock(container: Container): string[] | null {
   }
 }
 
-function objRodataSize(unit: TranslationUnit): number | null {
-  const obj = join(ROOT, unit.objectPath);
-  if (!existsSync(obj)) return null;
-  return elf32SectionSizes(readFileSync(obj)).get(".rodata") ?? 0;
+/** Only a bounded straight-line address formation is accepted for literal
+ * ownership: lui, at most four addiu/addu/or instructions, then addiu using
+ * the still-unmodified high register. Calls, branches and unknown instructions
+ * stop the proof. The entire relocation-free section must match at exactly
+ * one referenced original address; offsets into a pool remain undetermined. */
+function literalRodataAddress(
+  buf: Buffer, container: Container, members: FuncExtent[],
+  window: RodataWindow, data: Buffer,
+): number | null {
+  const matches = new Set<number>();
+  for (const fn of members) {
+    for (let va = fn.start; va + 4 < fn.end; va += 4) {
+      const rom = vramToRom(container, va);
+      if (rom < 0 || rom + 4 > buf.length) break;
+      const hi = buf.readUInt32LE(rom);
+      if (hi >>> 26 !== 0x0f || ((hi >>> 21) & 31) !== 0) continue;
+      const base = (hi >>> 16) & 31;
+      if (base === 0) continue;
+      for (let step = 1; step <= 5 && va + step * 4 < fn.end; step++) {
+        const at = vramToRom(container, va + step * 4);
+        if (at < 0 || at + 4 > buf.length) break;
+        const word = buf.readUInt32LE(at), op = word >>> 26;
+        const rs = (word >>> 21) & 31, rt = (word >>> 16) & 31;
+        if (op === 0x09 && rs === base) {
+          const address = (((hi & 0xffff) << 16) + ((word << 16) >> 16)) >>> 0;
+          const offset = vramToRom(container, address);
+          if (offset >= window.start && offset + data.length <= window.endAddr &&
+              buf.subarray(offset, offset + data.length).equals(data)) matches.add(offset);
+        }
+        const alu = op === 0 && [0x21, 0x25].includes(word & 63);
+        if (op !== 0x09 && !alu) break;
+        const destination = alu ? (word >>> 11) & 31 : rt;
+        if (destination === base) break;
+      }
+    }
+  }
+  return matches.size === 1 ? [...matches][0]! : null;
 }
 
 /** Members of a unit its source compiles rather than hands to the assembler. */
@@ -168,24 +204,36 @@ export function deriveContainer(container: Container): Derivation {
   for (const unit of loadTranslationUnits(container)) {
     const compiled = compiledMembers(unit);
     if (compiled.length === 0) continue;
-    const size = objRodataSize(unit);
-    if (size === null) {
+    const obj = join(ROOT, unit.objectPath);
+    if (!existsSync(obj)) {
       throw new Error(`${unit.segmentName}: compiled C but ${unit.objectPath} is missing — run make first`);
     }
-    if (size === 0) continue;
+    const sections = elf32Sections(readFileSync(obj));
+    const rodata = sections.get(".rodata");
+    const size = rodata?.size ?? 0;
+    if (!rodata || size === 0) continue;
     const tables: Array<{ name: string; vram: number }> = [];
     for (const name of compiled) {
       const fn = funcs.get(name);
       const vramAddr = fn ? scanTableAddr(buf, container, fn, window.start, window.endAddr) : null;
       if (vramAddr !== null) tables.push({ name, vram: vramAddr });
     }
+    let addr: number;
     if (tables.length === 0) {
-      throw new Error(
-        `${unit.segmentName}: object emits 0x${size.toString(16)} bytes of .rodata but no ` +
-          `lui/addiu reference into the rodata window was found in its members' original code — undetermined`,
-      );
+      const relocated = [...sections.values()].some((section) =>
+        [4, 9].includes(section.type) && section.info === rodata.index && section.size > 0);
+      const literal = relocated ? null : literalRodataAddress(buf, container,
+        compiled.flatMap((name) => funcs.has(name) ? [funcs.get(name)!] : []), window, rodata.data);
+      if (literal === null) {
+        throw new Error(
+          `${unit.segmentName}: object emits 0x${size.toString(16)} bytes of .rodata but no ` +
+            `jump table or unique referenced relocation-free byte match establishes its base — undetermined`,
+        );
+      }
+      addr = literal;
+    } else {
+      addr = vramToRom(container, Math.min(...tables.map((table) => table.vram)));
     }
-    const addr = vramToRom(container, Math.min(...tables.map((table) => table.vram)));
     for (const table of tables) {
       const at = vramToRom(container, table.vram);
       if (at >= addr + size) {

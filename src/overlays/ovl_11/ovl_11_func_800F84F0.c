@@ -1,10 +1,12 @@
 #include "common.h"
 #include "sound_commands.h"
 #include "message_window.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "ovl11_slot_decorations.h"
 
 s32 ovl_11_func_800F8404(s32 arg0);
-void ovl_11_func_800F6F7C(s32 arg0, s16 arg1, s16 arg2);
-void ovl_11_func_800F6F40(s32 arg0, s16 arg1, s16 arg2);
 
 void ovl_11_func_800F84F0(s32 arg0) {
     union { s32 value; u16 halves[2]; } delta;
@@ -58,11 +60,11 @@ void ovl_11_func_800F84F0(s32 arg0) {
         state = ovl_11_func_800F8404(D_80126E48);
         if (state >= 0) {
             if (state < 2 || (state == 2 && D_80126E4A == D_80126E4C)) {
-                ovl_11_func_800F6F7C(gActiveRenderContext->field_D8 + 0x54,
+                Ovl11DrawSelectedSlotMarker(gActiveRenderContext->field_D8 + 0x54,
                     D_80126E54[D_80126E48].x, D_80126E54[D_80126E48].y);
             }
         }
     }
-    ovl_11_func_800F6F40(gActiveRenderContext->field_D8 + 0x50,
+    Ovl11DrawSlotCursor(gActiveRenderContext->field_D8 + 0x50,
         D_80126E54[D_80126E44].x, D_80126E54[D_80126E44].y);
 }

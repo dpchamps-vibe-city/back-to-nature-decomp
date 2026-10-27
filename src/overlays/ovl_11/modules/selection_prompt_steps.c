@@ -32,7 +32,6 @@ s32 ovl_11_func_800E6EE0(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E6F34(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9284(s16 a, s16 b, s32 c, s32 d);
 s32 ovl_11_func_800E9B68(s16 a, s32 b, s32 c, s32 d);
-s32 ovl_11_func_8011D06C(s32 amount);
 
 s32 Ovl11StepSelectionPrompt(s32 *step, s32 baseStep, Ovl11D8012D7B8 descriptor) {
     s32 result;
@@ -216,7 +215,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
         switch ((u32)state) {
         case 0:
             if (ovl_11_func_800E6EE0(mode, 1, 1, 0) == 1) {
-                if (ovl_11_func_8011D06C(Ovl11GetItemPrice(item)) == 1) {
+                if (Ovl11HasSpendableBalance(Ovl11GetItemPrice(item)) == 1) {
                     SetMessagePortraitEnabled(0);
                     RequestMessageWindow(messages[0][0], messages[0][1]);
                     Ovl11SetInteractionStepsOffset(2, 4, baseStep);

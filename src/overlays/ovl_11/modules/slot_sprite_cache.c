@@ -20,8 +20,8 @@
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_item_table_queries.h"
+#include "ovl11_slot_decorations.h"
 
-void ovl_11_func_800F7010(s32 orderingTable, s16 x, s16 y);
 void *Ovl11EmitSlotSprite(s16 slot, s16 row, s16 alternate, s32 *ot,
                          SPRT *sprite, s16 x, s16 y, s32 flags);
 
@@ -381,7 +381,7 @@ void Ovl11DrawSlotSprite(s16 id, s16 alternate, s32 *ot, s16 x, s16 y, s32 flags
     }
     if (row != -1) {
         if (flags & 0xD) {
-            ovl_11_func_800F7010((s32)(ot + 1), x, y);
+            Ovl11DrawEmptySlot((s32)(ot + 1), x, y);
         }
         if (flags & 8) {
             x += (32 - ((Ovl11FarRecordTableView *)&D_8007AFF0)->records[row][slot].unk8) / 2;

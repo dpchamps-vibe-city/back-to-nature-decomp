@@ -34,7 +34,6 @@
 void SetVal8005E2BC(s32 arg0);
 s32 ovl_11_func_80113FF0(void);
 void Ovl11DebitQuantityCost(void *arg0);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
     Ovl11D8012D7B8 params;
@@ -97,7 +96,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
                 if (Ovl11FindFreeB4Record() == 0) {
                     RequestMessageWindow(2, 0x55);
                     Ovl11SetInteractionSteps(22, 21);
-                } else if (ovl_11_func_8011D06C(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
+                } else if (Ovl11HasSpendableBalance(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) != 1) {
                     RequestMessageWindow(2, 0x4F);
                     Ovl11SetInteractionSteps(22, 21);
                 } else {
@@ -117,7 +116,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
                 }
                 break;
             case 3:
-                if (ovl_11_func_8011D06C(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
+                if (Ovl11HasSpendableBalance(Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord))) == 1) {
                     if (Ovl11GetItemStackCapacity(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), 1) == 0) {
                         RequestMessageWindow(2, 0x54);
                         Ovl11SetInteractionSteps(22, 21);
@@ -158,7 +157,7 @@ s32 Ovl11UpdateQuantityPurchaseInteraction(void) {
             break;
         case 1:
             CloseMessageWindow();
-            if (ovl_11_func_8011D06C(state->unk8 * state->unkA) == 1) {
+            if (Ovl11HasSpendableBalance(state->unk8 * state->unkA) == 1) {
                 if (state->unk8 + ((Ovl11FeedGlobals *)D_8006C838)->amount >= 1000) {
                     RequestMessageWindow(2, 0x4C);
                     Ovl11SetInteractionSteps(22, 9);

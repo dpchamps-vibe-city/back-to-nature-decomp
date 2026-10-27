@@ -15,4 +15,9 @@
  * this routine does not guard arithmetic overflow or repair invalid state. */
 s32 Ovl11AdjustSpendableBalance(s32 delta, s32 clampDebit);
 
+/* Return 1 iff the signed current balance is at least amount, else 0.
+ * Units match the balance and item prices. No clamp, debit or reservation
+ * occurs; negative amounts are compared as supplied, not rejected. */
+s32 Ovl11HasSpendableBalance(s32 amount);
+
 #endif

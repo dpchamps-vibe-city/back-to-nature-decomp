@@ -28,6 +28,7 @@
 #include "psyq/abs.h"
 #include "ovl11_item_table_queries.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_slot_decorations.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
@@ -37,10 +38,7 @@ void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 void func_800248B0(s32 ot, s16 x, s16 y);
 void ovl_11_func_800BCF28(void);
 void ovl_11_func_800CCF58(Ovl11C7010Object *object);
-void ovl_11_func_800F6F7C(s32 ot, s16 x, s16 y);
 void ovl_11_func_800D5740(s16 *item);
-void ovl_11_func_800F7010(s32 ot, s16 x, s16 y);
-void ovl_11_func_800F7094(s32 ot, s16 x, s16 y, s32 count);
 
 /* Internal interfaces retain their original external linkage and word-sized
  * pointer arguments where present. Slot helpers are not a general inventory API. */
@@ -131,7 +129,7 @@ void Ovl11DrawAndProcessItemTransferMenu(void) {
     }
     navigationGroup = 4;
     if (gOvl11ItemTransferSelectedSlot != 0xFF) {
-        ovl_11_func_800F6F7C(gActiveRenderContext->field_D8 + 0x54,
+        Ovl11DrawSelectedSlotMarker(gActiveRenderContext->field_D8 + 0x54,
             gOvl11ItemTransferLayout[gOvl11ItemTransferSelectedSlot][0],
             gOvl11ItemTransferLayout[gOvl11ItemTransferSelectedSlot][1]);
     } else {
@@ -374,13 +372,13 @@ void Ovl11DrawItemTransferEntry(s32 ot, s32 slot, s16 *item) {
 
     id = item[0];
     if (id == 0) {
-        ovl_11_func_800F7010(ot, gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1]);
+        Ovl11DrawEmptySlot(ot, gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1]);
         return;
     }
     Ovl11DrawSlotSprite(id, 0, (s32 *)ot,
         gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1], 8);
     if (Ovl11GetItemType(item[0]) == 2) {
-        ovl_11_func_800F7094(gActiveRenderContext->field_D8 + 0x58,
+        Ovl11DrawSlotQuantity(gActiveRenderContext->field_D8 + 0x58,
             gOvl11ItemTransferLayout[slot][0], gOvl11ItemTransferLayout[slot][1], item[2]);
     }
 }

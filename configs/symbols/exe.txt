@@ -516,6 +516,14 @@ gSequenceNumber = 0x8005E318; // size:0x4
 gChoiceCellStates = 0x8007AFDA; // size:0x9
 // Cell-status and purchase checks compare this balance before applying debits.
 gSpendableBalance = 0x80071A5C; // size:0x4
+// 96 selection-catalog rows; row 95 is the terminating ID 0xE2.
+gSelectionCatalog = 0x80050B5C; // size:0xC00
+// Resident work +0x4AE0: eighty 0x16-byte selection records, no new storage.
+gSelectionRecordTable = 0x80071318; // size:0x6E0
+// Selection-menu unlocked slot bits; bit 7 also gates aggregate flags.
+gSelectionUnlockedFlags = 0x80070D04; // size:0x1
+// Resident work +0x44D6: queued item ID, not a separate allocation.
+gQueuedItemInteractionId = 0x80070D0E; // size:0x2
 PlaySoundEffect = 0x8001FABC; // type:func
 StopSoundEffectVoice = 0x8001FAE8; // type:func
 GetLastSpuVoiceIndex = 0x8001FB08; // type:func

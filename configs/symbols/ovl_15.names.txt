@@ -139,3 +139,14 @@ Ovl15CardReadPromptState16 = 0x80130EBC;
 Ovl15CardReadConfirmExit = 0x80130F2C;
 Ovl15CardReadReset = 0x80130FC8;
 Ovl15CardReadRestoreImage = 0x80130FF0;
+
+// Shared low-level card command/retry service, including its pooled literal.
+Ovl15ProbeCard = 0x80135C20; // type:func
+Ovl15PollCardPresence = 0x80135E9C; // type:func
+Ovl15CheckSaveCapacity = 0x80135FF0; // type:func
+Ovl15ReadSaveSummary = 0x80136288; // type:func
+Ovl15FormatCard = 0x80136470; // type:func
+Ovl15CreateSaveFile = 0x80136558; // type:func
+Ovl15WriteSaveFile = 0x80136660; // type:func
+Ovl15ReadSaveFile = 0x801367F8; // type:func
+Ovl15CardFilename = 0x80140EC0; // type:data size:0x20

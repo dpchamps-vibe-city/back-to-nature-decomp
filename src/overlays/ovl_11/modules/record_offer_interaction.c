@@ -26,7 +26,6 @@
 
 void SetVal8005E2BC(s32 arg0);
 u16 Ovl11SelectOfferConditionMessage(void);
-s32 ovl_11_func_8011D06C(s32 arg0);
 
 s32 Ovl11UpdateRecordOfferInteraction(void) {
     Ovl11D8012D7B8 first;
@@ -93,7 +92,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
             break;
         case 1:
             CloseMessageWindow();
-            if (ovl_11_func_8011D06C(10) == 1) {
+            if (Ovl11HasSpendableBalance(10) == 1) {
                 Ovl11AdjustSpendableBalance(-10, 1);
                 RequestMessageWindow(2, 0xE7);
                 Ovl11SetInteractionSteps(0x18, 10);
@@ -151,7 +150,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
             Ovl11SetInteractionSteps(1, 0);
             break;
         case 1:
-            if (ovl_11_func_8011D06C(price) == 1) {
+            if (Ovl11HasSpendableBalance(price) == 1) {
                 Ovl11AdjustSpendableBalance(-price, 1);
                 RequestMessageWindow(2, 0xFB);
                 Ovl11SetInteractionSteps(0x18, 0x1B);

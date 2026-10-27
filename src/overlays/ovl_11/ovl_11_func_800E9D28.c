@@ -16,9 +16,8 @@
 #include "ovl11_record_flag_counters.h"
 #include "ovl11_interaction_dispatch.h"
 #include "ovl11_pending_event_queue.h"
+#include "ovl11_record_partition_flags.h"
 
-void ovl_11_func_800F4AC0 (s32 arg0);
-s32 ovl_11_func_800F4B14 (void);
 void ovl_11_func_800EF488 (s16 arg0);
 s32 ovl_11_func_800EFA1C (s16 arg0);
 void ovl_11_func_800EF6E4 ();
@@ -62,10 +61,10 @@ s32 ovl_11_func_800E9D28(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
     switch (temp_v1) {
     case 0:
         if (arg1 == 1) {
-            ovl_11_func_800F4AC0(arg2 == 1);
+            Ovl11SetPartition6Enabled(arg2 == 1);
             return 1;
         }
-        gOvl11ValueSlots[arg2] = ovl_11_func_800F4B14();
+        gOvl11ValueSlots[arg2] = Ovl11CountEnabledPartition6Records();
         break;
     case 1:
         switch (arg1) {
