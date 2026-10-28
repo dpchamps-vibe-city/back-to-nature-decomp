@@ -1,5 +1,8 @@
 // Semantic labels within ovl_25; original container/address identities retained.
 
+// General record state/timer setter (800B9B00..800B9B28).
+Ovl25SetRecordState = 0x800B9B00; // type:func
+
 // Sprite-set animation and projected submission service (800B9B28..800BA7F0).
 Ovl25DrawObjectRecordPair = 0x800B9B28; // type:func
 Ovl25DrawAuxiliaryRecord = 0x800B9C90; // type:func

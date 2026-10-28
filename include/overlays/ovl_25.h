@@ -2,12 +2,11 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-s32 ovl_25_func_800B9480(s16 *arg0);
+void ovl_25_func_800B9480(s16 *arg0);
 void ovl_25_func_800B95B0(s16 *arg0);
 s32 ovl_25_func_800B9758(M2C_32ba532776b0_ReconA0View *arg0);
 s32 ovl_25_func_800B977C(Ovl25RecordIdView *record, s16 choice);
 void ovl_25_func_800B97E4(s16 *arg0);
-void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 void Ovl25AcquireVramAnimationSlot(Ovl11VramAnimationDescriptor *descriptor);
 void Ovl25AdvanceSceneTarget(void);
 void Ovl25ApplySceneCamera(void);
@@ -50,6 +49,7 @@ void Ovl25RunDialogueMode(void);
 void Ovl25ScanSceneCompletion(void);
 void Ovl25SeedInitialSceneRecords(void);
 void Ovl25SetBackgroundColor(s16 red, s16 green, s16 blue);
+void Ovl25SetRecordState(s16 *record, s16 newState, s16 timerTicks);
 void Ovl25StepBackgroundColorCycle(void);
 void Ovl25StepVramAnimationScroll(Ovl11AnimationSlot *slot);
 void Ovl25StepVramAnimationSequence(Ovl11AnimationSlot *slot);

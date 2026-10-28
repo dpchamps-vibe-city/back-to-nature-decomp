@@ -1,7 +1,6 @@
 #include "common.h"
 #include "random.h"
-
-void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
+#include "ovl25_record_state_timer.h"
 
 void ovl_25_func_800B95B0(s16 *arg0) {
     s16 rnd;
@@ -47,6 +46,6 @@ void ovl_25_func_800B95B0(s16 *arg0) {
     val = *(s32 *)&arg0[6];
     timer = result - val / 4096;
     ref = (s16 *)&D_800BFE44_view;
-    ovl_25_func_800B9B00((s16 *)arg0, 5, (s16)(timer * ref[0x26C] / ref[0x26B]));
+    Ovl25SetRecordState((s16 *)arg0, 5, (s16)(timer * ref[0x26C] / ref[0x26B]));
 }
 

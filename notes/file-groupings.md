@@ -23640,7 +23640,47 @@ Members (link order):
 
 ## `ovl_25` fixed-point threshold-lookup run — 0x800B9A10–0x800B9A84 (confidence: medium-low)
 
-**General state/timer setter fold attempted, not integrated**, ovl_25:
+**Reconstructed `modules/record_state_timer.c`, ovl_25:
+800B9B00–800B9B28 exclusive**, the complete stateless record-transition
+service, now named `Ovl25SetRecordState`. It writes signed state +2 and
+initializes signed timer +4 only when the state changes. The earlier
+publication blocker below is resolved: the only s32 declarations of this
+setter AND the void fallback 95B0 were in 9480. Its sole caller,
+Ovl25UpdateSceneRecord, discards its result. Changing 9480 and that caller's
+local declaration to void, replacing both return-call expressions with plain
+calls and dropping the unused arithmetic return, passed the checked singleton
+fold and the ENTIRE linked overlay at baseline. This is a measured consistent
+void context; the incidental old state left in v0 was not an interface.
+
+The left fixed_point_tier_lookup pair alone reads its eight tier
+constants; right sprite_set_service has the projection/sprite helper closure
+and no setter call. The setter accesses only the caller's record and uses
+neither neighbor's private data or helpers. Its many earlier record-driver
+clients establish a shared service, not co-compilation across the intervening
+tier lookups. These remain evidence-limited -G0 service boundaries, NOT a
+cut invented to protect 95B0's flag. No larger original TU is proved.
+
+`ovl25_record_state_timer.h` publishes the void contract, signed field offsets,
+update-tick units, unchecked inputs and same-state timer preservation. The
+function, parameters and previous-state local have behavior-based names;
+external linkage and all field widths remain unchanged. canonicalNames carried
+the container-qualified identity through all five affected sources, and
+interfaceAudit published the header to all four caller units with unchanged
+objects. No global, flag override, allowlist entry, assembly or stub was added.
+The neighboring five-function decision/predicate band remains blocked by
+95B0's standing no-follow setting; this result does not settle its TU extent
+or compiler flags.
+
+Batch acceptance: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passed every integrity gate, with
+2344 -> 2345 folded functions and 473/473 valid module TUs. The PS-X EXE
+and all 13 configured overlays, including data/tables/callback placement,
+remain byte-identical. Configuration convergence regenerated and kept the
+canonical ovl_25 symbol table and generated context header. Source policy,
+input stability, whitespace and exception non-growth pass; no tooling changed.
+
+Historical failed s32-publication experiment (superseded by the verified void
+context above): the general state/timer setter fold was attempted at
 800B9B00–800B9B28 exclusive. It changes signed halfword +2 and initializes
 the +4 timer ONLY on a state change. Ovl25TickSceneRecords decrements that
 +4 field once per call, establishing update-tick units. It has no private

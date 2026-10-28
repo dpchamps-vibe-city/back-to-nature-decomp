@@ -26,6 +26,7 @@
 #include "random.h"
 #include "ovl25_record_value_increments.h"
 #include "ovl25_scene_record_seeders.h"
+#include "ovl25_record_state_timer.h"
 
 void Ovl25DrawSceneSprites(void);
 
@@ -51,7 +52,6 @@ void Ovl25DispatchEventPhase(void) {
 }
 
 void SetVal8005E2BC(s32 arg0);
-void ovl_25_func_800B9B00(s16 *arg0, s16 arg1, s16 arg2);
 
 void Ovl25RunDialogueMode(void) {
     char *ref;
@@ -65,7 +65,7 @@ void Ovl25RunDialogueMode(void) {
         SetVal8005E2BC(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, 0x35);
-        ovl_25_func_800B9B00((s16 *)(ref + 0x2E0), 9, 0x3B);
+        Ovl25SetRecordState((s16 *)(ref + 0x2E0), 9, 0x3B);
     }
     *(u16 *)(ref + 0x4CC) = *(u16 *)(ref + 0x4CC) + 1;
     if (*(s16 *)(ref + 0x4CC) >= 0x3C) {
@@ -80,7 +80,7 @@ void Ovl25RunDialogueMode(void) {
         *(u16 *)(p + 0x53B6) = 0;
         *(u16 *)(p + 0x53B4) = *(u16 *)(ref + 0x20);
         *(u16 *)(p + 0x53B8) = *(u16 *)(ref + 0x24);
-        ovl_25_func_800B9B00((s16 *)(ref + 0x2E0), 0xA, 0);
+        Ovl25SetRecordState((s16 *)(ref + 0x2E0), 0xA, 0);
         gOvl25SequenceCyclePhase = 1;
         gOvl25SequenceAnchor4[0] = 0x85A;
         gOvl25SequenceAnchor4[1] = 0;
@@ -145,19 +145,19 @@ void Ovl25UpdatePrimaryRecordFromInput(void) {
         if (temp_v0 == 1) {
             if ((*(s32 *) ((u8 *) gPad0Input + 4)) & 0x10) {
                 (*(s16 *) ((u8 *) &gOvl25SceneRecordBase + -2)) = 0;
-                ovl_25_func_800B9B00(&gOvl25SceneRecordBase.unk0, 5, 1);
+                Ovl25SetRecordState(&gOvl25SceneRecordBase.unk0, 5, 1);
             } else {
                 if ((*(s32 *) ((u8 *) gPad0Input + 8)) & 0x40) {
                     temp_s1 = (u8 *) &gOvl25SceneRecordBase - 0x10;
                     *(s16 *)(temp_s1 + 0xE) = 0;
                     if ((*(s32 *) ((u8 *) &gOvl25SceneRecordBase + 0xC)) <= 0x9FFF) {
-                        ovl_25_func_800B9B00(&gOvl25SceneRecordBase.unk0, 7, 0x3C);
+                        Ovl25SetRecordState(&gOvl25SceneRecordBase.unk0, 7, 0x3C);
                         gOvl25SequenceCyclePhase = temp_v0;
                         gOvl25SequenceAnchor4[1] = 0;
                         gOvl25SequenceAnchor4[0] = gOvl25SceneRecordBase.source[0] - 0x320;
                         gOvl25SequenceAnchor4[2] = gOvl25SceneRecordBase.source[2];
                     } else {
-                        ovl_25_func_800B9B00(&gOvl25SceneRecordBase.unk0, 4, *(s16 *)(temp_s1 + 0x4D4));
+                        Ovl25SetRecordState(&gOvl25SceneRecordBase.unk0, 4, *(s16 *)(temp_s1 + 0x4D4));
                         *(s16 *)(temp_s1 + 0x18) = Ovl25LookupTierValue(*(s32 *)(temp_s1 + 0x1C));
                     }
                 } else {
@@ -165,7 +165,7 @@ void Ovl25UpdatePrimaryRecordFromInput(void) {
                     (*(u16 *)(temp_v0_2 + 0xE))++;
                     if ((u32) ((u16) gOvl25SceneRecordBase.unk2 - 4) < 2U) {
                         if ((s16) gOvl25SceneRecordBase.unk4 == 0) {
-                            ovl_25_func_800B9B00(&gOvl25SceneRecordBase.unk0, 2, 1);
+                            Ovl25SetRecordState(&gOvl25SceneRecordBase.unk0, 2, 1);
                         }
                     }
                 }
@@ -204,10 +204,10 @@ void Ovl25UpdateOtherRecordChoices(void) {
 
     state = (s16 *)&D_800BFE44_view;
     if (state[0xF9] != 8) {
-        ovl_25_func_800B9B00(&state[0xF8], 4, 1);
+        Ovl25SetRecordState(&state[0xF8], 4, 1);
     }
     if (state[0x135] != 8) {
-        ovl_25_func_800B9B00(&state[0x134], 4, 1);
+        Ovl25SetRecordState(&state[0x134], 4, 1);
     }
     objects = state + 8;
     for (i = 1; i < 4; i++) {
@@ -230,7 +230,7 @@ void Ovl25UpdateOtherRecordChoices(void) {
                 do {
                     do {
                         do {
-                            ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                            Ovl25SetRecordState(rec, 4, state[0x26A]);
                         } while (0);
                     } while (0);
                 } while (0);
@@ -248,7 +248,7 @@ void Ovl25UpdateOtherRecordChoices(void) {
                 do {
                     do {
                         do {
-                            ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                            Ovl25SetRecordState(rec, 4, state[0x26A]);
                         } while (0);
                     } while (0);
                 } while (0);
@@ -266,7 +266,7 @@ void Ovl25UpdateOtherRecordChoices(void) {
                 do {
                     do {
                         do {
-                            ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                            Ovl25SetRecordState(rec, 4, state[0x26A]);
                         } while (0);
                     } while (0);
                 } while (0);
@@ -281,7 +281,7 @@ void Ovl25UpdateOtherRecordChoices(void) {
             }
         } else if (*(s32 *)&rec[6] > 0x9FFF) {
             if (ovl_25_func_800B977C((Ovl25RecordIdView *)rec, 3) == 1) {
-                ovl_25_func_800B9B00(rec, 4, state[0x26A]);
+                Ovl25SetRecordState(rec, 4, state[0x26A]);
             } else if (ovl_25_func_800B977C((Ovl25RecordIdView *)rec, 4) == 1) {
                 ovl_25_func_800B95B0(rec);
             } else {
@@ -289,15 +289,15 @@ void Ovl25UpdateOtherRecordChoices(void) {
                 random = Rand((u16)(120 / ref[0x26C])) + 1;
                 value = ref[0x267] * 30;
                 if (random >= value / (ref[0x26C] * 100)) {
-                    ovl_25_func_800B9B00(rec, 3, 60);
+                    Ovl25SetRecordState(rec, 3, 60);
                     value = random - 2;
                     rec[3] = value * 30 / ref[0x26A];
                 } else {
-                    ovl_25_func_800B9B00(rec, 2, random * (u16)ref[0x26A]);
+                    Ovl25SetRecordState(rec, 2, random * (u16)ref[0x26A]);
                 }
             }
         } else {
-            ovl_25_func_800B9B00(rec, 7, 60);
+            Ovl25SetRecordState(rec, 7, 60);
         }
     }
 }
@@ -346,7 +346,7 @@ void Ovl25TickSceneRecords(void) {
     } while (i >= 0);
 }
 
-s32 ovl_25_func_800B9480 (s16 *arg0);
+void ovl_25_func_800B9480 (s16 *arg0);
 void ovl_25_func_800B97E4 (s16 *arg0);
 
 void Ovl25UpdateSceneRecord(s16 *record) {
@@ -377,7 +377,7 @@ void Ovl25UpdateSceneRecord(s16 *record) {
     case 1:
         (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) - ((s32) (D_800BFE44_view.unk4DA << 0xC) / (s16) D_800BFE44_view.unk4D4));
         if ((*(s16 *) ((u8 *) record + 4)) <= 0) {
-            ovl_25_func_800B9B00(record, 6, *(s16 *) ((u8 *) record + 6));
+            Ovl25SetRecordState(record, 6, *(s16 *) ((u8 *) record + 6));
             (*(s16 *) ((u8 *) record + 6)) = 0;
         }
         break;
@@ -393,10 +393,10 @@ void Ovl25UpdateSceneRecord(s16 *record) {
         switch (primaryStateCase) {
         case 0:
             if (D_800BFE44_view.unkE >= ((D_800BFE44_view.unk4CE * 0x1E) / 100)) {
-                ovl_25_func_800B9B00(record, 6, *(s16 *) ((u8 *) record + 4));
+                Ovl25SetRecordState(record, 6, *(s16 *) ((u8 *) record + 4));
             } else {
                 if ((*(s32 *) ((u8 *) record + 0xC)) <= 0x9FFF) {
-                    ovl_25_func_800B9B00(record, 7, 0x3C);
+                    Ovl25SetRecordState(record, 7, 0x3C);
                 }
             }
             /* Fall through to ensure the state-2 effect voice is running. */
@@ -418,7 +418,7 @@ void Ovl25UpdateSceneRecord(s16 *record) {
                 D_800BFE44_view.recordEffectVoice = -1;
             }
             if ((*(s16 *) ((u8 *) record + 4)) == 0) {
-                ovl_25_func_800B9B00(record, 6, 0);
+                Ovl25SetRecordState(record, 6, 0);
             }
             break;
         case 6:
@@ -441,8 +441,6 @@ void Ovl25UpdateSceneRecord(s16 *record) {
     }
 }
 
-void ovl_25_func_800B9B00 (s16 *arg0, s16 arg1, s16 arg2);
-
 void Ovl25ScanSceneCompletion(void) {
     char *base;
     s16 *rec;
@@ -457,11 +455,11 @@ void Ovl25ScanSceneCompletion(void) {
         rec = (s16 *) ((u8 *) &gOvl25SceneWorkWords + var_s2 * 0x78);
         if (rec[9] != 8) {
             if (rec[0x10] >= (*(s16 *) ((u8 *) &gOvl25SceneWorkWords + 0x4D2) - 0x140)) {
-                ovl_25_func_800B9B00((s16 *) ((u8 *) &gOvl25SceneWorkWords + 0x10 + var_s2 * 0x78), 8, 0x1E);
+                Ovl25SetRecordState((s16 *) ((u8 *) &gOvl25SceneWorkWords + 0x10 + var_s2 * 0x78), 8, 0x1E);
                 if (*(s32 *) ((u8 *) &gOvl25SceneWorkWords + 8) == 0) {
                     *(s32 *) ((u8 *) &gOvl25SceneWorkWords + 8) = 1;
                     *(s16 *) ((u8 *) &gOvl25SceneWorkWords + 0x4C8) = PlaySoundEffect(0x39);
-                    ovl_25_func_800B9B00((s16 *) ((u8 *) &gOvl25SceneWorkWords + 0x358), 0xC, 0x1E);
+                    Ovl25SetRecordState((s16 *) ((u8 *) &gOvl25SceneWorkWords + 0x358), 0xC, 0x1E);
                     if (var_s2 == 0) {
                         *(s32 *) (base + 0x6638) = 1;
                         *(s16 *) (base + 0x663C) = 0;

@@ -45,7 +45,7 @@ segments:
       - [0x195C, c, ovl_25_func_800B977C]
       - [0x19C4, c, ovl_25_func_800B97E4]
       - [0x1BF0, c, modules/fixed_point_tier_lookup]
-      - [0x1CE0, c, ovl_25_func_800B9B00]
+      - [0x1CE0, c, modules/record_state_timer]
       - [0x1D08, c, modules/sprite_set_service]
       - [0x29D0, c, modules/event_state_handlers]
       - [0x2C3C, c, modules/scene_display_pipeline]
