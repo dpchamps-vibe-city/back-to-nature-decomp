@@ -17,11 +17,9 @@
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
 #include "ovl11_record_family_lookup.h"
+#include "ui_sprites.h"
 
 void func_80017B3C(s32, s32, s32, s32);
-void func_80024770(s32, s16, s16);
-void func_800247C0(s32, s16, s16);
-void func_800248B0(s32, s16, s16);
 void func_8001AAF4(s16, s16, s32, s16, s16);
 void Ovl11DrawRecordFamilyRow(Ovl11RecordFamilyRow *, s32, s16, s16);
 
@@ -116,12 +114,12 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
         }
     }
     if (gOvl11RecordListScroll > 0) {
-        func_80024770(row_ot, 0x120, 0x30);
+        DrawAnimatedUiSprite29(row_ot, 0x120, 0x30);
     }
     if ((gOvl11RecordListScroll + 4) < count) {
-        func_800247C0(row_ot, 0x120, 0x80);
+        DrawAnimatedUiSprite28(row_ot, 0x120, 0x80);
     }
-    func_800248B0(row_ot, 0x20, (s16) ((((s16) gOvl11RecordListCursor - gOvl11RecordListScroll) * 0x18) + 0x3C));
+    DrawUiSprite0BFrame1(row_ot, 0x20, (s16) ((((s16) gOvl11RecordListCursor - gOvl11RecordListScroll) * 0x18) + 0x3C));
     for (i = 0; i < 4 && (next_row = i + 1, count >= gOvl11RecordListScroll + next_row); i++) {
         row_offset = i * 0x18;
         next_index = i + 1;
@@ -161,7 +159,6 @@ s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 s32 Ovl11ReadRecordRowValue(s16 *arg0);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void Ovl11DrawRecordRowGauge(s16 arg0, s32 arg1, s16 arg2, s16 arg3);
-void func_80024A10(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void Ovl11DrawRecordFamilyRow(Ovl11RecordFamilyRow *record, s32 orderingTable, s16 x, s16 y) {
     s16 valueX;
@@ -193,15 +190,12 @@ void Ovl11DrawRecordFamilyRow(Ovl11RecordFamilyRow *record, s32 orderingTable, s
     Ovl11DrawRecordRowGauge((s16) ((s16) record->gaugeValue / 25), orderingTable, (s16) (x + 0x48), (s16) (y + 0xC));
     valueX = x + 0x58;
     func_80017B3C(orderingTable, (s32) text, (s32) valueX, (s32) y);
-    func_80024A10(orderingTable, (s16) (valueX + 0x10), y, record->trailingValue);
+    DrawUiSprite2BFrame(orderingTable, (s16) (valueX + 0x10), y, record->trailingValue);
 }
 
 s32 Ovl11ReadRecordRowValue(s16 *value) {
     return *value;
 }
-
-/* Callee prototype as the original caller TU saw it. */
-void func_800245F4(s32 arg0, s16 arg1, s16 arg2);
 
 void Ovl11DrawRecordRowGauge(s16 count, s32 orderingTable, s16 x, s16 y) {
     s16 segmentX;
@@ -215,7 +209,7 @@ void Ovl11DrawRecordRowGauge(s16 count, s32 orderingTable, s16 x, s16 y) {
         /* Retain the 16.16 stepping accumulator and its halfword truncation. */
         fixedX = (segmentX << 0x10) + 0xFFF80000;
         do {
-            func_800245F4(orderingTable, segmentX, y);
+            DrawUiSprite2A(orderingTable, segmentX, y);
             nextX = fixedX >> 0x10;
             fixedX += 0xFFF80000;
             remaining -= 1;

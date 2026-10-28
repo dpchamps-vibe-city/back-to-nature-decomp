@@ -1,5 +1,8 @@
 #include "common.h"
 #include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ui_sprites.h"
 
 typedef struct {
     /* 0x00 */ s16 unk0;
@@ -22,7 +25,6 @@ void ovl_15_func_80134134(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 
 s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 s32 ovl_15_func_80134444(Ovl15Func80134444Arg *arg0);
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_80024A10(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void ovl_15_func_801342A0(u8 *arg0, s16 arg1, s16 arg2) {
     Ovl15Rec *var_s2;
@@ -63,5 +65,5 @@ void ovl_15_func_801342A0(u8 *arg0, s16 arg1, s16 arg2) {
     *((u16 *) func_8001A970(ovl_15_func_80134444((Ovl15Func80134444Arg *) ((u8 *) var_s2 + 0x1A)), &D_80137690[11], 2)) = 0xFFFF;
     var_a0 = var_s4 + 0x58;
     func_80017B3C(temp_s5, (s32) D_80137690, (s32) var_a0, (s32) arg2);
-    func_80024A10(temp_s5, (s16) (var_a0 + 0x10), arg2, var_s2->unk1C);
+    DrawUiSprite2BFrame(temp_s5, (s16) (var_a0 + 0x10), arg2, var_s2->unk1C);
 }

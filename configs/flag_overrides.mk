@@ -16,14 +16,8 @@
 # .pi/autoloop.json (sourcePolicy.allowlist, kind "flag-override") must be
 # added in the same change — the allowlist is the audit trail, and the gate
 # enforces that it exists. Speculative flag-shopping without a fingerprint
-# remains forbidden. The two -fno-schedule-insns entries below are legacy
-# and pending re-validation
-# (see notes/next-steps-for-revisiting-the-project.md).
-#
-# The pattern they work around: self-clobbering loads — the target binary
-# has sequential lui/lw pairs (lui v0 / lw v0,off(v0)) where the lw
-# overwrites the base register. GCC's scheduler groups the lui
-# instructions together and uses extra registers, preventing this pattern.
+# remains forbidden. The former two UI-counter scheduling exceptions are
+# retired; their complete module now matches baseline (see below).
 
 
 
@@ -140,71 +134,13 @@ CC1FLAGS_func_80018B98 := -fno-gcse
 # -fno-rerun-cse-after-loop entry described a superseded reconstruction;
 # see plans/flag-review-report.md and notes/file-groupings.md.
 
-# func_8002495C: -fno-schedule-insns2.
-#
-# Flag probe matrix (psx_flag_probe, fork-A s32/temp_v0 shape): the only row
-# that reaches the target's instruction count (25) and dominates the mask
-# score is -fno-schedule-insns2, 19/25 masked vs 4/25 baseline; every other
-# row (gcse/cse/rerun-cse/mno-split-addresses) stays at the baseline count.
-#
-# Target fingerprint: the target's post-branch sequence loads the DIVISION
-# CONSTANT 0x88888889 into the raw-load register $v0 only AFTER the andi
-# truncation has died (lbu v0 / addiu v0,1 / andi a0,v0,0xff / lui v0 / ori v0
-# / multu a0,v0), i.e. the constant inherits the dying raw byte's register.
-# That forces an explicit load-delay nop after the lbu and pins block 1's
-# allocation (raw=$v0, trunc=$a0, const=$v0). Under baseline -fschedule-insns2
-# the post-reload scheduler instead hoists the constant load into the lbu's
-# load-delay gap (constant lives in $v1, truncated byte in $v0) and the whole
-# block rotates: the residual is a pure local-alloc/sched2 rotation that the
-# local-allocation solver and the instrumented compiler oracle both prove
-# UNREACHABLE from clean C under baseline (solver UNSAT_WITHIN_BOUNDS; oracle
-# forcedLocalRejected for every target assignment; ~24 semantics- and
-# spelling-preserving variants all compile to the same words). The constant's
-# late birth in $v0 is precisely the allocation sched2 would undo, so a
-# post-reload scheduler being off is the natural prime-fact state.
-#
-# The completed match additionally requires -fno-schedule-insns (sched1 off):
-# the matched source reuses one variable for the block-0 sentinel (-1, a real
-# materialised addiu v0,zero,-1 feeding the beq) and the block-1 raw byte, so
-# that pseudo is set twice in the function; sched1 refuses to promote
-# multi-set destinations and drifts that set insn to the top of block 0
-# (v63.i.combine has the target's sll/sra/li/beq order; v63.i.sched shows the
-# scheduler moving the li above the sll). The target keeps the li between the
-# sra and the beq, i.e. it is built with no pre-reload scheduling pass.
-#
-# No contrary regional witness: the same division-constant idiom appears in
-# sibling funcs 0x800247C0/0x80024810/0x800249C0 with the same late constant
-# birth and empty delay slots; none is matched yet, and none shows a
-# sched2-filled delay slot.
-CC1FLAGS_func_8002495C := -fno-schedule-insns -fno-schedule-insns2
-
-# func_8002470C: -fno-schedule-insns -fno-schedule-insns2.
-#
-# Flag probe matrix (psx_flag_probe, current clean C): the only row reaching
-# the target's full masked score is -fno-schedule-insns{,2} at 25/25 vs 22/25
-# baseline; every other row (gcse/cse/rerun-cse/mno-split-addresses) stays at
-# the baseline 22. That row also lands the instruction count exactly (25) at
-# the same 25-everything count every other row already has.
-#
-# Target fingerprint: the head of block 0 materialises the sentinel
-# -1 (addiu v0,zero,-1) between the sra (sign-extension to s16) and the beq,
-# i.e. sll a0 / sra a0 / addiu v0,zero,-1 / beq a0,v0,taken — the constant
-# keeps its expand-time position, after the s16 extension and before the
-# branch. Under baseline -fschedule-insns (sched1 on), the shared pseudo that
-# is set twice in the function (tv = -1 for the sentinel, then tv = D_8005E5D0
-# + 1 for the raw byte) is a multi-set destination, and sched1 drifts its
-# first set (the li -1) to the top of block 0, above the sll/sra extension:
-# candidate emits li v0,-1 / sll a0 / sra a0 / beq and only the li position
-# differs (23/24 words). The same mechisism and override are documented on the
-# sibling func_8002495C (mod-60 counter, same-TU idiom cluster, same shared
-# sentinel/raw-byte pseudo reuse); psx_reverse_pipeline for this function
-# confirms a single sched2 owner with the li at target position 2 vs
-# candidate 0.
-#
-# No contrary regional witness: func_8002470C.c is its own TU (single function
-# per src file) in the 0x8002470C-0x800249C0 counter cluster; the sibling
-# func_8002495C carries the identical override.
-CC1FLAGS_func_8002470C := -fno-schedule-insns -fno-schedule-insns2
+# StepUiSpriteFourFramePhase / StepUiSpriteTwoFramePhase (8002470C/8002495C):
+# NO override. Both scheduling-off entries are retired. The complete seventeen-
+# member ui_sprites TU matches baseline with byte increment, byte quotient and
+# subtract operations. Earlier impossibility claims described the old local-
+# accumulator/sentinel reconstruction, not the clean-C domain. The checked
+# fold proves both counters, all consumers and the linked EXE at baseline;
+# see notes/file-groupings.md, sprite render dispatch wrappers.
 
 
 # ovl_11_func_800F3D40: -fno-gcse. The target materializes D_8006C838+0x4AD5

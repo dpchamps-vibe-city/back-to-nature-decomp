@@ -47,6 +47,7 @@
 #include "ovl27_menu_scene.h"
 #include "ovl27_scene_setup.h"
 #include "ovl27_work_area_init.h"
+#include "ui_sprites.h"
 
 /* Implementation helpers used by the earlier setup/menu definitions.
  * Consolidation changes declaration visibility, not their external linkage. */
@@ -700,7 +701,6 @@ s32 Ovl27RestartTitlePanelLoop(void) {
 
 void func_80017A38 (s16 arg0, s16 arg1);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_80024A10 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
 
 void Ovl27DrawTitleRecordSummary(void) {
@@ -713,7 +713,7 @@ void Ovl27DrawTitleRecordSummary(void) {
     func_80017B3C(temp_s2, (s32) ((u8 *) D_80051AF6 + *gTextBankOffsets), 0x4C, 0x3C);
     func_80017A38(0, 0);
     base = (u8 *) D_8006C838;
-    func_80024A10(temp_s2, 0xAC, 0x48, *(s16 *) (base + 0x5246));
+    DrawUiSprite2BFrame(temp_s2, 0xAC, 0x48, *(s16 *) (base + 0x5246));
     gOvl27TitleSummaryText = 0x71;
     *(u16 *) func_8001A970((*(s16 *) (base + 0x5248)) + 1, (&gOvl27TitleSummaryText + 1), 2) = 0xFFFF;
     func_80017B3C(temp_s2, (s32) &gOvl27TitleSummaryText, 0xBC, 0x48);

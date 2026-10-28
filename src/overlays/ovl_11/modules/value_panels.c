@@ -12,12 +12,11 @@
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
 #include "u16_string.h"
+#include "ui_sprites.h"
 
 void Ovl11DrawValuePanelVariant(s32 wide);
 s16 *func_8001A970(s32 value, s16 *dst, s32 width);
 void func_80017B3C(s32 orderingTable, s32 text, s32 x, s32 y);
-void func_80024810(s32 orderingTable, s16 x, s16 y);
-void func_80024860(s32 orderingTable, s16 x, s16 y);
 void func_8001ABF0(u16 *dst, u16 *src);
 
 void Ovl11DrawCompactValuePanel(void) {
@@ -85,8 +84,8 @@ void Ovl11DrawQuantityPromptRows(Ovl11D8012D538 prompt, s16 quantity, s32 value,
     *((u16 *)func_8001A970((s32)quantity, &gOvl11TextFormatScratch, 3)) = 0xFFFF;
     AppendU16String((u16 *)&gOvl11TextFormatScratch, (u16 *)prompt.unk4);
     func_80017B3C(orderingTable, (s32)&gOvl11TextFormatScratch, (s32)(s16)(x + 0x20), (s32)rowY);
-    func_80024810(orderingTable, leftMarkerX, rowY);
-    func_80024860(orderingTable, (s16)(x + 0x60), rowY);
+    DrawAnimatedUiSprite0D(orderingTable, leftMarkerX, rowY);
+    DrawAnimatedUiSprite0C(orderingTable, (s16)(x + 0x60), rowY);
     rowY += 0xE;
     Ovl11CopyPrimaryValueLabel(func_8001A970(value, &gOvl11TextFormatScratch, 5));
     func_80017B3C(gActiveRenderContext->field_D8 + 0x30, (s32)&gOvl11TextFormatScratch, (s32)(s16)(x + 0x10), (s32)rowY);

@@ -53,6 +53,7 @@
 #include "ovl11_selection_candidate.h"
 #include "game_flags.h"
 #include "ovl11_menu_exit_flags.h"
+#include "ui_sprites.h"
 
 void Ovl11ResetSelectionModeState(void) {
     s32 i;
@@ -205,7 +206,6 @@ void Ovl11PromptSelectionGridMode(void);
 void Ovl11ShowSelectionRecord(void);
 void Ovl11ShowSelectionRecordRequirements(void);
 void Ovl11ChooseSelectionRecordAction(void);
-void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 
 void Ovl11ServiceSelectionRecordGrid(void) {
     s8 column;
@@ -289,7 +289,7 @@ void Ovl11ServiceSelectionRecordGrid(void) {
         }
     }
     column = Ovl11_D_801273E7 / 10;
-    func_800248B0(gActiveRenderContext->field_D8 + 0x54,
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x54,
                  column * 144 + 23, (Ovl11_D_801273E7 - column * 10) * 14 + 24);
     gOvl11SelectionRecordIndex = Ovl11_D_801273E7 + Ovl11_D_801273E8 * 20;
 }
@@ -366,8 +366,6 @@ void Ovl11ChooseSelectionRecordAction(void) {
     }
 }
 
-void func_80024810 (s32 arg0, s16 arg1, s16 arg2);
-void func_80024860 (s32 arg0, s16 arg1, s16 arg2);
 void func_80017A38 (s16 arg0, s16 arg1);
 s32 Ovl11LookupSelectionTextOffset (u16 arg0);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -386,8 +384,8 @@ void Ovl11DrawSelectionRecordNames(u8 arg0) {
     temp_s0 = temp_t0 + 0x60;
     base = temp_t0 + 0x70;
     DrawMenuPanel((u32 *)(temp_t0 + 0x74), 1, 0xE, 0x10, 0x124, 0x94);
-    func_80024810(temp_s0, 6, 0x5A);
-    func_80024860(temp_s0, 0x12A, 0x5A);
+    DrawAnimatedUiSprite0D(temp_s0, 6, 0x5A);
+    DrawAnimatedUiSprite0C(temp_s0, 0x12A, 0x5A);
     func_80017A38(0, 2);
     var_s5 = 0x1C;
     for (var_s2 = 0; var_s2 < 2; var_s2++) {
@@ -647,7 +645,7 @@ void Ovl11ServiceSelectionFlagSlots(void) {
                 break;
             }
         }
-        func_800248B0(gActiveRenderContext->field_D8 + 0x54,
+        DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x54,
                      (Ovl11_D_801273E7 - Ovl11_D_801273E7 / 4 * 4) * 34 + 0x87,
                      Ovl11_D_801273E7 / 4 * 34 + 0x67);
         if (IsMessageWindowStatusFinal()) {
@@ -733,7 +731,7 @@ void Ovl11ServiceSelectionAggregateFlags(void) {
         }
         D_801273E9_selection -= (s8)(D_801273E9_selection / 5) * 5;
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 0x54, 0xAF, D_801273E9_selection * 14 + 0x5D);
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x54, 0xAF, D_801273E9_selection * 14 + 0x5D);
     if (IsMessageWindowStatusFinal()) {
         if (((u32 *)gPad0Input)[2] & 0x20) {
             CloseMessageWindow();
@@ -940,7 +938,7 @@ void Ovl11ServiceSelectionItemGrid(void) {
                 D_801273EA_table = 0;
             }
         }
-        func_800248B0(gActiveRenderContext->field_D8 + 0x54,
+        DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x54,
                      (Ovl11_D_801273E7 - Ovl11_D_801273E7 / 4 * 4) * 34 + 0x87,
                      Ovl11_D_801273E7 / 4 * 34 + 0x67);
         if (IsMessageWindowStatusFinal()) {
@@ -1063,9 +1061,6 @@ void Ovl11DrawSelectionWorkIdRow(void) {
     }
 }
 
-void func_80024810(s32 arg0, s16 arg1, s16 arg2);
-void func_80024860(s32 arg0, s16 arg1, s16 arg2);
-
 void Ovl11DrawSelectionItemGridPage(void) {
     u16 x;
     u16 y;
@@ -1092,8 +1087,8 @@ void Ovl11DrawSelectionItemGridPage(void) {
         slot = D_80070D42_slots[table];
         count = 8;
     }
-    func_80024810((s32)context0, 0x75, 0x90);
-    func_80024860((s32)context0, 0x10C, 0x90);
+    DrawAnimatedUiSprite0D((s32)context0, 0x75, 0x90);
+    DrawAnimatedUiSprite0C((s32)context0, 0x10C, 0x90);
     for (i = 0; i < 8; i++, slot++, x += 0x22) {
         if (x >= 0xEBU) {
             x = 0x84;

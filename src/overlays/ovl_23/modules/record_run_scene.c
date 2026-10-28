@@ -32,6 +32,7 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "ovl23_record_run.h"
+#include "ui_sprites.h"
 
 /* Forward interfaces within this unit, not a claim of original static linkage. */
 void Ovl23LoadSharedSpriteBank(void);
@@ -1408,7 +1409,6 @@ void Ovl23AdvanceDecisionRecordPosition(Ovl23Func800BB0C8Arg *record) {
 /* Internal helpers retain external linkage; original static linkage is unknown. */
 s32 Ovl23ProjectRecordX(s32 xQ12);
 s32 Ovl23OrderingTableForRecordY(s32 yQ12);
-void func_800248E8(s32 orderingTable, s32 x, s32 y, s32 frame);
 
 void Ovl23DrawActorRecord(Ovl23ActorRecord *record) {
     ObjectState *sprite;
@@ -1489,7 +1489,7 @@ void Ovl23DrawActorRecord(Ovl23ActorRecord *record) {
     } else {
         DrawSpriteFrameRects(orderingTable, (s32) sprite, record->animation, record->frame, screenX, screenY);
     }
-    func_800248E8(orderingTable, screenX, screenY, 0);
+    DrawUiSprite18Frame(orderingTable, screenX, screenY, 0);
     if ((((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk4 != 1) &&
         (((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk14 ==
          (((((Ovl23D87CViewBAA60 *) Ovl23_D_800BF87C_draw)->unk14 + 1) / 30) * 30) - 1)) {
@@ -1525,7 +1525,7 @@ void Ovl23DrawDecisionRecord(Ovl23DecisionRecord *record) {
     orderingTable = Ovl23OrderingTableForRecordY(screenY << 0xC);
     SetSpriteSourceTextureOffsets((Struct_800154CC *) sprite, 0, 0, 0, record->paletteY);
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *) sprite, screenX, screenY);
-    func_800248E8(orderingTable, screenX, screenY, 0);
+    DrawUiSprite18Frame(orderingTable, screenX, screenY, 0);
     if ((((Ovl23D87CViewBAA60 *)Ovl23_D_800BF87C_draw)->unk4 != 1) &&
         (((Ovl23D87CViewBAA60 *)Ovl23_D_800BF87C_draw)->unk14 ==
          (((((Ovl23D87CViewBAA60 *)Ovl23_D_800BF87C_draw)->unk14 + 1) / 10) * 10) - 1)) {

@@ -11,11 +11,10 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "ovl11_slot_decorations.h"
-
-void func_800248B0(s32 orderingTable, s16 x, s16 y);
+#include "ui_sprites.h"
 
 void Ovl11DrawSlotCursor(s32 orderingTable, s16 x, s16 y) {
-    func_800248B0(orderingTable, (s16)(x + 12), (s16)(y + 24));
+    DrawUiSprite0BFrame1(orderingTable, (s16)(x + 12), (s16)(y + 24));
 }
 
 void Ovl11DrawSelectedSlotMarker(s32 orderingTable, s16 x, s16 y) {

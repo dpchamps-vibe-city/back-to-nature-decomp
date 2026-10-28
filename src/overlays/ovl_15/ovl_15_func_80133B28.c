@@ -1,16 +1,13 @@
 #include "common.h"
 #include "sound_commands.h"
+#include "ui_sprites.h"
 
 void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 /* Both return paths in 801344E8 produce sign-extended halfwords. */
 s16 ovl_15_func_801344E8(u8 *arg0, s16 arg1);
-void func_80024770(s32 arg0, s16 arg1, s16 arg2);
-void func_800247C0(s32 arg0, s16 arg1, s16 arg2);
-void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
 void ovl_15_func_801342A0(u8 *arg0, s16 arg1, s16 arg2);
 s32 ovl_15_func_801340B8(s32 arg0, s16 arg1);
-void func_80024924(s32 arg0, s16 arg1, s16 arg2);
 void ovl_15_func_80134000(s32 arg0, s16 arg1);
 void ovl_15_func_80133F4C(s32 arg0, s16 arg1);
 
@@ -67,12 +64,12 @@ s32 ovl_15_func_80133B28(s16 arg0) {
         D_801375A0 = 0;
     }
     if (temp_s4 < (s16) D_801375A0) {
-        func_80024770(temp_s7, 0x120, 0x30);
+        DrawAnimatedUiSprite29(temp_s7, 0x120, 0x30);
     }
     if (((s16) D_801375A0 + 4) < temp_s4) {
-        func_800247C0(temp_s7, 0x120, 0x80);
+        DrawAnimatedUiSprite28(temp_s7, 0x120, 0x80);
     }
-    func_800248B0(temp_s7, 0x20, (s16) ((((s16) D_801375A2 - (s16) D_801375A0) * 0x18) + 0x3C));
+    DrawUiSprite0BFrame1(temp_s7, 0x20, (s16) ((((s16) D_801375A2 - (s16) D_801375A0) * 0x18) + 0x3C));
     for (var_a2 = 0; var_a2 < 4 && (var_v0 = var_a2 + 1, temp_s4 >= (s16) D_801375A0 + var_v0); var_a2++) {
         temp_s1 = var_a2 + 1;
         temp_s0 = var_a2 * 0x18;
@@ -80,7 +77,7 @@ s32 ovl_15_func_80133B28(s16 arg0) {
         func_8001AAF4((s16) ((u16) D_801375A0 + temp_s1), 2, gActiveRenderContext->field_D8 + 0x14, 0x20, (s16) (s32) temp_v0);
         ovl_15_func_801342A0(var_s3, ovl_15_func_801344E8(var_s3, (s16) ((u16) D_801375A0 + temp_s1)), (s16) (temp_s0 + 0x30));
         if (ovl_15_func_801340B8((s32) var_s3, ovl_15_func_801344E8(var_s3, (s16) ((u16) D_801375A0 + temp_s1))) == 1) {
-            func_80024924(temp_s7, 0x20, temp_v0);
+            DrawUiSprite1E(temp_s7, 0x20, temp_v0);
         }
     }
     temp_a0 = *(s32 *) ((u8 *) gPad0Input + 8);

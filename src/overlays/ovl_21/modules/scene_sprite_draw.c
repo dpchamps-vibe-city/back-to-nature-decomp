@@ -8,8 +8,7 @@
 #include "sprite_source.h"
 #include "sprite_render.h"
 #include "point_projection.h"
-
-void func_800248E8(s32 otAddress, s32 x, s32 y, s32 mode);
+#include "ui_sprites.h"
 
 void Ovl21DrawRecordSprite(s32 *record) {
     s16 animationBase;
@@ -81,7 +80,7 @@ void Ovl21SubmitProjectedSprite(SpriteSourceData *source, u16 *position) {
         (source == ((UnkStruct800C0448 *) gOvl21SceneControl)[1].unk30) ||
         (source == ((UnkStruct800C0448 *) gOvl21SceneControl)[2].unk30) ||
         (source == ((UnkStruct800C0448 *) gOvl21SceneControl)[5].unk30)) {
-        func_800248E8(otAddress,
+        DrawUiSprite18Frame(otAddress,
             *(s16 *) ((u8 *) gOvl21SpriteProjectScreen + 0),
             *(s16 *) ((u8 *) gOvl21SpriteProjectScreen + 4), 0);
     }

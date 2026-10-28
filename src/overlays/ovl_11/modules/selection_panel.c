@@ -26,6 +26,7 @@
 #include "sprite_source.h"
 #include "sprite_upload.h"
 #include "ovl11_menu_exit_flags.h"
+#include "ui_sprites.h"
 
 void Ovl11ResetSelectionPanelState(void) {
     gOvl11SelectionPanelState = 0;
@@ -204,7 +205,6 @@ void Ovl11ReloadSelectionPanelSprites(void) {
 }
 
 s32 Ovl11FindSelectionLaneSlot(s16 arg0);
-void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
 
 void Ovl11DrawSelectionPanel(void) {
     s32 idx;
@@ -221,7 +221,7 @@ void Ovl11DrawSelectionPanel(void) {
     DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x5C, (SpriteSourceData *)&gOvl11SelectionPanelSprites[2],
                   (s16)(*(u16 *)(gOvl11SelectionPanelLanes + idx * 8) + 0x10),
                   *(s16 *)(gOvl11SelectionPanelLanes + 2 + idx * 8));
-    func_800248B0(gActiveRenderContext->field_D8 + 0x58,
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x58,
                   *(s16 *)(gOvl11SelectionPanelLanes + gOvl11SelectionPanelLane * 8),
                   *(s16 *)(gOvl11SelectionPanelLanes + 2 + gOvl11SelectionPanelLane * 8));
 }

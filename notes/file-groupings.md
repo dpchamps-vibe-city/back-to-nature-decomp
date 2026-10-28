@@ -10289,6 +10289,61 @@ table; func_80024578 (m) — per-state offset scaled by arg1; func_800245C8
 
 ## sprite render dispatch wrappers — 0x800245F4–0x80024AE4 (confidence: high)
 
+**Reconstructed complete `src/modules/ui_sprites.c`, all seventeen compiled
+members, 800245F4–80024AE4 exclusive.** This supersedes the blocked status
+and local-accumulator experiments recorded below. Every draw wrapper calls
+24A4C; the two byte clocks and their animated clients share original-byte
+GP-relative E5D0/E5D1 ownership. The cached 0x30-byte shared sprite source,
+header identity check and fixed animation/frame selections corroborate the
+whole wrapper/clock/dispatcher unit, not three independently compiled slices.
+No dead stub occurs inside the run. The shared source/header also have remote
+clients and loaders: their use alone is not private ownership evidence.
+
+Left: text_entry ends its independent editing/input/character-grid state
+machine at 245F4. Its calls to these drawing wrappers are public render-client
+edges, with no clock ownership or dispatcher-helper implementation. There is
+no positive membership edge extending the UI unit left, nor a claimed
+GP/absolute proof of that cut. Right: 24AE4 begins libmath/adddf3, a hard
+configured library-object boundary. No flag-based internal cut was retained.
+
+The complete baseline dry run and checked fold succeeded after expressing
+both clocks as byte-global increment, byte quotient (`phase / 120U` or
+`phase / 60U`), then subtracting quotient times the period from that byte.
+The increment truncates BEFORE division, preserving wrap behavior for every
+initial byte. This is a distinct memory-update construction from the earlier
+local raw/sentinel spellings. The helper proved all seventeen member objects
+and the linked EXE exact under production baseline -O2/-G8, with BOTH
+scheduling passes enabled. The two full scheduling-off overrides and their
+allowlist permissions are retired, not transferred to the module. No flagged
+matrix is needed to select a nonbaseline setting once baseline proves exact;
+older no-clean-C/unreachable claims apply only to their measured source webs.
+Evidence: `build/foldTranslationUnit/exe/ui_sprites/check.log` and the source.
+
+Public `ui_sprites.h` documents ordering-table addresses, signed pixel offsets,
+unchecked byte animation/frame indices, shared cache invalidation limits,
+packet-work/render-context prerequisites and call-count (not time) clocks.
+Names preserve original EXE identities via canonicalNames. The dispatcher is
+DrawCachedUiSprite; wrappers name demonstrated animation IDs and fixed frames
+rather than speculative icon meanings. StepUiSpriteFourFramePhase/TwoFramePhase
+and gUiSpriteFourFramePhase/TwoFramePhase name the 120/60-call phase bytes;
+animated draws divide by 30 without advancing them. All seventeen public
+entries are published; helpers retain external linkage. Existing shared
+source/header names, types and ownership are unchanged. The redundant typed
+function-pointer cast at InitSpriteSourceData is replaced by its public call;
+wrapper parameters/locals and duplicate narrowing casts are cleaned up without
+changing their ABI. DrawUiSprite18Frame retains word parameters and narrows
+inside its implementation. InterfaceAudit reconciled 26 caller units across
+the executable and overlays with no failing published interface. The final
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` passes
+all eight integrity gates: EXE/all overlays including data and placement,
+inventory/completeness, source policy, configuration convergence, whitespace,
+input stability and no exception growth. Folded membership is 2386/2625
+(+17), with 475/475 valid modules and 239 functions remaining. Its exit 1
+means the campaign is incomplete, not a verification failure. No new flag,
+assembly, pin, stub or policy exception was introduced.
+
+Historical experiments and discovery (blocked status superseded):
+
 Read-only module-campaign review confirms the whole seventeen-member range,
 not just its counter consumers: all wrappers feed 24A4C, and the two GP-owned
 phase bytes connect the tick functions to their animated draws. The upper

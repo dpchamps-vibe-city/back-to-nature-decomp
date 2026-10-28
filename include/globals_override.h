@@ -3242,6 +3242,10 @@ extern s32 gSpriteGridTick;
  * it. Six overlay loaders copy 0x13DC bytes of header/tables to 800977F8. */
 extern struct SpriteSourceData gSharedSpriteSource;
 extern u8 gSharedSpriteData[0x13DC];
+/* exe:8002470C/8002495C update byte phases; their GP-relative draw clients
+ * divide by 30 to select four/two frames from the shared UI source. */
+extern u8 gUiSpriteFourFramePhase;
+extern u8 gUiSpriteTwoFramePhase;
 
 /* 80055974: the grid reads indices 0..3; 8005597C is the next table's label.
  * The original declared extent is unknown; keep an incomplete array view. */

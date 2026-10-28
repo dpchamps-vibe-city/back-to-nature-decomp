@@ -16,6 +16,7 @@
 #include "sprite_render.h"
 #include "point_projection.h"
 #include "ovl25_sprite_set_service.h"
+#include "ui_sprites.h"
 
 void Ovl25DrawBiasedProjectedSprite(SpriteSourceData *source, u16 *position);
 void Ovl25DrawProjectedSprite(SpriteSourceData *source, u16 *position);
@@ -365,8 +366,6 @@ void Ovl25DrawPrimarySprite(void) {
         (s16)((s32)((VWD0 + ((u32)VWD0 >> 0x1F)) << 0xF) >> 0x10));
 }
 
-void func_800248E8(s32 orderingTable, s32 x, s32 y, s32 variant);
-
 void Ovl25DrawBiasedProjectedSprite(SpriteSourceData *source, u16 *position) {
     s32 orderingTable;
 
@@ -383,13 +382,13 @@ void Ovl25DrawBiasedProjectedSprite(SpriteSourceData *source, u16 *position) {
     /* Identity, not animation number, selects the additional marker sprite. */
     if (D_800BFE44_view.selector == 0) {
         if ((source == ((s16 *)&D_800BFE44_view + 0x14)) || (source == ((s16 *)&D_800BFE44_view + 0x50)) || (source == ((s16 *)&D_800BFE44_view + 0x8C)) || (source == ((s16 *)&D_800BFE44_view + 0xC8)) || (source == ((s16 *)&D_800BFE44_view + 0x104)) || (source == ((s16 *)&D_800BFE44_view + 0x140)) || (source == ((s16 *)&D_800BFE44_view + 0x17C)) || (source == ((s16 *)&D_800BFE44_view + 0x1B8))) {
-            func_800248E8(orderingTable, *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 0), *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 4), 0);
+            DrawUiSprite18Frame(orderingTable, *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 0), *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 4), 0);
         }
     } else if ((source == ((s16 *)&D_800BFE44_view + 0x17C)) || (source == ((s16 *)&D_800BFE44_view + 0x1B8))) {
-        func_800248E8(orderingTable, *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 0), *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 4), 0);
+        DrawUiSprite18Frame(orderingTable, *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 0), *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 4), 0);
     }
     if ((source == &gOvl25SequenceSpriteBase) || (source == ((ObjectState *)&gOvl25SequenceSpriteBase + 6)) || (source == ((ObjectState *)&gOvl25SequenceSpriteBase + 0xC)) || (source == ((ObjectState *)&gOvl25SequenceSpriteBase + 0x12)) || (source == ((ObjectState *)&gOvl25SequenceSpriteBase + 0x18)) || (source == ((ObjectState *)&gOvl25SequenceSpriteBase + 0x1E))) {
-        func_800248E8(orderingTable, *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 0), *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 4), 0);
+        DrawUiSprite18Frame(orderingTable, *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 0), *(s16 *)((u8 *)gOvl25BiasedProjectionResult + 4), 0);
     }
 }
 

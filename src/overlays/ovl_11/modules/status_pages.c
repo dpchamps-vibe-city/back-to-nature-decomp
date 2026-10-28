@@ -28,6 +28,7 @@
 #include "ovl11_slot_decorations.h"
 #include "ovl11_menu_exit_flags.h"
 #include "ovl11_item_slot_commands.h"
+#include "ui_sprites.h"
 
 s32 Ovl11CountStatusSmallRecords (void);
 s32 Ovl11CountStatusNonzeroEntries (void);
@@ -532,7 +533,6 @@ void Ovl11DrawStatusUnpaddedNumber (s16 arg0, s16 arg1, s16 arg2);
 void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void Ovl11DrawStatusRecordMarks (s16 arg0, s16 arg1, s16 arg2);
 s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
-void func_80024A10 (s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void Ovl11DrawStatusTaggedRecordRowA(s16 arg0, s16 arg1) {
     s32 *var_s1;
@@ -665,8 +665,6 @@ void Ovl11DrawStatusRecordPageTitle(s32 arg0) {
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, *gTextBankOffsets + (s32) &D_80053604, 0xD2, 0x1A);
 }
 
-void func_80024A10(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
-
 void Ovl11DrawStatusRecordDetails(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
     s32 var_v1;
     s16 *base;
@@ -685,7 +683,7 @@ void Ovl11DrawStatusRecordDetails(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 ar
     base[10] = 0x24;
     *((u16 *)func_8001A970((s32) arg3, base + 0xB, 2)) = 0xFFFF;
     func_80017B3C(gActiveRenderContext->field_D8 + 0x54, (s32) base, (s32) arg4, (s32) arg5);
-    func_80024A10(gActiveRenderContext->field_D8 + 0x68, (s16) (arg4 + 0x10), arg5, arg1);
+    DrawUiSprite2BFrame(gActiveRenderContext->field_D8 + 0x68, (s16) (arg4 + 0x10), arg5, arg1);
 }
 
 void Ovl11DrawStatusSevenRecordRow(s16 arg0, s16 arg1);
@@ -817,7 +815,7 @@ void Ovl11DrawPairedValueRow(s16 row, s16 y) {
     iconFrame = ((struct Ovl11PairedValues *) D_8006C838)->field_44BA;
     iconFrame += 4;
     iconFrame -= row;
-    func_80024A10(textOt, 0x18, y, iconFrame % 4);
+    DrawUiSprite2BFrame(textOt, 0x18, y, iconFrame % 4);
     Ovl11DrawPairedValueBars(((struct Ovl11PairedValues *) D_8006C838)->pairs[row], y + 2);
     secondValue = ((struct Ovl11PairedValues *) D_8006C838)->pairs[row][1];
     secondBand = 0;

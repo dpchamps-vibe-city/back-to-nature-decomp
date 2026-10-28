@@ -16,13 +16,14 @@
 #include "ovl11_options_menu.h"
 #include "ovl11_status_pages.h"
 #include "ovl11_menu_frame_update.h"
-
-void func_8002470C(s16 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ui_sprites.h"
 
 void ovl_11_func_801038E4(void);
 
 void Ovl11UpdateMenuFrame(void) {
-    func_8002470C(0);
+    StepUiSpriteFourFramePhase(0);
     Ovl11ServiceInteractionSequence();
     Ovl11UpdateCalendarPanel();
     Ovl11UpdateItemTransferMenu();

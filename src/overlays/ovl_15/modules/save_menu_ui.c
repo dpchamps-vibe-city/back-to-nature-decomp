@@ -12,14 +12,13 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "ui_sprites.h"
 
 void func_80017B3C(s32, s32, s32, s32);
-void func_800248B0(s32, s16, s16);
 void func_80017A08(s32, s32);
 u16 *func_8001AA7C(s32, u16 *);
 s16 *func_8001A970(s32, s16 *, s32);
 void func_8001ABF0(u16 *, u16 *);
-void func_800249C0(s32, s16, s16);
 void Ovl15FormatDateNumber(s16, s16 *, s32);
 
 s8 Ovl15UpdateTwoChoiceMenu(void) {
@@ -42,7 +41,7 @@ s8 Ovl15UpdateTwoChoiceMenu(void) {
     if (gOvl15MenuCursor >= 2) {
         gOvl15MenuCursor = 0;
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 4, 0x5C, (gOvl15MenuCursor * 0xD) + 0x52);
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 4, 0x5C, (gOvl15MenuCursor * 0xD) + 0x52);
     buttons = *(s32 *)((u8 *)gPad0Input + 8);
     if (buttons & 0x40) {
         PlaySoundEffect(0);
@@ -77,7 +76,7 @@ s8 Ovl15UpdateSaveSlotMenu(s16 displayMode) {
     if (gOvl15MenuCursor >= 3) {
         gOvl15MenuCursor = 0;
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 4, 0x39, (gOvl15MenuCursor * 0x31) + 0x18);
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 4, 0x39, (gOvl15MenuCursor * 0x31) + 0x18);
     buttons = *(s32 *)((u8 *)gPad0Input + 8);
     if (buttons & 0x40) {
         PlaySoundEffect(0);
@@ -214,12 +213,12 @@ s8 Ovl15UpdateConfirmationMenu(void) {
     if (gOvl15ConfirmationChoice >= 2) {
         gOvl15ConfirmationChoice = 0;
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 4, 0x23, (gOvl15ConfirmationChoice * 0xE) + 0xC8);
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 4, 0x23, (gOvl15ConfirmationChoice * 0xE) + 0xC8);
     return 2;
 }
 
 s32 Ovl15WaitForMenuButton(s16 waitingState, s16 pressedState) {
-    func_800249C0(gActiveRenderContext->field_D8 + 4, 0x11D, 0xD9);
+    DrawAnimatedUiSprite07(gActiveRenderContext->field_D8 + 4, 0x11D, 0xD9);
     if (((GfxObj *)gPad0Input)->field_8 == 0) {
         return waitingState;
     } else {

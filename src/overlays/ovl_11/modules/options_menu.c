@@ -27,11 +27,11 @@
 #include "beveled_panel.h"
 #include "ovl11_clock_hud.h"
 #include "ovl11_menu_exit_flags.h"
+#include "ui_sprites.h"
 
 void func_80017A38(s16, s16);
 void func_80017B3C(s32, s32, s32, s32);
 void SetVal8005E2BC(s32);
-void func_800248B0(s32, s16, s16);
 void func_80017D9C(s32 *, u16 *, s16, s16, s32);
 
 void Ovl11UpdateOptionsMenu(void);
@@ -108,7 +108,7 @@ void Ovl11UpdateOptionsMenu(void) {
         SetMessagePortraitEnabled(0);
         SetVal8005E2BC(0);
         RequestMessageWindow(3, 0x3B0);
-        func_800248B0(gActiveRenderContext->field_D8 + 0x5C, 0x6C, (s16)(gOvl11OptionsRootRow_selection[0] * 14 + 0x54));
+        DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x5C, 0x6C, (s16)(gOvl11OptionsRootRow_selection[0] * 14 + 0x54));
         if (ready == 1) {
             buttons = *(s32 *)((u8 *)gPad0Input + 8);
             if (buttons & 0x20) {
@@ -181,7 +181,7 @@ void Ovl11UpdateOptionsListPage(void) {
             }
         }
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 0x50, (s16)(gOvl11OptionsListColumn * 0x96 + 0x1C), (s16)((gOvl11OptionsListRow_selection[0] + 1) * 0xE + 0x41));
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x50, (s16)(gOvl11OptionsListColumn * 0x96 + 0x1C), (s16)((gOvl11OptionsListRow_selection[0] + 1) * 0xE + 0x41));
     Ovl11ShowOptionsListRowDescription(gOvl11OptionsListColumn, gOvl11OptionsListRow_selection[0]);
 }
 
@@ -272,7 +272,7 @@ void Ovl11UpdateOptionsSettingsPage(void) {
             }
         }
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 0x50, (s16)(gOvl11OptionsSettingChoice * 65 + 0x42), (s16)((gOvl11OptionsSettingRow + 1) * 28 + 0x28));
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x50, (s16)(gOvl11OptionsSettingChoice * 65 + 0x42), (s16)((gOvl11OptionsSettingRow + 1) * 28 + 0x28));
     textOt = (s32 *)(gActiveRenderContext->field_D8 + 0x54);
     func_80017D9C(textOt, (u16 *)(D_80053D6A + gTextBankOffsets[0]), 0x46, 0x3E, gOvl11OptionsSettings_options[0] != 0);
     func_80017D9C(textOt, (u16 *)(D_80053D6A + 0xE + gTextBankOffsets[0]), 0x87, 0x3E, gOvl11OptionsSettings_options[0] != 1);
@@ -402,7 +402,7 @@ s32 Ovl11ShowMenuChoice(void) {
     } else {
         textRow = MENU_CHOICE_ROW + 2;
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 0x50, 0x16, (s16)(textRow * 14 + 0x18));
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x50, 0x16, (s16)(textRow * 14 + 0x18));
     if (ready) {
         buttons = *(s32 *)((u8 *)gPad0Input + 8);
         if (buttons & 0x820) {

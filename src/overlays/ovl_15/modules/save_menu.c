@@ -43,6 +43,7 @@
 #include "ovl15_card_filename.h"
 #include "ovl15_save_slot_header.h"
 #include "ovl15_save_slot_record_pool.h"
+#include "ui_sprites.h"
 
 void ovl_15_func_8013468C(void);
 
@@ -112,7 +113,6 @@ void Ovl15ResetSaveMenuState(void) {
 /* Shared text-token and pen-offset services. */
 void func_80017A08(s32, s32);
 void func_80017A38(s16, s16);
-void func_8002495C(s16);
 
 void Ovl15UpdateCardWriteScene(void) {
     s32 sprite;
@@ -130,7 +130,7 @@ void Ovl15UpdateCardWriteScene(void) {
         Ovl15LoadMenuResources(0);
         BeginScreenFadeDecrease(0x3C, 0, 2);
         BeginMasterVolumeFadeIn(0x3C);
-        func_8002495C(-1);
+        StepUiSpriteTwoFramePhase(-1);
         state->state = 1;
     } else if (state->state == 1) {
         DrawScrollingSpriteGrid(sprite);
@@ -141,7 +141,7 @@ void Ovl15UpdateCardWriteScene(void) {
         gOvl15MenuExitRequest = 2;
         func_80017A08(0, (s32)&gOvl15SaveSlotLabels[gOvl15SelectedCard]);
         DrawScrollingSpriteGrid(sprite);
-        func_8002495C(0);
+        StepUiSpriteTwoFramePhase(0);
         if (gOvl15MenuState != gOvl15LastMenuState) {
             gOvl15MenuStateTimer = 0;
             gOvl15LastMenuState = gOvl15MenuState;
@@ -191,7 +191,7 @@ void Ovl15UpdateCardReadScene(void) {
         Ovl15LoadMenuResources(0);
         BeginScreenFadeDecrease(0x3C, 0, 2);
         BeginMasterVolumeFadeIn(0x3C);
-        func_8002495C(-1);
+        StepUiSpriteTwoFramePhase(-1);
         state->state = 1;
     } else if (state->state == 1) {
         DrawScrollingSpriteGrid(sprite);
@@ -202,7 +202,7 @@ void Ovl15UpdateCardReadScene(void) {
         gOvl15MenuExitRequest = 2;
         func_80017A08(0, (s32)&gOvl15SaveSlotLabels[gOvl15SelectedCard]);
         DrawScrollingSpriteGrid(sprite);
-        func_8002495C(0);
+        StepUiSpriteTwoFramePhase(0);
         if (gOvl15MenuState != gOvl15LastMenuState) {
             gOvl15MenuStateTimer = 0;
             gOvl15LastMenuState = gOvl15MenuState;
@@ -263,7 +263,7 @@ void Ovl15UpdateCardTransferScene(void) {
         Ovl15LoadMenuResources(1);
         BeginScreenFadeDecrease(0x3C, 0, 2);
         BeginMasterVolumeFadeIn(0x3C);
-        func_8002495C(-1);
+        StepUiSpriteTwoFramePhase(-1);
         state->state = 1;
     } else if (state->state == 1) {
         DrawScrollingSpriteGrid(sprite);
@@ -274,7 +274,7 @@ void Ovl15UpdateCardTransferScene(void) {
         gOvl15MenuExitRequest = 2;
         func_80017A08(0, (s32)&gOvl15SaveSlotLabels[gOvl15SelectedCard]);
         DrawScrollingSpriteGrid(sprite);
-        func_8002495C(0);
+        StepUiSpriteTwoFramePhase(0);
         if (gOvl15MenuState != gOvl15LastMenuState) {
             gOvl15MenuStateTimer = 0;
             gOvl15LastMenuState = gOvl15MenuState;
@@ -650,8 +650,6 @@ void Ovl15CardWriteChooseSaveSlot(void) {
     }
 }
 
-void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
-
 void Ovl15CardWriteConfirmOverwrite(void) {
     s32 var_s0;
     s32 temp_a1;
@@ -661,7 +659,7 @@ void Ovl15CardWriteConfirmOverwrite(void) {
     for (var_s0 = 0; var_s0 < 3; var_s0++) {
         Ovl15DrawSaveSlotSummary((s16)var_s0, 1);
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 4, 0x39, (gOvl15MenuCursor * 0x31) + 0x18);
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 4, 0x39, (gOvl15MenuCursor * 0x31) + 0x18);
     switch (Ovl15UpdateConfirmationMenu()) {
     case 1:
     case -1:
@@ -2200,7 +2198,7 @@ void Ovl15CardTransferShowSummary(void) {
         Ovl15DrawSaveSlotSummary(var_s0, 0);
         var_s0 += 1;
     } while (var_s0 < 3);
-    func_800248B0(gActiveRenderContext->field_D8 + 4, 0x39, (gOvl15MenuCursor * 0x31) + 0x18);
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 4, 0x39, (gOvl15MenuCursor * 0x31) + 0x18);
     temp_v0 = Ovl15UpdateConfirmationMenu();
     switch (temp_v0) {
     case 1:

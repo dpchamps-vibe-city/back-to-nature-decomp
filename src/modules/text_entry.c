@@ -24,6 +24,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "ui_sprites.h"
 
 u16 gIndexedSelectionState;
 s16 gIndexedSelectionCursor;
@@ -144,8 +145,6 @@ void ProcessIndexedSelectionInput(void);
 
 void SetVal8005E2BC(s32 arg0);
 
-void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
-
 void DrawAndProcessIndexedSelection(void) {
     s32 temp_s0;
     s16 q;
@@ -161,17 +160,16 @@ void DrawAndProcessIndexedSelection(void) {
     RequestMessageWindow(3, 0x3A9);
     if (gIndexedSelectionState == 1) {
         s16 v = gIndexedSelectionCursor;
-        func_800248B0(temp_s0, (s16) ((v << 6) + 0x24), 0x42);
+        DrawUiSprite0BFrame1(temp_s0, (s16) ((v << 6) + 0x24), 0x42);
     } else if (gIndexedSelectionState == 2) {
         q = (s16) (gIndexedSelectionCursor / 7);
-        func_800248B0(temp_s0, (s16) (((gIndexedSelectionCursor - q * 7) * 0x27) + 0x24), (s16) (q * 0xE + 0x5E));
+        DrawUiSprite0BFrame1(temp_s0, (s16) (((gIndexedSelectionCursor - q * 7) * 0x27) + 0x24), (s16) (q * 0xE + 0x5E));
     }
     DrawIndexedSelectionLabels();
     ProcessIndexedSelectionInput();
 }
 
 void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_80024A10(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
 
 /* Existing overlapping views preserve signed/unsigned load widths. */
@@ -190,7 +188,7 @@ void DrawIndexedSelectionValue(void) {
     sum = *gTextBankOffsets + (s32)&D_80053946;
     func_80017B3C(base, sum, 0xAD, 0x23);
     if (gIndexedSelectionState >= 2) {
-        func_80024A10(base, 0xFD, 0x23, gIndexedSelectionRecord->category);
+        DrawUiSprite2BFrame(base, 0xFD, 0x23, gIndexedSelectionRecord->category);
     }
     if (gIndexedSelectionState >= 3) {
         func_8001AAF4((s16)(((IndexedSelectionSignedCategoryView *)gIndexedSelectionRecord)->index + 1), 2, base, 0x115, 0x23);
@@ -218,7 +216,7 @@ void DrawIndexedSelectionLabels(void) {
     end_val = -1;
     inc = 0x400000;
     do {
-        func_80024A10(base, var_s3 >> 16, 0x3C, (s16) var_s1);
+        DrawUiSprite2BFrame(base, var_s3 >> 16, 0x3C, (s16) var_s1);
         *func_8001AA7C(var_s1, &gTextEntryPreviewBuffer[0]) = end_val;
         func_80017B3C(base, (s32) &gTextEntryPreviewBuffer[0], var_s4 >> 16, 0x3C);
         var_s4 += inc;
@@ -572,7 +570,7 @@ void DrawEntryConfirmationPrompt(s32 arg0, s32 arg1) {
         func_80017B3C(base, sum, 0x93, 0x4E);
         DrawMenuPanel(gActiveRenderContext->field_D8 + 0x5C, 1, 0x91, 0x4C, 0x28,
                       0x1E);
-        func_800248B0(gActiveRenderContext->field_D8 + 0x54, 0x99, (s16)(tmp * 0xC + 0x54));
+        DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x54, 0x99, (s16)(tmp * 0xC + 0x54));
     }
 }
 
@@ -710,7 +708,7 @@ void DrawTextEntryCursor(u16 arg0) {
         add += 2;
     }
     rem += add;
-    func_800248B0(gActiveRenderContext->field_D8 + 0x60,
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x60,
                   (s16) (rem * 9 + 0x32),
                   (s16) (quot * 14 + 0x48));
 }

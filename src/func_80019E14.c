@@ -1,7 +1,8 @@
 #include "common.h"
-
-void func_800248B0(s32 arg0, s16 arg1, s16 arg2);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "ui_sprites.h"
 
 void func_80019E14(s32 arg0, s16 arg1, s16 arg2) {
-    func_800248B0(arg0, (s16)(arg1 + 8), (s16)(arg2 + 6));
+    DrawUiSprite0BFrame1(arg0, (s16)(arg1 + 8), (s16)(arg2 + 6));
 }

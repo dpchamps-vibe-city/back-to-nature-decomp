@@ -32,13 +32,13 @@
 #include "ovl11_held_item_flags.h"
 #include "ovl11_item_stack_clear.h"
 #include "ovl11_menu_exit_flags.h"
+#include "ui_sprites.h"
 
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
 void func_80017A38(s16 x, s16 y);
 void SetVal8005E2BC(s32 value);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
-void func_800248B0(s32 ot, s16 x, s16 y);
 
 /* Internal interfaces retain their original external linkage and word-sized
  * pointer arguments where present. Slot helpers are not a general inventory API. */
@@ -210,7 +210,7 @@ void Ovl11DrawAndProcessItemTransferMenu(void) {
             }
         }
     }
-    func_800248B0(gActiveRenderContext->field_D8 + 0x50,
+    DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x50,
         (s16)(gOvl11ItemTransferLayout[gOvl11ItemTransferCursor][0] + 12),
         (s16)(gOvl11ItemTransferLayout[gOvl11ItemTransferCursor][1] + 24));
 }

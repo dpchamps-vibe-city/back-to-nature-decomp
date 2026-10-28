@@ -10,8 +10,8 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "ui_sprites.h"
 
-void func_80024A10(s32 ot, s16 x, s16 y, s16 frame);
 s16 *func_8001A970(s32 value, s16 *text, s32 digits);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 u16 *func_8001AAB8(s32 weekday, u16 *text);
@@ -66,7 +66,7 @@ void Ovl11DrawClockHud(void) {
     DrawMenuPanel((u32 *)(drawContext + 0x90), 1, 0xE4, 0x10, 0x4E, 0x20);
     y = 0x13;
     x = 0x114;
-    func_80024A10(textOt, 0xE8, 0x13,
+    DrawUiSprite2BFrame(textOt, 0xE8, 0x13,
         ((struct Ovl11CalendarDisplayStateView *)D_8006C838)->season);
     *(u16 *)func_8001A970((((struct Ovl11CalendarDisplayStateView *)D_8006C838)->day) + 1,
         (s16 *)&gOvl11ClockHudText, 2) = 0xFFFF;

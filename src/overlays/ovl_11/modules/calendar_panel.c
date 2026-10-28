@@ -21,16 +21,15 @@
 #include "beveled_panel.h"
 #include "ovl11_menu_exit_flags.h"
 #include "ovl11_calendar_hooks.h"
+#include "ui_sprites.h"
 
 /* Engine text/sprite services; their original pointer-as-word ABI is kept. */
 u32 func_80017A64(void);
 void func_80017A48(u32 style);
 void func_80017A38(s16 x, s16 y);
 void SetVal8005E2BC(s32 value);
-void func_800248B0(s32 ot, s16 x, s16 y);
 s16 *func_8001A970(s32 value, s16 *text, s32 digits);
 void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
-void func_80024A10(s32 ot, s16 x, s16 y, s16 frame);
 u16 *func_8001AA7C(s32 value, u16 *text);
 u16 *func_8001AAB8(s32 weekday, u16 *text);
 
@@ -283,7 +282,7 @@ void Ovl11DrawCalendarCursor(s32 ot, s16 day, s16 firstWeekday) {
     s16 y;
 
     Ovl11GetCalendarCellPosition(day, firstWeekday, &x, &y);
-    func_800248B0(ot, (s16)(x + 0xC), (s16)(y + 0x9));
+    DrawUiSprite0BFrame1(ot, (s16)(x + 0xC), (s16)(y + 0x9));
 }
 
 void Ovl11DrawCalendarCurrentDayMarker(s32 ot, s16 day, s16 firstWeekday) {
@@ -327,7 +326,7 @@ void Ovl11DrawCalendarHeading(s32 ot, s16 year, s16 season) {
         boundedSeason = 0;
     }
     selectedSeason = boundedSeason;
-    func_80024A10(ot, 0x8E, 0x34, selectedSeason);
+    DrawUiSprite2BFrame(ot, 0x8E, 0x34, selectedSeason);
     *func_8001AA7C((s32)selectedSeason, (u16 *)&gOvl11CalendarNumberText) = 0xFFFF;
     func_80017B3C(ot, (s32)&gOvl11CalendarNumberText, 0x9E, 0x34);
 }

@@ -110,6 +110,20 @@ not dismissed because today's repository compiles one function per file.
 
 ### A. Counter/sprite family: strong reason to reopen the remaining flag
 
+**Subsequent TU reconstruction resolves both exceptions.** The complete
+seventeen-function `src/modules/ui_sprites.c` matches production baseline,
+including both scheduling passes, when each counter uses byte-global
+increment, byte quotient, then subtracts quotient times its period. The
+checked fold proved all members and linked EXE; the subsequent campaign gate
+passed every container, interface, policy and exception-growth check at
+2386/2625 folded functions. Both full overrides and their permissions are
+retired. This supplies a clean-C counterexample to the earlier universal
+claims, not evidence of original scheduling-off compilation. Fresh-sentinel
+and two-statement local-accumulator failures did not cover this construction.
+The grouping ledger's sprite-dispatch section records membership, boundaries,
+public names/contracts and verification. The reviewed-tree results below
+remain the historical controls for the superseded source.
+
 The grouping ledger places the counters among related sprite wrappers and
 mod-30 counter consumers (`notes/file-groupings.md:4801`).
 

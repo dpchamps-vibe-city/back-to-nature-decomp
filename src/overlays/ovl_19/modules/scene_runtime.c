@@ -46,6 +46,7 @@
 #include "random.h"
 #include "point_projection.h"
 #include "surface_collision.h"
+#include "ui_sprites.h"
 
 void func_80017A48(u32 arg0);
 u32 func_80017A64(void);
@@ -1606,12 +1607,6 @@ s32 Ovl19GetValueLabelOffset(s16 arg0) {
     return gOvl19ValueLabelOffsets[idx];
 }
 
-/* Surface-adjusted sprite projection and depth-bucket submission.
- * The paired paths share the same projection/draw protocol but retain
- * separate screen/vector workspaces in the original overlay data.
- * Interface: ovl19_projected_sprite.h. Grouping: notes/file-groupings.md. */
-void func_800248E8(s32 orderingTable, s32 arg1, s32 arg2, s32 arg3);
-
 void Ovl19DrawProjectedSprite(s32 orderingTable, SpriteSourceData *sprite,
                               s16 *position, s16 screenYOffset) {
     s32 activeOrderingTable;
@@ -1635,7 +1630,7 @@ void Ovl19DrawProjectedSprite(s32 orderingTable, SpriteSourceData *sprite,
         (sprite == (SpriteSourceData *) (gOvl19ActorSprites + 0x40)) ||
         (sprite == (SpriteSourceData *) (gOvl19ActorSprites + 0x80))) {
         DrawSpriteAnimationQuadsAndUpdate(spriteBucket, sprite, (s16) gOvl19ProjectedSpriteScreen[0], (s16) gOvl19ProjectedSpriteScreen[1]);
-        func_800248E8(companionBucket, (s16) gOvl19ProjectedSpriteScreen[0], (s16) gOvl19ProjectedSpriteScreen[1], 0);
+        DrawUiSprite18Frame(companionBucket, (s16) gOvl19ProjectedSpriteScreen[0], (s16) gOvl19ProjectedSpriteScreen[1], 0);
         return;
     }
     /* The +0x120 source bypasses depth rebucketing and the companion. */
@@ -1651,7 +1646,7 @@ void Ovl19DrawProjectedSprite(s32 orderingTable, SpriteSourceData *sprite,
     DrawSpriteAnimationQuadsAndUpdate(spriteBucket, sprite, (s16) gOvl19ProjectedSpriteScreen[0], (s16) gOvl19ProjectedSpriteScreen[1]);
     /* General sprites keep the companion at unshifted screen Y; the three
      * actor sources above instead apply screenYOffset to both submissions. */
-    func_800248E8(companionBucket, (s16) gOvl19ProjectedSpriteScreen[0], (s16) (gOvl19ProjectedSpriteScreen[1] - screenYOffset), 0);
+    DrawUiSprite18Frame(companionBucket, (s16) gOvl19ProjectedSpriteScreen[0], (s16) (gOvl19ProjectedSpriteScreen[1] - screenYOffset), 0);
 }
 
 void Ovl19DrawProjectedSpriteState(s32 orderingTable, ObjectState *sprite,
@@ -1668,7 +1663,7 @@ void Ovl19DrawProjectedSpriteState(s32 orderingTable, ObjectState *sprite,
     offset = (depth >> 3) * 4;
     DrawSpriteAnimationQuadsAndUpdate(orderingTable + offset, (SpriteSourceData *) sprite,
                  (s16) gOvl19ProjectedStateScreen[0], (s16) gOvl19ProjectedStateScreen[1]);
-    func_800248E8(gActiveRenderContext->field_120 + offset,
+    DrawUiSprite18Frame(gActiveRenderContext->field_120 + offset,
                  (s16) gOvl19ProjectedStateScreen[0], (s16) gOvl19ProjectedStateScreen[1], 0);
 }
 

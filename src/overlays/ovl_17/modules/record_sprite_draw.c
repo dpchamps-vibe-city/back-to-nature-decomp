@@ -12,8 +12,8 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
+#include "ui_sprites.h"
 
-void func_800248E8(s32 orderingTable, s32 x, s32 y, s32 frame);
 void Ovl17SelectRecordIndicatorAnimation(void);
 void ovl_17_func_800B9158(s32 position, s16 y);
 
@@ -42,7 +42,7 @@ void Ovl17DrawRecordSpriteQuads(Recon_ovl_17_func_800BAD9C_A0View *record, s32 v
         SetSpriteSourceTextureOffsets((Struct_800154CC *) sprite, 0, 0, 0, (s16) (s32) display->field_2);
     }
     DrawSpriteAnimationQuadsAndUpdate(orderingTable, (SpriteSourceData *) sprite, x, y);
-    func_800248E8(orderingTable, x, y, 1);
+    DrawUiSprite18Frame(orderingTable, x, y, 1);
     if (record->field_0 & 1) {
         Ovl17SelectRecordIndicatorAnimation();
         DrawSpriteAnimationQuadsAndUpdate(gActiveRenderContext->field_D8 + 0x10, (SpriteSourceData *) gOvl17ThresholdIndicatorSprite, (s16) (x - 0x38), (s16) (y - 0x38));
@@ -80,7 +80,7 @@ void Ovl17DrawRecordSpriteRects(Recon_ovl_17_func_800BAD9C_A0View *record, s32 v
     }
     DrawSpriteFrameRects(orderingTable, (s32)sprite, (s32)record->field_24, (s32)record->field_25,
                         x, y);
-    func_800248E8(orderingTable, x, y, 1);
+    DrawUiSprite18Frame(orderingTable, x, y, 1);
     if (record->field_0 & 1) {
         Ovl17SelectRecordIndicatorAnimation();
         indicator = gOvl17ThresholdIndicatorSprite;
