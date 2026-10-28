@@ -110,8 +110,9 @@ void func_8001FCDC(void) {
 
 /* Shared control record: transfer completion and master-volume integration.
  * Initialization marks the transfer idle but does not issue an SDK volume
- * command. The record remains absolute-addressed, distinct from the command
- * buffer/reset-guard words reached through GP. */
+ * command. Its 24-byte extent exceeds -G8, so absolute addressing gives no
+ * TU-ownership evidence. The two small command words retain their witnessed
+ * GP definitions above. */
 void StepMasterVolumeRamp(void);
 
 void InitMasterVolumeRamp(void) {

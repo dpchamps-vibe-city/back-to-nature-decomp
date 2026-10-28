@@ -11,6 +11,10 @@
  * Its adjacent surface helper probes a facing-offset COPY of object position
  * and caches the polygon word in gOvl11PrimarySurfaceFlags, substituting 0x8000
  * when the word has no upper-half bits; it does not move the object.
+ * Current-action input uses that same button snapshot. Held button 0x80
+ * charges eligible item actions in update-count units; release chooses the
+ * tier/facing animation and saves a sound voice for subsequent cancellation.
+ * At 61 saturated-charge updates it requests state 0x3E instead.
  * Clock/fade/object guards can skip work; this is not an unconditional tick.
  * No return value. State and counter units are area-update calls, not ms.
  */

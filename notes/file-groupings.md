@@ -1154,8 +1154,13 @@ proofs. The setters' many other clients demonstrate reuse; treating those
 outward edges as membership would absorb unrelated item, camera and movement
 services. The baseline checked fold preserves all seven and overlay bytes.
 
-**`modules/object_action_input.c`, 800C6A24–800C6E0C exclusive:** the release
-helper and its sole caller. 6AFC builds the +18 charge tier and saturated
+**Absorbed whole into `modules/primary_object_actions.c` (21 entries,
+C401C–C6E0C); current membership and boundaries are recorded in the C401C
+section.** The old C6A24 cut below is superseded by the original-byte exclusive
+call census and frame-snapshot/charge producer-consumer closure.
+
+Historical `modules/object_action_input.c`, 800C6A24–800C6E0C exclusive:
+the release helper and its sole caller. 6AFC builds the +18 charge tier and saturated
 update count, and 6A24 consumes that tier on button release to choose sound,
 next state, animation and frame. This is a concrete charge/release protocol,
 not just adjacency. The public input entry is called by primary_object_update.
@@ -2549,8 +2554,43 @@ above, not a separate dispatcher slice. Its admission and frame banks are
 gOvl11ObjectModeEntryGuards/gOvl11ObjectModeHandlers; their public callbacks
 alone do not prove all callback implementations share this original TU.
 
-**Complete frame bank reconstructed as `modules/object_mode_handlers.c`,
-8010E2C4–8010F6C0 exclusive, fourteen original entries.** It absorbs the whole
+**CURRENT: `modules/object_mode_actions.c`, 8010E2C4–80110658 exclusive,
+all 27 original entries**, absorbing the WHOLE fourteen-entry frame bank and
+thirteen-entry action_sequences unit. The former F6C0 cut is withdrawn:
+original-word j/jal and pointer-word scans show that all five action-driver
+entries have ONLY frame-bank clients (EB24/ECC0/EEE4/F324); none is another
+public callback-table target. The position lookup and movement helper likewise
+have no clients outside this union. Conversely, 10544 calls mode-7 movement
+E644 at 10568, closing the reciprocal helper link. The five action drivers
+share their acquisition/probe/completion helpers, while the mode callbacks
+select those exact sequences. Thus this is a single frame/action execution
+closure, not merely users of common object fields or a callback table.
+Private keyframe/message tables 127D48–127D90 and mutable action-position
+rows 127D90–127E60 corroborate its order; the checked fold proves pooled switch
+tables and the 2D40 section-relative alignment word without a new data object.
+
+Left is the distinct admission-guard bank, testing entry rather than running
+these sequences; it has no client of their five drivers or reciprocal helper
+loop. Right 10658 begins the independently shared grid-search/nested-helper
+service, also called by admission guards and area_record_claims. Neither edge
+splits this exclusive frame/action closure. These are evidence-limited -G0
+protocol edges, not GP-proven original object boundaries; no override or
+mechanical obstacle selected a seam. The real nested mode-10 resolver stays
+nested and all original entries retain external linkage and canonical ABIs.
+
+The module documents the table-driven callback interface, per-object retained
+fields, distinct completion conventions, mutable position rows and call-count
+timing. The mode-10 callback header remains; the seven action helpers and
+mode-7 helper are now in-unit forward contracts, not public headers with no
+outside client. Their former header documentation moved into the source.
+Movement/grid acquisition parameters and locals now identify object, rank
+threshold, flags, coordinates and grid mode. All 27 members and linked ovl_11
+pass the checked whole baseline fold; no setting or permission is changed.
+The final eight-gate batch acceptance (447 valid modules, 2511/2625 coverage,
+all linked bytes unchanged) is recorded with primary_object_actions above.
+
+Historical frame bank `modules/object_mode_handlers.c`,
+8010E2C4–8010F6C0 exclusive, fourteen original entries. It absorbs the whole
 two-entry object_mode_transition module, including the real nested resolver.
 Membership is supported by the entire non-null mode bank (modes 0..12), its
 one shared state/lock/release protocol, the internal mode-11-to-mode-7 calls,
@@ -3392,8 +3432,14 @@ established group sliced to protect a flag. The checked fold proved this
 service and the linked overlay at baseline; it has no override or policy
 exception. Canonical names preserve the original container/address identities.
 
-**Reconstructed `modules/action_sequences.c`, 8010F6C0–80110658 exclusive,
-all thirteen entries in original order.** The five grid/record/tagged/seasonal
+**Absorbed whole into `modules/object_mode_actions.c`, 8010E2C4–80110658,
+27 entries; current evidence and outer boundaries are in the object-mode
+section.** Its five action drivers and two common services have no client
+outside that union, while movement calls back to mode 7. The former F6C0
+public-service cut below is superseded by that original-word in-edge census.
+
+Historical `modules/action_sequences.c`, 8010F6C0–80110658 exclusive,
+all thirteen entries in original order. The five grid/record/tagged/seasonal
 action drivers form one connected helper closure: F6C0/ FBC4/ FEF8 share
 completion 10118; F6C0/ F80C share grid acquisition 105C8; 10520/10494 connect
 those drivers to the selection sequence F8E4. The offset probes 1031C/103E8
@@ -4312,6 +4358,18 @@ not infer this overlay's data owner. No generated file was edited by hand.
 
 ## `ovl_11` D_80127428 shared-state cluster — 0x801037DC–0x801040A8 (confidence: medium)
 
+Additional whole-fifteen baseline trial: separate positive/negative `if`
+guards in 3B24, with 4148's common +12 column advance after the text join.
+Both overrides were temporarily removed. The checked fold compiles but reports
+13/15 exact, again only 3B24 and 4148 nonexact; linked ovl_11 is 89ae3cfc
+versus original 165c3cca. 3B24 retains both RMW arms, but its positive store
+falls through to a second sign test rather than the target's jump over it.
+Evidence: build/foldTranslationUnit/ovl_11/card_quantity_editor/{members.json,
+failed-source.c,*.diff.txt}. The helper rolled back the fold; both source
+changes and exact prior flag settings were restored. This closes that combined
+source spelling, not other baseline contexts or the supported whole-unit
+hypothesis. No flag-protecting slice or replacement setting was retained.
+
 Fresh complete-fifteen compiler-setting control (80103770–801044E4), preserved
 under build/tuFlagReview/ovl_11/hand_value: baseline is exact for 13/15, with
 only 3B24/4148 nonexact; uniform no-skip is 14/15 (4148 nonexact); uniform
@@ -4815,8 +4873,51 @@ logs are record-hook-query-interfaces.log and gauge-clock-interfaces.log
 in the same directory. Exit 1 denotes the unfinished campaign, not a failed
 integrity gate.
 
-**Now merged whole into `modules/primary_object_actions.c`,
-800C401C–800C6A24 exclusive, nineteen entries**, together with the former
+**CURRENT: `modules/primary_object_actions.c`, 800C401C–800C6E0C
+exclusive, all 21 entries.** The whole two-entry object_action_input unit is
+absorbed; the former C6A24 service cut below is withdrawn. The original-byte
+in-edge census finds C4388 -> C6AFC and C6DBC -> C6A24, with no other j/jal
+client and no pointer-table word for either helper anywhere in ovl_11. The
+frame service produces the substituted held/pressed snapshot consumed by
+C6AFC, which builds the +18 charge tier consumed by C6A24. The latter saves
+the voice that the frame/action services cancel. This exclusive driver/input/
+release closure and concrete snapshot/charge lifecycle support the join;
+the shared voice alone does not, since action_phase also uses it. The pooled
+switch tables follow member order; the checked fold proves the 3E4 zero word
+is section-relative alignment, not a data object requiring a new definition.
+
+Left C3F6C is object_events' independent script/message protocol, with no
+snapshot/charge helper or private cell-request extension. Right C6E0C starts
+the reusable state/animation setters and their own selector closure; they
+have many other clients and do not implement this input/charge lifecycle.
+These are evidence-limited -G0 boundaries, not recovered object metadata.
+No flag or mechanical limit selects either edge; all 21 members and the linked
+overlay pass the checked baseline fold. The public frame/grid interfaces stay;
+the now-unused input-only header is retired, with its contract kept beside
+the internal dispatcher. All symbols retain external linkage, canonical
+identities and their ABI. Charge/transition locals and labels now describe
+their roles; no data type, ownership, layout or arithmetic changed.
+
+Batch acceptance with object_mode_actions: both complete merges cover 48
+already-folded functions; module count falls **449 -> 447**, with coverage
+unchanged at **2511/2625** (114 remaining, zero invalid/undetermined). The
+non-cached `tuProgress.ts --verify --baseline build/tu-campaign/baseline.json`
+passes all eight integrity categories: live-C completeness, source policy,
+EXE/all thirteen overlay bytes including data/callback/jump-table placement,
+configuration convergence, whitespace, stable inputs and exception non-growth.
+All 447 module objects are valid. Canonical names are clean; interfaceAudit
+reports zero failing published interfaces and no new conflicts/implicit calls.
+Its pre-existing unpublished text-engine conflict and implicit declaration
+remain visible, not silently repaired here. Three no-outside-client headers
+are retired, with their contracts retained in the consolidated sources.
+No shared tool/test changed, no setting or permission was added or retired,
+and all 164 pre-existing tracked patches outside this batch's scope are
+byte-for-byte unchanged. The unsuccessful whole-editor control above was
+fully restored before acceptance. Verification exit 1 denotes the 114 remaining
+functions, not a failed integrity gate. No commit was made.
+
+Historical nineteen-entry merge into `modules/primary_object_actions.c`,
+800C401C–800C6A24 exclusive, nineteen entries, together with the former
 three-member primary_object_update unit. The former cut at C4A2C is withdrawn:
 the u16 at 80128C64 has an exclusive reset/use closure across that cut.
 C401C clears it when action dispatch returns nonzero; C523C/C541C alone add
@@ -9455,7 +9556,7 @@ Members (address order):
   directly follows matched member func_8001FA0C in the link order (low
   confidence)
 
-## sound-sequencer slot wrappers — 0x8001FABC–0x8001FCE4
+## sound commands, transfer completion and master volume — 0x8001FABC–0x8001FE7C
 
 **CURRENT: complete `src/modules/sound_control.c`, exe:8001FABC–8001FE7C
 exclusive, sixteen entries**, absorbing ALL nine sound_commands and seven
@@ -9467,8 +9568,13 @@ the complete six-word record. No other C source accesses this record or its
 latch. This exclusive reset/service/query chain is a positive producer/consumer
 witness, not merely two clients of the broad low-level sound driver. The
 old 'client' description overlooked that FBF0 is the latch's ONLY invalidator.
-The service also steps the ramp and its four control/query helpers, so the
-whole seven-entry ramp family belongs with it, not just the completion query.
+The service also steps the ramp; its initializer, step and four control/query
+helpers complete the seven-entry ramp family, not just the completion query.
+Caller-side corroboration: Ovl11ReloadObjectSoundBank installs the read buffer,
+stops the sequence, queues a command and loops over the service/query pair.
+Ovl11RefreshAreaSoundBank combines the ramp/service/state query with sequence
+stop and command queueing. These are observed protocols, not generic common
+callers of the driver.
 
 The nine-entry command family's independently witnessed GP buffer-setter/
 dispatcher state, paired effect voice and sequence/reverb operations and two
@@ -9476,7 +9582,11 @@ private preset/load tables remain as described below. Its empty FCDC is
 carried, not treated as a boundary or assigned an invented purpose. All
 sixteen keep external linkage and their original signatures. The two command
 words retain their witnessed GP definitions; the 24-byte control record stays
-absolute/extern. No type, storage extent or alias is changed.
+absolute/extern. Its extent exceeds -G8, so absolute access supplies no ownership
+or boundary evidence. FB08/FB10 have no retail callers: their membership is the
+shared voice-23 convention and position inside the command family; FCDC has
+only its interior position and empty body. These are the weakest members,
+retained without invented purpose. No type, storage extent or alias is changed.
 
 Left FAB4 ends color_row_blend's gradient/upload helper closure; it uses no
 command table, buffer, transfer latch or ramp helper. Right FE7C begins the

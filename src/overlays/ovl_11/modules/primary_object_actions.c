@@ -1,7 +1,9 @@
 /*
  * Primary-object frame service: select live or substituted button masks,
  * dispatch object actions, advance timers/effects, and retain position history.
- * Input remapping and the ground-contact probe feed the frame service.
+ * Input remapping, charge/release selection and the ground-contact probe feed
+ * the frame service. The input dispatcher consumes that service's substituted
+ * button snapshot, not a second poll of the pad.
  * A new dispatched action clears the cumulative footprint power; the two
  * footprint helpers add tier-scaled power and pass it to grid/effect services.
  * The cell request and action-script step share one non-reentrant lifecycle.
@@ -10,7 +12,7 @@
  *
  * Public contracts: ovl11_primary_object_update.h (frame entry) and
  * ovl11_primary_object_grid_actions.h (transfer/animation/action entries).
- * Movement, collision and input-to-state selection remain external services.
+ * Movement, collision and reusable state/animation setters remain external.
  * All original entries retain external linkage.
  *
  * The evidence for its membership and boundaries is in
@@ -38,6 +40,8 @@
 #include "ovl11_held_item_replacement.h"
 #include "ovl11_primary_object_collision_action.h"
 #include "ovl11_cell_grid_lookup.h"
+#include "ovl11_grouped_value_mapping.h"
+#include "ovl11_position_transition.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libcd.h"
@@ -54,8 +58,8 @@
 #include "ovl11_primary_object_grid_actions.h"
 #include "ovl11_record_placement.h"
 #include "ovl11_moving_items.h"
+#include "sprite_source.h"
 #include "ovl11_primary_object_state_change.h"
-#include "ovl11_object_action_input.h"
 #include "ovl11_primary_object_action_phase.h"
 #include "ovl11_scene_header_key.h"
 #include "ovl11_cell_grid_selection.h"
@@ -85,6 +89,7 @@
 
 void Ovl11ProbePrimaryObjectSurface(Ovl11C498CObject *object);
 void Ovl11RemapPrimaryDirectionButtons(void);
+s32 Ovl11DispatchObjectActionInput(Ovl11C7010Object *object);
 
 void Ovl11UpdatePrimaryObject(void) {
     Ovl11PlayerUpdate *obj;
@@ -1293,4 +1298,128 @@ s32 Ovl11BeginFlaggedItemFollowup(Ovl11C7010Object *arg0) {
         return 1;
     }
     return 0;
+}
+
+/* The tier consumes the dispatcher's +18 charge count; the saved voice is
+ * cancelled by the frame/action services, not by this release operation. */
+void Ovl11ReleaseChargedItemAction(Ovl11C7010Object *object) {
+    s16 chargeTier;
+    s32 soundBase;
+    s32 soundOffset;
+
+    chargeTier = (s16) (*(u16 *) ((u8 *) object + 0x18)) / 20;
+    soundOffset = ((object->unk3C - 0x16) / 2) * 5;
+    soundBase = chargeTier + 0x1D;
+    gOvl11ActiveItemActionSound = PlaySoundEffect((s16) (soundOffset + soundBase));
+    Ovl11ChangePrimaryObjectState(object, object->unk3C + 1, Ovl11MapGroupedValueCode((s16) ((u16) object->unk84 - ((*(u16 *) ((u8 *) object + 0x86)) - chargeTier))) + (object->unk38 * 5), -2);
+    object->sprite.field_5 = chargeTier + 1;
+}
+
+/* Process the frame's held/pressed snapshot for the current action. Charge
+ * states saturate +18 at 20*the +86 word, then count saturated updates; at
+ * 61 they request state 0x3E and clear that count. Release selects the next
+ * animation and saves its sound voice. Units are update calls, not time.
+ * Return 1 only for the handled state-0x2D exit; zero can still have effects.
+ * Object flag 0x40 suppresses processing. */
+s32 Ovl11DispatchObjectActionInput(Ovl11C7010Object *object) {
+    s32 transitionResult;
+    u16 action;
+    u8 animation;
+    u16 held;
+    u16 pressed;
+
+    if (!(object->unk6C & 0x40)) {
+        held = *(u16 *)&gOvl11PrimaryHeldButtons;
+        pressed = *(u16 *)&gOvl11PrimaryPressedButtons;
+        action = object->unk3C;
+        switch (action) {
+        case 0x4F:
+            if (((*(s32 *) ((u8 *) object + 0x264)) & ~0xFF) == 0x400) {
+                PlaySoundEffect(0xC);
+                return 0;
+            }
+            return 0;
+        case 0x58:
+            if (pressed & 0x40) {
+                object->unk6C = (object->unk6C | 0x1800) & 0xBFFFFFFF;
+                Ovl11ChangePrimaryObjectState(object, 0x4BU, 0, 0x2D);
+                object->unk38 = 0;
+                SelectSpriteAnimation((ObjectState *) &object->sprite, 4);
+                (*(s32 *) ((u8 *) object + 0x114)) = -0xFA;
+                object->sprite.field_5 = (u8) (*(u16 *) ((u8 *) object + 0x38));
+                object->unk6C = (object->unk6C | 0x40000000) & ~1;
+                (*(u16 *) ((u8 *) object + 0x36)) = (u16) ((*(u16 *) ((u8 *) object + 0x36)) & 0xFEFF);
+                PlaySoundEffect(6);
+            }
+            goto update_status;
+        case 0x57:
+            if (pressed & 0x40) {
+                Ovl11ChangeObjectStateDirect((Recon_ovl_11_func_800C7270_A0View *) object, 0x58, 0, gOvl11ClockMinutePeriodTwice * 0xA);
+            }
+update_status:
+            if (D_8006C844 & 0x100000) {
+                Ovl11ApplyStatusDelta(2, -1, 0, 0);
+            }
+            return 0;
+        default:
+unhandled:
+            return 0;
+        case 0x3:
+        case 0x31:
+            if ((u8) object->sprite.field_5 >= 2U) {
+                object->unk6C &= 0xFFFF7FFF;
+            }
+            return 0;
+        case 0x2D:
+            if (!(held & 0xF9FF)) {
+                if (object->unk6C & 0x800000) {
+                    if (!(D_80070C88 & 0x1000)) {
+                        goto finish_state_2d;
+                    }
+                    return 0;
+                }
+                goto unhandled;
+            }
+finish_state_2d:
+            Ovl11ChangeObjectStateDirect((Recon_ovl_11_func_800C7270_A0View *) object, 0x2E, 2, -2);
+            object->unk6C &= 0xFFBFFFFF;
+            return 1;
+        case 0x16:
+        case 0x18:
+        case 0x1A:
+        case 0x1C:
+        case 0x1E:
+            if (held & 0x80) {
+                if ((*(s16 *) ((u8 *) object + 0x18)) < ((*(s16 *) ((u8 *) object + 0x86)) * 0x14)) {
+                    (*(s16 *) ((u8 *) object + 0x18)) = (s16) ((u16) (*(s16 *) ((u8 *) object + 0x18)) + 1);
+                } else {
+                    gOvl11ItemActionChargeFrames += 1;
+                }
+                object->sprite.field_5 = (*(s16 *) ((u8 *) object + 0x18)) / 20;
+                if ((u32) gOvl11ItemActionChargeFrames >= 0x3DU) {
+                    object->unk6C |= 0x1800;
+                    Ovl11ChangePrimaryObjectState(object, 0x3EU, 0, -2);
+                    gOvl11ItemActionChargeFrames = 0;
+                    return 0;
+                }
+                return 0;
+            }
+            Ovl11ReleaseChargedItemAction(object);
+            return 0;
+        case 0x4A:
+            animation = object->sprite.field_4;
+            if (animation == 1) {
+                transitionResult = Ovl11StepPositionTransition((Ovl11PositionTransitionObject *) object);
+                if (transitionResult == animation) {
+                    transitionResult = -2;
+                } else {
+                    transitionResult = 0x84;
+                }
+                (*(s16 *) ((u8 *) object + 0x1C)) = transitionResult;
+            }
+            return 0;
+        }
+    } else {
+        return 0;
+    }
 }
