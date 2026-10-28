@@ -15,7 +15,7 @@
 #include "psyq/libgte.h"
 #include "screen_fade.h"
 #include "message_window.h"
-#include "ovl25_scene_record_seeders.h"
+#include "ovl25_scene_state_machine.h"
 
 void Ovl25BeginEventPhases(void) {
     Ovl25ResetSceneRecords();
@@ -89,8 +89,6 @@ void Ovl25BeginEventFadeIncrease(void) {
         gOvl25EventPhase = 5;
     }
 }
-
-void Ovl25SeedInitialSceneRecords(void);
 
 void Ovl25WaitAndBeginEventFadeDecrease(void) {
     char *far_base;

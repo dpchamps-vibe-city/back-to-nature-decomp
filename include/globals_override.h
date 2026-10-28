@@ -5277,14 +5277,14 @@ extern s32 *gOvl11ActionProbedRecord;
  * code, i.e. outside the $gp range. */
 extern s32 gOvl11ActionMotionVariant;
 
-/* D_800BA894 - ovl_11 absolute-addressed pointer table indexed by the
- * handler object's u16 state field (obj+0x26). ovl_11_func_801090A4 reads
- * an entry, null-tests it and calls it; ovl_11_func_80109188 null-tests an
- * entry and clears state through it. Absolute-addressed main-RAM table. */
-extern s32 gOvl11ActionEntryHandlers[];
-/* 80109188 dispatches this nineteen-slot bank to signed handler-state views. */
+/* ovl_11:800BA894, nineteen raw callback addresses indexed by object+0x26.
+ * 801090A4 invokes the selected script each frame; 80109188 only tests its
+ * presence before resetting accepted state/script fields. */
+extern s32 gOvl11StageMode1StepCallbacks[];
+/* ovl_11:800BA848, nineteen transition checks called by 80109188 before
+ * accepting a requested state. Return -1 rejects the script-field reset. */
 struct Ovl11D04D4Obj;
-extern s32 (*gOvl11StageMode1StateCallbacks[19])(struct Ovl11D04D4Obj *);
+extern s32 (*gOvl11StageMode1TransitionCallbacks[19])(struct Ovl11D04D4Obj *);
 /* 80108BE8/80109550 index four animation/frame pairs per mode-1 state. */
 typedef struct {
     u16 animation;

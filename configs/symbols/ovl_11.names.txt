@@ -179,7 +179,7 @@ Ovl11StepActionMovement = 0x8010ADD4; // type:func
 Ovl11RefreshActionMotion = 0x8010AE64; // type:func
 Ovl11TryActionSpawnHandoff = 0x8010AFCC; // type:func
 
-gOvl11ActionEntryHandlers = 0x800BA894; // type:data size:0x4C
+gOvl11StageMode1StepCallbacks = 0x800BA894; // type:data size:0x4C
 gOvl11ActionEntry0Keyframes = 0x80127A78; // type:data size:0x8
 gOvl11ActionEntry2Keyframes = 0x80127A80; // type:data size:0x10
 gOvl11ActionEntry1Keyframes = 0x80127A90; // type:data size:0xC
@@ -2608,7 +2608,7 @@ Ovl11TryStageMode1Spawn65Move = 0x80109C24; // type:func
 Ovl11TryStageMode1TaggedRecordMove = 0x80109D08; // type:func
 Ovl11MoveStageMode1ToProbedRecord = 0x80109E04; // type:func
 Ovl11StartStageMode1Flag4Effect = 0x80109E64; // type:func
-gOvl11StageMode1StateCallbacks = 0x800BA848; // type:data size:0x4C
+gOvl11StageMode1TransitionCallbacks = 0x800BA848; // type:data size:0x4C
 gOvl11StageMode1AnimationPairs = 0x80127918; // type:data size:0x4
 
 // Five dated condition records, singleton, and closed calendar/flag protocol.

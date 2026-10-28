@@ -87,6 +87,235 @@ conditional on those source inputs; they did not establish baseline
 unreachability for the indexed header representation. The grouping ledger
 records the complete membership, interfaces and evidence-limited boundaries.
 
+## Subsequent scene and slot-menu TU resolutions
+
+The complete ovl_17 code span (61 entries, 800B7E38–800BB454) now compiles as
+`modules/record_scene.c` at baseline. Using the existing queue entry-member
+lvalues at 9158 preserves the distinct word/halfword address-expression orders
+lost by raw byte-pointer arithmetic. Its -fno-cse-skip-blocks and permission
+are retired, not moved to the whole unit. Earlier alternate-anchor and
+loop-guard failures were conditional on those source inputs.
+
+The complete twelve-entry ovl_11:800F787C–800F84F0 menu/slot unit similarly
+folds at baseline as `modules/record_slot_menu.c`. Explicit compactor
+backedges preserve the original recomputed index addresses without the
+LOOP_BEG introduced by the former outer do-while. Its -fno-strength-reduce
+and permission are retired. The earlier matrix measured that loop-shaped
+reconstruction, not every baseline C source.
+
+Both checked folds prove all member text and the linked container. The
+subsequent batch gate passes the EXE, all thirteen overlays, associated data,
+interfaces, source policy, convergence and exception non-growth at 2464/2625
+folded functions. No module flag or new permission was needed. Membership
+and conservative protocol boundaries are recorded in the grouping ledger.
+
+## Subsequent condition-record and simulation findings
+
+The complete 28-entry condition-evaluation protocol now includes F0E00's
+installer. Three source assignments form its count*36 offset before the
+integer address addition, retaining the target's indexed scan with both loop
+passes enabled. Its no-strength-reduce override and permission are retired.
+The complete seven-entry EEECC–EFA1C dated-condition protocol also folds at
+baseline: EF8BC's structured rejection returns, case breaks and shared success
+return retain its low-half rematerializations without no-skip. Both checked
+folds preserve every member and the linked overlay. The following full batch
+gate passes all eight integrity checks at 2472/2625 folded, 469 valid modules,
+including EXE/all thirteen overlays and data. No module flag replaces either.
+
+The 98CC simulation predicate's inverted branches and shared result return
+likewise preserve its two store/return tails at baseline; no-schedule-insns
+and its permission are retired. The whole-46 scene trial proves its 16 words
+and 44 other members exact, with only BA698 still differing at that stage. That helper's
+held-base form differs in five allocation words under baseline; no-GCSE is
+exact. A loop-local/direct-field base lets PRE hoist the full address and is
+two instructions short. Reading a genuine typed field through the held base
+is neutral, not a fix; the second asm-name proposal was rejected. The
+42-member scene/state/draw merge and three query entries are therefore a
+mechanically bounded integration of the same unfinished original-file family,
+not evidence of original cuts around BA698. Its original override stays
+local and unchanged, with no exception growth.
+
+For ovl_15, the 344E8 interface conflict is independently resolved by a
+halfword result/count plus word scan index and direct if/else return. The
+checked twelve-member selection fold and its s16-declaring caller remain
+exact. At that stage the supported renderer extension 335F8 was blocked: natural
+narrow coordinates remove the alleged PRE necessity but change allocation
+and next-X placement; uniform no-GCSE changes 33808 and 331C4. Its existing
+setting is not generalized and its temporary integration edge is not claimed
+as historical. Earlier claims of universal baseline unreachability for all
+these functions exceeded their measured source premises.
+
+## Subsequent complete option-row TU resolution
+
+Both complete runs now fold at baseline: eleven prompt_option_rows entries
+(8011A9CC–8011B6C4) and five price_option_rows entries
+(80113CD0–80114604). The last gated row must complete the unrolled append:
+advance its text cursor at the branch join, then post-increment each of the
+three parallel field cursors on its store. This retains all target pointer
+walks. Advancing text inside both branch arms still folds them, while separate
+pre-store increments change the row being addressed; constant-index struct
+fields also fold. The source preserves the ordinary complete row append, not
+an isolated arithmetic/alias knob. Every member and the linked overlay pass
+both checked folds. Four two-option overrides (AA64, AC30, ADF4, 13FF0) and
+their permissions are retired; no module setting replaces them. Old blanket
+unreachability claims were conditional on the measured incomplete cursor
+lifecycles. The grouping section records full membership, callback-word and
+boundary evidence, canonical identities and the three actual C-call interfaces.
+
+Earlier campaign verification after names, headers and caller reconciliation:
+**2509/2625 folded (112 above the 2397 receipt), 472 valid modules**; all eight
+integrity gates PASS, including linked EXE/all thirteen overlays and associated
+data, source policy and exception non-growth. The receipt listed 24 override
+entries; 12 remain, with no module-scope replacement. The unreconciled renderer
+335F8 and range helper BA698 are explicitly documented mechanical limits, not
+asserted original TU boundaries. No commit was made.
+
+## Complete ovl_15 slot-selection resolution
+
+The entire thirteen-entry 801335F8–80134770 unit now folds into
+modules/save_slot_selection.c at BASELINE. 335F8 is named Ovl15DrawSlotBanks;
+its public header documents the two banks, occupied-only vertical compaction,
+pixel coordinates and unchecked record-index prerequisites. Its caller uses
+the published interface, and the row helper is no longer exposed as a separate
+public service. Names/addresses, linkage and all ABI types remain consistent.
+
+Two source reconstructions explain the old exception. First, compute nextX
+once at the base-selection JOIN; GCC itself duplicates the add into both
+arms, while keeping the signed X conversion at the latch. The former two
+source assignments allowed PRE to lift half that conversion. Second, cache
+the FULL mark-table address before the outer loop; a bank byte offset is
+then added to that cached address, offset first. This removes the HIGH-only
+hoist/lifetime and closes the preheader register residual. Typed pointer
+addition reverses one commutative operand pair, so the readable source retains
+the documented offset-first integer address expression, over the real table.
+The cached-address dump reports zero PRE substitutions/insertions in this
+renderer. No literal RAM address, fabricated alias, dead store or pin is used.
+
+The renamed/readable complete source is exact for all thirteen members at
+baseline, and foldTranslationUnit's checked extension proves the linked
+ovl_15 too. The -fno-gcse entry and its permission are REMOVED, not extended
+to a module setting. No companion rewrite or alternative profile is required;
+the scratch row-helper recordType experiment is not integrated. The old
+12/13, 6/13 and 3/13 matrices below are valid controls for the superseded
+source, not current blockers or proofs of original flags. The grouping
+ledger records the complete membership and protocol-boundary evidence.
+
+Final post-integration gate: **2510/2625 folded, 472 valid modules**, all eight
+integrity categories PASS, including complete linked EXE/all thirteen overlays
+and data, policy and exception non-growth. This adds the last renderer to the
+unit (113 new folds above the campaign receipt); eleven overrides remain
+versus the receipt's twenty-four. The full gate follows canonical naming,
+public-header/caller reconciliation and stale internal-comment cleanup.
+No generated output was hand-edited and no commit was made.
+
+## Complete ovl_21 scene-simulation resolution
+
+The whole supported 46-entry 800B7E3C–800BA9F8 run is now one
+modules/scene_simulation.c, including BA698 and all three group queries.
+The checked fold proves all 46 relocated functions and linked ovl_21 exact
+at baseline. BA698 is Ovl21FindFirstProjectileInRange: first active projectile
+within the signed/narrowed X/Z distance threshold, returning its writable
+active word or NULL without consuming it. Its two callers remain inside the
+unit. The shared origin names x/z retain the ABI/layout; a corroborated biased
+search view replaces the C-local partial type. No new storage/alias is added.
+
+The original baseline residual was allocation-only in two blocks (five words).
+A guarded do-loop with the count-base birth AFTER the entry guard removes
+its high-half lifetime overlap with the initial bound: three words close.
+The remaining two came from an isolated local address temp being assigned
+v0. Reusing that address scratch for the existing per-slot active-word load
+makes a multi-set global web: lreg records two SETs/two deaths, and greg
+handles the recurrence. Both assignments are used; all target instructions
+remain, without additions. The complete source is 46/46, BA698 86/86 exact.
+
+Thus the 'sole local quantity must get v0' proof and alleged need for
+-fno-gcse were conditional on the split source webs. A new reading of the
+program's temporary reuse closes what no scheduling/priority spelling of
+those fixed webs could. PRE remains enabled and may share the high half;
+there is no need to resurrect the removed local HIGH pseudo. A no-GCSE
+full-46 control of the earlier source matched 28/46; it was never promoted.
+
+The old function override and its permission are REMOVED. No module flag,
+policy exception, speculative boundary or forbidden construct replaces them.
+The complete private query interface is now in-unit forward declarations,
+not an unnecessary cross-module header; external linkage is unchanged.
+Existing phase/draw public contracts remain, with zero failing published
+interfaces. Full-TU controls and pass dumps are preserved under
+build/tuFlagReview/ovl_21/scene_simulation; the grouping ledger records the
+membership/left/right evidence and matching-sensitive constructions.
+
+Fresh final acceptance after names, type views and private-interface cleanup:
+**2511/2625 folded, 471 valid modules**, all eight integrity categories PASS,
+including the complete linked EXE, all thirteen overlays/data, source policy,
+convergence, input stability and exception non-growth. The campaign is 114
+new folds above its receipt; ten overrides remain versus its original 24.
+No module setting replaces either retired hard-case override. No commit made.
+
+## Whole-fifteen hand-value dialog control
+
+A fresh, unchanged merged ovl_11:80103770–801044E4 control supplies the
+TU-wide matrix missing from the earlier regional review. Baseline is exact
+for 13/15 (3B24/4148 differ); no-skip for 14/15 (4148 differs); no-follow
+for 13/15 (3964/3B24 differ); both for 11/15
+(3964/3B24/40A8/4148 differ). All compile without diagnostics, with no
+undetermined relocated-byte verdicts. Source hashes, full compiler flags,
+per-member verdicts and instruction listings are under
+build/tuFlagReview/ovl_11/hand_value/merged-matrix.json and its four profile
+directories. No uniform profile accounts for the complete current source.
+
+A separate complete-TU baseline control moves only 4148's common +12
+signed-column update to the text-selection join. It still leaves exactly
+3B24/4148 nonexact (13/15); the candidate and report are retained as
+join_column.c / join_column-matrix.json. This is a scoped source experiment,
+not a proof of baseline unreachability. It isolates the column-join lever
+from the older combined trial in the grouping ledger. No source or flag
+change from these controls was promoted; no smaller flag-compatible dialog
+module was created.
+
+The independent accepted batch merges six already-matching modules into two:
+42-entry mode-1 record/scripts/handoff and 22-entry ovl_25 scene state machine.
+Both checked folds use baseline settings and preserve every member and linked
+container. The latter's right edge is expressly the unresolved 95B0 mechanical
+limit, not an original TU claim. No override or permission was added, broadened
+or retired. Final tuProgress verification passes all eight integrity categories
+at 2511/2625 folded and 467 valid modules, including every EXE/overlay byte and
+data/table placement. The unchanged folded count reflects merges, not new
+per-function integrations.
+
+## Prior-source ovl_15 whole-unit flag trial
+
+Freshly merged all thirteen then-current entries at 801335F8–80134770 using
+foldTranslationUnit's source merger, without changing the live build. Under
+one uniform setting, relocated-byte verdicts are: baseline **12/13 exact**
+(only 335F8 differs); -fno-gcse **6/13 exact** (renderer fixed, seven contrary
+members); -Os/classic GCSE **3/13 exact**. All compilations have zero
+front-end diagnostics and zero undetermined verdicts. These are complete-TU
+experiments, not the older split-source regional controls.
+
+The seven current no-GCSE contradictions are 33808, 33B28, 33F4C, 34000,
+34134, 342A0, 3468C. The first two lose symbol-high sharing across input
+branches/calls; gcse_main includes cprop as well as PRE, so disabling it
+removes more than the renderer's disputed hoist. Module-only compilation
+reproduces the same differences, excluding this merge's order/visibility as
+the cause for this source. The -Os experiment follows gcse.c's explicit
+classic-GCSE/PRE branch; it does not provide an alternative exact profile.
+
+One natural local split, s16 recordType = arg0 in the row renderer, makes
+34134 exact under no-GCSE. That demonstrates why the seven are conditional
+source witnesses, not proof of an immutable original flag boundary. Other
+small pointer-cache, details-lifetime and initializer-backedge trials remain
+nonexact; the explicit cursor/scroll pointer trial emits 203 words for 33808
+rather than 200. No universal no-go claim follows. In particular, mixed
+signed/unsigned halfword loads do not rule out a genuine aggregate view with
+casts. No setting has been promoted and no source/flag/permission changed.
+
+Reproducible evidence: build/tuFlagReview/ovl_15/save_slot_selection/
+report.json, size-report.json and the complete variant sources/objects/diffs.
+The existing grouping section records input/compiler hashes and each result.
+The next question is a faithful whole-group representation or independently
+supported membership—not simply moving the one-function override to a module
+and disregarding the seven mismatches.
+
 ## 1. Findings established without any source rewrite
 
 | Function | Current override | Fresh result | Recommendation |

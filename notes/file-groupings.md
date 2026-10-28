@@ -2921,7 +2921,13 @@ checked fold preserved every member and the overlay with no new exception.
 
 ## `ovl_11` D_8012D0xx tiny-global cluster / state-probe run — 0x80108104–0x8010AFCC (confidence: low)
 
-**Reconstructed `modules/action_state_handlers.c`, 80109EC4–8010B05C
+**Absorbed whole into `modules/stage_mode1_record.c`, now
+80108BE8–8010B0E8 (42 entries).** The four exclusive probe/motion cells and
+paired callback-table reader join the former banks; see the current record
+under the dual-table dispatcher section below. The following 17-entry review
+is historical membership evidence, not a surviving TU boundary.
+
+**Former `modules/action_state_handlers.c`, 80109EC4–8010B05C
 exclusive, all 17 entries:** the sixteen distinct callbacks of the 19-slot
 800BA894 bank plus AFCC's private handoff helper. The former declaration
 blocker is resolved without call-site copies or casts: Ovl11PaddedVec3 is now
@@ -2943,8 +2949,12 @@ not cut off at the old type conflict. The A850 jump table is owned by the
 module in the original member order. The address-word callback bank remains
 in its extracted rodata object; it is named and verified, not newly defined.
 
-**Reconstructed `modules/fixed_spawn_record_handoff.c`, 8010B05C–8010B0E8
-exclusive**, `Ovl11PublishObjectToFixedSpawnRecord`. Both the action-entry
+**Now the closing helper of `modules/stage_mode1_record.c`,
+8010B05C–8010B0E8.** Both clients of the adapter are in that merged unit;
+the old two-client argument below no longer supports a separate module.
+The dedicated public header was removed; linkage and aggregate ABI are unchanged.
+
+**Historical singleton review**,  `Ovl11PublishObjectToFixedSpawnRecord`. Both the action-entry
 bank's handoff and the independent 80108D84 update dispatcher call this shared
 adapter. It snapshots exactly 0xAC bytes, then passes selector +30 and the
 four-word position at +38 by value to Ovl11SetSpawnRecord(kind 0x65, index 0).
@@ -3542,8 +3552,54 @@ Candidate same-TU family; [shared-table, call/link-order evidence and limits](re
 
 ## `ovl_11` D_800BA848 / D_800BA894 dual-table dispatcher — 0x80109188 (confidence: medium)
 
-**Current reconstruction: `modules/stage_mode1_record.c`, the complete 24-entry
-80108BE8–80109EC4 lifecycle band.** The callback-table closure, acquire/init/
+**Current reconstruction: `modules/stage_mode1_record.c`, all 42 entries
+at 80108BE8–8010B0E8 exclusive.** It absorbs the complete former 24-entry
+lifecycle, all 17 action-script entries and B05C's snapshot adapter in original
+order. The earlier cross-bank public-protocol cut is superseded: a source
+census finds FoundRecord/FoundRecordCategory/ProbedRecord/MotionVariant used
+ONLY by these two halves. Transition checks produce probe results consumed
+by the per-frame scripts; the frame driver clears their motion selector.
+80109188 reads both adjacent 19-slot banks (800BA848/800BA894), and 801090A4
+executes the latter. Both snapshot-adapter clients (8D84/A850) are now inside
+this closure. These private producer/consumer cells, paired table protocol,
+exclusive helper and ordered table pool support the union, not adjacency or
+the broad resident work buffer alone. There is no -G0 ownership proof.
+
+The two banks now have behavior-accurate canonical data names:
+gOvl11StageMode1TransitionCallbacks (BA848) and
+gOvl11StageMode1StepCallbacks (BA894). The latter scripts run each eligible
+FRAME, not only on entry; accepted state changes invoke the former checks
+and reset script fields, not the step callback itself. Existing raw-word vs
+typed-pointer table representations, sizes, signatures and linkage remain.
+Names are set in ovl_11.names.txt. canonicalNames does not resolve an old
+semantic spelling as an anonymous address alias, so its zero-rewrite result
+was followed by exact source/override-header edits; supported regeneration
+replaces the derived symbol spelling. No alias or literal RAM address was added.
+
+Left choice_messages owns its distinct slot/phase/image tables and no probe
+quartet or paired-bank implementation. Right stage_mode2_record owns its own
+record/callback lifecycle and uses none of these exclusive cells/banks.
+These are conservative private-protocol boundaries, not GP-proven object cuts.
+Unlike the removed inner seams, neither has a private helper/result closure
+crossing it. The wider historical file extent remains uncertain.
+
+The public record interface stays in ovl11_stage_mode1_record.h, now documenting
+both callback phases, world-coordinate/call-count units and shared-state
+serialization. Action callback and snapshot headers were removed: they had no
+remaining outside C clients. Two ordinary in-unit forward declarations retain
+external linkage and the four-word aggregate ABI. No types, ownership, pins,
+assembly, stubs or compiler flags were added or changed. The checked baseline
+fold proves all 42 members and linked ovl_11 exact, including pooled tables.
+The independent boundary recheck also finds no required extension through
+choice_messages or stage_mode2_record. Final batch acceptance passes all eight
+tuProgress integrity gates: 2511/2625 folded, 467/467 valid modules (formerly
+471). Six existing modules containing 64 functions became two; the folded
+function count is intentionally unchanged. All executable/overlay bytes and
+associated data, callbacks and table placement match; source policy,
+canonical interfaces, convergence and exception non-growth pass. The earlier
+research-time stale-object observation is superseded by this full gate.
+
+**Historical 24-entry reconstruction, 80108BE8–80109EC4.** The callback-table closure, acquire/init/
 render chain, private animation-pair table and shared bounded-probe results
 join all 24 members described below. No helper-only slice remains. The left
 choice_messages module implements a different slot/phase/image protocol; the
@@ -4176,6 +4232,22 @@ not infer this overlay's data owner. No generated file was edited by hand.
 ---
 
 ## `ovl_11` D_80127428 shared-state cluster — 0x801037DC–0x801040A8 (confidence: medium)
+
+Fresh complete-fifteen compiler-setting control (80103770–801044E4), preserved
+under build/tuFlagReview/ovl_11/hand_value: baseline is exact for 13/15, with
+only 3B24/4148 nonexact; uniform no-skip is 14/15 (4148 nonexact); uniform
+no-follow is 13/15 (3964/3B24 nonexact); both are 11/15
+(3964/3B24/40A8/4148 nonexact). All compile without diagnostics or undetermined
+oracle results. These are relocated per-member verdicts over the same merged
+source/context, not masked scores or historical flag attribution. A separate
+complete-TU baseline candidate moves ONLY 4148's common +12 column advance to
+the text-selection join; it is still 13/15 with the same two nonexact members.
+That isolates the cursor-join experiment from the older combined trial below;
+it does not prove baseline impossibility for other source/context choices.
+No candidate was promoted, no setting changed and no flag-protecting slice
+was folded. Next useful work must address the guarded accounting source and
+narrow column-value propagation across this whole private dialog, not repeat
+these fixed-source flag columns.
 
 Whole-fifteen baseline trial, 80103770–801044E4 exclusive: tested 3B24's
 negative branch as subtraction of the reversed unsigned difference (so its
@@ -23582,8 +23654,44 @@ Fingerprints:
 
 ## `ovl_25` D_800BCBD8 dispatch-table cluster — 0x800B7EB4–0x800B81F4 (confidence: medium)
 
-**Reconstructed the complete six-entry phase lifecycle as
-`modules/scene_phase_lifecycle.c`, 800B7EB4–800B82B4 exclusive.** The private
+**Current: `modules/scene_state_machine.c`, all 22 entries at
+800B7EB4–800B9480 exclusive**, merging the former phase lifecycle (6), record
+seeders (4) and mode handlers (12) whole. The private three-pointer mode table
+at BCBEC has its only reader in 813C and all targets in 853C/860C/8728,
+spanning both old seams. Reset/init/seed feeds the exact selectors and six-plus-
+two record bank consumed by those modes; the frame input/target/timer/draw
+helpers close inside this run. Thus table exhaustion was not a boundary.
+The loader and record switch tables form one ordered pool at file 4..50;
+the checked fold preserves the leading generic word and trailing zero word.
+
+Left is container text start. Right 9480 is explicitly a MECHANICAL integration
+edge, not a discovered original TU boundary: the decision quartet continues
+the same record calls, but 95B0's standing no-follow setting remains unresolved.
+The broader scene/service hypothesis and the original flag-review controls
+below remain open. No new setting or permission generalizes that exception.
+The current quartet already has the corrected void setter/fallback contracts;
+the older declaration-conflict description in the mode section is superseded.
+A future reconciled whole-scene source/flag trial should extend this module,
+not create another flag-compatible fragment. The right-side specialized
+services are not merged on broad work-buffer references alone.
+
+All existing behavior-based member/global names are retained. The consolidated
+ovl25_scene_state_machine.h publishes only the engine callback and the two
+externally called bank operations, including the formerly C-local seeder.
+It documents unchecked selectors/divisors, update-count timers, pause/draw
+side effects, first/second bank differences and retained fields. The engine
+and event callers use it; three obsolete split-module headers are removed.
+Internal callback/helper prototypes retain external linkage. No data definition,
+layout, ABI, flag, pin, asm or stub changes. All 22 members and linked ovl_25
+pass the checked baseline fold. The final two-module batch gate passes all
+eight integrity categories at 2511/2625 folded and 467 valid modules, including
+all executable/overlay/data bytes, interfaces, source policy and exception
+non-growth. No further researched unit is baseline-ready: the remaining
+text/dialog/record-policy groups have unresolved source/context/flag limits,
+and the unused trivial entries lack membership or meaningful-interface evidence.
+
+**Historical six-entry phase reconstruction,
+800B7EB4–800B82B4 exclusive.** The private
 five-pointer phase table reaches exactly 7F3C/80A4/813C/81B4/81F4; 7EB4 is
 its only reader, and those phases update the same selector through load,
 transition, update and exit. Their complete dispatch protocol, not shared
@@ -24038,8 +24146,9 @@ cross the private six-callback table's end at AA5C. A9A4/A9F4 finish
 `event_state_handlers`; AA5C/AAAC start `scene_display_pipeline`. Earlier
 observations below remain address provenance, not a current proposed unit.
 
-**Reconstructed `modules/scene_record_seeders.c`, 800B82B4–800B853C
-exclusive, all four entries 82B4/8340/83A0/8478.** The direct initialization
+**Absorbed whole into `modules/scene_state_machine.c`;** its current membership
+and mechanical right edge are recorded in the BCBD8 section above.
+**Historical four-entry seeder review, 800B82B4–800B853C:** The direct initialization
 chain 82B4 -> 8340 -> 83A0 and 8478's reset twin use the same two eight-byte
 record tables, six scene records and two auxiliary records. The twins differ
 intentionally: initialization reads second banks at +30/+10 and sets the
@@ -24146,8 +24255,9 @@ Members (link order):
 
 ## `ovl_25` D_800BCBEC/D_800BCBF8 two-level state-dispatch tables — 0x800B853C–0x800B8848 (confidence: medium)
 
-**Reconstructed `modules/scene_mode_handlers.c`, 800B853C–800B9480
-exclusive, twelve entries through 941C.** All three mode-table callbacks
+**Absorbed whole into `modules/scene_state_machine.c`;** its current membership
+and mechanical right edge are recorded in the BCBD8 section above.
+**Historical twelve-entry mode review, 800B853C–800B9480 through 941C:** All three mode-table callbacks
 853C/860C/8728 and the active mode's complete contiguous update chain are
 included: 8848 input, 8A30 choices, 8CEC target approach, 8D70 timers -> 8DF4
 record state, 9208 completion, 93BC pause draw, 93E4 renderer -> 941C record

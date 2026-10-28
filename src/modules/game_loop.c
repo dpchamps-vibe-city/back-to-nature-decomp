@@ -18,9 +18,10 @@
  */
 
 #include "common.h"
+#include "ovl17_record_scene.h"
 #include "ovl19_scene_runtime.h"
 #include "ovl21_scene_state_machine.h"
-#include "ovl25_scene_phase_lifecycle.h"
+#include "ovl25_scene_state_machine.h"
 #include "packet_work.h"
 #include "psyq/types.h"
 #include "psyq/stddef.h"
@@ -262,7 +263,7 @@ int main(void) {
                 SelectRenderConfiguration(1);
                 SceneEntryHook(0);
                 CdLoadArchiveRangeBlocking(0x11, 0x12, D_80010098, D_80010098);
-                D_8005E384 = (void (*)(void))&D_800B7E38;
+                D_8005E384 = Ovl17DispatchRecordSceneSubphase;
                 D_8005E288 = 0;
                 break;
 
