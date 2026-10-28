@@ -29,34 +29,11 @@ segments:
     start: 0x0
     vram: 0x800B7E20
     align: 4
-    subalign: 4
+    subalign: 1
     subsegments:
       - [0x0, rodata]
-      - [0x2C4, .rodata, ovl_10_func_800B9108]
-      - [0x32C, rodata]
-      - [0x8AC, .rodata, ovl_10_func_800BA394]
-      - [0x8C0, rodata]
-      - [0xA7C, c, ovl_10_func_800B889C]
-      - [0xC3C, c, ovl_10_func_800B8A5C]
-      - [0xDF4, c, ovl_10_func_800B8C14]
-      - [0x1240, c, ovl_10_func_800B9060]
-      - [0x12E8, c, ovl_10_func_800B9108]
-      - [0x148C, c, ovl_10_func_800B92AC]
-      - [0x14B0, c, ovl_10_func_800B92D0]
-      - [0x1638, c, ovl_10_func_800B9458]
-      - [0x1684, c, ovl_10_func_800B94A4]
-      - [0x174C, c, ovl_10_func_800B956C]
-      - [0x1784, c, ovl_10_func_800B95A4]
-      - [0x17D0, c, ovl_10_func_800B95F0]
-      - [0x1C88, c, ovl_10_func_800B9AA8]
-      - [0x1F04, c, ovl_10_func_800B9D24]
-      - [0x22FC, c, ovl_10_func_800BA11C]
-      - [0x2480, c, ovl_10_func_800BA2A0]
-      - [0x2574, c, ovl_10_func_800BA394]
-      - [0x2CF0, c, ovl_10_func_800BAB10]
-      - [0x2E9C, c, ovl_10_func_800BACBC]
-      - [0x2F84, c, ovl_10_func_800BADA4]
-      - [0x3444, c, ovl_10_func_800BB264]
-      - [0x3908, c, ovl_10_func_800BB728]
+      - [0x4, .rodata, modules/card_diagnostics]
+      - [0xA79, rodata]
+      - [0xA7C, c, modules/card_diagnostics]
       - [0x399C, data]
   - [0x4000]

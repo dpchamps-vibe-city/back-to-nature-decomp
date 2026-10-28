@@ -262,12 +262,55 @@ export function mergeSources(files: Array<{ path: string; text: string }>, heade
  * tables are out of member order or separated by another subsegment, except
  * the original-byte/compiler-witnessed alignment gaps supplied by planFold.
  */
-export function foldConfigLines(lines: readonly string[], unitStems: readonly string[], stem: string, alignmentPadding: ReadonlySet<number> = new Set(), mixedPoolGaps: ReadonlySet<number> = new Set()): { lines: string[]; notes: string[] } {
+export function foldConfigLines(lines: readonly string[], unitStems: readonly string[], stem: string, alignmentPadding: ReadonlySet<number> = new Set(), mixedPoolGaps: ReadonlySet<number> = new Set(), mixedPool?: { start: number; end: number }): { lines: string[]; notes: string[] } {
   const entry = (line: string) => line.match(/^(\s*)- \[(0x[0-9A-Fa-f]+), ([^,\]]+)(?:, ([^,\]]+))?/);
   const stems = new Set(unitStems);
   const rodata = lines.map((line, index) => ({ line, index, m: entry(line) }))
     .filter((row) => row.m && (row.m[3]!.trim() === ".rodata" || row.m[3]!.trim() === ".rdata") && stems.has(row.m[4]!.trim()));
   const notes: string[] = [];
+  if (mixedPool) {
+    /* A uniquely byte-proved pool can begin before its first switch table
+       and end inside a generic residue. Preserve the unowned prefix/suffix;
+       never absorb another unit's attributed section. */
+    const order = rodata.map((row) => unitStems.indexOf(row.m![4]!.trim()));
+    if (order.some((value, i) => i > 0 && value < order[i - 1]!)) refuse("the members' jump tables are not in member order in the rodata window");
+    const rows = lines.flatMap((line, index) => {
+      const m = entry(line);
+      return m ? [{ index, m, addr: Number(m[2]) }] : [];
+    });
+    const overlap = rows.flatMap((row, i) => {
+      const end = rows[i + 1]?.addr;
+      return end !== undefined && row.addr < mixedPool.end && end > mixedPool.start ? [{ ...row, end }] : [];
+    });
+    if (mixedPool.end <= mixedPool.start || overlap.length === 0) refuse("empty mixed rodata pool");
+    for (const row of overlap) {
+      const kind = row.m[3]!.trim(), name = row.m[4]?.trim();
+      if (kind === "rodata" && !name) continue;
+      if ([".rodata", ".rdata"].includes(kind) && name && stems.has(name) &&
+          row.addr >= mixedPool.start && row.end <= mixedPool.end) continue;
+      refuse(`mixed rodata pool crosses an unowned subsegment: ${lines[row.index]!.trim()}`);
+    }
+    const first = overlap[0]!, last = overlap[overlap.length - 1]!;
+    if (first.addr > mixedPool.start || last.end < mixedPool.end) refuse("mixed rodata pool is not covered by the configured window");
+    const indent = first.m[1]!;
+    const replacement: string[] = [];
+    if (first.addr < mixedPool.start) replacement.push(`${indent}- [${hex(first.addr)}, rodata]`);
+    replacement.push(`${indent}- [${hex(mixedPool.start)}, .rodata, ${stem}]`);
+    if (last.end > mixedPool.end) replacement.push(`${indent}- [${hex(mixedPool.end)}, rodata]`);
+    const rebuilt = [...lines.slice(0, first.index), ...replacement, ...lines.slice(last.index + 1)];
+    /* Match bootstrapOverlay's input alignment derivation when the proved
+       section leaves a sub-word original residue. Section transitions keep
+       their explicit word alignment; no bytes may be inserted before a tail. */
+    let subalign = 4;
+    for (const row of findWindow(parseSubsegments(rebuilt)).members) {
+      while (subalign > 1 && row.addr % subalign !== 0) subalign /= 2;
+    }
+    const alignmentIndex = rebuilt.findLastIndex((line, i) => i < first.index && /^    subalign: \d+\s*$/.test(line));
+    if (alignmentIndex >= 0) rebuilt[alignmentIndex] = `    subalign: ${subalign}`;
+    const folded = foldConfigLines(rebuilt, unitStems, stem);
+    folded.notes.push(`unique relocated whole-pool proof establishes .rodata ${hex(mixedPool.start)}..${hex(mixedPool.end)}; unowned edge residues retained`);
+    return folded;
+  }
   if (rodata.length > 1) {
     const order = rodata.map((row) => unitStems.indexOf(row.m![4]!.trim()));
     if (order.some((value, i) => i > 0 && value < order[i - 1]!)) refuse("the members' jump tables are not in member order in the rodata window; one pooled .rodata cannot reproduce that");
@@ -507,6 +550,7 @@ export function planFold(request: FoldRequest): FoldPlan {
   const files = touched.map((unit) => ({ path: unit.sourcePath, text: retargetStubs(readFileSync(join(ROOT, unit.sourcePath), "utf8"), unit.segmentName, stem) }));
   const merged = mergeSources(files, moduleHeader(request.module, request.summary));
   const mixedPoolGaps = new Set<number>();
+  let mixedPool: { start: number; end: number } | undefined;
   const owned = segments.filter((s) => s.type === ".rodata" && touched.some((u) => u.segmentName === s.name));
   const gaps = owned.length > 1 ? segments.filter((s) => s.rom > owned[0]!.rom &&
     s.rom < owned[owned.length - 1]!.rom && s.type === "rodata" && !s.name && !alignmentPadding.has(s.rom)) : [];
@@ -525,13 +569,15 @@ export function planFold(request: FoldRequest): FoldPlan {
     const extents = parseFuncExtents(container).filter((fn) => wanted.includes(fn.name));
     const base = mixedRodataAddress(original, object, extents, findWindow(parseSubsegments(configLines)));
     const size = elf32SectionSizes(object).get(".rodata") ?? 0;
-    if (extents.length === members.length && base === owned[0]!.rom) {
+    if (extents.length === members.length && base !== null && base <= owned[0]!.rom &&
+        owned.every((segment) => segment.rom + segment.size <= base + size)) {
+      mixedPool = { start: base, end: base + size };
       for (const gap of gaps) {
         if (gap.rom + gap.size <= base + size) mixedPoolGaps.add(gap.rom);
       }
     }
   }
-  const rewritten = foldConfigLines(configLines, touched.map((u) => u.segmentName), stem, alignmentPadding, mixedPoolGaps);
+  const rewritten = foldConfigLines(configLines, touched.map((u) => u.segmentName), stem, alignmentPadding, mixedPoolGaps, mixedPool);
   const notes = [...rewritten.notes];
 
   /* Embedded asm that names a cc1 label: read the labels its unit's own

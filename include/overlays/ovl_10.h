@@ -2,25 +2,25 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-s32 ovl_10_func_800B889C(void);
-void ovl_10_func_800B8A5C(char *arg0);
-void ovl_10_func_800B8C14(void);
-void ovl_10_func_800B9060(void);
-int ovl_10_func_800B9108(s32 arg0, s32 arg1);
-void ovl_10_func_800B92AC(void);
-int ovl_10_func_800B92D0(int arg0);
-int ovl_10_func_800B9458(int arg0);
-int ovl_10_func_800B94A4(int arg0);
-int ovl_10_func_800B956C(int arg0);
-int ovl_10_func_800B95A4(int arg0);
-int ovl_10_func_800B95F0(int arg0, int arg1);
-int ovl_10_func_800B9AA8(s32 arg0, s32 arg1);
-int ovl_10_func_800B9D24(int arg0, int arg1);
-s32 ovl_10_func_800BA11C(s32 arg0, s32 arg1);
-int ovl_10_func_800BA2A0(int arg0, int arg1);
-s32 ovl_10_func_800BA394(s32 arg0, s32 arg1);
-int ovl_10_func_800BAB10(int arg0, int arg1);
-int ovl_10_func_800BACBC(s32 arg0, s32 arg1);
-int ovl_10_func_800BADA4(int arg0, int arg1);
-int ovl_10_func_800BB264(int arg0, int arg1);
-s32 ovl_10_func_800BB728(s32 arg0);
+int Ovl10DispatchPdaCommand(s32 arg0, s32 arg1);
+void Ovl10DrawNoPdaCommandData(void);
+void Ovl10DrawPdaCommandList(void);
+void Ovl10DrawPdaCommandStatus(void);
+int Ovl10HandlePdaAllInfo(int arg0);
+int Ovl10HandlePdaApplicationLaunch(int arg0, int arg1);
+int Ovl10HandlePdaApplicationQuery(int arg0);
+s32 Ovl10HandlePdaControl(s32 arg0, s32 arg1);
+int Ovl10HandlePdaDeviceRead(int arg0, int arg1);
+int Ovl10HandlePdaDeviceWrite(int arg0, int arg1);
+int Ovl10HandlePdaExecFlag(s32 arg0, s32 arg1);
+int Ovl10HandlePdaFlushAccess(int arg0, int arg1);
+int Ovl10HandlePdaHideTransitions(int arg0);
+int Ovl10HandlePdaLed(s32 arg0, s32 arg1);
+int Ovl10HandlePdaMemoryRead(int arg0, int arg1);
+s32 Ovl10HandlePdaMemoryWrite(s32 arg0, s32 arg1);
+int Ovl10HandlePdaSerialQuery(int arg0);
+int Ovl10HandlePdaTimeQuery(int arg0);
+int Ovl10HandlePdaTransitionDisplay(int arg0, int arg1);
+s32 Ovl10IsPdaMenuRepeatTick(s32 inputOccurrences);
+void Ovl10ProcessPdaCommandInput(char *workAnchor);
+s32 Ovl10RunPdaCommandMenu(void);

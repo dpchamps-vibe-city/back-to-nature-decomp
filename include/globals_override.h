@@ -3518,42 +3518,8 @@ typedef struct {
 } Ovl08SceneSelectEntry;
 extern Ovl08SceneSelectEntry gOvl08SceneSelectEntries[32];
 
-/* D_800B7EE8..D_800BB990 - ovl_10 memory-card editor globals
- * (Obj\gf_mcard.bin), used by ovl_10_func_800B95F0 and its matched siblings
- * (ovl_10_func_800B9AA8, ovl_10_func_800B9D24, ...). Absolute-addressed
- * (ovl_10 data, -G0); not classified in globals.h. Types derived from the
- * ovl_10_func_800B95F0 target: the format/heading strings are char[],
- * D_800BB810[5] is the 5-word save-slot table (words at 0/4/8/C/0x10 read
- * with lw and packed for McxGetMem), D_800BB90C is the card buffer, and the
- * D_800BB82X/D_800BB98C/D_800BB990 are the editor counters/predicate state.
- * The matched neighbor ovl_10_func_800B9D24 declares D_800B8328/D_800B8330/
- * D_800B8358/D_800B8360 locally with the same char[] type. */
-extern char D_800B7EE8[];
-extern char D_800B8280[];
-extern char D_800B82AC[];
-extern char D_800B82DC[];
-extern char D_800B830C[];
-extern char D_800B8328[];
-extern char D_800B8330[];
-extern char D_800B8340[];
-extern char D_800B8358[];
-extern char D_800B8360[];
-extern char D_800B8368[];
-extern char D_800B8370[];
-/* Further editor strings and status words read/written by the mcard
- * slot/S/R/L button editor (ovl_10_func_800BADA4) and the block/cursor
- * editor ovl_10_func_800BB264.  The byte buffer D_800BBA4C is indexed as
- * (D_800BB8A4 + 1); D_800BBA40/D_800BBA44 hold the masked button word
- * (arg1 & 0xF000). */
-extern char D_800B7E40[];
-extern char D_800B86C4[];
-extern char D_800B87C8[];
-extern char D_800B87FC[];
-extern char D_800B8840[];
-extern char D_800B885C[];
-extern char D_800B8868[];
-extern char D_800B8878[];
-extern char D_800B8884[];
+/* ovl_10's format strings are emitted by modules/card_diagnostics.c,
+ * rather than declared as unrelated address aliases. */
 
 /* ovl_31 driver: original rodata strings passed to FntPrint. */
 extern char D_800B7E48[];
@@ -3582,50 +3548,42 @@ extern char D_800B7EF0[];
 extern char D_800B7EF4[];
 extern struct DIRENTRY gOvl31DirectoryEntries[];
 extern char gOvl31DirectorySummary[];
-/* ovl_31:800B83B8 passes this word to libmcrd's long* output; ovl_10's
- * unrelated string at the same RAM address retains its own D_800B8868. */
+/* ovl_31:800B83B8 passes this word to libmcrd's long* output. */
 extern long gOvl31DirectoryFileCount;
-extern s32 D_800BB8A4;
-extern s32 D_800BB8A8;
-extern s32 D_800BB8AC;
-extern s32 D_800BB8B0;
-extern s32 D_800BB8B4;
-extern s32 D_800BB8B8;
-extern s32 D_800BB8BC;
-extern s32 D_800BB8C0;
-extern s32 D_800BB8C4;
-extern s32 D_800BB8C8;
-extern s32 D_800BBA44;
-extern s32 D_800BBA40;
-extern unsigned char D_800BBA4C[];
-extern unsigned int D_800BB810[5];
-extern unsigned char D_800BB90C[];
-extern s32 D_800BB824;
-extern s32 D_800BB828;
-extern s32 D_800BB82C;
-extern s32 D_800BB830;
-extern s32 D_800BB98C;
-extern s32 D_800BB990;
-/* The mcard write-device editor (ovl_10_func_800BA394).  D_800BB86C is a
- * five-word header the cursor D_800BB868 addresses with negative values
- * (-5..-1); D_800BB9BC is the 0xA0-byte payload it addresses with
- * non-negative ones, and D_800BB86C[4] is the live length of both.
- * D_800BB880..D_800BB88C are the four per-bit pad repeat counters, and
- * D_800BBA3C holds the masked button word — the same shape as D_800BBA40 and
- * D_800BBA44 above. */
-extern char D_800B861C[];
-extern char D_800B8644[];
-extern char D_800B866C[];
-extern char D_800B8694[];
-extern char D_800B86BC[];
-extern s32 D_800BB868;
-extern s32 D_800BB86C[5];
-extern s32 D_800BB880;
-extern s32 D_800BB884;
-extern s32 D_800BB888;
-extern s32 D_800BB88C;
-extern unsigned char D_800BB9BC[];
-extern s32 D_800BBA3C;
+/* ovl_10 device editors: signed cursor -1 selects the device byte;
+ * four held-button counters edit each byte's upper/lower nibble. */
+extern s32 gOvl10DeviceReadCursor;
+extern s32 gOvl10DeviceReadUpperIncrementTicks;
+extern s32 gOvl10DeviceReadUpperDecrementTicks;
+extern s32 gOvl10DeviceReadLowerIncrementTicks;
+extern s32 gOvl10DeviceReadLowerDecrementTicks;
+extern s32 gOvl10DeviceWriteCursor;
+extern s32 gOvl10DeviceWriteUpperIncrementTicks;
+extern s32 gOvl10DeviceWriteUpperDecrementTicks;
+extern s32 gOvl10DeviceWriteLowerIncrementTicks;
+extern s32 gOvl10DeviceWriteLowerDecrementTicks;
+extern s32 gOvl10DeviceWriteCursorLatch;
+extern s32 gOvl10DeviceReadCursorLatch;
+extern unsigned char gOvl10DeviceTransferBytes[];
+/* 95F0 packs four address bytes and a transfer length from five words. */
+extern unsigned int gOvl10MemoryReadHeader[5];
+extern unsigned char gOvl10MemoryReadBytes[];
+extern s32 gOvl10MemoryReadUpperIncrementTicks;
+extern s32 gOvl10MemoryReadUpperDecrementTicks;
+extern s32 gOvl10MemoryReadLowerIncrementTicks;
+extern s32 gOvl10MemoryReadLowerDecrementTicks;
+extern s32 gOvl10MemoryReadCursor;
+extern s32 gOvl10MemoryReadCursorLatch;
+/* A394 edits header words with cursor -5..-1 and payload with >=0;
+ * header[4] supplies the live transfer length. */
+extern s32 gOvl10MemoryWriteCursor;
+extern s32 gOvl10MemoryWriteHeader[5];
+extern s32 gOvl10MemoryWriteUpperIncrementTicks;
+extern s32 gOvl10MemoryWriteUpperDecrementTicks;
+extern s32 gOvl10MemoryWriteLowerIncrementTicks;
+extern s32 gOvl10MemoryWriteLowerDecrementTicks;
+extern unsigned char gOvl10MemoryWriteBytes[];
+extern s32 gOvl10MemoryWriteCursorLatch;
 
 /* Six-byte item identity/detail/count record, alignment two. 800C6770
  * copies all six bytes; FB404 merges the count at +4, capped at 99. The
@@ -8229,6 +8187,65 @@ typedef struct {
     u8 pad11A[0x220 - 0x11A];
     s16 secondEntityId;
 } Ovl21ResultEntityView;
+
+/* ovl_10 8A5C selects command 0..14 with signed %15 arithmetic. */
+extern s32 gOvl10CommandIndex;
+/* ovl_10 packed 15..33-byte status copies and FntPrint share this 64-byte buffer. */
+extern char gOvl10CommandResultText[0x40];
+
+/* ovl_10 mode/day pointer tables target these original readonly strings. */
+extern const char gOvl10LinkModeBoth[6];
+extern const char gOvl10LinkModeTransmit[3];
+extern const char gOvl10LinkModeReceive[3];
+extern const char gOvl10LinkModeDisabled[8];
+extern const char gOvl10WeekdayLabels[7][4];
+/* 9AA8 copies this complete 30-byte message after a failed card accept. */
+extern const char gOvl10DefaultCommandResultText[30];
+/* First mode label of the separate current-control pointer table. */
+extern const char gOvl10CurrentControlDisabled[4];
+
+/* ovl_10 scene/input state: 889C polls exit; 8A5C latches navigation/execute. */
+extern s32 gOvl10MenuExitRequested;
+extern char gOvl10InputWorkAnchor[];
+extern s32 gOvl10AcceptedCommandIndex;
+extern s32 gOvl10CommandNavigationLatch;
+extern s32 gOvl10CommandExecuteLatch;
+/* 8C14 fills one marker pointer per command; 9060 reads the three columns. */
+extern char *gOvl10CommandRowMarkers[];
+/* 92D0/94A4/A11C index these resident string-pointer tables. */
+extern char *gOvl10LinkModeNamePointers[];
+extern char *gOvl10InfoWeekdayNamePointers[];
+extern char *gOvl10TimeWeekdayNamePointers[];
+extern char *gOvl10ControlModeNamePointers[];
+/* SDK result views consumed by the all-info, application/time/serial drawers. */
+extern char gOvl10AllInfoBytes[];
+extern long gOvl10ApplicationNumber;
+extern char gOvl10TimeBytes[];
+extern long gOvl10SerialNumber;
+/* 9AA8 edits the block number/flag and uses per-bit repeat counters. */
+extern s32 gOvl10ExecApplicationNumber;
+extern s32 gOvl10ExecFlagEnabled;
+extern s32 gOvl10ExecNumberIncrementTicks;
+extern s32 gOvl10ExecNumberDecrementTicks;
+/* 9D24 edits a signed application selector and four argument bytes. */
+extern int gOvl10ApplicationParameterCursor;
+extern int gOvl10ApplicationUpperIncrementTicks;
+extern int gOvl10ApplicationUpperDecrementTicks;
+extern int gOvl10ApplicationLowerIncrementTicks;
+extern int gOvl10ApplicationLowerDecrementTicks;
+extern int gOvl10ApplicationCursorLatch;
+extern short gOvl10ApplicationParameters[];
+/* A11C/A2A0 provide McxCurrCtrl/McxFlashAcs's flag/mode arguments. */
+extern s32 gOvl10ControlSoundEnabled;
+extern s32 gOvl10ControlInfraredMode;
+extern s32 gOvl10ControlInfraredButtonLatch;
+extern s32 gOvl10FlushWriteSuperior;
+/* AB10/ACBC edit McxShowTrans direction/timeout and McxSetLED's state. */
+extern s32 gOvl10TransitionDirection;
+extern s32 gOvl10TransitionTimeout;
+extern s32 gOvl10TransitionTimeoutIncrementTicks;
+extern s32 gOvl10TransitionTimeoutDecrementTicks;
+extern s32 gOvl10LedEnabled;
 
 #endif /* GLOBALS_OVERRIDE_H */
 

@@ -4144,6 +4144,18 @@ not infer this overlay's data owner. No generated file was edited by hand.
 
 ## `ovl_11` D_80127428 shared-state cluster — 0x801037DC–0x801040A8 (confidence: medium)
 
+Whole-fifteen baseline trial, 80103770–801044E4 exclusive: tested 3B24's
+negative branch as subtraction of the reversed unsigned difference (so its
+pre-combine expression differs from the positive += delta arm), together
+with 4148's common +0x12 cursor update moved after its text-selection branch.
+Both standing per-function overrides were temporarily removed. The complete
+unit dry-planned and compiled, but its linked image was 8315d858 rather than
+original 165c3cca; the modified split rollback control was identical. This
+combination is not a clean baseline reconstruction; it does not separately
+establish either member's success or failure. All source, flag and policy
+changes were restored. No flag-protecting slice, replacement override or
+altered campaign receipt was retained.
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) threaded through a
 file-scope s32 state global. Same shared-global-cluster fingerprint as the
 documented D_80128810 / D_80128B50 runs: absolute-addressed main-RAM global
@@ -6271,6 +6283,21 @@ measure the minimal existing setting against every loop-bearing member;
 neutral getter neighbors alone cannot establish that setting. The unit
 remains unfurled because of that concrete source/compiler-setting limit.
 
+Further complete eleven-entry baseline trials tested explicit local X/Y
+copies in E4BA4. Loading both before the offset getter fails with image
+bb9293bb (original 165c3cca); the generated assembly keeps their values live
+across that call and adds saved registers. Calling the getter first, then
+copying X/Y, fails with exactly the previously measured fcc5fa78 image:
+that apparently different source is not a new output. Both modified split
+controls reproduce their respective failed merged images. All source, flag
+and allowlist changes were restored, and no internal flag-protecting cut was
+accepted. Local-copy spelling alone has not changed the second-pass hoist
+requirement in the desired direction. A separate whole-eleven test narrowed
+only the loop index to s16. It also failed (b527f851, identical in the modified
+split control): the generated loop uses a shifted induction accumulator and
+keeps both address highs inside, rather than the target's one-high preheader.
+That source and its temporary flag removal were restored too.
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) in the lower-middle of
 the overlay. Evidence is strict link-order adjacency plus an internal call graph
 centred on a single shared leaf getter. The tail extension is supported by
@@ -8328,6 +8355,72 @@ Members (address order):
 ---
 
 ## `ovl_10` debug/status string-table cluster — 0x800B814C–0x800B821C (confidence: low)
+
+**Complete module reconstructed: `src/overlays/ovl_10/modules/card_diagnostics.c`,
+800B889C–800BB7BC exclusive, all 22 compiled functions in original order.**
+This is the PlayStation/PDA diagnostic command menu (`obj\\PdaSamp.bin`),
+not a memory-card save-game UI. The driver polls pads and calls input/status;
+input and status call the same dispatcher, which routes fifteen commands to
+SDK Mcx wrappers, displays and hexadecimal editors. The editor pages share
+one transfer buffer, command index/result text, per-page cursors and repeat
+predicate. A source census finds all 64 formerly anonymous writable/table
+identities used here only in this module. The call closure, private context,
+resident pointer tables and interleaved member-order literal/table pool
+support the whole unit; no smaller slice was accepted. -G0 supplies no GP
+ownership proof. Both outer text boundaries are structural: the first game
+instruction in the container and the final function's end at the data window.
+
+The complete original rodata pool is now reproduced from C at file 4..A79:
+inline help/status strings retain one shared newline/color identity through
+cc1's TU-wide constant cache; the transfer-mode/day labels referenced only by
+resident pointer tables are named const objects at their original emission
+positions. They are real string data, not padding arrays. The 30-byte default
+result message keeps its packed-copy view. All zero alignment comes from the
+compiler; no source padding, new data allocation, asm or flag was introduced.
+The unreferenced leading word (0..4) and non-NUL three-byte tail (A79..A7C)
+remain extracted, with no invented ownership. Resident writable pointer
+arrays remain in the original data blob and still point at exactly the same
+string bytes. A unique relocated whole-section proof established 4..A79,
+including every compiler-generated switch-table word and every literal.
+
+The checked fold compiles all 22 at baseline -O2/-G0, oracle-checks each
+member and verifies the entire ovl_10 image byte-for-byte. Its first write
+exposed a concrete helper assumption: it required the proved pool to start
+at the old first-table attribution and did not anticipate the generator's
+subalign 1 for an odd tail. `foldTranslationUnit.ts` now admits only a uniquely
+proved full pool, rejects crossed nonmember attributions, retains its unowned
+edge residues and derives input alignment by the same split-position rule as
+bootstrapOverlay. The exact pool and all 22 then passed the checked fold.
+This is a scoped shared-tool fix outside the source integration roots, not
+a bypass of byte proof or a TU boundary at a table.
+
+All functions now have scoped Ovl10 behavior names. The public header
+`ovl10_card_diagnostics.h` publishes only Ovl10RunPdaCommandMenu and documents
+its blocking frame loop, Mcx/pad prerequisites, Select exit, state lifetime,
+shared-buffer and unchecked-length constraints. L2/L1 select, Start submits.
+The input reads PadInputState.pressedButtons (+8), not heldButtons: per-bit
+counters advance only while their supplied bit is present, so their tick
+predicate must not be documented as elapsed hold time. The existing packed
+text-copy widths, declaration visibility, external linkage and field types
+are retained. SDK declarations come from their canonical headers.
+
+Command selection is canonically signed (the %15 arithmetic); dispatch keeps
+its explicit unsigned interpretation. The common result is a 64-byte char
+buffer with per-copy packed views, not three incompatible global types. The
+other 64 data identities have scoped command/editor/buffer/table names at
+their original addresses. C-local externs moved to globals_override.h, the
+time weekday table has its witnessed char-pointer view, and obsolete
+rodata externs are removed. Naming does not equate another overlay's identical
+RAM addresses, create ownership definitions for writable data or infer static
+linkage. The public interface audit reports zero failing sites.
+
+Full uncached campaign acceptance passed all eight gates at 2367/2625 folded,
+258 remaining and 473/473 valid modules, including every linked executable/
+overlay image, canonical identities, interfaces, source policy and exception
+non-growth. The fold-helper tests remain 4/5: the same baseline failure names
+an already-retired ovl_31 symbol, so it is not a regression of this change.
+
+Historical representation limits below are superseded by this reconstruction.
 
 Current campaign follow-up: ovl_31's completed fold now supplies bounded
 mixed literal/table whole-pool proof in deriveRodataSplits/foldTranslationUnit;
@@ -12410,6 +12503,15 @@ Members (address order):
   helpers. Those are evidence-limited -G0 service cuts; the shared menu-grid
   state leaves a larger original screen TU uncertain, not ruled out.
 
+  A later whole-twelve baseline trial narrowed only F8224's inner scan
+  counter j to s16 and reconciled the copy/swap definitions to Ovl11CopyRecord.
+  It compiled but failed the linked oracle, image daa8d542 versus original
+  165c3cca; its modified split rollback control was identical. The generated
+  scan still has the +6 reduced walker, now with additional signed narrowing
+  at the counter latch. That counter-width mechanism does not supply the
+  target. All three source edits and the existing flag/policy entries were
+  restored; no smaller unit or broad flag exception was retained.
+
   A complete twelve-member baseline dry run passed after the three local
   CopyStruct types were reconciled to existing Ovl11CopyRecord and F8224's
   override was temporarily removed. The checked --write compiled but failed
@@ -12839,6 +12941,16 @@ Members (address order):
   graphics-display-object pointers (absolute addressing — not TU-owned)
 
 ## u16 text renderer core — func_80018B98 (and func_80019070) (confidence: medium)
+
+A read-only refresh of the current baseline flag-review artifacts identifies
+CSE of the repeated *arg2 stream loads at 18EA8/18FA0, not merely the older
+address-hoist fingerprint. The source already has a volatile cast at the
+glyph read, but that alone does not establish an externally mutable input
+contract for the other reads. Extending volatile to them was proposed, not
+compiled or accepted: it must not become a memory-CSE suppression workaround
+solely to force the whole unit to fold. The stream's update/alias contract
+and the independent 183E0 tail-PRE source/context problem remain unresolved.
+No flag, qualifier, signature or TU boundary changed in this review.
 
 Module-campaign follow-up: current 18B98 is compiled C and participates in
 all-container byte identity; the older suspended/unmatched status below is
@@ -24011,6 +24123,26 @@ Cross-container note: byte-shape twins `ovl_19_func_800B7ED8`,
 evidence — only the shared state word and the link adjacency are.
 
 ## `ovl_15` D_8013759E/A0/A2/A4 adjacent-u16 state run — 0x80133808–0x80134724 (confidence: medium)
+
+Whole-thirteen follow-up (335F8 through 34724): removed 335F8's cross-arm
+next-X temporary and used an in-place s16 X increment at the outer latch,
+under baseline settings. Reconciled all mark-table views to Ovl15Slots.
+With a consistent s32 344E8 contract the checked fold compiled but rejected
+image de039487 (original c0bcec6e); with a consistent s16 contract it rejected
+52a264a3. Both restored split contexts produced their respective same hashes.
+The emitted baseline assembly for the in-place X form keeps its sign wrap at
+the latch, but computes next-X in the inner preheader instead of the target's
+two branch arms; it is not the predicted complete fix. Thus this particular
+single-pass-PRE hypothesis is closed for that source, not all canonical loop
+forms. All thirteen sources, overrides and policy entries were restored; no
+partial module or new exception remains. The s32-return recommendation also
+remains unproved: publication alone changes the already-matching caller.
+A subsequent canonical-coordinate/count experiment used s16 Y += 24 in
+335F8 (retaining the branch-born s32 next-X) and s16 count++ in 344E8 with
+consistent s16 return declarations. That complete thirteen-entry baseline
+fold also compiled but failed, image 177aa3de, identical in its restored
+modified split context. Those source changes and the temporary flag removal
+were likewise restored. Natural narrow counters alone are not sufficient.
 
 Further baseline whole-run experiment: use a consistent s16-returning 344E8
 (the count path is sign-extended via >>16 and the index is an s16), reconcile
