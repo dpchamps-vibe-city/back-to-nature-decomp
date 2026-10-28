@@ -4995,11 +4995,13 @@ extern s16 gOvl11SelectionPanelSaveRect[4];
 
 /* ovl_27 800B944C tests bit zero of this absolute-addressed word. */
 extern s32 D_8006C840;
-/* ovl_27 800B944C divides two signed halfword counters at independent absolute bases. */
-extern s16 D_800C4A4C;
-/* The second halfword is at +2 from D_800C4A4C, immediately before D_800C4A50. */
-#define D_800C4A4E (((s16 *)D_800C4A50)[-1])
-extern u8 D_800C4BD0[];
+/* Ovl27DrawTiledBackdrop advances these signed-halfword phases modulo 960.
+ * Preserve the second phase's independent table-relative address view. */
+extern s16 gOvl27BackdropFirstPhase;
+/* ovl_27:800C4A4E, immediately before the four title label offsets. */
+#define gOvl27BackdropSecondPhase (((s16 *)gOvl27TitleLabelOffsets)[-1])
+/* Fixed/tiled title draws use the eighth stride-0x30 pool source (800C4BD0). */
+extern u8 gOvl27BackdropSpriteSource[];
 
 extern s32 D_800BB4E4[];
 
@@ -5245,11 +5247,10 @@ extern s16 gOvl23RecordYBounds[12];
 
 extern s32 gOvl27TitlePhaseCallbacks[];
 
-/* D_800C4A50 - s32 table indexed by a signed 16-bit index in
- * ovl_27_func_800BA130, which sign-extends and scales it (sll 16 / sra 14)
- * before an s32 load. Plain extern (never defined in this TU), so cc1 emits
- * the split absolute lui/addiu address the target shows. */
-extern s32 D_800C4A50[];
+/* ovl_27:800C4A50: four word-sized text offsets selected by
+ * Ovl27DrawTextBankLabel's unchecked signed-halfword index. Keep the extern
+ * array view and split absolute address formation; no local allocation. */
+extern s32 gOvl27TitleLabelOffsets[];
 
 /* ovl_27:0x800C4A60: four 8-byte page sources, ids 1/3/0/2.
  * Ovl27CopySelectedPage copies 0x1000 bytes to the bound work buffer +6,
@@ -6771,19 +6772,18 @@ extern s16 gOvl27EffectSlot5Ticks;
 /* ovl_27_func_800B9B98 increments with lhu/sh and threshold-tests with lh. */
 extern s16 gOvl27EffectSlot2Ticks;
 
-/* D_800C4A80 - ovl_27 SpriteSourceData block (0x30 bytes) at 0x800C4A80.
- * Only its address is taken (passed to func_80015BF0/func_80015840), so an
- * opaque byte object suffices; absolute-addressed from the overlay. */
-extern u8 D_800C4A80[];
-/* ovl_27_func_800BA230 initializes these 0x30-byte sprite objects. */
-extern u8 D_800C4AB0[0x30];
-extern u8 D_800C4AE0[0x30];
-extern u8 D_800C4B10[0x30];
-extern u8 D_800C4B40[0x30];
-extern u8 D_800C4B70[0x30];
-extern u8 D_800C4BA0[0x30];
-/* ovl_27_func_800BA230 copies 0xD1C bytes here before sprite initialization. */
-extern u8 D_800C4C00[0xD1C];
+/* Ovl27PollBackdropSpritePoolLoad initializes eight stride-0x30 sources
+ * at ovl_27:800C4A80..800C4BD0; slots 0..5 pair with the effect counters.
+ * Preserve the existing opaque byte views, not another allocation or type. */
+extern u8 gOvl27EffectSlot0Source[];
+extern u8 gOvl27EffectSlot1Source[0x30];
+extern u8 gOvl27EffectSlot2Source[0x30];
+extern u8 gOvl27EffectSlot3Source[0x30];
+extern u8 gOvl27EffectSlot4Source[0x30];
+extern u8 gOvl27EffectSlot5Source[0x30];
+extern u8 gOvl27SpritePoolSource6[0x30];
+/* The loader copies the 0xD1C-byte shared sprite header to ovl_27:800C4C00. */
+extern u8 gOvl27BackdropSpriteData[0xD1C];
 
 /* D_80075FE4 - ovl_11 2-byte table base scanned at 0xB4 stride (first field
  * u16, lhu) by ovl_11_func_800E1F9C and ovl_11_func_800D2160. Undefined in

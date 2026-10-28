@@ -106,7 +106,7 @@ s32 Ovl11StepScoredSceneSequence(s16 phaseSlot, s16 itemIdSlot,
         Ovl11StateRecordAnimationCommand(0x11, 0, 0, 1);
         Ovl11WriteStateRecordPosition(2, 0, -0x843, 0x327);
         Ovl11StateRecordAnimationCommand(2, 0, 3, 1);
-        if (ovl_11_func_800EDF3C(0x14, 0, 0, 0) == 1) {
+        if (Ovl11IsRecordActionAllowed(0x14, 0, 0, 0) == 1) {
             Ovl11WriteStateRecordPosition(0x14, 0, 0x51F, -0xA01);
             Ovl11StateRecordAnimationCommand(0x14, 0, 2, 1);
         }

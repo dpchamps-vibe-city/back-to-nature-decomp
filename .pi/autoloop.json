@@ -128,7 +128,7 @@
    "ovl_17_func_800b9158": [
     "flag-override"
    ],
-   "ovl_11_func_800edf3c": [
+   "ovl11isrecordactionallowed": [
     "register-asm",
     "embedded-asm"
    ],

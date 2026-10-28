@@ -395,7 +395,7 @@ segments:
       - [0x359C0, c, modules/special_counter_slot_command]
       - [0x35C84, c, modules/item_property_adjustment_command]
       - [0x35F34, c, modules/record_position_commands]
-      - [0x3611C, c, ovl_11_func_800EDF3C]
+      - [0x3611C, c, modules/record_action_predicate]
       - [0x361E0, c, modules/slot_comparison_code]
       - [0x36420, c, modules/color_flash_command]
       - [0x36708, c, modules/state_record_animation_draw]

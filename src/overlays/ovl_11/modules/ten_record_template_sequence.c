@@ -37,12 +37,12 @@ s32 Ovl11StepTenRecordTemplateSequence(s16 phaseSlot, s16 templateSlot) {
     } else {
         Ovl11ChangeStateRecordFlag800(8, 1, 0, 0);
     }
-    if (ovl_11_func_800EDF3C(11, 0, 0, 0) == 0 && ids.values[1][4] != 7) {
+    if (Ovl11IsRecordActionAllowed(11, 0, 0, 0) == 0 && ids.values[1][4] != 7) {
         Ovl11ChangeStateRecordFlag800(ids.values[0][3], 1, 0, 0);
         ids.values[0][3] = -1;
         ids.values[1][3] = -1;
     }
-    if (ovl_11_func_800EDF3C(ids.values[1][0], 0, 0, 0) == 0) {
+    if (Ovl11IsRecordActionAllowed(ids.values[1][0], 0, 0, 0) == 0) {
         Ovl11ChangeStateRecordFlag800(ids.values[0][0], 1, 0, 0);
         ids.values[0][0] = -1;
         ids.values[1][0] = -1;

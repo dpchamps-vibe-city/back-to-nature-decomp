@@ -11,8 +11,4 @@
  * overlay/engine state and is not reentrant. */
 void Ovl27DispatchTitleScenePhase(void);
 
-/* Shared with the menu: reset the animation tick, effect counters and drawing
- * coordinates (-160, 48, 320), and set the two-way selection to 1. This does
- * not itself replace the animation callback or reset the whole menu stage. */
-void Ovl27ResetTitleAnimationState(void);
 #endif

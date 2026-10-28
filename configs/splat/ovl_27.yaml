@@ -34,7 +34,6 @@ segments:
       - [0x0, rodata]
       - [0x4, .rodata, modules/title_scene]
       - [0xCC, c, modules/title_scene]
-      - [0x1504, c, modules/backdrop_sprite_pool]
       - [0x26A4, c, modules/scene_resources]
       - [0x2AF4, c, modules/work_area_init]
       - [0x2E40, data]

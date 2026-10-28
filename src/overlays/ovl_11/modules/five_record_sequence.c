@@ -17,7 +17,7 @@ s32 Ovl11StepFiveRecordSequence(s16 phaseSlot) {
     s32 start;
 
     phase = *(s16 *)&gOvl11ValueSlots[phaseSlot];
-    start = ovl_11_func_800EDF3C(gOvl11FiveRecordSequenceIds[0], 0, 0, 0) != 1;
+    start = Ovl11IsRecordActionAllowed(gOvl11FiveRecordSequenceIds[0], 0, 0, 0) != 1;
     result = 0;
     switch (phase) {
     case 0:

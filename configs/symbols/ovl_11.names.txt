@@ -91,6 +91,7 @@ Ovl11TryLatchProgressTrigger = 0x800F3F7C; // type:func
 Ovl11PublishObjectToFixedSpawnRecord = 0x8010B05C; // type:func
 
 // Independent slot-code mapping and resolved animation drawing commands.
+Ovl11IsRecordActionAllowed = 0x800EDF3C; // type:func
 Ovl11WriteSlotComparisonCode = 0x800EE000; // type:func
 Ovl11DrawStateRecordAnimation = 0x800EE528; // type:func
 

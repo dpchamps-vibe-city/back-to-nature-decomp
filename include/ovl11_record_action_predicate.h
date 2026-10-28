@@ -10,8 +10,9 @@
  * All other cases return true. No state is changed.
  * The two unused command operands retain the original callers' explicit
  * a2/a3 setup (e.g. zeros at 800EB864/868), not invented behavior.
- * The legacy symbol name and its separate existing source-policy exception
- * are unchanged; this header establishes only the witnessed call contract. */
-s32 ovl_11_func_800EDF3C(s16 recordOrSlot, s32 fromValueSlot, s32 unused2, s32 unused3);
+ * The implementation retains its authorized address-prefix/register recovery;
+ * naming this interface does not expand that existing source-policy grant. */
+s32 Ovl11IsRecordActionAllowed(s16 recordOrSlot, s32 fromValueSlot,
+                              s32 unused2, s32 unused3);
 
 #endif

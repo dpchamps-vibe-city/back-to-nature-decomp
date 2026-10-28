@@ -34,7 +34,7 @@ s32 Ovl11ChooseSpecialCounterSlotCommand(s16 skipFlagFilter, s16 resultSlot) {
         }
     }
     if (choices.slots[4] != -1) {
-        if (ovl_11_func_800EDF3C(choices.slots[4], 0, 0, 0) == 0) {
+        if (Ovl11IsRecordActionAllowed(choices.slots[4], 0, 0, 0) == 0) {
             choices.slots[4] = -1;
             count++;
         }

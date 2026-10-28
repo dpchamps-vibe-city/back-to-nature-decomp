@@ -17624,8 +17624,42 @@ Fingerprints:
   entry).
 
 Members:
-- ovl_11_func_800EDF3C (m, parked recovery) — optional signed-halfword
-  slot resolution through `D_80129560` at stride 4; returns a predicate
+- **Ovl11IsRecordActionAllowed (formerly ovl_11_func_800EDF3C), reconstructed
+  as `modules/record_action_predicate.c`, 800EDF3C–800EE000 exclusive.**
+  This read-only singleton has no owned state, private table or internal
+  helper closure: its inputs are the public value-slot bank, game flags,
+  season and work byte E647. The four external command/sequence clients
+  (ten_record_template_sequence, special_counter_slot_command,
+  scored_scene_sequence and five_record_sequence) use the existing
+  ovl11_record_action_predicate.h contract. Both unused trailing operands
+  remain: original callers explicitly prepare them. Function, parameters,
+  locals and control labels now describe the gate without assigning an
+  unproved gameplay role to IDs B/14 or to E647.
+
+  Left record_position_commands mutates coordinates/facing and calls the
+  public direction/animation services; right slot_comparison_code computes
+  category-dependent codes into an output slot. Neither calls this predicate,
+  uses its B/14 tests, or shares any private state/helper/table with it.
+  Those are evidence-limited service boundaries under -G0, not claimed
+  original-object proofs. The widely used slot bank alone does not establish
+  a larger unit, and no flag or dead stub was used as a boundary.
+
+  The checked baseline singleton fold passed the member and complete overlay.
+  It retains the SAME previously authorized three register bindings and
+  two-instruction MATCH_OFFSET prefix; this is organization/interface work,
+  not a newly clean-C reconstruction or an expanded exception. Canonical
+  naming carries the existing policy grant to the same container/address.
+  No compiler override, linkage or ownership changes. InterfaceAudit reconciled
+  all four caller modules with no failing published site. The assembly macro
+  is defined/undefined inside its sole authorized function so moving the file
+  does not grant module-wide use. Full `tuProgress.ts --verify --baseline
+  build/tu-campaign/baseline.json` passes all eight integrity gates: 2343→2344
+  folded functions, 473/473 valid modules, all EXE/13-overlay/data bytes exact,
+  canonical interfaces and zero exception growth. Exit 1 denotes the 281
+  remaining functions, not a verification failure.
+
+  Historical semantics: optional signed-halfword slot resolution through
+  `D_80129560` at stride 4 returns a predicate
   using selectors 0xB/0x14, `func_8001AF44(0x129/0x25)`, the day halfword
   `D_80070CF2`, and byte `D_8006C838+0xE647 == 255`. Original consumers
   include EB85C at EB8B0, EC52C at ECA18 and ED7E0 at ED8D8. The shared
@@ -21571,9 +21605,58 @@ Members (link order):
 
 ## `ovl_27` D_800C4A14/D_800C4A1C state-handler cluster — 0x800B845C–0x800B92E4 (confidence: low)
 
-**Merged the complete `modules/title_scene.c`, 800B7EEC–800B9324 exclusive,
-22 compiled members in original order.** It absorbs all six scene_setup and
-all sixteen menu_scene members, not a new slice. Setup
+**Extended/merged `modules/title_scene.c`, 800B7EEC–800BA4C4 exclusive,
+40 compiled members in original order.** It absorbs the WHOLE eighteen-member
+backdrop_sprite_pool as well as the former 22-member setup/menu unit.
+
+The old 9324 cut below is withdrawn. A whole-source reference census finds
+all six 4A2C..4A36 effect counters private to this pair: 7F7C resets them,
+and 998C/9A8C/9B98/9CB4/9DBC/9EEC alone advance/threshold-test them. This is
+one reset/update protocol, not a widely used engine global. The menu's
+9224/928C/92E4 drivers select and order those exact effect updates; 9FF4
+also consumes the menu's selection and animation clock to position/blink
+the marker. The 7F7C reset writes the same contiguous halfword scene state
+as the menu animation callbacks. These private-state producer/consumer and
+draw relationships corroborate the original adjacent order. The eight-source
+loader/render closure already justified all eighteen pool members; the A130
+label helper now also joins its actual four menu call sites in this one unit.
+No smaller pool/render slice or helper relocation is retained.
+
+Left is the first text in the container. Right A4C4 begins scene_resources:
+archive begin/poll/page-copy and sound-load services do not read/write the six
+effect counters, menu selection/clock, or pool source/header records. They
+use separate page-source metadata and public engine CD/graphics work areas.
+The following work_area_init similarly initializes general work records,
+not this animation protocol. The calls from title setup are client/service
+edges, not additional private-state links. Thus these outer cuts are explicit
+evidence limits under -G0, not GP-proven historical file edges. A larger
+original scene TU remains possible, but the newly established pair-private
+state gives positive support for this join and not for either next service.
+No flag, library gap or mechanical limit created the 800BA4C4 boundary.
+
+The checked baseline forty-member fold passed every member and the overlay.
+Eleven workspace identities now name the first backdrop phase, four label
+offsets, six effect sources, neutral pool source 6, fixed backdrop source and
+copied sprite data. The second phase keeps its original table-minus-halfword
+view under a descriptive macro name; widths, extents and address expressions
+are unchanged. Names are container-qualified in ovl_27.names.txt; canonical
+rewriting and explicit override-header reconciliation avoid equating other
+overlays' identical RAM addresses. No allocation, struct reinterpretation,
+linkage, flag or exception change. The no-outside-client pool header is retired;
+its unchanged forward contracts and rendering/staging documentation are local
+to title_scene. scene_setup publishes the entry; menu_scene publishes resident
+phase callbacks. Helpers remain externally linked, not newly static.
+
+Final batch verification: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates, with
+2344/2625 folded functions and 472/472 valid module TUs (one fewer TU after
+this merge). The EXE, all thirteen overlays, data, callback/jump-table bytes
+and placement are unchanged. Published interfaces, canonical names, policy,
+configuration convergence and exception non-growth pass. No tool or compiler
+flag changes were needed. Exit 1 reflects 281 remaining functions, not failure.
+
+Historical 22-member integration and its supporting sub-closure follow. It
+absorbed all six scene_setup and all sixteen menu_scene members. Setup
 includes the scene entry, both resets, begin/poll and the 13-state resource
 ladder: 7FE8 calls 7F2C, which calls 7F7C; 7FE8/80B0/823C exchange the saved
 work flags and setup stage. The seven-entry phase table links that setup to
@@ -21595,13 +21678,9 @@ tables pool at 0x4; the checked whole-unit fold proves every member and the
 entire overlay at baseline. Shared reset/stage/animation state, the resident
 seven-entry phase protocol and its complete helper closure support the join,
 not adjacency or flag compatibility. No padding declaration, flag or tool
-change was needed. Right menu edge 9324
-starts backdrop_sprite_pool's separately bounded object/effect-pool lifecycle
-and resident source tables. Menu orchestrates those services without directly
-managing their records. That private-layout/protocol edge supports keeping
-that complete module outside; it is not a GP-proven object boundary (-G0).
-Distant A130 remains in that pool/source unit, not silently claimed a
-same-TU menu helper just because the menu calls it.
+change was needed. Its former right edge at 9324 was evidence-limited,
+not a GP-proven boundary; the private reset/update state and marker coupling
+now support the complete forty-member join above, including A130.
 
 Names identify the setup/menu stages, callback address, animation/idle ticks,
 saved flags, exit variant, backdrop Y/extent, panel X and summary buffer.
@@ -21725,9 +21804,9 @@ membership sits with that idiom set, not the D_800C4A14 handler cluster.
 
 ## `ovl_27` parallel slot-array effect family — 0x800B998C–0x800B9EEC (confidence: medium)
 
-**Extended to the complete pool/loader unit,
-`src/overlays/ovl_27/modules/backdrop_sprite_pool.c`,
-800B9324–800BA4C4 exclusive, 18 compiled members in original order.**
+**Complete eighteen-member pool/loader sub-closure, now absorbed by
+`src/overlays/ovl_27/modules/title_scene.c` (forty members, see above).**
+Its original span is 800B9324–800BA4C4 exclusive, in original order.
 Four fixed draws (9324/9368/93B4/9400) and tiled backdrop 944C use source
 4BD0. Six timed slots (998C/9A8C/9B98/9CB4/9DBC/9EEC), with orchestrator
 9C84, pair counters 4A2C+2*i with sources 4A80+30*i. Three following fixed
@@ -21738,10 +21817,11 @@ This exact producer/consumer pool layout and the internal slot-3/4/5 call
 hub justify taking loader and renderers together, rather than isolating seven
 slot functions. The initialized 4BA0 source is retained though not drawn here.
 
-Interior A130 (Ovl27DrawTextBankLabel) remains the weakest member: it uses
-its own four-choice 4A50 text-bank-offset table and the same scene's draw
-facilities, not the sprite pool. It is carried inside the initializer/consumer
-span; there is no independent boundary proof on either side of it. This is
+In the former pool-only sub-closure, interior A130 (Ovl27DrawTextBankLabel)
+was the weakest member: it uses its own four-choice 4A50 text-bank-offset
+table and scene draw facilities, not the sprite pool. The complete merged
+unit now also holds its four menu calls. No independent boundary inside the
+initializer/consumer span justified removing or relocating that helper. This is
 not claimed as a GP/private-pool proof for that helper. Its unchecked 0..3
 caller convention is documented. All eighteen functions have semantic names,
 with fixed-draw suffixes explicitly identifying decimal animation ids, not
@@ -21749,28 +21829,26 @@ guessed feature names. Locals identify phases/wrap quotients, animation,
 tile rows/columns, sway, OT and coordinates; separate narrow intermediates
 and explicit draw order are retained.
 
-Left 92E4 is a scene-handler draw orchestrator over several public services,
-not a pool object accessor; 9324 is the first pool consumer in link order.
-Right A4C4 starts jump-table-selected display-setup handlers, with no pool
-object access. These are evidence-limited API/responsibility cuts, not proven
-original object boundaries. The earlier 7F7C reset clears the six counters
-along with wider scene state; consequently they are NOT TU-private just
-because the six renderers use parallel fields. All overlay code is -G0:
-the historical gp-relative claim below is withdrawn. No absolute/GP ownership
-contradiction can be inferred in this container.
+The former left cut at 9324 is removed: the reset and six counter updaters,
+plus the menu's selection/clock consumer, form a private protocol across it.
+The earlier 'NOT TU-private' observation meant not private to the old pool
+slice; a full reference census confirms they ARE private to the merged
+forty-member span. Right A4C4's separate resource-service evidence is detailed
+above. All overlay code is -G0: the historical gp-relative claim below remains
+withdrawn. This merge rests on private state/call/layout evidence, not a
+manufactured absolute/GP discriminator.
 
-ovl27_backdrop_sprite_pool.h publishes externally used draws and begin/poll
-loading, with archive offsets/byte counts, shared heap staging, GPU/OT effects,
+The former ovl27_backdrop_sprite_pool.h contracts are now implementation-local
+in title_scene: no caller remains outside that unit. Documentation retains
+archive offsets/byte counts, shared heap staging, GPU/OT effects,
 per-call animation updates, counter thresholds, phase units and unchecked
 label index. The three slot helpers retain external linkage without being
 published. Data externs now live only in globals_override.h; missing counter
-halfwords gained evidence comments and no tentative definitions. The external
-work-area addresses 800C4Axx..4Cxx lie outside this overlay's extracted image:
-they retain neutral address identities, with roles documented in source/header,
-rather than claiming EXE ownership or equating another overlay's same RAM.
-The supported overlay data-names generator requires an in-image recovered
-non-code window, so those workspace names are not invented as raw-data labels.
-This is a naming/provenance limit, not a reason to slice the compiled unit.
+halfwords gained evidence comments and no tentative definitions. The external work-area addresses 800C4Axx..4Cxx lie outside this overlay's
+extracted image; the current explicit container-scoped workspace names preserve
+those identities and extern views. They do not claim EXE ownership or identify
+another overlay's same-RAM data. No raw-data allocation or padding object is
+introduced.
 The baseline checked fold preserved all eighteen and the overlay. No compiler
 flag or policy exception was used.
 
