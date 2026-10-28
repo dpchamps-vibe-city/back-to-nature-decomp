@@ -1207,9 +1207,10 @@ typedef struct {
     u8 pad0[0x25478];
     s32 loadedItem;
 } Ovl11LoadedItemView;
-/* 800E4DAC adds indexed signed offsets to this loaded sprite-data base. */
-extern u8 *D_801291B8;
-extern s32 D_801291C0;
+/* 800E499C relocates sprite data below scratch end; 800E4DAC uses these
+ * 24 offsets, collected from archive tags by 800E4D08, relative to that base. */
+extern u8 *gOvl11InstalledSpriteData;
+extern s32 gOvl11InstalledSpriteOffsets[24];
 
 /* 801081A0 fills four pairs; 801082B0 also writes slot 3 at +0xC/+0xE. */
 typedef struct {
@@ -5694,14 +5695,12 @@ typedef struct {
 } Ovl11EntitySpriteSlot; /* 0x30; preserve the existing word-address view. */
 extern Ovl11EntitySpriteSlot gOvl11EntitySpriteSources[10];
 
-/* D_80129410 / D_80129412 - ovl_11 signed halfword display bounds read by
- * the ovl_11 sprite helpers (ovl_11_func_800E516C and ovl_11_func_800E4BA4)
- * and passed as four of the five arguments to func_80015868 /
- * func_80017240. Absolute-addressed (extern-only, lui + %lo). */
-extern s16 D_80129410;
-extern s16 D_80129412;
-/* 800E499C stores the sprite-data byte count here. */
-extern s32 D_80129414;
+/* 800E499C sets the VRAM offsets used by image upload and source setup.
+ * X is 384 (or 0 for archive flag 0x20); Y is 0. Absolute-addressed. */
+extern s16 gOvl11ArchiveTextureX;
+extern s16 gOvl11ArchiveTextureY;
+/* 800E499C stores the relocated sprite-data byte count here. */
+extern s32 gOvl11InstalledSpriteDataBytes;
 /* 800E499C loads this pointer and reads the current object's signed id at +2. */
 extern s16 *Ovl11CurrentObjectId __asm__("D_8006C868");
 

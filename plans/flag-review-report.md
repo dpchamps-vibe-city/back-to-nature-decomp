@@ -74,6 +74,19 @@ These are ignored diagnostic artifacts, not committed deliverables. The
 report below preserves the substantive results if those artifacts are cleaned.
 No source-rewrite search was performed, and no original-TU boundary was proved.
 
+## Subsequent object-archive TU resolution
+
+The complete eleven-entry ovl_11:800E499C–800E5230 unit now folds as
+`modules/object_program_install.c` at baseline -O2/-G0. Directly indexing
+E4BA4's archive halfword tags, instead of separately stepping a pointer,
+reproduces the one-hoisted-address target with both loop passes enabled.
+`foldTranslationUnit.ts --write` confirmed every member and the linked overlay.
+The -fno-rerun-loop-opt override and its permission are removed, not promoted
+to a module setting. Earlier pointer-walk/local-copy/s16-index failures were
+conditional on those source inputs; they did not establish baseline
+unreachability for the indexed header representation. The grouping ledger
+records the complete membership, interfaces and evidence-limited boundaries.
+
 ## 1. Findings established without any source rewrite
 
 | Function | Current override | Fresh result | Recommendation |

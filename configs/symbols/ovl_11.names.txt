@@ -1,5 +1,23 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+Ovl11InstallObjectProgramArchive = 0x800E499C; // type:func
+Ovl11GetObjectArchiveSpriteDataSize = 0x800E4AEC; // type:func
+Ovl11GetObjectArchiveEntryOffset = 0x800E4B58; // type:func
+Ovl11GetObjectArchiveEntryAddress = 0x800E4B6C; // type:func
+Ovl11UploadObjectArchiveImages = 0x800E4BA4; // type:func
+Ovl11GetObjectArchiveProgramSize = 0x800E4C30; // type:func
+Ovl11FindObjectArchiveProgramEntry = 0x800E4C84; // type:func
+Ovl11CollectObjectArchiveSpriteOffsets = 0x800E4D08; // type:func
+Ovl11InstallObjectArchiveSpriteSources = 0x800E4DAC; // type:func
+Ovl11CopyPreviousObjectSpriteSources = 0x800E5078; // type:func
+Ovl11InstallEntitySpriteSource = 0x800E516C; // type:func
+
+gOvl11InstalledSpriteData = 0x801291B8; // type:data size:0x4
+gOvl11InstalledSpriteOffsets = 0x801291C0; // type:data size:0x60
+gOvl11ArchiveTextureX = 0x80129410; // type:data size:0x2
+gOvl11ArchiveTextureY = 0x80129412; // type:data size:0x2
+gOvl11InstalledSpriteDataBytes = 0x80129414; // type:data size:0x4
+
 Ovl11ResetEntitySpriteSources = 0x800E5230; // type:func
 
 Ovl11CdAudioCommand = 0x800E6AB0; // type:func

@@ -6257,6 +6257,58 @@ no override or policy exception applies.
 
 ## `ovl_11` 0x800E499C–0x800E516C pointer-getter run (confidence: medium)
 
+**Reconstructed the complete eleven-entry unit as
+`modules/object_program_install.c`, 800E499C–800E5230 exclusive.**
+The local entry-offset/address/program-size call graph, the common 24-tag
+archive header, and sole-use installed-data/offset/texture-coordinate state
+join the installer, upload, relocation, source-copy and free-slot tail.
+This is not a getter-only slice: every member of the supported closure is
+included in original order, with external linkage unchanged. Overlay -G0
+provides no GP ownership proof, so this remains a private-state/helper/format
+reconstruction rather than a recovered linker-object label.
+
+The left E48CC belongs to active_record_sprites: E4568 alone calls it to
+project, draw and step an entity source; it neither parses the archive nor
+uses the installer offset helpers/state. Right E5230 invalidates shared
+entity-source headers but does not parse an archive or use installed offsets
+or texture coordinates. Its independent reset clients establish the shared
+pool as a cross-service interface, not private ownership joining both units.
+These are protocol/helper-scope cuts, not flag-protecting or GP-proven edges.
+
+The checked complete fold succeeds at baseline -O2/-G0 after expressing
+E4BA4's image-tag scan as `((s16 *)archiveAddress)[tagIndex]`, without a
+second pointer induction variable. All eleven members and linked ovl_11
+were byte-identical. This is a clean source counterexample to the old
+universal second-loop-pass impossibility claim: the pointer-walk source
+fixed that pass's input, not every possible reconstruction. The entire
+-fno-rerun-loop-opt override and its allowlist permission are retired; no
+TU-wide flag, assembly or new exception replaces them.
+
+Names are recorded at the eleven original function identities. The public
+`ovl11_object_program_install.h` publishes only archive installation and the
+37-record previous-source copy, both used by object_archive_pipeline; the
+remaining helpers keep external linkage but are not public API. Parameters
+and locals now describe tag indices, byte counts, payload addresses, source
+selectors and pool cursors. The five private globals name installed sprite
+data/24 offsets/byte count and VRAM texture X/Y offsets; their absolute
+extern-only addressing and storage placement are unchanged. The offset
+anchor is now its witnessed 24-word array. The program-entry error path uses
+the existing Ovl11CurrentObjectId view rather than a conflicting C-local
+pointee typedef. Documentation describes non-reentrancy, scratch lifetime,
+unchecked offsets/capacity, flag 0x20, no-data behavior and silent full-pool
+failure, without assigning gameplay meaning to tag selectors.
+
+After naming, interface publication and readability changes, the uncached
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` gate passes
+all eight integrity checks: 2386 -> 2397/2625 folded, 476/476 valid modules.
+EXE and all thirteen overlays, including data, callbacks and table placement,
+remain byte-identical. Canonical published interfaces have no failing sites;
+the three pre-existing global-audit declaration conflicts and one implicit
+site are unchanged outside this module. No tool or test changed; exception
+count decreases by the retired loop setting. Failed full-unit trials in
+other ranges were restored before this uncached final verification.
+
+
 Boundary correction from caller/source review: E48CC is not an installer
 helper. Its sole caller E4568 passes an entity position and SpriteSourceData;
 it projects/draws/steps that source and calls none of the pointer-getter
@@ -12613,6 +12665,17 @@ Members (address order):
   Final tuProgress --verify after restoration again passed all eight gates
   at 2206/2625 folded and 379/379 valid modules; all linked container bytes
   and the original exception set are preserved.
+
+  A further whole-twelve baseline trial used an Ovl11CopyRecord array base
+  for F8224, with `&slots[i]` / `&slots[i + j]`, while retaining its original
+  counters and goto control flow. The three copy/swap/compactor identities
+  were reconciled to the same existing record type. The checked fold compiled
+  but failed linked ovl_11 (bddfa4f3 versus original 165c3cca); the modified
+  split rollback control reproduced that failure. All source/type aliases
+  and the temporary override removal were restored exactly. This closes that
+  direct-record subscript representation in this context, not every typed
+  compaction loop. The supported twelve remain intact as a hypothesis; no
+  partial unit or module-wide flag was retained.
 - ovl_11_func_800F8224 (m, matched this session, byte-exact, 0xD8) — the
   region's 6-byte-record compaction helper and a zero-gap link member of the
   gapless 0x800F8188 (ends 0x800F8224) → 0x800F8224 (0x800F8224–0x800F82FC) →
@@ -20236,9 +20299,17 @@ full ovl_11 byte check failed and rolled back. Both original per-function
 sources/prototypes were then restored; the complete campaign gate passed.
 This is a measured interface-reconstruction limit, not evidence for a TU
 boundary between the two. No partial proximity module or exception remains.
-The next bounded experiment is the alternative common 0x1C-byte aggregate
-interface with the caller constructing all seven witnessed words; the failed
-split-aggregate spelling does not rule that out. No flag was tried or changed.
+A subsequent checked two-entry trial also tested the common 0x1C-byte
+aggregate with the caller explicitly constructing all seven words, including
+the unused forwarded words and a word selector narrowed to s16 in the callee.
+It compiled but failed the full overlay (built b76f78b7, original 165c3cca);
+the modified split rollback control produced the same failing image. All
+three source/type edits were restored exactly. Neither this full-aggregate
+construction nor the earlier split-position construction reconciles the ABI
+without changing bytes. This does not prove all aggregate contexts impossible
+or license slicing the enclosing update-handler closure. No flag or exception
+was tried or changed. The next useful step is the emitted aggregate-call
+construction, not another unchanged fold or a boundary at this pair.
 
 - call-graph adjacency for the pair: `ovl_11_func_801097F4` (0xBC) ends at
   0x801098B0 and its sole caller `ovl_11_func_801098B0` starts exactly there
@@ -21346,6 +21417,22 @@ then passed with the save-menu merge retained. This closes that loop-guard
 construction in the measured context, not all clean C or the historical
 compiler invocation. No slice around 9158, module flag or new permission was
 retained; unchanged regional witnesses are still only compatibility evidence.
+
+A complete 61-member baseline experiment now includes all ten existing
+ovl_17 modules through BB454, rather than assuming a file boundary at 9CE4.
+The two scene dispatch tables, load-step/resource calls, queue append/draw
+protocol and scene-local render/decision/helper clients support testing this
+whole closure; they do not prove that every shared engine service originally
+had private linkage. The outer cuts are the container's first code and its
+code/data boundary. The checked fold accepted the single jump-table pool and
+compiled all 61 with 9158's work base expressed through the existing animated
+record anchor minus 0x28. It still failed linked ovl_17: 5d23dfec versus
+original c5cad849, exactly the earlier loop-guard trial's image. The modified
+split rollback control was identical. The alternate anchor is therefore not
+a new emitted-output experiment in this context. Source and override were
+restored; no existing module was removed, no partial scene was retained and
+no module-wide flag or permission was added. The open decision remains
+9158's baseline address/web construction, not an internal cut at its flag.
 
 **Reconstructed `src/overlays/ovl_17/modules/record_sprite_animation.c`,
 ovl_17:800BAFAC–800BB0C4 exclusive**, all five entries in original order:

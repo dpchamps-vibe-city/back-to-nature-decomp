@@ -34,6 +34,7 @@
 #include "ovl11_object_sprite_recovery.h"
 #include "ovl11_object_load_resets.h"
 #include "ovl11_clock_event_transition_command.h"
+#include "ovl11_object_program_install.h"
 
 s32 Ovl11DispatchObjectLoadPhase(void) {
     char *work;
@@ -168,9 +169,6 @@ s32 Ovl11GetCurrentObjectId(void) {
  * phase order: 0 start, 1 run, 2 release, 3 poll. A deferred start selects 3,
  * completion selects 1, opcode FF selects 2, and release selects 0. */
 
-void ovl_11_func_800E499C(s32 arg0);
-void ovl_11_func_800E5078(void);
-
 s32 Ovl11StartObjectArchiveLoad(void) {
     s16 id;
     s32 size;
@@ -224,13 +222,13 @@ s32 Ovl11StartObjectArchiveLoad(void) {
         do {
             result = CdReadArchiveBytes(0xC, offset, size, data, 0, 0);
         } while (result == NULL);
-        ovl_11_func_800E499C((s32)result);
+        Ovl11InstallObjectProgramArchive((s32)result);
     } else {
         Ovl11DecodeByteRuns((u8 *)D_8006C838 + 0x20D8, data, Ovl11GetSpriteBlockSize(id));
         if (Ovl11GetSpriteBlockSize(id) >= 0xCE1U) {
             SystemError(0x53, ((struct Ovl11CurrentObjectView *)D_8006C838)->current[1]);
         }
-        ovl_11_func_800E5078();
+        Ovl11CopyPreviousObjectSpriteSources();
     }
     gOvl11ObjectProgramBase = gOvl11ObjectProgramCursor = gOvl11ObjectProgramRecords;
     gOvl11ObjectProgramIndex = 0;
@@ -325,7 +323,7 @@ s32 Ovl11PollObjectArchiveLoad(void) {
             return 0;
         }
     } while (data == 0);
-    ovl_11_func_800E499C((s32)data);
+    Ovl11InstallObjectProgramArchive((s32)data);
     gOvl11ObjectProgramCursor = gOvl11ObjectProgramRecords;
     gOvl11ObjectProgramBase = gOvl11ObjectProgramRecords;
     gOvl11ObjectProgramIndex = 0;
