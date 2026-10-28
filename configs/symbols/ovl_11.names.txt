@@ -1,5 +1,7 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+Ovl11ResetEntitySpriteSources = 0x800E5230; // type:func
+
 Ovl11CdAudioCommand = 0x800E6AB0; // type:func
 Ovl11MessageWindowGateCommand = 0x800E6DFC; // type:func
 Ovl11IsSceneMode3 = 0x800E8BF0; // type:func

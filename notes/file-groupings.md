@@ -6642,7 +6642,37 @@ Members (address order):
 
 ---
 
-## `ovl_11` D_80129230 0x30-byte record cluster — 0x800E4568 / 0x800E516C / 0x800E5230 (confidence: medium)
+## `ovl_11` D_80129230 0x30-byte record cluster — 0x800E4568 / 0x800E516C / 0x800E5230 (historical candidate, superseded)
+
+**Reconstructed the independent reset service as
+`modules/entity_sprite_source_reset.c`, E5230–E5294 exclusive**, named
+`Ovl11ResetEntitySpriteSources`. The archive pipeline calls it before loading
+and on release. It clears only the ten source-header addresses, clears the
+parallel spawn records through the public spawn-record service, and disables
+the current-object draw gate at work+4476. The existing
+`ovl11_object_load_resets.h` now publishes this third synchronous reset service,
+including initialization, preserved fields and non-allocation constraints.
+Parameters/local names describe headers, slots and work areas; no signature,
+linkage, storage definition or global ownership changed. The source array
+already has the canonical name gOvl11EntitySpriteSources.
+
+The historical three-entry association below does NOT identify one TU:
+E4568 belongs to the closed active_record_sprites helper protocol, and E516C
+to the eleven-entry installer/offset-getter closure. The ten sprite sources
+are a public resource consumed across those units, not private installer
+state. E5230 uses none of the installer's private 291B8/291C0/29410/29412/29414
+state or getter helpers. Its right neighbor E5294 starts the paired load-context
+save/restore protocol; it uses neither that protocol nor its private saved
+state. Thus the cuts rest on distinct private-helper/state closures and
+public resource edges, not E4BA4's flag. Under -G0 these are evidence-limited
+service boundaries, NOT recovered historical object edges; a future stronger
+allocator/reset co-compilation witness would require a larger fold. The
+checked baseline fold passed the reset and linked overlay with no setting
+or policy exception added. The two-module batch gate passes all eight integrity
+checks at 2369/2625 folded and 474/474 valid modules, including every linked
+EXE/overlay byte, data/placement, interface/policy, convergence, stable inputs,
+whitespace and exception non-growth. No tools or compiler settings changed.
+Historical candidate evidence follows:
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`) sharing the
 absolute-addressed global `D_80129230` — an array of 10 records with a
@@ -23802,6 +23832,47 @@ Members (link order):
 
 ## `ovl_25` s16-record decision/predicate run — 0x800B9480–0x800B97E4 (confidence: low)
 
+**Revised the weak tail association: the deterministic 97E4 updater now belongs
+to `modules/record_tier_update.c`, the complete three-entry 97E4–9B00 service,
+absorbing both entries of fixed_point_tier_lookup.** A source/call-site census
+finds 97E4 is the ONLY client of the delta lookup and consumes value/delta as
+a pair over the SAME record's +C Q12 value. The eight private tier constants,
+identical signed conversion/threshold cascade, exclusive delta-helper client
+and zero-gap function order support this consumer/helper unit. The value
+lookup also serves 8848; it remains externally linked and published by
+ovl25_fixed_point_tier_lookup.h. The updater is now
+`Ovl25AccumulateRecordTierValue`, published separately by
+ovl25_record_tier_update.h. No linkage was inferred from the fold.
+
+Left 977C is a randomized threshold service over its own CCA0 table; it
+neither calls the updater/lookups nor reads their tables. 9480/95B0 have a
+real decision/fallback/helper link to 977C, but their former association with
+97E4 used only link order, the shared state/timer setter and broad FE44
+parameters. Those do not join that randomized policy to this deterministic
+tier service. Right 9B00 is the general state/timer setter, also called by
+many other record drivers; it consumes no tier table or helper. These are
+positive helper/table protocol scopes and evidence-limited -G0 cuts, not GP
+proofs. The private constants sit behind the lookups, not in the updater
+itself; the outside value client and absence of a GP witness limit the
+historical-TU claim. Neither edge is chosen to protect 95B0's unchanged flag.
+
+The updater's kind (+0) is distinct from state (+2). Its per-iteration s16
+decay, s16 accumulator, timer forcing and separate Q12 delta are documented;
+no gameplay name or disputed type was inferred. Five state-view fields now
+name their demonstrated divisor, kind-4/5 amount and percentage roles, with
+unchanged widths/layout and all typed consumers updated. The shared work
+anchor and eight constants already have canonical semantic names. The
+checked whole-three fold passed baseline settings and the linked overlay;
+no override, assembly, stub or permission was added. After canonical naming,
+interface publication and readability/field-name changes, the two-module
+batch passes all eight tuProgress integrity gates: 2367 -> 2369/2625 folded,
+474/474 valid modules, no regression or exception growth, EXE and all thirteen
+overlays unchanged including data/callback/table placement. The global audit's
+three existing declaration conflicts and one implicit declaration remain in
+unrelated, unchanged functions; none is introduced by these published members.
+No shared tool or compiler setting changed. The earlier candidate and its
+limits are retained below for provenance.
+
 Candidate same-TU membership ([evidence and limits](research/ovl_25_func_800B9480-grouping.md)).
 
 Members (link order):
@@ -23888,13 +23959,12 @@ prove a single original array is needed. Matching conversion idiom, private
 constant run, complementary use by the common update caller and link order
 corroborate the pair; -G0 supplies no GP ownership witness.
 
-Left 97E4 is a duration/percentage-scaled record updater, also calling the
-general record-state setter 9B00; it consumes these services but no private
-tier constants. The value lookup also serves 8848 outside this span. Right
-9B00 is the shared state/timer setter used by other record drivers. These
-are caller/service and private-data boundaries, not GP-proven original TU
-cuts. A future stronger witness may require merging the updater; no such
-witness currently establishes the wider state/predicate band as one TU.
+The earlier pair-only boundary at 97E4 is superseded by the complete
+record_tier_update consumer/helper grouping above: 97E4 is the delta lookup's
+exclusive client and pairs both lookup results over one Q12 record value.
+The outside 8848 value client and shared 9B00 setter remain public interfaces,
+not reasons to absorb their other clients or the preceding randomized policy.
+These remain evidence-limited -G0 protocol scopes, not proven object edges.
 
 Names Ovl25LookupTierValue/Delta and eight scoped data names describe the
 observed thresholds and caller arithmetic, not a gameplay quantity. Original

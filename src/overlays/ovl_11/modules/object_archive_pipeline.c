@@ -168,7 +168,6 @@ s32 Ovl11GetCurrentObjectId(void) {
  * phase order: 0 start, 1 run, 2 release, 3 poll. A deferred start selects 3,
  * completion selects 1, opcode FF selects 2, and release selects 0. */
 
-void ovl_11_func_800E5230(void);
 void ovl_11_func_800E499C(s32 arg0);
 void ovl_11_func_800E5078(void);
 
@@ -193,7 +192,7 @@ s32 Ovl11StartObjectArchiveLoad(void) {
     offset = gOvl11ObjectArchiveOffsets[id];
     needsRead = 1;
     size = gOvl11ObjectArchiveOffsets[id + 1] - offset;
-    ovl_11_func_800E5230();
+    Ovl11ResetEntitySpriteSources();
     Ovl11EnterObjectLoadContext();
     if ((u32)(id - 0x15F) < 0x32U) {
         data = Ovl11RecoverObjectSpriteBlock((u16 *)((u8 *)D_8006C838 + 0xD8), id);
@@ -298,7 +297,7 @@ s32 Ovl11ReleaseObjectLoad(void) {
     ((struct Ovl11E4280State *)D_8006C838)->field_5214 = 0;
     ((struct Ovl11E4280State *)D_8006C838)->field_448C = 0;
     ((struct Ovl11E4280State *)D_8006C838)->flags_4450 &= ~0x10;
-    ovl_11_func_800E5230();
+    Ovl11ResetEntitySpriteSources();
     if (Ovl11HasQueuedRecordSlots() == 1) {
         Ovl11EnterObjectLoadContext();
     } else {

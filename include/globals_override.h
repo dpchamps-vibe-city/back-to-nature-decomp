@@ -5908,15 +5908,15 @@ typedef struct {
     s16 unk4CE;
     s16 unk4D0;
     s16 unk4D2;
-    s16 unk4D4;
+    s16 tierUpdateDivisor;       /* +4D4: divisor for per-call values/Q12 deltas. */
     s16 unk4D6;
     s16 unk4D8;
     s16 unk4DA;
     s16 unk4DC;
-    s16 unk4DE;
-    s16 unk4E0;
-    s16 unk4E2;
-    s16 unk4E4;
+    s16 kind5TierAmount;         /* +4DE: divided by 30 before repeated decay. */
+    s16 kind5TierDecayPercent;   /* +4E0: percentage removed on each decay step. */
+    s16 kind4TierAmount;         /* +4E2: divided by 30 for the kind-4 increment. */
+    s16 otherKindTierPercent;    /* +4E4: scales the tier value for other nonzero kinds. */
 } Ovl25StateView;
 /* 82B4/8340/83A0/8478 and the mode handlers address the same halfword
  * work anchor. Keep its established typed view without adding storage. */

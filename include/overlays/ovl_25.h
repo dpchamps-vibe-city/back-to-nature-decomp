@@ -6,7 +6,7 @@ void ovl_25_func_800B9480(s16 *arg0);
 void ovl_25_func_800B95B0(s16 *arg0);
 s32 ovl_25_func_800B9758(M2C_32ba532776b0_ReconA0View *arg0);
 s32 ovl_25_func_800B977C(Ovl25RecordIdView *record, s16 choice);
-void ovl_25_func_800B97E4(s16 *arg0);
+void Ovl25AccumulateRecordTierValue(s16 *record);
 void Ovl25AcquireVramAnimationSlot(Ovl11VramAnimationDescriptor *descriptor);
 void Ovl25AdvanceSceneTarget(void);
 void Ovl25ApplySceneCamera(void);

@@ -315,7 +315,7 @@ segments:
       - [0x2CF8C, c, ovl_11_func_800E4DAC]
       - [0x2D258, c, ovl_11_func_800E5078]
       - [0x2D34C, c, ovl_11_func_800E516C]
-      - [0x2D410, c, ovl_11_func_800E5230]
+      - [0x2D410, c, modules/entity_sprite_source_reset]
       - [0x2D474, c, modules/object_load_context]
       - [0x2D67C, c, modules/event_record_flag_reset]
       - [0x2D6A8, c, modules/object_work_pair_reset]

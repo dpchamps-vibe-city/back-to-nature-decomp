@@ -27,6 +27,7 @@
 #include "ovl25_record_value_increments.h"
 #include "ovl25_scene_record_seeders.h"
 #include "ovl25_record_state_timer.h"
+#include "ovl25_record_tier_update.h"
 
 void Ovl25DrawSceneSprites(void);
 
@@ -347,7 +348,6 @@ void Ovl25TickSceneRecords(void) {
 }
 
 void ovl_25_func_800B9480 (s16 *arg0);
-void ovl_25_func_800B97E4 (s16 *arg0);
 
 void Ovl25UpdateSceneRecord(s16 *record) {
     s16 voiceHandle;
@@ -362,20 +362,20 @@ void Ovl25UpdateSceneRecord(s16 *record) {
         }
         break;
     case 3:
-        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) + ((s32) (D_800BFE44_view.unk4D6 << 0xC) / (s16) D_800BFE44_view.unk4D4));
+        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) + ((s32) (D_800BFE44_view.unk4D6 << 0xC) / (s16) D_800BFE44_view.tierUpdateDivisor));
     default:
         break;
     case 0:
-        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) - ((s32) (D_800BFE44_view.unk4DA << 0xC) / (s16) D_800BFE44_view.unk4D4));
+        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) - ((s32) (D_800BFE44_view.unk4DA << 0xC) / (s16) D_800BFE44_view.tierUpdateDivisor));
         break;
     case 4:
-        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) + ((s32) (D_800BFE44_view.unk4D6 * (D_800BFE44_view.unk4D0 << 0xC)) / (s32) (D_800BFE44_view.unk4D4 * 0x64)));
+        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) + ((s32) (D_800BFE44_view.unk4D6 * (D_800BFE44_view.unk4D0 << 0xC)) / (s32) (D_800BFE44_view.tierUpdateDivisor * 0x64)));
         break;
     case 2:
-        ovl_25_func_800B97E4(record);
+        Ovl25AccumulateRecordTierValue(record);
         break;
     case 1:
-        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) - ((s32) (D_800BFE44_view.unk4DA << 0xC) / (s16) D_800BFE44_view.unk4D4));
+        (*(s32 *) ((u8 *) record + 0xC)) = (s32) ((*(s32 *) ((u8 *) record + 0xC)) - ((s32) (D_800BFE44_view.unk4DA << 0xC) / (s16) D_800BFE44_view.tierUpdateDivisor));
         if ((*(s16 *) ((u8 *) record + 4)) <= 0) {
             Ovl25SetRecordState(record, 6, *(s16 *) ((u8 *) record + 6));
             (*(s16 *) ((u8 *) record + 6)) = 0;
