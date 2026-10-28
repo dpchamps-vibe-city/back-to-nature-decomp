@@ -2535,3 +2535,6 @@ Ovl11TestProgressGate = 0x800EFA1C; // type:func
 Ovl11UpdateCounter21Purchase = 0x80118CE4; // type:func
 Ovl11UpdateA4ItemRequestPurchase = 0x80119008; // type:func
 gOvl11A4RequestItemId = 0x8012D51C; // type:data size:0x2
+// Independent retail notification and read-only interaction-ID query.
+Ovl11ForwardMenuExitFlags = 0x800F6650; // type:func
+Ovl11InteractionIdIsNot20 = 0x80115FC8; // type:func

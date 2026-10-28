@@ -3599,9 +3599,34 @@ split rollback control. This confirms the earlier conditioned result; it is
 NOT new evidence that the original unit was split or that a flag is needed.
 All six experimental per-function edits were restored. The preserved control
 before and after the experiment passes tuProgress's full EXE/overlay gate.
-No partial mode-1 module or header, altered ABI, or exception remains. A
-correctly typed complete-aggregate caller is still untested; the old scalar
-and split-position declarations must not be repeated as a new experiment.
+No partial mode-1 module or header, altered ABI, or exception remains. At that point a
+correctly typed complete-aggregate caller was still untested; the old scalar
+and split-position declarations were not a new experiment.
+
+Latest complete-band experiment closes that specific caller suggestion for
+the measured context. After removing the duplicate local canonical layouts,
+retaining separate signed/unsigned handler views and the real direction-vector
+header, 98B0 built a local Ovl11Func801097F4Arg: copied its four position words,
+assigned the signed selector, radius and output pointer, then called the
+unchanged aggregate callee through its actual prototype. All 24 members
+compiled, but the checked fold and its modified split control both produced
+`1a600fa0b7cd78b91746023fb51ee1761bce73b0b35efe57bfc843de206c3dee`, not the
+original `165c3cca1f3bd7ec8a37ef6ac0fa75eff2e79479816738379380f776da703742`.
+The preserved compiler output has local request stores and a selector-halfword
+store/reload absent from the original direct four-word argument forwarding.
+This is a failure of that aggregate construction, not evidence for different
+original files or for any compiler override.
+
+The alternative split contract was also recompiled with explicit local
+`out = outPtr; sel = key; r = radius` copies in the original aggregate body's
+order. It produced the already-recorded `b8bf3c29d6c6d02d3be5a8adc79e67b459fda8346b8e5b0662bdb5f4944001f4`
+in both the whole fold and its split rollback control; those local copies do
+not constitute a new remaining lever. No byte score or flag probe was used.
+All six pre-fold source files were restored byte-for-byte afterward, and no
+stage_mode1_record module, altered shared type, prototype exception or partial
+slice is retained. The remaining useful question is a coherent split-position
+ABI with the original callee's output-pointer/type-tag register allocation;
+not another seven-scalar declaration or a repeat of the aggregate local above.
 
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence:
 - shared data-table cluster: the dispatcher's two parallel rodata tables,
@@ -7856,6 +7881,35 @@ changed. Exit 1 denotes the still-incomplete overall campaign, not a failed
 gate. The data declaration renames in the shared override header and
 asm-bound save-summary alias reconciliation were explicit; no new storage
 or private linkage was introduced.
+
+**Adjacent independent query reconstructed as `modules/interaction_id_test.c`,
+ovl_11:80115FC8–80115FE0.** The complete singleton is now
+Ovl11InteractionIdIsNot20: no arguments, no writes, returns the Boolean
+`gOvl11InteractionId != 20`. The global already has a canonical identity; this
+change does not reinterpret ID 20 or alter its type. No retail caller is
+established in the compiled-source census, so no new public header is invented;
+the container context retains the external declaration. No private linkage is
+inferred from that census.
+
+Left selected_record_interaction owns the ten-record flag-query closure
+above; it neither calls this predicate nor shares one of its private helpers
+with it. Right record_offer_interaction begins at 15FE0 and owns its
+confirmation/debit protocol and ratio/level message selector. The predicate
+uses none of those records, helpers or tables, and neither neighboring handler
+calls it. Their common interaction ID/state vocabulary is overlay-wide, not
+TU evidence. These are responsibility/evidence-limited singleton boundaries,
+not proved original object edges, and no override or dead stub motivated them.
+The checked baseline fold proved the member and full ovl_11 bytes. Source
+comments document the exact result and the remaining provenance uncertainty.
+Together with menu_exit_hook, the full campaign gate passed all eight integrity
+checks: 2343/2625 folded functions (2341 before this batch), 472/472 valid
+modules, unchanged EXE/all thirteen overlay code/data/table placement,
+canonical interfaces, source policy and exception non-growth. Neither entry
+had a flag override, and none was added, moved or retired. InterfaceAudit found
+no caller reconciliation needed for these two entries. The authored overlay
+names are in ovl_11.names.txt; generated symbols/context were regenerated,
+not maintained as aliases. The later rejected mode-1 experiments were restored
+and the same complete gate was rerun on that restored tree.
 
 Historical grouping evidence:
 [handler and helper run](research/ovl_11_func_80115CAC-grouping.md).
@@ -25493,6 +25547,24 @@ all linked EXE/overlay bytes, source policy, config convergence and exception
 non-growth: **2210 folded functions, 381/381 valid modules** (up from 2206).
 Exit 1 reflects the remaining 415 ungrouped functions, not a failed integrity
 gate. No tool, flag, storage, ABI, or policy-exception change was needed.
+
+**Adjacent independent forwarding entry reconstructed as
+`modules/menu_exit_hook.c`, ovl_11:800F6650–800F6670.**
+Ovl11ForwardMenuExitFlags calls only Ovl11PostMenuExitFlags, taking no arguments
+and returning no value. It has no extra storage: the callee clears shared
+work-word bits 26/27 and sets status-halfword bit 6. It is an idempotent
+notification, not calendar initialization. This module uses the established
+ovl11_menu_exit_flags.h interface; no new public header is needed without an
+established external caller of the wrapper. External linkage is retained.
+
+Left calendar_hooks has the sampled open/conditional-close protocol described
+above, and no call/state/table tie to this forwarding entry. Right F6670 is
+empty, F6678 returns 1, and neither has a caller, private state, table or helper
+relationship establishing membership with the forwarding entry. Consequently
+neither trivial neighbor was swept in solely for proximity. These singleton
+boundaries are explicit evidence limits, not original-TU proofs. The checked
+baseline fold proved the member and linked ovl_11 bytes; no compiler setting,
+ABI, ownership or exception changed.
 
 Canonical function names (ovl_11 addresses): F9D3C ResetCalendarPanel,
 F9D5C OpenCalendarPanel, F9DB0 UpdateCalendarPanel, F9E4C
