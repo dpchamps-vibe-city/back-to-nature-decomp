@@ -5567,16 +5567,15 @@ typedef struct {
     s32 flag;
 } Ovl21ResultView;
 
-/* D_800BCC48 - ovl_21 table of six 4-byte {u16,u16} pairs (0xFD12/0xFD12,
- * 0x0000/0xFA24, 0x02EE/0xFC97, 0xFD12/0x02EE, 0x0000/0x05DC,
- * 0x02EE/0x02EE). ovl_21_func_800BAEEC indexes it by arg0*4 and loads both
- * halfwords with lhu, so both fields are unsigned. Absolute-addressed
- * (extern-only, lui + %lo) in the -G0 overlay build. */
+/* ovl_21:800BCC48, six world-coordinate X/Z halfword pairs shared by
+ * Ovl21InitSceneRecords and Ovl21DrawPrimarySceneSprite. Both load with lhu
+ * before storing/narrowing into signed position vectors; keep the bit widths.
+ * Absolute extern-only accesses in the -G0 overlay, not newly owned storage. */
 typedef struct {
-    /* 0x00 */ u16 unk0;
-    /* 0x02 */ u16 unk2;
-} UnkStruct800BCC48;
-extern UnkStruct800BCC48 gOvl21SceneOffsetPairs[];
+    /* 0x00 */ u16 x;
+    /* 0x02 */ u16 z;
+} Ovl21SceneRecordOffset;
+extern Ovl21SceneRecordOffset gOvl21SceneOffsetPairs[];
 
 /* D_800BCCC4 - ovl_21 table of s16 selector values (0x21/0x1F/0x1E/0x20 at
  * +0), indexed by a signed halfword read from the D_800C0448 state block.
@@ -7216,11 +7215,12 @@ extern u16 gOvl15SlotMarkCount;
 extern u8 gOvl15SlotRecordScratch[];
 /* 801342A0 fills 15 signed glyph halfwords and formats the row detail text. */
 extern s16 gOvl15SlotDetailText[15];
-/* ovl_15 slot writers use s16 at +0/+2 and s32 at +4, stride 8. */
+/* ovl_15: mark/unmark at 33F4C/34000 write kind/index; 32C1C stores
+ * staging byte addresses at +4 for 331C4. Preserve the signed word ABI. */
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s32 unk4;
+    s16 kind;                 /* -1 empty, 0 small, 1/2 large */
+    s16 recordIndex;
+    s32 stagedAddress;
 } Ovl15Slot;
 /* Alternate view preserves the existing local views in other ovl_15 TUs. */
 extern Ovl15Slot Ovl15Slots[2][5] __asm__("D_80140F90");

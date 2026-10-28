@@ -3,7 +3,10 @@
 
 #include "common.h"
 
-/* Transfer the five selected entries in each Ovl15Slots row. Row 1 records
+/* Transfer part of modules/save_slot_transfer.c. Initialize/select through
+ * ovl15_save_slot_selection.h first. Transfer the five marks in each Ovl15Slots
+ * row; kinds/record indices must still describe the selected pools.
+ * Row 1 records
  * leave the save-work pools for gOvl15StagedSlotRecords, with their staging
  * addresses recorded in the selection table; row 0 runtime records then move
  * into free save-work records. Sources are cleared after copying. Each moved
@@ -19,7 +22,9 @@ void Ovl15StageSelectedSlotTransfers(void);
 
 /* Restore staged row-1 records into newly allocated runtime records and
  * reapply placement. Run after staging and before the staging buffer/table
- * is reused; it does not clear the staged copies or selection descriptors.
+ * is reused or Ovl15InitializeSlotSelection is called; ordinary selection Reset
+ * does not invalidate these addresses. Restore does not clear the staged copies
+ * or selection descriptors, and is not a once-only/consuming operation.
  */
 void Ovl15RestoreStagedSlotRecords(void);
 

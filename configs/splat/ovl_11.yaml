@@ -446,7 +446,6 @@ segments:
       - [0x3F120, c, modules/slot_decorations]
       - [0x3F3BC, c, modules/texture_stream]
       - [0x3FA5C, c, modules/record_slot_menu]
-      - [0x406D0, c, modules/menu_grid_view]
       - [0x40ED8, c, modules/texture_sprite_draw]
       - [0x41354, c, modules/selection_texture_transfer]
       - [0x41F1C, c, modules/calendar_panel]

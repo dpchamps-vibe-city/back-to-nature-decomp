@@ -12865,8 +12865,45 @@ Members (address order):
   useful experiment is a whole-unit canonical-record baseline reconstruction,
   then the existing setting across all members per flag-review-report.md;
   duplicated binary helpers do not justify new private linkage.
-- **Current reconstruction: `modules/record_slot_menu.c`, all twelve entries
-  800F787C–800F84F0 exclusive.** The driver's direct call/input/operation chain
+- **CURRENT: whole screen `modules/record_slot_menu.c`, all nineteen entries
+  800F787C–800F8CF8 exclusive**, absorbing ALL of menu_grid_view. The earlier
+  twelve/seven division below is superseded. A fresh source-call census finds
+  exactly one outside caller of the view's six advertised entries: 787C, the
+  in-unit frame driver. The seventh is the panel drawer's exclusive indicator
+  helper. This is a complete view-helper closure, not simply a common caller
+  of otherwise public services. The driver supplies their exact 0/1..8/9..16
+  slot protocol, eight-cell page count and sibling rendering layers. Independently,
+  EXE:80071A1E (gMenuGridLayoutIndex) has exactly two symbolic C consumers:
+  the driver uses it for 2^(index+1) snapshot cells, navigation for the matching
+  link column. Their selected-slot/page/message handshake joins both sides:
+  input starts a record message, navigation freezes while it is active, and
+  the message helper restores FF after closing status 2. Internal resolver and
+  classifier calls connect the record mutations to that same geometry. These
+  specific producer/consumer, layout and exclusive-helper witnesses support
+  the larger unit at medium confidence; -G0 provides no GP provenance proof.
+  The former cut relied on responsibility layering, not independent evidence
+  that those helpers compiled separately. No member or intervening stub is omitted.
+
+  Outer boundaries: left texture_stream owns a separate CD batch/cursor
+  lifecycle and does not participate in the slot layout, message handshake or
+  record-operation helpers. Right texture_sprite_draw (F8CF8) emits sprite
+  packets using neither the 17-row geometry nor page-text scratch and has no
+  call into this helper closure. The external texture-selection service uses
+  the published resolver/classifier, not the internal view helpers. These are
+  evidence-limited protocol cuts, not proven original object edges or flag cuts.
+
+  The checked whole-nineteen fold preserves every member and linked ovl_11 at
+  baseline -O2/-G0; no override is present, added or moved. External linkage,
+  all record/parameter widths, global ownership and canonical identities stay
+  unchanged. The now-internal six-function view header is retired; ordinary
+  forward declarations replace it, not static linkage. The existing public
+  ovl11_record_slot_menu.h retains screen/resolver/classifier and now describes
+  the full frame ordering, input channels, state sentinels, pixel/tick units,
+  initialization and scratch lifetime. Readability edits name operation endpoints
+  and copy/swap parameters and use canonical pressedButtons/repeatButtons fields
+  in place of raw pad offsets. No speculative state/global rename was needed.
+
+  **Prior twelve-member reconstruction (now extended):** The driver's direct call/input/operation chain
   reaches every transfer, swap, merge, compactor, resolver and record helper;
   their shared three-halfword slot protocol is stronger evidence than address
   adjacency. This supersedes the nine-member slice and historical failures
@@ -22982,7 +23019,14 @@ here only the dispatcher call graph and the gapless link run are.
 
 ## `ovl_21` D_8007AFF0 far-buffer state writer + GTE reader — 0x800BB0F8 / 0x800BB138 / 0x800BB250 / 0x800BB2B4 (confidence: medium)
 
-**Extended/renamed module: `src/overlays/ovl_21/modules/scene_resources.c`,
+**CURRENT: these nine entries are part of the whole 67-entry
+`modules/scene_runtime.c` (7E3C–BBA84)**. Its retained-source producer/pause
+consumer and private record-offset/renderer lifetime supersede the former
+left service boundary; the complete evidence and public-interface reduction
+are in the six-record scene section below. Code/data at BBA84 remains the
+right edge. All 67 pass the checked baseline fold; no setting is changed.
+
+**Prior resource reconstruction (now absorbed),
 800BB0F8–800BBA84 exclusive, nine functions.** It absorbs all four members
 of the former scene_camera_geometry module plus BB328/BB59C/BB648/BB8B8/
 BBA3C, now Ovl21LoadSceneSpriteArchive, Ovl21UploadSceneSpriteChunk,
@@ -23136,8 +23180,92 @@ Members (link order):
 
 ## `ovl_21` six-record scene/state/projectile protocol — 0x800B7E3C–0x800BA9F8 exclusive (confidence: medium)
 
-**CURRENT: the complete 46-member `modules/scene_simulation.c` is checked
-at baseline, including 800BA698 and all three former record_group_queries.**
+**CURRENT: whole `modules/scene_runtime.c`, 800B7E3C–800BBA84 exclusive,
+all 67 original entries.** It absorbs ALL five former units: scene_simulation
+(46 entries, 7E3C–A9F8), sprite_pause (3, A9F8–AB28), entity_record_views
+(4, AB28–AE20), scene_sprite_draw (5, AE20–BB0F8), and scene_resources
+(9, BB0F8–BBA84). No function, dead stub or smaller absorbed module is omitted.
+These are original ovl_21 identities, not functions at the same RAM addresses
+in other overlays. The former internal responsibility cuts below are superseded.
+
+Membership witnesses checked against the actual source and original call
+relationships, not overlay membership alone:
+- The private six-entry X/Z pair table at BCC48 has exactly two function
+  consumers: InitSceneRecords seeds the six record positions and
+  DrawPrimarySceneSprite projects the selected entry. Thus the initialization
+  and rendering spans share the same narrow layout, not merely engine work RAM.
+  The projected drawer also compares its source against records 0/1/2/5 in
+  that very scene block to add the marker pass.
+- LoadSceneSpriteArchive/LoadUiAndObjectSprites bind the retained primary/UI
+  and eighteen embedded slot sources; SetSceneSpritePauseMode walks those
+  exact sixteen-plus-eighteen objects. Its two wrappers have only the scene
+  interaction as an outside caller. The source/header lifetime therefore joins
+  loading, simulation and pause, not just a generic drawing API dependency.
+- All five sprite-drawing entries have callers only in the simulation/draw
+  section or their own projected-draw closure. The two drawing front ends
+  traverse the same six 0x108 records/three 0x4C slots whose flags and sources
+  were initialized above. Camera/geometry initialization and per-frame consumers
+  share the private descriptor and phase-driven update/apply/draw protocol.
+- The four ID-keyed entity helpers are the record initializer/result writer's
+  exclusive inputs/outputs: object source, class range, persistent range read
+  and matching result increment. Their ID-selected source/constant data are
+  specific to this scene's record population. They occupy the interior of the
+  joined lifetime span, not a free-standing generic work-buffer API.
+- The existing nineteen-state/five-phase dispatch closure, projectile spawn/
+  step/search/group helpers, private source tables and member-order code/rodata
+  run supply the rest of the whole family. Both dispatch tables are in-unit;
+  the engine installs only StepScene, not independent helper callbacks.
+
+This is medium-confidence original-file reconstruction, not recovered object
+metadata: -G0 has no GP ownership discriminator. A merely sole-client public
+API would not suffice; the narrow offset-table, initialized-source and record
+producer/consumer lifetimes are the additional joining evidence. The earlier
+cuts described separate responsibilities but supplied no contradictory private
+ownership, pooled-data or call-protocol witness against these joins.
+
+Both outer edges are concrete: left is the container's first code at file 1C
+(after the pooled jump table); right is code/data at file 3C64. No neighboring
+code remains outside to hypothesize an untested extension. The checked dry
+plan and write fold prove every one of the 67 relocated functions and linked
+ovl_21 at baseline -O2/-G0. No member override is active, added or moved;
+old 98CC/BA698 settings remain retired. No source exception is introduced.
+
+Only ovl21_scene_state_machine.h has an external caller (game_loop installing
+StepScene). Six helper-only headers are retired and replaced by ordinary
+in-unit declarations, without changing external linkage or ABI types. The
+public callback docs now include the complete loading/scratch/header lifetime.
+Source section comments retain pause-vs-visibility, unsigned-position projection,
+entity range sentinels, non-consuming search and camera/CD ordering constraints.
+The six-pair type is Ovl21SceneRecordOffset with x/z fields; both consumers
+retain u16 loads and signed-vector narrowing. No data extent, tentative owner,
+new alias or disputed aggregate representation changes. Canonical function/global
+names remain at their original container/address identities.
+
+Final acceptance for this run's three whole-unit reconstructions (two
+record_slot_menu predecessors -> one 19-entry screen, two save-slot predecessors
+-> one 19-entry transfer, five ovl_21 predecessors -> one 67-entry runtime):
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json --json`
+passes all eight integrity categories, with **2511/2625 folded and 456/456
+valid modules**, down from 462 initial modules. The folded count is unchanged
+because these are whole-module mergers, not new function matches. No previous
+folded member regresses. The executable and all thirteen overlays match,
+including data, callbacks, jump tables and placement. Canonical names are clean;
+all published interfaces have zero failing sites; pre-existing text-band
+prototype/implicit-contract debt remains outside this batch. No override,
+allowlist entry, pin, assembly or stub is added. No shared tool/test is changed
+by this run, unrelated working edits are preserved, and no commit is made.
+
+The broad EXE text band remains blocked by the already-measured canonical
+split-context/whole-TU flag conflict; no compatible slice is invented. The
+remaining pad/overlay flagged groups and unreferenced empty leaves are not
+folded without a resolved whole-unit setting or positive membership witness.
+A read-only ovl_27 whole-overlay follow-up found sole-client closure but no
+narrow private-state/table/lifetime witness across its current seams; overlay
+membership and totality alone do not justify that additional merge.
+
+**Prior complete 46-member `modules/scene_simulation.c` (now absorbed into
+scene_runtime) was checked at baseline**, including 800BA698 and all three
+former record_group_queries.
 No interior mechanical cuts remain. The former BA698 -fno-gcse entry and its
 permission are retired, not moved to the module; the checked fold proves all
 46 functions and the linked overlay exact. This adds ONE newly folded
@@ -23462,8 +23590,15 @@ Members (link order):
   `func_800226A4() == 5` init via `func_8001FABC(0x45)` +
   `ovl_21_func_800B9798(1, 0xB)`. Membership rests on the shared globals, the
   `ovl_21_func_800BA4C0` call, and gapless link adjacency.
-**Five-entry sprite-submission service reconstructed as
-`modules/scene_sprite_draw.c`, 800BAE20–800BB0F8 exclusive.** E20/EA0/EEC
+**CURRENT: these five entries belong to whole `modules/scene_runtime.c`.**
+The X/Z-table initializer/draw pair and exact scene-record/source comparisons
+join this former view to simulation, pause and resource lifetime. All 67
+entries pass the checked baseline fold; the six-record section records the
+complete evidence and concrete outer code/container boundaries. The old
+helper header and service cuts below are retired.
+
+**Prior five-entry sprite-submission service (now absorbed),
+800BAE20–800BB0F8 exclusive.** E20/EA0/EEC
 share comparison-before-animation-selection and call BAFFC with their source
 and halfword position; F70 is the fixed centered-rect variant. BAFFC alone
 uses the private BCD18/BCD20 projection scratch and applies the additional
@@ -23582,7 +23717,12 @@ non-growth. Exit 1 reflects the incomplete campaign, not a verification failure.
   that callee pair, and `ovl_21_func_800BA4C0`'s dispatch.
 - ovl_21_func_800BAA38 (m, byte-exact, finalized) — bulk flag-4 toggle for the shared `D_800C0ACC` sprites and `D_800C0458` sprite subrecords ([grouping evidence](research/ovl_21_func_800BAA38-grouping.md)).
 
-  **Reconstructed `modules/sprite_pause.c`, 800BA9F8–800BAB28 exclusive:**
+  **CURRENT: the three pause entries belong to the whole scene_runtime unit**
+  recorded in the six-record scene section. Their initialized-source lifetime
+  joins resources and simulation; the former independent service cuts below
+  are historical. The helper remains externally linked, not public API.
+
+  **Prior pause reconstruction (now absorbed), 800BA9F8–800BAB28 exclusive:**
   all three entries, now Ovl21PauseSceneSprites, Ovl21ResumeSceneSprites and
   Ovl21SetSceneSpritePauseMode. The wrappers are the bulk helper's only
   callers and differ only in set/clear selection; scene interaction invokes
@@ -23660,7 +23800,13 @@ Fingerprints:
 
 ## `ovl_21` D_8006C838 +0x8000 per-entity field writer+reader — 0x800BAB28 / 0x800BABF8 (confidence: medium)
 
-**Whole four-entry service reconstructed as `modules/entity_record_views.c`,
+**CURRENT: all four entries are inside whole `modules/scene_runtime.c`.**
+Their exclusive record-initialization/result-publication call protocol and
+scene-selected object/constant tables join the complete 67-entry lifetime
+span, recorded in the six-record section. The helper header and old internal
+boundaries are retired, not preserved as source-file claims.
+
+**Prior four-entry service (now absorbed),
 BAB28/BABF8/BACB0/BAD18 through BAE20 exclusive.** The writer/read pair has
 identical per-ID storage and special-ID partition; scene initialization
 836C consumes the reader, class constant and object selector consecutively
@@ -24886,6 +25032,14 @@ evidence — only the shared state word and the link adjacency are.
 
 ## `ovl_15` D_8013759E/A0/A2/A4 selection/mark-bank protocol — 0x801335F8–0x80134770 exclusive (confidence: medium)
 
+**CURRENT: all thirteen selection entries belong to the nineteen-member
+`modules/save_slot_transfer.c`, 80132A8C–80134770.** Its exclusive staging
+clear/pack/address-restore lifetime joins this selection closure to the six
+transfer/placement members; evidence and outer cuts are recorded in the
+dual-base slot-machinery section below. The former internal edge at 335F8
+and module paths in the historical reconstruction below are superseded.
+No flag change accompanies the merge; all nineteen pass the checked baseline fold.
+
 **CURRENT: complete thirteen-entry `modules/save_slot_selection.c`, including
 335F8's `Ovl15DrawSlotBanks`, checked at baseline with no override.**
 The former interior cut at 33808 is gone. All thirteen members and linked
@@ -25146,8 +25300,48 @@ Members (link order):
 
 ## `ovl_15` D_800742EC/D_801376D0 dual-base slot machinery — 0x801320A8 / 0x80132C1C / 0x801331C4 / 0x80133538 / 0x801335F8 (confidence: medium for the 0x80133538/0x801335F8 pair, low for 0x801320A8/0x80132C1C/0x801331C4)
 
-**Extended/merged whole transfer service: `modules/save_slot_record_pool.c`,
-ovl_15:80132A8C–801335F8 exclusive, six original entries.** The former
+**CURRENT: complete `modules/save_slot_transfer.c`, ovl_15:80132A8C–80134770
+exclusive, all nineteen entries**, absorbing ALL of save_slot_record_pool and
+save_slot_selection. Beyond the mark table shared with the menu controller,
+the decisive extra witness is the private staging lifetime: 3468C is the only
+clearer of gOvl15StagedSlotRecords (80142550, 0x398 bytes); 32C1C alone packs
+records there and installs their addresses in bank-1 mark word +4; 331C4
+alone reads those installed addresses to restore them. Mark/unmark clears that
+same word; initialization invalidates both kind/index and all address words.
+A source census finds the staging symbol only in these two former modules,
+not in the outside save-menu controller. Thus initialization, selection and
+transfer are one narrow destructive transaction, not merely clients of the
+same broad runtime pools. The preview consumes exactly the selected
+kind/index pairs the transfer moves. The existing placement/allocator closure
+and private selection/row-helper closure join all nineteen entries in original
+order; no member or dead interposed entry is omitted. The former responsibility
+cut at 335F8 did not weigh this exclusive scratch/address producer-consumer
+lifetime; it is withdrawn, not preserved after its renderer override was retired.
+
+Outer limits: left 329F8 ends the menu/buffer controller, which selects phases,
+validates capacity and invokes this transaction but neither clears nor accesses
+its staging bytes/address words. No exclusive placement/selection helper extends
+left; that controller's own private dispatch/literal protocol remains separate.
+Right 34770 begins save_card_title's string-fragment formatting closure, with
+no staging, marks, placement or selection state. Both are evidence-limited
+-G0 protocol edges, not GP-proven historical object boundaries or flag cuts.
+
+The dry plan and checked whole-nineteen fold pass at baseline -O2/-G0, proving
+every member and linked ovl_15. No active member override exists; none is added,
+moved or retired in this merge. Headers retain the three externally used
+selection, transfer and row-placement interfaces. Their ordering docs now
+explicitly distinguish Initialize (invalidates staging) from Reset (preserves
+it); restore is non-consuming, not idempotent transaction completion.
+Ovl15Slot fields are kind, recordIndex and stagedAddress, witnessed by the
+mark writers and staging/restore consumers; s16/s16/s32 offsets and stride 8
+are unchanged. The outside controller's three kind reads are propagated.
+The pre-existing alternate linker view of the marks is retained without
+settling its independent representation question; no alias, global definition,
+private linkage, storage or ABI is added. Existing function/data identities
+and names remain canonical at their original ovl_15 addresses.
+
+**Prior six-entry transfer service (now absorbed),
+ovl_15:80132A8C–801335F8 exclusive:** The former
 row_placement pair is absorbed, not left as a slice. Its X/Z tables are private
 to those helpers and both transfer drivers are their only clients. 32C1C
 produces staged row-1 pointers consumed by 331C4, and both call 3345C's free
@@ -30291,7 +30485,15 @@ corroborates an operation/layout family, not a common TU across distant bands.
 
 ## ovl_11 menu driver / numeric-row display helpers (reconstructed view; original boundaries unproven)
 
-**Reconstructed `modules/menu_grid_view.c`, 800F84F0–800F8CF8 exclusive,
+**CURRENT: all seven entries are absorbed into the complete nineteen-entry
+`modules/record_slot_menu.c`, 800F787C–800F8CF8.** The source-call census,
+shared layout-selector and message-state protocol are recorded at the
+record-slot-menu section above. The former view/record division and retired
+view header below are historical, not retained boundaries. The F8224 setting
+was already removed by the successful twelve-entry baseline reconstruction;
+it is not an active limit on this merge.
+
+**Prior view reconstruction (now absorbed), 800F84F0–800F8CF8 exclusive,
 all seven entries in original order.** Navigation and single-slot drawing
 are the only consumers of the 17-row geometry/link table at 80126E54
 (now gOvl11MenuGridNavigation). Range drawing calls the single-slot drawer;

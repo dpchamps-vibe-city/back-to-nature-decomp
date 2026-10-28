@@ -44,8 +44,7 @@
 #include "ovl15_save_slot_header.h"
 #include "ovl15_save_slot_record_pool.h"
 #include "ui_sprites.h"
-
-void ovl_15_func_8013468C(void);
+#include "ovl15_save_slot_selection.h"
 
 /* Internal frame steps retain external linkage. They require the controller's
  * initialized menu/card state and timer; calling a stage directly bypasses
@@ -96,7 +95,7 @@ void Ovl15ResetSaveMenuState(void) {
     memset(gOvl15TransferBuffer, 0, 0x9690);
     memset(D_801377A0, 0, 0x80);
     saveWork = gOvl15TransferBuffer + 0x280;
-    ovl_15_func_8013468C();
+    Ovl15InitializeSlotSelection();
     gOvl15SaveWorkBase = saveWork;
     memset(saveWork, 0, 0x6378);
     summary = (u8 *)gOvl15SaveSlotHeaders;
@@ -1634,7 +1633,7 @@ void Ovl15CardTransferEnter(void) {
                   gTextBankOffsets[0] + (s32)D_80052FC4);
     Ovl15ResetSaveMenuState();
     gOvl15MenuState = 1;
-    ovl_15_func_8013468C();
+    Ovl15InitializeSlotSelection();
 }
 
 void Ovl15CardTransferPollCards(void) {
@@ -1937,7 +1936,7 @@ void Ovl15CardTransferCompareHeader(void) {
     if (bcmp(gOvl15SaveWorkBase + 0x225C, (u8 *)D_8006C838, 8) == 0) {
         gOvl15MenuState = 0x11;
     } else {
-        ovl_15_func_8013468C();
+        Ovl15InitializeSlotSelection();
         gOvl15MenuState = 0x12;
     }
 }
@@ -1959,18 +1958,15 @@ s32 Ovl15CardTransferPromptState17(void) {
     return ret;
 }
 
-s32 ovl_15_func_80133808(s16 arg0);
-void ovl_15_func_80134724(void);
-
 void Ovl15CardTransferChooseFirstSlot(void) {
     s32 result;
 
-    result = ovl_15_func_80133808(0);
+    result = Ovl15UpdateSlotSelectionMenu(0);
     switch (result) {
     case 0:
         break;
     case 1:
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
         gOvl15MenuState = 0x13;
         break;
     case -1:
@@ -1982,7 +1978,7 @@ void Ovl15CardTransferChooseFirstSlot(void) {
 void Ovl15CardTransferChooseSecondSlot(void) {
     s32 temp_v0;
 
-    temp_v0 = ovl_15_func_80133808(1);
+    temp_v0 = Ovl15UpdateSlotSelectionMenu(1);
     switch (temp_v0) {
     case 1:
         gOvl15MenuState = 0x14;
@@ -1990,7 +1986,7 @@ void Ovl15CardTransferChooseSecondSlot(void) {
     case 0:
         break;
     case -1:
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
         gOvl15MenuState = 0x12;
         break;
     }
@@ -2025,13 +2021,13 @@ void Ovl15CardTransferValidateCapacity(void) {
     for (side = 0; side < 2; side++) {
         selectedCount[side] = selectedKind0[side] = selectedKind12[side] = 0;
         for (slot = 0; slot < 5; slot++) {
-            if (Ovl15Slots[side][slot].unk0 == 0) {
+            if (Ovl15Slots[side][slot].kind == 0) {
                 selectedKind0[side] += 1;
             }
-            if (Ovl15Slots[side][slot].unk0 == 1) {
+            if (Ovl15Slots[side][slot].kind == 1) {
                 selectedKind12[side] += 1;
             }
-            if (Ovl15Slots[side][slot].unk0 == 2) {
+            if (Ovl15Slots[side][slot].kind == 2) {
                 selectedKind12[side] += 1;
             }
         }
@@ -2097,7 +2093,7 @@ void Ovl15CardTransferPromptState21(void) {
         *p = 0x12;
     }
     if (*p != 0x15) {
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
     }
 }
 
@@ -2112,7 +2108,7 @@ void Ovl15CardTransferPromptState22(void) {
         *p = 0x12;
     }
     if (*p != 0x16) {
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
     }
 }
 
@@ -2127,7 +2123,7 @@ void Ovl15CardTransferPromptState23(void) {
         *p = 0x12;
     }
     if (*p != 0x17) {
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
     }
 }
 
@@ -2142,7 +2138,7 @@ void Ovl15CardTransferPromptState24(void) {
         *p = 0x12;
     }
     if (*p != 0x18) {
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
     }
 }
 
@@ -2157,17 +2153,15 @@ void Ovl15CardTransferPromptState25(void) {
         *p = 0x12;
     }
     if (*p != 0x19) {
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
     }
 }
-
-void ovl_15_func_801335F8(void);
 
 void Ovl15CardTransferConfirmSlots(void) {
     s32 temp_a1;
     s8 temp_v0;
 
-    ovl_15_func_801335F8();
+    Ovl15DrawSlotBanks();
     temp_a1 = gActiveRenderContext->field_D8;
     func_8001AC10((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
                  (s32)(D_80051EC6 + gTextBankOffsets[0]));
@@ -2175,7 +2169,7 @@ void Ovl15CardTransferConfirmSlots(void) {
     switch (temp_v0) {
     case 1:
     case -1:
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
         gOvl15MenuState = 0x13;
         return;
     case 0:
@@ -2203,7 +2197,7 @@ void Ovl15CardTransferShowSummary(void) {
     switch (temp_v0) {
     case 1:
     case -1:
-        ovl_15_func_80134724();
+        Ovl15ResetSlotSelection();
         gOvl15ConfirmationChoice = 1;
         gOvl15MenuState = 0x1A;
         return;
