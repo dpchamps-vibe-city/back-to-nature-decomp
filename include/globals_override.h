@@ -4470,10 +4470,10 @@ extern u16 gOvl11ItemSpriteRecordOffsets[];
 /* ovl_11:6680 resets the shared menu/interaction phase to 0xFF;
  * 66F0/6734/6778 install phases serviced by 67E0. */
 extern s32 gOvl11InteractionPhase;
-/* ovl_11:8A3C selects the shared sprite frame and advances it every nine
- * updates; 6680 clears both halfwords. Preserve signedness of the counter. */
-extern u16 gOvl11SharedSpriteFrame;
-extern s16 gOvl11SharedSpriteFrameTicks;
+/* ovl_11:8A3C animates the two menu-grid indicators every nine draws;
+ * 6680 clears both halfwords. Preserve signedness of the counter. */
+extern u16 gOvl11MenuGridIndicatorFrame;
+extern s16 gOvl11MenuGridIndicatorTicks;
 
 extern s32 gOvl11ItemTransferMenuState; /* 0 inactive, 1 browse, 2 inspect, 3 close */
 

@@ -33,7 +33,6 @@
 #include "psyq/libgpu.h"
 #include "sprite_source.h"
 #include "sprite_render.h"
-#include "texture_sprite_draw.h"
 #include "integer_power.h"
 #include "psyq/libcd.h"
 #include "psyq/libetc.h"

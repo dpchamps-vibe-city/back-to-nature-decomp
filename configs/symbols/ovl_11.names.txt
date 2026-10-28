@@ -965,8 +965,8 @@ Ovl11StartSceneYRotationInteraction = 0x800F6734; // type:func
 Ovl11StartMessageInteraction = 0x800F6778; // type:func
 Ovl11ServiceInteractionSequence = 0x800F67E0; // type:func
 gOvl11InteractionPhase = 0x80126E40; // type:data size:0x4
-gOvl11SharedSpriteFrame = 0x80126E50; // type:data size:0x2
-gOvl11SharedSpriteFrameTicks = 0x80126E52; // type:data size:0x2
+gOvl11MenuGridIndicatorFrame = 0x80126E50; // type:data size:0x2
+gOvl11MenuGridIndicatorTicks = 0x80126E52; // type:data size:0x2
 
 // Transactional selection validators and the complete five-outcome protocol.
 Ovl11ChooseEligibleSelection = 0x80102BCC; // type:func

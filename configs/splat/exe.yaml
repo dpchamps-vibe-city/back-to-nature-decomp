@@ -186,8 +186,7 @@ segments:
       - [0xFDB8, c, func_8001F5B8]       # 0x8001F5B8 func_8001F5B8
       - [0xFDEC, c, func_8001F5EC]       # 0x8001F5EC func_8001F5EC
       - [0xFE64, c, modules/color_row_blend]
-      - [0x102BC, c, modules/sound_commands]
-      - [0x104E4, c, modules/master_volume]
+      - [0x102BC, c, modules/sound_control]
       - [0x1067C, c, modules/sound_driver]
       - [0x120C4, c, modules/cd_audio]
       - [0x12564, c, modules/area_scene_prepare_hook]

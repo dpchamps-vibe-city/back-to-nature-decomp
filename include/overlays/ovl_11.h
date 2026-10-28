@@ -1414,7 +1414,7 @@ s32 Ovl11TakeSaveCounter18(u16 amount);
 s32 Ovl11TakeSaveCounter19(u16 amount);
 s32 Ovl11TakeSaveCounter20(u16 amount);
 s32 Ovl11TakeSaveCounter21(u16 amount);
-s32 Ovl11TakeSlotRecord(u16 *arg0, s32 arg1, u16 *arg2, s32 arg3);
+s32 Ovl11TakeSlotRecord(u16 *source, s32 sourceSlot, u16 *destination, s32 destinationSlot);
 s32 Ovl11TestActionKey5(s32 objectAddress, s16 unusedActionId);
 s32 Ovl11TestActionKeyCounter(Ovl11StateKeyProbeView *object, s16 key, s16 threshold);
 s32 Ovl11TestAreaFlagGuard(s32 index);

@@ -3,9 +3,11 @@
 
 #include "common.h"
 
-/* Game-facing adapters over sound_driver.h. Shared driver, preset and queue
- * state makes these non-reentrant. IDs, preset indices and buffer sizes are
- * not checked. All addresses retain the original signed-word ABI. */
+/* Command interface of modules/sound_control.c, adapting sound_driver.h.
+ * master_volume.h publishes its frame service, transfer latch and ramps.
+ * Shared driver, preset and queue state makes these non-reentrant. IDs,
+ * preset indices and buffer sizes are unchecked; addresses retain the
+ * original signed-word ABI. */
 
 /* Play an effect on the inclusive SPU range 0..23 and return its voice.
  * The caller must ensure the driver can allocate a voice. Stop acts on the

@@ -1,7 +1,13 @@
 #ifndef OVL11_INTERACTION_SEQUENCE_H
 #define OVL11_INTERACTION_SEQUENCE_H
 
-/* Interaction-volume dispatch entries. All reset shared interaction/menu
+/* Entry points of modules/interaction_menu.c. The same unit implements the
+ * slot-grid screen, texture-stream/cache and slot-decoration interfaces in
+ * their respective headers. These operations share one non-reentrant state
+ * lifetime; starting another interaction invalidates the grid's selection,
+ * page, message and indicator state as well as its cache residency marks.
+ *
+ * Interaction-volume dispatch entries. All reset shared interaction/menu
  * work, texture-stream cursor and cell cache; not reentrant with that menu.
  * Z/Y starts set game flag 0x71/0x70, phase 6/7 and pad-0 actuator preset 2.
  * The service waits for the corresponding scene rotation ramp's held phase

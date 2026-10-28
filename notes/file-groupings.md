@@ -924,6 +924,76 @@ Members:
 
 ## `ovl_11` ovl_11_func_800F6680-driven state-set / dispatcher run — 0x800F66F0–0x800F67E0 (confidence: medium)
 
+**CURRENT: complete `modules/interaction_menu.c`, 800F6680–800F9D3C
+exclusive, 43 entries.** It absorbs ALL seven former units: interaction_sequence
+(5), texture_cell_cache (6), slot_decorations (4), texture_stream (4),
+record_slot_menu (19), texture_sprite_draw (2), selection_texture_transfer (3).
+Their old internal boundaries below are superseded, not historical-file claims.
+
+The additional witness is the private RESET/USE lifetime, not just the phase
+word or shared cache. F6680 alone initializes the six grid cursor/selection/
+page/message fields; F787C–F8C1C alone consumes and advances them. It also
+initializes the two indicator halfwords whose only consumer/updater is F8A3C.
+All nine state fields including InteractionPhase occur only in the sequence
+and grid code. F67E0 drives that grid after streaming and consumes its FE exit
+phase; the phase lifecycle thus crosses BOTH old cuts. F6680 also clears the
+stream cursor, whose remaining accesses belong to F77A8/F77F0. This exclusive
+initializer/consumer chain was not weighed by the earlier phase-only cut.
+
+The contiguous helper closure fills the span rather than slicing around it:
+F67E0 clears cache activity immediately before the grid draws; F889C invokes
+the single-ID cache path; F6C78/F6D14/F6E38 are the ONLY callers of the two
+F8CF8/F8F3C cache packet emitters. The grid's sole-use cursor helper F6F40
+joins its whole four-entry decoration family. The record move/swap helpers
+call F9174 before changing IDs, and the input path calls F9BE4 on each side
+of an operation. That reconciler snapshots exactly the selected/snapshot
+records the grid resolves, as an eighteen-ID multiset. Its transfer/helper
+closure is included whole. The cached records are also public to selection
+menus; those outside clients are not mistaken for private ownership proof.
+Link order corroborates this connected reset/stream/draw/record-transfer
+protocol. Under -G0 this remains medium-confidence source organization,
+not a GP or recovered original-object proof.
+
+Left F6670/F6678 are unused trivial entries with no calls, state or table
+relationship to this lifetime; their adjacency supplies no extension evidence.
+Earlier menu_exit_hook only forwards an exit notification. Right F9D3C starts
+the calendar panel's separate date/cursor/message state and private marker
+closure; it accesses none of the grid's nine fields or stream cursor and calls
+none of its record-transfer helpers. These are evidence-limited protocol
+edges, not GP-proven cuts or boundaries chosen to protect a flag/dead stub.
+
+The four actually used API families retain their documented sequence,
+texture-cache, texture-stream and decoration headers. Three synthetic
+helper-only headers (record-slot menu, selection transfer, cache packet draw)
+are retired in favor of in-unit forward declarations; every function retains
+external linkage and its ABI. The selection menu's unused packet-header
+include is removed. Source comments retain the unchecked slot/packet, pixel,
+integer-scale, scratch lifetime and nontransactional transfer constraints.
+The indicators are now gOvl11MenuGridIndicatorFrame/Ticks at 80126E50/52,
+not generic shared-sprite state. Types remain u16/s16. Configuration records
+the names; explicit semantic-reference edits supplement canonicalNames (which
+does not rewrite these old semantic spellings). No storage/alias is added.
+The take-record path now names source/destination/slot/type/result without
+changing its guarded assignments or return paths; obsolete m2c advice is gone.
+
+The dry plan and checked fold pass at baseline -O2/-G0: all 43 members and
+the linked overlay are exact. There is no active member override and no flag,
+permission, assembly, pin or stub was added or retired. interfaceAudit checked
+all 43 names: zero failing published interfaces and no caller-object change.
+Its global census retains one unrelated text-engine declaration conflict and
+one implicit declaration; no new interface debt is introduced here.
+Final batch acceptance: `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json` passes all eight integrity categories after
+the naming, source readability and interface edits. EXE/all thirteen overlays,
+associated data/callbacks/jump tables/placement remain byte-identical. Folded
+membership remains 2511/2625 with no regression; valid modules fall 456→450
+because seven become one. Canonical interfaces, source policy, convergence,
+stability, whitespace and exception non-growth pass. Exit 1 means the 114
+remaining functions, not an integrity failure. No shared tool changed or
+commit was made; unrelated working changes are preserved.
+
+Historical smaller-unit findings follow:
+
 **Reconstructed: `modules/interaction_sequence.c`, all five entries
 800F6680, 66F0, 6734, 6778, 67E0, ending at 69D0.** The reset's only three
 callers are the three starts; they install phases 6/7/4 consumed by the
@@ -7141,6 +7211,15 @@ The next useful question is which GCSE rewrite carries the reset's symbol
 high half across the first loop for these sources; inspect the pass evidence
 rather than repeat its backedge spellings.
 
+Additional whole-seven baseline control: reset through the existing
+Ovl11SelectionState.selected[1]/smallAvailable[9] field endpoints with one
+descending pointer scratch still leaves only 3D40 nonexact (17 versus 18
+instructions); the other six members are exact and the compiler reports no
+diagnostics. Source and complete artifacts are retained under
+build/tuFlagReview/ovl_11/progress_counters/typed_selection_reset.c and
+typed-selection-baseline/. This closes only that genuine field-view spelling,
+not baseline C generally. No source, flag, boundary or permission is promoted.
+
 Campaign re-review: no split at 3D40 was promoted. The index mapper is shared
 by writers/readers on both sides, and the two cost producers also share
 D603C, so there is positive family evidence across that entry. 3D40's different
@@ -9377,6 +9456,66 @@ Members (address order):
   confidence)
 
 ## sound-sequencer slot wrappers — 0x8001FABC–0x8001FCE4
+
+**CURRENT: complete `src/modules/sound_control.c`, exe:8001FABC–8001FE7C
+exclusive, sixteen entries**, absorbing ALL nine sound_commands and seven
+master_volume members in original order. The private transfer-latch lifetime
+supersedes the earlier responsibility cut at FCE4. Original FBF0 stores zero
+to 80061F1C before ANY dispatch test; FD10 stores one to that same address
+(61F08+14) only when the load queue is empty; FD74 reads it; FCE4 initializes
+the complete six-word record. No other C source accesses this record or its
+latch. This exclusive reset/service/query chain is a positive producer/consumer
+witness, not merely two clients of the broad low-level sound driver. The
+old 'client' description overlooked that FBF0 is the latch's ONLY invalidator.
+The service also steps the ramp and its four control/query helpers, so the
+whole seven-entry ramp family belongs with it, not just the completion query.
+
+The nine-entry command family's independently witnessed GP buffer-setter/
+dispatcher state, paired effect voice and sequence/reverb operations and two
+private preset/load tables remain as described below. Its empty FCDC is
+carried, not treated as a boundary or assigned an invented purpose. All
+sixteen keep external linkage and their original signatures. The two command
+words retain their witnessed GP definitions; the 24-byte control record stays
+absolute/extern. No type, storage extent or alias is changed.
+
+Left FAB4 ends color_row_blend's gradient/upload helper closure; it uses no
+command table, buffer, transfer latch or ramp helper. Right FE7C begins the
+low-level driver's stereo/CD bootstrap and the GP-owned bank/sequence/read
+state, none of which accesses 61F08/61F1C or the command-private tables/words.
+The control service calls that driver's public GetPendingSoundLoad/StepSoundLoad
+and queue APIs, but those calls do not extend the private latch lifecycle
+into it. Neither neighbor supplies positive extension evidence. These remain
+evidence-limited outer protocol cuts, not claims of GP/absolute contradictions
+or recovered original link metadata. No flag setting motivates either edge.
+
+`sound_commands.h` and `master_volume.h` remain the two real public interfaces
+of one unit. They now document the shared queue/latch lifetime and independent
+ramp state. In particular a command clears completion even if its guard
+suppresses queueing, and completion is latched on the NEXT service call that
+observes an empty queue, not the call that finishes the last load. Existing
+behavior-based function/global names are retained; no disputed ABI or gameplay
+meaning is changed. The source documents the combined responsibility and
+preserves the command dispatch and 16.16 arithmetic unchanged.
+
+The dry plan and checked whole-sixteen fold pass at baseline -O2/-G8: every
+member and linked EXE are exact. No active member override exists; no flag,
+permission, assembly, register pin or stub is added or retired. interfaceAudit
+checked all sixteen names, made no caller changes and reports zero failing
+published interfaces. The unchanged global census still reports one text-engine
+prototype conflict and one implicit declaration outside these units; neither
+is introduced or hidden by this merge.
+
+Final acceptance after both completed modules: `tuProgress.ts --verify
+--baseline build/tu-campaign/baseline.json` passes all eight integrity
+categories, including every EXE/thirteen-overlay byte and data/callback/table
+placement. Folded membership remains 2511/2625, with 114 remaining and no
+regressions; valid modules are 449/449 versus 456 at run start (nine become
+two). Canonical names, affected interfaces, source policy, convergence,
+stability, whitespace and exception non-growth pass. The existing unrelated
+working diffs are preserved; no shared tool or compiler setting changed in
+this run, and no commit was made.
+
+Historical smaller-unit findings follow:
 
 **Reconstructed module: `src/modules/sound_commands.c`**, all nine compiled
 members FABC/FAE8/FB08/FB10/FB30/FBBC/FBE4/FBF0/FCDC in original order.
@@ -11922,6 +12061,13 @@ No ownership, linkage, flag, source exception or ABI changed.
 
 ## master-volume ramps — 0x8001FCE4–0x8001FE7C (confidence: medium)
 
+**Current home: ALL seven entries are absorbed into `modules/sound_control.c`,
+8001FABC–8001FE7C.** The exclusive transfer-latch invalidator/service/query
+lifetime crosses the former FCE4 boundary; see the sound-sequencer wrappers
+section for complete sixteen-member membership, interfaces and outer edges.
+The former 'client of sound loading' left cut below is superseded, not an
+original-file claim. Historical ramp findings follow:
+
 **Module: `src/modules/master_volume.c`**, seven functions in original order.
 All seven access the same six-word state record at 61F08: initialization,
 service, transfer-completion query, level integration, the two ramp starters,
@@ -12193,7 +12339,10 @@ Members (address order):
   actual gameplay meaning of numerator/level is left neutral. Both entries
   and the overlay passed the baseline checked fold without flag exceptions.
 
-- **Reconstructed `modules/selection_texture_transfer.c`, F9174–F9D3C
+- **Current home: the whole three-entry transfer closure is absorbed by
+  `modules/interaction_menu.c`; see the F6680 section for its private-state
+  and helper evidence and the superseded left boundary.**
+  Historical **`modules/selection_texture_transfer.c`, F9174–F9D3C
   exclusive, all three entries.** The reorder wrapper calls the transfer,
   whose first/conditional paths use the release reconciler. All share the
   eighteen displayed-ID / two nine-slot-row / 72-cache-record protocol.
@@ -12865,7 +13014,10 @@ Members (address order):
   useful experiment is a whole-unit canonical-record baseline reconstruction,
   then the existing setting across all members per flag-review-report.md;
   duplicated binary helpers do not justify new private linkage.
-- **CURRENT: whole screen `modules/record_slot_menu.c`, all nineteen entries
+- **Current home: all nineteen screen entries belong to the complete
+  43-entry `modules/interaction_menu.c` (F6680 section). The reset/indicator
+  lifetime and sole-use cache/transfer helpers supersede both former cuts.**
+  Historical **whole screen `modules/record_slot_menu.c`, all nineteen entries
   800F787C–800F8CF8 exclusive**, absorbing ALL of menu_grid_view. The earlier
   twelve/seven division below is superseded. A fresh source-call census finds
   exactly one outside caller of the view's six advertised entries: 787C, the
@@ -26868,7 +27020,10 @@ Members (link order):
 - ovl_11_func_800F77A8 (m) — reset load progress or invoke the mode-1 progress step.
 - ovl_11_func_800F77F0 (m) — advance shared-state CD-load start/poll progress.
 
-**Reconstructed module: `src/overlays/ovl_11/modules/texture_stream.c`**,
+**Current home: all four stream entries are absorbed by
+`modules/interaction_menu.c`; the reset/encoded-cursor lifetime crosses the
+former sequence/stream cut (see F6680 section).** Historical
+**`src/overlays/ovl_11/modules/texture_stream.c`**,
 all four entries at 800F71DC..800F787C exclusive. 71DC/7230 are the start
 and completion halves of the identical archive-0 range (+03C19000, 80 records
 of 2048 bytes) and scratch destination (+4290). 77F0 directly calls both;
@@ -29337,7 +29492,11 @@ Members (address order):
 ## `ovl_11` D_800A0728 ObjectState reset/handoff run — 0x800F6F7C / 0x800F7010 / 0x800F7094 / 0x800F8A3C (confidence: medium)
 
 **Reconstructed the complete local slot-decoration family, 800F6F40–800F71DC
-exclusive, as `modules/slot_decorations.c` (four compiled entries).** Names
+exclusive, formerly `modules/slot_decorations.c` (four compiled entries).**
+All four now belong to `modules/interaction_menu.c`: F6F40's sole grid caller
+and the surrounding private reset/use chain join the whole family (F6680
+section). The prior cuts are superseded, not asserted original boundaries.
+Names
 are `Ovl11DrawSlotCursor`, `Ovl11DrawSelectedSlotMarker`, `Ovl11DrawEmptySlot`
 and `Ovl11DrawSlotQuantity`. The menu-grid clients supply the membership
 witness beyond the shared, widely used source: 800F84F0 pairs the cell-relative
@@ -32962,7 +33121,11 @@ no internal cut is retained. [Earlier evidence and limits](research/ovl_11_func_
 
 ## `ovl_11` D_80129648 texture-draw helper pair — 0x800F8CF8 / 0x800F8F3C (confidence: medium)
 
-**Reconstructed `src/overlays/ovl_11/modules/texture_sprite_draw.c`,
+**Current home: both packet emitters belong to the complete
+`modules/interaction_menu.c`. Their ONLY callers are the F6C78/F6D14/F6E38
+cache paths in that unit; see F6680 section. The old transfer boundary is
+superseded by the complete grid record/texture-operation closure.** Historical
+**`src/overlays/ovl_11/modules/texture_sprite_draw.c`,
 800F8CF8–800F9174 exclusive, both compiled members.** They consume the same
 0x22-byte texture-cache record fields (x/y, width/height, CLUT x/y), use the
 same neutral opaque texture-page protocol and provide complementary SPRT /
@@ -32997,7 +33160,10 @@ is recorded in the gradient-interpolation section above.
 
 ## `ovl_11` D_80129648 texture-ID load/lookup caller run — 0x800F6A24 / 0x800F6C78 / 0x800F6D14 / 0x800F6E38 (confidence: medium)
 
-**Reconstructed `modules/texture_cell_cache.c`, F69D0–F6F40 exclusive,
+**Current home: all six cache entries are absorbed by
+`modules/interaction_menu.c` (F6680 section). The reset/grid's eight additional
+exclusive fields and the sole-use packet emitters supersede both old cuts.**
+Historical **`modules/texture_cell_cache.c`, F69D0–F6F40 exclusive,
 six compiled entries.** The four load/lookup members are joined by the two
 immediately preceding cache reset leaves (69D0/69FC), not kept as an arbitrary
 four-entry slice. Both resets operate on precisely the id/active pair that

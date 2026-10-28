@@ -3,8 +3,10 @@
 
 #include "common.h"
 
-/* Master-volume ramp state uses signed 16.16 levels (0..127) and one step
- * per service call, not elapsed time. Left/right master levels are identical. */
+/* Ramp/service interface of modules/sound_control.c; command entry points
+ * are in sound_commands.h. The transfer latch and ramps share the frame
+ * service but complete independently. Ramp state uses signed 16.16 levels
+ * (0..127) and one step per call, not time. Left/right levels are identical. */
 
 /* Set the level and target to 127, idle the ramp, clear the step and mark
  * sound transfer complete. Does NOT send a volume command to the SDK. */
@@ -14,7 +16,9 @@ void InitMasterVolumeRamp(void);
  * then step the volume ramp if active. Called by the regular frame service. */
 void UpdateMasterVolumeAndSoundTransfer(void);
 
-/* Nonzero completion latch; a sound request clears it outside this module.
+/* Nonzero completion latch; QueueSoundLoadCommand clears it even when its
+ * reset guard suppresses queueing. The service sets it only on a later call
+ * that finds no pending load (not on the call that finishes the last load).
  * Independent of whether a volume ramp is active. */
 s32 IsSoundTransferComplete(void);
 
