@@ -1,5 +1,23 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Complete option-row initializer runs; raw callback tables retain addresses.
+Ovl11ResetOptionDrawMode = 0x8011A9CC; // type:func
+Ovl11InitQuantityPrompt6C = 0x8011A9DC; // type:func
+Ovl11ResetOptionDrawModeA = 0x8011AA44; // type:func
+Ovl11ResetOptionDrawModeB = 0x8011AA54; // type:func
+Ovl11FillFivePromptRowsBit2 = 0x8011AA64; // type:func
+Ovl11FillFivePromptRowsBit3 = 0x8011AC30; // type:func
+Ovl11FillFivePromptRowsBit4 = 0x8011ADF4; // type:func
+Ovl11FillEightPromptRowsBit23 = 0x8011AFB4; // type:func
+Ovl11FillSinglePromptRow = 0x8011B210; // type:func
+Ovl11FillPrimaryAndSecondaryPromptRows = 0x8011B2B0; // type:func
+Ovl11ResetOptionDrawModeTail = 0x8011B6B4; // type:func
+Ovl11BuildTradePriceRows = 0x80113CD0; // type:func
+Ovl11BuildQuantityPriceRows = 0x80113FF0; // type:func
+Ovl11ResetPriceRowDrawMode = 0x80114184; // type:func
+Ovl11BuildPairedPriceRows = 0x80114194; // type:func
+Ovl11BuildRecordFlagOptionRows = 0x80114398; // type:func
+
 Ovl11InstallObjectProgramArchive = 0x800E499C; // type:func
 Ovl11GetObjectArchiveSpriteDataSize = 0x800E4AEC; // type:func
 Ovl11GetObjectArchiveEntryOffset = 0x800E4B58; // type:func
@@ -2559,3 +2577,62 @@ gOvl11A4RequestItemId = 0x8012D51C; // type:data size:0x2
 // Independent retail notification and read-only interaction-ID query.
 Ovl11ForwardMenuExitFlags = 0x800F6650; // type:func
 Ovl11InteractionIdIsNot20 = 0x80115FC8; // type:func
+
+// Primary-object frame/action protocol: reset/use closure across C401C–C69B8.
+gOvl11PrimaryFootprintPower = 0x80128C64; // type:data size:0x2
+gOvl11PrimaryDispatchResult = 0x80128CB0; // type:data size:0x2
+gOvl11PrimaryNoActionTicks = 0x80128D30; // type:data size:0x4
+
+// Complete mode-1 stage-record lifecycle and its private query/callback closure.
+Ovl11DrawStageMode1Record = 0x80108BE8; // type:func
+Ovl11AccumulateStageMode1Direction = 0x80108CA4; // type:func
+Ovl11AcquireStageMode1Record = 0x80108CD0; // type:func
+Ovl11ExpireStageMode1SequenceOutsideWindow = 0x80108D38; // type:func
+Ovl11UpdateStageMode1Counters = 0x80108D84; // type:func
+Ovl11PropagateStageMode1Flag8000 = 0x80109068; // type:func
+Ovl11StepStageMode1Record = 0x801090A4; // type:func
+Ovl11SetStageMode1State = 0x80109188; // type:func
+Ovl11ClearStageMode1Record = 0x801092E0; // type:func
+Ovl11RefreshStageMode1Sprite = 0x80109310; // type:func
+Ovl11SetStageMode1PositionPreset = 0x8010941C; // type:func
+Ovl11InitStageMode1Record = 0x8010946C; // type:func
+Ovl11LookupStageMode1Animation = 0x80109550; // type:func
+Ovl11SelectStageMode1State = 0x80109594; // type:func
+Ovl11ProbeNearbyTaggedRecord = 0x801096FC; // type:func
+Ovl11ProbeNearbyCode15BRecord = 0x801097F4; // type:func
+Ovl11ProbeStageMode1Target = 0x801098B0; // type:func
+Ovl11MoveToNearbySpawn65 = 0x80109974; // type:func
+Ovl11TryStageMode1PositionSnapshot = 0x80109A70; // type:func
+Ovl11ReduceStageMode1CounterAndStartEffect = 0x80109B88; // type:func
+Ovl11TryStageMode1Spawn65Move = 0x80109C24; // type:func
+Ovl11TryStageMode1TaggedRecordMove = 0x80109D08; // type:func
+Ovl11MoveStageMode1ToProbedRecord = 0x80109E04; // type:func
+Ovl11StartStageMode1Flag4Effect = 0x80109E64; // type:func
+gOvl11StageMode1StateCallbacks = 0x800BA848; // type:data size:0x4C
+gOvl11StageMode1AnimationPairs = 0x80127918; // type:data size:0x4
+
+// Five dated condition records, singleton, and closed calendar/flag protocol.
+Ovl11ResetConditionDateRecords = 0x800EEECC; // type:func
+Ovl11SearchNextConditionDate = 0x800EEFB8; // type:func
+Ovl11ClassifyConditionDateSlot = 0x800EF0E8; // type:func
+Ovl11SnapshotConditionDateSlot = 0x800EF488; // type:func
+Ovl11AssignConditionDateSlot = 0x800EF6E4; // type:func
+Ovl11ClearConditionDateSlot = 0x800EF870; // type:func
+Ovl11ConditionDateSlotAccepts = 0x800EF8BC; // type:func
+
+// Copy/recount the terminated 36-byte condition list, then clear pending state.
+Ovl11InstallConditionRecords = 0x800F0E00; // type:func
+
+// Menu-grid input and its complete six-byte slot-operation closure.
+Ovl11UpdateMenuGridScreen = 0x800F787C; // type:func
+Ovl11HandleMenuGridInput = 0x800F7AA0; // type:func
+Ovl11ApplySlotRecordOperation = 0x800F7D34; // type:func
+Ovl11TakeSlotRecord = 0x800F7E38; // type:func
+Ovl11SwapSlotRecords = 0x800F7FAC; // type:func
+Ovl11MergeSlotRecords = 0x800F8188; // type:func
+Ovl11CompactItemSlots = 0x800F8224; // type:func
+Ovl11GetItemSlotRecord = 0x800F82FC; // type:func
+Ovl11GetItemSlotLevel = 0x800F8404; // type:func
+Ovl11AccumulateItemStackCount = 0x800F8428; // type:func
+Ovl11SwapCopyRecords = 0x800F8480; // type:func
+Ovl11CopySlotRecord = 0x800F84D4; // type:func

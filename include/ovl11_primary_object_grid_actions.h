@@ -10,6 +10,8 @@
  * sound and actuator sequences. The asynchronous footprint request is one
  * shared slot: callers must not interleave actions for different objects.
  * Position inputs are world coordinates; converters select the scene grid.
+ * Footprint power accumulates tier-scaled additions in a wrapping u16 shared
+ * with Ovl11UpdatePrimaryObject, which resets it on a new dispatched action.
  * Item/tier table indices are caller-validated; this service does not clamp
  * them. Grid operations skip mode 2 (no grid), and retain distinct completion,
  * score application and request-reset gates. */

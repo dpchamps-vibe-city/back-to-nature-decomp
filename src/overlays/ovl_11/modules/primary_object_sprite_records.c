@@ -71,7 +71,7 @@ void Ovl11InitPrimaryObjectRecordSprites(void) {
     }
     Ovl11LoadPrimaryObjectRecordSprites();
     Ovl11ReadDefaultPosition((s32 *)(base + 0x100));
-    D_80128D30 = 0;
+    gOvl11PrimaryNoActionTicks = 0;
     gOvl11MotionHoldCount = 0;
     gOvl11ItemActionChargeFrames = 0;
 }

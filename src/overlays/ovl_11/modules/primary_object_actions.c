@@ -1,50 +1,34 @@
 /*
- * primary_object_grid_actions — reconstructed translation unit.
+ * Primary-object frame service: select live or substituted button masks,
+ * dispatch object actions, advance timers/effects, and retain position history.
+ * Input remapping and the ground-contact probe feed the frame service.
+ * A new dispatched action clears the cumulative footprint power; the two
+ * footprint helpers add tier-scaled power and pass it to grid/effect services.
+ * The cell request and action-script step share one non-reentrant lifecycle.
+ * History A samples on odd ticks; history B and direction tags sample when
+ * tick % 8 == 7. Early exits deliberately skip those samples.
  *
- * Primary-object action dispatcher, mode-selected grid footprints, held-item
- * handoff and asynchronous cell-action request state. The single shared
- * request advances one footprint index per call, then applies its score.
- * See ovl11_primary_object_grid_actions.h for external entry contracts.
+ * Public contracts: ovl11_primary_object_update.h (frame entry) and
+ * ovl11_primary_object_grid_actions.h (transfer/animation/action entries).
+ * Movement, collision and input-to-state selection remain external services.
+ * All original entries retain external linkage.
  *
  * The evidence for its membership and boundaries is in
  * notes/file-groupings.md.
  */
 
 #include "common.h"
-#include "ovl11_primary_object_grid_actions.h"
 #include "game_types.h"
-#include "ovl11_cell_grid_lookup.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
+#include "ovl11_primary_object_update.h"
 #include "ovl11_cell_actions.h"
 #include "screen_fade.h"
 #include "pad_actuator_sequences.h"
 #include "master_volume.h"
 #include "sound_commands.h"
+#include "ovl11_clock_calendar.h"
 #include "message_window.h"
 #include "game_flags.h"
-#include "ovl11_halfword_triplets.h"
-#include "mode6_texture_refresh.h"
-#include "map_cell_texture.h"
-#include "ovl11_paired_item_ids.h"
-#include "area_grid_triggers.h"
-#include "ovl11_primary_object_requests.h"
-#include "ovl11_record_placement.h"
-#include "ovl11_moving_items.h"
-#include "ovl11_primary_object_state_change.h"
 #include "ovl11_surface_height.h"
-#include "ovl11_item_record_lists.h"
-#include "ovl11_cell_geometry.h"
-#include "ovl11_interaction_record_actions.h"
-#include "ovl11_spawn_effect_consume.h"
-#include "ovl11_pending_stage_dispatch.h"
-#include "ovl11_save_counters.h"
-#include "psyq/memory.h"
-#include "psyq/libcd.h"
-#include "psyq/libetc.h"
-#include "psyq/libgpu.h"
-#include "psyq/libsnd.h"
-#include "psyq/libgs.h"
 #include "psyq/libapi.h"
 #include "ovl11_slot_sprite_cache.h"
 #include "ovl11_item_table_queries.h"
@@ -53,8 +37,30 @@
 #include "ovl11_spawn_record_access.h"
 #include "ovl11_held_item_replacement.h"
 #include "ovl11_primary_object_collision_action.h"
+#include "ovl11_cell_grid_lookup.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+#include "ovl11_timed_sprite_effect.h"
+#include "ovl11_held_action_selection.h"
+#include "ovl11_halfword_triplets.h"
+#include "mode6_texture_refresh.h"
+#include "map_cell_texture.h"
+#include "ovl11_paired_item_ids.h"
+#include "area_grid_triggers.h"
+#include "ovl11_primary_object_requests.h"
+#include "ovl11_primary_object_grid_actions.h"
+#include "ovl11_record_placement.h"
+#include "ovl11_moving_items.h"
+#include "ovl11_primary_object_state_change.h"
+#include "ovl11_object_action_input.h"
+#include "ovl11_primary_object_action_phase.h"
+#include "ovl11_scene_header_key.h"
 #include "ovl11_cell_grid_selection.h"
 #include "ovl11_primary_object_input_override.h"
+#include "ovl11_recorded_input_playback.h"
 #include "ovl11_status_gauge_deltas.h"
 #include "ovl11_timed_effect_record_fill.h"
 #include "ovl11_interaction_hit_action.h"
@@ -62,10 +68,270 @@
 #include "ovl11_action_status_delta.h"
 #include "ovl11_triplet_sprite_release.h"
 #include "ovl11_held_item_flags.h"
+#include "psyq/libsnd.h"
+#include "psyq/libgs.h"
+#include "ovl11_item_record_lists.h"
+#include "ovl11_cell_geometry.h"
+#include "ovl11_interaction_record_actions.h"
+#include "ovl11_spawn_effect_consume.h"
+#include "ovl11_pending_stage_dispatch.h"
+#include "ovl11_save_counters.h"
+#include "psyq/memory.h"
+#include "surface_collision.h"
 #include "ovl11_object_area_sprite_reset.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_condition_evaluation.h"
 #include "ovl11_action_result_request.h"
+
+void Ovl11ProbePrimaryObjectSurface(Ovl11C498CObject *object);
+void Ovl11RemapPrimaryDirectionButtons(void);
+
+void Ovl11UpdatePrimaryObject(void) {
+    Ovl11PlayerUpdate *obj;
+    PadInputState *input;
+    s32 advanceAction;
+    u32 cachedValue;
+    s32 flags;
+
+    obj = &((Ovl11UpdateState *)D_8006C838)->player;
+
+    if ((*(s32 *) ((u8 *) obj + -0x51BC)) & 0x08000000) {
+        if (gOvl11ActiveItemActionSound != -1) {
+            StopSoundEffectVoice((s32) gOvl11ActiveItemActionSound);
+            gOvl11ActiveItemActionSound = -1;
+        }
+    } else if ((Ovl11IsClockAdvanceActive() != 1) && ((obj->flags & 0x800002) || (IsScreenFadeComplete() != 0)) && !(obj->flags & 0x400) && (Ovl11SceneHeaderKeyDiffers(obj->collision) == 0)) {
+        if (obj->flags & 0x2000) {
+            Ovl11SyncHeldItemFlags((Ovl11C7010Object *) obj);
+            obj->flags = (s32) (obj->flags & ~0x2000);
+        }
+        if (GetGameFlag(0xADU) == 1) {
+            SetGameFlag(0xADU, 0U);
+            RequestMessageWindow(0, 0x724);
+        }
+        Ovl11ProbePrimaryObjectSurface((Ovl11C498CObject *) obj);
+        cachedValue = obj->flags;
+        if ((cachedValue & 0x20000) && !(obj->flags & 0x20000010)) {
+            Ovl11ResetPrimaryObjectRequest();
+            gOvl11InteractionDispatchCount = 0;
+            obj->flags = (s32) (obj->flags & 0xFFFDFFFF);
+        }
+        obj->flags36 = (u16) (obj->flags36 & 0xFFFB);
+        if (obj->flags & 0x800000) {
+            gOvl11PrimaryHeldButtons = ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_522C;
+            gOvl11PrimaryPressedButtons = ((struct struct_8006C838_800E8F78 *)D_8006C838)->field_5230;
+            goto block_22;
+        }
+        input = gPad0Input;
+        gOvl11PrimaryHeldButtons = input->heldButtons;
+        gOvl11PrimaryPressedButtons = input->pressedButtons;
+        if (Ovl11StepRecordedInputPlayback() == 0) {
+            Ovl11RemapPrimaryDirectionButtons();
+            if (obj->flags36 & 0x40) {
+                if (gOvl11PrimaryHeldButtons & 0x20) {
+                    gOvl11PrimaryHeldButtons &= ~0x20;
+                    gOvl11PrimaryPressedButtons &= ~0x20;
+                } else {
+                    obj->flags36 = (u16) (obj->flags36 & 0xFFBF);
+                }
+            }
+block_22:
+            Ovl11TickTimedSpriteEffect((Ov11Timer *)&obj->effectTimer);
+            gOvl11PrimaryDispatchResult = 0;
+            if (!(obj->flags & 0x20000000)) {
+                switch ((u32)obj->flags & 0x800010) {
+                case 0x800000:
+                    Ovl11ApplyPrimaryObjectInputOverride(obj);
+                    if (Ovl11DispatchPrimaryObjectAction() != 0) {
+                        gOvl11PrimaryFootprintPower = 0;
+                    }
+                    flags = obj->flags;
+                    if (flags & 8) {
+                        cachedValue = (u16)obj->timer;
+                        if (obj->timer != 0) {
+                            obj->timer = cachedValue - 1;
+                        } else {
+                            goto clear_flags;
+                        }
+                    }
+                    break;
+                case 0x10:
+                    Ovl11UpdateHeldSelectionAction((Ovl11SelectionObject *)obj);
+                    return;
+                case 0:
+                    Ovl11ApplyPrimaryObjectInputOverride(obj);
+                    gOvl11PrimaryDispatchResult = Ovl11DispatchPrimaryObjectAction();
+                    if (gOvl11PrimaryDispatchResult != 0) {
+                        gOvl11PrimaryFootprintPower = 0;
+                        gOvl11PrimaryNoActionTicks = 0;
+                    } else if (gOvl11PrimaryNoActionTicks == 0x10) {
+                        gOvl11PrimaryNoActionTicks = 0;
+                        gOvl11PrimaryDirectionRemap = 1;
+                        if ((obj->direction == 2) || (obj->direction == 0)) {
+                            gOvl11PrimaryDirectionRemap = 0;
+                        }
+                    } else {
+                        gOvl11PrimaryNoActionTicks += 1;
+                    }
+                    flags = obj->flags;
+                    if (flags & 8) {
+                        if (obj->timer == 0) {
+clear_flags:
+                            obj->flags = flags & ~0xA;
+                        } else {
+                            obj->timer--;
+                        }
+                    }
+                    break;
+                }
+            } else {
+                Ovl11DispatchObjectActionInput((Ovl11C7010Object *)obj);
+            }
+            advanceAction = 0;
+            if (obj->countdown != -2) {
+                if (obj->countdown != -3) {
+                    obj->countdown = (s16) ((u16) obj->countdown - 1);
+                }
+                if (obj->countdown == -1) {
+                    advanceAction = 1;
+                }
+            } else if ((obj->flags36 & 0x10) || (obj->flags262 & 0x100)) {
+                advanceAction = 1;
+            }
+            if (advanceAction != 0) {
+                if (Ovl11StepPrimaryObjectAction((Ovl11C580CObject *)obj) != 0) {
+                    Ovl11ChangePrimaryObjectState((Ovl11C7010Object *) obj, 1U, 0, -2);
+                    obj->flags = (s32) ((obj->flags & 0xDFFFFFFF) | 0x04000000);
+                }
+            }
+            if (((Ovl11UpdateState *)D_8006C838)->tick & 1) {
+                obj->historyA[9] = obj->historyA[8];
+                obj->historyA[8] = obj->historyA[7];
+                obj->historyA[7] = obj->historyA[6];
+                obj->historyA[6] = obj->historyA[5];
+                obj->historyA[5] = obj->historyA[4];
+                obj->historyA[4] = obj->historyA[3];
+                obj->historyA[3] = obj->historyA[2];
+                obj->historyA[2] = obj->historyA[1];
+                obj->historyA[1] = obj->historyA[0];
+                obj->historyA[0] = obj->position;
+            }
+            if ((((Ovl11UpdateState *)D_8006C838)->tick & 7) == 7) {
+                obj->historyB[9] = obj->historyB[8];
+                obj->historyB[8] = obj->historyB[7];
+                obj->historyB[7] = obj->historyB[6];
+                obj->historyB[6] = obj->historyB[5];
+                obj->historyB[5] = obj->historyB[4];
+                obj->historyB[4] = obj->historyB[3];
+                obj->historyB[3] = obj->historyB[2];
+                obj->historyB[2] = obj->historyB[1];
+                obj->historyB[1] = obj->historyB[0];
+                obj->tags[9] = obj->tags[8];
+                obj->tags[8] = obj->tags[7];
+                obj->tags[7] = obj->tags[6];
+                obj->tags[6] = obj->tags[5];
+                obj->tags[5] = obj->tags[4];
+                obj->tags[4] = obj->tags[3];
+                obj->tags[3] = obj->tags[2];
+                obj->tags[2] = obj->tags[1];
+                obj->tags[1] = obj->tags[0];
+                if (!(obj->flags & 0x100)) {
+                    obj->historyB[0] = obj->position;
+                    obj->tags[0].phase = (s16) ((u32) (((Ovl11UpdateState *)D_8006C838)->tick & 8) >> 3);
+                    obj->tags[0].direction = (u16) obj->direction;
+                    return;
+                }
+                obj->tags[0].direction = 5U;
+            }
+        }
+    }
+}
+
+/* Keep snapshots of both masks: all four output bits must come from the
+ * original nibble, not from earlier writes to the rotated result. */
+void Ovl11RemapPrimaryDirectionButtons(void) {
+    s32 held;
+    s32 pressed;
+    s32 heldUp;
+    s32 heldWithoutDirections;
+    s32 remap;
+
+    remap = 0;
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 3) {
+        if (gPad0Input->stickMagnitude >= 0x56) {
+            gOvl11PrimaryHeldButtons |= 0x20;
+        }
+    }
+    if (gOvl11PrimaryDirectionRemap != 0) {
+        remap = 1;
+    }
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 1) {
+        remap = 1;
+    }
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 0) {
+        remap = 0;
+    }
+    if (((struct Ovl11DirectionRemapState *) D_8006C838)->mode == 3) {
+        remap = 0;
+    }
+    if (remap != 0) {
+        held = gOvl11PrimaryHeldButtons;
+        pressed = gOvl11PrimaryPressedButtons;
+        heldWithoutDirections = held & 0xFFFF0FFF;
+        heldUp = held & 0x1000;
+        gOvl11PrimaryHeldButtons = heldWithoutDirections;
+        gOvl11PrimaryPressedButtons = pressed & 0xFFFF0FFF;
+        if (heldUp != 0) {
+            gOvl11PrimaryHeldButtons = heldWithoutDirections | 0x8000;
+        }
+        if (pressed & 0x1000) {
+            gOvl11PrimaryPressedButtons = (pressed & 0xFFFF0FFF) | 0x8000;
+        }
+        if (held & 0x4000) {
+            gOvl11PrimaryHeldButtons |= 0x2000;
+        }
+        if (pressed & 0x4000) {
+            gOvl11PrimaryPressedButtons |= 0x2000;
+        }
+        if (held & 0x8000) {
+            gOvl11PrimaryHeldButtons |= 0x4000;
+        }
+        if (pressed & 0x8000) {
+            gOvl11PrimaryPressedButtons |= 0x4000;
+        }
+        if (held & 0x2000) {
+            gOvl11PrimaryHeldButtons |= 0x1000;
+        }
+        if (pressed & 0x2000) {
+            gOvl11PrimaryPressedButtons |= 0x1000;
+        }
+    }
+}
+
+/* The frame updater's ground-contact step. The offset is applied only to
+ * the copied probe position, not committed to the object's coordinates. */
+void Ovl11ProbePrimaryObjectSurface(Ovl11C498CObject *object) {
+    s32 probePosition[4];
+    s16 *offset;
+
+    Ovl11QueryPrimaryObjectCollisionAction((Ovl11CB114Object *)object, object->position, 0x18);
+    probePosition[0] = object->position[0];
+    probePosition[1] = object->position[1];
+    probePosition[2] = object->position[2];
+    probePosition[3] = object->position[3];
+    offset = gOvl11FacingProbeOffsets[object->direction];
+    probePosition[0] += offset[0];
+    probePosition[2] += offset[1];
+    Ovl11ResolveSurfaceHeight(probePosition, 0);
+    gOvl11PrimarySurfaceFlags = *(s32 *)GetSurfaceHitPolygonAddress();
+    /* Preserve the sentinel substitution when the polygon's upper half is 0. */
+    if (!(gOvl11PrimarySurfaceFlags & 0xFFFF0000)) {
+        gOvl11PrimarySurfaceFlags = 0x8000;
+    }
+}
+
+/* Cell-action implementation. A request advances one footprint index per
+ * call, then applies its score on the call after its inclusive limit. */
 
 void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     Ovl11CE034Position sp18;
@@ -96,7 +362,8 @@ void Ovl11InstallObjectCellItems(Ovl11C4A2CObject *arg0) {
     }
 }
 
-void Ovl11BeginCellActionRequest(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5);
+void Ovl11BeginCellActionRequest(s16 operation, s16 mode, s16 column,
+                               s16 row, s16 filter, s32 limit);
 
 s32 Ovl11BeginCellResetAction(Ovl11C7010Object *arg0) {
     Ovl11CE034Position pos;
@@ -272,82 +539,84 @@ s32 Ovl11StepCellActionRequest(Ovl11CD5BCObject *arg0) {
     return 0;
 }
 
-void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *arg0) {
-    Ovl11CE034Position sp18;
-    u16 sp28;
-    u16 sp2A;
-    s16 sp2C;
-    s16 sp2E;
-    s16 temp_s3;
-    s32 temp_s0;
-    s32 temp_v0;
-    s32 var_s4;
+/* Power accumulates only for usable grid cells or eligible effect hits.
+ * Its u16 wrap and the callee's signed-halfword view are intentional. */
+void Ovl11ApplyScoredCellFootprint(Ovl11CD5BCObject *object) {
+    Ovl11CE034Position position;
+    u16 baseColumn;
+    u16 baseRow;
+    s16 column;
+    s16 row;
+    s16 tier;
+    s32 layer;
+    s32 found;
+    s32 score;
 
-    var_s4 = 0x28;
-    temp_s0 = Ovl11GetCellGridSelection();
-    sp18.unk0 = arg0->x;
-    sp18.unk4 = arg0->y;
-    sp18.unk8 = arg0->z;
-    temp_s3 = arg0->power / 20;
-    if (temp_s0 != 2) {
-        gOvl11AreaCellConverters[temp_s0](&sp18, &sp28, &sp2A);
-        temp_v0 = Ovl11FindCellGridTag(&arg0->value, 0U, arg0->direction, &sp2C, &sp2E, 0);
-        if (temp_v0 == 1) {
-            sp2C += sp28;
-            sp2E += sp2A;
-            if (Ovl11IsCellUnusable(sp2C, sp2E, 0, (s16) temp_s0) == 0) {
-                D_80128C64 += temp_v0 << temp_s3;
-                if (Ovl11TryClearCellFootprintScored((s16) temp_s0, sp2C, sp2E, D_80128C64, arg0->amount) == temp_v0) {
-                    var_s4 = 0x96;
+    score = 0x28;
+    layer = Ovl11GetCellGridSelection();
+    position.unk0 = object->x;
+    position.unk4 = object->y;
+    position.unk8 = object->z;
+    tier = object->power / 20;
+    if (layer != 2) {
+        gOvl11AreaCellConverters[layer](&position, &baseColumn, &baseRow);
+        found = Ovl11FindCellGridTag(&object->value, 0U, object->direction, &column, &row, 0);
+        if (found == 1) {
+            column += baseColumn;
+            row += baseRow;
+            if (Ovl11IsCellUnusable(column, row, 0, (s16) layer) == 0) {
+                gOvl11PrimaryFootprintPower += found << tier;
+                if (Ovl11TryClearCellFootprintScored((s16) layer, column, row, gOvl11PrimaryFootprintPower, object->amount) == found) {
+                    score = 0x96;
                 }
             }
         }
     } else if (gOvl11InteractionHitFlags & 0x8000) {
-        D_80128C64 += 1 << temp_s3;
-        if (Ovl11ConsumeTieredSpawnEffect(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
-            var_s4 = 0x96;
+        gOvl11PrimaryFootprintPower += 1 << tier;
+        if (Ovl11ConsumeTieredSpawnEffect(gOvl11InteractionHitRecordView, gOvl11PrimaryFootprintPower, object->amount) == 1) {
+            score = 0x96;
         }
     }
-    Ovl11AddIndexedProgress(arg0, var_s4);
+    Ovl11AddIndexedProgress(object, score);
 }
 
-void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *arg0) {
-    Ovl11CE034Position sp18;
-    u16 sp28;
-    u16 sp2A;
-    s16 sp2C;
-    s16 sp2E;
-    s16 temp_s3;
-    s32 temp_s0;
-    s32 temp_v0;
-    s32 var_s4;
+void Ovl11ApplyCellFootprint(Ovl11CD5BCObject *object) {
+    Ovl11CE034Position position;
+    u16 baseColumn;
+    u16 baseRow;
+    s16 column;
+    s16 row;
+    s16 tier;
+    s32 layer;
+    s32 found;
+    s32 score;
 
-    var_s4 = 0x28;
-    temp_s0 = Ovl11GetCellGridSelection();
-    sp18.unk0 = arg0->x;
-    sp18.unk4 = arg0->y;
-    sp18.unk8 = arg0->z;
-    temp_s3 = arg0->power / 20;
-    if (temp_s0 != 2) {
-        gOvl11AreaCellConverters[temp_s0](&sp18, &sp28, &sp2A);
-        temp_v0 = Ovl11FindCellGridTag(&arg0->value, 0U, arg0->direction, &sp2C, &sp2E, 0);
-        if (temp_v0 == 1) {
-            sp2C += sp28;
-            sp2E += sp2A;
-            if (Ovl11IsCellUnusable(sp2C, sp2E, 0, (s16) temp_s0) == 0) {
-                D_80128C64 += temp_v0 << temp_s3;
-                if (Ovl11TryClearCellFootprint((s16) temp_s0, sp2C, sp2E, D_80128C64, arg0->amount) == temp_v0) {
-                    var_s4 = 0x96;
+    score = 0x28;
+    layer = Ovl11GetCellGridSelection();
+    position.unk0 = object->x;
+    position.unk4 = object->y;
+    position.unk8 = object->z;
+    tier = object->power / 20;
+    if (layer != 2) {
+        gOvl11AreaCellConverters[layer](&position, &baseColumn, &baseRow);
+        found = Ovl11FindCellGridTag(&object->value, 0U, object->direction, &column, &row, 0);
+        if (found == 1) {
+            column += baseColumn;
+            row += baseRow;
+            if (Ovl11IsCellUnusable(column, row, 0, (s16) layer) == 0) {
+                gOvl11PrimaryFootprintPower += found << tier;
+                if (Ovl11TryClearCellFootprint((s16) layer, column, row, gOvl11PrimaryFootprintPower, object->amount) == found) {
+                    score = 0x96;
                 }
             }
         }
     } else if (gOvl11InteractionHitFlags & 0x8000) {
-        D_80128C64 += 1 << temp_s3;
-        if (Ovl11ConsumeSpawnEffectWithBudgets(gOvl11InteractionHitRecordView, D_80128C64, arg0->amount) == 1) {
-            var_s4 = 0x96;
+        gOvl11PrimaryFootprintPower += 1 << tier;
+        if (Ovl11ConsumeSpawnEffectWithBudgets(gOvl11InteractionHitRecordView, gOvl11PrimaryFootprintPower, object->amount) == 1) {
+            score = 0x96;
         }
     }
-    Ovl11AddIndexedProgress(arg0, var_s4);
+    Ovl11AddIndexedProgress(object, score);
 }
 
 void Ovl11PlaceObjectCellTexture(Ovl11CE034Object *arg0) {
@@ -407,18 +676,9 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
     arg0->direction = direction;
 }
 
-void Ovl11InstallObjectCellItems (Ovl11C4A2CObject *arg0);
-void Ovl11FinalizePrimaryItemAction (Ovl11C6770Object *arg0);
-s32 ovl_11_func_800F3E44 (s16 arg0);
-void Ovl11MoveToFreeDirection (Ovl11C498CObject *arg0);
-void Ovl11PlaceObjectCellTexture (Ovl11CE034Object *arg0);
-s32 Ovl11CommitPendingItemRecord (Ovl11C7010Object *arg0);
-s32 Ovl11BeginCellEffectAction (Ovl11C7010Object *arg0);
-s32 Ovl11BeginCellResetAction (Ovl11C7010Object *arg0);
-s32 Ovl11BeginCellPromotionAction (Ovl11C7010Object *arg0);
-s32 Ovl11StepCellActionRequest (Ovl11CD5BCObject *arg0);
-void Ovl11ApplyCellFootprint (Ovl11CD5BCObject *arg0);
-void Ovl11ApplyScoredCellFootprint (Ovl11CD5BCObject *arg0);
+void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *object);
+s32 Ovl11CommitPendingItemRecord(Ovl11C7010Object *object);
+s32 ovl_11_func_800F3E44(s16 arg0);
 s32 ovl_11_func_800F3EF0(void);
 
 /* Action scripts use six-byte {state, animation, attributes} entries.

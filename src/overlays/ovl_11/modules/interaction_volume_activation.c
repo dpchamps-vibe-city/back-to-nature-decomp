@@ -41,7 +41,7 @@ s32 Ovl11ActivateInteractionVolume(Ovl11C7010Object *object) {
     if (object->unk6C & 0x50) {
         return 0;
     }
-    if (D_80128CB0 == 2) {
+    if (gOvl11PrimaryDispatchResult == 2) {
         return 0;
     }
     if (((struct Ovl11C7F0Flags *)D_8006C838)->flags10 & 0x20000000) {

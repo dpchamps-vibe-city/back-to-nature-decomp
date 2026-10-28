@@ -776,9 +776,9 @@ extern s32 gOvl11ReactionSearchSentinel;
 extern u16 gPrimaryObjectFacing;
 
 /* ovl_17_func_800B8028 indexes 11 original callbacks; all entries ignore incoming arguments. */
-extern void (*D_800BB4F8[11])(void);
+extern void (*gOvl17RecordSceneStages[11])(void);
 /* ovl_17_func_800B8028 reads this dispatch selector with lbu. */
-extern u8 D_800BD84C;
+extern u8 gOvl17RecordSceneStageIndex;
 
 /* ovl_17_func_800B9FA8 copies 0x13DC bytes here, then uses the leading sprite header. */
 extern u8 gOvl17SharedSpriteBank[0x13DC];
@@ -1759,7 +1759,9 @@ struct Ovl11PoolResetView {
     s16 field_E4CA;
 };
 
-/* 800EF488 copies four u16 fields into 0xC-byte records and reads signed indices at +8/+A. */
+/* Dated conditions: four calendar halfwords followed by two signed record
+ * indices (800EF488 snapshots; 800EF6E4 assigns; 800EF0E8 classifies).
+ * field_0/2/4 are year/season/day; field_6 is calendar state[3], not yet named. */
 typedef struct {
     u16 field_0;
     u16 field_2;
@@ -1770,10 +1772,9 @@ typedef struct {
 } Ovl11EF488Record;
 /* 800EF488 uses lhu at +0/+2/+4/+6 of this input state. */
 extern u16 D_80070CF0_halfwords[4] __asm__("gCalendarYear");
-/* 800EF488 selects this single record for arg0 == -1; named view preserves existing local types. */
-extern Ovl11EF488Record D_80071CC0_record __asm__("D_80071CC0");
-/* 800EF488 indexes these records at stride 0xC; named view preserves existing local types. */
-extern Ovl11EF488Record D_8007AD10_records[] __asm__("D_8007AD10");
+/* 800EF488/800EF6E4 select the singleton for slot -1, otherwise five slots. */
+extern Ovl11EF488Record gConditionDateSingleton;
+extern Ovl11EF488Record gConditionDateSlots[5];
 /* 800EF488 passes the signed halfword at +0x5492 to 80112904. */
 typedef struct {
     u8 pad_0[0x5492];
@@ -4966,7 +4967,7 @@ extern s16 gOvl27BackdropFirstPhase;
 /* Fixed/tiled title draws use the eighth stride-0x30 pool source (800C4BD0). */
 extern u8 gOvl27BackdropSpriteSource[];
 
-extern s32 D_800BB4E4[];
+extern s32 gOvl17RecordSceneSubphases[5];
 
 /* 800B7E78 dispatches and advances this unsigned state byte with lbu/sb. */
 extern u8 gOvl17SceneLoadStep;
@@ -4975,7 +4976,7 @@ extern u8 gOvl17SceneLoadStep;
 extern u8 gOvl17RecordRollThresholds[];
 
 /* ovl_17_func_800B8470 increments this byte and compares its signed value to 30. */
-extern s8 D_800BB6F8;
+extern s8 gOvl17BackdropScrollTick;
 
 /* 800B80B0 loads this signed halfword and uses -1 as its inactive value. */
 extern s16 D_800BDB10;
@@ -5070,12 +5071,12 @@ typedef struct {
 extern s16 D_800BDB04;
 
 /* 800B8D88 selects one of three four-byte text entries in data/3634.data.s. */
-extern u16 D_800BB528[6];
+extern u16 gOvl17RecordModeHeadingText[6];
 /* 800B8D88 draws this halfword text and the preceding text at byte offset -0x2E. */
-extern u16 D_800BB482[];
+extern u16 gOvl17RecordPanelLabelText[];
 
 /* ovl_17 data/3634.data.s reserves ten halfwords; 800B9940 formats text here. */
-extern u16 D_800BD738[10];
+extern u16 gOvl17NumberTextBuffer[10];
 /* One slot of the 3x6 card table at D_8006C838 + 0xE516 (D_8007AD4E): a
  * value, an x/y pair, two attribute halfwords, a weight and a halfword that
  * ovl_17_func_800B9940 multiplies by the weight for the selected slot.
@@ -5150,9 +5151,9 @@ typedef struct {
     s16 selected;
 } Ovl17RowsView;
 /* ovl_17_func_800B9940 draws text at this base and byte offsets +0xA/+0x1A. */
-extern s16 D_800BB49A[];
+extern s16 gOvl17RecordColumnLabelText[];
 /* ovl_17_func_800B9940 reads six indexed halfwords with lhu. */
-extern u16 D_800BB6EC[6];
+extern u16 gOvl17RecordRowLabelText[6];
 /* ovl_17_func_800B9940 reads signed/unsigned halfwords at a computed byte offset. */
 extern s16 D_8007AD5A[];
 
@@ -5166,7 +5167,7 @@ extern u32 gOvl17RecordDrawTick;
  * in display rows. The original label spans 0xF0, only its first 0x24 is used. */
 extern u8 gOvl17RowSlotTargets[];
 /* ovl_17 data/3634.data.s holds four-byte text offsets; 800B8294 stores their low halfwords. */
-extern s32 D_800BB534[];
+extern s32 gOvl17RecordRowNameOffsets[6];
 /* 800B8294 initializes a sprite here and writes a signed halfword at +0x1E4. */
 extern u8 D_800BD930[];
 
@@ -5281,6 +5282,15 @@ extern s32 gOvl11ActionMotionVariant;
  * an entry, null-tests it and calls it; ovl_11_func_80109188 null-tests an
  * entry and clears state through it. Absolute-addressed main-RAM table. */
 extern s32 gOvl11ActionEntryHandlers[];
+/* 80109188 dispatches this nineteen-slot bank to signed handler-state views. */
+struct Ovl11D04D4Obj;
+extern s32 (*gOvl11StageMode1StateCallbacks[19])(struct Ovl11D04D4Obj *);
+/* 80108BE8/80109550 index four animation/frame pairs per mode-1 state. */
+typedef struct {
+    u16 animation;
+    u16 frame;
+} Ovl11StageMode1AnimationPair;
+extern Ovl11StageMode1AnimationPair gOvl11StageMode1AnimationPairs[][4];
 
 /* D_80070D30 and D_800719F8 - the ovl_11 file-status flag word and its
  * status sibling (reached as &D_800719F8 - 0xCC8). Both are >8-byte-view
@@ -5605,12 +5615,22 @@ extern u8 D_800BCA78[];
  * -G0 overlay build. Not classified in globals.h. */
 extern u8 D_800BCAD8[];
 
-/* D_800C0448 - two-halfword ovl_21 state. ovl_21_func_800B9538 writes the
- * first halfword, ovl_21_func_800B95EC clears the first and increments the
- * second. Unsigned halfwords: the increment target loads with lhu. All the
- * other ovl_21 references are unmatched stubs, so this type is the only one
- * the matched pair shares. Absolute-addressed (extern-only, lui + %lo). */
+/* D_800C0448 - leading state-pair view of the larger ovl_21 scene block.
+ * 800B9538 writes the first halfword; 800B95EC clears it and increments the
+ * second with lhu. Other views below/game_types.h cover the six records and
+ * trailing selectors/counts. Absolute extern addressing; no new ownership. */
 extern u16 gOvl21SceneControl[2];
+/* 800BA698 walks 0x4C-byte slices from each 0x108-byte record: active s32
+ * at +0x34 and unsigned X/Z at +0x40/+0x44, also seeded/stepped by 9F3C/A300.
+ * Biased traversal view (0x34 before the active word), not a full record. */
+typedef struct {
+    u8 pad_00[0x34];
+    s32 active;
+    u8 pad_38[0x40 - 0x38];
+    u16 x;
+    u16 pad_42;
+    u16 z;
+} Ovl21ProjectileSearchView;
 /* 800B8134 loads the signed handles at D_800C0448 +0x984/+0x986 with lh. */
 typedef struct {
     u8 pad_0[0x984];
@@ -6061,7 +6081,7 @@ extern s16 gOvl15SelectedSlot;
  * scan table with `lh D_8013759E`; ovl_15_func_80133F4C/801342A0 also read it).
  * Absolute-addressed (lui + %lo) from -G0 overlay code; the TU family only
  * declares it, so a scalar extern keeps the base name. */
-extern s16 D_8013759E;
+extern s16 gOvl15SlotCategory;
 
 /* D_80053350 - text-updater array base in the PS-X EXE used by the shared
  * ovl_15 text-draw prologue (ovl_15_func_8012ED18 family add D_80054BBC[0]
@@ -7188,9 +7208,13 @@ extern u8 D_80137658[];
 /* 80133808 and 80134134 pass this overlay buffer to func_80015EE8. */
 /* 801456A0 is gOvl15MenuSpriteSources[1], not separate storage. */
 /* ovl_15 slot state: sh updates/clears in 80133B28/80134724; signed comparisons use lh. */
-extern u16 D_801375A0;
-extern u16 D_801375A2;
-extern u16 D_801375A4;
+extern u16 gOvl15SlotFirstVisible;
+extern u16 gOvl15SlotCursor;
+extern u16 gOvl15SlotMarkCount;
+/* Ovl15ResetSlotSelection clears this 0x1568-byte scratch region. */
+extern u8 gOvl15SlotRecordScratch[];
+/* 801342A0 fills 15 signed glyph halfwords and formats the row detail text. */
+extern s16 gOvl15SlotDetailText[15];
 /* ovl_15 slot writers use s16 at +0/+2 and s32 at +4, stride 8. */
 typedef struct {
     s16 unk0;
@@ -7479,8 +7503,8 @@ extern s32 gOvl11InteractionHitFlags;
 extern s32 gOvl11LastFlaggedVolumeAddress;
 /* Existing publisher spelling preserves its original address-register order. */
 extern s32 Ovl11CollisionFlags __asm__("gOvl11InteractionHitFlags");
-/* 800C523C reads and updates this counter with lhu/sh. */
-extern u16 D_80128C64;
+/* C401C resets; C523C/C541C add 1 << (power/20), retaining u16 wrap. */
+extern u16 gOvl11PrimaryFootprintPower;
 /* 800C907C saves the dispatched object pointer here and reads its u16 +0x22. */
 extern void *Ovl11SavedInteractionObject;
 /* 800C498C/800CAADC cache the surface polygon word; action services test its flags. */
@@ -7488,7 +7512,8 @@ extern s32 gOvl11PrimarySurfaceFlags;
 /* 800C9C60 clears these three absolute-addressed words with sw. */
 extern s32 gOvl11MotionHoldCount;
 extern s32 gOvl11ItemActionChargeFrames;
-extern s32 D_80128D30;
+/* C401C counts zero dispatch results through 16; C9C60 resets it. */
+extern s32 gOvl11PrimaryNoActionTicks;
 /* 800CD0F4 saturating-increments the signed halfword at D_8006C838+0x5240. */
 struct Ovl11ActionCounter {
     u8 pad_0[0x5240];
@@ -7673,8 +7698,8 @@ typedef struct {
     char pad25490[0x10];
     s32 state;
 } Ovl11BBCB8Work;
-/* 800CD9A0 compares this signed halfword with 2. */
-extern s16 D_80128CB0;
+/* C401C publishes the narrowed dispatch result; CD9A0 tests it against 2. */
+extern s16 gOvl11PrimaryDispatchResult;
 
 /* 8012FFB4 passes these strings and the 29-entry value menu to the debug UI. */
 extern char gOvl30ActionHeading[];
