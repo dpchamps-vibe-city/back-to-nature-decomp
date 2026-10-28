@@ -149,6 +149,7 @@ gOvl30FlagRowLabels = 0x80133FB4; // size:0x4
 gOvl30FlagRowCount = 0x80133FB8; // size:0x4
 gOvl30DebugMenuHandlers = 0x80133FC0; // size:0x48
 gOvl30DebugMenuPendingChange = 0x80134008; // size:0x4
+gOvl30DebugDisplayRect = 0x8013400C; // size:0x8
 gOvl30RecordMenuCursor = 0x80134014; // size:0x4
 gOvl30MainDataMenu = 0x80134018; // size:0x1b8
 gOvl30PlayerDataMenu = 0x801341D0; // size:0x1cc

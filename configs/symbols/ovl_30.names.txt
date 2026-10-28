@@ -7,6 +7,7 @@ Ovl30TransferDebugDisplay = 0x8012F030; // type:func
 Ovl30UpdateDebugMenu = 0x8012F084; // type:func
 gOvl30DebugMenuHandlers = 0x80133FC0; // type:data size:0x48
 gOvl30DebugMenuPendingChange = 0x80134008; // type:data size:0x4
+gOvl30DebugDisplayRect = 0x8013400C; // type:data size:0x8
 gOvl30DebugMenuWaitingForExit = 0x80134AD8; // type:data size:0x4
 gOvl30DebugPageIndex = 0x80134ADC; // type:data size:0x4
 gOvl30DebugPageState = 0x80134AE0; // type:data size:0x4

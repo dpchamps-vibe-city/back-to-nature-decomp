@@ -3,7 +3,8 @@
 
 #include "common.h"
 
-/*
+/* Creation interface of code160_record_family; lifecycle and source lookup
+ * are published by ovl11_code160_record_handlers.h.
  * Accepts codes 0x160..0x162, obtains a free 0xB8-byte tagged record and
  * initializes/places it in row-placement mode 1. Returns its address as a
  * signed word, or zero for an unsupported code/full pool. Both trailing

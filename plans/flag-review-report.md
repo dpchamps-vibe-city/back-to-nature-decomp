@@ -251,6 +251,25 @@ convergence, input stability and exception non-growth. The campaign is 114
 new folds above its receipt; ten overrides remain versus its original 24.
 No module setting replaces either retired hard-case override. No commit made.
 
+## Whole-seven progress-counter control
+
+A fresh complete ovl_11:800F3BCC–800F3F7C merge is **6/7 exact at
+baseline** (3D40 differs) and **6/7 exact with -fno-gcse** (3BCC differs).
+The old regional compatibility checks therefore do not account for the whole
+current TU source. All fourteen member/profile verdicts are determinate,
+with successful compilations and no live source or setting change.
+Reports, merged sources, production compiler/toolchain identity, objects and
+instruction listings are under build/tuFlagReview/ovl_11/progress_counters.
+
+Three complete-TU baseline alternatives change only the reset: indexed
+arrays, reuse of its pointer scratch, and explicit loop backedges. All leave
+six members exact and the reset nonexact; the backedge form has identical
+.text to the unchanged merge (SHA-256 378f9a60312825a4a69df5bd1ec7ef5a8ea8cda0df8d1b40a50a659c3ec3c2cb).
+No flagged module or fabricated cut was integrated. These outcomes are scoped
+to those sources/context, not an impossibility claim; the next question is
+which GCSE rewrite carries the symbol high across the first loop. The unrelated thirteen-entry ovl_30
+debug-menu merge passes its checked fold at baseline without a flag change.
+
 ## Whole-fifteen hand-value dialog control
 
 A fresh, unchanged merged ovl_11:80103770–801044E4 control supplies the

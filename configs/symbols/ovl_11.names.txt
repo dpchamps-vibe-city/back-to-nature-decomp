@@ -371,8 +371,8 @@ Ovl11StepCode160Handler11 = 0x800DFA7C; // type:func
 Ovl11StepCode160Handler12 = 0x800DFB3C; // type:func
 Ovl11StepCode160Handler13 = 0x800DFB98; // type:func
 Ovl11StepCode160Handler14 = 0x800DFC3C; // type:func
-gOvl11Code160Handlers = 0x800B957C; // type:data size:0x50
-gOvl11RecordAnimationHandlers = 0x800B95CC; // type:data size:0x50
+gOvl11Code160RequestHandlers = 0x800B957C; // type:data size:0x50
+gOvl11Code160StepHandlers = 0x800B95CC; // type:data size:0x50
 gOvl11Code160SpriteDescriptors = 0x80123E70; // type:data size:0x90
 
 // Whole-grid lifecycle; the interleaved dead hook retains a neutral identity.
@@ -1377,8 +1377,8 @@ gOvl11Animation70Sequence = 0x80123F30; // type:data size:0xC
 gOvl11Animation60Sequence = 0x80123F3C; // type:data size:0xC
 gOvl11Animation3Sequence = 0x80123F48; // type:data size:0x8
 gOvl11Animation8Sequence = 0x80123F50; // type:data size:0x8
-Ovl11SubmitDeferredAnimationPose = 0x800E0220;
-Ovl11SubmitAnimationPose = 0x800E0280;
+Ovl11SubmitDeferredCode160Pose = 0x800E0220; // type:func
+Ovl11SubmitCode160Pose = 0x800E0280; // type:func
 
 // Complete progress-timer/request/derived-status pipeline.
 Ovl11ResetProgressControl = 0x80111E38; // type:func

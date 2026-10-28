@@ -1,20 +1,24 @@
-/* Code-0x160..0x162 resident-record lifecycle and action handler bank.
+/* Code-0x160..0x162 record family: allocation, lifecycle and animation.
  *
- * The pool runs liveness and frame passes separately. A per-record tick
- * selects the sprite source, invokes the separate animation bank and services
- * its 300-update handler timer. The action dispatcher owns handler selection
- * (+26), step/counter/timer (+28/+2A/+2C) and the repeat-suppression bit 0800.
- * Opacity (+16), effect (+A8) and state flags (+34) are shared by the actions.
- * Handler names use actual bank slots, not guessed gameplay actions.
+ * The two 20-slot banks are a single protocol: request handlers accept an
+ * action, while step handlers advance its playlist or pose on later ticks.
+ * The selected slot and +28/+2A/+2C counters live in each 0xB8-byte record.
+ * The family owns no new storage: banks, descriptors and playlists remain
+ * extracted data, and the shared pool/work areas retain their owners.
  *
- * All 22 original entries DE9C8..DFC44 belong to this helper/callback closure;
- * the two callback banks and descriptor data retain their original locations.
- * No linkage was privatized. Membership/boundaries: notes/file-groupings.md. */
+ * Creation and lifecycle interfaces are published separately through
+ * ovl11_code160_record_creation.h and ovl11_code160_record_handlers.h.
+ * Playlist/pose callbacks are bank-local interfaces, not generic animation
+ * services. All original entries retain external linkage and address identity.
+ * Whole membership and conservative outer boundaries: notes/file-groupings.md.
+ */
 
 #include "common.h"
+#include "ovl11_code160_record_creation.h"
 #include "game_types.h"
 #include "random.h"
 #include "ovl11_record_pair_slots.h"
+#include "ovl11_keyframe_step.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
@@ -36,6 +40,57 @@
 #include "ovl11_record_status_message.h"
 #include "ovl11_ready_kind36_cell.h"
 #include "ovl11_record_position_set.h"
+#include "ovl11_record_movement.h"
+
+s32 Ovl11SubmitCode160Pose(Recon_ovl_11_func_800D2594_A0View *object, s32 unused);
+
+/* Allocation and indexed copy share the initializer. The copy path deliberately
+ * ignores its failure result and still writes the destination fields. */
+s32 Ovl11AllocateCode160Record(s32 code, s32 unused1, s32 unused2) {
+    s32 recordAddress;
+    s32 slot;
+
+    if ((u32)(code - 0x160) < 3U) {
+        recordAddress = (s32)Ovl11FindFreeTaggedRecord();
+        if (recordAddress == 0) {
+            return 0;
+        } else {
+            slot = Ovl11GetTaggedRecordIndex((u8 *)recordAddress);
+            Ovl11InitCode160Record((char *)recordAddress, code);
+            Ovl11ApplyRecordRowPlacement(recordAddress, (s16)slot, 1);
+            return recordAddress;
+        }
+    } else {
+        return 0;
+    }
+}
+
+s8 *Ovl11InitCode160OffsetCopy(s32 sourceSlot, s32 destinationSlot) {
+    u8 *destination;
+    u8 *source;
+
+    destination = (u8 *)&gTaggedRecordBase + destinationSlot * 0xB8;
+    source = (u8 *)&gTaggedRecordBase + sourceSlot * 0xB8;
+    Ovl11InitCode160Record((char *)destination, 0x160);
+    *(s32 *)(destination + 0x38) = *(s32 *)(source + 0x38);
+    *(s32 *)(destination + 0x3C) = *(s32 *)(source + 0x3C);
+    *(s32 *)(destination + 0x40) = *(s32 *)(source + 0x40) - 200;
+    *(u16 *)(destination + 0x30) = *(u16 *)(source + 0x30);
+    *(u16 *)(destination + 0x22) = *(u16 *)(source + 0x22);
+    return (s8 *)destination;
+}
+
+/* Code-0x160..0x162 resident-record lifecycle and action handler bank.
+ *
+ * The pool runs liveness and frame passes separately. A per-record tick
+ * selects the sprite source, invokes the step bank and services
+ * its 300-update handler timer. The action dispatcher owns handler selection
+ * (+26), step/counter/timer (+28/+2A/+2C) and the repeat-suppression bit 0800.
+ * Opacity (+16), effect (+A8) and state flags (+34) are shared by the actions.
+ * Handler names use actual bank slots, not guessed gameplay actions.
+ *
+ * The request handlers below and the later playlist/pose step callbacks share
+ * the selected slot. Request dispatch does not itself invoke the step bank. */
 
 s32 Ovl11IsCode160RecordActive(UnkStruct800DF4F0 *arg0);
 
@@ -222,7 +277,7 @@ s32 Ovl11TickCode160Record(UnkStruct800DF4F0 *arg0) {
         (*(s32 *)((u8 *)arg0 + 0x8C) == 0)) {
         Ovl11SelectCode160RecordSpriteSource((Recon_ovl_11_func_800DEEE0_A0View *)arg0);
     }
-    handler = gOvl11RecordAnimationHandlers[*(u16 *)((u8 *)arg0 + 0x26)];
+    handler = gOvl11Code160StepHandlers[*(u16 *)((u8 *)arg0 + 0x26)];
     if (handler != 0) {
         handler(arg0);
     }
@@ -239,14 +294,14 @@ s32 Ovl11DispatchCode160Handler(Ovl11Code160HandlerRecord *record, s32 handlerId
     s32 result;
 
     result = 0;
-    if (gOvl11Code160Handlers[handlerId] != 0) {
+    if (gOvl11Code160RequestHandlers[handlerId] != 0) {
         if (record->handlerId == handlerId && (record->flags & 0x800)) {
             result = -1;
         } else {
-            result = gOvl11Code160Handlers[handlerId](record);
+            result = gOvl11Code160RequestHandlers[handlerId](record);
         }
     }
-    if (gOvl11RecordAnimationHandlers[handlerId] != 0 && result != -1) {
+    if (gOvl11Code160StepHandlers[handlerId] != 0 && result != -1) {
         record->handlerId = handlerId;
         record->step = 0;
         record->counter = 0;
@@ -766,4 +821,274 @@ s32 Ovl11StepCode160Handler13(Ovl11SetFieldsView *record) {
 /* Real action-bank slot 14, not an omitted function. */
 s32 Ovl11StepCode160Handler14(void) {
     return 0;
+}
+
+/* Bank-local animation/hold playlists, in original table order. Cursor +28
+ * starts at 0 and is set to 1 before playback. Completion is reported on a
+ * later call in the terminal state, not the update that reaches it.
+ * Most callbacks set lock 0x800 and arm +2C at 300 updates on completion;
+ * 052 does not arm that timer, 50 terminates at state 4, and 3/8 do not lock.
+ * The 41 variant uses +2C as its hold counter and also clears 0x4000.
+ * Keep these distinct bank entries and their different counter protocols. */
+s32 Ovl11RunAnimation0Sequence(Ovl11D04D4Obj *object) {
+    s16 state;
+    s32 complete;
+
+    state = object->unk28;
+    complete = 0;
+    switch (state) {
+    case 0:
+        object->unk28 = 1;
+        object->unk34 |= 0x800;
+        break;
+    case -1:
+        complete = 1;
+        object->unk2C = 0x12C;
+        object->unk34 &= ~0x800;
+        break;
+    case 1:
+    default:
+        if (Ovl11StepPackedKeyframes(object, &gOvl11Animation0Sequence, &object->unk28, -1, (u16 *)&object->unk2A) != 0) {
+            object->unk28 = -1;
+        }
+        break;
+    }
+    return complete;
+}
+
+s32 Ovl11RunAnimation052Sequence(Ovl11D04D4Obj *object) {
+    s16 state;
+    s32 complete;
+
+    state = object->unk28;
+    complete = 0;
+    switch (state) {
+    case 0:
+        object->unk28 = 1;
+        object->unk34 |= 0x800;
+        break;
+    case -1:
+        complete = 1;
+        object->unk34 &= ~0x800;
+        break;
+    case 1:
+    default:
+        if (Ovl11StepPackedKeyframes(object, &gOvl11Animation052Sequence, &object->unk28, -1, (u16 *)&object->unk2A) != 0) {
+            object->unk28 = -1;
+        }
+        break;
+    }
+    return complete;
+}
+
+s32 Ovl11RunAnimation50Sequence(Ovl11D04D4Obj *object) {
+    s16 state;
+    s32 complete;
+
+    state = object->unk28;
+    complete = 0;
+    switch (state) {
+    case 0:
+        object->unk28 = 1;
+        object->unk34 |= 0x800;
+        break;
+    case 4:
+        complete = 1;
+        object->unk2C = 0x12C;
+        object->unk34 &= ~0x800;
+        break;
+    case 1:
+    default:
+        if (Ovl11StepPackedKeyframes(object, &gOvl11Animation50Sequence, &object->unk28, -1, (u16 *)&object->unk2A) != 0) {
+            object->unk28 = 4;
+        }
+        break;
+    }
+    return complete;
+}
+
+s32 Ovl11RunAnimation41Sequence(Ovl11D04D4Obj *object) {
+    s32 complete;
+
+    complete = 0;
+    switch (object->unk28) {
+    case 0:
+        object->unk28 = 1;
+        object->unk2C = 0;
+        object->unk34 |= 0x800;
+        Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)object, 0x12, 0x8031);
+        break;
+    case -1:
+        complete = 1;
+        object->unk2C = 0x12C;
+        object->unk34 &= ~0x4000;
+        object->unk34 &= ~0x800;
+        break;
+    case 1:
+    default:
+        if (object->unk2C != 0) {
+            object->unk2C--;
+        }
+        if (Ovl11StepPackedKeyframes(object, gOvl11Animation41Sequence, &object->unk28, -1, (u16 *)&object->unk2C) != 0) {
+            object->unk28 = -1;
+        } else {
+            Ovl11StepRecordMovement((Recon_ovl_11_func_800D2594_A0View *)object, 0x12, 0x8031);
+        }
+        break;
+    }
+    return complete;
+}
+
+s32 Ovl11RunAnimation70Sequence(Ovl11D04D4Obj *object) {
+    s16 state;
+    s32 complete;
+
+    state = object->unk28;
+    complete = 0;
+    switch (state) {
+    case 0:
+        object->unk28 = 1;
+        object->unk34 |= 0x800;
+        break;
+    case -1:
+        complete = 1;
+        object->unk2C = 0x12C;
+        object->unk34 &= ~0x800;
+        break;
+    case 1:
+    default:
+        if (Ovl11StepPackedKeyframes(object, &gOvl11Animation70Sequence, &object->unk28, -1, (u16 *)&object->unk2A) != 0) {
+            object->unk28 = -1;
+        }
+        break;
+    }
+    return complete;
+}
+
+s32 Ovl11RunAnimation60Sequence(Ovl11D04D4Obj *object) {
+    s16 state;
+    s32 complete;
+
+    state = object->unk28;
+    complete = 0;
+    switch (state) {
+    case 0:
+        object->unk28 = 1;
+        object->unk34 |= 0x800;
+        break;
+    case -1:
+        complete = 1;
+        object->unk2C = 0x12C;
+        object->unk34 &= ~0x800;
+        break;
+    case 1:
+    default:
+        if (Ovl11StepPackedKeyframes(object, &gOvl11Animation60Sequence, &object->unk28, -1, (u16 *)&object->unk2A) != 0) {
+            object->unk28 = -1;
+        }
+        break;
+    }
+    return complete;
+}
+
+s32 Ovl11RunAnimation3Sequence(Ovl11D04D4Obj *object) {
+    s16 state;
+    s32 complete;
+
+    state = object->unk28;
+    complete = 0;
+    switch (state) {
+    case 0:
+        object->unk28 = 1;
+        break;
+    case -1:
+        complete = 1;
+        object->unk34 = object->unk34 & ~0x800;
+        break;
+    case 1:
+    default:
+        if (Ovl11StepPackedKeyframes(object, &gOvl11Animation3Sequence, &object->unk28, -1, (u16 *)&object->unk2A) != 0) {
+            object->unk28 = -1;
+        }
+        break;
+    }
+    return complete;
+}
+
+s32 Ovl11RunAnimation8Sequence(Ovl11D04D4Obj *object) {
+    s16 state;
+    s32 complete;
+
+    state = object->unk28;
+    complete = 0;
+    switch (state) {
+    case 0:
+        object->unk28 = 1;
+        break;
+    case -1:
+        complete = 1;
+        object->unk34 = object->unk34 & ~0x800;
+        break;
+    case 1:
+    default:
+        if (Ovl11StepPackedKeyframes(object, &gOvl11Animation8Sequence, &object->unk28, -1, (u16 *)&object->unk2A) != 0) {
+            object->unk28 = -1;
+        }
+        break;
+    }
+    return complete;
+}
+
+/* Step-bank slot 13: without flag 0x2000, unlock, arm the 300-update timer
+ * and return 1. Otherwise clear +2E, submit this family's pose and return 0. */
+s32 Ovl11SubmitDeferredCode160Pose(Recon_ovl_11_func_800E0220_A0View *object) {
+    object->unk34 = object->unk34 | 0x800;
+    if (((object->unk34 | 0x800) & 0x2000) == 0) {
+        object->unk34 = (object->unk34 | 0x800) & -0x801;
+        object->unk2C = 0x12C;
+        return 1;
+    } else {
+        object->unk2E = 0;
+        Ovl11SubmitCode160Pose((Recon_ovl_11_func_800D2594_A0View *)object, (s32)object);
+        return 0;
+    }
+}
+
+/* Step-bank slot 18, also used by slot 13 above. +B2 selects period 2/6;
+ * handler 13 selects movement mode 0x8030, otherwise 0x8031. Update pose +24
+ * from the movement vector and clear lock 0x800. The second ABI argument is
+ * unread; keep it distinct from the tagged family's own pose implementation. */
+s32 Ovl11SubmitCode160Pose(Recon_ovl_11_func_800D2594_A0View *object, s32 unused) {
+    s32 isHandler13;
+    s32 period;
+    s32 mode;
+    s32 selector;
+
+    isHandler13 = (*(s16 *)((u8 *)object + 0x26)) == 0xD;
+    selector = *(u16 *)((u8 *)object + 0xB2);
+    period = selector ? 2 : 6;
+    mode = 0x8031;
+    if (isHandler13 != 0) {
+        mode = 0x8030;
+        if (selector == 0) {
+            object->unk34 |= 0x04000000;
+        }
+    } else if ((((struct Ovl11HandlerState *)D_8006C838)->field_52C6 == 5) && (((struct Ovl11HandlerState *)D_8006C838)->field_E4C8 == 0)) {
+        if (selector == 0) {
+            object->unk34 |= 0x04000000;
+        }
+    } else {
+        object->unk34 &= 0xFBFFFFFF;
+    }
+    Ovl11StepRecordMovement(object, period, mode);
+    if (((*(s32 *)((u8 *)object + 0x48)) == 0) && (object->unk4C == 0) && ((*(s32 *)((u8 *)object + 0x50)) == 0)) {
+        if (isHandler13 != 0) {
+            object->unk34 &= ~0x2000;
+        }
+        (*(s16 *)((u8 *)object + 0x24)) = 0;
+    } else {
+        (*(s16 *)((u8 *)object + 0x24)) = 1;
+    }
+    object->unk34 &= ~0x800;
+    return 1;
 }

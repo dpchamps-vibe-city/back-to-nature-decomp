@@ -263,7 +263,7 @@ void Ovl11StepAreaModeState(void) {
                     WORK->selection = 0;
                 }
                 if (GetGameFlag(0x9C) == 1) {
-                    WORK->selection = D_8005E32C;
+                    WORK->selection = gDebugMenuRequestedSelection;
                     SetGameFlag(0x9C, 0);
                 }
                 STATUS->direction = WORK->selection - WORK->selection / 4 * 4;

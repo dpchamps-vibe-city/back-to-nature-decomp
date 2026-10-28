@@ -519,10 +519,11 @@ struct Ovl30SettingsView {
 };
 
 /* ovl_30 8012F030 supplies this four-halfword rectangle to StoreImage/LoadImage. */
-extern s16 Ovl30_DisplayRect[4] __asm__("D_8013400C");
+extern s16 gOvl30DebugDisplayRect[4];
 
-/* ovl_30 8012F084 stores this word after comparing the selected setting. */
-extern s32 D_8005E32C;
+/* Ovl30UpdateDebugMenu publishes a changed selection; Ovl11StepAreaModeState
+ * consumes it when game flag 0x9C is set. */
+extern s32 gDebugMenuRequestedSelection;
 /* ovl_30 8012F084 clears this halfword with sh. */
 extern s16 D_80133FBC;
 /* ovl_30 8012F084 indexes 18 callbacks; one table member takes no arguments. */
@@ -7600,9 +7601,9 @@ extern s16 gOvl11WideChoiceSelection;
 
 /* ovl_11:800DF010 dispatches this 20-entry action bank; original table
  * relocations target the DE9C8..DFC44 record-handler unit. */
-extern s32 (*gOvl11Code160Handlers[20])(void *);
+extern s32 (*gOvl11Code160RequestHandlers[20])(void *);
 /* ovl_11 800DEF30 dispatches the 20-word table; matched 800DFC44/800DFCFC take one object and return s32. */
-extern s32 (*gOvl11RecordAnimationHandlers[20])(void *);
+extern s32 (*gOvl11Code160StepHandlers[20])(void *);
 
 /* 8011FFA8 reads/writes the three selection words at +0/+4/+8. */
 extern s32 gOvl11HeldActionState[3];

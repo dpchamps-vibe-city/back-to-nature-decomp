@@ -434,6 +434,15 @@ campaign gate pass; no setting, linkage, ownership or exception changed.
 
 ## `ovl_11` D_800749F4 record-clone pair — 0x800DE8A4 / 0x800DE924 (confidence: low)
 
+**CURRENT:** both creation facades are the head of the complete 34-entry
+`modules/code160_record_family.c`, DE8A4–E03A0 exclusive. The shared DF128
+initializer, paired request/step banks and family-local playlist/pose closure
+join the former four modules; see the DF4F0 predicate section for complete
+membership and outer-boundary evidence. The old DE9C8 responsibility cut and
+claim that the intervening updater could not join are superseded, not retained
+as an original boundary. The creation header still publishes both unchanged
+ABIs, including the unused trailing arguments and ignored copy-init failure.
+
 **Reconstructed `modules/code160_record_creation.c`, DE8A4–DE9C8
 exclusive, both compiled members.** Ovl11AllocateCode160Record and
 Ovl11InitCode160OffsetCopy are complementary creation facades over the same
@@ -7116,6 +7125,21 @@ Members (address order):
 ---
 
 ## `ovl_11` D_800711C4 progress-record accessor cluster — 0x800F3BCC–0x800F3EF0 (confidence: medium)
+
+Fresh whole-seven TU control under build/tuFlagReview/ovl_11/progress_counters:
+unchanged merged source is exact for 6/7 at baseline (3D40 alone differs),
+and 6/7 with no-GCSE (3BCC alone differs). Thus the formerly compatible
+regional neighbors do not license a uniform setting for the whole current
+source. Every compile succeeds; there are no undetermined byte verdicts.
+Three complete-TU baseline reset alternatives were also measured: indexed
+arrays, a single reused pointer, and explicit backedges. None closes 3D40;
+all six other members remain exact. Explicit backedges produce identical
+.text to the unchanged merge (SHA-256 378f9a60…); reused-pointer and indexed
+forms change code, not the result. These are conditional source/context
+controls, not proof of baseline impossibility. No source/setting was promoted.
+The next useful question is which GCSE rewrite carries the reset's symbol
+high half across the first loop for these sources; inspect the pass evidence
+rather than repeat its backedge spellings.
 
 Campaign re-review: no split at 3D40 was promoted. The index mapper is shared
 by writers/readers on both sides, and the two cost producers also share
@@ -20916,6 +20940,61 @@ Members:
 
 ## `ovl_30` init/read and nested display-helper cluster — 0x8012EFEC–0x8012FDEC (confidence: high for 8012F030/8012F084, medium for init/read pair, low for wider TU)
 
+**CURRENT: merged complete `modules/debug_menu.c`, 8012EFEC–8012FEEC
+exclusive, thirteen entries.** It absorbs ALL of debug_menu_lifecycle,
+debug_flags_sound and debug_font, in original order. The former F3D4 and
+FE94 source cuts below are superseded, not protected module boundaries.
+The additional membership witness is the narrow setting transaction at
+80134B14 (gOvl30DebugSettingValue): F454 initializes it from the selected
+setting, FDEC edits it, and F084 alone compares/publishes it on exit.
+The source-reference census finds exactly those three function clients;
+this is not the generic callback-state or engine work-area argument.
+The controller selects this first page through its original handler table,
+whose row/audio entry/exit helpers and flag writer complete its call closure.
+FE94 has only F084 as its caller and performs that controller's entry-time
+font/text-origin setup. The nested F030 display helper, reset/query pair,
+and two interposed trivial entries remain intact. Together the private
+staged-setting lifecycle, exclusive initializer/helper closure and original
+link order support the thirteen-entry unit (medium-confidence provenance,
+not recovered original object metadata).
+
+Left is the overlay's first code entry after rodata. Right FEEC starts the
+static descriptor-page run: its four menu tables/headings and selected-action
+parameters are a different private protocol, with no access to 34B14 and no
+call into the setting/flag/audio helper closure. The first-page handoff does
+not extend to every callback merely because F084 dispatches it. This right
+cut is an evidence-limited private-protocol boundary under -G0, NOT the
+interleaved-rodata obstruction described below or a compiler-flag cut.
+A whole-overlay original TU remains possible but unestablished; its separate
+literal-representation obstacle is unchanged. No intervening entry/stub or
+member of an absorbed module is omitted.
+
+The controller, first page and font headers retain their distinct public
+contracts, with all five published members checked by interfaceAudit (zero
+failing publications, no caller changes needed). Source now reads canonical
+PadInputState pressedButtons/repeatButtons rather than raw offsets or the
+unrelated SomeStruct view. The display rectangle is canonically named
+ gOvl30DebugDisplayRect at ovl_30:8013400C, retaining s16[4] and its eight
+bytes; the old C asm-name alias is removed. The EXE word at 8005E32C is
+ gDebugMenuRequestedSelection: F084 writes a changed preview with flag 0x9C;
+Ovl11StepAreaModeState applies it and clears the flag. Canonicalization
+propagates the name to both overlay clients and its override extern. No
+new storage, ownership, linkage, ABI or speculative gameplay meaning is
+introduced. Header/source documentation distinguishes staged selection
+publication from immediate flag/sound effects and describes scratch lifetime.
+
+The checked baseline -O2/-G0 fold proves all thirteen members and linked
+ovl_30 exact, pooling its single jump table at file 154. No member flag
+exists; none is added, moved or retired. After naming and canonical-pad-field
+edits, the first batch gate passes all eight integrity categories (465 valid
+modules). The subsequent code160-family batch also passes all eight, with
+**2511/2625 folded and 462/462 valid modules**, down from the run's 467 units
+because seven existing modules became two. All EXE/13-overlay code and data,
+callbacks, placement, canonical interfaces, source policy, convergence,
+stability and exception non-growth pass. No previously folded function
+regresses. Exit 1 denotes the 114 still-unfolded functions, not a failed gate.
+Unrelated working changes are preserved; no tool change or commit was made.
+
 **Reconstructed lifecycle unit `modules/debug_menu_lifecycle.c`,
 8012EFEC–8012F3D4 exclusive, six original entries.** Reset/read leaves
 share 34B0C with the controller; reset and controller alone clear/read
@@ -21003,6 +21082,12 @@ through the compiler, then repeat the whole-module plan. Merely skipping the
 rodata refusal would lose the original pool/table layout and is not a fix.
 
 ## `ovl_30` debug menu and mirror-helper run — 0x8012F3D4–0x8012F454 (confidence: medium)
+
+**Current integration:** all six page/helpers and FE94 font startup belong
+to the thirteen-entry `modules/debug_menu.c` above. Its private staged-setting
+witness supersedes the old controller/page/font cuts below; those historical
+cuts are not retained as original-file claims. The right descriptor-page
+boundary remains independently argued in the leading section.
 
 **Reconstructed `modules/debug_flags_sound.c`, 8012F3D4–8012FE94
 exclusive, all six entries.** This extends the four-entry controller/hook
@@ -28077,6 +28162,66 @@ Historical [paired render helper/caller evidence](research/ovl_19_func_800BAFAC-
 
 ## `ovl_11` `ovl_11_func_800DF4F0` predicate-caller run — 0x800DE9C8–0x800DFB98 (confidence: medium)
 
+**CURRENT: complete `modules/code160_record_family.c`, 800DE8A4–800E03A0
+exclusive, 34 original entries.** It absorbs ALL of code160_record_creation
+(2), code160_record_handlers (22), animation_sequences (8) and animation_pose
+(2), without a gap, omitted stub or compiler-setting cut. The prior internal
+boundaries below are superseded.
+
+Membership is the complete two-bank protocol, not the shared record pool.
+Only DEF30's tick and DF010's request dispatcher consume the step bank at
+B95CC. That single 20-slot bank reaches all eight DFC44..E0180 playlist
+callbacks AND the E0220/E0280 deferred/pose pair (slots 13/18). Whole-overlay
+call/data-pointer census finds no other client of those ten callbacks; the
+pose pair calls within the family. The complementary B957C request bank
+contains only DF51C..DFC3C handlers. Both banks use record slot +26,
+cursor/counter/timer +28/+2A/+2C and lock 0x800: request dispatch accepts and
+resets a slot, while tick executes its later step. The two DE8A4/DE924
+creation facades invoke this family's DF128 initializer. Tagged/small families
+repeat that creation/request/step/pose organization with their own banks and
+copies, corroborating the full family rather than a generic animation module.
+Descriptors at 123E70 and playlists 123F00..123F58 follow family code order.
+No GP ownership claim is made under -G0; provenance remains medium confidence.
+
+Left DE878 is the shared pool driver's motion/presentation service, not a
+family allocator, bank member or initializer. Its descriptor-reader dependency
+is a published service edge, not ownership of the family's callback protocol.
+Right E03A0 begins tagged_record_handlers: its request/step banks at
+B961C/B966C have no entries into this family, its pose pair E1D48/E1DA8 has
+its own targets/behavior, and its descriptor/keyframe data begins at 123F58.
+The code160 bank likewise ends its reach at E0280. These separate private
+banks, duplicated family-specific pose protocols and ordered table runs
+corroborate the outer cuts; they are not GP-proven original object edges.
+The shared pool, generic movement helper and template resemblance alone do
+not extend either boundary.
+
+Names now make the protocol explicit: gOvl11Code160RequestHandlers at B957C
+and gOvl11Code160StepHandlers at B95CC, with the same 20-word views/extents;
+E0220/E0280 are Ovl11SubmitDeferredCode160Pose/Ovl11SubmitCode160Pose, not
+the tagged family's implementation at a different identity. The configuration
+records each original overlay/address. Existing semantic references were
+changed explicitly, canonicalNames checked the tree, and generated contexts/
+callback symbols regenerate through the supported path. No storage,
+private linkage, record types, parameter width or ignored argument changed.
+
+The creation and lifecycle headers remain the ten-member public interface.
+Their caller audit requires no edits and has zero failing publications.
+The two playlist/pose headers had no external source includer and are retired:
+bank-local contracts now live beside the callbacks and the one forward call
+has an ordinary in-unit prototype. All functions remain externally linked.
+Documentation covers request-versus-tick timing, update-count units, lock and
+terminal-state differences, pose periods/modes and unchanged caller storage.
+The checked complete fold proves all 34 functions and linked ovl_11 exact at
+baseline -O2/-G0; there is no member override, pooled compiler rodata or new
+policy construct. Fresh post-naming `tuProgress.ts --verify --baseline
+build/tu-campaign/baseline.json --json` passes all eight integrity categories:
+EXE/all thirteen overlays including data/callback placement, canonical/public
+interfaces, source policy, configuration convergence, whitespace, stability
+and exception non-growth. **2511/2625 folded, 462/462 valid modules**, no
+invalid/undetermined units or failures. The run merged seven existing units
+into two (47 functions), without previously folded regression; 114 remain.
+No compiler option/permission was added or retired and no commit was made.
+
 **Reconstructed the complete 22-entry 800DE9C8–800DFC44 run as
 `modules/code160_record_handlers.c`, not a predicate-only slice.** Original
 address suffixes, in order: DE9C8/DEB00/DEEE0/DEF30/DF010/DF0F8/DF128/
@@ -30515,6 +30660,16 @@ Members:
 ---
 
 ## `ovl_11` keyframe-state handler triple — 0x800E0028 / 0x800E00E0 / 0x800E0180 (confidence: high)
+
+**Current integration:** all eight playlists and the two following pose
+callbacks are bank-local members of the complete 34-entry
+`modules/code160_record_family.c` (DE8A4–E03A0). The single B95CC step bank
+contains both sets, consumed only by that family's tick/request dispatcher;
+no other call/data-pointer client exists. The DF4F0 predicate section records
+the full membership, companion request bank and outer boundaries. The former
+DFC44 and E0220 cuts below are superseded, not original-file claims. Private
+callback contracts moved into the source; their two unused public headers
+are retired. The shared keyframe helper remains a separately used dependency.
 
 **Whole supported playlist band reconstructed as `modules/animation_sequences.c`,
 800DFC44–800E0220 exclusive, eight compiled callbacks.** The former triple is

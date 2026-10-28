@@ -1,4 +1,8 @@
 
+// Dated-condition storage: one 12-byte singleton and five 12-byte slots.
+gConditionDateSingleton = 0x80071CC0; // size:0xC
+gConditionDateSlots = 0x8007AD10; // size:0x3C
+
 // Area-frame mode-1/mode-2 record anchors; keep the existing partial views.
 gStageMode1Record = 0x800759E4; // size:0x44
 gStageMode2Record = 0x80075AD4; // size:0xF0
@@ -675,6 +679,8 @@ gCdAudioChannel = 0x8005E59C; // size:0x4
 gCdAudioFileNames = 0x80049A70; // size:0x10
 gCdAudioTrackSettings = 0x80049A80; // size:0xC
 gCdAudioFileLocationStorage = 0x8006C7D8; // size:0x60
+gDebugMenuRequestedSelection = 0x8005E32C; // size:0x4
+
 AreaScenePrepareHook = 0x80021D64; // type:func
 func_80021D70 = 0x80021D70; // type:func
 func_80021D78 = 0x80021D78; // type:func

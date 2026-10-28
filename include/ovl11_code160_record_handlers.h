@@ -3,9 +3,11 @@
 
 #include "game_types.h"
 
-/* Lifecycle/handler bank for resident 0xB8-byte records, including codes
- * 0x160..0x162. These are partial views of the same record representation;
- * callers must provide the full record and initialized work/sprite tables.
+/* Lifecycle interface of code160_record_family; allocation/copy is published
+ * by ovl11_code160_record_creation.h. The family's private step bank contains
+ * its animation playlists and pose callbacks, not a generic animation API.
+ * These are partial views of resident 0xB8-byte records (codes 0x160..0x162);
+ * callers must provide full records and initialized work/sprite/bank tables.
  * Mutating services share work/pool state and provide no synchronization. */
 
 /* Pool pass one and pass two respectively: liveness/condition gates, then
@@ -20,7 +22,7 @@ s32 Ovl11StepCode160RecordFrame(Ovl11Deb00Object *record);
  * otherwise 0. Loading tables and handler indices are unchecked. */
 s32 Ovl11TickCode160Record(UnkStruct800DF4F0 *record);
 
-/* handlerId indexes both 20-entry action/animation banks. A repeated action
+/* handlerId indexes both 20-entry request/step banks. A repeated action
  * with flag 0x800 is suppressed (-1); otherwise return its action result
  * (zero when no action exists). A present animation slot and non--1 result
  * record the handler, zero +28/+2A/+2C, and clear the +48 movement vector.

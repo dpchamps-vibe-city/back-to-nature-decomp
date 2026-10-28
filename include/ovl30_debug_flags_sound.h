@@ -6,8 +6,10 @@
 /* Overlay-30 page callback. Pass 0 to initialize, then feed each returned
  * state back on subsequent frames: 1 edits/displays, 999 waits for a sequence
  * load, 1000 waits for a sound-bank change. Other states pass through.
- * Reads pad 0; edits work-area flag words and the pending debug setting;
- * prints rows and can replace playing effects, sequences and CD audio.
+ * Uses pad-0 repeatButtons for row/number movement and pressedButtons for
+ * flag changes and playback. Work-area flags and sound commands take effect
+ * immediately; gOvl30DebugSettingValue is staged until the menu exits.
+ * Prints rows and can replace playing effects, sequences and CD audio.
  * The 15-row label/status tables and sound driver must already be initialized.
  * Sequence decrement wraps 0 to 35, while increment wraps 36 to 0: intentional
  * preservation of the original asymmetry, not a normalized range check. */

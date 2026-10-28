@@ -22,6 +22,10 @@ struct Ovl11CurrentRecordBoundsEntry;
 
 typedef struct Ovl11CurrentRecordBoundsEntry Ovl11CurrentRecordBoundsEntry;
 
+struct Ovl11D04D4Obj;
+
+typedef struct Ovl11D04D4Obj Ovl11D04D4Obj;
+
 struct Ovl11DispatchRecord;
 
 typedef struct Ovl11DispatchRecord Ovl11DispatchRecord;
@@ -171,33 +175,9 @@ typedef struct {
 } LINE_F2;
 
 typedef struct {
-    u16 unk0;
-    char pad_02[0x22];
-    u16 unk24;
-    u16 unk26;
-    s16 unk28;
-    s16 unk2A;
-    s16 unk2C;
-    char pad_2E[0x06];
-    s32 unk34;
-} M2C_08b4c7960c40_Ovl11HandlerObj;
-
-typedef struct {
-               u16 field_0;
-               char pad_02[0x34 - 0x02];
-               s32 field_34;
-} M2C_0ced4ee09ea5_Ov11FlagSet;
-
-typedef struct {
     char pad_0[0x2];
     s16 unk2;
 } M2C_32ba532776b0_ReconA0View;
-
-typedef struct {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-} M2C_3f22cd297a83_CopyStruct_8480;
 
 typedef struct {
     char pad_00[0x24];
@@ -329,15 +309,73 @@ typedef struct {
 } M2C_4ed7769e2366_UnkStruct800E1254;
 
 typedef struct {
-    char pad_00[0x24];
-    s16 unk24;
-    s16 unk26;
-    s16 unk28;
-    s16 unk2A;
-    s16 unk2C;
-    char pad_2E[0x06];
-    s32 unk34;
-} M2C_59c9fee476d6_Ovl11HandlerObj;
+               char pad_00[0x16];
+               u16 unk16;
+               char pad_18[0x30 - 0x18];
+               s16 unk30;
+               char pad_32[0xA8 - 0x32];
+               char unkA8[0];
+} M2C_5ec36d01e2d1_Struct_800DF51C;
+
+typedef struct {
+               char pad_00[0x16];
+               u16 unk16;
+               char pad_18[0xA8 - 0x18];
+               char unkA8[0];
+} M2C_5ec36d01e2d1_Struct_800DF5AC;
+
+typedef struct {
+               char pad_00[0x16];
+               u16 unk16;
+               char pad_18[0x30 - 0x18];
+               s16 unk30;
+               char pad_32[0xAE - 0x32];
+               u16 unkAE;
+} M2C_5ec36d01e2d1_Struct_800DF614;
+
+typedef struct {
+               char pad_00[0x30];
+               s16 unk30;
+               char pad_32[0x2];
+               s32 unk34;
+} M2C_5ec36d01e2d1_Struct_800DF9F0;
+
+typedef struct {
+               char pad_00[0x16];
+               s16 unk16;
+               char pad_18[0x30 - 0x18];
+               s16 unk30;
+               char pad_32[0x34 - 0x32];
+               s32 unk34;
+               char pad_38[0x58 - 0x38];
+               s32 unk58;
+               s32 unk5C;
+               s32 unk60;
+               s32 unk64;
+} M2C_5ec36d01e2d1_Struct_800DFA7C;
+
+typedef struct {
+               char pad_00[0x26];
+               s16 unk26;
+               s16 unk28;
+               s16 unk2A;
+               s16 unk2C;
+               char pad_2E[0x34 - 0x2E];
+               s32 unk34;
+               char pad_38[0x58 - 0x38];
+               s32 unk58;
+               s32 unk5C;
+               s32 unk60;
+               s32 unk64;
+} M2C_5ec36d01e2d1_Struct_800DFB3C;
+
+typedef struct {
+               u16 unk0;
+               char pad_2[0x2E];
+               s16 unk30;
+               char pad_32[0x2];
+               s32 unk34;
+} M2C_5ec36d01e2d1_UnkStruct800DF6A8;
 
 typedef struct {
     char pad[0x28];
@@ -345,55 +383,6 @@ typedef struct {
     char pad2[2];
     void *blend;
 } M2C_6acdeb54e179_CycleRecord;
-
-typedef struct {
-    char pad_00[0x24];
-    s16 unk24;
-    s16 unk26;
-    s16 unk28;
-    s16 unk2A;
-    s16 unk2C;
-    char pad_2E[0x06];
-    s32 unk34;
-} M2C_708e65b63435_Ovl11D04D4Obj;
-
-typedef struct {
-    u16 unk0;
-    u16 pad_02;
-    u16 unk4;
-} M2C_765ee3c63fa4_Ovl21Func800BA698Arg;
-
-typedef struct {
-               u16 unk0;
-               char pad_02[0x14];
-               s16 unk16;
-               char pad_18[0x18];
-               s16 unk30;
-               char pad_32[0x2];
-               s32 unk34;
-} M2C_7b06bd92cdbb_Struct_80109A70;
-
-typedef struct {
-               u16 unk0;
-               char pad_02[0x16 - 0x02];
-               u16 unk16;
-               char pad_18[0x30 - 0x18];
-               s16 unk30;
-} M2C_84dd550b7b46_Struct_80109B88;
-
-typedef struct {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-} M2C_8573ba8bfae4_CopyStruct_84D4;
-
-typedef struct {
-               u16 field_0;
-               char pad_02[0x2C - 0x02];
-               u16 field_2C;
-               char pad_2E[0x34 - 0x2E];
-               s32 field_34;
-} M2C_884f54480578_Ov11FlagSet80108D38;
 
 typedef struct {
     char pad_0[0x2];
@@ -433,85 +422,38 @@ typedef struct {
 } M2C_90bbdd1382f9_Struct_8010D0EC;
 
 typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-} M2C_a34e94965883_M2C_800EEFB8_Arg1;
-
-typedef struct {
                u16 field0;
                char reserved[0x34 - 0x02];
                s32 flags;
 } M2C_ad00b4a12930_Ovl11RecordFlagView;
 
 typedef struct {
-               char pad_00[0x16];
-               u16 unk16;
-               char pad_18[0x30 - 0x18];
-               s16 unk30;
-               char pad_32[0xA8 - 0x32];
-               char unkA8[0];
-} M2C_c8993a86c83b_Struct_800DF51C;
+               u16 field_0;
+               char pad_02[0x34 - 0x02];
+               s32 field_34;
+} M2C_d803ed77790d_Ov11FlagSet;
 
 typedef struct {
-               char pad_00[0x16];
-               u16 unk16;
-               char pad_18[0xA8 - 0x18];
-               char unkA8[0];
-} M2C_c8993a86c83b_Struct_800DF5AC;
-
-typedef struct {
-               char pad_00[0x16];
-               u16 unk16;
-               char pad_18[0x30 - 0x18];
-               s16 unk30;
-               char pad_32[0xAE - 0x32];
-               u16 unkAE;
-} M2C_c8993a86c83b_Struct_800DF614;
-
-typedef struct {
-               char pad_00[0x30];
-               s16 unk30;
-               char pad_32[0x2];
-               s32 unk34;
-} M2C_c8993a86c83b_Struct_800DF9F0;
-
-typedef struct {
-               char pad_00[0x16];
-               s16 unk16;
-               char pad_18[0x30 - 0x18];
-               s16 unk30;
-               char pad_32[0x34 - 0x32];
-               s32 unk34;
-               char pad_38[0x58 - 0x38];
-               s32 unk58;
-               s32 unk5C;
-               s32 unk60;
-               s32 unk64;
-} M2C_c8993a86c83b_Struct_800DFA7C;
-
-typedef struct {
-               char pad_00[0x26];
-               s16 unk26;
-               s16 unk28;
-               s16 unk2A;
-               s16 unk2C;
+               u16 field_0;
+               char pad_02[0x2C - 0x02];
+               u16 field_2C;
                char pad_2E[0x34 - 0x2E];
-               s32 unk34;
-               char pad_38[0x58 - 0x38];
-               s32 unk58;
-               s32 unk5C;
-               s32 unk60;
-               s32 unk64;
-} M2C_c8993a86c83b_Struct_800DFB3C;
+               s32 field_34;
+} M2C_d803ed77790d_Ov11FlagSet80108D38;
 
 typedef struct {
                u16 unk0;
-               char pad_2[0x2E];
+               char pad_02[0x16 - 0x02];
+               u16 unk16;
+               char pad_18[0x30 - 0x18];
                s16 unk30;
-               char pad_32[0x2];
+} M2C_d803ed77790d_Struct_80109B88;
+
+typedef struct {
+               u16 unk0;
+               char pad_2[0x32];
                s32 unk34;
-} M2C_c8993a86c83b_UnkStruct800DF6A8;
+} M2C_d803ed77790d_UnkStruct80109E64;
 
 typedef struct {
                u16 unk0;
@@ -561,12 +503,6 @@ typedef struct {
                s16 variant;
                s16 reserved;
 } M2C_e513cdc3a96c_Ovl11DecodedItemCode;
-
-typedef struct {
-               u16 unk0;
-               char pad_2[0x32];
-               s32 unk34;
-} M2C_fe2fb85508b9_UnkStruct80109E64;
 
 typedef struct {
  short m[3][3];
@@ -1019,6 +955,12 @@ typedef struct {
     u8 stateArgument;
 } Ovl11ConditionRecord;
 
+typedef struct {
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+} Ovl11CopyRecord;
+
 struct Ovl11CurrentRecordBoundsEntry {
     s16 selector;
     char pad2[6];
@@ -1027,9 +969,11 @@ struct Ovl11CurrentRecordBoundsEntry {
     s32 z;
 };
 
-typedef struct {
+struct Ovl11D04D4Obj {
     u16 unk0;
-    char pad_02[0x24 - 2];
+    char pad_02[0x16 - 2];
+    s16 unk16;
+    char pad_18[0x24 - 0x18];
     s16 unk24;
     s16 unk26;
     s16 unk28;
@@ -1041,7 +985,7 @@ typedef struct {
     s32 unk34;
     char pad_38[0x7A - 0x38];
     u16 unk7A;
-} Ovl11D04D4Obj;
+};
 
 typedef struct {
                s16 unk0;
@@ -1246,6 +1190,15 @@ typedef struct {
 } Ovl11E6E8Object;
 
 typedef struct {
+    u16 field_0;
+    u16 field_2;
+    u16 field_4;
+    u16 field_6;
+    s16 index_8;
+    s16 index_A;
+} Ovl11EF488Record;
+
+typedef struct {
     u8 pad000[0x100];
     s32 x;
     s32 y;
@@ -1306,27 +1259,6 @@ typedef struct {
 
 typedef struct {
                u16 unk0;
-               char pad_02[0x2E];
-               s16 unk30;
-               char pad_32[6];
-               s32 unk38;
-               char pad_3C[4];
-               s32 unk40;
-               char pad_44[0x6C];
-} UnkStruct80075BC4;
-
-typedef struct {
-               s32 unk0;
-               char pad_04[4];
-               s32 unk8;
-               char pad_0C[4];
-               s16 unk10;
-               s32 unk14;
-               UnkStruct80075BC4 **unk18;
-} Ovl11Func801097F4Arg;
-
-typedef struct {
-               u16 unk0;
                char pad_02[0x30 - 0x02];
                s16 unk30;
                char pad_32[0x34 - 0x32];
@@ -1354,6 +1286,18 @@ typedef struct {
     u16 secondValue;
     u16 result;
 } Ovl11GuardRecord;
+
+typedef struct {
+    u16 unk0;
+    char pad_02[0x22];
+    u16 unk24;
+    u16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    char pad_2E[0x06];
+    s32 unk34;
+} Ovl11HandlerObjectView;
 
 typedef struct {
     u16 id;
@@ -1948,6 +1892,12 @@ typedef struct {
                s16 parameter;
                s16 extra;
 } Ovl19Func800BAC40Arg;
+
+typedef struct {
+    u16 x;
+    u16 pad_02;
+    u16 z;
+} Ovl21DistanceOrigin;
 
 typedef struct {
                u8 pad_00[2];
