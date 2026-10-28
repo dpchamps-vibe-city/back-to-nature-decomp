@@ -32,12 +32,11 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x4, .rodata, modules/card_menu_states]
+      - [0x4, .rodata, modules/save_menu]
       - [0x22C, rodata]
       - [0x2A4, .rodata, modules/card_service]
       - [0x324, rodata]
-      - [0x374, c, modules/save_menu_lifecycle]
-      - [0xC30, c, modules/card_menu_states]
+      - [0x374, c, modules/save_menu]
       - [0x4CA4, c, modules/save_slot_record_pool]
       - [0x5810, c, ovl_15_func_801335F8]
       - [0x5A20, c, ovl_15_func_80133808]

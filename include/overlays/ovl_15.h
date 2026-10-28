@@ -128,7 +128,7 @@ void Ovl15StepCardReadMenu(void);
 void Ovl15StepCardTransferMenu(void);
 void Ovl15StepCardWriteMenu(void);
 void Ovl15UpdateCardReadScene(void);
-void Ovl15UpdateCardReadSceneWithSprites(void);
+void Ovl15UpdateCardTransferScene(void);
 void Ovl15UpdateCardWriteScene(void);
 s8 Ovl15UpdateConfirmationMenu(void);
 s8 Ovl15UpdateSaveSlotMenu(s16 displayMode);

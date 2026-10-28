@@ -1,7 +1,7 @@
 Ovl15ResetSaveMenuState = 0x8012E15C; // type:func
 Ovl15UpdateCardWriteScene = 0x8012E2CC; // type:func
 Ovl15UpdateCardReadScene = 0x8012E520; // type:func
-Ovl15UpdateCardReadSceneWithSprites = 0x8012E7C8; // type:func
+Ovl15UpdateCardTransferScene = 0x8012E7C8; // type:func
 Ovl15StepCardWriteMenu = 0x8012EA18; // type:func
 Ovl15CardWriteEnter = 0x8012ED18; // type:func
 Ovl15CardWritePollCards = 0x8012ED6C; // type:func

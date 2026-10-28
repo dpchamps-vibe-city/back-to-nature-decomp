@@ -1,4 +1,314 @@
 /*
+ * save_menu — memory-card scene lifecycle and write/read/slot-transfer menus.
+ *
+ * Reset, the three scene controllers and all menu stages share one state
+ * protocol. Controllers advance the saturating update timer and consume exit
+ * requests; stages change the state, select/monitor cards and request exit.
+ * Only one controller may run at a time. Card commands can remain pending
+ * across updates; do not reset or reuse the transfer workspace during I/O.
+ *
+ * Write builds a checksummed save image with title/icons. Read validates and
+ * restores that image. Transfer validates a source image, selects slot records
+ * and optionally writes the edited result. Card I/O, image serialization,
+ * reusable UI widgets and record-pool editing remain separate services.
+ * Public controllers: ovl15_save_menu.h. Membership: notes/file-groupings.md.
+ */
+
+#include "common.h"
+#include "ovl15_save_menu.h"
+#include "psyq/libmcrd.h"
+#include "psyq/libsnd.h"
+#include "screen_fade.h"
+#include "scene_selection.h"
+#include "aux_sprite_display.h"
+#include "sprite_grid.h"
+#include "master_volume.h"
+#include "sound_driver.h"
+#include "message_window.h"
+#include "ovl15_save_checksums.h"
+#include "game_types.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/memory.h"
+#include "ovl15_save_sprite_resources.h"
+#include "ovl15_card_service.h"
+#include "beveled_panel.h"
+#include "psyq/libmcx.h"
+#include "psyq/strings.h"
+#include "sound_commands.h"
+#include "ovl15_save_menu_ui.h"
+#include "ovl15_save_card_title.h"
+#include "ovl15_save_image.h"
+#include "ovl15_card_filename.h"
+#include "ovl15_save_slot_header.h"
+#include "ovl15_save_slot_record_pool.h"
+
+void ovl_15_func_8013468C(void);
+
+/* Internal frame steps retain external linkage. They require the controller's
+ * initialized menu/card state and timer; calling a stage directly bypasses
+ * that protocol. Non-I/O stages monitor card changes, alternating ports when
+ * selected-card is 2. I/O stages deliberately skip that monitoring tail.
+ *
+ * Write: card/slot selection, format/overwrite confirmation and image write.
+ * Read: card/slot selection, checksum validation and persistent-image restore.
+ * Transfer: read/validate, select/copy slot records, then optional image write.
+ * Prompts draw through the active render context. Exit requests are 1 after
+ * completion and -1 after cancellation; some prompts also expire at 91 timer
+ * updates. The scene controller, not these steps, services fades and timing. */
+void Ovl15StepCardWriteMenu(void);
+void Ovl15StepCardReadMenu(void);
+void Ovl15StepCardTransferMenu(void);
+
+/* Reset waits for an outstanding card command, then invalidates every
+ * summary and clears the shared transfer workspace. It is not reentrant. */
+void Ovl15ResetSaveMenuState(void) {
+    s32 cardCommand;
+    s32 cardResult;
+    s32 summaryIndex;
+    u16 invalid;
+    u8 *saveWork;
+    u8 *summary;
+
+    MemCardSync(0, &cardCommand, &cardResult);
+    gOvl15MenuState = 0;
+    gOvl15LastMenuState = 0;
+    gOvl15MenuExitRequest = 0;
+    gOvl15MenuCursor = 0;
+    gOvl15ConfirmationChoice = 0;
+    gOvl15CardRetryCount = 0;
+    gOvl15MonitoredCard = 0;
+    gOvl15SelectedCard = 2;
+    gOvl15SelectedSlot = 0;
+    D_80137590 = 0;
+    gOvl15CardStates[0] = 4;
+    gOvl15CardStates[1] = 4;
+    gOvl15SaveSlotStatus[0] = 2;
+    gOvl15SaveSlotStatus[1] = 2;
+    gOvl15SaveSlotStatus[2] = 2;
+    gOvl15MenuStateTimer = 0;
+    gOvl15CardIconResourceBuffer = D_8007BFF8;
+    memset((u8 *)gOvl15SaveSlotHeaders, 0, 0x3C);
+    memset((u8 *)gOvl15SaveSlotHeaders + 0x3C, 0, 0x3C);
+    memset((u8 *)gOvl15SaveSlotHeaders + 0x78, 0, 0x3C);
+    memset(gOvl15TransferBuffer, 0, 0x9690);
+    memset(D_801377A0, 0, 0x80);
+    saveWork = gOvl15TransferBuffer + 0x280;
+    ovl_15_func_8013468C();
+    gOvl15SaveWorkBase = saveWork;
+    memset(saveWork, 0, 0x6378);
+    summary = (u8 *)gOvl15SaveSlotHeaders;
+    invalid = 0xFFFF;
+    for (summaryIndex = 2; summaryIndex >= 0; summaryIndex--) {
+        (*(u16 *) (summary + 8)) = invalid;
+        (*(u16 *) (summary + 0x18)) = invalid;
+        (*(u16 *) (summary + 0x1A)) = invalid;
+        (*(u16 *) (summary + 0x2A)) = invalid;
+        summary += 0x3C;
+    }
+}
+
+/* Shared text-token and pen-offset services. */
+void func_80017A08(s32, s32);
+void func_80017A38(s16, s16);
+void func_8002495C(s16);
+
+void Ovl15UpdateCardWriteScene(void) {
+    s32 sprite;
+    Ovl21MainStateView *state;
+
+    sprite = gActiveRenderContext->field_D8 + 0x2C;
+    state = (Ovl21MainStateView *)D_8006C838;
+    if (state->state == 0) {
+        SetSoundSequenceSlotVolume(0, 0, 0, 0, 0);
+        SsUtAllKeyOff(0);
+        DisableAuxSpriteDisplay();
+        ResetMessageWindow();
+        Ovl15ResetSaveMenuState();
+        gOvl15MenuState = 0;
+        Ovl15LoadMenuResources(0);
+        BeginScreenFadeDecrease(0x3C, 0, 2);
+        BeginMasterVolumeFadeIn(0x3C);
+        func_8002495C(-1);
+        state->state = 1;
+    } else if (state->state == 1) {
+        DrawScrollingSpriteGrid(sprite);
+        if (IsScreenFadeComplete() == 1) {
+            state->state = 2;
+        }
+    } else if (state->state == 2) {
+        gOvl15MenuExitRequest = 2;
+        func_80017A08(0, (s32)&gOvl15SaveSlotLabels[gOvl15SelectedCard]);
+        DrawScrollingSpriteGrid(sprite);
+        func_8002495C(0);
+        if (gOvl15MenuState != gOvl15LastMenuState) {
+            gOvl15MenuStateTimer = 0;
+            gOvl15LastMenuState = gOvl15MenuState;
+        } else if (gOvl15MenuStateTimer < 0xFF) {
+            gOvl15MenuStateTimer++;
+        }
+        func_80017A38(0, 2);
+        Ovl15StepCardWriteMenu();
+        func_80017A38(0, 0);
+        switch (gOvl15MenuExitRequest) {
+        case 2:
+            break;
+        case -1:
+            ((Ovl21MainStateView *)D_8006C838)->state = 4;
+            BeginScreenFadeIncrease(0xA, 0, 2);
+            BeginMasterVolumeFadeOut(0xA);
+            break;
+        case 1:
+            ((Ovl21MainStateView *)D_8006C838)->state = 3;
+            BeginScreenFadeIncrease(0xA, 0, 2);
+            BeginMasterVolumeFadeOut(0xA);
+            break;
+        }
+    } else if ((unsigned)(state->state - 3) < 2) {
+        DrawScrollingSpriteGrid(sprite);
+        if (IsScreenFadeComplete() == 1) {
+            state->state = state->state == 3 ? 3 : 4;
+            RequestSceneChange(0xF);
+            SetSoundSequenceSlotVolume(0, 0, 0, 0x50, 0xA);
+        }
+    }
+}
+
+void Ovl15UpdateCardReadScene(void) {
+    s32 sprite;
+    Ovl21MainStateView *state;
+
+    sprite = gActiveRenderContext->field_D8 + 0x2C;
+    state = (Ovl21MainStateView *)D_8006C838;
+    if (state->state == 0) {
+        SetSoundSequenceSlotVolume(0, 0, 0, 0, 0);
+        SsUtAllKeyOff(0);
+        DisableAuxSpriteDisplay();
+        ResetMessageWindow();
+        Ovl15ResetSaveMenuState();
+        gOvl15MenuState = 0;
+        Ovl15LoadMenuResources(0);
+        BeginScreenFadeDecrease(0x3C, 0, 2);
+        BeginMasterVolumeFadeIn(0x3C);
+        func_8002495C(-1);
+        state->state = 1;
+    } else if (state->state == 1) {
+        DrawScrollingSpriteGrid(sprite);
+        if (IsScreenFadeComplete() == 1) {
+            state->state = 2;
+        }
+    } else if (state->state == 2) {
+        gOvl15MenuExitRequest = 2;
+        func_80017A08(0, (s32)&gOvl15SaveSlotLabels[gOvl15SelectedCard]);
+        DrawScrollingSpriteGrid(sprite);
+        func_8002495C(0);
+        if (gOvl15MenuState != gOvl15LastMenuState) {
+            gOvl15MenuStateTimer = 0;
+            gOvl15LastMenuState = gOvl15MenuState;
+        } else if (gOvl15MenuStateTimer < 0xFF) {
+            gOvl15MenuStateTimer++;
+        }
+        func_80017A38(0, 2);
+        Ovl15StepCardReadMenu();
+        func_80017A38(0, 0);
+        switch (gOvl15MenuExitRequest) {
+        case 2:
+            break;
+        case -1:
+            ((Ovl21MainStateView *)D_8006C838)->state = 4;
+            BeginScreenFadeIncrease(0xA, 0, 2);
+            BeginMasterVolumeFadeOut(0xA);
+            break;
+        case 1:
+            ((Ovl21MainStateView *)D_8006C838)->state = 3;
+            BeginScreenFadeIncrease(0xA, 0, 2);
+            BeginMasterVolumeFadeOut(0xA);
+            break;
+        }
+    } else if ((unsigned)(state->state - 3) < 2) {
+        DrawScrollingSpriteGrid(sprite);
+        if (IsScreenFadeComplete() == 1) {
+            SetSoundSequenceSlotVolume(0, 0, 0, 0x50, 0xA);
+            state->state = state->state == 3 ? 3 : 4;
+            if (state->state == 4) {
+                if (state->flags & 0x4000) {
+                    RequestSceneChange(0xD);
+                } else {
+                    RequestSceneChange(0x13);
+                }
+            } else {
+                if (state->flags & 0x4000) {
+                    state->flags &= ~0x4000;
+                }
+                RequestSceneChange(0xE);
+            }
+        }
+    }
+}
+
+void Ovl15UpdateCardTransferScene(void) {
+    s32 sprite;
+    Ovl21MainStateView *state;
+
+    sprite = gActiveRenderContext->field_D8 + 0x2C;
+    state = (Ovl21MainStateView *)D_8006C838;
+    if (state->state == 0) {
+        SetSoundSequenceSlotVolume(0, 0, 0, 0, 0);
+        SsUtAllKeyOff(0);
+        DisableAuxSpriteDisplay();
+        ResetMessageWindow();
+        Ovl15ResetSaveMenuState();
+        gOvl15MenuState = 0;
+        Ovl15LoadMenuResources(1);
+        BeginScreenFadeDecrease(0x3C, 0, 2);
+        BeginMasterVolumeFadeIn(0x3C);
+        func_8002495C(-1);
+        state->state = 1;
+    } else if (state->state == 1) {
+        DrawScrollingSpriteGrid(sprite);
+        if (IsScreenFadeComplete() == 1) {
+            state->state = 2;
+        }
+    } else if (state->state == 2) {
+        gOvl15MenuExitRequest = 2;
+        func_80017A08(0, (s32)&gOvl15SaveSlotLabels[gOvl15SelectedCard]);
+        DrawScrollingSpriteGrid(sprite);
+        func_8002495C(0);
+        if (gOvl15MenuState != gOvl15LastMenuState) {
+            gOvl15MenuStateTimer = 0;
+            gOvl15LastMenuState = gOvl15MenuState;
+        } else if (gOvl15MenuStateTimer < 0xFF) {
+            gOvl15MenuStateTimer++;
+        }
+        func_80017A38(0, 2);
+        Ovl15StepCardTransferMenu();
+        func_80017A38(0, 0);
+        switch (gOvl15MenuExitRequest) {
+        case 2:
+            break;
+        case -1:
+            ((Ovl21MainStateView *)D_8006C838)->state = 4;
+            BeginScreenFadeIncrease(0xA, 0, 2);
+            BeginMasterVolumeFadeOut(0xA);
+            break;
+        case 1:
+            ((Ovl21MainStateView *)D_8006C838)->state = 3;
+            BeginScreenFadeIncrease(0xA, 0, 2);
+            BeginMasterVolumeFadeOut(0xA);
+            break;
+        }
+    } else if ((unsigned)(state->state - 3) < 2) {
+        DrawScrollingSpriteGrid(sprite);
+        if (IsScreenFadeComplete() == 1) {
+            SetSoundSequenceSlotVolume(0, 0, 0, 0x50, 0xA);
+            state->state = state->state == 3 ? 3 : 4;
+            RequestSceneChange(0x13);
+        }
+    }
+}
+
+/*
  * Card write, read and slot-transfer menu workflows, in original link order.
  * Only the active workflow may be stepped: the three dispatchers share menu
  * state, selection, timers, card-status caching and prompt protocols. Read
@@ -11,29 +321,6 @@
  * returns intentionally skip the common card-monitor tail during I/O stages.
  * Membership and remaining boundary evidence: notes/file-groupings.md.
  */
-
-#include "common.h"
-#include "ovl15_save_checksums.h"
-#include "game_types.h"
-#include "psyq/stddef.h"
-#include "psyq/libgte.h"
-#include "psyq/memory.h"
-#include "psyq/libmcrd.h"
-#include "beveled_panel.h"
-#include "psyq/libmcx.h"
-#include "psyq/strings.h"
-#include "ovl15_card_service.h"
-#include "ovl15_card_read_states.h"
-#include "ovl15_card_write_states.h"
-#include "ovl15_card_read_sprite_states.h"
-#include "ovl15_save_menu_lifecycle.h"
-#include "sound_commands.h"
-#include "ovl15_save_menu_ui.h"
-#include "ovl15_save_card_title.h"
-#include "ovl15_save_image.h"
-#include "ovl15_card_filename.h"
-#include "ovl15_save_slot_header.h"
-#include "ovl15_save_slot_record_pool.h"
 
 void Ovl15CardWriteEnter (void);
 void Ovl15CardWritePollCards (void);
@@ -685,7 +972,7 @@ void Ovl15CardWriteFinish(void) {
  * in original order (ovl_15:801301A0–80132A8C exclusive). Their private prompt
  * copies implement different state numbering and exit/restore behavior; they
  * share the same card-monitor and menu context. Step only the active scene.
- * See ovl15_card_read_states.h and ovl15_card_read_sprite_states.h.
+ * Their internal frame contracts are documented above the scene controllers.
  *
  * PromptStateNN names preserve undecoded text meaning rather than guessing it.
  * Distinct return types, timeout paths and conditional card monitoring remain
@@ -1340,8 +1627,6 @@ void Ovl15StepCardTransferMenu(void) {
         return;
     }
 }
-
-void ovl_15_func_8013468C(void);
 
 void Ovl15CardTransferEnter(void) {
     s32 temp_a1;

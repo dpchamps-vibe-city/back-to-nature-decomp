@@ -3628,6 +3628,22 @@ slice is retained. The remaining useful question is a coherent split-position
 ABI with the original callee's output-pointer/type-tag register allocation;
 not another seven-scalar declaration or a repeat of the aggregate local above.
 
+A subsequent isolated split-control test changed ONLY 97F4 and its sole
+caller 98B0, before touching any other band declaration. It used the canonical
+16-byte Ovl11PaddedVec3 by-value position, s16 key, s32 radius and s32** result
+address, preserving the original local-copy order and the shared result's
+s32* storage. The caller forwarded the existing four-word object+38 position
+by value, not a newly materialized request aggregate. The uncached campaign
+gate still produced exactly the recorded `b8bf3c29…` overlay hash. A second
+control passed key as s32 and narrowed it only into the callee's existing
+s16 local; it produced the SAME hash. Those key types are not distinct
+remaining experiments. This now isolates that failing output to the coherent
+split-position pair, without attributing it to duplicate handler layouts or
+other whole-band context edits. Both files were restored byte-for-byte; no
+ABI/type/header alteration, partial unit or exception was retained. The
+callee's local allocation/parameter representation remains unresolved; a
+failed spelling is not evidence of different original TUs.
+
 Candidate same-TU family of `ovl_11` (`Obj\GF_FARM.bin`). Evidence:
 - shared data-table cluster: the dispatcher's two parallel rodata tables,
   `D_800BA848` (transition handlers variants, 19 slots) and `D_800BA894`
@@ -10180,6 +10196,20 @@ Both counter sources, both overrides and their original allowlist entries
 were restored; no partial module or flag-based slice remains. The final
 full campaign gate passes at 380 folded functions / 43 valid modules.
 
+A further whole-17 baseline trial separated the sentinel and made the raw
+accumulator explicitly two-statement (`raw = counter; raw += 1;`), retaining
+the byte truncation, byte-sized quotient and remainder arithmetic. The dry
+fold passed and the checked write compiled, but both the merged EXE and its
+modified split rollback control produced SHA-256
+`4ff0336bc4b9ce90797638195d87b685fa741b57c13f4b342f1f0ae6fa4b1d45`,
+not the original `5da12747…`. The helper therefore rolled back; both original
+counter sources and both complete overrides were restored byte-for-byte.
+This closes that two-statement spelling in the measured context, not every
+multi-SET construction; no per-member or pass attribution was measured.
+`tuProgress.ts --verify --baseline build/tu-campaign/baseline.json` then
+passed all eight integrity gates at 2345 folded / 473 valid modules. No
+partial fold, changed interface or new exception was retained.
+
 This family is not ready to integrate under a single verified setting.
 The report already records that sched1-off changes the shared-counter
 consumers, so moving that setting wholesale is not justified either. The
@@ -12457,6 +12487,24 @@ band, and the existing u16_string module lies inside the possible full span.
 Do not fold that pair or the override-free A574 tail as an isolated solution.
 The unresolved whole-band baseline/context and compiler-setting question
 remains; no split, override change or new assembly exception was retained.
+
+Whole-75 baseline experiment (179E8–1AF44, including u16_string and four
+existing dead stubs): reconciled the six conflicting small-global views
+(E2B8/E45C/E468/E46C/E4A4/E4B0) using witnessed widths and pointer consumers,
+and corrected AD00's 19E80 contract to the matched pointer/s16 prototype.
+The dry fold accepted the complete table pool; the checked write compiled
+all 75, but the linked EXE was `c3ddb7b43f4e5dce50c10e748ac4d56557e8daed52983ca6b5eb9a92a7640c44`,
+not original `5da12747…`. Its modified split rollback control was
+`4412a0695056eface279ef0bff1e39facb21bde8800b43fd862af19c800748aa`.
+Thus declaration consolidation changes compiler context as well as the two
+removed settings; this experiment does NOT assign all divergence to those
+flags or establish a historical boundary. The six header declarations, seven
+source edits and both original overrides were restored exactly. The full
+campaign gate then passed all eight checks with the independently completed
+save-menu merge retained (2345 folded / 472 valid modules). No partial text
+unit, altered declaration, flag or exception was retained. The next useful
+step is an exact canonical split-control context before attributing any
+whole-unit flag result, not another unchanged raw merge.
 
 Slot-based table loading: a 16-bit "slot" selects a 0x1800-byte region read
 from CD into D_8006C910 via func_80014CBC; per-slot state lives in a small
@@ -21089,6 +21137,19 @@ for separate original files. No 18/10 slice is retained to avoid 9158's flag.
 The next useful experiment remains a baseline source/context reconstruction
 of the complete 31-entry union, not another cut around the queue.
 
+A new whole-31 baseline trial changed 9158's capacity guard from `if` to
+`while` (the clear makes it a single-iteration loop), testing a source loop
+boundary as the CSE-context lever rather than another operand-order spelling.
+The dry fold passed and all members compiled, but both the merged overlay
+and its modified split rollback control had SHA-256
+`5d23dfec65daaf8619692a01c0d924db00811d02d074f528dd175caccef3d6f4`,
+not original `c5cad849…`. The helper rolled back; the original guard and
+complete override were restored. An uncached all-container campaign gate
+then passed with the save-menu merge retained. This closes that loop-guard
+construction in the measured context, not all clean C or the historical
+compiler invocation. No slice around 9158, module flag or new permission was
+retained; unchanged regional witnesses are still only compatibility evidence.
+
 **Reconstructed `src/overlays/ovl_17/modules/record_sprite_animation.c`,
 ovl_17:800BAFAC–800BB0C4 exclusive**, all five entries in original order:
 Ovl17SelectRecordAnimation2, Ovl17SelectAllRecordAnimations2,
@@ -24242,6 +24303,49 @@ Members (link order):
   to `arg1`
 
 ## `ovl_15` D_80053350/func_8001AC10 shared-prologue cluster — 0x8012EA18–0x80132934 (confidence: medium)
+
+**Merged complete `modules/save_menu.c`, 8012E15C–80132A8C exclusive,
+85 compiled entries in original order.** This absorbs all four lifecycle
+controllers and all 81 write/read/slot-transfer stages. A whole-source census
+corrects the older EA18 interface-cut rationale: MenuState, MenuExitRequest,
+MonitoredCard, SelectedCard, SelectedSlot, CardStates and MenuStateTimer
+(all gOvl15-prefixed) occur in exactly these two former modules, not in the
+UI/card/save services. Reset initializes their shared context; controllers
+reset/advance the saturating timer when stages change state; stages consume
+that timer, change state and request exits. Stages also call the same reset,
+so this is a cyclic private protocol, not merely three public service calls.
+The three dispatchers and every stage have no other source clients. These
+positive state/call witnesses supersede the older conservative EA18 cut.
+
+Left is the overlay's first text entry, after its rodata. Right 32A8C starts
+the row-placement/record-pool service: it uses none of those seven controls,
+owns separate placement tables and staged records, and serves the menu by
+allocation/stage/restore operations rather than menu-stage callbacks. Its
+other staged-record client is nonadjacent 13468C. No extension across that
+service is established; the later 1335F8 flag is not this boundary's reason.
+Overlays use -G0, so these are private-protocol/link-order witnesses, not
+claimed GP-proven historical object edges. No private linkage was inferred.
+
+The checked full-85 baseline fold passed every member and linked ovl_15,
+including the unchanged mixed switch-table/SC-literal pool at file 4..22C.
+The controllers add no rodata; no flag, ownership or type change was needed.
+`ovl15_save_menu.h` now publishes only reset and the three scene controllers;
+the three no-outside-client dispatcher headers are retired and their timing,
+card-monitoring, drawing and exit contracts are local to the module.
+8012E7C8 is now Ovl15UpdateCardTransferScene: its actual dispatcher selects,
+validates and transfers slot records, optionally writes the result, and does
+not restore the persistent image like plain read. Its old WithSprites name
+only described a resource-loading side effect. The original overlay identity,
+ABI, external linkage, widths and all state behavior remain unchanged.
+
+Final acceptance: `tuProgress.ts --verify --no-cache --baseline
+build/tu-campaign/baseline.json` passes all eight integrity gates, including
+the EXE/all thirteen overlays, data, callback and jump-table bytes, canonical
+interfaces, source policy and exception non-growth. Folded membership stays
+2345/2625; merging the two supported slices reduces valid module TUs from
+473 to 472. No new flags, permissions, stubs or tooling changes were needed.
+
+Earlier integration history follows; its EA18 boundary is superseded above.
 
 **Completed wider `modules/card_menu_states.c`, 8012EA18–80132A8C exclusive:
 all 81 write/read/slot-transfer entries, in original order.** The 25 write
@@ -28056,6 +28160,16 @@ Members (address order):
   — link-order neighbours of the run; 0x800EFE34 is called by 0x800EFABC.
 
 ## `ovl_15` D_80137828 buffer-pointer cluster — 0x8012E15C / 0x8012FAE0 / 0x80137300 (confidence: medium)
+
+**Current organization:** the four lifecycle entries are now part of the
+complete 85-function `src/overlays/ovl_15/modules/save_menu.c`; see the
+shared-prologue/card-workflow section at 8012EA18 for the private-context
+census, cyclic timer/reset/exit evidence, whole-module boundaries and header
+consolidation. The historical EA18 interface cut below is withdrawn: the
+seven shared controls are private to lifecycle and stages, not shared with
+the UI/card/save services. The code's types and behavior are unchanged.
+
+Historical four-member integration:
 
 **Reconstructed `src/overlays/ovl_15/modules/save_menu_lifecycle.c`, all four
 opening entries 8012E15C–8012EA18 exclusive.** Reset and the three controllers

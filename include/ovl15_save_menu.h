@@ -1,5 +1,5 @@
-#ifndef OVL15_SAVE_MENU_LIFECYCLE_H
-#define OVL15_SAVE_MENU_LIFECYCLE_H
+#ifndef OVL15_SAVE_MENU_H
+#define OVL15_SAVE_MENU_H
 
 #include "common.h"
 
@@ -30,8 +30,10 @@ void Ovl15UpdateCardWriteScene(void); /* dispatch 8012EA18; exit scene 15 */
  * otherwise. State 3 clears that flag if set and exits to 14. */
 void Ovl15UpdateCardReadScene(void);
 
-/* Dispatch 80131094, load the extra menu sprite resources, exit to scene 19.
- * The two read flows retain separate dispatchers and saved-image policies. */
-void Ovl15UpdateCardReadSceneWithSprites(void);
+/* Read/validate a source save, select and transfer slot records, and optionally
+ * write the edited image. Loads the extra menu sprites and exits to scene 19.
+ * Unlike plain read, this workflow does not restore the persistent game image.
+ * Original scene controller: ovl_15:8012E7C8; internal dispatcher: 80131094. */
+void Ovl15UpdateCardTransferScene(void);
 
 #endif
