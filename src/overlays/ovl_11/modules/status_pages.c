@@ -61,7 +61,7 @@ void Ovl11SnapshotStatusPages(void) {
     for (var_s0 = 0; var_s0 < 14; var_s0++) {
         text_position = var_s0 * 2;
         temp_a0 = *(u16 *) ((u8 *) &D_80070D18 + text_position);
-        text = D_800535C6;
+        text = gRecordFarmLabelTextAnchor;
         if (temp_a0 != 0xFFFF) {
             gOvl11StatusHeadingText[var_s0] = temp_a0;
         } else {

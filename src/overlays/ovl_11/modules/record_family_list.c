@@ -70,7 +70,7 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
         prefix_value = ((Ovl11MenuGlobals *)D_8006C838)->text[i];
         terminator = prefix_value;
         if (terminator == 0xFFFF) {
-            name = &D_800535C6[*gTextBankOffsets];
+            name = &gRecordFarmLabelTextAnchor[*gTextBankOffsets];
             (&gOvl11TextFormatScratch)[i] = ((u16 *)name)[0];
             text_index1 = i + 1;
             (&gOvl11TextFormatScratch)[text_index1] = ((u16 *)name)[1];
@@ -87,7 +87,7 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
     }
     DrawTextLine(header_ot, (s32) &gOvl11TextFormatScratch, 0x52, 0x1A);
     gOvl11RecordListIconDrawers[kind](header_ot, 0xB0, 0x12);
-    DrawTextLine(header_ot, (s32) &(D_800535C6 + 0x3E)[*gTextBankOffsets], 0xC8, 0x1A);
+    DrawTextLine(header_ot, (s32) &(gRecordFarmLabelTextAnchor + 0x3E)[*gTextBankOffsets], 0xC8, 0x1A);
     count = Ovl11FindFamilyRecordIndex(kind, filter, -1);
     if (input_mode == 0) {
         repeat_buttons = *(s32 *) ((u8 *) gPad0Input + 0);

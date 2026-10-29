@@ -365,7 +365,7 @@ s32 Ovl15UpdateSlotSelectionMenu(s16 arg0) {
         temp_v0 = var_s0[var_a2];
         temp_a3 = (u16) temp_v0;
         if (temp_a3 == 0xFFFF) {
-            var_s0 = (u16 *) (D_800535C6 + *gTextBankOffsets);
+            var_s0 = (u16 *) (gRecordFarmLabelTextAnchor + *gTextBankOffsets);
             gOvl15MenuTextScratch[var_a2] = var_s0[0];
             gOvl15MenuTextScratch[var_a2 + 1] = var_s0[1];
             gOvl15MenuTextScratch[var_a2 + 2] = var_s0[2];

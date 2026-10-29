@@ -7251,8 +7251,8 @@ typedef struct {
     u8 pad_0[0x1F34];
     Ovl15SavedRecord records[37];
 } Ovl15SavedRecordList;
-/* 80133808 adds the language offset and reads four halfwords from this text. */
-extern u8 D_800535C6[];
+/* 80133808 copies this bank-adjusted label; U16 codes decode Farm, used by record-list and status headers. */
+extern u8 gRecordFarmLabelTextAnchor[];
 /* 80133808/800FD194: Ovl15UpdateSlotSelectionMenu and Ovl11DrawStatusRecordPageTitle draw record-list title text; U16 codes decode List. */
 extern s32 gRecordListTitleTextAnchor;
 /* 80133808 indexes one unsigned byte with D_8013759E. */
