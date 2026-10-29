@@ -278,7 +278,7 @@ void Ovl23InitActorRecords(void) {
                 *(u16 *)(rec2 + 0x32) = *(u16 *)(work + 0x1258);
             }
         }
-        pr->unk2E = D_800BBA90[(s16)pr->unk32 / 50];
+        pr->unk2E = gOvl23ActorDistanceThresholds[(s16)pr->unk32 / 50];
         ((Ovl23D87CView50 *)base)->unk0[i].unk34 =
             (s16)*(u16 *)(base + 0x3B0) * ((s16)pr->unk30 + 0x80) << 4;
         pairIndex += 2;

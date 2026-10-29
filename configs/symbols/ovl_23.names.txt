@@ -33,6 +33,8 @@ gOvl23RecordRunSetupStage = 0x800BBA3C; // type:data size:0x1
 gOvl23RecordMessageTextOffsets = 0x800BBA14; // type:data size:0x28
 // Ovl23InitActorRecords copies six u16 pairs into each actor record's +0x70/+0x72 fields.
 gOvl23ActorScreenOffsetPairs = 0x800BBA64; // type:data size:0x18
+// Ovl23InitActorRecords selects a per-actor interaction distance from this table by record+0x32 / 50.
+gOvl23ActorDistanceThresholds = 0x800BBA90; // type:data size:0xC
 
 // Adjacent work-record halfwords, with distinct caps and increment sizes.
 Ovl23RaiseRecordByteRangeValue = 0x800BB7A0; // type:func

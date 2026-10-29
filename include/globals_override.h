@@ -2874,8 +2874,8 @@ extern u8 D_800BB860[];
 
 /* 800B8354: Ovl23InitActorRecords copies six u16 pairs into actor record +0x70/+0x72 fields. */
 extern u16 gOvl23ActorScreenOffsetPairs[12];
-/* 800B8354 indexes this u16 table by signed record +0x32 divided by 50. */
-extern u16 D_800BBA90[];
+/* 800B8354: Ovl23InitActorRecords selects a per-actor interaction distance by record+0x32 / 50. */
+extern u16 gOvl23ActorDistanceThresholds[];
 
 /* 800B8354 writes +0x70/+0x72 relative to each 0x50-stride record base. */
 struct Ovl23ScreenInitTail {
