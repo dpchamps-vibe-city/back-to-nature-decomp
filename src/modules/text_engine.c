@@ -2001,7 +2001,7 @@ u16 *WriteWeekdayNameText(s32 arg0, u16 *arg1) {
     u16 *var_v1;
     u16 temp_v0;
 
-    var_v1 = (u16 *)((u8 *)&D_800490BC + arg0 * 6);
+    var_v1 = (u16 *)((u8 *)&gTextWeekdayNames + arg0 * 6);
     var_a0 = 2;
     do {
         temp_v0 = *var_v1;

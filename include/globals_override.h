@@ -2643,8 +2643,8 @@ extern s32 gTextScrolledFull;
 extern s32 D_80049058[4];
 /* 8004908C: WriteSeasonNameText copies six glyphs per row: Spring, Summer, Fall, Winter. */
 extern u16 gTextSeasonNames[];
-/* WriteWeekdayNameText copies three halfwords per weekday. */
-extern u16 D_800490BC[];
+/* 800490BC: WriteWeekdayNameText copies three glyphs per row, Sun through Sat. */
+extern u16 gTextWeekdayNames[];
 
 /* D_8005E444 - unsigned halfword (lhu) — func_80019030 owns it */
 extern u16 gTextScriptIndex;
