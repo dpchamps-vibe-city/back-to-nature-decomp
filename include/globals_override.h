@@ -6170,8 +6170,8 @@ extern u8 gCardOverwriteConfirmTextAnchor[];
 extern u8 gCardSearchingTextAnchor[];
 /* 801315B0: Ovl15CardTransferPromptNoCard and the write/read no-card prompts draw bank-adjusted There is no MEMORY CARD. */
 extern u8 gCardNoMemoryCardTextAnchor[];
-/* ovl_15:80131778 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_8005306A[];
+/* 80131778: Ovl15CardTransferPromptState05 and the write/read slot checks draw bank-adjusted There is no MEMORY CARD in MEMORY CARD slot <n>. */
+extern u8 gCardSlotEmptyTextAnchor[];
 /* ovl_15:801317E8 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_800530C8[];
 /* ovl_15:80131A34 adds the text-bank byte offset before drawing this prompt. */
