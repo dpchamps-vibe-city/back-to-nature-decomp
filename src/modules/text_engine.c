@@ -1421,7 +1421,7 @@ s32 MapChoiceIndexToStatus(s32 arg0) {
     if (var_v1 >= 4U) {
         var_v1 = 0;
     }
-    return D_80049058[var_v1];
+    return gTextChoiceStatusCodes[var_v1];
 }
 
 /* GPU primitive initializer: allocate and chain an SPRT sprite with a

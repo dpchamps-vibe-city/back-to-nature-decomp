@@ -2638,8 +2638,8 @@ extern s16 gTextLineScroll;
 extern s32 gTextPageTimer;
 extern s32 gTextRendering;
 extern s32 gTextScrolledFull;
-/* MapChoiceIndexToStatus indexes four word-sized status entries. */
-extern s32 D_80049058[4];
+/* 80049058: MapChoiceIndexToStatus returns window status codes 10..13 for choices 1..4. */
+extern s32 gTextChoiceStatusCodes[4];
 /* 8004908C: WriteSeasonNameText copies six glyphs per row: Spring, Summer, Fall, Winter. */
 extern u16 gTextSeasonNames[];
 /* 800490BC: WriteWeekdayNameText copies three glyphs per row, Sun through Sat. */

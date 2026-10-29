@@ -865,6 +865,8 @@ gTextBankOffsets = 0x80054BBC; // size:0x4
 gTextPaletteClutRows = 0x80049044; // size:0xC
 // SetTextSpeedIndex selects the 0/3/5 VSync intervals consumed by the text reveal timer.
 gTextSpeedIntervals = 0x80049050; // size:0x6
+// MapChoiceIndexToStatus maps confirmed choices 1..4 to DrawTextWindow results 10..13.
+gTextChoiceStatusCodes = 0x80049058; // size:0x10
 // WriteSeasonNameText copies six glyph codes per row; DrawIndexedSelectionLabels uses all four seasons.
 gTextSeasonNames = 0x8004908C; // size:0x30
 // WriteWeekdayNameText copies three glyph codes per row; original rows run Sun through Sat.
