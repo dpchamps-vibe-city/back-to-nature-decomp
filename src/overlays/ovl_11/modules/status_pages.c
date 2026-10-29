@@ -689,7 +689,7 @@ void Ovl11DrawStatusSevenRecordPage(void) {
     s32 var_s0;
     s16 var_a1;
 
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32) (D_8005360E + gTextBankOffsets[0]), 0xBA, 0x1A);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32) (gStatusHelpTextAnchor + gTextBankOffsets[0]), 0xBA, 0x1A);
     var_a1 = 0x30;
     for (var_s0 = 0; var_s0 < 7; var_s0++) {
         Ovl11DrawStatusSevenRecordRow(var_s0, var_a1);

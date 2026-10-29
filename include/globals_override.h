@@ -4678,8 +4678,8 @@ struct Ovl11PairedValues {
     s32 pairs[4][2];
 };
 
-/* ovl_11_func_800FD33C adds D_80054BBC[0] bytes and passes this text base to func_80017B3C. */
-extern u8 D_8005360E[];
+/* 800FD33C: Ovl11DrawStatusSevenRecordPage draws bank-adjusted Help as the page header. */
+extern u8 gStatusHelpTextAnchor[];
 /* 80100B50 adds D_80054BBC[0] bytes to this text base and its +0x12 successor for func_80017B3C. */
 extern u8 D_8005396A[];
 /* 800FEFEC adds D_80054BBC[0] bytes to this text base before func_80017B3C. */
