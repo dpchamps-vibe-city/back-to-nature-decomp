@@ -521,7 +521,7 @@ void ovl_19_func_800B8C74(void) {
     } else {
         SetTextSourcePointer(0, (s32)((u8 *)gOvl19ValueLabelText +
             Ovl19GetValueLabelOffset(((Ovl19SelectionState *)gOvl19SceneWork)->values[
-                D_800BCF24[((Ovl19SelectionState *)gOvl19SceneWork)->selection]])));
+                gOvl19SelectionValueIndices[((Ovl19SelectionState *)gOvl19SceneWork)->selection]])));
         RequestMessageWindow(4, 0x17);
     }
     if (GetMessageWindowStatus() == 2) {

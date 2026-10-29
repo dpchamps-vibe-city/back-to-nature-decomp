@@ -6369,8 +6369,8 @@ extern u16 gOvl19ValueLabelText[0x96];
 /* ovl_25 has a different object at 800BCD68: 800BAFCC reads sprite-header
  * offsets here. Preserve its prior declaration; it is NOT the ovl_19 text. */
 extern u16 D_800BCD68[0x96];
-/* 800B8C74 indexes this byte table with the signed selection at state +0x8. */
-extern u8 D_800BCF24[];
+/* 800B8C74: byte indices mapping the four selection slots to value entries for the completion prompt. */
+extern u8 gOvl19SelectionValueIndices[];
 extern s16 gOvl19SceneWork[];
 /* 800B89C8: selected actor index while the ovl_19 choice prompt is active; -1 means no selection. */
 extern s16 gOvl19SelectedActorIndex;

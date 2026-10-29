@@ -115,3 +115,5 @@ gOvl19SelectedActorIndex = 0x800BD070; // type:data size:0x2
 gOvl19ValueCategory = 0x800BF4C8; // type:data size:0x2
 // Nine halfword limits indexed by year-category*3 + category for Rand() in Ovl19ChooseInitialActorValue.
 gOvl19ValueRandomLimits = 0x800BCFE4; // type:data size:0xC
+// Byte indices mapping the four selection slots to value entries drawn by the completion prompt.
+gOvl19SelectionValueIndices = 0x800BCF24; // type:data size:0x4
