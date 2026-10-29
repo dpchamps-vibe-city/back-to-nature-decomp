@@ -28,6 +28,8 @@ gOvl11QuantityEditorQuantities = 0x8012CF10; // type:data size:0xC
 gOvl11QuantityEditorEditStartQuantity = 0x8012CF1C; // type:data size:0x2
 // Selection input snapshots the pending balance; cancelling that row edit restores it with the quantity.
 gOvl11QuantityEditorEditStartBalance = 0x8012CF24; // type:data size:0x4
+// Balance/row rendering and the race-number text source reuse this 12-halfword glyph scratch.
+gOvl11QuantityEditorTextBuffer = 0x8012CF30; // type:data size:0x18
 
 // Unreferenced leaves. Names describe only the shipped body, not a guessed role.
 Ovl11UnusedReturnMinusOne = 0x800BDCE0; // type:func

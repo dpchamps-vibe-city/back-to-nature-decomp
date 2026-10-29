@@ -5556,10 +5556,9 @@ extern s32 gOvl11QuantityEditorSelectedRow;
 extern s16 gOvl11QuantityEditorEditStartQuantity;
 extern s32 gOvl11QuantityEditorEditStartBalance;
 
-/* D_8012CF30 - 12-halfword (0x18 byte) ovl_11 scratch buffer filled by
- * func_8001A970 (0xFFFF terminator) and passed to func_80017B3C by
- * ovl_11_func_80103EB8 / ovl_11_func_80103F8C. Absolute-addressed. */
-extern s16 D_8012CF30[12];
+/* ovl_11:8012CF30: balance/row rendering and the race-number text source reuse
+ * this 12-halfword glyph scratch. Decimal writers append FFFF before drawing. */
+extern s16 gOvl11QuantityEditorTextBuffer[12];
 
 /* 80104148 writes a glyph at +0 and a 0xFFFF terminator at +2 in this buffer. */
 typedef struct {
@@ -5567,7 +5566,7 @@ typedef struct {
     u16 terminator;
     s16 rest[10];
 } Ovl11GlyphTextBuffer;
-extern Ovl11GlyphTextBuffer D_8012CF30_glyph __asm__("D_8012CF30");
+extern Ovl11GlyphTextBuffer D_8012CF30_glyph __asm__("gOvl11QuantityEditorTextBuffer");
 
 /* 80104148 adds byte offsets to these text bases before func_80017B3C. */
 extern u8 D_80051BF4[];

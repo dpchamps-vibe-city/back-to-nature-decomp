@@ -2125,6 +2125,7 @@ gOvl11QuantityEditorQuantities = 0x8012CF10; // size:0xc
 gOvl11QuantityEditorEditStartQuantity = 0x8012CF1C; // size:0x2
 gOvl11QuantityEditorBalance = 0x8012CF20; // size:0x4
 gOvl11QuantityEditorEditStartBalance = 0x8012CF24; // size:0x4
+gOvl11QuantityEditorTextBuffer = 0x8012CF30; // size:0x18
 gOvl11SpriteRotations = 0x8012CF48; // size:0xf0
 gOvl11ActionGuardSelector = 0x8012D038; // size:0x4
 gOvl11ChoiceMessageIndex = 0x8012D040; // size:0x4

@@ -310,9 +310,9 @@ void Ovl11DrawQuantityEditorBalance(void) {
     temp_s3_2 = temp_s3 + 0x58;
     DrawMenuPanel((u32 *)(temp_s3 + 0x5C), 0, 0xE3, 0x10, 0x47, 0x1E);
     DrawTextLine(temp_s3_2, (s32)((u8 *)gQuantityEditorMoneyTextAnchor + gTextBankOffsets[1]), 0xE5, 0x12);
-    CopyTextString(WriteDecimalText(gOvl11QuantityEditorBalance, D_8012CF30, 7),
+    CopyTextString(WriteDecimalText(gOvl11QuantityEditorBalance, gOvl11QuantityEditorTextBuffer, 7),
                   (u16 *)((u8 *)gQuantityEditorMoneyTextAnchor + 0x42 + gTextBankOffsets[1]));
-    DrawTextLine(temp_s3_2, (s32)D_8012CF30, 0xE5, 0x20);
+    DrawTextLine(temp_s3_2, (s32)gOvl11QuantityEditorTextBuffer, 0xE5, 0x20);
 }
 
 void Ovl11DrawQuantityEditorRow (s32 arg0);
@@ -330,8 +330,8 @@ void Ovl11DrawQuantityEditorRows(void) {
     if (((Ovl11HorseRaceView *) D_8006C838)->selector != 3) {
         var_a1 = (u16) ((Ovl11HorseRaceView *) D_8006C838)->selector;
     }
-    *(u16 *)WriteDecimalText(var_a1 + 1, D_8012CF30, 1) = 0xFFFF;
-    SetTextSourcePointer(0, (s32) D_8012CF30);
+    *(u16 *)WriteDecimalText(var_a1 + 1, gOvl11QuantityEditorTextBuffer, 1) = 0xFFFF;
+    SetTextSourcePointer(0, (s32) gOvl11QuantityEditorTextBuffer);
     DrawTextLine(temp_s3, (s32)(D_80051C0E + gTextBankOffsets[0]), 0x22, 0x32);
     DrawTextLine(temp_s3, (s32)(D_80051C0E + 0x18 + gTextBankOffsets[0]), 0xDF, 0x94);
     var_s2 = 0;
