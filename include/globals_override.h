@@ -6350,12 +6350,9 @@ extern s32 gOvl11SceneAnimationCycleState;
  * setup/update alone use this pair to alternate the renderer's hide bit. */
 extern u32 gOvl11SceneRecordVisibilityPair[2];
 
-/* D_800BFC90 - ovl_23 sound/state block. Absolute-addressed (lui + %lo) from
- * ovl_23 code; ovl_23_func_800B8104 reads a signed halfword at +0 and compares
- * it against -1, while ovl_23_func_800B9454 stores a word at +0 and halfwords
- * at +4/+8/+0xA (+0x1B4). Declared as the halfword this TU observes; the
- * object lives in overlay RAM, so only an extern declaration belongs here. */
-extern s16 D_800BFC90;
+/* 800B8104: Ovl23FinishRecordRunExit stops this sound-effect voice when it is not -1.
+ * The same overlay block also carries state words at +4/+8/+0xA. */
+extern s16 gOvl23SoundEffectVoice;
 
 /* ovl_19 initialiser tables. Absolute-addressed (lui + %lo) from ovl_19 code;
  * they live in the overlay data segment, so only extern declarations belong

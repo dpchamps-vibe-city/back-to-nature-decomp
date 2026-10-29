@@ -168,8 +168,8 @@ void Ovl23FinishRecordRunExit(void) {
         var_s0 = (var_s0 + 1) & 0xFF;
     }
     if (var_s0 == 2) {
-        if (D_800BFC90 != -1) {
-            StopSoundEffectVoice((s32) D_800BFC90);
+        if (gOvl23SoundEffectVoice != -1) {
+            StopSoundEffectVoice((s32) gOvl23SoundEffectVoice);
         }
         StopSoundSequence(0);
         RewindSoundLoadSlots(2, 0);
