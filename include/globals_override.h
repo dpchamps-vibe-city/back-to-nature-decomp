@@ -7349,8 +7349,8 @@ extern s8 D_801273E9_selection __asm__("D_801273E9");
 extern u8 D_801273E4_state __asm__("gOvl11SelectionModePhase");
 /* 801014F8: Ovl11ServiceSelectionAggregateFlags draws bank-adjusted ingredient choices at base/0xC/0x16/0x26/0x38. */
 extern u8 gSelectionIngredientChoicesTextAnchor[];
-/* 80101B9C adds D_80054BBC[0] to this text base and its +0x16/+0x28/+0x36 labels. */
-extern u8 D_800539E8[];
+/* 80101B9C: Ovl11ServiceSelectionItemGrid draws bank-adjusted Ingredient, Rucksack (+0x16), Icebox (+0x28) and token (+0x36). */
+extern u8 gSelectionIngredientStorageTextAnchor[];
 
 /* 801000D4/80100A34/80102BCC share this 0x20-stride selection catalog;
  * original row 95 is the 0xE2 sentinel, ending exactly at 8005175C. */

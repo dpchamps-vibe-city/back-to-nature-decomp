@@ -856,13 +856,13 @@ void Ovl11ServiceSelectionItemGrid(void) {
     text = ui + 0x70;
     DrawMenuPanel(panels, 1, 0x16, 0x10, 0x10E, 0x4A);
     DrawMenuPanel(panels, 1, 0x16, 0x5A, 0x10E, 0x4A);
-    DrawTextLine(text, (s32)(D_800539E8 + gTextBankOffsets[0]), 0x21, 0x20);
+    DrawTextLine(text, (s32)(gSelectionIngredientStorageTextAnchor + gTextBankOffsets[0]), 0x21, 0x20);
     if (D_801273EA_table == 0) {
-        DrawTextLine(text, (s32)(D_800539E8 + 0x16 + gTextBankOffsets[0]), 0x21, 0x6A);
+        DrawTextLine(text, (s32)(gSelectionIngredientStorageTextAnchor + 0x16 + gTextBankOffsets[0]), 0x21, 0x6A);
     } else {
-        DrawTextLine(text, (s32)(D_800539E8 + 0x28 + gTextBankOffsets[0]), 0x21, 0x6A);
+        DrawTextLine(text, (s32)(gSelectionIngredientStorageTextAnchor + 0x28 + gTextBankOffsets[0]), 0x21, 0x6A);
         DrawNumberText(D_801273EA_table, 1, text, 0x2A, 0x78);
-        DrawTextLine(text, (s32)(D_800539E8 + 0x36 + gTextBankOffsets[0]), 0x33, 0x78);
+        DrawTextLine(text, (s32)(gSelectionIngredientStorageTextAnchor + 0x36 + gTextBankOffsets[0]), 0x33, 0x78);
         DrawNumberText(8, 1, text, 0x3C, 0x78);
     }
     Ovl11DrawSelectionWorkIdRow();
