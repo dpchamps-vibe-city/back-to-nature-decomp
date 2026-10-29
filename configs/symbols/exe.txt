@@ -1004,6 +1004,8 @@ gOvl11SelectedRecordIndex = 0x80071CCA; // size:0x2
 gOvl11ConditionObjectState = 0x80071A22; // size:0x2
 // Resident +0x44CA clock value used as minutes by held-action ranges and the 18:00 object-event gate.
 gOvl11ClockMinutes = 0x80070D02; // size:0x2
+// State command case 5 masks this halfword against an argument to return a held-input test.
+gOvl11InputMask = 0x800712BE; // size:0x2
 // Ovl11DrawStatusRecordPageTitle and the save-slot record list draw this bank-adjusted title; U16 codes decode List.
 gRecordListTitleTextAnchor = 0x80053604; // size:0xA
 // Ovl15UpdateSlotSelectionMenu, Ovl11DrawStatusSevenRecordRow and the record-family list copy/draw this bank-adjusted label; U16 codes decode Farm.

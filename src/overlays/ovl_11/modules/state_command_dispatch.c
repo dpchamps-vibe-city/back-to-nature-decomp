@@ -176,7 +176,7 @@ s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
         goto block_204;
     case 5:
         if (arg2 != 0) {
-            return (D_800712BE & arg1) != 0;
+            return (gOvl11InputMask & arg1) != 0;
         }
         ((E9State *)D_8006C838)->f4A86 = (u16) (((E9State *)D_8006C838)->f4A86 | arg1);
         goto block_204;

@@ -174,8 +174,8 @@ typedef struct {
 typedef struct { char pad[0x25388]; E9Ptr *f25388; } E9Other;
 
 
-/* 800E9D28 uses absolute lhu of this input-mask halfword. */
-extern u16 D_800712BE;
+/* 800E9D28/state command case 5 load this halfword as the held-input mask. */
+extern u16 gOvl11InputMask;
 /* 800E9D28 stores the halfword 100 at this absolute address. */
 extern s16 D_80071A16;
 /* 800E9D28 loads this signed selected-record index; condition dispatch compares it and command dispatch rewrites it. */
