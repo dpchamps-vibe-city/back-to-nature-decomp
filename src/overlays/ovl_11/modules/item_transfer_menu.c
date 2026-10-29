@@ -114,8 +114,8 @@ void Ovl11DrawAndProcessItemTransferMenu(void) {
             gOvl11ItemTransferPanels[i][0], gOvl11ItemTransferPanels[i][1],
             gOvl11ItemTransferPanels[i][2], gOvl11ItemTransferPanels[i][3]);
     }
-    DrawTextLine(textOt, (s32)(D_80051B7C + gTextBankOffsets[0]), 0x1D, 0x14);
-    DrawTextLine(textOt, (s32)(D_80051B7C + 0xC + gTextBankOffsets[0]), 0x1D, 0x5E);
+    DrawTextLine(textOt, (s32)(gItemTransferSourceLabelsTextAnchor + gTextBankOffsets[0]), 0x1D, 0x14);
+    DrawTextLine(textOt, (s32)(gItemTransferSourceLabelsTextAnchor + 0xC + gTextBankOffsets[0]), 0x1D, 0x5E);
     Ovl11DrawItemTransferEntry(itemOt, 0, (s16 *)((u8 *)D_8006C838 + 0x524C));
     Ovl11DrawItemTransferEntry(itemOt, 9, (s16 *)((u8 *)D_8006C838 + 0x5252));
     for (i = 0; i < pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1); i++) {

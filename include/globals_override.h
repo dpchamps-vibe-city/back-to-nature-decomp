@@ -371,8 +371,8 @@ extern struct Ovl11ItemTransferLayoutRow gOvl11ItemTransferNavigation[] __asm__(
 extern s16 gOvl11ItemTransferLayout[][14];
 /* Four signed x/y/width/height rectangles at ovl_11:801271E8. */
 extern s16 gOvl11ItemTransferPanels[][4];
-/* 800FAC0C adds the language byte offset to this label and its +0xC successor. */
-extern u8 D_80051B7C[];
+/* 800FAC0C: Ovl11DrawAndProcessItemTransferMenu draws Equip and Rucksack (+0xC). */
+extern u8 gItemTransferSourceLabelsTextAnchor[];
 /* Item-transfer cursor, saved cursor during a transfer, and selected source
  * (FF means no source). Word widths follow FAC0C's lw/sw. */
 extern s32 gOvl11ItemTransferCursor;
