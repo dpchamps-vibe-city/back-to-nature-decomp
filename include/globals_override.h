@@ -3359,14 +3359,10 @@ typedef s32 (*FuncPtr_80049078)(s32);
 extern FuncPtr_80049078 _D_80049078[3] __asm__("D_80049078");
 #define D_80049078 _D_80049078
 
-/* D_80049084 — u16 string at offset 0x0C past D_80049078 (func_8001A808 strcat source).
- * Content is 4 u16 (8B, 0x80049084..0x8004908B), but the target splits its address
- * (lui a1,%hi at 8001A850, addiu a1,a1,%lo in the next jal's delay slot at 8001A858),
- * which per ADR-0001 §1 requires a declared size > -G8 (≤8 would keep SYMBOL_REF_FLAG
- * set and leave the address a single unsplit macro that cannot straddle a delay slot).
- * The original TU therefore declared it >8B; [5]=10B keeps the split and the label's data
- * region is still the 8B splat defines. Verified: [3]=6B and [4]=8B both unsplit (24/26). */
-extern u16 D_80049084[5];
+/* 80049084: AppendRecordNameText appends {0x51, 0xFFFE, 0xFFFF} after each eligible name.
+ * The original eight-byte region includes a trailing zero halfword. Retain the existing
+ * five-halfword view: the target splits its address across 8001A850/8001A858. */
+extern u16 gTextRecordNameSuffix[5];
 
 /* D_800491E0 — four signed rotation angles loaded by func_8001D348 at offsets 0, 4, 8 and 12. */
 extern s32 gProjectedClipAngles[4];

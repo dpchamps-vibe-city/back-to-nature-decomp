@@ -1878,7 +1878,7 @@ u16 *AppendRecordNameText(u16 *arg0, s32 arg1, s32 arg2) {
         flag_bit = temp_v1 & 0x80000;
     }
     if (flag_100 && flag_bit) {
-        arg0 = AppendU16String(AppendU16String(arg0, (u16 *)(arg1 + 4)), D_80049084);
+        arg0 = AppendU16String(AppendU16String(arg0, (u16 *)(arg1 + 4)), gTextRecordNameSuffix);
     }
     return arg0;
 }

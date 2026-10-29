@@ -871,6 +871,8 @@ gTextChoiceStatusCodes = 0x80049058; // size:0x10
 gTextChoiceStartTokens = 0x80049068; // size:0x6
 // EnterChoiceState publishes states 7/8/9; UpdateTextWindow handles them as 2/3/4-choice windows.
 gTextChoiceStates = 0x80049070; // size:0x6
+// AppendRecordNameText appends glyph 0x51, row separator FFFE and terminator FFFF after each name.
+gTextRecordNameSuffix = 0x80049084; // size:0x8
 // WriteSeasonNameText copies six glyph codes per row; DrawIndexedSelectionLabels uses all four seasons.
 gTextSeasonNames = 0x8004908C; // size:0x30
 // WriteWeekdayNameText copies three glyph codes per row; original rows run Sun through Sat.
