@@ -603,13 +603,13 @@ s32 GetAssetScratchCapacity(void) {
     s32 reservationAdjustment;
     s32 remainingBytes;
 
-    /* The lower boundary is D_8007AFF4 + 0x49000 + D_8005E328:
+    /* The lower boundary is D_8007AFF4 + 0x49000 + gLoadedAreaResourceBytes:
      * boot sets the first address, the loader records the variable byte count.
      * Keep the staged differences around D_8001009C: algebraically cancelling
      * that reference changes the original load/arithmetic sequence. */
     reservationAdjustment = -0x49000;
     remainingBytes = gGraphicsHeapBase - D_8001009C;
-    remainingBytes = (remainingBytes + reservationAdjustment) - D_8005E328;
+    remainingBytes = (remainingBytes + reservationAdjustment) - gLoadedAreaResourceBytes;
     return remainingBytes - (D_8007AFF4 - D_8001009C);
 }
 

@@ -32,10 +32,10 @@ void Ovl11LoadAreaResourceSet(s32 index, s32 alreadyLoaded) {
 
     index *= 4;
     record = &gOvl11ResourceDescriptors + index;
-    D_8005E328 = record[1] - record[0];
+    gLoadedAreaResourceBytes = record[1] - record[0];
     start = record[0];
     if (alreadyLoaded == 0) {
-        CdReadDiscSectorsBlocking(0, start, D_8005E328, 0, D_8007AFF0);
+        CdReadDiscSectorsBlocking(0, start, gLoadedAreaResourceBytes, 0, D_8007AFF0);
     }
     memcpy(gLoadedAreaHeaderCopy, (void *)D_8007AFF0, 0xBDC);
     work = (u8 *)&D_8007AFF0;

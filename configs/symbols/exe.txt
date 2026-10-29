@@ -94,6 +94,8 @@ gPadActuatorsEnabled = 0x8005E3EC; // type:s32 size:0x4
 
 // Graphics-heap initializers store the pool base; overlay loaders reuse its scratch area.
 gGraphicsHeapBase = 0x8005E3B0; // size:0x4
+// Ovl11LoadAreaResourceSet stores descriptor[1]-descriptor[0]; GetAssetScratchCapacity reserves these bytes.
+gLoadedAreaResourceBytes = 0x8005E328; // size:0x4
 // Shared scene phase: overlay dispatchers index their handlers with this word.
 gScenePhase = 0x80070CC0; // size:0x4
 // Secondary scene-dispatch word: overlay handlers increment it or select a step.

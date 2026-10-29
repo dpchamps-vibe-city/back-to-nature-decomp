@@ -3139,7 +3139,8 @@ extern s32 gSpriteBankArchiveBuffer;
  * past the threshold forces the two-register split form and stops the match. */
 extern s32 D_80010098;
 extern s32 D_8001009C;
-extern s32 D_8005E328;
+/* Ovl11LoadAreaResourceSet records its first archive span; scratch queries reserve it. */
+extern s32 gLoadedAreaResourceBytes;
 
 /* D_80010078, D_80010088 - CD-ROM filenames in .rodata (func_800147BC)
  * "\\A_FILE.HDT;1" and "\\A_FILE.BIN;1". Accessed absolutely with
