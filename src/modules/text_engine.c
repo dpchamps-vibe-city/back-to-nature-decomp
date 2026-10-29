@@ -986,7 +986,7 @@ void *DrawGlyphSprite(s32 *ordering_table, u8 *packet, u32 glyph,
         palette_index = 0;
     }
 
-    setClut(sprt, 0x380, D_80049044[palette_index]);
+    setClut(sprt, 0x380, gTextPaletteClutRows[palette_index]);
     setRGB0(sprt, red_reg, green_reg, blue_reg);
     __asm__ volatile("" ::: "memory");
 

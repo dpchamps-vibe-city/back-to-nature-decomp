@@ -2506,9 +2506,8 @@ extern s16 D_8005F0A8[10];
  * Index: (s16)arg. Array size of 5 ensures >8 byte declaration for absolute addressing */
 extern s16 gMessagePortraitValueIndices[5];
 
-/* D_80049044 - u16 array accessed with lhu at index*2 (func_80019070)
- * Array size of 6 ensures >8 byte declaration for absolute addressing (lui+addiu) */
-extern u16 D_80049044[6];
+/* 80049044: DrawGlyphSprite indexes six CLUT Y rows; setClut supplies X=0x380. */
+extern u16 gTextPaletteClutRows[6];
 
 /* D_80048B1C - table of 0x28-byte entries (CD file table). func_80014854
  * reads the s32 at offset 0x24 (last s32) of entry [arg] as a CD position.

@@ -861,6 +861,8 @@ gSecondaryValueLabelTextAnchor = 0x8005180C; // size:0x4
 gQuantityPromptDefaultTextAnchor = 0x8005181A; // size:0x2
 gTextBankOffsets = 0x80054BBC; // size:0x4
 
+// DrawGlyphSprite selects one of six CLUT Y rows and pairs it with VRAM X=0x380.
+gTextPaletteClutRows = 0x80049044; // size:0xC
 // SetTextSpeedIndex selects the 0/3/5 VSync intervals consumed by the text reveal timer.
 gTextSpeedIntervals = 0x80049050; // size:0x6
 // WriteSeasonNameText copies six glyph codes per row; DrawIndexedSelectionLabels uses all four seasons.
