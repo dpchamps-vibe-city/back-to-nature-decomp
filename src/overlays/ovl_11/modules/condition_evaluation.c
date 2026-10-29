@@ -158,7 +158,7 @@ s32 Ovl11QueueConditionResultFirstSlot(s32 arg0, s32 arg1) {
     char *far_base;
 
     temp_s0 = arg0 & 0xFFFF;
-    if ((D_80070C88 & 1) && (temp_s0 < 0x12C)) {
+    if ((gOvl11StateFlags & 1) && (temp_s0 < 0x12C)) {
         return 1;
     }
     temp_a1 = Ovl11ReserveFirstRecordSlotIfAbsent(0);
@@ -178,7 +178,7 @@ s32 Ovl11QueueConditionResultAnySlot(s32 arg0, s32 arg1) {
     char *far_base;
 
     temp_s0 = arg0 & 0xFFFF;
-    if ((D_80070C88 & 1) && (temp_s0 < 0x12C)) {
+    if ((gOvl11StateFlags & 1) && (temp_s0 < 0x12C)) {
         return 1;
     }
     temp_a1 = Ovl11ReserveAnyRecordSlot(0);

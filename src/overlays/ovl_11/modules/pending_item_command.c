@@ -29,7 +29,7 @@ s32 Ovl11ConsumePendingItemCommand(s16 mode, s16 propertyIndex, s32 resultSlot, 
         ((struct Ovl11E9914State *)D_8006C838)->pending = 0;
         break;
     case 1:
-        if (D_80070C88 & 0x20) {
+        if (gOvl11StateFlags & 0x20) {
             result = 1;
         }
         break;

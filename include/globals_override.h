@@ -1384,8 +1384,9 @@ struct Ovl30NValues {
 /* 80132C2C passes this original Ke-N-VAL row format to FntPrint. */
 extern char gOvl30NValueFormat[];
 
-/* ovl_11_func_800E9914 tests bit 0x20 of this word with lw. */
-extern s32 D_80070C88;
+/* 800E9914 and the condition/clock/record-pool services test independent bits of this shared state word
+ * (date gate bit 0, clock bits 2/4, interaction bit 1, pool bit 8, object state bit 0x1000). */
+extern s32 gOvl11StateFlags;
 /* 800E5294 passes this pair to 80107DD0, which stores s16 -1 and 0. */
 extern s16 gObjectWorkTimedSpriteEffect[2];
 /* EXE:80076300 - E7C2C selects the ID/tick pair at this 0x1D4-stride anchor. */

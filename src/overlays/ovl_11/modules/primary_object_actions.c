@@ -1372,7 +1372,7 @@ unhandled:
         case 0x2D:
             if (!(held & 0xF9FF)) {
                 if (object->unk6C & 0x800000) {
-                    if (!(D_80070C88 & 0x1000)) {
+                    if (!(gOvl11StateFlags & 0x1000)) {
                         goto finish_state_2d;
                     }
                     return 0;

@@ -71,7 +71,7 @@ s32 Ovl11DispatchInteractionRecordInput(Ovl11C8FA8Object *object, u16 pressed) {
             return 1;
         }
         if (gOvl11InteractionHitFlags & 0x400) {
-            if (!(D_80070C88 & 2)) {
+            if (!(gOvl11StateFlags & 2)) {
                 Ovl11SetObjectRecordMode(gOvl11InteractionHitRecordView, 6);
                 Ovl11ResetPrimaryObjectRequest();
                 return 1;

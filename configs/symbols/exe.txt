@@ -995,6 +995,9 @@ gCalendarYearLabelTextAnchor = 0x80051B9A; // size:0xA
 gLoadedSpriteBankBuffer = 0x8007BFF8; // size:0x3800
 // Ovl11LoadCopiedSpriteData copies one selected bounds pair (up to 0x10000 bytes) here for stage records.
 gCopiedSpriteDataBuffer = 0x8007F7F8; // size:0x10000
+
+// Shared ovl_11 resident +0x4450 state word: date/clock gates, interaction and record-pool bits.
+gOvl11StateFlags = 0x80070C88; // size:0x4
 // Ovl11DrawStatusRecordPageTitle and the save-slot record list draw this bank-adjusted title; U16 codes decode List.
 gRecordListTitleTextAnchor = 0x80053604; // size:0xA
 // Ovl15UpdateSlotSelectionMenu, Ovl11DrawStatusSevenRecordRow and the record-family list copy/draw this bank-adjusted label; U16 codes decode Farm.
