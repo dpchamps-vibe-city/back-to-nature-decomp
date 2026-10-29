@@ -1315,7 +1315,7 @@ s32 Ovl15CardReadPromptState10(void) {
 }
 
 void Ovl15CardReadBuildFilename(void) {
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardLoadProgressTextAnchor);
     Ovl15BuildCardFilename((s32)Ovl15CardFilename, gOvl15SelectedSlot);
     gOvl15MenuState = 12;
 }
@@ -1325,7 +1325,7 @@ void Ovl15CardReadReadSaveFile(void) {
     u32 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
+    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardLoadProgressTextAnchor);
     temp_v0 = Ovl15ReadSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
     switch (temp_v0) {
     case 1:
@@ -1348,7 +1348,7 @@ void Ovl15CardReadVerifyChecksums(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
+    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardLoadProgressTextAnchor);
     if (Ovl15VerifySaveChecksums() == -1) {
         gOvl15MenuState = 0xE;
     }
@@ -1839,7 +1839,7 @@ s32 Ovl15CardTransferPromptState10(void) {
 }
 
 void Ovl15CardTransferBuildFilename(void) {
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardLoadProgressTextAnchor);
     Ovl15BuildCardFilename((s32)Ovl15CardFilename, gOvl15SelectedSlot);
     gOvl15MenuState = 12;
 }
@@ -1849,7 +1849,7 @@ void Ovl15CardTransferReadSaveFile(void) {
     u32 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
+    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardLoadProgressTextAnchor);
     temp_v0 = Ovl15ReadSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
     switch (temp_v0) {
     case 1:
@@ -1872,7 +1872,7 @@ void Ovl15CardTransferVerifyChecksums(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardLoadProgressTextAnchor);
     if (Ovl15VerifySaveChecksums() == -1) {
         gOvl15MenuState = 0xE;
     }
@@ -1928,7 +1928,7 @@ s32 Ovl15CardTransferPromptState30(void) {
 }
 
 void Ovl15CardTransferCompareHeader(void) {
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80053350);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardLoadProgressTextAnchor);
     if (bcmp(gOvl15SaveWorkBase + 0x225C, (u8 *)D_8006C838, 8) == 0) {
         gOvl15MenuState = 0x11;
     } else {

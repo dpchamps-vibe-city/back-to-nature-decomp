@@ -6142,12 +6142,9 @@ extern s16 gOvl15SelectedSlot;
  * declares it, so a scalar extern keeps the base name. */
 extern s16 gOvl15SlotCategory;
 
-/* D_80053350 - text-updater array base in the PS-X EXE used by the shared
- * ovl_15 text-draw prologue (ovl_15_func_8012ED18 family add D_80054BBC[0]
- * to its address with the split lui/addiu form; also ovl_15_func_80130C8C).
- * Never defined in the overlay, so an incomplete array extern keeps the base
- * name. */
-extern u8 D_80053350[];
+/* 80053350: card read/load steps draw bank-adjusted Loading from memory card slot <n>.
+ * Do not remove MEMORY CARD. Never defined in the overlay. */
+extern u8 gCardLoadProgressTextAnchor[];
 
 /* D_80053530 - ovl_15 updater-array base in the PS-X EXE used by the shared
  * text-draw prologue (ovl_15_func_8012EEEC/8013063C/80131618 add
