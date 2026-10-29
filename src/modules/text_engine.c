@@ -80,7 +80,7 @@ void SetTextSpeedIndex(u32 arg0) {
         arg0 = 1;
     }
 
-    gTextSpeedInterval = D_80049050[arg0];
+    gTextSpeedInterval = gTextSpeedIntervals[arg0];
 }
 
 /* Inverse speed mapping: interval 0 -> index 0, 5 -> 2, otherwise 1. */

@@ -2544,9 +2544,9 @@ extern s32 gCdByteRangeReadBusy;
  * then indexes by arg*0x28. Array size forces >8 bytes for absolute addressing. */
 extern s32 gCdArchiveFirstByteOffset[4];
 
-/* D_80049050 - array used by func_80017A70
- * Array size of 5 ensures >8 byte declaration for absolute addressing (lui+addiu) */
-extern u16 D_80049050[5];
+/* 80049050: SetTextSpeedIndex selects VSync intervals 0/3/5 for text reveal.
+ * Retain the existing five-halfword linkage view; only three entries are indexed. */
+extern u16 gTextSpeedIntervals[5];
 
 /* D_8005E43C - GP-relative update flag */
 extern s32 gSpriteAnimationUpdateLatch;
