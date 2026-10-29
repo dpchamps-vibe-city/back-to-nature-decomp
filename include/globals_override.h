@@ -964,7 +964,7 @@ extern char gOvl31OldFarm2FileName[18];
 /* ovl_31 rodata: NUL-terminated new FARM2 memory-card filename. */
 extern char gOvl31NewFarm2FileName[18];
 /* ovl_31 rodata: NUL-terminated old FARMP memory-card filename. */
-extern char D_800B7FA4[18];
+extern char gOvl31OldFarmPFileName[18];
 /* ovl_31 rodata: NUL-terminated new FARMP memory-card filename. */
 extern char D_800B7FB8[18];
 /* ovl_31 data allocates 32 bytes for the first sprintf/rename path buffer. */
