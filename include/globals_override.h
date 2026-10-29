@@ -5568,8 +5568,8 @@ typedef struct {
 } Ovl11GlyphTextBuffer;
 extern Ovl11GlyphTextBuffer D_8012CF30_glyph __asm__("gOvl11QuantityEditorTextBuffer");
 
-/* 80104148 adds byte offsets to these text bases before func_80017B3C. */
-extern u8 D_80051BF4[];
+/* 80051BF4: Ovl11DrawQuantityEditorRow draws bank-adjusted Odds and Tickets (+0xA) labels. */
+extern u8 gRaceBettingColumnLabelsTextAnchor[];
 /* 80103F8C adds D_80054BBC[0] bytes to this text base and its +0x18 successor. */
 extern u8 D_80051C0E[];
 extern u8 D_800556A8[];

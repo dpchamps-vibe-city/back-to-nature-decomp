@@ -416,7 +416,7 @@ void Ovl11DrawQuantityEditorRow(s32 rowIndex) {
     }
     DrawTextLine(textContext, (s32)labelText, x, (s32)y);
     x += 81;
-    DrawTextLine(textContext, (s32)(D_80051BF4 + *gTextBankOffsets), x, (s32)y);
+    DrawTextLine(textContext, (s32)(gRaceBettingColumnLabelsTextAnchor + *gTextBankOffsets), x, (s32)y);
     x += 36;
     numberText = &D_8012CF30_glyph.glyph;
     *(u16 *)WriteDecimalText((s32)storedValue, numberText, 2) = 0xFFFF;
@@ -425,7 +425,7 @@ void Ovl11DrawQuantityEditorRow(s32 rowIndex) {
     *(u16 *)WriteDecimalText((s32)editedValue, numberText, 2) = 0xFFFF;
     DrawTextLine(textContext, (s32)numberText, x, (s32)y);
     x += 18;
-    DrawTextLine(textContext, (s32)(D_80051BF4 + 10 + *gTextBankOffsets), x, (s32)y);
+    DrawTextLine(textContext, (s32)(gRaceBettingColumnLabelsTextAnchor + 10 + *gTextBankOffsets), x, (s32)y);
 }
 
 s32 Ovl11AreEditedQuantitiesUnchanged(void) {
