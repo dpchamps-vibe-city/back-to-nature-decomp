@@ -912,7 +912,7 @@ s32 Ovl15CardWritePromptState21(void) {
     s32 ret;
 
     p = &gOvl15MenuState;
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052F4E);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardDisconnectedTextAnchor);
     ret = Ovl15WaitForMenuButton(0x15, 0);
     *p = ret;
     if (gOvl15MenuStateTimer >= 0x5B) {
@@ -1393,7 +1393,7 @@ s32 Ovl15CardReadPromptState16(void) {
     s32 ret;
 
     p = &gOvl15MenuState;
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052F4E);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardDisconnectedTextAnchor);
     ret = Ovl15WaitForMenuButton(0x10, 0);
     *p = ret;
     if (gOvl15MenuStateTimer >= 0x5B) {
@@ -1918,7 +1918,7 @@ s32 Ovl15CardTransferPromptState30(void) {
     s32 ret;
 
     p = &gOvl15MenuState;
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052F4E);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardDisconnectedTextAnchor);
     ret = Ovl15WaitForMenuButton(0x1E, 0);
     *p = ret;
     if (gOvl15MenuStateTimer >= 0x5B) {

@@ -6182,8 +6182,8 @@ extern u8 gCardNoDiaryHereTextAnchor[];
 extern u8 gCardDiaryDamagedTextAnchor[];
 /* 80130E4C/80131DF8: card read and transfer prompt state 15 draw bank-adjusted Loading has failed. */
 extern u8 gCardLoadFailedTextAnchor[];
-/* ovl_15:80131E68 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_80052F4E[];
+/* 80131E68: Ovl15CardTransferPromptState30 and the write/read disconnect prompts draw bank-adjusted MEMORY CARD has been disconnected. */
+extern u8 gCardDisconnectedTextAnchor[];
 /* ovl_15:80131F5C adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_8005204A[];
 /* ovl_15:8013237C adds the text-bank byte offset before drawing this prompt. */
