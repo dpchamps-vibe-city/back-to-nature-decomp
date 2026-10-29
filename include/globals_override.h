@@ -5554,7 +5554,7 @@ extern s32 gOvl11QuantityEditorSelectedRow;
  * ServiceQuantityEditor restores them on row-edit cancellation. Reset clears both.
  * Preserve the existing signed-halfword/word views and absolute addressing. */
 extern s16 gOvl11QuantityEditorEditStartQuantity;
-extern s32 D_8012CF24;
+extern s32 gOvl11QuantityEditorEditStartBalance;
 
 /* D_8012CF30 - 12-halfword (0x18 byte) ovl_11 scratch buffer filled by
  * func_8001A970 (0xFFFF terminator) and passed to func_80017B3C by
