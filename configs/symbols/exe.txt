@@ -959,6 +959,8 @@ gCardSlotEmptyTextAnchor = 0x8005306A; // size:0x5E
 gCardDamagedTextAnchor = 0x800530C8; // size:0x4C
 // Card read/transfer empty-diary checks draw this bank-adjusted status; U16 codes decode No loadable diary in MEMORY CARD slot <n>.
 gCardNoLoadableDiaryTextAnchor = 0x800532FE; // size:0x52
+// The card read/transfer diary prompt draws this bank-adjusted status when the selected slot is empty; U16 codes decode There is no diary here.
+gCardNoDiaryHereTextAnchor = 0x800523AC; // size:0x30
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

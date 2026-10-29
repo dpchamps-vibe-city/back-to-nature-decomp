@@ -6176,8 +6176,8 @@ extern u8 gCardSlotEmptyTextAnchor[];
 extern u8 gCardDamagedTextAnchor[];
 /* 80131A34: Ovl15CardTransferPromptState08 and the read empty-diary check draw bank-adjusted No loadable diary. */
 extern u8 gCardNoLoadableDiaryTextAnchor[];
-/* ovl_15:80131B5C adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_800523AC[];
+/* 80131B5C: Ovl15CardTransferPromptState10 and the read diary prompt draw bank-adjusted There is no diary here. */
+extern u8 gCardNoDiaryHereTextAnchor[];
 /* 80130DDC/80131D88: card read and transfer prompt state 14 draw bank-adjusted The diary is damaged. Loading failed. */
 extern u8 gCardDiaryDamagedTextAnchor[];
 /* 80130E4C/80131DF8: card read and transfer prompt state 15 draw bank-adjusted Loading has failed. */
