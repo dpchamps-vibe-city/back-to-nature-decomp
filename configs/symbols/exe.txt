@@ -869,6 +869,8 @@ gRaceBettingColumnLabelsTextAnchor = 0x80051BF4; // size:0x1A
 gRaceBettingHeaderTextAnchor = 0x80051C0E; // size:0x1E
 // Ovl15UpdateTwoChoiceMenu draws this bank-adjusted base; U16 codes decode as MEMORY CARD slot 1 / slot 2.
 gMemoryCardSlotLabelsTextAnchor = 0x80051D18; // size:0x4C
+// Ovl15UpdateConfirmationMenu draws this bank-adjusted base; U16 codes decode as Yes / No.
+gSaveMenuConfirmationYesNoTextAnchor = 0x80051D80; // size:0xE
 // Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
 gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
 // The wide Ovl11DrawChoicePromptVariant selects the secondary-bank Buy/Don't-buy text.

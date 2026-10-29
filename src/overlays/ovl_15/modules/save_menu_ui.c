@@ -182,7 +182,7 @@ s8 Ovl15UpdateConfirmationMenu(void) {
     s32 buttons;
     s32 navigation;
 
-    DrawTextLine(gActiveRenderContext->field_D8 + 8, (s32)(D_80051D80 + gTextBankOffsets[0]), 0x2B, 0xC4);
+    DrawTextLine(gActiveRenderContext->field_D8 + 8, (s32)(gSaveMenuConfirmationYesNoTextAnchor + gTextBankOffsets[0]), 0x2B, 0xC4);
     /* Unlike the preceding menus, confirmation precedes navigation. */
     buttons = *(s32 *)((u8 *)gPad0Input + 8);
     if (buttons & 0x40) {

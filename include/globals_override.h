@@ -4134,11 +4134,8 @@ extern u8 D_800537A2[];
 /* 80051D18: Ovl15UpdateTwoChoiceMenu draws bank-adjusted MEMORY CARD slot 1 / slot 2 labels. */
 extern u8 gMemoryCardSlotLabelsTextAnchor[];
 
-/* D_80051D80 - base of a data table in the PS-X EXE, indexed by
- * D_80054BBC[0] and passed as the second argument to func_80017B3C by
- * ovl_15_func_801370B4. Only address-taken; absolute-addressed (split
- * lui/%lo pair, the >8-byte incomplete-array form). */
-extern u8 D_80051D80[];
+/* 80051D80: Ovl15UpdateConfirmationMenu draws bank-adjusted Yes / No choices. */
+extern u8 gSaveMenuConfirmationYesNoTextAnchor[];
 
 /* D_80074124 - 7x7 table of 8-byte entries (ovl_11), written by
  * ovl_11_func_800D7B00. Each entry holds two s16 set to 0x167, two spare
