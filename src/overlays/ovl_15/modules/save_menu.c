@@ -1281,7 +1281,7 @@ void Ovl15CardReadChooseSaveSlot(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053596);
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardSelectDiaryLoadTextAnchor);
     temp_v0 = Ovl15UpdateSaveSlotMenu(0);
     if (temp_v0 < 3) {
         if (temp_v0 < 0) {
@@ -1805,7 +1805,7 @@ void Ovl15CardTransferChooseSaveSlot(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80053596[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &gCardSelectDiaryLoadTextAnchor[*gTextBankOffsets]);
     temp_v0 = Ovl15UpdateSaveSlotMenu(0);
     if (temp_v0 < 3) {
         if (temp_v0 < 0) {

@@ -6157,8 +6157,8 @@ extern s16 gOvl15MenuStateTimer;
 /* ovl_15_func_8012F4F4 clears this state with sh; 8012F6C0 reads it with lh. */
 extern s16 gOvl15FormatPromptStep;
 
-/* ovl_15_func_80130B04 adds D_80054BBC[0] bytes to this text-updater address. */
-extern u8 D_80053596[];
+/* 80130B04: card read diary-selection steps draw bank-adjusted Select a diary to load. */
+extern u8 gCardSelectDiaryLoadTextAnchor[];
 /* ovl_15_func_8012F300 adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_80053566[];
 /* ovl_15_func_8012F7D4 adds D_80054BBC[0] bytes to this text-updater address. */
