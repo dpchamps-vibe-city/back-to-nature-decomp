@@ -6168,8 +6168,8 @@ extern u8 gCardFormattingProgressTextAnchor[];
 extern u8 gCardOverwriteConfirmTextAnchor[];
 /* 8012F158 and the shared card scan prologue draw bank-adjusted Searching the MEMORY CARD. */
 extern u8 gCardSearchingTextAnchor[];
-/* ovl_15:801315B0 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_80052FFA[];
+/* 801315B0: Ovl15CardTransferPromptNoCard and the write/read no-card prompts draw bank-adjusted There is no MEMORY CARD. */
+extern u8 gCardNoMemoryCardTextAnchor[];
 /* ovl_15:80131778 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_8005306A[];
 /* ovl_15:801317E8 adds the text-bank byte offset before drawing this prompt. */

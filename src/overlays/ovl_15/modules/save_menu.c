@@ -491,7 +491,7 @@ void Ovl15CardWritePollCards(void) {
 }
 
 void Ovl15CardWritePromptNoCard(void) {
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052FFA);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardNoMemoryCardTextAnchor);
     gOvl15MenuState = Ovl15WaitForMenuButton(2, 0x16);
     gOvl15ConfirmationChoice = 1;
 }
@@ -1131,7 +1131,7 @@ void Ovl15CardReadPollCards(void) {
 }
 
 void Ovl15CardReadPromptNoCard(void) {
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052FFA);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardNoMemoryCardTextAnchor);
     gOvl15MenuState = Ovl15WaitForMenuButton(2, 0x11);
     gOvl15ConfirmationChoice = 1;
 }
@@ -1663,7 +1663,7 @@ void Ovl15CardTransferPollCards(void) {
 }
 
 void Ovl15CardTransferPromptNoCard(void) {
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80052FFA);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardNoMemoryCardTextAnchor);
     gOvl15MenuState = Ovl15WaitForMenuButton(2, 0x1F);
     gOvl15ConfirmationChoice = 1;
 }
