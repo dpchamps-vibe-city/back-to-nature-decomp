@@ -877,6 +877,8 @@ gSaveSlotDiaryTextAnchor = 0x80051D8E; // size:0x10
 gSaveSlotDateTextAnchor = 0x80051D9E; // size:0x1C
 // Ovl15CardReadConfirmExit draws this bank-adjusted prompt; U16 codes decode as Aborting load / Is that OK.
 gCardReadAbortConfirmTextAnchor = 0x80051E02; // size:0x36
+// Ovl15CardTransferConfirmExit draws this bank-adjusted prompt; U16 codes decode as Aborting exchange / Is that OK.
+gCardTransferAbortConfirmTextAnchor = 0x80051E88; // size:0x3E
 // Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
 gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
 // The wide Ovl11DrawChoicePromptVariant selects the secondary-bank Buy/Don't-buy text.
