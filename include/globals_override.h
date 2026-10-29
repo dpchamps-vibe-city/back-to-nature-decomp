@@ -3484,10 +3484,9 @@ extern s32 D_80051768;
 extern u8 gYesNoChoiceTextAnchor[];
 extern u8 gBuyDeclineChoiceTextAnchor[];
 
-/* D_800517C6 - u8 table base in the PS-X EXE indexed by D_80054BBC[1]
- * (and +0x42) in ovl_11_func_80103EB8. Never defined in the overlays, so
- * cc1 materializes the address as the split lui/%lo pair. */
-extern u8 D_800517C6[];
+/* 800517C6: Ovl11DrawQuantityEditorBalance adds gTextBankOffsets[1] for Money
+ * and an additional 0x42 for the G suffix. Retain the incomplete byte-array anchor. */
+extern u8 gQuantityEditorMoneyTextAnchor[];
 
 /* D_80061E28 - 0x20-byte u16 struct cleared with memset(&..,0,0x20) and
  * given u16 0x1000 writes at offsets 0x00/0x08/0x10 by func_8001B530.

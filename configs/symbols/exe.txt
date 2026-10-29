@@ -859,6 +859,8 @@ gPrimaryValueLabelTextAnchor = 0x80051808; // size:0x4
 gSecondaryValueLabelTextAnchor = 0x8005180C; // size:0x4
 // Address anchor for the default secondary quantity-prompt text (u16 codes).
 gQuantityPromptDefaultTextAnchor = 0x8005181A; // size:0x2
+// Ovl11DrawQuantityEditorBalance adds bank offset[1] for Money; anchor+0x42 supplies the G suffix.
+gQuantityEditorMoneyTextAnchor = 0x800517C6; // size:0x2
 // Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
 gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
 // The wide Ovl11DrawChoicePromptVariant selects the secondary-bank Buy/Don't-buy text.

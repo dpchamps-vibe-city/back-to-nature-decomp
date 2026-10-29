@@ -309,9 +309,9 @@ void Ovl11DrawQuantityEditorBalance(void) {
     temp_s3 = gActiveRenderContext->field_D8;
     temp_s3_2 = temp_s3 + 0x58;
     DrawMenuPanel((u32 *)(temp_s3 + 0x5C), 0, 0xE3, 0x10, 0x47, 0x1E);
-    DrawTextLine(temp_s3_2, (s32)((u8 *)D_800517C6 + gTextBankOffsets[1]), 0xE5, 0x12);
+    DrawTextLine(temp_s3_2, (s32)((u8 *)gQuantityEditorMoneyTextAnchor + gTextBankOffsets[1]), 0xE5, 0x12);
     CopyTextString(WriteDecimalText(D_8012CF20, D_8012CF30, 7),
-                  (u16 *)((u8 *)D_800517C6 + 0x42 + gTextBankOffsets[1]));
+                  (u16 *)((u8 *)gQuantityEditorMoneyTextAnchor + 0x42 + gTextBankOffsets[1]));
     DrawTextLine(temp_s3_2, (s32)D_8012CF30, 0xE5, 0x20);
 }
 
