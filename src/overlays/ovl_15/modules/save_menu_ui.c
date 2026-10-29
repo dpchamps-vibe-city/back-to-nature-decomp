@@ -101,24 +101,24 @@ void Ovl15DrawSaveSlotSummary(s16 slot, s16 displayMode) {
     y = slot * 0x31 + 0x14;
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x18), 1, 0x30, (s32)(s16)(slot * 0x31 + 0x10), 0xE4, 0x30);
     SetTextSourcePointer(1, (s32)((void *)((u8 *)&gOvl15SaveSlotLabels + (slot * 4))));
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D8E + *gTextBankOffsets)), 0x41, (s32)y);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&gSaveSlotDiaryTextAnchor + *gTextBankOffsets)), 0x41, (s32)y);
     status = gOvl15SaveSlotStatus[slot];
     switch (status) {
     case 1:
-        DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D8E - 0x13A)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
+        DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&gSaveSlotDiaryTextAnchor - 0x13A)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
         return;
     case 2:
         if (displayMode == 0) {
-            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D8E - 0x13A)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
+            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&gSaveSlotDiaryTextAnchor - 0x13A)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
         } else if (displayMode == 1) {
-            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D8E - 0x128)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
+            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&gSaveSlotDiaryTextAnchor - 0x128)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
         }
         break;
     case 3:
         if (displayMode == 0) {
-            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D8E - 0x13A)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
+            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&gSaveSlotDiaryTextAnchor - 0x13A)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
         } else if (displayMode == 1) {
-            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D8E - 0xFC)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
+            DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&gSaveSlotDiaryTextAnchor - 0xFC)) + gTextBankOffsets[0], 0x41, (s16)(y + 0x15));
         }
         break;
     case 0:

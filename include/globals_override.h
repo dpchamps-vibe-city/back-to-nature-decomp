@@ -7595,8 +7595,9 @@ struct Ovl11TimerState {
 
 /* ovl_15_func_80136C70 indexes three 4-byte terminated text labels. */
 extern u32 gOvl15SaveSlotLabels[3];
-/* ovl_15_func_80136C70 adds the text relocation base to these byte addresses. */
-extern u8 D_80051D8E[];
+/* Ovl15DrawSaveSlotSummary draws the bank-adjusted Diary <name> line from the first;
+ * the second supplies the complete-date line at +0x1C. */
+extern u8 gSaveSlotDiaryTextAnchor[];
 extern u8 D_80051D9E[];
 /* ovl_15_func_80136C70 clears 0x28 bytes and formats halfword text here. */
 extern s16 gOvl15MenuTextScratch[20];
