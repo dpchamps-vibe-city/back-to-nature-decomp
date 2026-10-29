@@ -6187,8 +6187,8 @@ extern u8 D_800532FE[];
 extern u8 D_800523AC[];
 /* ovl_15:80131D88 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_8005341E[];
-/* ovl_15:80131DF8 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_800533F6[];
+/* 80130E4C/80131DF8: card read and transfer prompt state 15 draw bank-adjusted Loading has failed. */
+extern u8 gCardLoadFailedTextAnchor[];
 /* ovl_15:80131E68 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_80052F4E[];
 /* ovl_15:80131F5C adds the text-bank byte offset before drawing this prompt. */
