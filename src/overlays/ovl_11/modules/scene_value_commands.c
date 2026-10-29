@@ -14,6 +14,7 @@
 #include "psyq/memory.h"
 #include "ovl11_condition_value_queries.h"
 #include "ovl11_record_counter_category.h"
+#include "ovl11_counted_table_cell_percent.h"
 
 /* Narrow view starting at work +25394. Keeping the fields in one address
  * web preserves the original far-buffer load order. Target Y is a halfword;
@@ -82,8 +83,6 @@ done:
     return complete;
 }
 
-s32 ovl_11_func_800F00E4(void);
-
 s32 Ovl11UpdateConditionValueCommand(s16 mode, s16 outputSlot,
                                    s32 unused2, s32 unused3) {
     s32 category;
@@ -102,7 +101,7 @@ s32 Ovl11UpdateConditionValueCommand(s16 mode, s16 outputSlot,
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xCU;
             } else if (Ovl11GetConditionCounterTotal() < 0xB) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xDU;
-            } else if (ovl_11_func_800F00E4() < 6) {
+            } else if (Ovl11GetCountedTableCellPercent() < 6) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xEU;
             } else if (category == -1) {
                 ((struct struct_8006C838_800EE7BC *) D_8006C838)->field_E7A0 = 0xFU;

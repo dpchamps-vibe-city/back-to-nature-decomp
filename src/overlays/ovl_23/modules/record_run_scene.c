@@ -33,6 +33,8 @@
 #include "sprite_render.h"
 #include "ovl23_record_run.h"
 #include "ui_sprites.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 /* Forward interfaces within this unit, not a claim of original static linkage. */
 void Ovl23LoadSharedSpriteBank(void);
@@ -62,18 +64,15 @@ void Ovl23DrawScrollingRecordBackdrop(void);
 void Ovl23RaiseRecordByteRangeValue(s16 recordIndex);
 void Ovl23RaiseRecordHalfwordRangeValue(s16 recordIndex);
 
-void func_80017A48(u32 arg0);
-u32 func_80017A64(void);
-
 void Ovl23DispatchRecordRunSubphase(void) {
     s32 *base;
     u32 savedDrawMode;
 
-    savedDrawMode = func_80017A64();
-    func_80017A48(3U);
+    savedDrawMode = GetTextPalette();
+    SetTextPalette(3U);
     base = &gOvl23RecordRunSubphases;
     ((void (*)(s32 *))base[gSceneSubphase])(base);
-    func_80017A48(savedDrawMode);
+    SetTextPalette(savedDrawMode);
 }
 
 void Ovl23InitRecordRunBounds (void);
@@ -324,20 +323,16 @@ void Ovl23UpdateRecordStage3(void) {
     }
 }
 
-void func_80017A08(s32 arg0, s32 arg1);
-/* Executable imports SetVal8005E2BC and SetMessagePortraitEnabled. */
-void SetVal8005E2BC(s32 arg0);
-
 void Ovl23UpdateRecordStage4(void) {
     Ovl23UpdateRecordRunFrame();
-    func_80017A08(0, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[0]]);
-    func_80017A08(1, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[1]]);
-    func_80017A08(2, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[3]]);
-    func_80017A08(3, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[5]]);
+    SetTextSourcePointer(0, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[0]]);
+    SetTextSourcePointer(1, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[1]]);
+    SetTextSourcePointer(2, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[3]]);
+    SetTextSourcePointer(3, (s32)D_800BB860 + D_800BBA14[Ovl23_D_800BF87C_header.unk16[5]]);
     RequestMessageWindow(4, 0x2D);
     if (GetMessageWindowStatus() == 2) {
         CloseMessageWindow();
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         Ovl23_D_800BF87C_header.unk0 = 5;
         Ovl23_D_800BF87C_header.unk416 = 0;
@@ -350,7 +345,7 @@ void Ovl23UpdateRecordStage5(void) {
     Ovl23UpdateRecordRunFrame();
     if (Ovl23_D_800BF87C_header.unk416 == 0) {
         CloseMessageWindow();
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, 0x2E);
     }

@@ -23,8 +23,9 @@
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "two_choice_prompt.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
-void SetVal8005E2BC(s32 arg0);
 u16 Ovl11SelectOfferConditionMessage(void);
 
 s32 Ovl11UpdateRecordOfferInteraction(void) {
@@ -169,7 +170,7 @@ s32 Ovl11UpdateRecordOfferInteraction(void) {
         break;
     case 25:
         if (GetMessageWindowStatus() == 5) {
-            SetVal8005E2BC(0);
+            SetTextInputEnabled(0);
             Ovl11ResumeInteractionStep();
         }
         break;

@@ -11,9 +11,11 @@
 
 #include "ovl11_record_status_message.h"
 #include "message_window.h"
-
-s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
-void func_80017A08(s32 arg0, s32 arg1);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 /* Both clients ignore the message request's result; this service only
  * publishes the selected message and the two text substitution records. */
@@ -23,10 +25,10 @@ void Ovl11RequestRecordStatusMessage(UnkStruct800DF4F0 *record) {
     u16 stateAE;
     u16 countB2;
 
-    func_80017A08(0, (s32) ((u8 *) record + 4));
-    *(u16 *) func_8001A970(0x15 - (*(u16 *) ((u8 *) record + 0xB2)),
+    SetTextSourcePointer(0, (s32) ((u8 *) record + 4));
+    *(u16 *) WriteDecimalText(0x15 - (*(u16 *) ((u8 *) record + 0xB2)),
                          &gOvl11RecordStatusCountText, 2) = 0xFFFF;
-    func_80017A08(1, (s32) &gOvl11RecordStatusCountText);
+    SetTextSourcePointer(1, (s32) &gOvl11RecordStatusCountText);
     stateAE = *(u16 *) ((u8 *) record + 0xAE);
     messageCode = 0x6C1;
     if (stateAE < 4U) {

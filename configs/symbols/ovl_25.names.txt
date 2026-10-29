@@ -130,3 +130,11 @@ Ovl25DrawSceneObjectRecords = 0x800B941C; // type:func
 // named interior sprite storage (e.g. auxiliary +0x18 at 800C013C).
 gOvl25SceneRecordBase = 0x800BFE54; // type:data size:0x2
 gOvl25AuxiliaryRecordBase = 0x800C0124; // type:data size:0x2
+Ovl25ChooseRecordStateAndTimer = 0x800B9480; // type:func
+Ovl25ChooseWeightedState5Timer = 0x800B95B0; // type:func
+Ovl25CanUpdateRecordChoice = 0x800B9758; // type:func
+Ovl25PassRecordChoiceThreshold = 0x800B977C; // type:func
+// 3 record IDs x 5 choices plus original trailing halfword.
+gOvl25RecordChoiceThresholds = 0x800BCCA0; // type:data size:0x20
+// Signed category indexing is preserved, including the preceding -1 row.
+gOvl25State5ChoiceWeights = 0x800BCCC0; // type:data size:0x60

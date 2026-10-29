@@ -25,8 +25,11 @@
 #include "ovl11_quantity_input.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_dispatch_record_enable.h"
-
-void SetVal8005E2BC(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 s32 Ovl11UpdateCounter21Purchase(void) {
     s32 result;
@@ -67,7 +70,7 @@ s32 Ovl11UpdateCounter21Purchase(void) {
         break;
     case 4:
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(2, 0x4D);
         Ovl11SetInteractionSteps(3, 5);
         break;

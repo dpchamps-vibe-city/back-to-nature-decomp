@@ -51,6 +51,7 @@
 #include "ovl11_eligible_record_selection.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_record_position_set.h"
+#include "ovl11_item_value_counters.h"
 
 /* These cross-bank helper calls retain their original external symbols. */
 s32 Ovl11StepGridTargetAction(Ovl11SetFieldsView *object, s32 gridMode);
@@ -1089,12 +1090,10 @@ s32 Ovl11StepSeasonalRecordAction(Ovl11SetFieldsView *arg0, s32 arg1) {
     return 0;
 }
 
-s32 ovl_11_func_800F3BCC(u16 arg0);
-
 u16 Ovl11CompleteActionSequence(Ovl11ActionCompletionView *object) {
     char *farBase;
 
-    ovl_11_func_800F3BCC(object->actionId);
+    Ovl11RecordItemValue(object->actionId);
     farBase = (char *)&D_8007AFF0;
     if (*(s16 *)(farBase + 0x25476) == object->area) {
         PlaySoundEffect(0x13);

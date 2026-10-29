@@ -45,8 +45,9 @@
 #include "ovl11_surface_height_probe.h"
 #include "ovl11_condition_evaluation.h"
 #include "ovl11_current_record_bounds.h"
+#include "ovl11_stage_mode1_record.h"
+#include "ovl11_item_value_counters.h"
 
-s32 ovl_11_func_800F3BCC(u16 arg0);
 void Ovl11ReleaseMovingItemRecord(Ovl11CC4E0Object *arg0);
 
 s32 Ovl11ProbeMovingItemHit(Ovl11CC4E0Object *arg0) {
@@ -67,7 +68,7 @@ s32 Ovl11ProbeMovingItemHit(Ovl11CC4E0Object *arg0) {
 failed:
     return 0;
 success:
-    ovl_11_func_800F3BCC(*(u16 *)((u8 *)arg0 + 2));
+    Ovl11RecordItemValue(*(u16 *)((u8 *)arg0 + 2));
     PlaySoundEffect(0x13);
     Ovl11ReleaseMovingItemRecord(arg0);
     return 1;
@@ -358,8 +359,6 @@ store1:
 }
 
 s32 Ovl11HandleMovingItemGeometryHit(Ovl11CC4E0Object *arg0, Vec3 *arg1);
-s32 ovl_11_func_800F3E44(s16 arg0);
-s32 ovl_11_func_80109188(Ovl11D04D4Obj *arg0, s32 arg1);
 s32 Ovl11CheckMovingItemCellContact(Ovl11MovingItemRecord *arg0);
 
 s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0) {
@@ -421,7 +420,7 @@ s32 Ovl11StepMovingItemMotion(Ovl11MovingItemRecord *arg0) {
             spawn = (Ovl11CC7CCSpawn *)Ovl11ProbeCurrentRecordBounds((Vec3 *)&next);
             if (spawn != NULL) {
                 spawn->flags |= 0x100;
-                if (gItemDataTable[arg0->itemId].field_12 != 0 && ovl_11_func_800F3E44(arg0->itemId) != 0) {
+                if (gItemDataTable[arg0->itemId].field_12 != 0 && Ovl11StageItemValue(arg0->itemId) != 0) {
                     RequestMessageWindow(3, 0x383);
                 }
 remove:
@@ -429,7 +428,7 @@ remove:
                 return 1;
             }
             if (Ovl11GetGeometryHitHighBit() != 0 && gItemDataTable[arg0->itemId].field_12 != 0) {
-                ovl_11_func_800F3BCC(arg0->itemId);
+                Ovl11RecordItemValue(arg0->itemId);
                 PlaySoundEffect(0x13);
                 Ovl11ReleaseMovingItemRecord((Ovl11CC4E0Object *)arg0);
                 SetGameFlag(7, 1);
@@ -441,7 +440,7 @@ remove:
                 position.vz = arg0->position.vz;
                 Ovl11ReleaseMovingItemRecord((Ovl11CC4E0Object *)arg0);
                 Ovl11SetSpawnRecord(0x65, position, D_80071AFE, 0);
-                ovl_11_func_80109188((Ovl11D04D4Obj *)&gStageMode1Record, 7);
+                Ovl11SetStageMode1State((Ovl11D04D4Obj *)&gStageMode1Record, 7);
                 return 1;
             }
             result = Ovl11CheckMovingItemCellContact(arg0);

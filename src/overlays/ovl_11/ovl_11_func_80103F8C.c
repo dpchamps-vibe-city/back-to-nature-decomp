@@ -2,10 +2,10 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
-s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
-void func_80017A08 (s32 arg0, s32 arg1);
-void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_11_func_80104148 (s32 arg0);
 
 void ovl_11_func_80103F8C(void) {
@@ -21,10 +21,10 @@ void ovl_11_func_80103F8C(void) {
     if (((Ovl11CardView *) D_8006C838)->selector != 3) {
         var_a1 = (u16) ((Ovl11CardView *) D_8006C838)->selector;
     }
-    *(u16 *)func_8001A970(var_a1 + 1, D_8012CF30, 1) = 0xFFFF;
-    func_80017A08(0, (s32) D_8012CF30);
-    func_80017B3C(temp_s3, (s32)(D_80051C0E + gTextBankOffsets[0]), 0x22, 0x32);
-    func_80017B3C(temp_s3, (s32)(D_80051C0E + 0x18 + gTextBankOffsets[0]), 0xDF, 0x94);
+    *(u16 *)WriteDecimalText(var_a1 + 1, D_8012CF30, 1) = 0xFFFF;
+    SetTextSourcePointer(0, (s32) D_8012CF30);
+    DrawTextLine(temp_s3, (s32)(D_80051C0E + gTextBankOffsets[0]), 0x22, 0x32);
+    DrawTextLine(temp_s3, (s32)(D_80051C0E + 0x18 + gTextBankOffsets[0]), 0xDF, 0x94);
     var_s2 = 0;
     do {
         ovl_11_func_80104148((s16) var_s2);

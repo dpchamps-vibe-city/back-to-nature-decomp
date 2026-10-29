@@ -13,11 +13,11 @@
 #include "beveled_panel.h"
 #include "u16_string.h"
 #include "ui_sprites.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 void Ovl11DrawValuePanelVariant(s32 wide);
-s16 *func_8001A970(s32 value, s16 *dst, s32 width);
-void func_80017B3C(s32 orderingTable, s32 text, s32 x, s32 y);
-void func_8001ABF0(u16 *dst, u16 *src);
 
 void Ovl11DrawCompactValuePanel(void) {
     Ovl11DrawValuePanelVariant(0);
@@ -53,12 +53,12 @@ void Ovl11DrawValuePanelVariant(s32 wide) {
         panelHeight = 0x22;
     }
     orderingTable = gActiveRenderContext->field_D8 + 0x40;
-    copyLabel(func_8001A970(value, &gOvl11TextFormatScratch, 8));
+    copyLabel(WriteDecimalText(value, &gOvl11TextFormatScratch, 8));
     DrawBeveledPanel((u32 *)(gActiveRenderContext->field_D8 + 0x44), panelX, 0x10, panelWidth, panelHeight);
     /* These fixed x positions have bit 2 clear; preserve the original OR. */
     textX = panelX | 4;
-    func_80017B3C(orderingTable, (s32)((void *)((u8 *)D_8005175C + (*D_80054BC0 + labelOffset))), textX, 0x14);
-    func_80017B3C(orderingTable, (s32)&gOvl11TextFormatScratch, textX, panelHeight);
+    DrawTextLine(orderingTable, (s32)((void *)((u8 *)D_8005175C + (*D_80054BC0 + labelOffset))), textX, 0x14);
+    DrawTextLine(orderingTable, (s32)&gOvl11TextFormatScratch, textX, panelHeight);
 }
 
 void Ovl11DrawQuantityPromptRows(Ovl11D8012D538 prompt, s16 quantity, s32 value, s16 x, s16 y) {
@@ -75,26 +75,26 @@ void Ovl11DrawQuantityPromptRows(Ovl11D8012D538 prompt, s16 quantity, s32 value,
         leftMarkerX = x + 4;
     } else {
         headerX = x + 4;
-        func_80017B3C(orderingTable, prompt.unk0, (s16)headerX, (s32)rowY);
+        DrawTextLine(orderingTable, prompt.unk0, (s16)headerX, (s32)rowY);
         heightAdjustment = 0;
         rowY += 0xE;
         leftMarkerX = headerX;
     }
     DrawBeveledPanel((u32 *)(gActiveRenderContext->field_D8 + 0x34), x, y, 0x74, (s16)(heightAdjustment + 0x30));
-    *((u16 *)func_8001A970((s32)quantity, &gOvl11TextFormatScratch, 3)) = 0xFFFF;
+    *((u16 *)WriteDecimalText((s32)quantity, &gOvl11TextFormatScratch, 3)) = 0xFFFF;
     AppendU16String((u16 *)&gOvl11TextFormatScratch, (u16 *)prompt.unk4);
-    func_80017B3C(orderingTable, (s32)&gOvl11TextFormatScratch, (s32)(s16)(x + 0x20), (s32)rowY);
+    DrawTextLine(orderingTable, (s32)&gOvl11TextFormatScratch, (s32)(s16)(x + 0x20), (s32)rowY);
     DrawAnimatedUiSprite0D(orderingTable, leftMarkerX, rowY);
     DrawAnimatedUiSprite0C(orderingTable, (s16)(x + 0x60), rowY);
     rowY += 0xE;
-    Ovl11CopyPrimaryValueLabel(func_8001A970(value, &gOvl11TextFormatScratch, 5));
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x30, (s32)&gOvl11TextFormatScratch, (s32)(s16)(x + 0x10), (s32)rowY);
+    Ovl11CopyPrimaryValueLabel(WriteDecimalText(value, &gOvl11TextFormatScratch, 5));
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x30, (s32)&gOvl11TextFormatScratch, (s32)(s16)(x + 0x10), (s32)rowY);
 }
 
 void Ovl11CopyPrimaryValueLabel(u16 *dst) {
-    func_8001ABF0(dst, (u16 *)(D_80054BC0[0] + (s32)&gPrimaryValueLabelTextAnchor));
+    CopyTextString(dst, (u16 *)(D_80054BC0[0] + (s32)&gPrimaryValueLabelTextAnchor));
 }
 
 void Ovl11CopySecondaryValueLabel(u16 *dst) {
-    func_8001ABF0(dst, (u16 *)(D_80054BC0[0] + (s32)&gSecondaryValueLabelTextAnchor));
+    CopyTextString(dst, (u16 *)(D_80054BC0[0] + (s32)&gSecondaryValueLabelTextAnchor));
 }

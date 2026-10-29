@@ -34,9 +34,8 @@
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_dispatch_record_enable.h"
-
-/* Original overlay labels for the resident setters and state getter. */
-void SetVal8005E2BC(s32 arg0);
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 s32 Ovl11StepSingleItemPurchase(s16 catalogId, s16 messageBank, s16 promptId, s16 mode) {
     VECTOR position;
@@ -75,7 +74,7 @@ s32 Ovl11StepSingleItemPurchase(s16 catalogId, s16 messageBank, s16 promptId, s1
         break;
     case 3:
         if (GetMessageWindowStatus() == 5) {
-            SetVal8005E2BC(0);
+            SetTextInputEnabled(0);
             Ovl11ResumeInteractionStep();
         }
         break;

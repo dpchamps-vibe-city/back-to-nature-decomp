@@ -37,6 +37,7 @@
 #include "ovl11_scene_header_key.h"
 #include "ovl11_action_result_request.h"
 #include "ovl11_record_remap_tables.h"
+#include "ovl11_item_value_counters.h"
 
 s32 Ovl11BeginObjectCommandRow(Ovl11C3B78Arg0 *arg0, s32 arg1, s32 arg2);
 
@@ -1239,8 +1240,6 @@ s32 Ovl11TryStartCommandReaction(Ovl11AnimationObject *object, u16 *commandWords
     return result;
 }
 
-s32 ovl_11_func_800F3D88(void);
-
 void Ovl11ShowObjectCommandMessage(Ovl11C3F6CObjectView *object, u16 *commandWords) {
     s32 valueBeforeUpdate;
     u8 *base;
@@ -1249,7 +1248,7 @@ void Ovl11ShowObjectCommandMessage(Ovl11C3F6CObjectView *object, u16 *commandWor
      * after the updater. Do not move that call outside the guarded tail. */
     if (((*(s16 *)((u8 *)commandWords + 2)) == 0) && (GetGameFlag(0xA0U) != 1) &&
         (base = (u8 *)D_8006C838, valueBeforeUpdate = *(s32 *)(base + 0x49C0),
-         ovl_11_func_800F3D88(), ((*(s16 *)(base + 0x52C6)) == object->unk2E))) {
+         Ovl11ApplyItemValueOnce(), ((*(s16 *)(base + 0x52C6)) == object->unk2E))) {
         if (valueBeforeUpdate == 0) {
             RequestMessageWindow(1, 0x72B);
             return;

@@ -33,12 +33,7 @@
 #include "ovl11_item_stack_clear.h"
 #include "ovl11_menu_exit_flags.h"
 #include "ui_sprites.h"
-
-u32 func_80017A64(void);
-void func_80017A48(u32 style);
-void func_80017A38(s16 x, s16 y);
-void SetVal8005E2BC(s32 value);
-void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
+#include "text_engine.h"
 
 /* Internal interfaces retain their original external linkage and word-sized
  * pointer arguments where present. Slot helpers are not a general inventory API. */
@@ -92,10 +87,10 @@ void Ovl11UpdateItemTransferMenu(void) {
                 workFlags[0x5234 / 4] |= 0x2000;
             }
         } else {
-            previousStyle = func_80017A64();
-            func_80017A48(3);
+            previousStyle = GetTextPalette();
+            SetTextPalette(3);
             Ovl11DrawAndProcessItemTransferMenu();
-            func_80017A48(previousStyle);
+            SetTextPalette(previousStyle);
             Ovl11SyncHeldItemFlags((Ovl11C7010Object *)&gPrimaryObjectBase);
         }
     }
@@ -113,14 +108,14 @@ void Ovl11DrawAndProcessItemTransferMenu(void) {
 
     textOt = gActiveRenderContext->field_D8 + 0x60;
     itemOt = gActiveRenderContext->field_D8 + 0x5C;
-    func_80017A38(0, 2);
+    SetTextSpacing(0, 2);
     for (i = 0; i < 4U; i++) {
         DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1,
             gOvl11ItemTransferPanels[i][0], gOvl11ItemTransferPanels[i][1],
             gOvl11ItemTransferPanels[i][2], gOvl11ItemTransferPanels[i][3]);
     }
-    func_80017B3C(textOt, (s32)(D_80051B7C + gTextBankOffsets[0]), 0x1D, 0x14);
-    func_80017B3C(textOt, (s32)(D_80051B7C + 0xC + gTextBankOffsets[0]), 0x1D, 0x5E);
+    DrawTextLine(textOt, (s32)(D_80051B7C + gTextBankOffsets[0]), 0x1D, 0x14);
+    DrawTextLine(textOt, (s32)(D_80051B7C + 0xC + gTextBankOffsets[0]), 0x1D, 0x5E);
     Ovl11DrawItemTransferEntry(itemOt, 0, (s16 *)((u8 *)D_8006C838 + 0x524C));
     Ovl11DrawItemTransferEntry(itemOt, 9, (s16 *)((u8 *)D_8006C838 + 0x5252));
     for (i = 0; i < pow_int(2, ((struct Ovl11ItemGridState *)D_8006C838)->exponent + 1); i++) {
@@ -141,7 +136,7 @@ void Ovl11DrawAndProcessItemTransferMenu(void) {
         return;
     }
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x3AC);
     if (IsMessageWindowStatusFinal()) {
         buttons = ((u32 *)gPad0Input)[2];

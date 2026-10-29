@@ -43,6 +43,8 @@
 #include "point_projection.h"
 #include "ui_sprites.h"
 #include "surface_collision.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 /* Scene-local interfaces; co-location does not establish static linkage. */
 void Ovl21InitSceneCamera(void);
@@ -72,21 +74,17 @@ s32 Ovl21CountActiveRecordsInGroup(s16 group);
 s16 Ovl21PickRandomActiveRecord(s16 mode);
 s16 Ovl21PickRandomInactiveRecord(s16 group);
 
-void func_80017A48(u32 arg0);
-
-u32 func_80017A64(void);
-
 void Ovl21StepScene(void) {
     s32 *phaseTable;
     u32 previousTextDrawMode;
 
-    previousTextDrawMode = func_80017A64();
-    func_80017A48(3U);
+    previousTextDrawMode = GetTextPalette();
+    SetTextPalette(3U);
     phaseTable = gOvl21ScenePhaseTable;
     /* The original dispatch forwards its table base; all five handlers
      * ignore that argument. Keep the word view and call boundary intact. */
     ((void (*)(s32 *))phaseTable[gSceneSubphase])(phaseTable);
-    func_80017A48(previousTextDrawMode);
+    SetTextPalette(previousTextDrawMode);
 }
 
 void Ovl21InitSceneState(void);
@@ -377,8 +375,6 @@ void Ovl21ShowOpeningMessage(void) {
     }
 }
 
-void SetVal8005E2BC(s32 arg0);
-
 void Ovl21RunFirstGroupVoiceMessage(void) {
     u8 *base;
     u8 *p;
@@ -403,7 +399,7 @@ void Ovl21RunFirstGroupVoiceMessage(void) {
         status = SpuGetKeyStatus(gOvl21SceneVoiceMasks[*(s16 *)(p + 0x986)]);
         if (status == 0 || *(s16 *)(p + 0x988) >= 0x96) {
             Ovl21SetRecordGroupState(0, 0);
-            SetVal8005E2BC(1);
+            SetTextInputEnabled(1);
             SetMessagePortraitEnabled(1);
             *(s16 *)(p + 0x988) = -1;
             return;
@@ -420,7 +416,7 @@ void Ovl21RunFirstGroupVoiceMessage(void) {
     r = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(r + 0x988) == 0) {
         CloseMessageWindow();
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, gOvl21FirstGroupMessages[*(s16 *)(r + 0x640)]);
         *(s16 *)(r + 0x988) = 1;
@@ -451,7 +447,7 @@ void Ovl21RunSecondGroupVoiceMessage(void) {
         status = SpuGetKeyStatus(gOvl21SceneVoiceMasks[*(s16 *)(p + 0x986)]);
         if (status == 0 || *(s16 *)(p + 0x988) >= 0x96) {
             Ovl21SetRecordGroupState(1, 0);
-            SetVal8005E2BC(1);
+            SetTextInputEnabled(1);
             SetMessagePortraitEnabled(1);
             *(s16 *)(p + 0x988) = -1;
             return;
@@ -468,7 +464,7 @@ void Ovl21RunSecondGroupVoiceMessage(void) {
     r = (u8 *)gOvl21SceneControl;
     if (*(s16 *)(r + 0x988) == 0) {
         CloseMessageWindow();
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, gOvl21SecondGroupMessages[*(s16 *)(r + 0x642)]);
         *(s16 *)(r + 0x988) = 1;
@@ -483,7 +479,7 @@ void Ovl21ShowPromptMessage(void) {
     Ovl21ResetSceneState();
     Ovl21DrawSceneSprites();
     CloseMessageWindow();
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     SetMessagePortraitEnabled(0);
     RequestMessageWindow(4, 0x1A);
     base = (u8 *)gOvl21SceneControl;
@@ -523,7 +519,6 @@ void Ovl21ChooseRecordTargets(void);
 void Ovl21UpdateRecordActions(void);
 void Ovl21SpawnRecordProjectiles(void);
 void Ovl21ConsumeNearbyRecordSlots(void);
-void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 void Ovl21StepRecordProjectiles(void);
 
 void Ovl21UpdateSceneInteraction(void) {
@@ -615,7 +610,7 @@ void Ovl21UpdateSceneInteraction(void) {
     if (((Ovl21C0448View *)gOvl21SceneControl)->unk988 != 0) {
         if (*(void **)((u8 *)gOvl21SceneControl + 0xC) != NULL) {
             text = gActiveRenderContext->field_D8;
-            func_8001AC10((u32 *)(text + 0xC), text + 8, (s32)((Ovl21C0448View *)gOvl21SceneControl)->unkC);
+            DrawMenuPanelWithText((u32 *)(text + 0xC), text + 8, (s32)((Ovl21C0448View *)gOvl21SceneControl)->unkC);
         }
         (((Ovl21C0448View *)gOvl21SceneControl)->unk988)++;
         if (((Ovl21C0448View *)gOvl21SceneControl)->unk988 >= 90) {
@@ -655,7 +650,7 @@ void Ovl21WaitVoiceCooldown(void) {
     (*(s16 *)(base + 0x988))++;
     if (SpuGetKeyStatus(gOvl21SceneVoiceMasks[*(s16 *)(base + 0x986)]) == 0 ||
         *(s16 *)(base + 0x988) >= 150) {
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, 0x1D);
     }
@@ -684,7 +679,7 @@ void Ovl21SelectTargetGroup(void) {
         if (slot == 0) {
             next = 0xA;
         }
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, gOvl21ResultMessages[((Ovl21SelectorView *)gOvl21SceneControl)->selectors[slot]]);
     }
@@ -719,7 +714,7 @@ void Ovl21WaitFirstGroupVoice(void) {
         status = SpuGetKeyStatus(gOvl21SceneVoiceMasks[*(s16 *)(p + 0x986)]);
         if (status == 0 || *(s16 *)(p + 0x988) >= 0x96) {
             Ovl21SetRecordGroupState(0, 0);
-            SetVal8005E2BC(1);
+            SetTextInputEnabled(1);
             SetMessagePortraitEnabled(1);
             *(s16 *)(p + 0x988) = -1;
         }
@@ -757,7 +752,7 @@ void Ovl21WaitSecondGroupVoice(void) {
         status = SpuGetKeyStatus(gOvl21SceneVoiceMasks[*(s16 *)(p + 0x986)]);
         if (status == 0 || *(s16 *)(p + 0x988) >= 0x96) {
             Ovl21SetRecordGroupState(1, 0);
-            SetVal8005E2BC(1);
+            SetTextInputEnabled(1);
             SetMessagePortraitEnabled(1);
             *(s16 *)(p + 0x988) = -1;
         }

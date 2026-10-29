@@ -18,10 +18,9 @@
 #include "psyq/libgte.h"
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_selection_value.h"
-
-void func_80019E14(s32 arg0, s16 arg1, s16 arg2);
-void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 void Ovl11DrawSelectionListPanel(s32 *record, s16 x, s16 y) {
     s32 Ovl11HasRowTypeTwo(u8 *categories) {
@@ -70,15 +69,15 @@ void Ovl11DrawSelectionListPanel(s32 *record, s16 x, s16 y) {
     do {
         if (*rowText != 0) {
             if (rowIndex == (*(s16 *) ((u8 *) record + 0x5C))) {
-                func_80019E14(orderingTable, (s16) (x + 4), (s16) (y + (s16) ((drawnRows * 0xE) + 4)));
+                DrawChoiceCursor(orderingTable, (s16) (x + 4), (s16) (y + (s16) ((drawnRows * 0xE) + 4)));
             }
-            func_80017B3C(orderingTable, *rowText, (s16) (x + 0xC), (s32) (s16) (y + (s16) ((drawnRows * 0xE) + 4)));
+            DrawTextLine(orderingTable, *rowText, (s16) (x + 0xC), (s32) (s16) (y + (s16) ((drawnRows * 0xE) + 4)));
             numberText = &gOvl11TextFormatScratch;
             rowType = *(u8 *) ((u8 *) rowTypes + 0);
             if (rowType == 0) {
-                Ovl11CopyPrimaryValueLabel(func_8001A970(Ovl11GetItemPrice(*(u16 *) ((u8 *) rowValues + 0)), &gOvl11TextFormatScratch, numberWidth));
+                Ovl11CopyPrimaryValueLabel(WriteDecimalText(Ovl11GetItemPrice(*(u16 *) ((u8 *) rowValues + 0)), &gOvl11TextFormatScratch, numberWidth));
             } else if (rowType == 2) {
-                Ovl11CopySecondaryValueLabel(func_8001A970(Ovl11LookupItemSelectionValue(*(u16 *) ((u8 *) rowValues + 0)), &gOvl11TextFormatScratch, numberWidth));
+                Ovl11CopySecondaryValueLabel(WriteDecimalText(Ovl11LookupItemSelectionValue(*(u16 *) ((u8 *) rowValues + 0)), &gOvl11TextFormatScratch, numberWidth));
             } else {
                 if (rowType == 3) {
                     fillCount = numberWidth + 1;
@@ -96,7 +95,7 @@ void Ovl11DrawSelectionListPanel(s32 *record, s16 x, s16 y) {
             }
             if (numberText != NULL) {
                 /* This column is absolute, not relative to panel origin x. */
-                func_80017B3C(orderingTable, (s32) numberText, numberX, (s32) (s16) (y + (s16) ((drawnRows * 0xE) + 4)));
+                DrawTextLine(orderingTable, (s32) numberText, numberX, (s32) (s16) (y + (s16) ((drawnRows * 0xE) + 4)));
             }
             drawnRows++;
         }

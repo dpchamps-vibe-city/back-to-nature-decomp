@@ -22,16 +22,8 @@
 #include "ovl11_menu_exit_flags.h"
 #include "ovl11_calendar_hooks.h"
 #include "ui_sprites.h"
-
-/* Engine text/sprite services; their original pointer-as-word ABI is kept. */
-u32 func_80017A64(void);
-void func_80017A48(u32 style);
-void func_80017A38(s16 x, s16 y);
-void SetVal8005E2BC(s32 value);
-s16 *func_8001A970(s32 value, s16 *text, s32 digits);
-void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
-u16 *func_8001AA7C(s32 value, u16 *text);
-u16 *func_8001AAB8(s32 weekday, u16 *text);
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 /* Module-local interfaces retain external linkage: co-location alone does
  * not establish that the original functions were static. */
@@ -83,10 +75,10 @@ void Ovl11UpdateCalendarPanel(void) {
                 Ovl11PostMenuExitFlags();
             }
         } else {
-            previousStyle = func_80017A64();
-            func_80017A48(3);
+            previousStyle = GetTextPalette();
+            SetTextPalette(3);
             Ovl11DrawAndProcessCalendarPanel();
-            func_80017A48(previousStyle);
+            SetTextPalette(previousStyle);
         }
     }
 }
@@ -109,7 +101,7 @@ void Ovl11DrawAndProcessCalendarPanel(void) {
         Ovl11DrawAndMoveCalendarCursor();
         if (gOvl11CalendarMessageState == 0xFF) {
             SetMessagePortraitEnabled(0);
-            SetVal8005E2BC(0);
+            SetTextInputEnabled(0);
             RequestMessageWindow(3, 0x3B4);
         } else {
             drawContext = gActiveRenderContext->field_D8;
@@ -209,7 +201,7 @@ void Ovl11DrawCalendarPanelDate(Ovl11CalendarPanelDate *date) {
     drawContext = gActiveRenderContext->field_D8;
     textOt = drawContext + 0x60;
     markerOt = drawContext + 0x54;
-    func_80017A38(1, 2);
+    SetTextSpacing(1, 2);
     currentContext = gActiveRenderContext->field_D8;
     Ovl11DrawCalendarWeekdayHeadings((u32 *)(currentContext + 0x64), currentContext + 0x60);
     Ovl11DrawCalendarHeading(textOt, date->year, date->season);
@@ -217,7 +209,7 @@ void Ovl11DrawCalendarPanelDate(Ovl11CalendarPanelDate *date) {
     Ovl11DrawCalendarCurrentDayMarker(markerOt, (s16)date->day, firstWeekday);
     Ovl11DrawCalendarEventMarkers(markerOt, date->season, firstWeekday);
     Ovl11DrawCalendarSavedDateMarker(markerOt, date->year, date->season, firstWeekday);
-    func_80017A38(0, 0);
+    SetTextSpacing(0, 0);
 }
 
 void Ovl11DrawCalendarEventMarkers(s32 ot, s16 season, s16 firstWeekday) {
@@ -317,9 +309,9 @@ void Ovl11DrawCalendarHeading(s32 ot, s16 year, s16 season) {
     s16 selectedSeason;
 
     selectedSeason = season;
-    *(u16 *)func_8001A970(year + 1, &gOvl11CalendarNumberText, 2) = 0xFFFF;
-    func_80017B3C(ot, (s32)&gOvl11CalendarNumberText, 0x1F, 0x34);
-    func_80017B3C(ot, (s32)((void *)((u8 *)&D_80051B9A + *gTextBankOffsets)), 0x39, 0x34);
+    *(u16 *)WriteDecimalText(year + 1, &gOvl11CalendarNumberText, 2) = 0xFFFF;
+    DrawTextLine(ot, (s32)&gOvl11CalendarNumberText, 0x1F, 0x34);
+    DrawTextLine(ot, (s32)((void *)((u8 *)&D_80051B9A + *gTextBankOffsets)), 0x39, 0x34);
     if (selectedSeason >= 0) {
         boundedSeason = (selectedSeason < 4) ? selectedSeason : 3;
     } else {
@@ -327,8 +319,8 @@ void Ovl11DrawCalendarHeading(s32 ot, s16 year, s16 season) {
     }
     selectedSeason = boundedSeason;
     DrawUiSprite2BFrame(ot, 0x8E, 0x34, selectedSeason);
-    *func_8001AA7C((s32)selectedSeason, (u16 *)&gOvl11CalendarNumberText) = 0xFFFF;
-    func_80017B3C(ot, (s32)&gOvl11CalendarNumberText, 0x9E, 0x34);
+    *WriteSeasonNameText((s32)selectedSeason, (u16 *)&gOvl11CalendarNumberText) = 0xFFFF;
+    DrawTextLine(ot, (s32)&gOvl11CalendarNumberText, 0x9E, 0x34);
 }
 
 void Ovl11DrawCalendarDayNumbers(s32 ot, s16 firstWeekday) {
@@ -350,9 +342,9 @@ void Ovl11DrawCalendarDayNumber(s32 ot, s16 day, s16 firstWeekday, s16 colorClas
     u32 previousStyle;
     u32 style;
 
-    *((u16 *)func_8001A970(day + 1, &gOvl11CalendarNumberText, 2)) = 0xFFFF;
+    *((u16 *)WriteDecimalText(day + 1, &gOvl11CalendarNumberText, 2)) = 0xFFFF;
     Ovl11GetCalendarCellPosition(day, firstWeekday, &x, &y);
-    previousStyle = func_80017A64();
+    previousStyle = GetTextPalette();
     style = 5;
     if (colorClass != 1) {
         style = previousStyle;
@@ -360,9 +352,9 @@ void Ovl11DrawCalendarDayNumber(s32 ot, s16 day, s16 firstWeekday, s16 colorClas
             style = 4;
         }
     }
-    func_80017A48(style);
-    func_80017B3C(ot, (s32)&gOvl11CalendarNumberText, (s32)x, (s32)y);
-    func_80017A48(previousStyle);
+    SetTextPalette(style);
+    DrawTextLine(ot, (s32)&gOvl11CalendarNumberText, (s32)x, (s32)y);
+    SetTextPalette(previousStyle);
 }
 
 /* Seven columns 41 pixels apart, rows 14 pixels apart, origin (30,80). */
@@ -379,10 +371,10 @@ void Ovl11DrawCalendarWeekdayHeadings(u32 *panelOt, s32 textOt) {
 
     DrawMenuPanel(panelOt, 1, 0x10, 0x30, 0x11F, 0x74);
     weekday = 0;
-    previousStyle = func_80017A64();
+    previousStyle = GetTextPalette();
     x = 0x16;
     do {
-        *func_8001AAB8(weekday, (u16 *)&gOvl11CalendarNumberText) = 0xFFFF;
+        *WriteWeekdayNameText(weekday, (u16 *)&gOvl11CalendarNumberText) = 0xFFFF;
         if (weekday != 0) {
             style = 5;
             if (weekday < 6) {
@@ -392,9 +384,9 @@ void Ovl11DrawCalendarWeekdayHeadings(u32 *panelOt, s32 textOt) {
             style = 4;
         }
         weekday += 1;
-        func_80017A48(style);
-        func_80017B3C(textOt, (s32)&gOvl11CalendarNumberText, x, 0x42);
+        SetTextPalette(style);
+        DrawTextLine(textOt, (s32)&gOvl11CalendarNumberText, x, 0x42);
         x += 0x29;
     } while (weekday < 7);
-    func_80017A48(previousStyle);
+    SetTextPalette(previousStyle);
 }

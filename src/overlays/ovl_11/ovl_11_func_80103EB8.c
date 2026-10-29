@@ -3,10 +3,9 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
-
-void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
-void func_8001ABF0(u16 *dst, u16 *src);
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 void ovl_11_func_80103EB8(void) {
     s32 temp_s3;
@@ -15,8 +14,8 @@ void ovl_11_func_80103EB8(void) {
     temp_s3 = gActiveRenderContext->field_D8;
     temp_s3_2 = temp_s3 + 0x58;
     DrawMenuPanel((u32 *)(temp_s3 + 0x5C), 0, 0xE3, 0x10, 0x47, 0x1E);
-    func_80017B3C(temp_s3_2, (s32)((u8 *)D_800517C6 + gTextBankOffsets[1]), 0xE5, 0x12);
-    func_8001ABF0(func_8001A970(D_8012CF20, D_8012CF30, 7),
+    DrawTextLine(temp_s3_2, (s32)((u8 *)D_800517C6 + gTextBankOffsets[1]), 0xE5, 0x12);
+    CopyTextString(WriteDecimalText(D_8012CF20, D_8012CF30, 7),
                   (u16 *)((u8 *)D_800517C6 + 0x42 + gTextBankOffsets[1]));
-    func_80017B3C(temp_s3_2, (s32)D_8012CF30, 0xE5, 0x20);
+    DrawTextLine(temp_s3_2, (s32)D_8012CF30, 0xE5, 0x20);
 }

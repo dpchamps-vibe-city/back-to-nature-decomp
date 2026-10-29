@@ -967,10 +967,10 @@ typedef struct Ovl25ObjectRecord {
     /* 0x48 */ SpriteSourceData record1;
 } Ovl25ObjectRecord;
 
-/* ovl_25_func_800B9758 reads only the signed state selector at +2. */
+/* Ovl25CanUpdateRecordChoice reads only the signed state selector at +2. */
 typedef struct {
     char pad_0[2];
-    s16 unk2;
+    s16 state;
 } Ovl25StateSelectorView;
 
 /* Polygon-list query consumed by func_8001EAE4. */
@@ -1620,8 +1620,8 @@ typedef struct {
 /* ovl_17's 90-entry region at D_800BD848 +0x2D8 and the
  * following +0x5A8 cursor, shared by the initializer and append routine. */
 typedef struct {
-    s32 word;
-    s16 field;
+    s32 positionQ12;
+    s16 y;
     s16 pad;
 } Ovl17QueueEntry;
 
@@ -1862,11 +1862,12 @@ typedef struct {
     /* 0x4E */ char pad_4E[0x108 - 0x4E];
 } UnkStruct800C0448;
 
-/* 800BA698 reads unsigned coordinates at +0/+4; 800B9CA4 passes record +0x1A. */
+/* 800BA698 reads unsigned X/Z at +0/+4; 800B990C/9CA4 pass record +0x1A.
+ * Differences and the SquareRoot0 result are narrowed to signed halfwords. */
 typedef struct {
-    u16 unk0;
+    u16 x;
     u16 pad_02;
-    u16 unk4;
+    u16 z;
 } Ovl21DistanceOrigin;
 
 /* 800B9F3C forms signed 16-bit displacements from the positions at +0x1A/+0x1E. */
@@ -1970,20 +1971,6 @@ typedef struct {
     /* 0x988 */ s16 unk988;
 } Ovl21C0448View;
 
-/* ovl_11_func_801097F4 argument record, passed by value: the first 16 bytes
- * ride in $a0-$a3 and are homed to 0x0($sp) on entry; the witnessed tail
- * fields sit at 0x10 (s16 selector), 0x14 (s32 radius) and 0x18 (out
- * pointer). Only the fields the function reads are named. */
-typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ char pad_04[4];
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ char pad_0C[4];
-    /* 0x10 */ s16 unk10;
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ UnkStruct80075BC4 **unk18;
-} Ovl11Func801097F4Arg;
-
 /* CF95C takes this 16-byte position by value in $a0-$a3. Keep the
  * fourth word in the ABI even though the spawn attempt reads only X/Y/Z. */
 typedef struct {
@@ -1992,23 +1979,6 @@ typedef struct {
     /* 0x08 */ s32 z;
     /* 0x0C */ s32 unusedWord;
 } Ovl11ItemSpawnPosition;
-
-/* ovl_11_func_801096FC argument record, passed by value like
- * Ovl11Func801097F4Arg: the first 16 bytes ride in $a0-$a3 and are homed to
- * 0x0($sp) on entry; the tail fields sit at 0x10 (s16 selector), 0x14 (s32
- * half-width), 0x18 (s32 flag out) and 0x1C (record out). Only the fields the
- * function reads are named. */
-typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ char pad_12[2];
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 *unk18;
-    /* 0x1C */ s32 **unk1C;
-} Ovl11Func801096FCArg;
 
 /* Records of the D_800749F4 table scanned by ovl_11_func_801096FC: twenty
  * 0xB8-byte entries sharing the Ovl11Func801097F4 record layout with an extra
@@ -2507,9 +2477,11 @@ typedef struct {
  * sequence callbacks and 80109188 also maintain +26..+2C and +34.
  * E2F58/E32E4 additionally read the leading ID. All existing field offsets,
  * halfword widths and signedness are retained across these partial views. */
-typedef struct {
+typedef struct Ovl11D04D4Obj {
     u16 unk0;
-    char pad_02[0x24 - 2];
+    char pad_02[0x16 - 2];
+    s16 unk16;                  /* 80109A70's signed threshold input */
+    char pad_18[0x24 - 0x18];
     s16 unk24;                  /* selected animation */
     s16 unk26;                  /* selected handler */
     s16 unk28;                  /* keyframe cursor / handler sub-state */

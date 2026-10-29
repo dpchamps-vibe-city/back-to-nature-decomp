@@ -29,6 +29,8 @@
 #include "psyq/libgpu.h"
 #include "sprite_render.h"
 #include "ui_sprites.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 void Ovl15PlaceRowXSlot(RowXPlacement *output, s16 slot) {
     s16 row = slot / 5;
@@ -227,7 +229,6 @@ s16 Ovl15CountOccupiedPoolUnits(u8 *poolBase, s16 kind) {
 
 /* Selection and preview of the same mark banks consumed by transfer above. */
 
-void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void Ovl15DrawSlotRecordRow(s16 id, s16 variant, s32 text,
                           s16 meter, s16 x, s16 y);
 
@@ -255,9 +256,9 @@ void Ovl15DrawSlotBanks(void) {
     x = 0x28;
     y = 0x22;
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0x24, 0x10, 0x70, 0x8D);
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051CAE + *gTextBankOffsets)), 0x3C, 0x14);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051CAE + *gTextBankOffsets)), 0x3C, 0x14);
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0xAC, 0x10, 0x70, 0x8D);
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051CAE + 0xE)) + *gTextBankOffsets)), 0xC4, 0x14);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051CAE + 0xE)) + *gTextBankOffsets)), 0xC4, 0x14);
     slotTable = &Ovl15Slots[0][0];
     bank = 0;
     do {
@@ -303,9 +304,7 @@ void Ovl15DrawSlotBanks(void) {
 
 s32 Ovl15StepSlotSelectionInput (s16 arg0);
 void Ovl15ResetSlotSelection (void);
-void func_8001AC10 (u32 *arg0, s32 arg1, s32 arg2);
 s16 Ovl15FindSlotRecordIndexOrCount (u8 *arg0, s16 arg1);
-void func_8001AAF4 (s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
 void Ovl15DrawSlotRecordDetails (u8 *arg0, s16 arg1, s16 arg2);
 s32 Ovl15IsSlotRecordMarked (s32 arg0, s16 arg1);
 void Ovl15UnmarkSlotRecord (s32 arg0, s16 arg1);
@@ -331,7 +330,7 @@ s32 Ovl15UpdateSlotSelectionMenu(s16 arg0) {
     temp_s4 = temp_t0 + 0x14;
     DrawMenuPanel((u32 *) (temp_t0 + 0x28), 1, 0x18, 0x20, 0x110, 0x74);
     DrawMenuPanel((u32 *) (gActiveRenderContext->field_D8 + 0x24), 1, 0x50, 0x10, 0xA0, 0x20);
-    func_80017B3C(temp_s4, (s32) ((void *) ((u8 *) &D_80053604 + *gTextBankOffsets)), 0xD0, 0x1A);
+    DrawTextLine(temp_s4, (s32) ((void *) ((u8 *) &D_80053604 + *gTextBankOffsets)), 0xD0, 0x1A);
     DrawSpriteFrameRects(temp_s2, (s32)&gOvl15MenuSpriteSources[1], D_80137658[gOvl15SlotCategory], 0, 0xB8, 0x12);
     StepUiSpriteFourFramePhase(0);
     DrawAnimatedUiSprite0D(temp_s2, 0x20, 0x18);
@@ -376,13 +375,11 @@ s32 Ovl15UpdateSlotSelectionMenu(s16 arg0) {
         }
         gOvl15MenuTextScratch[var_a2] = temp_v0;
     }
-    func_80017B3C(temp_s4, (s32) gOvl15MenuTextScratch, 0x52, 0x1A);
+    DrawTextLine(temp_s4, (s32) gOvl15MenuTextScratch, 0x52, 0x1A);
     return Ovl15StepSlotSelectionInput(arg0);
 }
-void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 /* Both return paths in 801344E8 produce sign-extended halfwords. */
 s16 Ovl15FindSlotRecordIndexOrCount(u8 *arg0, s16 arg1);
-void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
 void Ovl15DrawSlotRecordDetails(u8 *arg0, s16 arg1, s16 arg2);
 s32 Ovl15IsSlotRecordMarked(s32 arg0, s16 arg1);
 void Ovl15UnmarkSlotRecord(s32 arg0, s16 arg1);
@@ -411,7 +408,7 @@ s32 Ovl15StepSlotSelectionInput(s16 arg0) {
     }
     temp_a1 = gActiveRenderContext->field_D8;
     temp_s7 = temp_a1 + 0x14;
-    func_8001AC10((u32 *) (temp_a1 + 0x18), temp_s7, (s32) &D_800520A0[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_s7, (s32) &D_800520A0[*gTextBankOffsets]);
     temp_s4 = Ovl15FindSlotRecordIndexOrCount(var_s3, -1);
     temp_v1 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v1 & 0x1000) {
@@ -451,7 +448,7 @@ s32 Ovl15StepSlotSelectionInput(s16 arg0) {
         temp_s1 = var_a2 + 1;
         temp_s0 = var_a2 * 0x18;
         temp_v0 = temp_s0 + 0x36;
-        func_8001AAF4((s16) ((u16) gOvl15SlotFirstVisible + temp_s1), 2, gActiveRenderContext->field_D8 + 0x14, 0x20, (s16) (s32) temp_v0);
+        DrawNumberText((s16) ((u16) gOvl15SlotFirstVisible + temp_s1), 2, gActiveRenderContext->field_D8 + 0x14, 0x20, (s16) (s32) temp_v0);
         Ovl15DrawSlotRecordDetails(var_s3, Ovl15FindSlotRecordIndexOrCount(var_s3, (s16) ((u16) gOvl15SlotFirstVisible + temp_s1)), (s16) (temp_s0 + 0x30));
         if (Ovl15IsSlotRecordMarked((s32) var_s3, Ovl15FindSlotRecordIndexOrCount(var_s3, (s16) ((u16) gOvl15SlotFirstVisible + temp_s1))) == 1) {
             DrawUiSprite1E(temp_s7, 0x20, temp_v0);
@@ -578,7 +575,7 @@ void Ovl15DrawSlotRecordRow(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s1
         var_v1 = 0xD;
     }
     DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 4, (s32)&gOvl15MenuSpriteSources[1], var_v1, arg1 & 0xFF, (s16) (s32) arg4, (s16) (s32) arg5);
-    func_80017B3C(gActiveRenderContext->field_D8 + 0x14, arg2, (s32) (s16) (arg4 + 0x18), (s32) arg5);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, arg2, (s32) (s16) (arg4 + 0x18), (s32) arg5);
     Ovl15DrawSlotMeterIcons((s16) (arg3 / 25), (s16) (arg4 + 0x5A), (s16) (arg5 + 0xC));
 }
 
@@ -596,7 +593,6 @@ typedef struct {
     /* 0xAE */ s16 unkAE;
 } Ovl15Rec;
 
-s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 s32 Ovl15ReadSignedSlotValue(Ovl15Func80134444Arg *arg0);
 
 void Ovl15DrawSlotRecordDetails(u8 *arg0, s16 arg1, s16 arg2) {
@@ -631,13 +627,13 @@ void Ovl15DrawSlotRecordDetails(u8 *arg0, s16 arg1, s16 arg2) {
         gOvl15SlotDetailText[0] = 0x90;
     }
     gOvl15SlotDetailText[4] = 0x71;
-    func_8001A970(var_s2->unk1E + 1, &gOvl15SlotDetailText[5], 2);
+    WriteDecimalText(var_s2->unk1E + 1, &gOvl15SlotDetailText[5], 2);
     gOvl15SlotDetailText[8] = 0;
     gOvl15SlotDetailText[9] = 0x26;
     gOvl15SlotDetailText[10] = 0x24;
-    *((u16 *) func_8001A970(Ovl15ReadSignedSlotValue((Ovl15Func80134444Arg *) ((u8 *) var_s2 + 0x1A)), &gOvl15SlotDetailText[11], 2)) = 0xFFFF;
+    *((u16 *) WriteDecimalText(Ovl15ReadSignedSlotValue((Ovl15Func80134444Arg *) ((u8 *) var_s2 + 0x1A)), &gOvl15SlotDetailText[11], 2)) = 0xFFFF;
     var_a0 = var_s4 + 0x58;
-    func_80017B3C(temp_s5, (s32) gOvl15SlotDetailText, (s32) var_a0, (s32) arg2);
+    DrawTextLine(temp_s5, (s32) gOvl15SlotDetailText, (s32) var_a0, (s32) arg2);
     DrawUiSprite2BFrame(temp_s5, (s16) (var_a0 + 0x10), arg2, var_s2->unk1C);
 }
 

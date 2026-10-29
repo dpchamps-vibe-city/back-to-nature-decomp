@@ -32,21 +32,20 @@
 #include "random.h"
 #include "sprite_upload.h"
 #include "sprite_render.h"
-
-void func_80017A48(u32 arg0);
-u32 func_80017A64(void);
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 void Ovl28UpdateSpriteSequenceScene(void) {
     s32 *handlers;
     u32 savedDrawMode;
 
-    savedDrawMode = func_80017A64();
-    func_80017A48(3U);
+    savedDrawMode = GetTextPalette();
+    SetTextPalette(3U);
     handlers = &gOvl28SpriteSceneHandlers;
     /* The table-as-argument dispatch ABI is shared with the other scenes;
      * these handlers do not read the argument. No phase bounds check. */
     ((void (*)(s32 *))handlers[gScenePhase])(handlers);
-    func_80017A48(savedDrawMode);
+    SetTextPalette(savedDrawMode);
 }
 
 s32 Ovl28InitScrollingSpriteSequence(void);
@@ -331,8 +330,6 @@ void Ovl28InitSpritePresentation(void) {
     }
 }
 
-s32 func_8001AD6C(s32 arg0);
-void func_8001ADD8(u32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void Ovl28DrawSequenceGradientRect(u_long *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s16 arg9, u8 arg10);
 /* The color-ramp updater uses only private state; it takes no rectangle argument. */
 void Ovl28UpdateSpriteColorRamp(void);
@@ -361,27 +358,27 @@ void Ovl28UpdateSpritePresentation(void) {
             }
             break;
         case -2:
-            if (func_8001AD6C((u16)gOvl28PresentationId) == 1) {
+            if (EnsureTextSlotLoaded((u16)gOvl28PresentationId) == 1) {
                 Ovl28BeginSpriteColorRampDown(gOvl28PresentationX, gOvl28PresentationY);
                 gOvl28PresentationPhase = -3;
             }
             break;
         case -3:
             Ovl28UpdateSpriteColorRamp();
-            func_8001ADD8(ot, (u16)gOvl28PresentationId, gOvl28PresentationX, gOvl28PresentationY);
+            DrawTextSlotImageForToken(ot, (u16)gOvl28PresentationId, gOvl28PresentationX, gOvl28PresentationY);
             if (Ovl28IsSpriteColorRampComplete() != 0) {
                 gOvl28PresentationPhase = 60;
             }
             break;
         case 0:
             Ovl28UpdateSpriteColorRamp();
-            func_8001ADD8(ot, (u16)gOvl28PresentationId, gOvl28PresentationX, gOvl28PresentationY);
+            DrawTextSlotImageForToken(ot, (u16)gOvl28PresentationId, gOvl28PresentationX, gOvl28PresentationY);
             if (Ovl28IsSpriteColorRampComplete() != 0) {
                 gOvl28PresentationPhase = -1;
             }
             break;
         default:
-            func_8001ADD8(ot, (u16)gOvl28PresentationId, gOvl28PresentationX, gOvl28PresentationY);
+            DrawTextSlotImageForToken(ot, (u16)gOvl28PresentationId, gOvl28PresentationX, gOvl28PresentationY);
             Ovl28DrawSequenceGradientRect((u_long *)gActiveRenderContext->field_D8 + 3,
                 gOvl28PresentationX, gOvl28PresentationY, 80, 80,
                 0x4B6496, 0x4B6496, 0x4B6496, 0x4B6496, 1, 2);

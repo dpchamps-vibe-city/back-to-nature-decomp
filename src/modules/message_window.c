@@ -25,6 +25,8 @@
 #include "game_flags.h"
 #include "message_buffer_access.h"
 #include "beveled_panel.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 /* Tentative definitions retain the original $gp ownership. The saved flag-3
  * word is stored whole but only its low halfword is restored. The archive
@@ -48,15 +50,6 @@ void DrawMessagePortrait(void);
 s32 GetMessagePortraitValueBucket(s32 selector);
 s32 AnimateMessageWindowRect(s32 packet, s32 unused, s16 x, s16 y,
     s16 width, s16 height, s32 *step, s32 heightSteps, s32 opening);
-
-void SetVal8005E2BC(s32 value);
-void func_800179E8(void);
-void func_80017A38(s16 x, s16 y);
-u32 func_80017A64(void);
-void func_80017A48(u32 mode);
-s32 func_80017BC8(s32 *packet, u16 *text, s16 x, s16 y, s16 width, s16 height);
-s16 func_80017B30(void);
-void func_80017C3C(s32 slot);
 
 s32 GetMessageWindowChoice(void) {
     return gMessageWindowChoice;
@@ -129,7 +122,7 @@ void ResetMessageWindow(void) {
     gMessageWindowSavedWorkFlags = 0;
     FinishMessageWindow();
     gMessageWindowPhase = 0;
-    SetVal8005E2BC(1);
+    SetTextInputEnabled(1);
     SetMessagePortraitEnabled(1);
     gMessageWindowStatus = 2;
     gMessageWindowQueuedArchive = -1;
@@ -138,7 +131,7 @@ void ResetMessageWindow(void) {
 void CloseMessageWindow(void) {
     char *work;
 
-    SetVal8005E2BC(1);
+    SetTextInputEnabled(1);
     SetMessagePortraitEnabled(1);
     work = (char *)&D_8006C838;
     if (*(u8 *)(work + 0xCC) == 4) {
@@ -261,7 +254,7 @@ s32 PollMessageWindowRead(void) {
     if (loadedRecord != 0) {
         LoadMessageWindowSprite((s32 *)loadedRecord);
         gMessageWindowText = (s32 *)((u8 *)&gMessageWindowReadBuffer + 0x1800);
-        func_800179E8();
+        InvalidateTextScript();
         nextPhase = 3;
         if (opened == 1) {
             nextPhase = 4;
@@ -296,14 +289,14 @@ s32 ProcessMessageWindowText(void) {
     s32 drawPortrait;
     u32 savedTextMode;
 
-    func_80017A38(0, 2);
+    SetTextSpacing(0, 2);
     drawPortrait = 0;
-    savedTextMode = func_80017A64();
-    func_80017A48(3);
-    gMessageWindowStatus = func_80017BC8((s32 *)(gActiveRenderContext->field_D8 + 8),
+    savedTextMode = GetTextPalette();
+    SetTextPalette(3);
+    gMessageWindowStatus = DrawTextWindow((s32 *)(gActiveRenderContext->field_D8 + 8),
         (u16 *)gMessageWindowText, 0x1E, 0xA8, 0x107, 0x3A);
-    func_80017A48(savedTextMode);
-    func_80017A38(0, 0);
+    SetTextPalette(savedTextMode);
+    SetTextSpacing(0, 0);
     gMessageWindowChoice = 0;
     switch (gMessageWindowStatus) {
     case 0:
@@ -390,7 +383,7 @@ void DrawMessagePortrait(void) {
     s32 selector;
     s32 bucket;
 
-    selector = func_80017B30();
+    selector = GetTextPortraitSelector();
     bucket = 7;
     if (selector != 0) {
         bucket = GetMessagePortraitValueBucket(selector);
@@ -443,6 +436,6 @@ void LoadMessageWindowSprite(s32 *record) {
     textSlot = *record;
     if (textSlot != -1) {
         UploadSpriteImages((u8 *)record + 4);
-        func_80017C3C(textSlot);
+        SetTextSlot(textSlot);
     }
 }

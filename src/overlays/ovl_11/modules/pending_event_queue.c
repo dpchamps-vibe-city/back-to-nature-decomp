@@ -16,6 +16,7 @@
 #include "ovl11_status_pages.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_progress_gate.h"
+#include "ovl11_item_value_counters.h"
 
 s32 Ovl11PopEventMessageEntry(void);
 void Ovl11CompleteLatchedEventMessage(void);
@@ -229,7 +230,6 @@ void Ovl11RemoveQueuedEvent(s16 entryIndex, s32 immediateQueue) {
 }
 
 s32 Ovl11GetEventEligibilityFlag(void);
-s32 ovl_11_func_800F3C9C(u16);
 void Ovl11QueueDatedEvent(s16, s16, s16);
 
 void Ovl11EvaluateEventRequests(void) {
@@ -428,21 +428,21 @@ void Ovl11EvaluateEventRequests(void) {
     }
     if (!(events->flags & 1) && ((temp_s3 == 0) || ((((Ovl11EventStateView *)D_8006C838)->field_44D4) == 1))) {
         temp_s0 = (void *)D_8006C838;
-        if ((((Ovl11EventStateView *)temp_s0)->field_498C[ovl_11_func_800F3C9C(0x41U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0)->field_498C[ovl_11_func_800F3C9C(0x42U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0)->field_498C[ovl_11_func_800F3C9C(0x43U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0)->field_498C[ovl_11_func_800F3C9C(0x45U)] >= 0x64U)) {
+        if ((((Ovl11EventStateView *)temp_s0)->field_498C[Ovl11ItemCounterIndex(0x41U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0)->field_498C[Ovl11ItemCounterIndex(0x42U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0)->field_498C[Ovl11ItemCounterIndex(0x43U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0)->field_498C[Ovl11ItemCounterIndex(0x45U)] >= 0x64U)) {
             Ovl11QueueDatedEvent(2, 0x38, 0);
             events->flags = (s32) (events->flags | 1);
         }
     }
     if (!(events->flags & 2) && ((temp_s3 == 1) || ((((Ovl11EventStateView *)D_8006C838)->field_44D4) == 1))) {
         temp_s0_2 = (void *)D_8006C838;
-        if ((((Ovl11EventStateView *)temp_s0_2)->field_498C[ovl_11_func_800F3C9C(0x46U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_2)->field_498C[ovl_11_func_800F3C9C(0x47U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_2)->field_498C[ovl_11_func_800F3C9C(0x48U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_2)->field_498C[ovl_11_func_800F3C9C(0x4AU)] >= 0x64U)) {
+        if ((((Ovl11EventStateView *)temp_s0_2)->field_498C[Ovl11ItemCounterIndex(0x46U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_2)->field_498C[Ovl11ItemCounterIndex(0x47U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_2)->field_498C[Ovl11ItemCounterIndex(0x48U)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_2)->field_498C[Ovl11ItemCounterIndex(0x4AU)] >= 0x64U)) {
             Ovl11QueueDatedEvent(2, 0x39, 0);
             events->flags = (s32) (events->flags | 2);
         }
     }
     if (!(events->flags & 4) && ((temp_s3 == 2) || ((((Ovl11EventStateView *)D_8006C838)->field_44D4) == 1))) {
         temp_s0_3 = (void *)D_8006C838;
-        if ((((Ovl11EventStateView *)temp_s0_3)->field_498C[ovl_11_func_800F3C9C(0x4BU)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_3)->field_498C[ovl_11_func_800F3C9C(0x4CU)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_3)->field_498C[ovl_11_func_800F3C9C(0x4DU)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_3)->field_498C[ovl_11_func_800F3C9C(0x4FU)] >= 0x64U)) {
+        if ((((Ovl11EventStateView *)temp_s0_3)->field_498C[Ovl11ItemCounterIndex(0x4BU)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_3)->field_498C[Ovl11ItemCounterIndex(0x4CU)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_3)->field_498C[Ovl11ItemCounterIndex(0x4DU)] >= 0x64U) && (((Ovl11EventStateView *)temp_s0_3)->field_498C[Ovl11ItemCounterIndex(0x4FU)] >= 0x64U)) {
             Ovl11QueueDatedEvent(2, 0x3A, 0);
             events->flags = (s32) (events->flags | 4);
         }

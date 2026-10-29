@@ -1,5 +1,30 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Unreferenced leaves. Names describe only the shipped body, not a guessed role.
+Ovl11UnusedReturnMinusOne = 0x800BDCE0; // type:func
+Ovl11UnusedReturnZeroA = 0x800BF4AC; // type:func
+Ovl11UnusedReturnZeroB = 0x800DD36C; // type:func
+Ovl11UnusedReturnOneA = 0x800EEC14; // type:func
+Ovl11UnusedNoOpA = 0x800F1F40; // type:func
+Ovl11UnusedNoOpB = 0x800F4A50; // type:func
+Ovl11UnusedNoOpC = 0x800F6670; // type:func
+Ovl11UnusedReturnOneB = 0x800F6678; // type:func
+
+// Counted table cells: the percentage query and its exclusive ID predicate.
+Ovl11GetCountedTableCellPercent = 0x800F00E4; // type:func
+Ovl11IsCountedTableCellId = 0x800F021C; // type:func
+
+// Item-value counters, including the intervening unused selection-bank reset.
+Ovl11RecordItemValue = 0x800F3BCC; // type:func
+Ovl11ItemCounterIndex = 0x800F3C9C; // type:func
+Ovl11ResetSelectionFlagBanks = 0x800F3D40; // type:func
+Ovl11ApplyItemValueOnce = 0x800F3D88; // type:func
+Ovl11GetItemCounter = 0x800F3E00; // type:func
+Ovl11StageItemValue = 0x800F3E44; // type:func
+Ovl11CommitPendingItemCounts = 0x800F3EF0; // type:func
+Ovl11ClockThresholdCommand = 0x800E7660; // type:func
+Ovl11EvaluateItemConditionCode = 0x80104EC8; // type:func
+
 // Complete option-row initializer runs; raw callback tables retain addresses.
 Ovl11ResetOptionDrawMode = 0x8011A9CC; // type:func
 Ovl11InitQuantityPrompt6C = 0x8011A9DC; // type:func

@@ -37,6 +37,8 @@
 #include "ovl11_quantity_input.h"
 #include "ovl11_quantity_prompt_setup.h"
 #include "two_choice_prompt.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 s32 Ovl11InitTimeDependentCatalog(void) {
     s16 daytime;
@@ -317,7 +319,6 @@ s32 Ovl11InitResourcePurchasePanel(void) {
     return 1;
 }
 
-void SetVal8005E2BC(s32 arg0);
 s32 Ovl11UpdateResourceQuantitySelection(s32 *arg0, s32 arg1, s32 arg2, Ovl11BAFCParams arg3, Ovl11QuantityPromptView *arg8);
 
 /* Per-unit purchases cap stored units at 999. Option transactions instead
@@ -414,7 +415,7 @@ s32 Ovl11UpdateResourcePurchasePanel(void) {
     case 5:
         Ovl11UpdateCompactChoicePrompt(0, -1, 0);
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(2, 0x5F);
         gOvl11ResourcePanelState = 6;
         return 0;
@@ -526,7 +527,7 @@ s32 Ovl11UpdateResourceQuantitySelection(s32 *step, s32 baseStep, s32 drawMode,
         break;
     case 3:
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(2, 0x4D);
         Ovl11SetupQuantityPrompt(prompt, (s32)(D_80051DBE + gTextBankOffsets[1]), 1,
             (s16)Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*record)), 0);

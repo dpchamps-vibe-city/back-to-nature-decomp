@@ -86,6 +86,7 @@
 #include "ovl11_object_record_state.h"
 #include "ovl11_condition_evaluation.h"
 #include "ovl11_action_result_request.h"
+#include "ovl11_item_value_counters.h"
 
 void Ovl11ProbePrimaryObjectSurface(Ovl11C498CObject *object);
 void Ovl11RemapPrimaryDirectionButtons(void);
@@ -683,8 +684,6 @@ void Ovl11MoveToFreeDirection(Ovl11C498CObject *arg0) {
 
 void Ovl11FinalizePrimaryItemAction(Ovl11C6770Object *object);
 s32 Ovl11CommitPendingItemRecord(Ovl11C7010Object *object);
-s32 ovl_11_func_800F3E44(s16 arg0);
-s32 ovl_11_func_800F3EF0(void);
 
 /* Action scripts use six-byte {state, animation, attributes} entries.
  * 0x270F terminates the script. Preserve the shared finish/advance tails:
@@ -854,7 +853,7 @@ state_done:
             Ovl11ResetPrimaryObjectRequest();
             return 0;
         case 0x46:
-            if ((gOvl11PrimarySurfaceFlags & 0x80) && (ovl_11_func_800F3EF0() != 0)) {
+            if ((gOvl11PrimarySurfaceFlags & 0x80) && (Ovl11CommitPendingItemCounts() != 0)) {
                 PlaySoundEffect(0x13);
                 SetGameFlag(7U, 1U);
             }
@@ -897,7 +896,7 @@ state_done:
             PlaySoundEffect(9);
             ((struct Ovl11C580CState *)D_8006C838)->record->flags |= 0x100;
             gOvl11RecordSpriteYOffsetIndex = 3;
-            if (ovl_11_func_800F3E44(arg0->item) != 0) {
+            if (Ovl11StageItemValue(arg0->item) != 0) {
                 RequestMessageWindow(3, 0x383);
             }
             arg0->unk6C &= 0xE7FF3FFF;

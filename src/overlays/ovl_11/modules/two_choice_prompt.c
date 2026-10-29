@@ -5,10 +5,12 @@
 #include "two_choice_prompt.h"
 #include "beveled_panel.h"
 #include "sound_commands.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
-void func_80019E14(s32 ot, s16 x, s16 y);
-void func_80017A38(s16 x, s16 y);
-void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
 void Ovl11DrawChoicePromptVariant(s32 wide, s32 ot, s16 x, s16 y, s16 selection);
 
 void Ovl11DrawCompactChoicePrompt(s32 ot, s16 x, s16 y, s16 selection) {
@@ -32,10 +34,10 @@ void Ovl11DrawChoicePromptVariant(s32 wide, s32 ot, s16 x, s16 y, s16 selection)
         text = *D_80054BC0 + (s32) D_800517E0;
     }
     cursorYOffset = selection * 0xE + 4;
-    func_80019E14(ot, (s16) (x + 4), (s16) (y + cursorYOffset));
-    func_80017A38(0, 2);
-    func_80017B3C(ot, (s32) text, (s32) (s16) (x + 0xC), (s32) (s16) (y + 4));
-    func_80017A38(0, 0);
+    DrawChoiceCursor(ot, (s16) (x + 4), (s16) (y + cursorYOffset));
+    SetTextSpacing(0, 2);
+    DrawTextLine(ot, (s32) text, (s32) (s16) (x + 0xC), (s32) (s16) (y + 4));
+    SetTextSpacing(0, 0);
     DrawBeveledPanel((u32 *) ot, x, y, (textTiles * 8) + 8, 0x24);
 }
 

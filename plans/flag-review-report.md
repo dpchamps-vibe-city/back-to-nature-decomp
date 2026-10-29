@@ -37,6 +37,42 @@ The mechanical cleanup alone would reduce **26 override entries / 32 option
 instances to 24 entries / 28 option instances**, and 27 flag-allowlisted
 functions to 24. This review has not applied that cleanup.
 
+## Subsequent resolution: ovl_25 weighted record-choice policy
+
+The whole 26-member scene state machine at 800B7EB4–800B97E4 now folds at
+baseline. The formerly flagged 95B0 fallback initializes its selector through
+a signed 16-bit bit-field transfer before Rand. This preserves a real width
+boundary through CSE, then folds to the exact target instructions: both zero
+assignments and all 106 words remain. Ordinary scalar initialization, a
+halfword-record transfer and a partial union reset were separately measured
+and did not reproduce that result. The previous no-follow explanation was
+conditional on the scalar source, not proof that baseline could never emit it.
+
+`build/tuFlagReview/ovl_25/choice_initial_bitfield/baseline/report.json`
+records the baseline oracle and production flags; the checked whole-unit fold
+also proves every member and the linked overlay. The no-follow override and
+its flag permission are removed, not generalized to the module. Canonical
+names are Ovl25ChooseWeightedState5Timer and its three sibling decision
+helpers; their private thresholds and weights are named without changing
+storage, table-origin arithmetic or the signed -1 category.
+
+## Subsequent dialog-row renderer resolution
+
+The 80104148 renderer now matches all 147 original words at baseline,
+including its 56-byte frame. Its local signed-halfword label/column pair is
+formed in one whole-word assignment; both fields are consumed through the
+existing label-ID and X variables. CSE retains the width boundary and combine
+folds the transfer without the synthetic USE spills of partial bit-field
+stores. The readable source also remains exact under its former no-follow
+setting, so retiring the override and its permission preserves the live build.
+Evidence: `build/tuFlagReview/ovl_11/dialog_row_readable/{baseline,noFollow}`.
+
+The complete fifteen-entry dialog still awaits 3B24's accounting source.
+The revised renderer is not exact under no-skip, so the earlier 14/15 uniform
+no-skip matrix is no longer evidence about this source. No module setting or
+flag-protecting slice is added. The pending batch gate will verify the revised
+source and declaration context across linked containers.
+
 ## What was actually tested
 
 I reviewed every active entry and evidence comment in
@@ -251,6 +287,94 @@ convergence, input stability and exception non-growth. The campaign is 114
 new folds above its receipt; ten overrides remain versus its original 24.
 No module setting replaces either retired hard-case override. No commit made.
 
+## Complete baseline text-engine resolution (supersedes the controls below)
+
+The whole exe:800179E8–8001AF44 unit now folds as `modules/text_engine`:
+75 original entries, 71 compiled C functions and four existing dead stubs,
+absorbing the former string module. The checked fold pools all jump tables,
+proves every C member and the linked executable exact, and full campaign
+verification passes all eight integrity categories (2603/2625 folded,
+463/463 valid modules, 22 remaining). All thirteen overlays and associated
+data/callback/table placement remain byte-identical after the public renames
+and reconciliation of 49 caller units through `text_engine.h`.
+
+Both no-GCSE entries and their permissions are retired. A raw single-field
+halfword command record keeps 18B98's token load distinct from the multi-role
+word scratch until combine. For 183E0, an inverted halfword status and staged
+negative coordinate calculations keep the five real result/cursor computations
+branch-local until combine. Both complete-source controls show PRE **0
+substitutions / 0 insertions**, and exactly 294 / 491 words respectively.
+No new qualifiers, aliases, flag settings or source-policy exceptions were
+introduced. The full baseline check disproves the earlier source-independent
+impossibility claims; the failed controls were conditional on their promoted
+scalar/coordinate representations. Artifacts: `build/tuFlagReview/exe/
+{text_token_record,text_window_staged_bias}` and the checked fold under
+`build/foldTranslationUnit/exe/text_engine`.
+
+The historical measurements below remain useful controls, not current blockers.
+
+## Reconciled whole-text context control
+
+The six conflicting small-global views in exe:179E8–1AF44 are now reconciled
+without changing any member's bytes under its existing settings. AD00's real
+pointer/short renderer contract and AD6C's missing void/s16 declaration are
+also reconciled. Both callers must retain GetPairedTpage's result in an s16
+local; widening it to s32 before passing it to a short parameter introduces
+shifts. The narrow locals reproduce both original callers exactly. All 71
+compiled members pass the split control; four existing dead stubs remain.
+
+A fresh checked whole-75 baseline fold, with actual pooled rodata attribution,
+compiles and reports **69/71 exact**: only 183E0 and 18B98 differ. The helper
+rolls back the fold, and both existing no-GCSE settings are restored. Canonical
+split declarations/interfaces remain as a verified prerequisite, not an
+assertion that the unresolved text module has been folded. The whole-source
+uniform no-GCSE control fixes those two but changes code in 19610, 19AD0,
+19CBC, A018, A574, A668, A6FC, A790 and A970. It is not promoted to TU scope.
+The raw standalone-context oracle also reports table-address-only differences
+for A284/A8D0 in that merged object; those are not compiler-setting witnesses.
+The actual pooled baseline fold proves both members exact.
+
+An s16 cursor-X/Y variant of 183E0 does not close baseline and loses its
+configured match; it is restored to the measured s32 construction. Complete
+sources, flags, header/source hashes, diagnostics, objects and listings live
+under build/tuFlagReview/exe/{text_context_control,text_reconciled,
+text_reconciled_narrow_cursor}; the checked whole-fold evidence is under
+build/foldTranslationUnit/exe/text_engine. These results isolate the remaining
+source/PRE question, not a universal no-baseline proof or an original TU cut.
+
+Final full campaign verification after restoration and canonical-context
+integration passes all eight integrity gates: 2511/2625 folded, 445/445 valid
+modules, 114 remaining. Every EXE/overlay/data byte is intact, exception growth
+is empty, and interface audit has zero conflicts/implicit declarations or
+failing publications. The independent 17-entry object_sprite_resources merge
+absorbs three old modules; no text slice or new flag setting is retained.
+
+The earlier baseline address-scratch trial of E7660 remains a failed source
+experiment. Its now-integrated singleton `clock_threshold_command`, and the
+104EC8 singleton `item_condition_dispatch`, preserve their exact existing
+no-skip settings on the same original identities. The checked helper now
+supports a one-function filename move only: it measures baseline first,
+refuses an unnecessary override, migrates the literal key with unchanged
+options and original permission, and checks the complete configured container.
+No multi-member inheritance or new exception is permitted. Both public
+interfaces and full campaign verification pass; original-build flag provenance
+remains unresolved. The baseline artifacts are retained by each checked fold.
+
+## Complete baseline item-value counter resolution
+
+All seven entries 800F3BCC–800F3F7C now fold as `modules/item_value_counters`,
+including the intervening compiled flag-bank reset. The reset computes the
+byte offset first inside each loop and then adds the work-area base. This
+lets loop.c emit each bare-symbol base and affine cursor after GCSE, matching
+all 18 original words at baseline. A direct symbol-plus-field expression had
+folded too early; the failure did not rule out this offset-first GIV origin.
+The whole seven-member fold and full campaign verification pass; the reset's
+no-GCSE entry and permission are retired, not inherited by the module.
+`ovl11_item_value_counters.h` publishes the actual client interface; names
+and partial-effect/overflow contracts are documented in source/header.
+Evidence: `build/tuFlagReview/ovl_11/progress_counters/offset-giv` and the
+checked module fold. The older 6/7 matrices below are superseded source controls.
+
 ## Whole-seven progress-counter control
 
 A fresh complete ovl_11:800F3BCC–800F3F7C merge is **6/7 exact at
@@ -267,8 +391,36 @@ six members exact and the reset nonexact; the backedge form has identical
 .text to the unchanged merge (SHA-256 378f9a60312825a4a69df5bd1ec7ef5a8ea8cda0df8d1b40a50a659c3ec3c2cb).
 No flagged module or fabricated cut was integrated. These outcomes are scoped
 to those sources/context, not an impossibility claim; the next question is
-which GCSE rewrite carries the symbol high across the first loop. The unrelated thirteen-entry ovl_30
+which GCSE rewrite carries the symbol high across the first loop.
+
+A fresh fourth baseline alternative indexes a corroborated 22-byte/10-byte
+struct view directly, rather than advancing typed pointers. The checked whole
+seven-member fold is still 6/7 exact: only 3D40 differs. Its array-index loop
+folds the field offsets into the symbol addresses and retains index-based
+stores, unlike the target's descending pointers. The helper rolls back;
+the original source/setting and header are restored. Failed source/object,
+per-member verdicts and listing are preserved under
+build/foldTranslationUnit/ovl_11/shipment_counters. This closes only that
+indexed-field representation, not other baseline source constructions. The unrelated thirteen-entry ovl_30
 debug-menu merge passes its checked fold at baseline without a flag change.
+
+## Subsequent complete table-percentage resolution
+
+The complete F00E4/F021C scan/predicate pair now folds at baseline as
+`modules/counted_table_cell_percent.c`. Signed-halfword offset records,
+initialized before each outer loop and read by base additions inside it,
+retain independent base/offset expressions through GCSE and loop hoisting.
+Combine then folds the halfword constants; all 78 scan words match,
+including both three-word preheaders. The helper and linked overlay also
+pass the checked fold. No-GCSE and its allowlist entry are retired.
+
+Evidence: `build/tuFlagReview/ovl_11/collection_halfword_offsets/baseline`
+and the checked fold directory. Literal-offset loop forms, affine inner
+byte offsets and a do/while latch control had failed. Those outcomes did
+not prove baseline impossibility: the halfword representation changes the
+inter-pass constant visibility that their two-endpoint argument assumed.
+The query/header names, exact dimensions, denominator and 18 excluded IDs
+are documented; its sole external caller imports the public header.
 
 ## Whole-fifteen hand-value dialog control
 

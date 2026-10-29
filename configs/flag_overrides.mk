@@ -80,53 +80,18 @@ CC1FLAGS_func_80014494 := -fno-cse-skip-blocks
 # both functions match byte-for-byte under baseline flags; the flag was the
 # same wrong lever as the withdrawn func_80016C08/func_800165D8 entries.
 
-# func_800183E0: -fno-gcse.
-#
-# Fingerprint: the target recomputes arg2 - 4, arg3 - 0x54 and (u16)status at
-# 0x80018900-0x80018934 (addiu s5,s7,-4 / addiu s4,fp,-0x54 /
-# andi s6,s3,0xffff). Those points are dominated by the identical
-# computations at 0x800187DC-0x800187E0, and nothing writes arg2, arg3 or
-# status in between. GCSE's PRE deletes such fully redundant computations;
-# the default-flag build of the matching source does ("PRE: redundant insn
-# ... reaching reg" in its .gcse dump). The reaching registers then live
-# across the calls and push arg2, arg3 and the step value onto the stack.
-#
-# Flag column: the matching source is 489/491 words under -fno-gcse (the two
-# remaining words are the jump table's .rodata relocations, which resolve
-# once its rodata is attributed) against 395/517 at baseline and 343/522
-# with -fno-schedule-insns.
-#
-# No contrary regional witness: the scan loop's addiu a0,s1,1 / move s1,a0
-# counter, which a default-flag build gets from PRE, comes under -fno-gcse
-# from the source's explicit next = i + 1. The neighbouring func_80018B98
-# carries -fno-gcse on its own evidence, and the only function between them,
-# ClearVal8005E4B0, clears this function's D_8005E4B0: very likely one
-# original TU.
-CC1FLAGS_func_800183E0 := -fno-gcse
+# func_800183E0: NO override. An inverted halfword status and staged negative
+# coordinate calculations keep the branch-local computations distinct until
+# combine, without changing their results. The complete text-TU control matches
+# all 491 words at baseline, with PRE 0 substitutions / 0 insertions.
+# The former -fno-gcse permission is retired; see plans/flag-review-report.md.
 
-# func_80018B98: -fno-gcse.
-#
-# Fingerprint (proved unreachable from any C shape at baseline, no source
-# needed): the target reloads D_8005E446 at the post-arg8 merge point
-# (0x80018C98 lhu v0,%gp_rel(D_8005E446)) and pairs `addiu v0,v0,-7` /
-# `sltiu s5,v0,3` with the `bne s2,v1,.L80018CEC` in its delay slot. Under
-# -fgcse (default) the D_8005E446 load and the flag computation are
-# loop-invariant-hoisted to the entry block, above the arg8-block calls, and
-# the flag's sltiu cannot occupy that delay slot — verified over the
-# semantics-preserving source closure (184320 candidates, all still diverged
-# at prologue allocation) and over micro-compilations showing the hoist is
-# robust to source statement position. -fno-gcse removes exactly that hoist:
-# the merge-point reload and sltiu-in-delay-slot reappear.
-#
-# Flag column: -fno-gcse takes the natural source from 42/292 to 86/294
-# byte-matched words and lands the instruction count exactly at the target's
-# 294 (the only matrix row to do so; baseline is 292).
-#
-# No contrary regional witness: func_80018B98.c is its own TU (single
-# function per src file), so the override cannot disturb the matched
-# neighbours; the source family was scored at baseline and only -fno-gcse
-# beats it.
-CC1FLAGS_func_80018B98 := -fno-gcse
+# func_80018B98: NO override. A two-byte local command record preserves the
+# raw HImode read separately from the word-sized decode/return scratch.
+# In the complete text-TU control PRE makes zero substitutions/insertions and
+# all 294 words match baseline. The old load-hoist/impossibility claim concerned
+# earlier promoted-scalar inputs, not every clean-C representation. The former
+# -fno-gcse entry and its permission are retired; see plans/flag-review-report.md.
 
 
 # AnimateMessageWindowRect (80022794): NO override. The current clean C
@@ -155,19 +120,18 @@ CC1FLAGS_func_80018B98 := -fno-gcse
 # (18 instructions = target 18); diffFunc VERDICT MATCH. Precedent: func_80018B98
 # already carries -fno-gcse in this project's exe; per-TU flags exist in ovl_11
 # (ovl_11_func_8011FF74: -fno-schedule-insns).
-CC1FLAGS_ovl_11_func_800F3D40 := -fno-gcse
+# RETIRED: an in-loop byte-offset temporary (index + bank offset), then
+# base + offset, gives both independent reverse pointer scans at baseline.
+# The complete seven-entry control is exact with GCSE/loop passes enabled.
+# The impossibility claim above covered earlier preheader/pointer inputs only.
 
-# ovl_11_func_800F00E4: -fno-gcse. Same fingerprint as ovl_11_func_800F3D40 in
-# this overlay: the target materializes D_8006C838+0x78EE and D_8006C838+0x55C6
-# as two independent lui %hi(D_8006C838) / addiu %lo / addiu-offset preheaders.
-# Under baseline gcse the two identical %hi(D_8006C838) halves merge into one
-# register live across the first loop, so the function needs an eighth saved
-# register and one fewer preheader statement (frame 56 vs target 48; the
-# residual-space search over the natural C closure was exhausted with no exact
-# candidate). With -fno-gcse the symbol halves are recomputed per preheader and
-# the frame is 48. Precedent: ovl_11_func_800F3D40 in this same overlay carries
-# the same flag for the identical D_8006C838+offset materialization.
-CC1FLAGS_ovl_11_func_800F00E4 := -fno-gcse
+# RETIRED ovl_11_func_800F00E4 -fno-gcse: signed-halfword offset records
+# initialized before each outer loop keep the two offset additions distinct
+# through GCSE. The base expressions are inside the outer loops; loop.c
+# hoists them independently and combine then folds the halfword constants.
+# Baseline reproduces all 78 words, including both three-word preheaders.
+# Evidence: build/tuFlagReview/ovl_11/collection_halfword_offsets/baseline.
+# Earlier claims of baseline impossibility covered literal-offset inputs.
 
 # ovl_11_func_80103B24: the original keeps separate positive/negative
 # read-modify-write arms on the same work-area field, including a jump after
@@ -188,98 +152,34 @@ CC1FLAGS_ovl_11_func_80103B24 := -fno-cse-skip-blocks
 # follow-jumps too emits 1988 words: it destroys sharing the target retains
 # within case 0x15. Scheduling, GCSE and CSE jump following remain enabled.
 # Same-overlay precedent: 80103B24 above. See the function's research note.
-CC1FLAGS_ovl_11_func_80104EC8 := -fno-cse-skip-blocks
+CC1FLAGS_overlays__ovl_11__modules__item_condition_dispatch := -fno-cse-skip-blocks
 
-# 80104148 retains signed-short column updates across the text-choice join
-# while sharing the scratch-address high half across calls. CSE branch
-# following exposes column constants to gcse.c:cprop_insn, folding the
-# target's +0x51/+0x24/+0x1B/+0x12 updates under baseline flags.
-# Exact-source matrix: baseline 133 insns, -fno-gcse 149, no-follow 147/147
-# byte-exact (target 147); disabling skip-blocks too is a contrary witness.
-# Regional witnesses 80103770/801037EC/80103D44/80103EB8/80104394 remain
-# byte-exact with no-follow (build/manual/ovl_11_func_80104148/regional).
-# Evidence: build/flagProbe/ovl_11_func_80104148/report.json.
-CC1FLAGS_ovl_11_func_80104148 := -fno-cse-follow-jumps
+# Retired 80104148's no-follow setting: a local signed-halfword label/column
+# pair retains the actual label ID and the 61-pixel starting column through
+# CSE, then folds without synthetic USE spills. Both fields are consumed.
+# Baseline preserves all 147 words, the 56-byte frame and every later narrow
+# column update. build/tuFlagReview/ovl_11/dialog_row_readable/baseline.
 
-# ovl_21_func_800B98CC: -fno-schedule-insns.
-#
-# Target fingerprint (assembly-level, stronger than the flag probe's structural
-# detectors): the target's two return tails each compute the comparison into
-# $v0, store it, and return it with NO register copy (sltiu v0,v0,3 / jr ra /
-# sw v0,24(a0) in both arms). Under baseline sched1 the return copy (v0<-value)
-# is drifted ahead of the store because the store is class-3 (independent of
-# the epilogue use) and the copy is class-1 (data-dependent on it); local-alloc
-# then sees v0 live across the value range and cannot tie the value to v0, so
-# every baseline C spelling of this function emits two extra `move v0,v1` and
-# 18 instructions. Disabling pre-reload scheduling keeps the expand-time
-# store-before-return-copy order, local-alloc ties the value to v0, and the
-# function emits exactly the target's 16 words. Same mechanism as the
-# allowlisted ovl_11_func_8011FF74 (sched1 drifts an independently-birthed
-# value out of its expand-time position).
-#
-# Flag-probe matrix on the matching source: baseline 6/16 masked, 18 instrs;
-# -fno-schedule-insns{,2} 16/16 masked, 16 instrs (target 16). Fresh recovery
-# checks confirm -fno-schedule-insns alone is 16/16 byte-exact. The adjacent
-# matched 800B9844's assembled text is unchanged under that flag (136 bytes),
-# so it supplies no contrary regional witness. This does not infer a TU
-# boundary from the repository's one-function-per-file source layout.
-CC1FLAGS_ovl_21_func_800B98CC := -fno-schedule-insns
+# Retired ovl_21:800B98CC's -fno-schedule-insns: a shared result return
+# outside the inverted two-arm condition preserves both store/return tails
+# at baseline (all 16 words exact in the complete scene-fold experiment).
+# The old universal claim applied to separate per-arm returns.
 
-# ovl_21_func_800BA698: -fno-gcse.
-#
-# Target fingerprint: the target's preheader and its first inner-loop block
-# each keep a symbol-derived temporary alive in $v1 — `addiu v1,s4,3` for the
-# outer bound and `addiu v1,s5,0x34` for the var_s1 base — while baseline gcse
-# (plus one more source statement order, measured independently) puts the bound
-# in $a0 and the base in $v0. The value levels are identical; gcse only changes
-# the allocator's live ranges, so the same word sequence cannot be reached by
-# any spelling of the program at baseline. With -fno-gcse both temporaries land
-# in $v1 and every one of the 86 target words is reproduced from clean C
-# (`diffFunc` VERDICT MATCH); baseline keeps two words wrong.
-#
-# Flag column on the final source: -fno-gcse is the probe's dominant row
-# (build/flagProbe/ovl_21_func_800BA698: baseline 48/86 masked; -fno-gcse 50/86;
-# every scheduling / cse-skip / split-address column at or below baseline). The
-# probe's target fingerprint is the -fno-gcse 'in-place bottom increment' shape
-# at word 68 inside the nested loop.
-#
-# No contrary regional witness: overlays are built -G0 and this src file is its
-# own TU (one function per file); the matched ovl_21 neighbours carry no
-# -fno-gcse override and are unaffected.
-CC1FLAGS_ovl_21_func_800BA698 := -fno-gcse
+# Retired ovl_21:800BA698's -fno-gcse in modules/scene_simulation.
+# Initialize the count-load base AFTER the window-entry guard, before the
+# outer do-loop: PRE's high-half copy no longer overlaps the first bound.
+# Reuse the active-word address scratch for the loaded per-slot active flag;
+# both assignments are consumed. That changes the web from one isolated local
+# quantity to an ordinary multi-set global web, reproducing both occurrences
+# without extra instructions. All 46 members match at baseline in the complete
+# control and checked fold; no module override or permission replaces this.
+# Prior impossibility/flag claims assumed the split address/flag variables.
 
-# ovl_17_func_800B9158: -fno-cse-skip-blocks.
-#
-# Target fingerprint (proved unreachable from clean C at baseline, no source
-# needed): block 1 computes the record address as `addu v0,a2,v0` (base first)
-# while block 2 computes the same address as `addu v1,v1,a2` (index first).
-# Every baseline source shape tried for block 1 (direct `base + idx*8`, index-
-# first, `<<3`, integer-cast, struct/array indexing, pointer local, scaled-offset
-# local, s16/s32/u32 offset) compiles to the SAME object, and the
-# experimentLedger records one identical outputHash for all of them: CSE's
-# fold_rtx canonicalises the plus to index-first whenever the base's constant
-# equivalent is known, so the target's base-first order is not a spelling.
-#
-# Flag column: on the scaled-offset source shape (offset variable shifted in
-# place, so CSE sees a plain register), -fno-cse-skip-blocks scores 24/24
-# against the target while baseline scores 23/24 and every other matrix row
-# scores <= 23 (psx_flag_probe matrix, two sources). diffFunc with the override
-# reports VERDICT: MATCH, 24/24 byte-identical words.
-#
-# Mechanism: the guard `if (count >= 0x5A) count = 0;` is a branch around a
-# one-statement block. With -fcse-skip-blocks (default) cse.c
-# cse_end_of_basic_block follows that branch and carries the base address's
-# constant equivalence across it, which is what forces the index-first
-# canonicalisation; -fno-cse-skip-blocks keeps the base's state local to the
-# join and the target's base-first `addu` appears. The same flag is already a
-# project precedent (func_80014494, ovl_11_func_80103B24).
-#
-# Fresh regional checks: matched ovl_17 neighbours 800B9F10, 800B9F44,
-# 800B9CAC and 800BAEF0 have byte-identical assembled text under this flag
-# versus baseline (52, 52, 56 and 96 bytes). They supply no contrary witness;
-# this does not infer an original TU boundary from today's source-file layout.
-# The flag-override audit entry is present in .pi/autoloop.json.
-CC1FLAGS_ovl_17_func_800B9158 := -fno-cse-skip-blocks
+# Retired ovl_17:800B9158's -fno-cse-skip-blocks in modules/record_scene.
+# Existing Ovl17QueueView entry-member lvalues retain the word/halfword
+# address-expression distinction lost by raw byte-pointer arithmetic. The
+# checked whole-61 baseline fold proves all members and linked ovl_17 exact.
+# The earlier universal CSE-impossibility claim applied only to those inputs.
 
 # Retired ovl_11:800E4BA4's -fno-rerun-loop-opt during reconstruction of
 # modules/object_program_install. Indexing the archive's halfword tag array
@@ -289,30 +189,11 @@ CC1FLAGS_ovl_17_func_800B9158 := -fno-cse-skip-blocks
 # baseline-impossibility claim covered only the pointer-walk reconstruction.
 
 
-# ovl_11_func_800F8224: -fno-strength-reduce.
-#
-# Target fingerprint (decoded from the original bytes, no source needed): the
-# inner scan recomputes the element address from its index every iteration --
-# `sll v1,a1,1 / addu v1,v1,a1 / sll v1,v1,1` (6*j) and, for the loop-invariant
-# part, `addu v0,t1,a2 / sll v0,v0,1` (6*i) -- then adds the two (`addu
-# v1,v0,v1`). The target carries no strength-reduced induction variable and no
-# `addiu <reg>,<reg>,6` walker update for the inner scan. Under baseline flags
-# loop.c reduces `j*6` to exactly that `addiu ...,6` induction (keeping a
-# second counter register) in the current matched source.
-#
-# Flag column: the matched source (a single reused `p` pointer threaded
-# through the outer check and inner scan, with `dst = p` copied before the
-# scan) is relocated-byte exact 54/54 with -fno-strength-reduce, versus
-# baseline 42/54 with 53 emitted instructions. Remeasured under overlay -G0,
-# ignoring existing overrides: build/ovl_11_func_800F8224/existing-flag-audit.json.
-# Earlier -fno-rerun-loop-opt, -fno-gcse and -fno-peephole columns were also
-# non-exact. This source-scoped result is not a proof about every C spelling.
-#
-# No original TU boundary is established by the one-function source layout.
-# There is no established same-TU contrary witness; FE068's withdrawn flag
-# does not support grouping it with this function. The matching flag-override
-# audit entry is present in .pi/autoloop.json.
-CC1FLAGS_ovl_11_func_800F8224 := -fno-strength-reduce
+# Retired ovl_11:800F8224's -fno-strength-reduce in modules/record_slot_menu.
+# Explicit scan backedges retain the target's recomputed six-byte addresses;
+# a C loop construct instead introduces LOOP_BEG and a strength-reduced walker.
+# The checked whole-twelve baseline fold proves every member and linked ovl_11
+# exact. The old flag column described the do-while reconstruction, not a TU.
 
 # ovl_15_func_8013345C: NO override. The -fno-gcse entry that used to sit here
 # was withdrawn 2026-10-21. It was fitted to the m2c goto-form reconstruction
@@ -320,14 +201,15 @@ CC1FLAGS_ovl_11_func_800F8224 := -fno-strength-reduce
 # replaced it compiles to identical words with or without -fno-gcse and is
 # byte-exact under baseline flags.
 
-# ovl_15_func_801335F8: target retains the bottom signed-coordinate
-# conversion inside a nested loop; baseline GCSE PRE hoists its left shift
-# into the inner preheader. The flag matrix on the compiling C reports
-# -fno-gcse 132/132 masked versus baseline 84/132; the relocated-byte oracle
-# confirms 132/132 exact. The source is still m2c-shaped: no matched ovl_15
-# neighbour needs this flag, and 801331C4/80133808 change under it.
-# User authorized the evidence-backed exception in the matching session.
-CC1FLAGS_ovl_15_func_801335F8 := -fno-gcse
+# Retired ovl_15:801335F8's -fno-gcse in modules/save_slot_selection.
+# A single next-column assignment at the base-selection join preserves the
+# target's latch narrowing; the compiler duplicates its add into both arms.
+# Cache the complete mark-table address before the outer loop and form its
+# bank byte offset first. This avoids the old HIGH-only PRE/rematerialization
+# web and reproduces the preheader's registers/operand order at baseline.
+# All thirteen members and the linked overlay pass the checked whole-unit
+# fold. The prior flag requirement described the split source, not the TU;
+# no module override or replacement permission is introduced.
 
 # ovl_11_func_800FE068: NO override. The -fno-strength-reduce entry was
 # withdrawn after remeasuring the actual matched source under overlay -G0.
@@ -336,36 +218,12 @@ CC1FLAGS_ovl_15_func_801335F8 := -fno-gcse
 # to another source shape, not this one. A shared flag therefore cannot
 # support grouping it with ovl_11_func_800F8224.
 
-# ovl_11_func_800F0E00: -fno-strength-reduce.
-#
-# Target fingerprint (decoded from the original bytes, no source needed): the
-# 0xFFFF-terminated scan recomputes the element address from its index every
-# iteration -- `sll v0,a1,3 / addu v0,v0,a1 / sll v0,v0,2 / addu v0,v0,s0`
-# (enumerated count*0x24) -- and psx_target_loop_emission reports no giv init
-# in the loop preheader at 0x800F0EF4 (its classes are source movables and the
-# source induction init only). The target carries no strength-reduced entry
-# pointer and no `addiu <reg>,<reg>,0x24` walker update for the scan. Under
-# baseline flags loop.c reduces `count*0x24` to exactly that walker induction
-# initialized in the preheader (measured: the candidate `while`/`for` family
-# produces the reduced pointer loop with 16 basic blocks against the target's
-# 14), so the target's redundant per-iteration arithmetic is unreachable from
-# any C spelling at baseline.
-#
-# Flag column (reconfirmed 2026-10-22 on the complete matching source):
-# production baseline emits 81 instructions and matches 73/84 target words;
-# -fno-strength-reduce preserves the index multiply and matches all 84/84.
-# No other flags differ. The two-object comparison is preserved in
-# build/ovl_11_func_800F0E00/flag-confirmation.json. The matching flag-override
-# allowlist entry records this measured per-TU requirement.
-#
-# Regional precedent: ovl_11_func_800F8224 and ovl_11_func_800FE068 in this
-# same overlay are matched TUs whose overrides are also -fno-strength-reduce,
-# so disabling strength reduction is an observed per-TU fact of this build,
-# not a workaround.
-#
-# No contrary regional witness: this src file is its own TU (one function per
-# file), so the override cannot disturb the matched ovl_11 neighbours.
-CC1FLAGS_ovl_11_func_800F0E00 := -fno-strength-reduce
+# Retired ovl_11:800F0E00's -fno-strength-reduce in condition_evaluation.
+# Reconstructing the target's 36-byte offset in its three arithmetic steps
+# retains the indexed scan at baseline. The integer-address addition retains
+# its operand order. The checked complete-28 fold proves every member and
+# linked ovl_11 exact. The earlier universal claim covered multiply-shaped
+# loop inputs, not this address representation; no module setting replaces it.
 
 
 # ovl_11_func_800E7660: -fno-cse-skip-blocks.
@@ -391,133 +249,37 @@ CC1FLAGS_ovl_11_func_800F0E00 := -fno-strength-reduce
 #
 # No contrary regional witness: this src file is its own TU (one function per
 # file), so the override cannot disturb the matched ovl_11 neighbours.
-CC1FLAGS_ovl_11_func_800E7660 := -fno-cse-skip-blocks
+CC1FLAGS_overlays__ovl_11__modules__clock_threshold_command := -fno-cse-skip-blocks
 
 
-# ovl_11_func_800EF8BC: -fno-cse-skip-blocks.
-#
-# Target fingerprint (decoded from the original bytes, no source needed): the
-# prologue materializes D_8006C838 through the CSE-shared %hi exactly as
-# ovl_11_func_800F1678 — `lui $a0,%hi(D_8006C838)` once, then `addiu $v0,$a0,
-# %lo(D_8006C838)` for the +0x5492 index load, and every later reference
-# re-forms only the low half from that %hi (`addiu $v0,$a0,%lo` at 0x800EF8F8
-# and 0x800EF9D0, `addiu $v1,$a0,%lo` at 0x800EF92C, `addiu $a0,$a0,%lo` at
-# 0x800EF95C) instead of carrying a full-address pseudo across the branch joins.
-# Under baseline -fcse-skip-blocks cse.c follows the branches and keeps the full
-# lo_sum in one register; the re-materialised low half is unreachable from any
-# C shape at baseline (same mechanism as ovl_11_func_800F1678, established from
-# 21 source shapes there).
-#
-# Flag column / regional witness: ovl_11_func_800F1678 is the adjacent sibling
-# with this identical `lui %hi / addiu %lo / lh 0x5492` D_8006C838 fingerprint
-# and already carries -fno-cse-skip-blocks as a matched-project precedent;
-# ovl_11_func_800E7660 and ovl_11_func_80103B24 are further ovl_11 precedents.
-# This src file is its own TU (one function per file), so the override cannot
-# disturb the matched ovl_11 neighbours.
-CC1FLAGS_ovl_11_func_800EF8BC := -fno-cse-skip-blocks
+# Retired ovl_11:800EF8BC's -fno-cse-skip-blocks in condition_date_records.
+# Structured rejection returns, case breaks and a shared success return keep
+# the target's rematerialized low halves at baseline. The checked whole-seven
+# fold preserves every member and the linked overlay. The old unreachable
+# claim was conditional on shared-failure-tail CFGs, not all clean C. No TU
+# setting replaces it; the canonical record view also removes local conflicts.
 
-# ovl_11_func_80113FF0: -fno-cse-follow-jumps -fno-cse-skip-blocks.
-#
-# Target fingerprint (decoded from the original bytes, no source needed): block 0
-# of the original is a straight-line fill of the ovl_11 D_8012D548 record that
-# carries live strength-reduced pointer walks — six `addiu <reg>,<reg>,2`, three
-# `addiu <reg>,<reg>,1` and three `addiu <reg>,<reg>,4`, interleaved with the
-# `sh/sw/sb <reg>,0(<reg>)` stores they address. Under baseline flags cse.c
-# folds every one of those walks back to `base+offset` (`sh $r,0x2a($s4)` etc.)
-# and the function shrinks to 88 instructions; the target's 101 words carry the
-# walks, so the baseline form is unreachable from any C spelling (measured:
-# draft2-draft12, pointer/`*p++`/integer-base/cast/volatile and duplicated-tail
-# spellings all compile to the identical 88-instruction object).
-#
-# Flag column (psx_flag_probe --with-source): baseline 18/101 masked, 88 instrs;
-# -fno-cse-follow-jumps alone 88; -fno-cse-skip-blocks alone 88;
-# -fno-cse-follow-jumps -fno-cse-skip-blocks 100 instrs (target 101) and it is
-# the only measured column that retains the pointer walks. Same two-flag pair is
-# the mechanism-precedent family of the matched ovl_11_func_800EF8BC /
-# ovl_11_func_800F1678 / ovl_11_func_80103B24 (cse.c branch following), and this
-# src file is its own TU (one function per file), so the override cannot disturb
-# the matched ovl_11 neighbours.
-CC1FLAGS_ovl_11_func_80113FF0 := -fno-cse-follow-jumps -fno-cse-skip-blocks
+# Retired ovl_11:80113FF0's two CSE overrides in price_option_rows.
+# Complete its final gated row append: advance q at the join, then advance
+# each parallel cursor on its store. This preserves the 101-word pointer-walk
+# target at baseline, as for the complete prompt_option_rows family.
+# The checked whole-five fold preserves every member and linked overlay;
+# no module setting replaces it. Earlier 88-word forms stopped at the last
+# row and did not establish baseline unreachability for a complete append.
 
 
-# ovl_25_func_800B95B0: -fno-cse-follow-jumps.
-#
-# Target fingerprint (decoded from the original bytes, no source needed): the
-# threshold cascade at 0x800B95E0-0x800B9648 keeps a REDUNDANT `sel = 0` set in
-# the val > 0x1DFFF arm (`j .L9644` with `addu s0,zero,zero` in its delay slot)
-# and branches with `beqz` to the next test. Baseline cse follows the single-use
-# conditional-branch target across the block-ending BARRIER (cse.c
-# cse_end_of_basic_block, follow_jumps path), carries the dominating `sel = 0`
-# from the prologue into the arm, deletes the set and inverts the branch to
-# `bne` (measured on the candidate .cse dump). The target's retained set and
-# `beqz` sense are unreachable under -fcse-follow-jumps from the natural
-# if/else-if cascade.
-#
-# Final-source flag matrix (2026-10-22): baseline 22/106, 105 instructions;
-# -fno-cse-follow-jumps 106/106, 106 instructions, confirmed byte-exact.
-# Adding -fno-cse-skip-blocks ties rather than improves it. Evidence:
-# build/ovl_25_func_800B95B0/exact-source-flag-probe.txt.
-#
-# No contrary regional witness: the immediate matched neighbours 800B9480
-# and 800B9758 retain their baseline 76/76 and 9/9 masked instruction streams
-# under -fno-cse-follow-jumps (neighbor-*-flag-probe.txt in the same directory).
-# This does not infer an original TU boundary from today's source-file layout.
-# The matching sourcePolicy flag-override entry records this requirement.
-CC1FLAGS_ovl_25_func_800B95B0 := -fno-cse-follow-jumps
+# Retired ovl_25:800B95B0's no-follow override. Transfer the initial signed
+# 16-bit selector through its bit-field before Rand, retaining that width
+# boundary until combine instead of teaching CSE its value across the cascade.
+# Baseline then retains both zero assignments and the original branch sense:
+# all 106 words match. Evidence: build/tuFlagReview/ovl_25/
+# choice_initial_bitfield/baseline/report.json and the checked complete
+# scene_state_machine fold. No replacement flag or permission is introduced.
 
-# ovl_11_func_8011ADF4: -fno-cse-follow-jumps -fno-cse-skip-blocks.
-#
-# Target fingerprint (decoded from the original bytes, no source needed): block 0
-# of the original is the same straight-line fill of the ovl_11 D_8012D548 record
-# as its sibling ovl_11_func_80113FF0, carrying live strength-reduced pointer
-# walks — eight `addiu <reg>,<reg>,2`, four `addiu <reg>,<reg>,1` and four
-# `addiu <reg>,<reg>,4`, interleaved with the `sh/sw/sb <reg>,0(<reg>)` stores
-# they address. Under baseline flags cse.c folds every walk back to base+offset
-# and the function shrinks (candidate 95 instructions vs the target's 112); the
-# baseline form is unreachable from any C spelling here too (draft, a no-base-
-# local form, a natural `*p++` form and an early-temp form all compile to the
-# same folded object). This is the identical mechanism and the identical
-# container record as ovl_11_func_80113FF0, which already carries this override.
-#
-# Flag column: on the clean source, the two-flag pair retains the walks and the
-# pointer-register allocation; single-flag columns do not. Precedent:
-# ovl_11_func_80113FF0 (same overlay, same function family, same two-flag pair).
-CC1FLAGS_ovl_11_func_8011ADF4 := -fno-cse-follow-jumps -fno-cse-skip-blocks
-
-# ovl_11_func_8011AC30: -fno-cse-follow-jumps -fno-cse-skip-blocks.
-#
-# Target fingerprint (decoded from the original bytes, no source needed): block 0
-# of the original is the same straight-line fill of the ovl_11 D_8012D548 record
-# as its zero-gap siblings ovl_11_func_80113FF0 and ovl_11_func_8011ADF4,
-# carrying live strength-reduced pointer walks — eight `addiu <reg>,<reg>,2`,
-# four `addiu <reg>,<reg>,1` and four `addiu <reg>,<reg>,4`, interleaved with the
-# `sh/sw/sb <reg>,0(<reg>)` stores they address. psx_reverse_pipeline on the
-# clean source reports exactly those target-only words (`target-only: 8× addiu
-# <reg>,<reg>,2; 4× addiu <reg>,<reg>,1; 4× addiu <reg>,<reg>,4; 3× sb
-# <reg>,0(<reg>)` …) with candidate-only `sh <reg>,42(<reg>)`/`sh
-# <reg>,72(<reg>)` constant-displacement equivalents; baseline cse.c folds every
-# walk back to base+offset and the function shrinks (candidate 95 instructions vs
-# the target's 113). The baseline form is unreachable from the same clean source
-# shape that is exact for the sibling under the override (draft, an inline-mask
-# form and the natural `*p++` family all compile to the folded object). This is
-# the identical mechanism, the identical container record and the identical walk
-# counts as ovl_11_func_8011ADF4.
-#
-# Flag column (psx_flag_probe --with-source on the clean source): the two-flag
-# pair is the only column that retains the pointer walks and reaches the target
-# instruction count (110 instrs vs target 113; every single-flag column collapses
-# to 93-95 and `-mno-split-addresses` to 93). Precedent: ovl_11_func_8011ADF4
-# and ovl_11_func_80113FF0 (same overlay, same function family, same two-flag
-# pair). This src file is its own TU (one function per file), so the override
-# cannot disturb the matched ovl_11 neighbours; no contrary regional witness.
-CC1FLAGS_ovl_11_func_8011AC30 := -fno-cse-follow-jumps -fno-cse-skip-blocks
-
-# ovl_11_func_8011AA64: same pointer-walk fingerprint as its zero-gap
-# matched neighbours 8011AC30/8011ADF4: eight +2, four +1 and four +4
-# increments address interleaved zero-displacement stores. Baseline CSE
-# folds these walks into fixed displacements (97 instructions vs target 115).
-# The measured clean-source flag matrix has one dominant column: the pair
-# below retains all walks and emits 115 instructions (99/115 masked), while
-# either single flag emits 97/98. Both adjacent matched members require the
-# same pair and supply no contrary regional witness.
-CC1FLAGS_ovl_11_func_8011AA64 := -fno-cse-follow-jumps -fno-cse-skip-blocks
+# Retired ovl_11:8011AA64/8011AC30/8011ADF4's two CSE overrides.
+# Complete the unrolled append of the gated last row: advance the text cursor
+# after the gate, then post-increment each parallel row-field cursor. This
+# retains all target walks at baseline; the earlier reconstruction stopped
+# its cursors on the final row and folded those walks into displacements.
+# The checked eleven-member prompt_option_rows fold proves the whole unit
+# and linked overlay. No module flag or new exception replaces the entries.

@@ -40,15 +40,15 @@ Access type breakdown (by symbol count):
 
 | Symbol | Access types | Per-symbol inference | Refs |
 |--------|-------------|---------------------|------|
-| func_80049044 | addr_taken | ambiguous | 1 |
-| T_80049050 | addr_taken | ambiguous | 1 |
-| T_80049058 | addr_taken | ambiguous | 1 |
-| T_80049068 | addr_taken | ambiguous | 1 |
-| T_80049070 | addr_taken | ambiguous | 1 |
-| T_80049078 | addr_taken | ambiguous | 1 |
-| T_80049084 | addr_taken | ambiguous | 1 |
-| T_8004908C | addr_taken | ambiguous | 1 |
-| T_800490BC | addr_taken | ambiguous | 1 |
+| func_80049044 | addr_taken | ambiguous | 2 |
+| T_80049050 | addr_taken | ambiguous | 2 |
+| T_80049058 | addr_taken | ambiguous | 2 |
+| T_80049068 | addr_taken | ambiguous | 2 |
+| T_80049070 | addr_taken | ambiguous | 2 |
+| T_80049078 | addr_taken | ambiguous | 2 |
+| T_80049084 | addr_taken | ambiguous | 2 |
+| T_8004908C | addr_taken | ambiguous | 2 |
+| T_800490BC | addr_taken | ambiguous | 2 |
 
 ### Region 6: 0x800491F0–0x80049268 (0x78) → **.data**
 
@@ -73,7 +73,7 @@ No referenced symbols in this region.
 
 ## Global Summary
 
-Total symbols scanned: 1342
+Total symbols scanned: 1383
 
 | Inferred section | Regions |
 |-----------------|---------|

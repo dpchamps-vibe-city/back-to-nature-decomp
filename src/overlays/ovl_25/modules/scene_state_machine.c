@@ -4,14 +4,15 @@
  * The five-phase engine callback drives loading, fades and the three-mode
  * event/dialogue/active protocol. Its record initializers and frame helpers
  * operate on six scene and two auxiliary records at 0x78-byte strides.
- * Mode and phase callback tables are closed over this unit; event scripts
- * and randomized record policies remain external dependencies.
+ * Mode and phase callback tables, randomized record-state decisions and their
+ * threshold/weight tables are closed over this unit. Event scripts and the
+ * shared state/timer setter remain external dependencies.
  *
  * All timers count update calls. Selectors, record indices and tuning
  * divisors are unchecked; the shared scene/CD/render state is non-reentrant.
- * Public contracts are in ovl25_scene_state_machine.h. The unresolved compiler
- * setting in the adjacent decision policy prevents a wider fold; it does not
- * establish an original source-file boundary.
+ * Public contracts are in ovl25_scene_state_machine.h. The choice helpers keep
+ * external linkage but are called only inside this unit. Their record IDs,
+ * choice indices and signed weight-category indexing are unchecked.
  *
  * The evidence for its membership and boundaries is in
  * notes/file-groupings.md.
@@ -42,29 +43,27 @@
 #include "ovl25_record_value_increments.h"
 #include "ovl25_record_state_timer.h"
 #include "ovl25_record_tier_update.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 /* Internal helpers retain external linkage and the original callback ABI. */
 void Ovl25ResetSceneState(void);
 void Ovl25InitSceneRecordState(void);
 void Ovl25DrawSceneSprites(void);
 
-void func_80017A48(u32 arg0);
-
-u32 func_80017A64(void);
-
 void Ovl25DispatchScenePhase(void) {
     s32 *work;
     s32 *phaseTable;
     u32 previousTextDrawMode;
 
-    previousTextDrawMode = func_80017A64();
-    func_80017A48(3U);
+    previousTextDrawMode = GetTextPalette();
+    SetTextPalette(3U);
     phaseTable = gOvl25ScenePhaseTable;
     work = (s32 *) &D_8006C838;
     /* Keep the original word-view dispatch and forwarded table argument;
      * every phase handler ignores that argument. */
     ((void (*)(s32 *)) phaseTable[work[0x448C >> 2]])(phaseTable);
-    func_80017A48(previousTextDrawMode);
+    SetTextPalette(previousTextDrawMode);
     if (work[0xC >> 2] & 0x08000000) {
         work[0xC >> 2] &= 0xF7FFFFFF;
     }
@@ -324,8 +323,6 @@ void Ovl25ResetSceneRecords(void) {
  * rendering still runs, including the stateful sequence-sprite service.
  */
 
-void Ovl25DrawSceneSprites(void);
-
 void Ovl25DispatchEventPhase(void) {
     s32 temp_v0;
     s32 q;
@@ -347,8 +344,6 @@ void Ovl25DispatchEventPhase(void) {
     }
 }
 
-void SetVal8005E2BC(s32 arg0);
-
 void Ovl25RunDialogueMode(void) {
     char *ref;
     char *base;
@@ -358,7 +353,7 @@ void Ovl25RunDialogueMode(void) {
     ref = (char *)&gOvl25SceneWorkWords;
     if (*(s16 *)(ref + 0x4CC) == 0) {
         CloseMessageWindow();
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, 0x35);
         Ovl25SetRecordState((s16 *)(ref + 0x2E0), 9, 0x3B);
@@ -422,11 +417,7 @@ void Ovl25UpdateActiveSceneMode(void) {
     D_800BFE44_view.unkC = (u16) D_800BFE44_view.unkC - decrement;
 }
 
-s32 ovl_25_func_800B9758(Ovl25StateSelectorView *arg0);
-/* The state update has a byte-exact void body as well as the existing
- * value-returning reconstruction. This caller requires the void contract;
- * none of its calls consumes a result. */
-void func_8001AC10 (u32 *arg0, s32 arg1, s32 arg2);
+s32 Ovl25CanUpdateRecordChoice(Ovl25StateSelectorView *arg0);
 
 void Ovl25UpdatePrimaryRecordFromInput(void) {
     s32 temp_a1;
@@ -437,7 +428,7 @@ void Ovl25UpdatePrimaryRecordFromInput(void) {
     Ovl25StateView *state;
 
     if (gOvl25SceneRecordBase.unk2 != 8) {
-        temp_v0 = ovl_25_func_800B9758((Ovl25StateSelectorView *) &gOvl25SceneRecordBase);
+        temp_v0 = Ovl25CanUpdateRecordChoice((Ovl25StateSelectorView *) &gOvl25SceneRecordBase);
         if (temp_v0 == 1) {
             if ((*(s32 *) ((u8 *) gPad0Input + 4)) & 0x10) {
                 (*(s16 *) ((u8 *) &gOvl25SceneRecordBase + -2)) = 0;
@@ -475,19 +466,19 @@ void Ovl25UpdatePrimaryRecordFromInput(void) {
             }
             if (state->unk4CC == 1) {
                 temp_a1 = gActiveRenderContext->field_D8;
-                func_8001AC10((u32 *)(temp_a1 + 0xC), temp_a1 + 8, (s32) D_800BCB34);
+                DrawMenuPanelWithText((u32 *)(temp_a1 + 0xC), temp_a1 + 8, (s32) D_800BCB34);
                 return;
             }
             if (state->unk4CC == -1) {
                 temp_a1_2 = gActiveRenderContext->field_D8;
-                func_8001AC10((u32 *)(temp_a1_2 + 0xC), temp_a1_2 + 8, (s32) D_800BCB8E);
+                DrawMenuPanelWithText((u32 *)(temp_a1_2 + 0xC), temp_a1_2 + 8, (s32) D_800BCB8E);
             }
         }
     }
 }
 
-s32 ovl_25_func_800B977C(Ovl25RecordIdView *record, s16 choice);
-void ovl_25_func_800B95B0(s16 *arg0);
+s32 Ovl25PassRecordChoiceThreshold(Ovl25RecordIdView *record, s16 choice);
+void Ovl25ChooseWeightedState5Timer(s16 *arg0);
 
 void Ovl25UpdateOtherRecordChoices(void) {
     s16 *state;
@@ -522,7 +513,7 @@ void Ovl25UpdateOtherRecordChoices(void) {
         }
         /* Retain the inherited scopes around these six calls for code layout. */
         if (*(s32 *)&rec[6] > 0x27FFF) {
-            if (ovl_25_func_800B977C((Ovl25RecordIdView *)rec, 0) == 1) {
+            if (Ovl25PassRecordChoiceThreshold((Ovl25RecordIdView *)rec, 0) == 1) {
                 do {
                     do {
                         do {
@@ -534,13 +525,13 @@ void Ovl25UpdateOtherRecordChoices(void) {
                 do {
                     do {
                         do {
-                            ovl_25_func_800B95B0(rec);
+                            Ovl25ChooseWeightedState5Timer(rec);
                         } while (0);
                     } while (0);
                 } while (0);
             }
         } else if (*(s32 *)&rec[6] > 0x1DFFF) {
-            if (ovl_25_func_800B977C((Ovl25RecordIdView *)rec, 1) == 1) {
+            if (Ovl25PassRecordChoiceThreshold((Ovl25RecordIdView *)rec, 1) == 1) {
                 do {
                     do {
                         do {
@@ -552,13 +543,13 @@ void Ovl25UpdateOtherRecordChoices(void) {
                 do {
                     do {
                         do {
-                            ovl_25_func_800B95B0(rec);
+                            Ovl25ChooseWeightedState5Timer(rec);
                         } while (0);
                     } while (0);
                 } while (0);
             }
         } else if (*(s32 *)&rec[6] > 0x13FFF) {
-            if (ovl_25_func_800B977C((Ovl25RecordIdView *)rec, 2) == 1) {
+            if (Ovl25PassRecordChoiceThreshold((Ovl25RecordIdView *)rec, 2) == 1) {
                 do {
                     do {
                         do {
@@ -570,16 +561,16 @@ void Ovl25UpdateOtherRecordChoices(void) {
                 do {
                     do {
                         do {
-                            ovl_25_func_800B95B0(rec);
+                            Ovl25ChooseWeightedState5Timer(rec);
                         } while (0);
                     } while (0);
                 } while (0);
             }
         } else if (*(s32 *)&rec[6] > 0x9FFF) {
-            if (ovl_25_func_800B977C((Ovl25RecordIdView *)rec, 3) == 1) {
+            if (Ovl25PassRecordChoiceThreshold((Ovl25RecordIdView *)rec, 3) == 1) {
                 Ovl25SetRecordState(rec, 4, state[0x26A]);
-            } else if (ovl_25_func_800B977C((Ovl25RecordIdView *)rec, 4) == 1) {
-                ovl_25_func_800B95B0(rec);
+            } else if (Ovl25PassRecordChoiceThreshold((Ovl25RecordIdView *)rec, 4) == 1) {
+                Ovl25ChooseWeightedState5Timer(rec);
             } else {
                 ref = objects - 8;
                 random = Rand((u16)(120 / ref[0x26C])) + 1;
@@ -642,7 +633,7 @@ void Ovl25TickSceneRecords(void) {
     } while (i >= 0);
 }
 
-void ovl_25_func_800B9480 (s16 *arg0);
+void Ovl25ChooseRecordStateAndTimer (s16 *arg0);
 
 void Ovl25UpdateSceneRecord(s16 *record) {
     s16 voiceHandle;
@@ -653,7 +644,7 @@ void Ovl25UpdateSceneRecord(s16 *record) {
     switch (stateCase) {
     case 5:
         if ((record[0] != 0) && ((*(s16 *) ((u8 *) record + 4)) <= 0)) {
-            ovl_25_func_800B9480(record);
+            Ovl25ChooseRecordStateAndTimer(record);
         }
         break;
     case 3:
@@ -835,4 +826,103 @@ void Ovl25DrawSceneObjectRecords(void) {
         auxRemaining -= 1;
         auxRecord += 1;
     } while (auxRemaining >= 0);
+}
+
+/* Choose state 2/3 using the scene's rate parameters, or fall back to state
+ * 5. State 3 also writes record +6. Divisors and the Rand bound must be valid. */
+void Ovl25ChooseRecordStateAndTimer(s16 *record) {
+    s16 random;
+    s16 *state;
+    s32 value;
+
+    if (Ovl25PassRecordChoiceThreshold((Ovl25RecordIdView *)record, 4) == 1) {
+        state = (s16 *)&D_800BFE44_view;
+        random = Rand((u16)(120 / state[0x26C])) + 1;
+        value = state[0x267] * 30;
+        if (random >= value / (state[0x26C] * 100)) {
+            Ovl25SetRecordState(record, 3, 60);
+            value = random - 2;
+            record[3] = value * 30 / state[0x26A];
+            return;
+        } else {
+            Ovl25SetRecordState(record, 2, random * (u16)state[0x26A]);
+        }
+    } else {
+        Ovl25ChooseWeightedState5Timer(record);
+    }
+}
+
+/* Select a cumulative-weight bucket and convert its distance from record
+ * +0C (Q12 units) into a state-5 timer. Signed category -1 intentionally reads
+ * the original words preceding the weight-table origin; do not clamp it.
+ * If no bucket wins, bucket remains 4. Accumulation wraps to s16 each step. */
+void Ovl25ChooseWeightedState5Timer(s16 *record) {
+    s16 random;
+    s16 cumulativeWeight;
+    s16 category;
+    struct { signed int value : 16; } initialClass;
+    s32 targetValue;
+    s32 bucket;
+    s32 valueQ12;
+    s32 timer;
+    s32 weight;
+    s16 *state;
+
+    cumulativeWeight = 0;
+    /* Keep the signed-width initialization boundary before Rand. A plain
+     * scalar zero lets CSE erase the separate category-0 arm and its branch. */
+    initialClass.value = 0;
+    category = initialClass.value;
+    random = Rand(0x64);
+    valueQ12 = *(s32 *)&record[6];
+    if (valueQ12 > 0x27FFF) {
+        category = -1;
+    } else if (valueQ12 > 0x1DFFF) {
+        category = 0;
+    } else if (valueQ12 > 0x13FFF) {
+        category = 1;
+    } else if (valueQ12 > 0x9FFF) {
+        category = 3;
+    }
+    bucket = 0;
+    for (; bucket < 4; bucket++) {
+        weight = gOvl25State5ChoiceWeights[category][record[0] - 1][bucket];
+        cumulativeWeight = (s16)(cumulativeWeight + weight);
+        if (random < cumulativeWeight) {
+            break;
+        }
+    }
+    if (category == -1) {
+        targetValue = 0x32;
+    } else {
+        targetValue = (s16)(0x31 - bucket * 10);
+        if (bucket == 0) {
+            targetValue = targetValue + 1;
+        }
+        targetValue = (s16)targetValue;
+    }
+    valueQ12 = *(s32 *)&record[6];
+    timer = targetValue - valueQ12 / 4096;
+    state = (s16 *)&D_800BFE44_view;
+    Ovl25SetRecordState((s16 *)record, 5, (s16)(timer * state[0x26C] / state[0x26B]));
+}
+
+/* States 7 and 4 suppress choice updates; every other signed state passes. */
+s32 Ovl25CanUpdateRecordChoice(Ovl25StateSelectorView *record) {
+    if (record->state != 7) {
+        if (record->state != 4) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+/* The comparison is inverted: pass when Rand(128) >= the signed threshold.
+ * It always consumes one random draw, even for an extreme threshold. */
+s32 Ovl25PassRecordChoiceThreshold(Ovl25RecordIdView *record, s16 choice) {
+    s32 random;
+    s32 recordIndex;
+    random = Rand(0x80);
+    recordIndex = record->id - 1;
+    return (random < gOvl25RecordChoiceThresholds[recordIndex * 5 + choice]) ^ 1;
 }

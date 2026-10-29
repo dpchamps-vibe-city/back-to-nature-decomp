@@ -48,6 +48,8 @@
 #include "ovl27_scene_setup.h"
 #include "ovl27_work_area_init.h"
 #include "ui_sprites.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 /* Implementation helpers used by the earlier setup/menu definitions.
  * Consolidation changes declaration visibility, not their external linkage. */
@@ -699,24 +701,20 @@ s32 Ovl27RestartTitlePanelLoop(void) {
     return (s32)Ovl27OpenTitlePanel;
 }
 
-void func_80017A38 (s16 arg0, s16 arg1);
-void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s16 *func_8001A970 (s32 arg0, s16 *arg1, s32 arg2);
-
 void Ovl27DrawTitleRecordSummary(void) {
     s32 temp_s2;
     u8 *base;
 
     temp_s2 = gActiveRenderContext->field_D8 + 0x80;
-    func_80017A38(0, 1);
+    SetTextSpacing(0, 1);
     DrawMenuPanel((u32 *) (gActiveRenderContext->field_D8 + 0x84), 1, 0x48, 0x38, 0xB0, 0x5A);
-    func_80017B3C(temp_s2, (s32) ((u8 *) D_80051AF6 + *gTextBankOffsets), 0x4C, 0x3C);
-    func_80017A38(0, 0);
+    DrawTextLine(temp_s2, (s32) ((u8 *) D_80051AF6 + *gTextBankOffsets), 0x4C, 0x3C);
+    SetTextSpacing(0, 0);
     base = (u8 *) D_8006C838;
     DrawUiSprite2BFrame(temp_s2, 0xAC, 0x48, *(s16 *) (base + 0x5246));
     gOvl27TitleSummaryText = 0x71;
-    *(u16 *) func_8001A970((*(s16 *) (base + 0x5248)) + 1, (&gOvl27TitleSummaryText + 1), 2) = 0xFFFF;
-    func_80017B3C(temp_s2, (s32) &gOvl27TitleSummaryText, 0xBC, 0x48);
+    *(u16 *) WriteDecimalText((*(s16 *) (base + 0x5248)) + 1, (&gOvl27TitleSummaryText + 1), 2) = 0xFFFF;
+    DrawTextLine(temp_s2, (s32) &gOvl27TitleSummaryText, 0xBC, 0x48);
 }
 
 void Ovl27DrawTitleMenuBackdropFull(void) {
@@ -1021,8 +1019,6 @@ void Ovl27DrawBackdropAnim35(void) {
     DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x88, ((s32)(&gOvl27BackdropSpriteSource)), 0x23, 0, 0, 0);
 }
 
-void func_80017B3C(s32 orderingTable, s32 text, s32 x, s32 y);
-
 /* Loaded text-bank offsets; the menu supplies an unchecked index 0..3.
  * Drawing the label and its panel consumes packet work. */
 void Ovl27DrawTextBankLabel(s16 index) {
@@ -1030,7 +1026,7 @@ void Ovl27DrawTextBankLabel(s16 index) {
 
     text = (s32)&D_8005175C + (*gTextBankOffsets + gOvl27TitleLabelOffsets[index]);
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 4), 1, 0x10, 0x10, 0x78, 0x14);
-    func_80017B3C(gActiveRenderContext->field_D8, text, 0x14, 0x14);
+    DrawTextLine(gActiveRenderContext->field_D8, text, 0x14, 0x14);
 }
 
 /* Stage archive 0 bytes [0x2000,0x25000) at graphics heap+0x4290.

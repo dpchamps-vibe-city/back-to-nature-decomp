@@ -56,7 +56,7 @@ import { declaratorName, field, namedChildren, parseC, type Node } from "../agen
 /* ------------------------------------------------------------------ */
 
 const ALIAS = /^(?:(?:(ovl_\d+)_)?func|(D))_([0-9A-F]{8})$/;
-const ALIAS_TOKEN = /\b(?:(?:ovl_\d+_)?func|D)_[0-9A-F]{8}\b/g;
+const ALIAS_TOKEN = /\b[A-Za-z_][A-Za-z0-9_]*\b/g;
 
 /**
  * The container prefix and address splat encodes in an anonymous name.
@@ -84,6 +84,9 @@ export interface NameTable {
   sourceDefinitions: Map<string, Set<string>>;
   /** Container id -> aliases defined, or stubbed, by the translation unit that owns their address: the function itself. */
   ownDefinitions?: Map<string, Set<string>>;
+  /** Explicit prior names, tied to container/address by symbol-row metadata.
+   * This is rename provenance, never a second linker alias. */
+  formerNames?: Map<string, Array<{ container: string; address: number }>>;
   /** Alias-shaped name -> the hand-maintained header that declares it. */
   headerDeclarations: Map<string, string>;
 }
@@ -103,7 +106,19 @@ function hex(address: number): string {
  */
 export function resolveAlias(name: string, from: string, table: NameTable): Resolution | null {
   const decoded = decodeAlias(name);
-  if (!decoded) return null;
+  if (!decoded) {
+    const candidates = (table.formerNames?.get(name) ?? []).filter((entry) =>
+      entry.container === from || entry.container === "exe" || name.startsWith(`${entry.container}_`));
+    if (candidates.length === 0) return null;
+    if (candidates.length !== 1) return { kind: "ambiguous", reason: `prior name ${name} belongs to multiple containers` };
+    const owner = candidates[0]!;
+    const canonical = table.functions.get(owner.container)?.get(owner.address);
+    if (!canonical || canonical === name || table.defined.get(owner.container)?.has(name)) return { kind: "current" };
+    if (table.sourceDefinitions.get(owner.container)?.has(name) && !table.ownDefinitions?.get(owner.container)?.has(name)) {
+      return { kind: "ambiguous", reason: `an active ${owner.container} source defines prior name ${name} outside its owning unit` };
+    }
+    return { kind: "obsolete", container: owner.container, address: owner.address, canonical };
+  }
   if (decoded.data) {
     const exe = table.containers.find((c) => c.kind === "exe");
     const local = table.containers.find((c) => c.id === from && c.kind === "overlay" && containsVram(c, decoded.address));
@@ -214,6 +229,22 @@ export function handHeaders(): string[] {
 export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
   const containers = loadContainers();
   const functions = new Map(containers.map((c) => [c.id, establishedFunctions(c)]));
+  const formerNames = new Map<string, Array<{ container: string; address: number }>>();
+  for (const container of containers) {
+    const paths = [container.paths.symbolAddrs, ...(container.kind === "overlay" ? [container.paths.symbolAddrs.replace(/\.txt$/, ".names.txt")] : [])];
+    for (const path of paths) {
+      if (!existsSync(join(ROOT, path))) continue;
+      for (const line of readFileSync(join(ROOT, path), "utf-8").split("\n")) {
+        const row = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;(.*)$/);
+        if (!row || functions.get(container.id)?.get(Number(row[2])) !== row[1]) continue;
+        for (const previous of row[3]!.matchAll(/\brenamed-from=([A-Za-z_][A-Za-z0-9_]*)/g)) {
+          const entries = formerNames.get(previous[1]!) ?? [];
+          if (!entries.some((entry) => entry.container === container.id && entry.address === Number(row[2]))) entries.push({ container: container.id, address: Number(row[2]) });
+          formerNames.set(previous[1]!, entries);
+        }
+      }
+    }
+  }
   const data = new Map(containers.map((c) => [c.id, establishedData(c, functions.get(c.id)!)]));
   const defined = new Map<string, Set<string>>();
   for (const container of containers) {
@@ -234,7 +265,7 @@ export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
   const headerDeclarations = new Map<string, string>();
   for (const [path, text] of sources) {
     if (path.endsWith(".h")) {
-      for (const name of declaredNames(text)) if (decodeAlias(name)) headerDeclarations.set(name, path);
+      for (const name of declaredNames(text)) if (decodeAlias(name) || formerNames.has(name)) headerDeclarations.set(name, path);
       continue;
     }
     const into = sourceDefinitions.get(sourceContainer(path));
@@ -252,11 +283,14 @@ export function loadNameTable(sources: ReadonlyMap<string, string>): NameTable {
       for (const member of unit.members) {
         const alias = `${container.kind === "exe" ? "" : `${container.id}_`}func_${member.vram.toString(16).toUpperCase().padStart(8, "0")}`;
         if (defined.has(alias)) own.add(alias);
+        for (const [previous, entries] of formerNames) {
+          if (defined.has(previous) && entries.some((entry) => entry.container === container.id && entry.address === member.vram)) own.add(previous);
+        }
       }
     }
     ownDefinitions.set(container.id, own);
   }
-  return { containers, functions, data, defined, sourceDefinitions, ownDefinitions, headerDeclarations };
+  return { containers, functions, data, defined, sourceDefinitions, ownDefinitions, formerNames, headerDeclarations };
 }
 
 /* ------------------------------------------------------------------ */

@@ -47,19 +47,18 @@
 #include "point_projection.h"
 #include "surface_collision.h"
 #include "ui_sprites.h"
-
-void func_80017A48(u32 arg0);
-u32 func_80017A64(void);
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 void Ovl19StepScene(void) {
     s32 *handlers;
     u32 savedTextSetting;
 
-    savedTextSetting = func_80017A64();
-    func_80017A48(3U);
+    savedTextSetting = GetTextPalette();
+    SetTextPalette(3U);
     handlers = &gOvl19PhaseHandlerWords;
     ((void (*)(s32 *))handlers[gSceneSubphase])(handlers);
-    func_80017A48(savedTextSetting);
+    SetTextPalette(savedTextSetting);
 }
 
 void Ovl19InitSceneWork(void);
@@ -338,10 +337,7 @@ s32 Ovl19ChooseInitialActorValue(void) {
     return v;
 }
 
-u32 func_80017A64 (void);
-void func_80017A48 (u32 arg0);
 s32 Ovl19GetValueLabelOffset (s16 arg0);
-void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void ovl_19_func_800B868C(void) {
     Ovl19DrawProjectedActorSprites();
     Ovl19DrawValueTable();
@@ -395,13 +391,10 @@ void ovl_19_func_800B87C4(void) {
     Ovl19DrawProjectedActorSprites();
 }
 
-/* Executable aliases: SetVal8005E2BC, SetMessagePortraitEnabled and GetMessageWindowStatus. */
-void SetVal8005E2BC(s32 arg0);
-
 void ovl_19_func_800B8830(void) {
     Ovl19ResetActorStage();
     Ovl19DrawProjectedActorSprites();
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     SetMessagePortraitEnabled(0);
     RequestMessageWindow(4, Ovl19_D_800BCFF0[gOvl19SceneWork[4]]);
     if (GetMessageWindowStatus() == 5) {
@@ -423,7 +416,7 @@ void ovl_19_func_800B8908(void) {
     s32 state;
 
     Ovl19DrawProjectedActorSprites();
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     SetMessagePortraitEnabled(0);
     RequestMessageWindow(4, 0x12);
     state = GetMessageWindowStatus();
@@ -515,7 +508,6 @@ void ovl_19_func_800B89C8(void) {
     }
 }
 
-void func_80017A08(s32 arg0, s32 arg1);
 s32 Ovl19GetValueLabelOffset(s16 arg0);
 
 void ovl_19_func_800B8C74(void) {
@@ -524,10 +516,10 @@ void ovl_19_func_800B8C74(void) {
     Ovl19DrawProjectedActorSprites();
     flag = ((Ovl19SelectionState *)gOvl19SceneWork)->flag;
     if (flag == 0) {
-        func_80017A08(0, ((Ovl19CompletionCounterView *)D_8006C838)->text);
+        SetTextSourcePointer(0, ((Ovl19CompletionCounterView *)D_8006C838)->text);
         RequestMessageWindow(4, 0x16);
     } else {
-        func_80017A08(0, (s32)((u8 *)gOvl19ValueLabelText +
+        SetTextSourcePointer(0, (s32)((u8 *)gOvl19ValueLabelText +
             Ovl19GetValueLabelOffset(((Ovl19SelectionState *)gOvl19SceneWork)->values[
                 D_800BCF24[((Ovl19SelectionState *)gOvl19SceneWork)->selection]])));
         RequestMessageWindow(4, 0x17);
@@ -658,7 +650,7 @@ void ovl_19_func_800B9124(void) {
         gOvl19SceneWork[0x101] = PlaySoundEffect(0x3A);
     }
     if (gOvl19SceneWork[7] == 0) {
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         SetMessagePortraitEnabled(0);
         RequestMessageWindow(4, 0xC);
         gOvl19SceneWork[7]++;
@@ -685,7 +677,7 @@ void ovl_19_func_800B9124(void) {
  * materialises the D_800BF560 label (D_800BF4C0 + 0xA0) and folds the +0xA0/
  * +0xE0 command records and the -0x90/-0x48 records as displacements from it. */
 void ovl_19_func_800B9288(void) {
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     SetMessagePortraitEnabled(0);
     RequestMessageWindow(4, 0xD);
     if (gOvl19SceneWork[9] == 4) {
@@ -695,7 +687,7 @@ void ovl_19_func_800B9288(void) {
     }
     if (ovl_19_func_800BA25C() == 1) {
         if (GetMessageWindowStatus() == 5) {
-            SetVal8005E2BC(1);
+            SetTextInputEnabled(1);
             SetMessagePortraitEnabled(1);
         }
         if (GetMessageWindowStatus() == 2) {
@@ -1675,9 +1667,7 @@ void Ovl19DrawProjectedSpriteState(s32 orderingTable, ObjectState *sprite,
  * rather than emulating its incoming register in a separate file. Membership
  * and boundaries are documented in notes/file-groupings.md.
  */
-void func_80017A48(u32 setting);
 s32 Ovl19GetValueLabelOffset(s16 value);
-void func_80017B3C(s32 orderingTable, s32 text, s32 x, s32 y);
 
 void Ovl19DrawValueTable(void) {
     void Ovl19DrawValueTableSpriteState(s32 animation, s32 frame) {
@@ -1716,8 +1706,8 @@ void Ovl19DrawValueTable(void) {
     DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x18, (s32)sprite, display[0x1A4], display[0x1A5], 0, 0);
     column = 0;
     row = 0;
-    savedTextSetting = func_80017A64();
-    func_80017A48(1);
+    savedTextSetting = GetTextPalette();
+    SetTextPalette(1);
     firstLabel = &D_8007AE58;
     labelText = (u8 *)gOvl19ValueLabelText;
     do {
@@ -1732,7 +1722,7 @@ void Ovl19DrawValueTable(void) {
                 textOffset = Ovl19GetValueLabelOffset(((s16 *)values)[column * 4 + row]);
                 textAddress = textOffset + (s32)labelText;
             }
-            func_80017B3C(gActiveRenderContext->field_D8 + 0xC, textAddress, (s16)(column * 200 + 21),
+            DrawTextLine(gActiveRenderContext->field_D8 + 0xC, textAddress, (s16)(column * 200 + 21),
                           row > 0 ? rowYFixed >> 16 : (s16)firstRowY);
             firstRowY += 45;
             rowYFixed += 45 << 16;
@@ -1742,7 +1732,7 @@ void Ovl19DrawValueTable(void) {
         column = nextColumn;
         row = 0;
     } while (moreColumns);
-    func_80017A48(savedTextSetting);
+    SetTextPalette(savedTextSetting);
     counts = (u8 *)gOvl19SceneWork;
     if (((s16 *)counts)[4] > 0) {
         Ovl19DrawValueTableSpriteState(1, 0);

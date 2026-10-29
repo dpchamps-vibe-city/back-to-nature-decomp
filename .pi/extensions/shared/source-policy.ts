@@ -460,6 +460,27 @@ export function moduleMembers(projectRoot: string, file: string): MemberScope[] 
   return [];
 }
 
+/* Renaming a one-function source into modules/ changes its flag key, not its
+ * exception's scope. Require both original inventory and AST to prove 1:1;
+ * a helper, nested definition or carried stub prevents this equivalence. */
+function soleModuleFlagOwner(options: PolicyOptions, file: string): MemberScope | undefined {
+  const members = moduleMembers(options.projectRoot, file);
+  const path = resolve(options.projectRoot, file);
+  if (members.length !== 1 || !existsSync(path)) return undefined;
+  const facts = sourceFacts(readFileSync(path, "utf8"));
+  return facts.parses && facts.includeAsm.length === 0 && facts.definitions.length === 1 &&
+    facts.definitions[0]!.name === members[0]!.name ? members[0] : undefined;
+}
+
+function flagKeyOwner(options: PolicyOptions, key: string): MemberScope | undefined {
+  const paths = new Set([...Object.values(options.functionSources ?? {}), ...(options.changedFiles ?? [])]);
+  for (const container of loadContainers()) {
+    for (const unit of loadTranslationUnits(container)) if (unit.foldedModule) paths.add(unit.sourcePath);
+  }
+  const file = [...paths].find((path) => isModuleSourcePath(path) && flagOverrideKey(path) === key);
+  return file ? soleModuleFlagOwner(options, file) : undefined;
+}
+
 function scanSourceFile(options: PolicyOptions, file: string, findings: PolicyFinding[]): void {
   const path = resolve(options.projectRoot, file);
   if (!existsSync(path)) return;
@@ -576,11 +597,13 @@ function scanAddedPatch(options: PolicyOptions): PolicyFinding[] {
         ? text.match(/^CC1FLAGS_(\S+?)\s*:?=/)?.[1]
         : undefined;
       if (overrideStem) {
-        const overrideVram = options.functionVrams?.[overrideStem]
+        const owner = flagKeyOwner(options, overrideStem);
+        const grantName = owner?.name ?? overrideStem;
+        const overrideVram = owner?.vram ?? options.functionVrams?.[overrideStem]
           ?? (overrideStem === options.functionName ? options.functionVram : undefined);
-        const overrideContainer = options.functionContainers?.[overrideStem]
+        const overrideContainer = owner?.container ?? options.functionContainers?.[overrideStem]
           ?? (overrideStem === options.functionName ? options.functionContainer : undefined);
-        if (!allowlisted(options.config, overrideStem, overrideVram, overrideContainer, "flag-override")) {
+        if (!allowlisted(options.config, grantName, overrideVram, overrideContainer, "flag-override")) {
           findings.push({
             kind: "flag-override",
             file,
@@ -683,17 +706,22 @@ export function checkSourcePolicy(options: PolicyOptions): SourcePolicyResult {
   const overrides = resolve(options.projectRoot, "configs", "flag_overrides.mk");
   if (existsSync(overrides)) {
     const lines = readFileSync(overrides, "utf8").split("\n");
-    /* A module's own override is never covered by a member's entry: that would
-       broaden one function's exception to the whole unit. */
+    /* A multi-member unit cannot borrow one member's permission. The sole
+       exception is a proven 1:1 source rename: it changes no flag scope. */
     for (const file of scannedFiles) {
       if (!isModuleSourcePath(file)) continue;
       const key = flagOverrideKey(file).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const index = lines.findIndex((line) => new RegExp(`^CC1FLAGS_${key}\\s*:?=`).test(line));
-      if (index >= 0) hardFailures.push({
-        kind: "flag-override", file: "configs/flag_overrides.mk", line: index + 1,
-        message: `Module-level compiler flag override for ${file}: it needs the evidence review in plans/flag-review-report.md and cannot borrow a member's allowlist entry`,
-        text: lines[index]!.trim(),
-      });
+      if (index >= 0) {
+        const owner = soleModuleFlagOwner(options, file);
+        if (!owner || !allowlisted(options.config, owner.name, owner.vram, owner.container, "flag-override")) {
+          hardFailures.push({
+            kind: "flag-override", file: "configs/flag_overrides.mk", line: index + 1,
+            message: `Module-level compiler flag override for ${file}: it needs the evidence review in plans/flag-review-report.md and cannot broaden a member's allowlist entry`,
+            text: lines[index]!.trim(),
+          });
+        }
+      }
     }
     const names = options.functionName ? [options.functionName] : scanNames;
     for (const name of names) {

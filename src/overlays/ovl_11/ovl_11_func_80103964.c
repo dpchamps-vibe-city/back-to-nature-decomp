@@ -2,6 +2,11 @@
 #include "sound_commands.h"
 #include "message_window.h"
 #include "ovl11_menu_exit_flags.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 void ovl_11_func_80103EB8(void);
 void ovl_11_func_80103F8C(void);
@@ -9,7 +14,6 @@ void ovl_11_func_801040A8(void);
 s32 ovl_11_func_80103D44(void);
 s32 ovl_11_func_80103C00(void);
 void ovl_11_func_80103B24(void);
-void SetVal8005E2BC(s32 arg0);
 
 void ovl_11_func_80103964(void) {
     s32 result;
@@ -63,6 +67,6 @@ void ovl_11_func_80103964(void) {
         return;
     }
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(1, 0x764);
 }

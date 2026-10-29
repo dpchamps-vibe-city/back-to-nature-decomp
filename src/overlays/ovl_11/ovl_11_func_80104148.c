@@ -1,59 +1,67 @@
 #include "common.h"
+#include "text_engine.h"
 
-void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
-
-void ovl_11_func_80104148(s32 arg0) {
-    s16 temp_s2;
-    s16 temp_s7;
-    s16 temp_v0;
-    s16 var_s1;
-    s32 var_t0;
+/* Draw one quantity row. rowIndex selects the label and the stored/edited
+ * values; all coordinates are pixels. The caller supplies a valid row index.
+ * Selector 3 uses bank 2 and leaves the third row's label empty. */
+void ovl_11_func_80104148(s32 rowIndex) {
+    s16 storedValue;
+    s16 editedValue;
+    s16 y;
+    s16 labelId;
+    s32 bank;
     s32 mode;
     s32 three;
     register s16 x;
-    s32 *var_a1;
-    s16 *buffer;
-    s32 temp_s6;
-    Ovl11CardView *temp_v1;
+    register union {
+        s32 pair;
+        struct { signed int labelId : 16; signed int x : 16; } fields;
+    } labelCell;
+    s32 *labelText;
+    s16 *numberText;
+    s32 textContext;
+    Ovl11CardView *state;
 
-    var_t0 = 2;
-    arg0 = (s16) arg0;
-    temp_s6 = gActiveRenderContext->field_D8 + 0x58;
-    temp_v1 = (Ovl11CardView *) D_8006C838;
-    mode = temp_v1->selector;
+    bank = 2;
+    rowIndex = (s16)rowIndex;
+    textContext = gActiveRenderContext->field_D8 + 0x58;
+    state = (Ovl11CardView *)D_8006C838;
+    mode = state->selector;
     three = 3;
     if (mode != three) {
-        var_t0 = mode;
+        bank = mode;
     }
-    var_s1 = temp_v1->cards[var_t0][arg0][0];
-    temp_s2 = temp_v1->cards[var_t0][arg0][5];
-    temp_s7 = D_8012CF10[arg0];
-    temp_v0 = ((arg0 + 1) * 0xE) + 0x32;
-    if (mode == three && arg0 == 2) {
-        var_s1 = -1;
+    labelId = state->cards[bank][rowIndex][0];
+    storedValue = state->cards[bank][rowIndex][5];
+    editedValue = D_8012CF10[rowIndex];
+    y = ((rowIndex + 1) * 14) + 50;
+    if (mode == three && rowIndex == 2) {
+        labelId = -1;
     }
-    D_8012CF30_glyph.glyph = arg0 < 2 ? arg0 + 0x79 : arg0 + 0x8F;
+    D_8012CF30_glyph.glyph = rowIndex < 2 ? rowIndex + 0x79 : rowIndex + 0x8F;
     D_8012CF30_glyph.terminator = 0xFFFF;
-    x = 0x2B;
-    func_80017B3C(temp_s6, (s32) &D_8012CF30_glyph.glyph, x, (s32) temp_v0);
-    if (var_s1 != -1) {
-        var_a1 = (s32 *) (D_800556A8 + D_80127430[var_s1][0]);
-        x += 0x12;
+    x = 43;
+    DrawTextLine(textContext, (s32)&D_8012CF30_glyph.glyph, x, (s32)y);
+    /* Keep the label and starting column signed-halfword sized through the
+     * label choice. The subsequent column advances have the same truncation. */
+    labelCell.pair = (labelId & 0xFFFF) | (61 << 16);
+    x = labelCell.fields.x;
+    labelId = labelCell.fields.labelId;
+    if (labelId != -1) {
+        labelText = (s32 *)(D_800556A8 + D_80127430[labelId][0]);
     } else {
-        var_a1 = &D_80075AD8;
-        x += 0x12;
+        labelText = &D_80075AD8;
     }
-    func_80017B3C(temp_s6, (s32) var_a1, x, (s32) temp_v0);
-    x += 0x51;
-    func_80017B3C(temp_s6, (s32) (D_80051BF4 + *gTextBankOffsets), x, (s32) temp_v0);
-    x += 0x24;
-    buffer = &D_8012CF30_glyph.glyph;
-    *(u16 *)func_8001A970((s32) temp_s2, buffer, 2) = 0xFFFF;
-    func_80017B3C(temp_s6, (s32) buffer, x, (s32) temp_v0);
-    x += 0x1B;
-    *(u16 *)func_8001A970((s32) temp_s7, buffer, 2) = 0xFFFF;
-    func_80017B3C(temp_s6, (s32) buffer, x, (s32) temp_v0);
-    x += 0x12;
-    func_80017B3C(temp_s6, (s32) (D_80051BF4 + 0xA + *gTextBankOffsets), x, (s32) temp_v0);
+    DrawTextLine(textContext, (s32)labelText, x, (s32)y);
+    x += 81;
+    DrawTextLine(textContext, (s32)(D_80051BF4 + *gTextBankOffsets), x, (s32)y);
+    x += 36;
+    numberText = &D_8012CF30_glyph.glyph;
+    *(u16 *)WriteDecimalText((s32)storedValue, numberText, 2) = 0xFFFF;
+    DrawTextLine(textContext, (s32)numberText, x, (s32)y);
+    x += 27;
+    *(u16 *)WriteDecimalText((s32)editedValue, numberText, 2) = 0xFFFF;
+    DrawTextLine(textContext, (s32)numberText, x, (s32)y);
+    x += 18;
+    DrawTextLine(textContext, (s32)(D_80051BF4 + 10 + *gTextBankOffsets), x, (s32)y);
 }

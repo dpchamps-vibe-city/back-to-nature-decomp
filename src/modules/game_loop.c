@@ -60,6 +60,7 @@
 #include "render_packet_pool.h"
 #include "state_memory_init.h"
 #include "scene_phase.h"
+#include "text_engine.h"
 
 /* SceneEntryHook is declared void in functions.h but all call sites pass
    an s32 argument (0 or 1). The callee body is empty and ignores it,
@@ -77,10 +78,6 @@ void ResetActiveRenderContext(void);
 void SelectRenderConfiguration(s32 arg0);
 void CopyRenderContextBackup(s32 arg0, s32 arg1);
 void InitPads(void);
-/* func_800145F0 ends with `addu $v0,$zero,$zero` before `jr $ra` — it
-   returns 0, and the target's callers keep $v0 out of post-call temporaries. */
-void func_80017A48(u32 arg0);
-void func_80017A70(u32 arg0);
 
 /* Globals accessed by this function */
 /* D_80010098 / D_8001009C: the target loads these with the unsplit assembler
@@ -215,8 +212,8 @@ int main(void) {
     InitStateMemory();
     InitSoundOutputAndCdFiles();
     OpenSoundSequencesAndStart();
-    func_80017A48(3);
-    func_80017A70(3);
+    SetTextPalette(3);
+    SetTextSpeedIndex(3);
     D_8005E398 = 0;
 
     while (1) {

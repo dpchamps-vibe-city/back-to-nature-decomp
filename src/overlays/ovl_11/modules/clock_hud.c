@@ -11,13 +11,10 @@
 #include "psyq/libgte.h"
 #include "beveled_panel.h"
 #include "ui_sprites.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
-s16 *func_8001A970(s32 value, s16 *text, s32 digits);
-void func_80017B3C(s32 ot, s32 text, s32 x, s32 y);
-u16 *func_8001AAB8(s32 weekday, u16 *text);
-u32 func_80017A64(void);
-void func_80017A48(u32 style);
-void func_80017D9C(s32 *ot, u16 *text, s16 x, s16 y, s32 frame);
 void Ovl11DrawClockHud(void);
 
 void Ovl11ResetClockHud(void) {
@@ -68,12 +65,12 @@ void Ovl11DrawClockHud(void) {
     x = 0x114;
     DrawUiSprite2BFrame(textOt, 0xE8, 0x13,
         ((struct Ovl11CalendarDisplayStateView *)D_8006C838)->season);
-    *(u16 *)func_8001A970((((struct Ovl11CalendarDisplayStateView *)D_8006C838)->day) + 1,
+    *(u16 *)WriteDecimalText((((struct Ovl11CalendarDisplayStateView *)D_8006C838)->day) + 1,
         (s16 *)&gOvl11ClockHudText, 2) = 0xFFFF;
-    func_80017B3C(textOt, (s32)&gOvl11ClockHudText, 0xFC, 0x13);
-    *func_8001AAB8((s32)(((struct Ovl11CalendarDisplayStateView *)D_8006C838)->weekday),
+    DrawTextLine(textOt, (s32)&gOvl11ClockHudText, 0xFC, 0x13);
+    *WriteWeekdayNameText((s32)(((struct Ovl11CalendarDisplayStateView *)D_8006C838)->weekday),
         (u16 *)&gOvl11ClockHudText) = 0xFFFF;
-    previousStyle = func_80017A64();
+    previousStyle = GetTextPalette();
     do {
         if ((((struct Ovl11CalendarDisplayStateView *)D_8006C838)->weekday) != 0) {
             style = 5;
@@ -83,9 +80,9 @@ void Ovl11DrawClockHud(void) {
         } else {
             style = 4;
         }
-        func_80017A48(style);
-        func_80017B3C(textOt, (s32)&gOvl11ClockHudText, x, y);
-        func_80017A48(previousStyle);
+        SetTextPalette(style);
+        DrawTextLine(textOt, (s32)&gOvl11ClockHudText, x, y);
+        SetTextPalette(previousStyle);
         x = 0xE8;
         y = 0x21;
         cursor = (s16 *)&gOvl11ClockHudText;
@@ -102,17 +99,17 @@ void Ovl11DrawClockHud(void) {
             hour -= 0xC;
         }
         do {
-            cursor = func_8001A970((s32)hour, cursor, 2);
+            cursor = WriteDecimalText((s32)hour, cursor, 2);
             *cursor++ = 0xFFD;
             minuteTens = (s16)((s16)(((struct Ovl11CalendarDisplayStateView *)D_8006C838)->minute) / 10);
-            cursor = func_8001A970(0, func_8001A970((s32)minuteTens, cursor, 1), 1);
+            cursor = WriteDecimalText(0, WriteDecimalText((s32)minuteTens, cursor, 1), 1);
             display = (s16 *)&gOvl11ClockHudText;
             finalDisplay = display;
             glyphDisplay = finalDisplay;
             row = y;
             y = 0;
             *(u16 *)cursor = 0xFFFF;
-            func_80017B3C(textOt, (s32)display, x, row);
+            DrawTextLine(textOt, (s32)display, x, row);
             display = 0;
             finalDisplay = 0;
             minute = (s16)((struct Ovl11CalendarDisplayStateView *)D_8006C838)->minute;
@@ -123,7 +120,7 @@ void Ovl11DrawClockHud(void) {
             fiveMinuteDigit = (minute - minuteTens * 10) / 5;
             gOvl11ClockHudText.leadingGlyph = 0x66;
             ((u16 *)glyphDisplay)[1] = 0xFFFF;
-            func_80017D9C((s32 *)textOt, (u16 *)glyphDisplay, 0x110, row, fiveMinuteDigit);
+            DrawTextLineSemiTransparent((s32 *)textOt, (u16 *)glyphDisplay, 0x110, row, fiveMinuteDigit);
             x = 0;
             y = 0;
         } while (repeat);

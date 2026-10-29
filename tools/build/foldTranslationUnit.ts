@@ -16,9 +16,10 @@
  *    extended, and any other module it absorbs whole (a merge);
  *  - the fold crosses no other configured segment — no non-member function,
  *    assembly, library object or data;
- *  - no member carries a per-function compiler-flag override (inside a module
- *    every member compiles under one command line; reconcile the override with
- *    the evidence in plans/flag-review-report.md first);
+ *  - no multi-member unit carries a per-function compiler-flag override.
+ *    A singleton may rename its existing override key without broadening its
+ *    scope; --write first measures baseline, then checks the retained profile.
+ *    Multi-member conflicts still require plans/flag-review-report.md;
  *  - the members' jump tables form one run of the rodata window, in member
  *    order, with only verified zero padding for cc1's table alignment between
  *    them — the only layout a pooled `.rodata` section can reproduce;
@@ -40,7 +41,8 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { dirname, join, posix } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
@@ -51,7 +53,7 @@ import { loadOriginalFunctionInventory, loadSubsegments, type OriginalFunctionSp
 import { flagOverrideKey, loadTranslationUnits, MODULE_DIR, moduleStemProblem, type TranslationUnit } from "../lib/translationUnits.js";
 import { auditContainer, loadFlagOverrideKeys } from "../lib/translationUnitAudit.js";
 import { field, namedChildren, parseC, type Node } from "../agent/residual-source-search/tree-sitter-c.js";
-import { compareFunction } from "../lib/functionOracle.js";
+import { compareFunction, renderDiff } from "../lib/functionOracle.js";
 import { computeLiveness } from "../lib/liveness.js";
 import { compileSource } from "../agent/decompToolchain.js";
 import { findWindow, mixedRodataAddress, parseSubsegments } from "./deriveRodataSplits.js";
@@ -79,6 +81,8 @@ export interface FoldPlan {
   moduleText: string;
   configPath: string;
   configText: string;
+  /** A source-path rename for the SAME one-function exception, never a new profile. */
+  flagConfig?: { path: string; text: string; owner: string; flags: string };
   notes: string[];
 }
 
@@ -508,8 +512,20 @@ export function planFold(request: FoldRequest): FoldPlan {
   /* One command line for the whole unit. */
   const keys = loadFlagOverrideKeys();
   const modulePath = posix.join(container.paths.srcDir, `${stem}.c`);
+  let flagConfig: FoldPlan["flagConfig"];
   for (const member of members) {
-    if (keys.has(member.name)) refuse(`${member.name} has a per-function flag override (CC1FLAGS_${member.name}); reconcile it per plans/flag-review-report.md before folding`);
+    if (!keys.has(member.name)) continue;
+    if (members.length !== 1) refuse(`${member.name} has a per-function flag override (CC1FLAGS_${member.name}); reconcile it per plans/flag-review-report.md before folding`);
+    const path = "configs/flag_overrides.mk";
+    const text = readFileSync(join(ROOT, path), "utf8");
+    const key = member.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(`^CC1FLAGS_${key}\\s*:?=\\s*(.+)$`, "m");
+    const setting = text.match(pattern);
+    if (!setting || setting[1]!.includes("$")) refuse(`${member.name}: singleton migration requires an existing literal flag list`);
+    flagConfig = {
+      path, owner: member.name, flags: setting[1]!.trim(),
+      text: text.replace(pattern, (line) => line.replace(`CC1FLAGS_${member.name}`, `CC1FLAGS_${flagOverrideKey(modulePath)}`)),
+    };
   }
   if (keys.has(flagOverrideKey(modulePath))) refuse(`configs/flag_overrides.mk already overrides ${flagOverrideKey(modulePath)}`);
 
@@ -579,6 +595,7 @@ export function planFold(request: FoldRequest): FoldPlan {
   }
   const rewritten = foldConfigLines(configLines, touched.map((u) => u.segmentName), stem, alignmentPadding, mixedPoolGaps, mixedPool);
   const notes = [...rewritten.notes];
+  if (flagConfig) notes.push(`renames ${flagConfig.owner}'s existing flag key to ${flagOverrideKey(modulePath)} (${flagConfig.flags}); one function, unchanged exception scope; --write measures baseline first`);
 
   /* Embedded asm that names a cc1 label: read the labels its unit's own
      assembly defines now, to renumber them once the module is compiled. */
@@ -609,6 +626,7 @@ export function planFold(request: FoldRequest): FoldPlan {
     moduleText: merged.text,
     configPath,
     configText: rewritten.lines.join("\n"),
+    ...(flagConfig ? { flagConfig } : {}),
     notes: [...notes, ...merged.notes],
   };
 }
@@ -638,7 +656,7 @@ function checkTarget(container: Container): string {
  * over a batch of folds.
  */
 export function applyFold(plan: FoldPlan, log: (line: string) => void = console.log): { ok: boolean; detail: string } {
-  const touched = [plan.modulePath, plan.configPath, ...plan.removedSources];
+  const touched = [plan.modulePath, plan.configPath, ...plan.removedSources, ...(plan.flagConfig ? [plan.flagConfig.path] : [])];
   const saved = new Map(touched.map((path) => [path, existsSync(join(ROOT, path)) ? readFileSync(join(ROOT, path)) : null]));
   const rollback = (why: string): { ok: false; detail: string } => {
     for (const [path, content] of saved) {
@@ -660,6 +678,7 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
   writeFileSync(join(ROOT, plan.modulePath), plan.moduleText);
   for (const path of plan.removedSources) rmSync(join(ROOT, path), { force: true });
   writeFileSync(join(ROOT, plan.configPath), plan.configText);
+  if (plan.flagConfig) writeFileSync(join(ROOT, plan.flagConfig.path), plan.flagConfig.text);
   log(`wrote ${plan.modulePath}, ${plan.configPath}; removed ${plan.removedSources.join(", ")}`);
 
   log(`make ${splitTarget(plan.container)}`);
@@ -673,6 +692,29 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
       ...resplit.split("\n").filter((line) => !planned.has(line)).map((line) => `  + ${line.trim()}`),
     ];
     return rollback(`the re-split rewrote ${plan.configPath}: the generator does not preserve the module\n${changes.slice(0, 12).join("\n")}`);
+  }
+
+  if (plan.flagConfig) {
+    const dir = join(ROOT, "build/foldTranslationUnit", plan.container.id, plan.stem.slice(`${MODULE_DIR}/`.length), "baseline");
+    try {
+      const compiled = compileSource(plan.modulePath, dir, "baseline", {
+        assemble: true, useOverrides: false, containerKind: plan.container.kind,
+      });
+      const member = plan.members[0]!;
+      const result = compareFunction(member.name, { container: plan.container, objectPath: compiled.object! });
+      writeFileSync(join(dir, "report.json"), JSON.stringify({
+        owner: member.name, sourceHash: createHash("sha256").update(readFileSync(join(ROOT, plan.modulePath))).digest("hex"),
+        preprocessedHash: createHash("sha256").update(readFileSync(compiled.preprocessed)).digest("hex"),
+        objectHash: createHash("sha256").update(readFileSync(compiled.object!)).digest("hex"),
+        flags: compiled.cc1Flags, retainedFlags: plan.flagConfig.flags, verdict: result.verdict,
+      }, null, 2) + "\n");
+      writeFileSync(join(dir, "diff.txt"), renderDiff(result, false).join("\n") + "\n");
+      log(`singleton baseline: ${member.name}: ${result.verdict}; ${posix.relative(ROOT, dir)}/report.json`);
+      if (result.verdict === "match") return rollback(`${member.name} matches baseline: retire its unnecessary override before folding`);
+      if (result.verdict !== "mismatch") return rollback(`${member.name}: baseline is undetermined, so the existing setting cannot be assessed`);
+    } catch (error) {
+      return rollback(`singleton baseline control failed: ${(error as Error).message}`);
+    }
   }
 
   if (plan.relabel.length > 0) {
@@ -703,7 +745,35 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
   mkdirSync(reportDir, { recursive: true });
   writeFileSync(join(reportDir, "check.log"), check.output);
   /* The tools' own diagnostics name the cause; make's tail only names the target. */
-  if (check.code !== 0) return rollback(`make ${checkTarget(plan.container)} failed:\n${failureLines(check.output).join("\n")}`);
+  if (check.code !== 0) {
+    /* A linked hash alone cannot identify the declaration/context change that
+       broke a whole-unit fold. Preserve the existing member oracle's evidence
+       before rollback removes the module and overwrites its object. This is
+       diagnostic only: the failed container still unconditionally rolls back. */
+    writeFileSync(join(reportDir, "failed-source.c"), readFileSync(join(ROOT, plan.modulePath)));
+    const objectPath = posix.join(plan.container.paths.objDir, `${plan.stem}.c.o`);
+    const memberReports: Array<{ member: string; verdict: string; detail?: string }> = [];
+    if (existsSync(join(ROOT, objectPath)) &&
+        statSync(join(ROOT, objectPath)).mtimeMs >= statSync(join(ROOT, plan.modulePath)).mtimeMs) {
+      writeFileSync(join(reportDir, "failed-object.o"), readFileSync(join(ROOT, objectPath)));
+      for (const member of plan.members.filter((m) => !plan.stubs.includes(m.name))) {
+        try {
+          const result = compareFunction(member.name, { container: plan.container });
+          memberReports.push({ member: member.name, verdict: result.verdict });
+          if (result.verdict !== "match") {
+            writeFileSync(join(reportDir, `${member.name}.diff.txt`), renderDiff(result, false).join("\n") + "\n");
+          }
+        } catch (error) {
+          memberReports.push({ member: member.name, verdict: "undetermined", detail: (error as Error).message });
+        }
+      }
+      writeFileSync(join(reportDir, "members.json"), JSON.stringify(memberReports, null, 2) + "\n");
+      const failed = memberReports.filter((member) => member.verdict !== "match");
+      log(`Failed-link member oracle: ${memberReports.length - failed.length}/${memberReports.length} exact; ${failed.map((member) => `${member.member}: ${member.verdict}`).join(", ") || "member text is exact; inspect linked placement/data"}`);
+      log(`Preserved failed source/object and member evidence in ${posix.relative(ROOT, reportDir)}`);
+    }
+    return rollback(`make ${checkTarget(plan.container)} failed:\n${failureLines(check.output).join("\n")}`);
+  }
 
   /* A carried stub assembles the original disassembly; the container check covers it. */
   for (const member of plan.members.filter((m) => !plan.stubs.includes(m.name))) {

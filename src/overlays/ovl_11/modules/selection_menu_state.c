@@ -53,6 +53,7 @@
 #include "game_flags.h"
 #include "ovl11_menu_exit_flags.h"
 #include "ui_sprites.h"
+#include "text_engine.h"
 
 void Ovl11ResetSelectionModeState(void) {
     s32 i;
@@ -77,7 +78,6 @@ void Ovl11ResetSelectionModeState(void) {
 }
 
 void Ovl11PromptRecordGridEntry(void);
-void SetVal8005E2BC(s32 arg0);
 
 void Ovl11EnterSelectionModeDefault(void) {
     ((struct struct_8006C838_view *)&D_8006C838)->field_0C |= 0x20000;
@@ -89,7 +89,7 @@ void Ovl11EnterSelectionModeDefault(void) {
     PlaySoundEffect(3);
     Ovl11ServiceTextureStream(-1);
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x3B5);
 }
 
@@ -105,13 +105,9 @@ void Ovl11EnterSelectionModeAlternate(void) {
     PlaySoundEffect(3);
     Ovl11ServiceTextureStream(-1);
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x3B5);
 }
-
-u32 func_80017A64(void);
-void func_80017A48(u32 arg0);
-void func_80017A38(s16 arg0, s16 arg1);
 
 void Ovl11ServiceSelectionMode(void) {
     s32 orderingTable;
@@ -139,14 +135,14 @@ void Ovl11ServiceSelectionMode(void) {
                     Ovl11_D_801273E8 = 0;
                     Ovl11_D_801273E7 = 0;
                 }
-                savedPalette = func_80017A64();
-                func_80017A48(3U);
-                func_80017A38(1, 2);
+                savedPalette = GetTextPalette();
+                SetTextPalette(3U);
+                SetTextSpacing(1, 2);
                 Ovl11ClearTextureCellActivity();
                 gOvl11LastSelectionHandler = Ovl11_D_801273DC;
                 Ovl11_D_801273DC();
-                func_80017A48(savedPalette);
-                func_80017A38(0, 2);
+                SetTextPalette(savedPalette);
+                SetTextSpacing(0, 2);
             }
         }
     }
@@ -210,7 +206,7 @@ void Ovl11ServiceSelectionRecordGrid(void) {
     s8 column;
 
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x3B8);
     Ovl11DrawSelectionRecordNames(Ovl11_D_801273E8);
     if (IsMessageWindowStatusFinal()) {
@@ -300,7 +296,7 @@ void Ovl11ShowSelectionRecord(void) {
     s32 buttons;
 
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x3B9);
     Ovl11DrawSelectionRecordSlots((u8)gOvl11SelectionRecordIndex, 0);
     if (IsMessageWindowStatusFinal() != 0) {
@@ -320,7 +316,7 @@ void Ovl11ShowSelectionRecordRequirements(void) {
     s32 buttons;
 
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x3BA);
     Ovl11DrawSelectionRecordSlots((u8)gOvl11SelectionRecordIndex, 1);
     if (IsMessageWindowStatusFinal() != 0) {
@@ -365,9 +361,7 @@ void Ovl11ChooseSelectionRecordAction(void) {
     }
 }
 
-void func_80017A38 (s16 arg0, s16 arg1);
 s32 Ovl11LookupSelectionTextOffset (u16 arg0);
-void func_80017B3C (s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void Ovl11DrawSelectionRecordNames(u8 arg0) {
     s32 temp_s0;
@@ -385,7 +379,7 @@ void Ovl11DrawSelectionRecordNames(u8 arg0) {
     DrawMenuPanel((u32 *)(temp_t0 + 0x74), 1, 0xE, 0x10, 0x124, 0x94);
     DrawAnimatedUiSprite0D(temp_s0, 6, 0x5A);
     DrawAnimatedUiSprite0C(temp_s0, 0x12A, 0x5A);
-    func_80017A38(0, 2);
+    SetTextSpacing(0, 2);
     var_s5 = 0x1C;
     for (var_s2 = 0; var_s2 < 2; var_s2++) {
         var_s1 = 0x15;
@@ -394,12 +388,12 @@ void Ovl11DrawSelectionRecordNames(u8 arg0) {
             if (temp_a0 == 0) {
                 break;
             }
-            func_80017B3C(base, (s32) ((void *) ((u8 *) D_8005175C + (*gTextBankOffsets + Ovl11LookupSelectionTextOffset(temp_a0)))), var_s5, var_s1);
+            DrawTextLine(base, (s32) ((void *) ((u8 *) D_8005175C + (*gTextBankOffsets + Ovl11LookupSelectionTextOffset(temp_a0)))), var_s5, var_s1);
             var_s1 = (s32) (s16) (var_s1 + 0xE);
         }
         var_s5 = (s32) (s16) (var_s5 + 0x90);
     }
-    func_80017A38(1, 2);
+    SetTextSpacing(1, 2);
 }
 
 s32 Ovl11LookupSelectionTextOffset(u16 id) {
@@ -446,7 +440,6 @@ s32 Ovl11TestSelectionRecordRequirements(s32 arg0) {
 
 s32 Ovl11TestSelectionUnlockedMask (u16 arg0);
 s32 Ovl11SelectionItemExists (s32 arg0);
-void SetVal8005E2BC (s32 arg0);
 void Ovl11LoadTextureCellRecord (u16 arg0);
 void Ovl11DrawCachedTextureCell (s32 *arg0, u16 arg1, s16 arg2, s16 arg3);
 void Ovl11LoadSelectionWorkSet (s32 arg0);
@@ -482,8 +475,8 @@ void Ovl11DrawSelectionRecordSlots(u8 arg0, u8 arg1) {
     var_s5 = 0x14;
     var_s7 = 1;
     DrawMenuPanel(temp_s0, 1, 0x16, 0x5A, 0x10E, 0x4A);
-    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) &D_8005396A + *gTextBankOffsets)), 0x21, 0x20);
-    func_80017B3C(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_8005396A + 0x12)) + *gTextBankOffsets)), 0x21, 0x6A);
+    DrawTextLine(temp_s3, (s32) ((void *) ((u8 *) &D_8005396A + *gTextBankOffsets)), 0x21, 0x20);
+    DrawTextLine(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_8005396A + 0x12)) + *gTextBankOffsets)), 0x21, 0x6A);
     var_s2 = gOvl11SelectionFlagSlotIds;
     for (; var_s6 < 7; var_s6++) {
         if (*(u16 *)(temp_fp + 4) & var_s7) {
@@ -588,7 +581,6 @@ void Ovl11LoadSelectionWorkSet(s32 recordIndex) {
     } while (remaining >= 0);
 }
 
-void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void Ovl11DrawSelectionFlagSlots(void);
 void Ovl11DrawSelectionWorkItems(void);
 void Ovl11ShowSelectionFlagMessage(s8 arg0);
@@ -608,8 +600,8 @@ void Ovl11ServiceSelectionFlagSlots(void) {
     text = ui + 0x70;
     DrawMenuPanel(panels, 1, 0x16, 0x10, 0x10E, 0x4A);
     DrawMenuPanel(panels, 1, 0x16, 0x5A, 0x10E, 0x4A);
-    func_80017B3C(text, (s32)(D_8005396A + 0x28 + gTextBankOffsets[0]), 0x21, 0x20);
-    func_80017B3C(text, (s32)(D_8005396A + gTextBankOffsets[0]), 0x21, 0x6A);
+    DrawTextLine(text, (s32)(D_8005396A + 0x28 + gTextBankOffsets[0]), 0x21, 0x20);
+    DrawTextLine(text, (s32)(D_8005396A + gTextBankOffsets[0]), 0x21, 0x6A);
     Ovl11DrawSelectionFlagSlots();
     Ovl11DrawSelectionWorkItems();
     if (D_801273E4_state == 4) {
@@ -618,7 +610,7 @@ void Ovl11ServiceSelectionFlagSlots(void) {
         Ovl11ServiceSelectionAggregateFlags();
     } else {
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(3, 0x3BC);
         if (IsMessageWindowStatusFinal()) {
             switch (((u32 *)gPad0Input)[0]) {
@@ -706,13 +698,11 @@ void Ovl11ShowSelectionFlagMessage(s8 arg0) {
     }
 }
 
-void func_80017D9C(s32 *arg0, u16 *arg1, s16 arg2, s16 arg3, s32 arg4);
-
 void Ovl11ServiceSelectionAggregateFlags(void) {
     s32 *text;
 
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x3BD);
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x5C), 1, 0xA6, 0x58, 0x68, 0x48);
     if (IsMessageWindowStatusFinal()) {
@@ -746,11 +736,11 @@ void Ovl11ServiceSelectionAggregateFlags(void) {
         }
     }
     text = (s32 *)(gActiveRenderContext->field_D8 + 0x58);
-    func_80017D9C(text, (u16 *)(D_8005399A + gTextBankOffsets[0]), 0xB1, 0x5A, ((D_801273EE_flags >> 7) ^ 1) & 1);
-    func_80017D9C(text, (u16 *)(D_8005399A + 0xC + gTextBankOffsets[0]), 0xB1, 0x68, ((D_801273EE_flags >> 8) ^ 1) & 1);
-    func_80017D9C(text, (u16 *)(D_8005399A + 0x16 + gTextBankOffsets[0]), 0xB1, 0x76, ((D_801273EE_flags >> 9) ^ 1) & 1);
-    func_80017D9C(text, (u16 *)(D_8005399A + 0x26 + gTextBankOffsets[0]), 0xB1, 0x84, ((D_801273EE_flags >> 10) ^ 1) & 1);
-    func_80017D9C(text, (u16 *)(D_8005399A + 0x38 + gTextBankOffsets[0]), 0xB1, 0x92, ((D_801273EE_flags >> 11) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + gTextBankOffsets[0]), 0xB1, 0x5A, ((D_801273EE_flags >> 7) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0xC + gTextBankOffsets[0]), 0xB1, 0x68, ((D_801273EE_flags >> 8) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0x16 + gTextBankOffsets[0]), 0xB1, 0x76, ((D_801273EE_flags >> 9) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0x26 + gTextBankOffsets[0]), 0xB1, 0x84, ((D_801273EE_flags >> 10) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0x38 + gTextBankOffsets[0]), 0xB1, 0x92, ((D_801273EE_flags >> 11) ^ 1) & 1);
 }
 
 void Ovl11DrawSelectionFlagSlots(void) {
@@ -845,7 +835,6 @@ s32 Ovl11SelectionSlotMask(s8 arg0) {
     return (1 << arg0) & 0xFFFF;
 }
 
-void func_8001AAF4(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
 void Ovl11DrawSelectionWorkIdRow(void);
 void Ovl11DrawSelectionItemGridPage(void);
 void Ovl11ShowSelectionGridItemMessage(s8 arg0, s8 arg1);
@@ -867,14 +856,14 @@ void Ovl11ServiceSelectionItemGrid(void) {
     text = ui + 0x70;
     DrawMenuPanel(panels, 1, 0x16, 0x10, 0x10E, 0x4A);
     DrawMenuPanel(panels, 1, 0x16, 0x5A, 0x10E, 0x4A);
-    func_80017B3C(text, (s32)(D_800539E8 + gTextBankOffsets[0]), 0x21, 0x20);
+    DrawTextLine(text, (s32)(D_800539E8 + gTextBankOffsets[0]), 0x21, 0x20);
     if (D_801273EA_table == 0) {
-        func_80017B3C(text, (s32)(D_800539E8 + 0x16 + gTextBankOffsets[0]), 0x21, 0x6A);
+        DrawTextLine(text, (s32)(D_800539E8 + 0x16 + gTextBankOffsets[0]), 0x21, 0x6A);
     } else {
-        func_80017B3C(text, (s32)(D_800539E8 + 0x28 + gTextBankOffsets[0]), 0x21, 0x6A);
-        func_8001AAF4(D_801273EA_table, 1, text, 0x2A, 0x78);
-        func_80017B3C(text, (s32)(D_800539E8 + 0x36 + gTextBankOffsets[0]), 0x33, 0x78);
-        func_8001AAF4(8, 1, text, 0x3C, 0x78);
+        DrawTextLine(text, (s32)(D_800539E8 + 0x28 + gTextBankOffsets[0]), 0x21, 0x6A);
+        DrawNumberText(D_801273EA_table, 1, text, 0x2A, 0x78);
+        DrawTextLine(text, (s32)(D_800539E8 + 0x36 + gTextBankOffsets[0]), 0x33, 0x78);
+        DrawNumberText(8, 1, text, 0x3C, 0x78);
     }
     Ovl11DrawSelectionWorkIdRow();
     Ovl11DrawSelectionItemGridPage();
@@ -891,7 +880,7 @@ void Ovl11ServiceSelectionItemGrid(void) {
         Ovl11ConfirmSelectionItemGrid();
     } else {
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(3, 0x3BE);
         if (IsMessageWindowStatusFinal()) {
             switch (((u32 *)gPad0Input)[0]) {

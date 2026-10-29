@@ -26,11 +26,11 @@ s32 Ovl11SelectObjectStateOrDirectionCommand(s16 stateOrDirection, s16 recordSel
         ((struct Ovl11CompactRecordDirectionView *) record)->direction = stateOrDirection;
     } else {
         if (((Ovl11CBB9CGlobals *) D_8006C838)->state != stateOrDirection) {
-            savedFlags = ((struct struct_8006C838_800E4608 *) D_8006C838)->field_0C;
+            savedFlags = ((struct Ovl11CurrentObjectSpriteWork *) D_8006C838)->flags;
             ((Ovl11CBB9CGlobals *) D_8006C838)->state = stateOrDirection;
-            ((struct struct_8006C838_800E4608 *) D_8006C838)->field_0C = savedFlags & 0xF7FFFFFF;
+            ((struct Ovl11CurrentObjectSpriteWork *) D_8006C838)->flags = savedFlags & 0xF7FFFFFF;
             Ovl11UpdatePrimaryObject();
-            ((struct struct_8006C838_800E4608 *) D_8006C838)->field_0C = savedFlags;
+            ((struct Ovl11CurrentObjectSpriteWork *) D_8006C838)->flags = savedFlags;
             return 1;
         }
         return 1;

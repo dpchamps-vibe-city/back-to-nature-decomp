@@ -2,10 +2,6 @@
 /* m2c context only. Types live in include/sdk_types.h, which must be
  * passed to m2c before this file. */
 
-void ovl_25_func_800B9480(s16 *arg0);
-void ovl_25_func_800B95B0(s16 *arg0);
-s32 ovl_25_func_800B9758(M2C_32ba532776b0_ReconA0View *arg0);
-s32 ovl_25_func_800B977C(Ovl25RecordIdView *record, s16 choice);
 void Ovl25AccumulateRecordTierValue(s16 *record);
 void Ovl25AcquireVramAnimationSlot(Ovl11VramAnimationDescriptor *descriptor);
 void Ovl25AdvanceSceneTarget(void);
@@ -13,6 +9,9 @@ void Ovl25ApplySceneCamera(void);
 void Ovl25BeginEventFadeIncrease(void);
 void Ovl25BeginEventPhases(void);
 s32 Ovl25BeginSceneExit(void);
+s32 Ovl25CanUpdateRecordChoice(Ovl25StateSelectorView *record);
+void Ovl25ChooseRecordStateAndTimer(s16 *record);
+void Ovl25ChooseWeightedState5Timer(s16 *record);
 void Ovl25DispatchEventPhase(void);
 void Ovl25DispatchScenePhase(void);
 void Ovl25DrawAuxiliaryRecord(Ovl25ObjectRecord *object);
@@ -37,6 +36,7 @@ s32 Ovl25LookupTierDelta(s32 inputQ12);
 s32 Ovl25LookupTierValue(s32 inputQ12);
 void Ovl25MoveEventTargetBack(void);
 void Ovl25MoveEventTargetForward(void);
+s32 Ovl25PassRecordChoiceThreshold(Ovl25RecordIdView *record, s16 choice);
 void Ovl25PauseSpriteSets(void);
 void Ovl25QueueSceneSoundLoads(void);
 void Ovl25RaiseRecordByteRangeValue(s16 recordIndex);

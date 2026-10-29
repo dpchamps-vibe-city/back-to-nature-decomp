@@ -29,8 +29,8 @@
 #include "ovl11_object_event_slot_reset_command.h"
 #include "ovl11_object_state_selection_command.h"
 #include "ovl11_area_selection_command.h"
-
-void SetVal8005E2BC(s32 value);
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 s32 Ovl11StepSelectionPrompt(s32 *step, s32 baseStep, Ovl11D8012D7B8 descriptor) {
     s32 result;
@@ -72,7 +72,7 @@ s32 Ovl11StepSelectionPrompt(s32 *step, s32 baseStep, Ovl11D8012D7B8 descriptor)
         break;
     case 3:
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         if (gOvl11InteractionDrawMode == 7) {
             gOvl11InteractionDrawMode = drawMode;
             if (RequestMessageWindow(2, 0x5F) == 0) {
@@ -140,7 +140,7 @@ s32 Ovl11StepQuantityPrompt(s32 *step, s32 baseStep, s32 drawMode,
         break;
     case 3:
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(2, 0x4D);
         Ovl11SetupQuantityPrompt(prompt, 0, 0,
             (s16)Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*record)), 0);
@@ -234,7 +234,7 @@ s32 Ovl11StepSelectedItemPurchase(s32 *step, s32 baseStep, StructD548 **record) 
             break;
         case 2:
             if (GetMessageWindowStatus() == 5) {
-                SetVal8005E2BC(0);
+                SetTextInputEnabled(0);
                 Ovl11ResumeInteractionStep();
             }
             break;

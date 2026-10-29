@@ -2,8 +2,8 @@
  * an eligible-record maximum, a flag override and a counter total.
  * The three entries' only client is that command; no query owns storage.
  * This service cut does not assert recovered object boundaries under -G0.
- * The following map-percentage scan has its own private exclusion helper
- * and an unresolved compiler-setting constraint; see notes/file-groupings.md.
+ * The following table-percentage scan has its own exclusive ID predicate
+ * and disjoint table fields; see notes/file-groupings.md.
  */
 #include "ovl11_condition_value_queries.h"
 #include "ovl11_object_events.h"

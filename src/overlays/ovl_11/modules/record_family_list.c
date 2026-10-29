@@ -18,9 +18,10 @@
 #include "beveled_panel.h"
 #include "ovl11_record_family_lookup.h"
 #include "ui_sprites.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
-void func_80017B3C(s32, s32, s32, s32);
-void func_8001AAF4(s16, s16, s32, s16, s16);
 void Ovl11DrawRecordFamilyRow(Ovl11RecordFamilyRow *, s32, s16, s16);
 
 s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 inputMode) {
@@ -84,9 +85,9 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
         (&gOvl11TextFormatScratch)[i] = prefix_value;
         i++;
     }
-    func_80017B3C(header_ot, (s32) &gOvl11TextFormatScratch, 0x52, 0x1A);
+    DrawTextLine(header_ot, (s32) &gOvl11TextFormatScratch, 0x52, 0x1A);
     gOvl11RecordListIconDrawers[kind](header_ot, 0xB0, 0x12);
-    func_80017B3C(header_ot, (s32) &(D_800535C6 + 0x3E)[*gTextBankOffsets], 0xC8, 0x1A);
+    DrawTextLine(header_ot, (s32) &(D_800535C6 + 0x3E)[*gTextBankOffsets], 0xC8, 0x1A);
     count = Ovl11FindFamilyRecordIndex(kind, filter, -1);
     if (input_mode == 0) {
         repeat_buttons = *(s32 *) ((u8 *) gPad0Input + 0);
@@ -124,7 +125,7 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
         row_offset = i * 0x18;
         next_index = i + 1;
         record_index = Ovl11FindFamilyRecordIndex(kind, filter, (s16) ((u16) gOvl11RecordListScroll + i + 1));
-        func_8001AAF4((s16) ((u16) gOvl11RecordListScroll + next_index), 2, row_ot, 0x20, (s16) (s32) (s16) (row_offset + 0x36));
+        DrawNumberText((s16) ((u16) gOvl11RecordListScroll + next_index), 2, row_ot, 0x20, (s16) (s32) (s16) (row_offset + 0x36));
         row_y = row_offset + 0x30;
         if (kind == 0) {
             record = (Ovl11RecordFamilyRow *) ((u8 *) &gSmallTaggedRecordBase + (record_index * 0xB4));
@@ -155,9 +156,7 @@ s32 Ovl11DrawAndProcessRecordFamilyList(s16 requestedKind, s16 filter, s16 input
     return result;
 }
 
-s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
 s32 Ovl11ReadRecordRowValue(s16 *arg0);
-void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void Ovl11DrawRecordRowGauge(s16 arg0, s32 arg1, s16 arg2, s16 arg3);
 
 void Ovl11DrawRecordFamilyRow(Ovl11RecordFamilyRow *record, s32 orderingTable, s16 x, s16 y) {
@@ -180,16 +179,16 @@ void Ovl11DrawRecordFamilyRow(Ovl11RecordFamilyRow *record, s32 orderingTable, s
         text[0] = 0x90;
     }
     text[4] = 0x71;
-    func_8001A970(record->ordinalIndex + 1, text + 5, 2);
+    WriteDecimalText(record->ordinalIndex + 1, text + 5, 2);
     text[8] = 0;
     text[9] = 0x26;
     text[10] = 0x24;
-    *((u16 *) func_8001A970(Ovl11ReadRecordRowValue(&record->rowValue), text + 0xB, 2)) = 0xFFFF;
-    func_80017B3C(orderingTable, (s32) ((u8 *) record + 4), (s32) (s16) (x + 2), (s32) y);
+    *((u16 *) WriteDecimalText(Ovl11ReadRecordRowValue(&record->rowValue), text + 0xB, 2)) = 0xFFFF;
+    DrawTextLine(orderingTable, (s32) ((u8 *) record + 4), (s32) (s16) (x + 2), (s32) y);
     /* The stored u16 is deliberately read as s16 before division. */
     Ovl11DrawRecordRowGauge((s16) ((s16) record->gaugeValue / 25), orderingTable, (s16) (x + 0x48), (s16) (y + 0xC));
     valueX = x + 0x58;
-    func_80017B3C(orderingTable, (s32) text, (s32) valueX, (s32) y);
+    DrawTextLine(orderingTable, (s32) text, (s32) valueX, (s32) y);
     DrawUiSprite2BFrame(orderingTable, (s16) (valueX + 0x10), y, record->trailingValue);
 }
 

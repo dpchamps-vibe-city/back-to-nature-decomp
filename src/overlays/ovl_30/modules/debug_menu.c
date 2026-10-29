@@ -27,6 +27,8 @@
 #include "sound_commands.h"
 #include "game_flags.h"
 #include "ovl30_debug_font.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 void Ovl30ResetDebugMenu(void) {
     gOvl30DebugMenuPendingChange = 0;
@@ -391,14 +393,11 @@ s32 Ovl30WriteDebugFlagBit(s32 bitIndex, s32 value) {
 
 /* Entry-time SDK console setup, before dispatching any page. */
 
-/* Shared text-origin setter; also clears the two secondary pen offsets. */
-void func_800183B8(s32 x, s32 y);
-
 void Ovl30InitDebugFont(void) {
     s32 consoleId;
 
     FntLoad(0x2C0, 0x100);
     consoleId = FntOpen(0x18, 0, 0x100, 0xC8, 0, 0x200);
     SetDumpFnt(consoleId);
-    func_800183B8(0x18, 0x18);
+    SetTextBlockOrigin(0x18, 0x18);
 }

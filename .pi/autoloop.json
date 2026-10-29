@@ -43,7 +43,7 @@
  "sourcePolicy": {
   "allowEmptyMemoryBarrier": true,
   "allowlist": {
-   "func_80019070": [
+   "drawglyphsprite": [
     "register-asm",
     "embedded-asm"
    ],
@@ -57,27 +57,6 @@
    "func_80014494": [
     "flag-override"
    ],
-   "ovl_25_func_800b95b0": [
-    "flag-override"
-   ],
-   "ovl_11_func_800f0e00": [
-    "flag-override"
-   ],
-   "ovl_11_func_800f8224": [
-    "flag-override"
-   ],
-   "ovl_11_func_80113ff0": [
-    "flag-override"
-   ],
-   "ovl_11_func_8011adf4": [
-    "flag-override"
-   ],
-   "ovl_11_func_8011ac30": [
-    "flag-override"
-   ],
-   "ovl_11_func_8011aa64": [
-    "flag-override"
-   ],
    "initgraphicsheap": [
     "register-asm",
     "embedded-asm"
@@ -86,37 +65,13 @@
     "register-asm",
     "embedded-asm"
    ],
-   "func_800183e0": [
-    "flag-override"
-   ],
-   "func_80018B98": [
-    "flag-override"
-   ],
-   "func_80019610": [
-    "flag-override"
-   ],
-   "ovl_11_func_800f3d40": [
-    "flag-override"
-   ],
-   "ovl_11_func_800f00e4": [
-    "flag-override"
-   ],
    "ovl_11_func_80103b24": [
     "flag-override"
    ],
-   "ovl_11_func_80104ec8": [
+   "ovl11evaluateitemconditioncode": [
     "flag-override"
    ],
-   "ovl_11_func_80104148": [
-    "flag-override"
-   ],
-   "ovl_11_func_800e7660": [
-    "flag-override"
-   ],
-   "ovl_21_func_800b98cc": [
-    "flag-override"
-   ],
-   "ovl_17_func_800b9158": [
+   "ovl11clockthresholdcommand": [
     "flag-override"
    ],
    "ovl11isrecordactionallowed": [
@@ -129,18 +84,6 @@
    ],
    "ovl19updateactorcommands": [
     "register-asm"
-   ],
-   "ovl_21_func_800ba698": [
-    "flag-override"
-   ],
-   "ovl_15_func_801335f8": [
-    "flag-override"
-   ],
-   "ovl_11_func_800ef8bc": [
-    "flag-override"
-   ],
-   "ovl_11_func_80113ff0": [
-    "flag-override"
    ]
   }
  }

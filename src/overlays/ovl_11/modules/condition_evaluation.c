@@ -1,17 +1,15 @@
 /*
- * Installed condition-record evaluation and result queueing. The driver
- * selects the pending state, then short-circuits calendar, range, item and
- * flag predicates in record order. Tests may consume pending work state;
- * queueing failures do not stop the record walk.
+ * condition_evaluation — reconstructed translation unit.
  *
- * The mask/field decoders belong to this evaluator's helper closure, not
- * separate files. Their existing headers retain the packed-field contracts.
- * The installer at 800F0E00 belongs to the same data protocol but remains
- * outside only because its strength-reduction setting is unresolved.
- * Public lifecycle/side effects: ovl11_condition_evaluation.h.
+ * Install, evaluate and queue results from the terminated condition-record
+ * list; complete private count/state and predicate closure.
+ *
+ * The evidence for its membership and boundaries is in
+ * notes/file-groupings.md.
  */
 
 #include "common.h"
+#include "psyq/memory.h"
 #include "game_types.h"
 #include "ovl11_clock_calendar.h"
 #include "game_flags.h"
@@ -23,6 +21,55 @@
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_pending_item_command.h"
 #include "ovl11_condition_field_read.h"
+#include "ovl11_item_condition_dispatch.h"
+
+/* The three-step byte offset keeps this compiler's indexed scan, rather
+ * than a strength-reduced pointer walk. Integer addition preserves the
+ * target's offset-first address formation. The sentinel must be in bounds. */
+void Ovl11InstallConditionRecords(void *records) {
+    u16 *list;
+    u16 term;
+    u16 loopTerm;
+    s32 count;
+    s32 offset;
+
+    gOvl11ConditionRecordCount = 0;
+    if (records == 0) {
+        gOvl11ConditionRecordCount = 0;
+    } else {
+        list = &D_8006F5F0;
+        memset(list, 0, 0xE10);
+        memcpy(list, records, 0xE10);
+        term = 0xFFFF;
+        count = 0;
+        if (*list == term) {
+            gOvl11ConditionRecordCount = 0;
+        } else {
+            do {
+                loopTerm = 0;
+                count += 1;
+                loopTerm = 0xFFFF;
+                offset = count << 3;
+                offset += count;
+                offset <<= 2;
+            } while (*(u16 *)(offset + (u32)list) != loopTerm);
+            gOvl11ConditionRecordCount = count;
+        }
+    }
+    gOvl11ConditionEvaluationState = 0;
+}
+
+/*
+ * Installed condition-record evaluation and result queueing. The driver
+ * selects the pending state, then short-circuits calendar, range, item and
+ * flag predicates in record order. Tests may consume pending work state;
+ * queueing failures do not stop the record walk.
+ *
+ * The mask/field decoders belong to this evaluator's helper closure, not
+ * separate files. Their existing headers retain the packed-field contracts.
+ * Installation, count/state publication and evaluation share this unit.
+ * Public lifecycle/side effects: ovl11_condition_evaluation.h.
+ */
 
 s32 Ovl11EvaluateConditionRecords(Ovl11ConditionRecord *arg0, s32 arg1);
 
@@ -466,13 +513,11 @@ s32 Ovl11ConditionStateMatches(u8 arg0, u8 arg1) {
     return result;
 }
 
-s32 ovl_11_func_80104EC8(s16 arg0);
-
 s32 Ovl11ConditionItemListMatches(u8 arg0) {
     s32 result;
 
     if (arg0 != 0xFF) {
-        result = ovl_11_func_80104EC8(arg0);
+        result = Ovl11EvaluateItemConditionCode(arg0);
     } else {
         result = 1;
     }

@@ -49,6 +49,7 @@
 #include "ovl11_item_stack_clear.h"
 #include "ovl11_slot_decorations.h"
 #include "ui_sprites.h"
+#include "text_engine.h"
 
 /* In-unit helpers retain external linkage and the original ABI. Only the
  * sequence, cache, streaming and decoration services have outside callers. */
@@ -91,20 +92,15 @@ void Ovl11StartSceneYRotationInteraction(void) {
     RequestPadActuatorSequence(0, 2);
 }
 
-void SetVal8005E2BC(s32 arg0);
-
 void Ovl11StartMessageInteraction(void) {
     Ovl11ResetInteractionSequence();
     ((struct struct_8006C838_view *)&D_8006C838)->field_0C |= 0x20000;
     PlaySoundEffect(3);
     gOvl11InteractionPhase = 4;
     SetMessagePortraitEnabled(0);
-    SetVal8005E2BC(0);
+    SetTextInputEnabled(0);
     RequestMessageWindow(3, 0x37A);
 }
-
-u32 func_80017A64(void);
-void func_80017A48(u32 arg0);
 
 void Ovl11ServiceInteractionSequence(void) {
     /* id/next deliberately serve both ramp-message and texture phases. */
@@ -128,7 +124,7 @@ void Ovl11ServiceInteractionSequence(void) {
                 ((struct struct_8006C838_view *)&D_8006C838)->field_0C |= 0x20000;
                 PlaySoundEffect(3);
                 SetMessagePortraitEnabled(0);
-                SetVal8005E2BC(0);
+                SetTextInputEnabled(0);
                 RequestMessageWindow(3, id);
                 gOvl11InteractionPhase = next;
             }
@@ -163,10 +159,10 @@ void Ovl11ServiceInteractionSequence(void) {
                 }
             } else {
                 Ovl11ClearTextureCellActivity();
-                savedPalette = func_80017A64();
-                func_80017A48(3);
+                savedPalette = GetTextPalette();
+                SetTextPalette(3);
                 Ovl11UpdateMenuGridScreen();
-                func_80017A48(savedPalette);
+                SetTextPalette(savedPalette);
             }
         }
     }
@@ -558,7 +554,6 @@ s32 Ovl11StepTextureStream(s32 requestMode) {
  * Membership and evidence-limited outer boundaries: notes/file-groupings.md.
  */
 
-void func_80017A38(s16 arg0, s16 arg1);
 s32 Ovl11HandleMenuGridInput(void);
 void Ovl11UpdateMenuGridNavigation(s32 slotCount);
 void Ovl11UpdateMenuGridMessage(s32 textDisplay, s32 panelDisplay, s32 slot, s32 page);
@@ -580,7 +575,7 @@ void Ovl11UpdateMenuGridScreen(void) {
     u32 *panel;
     s32 *display;
 
-    func_80017A38(0, 2);
+    SetTextSpacing(0, 2);
     if (IsMessageWindowStatusFinal() && (gPad0Input->pressedButtons & 0x800)) {
         gOvl11InteractionPhase = 0xFE;
         CloseMessageWindow();
@@ -629,7 +624,7 @@ void Ovl11UpdateMenuGridScreen(void) {
     Ovl11UpdateMenuGridMessage(text, (s32)panel, gOvl11MenuGridCursorSlot, gOvl11MenuGridPageIndex);
     if (gOvl11MenuGridMessageState == 0xFF) {
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(3, message);
     }
 }
@@ -1143,9 +1138,6 @@ void Ovl11DrawMenuGridIndicators(s32 textDisplay) {
     }
 }
 
-s16 *func_8001A970(s32 arg0, s16 *arg1, s32 arg2);
-void func_80017B3C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-
 /* One-based page / (slotCount/8), using shared FFFF-terminated digit scratch.
  * slotCount/8 must be nonzero; the screen driver supplies 64 slots. */
 void Ovl11DrawMenuGridPageCount(s32 textDisplay, s32 slotCount) {
@@ -1153,14 +1145,14 @@ void Ovl11DrawMenuGridPageCount(s32 textDisplay, s32 slotCount) {
     s16 *end;
 
     end = gOvl11MenuGridPageText;
-    end = func_8001A970(gOvl11MenuGridPageIndex + 1, end, 1);
+    end = WriteDecimalText(gOvl11MenuGridPageIndex + 1, end, 1);
     firstDisplay = textDisplay;
     *(u16 *)end = 0xFFFF;
     end = gOvl11MenuGridPageText;
-    func_80017B3C(firstDisplay, (s32)end, 0x28, 0x6E);
-    func_80017B3C(textDisplay, (s32)((u8 *)D_80051BF0 + gTextBankOffsets[0]), 0x35, 0x6E);
-    *(u16 *)func_8001A970(slotCount / 8, gOvl11MenuGridPageText, 1) = 0xFFFF;
-    func_80017B3C(textDisplay, (s32)gOvl11MenuGridPageText, 0x42, 0x6E);
+    DrawTextLine(firstDisplay, (s32)end, 0x28, 0x6E);
+    DrawTextLine(textDisplay, (s32)((u8 *)D_80051BF0 + gTextBankOffsets[0]), 0x35, 0x6E);
+    *(u16 *)WriteDecimalText(slotCount / 8, gOvl11MenuGridPageText, 1) = 0xFFFF;
+    DrawTextLine(textDisplay, (s32)gOvl11MenuGridPageText, 0x42, 0x6E);
 }
 
 void Ovl11DrawMenuGridPanels(u32 *panelOrderingTable, s32 textDisplay,
@@ -1169,8 +1161,8 @@ void Ovl11DrawMenuGridPanels(u32 *panelOrderingTable, s32 textDisplay,
     DrawMenuPanel(panelOrderingTable, 1, 0x79, 0x10, 0xAE, 0x4A);
     DrawMenuPanel(panelOrderingTable, 1, 0x19, 0x5A, 0x10E, 0x4A);
     Ovl11DrawMenuGridIndicators(textDisplay);
-    func_80017B3C(textDisplay, topTextAddress, 0x1D, 0x14);
-    func_80017B3C(textDisplay, bottomTextAddress, 0x1D, 0x5E);
+    DrawTextLine(textDisplay, topTextAddress, 0x1D, 0x14);
+    DrawTextLine(textDisplay, bottomTextAddress, 0x1D, 0x5E);
 }
 
 /* Draw existing texture-cache records without loading or reclaiming them.

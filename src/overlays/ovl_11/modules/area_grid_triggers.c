@@ -28,6 +28,8 @@
 #include "surface_collision.h"
 #include "ovl11_primary_object_input_override.h"
 #include "two_choice_prompt.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 void Ovl11ResetAreaGridState(void) {
     u8 *b;
@@ -326,7 +328,6 @@ s32 Ovl11AreaGridCellFromPosition(s32 *position, u16 *column, u16 *row) {
     return 3;
 }
 
-void func_8001AC10(u32 *arg0, s32 arg1, s32 arg2);
 void Ovl11UpdateAreaGridTrigger(void) {
     Ovl11TriggerWorkView *work;
     s16 mode;
@@ -341,7 +342,7 @@ void Ovl11UpdateAreaGridTrigger(void) {
         }
         result = Ovl11UpdateCompactChoicePrompt(gActiveRenderContext->field_D8 + 0x3C, 0x20, 0x20);
         object = gActiveRenderContext->field_D8;
-        func_8001AC10((u32 *)(object + 0x3C), object + 0x28,
+        DrawMenuPanelWithText((u32 *)(object + 0x3C), object + 0x28,
                       (s32)(gOvl11AreaGridTriggerText + dataOffset));
         if (result == 1) {
             work = (Ovl11TriggerWorkView *)&D_8007AFF0;

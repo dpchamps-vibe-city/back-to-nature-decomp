@@ -27,6 +27,8 @@
 #include "sprite_upload.h"
 #include "ovl11_menu_exit_flags.h"
 #include "ui_sprites.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
 void Ovl11ResetSelectionPanelState(void) {
     gOvl11SelectionPanelState = 0;
@@ -38,8 +40,6 @@ void Ovl11OpenSelectionPanel(void) {
     gOvl11SelectionPanelState = 1;
 }
 
-u32 func_80017A64(void);
-void func_80017A48(u32 arg0);
 void Ovl11ReloadSelectionPanelSprites(void);
 void Ovl11ProcessSelectionPanelInput(void);
 
@@ -103,23 +103,21 @@ void Ovl11UpdateSelectionPanel(void) {
         Ovl11ReloadSelectionPanelSprites();
         gOvl11SelectionPanelState = 5;
     } else if (gOvl11SelectionPanelState != 0) {
-        savedTextMode = func_80017A64();
-        func_80017A48(3);
+        savedTextMode = GetTextPalette();
+        SetTextPalette(3);
         Ovl11ProcessSelectionPanelInput();
-        func_80017A48(savedTextMode);
+        SetTextPalette(savedTextMode);
     }
 }
 
-void func_80017A38(s16 arg0, s16 arg1);
 void Ovl11DrawSelectionPanel(void);
-void SetVal8005E2BC(s32 arg0);
 void Ovl11ConfirmSelectionPanel(void);
 
 void Ovl11ProcessSelectionPanelInput(void) {
     s32 direction;
     u32 buttons;
 
-    func_80017A38(0, 2);
+    SetTextSpacing(0, 2);
     direction = 0;
     if (gOvl11SelectionPanelState != 7 && IsMessageWindowStatusFinal()) {
         buttons = ((u32 *)gPad0Input)[0] & 0xF000;
@@ -157,7 +155,7 @@ void Ovl11ProcessSelectionPanelInput(void) {
         }
     } else {
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         if (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476 == 1) {
             RequestMessageWindow(3, 0x3AB);
         } else {

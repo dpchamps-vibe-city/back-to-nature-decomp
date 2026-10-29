@@ -20,6 +20,7 @@
 #include "ovl11_record_position_recovery.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_item_record_search.h"
+#include "ovl11_item_value_counters.h"
 
 s32 *Ovl11ResetProgressControl(void) {
     Ovl11RefreshProgressStatusEntry();
@@ -201,8 +202,6 @@ done:
 
 #undef OVL11_STATUS_WORK
 
-extern s32 ovl_11_func_800F3E00(s16 arg0);
-
 void Ovl11RefreshCounterGroupAFlag(void) {
     s32 *base;
     s16 *p;
@@ -212,7 +211,7 @@ void Ovl11RefreshCounterGroupAFlag(void) {
     i = 0;
     p = &gOvl11StatusCounterGroupAIds;
     *base &= ~4;
-    while (i < 4 && ovl_11_func_800F3E00(*p) >= 0x65) {
+    while (i < 4 && Ovl11GetItemCounter(*p) >= 0x65) {
         p++;
         i++;
     }
@@ -231,7 +230,7 @@ void Ovl11RefreshCounterGroupBFlag(void) {
     i = 0;
     p = &gOvl11StatusCounterGroupBIds;
     *base &= ~8;
-    while (i < 4 && ovl_11_func_800F3E00(*p) >= 0x65) {
+    while (i < 4 && Ovl11GetItemCounter(*p) >= 0x65) {
         p++;
         i++;
     }
@@ -250,7 +249,7 @@ void Ovl11RefreshCounterGroupCFlag(void) {
     i = 0;
     p = &gOvl11StatusCounterGroupCIds;
     *base &= ~0x10;
-    while (i < 4 && ovl_11_func_800F3E00(*p) >= 0x65) {
+    while (i < 4 && Ovl11GetItemCounter(*p) >= 0x65) {
         p++;
         i++;
     }
@@ -266,7 +265,7 @@ void Ovl11RefreshCounter5DFlag(void) {
     base = &gProgressDerivedFlags;
     *base &= ~1;
 
-    if (ovl_11_func_800F3E00(0x5D) >= 0x33) {
+    if (Ovl11GetItemCounter(0x5D) >= 0x33) {
         *base |= 1;
     }
 }
@@ -277,7 +276,7 @@ void Ovl11RefreshCounter5FFlag(void) {
     base = &gProgressDerivedFlags;
     *base &= ~2;
 
-    if (ovl_11_func_800F3E00(0x5F) >= 0x33) {
+    if (Ovl11GetItemCounter(0x5F) >= 0x33) {
         *base |= 2;
     }
 }

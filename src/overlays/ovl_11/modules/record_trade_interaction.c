@@ -35,9 +35,13 @@
 #include "ovl11_item_record_allocation.h"
 #include "two_choice_prompt.h"
 #include "ovl11_code160_record_handlers.h"
+#include "psyq/stddef.h"
+#include "ovl11_price_option_rows.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
-void SetVal8005E2BC(s32 arg0);
-s32 ovl_11_func_80113CD0(void);
 void Ovl11DebitRecordTradeQuantity(Ovl11D8012D538 *prompt);
 
 s32 Ovl11UpdateRecordTradeInteraction(void) {
@@ -67,7 +71,7 @@ s32 Ovl11UpdateRecordTradeInteraction(void) {
         Ovl11SetInteractionSteps(2, 0);
         break;
     case 1:
-        ovl_11_func_80113CD0();
+        Ovl11BuildTradePriceRows();
         gOvl11InteractionDrawMode = 4;
         params.unk4 = -1;
         Ovl11SetInteractionSteps(2, 0);
@@ -157,7 +161,7 @@ s32 Ovl11UpdateRecordTradeInteraction(void) {
         break;
     case 9:
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(2, 0x4D);
         Ovl11SetInteractionSteps(26, 10);
         break;
@@ -218,7 +222,7 @@ s32 Ovl11UpdateRecordTradeInteraction(void) {
         break;
     case 18:
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(2, 0x5A);
         Ovl11SetInteractionSteps(26, 19);
         break;
@@ -272,7 +276,7 @@ s32 Ovl11UpdateRecordTradeInteraction(void) {
         break;
     case 21:
         SetMessagePortraitEnabled(0);
-        SetVal8005E2BC(0);
+        SetTextInputEnabled(0);
         RequestMessageWindow(2, 0x5A);
         Ovl11SetInteractionSteps(26, 22);
         break;
@@ -341,7 +345,7 @@ s32 Ovl11UpdateRecordTradeInteraction(void) {
             Ovl11DrawAndProcessRecordFamilyList(2, 0, 1);
         }
         if (GetMessageWindowStatus() == 5) {
-            SetVal8005E2BC(0);
+            SetTextInputEnabled(0);
             Ovl11ResumeInteractionStep();
         }
         break;

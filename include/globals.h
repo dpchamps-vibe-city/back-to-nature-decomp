@@ -5,17 +5,9 @@
 /* Requires common.h typedefs (s8, s16, s32, u8, u16, u32) */
 #include "globals_override.h"
 
-/* 88 symbol(s) supplied by overrides or translation-unit-specific declarations */
+/* 96 symbol(s) supplied by overrides or translation-unit-specific declarations */
 
 /* GP-relative symbols (within $gp ± 0x7FF0) */
-extern u16 D_8005E2BA;
-extern u16 D_8005E446;
-extern u16 D_8005E44E;
-extern s16 D_8005E47E;
-extern u16 D_8005E482;
-extern u16 D_8005E49A;
-extern s16 D_8005E49E;
-extern s16 D_8005E4A2;
 extern s16 D_8005E566;
 extern s16 D_8005E56A;
 extern s16 D_8005E56E;
@@ -65,8 +57,8 @@ extern s32 _D_80070D18[3] __asm__("D_80070D18");
 #define D_80070D18 (*((s32*)_D_80070D18))
 extern s32 _gItemOverflowSlotBase[3] __asm__("gItemOverflowSlotBase");
 #define gItemOverflowSlotBase (*((s32*)_gItemOverflowSlotBase))
-extern u16 _D_800712C0[5] __asm__("D_800712C0");
-#define D_800712C0 (*((u16*)_D_800712C0))
+extern u16 _gPendingItemValueCount[5] __asm__("gPendingItemValueCount");
+#define gPendingItemValueCount (*((u16*)_gPendingItemValueCount))
 extern s32 _D_80071A84[3] __asm__("D_80071A84");
 #define D_80071A84 (*((s32*)_D_80071A84))
 extern s32 _gItemStackSlotBase[3] __asm__("gItemStackSlotBase");

@@ -26,8 +26,11 @@
 #include "ovl11_object_event_slot_reset_command.h"
 #include "ovl11_object_state_selection_command.h"
 #include "ovl11_area_selection_command.h"
-
-void SetVal8005E2BC(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 s32 Ovl11UpdateTierUpgradePurchase(void) {
     s32 result;
@@ -57,7 +60,7 @@ s32 Ovl11UpdateTierUpgradePurchase(void) {
         break;
     case 2:
         if (GetMessageWindowStatus() == 5) {
-            SetVal8005E2BC(0);
+            SetTextInputEnabled(0);
             Ovl11ResumeInteractionStep();
         }
         break;

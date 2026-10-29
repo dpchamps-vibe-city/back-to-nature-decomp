@@ -29,8 +29,8 @@
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_record_position_tables.h"
 #include "ovl11_eligible_record_selection.h"
+#include "ovl11_item_value_counters.h"
 
-s32 ovl_11_func_800F3BCC(u16 arg0);
 s32 Ovl11ProcessAreaSlotActions(u8 *object, s16 area);
 s32 Ovl11ProcessAreaAction6Records(u8 *object, s16 area);
 s32 Ovl11ProcessAreaItemActions(u8 *object, s16 area);
@@ -62,7 +62,7 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
                 }
                 item = Ovl11ResolveCellItemState((void *)cell);
             }
-            ovl_11_func_800F3BCC(item);
+            Ovl11RecordItemValue(item);
         }
     } else if (*(u16 *)(object + 0xB8) & 2) {
         random = Rand(5);
@@ -88,7 +88,7 @@ s32 Ovl11DispatchAreaRecordAction(u8 *object) {
             Ovl11AddSaveCounter20(0, 0);
             break;
         default:
-            ovl_11_func_800F3BCC(*(u16 *)(object + 0xB6));
+            Ovl11RecordItemValue(*(u16 *)(object + 0xB6));
             break;
         }
         Ovl11ClearRecordItemSprite(object);
@@ -244,7 +244,7 @@ fallback_done:
         failed = fallbackFailed;
     }
     if (*(u16 *)(object + 0xB6) != 0) {
-        ovl_11_func_800F3BCC(*(u16 *)(object + 0xB6));
+        Ovl11RecordItemValue(*(u16 *)(object + 0xB6));
         Ovl11ClearRecordItemSprite(object);
     }
     return failed;

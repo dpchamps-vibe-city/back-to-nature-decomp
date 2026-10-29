@@ -20,8 +20,9 @@
 #include "ovl11_held_item_replacement.h"
 #include "two_choice_prompt.h"
 #include "ovl11_item_selection_value.h"
+#include "psyq/libapi.h"
+#include "text_engine.h"
 
-void SetVal8005E2BC(s32 arg0);
 s32 Ovl11CanApplySelectedThreshold(StructD548 *arg0);
 void Ovl11ApplySelectedThreshold(StructD548 *arg0);
 
@@ -88,7 +89,7 @@ s32 Ovl11UpdateThresholdInteraction(void) {
         break;
     case 10:
         if (GetMessageWindowStatus() == 5) {
-            SetVal8005E2BC(0);
+            SetTextInputEnabled(0);
             Ovl11ResumeInteractionStep();
         }
         break;

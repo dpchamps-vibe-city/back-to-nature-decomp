@@ -1185,9 +1185,9 @@ extern u16 gPrimaryObjectAuxFlags;
 extern s32 gObjectPositionRecordCoordinates[];
 
 /* ovl_11_func_800E5078 copies 0x30-byte sprites at stride 0x1D4 from base-0x30. */
-extern u8 D_800762D0[];
+extern u8 gObjectEventSpriteSourceBase[];
 /* 800E4DAC initializes this sprite from a SpriteDataHeader. */
-extern struct SpriteSourceData D_8007942C;
+extern struct SpriteSourceData gObjectArchiveSpecialSpriteSource;
 /* 800E4DAC loads the first offset-table pointer, then signed words at +8/+0x18. */
 extern s32 *D_80124FCC_spriteOffsets __asm__("D_80124FCC");
 /* 800BD3C4 indexes the same offset-table pointers by item number. */
@@ -2268,20 +2268,19 @@ typedef struct {
     s16 time;
 } Ovl11C2B04GlobalState;
 
-/* View of D_8006C838 for ovl_11_func_800E4608: the flag word at +0xC and the
- * s16/u16 pair at +0x4476..+0x4480. Reached as a struct member so cc1 keeps
- * lui %hi(D_8006C838) as the base and uses each offset as a displacement
- * instead of folding the offset into the %hi. */
-struct struct_8006C838_800E4608 {
+/* Current-object draw state at shared work +0xC/+0x4476..+0x4480.
+ * The renderer uses the unsigned low halfwords of three word coordinates.
+ * Keep the struct-member base/displacement addressing and existing widths. */
+struct Ovl11CurrentObjectSpriteWork {
     char pad_000[0xC];      /* 0x0000-0x000B */
-    s32 field_0C;           /* 0x000C */
+    s32 flags;             /* 0x000C */
     char pad_010[0x4466];   /* 0x0010-0x4475 */
-    s16 field_4476;         /* 0x4476 */
-    u16 field_4478;         /* 0x4478 */
+    s16 drawSuppressed;     /* 0x4476: zero permits drawing */
+    u16 xLow;              /* 0x4478 */
     u16 pad_447A;           /* 0x447A */
-    u16 field_447C;         /* 0x447C */
+    u16 yLow;              /* 0x447C */
     u16 pad_447E;           /* 0x447E */
-    u16 field_4480;         /* 0x4480 */
+    u16 zLow;              /* 0x4480 */
 };
 
 /* Object-load entry: pointer +30, flags +4450/+5234, state +4476. */
@@ -2304,7 +2303,7 @@ typedef struct {
     s16 *current;
     char pad_34[0xE778 - 0x34];
     s16 selectedId;
-} Ovl11E46A8State;
+} Ovl11RecordSpriteWork;
 
 /* View of D_8006C838 for ovl_11_func_800EE7BC: the u8 at +0x44CD, the s16 at
  * +0x91C2 and the u16 at +0xE7A0. Reached as struct members so cc1 keeps the
@@ -2593,13 +2592,62 @@ extern s32 gSoundLoadReadIndex;
 extern s32 gSoundSequenceSlotCursor;
 
 /* D_8005E44C - GP-relative s16 scalar (loaded with lh by func_80017AA0) */
-extern s16 D_8005E44C;
+extern s16 gTextSpeedInterval;
 
 /* D_8005E47A - signed halfword (lh) — func_80019030 owns it */
-extern s16 D_8005E47A;
+extern s16 gTextPenY;
+
+/* Text/slot state: original lhu/lh/lw widths, E46C's sprite-upload pointer,
+ * and E4B0's u16-script comparison establish these shared canonical views. */
+extern u16 gTextLetterSpacing;
+extern s32 gTextSlotLoadDone;
+extern s16 gTextUploadedSlot;
+extern u8 *gTextSlotBuffer;
+extern u16 gTextChoiceIndex;
+extern u16 *gTextScriptTable;
+
+/* Text-TU original lh/lhu/lw/sh/sw accesses and matching tentative definitions;
+ * preserve signedness and scalar anchors, including the eight-byte number area. */
+extern u16 gTextLineSpacing;
+extern s32 gTextInputEnabled;
+extern u32 gTextPendingSlot;
+extern u16 gTextState;
+extern u32 gTextTypeTimer;
+extern u16 gTextPrevState;
+extern u32 gTextPalette;
+extern s16 gTextTpage;
+extern s32 gTextSlotLoadAsync;
+extern s16 gTextLoadedSlot;
+extern s32 gTextSlotImageVisible;
+extern s16 gTextPortraitSelector;
+extern s32 gTextInstantPageMode;
+extern s16 gTextPenX;
+extern u16 gTextLineStartX;
+extern s16 gTextRevealCount;
+extern u16 gTextPauseIndex;
+extern u16 gTextEndToken;
+extern u16 gTextPublishedEndToken;
+extern s32 gTextHoldAtEnd;
+extern s32 gTextTypeSoundToggle;
+extern s16 gTextNumberBuffer;
+extern u16 gTextBlockOriginX;
+extern u16 gTextBlockOriginY;
+extern s16 gTextBlockWidth;
+extern s16 gTextBlockHeight;
+extern s16 gTextLineCount;
+extern s16 gTextLineScroll;
+extern s32 gTextPageTimer;
+extern s32 gTextRendering;
+extern s32 gTextScrolledFull;
+/* MapChoiceIndexToStatus indexes four word-sized status entries. */
+extern s32 D_80049058[4];
+/* WriteSeasonNameText copies six halfwords per season (four caller indices). */
+extern u16 D_8004908C[];
+/* WriteWeekdayNameText copies three halfwords per weekday. */
+extern u16 D_800490BC[];
 
 /* D_8005E444 - unsigned halfword (lhu) — func_80019030 owns it */
-extern u16 D_8005E444;
+extern u16 gTextScriptIndex;
 
 /* Camera-offset bytes: InitCameraOffsetState stores 2/1/0; setters mark dirty. */
 extern s8 gCameraOffsetState;
@@ -2612,7 +2660,7 @@ extern s32 gCameraOffsetHeight;
 extern s32 gCameraOffsetYaw;
 
 /* D_8005E4A8 - pointer to u16 array (lw, used as base) — func_80019030 owns it */
-extern u16 *D_8005E4A8;
+extern u16 *gTextScriptCursor;
 
 /* D_8005E025 - byte table accessed with absolute addressing (lui+addiu+lbu)
  * Array of 9 bytes ensures >8 byte declaration for absolute addressing */
@@ -5233,7 +5281,14 @@ extern struct Ovl27PageSource gOvl27PageSources[];
  * folds the pending half of the u16 array (entries 1..25 at 0xFE..0x12E) into
  * the counter half (entries 0..24 at 0x00..0x30) with a 999 clamp, clears the
  * pending entries, and folds the s32 at 0x130 into the s32 at 0x34. */
-extern u16 D_800711C4[0x9A];
+extern u16 gItemValueCounterWork[0x9A];
+/* F3E44 stages at work+FC: count@0, 25 halfword categories@2, value@34;
+ * F3EF0 merges and clears the same record. This is a view, not new storage. */
+typedef struct {
+    u16 acceptedCount;
+    u16 categoryCounts[25];
+    s32 totalValue;
+} Ovl11PendingItemValueCounters;
 
 /* 80108864 selects the two offset pairs forwarded to sprite-image upload. */
 typedef struct {
@@ -5945,10 +6000,11 @@ typedef struct {
  * work anchor. Keep its established typed view without adding storage. */
 extern s16 gOvl25SceneWorkWords[];
 extern Ovl25StateView D_800BFE44_view __asm__("gOvl25SceneWorkWords");
-/* 800B95B0 reads unsigned halfwords with category*24 + (record-1)*8 + choice*2. */
-extern u16 D_800BCCC0[][3][4];
+/* ovl_25 95B0 reads unsigned weights at category*24 + (recordId-1)*8 + choice*2.
+ * Its -1 category intentionally reaches the preceding original table words. */
+extern u16 gOvl25State5ChoiceWeights[][3][4];
 /* ovl_25 977C reads signed thresholds at (recordId-1)*5 + choice. */
-extern s16 D_800BCCA0[];
+extern s16 gOvl25RecordChoiceThresholds[];
 /* 800B8DF4 reads signed halfwords at +E,+20,+4CA..4DC and a word at +8 in the view above. */
 /* 800B8DF4 compares this signed halfword with state +20. */
 extern s16 D_800BCC40;

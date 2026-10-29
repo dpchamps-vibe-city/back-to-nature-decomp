@@ -175,11 +175,6 @@ typedef struct {
 } LINE_F2;
 
 typedef struct {
-    char pad_0[0x2];
-    s16 unk2;
-} M2C_32ba532776b0_ReconA0View;
-
-typedef struct {
     char pad_00[0x24];
                s16 unk24;
                s16 unk26;
@@ -1967,6 +1962,11 @@ struct Ovl25ObjectRecord {
 typedef struct {
     s16 id;
 } Ovl25RecordIdView;
+
+typedef struct {
+    char pad_0[2];
+    s16 state;
+} Ovl25StateSelectorView;
 
 struct Ovl30FlagMenuEntry {
     void *value;

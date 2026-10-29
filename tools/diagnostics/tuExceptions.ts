@@ -26,7 +26,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { loadContainers, type Container } from "../lib/container.js";
-import { isModuleStem, loadTranslationUnits } from "../lib/translationUnits.js";
+import { flagOverrideKey, isModuleStem, loadTranslationUnits } from "../lib/translationUnits.js";
 import { enclosingDefinition, sourceFacts } from "../lib/translationUnitAudit.js";
 import { loadConfig } from "../../.pi/extensions/shared/config.ts";
 import { sourceConstructFindings } from "../../.pi/extensions/shared/source-policy.ts";
@@ -169,11 +169,21 @@ function allowlistSet(text: string | null, ids: Identities): string[] {
   return [...new Set(Object.entries(allowlist).flatMap(([key, kinds]) => kinds.map((kind) => `${normalize(key)}:${kind}`)))].sort();
 }
 
-function flagOverrideSet(text: string | null, ids: Identities): string[] {
+function flagOverrideSet(text: string | null, ids: Identities, view: TreeView): string[] {
   if (!text) return [];
+  const singletons = new Map<string, string>();
+  for (const unit of view.units) {
+    if (!isModuleStem(unit.segmentName)) continue;
+    const source = view.read(unit.sourcePath);
+    if (source === null) continue;
+    const facts = sourceFacts(source);
+    if (!facts.parses || facts.definitions.length !== 1 || facts.includeAsm.length !== 0) continue;
+    const owner = ids.inContainer.get(unit.container)?.get(facts.definitions[0]!.name);
+    if (owner) singletons.set(flagOverrideKey(unit.sourcePath), owner);
+  }
   return text.split("\n").flatMap((line) => {
     const match = line.match(/^CC1FLAGS_(\S+?)\s*:?=\s*(.*)$/);
-    return match ? [`${ids.byName.get(match[1]!) ?? match[1]}=${match[2]!.trim().split(/\s+/).join(" ")}`] : [];
+    return match ? [`${ids.byName.get(match[1]!) ?? singletons.get(match[1]!) ?? match[1]}=${match[2]!.trim().split(/\s+/).join(" ")}`] : [];
   }).sort();
 }
 
@@ -213,7 +223,7 @@ export function exceptionSets(view: TreeView, config: AutodecompConfig): Excepti
   }
   return {
     allowlist: allowlistSet(view.read(".pi/autoloop.json"), ids),
-    flagOverrides: flagOverrideSet(view.read("configs/flag_overrides.mk"), ids),
+    flagOverrides: flagOverrideSet(view.read("configs/flag_overrides.mk"), ids, view),
     constructs: [...constructs].sort(),
     includeAsm: [...includeAsm].sort(),
     moduleScope: [...moduleScope].sort(),

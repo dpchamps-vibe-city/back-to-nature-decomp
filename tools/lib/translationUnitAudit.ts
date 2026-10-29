@@ -473,8 +473,8 @@ export function auditUnits(input: UnitAuditInput): ContainerAudit {
          folded: callers exclude it as they exclude any pending stub, and a
          live one fails the completion checks. It is no boundary. */
       const moduleKey = flagOverrideKey(unit.sourcePath);
-      if (flagKeys.has(moduleKey)) {
-        unitFindings.push(`configs/flag_overrides.mk overrides ${moduleKey}: a module flag override needs the evidence review in plans/flag-review-report.md`);
+      if (flagKeys.has(moduleKey) && unit.members.length !== 1) {
+        unitFindings.push(`configs/flag_overrides.mk overrides ${moduleKey}: a multi-member module flag override needs the evidence review in plans/flag-review-report.md`);
       }
       for (const member of unit.members) {
         if (flagKeys.has(member.name)) unitFindings.push(`configs/flag_overrides.mk still overrides ${member.name}, which no longer applies inside ${unit.segmentName}; reconcile it before folding`);

@@ -13,6 +13,13 @@
  * 0x10; Y offset is 0. Rebuilds sprite-offset/source state and clears eligible
  * state objects when sprite data is nonempty. Shared installation state makes
  * this non-reentrant. The program record is copied even with no sprite data.
+ *
+ * This and ovl11_active_record_sprites.h expose the install/render sides of
+ * object_sprite_resources. Entity entries tagged 0x800 claim the first free
+ * source among ten slots and write its selector to the parallel spawn record.
+ * A full source pool silently skips installation. Call the entity-source
+ * reset in ovl11_object_load_resets.h before loading a replacement archive;
+ * this installer does not itself reset the pool or allocate its side records.
  */
 void Ovl11InstallObjectProgramArchive(s32 archiveAddress);
 

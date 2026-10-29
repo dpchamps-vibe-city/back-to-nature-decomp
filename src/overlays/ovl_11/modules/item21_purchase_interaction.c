@@ -24,8 +24,11 @@
 #include "ovl11_cell_grid_lookup.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_dispatch_record_enable.h"
-
-void SetVal8005E2BC(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 s32 Ovl11UpdateItem21Purchase(void) {
     s32 result;
@@ -56,7 +59,7 @@ s32 Ovl11UpdateItem21Purchase(void) {
         break;
     case 3:
         if (GetMessageWindowStatus() == 5) {
-            SetVal8005E2BC(0);
+            SetTextInputEnabled(0);
             Ovl11ResumeInteractionStep();
         }
         break;

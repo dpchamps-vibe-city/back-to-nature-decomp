@@ -620,7 +620,12 @@ function convergence(tree: string | null, full: boolean): { state: GateState; de
     if (failure) return;
     passes.at(-1)!.push(label);
     const result = run(command, args);
-    if (result.code !== 0) failure = `${label} exited ${result.code}:\n${failureLines(result.output, 8).join("\n")}`;
+    if (result.code !== 0) {
+      const log = `build/tu-campaign/failed-${label.replace(/[^A-Za-z0-9_-]/g, "_")}.log`;
+      mkdirSync(join(ROOT, "build/tu-campaign"), { recursive: true });
+      writeFileSync(join(ROOT, log), result.output);
+      failure = `${label} exited ${result.code} (full output: ${log}):\n${failureLines(result.output, 8).join("\n")}`;
+    }
   };
   const tool = (path: string, flag: string) => step(path.replace(/^tools\/[^/]+\//, ""), "npx", ["tsx", path, flag]);
   /* The export the overlays were last split against. */

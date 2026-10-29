@@ -40,10 +40,7 @@ segments:
       - [0x808, .rodata, modules/game_loop]
       - [0x85C, .rodata, modules/pad]
       - [0x878, rodata]
-      - [0x8B4, .rodata, func_800183E0]
-      - [0x8DC, .rodata, func_8001A284]
-      - [0x940, rodata]
-      - [0x944, .rodata, func_8001A8D0]
+      - [0x8B4, .rodata, modules/text_engine]
       - [0xA1C, rodata]
       - [0xA24, .rodata, modules/sound_driver]
       - [0xB18, rodata]
@@ -94,78 +91,7 @@ segments:
       - [0x4D54, c, modules/cd_loader]
       - [0x5690, c, modules/screen_primitives]
       - [0x5F04, c, modules/sprite_animation]
-      - [0x81E8, c, func_800179E8]       # 0x800179E8 func_800179E8
-      - [0x8208, c, func_80017A08]       # 0x80017A08 func_80017A08
-      - [0x8238, c, func_80017A38]       # 0x80017A38 func_80017A38
-      - [0x8248, c, func_80017A48]       # 0x80017A48 func_80017A48
-      - [0x8264, c, func_80017A64]       # 0x80017A64 func_80017A64
-      - [0x8270, c, func_80017A70]       # 0x80017A70 func_80017A70
-      - [0x82A0, c, func_80017AA0]       # 0x80017AA0 func_80017AA0
-      - [0x82CC, c, func_80017ACC]       # 0x80017ACC func_80017ACC
-      - [0x82E8, c, func_80017AE8]       # 0x80017AE8 func_80017AE8
-      - [0x8318, c, SetVal8005E2BC]       # 0x80017B18 SetVal8005E2BC
-      - [0x8324, c, GetVal8005E2BC]       # 0x80017B24 GetVal8005E2BC
-      - [0x8330, c, func_80017B30]       # 0x80017B30 func_80017B30
-      - [0x833C, c, func_80017B3C]       # 0x80017B3C func_80017B3C
-      - [0x83C8, c, func_80017BC8]       # 0x80017BC8 func_80017BC8
-      - [0x8404, c, func_80017C04]       # 0x80017C04 func_80017C04
-      - [0x8424, c, func_80017C24]       # 0x80017C24 func_80017C24
-      - [0x8430, c, func_80017C30]       # 0x80017C30 func_80017C30
-      - [0x843C, c, func_80017C3C]       # 0x80017C3C func_80017C3C
-      - [0x844C, c, func_80017C4C]       # 0x80017C4C func_80017C4C
-      - [0x84F4, c, func_80017CF4]       # 0x80017CF4 func_80017CF4
-      - [0x859C, c, func_80017D9C]       # 0x80017D9C func_80017D9C
-      - [0x8634, c, modules/u16_string]
-      - [0x8788, c, func_80017F88]       # 0x80017F88 func_80017F88
-      - [0x8BB8, c, func_800183B8]       # 0x800183B8 func_800183B8
-      - [0x8BD0, c, ClearVal8005E49C]     # 0x800183D0 ClearVal8005E49C
-      - [0x8BE0, c, func_800183E0]       # 0x800183E0 func_800183E0
-      - [0x938C, c, ClearVal8005E4B0]       # 0x80018B8C ClearVal8005E4B0
-      - [0x9398, c, func_80018B98]       # 0x80018B98 func_80018B98
-      - [0x9830, c, func_80019030]       # 0x80019030 func_80019030
-      - [0x9870, c, func_80019070]       # 0x80019070 func_80019070
-      - [0x99B4, c, func_800191B4]       # 0x800191B4 func_800191B4
-      - [0x9A9C, c, func_8001929C]       # 0x8001929C func_8001929C
-      - [0x9BF0, c, func_800193F0]       # 0x800193F0 func_800193F0
-      - [0x9C5C, c, func_8001945C]       # 0x8001945C func_8001945C
-      - [0x9D64, c, func_80019564]       # 0x80019564 func_80019564
-      - [0x9DF4, c, func_800195F4]       # 0x800195F4 func_800195F4
-      - [0x9E00, c, func_80019600]       # 0x80019600 func_80019600
-      - [0x9E10, c, func_80019610]       # 0x80019610 func_80019610
-      - [0x9FFC, c, func_800197FC]       # 0x800197FC func_800197FC
-      - [0xA0E0, c, func_800198E0]       # 0x800198E0 func_800198E0
-      - [0xA1F8, c, func_800199F8]       # 0x800199F8 func_800199F8
-      - [0xA2D0, c, func_80019AD0]       # 0x80019AD0 func_80019AD0
-      - [0xA4BC, c, func_80019CBC]       # 0x80019CBC func_80019CBC
-      - [0xA614, c, func_80019E14]       # 0x80019E14 func_80019E14
-      - [0xA650, c, func_80019E50]       # 0x80019E50 func_80019E50
-      - [0xA680, c, func_80019E80]       # 0x80019E80 func_80019E80
-      - [0xA7AC, c, GetPairedTpage]       # 0x80019FAC GetPairedTpage
-      - [0xA7C4, c, func_80019FC4]       # 0x80019FC4 func_80019FC4
-      - [0xA818, c, func_8001A018]       # 0x8001A018 func_8001A018
-      - [0xA91C, c, func_8001A11C]       # 0x8001A11C func_8001A11C
-      - [0xA99C, c, func_8001A19C]       # 0x8001A19C func_8001A19C
-      - [0xAA84, c, func_8001A284]       # 0x8001A284 func_8001A284
-      - [0xAD74, c, func_8001A574]       # 0x8001A574 func_8001A574
-      - [0xAE68, c, func_8001A668]       # 0x8001A668 func_8001A668
-      - [0xAEFC, c, func_8001A6FC]       # 0x8001A6FC func_8001A6FC
-      - [0xAF90, c, func_8001A790]       # 0x8001A790 func_8001A790
-      - [0xB008, c, func_8001A808]       # 0x8001A808 func_8001A808
-      - [0xB070, c, func_8001A870]       # 0x8001A870 func_8001A870
-      - [0xB0D0, c, func_8001A8D0]       # 0x8001A8D0 func_8001A8D0
-      - [0xB170, c, func_8001A970]       # 0x8001A970 func_8001A970       # 0x8001A970 func_8001A970
-      - [0xB27C, c, func_8001AA7C]       # 0x8001AA7C func_8001AA7C
-      - [0xB2B8, c, func_8001AAB8]       # 0x8001AAB8 func_8001AAB8
-      - [0xB2F4, c, func_8001AAF4]       # 0x8001AAF4 func_8001AAF4
-      - [0xB3F0, c, func_8001ABF0]       # 0x8001ABF0 func_8001ABF0
-      - [0xB410, c, func_8001AC10]       # 0x8001AC10 func_8001AC10
-      - [0xB4A0, c, func_8001ACA0]       # 0x8001ACA0 func_8001ACA0
-      - [0xB4BC, c, func_8001ACBC]       # 0x8001ACBC func_8001ACBC
-      - [0xB500, c, func_8001AD00]       # 0x8001AD00 func_8001AD00
-      - [0xB56C, c, func_8001AD6C]       # 0x8001AD6C func_8001AD6C
-      - [0xB5D8, c, func_8001ADD8]       # 0x8001ADD8 func_8001ADD8
-      - [0xB634, c, func_8001AE34]       # 0x8001AE34 func_8001AE34
-      - [0xB734, c, func_8001AF34]       # 0x8001AF34 func_8001AF34
+      - [0x81E8, c, modules/text_engine]
       - [0xB744, c, modules/game_flags]
       - [0xB7E0, c, modules/aux_sprite_display]
       - [0xBA58, c, modules/pad_actuator_sequences]
@@ -190,13 +116,13 @@ segments:
       - [0x1067C, c, modules/sound_driver]
       - [0x120C4, c, modules/cd_audio]
       - [0x12564, c, modules/area_scene_prepare_hook]
-      - [0x12570, c, func_80021D70]       # 0x80021D70 func_80021D70
-      - [0x12578, c, func_80021D78]       # 0x80021D78 func_80021D78
-      - [0x12580, c, func_80021D80]       # 0x80021D80 func_80021D80
-      - [0x12588, c, func_80021D88]       # 0x80021D88 func_80021D88
-      - [0x12590, c, func_80021D90]       # 0x80021D90 func_80021D90
-      - [0x12598, c, func_80021D98]       # 0x80021D98 func_80021D98
-      - [0x125A0, c, func_80021DA0]       # 0x80021DA0 func_80021DA0
+      - [0x12570, c, modules/unused_noop_a]
+      - [0x12578, c, modules/unused_return_zero_a]
+      - [0x12580, c, modules/unused_noop_b]
+      - [0x12588, c, modules/unused_return_zero_b]
+      - [0x12590, c, modules/unused_noop_c]
+      - [0x12598, c, modules/unused_noop_d]
+      - [0x125A0, c, modules/unused_noop_e]
       - [0x125A8, c, modules/state_memory_init]
       - [0x127D0, c, modules/scene_phase]
       - [0x127E4, c, modules/message_buffer_access]

@@ -55,6 +55,7 @@
 #include "ovl11_primary_object_day_reset.h"
 #include "ovl11_object_record_state.h"
 #include "ovl11_record_pool_setup.h"
+#include "ovl11_condition_date_records.h"
 
 s32 Ovl11ClockAcknowledgeEvent(void) {
     return 1;
@@ -81,8 +82,7 @@ s32 Ovl11ClockShiftValueHistory(void) {
     return 1;
 }
 
-void ovl_11_func_800EEECC (void);
-void ovl_11_func_800F3D40 (void);
+void Ovl11ResetSelectionFlagBanks (void);
 
 s32 Ovl11ClockRebuildDayScene(void) {
     s32 result;
@@ -160,7 +160,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
             Ovl11ResetMovingItemRecords();
             ((Ovl11DDDFCState *)D_8006C838)->status = (((Ovl11DDDFCState *)D_8006C838)->status | 0x4000) & 0xFFF07FFF;
             Ovl11CaptureSceneHeaderKey();
-            ovl_11_func_800EEECC();
+            Ovl11ResetConditionDateRecords();
             Ovl11StageFixedSpriteBank();
             Ovl11InitEventSchedules(gGraphicsHeapBase + 0x4290);
             Ovl11RebuildObjectEventsForTime();
@@ -185,7 +185,7 @@ s32 Ovl11ClockRebuildDayScene(void) {
         Ovl11AdvanceTrackedRecordCounters();
         Ovl11AdvanceObjectPoolCounters();
         Ovl11ApplyPoolRecordFlagRules();
-        ovl_11_func_800F3D40();
+        Ovl11ResetSelectionFlagBanks();
         Ovl11ServiceEventQueues();
         Ovl11UpdateCalendarRecordGate();
         Ovl11ProbePoolRecordTransitions();

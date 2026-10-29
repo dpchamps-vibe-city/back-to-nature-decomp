@@ -32,10 +32,9 @@
 #include "ovl11_primary_object_input_override.h"
 #include "ovl11_menu_exit_flags.h"
 #include "ovl11_action_result_request.h"
-
-u32 func_80017A64(void);
-void func_80017A48(u32 context);
-void func_80017A08(s32 slot, s32 textAddress);
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 void Ovl11StepCounterChoice(void);
 void Ovl11FinishCounterChoice(void);
@@ -85,10 +84,10 @@ void Ovl11UpdateCounterChoice(void) {
     u32 previousTextContext;
 
     if (gOvl11CounterChoicePhase != 0) {
-        previousTextContext = func_80017A64();
-        func_80017A48(3U);
+        previousTextContext = GetTextPalette();
+        SetTextPalette(3U);
         Ovl11StepCounterChoice();
-        func_80017A48(previousTextContext);
+        SetTextPalette(previousTextContext);
     }
 }
 
@@ -108,9 +107,9 @@ void Ovl11StepCounterChoice(void) {
         }
         break;
     case 3:
-        func_80017A08(0, gOvl11CounterChoiceText[0]);
-        func_80017A08(1, gOvl11CounterChoiceText[1]);
-        func_80017A08(2, gOvl11CounterChoiceText[2]);
+        SetTextSourcePointer(0, gOvl11CounterChoiceText[0]);
+        SetTextSourcePointer(1, gOvl11CounterChoiceText[1]);
+        SetTextSourcePointer(2, gOvl11CounterChoiceText[2]);
         RequestMessageWindow(2, 0xFD);
         if (GetMessageWindowStatus() == 2) {
             gOvl11CounterChoiceMessage = Ovl11ApplyCounterChoice((s16)GetMessageWindowChoice());

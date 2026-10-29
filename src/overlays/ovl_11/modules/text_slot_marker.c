@@ -12,16 +12,18 @@
  */
 
 #include "common.h"
-
-u16 func_80017C30(void);
-void func_8001AF34(void);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libapi.h"
+#include "psyq/libgpu.h"
+#include "text_engine.h"
 
 s32 Ovl11PollTextSlotOrInvalidate(s16 requestedMarker) {
-    if (requestedMarker == func_80017C30()) {
+    if (requestedMarker == GetTextSlotMarker()) {
         return 1;
     }
     if (requestedMarker == -1) {
-        func_8001AF34();
+        InvalidateTextSlot();
     }
     return 0;
 }
