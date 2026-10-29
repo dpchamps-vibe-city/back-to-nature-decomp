@@ -3525,13 +3525,14 @@ typedef struct {
 } struct_80061E28;
 extern struct_80061E28 gSceneDefaultMatrix;
 
-/* D_80049068 / D_80049070 - u16 message tables read by func_8001A19C under
+/* 80049068 / 80049070: EnterChoiceState's parallel token/state tables use
  * split absolute addressing (`lui %hi` / `addiu r,%lo` with the base in a
  * scratch register, not the self-clobber `la` pair). Declared as incomplete
  * arrays so cc1 leaves SYMBOL_REF_FLAG unset (size unknown > -G8) and emits
  * the split two-register address form matching the target. Not classified
  * in globals.h. */
-extern u16 D_80049068[];
+/* EnterChoiceState searches the three FFA/FF9/FF8 choice-start tokens. */
+extern u16 gTextChoiceStartTokens[];
 extern u16 D_80049070[];
 
 /* D_800558A4 - two u16 attributes per horse ID. InitHorseRaceEntries reads

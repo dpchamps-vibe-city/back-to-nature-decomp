@@ -1572,7 +1572,7 @@ void EnterChoiceState(void) {
     }
     i = 0;
     do {
-        v = FindTextToken(gTextScriptCursor, D_80049068[i], 1, count);
+        v = FindTextToken(gTextScriptCursor, gTextChoiceStartTokens[i], 1, count);
         if (v != 0) {
             gTextScriptCursor = v + 1;
             if (*gTextScriptCursor == 0xFFFE) {
