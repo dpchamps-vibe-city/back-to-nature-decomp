@@ -247,7 +247,7 @@ load_selected:
 
 void Ovl11LoadLargeIndexedSpriteBank(s16 index) {
     gOvl11LoadedSpriteBankSelector = index;
-    CdReadDiscSectorsBlocking(0, ((index << 3) - index << 11) + 0x3CB8800, 0x3800, 0, ((s32)(&D_8007BFF8)));
+    CdReadDiscSectorsBlocking(0, ((index << 3) - index << 11) + 0x3CB8800, 0x3800, 0, ((s32)(&gLoadedSpriteBankBuffer)));
 }
 
 void Ovl11LoadPaletteBankTriplet(void) {
@@ -262,7 +262,7 @@ void Ovl11LoadPaletteBankTriplet(void) {
 }
 
 void Ovl11LoadSmallIndexedSpriteBank(s32 index) {
-    CdReadDiscSectorsBlocking(0, ((index << 1) + index << 11) + 0x3D5A800, 0x1800, 0, ((s32)(&D_8007BFF8)));
+    CdReadDiscSectorsBlocking(0, ((index << 1) + index << 11) + 0x3D5A800, 0x1800, 0, ((s32)(&gLoadedSpriteBankBuffer)));
 }
 
 void Ovl11LoadFixedSpriteImages(void) {

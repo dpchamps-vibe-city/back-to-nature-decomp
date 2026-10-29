@@ -4491,7 +4491,9 @@ extern s32 gGraphicsHeapBase;
 
 extern s16 gOvl11LoadedSpriteBankSelector;
 
-extern u8 D_8007BFF8[];
+/* Main-RAM destination for large (0x3800) and small (0x1800) indexed sprite bank loads;
+ * ovl_15 also points its card-icon resource buffer here. */
+extern u8 gLoadedSpriteBankBuffer[];
 /* CCFF8 loads unsigned halfword byte offsets for its embedded sprite record. */
 extern u16 gOvl11ItemSpriteRecordOffsets[];
 

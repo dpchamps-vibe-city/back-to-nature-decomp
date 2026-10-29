@@ -434,14 +434,14 @@ void Ovl11CycleChoiceImages(void) {
     block = (adjustedTick >> 4) - ((gOvl11ChoiceImageTick / 48) * 3);
     if (gOvl11ChoiceImageBlock != block) {
         gOvl11ChoiceImageBlock = block;
-        UploadSpriteImagesAtOffsets((D_8007BFF8 + (block << 0xB)), gOvl11ChoiceImageOffsets.x, gOvl11ChoiceImageOffsets.y, gOvl11ChoiceImageOffsets.type2X, (s16)(s32)gOvl11ChoiceImageOffsets.type2Y);
+        UploadSpriteImagesAtOffsets((gLoadedSpriteBankBuffer + (block << 0xB)), gOvl11ChoiceImageOffsets.x, gOvl11ChoiceImageOffsets.y, gOvl11ChoiceImageOffsets.type2X, (s16)(s32)gOvl11ChoiceImageOffsets.type2Y);
     }
     gOvl11ChoiceImageTick += 1;
 }
 
 void Ovl11RestoreChoiceImages(void) {
     Ovl11LoadSmallIndexedSpriteBank(0x12);
-    UploadSpriteImagesAtOffsets(((u8 *)(((s32)(&D_8007BFF8)))), gOvl11ChoiceImageOffsets.x, gOvl11ChoiceImageOffsets.y, gOvl11ChoiceImageOffsets.type2X, gOvl11ChoiceImageOffsets.type2Y);
+    UploadSpriteImagesAtOffsets(((u8 *)(((s32)(&gLoadedSpriteBankBuffer)))), gOvl11ChoiceImageOffsets.x, gOvl11ChoiceImageOffsets.y, gOvl11ChoiceImageOffsets.type2X, gOvl11ChoiceImageOffsets.type2Y);
 }
 
 void Ovl11AdvanceChoiceCellStates(void) {

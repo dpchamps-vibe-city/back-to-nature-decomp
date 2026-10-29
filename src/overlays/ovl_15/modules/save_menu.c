@@ -90,7 +90,7 @@ void Ovl15ResetSaveMenuState(void) {
     gOvl15SaveSlotStatus[1] = 2;
     gOvl15SaveSlotStatus[2] = 2;
     gOvl15MenuStateTimer = 0;
-    gOvl15CardIconResourceBuffer = D_8007BFF8;
+    gOvl15CardIconResourceBuffer = gLoadedSpriteBankBuffer;
     memset((u8 *)gOvl15SaveSlotHeaders, 0, 0x3C);
     memset((u8 *)gOvl15SaveSlotHeaders + 0x3C, 0, 0x3C);
     memset((u8 *)gOvl15SaveSlotHeaders + 0x78, 0, 0x3C);

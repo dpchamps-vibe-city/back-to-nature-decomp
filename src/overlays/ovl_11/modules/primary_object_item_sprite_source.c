@@ -26,8 +26,8 @@ void Ovl11InitPrimaryObjectItemSpriteSource(
         Ovl11LoadLargeIndexedSpriteBank(bankIndex);
     }
     source = (SpriteSourceData *) ((u8 *) object + 0x260);
-    InitSpriteSourceData(source, (SpriteDataHeader *) D_8007BFF8);
+    InitSpriteSourceData(source, (SpriteDataHeader *) gLoadedSpriteBankBuffer);
     SetSpriteSourceRecordAddress((SomeStruct *) source,
-        (s32) &D_8007BFF8[gOvl11ItemSpriteRecordOffsets[bankIndex]]);
+        (s32) &gLoadedSpriteBankBuffer[gOvl11ItemSpriteRecordOffsets[bankIndex]]);
     SelectSpriteAnimation((ObjectState *) source, 0);
 }
