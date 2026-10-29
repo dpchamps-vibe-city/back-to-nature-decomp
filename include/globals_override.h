@@ -6186,8 +6186,8 @@ extern u8 gCardLoadFailedTextAnchor[];
 extern u8 gCardDisconnectedTextAnchor[];
 /* 80131F5C: Ovl15CardTransferPromptState17 draws bank-adjusted Cannot exchange with diary from same farm. */
 extern u8 gCardSameFarmExchangeTextAnchor[];
-/* ovl_15:8013237C adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_80052150[];
+/* 8013237C: Ovl15CardTransferPromptState21 draws bank-adjusted No animal selected. */
+extern u8 gCardNoAnimalSelectedTextAnchor[];
 /* ovl_15:80132408 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_80052178[];
 /* ovl_15:80132494 adds the text-bank byte offset before drawing this prompt. */
