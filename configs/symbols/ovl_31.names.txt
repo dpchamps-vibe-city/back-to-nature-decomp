@@ -16,3 +16,5 @@ gOvl31RenameDestinationPath = 0x800B8890; // type:data size:0x20
 gOvl31DirectoryEntries = 0x800B88B0; // type:data size:0x258
 // Incomplete char buffer: only its first byte is assigned a symbol extent.
 gOvl31DirectorySummary = 0x800B8B10; // type:data size:0x1
+// Old FARM0 memory-card filename used by the legacy rename path.
+gOvl31OldFarm0FileName = 0x800B7F2C; // type:data size:0x12

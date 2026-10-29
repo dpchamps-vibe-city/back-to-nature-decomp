@@ -952,7 +952,7 @@ extern u8 gOvl11Mode6TextureCoords[];
 /* ovl_31 rodata: NUL-terminated "bu%d%d:%s" used by sprintf. */
 extern char D_800B7F20[10];
 /* ovl_31 rodata: NUL-terminated old FARM0 memory-card filename. */
-extern char D_800B7F2C[18];
+extern char gOvl31OldFarm0FileName[18];
 /* ovl_31 rodata: NUL-terminated new FARM0 memory-card filename. */
 extern char D_800B7F40[18];
 /* ovl_31 rodata: old FARM1 filename; ovl_11 has a different object at this address. */
