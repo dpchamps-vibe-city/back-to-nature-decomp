@@ -18,6 +18,8 @@ Ovl11AreEditedQuantitiesUnchanged = 0x80104394; // type:func
 Ovl11AdjustEditedQuantity = 0x80104418; // type:func
 // Begin copies work+5224; item edits transfer 50 per unit; the balance renderer appends G.
 gOvl11QuantityEditorBalance = 0x8012CF20; // type:data size:0x4
+// Selection input wraps 0..6; rows 0..5 edit quantities and row 6 finishes; cursor drawing reads it.
+gOvl11QuantityEditorSelectedRow = 0x8012742C; // type:data size:0x4
 
 // Unreferenced leaves. Names describe only the shipped body, not a guessed role.
 Ovl11UnusedReturnMinusOne = 0x800BDCE0; // type:func

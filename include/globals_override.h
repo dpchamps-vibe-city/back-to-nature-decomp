@@ -5546,7 +5546,8 @@ extern s16 D_8012CF10[7];
 /* ovl_11:8012CF20: pending money balance, edited at 50 per item and committed to work+5224. */
 extern s32 gOvl11QuantityEditorBalance;
 extern s32 D_80127428;
-extern s32 D_8012742C;
+/* ovl_11:8012742C: selection wraps over six editable quantity rows and the finish row. */
+extern s32 gOvl11QuantityEditorSelectedRow;
 
 /* D_8012CF1C / D_8012CF24 - ovl_11 farm-state outputs selected alongside the
  * D_8012CF10 row. ovl_11_func_80103D44 copies the chosen D_8012CF10 halfword

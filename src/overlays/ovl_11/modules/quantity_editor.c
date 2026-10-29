@@ -54,7 +54,7 @@ void Ovl11ResetQuantityEditor(void) {
     s32 i;
 
     D_80127428 = 0;
-    D_8012742C = 0;
+    gOvl11QuantityEditorSelectedRow = 0;
     for (i = 0; i < 6; i++) {
         D_8012CF10[i] = 0;
     }
@@ -121,7 +121,7 @@ void Ovl11ServiceQuantityEditor(void) {
         result = Ovl11HandleQuantityEditInput();
         if (result == -1) {
             D_80127428 = 1;
-            D_8012CF10[D_8012742C] = D_8012CF1C;
+            D_8012CF10[gOvl11QuantityEditorSelectedRow] = D_8012CF1C;
             gOvl11QuantityEditorBalance = D_8012CF24;
         } else if (result == -2) {
             CloseMessageWindow();
@@ -207,7 +207,7 @@ s32 Ovl11HandleQuantityEditInput(void) {
         return 0;
     }
     var_s0 = 0;
-    temp_s1 = &D_8012CF10[D_8012742C];
+    temp_s1 = &D_8012CF10[gOvl11QuantityEditorSelectedRow];
     temp_a2 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_a2 & 0x1000) {
         var_s0 = 0xA;
@@ -260,13 +260,13 @@ s32 Ovl11HandleQuantitySelectionInput(void) {
         }
         if (var_s0 != 0) {
             PlaySoundEffect(5);
-            temp_v0 = D_8012742C + var_s0;
-            D_8012742C = temp_v0;
+            temp_v0 = gOvl11QuantityEditorSelectedRow + var_s0;
+            gOvl11QuantityEditorSelectedRow = temp_v0;
             if (temp_v0 < 0) {
-                D_8012742C = 6;
+                gOvl11QuantityEditorSelectedRow = 6;
             }
-            if (D_8012742C >= 7) {
-                D_8012742C = 0;
+            if (gOvl11QuantityEditorSelectedRow >= 7) {
+                gOvl11QuantityEditorSelectedRow = 0;
             }
         }
         temp_a0_2 = *(s32 *) ((u8 *) gPad0Input + 8);
@@ -278,8 +278,8 @@ s32 Ovl11HandleQuantitySelectionInput(void) {
         }
         if (!(temp_a0_2 & 0x20)) {
             if (temp_a0_2 & 0x40) {
-                if (D_8012742C != 6) {
-                    D_8012CF1C = D_8012CF10[D_8012742C];
+                if (gOvl11QuantityEditorSelectedRow != 6) {
+                    D_8012CF1C = D_8012CF10[gOvl11QuantityEditorSelectedRow];
                     D_8012CF24 = gOvl11QuantityEditorBalance;
                     PlaySoundEffect(0);
                     return 2;
@@ -345,11 +345,11 @@ void Ovl11DrawQuantityEditorCursor(void) {
     s16 var_a2;
     s32 var_a1;
 
-    var_a2 = (D_8012742C + 1) * 0xE + 0x32;
+    var_a2 = (gOvl11QuantityEditorSelectedRow + 1) * 0xE + 0x32;
     var_a1 = -1;
     if (D_80127428 == 1) {
         var_a1 = 0xD6;
-        if (D_8012742C != 6) {
+        if (gOvl11QuantityEditorSelectedRow != 6) {
             var_a1 = 0x22;
         }
     } else if (D_80127428 == 2) {

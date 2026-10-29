@@ -1867,6 +1867,7 @@ gOvl11SelectionRecordIndex = 0x801273EC; // size:0x1
 gOvl11SelectionWorkFlags = 0x801273EE; // size:0x2
 gOvl11SelectionFlagSlotIds = 0x801273F4; // size:0xe
 gOvl11RequiredIdClasses = 0x80127404; // size:0x20
+gOvl11QuantityEditorSelectedRow = 0x8012742C; // size:0x4
 gOvl11RotationHoldAngles = 0x801274DC; // size:0x10
 gOvl11ActionGuardLists = 0x80127814; // size:0x7c
 gOvl11ActionGuardAreaExceptions = 0x801278D8; // size:0xc
