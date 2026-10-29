@@ -103,6 +103,7 @@ gOvl25ObjectSpriteData = 0x800BE1B4; // size:0x1c88
 gOvl25SceneWorkWords = 0x800BFE44; // size:0x2
 gOvl25EventPhase = 0x800BFE46; // size:0x2
 gOvl25SceneRecordBase = 0x800BFE54; // size:0x2
+gOvl25ThresholdValue = 0x800BFE60; // size:0x4
 gOvl25AuxiliaryRecordBase = 0x800C0124; // size:0x2
 gOvl25AuxiliarySpriteBase = 0x800C013C; // size:0x30
 gOvl25SceneEffectSpriteSource = 0x800C021C; // size:0x30

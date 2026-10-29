@@ -6066,12 +6066,9 @@ extern s16 D_800BFE64;
  * incomplete-type declaration class as D_800BFE54 above. */
 extern struct Ovl25ObjectRecord gOvl25AuxiliaryRecordBase;
 
-/* D_800BFE60 - ovl_25 signed level/threshold word. ovl_25_func_800B9D4C
- * loads it once (lw) and selects one of five reset levels by comparing it
- * against 0x28000, 0x1E000, 0x14000 and 0xA000. Absolute-addressed
- * (lui + lw %lo) from -G0 overlay code; the overlay only declares it, so a
- * scalar extern keeps the base name. */
-extern s32 D_800BFE60;
+/* 800B9D4C: Ovl25DrawThresholdIndicator selects one of five reset animations by comparing
+ * this signed level/threshold word against 0x28000/0x1E000/0x14000/0xA000. */
+extern s32 gOvl25ThresholdValue;
 
 /* D_801227F8 - ovl_11 pair table indexed by an s32 argument in
  * ovl_11_func_800BD1BC; entries are {start, end} s32 pairs. Defined in the

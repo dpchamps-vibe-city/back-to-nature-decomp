@@ -138,13 +138,13 @@ void Ovl25DrawThresholdIndicator(void) {
     s16 state;
     s8 animation;
 
-    if (D_800BFE60 > 0x28000) {
+    if (gOvl25ThresholdValue > 0x28000) {
         animation = 0;
-    } else if (D_800BFE60 > 0x1E000) {
+    } else if (gOvl25ThresholdValue > 0x1E000) {
         animation = 1;
-    } else if (D_800BFE60 > 0x14000) {
+    } else if (gOvl25ThresholdValue > 0x14000) {
         animation = 2;
-    } else if (D_800BFE60 > 0xA000) {
+    } else if (gOvl25ThresholdValue > 0xA000) {
         animation = 3;
     } else {
         animation = 4;
