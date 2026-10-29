@@ -262,7 +262,7 @@ void Ovl25UpdateSequenceSprites(void) {
             gOvl25SequenceCyclePhase = 0;
             gOvl25SequenceEffectActive = 1;
             PlaySoundEffect(0x4D);
-            SelectSpriteAnimation((ObjectState *)D_800C021C, 0x17);
+            SelectSpriteAnimation((ObjectState *)gOvl25SceneEffectSpriteSource, 0x17);
         }
         break;
     }
@@ -272,8 +272,8 @@ void Ovl25UpdateSequenceSprites(void) {
         coords.vx += 0x96;
         coords.vy += 0x64;
         coords.vz += 0x96;
-        Ovl25DrawBiasedProjectedSprite((SpriteSourceData *)D_800C021C, (u16 *)gOvl25SequenceAnchor4);
-        if (((SpriteSourceData *)D_800C021C)->field_2 & 0x100) {
+        Ovl25DrawBiasedProjectedSprite((SpriteSourceData *)gOvl25SceneEffectSpriteSource, (u16 *)gOvl25SequenceAnchor4);
+        if (((SpriteSourceData *)gOvl25SceneEffectSpriteSource)->field_2 & 0x100) {
             gOvl25SequenceEffectActive = 0;
         }
     }

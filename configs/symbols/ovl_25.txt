@@ -105,6 +105,7 @@ gOvl25EventPhase = 0x800BFE46; // size:0x2
 gOvl25SceneRecordBase = 0x800BFE54; // size:0x2
 gOvl25AuxiliaryRecordBase = 0x800C0124; // size:0x2
 gOvl25AuxiliarySpriteBase = 0x800C013C; // size:0x30
+gOvl25SceneEffectSpriteSource = 0x800C021C; // size:0x30
 gOvl25PrimarySpriteBase = 0x800C024C; // size:0xc0
 gOvl25SceneEffectVoice = 0x800C030C; // size:0x2
 gOvl25SequenceSpriteBase = 0x800C0334; // size:0x120

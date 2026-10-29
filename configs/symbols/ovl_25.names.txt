@@ -30,6 +30,8 @@ gOvl25SequenceAnchor4 = 0x800BCD48; // type:data size:0x8
 // First-record anchors; sequence storage contains six consecutive sources.
 gOvl25AuxiliarySpriteBase = 0x800C013C; // type:data size:0x30
 gOvl25PrimarySpriteBase = 0x800C024C; // type:data size:0xC0
+// 0x30-byte scene sprite source initialized from gOvl25SharedSpriteData and animated as sequence 0x17.
+gOvl25SceneEffectSpriteSource = 0x800C021C; // type:data size:0x30
 gOvl25SequenceSpriteBase = 0x800C0334; // type:data size:0x120
 
 // Complete six-entry event-phase callback table.

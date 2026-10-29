@@ -7496,8 +7496,8 @@ struct Ovl11DispatchState {
 
 /* ovl_25 800BAC9C copies 0x13DC bytes here and uses the base as a sprite header. */
 extern u8 gOvl25SharedSpriteData[];
-/* ovl_25 800BAC9C initializes this 0x30-byte sprite source from D_800BCDD4. */
-extern u8 D_800C021C[];
+/* 800BAC9C: ovl_25 initializes this 0x30-byte scene effect sprite source from gOvl25SharedSpriteData. */
+extern u8 gOvl25SceneEffectSpriteSource[];
 
 /* ovl_17:800BB0C4 draws this halfword separator text {0x66, -1} twice. */
 extern s16 gOvl17TimerSeparatorText[2];

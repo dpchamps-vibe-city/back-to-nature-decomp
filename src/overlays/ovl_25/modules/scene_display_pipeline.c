@@ -108,8 +108,8 @@ void Ovl25LoadSharedSpriteArchive(void) {
     UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x566C));
     memcpy(gOvl25SharedSpriteData, (void *)(gGraphicsHeapBase + 0x4290), 0x13DC);
     memcpy(&gSharedSpriteData, (void *)(gGraphicsHeapBase + 0x4290), 0x13DC);
-    InitSpriteSourceData((SpriteSourceData *)D_800C021C, (SpriteDataHeader *)gOvl25SharedSpriteData);
-    SelectSpriteAnimation((ObjectState *)D_800C021C, 0x17);
+    InitSpriteSourceData((SpriteSourceData *)gOvl25SceneEffectSpriteSource, (SpriteDataHeader *)gOvl25SharedSpriteData);
+    SelectSpriteAnimation((ObjectState *)gOvl25SceneEffectSpriteSource, 0x17);
 }
 
 void Ovl25UploadCommonSpriteImages(void) {
