@@ -111,3 +111,5 @@ gOvl19MessageSoundTicks = 0x800BD074; // type:data size:0x4
 gOvl19SceneTickCounter = 0x800BD078; // type:data size:0x4
 // Selected actor index while the ovl_19 choice prompt is active; -1 means no selection.
 gOvl19SelectedActorIndex = 0x800BD070; // type:data size:0x2
+// Category (0..2) used with the year to select a random-value limit from gOvl19ValueRandomLimits.
+gOvl19ValueCategory = 0x800BF4C8; // type:data size:0x2

@@ -6407,8 +6407,8 @@ extern s16 gOvl19SoundVoice;
 extern s32 gOvl19PhaseHandlerWords;
 /* ovl_19:85F4 indexes this halfword limit table by year/category. */
 extern u16 D_800BCFE4[];
-/* ovl_19:85F4 reads the signed halfword category used by that limit table. */
-extern s16 D_800BF4C8;
+/* 800B85F4: category (0..2) used with the year to select a random-value limit from the halfword table. */
+extern s16 gOvl19ValueCategory;
 /* ovl_19:8F38 increments this word, sounds every 30 ticks and clears on exit. */
 extern s32 gOvl19MessageSoundTicks;
 /* ovl_19:BADAC clamps an index to 0..19 and reads this signed-word table. */

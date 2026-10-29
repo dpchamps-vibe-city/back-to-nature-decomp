@@ -96,6 +96,7 @@ gOvl19SceneSpriteData = 0x800BD090; // size:0x13dc
 gOvl19UiSpriteData = 0x800BE470; // size:0x104c
 gOvl19SceneWork = 0x800BF4C0; // size:0x4
 gOvl19SceneMode = 0x800BF4C4; // size:0x2
+gOvl19ValueCategory = 0x800BF4C8; // size:0x2
 gOvl19ActorPairState = 0x800BF4D0; // size:0x10
 gOvl19AuxActorSprites = 0x800BF4E8; // size:0x78
 gOvl19AuxRecordBase = 0x800BF560; // size:0x2

@@ -323,7 +323,7 @@ s32 Ovl19ChooseInitialActorValue(void) {
     s32 v;
 
     s0 = gCalendarYear;
-    s1 = D_800BF4C8;
+    s1 = gOvl19ValueCategory;
     if (s0 >= 2) {
         s0 = 1;
     }
