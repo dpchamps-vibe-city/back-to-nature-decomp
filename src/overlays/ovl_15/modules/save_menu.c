@@ -1407,7 +1407,7 @@ void Ovl15CardReadConfirmExit(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80051E02);
+    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardReadAbortConfirmTextAnchor);
     temp_v0 = Ovl15UpdateConfirmationMenu();
     switch (temp_v0) {
     case 0:

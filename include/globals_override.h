@@ -6205,8 +6205,8 @@ extern u8 D_8005230A[];
 extern u8 D_80053506[];
 /* ovl_15:80132934 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_80051E88[];
-/* ovl_15:80130F2C adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_80051E02[];
+/* 80130F2C: Ovl15CardReadConfirmExit draws bank-adjusted Aborting load / Is that OK. */
+extern u8 gCardReadAbortConfirmTextAnchor[];
 /* ovl_15:801329F8 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_80052022[];
 /* 8012E15C clears these halfword controls before each menu session. */
