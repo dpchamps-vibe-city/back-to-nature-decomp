@@ -311,7 +311,7 @@ void Ovl11DrawCalendarHeading(s32 ot, s16 year, s16 season) {
     selectedSeason = season;
     *(u16 *)WriteDecimalText(year + 1, &gOvl11CalendarNumberText, 2) = 0xFFFF;
     DrawTextLine(ot, (s32)&gOvl11CalendarNumberText, 0x1F, 0x34);
-    DrawTextLine(ot, (s32)((void *)((u8 *)&D_80051B9A + *gTextBankOffsets)), 0x39, 0x34);
+    DrawTextLine(ot, (s32)((void *)((u8 *)&gCalendarYearLabelTextAnchor + *gTextBankOffsets)), 0x39, 0x34);
     if (selectedSeason >= 0) {
         boundedSeason = (selectedSeason < 4) ? selectedSeason : 3;
     } else {

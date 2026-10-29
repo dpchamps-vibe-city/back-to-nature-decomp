@@ -988,6 +988,8 @@ gOvl11LastCalendarDate = 0x8007A414; // size:0x4
 gStatusAmountShippedTextAnchor = 0x800535E6; // size:0x1E
 // Ovl11DrawAndProcessItemTransferMenu draws Equip at this base and Rucksack at +0xC.
 gItemTransferSourceLabelsTextAnchor = 0x80051B7C; // size:0x1E
+// Ovl11DrawCalendarHeading draws this bank-adjusted suffix after the year number; U16 codes decode Year.
+gCalendarYearLabelTextAnchor = 0x80051B9A; // size:0xA
 // Ovl11DrawStatusRecordPageTitle and the save-slot record list draw this bank-adjusted title; U16 codes decode List.
 gRecordListTitleTextAnchor = 0x80053604; // size:0xA
 // Ovl15UpdateSlotSelectionMenu, Ovl11DrawStatusSevenRecordRow and the record-family list copy/draw this bank-adjusted label; U16 codes decode Farm.

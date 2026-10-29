@@ -4100,10 +4100,8 @@ struct Ovl11MenuNavigation {
 };
 extern struct Ovl11MenuNavigation gOvl11MenuGridNavigation[];
 
-/* D_80051B9A - base of a data table in the PS-X EXE, indexed by
- * D_80054BBC and passed to func_80017B3C by ovl_11_func_800FA6CC.
- * Only address-taken; absolute-addressed (split lui/%lo pair). */
-extern u8 D_80051B9A[];
+/* 800FA6CC: Ovl11DrawCalendarHeading draws bank-adjusted Year after the year number. */
+extern u8 gCalendarYearLabelTextAnchor[];
 
 /* D_80051BF0 - base of a data table in the PS-X EXE, indexed by
  * D_80054BBC and passed to func_80017B3C by ovl_11_func_800F8B4C (and
