@@ -2497,10 +2497,9 @@ extern s32 gObjectWorkPosition[3];
  * The eight-halfword extent removes the old small-array label alias. */
 extern s16 gRecordPairSlots[8];
 
-/* D_8005F0A8 - s16 digit buffer. >8-byte declaration for the genuine split
- * address form (shared lui %hi base, see func_8001205C research).
- * func_8001A970 writes up to 10 halfwords (digits + terminator). */
-extern s16 D_8005F0A8[10];
+/* 8005F0A8: DrawNumberText formats up to nine glyphs plus FFFF via WriteDecimalText,
+ * then passes this scratch to DrawTextLine; retain the ten-halfword split-address view. */
+extern s16 gTextNumberDrawBuffer[10];
 
 /* D_80055988 - s16 array accessed with absolute addressing (lui+addiu+lh)
  * Index: (s16)arg. Array size of 5 ensures >8 byte declaration for absolute addressing */

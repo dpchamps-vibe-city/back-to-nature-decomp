@@ -871,6 +871,8 @@ gTextChoiceStatusCodes = 0x80049058; // size:0x10
 gTextSeasonNames = 0x8004908C; // size:0x30
 // WriteWeekdayNameText copies three glyph codes per row; original rows run Sun through Sat.
 gTextWeekdayNames = 0x800490BC; // size:0x2A
+// DrawNumberText formats up to nine glyphs here, appends FFFF, then calls DrawTextLine.
+gTextNumberDrawBuffer = 0x8005F0A8; // size:0x14
 
 // Text engine state: widths follow the matching definitions and original loads.
 gTextLetterSpacing = 0x8005E2B8; // size:0x2

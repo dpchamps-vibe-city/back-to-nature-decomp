@@ -2031,13 +2031,13 @@ void DrawNumberText(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4) {
         digits = 9;
     }
 
-    it = (s16 *)&D_8005F0A8;
+    it = (s16 *)&gTextNumberDrawBuffer;
     *((u16 *)WriteDecimalText((s32)arg0, it, digits)) = 0xFFFF;
 
     p = it;
     if (arg1 == -1) {
         i = 0;
-        if (digits > 0 && *(u16 *)&D_8005F0A8 == 0xFFD) {
+        if (digits > 0 && *(u16 *)&gTextNumberDrawBuffer == 0xFFD) {
             do {
                 i++;
                 p++;
