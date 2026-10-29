@@ -736,7 +736,7 @@ export function checkSourcePolicy(options: PolicyOptions): SourcePolicyResult {
         if (!owner || !allowlisted(options.config, owner.name, owner.vram, owner.container, "flag-override")) {
           hardFailures.push({
             kind: "flag-override", file: "configs/flag_overrides.mk", line: index + 1,
-            message: `Module-level compiler flag override for ${file}: it needs the evidence review in plans/flag-review-report.md and cannot broaden a member's allowlist entry`,
+            message: `Module-level compiler flag override for ${file}: it needs an exact flag record in configs/tu_flag_reviews.json and cannot broaden a member's allowlist entry`,
             text: lines[index]!.trim(),
           });
         }

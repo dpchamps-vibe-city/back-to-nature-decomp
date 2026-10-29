@@ -527,7 +527,7 @@ export function repairEscalationMessage(
 
 /** What the fold loop tells a dispatch about the campaign it belongs to. */
 export interface FoldBrief {
-  /** plans/tu-prompt.md, verbatim: the task itself. */
+  /** prompts/tu-prompt.md, verbatim: the task itself. */
   task: string;
   /** Campaign baseline receipt and the commit it was captured on. */
   baseline: string;

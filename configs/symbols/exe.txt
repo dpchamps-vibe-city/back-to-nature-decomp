@@ -705,21 +705,21 @@ gInitialPoolRecordData = 0x8004ED04; // size:0x124C
 ResetSceneDispatchState = 0x80021FD0; // type:func
 GetAvailableMessageReadBuffer = 0x80021FE4; // type:func
 ClearMessageReadBufferBusy = 0x80022008; // type:func
-CardTableContainsValue = 0x80022014; // size:0x58 type:func
+HorseRaceContainsEntrant = 0x80022014; // size:0x58 type:func renamed-from=CardTableContainsValue
 _80022028 = 0x80022028; // type:label
 _80022030 = 0x80022030; // type:label
 _80022048 = 0x80022048; // type:label
-DealCardGameTable = 0x8002206C; // type:func
-// card_deal: 3x6 state, retained first-slot field anchors and private deal tables.
-gCardGameState = 0x8007AD4C; // size:0x108
-gCardFirstValue = 0x8007AD4E; // size:0x2
-gCardFirstX = 0x8007AD50; // size:0x2
-gCardFirstY = 0x8007AD52; // size:0x2
-gCardFirstAttribute0 = 0x8007AD54; // size:0x2
-gCardFirstAttribute1 = 0x8007AD56; // size:0x2
-gCardFirstWeight = 0x8007AD58; // size:0x2
-gCardValueAttributes = 0x800558A4; // size:0xA0
-gCardColumnPositionRanges = 0x80055944; // size:0x30
+InitHorseRaceEntries = 0x8002206C; // type:func renamed-from=DealCardGameTable
+// horse_race_setup: three races of six entrants; ovl_17 labels odds/tickets.
+gHorseRaceState = 0x8007AD4C; // size:0x108
+gHorseRaceFirstHorseId = 0x8007AD4E; // size:0x2
+gHorseRaceFirstParameter0 = 0x8007AD50; // size:0x2
+gHorseRaceFirstParameter1 = 0x8007AD52; // size:0x2
+gHorseRaceFirstAttribute0 = 0x8007AD54; // size:0x2
+gHorseRaceFirstAttribute1 = 0x8007AD56; // size:0x2
+gHorseRaceFirstOdds = 0x8007AD58; // size:0x2
+gHorseRaceHorseAttributes = 0x800558A4; // size:0xA0
+gHorseRaceEntrantParameterRanges = 0x80055944; // size:0x30
 DrawScrollingSpriteGrid = 0x8002238C; // type:func
 DrawScrollingSpriteGridInContext = 0x800223B0; // type:func
 VisitScrollingSpriteGrid = 0x800223D4; // type:func

@@ -14,7 +14,7 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-#include "card_deal.h"
+#include "horse_race_setup.h"
 #include "master_volume.h"
 #include "scene_selection.h"
 
@@ -42,7 +42,7 @@ void Ovl08InitSceneSelectMenu(void) {
     drawEnvironment[0x19] = 0x40;
     drawEnvironment[0x1A] = 0x40;
     drawEnvironment[0x1B] = 0x80;
-    DealCardGameTable();
+    InitHorseRaceEntries();
     gOvl08SceneSelectPhase += 1;
 }
 

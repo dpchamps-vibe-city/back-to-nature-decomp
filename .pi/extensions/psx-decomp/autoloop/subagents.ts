@@ -30,7 +30,7 @@ interface RegistrationRequest {
 export function researchAgentPrompt(config: SubagentConfig): string {
   return [
     "You research translation-unit boundaries for a matching PSX decompilation, for a driver agent that folds",
-    "the units you find. Read AGENTS.md and the \"Discover the units\" section of plans/tu-prompt.md first; their",
+    "the units you find. Read AGENTS.md and the \"Discover the units\" section of prompts/tu-prompt.md first; their",
     "evidence rules are yours. You are given one address range or candidate group; stay inside it.",
     "",
     "You only read. Never edit or write a file, never run make, a split, foldTranslationUnit.ts --write,",

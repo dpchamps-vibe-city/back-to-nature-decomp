@@ -1,10 +1,16 @@
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { DEFAULT_CHECKPOINT_AT_TOKENS, DEFAULT_LADDER, loadLoopConfig, parseLadder } from "./config.ts";
 import { parseArgs } from "./commands.ts";
+import { FOLD_TASK } from "./fold.ts";
+
+test("the folding task is loaded from prompts, not the retired plans directory", () => {
+  assert.equal(FOLD_TASK, "prompts/tu-prompt.md");
+  assert.match(readFileSync(new URL(`../../../../${FOLD_TASK}`, import.meta.url), "utf8"), /^# Reconstruct source modules/);
+});
 
 test("the default ladder escalates local -> openrouter -> codex with the configured thinking levels", () => {
   assert.deepEqual(

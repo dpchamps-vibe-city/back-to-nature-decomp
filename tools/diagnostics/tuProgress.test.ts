@@ -81,7 +81,7 @@ test("exception growth: any added entry fails, removals never do", () => {
 test("reviewed TU flag migration retains its origin in the old receipt, but unreviewed growth fails", () => {
   const sourcePath = "src/modules/pair.c", members = ["func_a", "func_b"];
   const review = { sourcePath, container: "exe", members: ["exe:0x80010000", "exe:0x80010010"],
-    owner: "exe:0x80010010", flags: "-fno-cse-skip-blocks", evidence: "plans/flag-review-report.md#pair" };
+    owner: "exe:0x80010010", flags: "-fno-cse-skip-blocks" };
   const base = { "configs/symbols/exe.txt": "func_a = 0x80010000; // type:func\nfunc_b = 0x80010010; // type:func\n" };
   const files: Record<string, string> = { ...base,
     [sourcePath]: "void func_a(void) {}\nvoid func_b(void) {}\n",

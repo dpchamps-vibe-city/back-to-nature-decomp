@@ -18,7 +18,7 @@ import type { FoldRecord, FunctionOutcome, HandoffSummary, LoopState } from "./t
  * `/auto_decompilation_loop fold` — reconstruct source modules until every
  * eligible function is folded into one.
  *
- * Each dispatch hands one agent `plans/tu-prompt.md`: fold every unit the
+ * Each dispatch hands one agent `prompts/tu-prompt.md`: fold every unit the
  * evidence supports into semantic modules — new, extended or merged — name and
  * document them, keep every byte. The loop never trusts the agent's account.
  * Progress is re-derived from the source tree, configuration and objects by
@@ -46,7 +46,7 @@ import type { FoldRecord, FunctionOutcome, HandoffSummary, LoopState } from "./t
  */
 
 /** The task every dispatch is given, verbatim. */
-export const FOLD_TASK = "plans/tu-prompt.md";
+export const FOLD_TASK = "prompts/tu-prompt.md";
 /** The campaign's baseline receipt, under ignored build/. */
 export const FOLD_RECEIPT = "build/tu-campaign/baseline.json";
 

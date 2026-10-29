@@ -3535,15 +3535,15 @@ extern struct_80061E28 gSceneDefaultMatrix;
 extern u16 D_80049068[];
 extern u16 D_80049070[];
 
-/* D_800558A4 - card/colour table: 4 bytes per card value (two u16).
- * func_8002206C reads byte offsets 4*v and (4*v)|2 (lui+addiu absolute,
- * owned by the nonmatching data file, not classified in globals.h). */
-extern u16 gCardValueAttributes[80];
+/* D_800558A4 - two u16 attributes per horse ID. InitHorseRaceEntries reads
+ * byte offsets 4*id and (4*id)|2; their exact meanings remain unresolved.
+ * Absolute-addressed, owned by the nonmatching data file. */
+extern u16 gHorseRaceHorseAttributes[80];
 
-/* D_80055944 - per-stall position ranges: stall k uses the u16 entries
- * [4k..4k+3] as (lo, hi, lo, hi). Absolute-addressed, owned by the
- * nonmatching data file, not classified in globals.h. */
-extern u16 gCardColumnPositionRanges[24];
+/* D_80055944 - two half-open race-parameter ranges per entrant position:
+ * u16 entries [4k..4k+3] are (lo, hi, lo, hi), not screen coordinates.
+ * Absolute-addressed, owned by the nonmatching data file. */
+extern u16 gHorseRaceEntrantParameterRanges[24];
 
 /* ovl_08: 800B8400 prints the original nine-byte "PADNO=%d" format. */
 extern char gOvl08ActuatorTestFormat[9];
@@ -5126,38 +5126,37 @@ extern u16 gOvl17RecordPanelLabelText[];
 
 /* ovl_17 data/3634.data.s reserves ten halfwords; 800B9940 formats text here. */
 extern u16 gOvl17NumberTextBuffer[10];
-/* One slot of the 3x6 card table at D_8006C838 + 0xE516 (D_8007AD4E): a
- * value, an x/y pair, two attribute halfwords, a weight and a halfword that
- * ovl_17_func_800B9940 multiplies by the weight for the selected slot.
- * ovl_17_func_800BA704 copies x/y and the attributes of one row into the
- * D_800BD848 display rows. */
+/* One horse-race entrant at D_8006C838 + 0xE516 (D_8007AD4E).
+ * Ovl17DrawHorseRaceBetsPanel labels +0xA "Odds" and +0xC "Tickets" and
+ * multiplies them for winnings. The ID selects a horse name at 800556A8;
+ * mode 3 uses the player's horse name at 80075AD8 for entrant [2][2].
+ * Parameter/attribute meanings are unresolved; these are not screen x/y. */
 typedef struct {
-    s16 value;
-    s16 x;
-    s16 y;
+    s16 horseId;
+    s16 parameter0;
+    s16 parameter1;
     u16 attr[2];
-    s16 weight;
-    s16 unkC;
-} CardGameSlot;
-/* 8002206C clears 0x108 bytes: lh mode at +0, then 3x6 stride-14 card slots. */
+    s16 odds;
+    s16 ticketCount;
+} HorseRaceEntry;
+/* 8002206C clears 0x108 bytes: mode@0, then three races of six 14-byte entries. */
 typedef struct {
     s16 mode;
-    CardGameSlot cards[3][6];
+    HorseRaceEntry entries[3][6];
     u8 unkFE[0x108 - 0xFE];
-} CardGameState;
-extern s16 gCardGameState[0x84];
-/* 8002206C's stride-14 walks name the value, x/y, attributes and weight halfwords. */
-extern s16 gCardFirstValue;
-extern s16 gCardFirstX;
-extern s16 gCardFirstY;
-extern u16 gCardFirstAttribute0;
-extern u16 gCardFirstAttribute1;
-extern s16 gCardFirstWeight;
-/* ovl_17 view of D_8006C838: the card-game mode at +0xE514 (3 shows row 2
- * with a special slot), the card table after it, and the two halfwords at
- * +0x92B2/+0x9348 that ovl_17_func_800BA704 places in display row 2. The
- * cast base goes through a register, so the far fields split as
- * (base + 0x8000) + low offset. */
+} HorseRaceState;
+extern s16 gHorseRaceState[0x84];
+/* 8002206C's separate symbolic bases for the stride-14 entrant-field walks. */
+extern s16 gHorseRaceFirstHorseId;
+extern s16 gHorseRaceFirstParameter0;
+extern s16 gHorseRaceFirstParameter1;
+extern u16 gHorseRaceFirstAttribute0;
+extern u16 gHorseRaceFirstAttribute1;
+extern s16 gHorseRaceFirstOdds;
+/* ovl_17 view of D_8006C838: race mode at +0xE514 (3 uses race 2 with the
+ * player's horse), the entrant table, and the player's parameters at
+ * +0x92B2/+0x9348 copied by Ovl17ResetHorseRaceEntrants. The cast base goes
+ * through a register, so far fields split as (base + 0x8000) + low offset. */
 typedef struct {
     u8 pad_0[0x92B2];
     u16 unk92B2;
@@ -5165,7 +5164,7 @@ typedef struct {
     u16 unk9348;
     u8 pad_934A[0xE514 - 0x934A];
     s16 mode;
-    CardGameSlot cards[3][6];
+    HorseRaceEntry entries[3][6];
 } Ovl17ModeView;
 /* 800B9940 reads mode at +0x6514 and value halfwords from +0x6520 of D_80074838. */
 typedef struct {
@@ -5177,7 +5176,7 @@ typedef struct {
 /* 800B9940: six 0x50-byte rows have a u16 name index at +0x40; selector is +0x2BC.
  * 800B8294 clears flags at +0x28, stores the data pointer at +0x3C,
  * and sets bit 0 on row two. 800BA704 resets +0x2A..+0x38 and copies a
- * card-table slot's x/y and attributes into +0x34/+0x36 and +0x42/+0x44. */
+ * horse-race entry's parameters and attributes into +0x34/+0x36 and +0x42/+0x44. */
 typedef struct {
     u8 pad_0[0x28];
     u8 flags;
@@ -5186,8 +5185,8 @@ typedef struct {
     s16 unk2C;
     s16 unk2E;
     s32 unk30;
-    s16 x;
-    s16 y;
+    s16 parameter0;
+    s16 parameter1;
     s32 unk38;
     u8 *data;
     u16 nameOffset;
@@ -5463,8 +5462,8 @@ extern s16 gOvl11AreaGridRewardItems[];
 extern s16 gOvl11Area37RewardItems[];
 
 /* D_80074838 - large ovl_11 work-area base. Referenced with absolute
- * addressing from ovl_11 code; the card-table region this overlay clears
- * sits at +0x6520 (three rows of six 14-byte card records, also reached
+ * addressing from ovl_11 code; the horse-race region this overlay clears
+ * sits at +0x6520 (three races of six 14-byte entrant records, also reached
  * as D_8007AD4E). */
 extern u8 D_80074838[0x8000];
 
@@ -5590,15 +5589,15 @@ extern s16 D_80127430[][2];
 typedef struct {
     u8 pad_0[0xE514];
     s16 selector;
-    s16 cards[3][6][7];
-} Ovl11CardView;
+    s16 entries[3][6][7];
+} Ovl11HorseRaceView;
 /* 80104148 shares a cached work-area +0x8000 base across bank selection:
  * selector@+0x6514 and six 14-byte records per bank at +0x6516. */
 typedef struct {
     u8 pad_0[0x6514];
     s16 selector;
-    s16 cards[3][6][7];
-} Ovl11CardUpperView;
+    s16 entries[3][6][7];
+} Ovl11HorseRaceUpperView;
 
 /* The sprite-rotation unit resets and walks ten 0x18-byte state records. */
 struct Ovl11RotationState;

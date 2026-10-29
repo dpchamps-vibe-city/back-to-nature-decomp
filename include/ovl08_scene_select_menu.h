@@ -11,7 +11,7 @@
  * the selected scene unless its ID is -1. Rows 13..16 also set one of bits
  * 19..16 in the game-state word at +0x10. Input and font flush wait for the
  * screen fade to complete. Initialization sets both backgrounds and deals
- * the card table; it does not just draw text. */
+ * the horse-race entrant table; it does not just draw text. */
 void Ovl08UpdateSceneSelectMenu(void);
 
 #endif

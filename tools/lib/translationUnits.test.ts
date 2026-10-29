@@ -213,7 +213,7 @@ test("multi-member flags require an exact reviewed setting, not a member's grant
   const sourcePath = "src/overlays/ovl_t/modules/widget.c";
   const key = flagOverrideKey(sourcePath);
   const review = { sourcePath, container: "ovl_t", members: ["ovl_t:0x80100020", "ovl_t:0x80100040"],
-    owner: "ovl_t:0x80100040", flags: "-fno-cse-skip-blocks", evidence: "plans/flag-review-report.md#widget" };
+    owner: "ovl_t:0x80100040", flags: "-fno-cse-skip-blocks" };
   const input = { flagOverrideKeys: new Set([key]), flagOverrideText: `CC1FLAGS_${key} := ${review.flags}`, flagReviews: [review] };
   const check = (extra: Partial<UnitAuditInput>) => audit(MODULE, { "src/overlays/ovl_t/f_a.c": A, [sourcePath]: B + C }, undefined, extra).units[1]!;
   assert.equal(check(input).status, "valid");

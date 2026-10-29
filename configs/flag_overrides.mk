@@ -57,8 +57,8 @@
 # Whole merged-source matrix: baseline 16/17 exact (only 0x80014494 differs),
 # no-skip 17/17 exact; no compiler diagnostics. The 16 unchanged members are
 # neutral witnesses, not proof of the original compiler command line.
-# Evidence: plans/flag-review-report.md#complete-pad-tu-review;
-# build/tuFinal/pad-whole/matrix.json. Exact approved scope/options are in
+# Whole-source matrix: build/tuFinal/pad-whole/matrix.json.
+# Exact approved scope/options are in
 # configs/tu_flag_reviews.json; the checked fold remeasures every baseline
 # member before linked verification. No other construct grant is broadened.
 CC1FLAGS_modules__pad := -fno-cse-skip-blocks
@@ -75,20 +75,20 @@ CC1FLAGS_modules__pad := -fno-cse-skip-blocks
 # coordinate calculations keep the branch-local computations distinct until
 # combine, without changing their results. The complete text-TU control matches
 # all 491 words at baseline, with PRE 0 substitutions / 0 insertions.
-# The former -fno-gcse permission is retired; see plans/flag-review-report.md.
+# The former -fno-gcse permission is retired.
 
 # func_80018B98: NO override. A two-byte local command record preserves the
 # raw HImode read separately from the word-sized decode/return scratch.
 # In the complete text-TU control PRE makes zero substitutions/insertions and
 # all 294 words match baseline. The old load-hoist/impossibility claim concerned
 # earlier promoted-scalar inputs, not every clean-C representation. The former
-# -fno-gcse entry and its permission are retired; see plans/flag-review-report.md.
+# -fno-gcse entry and its permission are retired.
 
 
 # AnimateMessageWindowRect (80022794): NO override. The current clean C
 # and the complete message_window TU match at baseline. The retired
 # -fno-rerun-cse-after-loop entry described a superseded reconstruction;
-# see plans/flag-review-report.md and notes/file-groupings.md.
+# see notes/file-groupings.md.
 
 # StepUiSpriteFourFramePhase / StepUiSpriteTwoFramePhase (8002470C/8002495C):
 # NO override. Both scheduling-off entries are retired. The complete seventeen-
@@ -131,8 +131,7 @@ CC1FLAGS_modules__pad := -fno-cse-skip-blocks
 # them and produces all 55 original words from clean C. The complete fifteen-
 # member quantity-editor source is 14/15 exact at baseline and 15/15 with
 # this setting after retaining the renderer's upper work-area base. Scope and
-# original exception identity: configs/tu_flag_reviews.json; evidence:
-# plans/quantity-editor-tu-review.md#complete-quantity-editor-tu-review.
+# original exception identity: configs/tu_flag_reviews.json.
 CC1FLAGS_overlays__ovl_11__modules__quantity_editor := -fno-cse-skip-blocks
 
 # ovl_11_func_80104EC8: repeated full D_8006C838 address materializations

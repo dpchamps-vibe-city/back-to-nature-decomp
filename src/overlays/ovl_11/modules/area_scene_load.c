@@ -17,7 +17,7 @@
 #include "psyq/libcd.h"
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
-#include "card_deal.h"
+#include "horse_race_setup.h"
 #include "ovl11_selection_message.h"
 #include "ovl11_clock_calendar.h"
 #include "ovl11_area_scene_load.h"
@@ -136,7 +136,7 @@ void Ovl11PrepareAreaScene(void) {
     base->field_4438 = -1;
     Ovl11ResetAreaGridState();
     Ovl11ClearAreaSpriteWork();
-    DealCardGameTable();
+    InitHorseRaceEntries();
     Ovl11ApplyCurrentDayCondition();
     Ovl11ChooseNextDayCondition();
     Ovl11AreaResetEndHook();

@@ -482,7 +482,7 @@ export function auditUnits(input: UnitAuditInput): ContainerAudit {
         input.flagReviews ?? [], unit.sourcePath, input.container,
         unit.members.map(m => originalIdentity(input.container, m.vram)),
         literalFlagSetting(input.flagOverrideText ?? "", moduleKey))) {
-        unitFindings.push(`configs/flag_overrides.mk overrides ${moduleKey}: a multi-member module flag override needs the evidence review in plans/flag-review-report.md`);
+        unitFindings.push(`configs/flag_overrides.mk overrides ${moduleKey}: a multi-member module flag override needs an exact flag record in configs/tu_flag_reviews.json`);
       }
       for (const member of unit.members) {
         if (flagKeys.has(member.name)) unitFindings.push(`configs/flag_overrides.mk still overrides ${member.name}, which no longer applies inside ${unit.segmentName}; reconcile it before folding`);

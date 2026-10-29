@@ -29,7 +29,7 @@ policy, stop and ask rather than silently weakening the policy.
 - Refining an already-matching function: load
   `.pi/skills/psx-refine-function/SKILL.md`.
 - Reconstructing a source module (folding matched functions into one
-  translation unit): follow `plans/tu-prompt.md`. Measure with
+  translation unit): follow `prompts/tu-prompt.md`. Measure with
   `tools/diagnostics/tuProgress.ts`, fold with
   `tools/build/foldTranslationUnit.ts`, and accept only on
   `tuProgress.ts --verify`. A function's source is its unit's, so look it up

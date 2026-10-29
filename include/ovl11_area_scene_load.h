@@ -10,7 +10,7 @@
  * Callback entries below remain phase-table slots 4/5/6/7 respectively. */
 
 /* Ordered full preparation: resets slot/row records and subsystem state,
- * stages sprite banks/events, deals the card table, and advances day-condition
+ * stages sprite banks/events, initializes horse-race entries, and advances day-condition
  * setup. Main-work flag 8000 also clears the pointed reset value, seeds RNG
  * to 1 and creates the fixed initial object set. The three empty lifecycle
  * hooks are still called at their original positions. */

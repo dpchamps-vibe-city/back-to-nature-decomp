@@ -11,7 +11,7 @@ gOvl17ThresholdIndicatorSprite = 0x800BDAD4; // type:data size:0x30
 Ovl17InitRecordWork = 0x800BA54C; // type:func
 Ovl17InitRecordRollThresholds = 0x800BA630; // type:func
 Ovl17InitRowSlotTargets = 0x800BA698; // type:func
-Ovl17ResetCardRows = 0x800BA704; // type:func
+Ovl17ResetHorseRaceEntrants = 0x800BA704; // type:func renamed-from=Ovl17ResetCardRows
 gOvl17RecordRollThresholds = 0x800BB710; // type:data size:0x12
 gOvl17RowSlotTargets = 0x800BD758; // type:data size:0xF0
 
@@ -99,7 +99,7 @@ Ovl17DecayRecordCountdown = 0x800B9594; // type:func
 Ovl17UpdateRecordSelectionList = 0x800B9628; // type:func
 Ovl17UpdateRecordScrollSpeed = 0x800B9784; // type:func
 Ovl17ClampRecordPositionsAndTestComplete = 0x800B986C; // type:func
-Ovl17DrawRecordCardsPanel = 0x800B9940; // type:func
+Ovl17DrawHorseRaceBetsPanel = 0x800B9940; // type:func renamed-from=Ovl17DrawRecordCardsPanel
 Ovl17EvaluateRecordValueCurve = 0x800B9C48; // type:func
 Ovl17RaiseRecordCountdownSteps = 0x800B9CAC; // type:func
 

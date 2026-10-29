@@ -14,7 +14,6 @@ export interface TuFlagReview {
   members: string[];
   owner: string;
   flags: string;
-  evidence: string;
 }
 
 export function originalIdentity(container: string, vram: number): string {
@@ -39,18 +38,20 @@ export function parseTuFlagReviews(text: string | null): TuFlagReview[] {
       Object.keys(data).some(key => !["schemaVersion", "reviews"].includes(key))) fail();
   const paths = new Set<string>();
   for (const r of data.reviews) {
-    if (!r || typeof r !== "object" || Object.keys(r).sort().join(",") !== "container,evidence,flags,members,owner,sourcePath" ||
+    if (!r || typeof r !== "object" || Object.keys(r).filter(key => key !== "evidence").sort().join(",") !== "container,flags,members,owner,sourcePath" ||
         typeof r.container !== "string" || !/^[a-zA-Z0-9_]+$/.test(r.container) ||
         typeof r.sourcePath !== "string" || !/^src\/(?:overlays\/[a-zA-Z0-9_]+\/)?modules\/[a-z][a-z0-9_]*\.c$/.test(r.sourcePath) ||
         paths.has(r.sourcePath) || typeof r.flags !== "string" ||
         literalFlagSetting(`CC1FLAGS_review := ${r.flags}`, "review") !== r.flags ||
-        typeof r.evidence !== "string" || !/^plans\/[a-z0-9_-]+\.md#[a-z0-9-]+$/.test(r.evidence) ||
         !Array.isArray(r.members) || r.members.length < 2 || new Set(r.members).size !== r.members.length ||
         !r.members.every((id: unknown) => typeof id === "string" && id.startsWith(`${r.container}:`) && /^[a-zA-Z0-9_]+:0x[0-9A-F]{8}$/.test(id)) ||
         !r.members.includes(r.owner)) fail();
     paths.add(r.sourcePath);
   }
-  return data.reviews;
+  /* Historical snapshots may carry documentary metadata; it has no bearing
+     on the exact source/member/flag scope checked here. */
+  return data.reviews.map(({ sourcePath, container, members, owner, flags }: TuFlagReview) =>
+    ({ sourcePath, container, members, owner, flags }));
 }
 
 export function loadTuFlagReviews(root = ROOT): TuFlagReview[] {

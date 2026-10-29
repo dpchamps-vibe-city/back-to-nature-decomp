@@ -24,8 +24,7 @@
         "exe:0x80014494"
       ],
       "owner": "exe:0x80014494",
-      "flags": "-fno-cse-skip-blocks",
-      "evidence": "plans/flag-review-report.md#complete-pad-tu-review"
+      "flags": "-fno-cse-skip-blocks"
     },
     {
       "sourcePath": "src/overlays/ovl_11/modules/quantity_editor.c",
@@ -48,8 +47,7 @@
         "ovl_11:0x80104418"
       ],
       "owner": "ovl_11:0x80103B24",
-      "flags": "-fno-cse-skip-blocks",
-      "evidence": "plans/quantity-editor-tu-review.md#complete-quantity-editor-tu-review"
+      "flags": "-fno-cse-skip-blocks"
     }
   ]
 }

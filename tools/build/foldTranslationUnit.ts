@@ -526,7 +526,7 @@ export function planFold(request: FoldRequest): FoldPlan {
     if (!flags) refuse(`${member.name}: migration requires one existing literal flag list`);
     if (members.length !== 1 && (stubs.length > 0 || reviewedTuFlagOwner(loadTuFlagReviews(), modulePath,
       container.id, members.map(m => originalIdentity(container.id, m.vram)), flags) !== originalIdentity(container.id, member.vram))) {
-      refuse(`${member.name} has a per-function flag override (CC1FLAGS_${member.name}); reconcile it per plans/flag-review-report.md and record the exact whole-TU approval before folding`);
+      refuse(`${member.name} has a per-function flag override (CC1FLAGS_${member.name}); reconcile it with an exact whole-TU flag record in configs/tu_flag_reviews.json before folding`);
     }
     flagConfig = {
       path, owner: member.name, flags,

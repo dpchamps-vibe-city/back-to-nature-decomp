@@ -125,7 +125,7 @@ segments:
       - [0x125A8, c, modules/state_memory_init]
       - [0x127D0, c, modules/scene_phase]
       - [0x127E4, c, modules/message_buffer_access]
-      - [0x12814, c, modules/card_deal]
+      - [0x12814, c, modules/horse_race_setup]
       - [0x12B8C, c, modules/sprite_grid]
       - [0x12D80, c, modules/menu_panel]
       - [0x12DB8, c, modules/message_window]

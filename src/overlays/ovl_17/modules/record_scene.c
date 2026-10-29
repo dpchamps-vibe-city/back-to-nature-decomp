@@ -1,8 +1,8 @@
 /*
  * record_scene — reconstructed translation unit.
  *
- * Complete record-selection scene: private phase and state dispatch, row
- * selection and simulation, queue, resource lifecycle and presentation.
+ * Horse-race scene: private phase and state dispatch, entrant simulation,
+ * betting/results, queue, resource lifecycle and presentation.
  *
  * The evidence for its membership and boundaries is in
  * notes/file-groupings.md.
@@ -197,9 +197,9 @@ void Ovl17ResetRecordTrails(void);
 
 void Ovl17InitRecordStageRows(void) {
     s16 temp_v0;
-    Ovl11CardView *work;
+    Ovl11HorseRaceView *work;
     s16 *var_a2;
-    s16 *cards;
+    s16 *entries;
     s16 var_a1;
     s32 var_a3;
     s32 offset;
@@ -207,16 +207,16 @@ void Ovl17InitRecordStageRows(void) {
     u8 *var_a1_3;
     s32 *names;
 
-    Ovl17ResetCardRows();
-    work = (Ovl11CardView *)D_8006C838;
+    Ovl17ResetHorseRaceEntrants();
+    work = (Ovl11HorseRaceView *)D_8006C838;
     var_a1 = 2;
     if (((Ovl17ModeView *)D_8006C838)->mode != 3) {
         var_a1 = ((Ovl17ModeView *)D_8006C838)->mode;
     }
     names = gOvl17RecordRowNameOffsets;
     offset = var_a1 * 0x54;
-    cards = (s16 *)((u8 *)work + 0xE516);
-    var_a2 = (s16 *)((u8 *)cards + offset);
+    entries = (s16 *)((u8 *)work + 0xE516);
+    var_a2 = (s16 *)((u8 *)entries + offset);
     var_a0 = gOvl17RowSlotTargets;
     for (var_a3 = 0; var_a3 < 6; var_a3++) {
         temp_v0 = *var_a2;
@@ -322,7 +322,7 @@ void Ovl17ShowRecordChoicePage1(void) {
         if (result == 1) {
             base[-0xC4] = 4;
         } else if (result == state) {
-            Ovl17ResetCardRows();
+            Ovl17ResetHorseRaceEntrants();
             base[-0xC4] = result;
         }
     }
@@ -344,7 +344,7 @@ void Ovl17ShowRecordConfirmPage2(void) {
     Ovl17DrawRecordBackdrop(0x40000);
     RequestMessageWindow(4, 2);
     if (GetMessageWindowStatus() == 2) {
-        Ovl17ResetCardRows();
+        Ovl17ResetHorseRaceEntrants();
         record[-0xC4] = 5;
     }
 }
@@ -571,7 +571,7 @@ void Ovl17ShowSelectedRecordNamePage6(void) {
     }
 }
 
-s16 Ovl17DrawRecordCardsPanel(s32 arg0);
+s16 Ovl17DrawHorseRaceBetsPanel(s32 arg0);
 
 void Ovl17ShowRecordTotalPage7(void) {
     u32 *boxes;
@@ -593,7 +593,7 @@ void Ovl17ShowRecordTotalPage7(void) {
     SetTextSourcePointer(0, (s32)&gOvl17RecordModeHeadingText[mode * 2]);
     DrawMenuPanel(boxes, 1, 0x28, 0x30, 0xF4, 0x72);
     DrawTextLine(text, (s32)gOvl17RecordPanelLabelText, 0x3D, 0x32);
-    total = Ovl17DrawRecordCardsPanel(1);
+    total = Ovl17DrawHorseRaceBetsPanel(1);
     DrawMenuPanel(boxes, 1, 0xC3, 0x10, 0x6F, 0x1E);
     DrawTextLine(text, (s32)(gOvl17RecordPanelLabelText - 0x17), 0xC7, 0x12);
     *(u16 *)WriteDecimalText(work->value, (s16 *)gOvl17NumberTextBuffer, 7) = 0xFFFF;
@@ -621,7 +621,7 @@ void Ovl17ShowRecordResultPage8(void) {
     DrawScreenSubtractOverlay(0x40, 0x40, 0x40);
     DrawMenuPanel(boxes, 1, 0x28, 0x30, 0xF4, 0x72);
     DrawTextLine(text, (s32)gOvl17RecordPanelLabelText, 0x3D, 0x32);
-    total = Ovl17DrawRecordCardsPanel(0);
+    total = Ovl17DrawHorseRaceBetsPanel(0);
     base = (Ovl17SummaryResultView *)D_8006C838;
     total += base->value;
     if (total > 99999) {
@@ -953,8 +953,8 @@ s32 Ovl17ClampRecordPositionsAndTestComplete(void) {
     return count == 0;
 }
 
-/* Draws the six-row card table and returns the selected row's weight * unkC
- * total (shown only when arg0 is set).
+/* Draws the six-entrant betting table and returns the selected entrant's
+ * odds * ticketCount winnings (shown only when arg0 is set).
  *
  * `text` is reused as a scratch string pointer, and it is bound to the row
  * record before the name is chosen. All four sets are dead. cse forwards the
@@ -969,7 +969,7 @@ s32 Ovl17ClampRecordPositionsAndTestComplete(void) {
  * and rematerialised by reload instead (186/194). See
  * notes/research/harness-improvement-case-studies/ovl_11_func_80110944-dead-bindings-and-compiler-history.md
  * for the dead-binding mechanism. */
-s16 Ovl17DrawRecordCardsPanel(s32 arg0) {
+s16 Ovl17DrawHorseRaceBetsPanel(s32 arg0) {
     s32 surface;
     u16 total;
     u16 row;
@@ -1003,14 +1003,14 @@ s16 Ovl17DrawRecordCardsPanel(s32 arg0) {
         }
         DrawTextLine(surface, (s32)text, 0x46, y);
         DrawTextLine(surface, (s32)gOvl17RecordColumnLabelText, 0x8E, y);
-        *(u16 *)WriteDecimalText(((Ovl17ModeView *)D_8006C838)->cards[row][i].weight, (s16 *)gOvl17NumberTextBuffer, 2) = 0xFFFF;
+        *(u16 *)WriteDecimalText(((Ovl17ModeView *)D_8006C838)->entries[row][i].odds, (s16 *)gOvl17NumberTextBuffer, 2) = 0xFFFF;
         DrawTextLine(surface, (s32)gOvl17NumberTextBuffer, 0xB2, y);
-        *(u16 *)WriteDecimalText(((Ovl17ModeView *)D_8006C838)->cards[row][i].unkC, (s16 *)gOvl17NumberTextBuffer, 2) = 0xFFFF;
+        *(u16 *)WriteDecimalText(((Ovl17ModeView *)D_8006C838)->entries[row][i].ticketCount, (s16 *)gOvl17NumberTextBuffer, 2) = 0xFFFF;
         DrawTextLine(surface, (s32)gOvl17NumberTextBuffer, 0xCA, y);
         text = &gOvl17RecordColumnLabelText[5];
         DrawTextLine(surface, (s32)text, 0xDE, y);
         if (((Ovl17RowsView *)gOvl17RecordWorkBase)->selected == i) {
-            total += (u16)((Ovl17ModeView *)D_8006C838)->cards[row][i].weight * (u16)((Ovl17ModeView *)D_8006C838)->cards[row][i].unkC;
+            total += (u16)((Ovl17ModeView *)D_8006C838)->entries[row][i].odds * (u16)((Ovl17ModeView *)D_8006C838)->entries[row][i].ticketCount;
         }
         y += 13;
     }
@@ -1234,7 +1234,7 @@ void Ovl17QueueSoundBankLoads(void) {
 /*
  * Record work-area initialization, ovl_17:800BA54C..800BA808.
  * The terminal scene-load phase seeds controls, roll thresholds and row
- * targets, then loads six display rows from the shared card table. Row reset
+ * targets, then loads six entrants from the shared horse-race table. Row reset
  * is also a public operation during the scene. No sprite archive is loaded
  * here; the resource and rendering sections below consume the same rows.
  */
@@ -1271,7 +1271,7 @@ void Ovl17InitRecordWork(void) {
     RECORD_WORK.selectionCount = 0;
     Ovl17InitRecordRollThresholds();
     Ovl17InitRowSlotTargets();
-    Ovl17ResetCardRows();
+    Ovl17ResetHorseRaceEntrants();
     Ovl17UpdateTimerHud(-1);
 }
 
@@ -1316,9 +1316,9 @@ void Ovl17InitRowSlotTargets(void) {
     }
 }
 
-/* Mode 3 uses card row 2 and substitutes the special slot's x/y into display
- * row 2. Other modes directly index the card table without a bounds check. */
-void Ovl17ResetCardRows(void) {
+/* Mode 3 uses race 2 and substitutes the player's horse parameters into
+ * entrant 2. Other modes directly index the race table without a bounds check. */
+void Ovl17ResetHorseRaceEntrants(void) {
     u16 row;
     s32 slot;
 
@@ -1332,22 +1332,22 @@ void Ovl17ResetCardRows(void) {
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].unk2C = 0;
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].unk2E = 0;
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].unk30 = 0;
-        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].x =
-            ((Ovl17ModeView *)D_8006C838)->cards[row][slot].x;
-        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].y =
-            ((Ovl17ModeView *)D_8006C838)->cards[row][slot].y;
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].parameter0 =
+            ((Ovl17ModeView *)D_8006C838)->entries[row][slot].parameter0;
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].parameter1 =
+            ((Ovl17ModeView *)D_8006C838)->entries[row][slot].parameter1;
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].attr[0] =
-            ((Ovl17ModeView *)D_8006C838)->cards[row][slot].attr[0];
+            ((Ovl17ModeView *)D_8006C838)->entries[row][slot].attr[0];
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].attr[1] =
-            ((Ovl17ModeView *)D_8006C838)->cards[row][slot].attr[1];
+            ((Ovl17ModeView *)D_8006C838)->entries[row][slot].attr[1];
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].unk38 = -0x20000;
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[slot].data = &gOvl17RowSlotTargets[slot * 6];
     }
     if (((Ovl17ModeView *)D_8006C838)->mode == 3) {
         ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[2].flags = 1;
-        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[2].x =
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[2].parameter0 =
             ((Ovl17ModeView *)D_8006C838)->unk9348;
-        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[2].y =
+        ((Ovl17RowsView *)gOvl17RecordWorkBase)->rows[2].parameter1 =
             ((Ovl17ModeView *)D_8006C838)->unk92B2;
     }
 }

@@ -4,7 +4,7 @@ import { literalFlagSetting, parseTuFlagReviews, reviewedTuFlagOwner, type TuFla
 
 const review: TuFlagReview = {
   sourcePath: "src/modules/pair.c", container: "exe", members: ["exe:0x80010000", "exe:0x80010010"],
-  owner: "exe:0x80010010", flags: "-fno-cse-skip-blocks", evidence: "plans/flag-review-report.md#pair-review",
+  owner: "exe:0x80010010", flags: "-fno-cse-skip-blocks",
 };
 
 test("whole-TU permission binds path, container, every original identity and exact options", () => {
@@ -20,12 +20,19 @@ test("whole-TU permission binds path, container, every original identity and exa
   assert.equal(reviewedTuFlagOwner([], review.sourcePath, "exe", review.members, review.flags), undefined);
 });
 
+test("flag records need no document and ignore legacy evidence metadata", () => {
+  const parse = (row: object) => parseTuFlagReviews(JSON.stringify({ schemaVersion: 1, reviews: [row] }));
+  assert.deepEqual(parse(review), [review]);
+  assert.deepEqual(parse({ ...review, evidence: "deleted/report.md#old" }), [review]);
+  assert.deepEqual(parse({ ...review, evidence: "" }), [review]);
+});
+
 test("malformed, duplicate or unbounded reviews fail closed", () => {
   assert.deepEqual(parseTuFlagReviews(null), []);
   for (const changed of [
     { ...review, members: [review.owner] }, { ...review, owner: "exe:0x80010020" },
     { ...review, members: [...review.members, review.owner] }, { ...review, flags: "$(FLAGS)" },
-    { ...review, evidence: "" }, { ...review, constructs: ["embedded-asm"] },
+    { ...review, constructs: ["embedded-asm"] },
     { ...review, sourcePath: "../pair.c" }, { ...review, members: ["ovl_11:0x80010000", review.owner] },
   ]) assert.throws(() => parseTuFlagReviews(JSON.stringify({ schemaVersion: 1, reviews: [changed] })));
   assert.throws(() => parseTuFlagReviews(JSON.stringify({ schemaVersion: 1, reviews: [review, review] })));

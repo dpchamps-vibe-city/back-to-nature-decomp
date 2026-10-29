@@ -21,7 +21,7 @@
 #include "psyq/libcd.h"
 #include "psyq/libetc.h"
 #include "psyq/memory.h"
-#include "card_deal.h"
+#include "horse_race_setup.h"
 #include "ovl11_state_field_access.h"
 #include "game_flags.h"
 #include "ovl11_record_flag_query.h"
@@ -280,7 +280,7 @@ block_118:
     case 11:
         switch (arg1) {
         case 0:
-            DealCardGameTable();
+            InitHorseRaceEntries();
             return 1;
         case 1:
             ((E9State *)D_8006C838)->fE514 = (s16) arg2;

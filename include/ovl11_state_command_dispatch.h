@@ -24,7 +24,7 @@
  *  9  Set game flag 66.
  * 10  Queue a dated event with arg1 and narrowed arg2/arg3.
  * 11  Set work +44F8 bit 1.
- * 12  arg1 0..12 selects card-deal, interaction, scene or record-state operations.
+ * 12  arg1 0..12 selects horse-race setup, interaction, scene or record-state operations.
  * 13  arg1 0/1/2/3 restores, tests, edits or clears selected record pairs.
  * 14  arg1==0 tests record flags; arg1==1 retires then FALLS THROUGH to 15.
  * 15  arg1 0/1 sets work +44F8 bit 400/400000 then FALLS THROUGH to 16.

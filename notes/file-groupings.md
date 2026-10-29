@@ -4364,8 +4364,8 @@ renderer blockers below are superseded by the integrated whole-unit source,
 not erased from the experimental history. No per-function slice remains.
 
 The missing source operation was in the row renderer: retain the work-area
-+0x8000 base across bank selection and read the existing 14-byte card records
-through it. `Ovl11CardUpperView` describes selector@6514 and records@6516
++0x8000 base across bank selection and read the existing 14-byte horse-race entries
+through it. `Ovl11HorseRaceUpperView` describes selector@6514 and records@6516
 relative to that real base. It adds neither storage nor accesses. The shared
 snapshot/commit view and all global declarations live in the override header;
 redundant C-local global declarations and duplicate view types were removed.
@@ -10530,7 +10530,7 @@ gSharedSpriteData deliberately acknowledge their other sprite/UI consumers.
 The data load is witnessed by six overlays' 0x13DC-byte copies. Shared RAM
 or a shared asset alone does not extend this unit to those consumers.
 
-Boundaries: predecessor 2206C initializes a 3x6 card table using 558A4/55944
+Boundaries: predecessor 2206C initializes a 3x6 horse-race table using 558A4/55944
 and 22014, with neither grid state nor grid-helper calls. Successor 22580
 is solely a forwarding wrapper to the 136D4 panel drawer. It neither
 participates in the callback graph nor uses its state/tables. Thus there is
@@ -12380,8 +12380,8 @@ serial-volume mapping (countdown >32 ->45; <=32 ->4*countdown).
 Boundaries: 21820 is the SPU voice allocator over 8006C0C8/8006C128; neither
 side touches the other's private state or tables. Intervening empty 218BC has
 no ownership, call or table evidence and stays outside. Likewise 21D64 is an
-empty stack-frame function, followed by empty entries and then a card-table
-family; none supplies a playback-state or helper relationship. These cuts are
+empty stack-frame function, followed by empty entries and then a horse-race
+setup family; none supplies a playback-state or helper relationship. These cuts are
 absence-of-extension evidence, not claimed GP/absolute conflict proofs.
 The broader sound driver calls this unit's bootstrap, but shares no owned
 playback state. No evidence supports absorbing it solely for that call.
@@ -12824,7 +12824,7 @@ Members (address order):
   not use of the general state base alone. Both functions have no GP access.
 
   Left 21FD0 clears only independent +4488/+448C transition words; right
-  22014 begins card-table membership/dealing and touches neither availability
+  22014 begins horse-race entrant membership/setup and touches neither availability
   byte nor read buffer. These are evidence-limited responsibility boundaries,
   not proven original object cuts. No evidence joins either neighbor to this
   pair. The public header states zero/nonzero availability, optional NULL
@@ -14256,7 +14256,7 @@ that named callback. Container-local names cover the phase, cursor, row table,
 callback table and seven formatting objects. The row fields are sceneId and
 labelAddress, with original signed-word representations preserved. The header
 documents paging, wrap vs clamp, the fade guard, flag effects and the otherwise
-surprising card-table initialization. No original data was moved into C.
+surprising horse-race table initialization. No original data was moved into C.
 
 The checked fold matched all four functions at baseline -O2/-G0. No flag
 exception was involved or added. Naming exposed two concrete generator/link
@@ -22682,9 +22682,9 @@ Members:
   800B9C48/800B9CAC/800B9594/800B9324) reads its result. Same
   `base = D_800BD848` + 0x50-stride and s32@+0x38 field as 800B9E94; gapless
   link-order run 800B9784 → 800B986C → 800B9940.
-- ovl_17_func_800B9940 (m, 2026-10-23) — six-row card-table drawer: the
-  `((Ovl17RowsView *)D_800BD848)->rows[i].nameOffset` names, plus the
-  `Ovl17ModeView` card table read the same way as 800BA704. Gapless
+- ovl_17_func_800B9940 (m, 2026-10-23; now Ovl17DrawHorseRaceBetsPanel) —
+  six-entrant betting table: `((Ovl17RowsView *)D_800BD848)->rows[i].nameOffset`
+  names, plus the `Ovl17ModeView` race table read the same way as 800BA704. Gapless
   link-order successor of 800B986C. The match relies on four dead `text`
   bindings that size the re-run loop pass (see the source comment).
 - ovl_17_func_800B9594 (m, 2026-10-05) — countdown walk of 6 D_800BD848
@@ -22895,7 +22895,7 @@ not GP-proven original object boundaries.
 The following four entries are a separate complete module,
 `src/overlays/ovl_17/modules/record_work_init.c`: BA54C
 `Ovl17InitRecordWork`, BA630 `Ovl17InitRecordRollThresholds`, BA698
-`Ovl17InitRowSlotTargets`, BA704 `Ovl17ResetCardRows`. BA54C calls all
+`Ovl17InitRowSlotTargets`, BA704 `Ovl17ResetHorseRaceEntrants`. BA54C calls all
 three in order; BA630/BA698 have no other caller. BA704 also supports
 in-scene row reloads. The control/selection initialization and six row reset
 writes are complementary parts of the same work-area protocol. BA630 expands
@@ -22991,41 +22991,55 @@ Members (link order):
 Callee evidence for 800BA704 (m, 2026-10-23), which sits outside this run:
 it writes the six display rows through the same
 `((Ovl17RowsView *)D_800BD848)->rows[i].field` idiom as the matched
-800B8294, and reads the card table through the `Ovl17ModeView` cast of
-D_8006C838 (`cards[row][i]`, mode at +0xE514). The same table is read by
-800B9940 and dealt by the executable's func_8002206C. Both 800BA704 and
+800B8294, and reads the horse-race table through the `Ovl17ModeView` cast of
+D_8006C838 (`entries[row][i]`, mode at +0xE514). The same table is read by
+800B9940 and initialized by the executable's InitHorseRaceEntries (8002206C). Both 800BA704 and
 func_8002206C put the +0x9348/+0x92B2 halfwords into row 2 in mode 3. That is
 data-layout evidence only and does not establish a TU boundary.
 
-### EXE card-dealer unit — 0x80022014–0x8002238C
+### EXE horse-race setup unit — 0x80022014–0x8002238C
 
-`src/modules/card_deal.c` folds the complete two-function dealer/helper pair:
-CardTableContainsValue (22014) and DealCardGameTable (2206C). The dealer is
-the helper's only calling C body; the helper scans exactly the same 3x6,
-stride-14 value layout the dealer clears/fills. Its role in rejecting duplicate
-Rand(40) draws, plus the adjacent link order and the dealer's private value-
-attribute table (558A4) and column-position table (55944), support membership.
-There is no GP signal in either function; this is protocol/helper evidence,
-not a claim of GP-proven original boundaries. The card state is deliberately
-shared with ovl_17 consumers, which are not EXE TU members.
+`src/modules/horse_race_setup.c` folds the complete two-function setup/helper
+pair: HorseRaceContainsEntrant (22014) and InitHorseRaceEntries (2206C).
+The initializer is the helper's only calling C body; both use the same 3x6,
+stride-14 entrant layout. Rejecting duplicate Rand(40) horse IDs, adjacent
+link order, the private horse-attribute table (558A4) and entrant-parameter
+range table (55944) support membership. There is no GP signal in either
+function; this is protocol/helper evidence, not GP-proven original boundaries.
+The state is shared with ovl_17 consumers, which are not EXE TU members.
 
-Left boundary: 22008 clears the unrelated byte at 6C905 and has no card-table,
-random-deal or helper relationship. Earlier 21DA8/21E60 initialize broad game
-storage/pool tables, not this dealer protocol. Right boundary: 2238C starts
-the complete sprite_grid callback family, whose private tick/frame-index table
-and callbacks have no card-state relationship. Neither end has positive
-extension evidence; neither cut is claimed to be an absolute/GP conflict.
+Semantic correction: the former `card_deal`/card-game interpretation was
+unsupported. The original ovl_17 data contains these halfword-encoded strings
+(uppercase A=0, lowercase a=0x20, space=0x0FFD, terminator=0xFFFF):
+- 800BB482: "Race <4000> bets" (4000 substitutes the race number).
+- 800BB49A: "Odds"; 800BB4A4: "Tickets".
+- 800BB4B4: "You can win      medals".
+Ovl17DrawHorseRaceBetsPanel (800B9940) draws these labels beside entry +0xA
+and +0xC, then multiplies those fields for selected-entrant winnings. They
+are `odds` and `ticketCount`, not a generic weight and unknown halfword.
+The ID indexes text offsets at 800BB534 into EXE text at 800556A8: the first
+names are HoneyB, BeeBop, Nova, ShyBoy, Sadie and Apache. Mode 3 substitutes
+the player's horse-name buffer at 80075AD8 for entrant 2 in race 2 and uses
+game-state +9348/+92B2 for that horse's parameters. The race simulation
+consumes those parameters; their exact meanings and the attribute pair's
+meanings remain unresolved, so neutral parameter0/parameter1/attr names
+replace the misleading screen-coordinate interpretation.
 
-`card_deal.h` publishes the retained address-as-s32 membership ABI and the
-no-argument dealer. Names cover the two functions, gCardGameState and its six
-first-slot field anchors, gCardValueAttributes and gCardColumnPositionRanges.
-The explicit interior labels preserve their original identities inside the
-0x108-byte state; declarations and signed/unsigned field types are unchanged.
-Locals now distinguish row, column, value, saved mode and the x/weight walks.
-Documentation records 18 unique values, half-open coordinate ranges, the old
-mode-3 special slot at [2][2], the fact that mode is NOT restored after memset,
-and the unsigned maximum comparison and distance-squared weight calculation.
-No gameplay meaning was guessed for the two attribute halfwords.
+Left boundary: 22008 clears the unrelated byte at 6C905 and has no race-table,
+random-initialization or helper relationship. Earlier 21DA8/21E60 initialize
+broad game storage/pool tables, not this entrant protocol. Right boundary:
+2238C starts the complete sprite_grid callback family, whose private tick/
+frame-index table and callbacks have no race-state relationship. Neither end
+has positive extension evidence; neither cut is an absolute/GP conflict proof.
+
+`horse_race_setup.h` publishes the retained address-as-s32 membership ABI
+and no-argument initializer. HorseRaceEntry/HorseRaceState and all renamed
+gHorseRace field anchors/tables retain their layout, signedness and symbol
+addresses. Documentation records 18 distinct horse IDs, half-open parameter
+ranges, player entry [2][2], mode NOT restored after memset, and the unsigned
+maximum comparison in 1 + (maxParameter0-parameter0)^2/1000 + Rand(4) odds.
+Overlay consumers now use Ovl17DrawHorseRaceBetsPanel and
+Ovl17ResetHorseRaceEntrants; no control flow or arithmetic was changed.
 
 Baseline fold: both members and EXE exact; no flag override involved. After
 naming and header publication, interfaceAudit confirmed caller objects and the

@@ -327,8 +327,8 @@ void Ovl11DrawQuantityEditorRows(void) {
     temp_s3 = temp_t0 + 0x58;
     DrawMenuPanel((u32 *)(temp_t0 + 0x5C), 0, 0x20, 0x30, 0x101, 0x72);
     var_a1 = 2;
-    if (((Ovl11CardView *) D_8006C838)->selector != 3) {
-        var_a1 = (u16) ((Ovl11CardView *) D_8006C838)->selector;
+    if (((Ovl11HorseRaceView *) D_8006C838)->selector != 3) {
+        var_a1 = (u16) ((Ovl11HorseRaceView *) D_8006C838)->selector;
     }
     *(u16 *)WriteDecimalText(var_a1 + 1, D_8012CF30, 1) = 0xFFFF;
     SetTextSourcePointer(0, (s32) D_8012CF30);
@@ -379,22 +379,22 @@ void Ovl11DrawQuantityEditorRow(s32 rowIndex) {
     s32 *labelText;
     s16 *numberText;
     s32 textContext;
-    Ovl11CardView *state;
-    Ovl11CardUpperView *upper;
+    Ovl11HorseRaceView *state;
+    Ovl11HorseRaceUpperView *upper;
 
     bank = 2;
     rowIndex = (s16)rowIndex;
     textContext = gActiveRenderContext->field_D8 + 0x58;
-    state = (Ovl11CardView *)D_8006C838;
+    state = (Ovl11HorseRaceView *)D_8006C838;
     mode = state->selector;
     /* Reuse the upper work-area base through the bank-selection branch. */
-    upper = (Ovl11CardUpperView *)((u8 *)state + 0x8000);
+    upper = (Ovl11HorseRaceUpperView *)((u8 *)state + 0x8000);
     three = 3;
     if (mode != three) {
         bank = mode;
     }
-    labelId = upper->cards[bank][rowIndex][0];
-    storedValue = upper->cards[bank][rowIndex][5];
+    labelId = upper->entries[bank][rowIndex][0];
+    storedValue = upper->entries[bank][rowIndex][5];
     editedValue = D_8012CF10[rowIndex];
     y = ((rowIndex + 1) * 14) + 50;
     if (mode == three && rowIndex == 2) {

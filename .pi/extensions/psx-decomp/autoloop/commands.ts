@@ -102,7 +102,7 @@ export function registerAutoloopCommands(pi: ExtensionAPI, projectRoot: string):
   pi.registerCommand(LOOP_COMMAND, {
     description:
       "Run the tiered escalation decompilation loop in this session; `repair` removes asm/pin exceptions from functions that already match; " +
-      "`fold` reconstructs source modules (plans/tu-prompt.md) until tuProgress.ts reports every eligible function folded. " + USAGE,
+      "`fold` reconstructs source modules (prompts/tu-prompt.md) until tuProgress.ts reports every eligible function folded. " + USAGE,
     handler: async (args, ctx) => {
       const parsed = parseArgs(args);
 

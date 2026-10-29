@@ -71,18 +71,18 @@ test("a note quoting embedded asm is documentation, not a violation", () => {
   assert.equal(result.pass, true);
 });
 
-test("project scope permits plans without widening unrelated roots or source exceptions", () => {
+test("project scope permits prompts without the retired plans root or wider source exceptions", () => {
   const { root, config } = fixture("void target(void) {}\n");
   /* Finalization reads the project's integration roots, not DEFAULT_CONFIG. */
   const projectRoot = fileURLToPath(new URL("../../../", import.meta.url));
   config.integration = loadConfig(projectRoot).integration;
   const changedFiles = [
-    "plans/retired-overview.md",
-    "./plans/static-recompilation-project/overview.md",
-    "plans/static-recompilation-project/phase-01-end-to-end-slice.md",
+    "prompts/tu-prompt.md",
+    "./prompts/README.md",
+    "prompts/reference/flags.md",
   ];
   const patch = [
-    "+++ b/plans/static-recompilation-project/overview.md",
+    "+++ b/prompts/tu-prompt.md",
     "@@ -0,0 +1 @@",
     '+__asm__("nop");',
   ].join("\n");
@@ -93,10 +93,10 @@ test("project scope permits plans without widening unrelated roots or source exc
   const unrelated = checkSourcePolicy({
     projectRoot: root,
     config,
-    changedFiles: [...changedFiles, "README.md", "plans-other/overview.md"],
+    changedFiles: [...changedFiles, "README.md", "plans/retired-overview.md", "prompts-other/overview.md"],
   });
   assert.equal(unrelated.pass, false);
-  assert.deepEqual(unrelated.outOfScopeFiles, ["README.md", "plans-other/overview.md"]);
+  assert.deepEqual(unrelated.outOfScopeFiles, ["README.md", "plans/retired-overview.md", "prompts-other/overview.md"]);
 
   const sourcePatch = [
     patch,
@@ -394,7 +394,7 @@ test("reviewed module flags need the original owner's grant and do not authorize
   assert.equal(check().pass, false, "a member's grant alone is insufficient");
   writeFileSync(join(root, "configs/tu_flag_reviews.json"), JSON.stringify({ schemaVersion: 1, reviews: [{
     sourcePath: file, container: "exe", members: members.map(m => originalIdentity("exe", Number(m.vram))),
-    owner: originalIdentity("exe", Number(owner.vram)), flags: "-fno-cse-skip-blocks", evidence: "plans/flag-review-report.md#test",
+    owner: originalIdentity("exe", Number(owner.vram)), flags: "-fno-cse-skip-blocks",
   }] }));
   assert.equal(check().pass, true, JSON.stringify(check().hardFailures));
   config.sourcePolicy.allowlist = {};
