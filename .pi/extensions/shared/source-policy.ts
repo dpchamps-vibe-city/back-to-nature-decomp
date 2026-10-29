@@ -7,6 +7,7 @@ import { approvedSdkMacroDefinitions } from "./sdk-macros.ts";
 import { enclosingDefinition, sourceFacts } from "../../../tools/lib/translationUnitAudit.ts";
 import { flagOverrideKey, loadTranslationUnits } from "../../../tools/lib/translationUnits.ts";
 import { loadContainers } from "../../../tools/lib/container.ts";
+import { literalFlagSetting, loadTuFlagReviews, originalIdentity, reviewedTuFlagOwner } from "../../../tools/lib/tuFlagReviews.ts";
 import { loadCallGraph } from "./call-graph.ts";
 
 interface PolicyOptions {
@@ -472,13 +473,31 @@ function soleModuleFlagOwner(options: PolicyOptions, file: string): MemberScope 
     facts.definitions[0]!.name === members[0]!.name ? members[0] : undefined;
 }
 
-function flagKeyOwner(options: PolicyOptions, key: string): MemberScope | undefined {
+/* A reviewed multi-member setting grants only this flag migration. Construct
+ * permissions are still checked against each enclosing original function. */
+function moduleFlagOwner(options: PolicyOptions, file: string, flags: string | undefined): MemberScope | undefined {
+  const sole = soleModuleFlagOwner(options, file);
+  if (sole) return sole;
+  const members = moduleMembers(options.projectRoot, file);
+  const path = resolve(options.projectRoot, file);
+  if (members.length < 2 || !existsSync(path)) return undefined;
+  const facts = sourceFacts(readFileSync(path, "utf8"));
+  if (!facts.parses || facts.includeAsm.length !== 0 || facts.definitions.length !== members.length ||
+      !members.every(m => facts.definitions.filter(d => d.name === m.name).length === 1)) return undefined;
+  const container = members[0]!.container;
+  if (!container || members.some(m => m.container !== container || !m.vram)) return undefined;
+  const owner = reviewedTuFlagOwner(loadTuFlagReviews(options.projectRoot), file, container,
+    members.map(m => originalIdentity(container, Number(m.vram))), flags);
+  return members.find(m => originalIdentity(container, Number(m.vram)) === owner);
+}
+
+function flagKeyOwner(options: PolicyOptions, key: string, flags: string | undefined): MemberScope | undefined {
   const paths = new Set([...Object.values(options.functionSources ?? {}), ...(options.changedFiles ?? [])]);
   for (const container of loadContainers()) {
     for (const unit of loadTranslationUnits(container)) if (unit.foldedModule) paths.add(unit.sourcePath);
   }
   const file = [...paths].find((path) => isModuleSourcePath(path) && flagOverrideKey(path) === key);
-  return file ? soleModuleFlagOwner(options, file) : undefined;
+  return file ? moduleFlagOwner(options, file, flags) : undefined;
 }
 
 function scanSourceFile(options: PolicyOptions, file: string, findings: PolicyFinding[]): void {
@@ -597,13 +616,13 @@ function scanAddedPatch(options: PolicyOptions): PolicyFinding[] {
         ? text.match(/^CC1FLAGS_(\S+?)\s*:?=/)?.[1]
         : undefined;
       if (overrideStem) {
-        const owner = flagKeyOwner(options, overrideStem);
+        const owner = flagKeyOwner(options, overrideStem, literalFlagSetting(text, overrideStem));
         const grantName = owner?.name ?? overrideStem;
         const overrideVram = owner?.vram ?? options.functionVrams?.[overrideStem]
           ?? (overrideStem === options.functionName ? options.functionVram : undefined);
         const overrideContainer = owner?.container ?? options.functionContainers?.[overrideStem]
           ?? (overrideStem === options.functionName ? options.functionContainer : undefined);
-        if (!allowlisted(options.config, grantName, overrideVram, overrideContainer, "flag-override")) {
+        if ((!owner && overrideStem.includes("modules__")) || !allowlisted(options.config, grantName, overrideVram, overrideContainer, "flag-override")) {
           findings.push({
             kind: "flag-override",
             file,
@@ -706,14 +725,14 @@ export function checkSourcePolicy(options: PolicyOptions): SourcePolicyResult {
   const overrides = resolve(options.projectRoot, "configs", "flag_overrides.mk");
   if (existsSync(overrides)) {
     const lines = readFileSync(overrides, "utf8").split("\n");
-    /* A multi-member unit cannot borrow one member's permission. The sole
-       exception is a proven 1:1 source rename: it changes no flag scope. */
+    /* A multi-member unit cannot borrow one member's permission without an
+       exact whole-TU review; singleton source renames retain their scope. */
     for (const file of scannedFiles) {
       if (!isModuleSourcePath(file)) continue;
       const key = flagOverrideKey(file).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const index = lines.findIndex((line) => new RegExp(`^CC1FLAGS_${key}\\s*:?=`).test(line));
       if (index >= 0) {
-        const owner = soleModuleFlagOwner(options, file);
+        const owner = moduleFlagOwner(options, file, literalFlagSetting(lines.join("\n"), flagOverrideKey(file)));
         if (!owner || !allowlisted(options.config, owner.name, owner.vram, owner.container, "flag-override")) {
           hardFailures.push({
             kind: "flag-override", file: "configs/flag_overrides.mk", line: index + 1,

@@ -8,8 +8,17 @@
 #include "ovl11_timed_sprite_effect.h"
 #include "ovl11_interaction_record_prepare.h"
 #include "ovl11_item_slot_commands.h"
-
-s32 ovl_11_func_80109188(Ovl11D04D4Obj *object, s32 state);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode1_record.h"
 
 s32 Ovl11PrepareInteractionRecord(Ovl11InteractionRecord *record) {
     s32 flags;
@@ -20,7 +29,7 @@ s32 Ovl11PrepareInteractionRecord(Ovl11InteractionRecord *record) {
     flags = *(s32 *)((u8 *)record + 0x34);
     if (flags & 0x100000) {
         if (Ovl11HasEmptyItemSlot(1, 0, 0, 0) == 1) {
-            ovl_11_func_80109188((Ovl11D04D4Obj *)&gStageMode1Record, 0x12);
+            Ovl11SetStageMode1State((Ovl11D04D4Obj *)&gStageMode1Record, 0x12);
             (*(s32 *)((u8 *)record + 0x34)) = (s32)((*(s32 *)((u8 *)record + 0x34)) & 0xFFEFFFFF);
         }
         return 2;

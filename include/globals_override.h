@@ -3162,7 +3162,7 @@ extern u8 _gPadReadBuffers[2][0x22] __asm__("gPadReadBuffers");
 #define gPadReadBuffers (_gPadReadBuffers)
 
 /* Two eight-byte PadSetAct tables: func_80014064 binds them to SDK ports
- * 0 and 0x10; func_80014494 updates them by zero-based port index.
+ * 0 and 0x10; WritePadActuatorRequests updates them by zero-based port index.
  * Keep the 16-byte aggregate and existing absolute addressing. */
 extern u8 gPadActuatorBuffers[2][8];
 

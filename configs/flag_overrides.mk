@@ -47,30 +47,21 @@
 # under baseline flags.
 # `make check` passes with no per-file compiler flag overrides in the project.
 
-# func_80014494: -fno-cse-skip-blocks.
-#
-# Fingerprint (decoded from the original bytes, no source needed): at
-# 0x800144F4 the join block of the inner `if` re-forms the address of
-# D_8005EA18 with `addiu $v0,$t2,%lo(D_8005EA18)` from the CSE-shared %hi in
-# $t2, even though the dominating block at 0x800144C4 already materialised
-# the very same symbol address in $v0 and no call or clobber sits between
-# them. Under -fcse-skip-blocks CSE follows the `beqz` around the one-block
-# if-body (cse.c cse_end_of_basic_block, "detect a branch around a block of
-# code") and carries that pseudo into the join, so the lo_sum there is
-# always folded away — the target's re-materialised lo_sum is unreachable
-# from any C shape at baseline. The same block reuses the dominating block's
-# `sll` result in $a0, so the target is not merely CSE-starved: it is CSE
-# with the skipped-block path switched off.
-#
-# Flag column: -fno-cse-skip-blocks takes the natural array-form source from
-# 47 instructions / 13-of-48 to a byte-exact 48/48 MATCH; baseline cannot
-# reach it (verified over 21 source shapes covering pointer-increment,
-# two-pointer, row-pointer, offset-local and cast address families).
-#
-# No contrary regional witness: the other matched members of the
-# 0x80013B04-0x80014554 pad group still match byte-for-byte with this flag
-# applied (checked 2026-08-09).
-CC1FLAGS_func_80014494 := -fno-cse-skip-blocks
+# Complete pad TU, exe:[0x800139FC,0x80014554), reviewed migration of
+# exe:0x80014494's existing -fno-cse-skip-blocks setting. The operator
+# approved applying this one setting to all 17 members. GP-relative gate/
+# mode-ID ownership and internal calls support membership independently.
+# Target 0x800144F4 re-forms the buffer's low address after the inner guard
+# while sharing the earlier shift; the natural source loses that formation
+# at baseline. This is not an impossibility proof for other baseline C.
+# Whole merged-source matrix: baseline 16/17 exact (only 0x80014494 differs),
+# no-skip 17/17 exact; no compiler diagnostics. The 16 unchanged members are
+# neutral witnesses, not proof of the original compiler command line.
+# Evidence: plans/flag-review-report.md#complete-pad-tu-review;
+# build/tuFinal/pad-whole/matrix.json. Exact approved scope/options are in
+# configs/tu_flag_reviews.json; the checked fold remeasures every baseline
+# member before linked verification. No other construct grant is broadened.
+CC1FLAGS_modules__pad := -fno-cse-skip-blocks
 
 # func_800231E8 / func_80023060: NO override. The -mno-split-addresses entries
 # that used to sit here were withdrawn 2026-10-21. They existed to force the

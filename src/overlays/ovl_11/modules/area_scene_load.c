@@ -72,6 +72,7 @@
 #include "ovl11_condition_evaluation.h"
 #include "ovl11_area_setup_hook.h"
 #include "area_scene_prepare_hook.h"
+#include "ovl11_stage_mode1_record.h"
 
 void Ovl11AreaResetBeginHook (void);
 void Ovl11ResetAreaSlotRecords (void);
@@ -332,10 +333,6 @@ void Ovl11AreaResetBeginHook(void) {
 void Ovl11AreaResetEndHook(void) {
 }
 
-/* These two sprite-loader wrappers use their matched definition signatures;
- * the forwarded arg2/arg3 of func_80015704 are unused debug-hook parameters. */
-s32 ovl_11_func_80109310(s32 *arg0);
-
 void Ovl11LoadAreaScene(void) {
     Ovl11AreaInitView *base;
     Ovl11FarInitView *far;
@@ -386,7 +383,7 @@ void Ovl11LoadAreaScene(void) {
     Ovl11ResetMenuChoiceState();
     Ovl11PlaceCode109Records();
     Ovl11UpdateCalendarRecordGate();
-    ovl_11_func_80109310((s32 *) &gStageMode1Record);
+    Ovl11RefreshStageMode1Sprite((s32 *) &gStageMode1Record);
     Ovl11StageFixedSpriteBank();
     Ovl11InitEventSchedules(gGraphicsHeapBase + 0x4290);
     base->field_4488 = 1;

@@ -15,8 +15,17 @@
 #include "ovl11_object_load_context.h"
 #include "ovl11_camera_record_selection.h"
 #include "ovl11_flag_group_command.h"
-
-void ovl_11_func_8010941C(s32 mode);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode1_record.h"
 
 void Ovl11EnterObjectLoadContext(void) {
     struct Ovl11ObjectLoadEntryView *state;
@@ -55,6 +64,6 @@ void Ovl11LeaveObjectLoadContext(void) {
         Ovl11PublishCurrentPoolRecord();
     }
     if (((struct Ovl11ResetState *) &D_8006C838)->field_91DC == 0x36) {
-        ovl_11_func_8010941C(0);
+        Ovl11SetStageMode1PositionPreset(0);
     }
 }

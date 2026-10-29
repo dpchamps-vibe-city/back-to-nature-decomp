@@ -42,6 +42,7 @@ import {
 } from "./translationUnits.js";
 import { declaratorName, field, parseC, type Node } from "../agent/residual-source-search/tree-sitter-c.js";
 import { walkActiveC } from "../agent/cSourceGuard.js";
+import { literalFlagSetting, loadTuFlagReviews, originalIdentity, reviewedTuFlagOwner, type TuFlagReview } from "./tuFlagReviews.js";
 
 // --- source view ---------------------------------------------------------------
 
@@ -280,6 +281,8 @@ export function auditContainer(container: Container | string, options: AuditOpti
     exists: (path) => existsSync(join(ROOT, path)),
     moduleSourcesOnDisk: moduleSourcesOnDisk(target),
     flagOverrideKeys: options.flagOverrideKeys ?? loadFlagOverrideKeys(),
+    flagOverrideText: readSource("configs/flag_overrides.mk") ?? "",
+    flagReviews: loadTuFlagReviews(),
     dataSymbols: new Set([...loadSymbolAddresses(target).keys()].filter((name) => !originalNames.has(name))),
     ...(options.moduleFindings ? { moduleFindings: options.moduleFindings } : {}),
     ...(options.largeModuleWarning !== undefined ? { largeModuleWarning: options.largeModuleWarning } : {}),
@@ -304,6 +307,8 @@ export interface UnitAuditInput {
   exists(path: string): boolean;
   moduleSourcesOnDisk: readonly string[];
   flagOverrideKeys: ReadonlySet<string>;
+  flagOverrideText?: string;
+  flagReviews?: readonly TuFlagReview[];
   /** Data symbol names, for the "shares a global" review warning. */
   dataSymbols: ReadonlySet<string>;
   moduleFindings?: AuditOptions["moduleFindings"];
@@ -473,7 +478,10 @@ export function auditUnits(input: UnitAuditInput): ContainerAudit {
          folded: callers exclude it as they exclude any pending stub, and a
          live one fails the completion checks. It is no boundary. */
       const moduleKey = flagOverrideKey(unit.sourcePath);
-      if (flagKeys.has(moduleKey) && unit.members.length !== 1) {
+      if (flagKeys.has(moduleKey) && unit.members.length !== 1 && !reviewedTuFlagOwner(
+        input.flagReviews ?? [], unit.sourcePath, input.container,
+        unit.members.map(m => originalIdentity(input.container, m.vram)),
+        literalFlagSetting(input.flagOverrideText ?? "", moduleKey))) {
         unitFindings.push(`configs/flag_overrides.mk overrides ${moduleKey}: a multi-member module flag override needs the evidence review in plans/flag-review-report.md`);
       }
       for (const member of unit.members) {

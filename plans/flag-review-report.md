@@ -883,3 +883,56 @@ attribution by itself.
 
 These pilots are investigations, not a commitment to particular original TU
 boundaries or a promise that every remaining override can be removed.
+
+### Complete pad TU review
+
+The operator explicitly approved moving the existing `exe:0x80014494`
+`-fno-cse-skip-blocks` setting to the complete `src/modules/pad.c` unit after
+being told that every function in that file would receive it. This is a
+reviewed expansion of compilation scope, not evidence of the original command
+line and not permission to add assembly, register pins or other flag settings.
+
+Membership is the 17 original functions in `[0x800139FC, 0x80014554)`, bound by
+address in `configs/tu_flag_reviews.json`. The actuator gate and extended-mode
+IDs are shared through GP-relative references; the input/output helper calls
+and buffer use corroborate the grouping. The preceding full-screen primitive
+unit ends at 0x800139F8; the following 0x80014554 filename-bootstrap function
+belongs to `cd_loader`. The former split before 0x80014494 was mechanical,
+not a supported source boundary. See the existing pad grouping section.
+
+The merged-source production matrix is in `build/tuFinal/pad-whole/`:
+`source.c`, `matrix.json`, and per-profile objects, dumps and member diffs.
+Baseline matches 16/17 members; only 0x80014494 differs. Adding exactly
+`-fno-cse-skip-blocks` matches all 17, with empty compiler diagnostics in both
+columns. The other 16 members are neutral witnesses, not affirmative flag
+fingerprints. Earlier baseline cursor sources also recovered the target's
+instruction population without matching its allocation, so the old assertion
+that baseline could never produce the extra address formation is withdrawn.
+
+The checked fold repeats the whole-unit baseline control and preserves every
+member verdict and source/preprocessed/object hash under
+`build/foldTranslationUnit/exe/pad/baseline/`. Acceptance still requires the
+retained profile's per-member oracle, linked EXE check, then all-container
+`tuProgress.ts --verify` against the **existing** campaign receipt. No receipt
+is recaptured to hide the migration. The exception comparison recognizes only
+an exact reviewed membership/path/setting and retains the original exception
+identity; absent or changed review inputs expose the module key as growth.
+The original function's flag permission is still required. Construct
+permissions remain function-local. This config records the approved
+provisional TU setting; any different grouping or flag needs a new review.
+
+Integrated result: the checked fold reported all 17 members byte-identical
+and the EXE exact. `func_80014494` is now `WritePadActuatorRequests`; its sole
+caller, declaration, generated context and original function allowlist grant
+were reconciled through canonical naming. The final
+`build/tuFinal/pad-integrated-verify.json` reports all eight integrity fields
+passing, no failures or exception growth, and `make check-all` confirms the
+EXE and all 13 overlays. Progress is 2610/2625 folded, 464 valid modules,
+15 remaining (the unresolved dialog group), zero invalid or undetermined.
+Exit 1 means incomplete folding, not a failed integrity gate.
+
+Focused tooling tests: 56 passed, two stale-name inventory/planning fixtures
+failed; both failures were reproduced with the pre-edit HEAD versions of the
+tests and tools. Logs are under `build/tuFinal/pad-tool-tests.log` and
+`pad-preedit-tests.log`. Repository-wide TypeScript checking is not clean
+(`pad-typecheck.log`); it is not claimed as a passing gate.

@@ -7,8 +7,16 @@
 #include "game_flags.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_object_group_flag_command.h"
-
-void ovl_11_func_8010941C(s32 arg0);
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode1_record.h"
 
 s32 Ovl11ApplyObjectGroupCommand(s16 group, s16 recordIndex, s32 operation,
                                  s32 indexFromSlot) {
@@ -87,13 +95,13 @@ s32 Ovl11ApplyObjectGroupCommand(s16 group, s16 recordIndex, s32 operation,
         break;
     case 2:
         SetGameFlag(0x74, 0);
-        ovl_11_func_8010941C(0);
+        Ovl11SetStageMode1PositionPreset(0);
         break;
     case 3:
         Ovl11MatchItemSlotsCommand(0x106, 1, 0, 1);
         ((struct Ovl11PoolResetView *)D_8006C838)->field_91E0 &= ~0x20000;
         SetGameFlag(0x74, 1);
-        ovl_11_func_8010941C(1);
+        Ovl11SetStageMode1PositionPreset(1);
         break;
     }
     return 1;

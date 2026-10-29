@@ -14,8 +14,8 @@
 #include "game_flags.h"
 #include "ovl11_clock_calendar.h"
 #include "ovl11_interaction_state_access.h"
+#include "ovl11_condition_date_records.h"
 
-s32 ovl_11_func_800EF0E8(s16 index);
 s32 Ovl11ResetStaleRecordSlot(s32 unused);
 s32 Ovl11ServiceRecordSlot(s32 tag);
 void Ovl11DropFirstRecordSlot(void);
@@ -131,11 +131,11 @@ void Ovl11AdvanceTrackedRecordCounters(void) {
         return;
     }
     for (i = 0; i < 5; i++) {
-        if (ovl_11_func_800EF0E8(i) == 2) {
+        if (Ovl11ClassifyConditionDateSlot(i) == 2) {
             return;
         }
     }
-    if (ovl_11_func_800EF0E8(-1) != 2 &&
+    if (Ovl11ClassifyConditionDateSlot(-1) != 2 &&
         (u32)(((struct Ovl11TimerState *)D_8006C838)->field_E4C8 - 3) >= 2U) {
         for (i = 0; i < 8; i++) {
             if (gSecondaryRecordCounters[i] != 0xFF) {

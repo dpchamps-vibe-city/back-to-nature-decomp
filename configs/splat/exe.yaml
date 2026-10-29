@@ -87,7 +87,6 @@ segments:
       - [0x3C50, c, modules/wide_screen_fade]
       - [0x3ED4, c, modules/beveled_panel]
       - [0x41FC, c, modules/pad]
-      - [0x4C94, c, func_80014494]       # 0x80014494 func_80014494
       - [0x4D54, c, modules/cd_loader]
       - [0x5690, c, modules/screen_primitives]
       - [0x5F04, c, modules/sprite_animation]

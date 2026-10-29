@@ -26,8 +26,8 @@
 #include "ovl11_selection_prompt_steps.h"
 #include "ovl11_balance_accounting.h"
 #include "ovl11_cell_grid_lookup.h"
-
-s32 ovl_11_func_8011B2B0(void);
+#include "psyq/stddef.h"
+#include "ovl11_prompt_option_rows.h"
 
 s32 Ovl11UpdateTwoStageSelectionPurchase(void) {
     Ovl11D8012D7B8 first;
@@ -181,7 +181,7 @@ s32 Ovl11UpdateTwoStageSelectionPurchase(void) {
         Ovl11AdjustSpendableBalance(-price, 1);
         Ovl11InsertItemStack(item, 1, 1);
         Ovl11RefreshProgressStatus();
-        ovl_11_func_8011B2B0();
+        Ovl11FillPrimaryAndSecondaryPromptRows();
         gOvl11InteractionDrawMode = 4;
         RequestMessageWindow(2, 0x91);
         Ovl11SetInteractionSteps(1, 2);

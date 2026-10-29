@@ -19,7 +19,8 @@
  *  - no multi-member unit carries a per-function compiler-flag override.
  *    A singleton may rename its existing override key without broadening its
  *    scope; --write first measures baseline, then checks the retained profile.
- *    Multi-member conflicts still require plans/flag-review-report.md;
+ *    Multi-member migrations require an exact configs/tu_flag_reviews.json
+ *    approval; baseline is measured for every member before the linked check;
  *  - the members' jump tables form one run of the rodata window, in member
  *    order, with only verified zero padding for cc1's table alignment between
  *    them — the only layout a pooled `.rodata` section can reproduce;
@@ -52,6 +53,7 @@ import { failureLines } from "../lib/failureLines.js";
 import { loadOriginalFunctionInventory, loadSubsegments, type OriginalFunctionSpan } from "../lib/symbolIndex.js";
 import { flagOverrideKey, loadTranslationUnits, MODULE_DIR, moduleStemProblem, type TranslationUnit } from "../lib/translationUnits.js";
 import { auditContainer, loadFlagOverrideKeys } from "../lib/translationUnitAudit.js";
+import { literalFlagSetting, loadTuFlagReviews, originalIdentity, reviewedTuFlagOwner } from "../lib/tuFlagReviews.js";
 import { field, namedChildren, parseC, type Node } from "../agent/residual-source-search/tree-sitter-c.js";
 import { compareFunction, renderDiff } from "../lib/functionOracle.js";
 import { computeLiveness } from "../lib/liveness.js";
@@ -81,7 +83,7 @@ export interface FoldPlan {
   moduleText: string;
   configPath: string;
   configText: string;
-  /** A source-path rename for the SAME one-function exception, never a new profile. */
+  /** Existing setting migrated to a singleton or an explicitly reviewed whole TU. */
   flagConfig?: { path: string; text: string; owner: string; flags: string };
   notes: string[];
 }
@@ -515,15 +517,19 @@ export function planFold(request: FoldRequest): FoldPlan {
   let flagConfig: FoldPlan["flagConfig"];
   for (const member of members) {
     if (!keys.has(member.name)) continue;
-    if (members.length !== 1) refuse(`${member.name} has a per-function flag override (CC1FLAGS_${member.name}); reconcile it per plans/flag-review-report.md before folding`);
+    if (flagConfig) refuse("multiple flag owners require a separate review; this migration retains one existing exception");
     const path = "configs/flag_overrides.mk";
     const text = readFileSync(join(ROOT, path), "utf8");
     const key = member.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pattern = new RegExp(`^CC1FLAGS_${key}\\s*:?=\\s*(.+)$`, "m");
-    const setting = text.match(pattern);
-    if (!setting || setting[1]!.includes("$")) refuse(`${member.name}: singleton migration requires an existing literal flag list`);
+    const flags = literalFlagSetting(text, member.name);
+    if (!flags) refuse(`${member.name}: migration requires one existing literal flag list`);
+    if (members.length !== 1 && (stubs.length > 0 || reviewedTuFlagOwner(loadTuFlagReviews(), modulePath,
+      container.id, members.map(m => originalIdentity(container.id, m.vram)), flags) !== originalIdentity(container.id, member.vram))) {
+      refuse(`${member.name} has a per-function flag override (CC1FLAGS_${member.name}); reconcile it per plans/flag-review-report.md and record the exact whole-TU approval before folding`);
+    }
     flagConfig = {
-      path, owner: member.name, flags: setting[1]!.trim(),
+      path, owner: member.name, flags,
       text: text.replace(pattern, (line) => line.replace(`CC1FLAGS_${member.name}`, `CC1FLAGS_${flagOverrideKey(modulePath)}`)),
     };
   }
@@ -595,7 +601,7 @@ export function planFold(request: FoldRequest): FoldPlan {
   }
   const rewritten = foldConfigLines(configLines, touched.map((u) => u.segmentName), stem, alignmentPadding, mixedPoolGaps, mixedPool);
   const notes = [...rewritten.notes];
-  if (flagConfig) notes.push(`renames ${flagConfig.owner}'s existing flag key to ${flagOverrideKey(modulePath)} (${flagConfig.flags}); one function, unchanged exception scope; --write measures baseline first`);
+  if (flagConfig) notes.push(`renames ${flagConfig.owner}'s existing flag key to ${flagOverrideKey(modulePath)} (${flagConfig.flags}); ${members.length === 1 ? "one function, unchanged exception scope" : "explicitly reviewed whole-TU compilation scope"}; --write measures every member at baseline first`);
 
   /* Embedded asm that names a cc1 label: read the labels its unit's own
      assembly defines now, to renumber them once the module is compiled. */
@@ -700,20 +706,22 @@ export function applyFold(plan: FoldPlan, log: (line: string) => void = console.
       const compiled = compileSource(plan.modulePath, dir, "baseline", {
         assemble: true, useOverrides: false, containerKind: plan.container.kind,
       });
-      const member = plan.members[0]!;
-      const result = compareFunction(member.name, { container: plan.container, objectPath: compiled.object! });
+      const results = plan.members.filter(m => !plan.stubs.includes(m.name)).map(member => {
+        const result = compareFunction(member.name, { container: plan.container, objectPath: compiled.object! });
+        writeFileSync(join(dir, `${member.name}.diff.txt`), renderDiff(result, false).join("\n") + "\n");
+        return { member: member.name, verdict: result.verdict };
+      });
       writeFileSync(join(dir, "report.json"), JSON.stringify({
-        owner: member.name, sourceHash: createHash("sha256").update(readFileSync(join(ROOT, plan.modulePath))).digest("hex"),
+        owner: plan.flagConfig.owner, sourceHash: createHash("sha256").update(readFileSync(join(ROOT, plan.modulePath))).digest("hex"),
         preprocessedHash: createHash("sha256").update(readFileSync(compiled.preprocessed)).digest("hex"),
         objectHash: createHash("sha256").update(readFileSync(compiled.object!)).digest("hex"),
-        flags: compiled.cc1Flags, retainedFlags: plan.flagConfig.flags, verdict: result.verdict,
+        flags: compiled.cc1Flags, retainedFlags: plan.flagConfig.flags, members: results,
       }, null, 2) + "\n");
-      writeFileSync(join(dir, "diff.txt"), renderDiff(result, false).join("\n") + "\n");
-      log(`singleton baseline: ${member.name}: ${result.verdict}; ${posix.relative(ROOT, dir)}/report.json`);
-      if (result.verdict === "match") return rollback(`${member.name} matches baseline: retire its unnecessary override before folding`);
-      if (result.verdict !== "mismatch") return rollback(`${member.name}: baseline is undetermined, so the existing setting cannot be assessed`);
+      log(`whole-unit baseline: ${results.filter(r => r.verdict === "match").length}/${results.length} match; ${posix.relative(ROOT, dir)}/report.json`);
+      if (results.some(r => r.verdict !== "match" && r.verdict !== "mismatch")) return rollback("baseline is undetermined, so the existing setting cannot be assessed");
+      if (results.every(r => r.verdict === "match")) return rollback("every member matches baseline: retire the unnecessary override before folding");
     } catch (error) {
-      return rollback(`singleton baseline control failed: ${(error as Error).message}`);
+      return rollback(`whole-unit baseline control failed: ${(error as Error).message}`);
     }
   }
 

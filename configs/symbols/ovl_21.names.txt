@@ -1,3 +1,15 @@
+// Six-record simulation and three-record group queries.
+Ovl21MarkOppositeGroupTarget = 0x800B98CC; // type:func
+Ovl21ConsumeNearbyRecordSlots = 0x800B990C; // type:func
+Ovl21ChooseRecordTargets = 0x800B9A20; // type:func
+Ovl21UpdateRecordActions = 0x800B9CA4; // type:func
+Ovl21SpawnRecordProjectiles = 0x800B9F3C; // type:func
+Ovl21StepRecordProjectiles = 0x800BA300; // type:func
+Ovl21FindFirstProjectileInRange = 0x800BA698; // type:func
+Ovl21CountActiveRecordsInGroup = 0x800BA7F0; // type:func
+Ovl21PickRandomActiveRecord = 0x800BA868; // type:func
+Ovl21PickRandomInactiveRecord = 0x800BA944; // type:func
+
 // Per-entity value service consumed together by scene-record initialization.
 Ovl21RaiseEntityRangeValue = 0x800BAB28; // type:func
 Ovl21ReadEntityRangeValue = 0x800BABF8; // type:func

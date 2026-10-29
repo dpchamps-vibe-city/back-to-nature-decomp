@@ -78,6 +78,30 @@ test("exception growth: any added entry fails, removals never do", () => {
     "an allowlist key naming a module broadens a function exception");
 });
 
+test("reviewed TU flag migration retains its origin in the old receipt, but unreviewed growth fails", () => {
+  const sourcePath = "src/modules/pair.c", members = ["func_a", "func_b"];
+  const review = { sourcePath, container: "exe", members: ["exe:0x80010000", "exe:0x80010010"],
+    owner: "exe:0x80010010", flags: "-fno-cse-skip-blocks", evidence: "plans/flag-review-report.md#pair" };
+  const base = { "configs/symbols/exe.txt": "func_a = 0x80010000; // type:func\nfunc_b = 0x80010010; // type:func\n" };
+  const files: Record<string, string> = { ...base,
+    [sourcePath]: "void func_a(void) {}\nvoid func_b(void) {}\n",
+    "configs/flag_overrides.mk": `CC1FLAGS_modules__pair := ${review.flags}`,
+    "configs/tu_flag_reviews.json": JSON.stringify({ schemaVersion: 1, reviews: [review] }),
+  };
+  const view = (files: Record<string, string>): TreeView => ({ read: p => files[p] ?? null,
+    units: [{ container: "exe", sourcePath, segmentName: "modules/pair", members }] });
+  const before = exceptionSets({ read: p => ({ ...base, "configs/flag_overrides.mk": `CC1FLAGS_func_b := ${review.flags}` })[p] ?? null, units: [] }, DEFAULT_CONFIG);
+  assert.deepEqual(exceptionGrowth(before, exceptionSets(view(files), DEFAULT_CONFIG)), []);
+  for (const changed of [
+    { ...files, "configs/tu_flag_reviews.json": '{"schemaVersion":1,"reviews":[]}' },
+    { ...files, "configs/flag_overrides.mk": "CC1FLAGS_modules__pair := -fno-gcse" },
+    { ...files, [sourcePath]: files[sourcePath] + "void helper(void) {}\n" },
+    { ...files, [sourcePath]: "void func_b(void) {}\n" },
+  ]) assert.ok(exceptionGrowth(before, exceptionSets(view(changed), DEFAULT_CONFIG)).some(g => g.category === "flagOverrides"));
+  const addedAsm = { ...files, [sourcePath]: 'void func_a(void) { __asm__("nop"); }\nvoid func_b(void) {}\n' };
+  assert.ok(exceptionGrowth(before, exceptionSets(view(addedAsm), DEFAULT_CONFIG)).some(g => g.category === "constructs"));
+});
+
 test("folding a function into a module keeps its exception identity; module scope is new", () => {
   const view = (units: TreeView["units"], files: Record<string, string>): TreeView => ({ read: (path) => files[path] ?? null, units });
   const pinned = "void func_a(void) {\n    __asm__(\"nop\");\n}\n";

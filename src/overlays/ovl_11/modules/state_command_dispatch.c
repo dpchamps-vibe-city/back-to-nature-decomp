@@ -38,9 +38,8 @@
 #include "ovl11_record_family_lookup.h"
 #include "ovl11_progress_gate.h"
 #include "selected_threshold_interaction.h"
+#include "ovl11_condition_date_records.h"
 
-void ovl_11_func_800EF488 (s16 arg0);
-void ovl_11_func_800EF6E4 ();
 void ovl_11_func_80103830 (void);
 s32 ovl_11_func_801037DC (void);
 s32 ovl_11_func_80103770 (void);
@@ -83,7 +82,7 @@ s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
             } else {
                 var_a0 = -1;
             }
-            ovl_11_func_800EF488(var_a0);
+            Ovl11SnapshotConditionDateSlot(var_a0);
             return 1;
         case 1:
             if (arg3 != 0) {
@@ -99,7 +98,7 @@ s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
             }
             return GetGameFlag(var_s3);
         case 2:
-            ovl_11_func_800EF6E4((s16) arg2, (s16) arg3);
+            Ovl11AssignConditionDateSlot((s16) arg2, (s16) arg3);
             return 1;
         case 3:
             ((E9State *)D_8006C838)->fE76C = (s16) (*((u16 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) - 1);

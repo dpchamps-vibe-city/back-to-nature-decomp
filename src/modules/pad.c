@@ -9,14 +9,16 @@
  * analog pad whose d-pad is idle reports its left stick as d-pad directions
  * (ReadPadDirectionByte) and as a magnitude (ReadPadStickMagnitude).
  *
- * One unit, 0x800139FC-0x80014494: the actuator gate word and the extended
+ * WritePadActuatorRequests formats the per-port output table; a disabled
+ * actuator gate clears both ports' tables on the next output update.
+ * Public setup, polling and gate interfaces are in pad_input_setup.h,
+ * pad_input_update.h and pad_actuator_gate.h respectively.
+ *
+ * One unit, [0x800139FC, 0x80014554): the actuator gate word and extended
  * mode IDs are declared here (members reach them through $gp) and reached
- * absolutely from outside. It ends at the actuator output service
- * 0x80014494 for a mechanical reason, not evidence: that function carries a
- * per-function -fno-cse-skip-blocks override, and a module compiles under
- * one command line. The evidence puts 0x80014494 in this unit too; the next
- * function, 0x80014554, is cd_loader's filename bootstrap helper. See
- * notes/file-groupings.md.
+ * absolutely from outside. The following function is cd_loader's filename
+ * bootstrap helper. See notes/file-groupings.md for membership evidence and
+ * plans/flag-review-report.md for the reviewed whole-unit compiler setting.
  */
 
 #include "common.h"
@@ -83,8 +85,7 @@ void SetPadSecondaryRepeatTiming(s32 delay, s32 interval) {
  * deferred effects.
  */
 
-/* Declared here for the members' GP-relative accesses. The output service,
- * outside this module only for its flag override, defines it too. */
+/* Declared here for the members' GP-relative accesses. */
 s32 gPadActuatorsEnabled;
 
 void SetPadActuatorsEnabled(s32 enabled) {
@@ -101,8 +102,7 @@ s32 GetPadActuatorsEnabled(void) {
  * transient input while preserving repeat timings and actuator requests.
  */
 
-/* Declared here for the members' GP-relative accesses; the output service
- * defines the mode-ID pair too. */
+/* Polling, startup and output share this unit's GP-relative state. */
 s32 gPadAlignmentPending[2];
 s16 gPadExtendedModeIds[2];
 
@@ -113,7 +113,7 @@ void UpdatePadInputRecord(void *record, s32 portIndex);
 s32 AlignPadActuators(s32 portIndex);
 s32 ReadPadRawButtons(s32 portIndex);
 s32 ReadPadStickMagnitude(s32 portIndex);
-void func_80014494(s32 request0, s32 request1, s32 portIndex);
+void WritePadActuatorRequests(s32 request0, s32 request1, s32 portIndex);
 
 /* Preserve the inner retry loop: a successful actuator alignment clears
  * input and re-polls this port before advancing. The nesting also keeps
@@ -192,7 +192,7 @@ void UpdatePadInputRecord(void *record, s32 portIndex) {
     u8 timingMode;
 
     port = portIndex & 0xFF;
-    func_80014494(input->actuatorRequest0, input->actuatorRequest1, port);
+    WritePadActuatorRequests(input->actuatorRequest0, input->actuatorRequest1, port);
     input->heldButtons = ~ReadPadRawButtons(port) & 0xFFFF;
     input->stickMagnitude = ReadPadStickMagnitude(port);
 
@@ -585,4 +585,33 @@ done: ;
         angle = 0;
     }
     return (s16) angle;
+}
+
+/* portIndex is 0 or 1 (unchecked); only each request's low byte is used.
+ * Mode ID zero selects a 0x40 header and collapses either nonzero request to
+ * byte 1, clearing byte 2. Otherwise byte 1 is boolean request0 and byte 2
+ * carries request1. No SDK call occurs here: PadSetAct already points at
+ * these tables. Disabling the gate clears BOTH eight-byte port tables. */
+void WritePadActuatorRequests(s32 request0, s32 request1, s32 portIndex) {
+    u8 act0;
+    u8 act1;
+
+    act0 = request0 & 0xFF;
+    act1 = request1 & 0xFF;
+
+    if (gPadExtendedModeIds[portIndex] == 0) {
+        gPadActuatorBuffers[portIndex][0] = 0x40;
+        gPadActuatorBuffers[portIndex][1] = (act0 > 0);
+        if (act1 != 0) {
+            gPadActuatorBuffers[portIndex][1] = 1;
+        }
+        gPadActuatorBuffers[portIndex][2] = 0;
+    } else {
+        gPadActuatorBuffers[portIndex][1] = (act0 > 0);
+        gPadActuatorBuffers[portIndex][2] = act1;
+    }
+
+    if (gPadActuatorsEnabled == 0) {
+        memset(gPadActuatorBuffers, 0, 0x10);
+    }
 }

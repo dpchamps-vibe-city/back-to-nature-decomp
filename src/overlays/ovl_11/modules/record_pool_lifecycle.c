@@ -28,8 +28,7 @@
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_record_position_recovery.h"
 #include "ovl11_stage_mode2_record.h"
-
-s32 ovl_11_func_80108D84(s32 *arg0);
+#include "ovl11_stage_mode1_record.h"
 
 void Ovl11ResetRecordPools(void) {
     s32 index;
@@ -162,7 +161,7 @@ void Ovl11RunRecordPoolSecondPass(void) {
         }
         recordWords = (s32 *) &gStageMode1Record;
         if (*(u16 *) recordWords != 0) {
-            ovl_11_func_80108D84(recordWords);
+            Ovl11UpdateStageMode1Counters(recordWords);
         }
         recordWords = (s32 *) ((u8 *) recordWords + 0xF0);
         if (*(u16 *) recordWords != 0) {

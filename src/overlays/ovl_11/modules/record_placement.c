@@ -16,8 +16,16 @@
 #include "ovl11_object_state_dispatch.h"
 #include "ovl11_object_record_clear.h"
 #include "ovl11_season_mask.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode1_record.h"
 
-s32 ovl_11_func_80109188(Ovl11D04D4Obj *record, s32 mode);
 s32 Ovl11IsItemIdEnabled(s32 itemId);
 
 s32 Ovl11UpdateRecordPlacement(Ovl11PlacedRecordView *record,
@@ -59,7 +67,7 @@ s32 Ovl11RefreshRecordById(s16 itemId, Ovl11CollisionTag *tag, VECTOR *position)
     }
     if ((u32) (itemId - 0x106) < 2U) {
         if (gStageMode1Record.f34 & 0x20000) {
-            ovl_11_func_80109188((Ovl11D04D4Obj *) &gStageMode1Record, 9);
+            Ovl11SetStageMode1State((Ovl11D04D4Obj *) &gStageMode1Record, 9);
             recordWords = (s32 *) &gStageMode1Record;
 place_selected:
             return Ovl11UpdateRecordPlacement((Ovl11PlacedRecordView *) recordWords, tag, position);

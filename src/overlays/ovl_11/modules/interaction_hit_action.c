@@ -27,8 +27,7 @@
 #include "psyq/libapi.h"
 #include "ovl11_code160_record_handlers.h"
 #include "ovl11_stage_mode2_record.h"
-
-s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
+#include "ovl11_stage_mode1_record.h"
 
 s32 Ovl11DispatchInteractionHitAction(
     Recon_ovl_11_func_800CCFF8_A0View *object, s32 mode) {
@@ -78,7 +77,7 @@ s32 Ovl11DispatchInteractionHitAction(
     }
     if (gOvl11InteractionHitFlags & 0x100) {
         if (mode == 0) {
-            ovl_11_func_80109188(gOvl11InteractionHitRecordView, 3);
+            Ovl11SetStageMode1State(gOvl11InteractionHitRecordView, 3);
             PlaySoundEffect(26);
         }
         return 1;

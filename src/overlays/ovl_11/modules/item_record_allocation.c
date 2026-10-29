@@ -21,8 +21,7 @@
 #include "psyq/libsnd.h"
 #include "psyq/libapi.h"
 #include "ovl11_stage_mode2_record.h"
-
-struct_800759E4 *ovl_11_func_80108CD0(s32 itemCode, s32 mode);
+#include "ovl11_stage_mode1_record.h"
 
 u16 *Ovl11AllocateItemRecord(s32 itemCode, s32 mode) {
     s32 stateCode;
@@ -83,7 +82,7 @@ allocate_state_object:
         break;
     case 0x106:
     case 0x107:
-        recordAddress = ovl_11_func_80108CD0(itemCode, 1);
+        recordAddress = Ovl11AcquireStageMode1Record(itemCode, 1);
         break;
     case 0x15E:
     case 0x15F:

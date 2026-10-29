@@ -51,6 +51,7 @@
 #include "ovl11_stage_mode2_record.h"
 #include "ovl11_action_result_request.h"
 #include "ovl11_record_position_set.h"
+#include "ovl11_stage_mode1_record.h"
 
 void Ovl11UpdateRecordProbeFlag (Recon_ovl_11_func_800D2594_A0View *arg0);
 s32 Ovl11ProbeMovementPosition (Ovl11Func800BDCE8Arg1 *arg0);
@@ -554,10 +555,7 @@ void Ovl11UpdateStateObjectPool(void) {
     }
 }
 
-s32 ovl_11_func_801090A4(Ovl11HandlerObjectView *arg0);
 void Ovl11AdvanceRecordModeCounter(Ov11D266CFields *arg0, u16 *arg1, s32 arg2);
-void ovl_11_func_80108CA4(s32 arg0);
-void ovl_11_func_80108BE8(u8 *arg0);
 
 /* The two paths share presentation, but only slot 0 has the date-row-8
  * exception. Retain the shared tail rather than conflating their guards. */
@@ -575,7 +573,7 @@ void Ovl11UpdatePairedStageObjects(void) {
         if (slotIndex == 0) {
             record = &gStageMode1Record;
             if ((gStageMode1Record.f00 != 0) && (!(gStageMode1Record.f34 & 0x400) || (Ovl11FindCalendarDate(*(s16 *) (stateWork + 0x44BA), *(s16 *) (stateWork + 0x44BC)) != 8))) {
-                ovl_11_func_801090A4((Ovl11HandlerObjectView *) &gStageMode1Record);
+                Ovl11StepStageMode1Record((Ovl11HandlerObjectView *) &gStageMode1Record);
                 goto present_record;
             }
             goto next_record;
@@ -591,9 +589,9 @@ present_record:
                 if (slotIndex == 0) {
                     if (!((*(s32 *) (stateWork + 0xC)) & 0x08000000)) {
                         Ovl11AdvanceRecordModeCounter((Ov11D266CFields *) record, (u16 *) &gOvl11Mode1DispatchCounter, 0x11);
-                        ovl_11_func_80108CA4((s32) record);
+                        Ovl11AccumulateStageMode1Direction((s32) record);
                     }
-                    ovl_11_func_80108BE8((u8 *) record);
+                    Ovl11DrawStageMode1Record((u8 *) record);
                     Ovl11TickTimedSpriteEffect((Ov11Timer *) ((u8 *) record + 0xA8));
                 } else {
                     stateWork2 = (u8 *)D_8006C838;
@@ -715,8 +713,6 @@ void Ovl11ProcessPendingStageMode(void) {
     }
 }
 
-s32 ovl_11_func_80109188(Ovl11PrimaryStageHandlerObj *arg0, s32 arg1);
-
 #define CURRENT_STAGE (((struct Ovl11D2764StateView *)&D_8007AFF0)->field_25476)
 #define MAIN_STAGE (((struct Ovl11D2764StageView *)D_8006C838)->field_91DC)
 #define OTHER_STAGE (((struct Ovl11D2764StageView *)D_8006C838)->field_92CC)
@@ -730,7 +726,7 @@ void Ovl11DispatchStageMode(s32 mode) {
     switch (mode) {
     case 0:
         if (CURRENT_STAGE == MAIN_STAGE) {
-            ovl_11_func_80109188((Ovl11PrimaryStageHandlerObj *)&gStageMode1Record, 5);
+            Ovl11SetStageMode1State((Ovl11PrimaryStageHandlerObj *)&gStageMode1Record, 5);
         }
         for (slot = 0; slot < 20; slot++) {
             object = (Ovl11StageHandlerObj *)((u8 *)&gTaggedRecordBase + slot * 0xB8);
@@ -751,7 +747,7 @@ void Ovl11DispatchStageMode(s32 mode) {
         return;
     case 1:
         if ((CURRENT_STAGE == MAIN_STAGE) &&
-            (ovl_11_func_80109188((Ovl11PrimaryStageHandlerObj *)&gStageMode1Record, 4) == 0)) {
+            (Ovl11SetStageMode1State((Ovl11PrimaryStageHandlerObj *)&gStageMode1Record, 4) == 0)) {
             gOvl11Mode1DispatchCounter = 0;
             return;
         }

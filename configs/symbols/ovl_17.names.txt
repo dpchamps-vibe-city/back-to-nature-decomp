@@ -69,3 +69,47 @@ gOvl17BackdropPropAnimations = 0x800BB5D4; // type:data size:0x1C
 
 // The scene callback selects animation 4 on the separate display sprite.
 Ovl17DrawDisplaySpriteFrameRects = 0x800BAF50; // type:func
+
+// Complete scene's private lifecycle/stage banks, trail protocol and row updates.
+Ovl17DispatchRecordSceneSubphase = 0x800B7E38; // type:func
+Ovl17UpdateRecordSceneSetup = 0x800B7E78; // type:func
+Ovl17EnterRecordScene = 0x800B7F90; // type:func
+Ovl17DispatchRecordSceneStage = 0x800B8028; // type:func
+Ovl17BeginRecordSceneExitFade = 0x800B8078; // type:func
+Ovl17FinishRecordSceneExit = 0x800B80B0; // type:func
+Ovl17EnterRecordSceneStages = 0x800B81FC; // type:func
+Ovl17InitRecordStageRows = 0x800B8294; // type:func
+Ovl17ShowRecordRowNamesPage3 = 0x800B83A4; // type:func
+Ovl17ShowRecordScrollBackdropPage0 = 0x800B8470; // type:func
+Ovl17ShowRecordChoicePage1 = 0x800B8534; // type:func
+Ovl17ShowRecordConfirmPage2 = 0x800B861C; // type:func
+Ovl17ShowRecordRowNamesPage4 = 0x800B86C4; // type:func
+Ovl17SeedRecordRowValuesPage5 = 0x800B8790; // type:func
+Ovl17RunRecordSceneStage = 0x800B8898; // type:func
+Ovl17ShowSelectedRecordNamePage6 = 0x800B8C38; // type:func
+Ovl17ShowRecordTotalPage7 = 0x800B8D88; // type:func
+Ovl17ShowRecordResultPage8 = 0x800B8F28; // type:func
+Ovl17ResetRecordTrails = 0x800B90F8; // type:func
+Ovl17PushRecordTrailNode = 0x800B9158; // type:func
+Ovl17DrawRecordTrails = 0x800B91B8; // type:func
+Ovl17DrawPausedRecordSceneFrame = 0x800B92B0; // type:func
+Ovl17RollRecordDecisionResults = 0x800B9324; // type:func
+Ovl17AdvanceRecordDecisionProgress = 0x800B946C; // type:func
+Ovl17DecayRecordCountdown = 0x800B9594; // type:func
+Ovl17UpdateRecordSelectionList = 0x800B9628; // type:func
+Ovl17UpdateRecordScrollSpeed = 0x800B9784; // type:func
+Ovl17ClampRecordPositionsAndTestComplete = 0x800B986C; // type:func
+Ovl17DrawRecordCardsPanel = 0x800B9940; // type:func
+Ovl17EvaluateRecordValueCurve = 0x800B9C48; // type:func
+Ovl17RaiseRecordCountdownSteps = 0x800B9CAC; // type:func
+
+gOvl17RecordSceneSubphases = 0x800BB4E4; // type:data size:0x14
+gOvl17RecordSceneStages = 0x800BB4F8; // type:data size:0x2C
+gOvl17RecordSceneStageIndex = 0x800BD84C; // type:data size:0x1
+gOvl17BackdropScrollTick = 0x800BB6F8; // type:data size:0x1
+gOvl17RecordRowNameOffsets = 0x800BB534; // type:data size:0x18
+gOvl17RecordModeHeadingText = 0x800BB528; // type:data size:0xC
+gOvl17RecordPanelLabelText = 0x800BB482; // type:data size:0x2
+gOvl17RecordColumnLabelText = 0x800BB49A; // type:data size:0x2
+gOvl17RecordRowLabelText = 0x800BB6EC; // type:data size:0xC
+gOvl17NumberTextBuffer = 0x800BD738; // type:data size:0x14

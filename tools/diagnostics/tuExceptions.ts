@@ -27,6 +27,7 @@ import { dirname, join, posix } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
 import { loadContainers, type Container } from "../lib/container.js";
 import { flagOverrideKey, isModuleStem, loadTranslationUnits } from "../lib/translationUnits.js";
+import { literalFlagSetting, parseTuFlagReviews, reviewedTuFlagOwner, TU_FLAG_REVIEWS } from "../lib/tuFlagReviews.js";
 import { enclosingDefinition, sourceFacts } from "../lib/translationUnitAudit.js";
 import { loadConfig } from "../../.pi/extensions/shared/config.ts";
 import { sourceConstructFindings } from "../../.pi/extensions/shared/source-policy.ts";
@@ -171,19 +172,28 @@ function allowlistSet(text: string | null, ids: Identities): string[] {
 
 function flagOverrideSet(text: string | null, ids: Identities, view: TreeView): string[] {
   if (!text) return [];
-  const singletons = new Map<string, string>();
+  const owners = new Map<string, string>();
+  const reviews = parseTuFlagReviews(view.read(TU_FLAG_REVIEWS));
   for (const unit of view.units) {
     if (!isModuleStem(unit.segmentName)) continue;
     const source = view.read(unit.sourcePath);
     if (source === null) continue;
     const facts = sourceFacts(source);
-    if (!facts.parses || facts.definitions.length !== 1 || facts.includeAsm.length !== 0) continue;
-    const owner = ids.inContainer.get(unit.container)?.get(facts.definitions[0]!.name);
-    if (owner) singletons.set(flagOverrideKey(unit.sourcePath), owner);
+    if (!facts.parses || facts.includeAsm.length !== 0) continue;
+    const key = flagOverrideKey(unit.sourcePath);
+    const names = facts.definitions.map(d => d.name);
+    if (names.length !== unit.members.length || !unit.members.every(name => names.filter(n => n === name).length === 1)) continue;
+    const members = names.map(name => ids.inContainer.get(unit.container)?.get(name) ?? "");
+    /* Explicitly authorized expansion of compilation scope, not a grant for
+       other constructs. Without the exact review, retain the raw module key
+       so the old campaign receipt reports growth. Flags remain in the key. */
+    const owner = members.length === 1 ? members[0] : reviewedTuFlagOwner(reviews,
+      unit.sourcePath, unit.container, members, literalFlagSetting(text, key));
+    if (owner) owners.set(key, owner);
   }
   return text.split("\n").flatMap((line) => {
     const match = line.match(/^CC1FLAGS_(\S+?)\s*:?=\s*(.*)$/);
-    return match ? [`${ids.byName.get(match[1]!) ?? singletons.get(match[1]!) ?? match[1]}=${match[2]!.trim().split(/\s+/).join(" ")}`] : [];
+    return match ? [`${ids.byName.get(match[1]!) ?? owners.get(match[1]!) ?? match[1]}=${match[2]!.trim().split(/\s+/).join(" ")}`] : [];
   }).sort();
 }
 
@@ -252,7 +262,7 @@ export function exceptionGrowth(before: ExceptionSets, after: ExceptionSets): Ex
 /** Hash of everything that decides source organization and policy. */
 export function inputsDigest(): string {
   const hash = createHash("sha256");
-  const paths = new Set<string>([".pi/autoloop.json", "configs/flag_overrides.mk", "include/globals_override.h", "include/game_types.h", "include/common.h"]);
+  const paths = new Set<string>([".pi/autoloop.json", "configs/flag_overrides.mk", TU_FLAG_REVIEWS, "include/globals_override.h", "include/game_types.h", "include/common.h"]);
   for (const container of loadContainers()) {
     paths.add(container.paths.splat);
     paths.add(container.paths.symbolAddrs);

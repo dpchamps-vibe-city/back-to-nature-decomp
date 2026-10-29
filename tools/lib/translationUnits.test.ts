@@ -209,6 +209,19 @@ test("a member's flag override blocks the module instead of silently not applyin
   assert.match(result.units[1]!.findings.join("\n"), /still overrides f_c/);
 });
 
+test("multi-member flags require an exact reviewed setting, not a member's grant", () => {
+  const sourcePath = "src/overlays/ovl_t/modules/widget.c";
+  const key = flagOverrideKey(sourcePath);
+  const review = { sourcePath, container: "ovl_t", members: ["ovl_t:0x80100020", "ovl_t:0x80100040"],
+    owner: "ovl_t:0x80100040", flags: "-fno-cse-skip-blocks", evidence: "plans/flag-review-report.md#widget" };
+  const input = { flagOverrideKeys: new Set([key]), flagOverrideText: `CC1FLAGS_${key} := ${review.flags}`, flagReviews: [review] };
+  const check = (extra: Partial<UnitAuditInput>) => audit(MODULE, { "src/overlays/ovl_t/f_a.c": A, [sourcePath]: B + C }, undefined, extra).units[1]!;
+  assert.equal(check(input).status, "valid");
+  for (const extra of [{ ...input, flagReviews: [] }, { ...input, flagOverrideText: `CC1FLAGS_${key} := -fno-gcse` },
+    { ...input, flagReviews: [{ ...review, members: [...review.members, "ovl_t:0x80100010"] }] }])
+    assert.match(check(extra).findings.join("\n"), /multi-member module flag override/);
+});
+
 test("a nested function is attributed to its own identity without stealing its parent's", () => {
   const carrier = "/* f_b is nested in f_c */\n";
   const parent = "s32 f_c(void) {\n  auto s32 inner(void) __asm__(\"f_b\");\n  s32 inner(void) { return 2; }\n  return inner();\n}\n";

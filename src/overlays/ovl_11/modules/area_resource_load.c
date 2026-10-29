@@ -19,9 +19,9 @@
 #include "ovl11_block_copy.h"
 #include "ovl11_area_resource_load.h"
 #include "ovl11_record_sprite_sources.h"
+#include "ovl11_condition_evaluation.h"
 
 void Ovl11LoadPaletteBankTriplet(void);
-void ovl_11_func_800F0E00(void *data);
 
 void Ovl11LoadAreaResourceSet(s32 index, s32 alreadyLoaded) {
     s32 *record;
@@ -50,7 +50,7 @@ void Ovl11LoadAreaResourceSet(s32 index, s32 alreadyLoaded) {
     UploadSpriteImages((u8 *)(gGraphicsHeapBase + 0x4290));
     bankStart = record[2];
     CdReadDiscSectorsBlocking(0, bankStart, record[4] - bankStart, 0, gGraphicsHeapBase + 0x4290);
-    ovl_11_func_800F0E00((void *)(gGraphicsHeapBase + 0x4290));
+    Ovl11InstallConditionRecords((void *)(gGraphicsHeapBase + 0x4290));
     Ovl11UploadGuardedSpriteBank((u8 *)gGraphicsHeapBase + ((record[3] - record[2]) + 0x4290));
 }
 

@@ -3,13 +3,17 @@
 
 #include "common.h"
 
-/* Installed 0x24-byte condition records are supplied by the existing
- * 800F0E00 installer (still separately compiled because of its unresolved
- * strength-reduction setting). Initialize work/calendar/object records,
+/* Initialize work/calendar/object records,
  * flag banks and the result-slot service before these non-reentrant calls.
  * Packed mask and field contracts remain in ovl11_condition_masks.h and
  * ovl11_condition_record_fields.h; helpers retain external linkage.
  */
+
+/* NULL clears count/state without touching the old list. Otherwise copy
+ * exactly 0xE10 bytes, count 0x24-byte records up to an ID of 0xFFFF, and
+ * clear pending state. The caller must provide the full readable block with
+ * an in-bounds sentinel; no validation or count limit is applied. */
+void Ovl11InstallConditionRecords(void *records);
 
 /* If work+10 bit 800 is set, return 1 WITHOUT consuming pending state.
  * Otherwise a nonzero evaluation state tests the installed record count in

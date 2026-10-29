@@ -166,7 +166,6 @@ s32 FindOldestSoundVoiceByGroup(s32 start, s32 end);
 s32 FindSpriteTextureRecord(s32 arg0, s32 arg1, u16 arg2);
 u16 *FindTextToken(u16 *arg0, u16 arg1, s32 arg2, s32 arg3);
 s32 FinishMessageWindow(void);
-void func_80014494(s32 arg0, s32 arg1, s32 arg2);
 void func_8001588C(void);
 s32 func_80015DD4(s32 *arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 void func_80015E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9, s16 arg10, s16 arg11);
@@ -412,6 +411,7 @@ void UploadSpriteImagesKeepingWideType2Positions(u8 *arg0, s16 arg1, s16 arg2, s
 void UploadSpriteImagesWithMask(s32 arg0);
 void VisitScrollingSpriteGrid(s32 orderingTable, SpriteGridCallback visitor);
 s16 *WriteDecimalText(s32 arg0, s16 *arg1, s32 arg2);
+void WritePadActuatorRequests(s32 request0, s32 request1, s32 portIndex);
 s16 *WritePaddedNumberText(s32 arg0, s16 *arg1, s32 arg2);
 u16 *WriteSeasonNameText(s32 arg0, u16 *arg1);
 u16 *WriteWeekdayNameText(s32 arg0, u16 *arg1);

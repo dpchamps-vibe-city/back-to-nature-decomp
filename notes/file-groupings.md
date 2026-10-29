@@ -4358,6 +4358,21 @@ not infer this overlay's data owner. No generated file was edited by hand.
 
 ## `ovl_11` D_80127428 shared-state cluster — 0x801037DC–0x801040A8 (confidence: medium)
 
+Follow-up baseline accounting experiments (not integrated):
+`build/tuFinal/dialog-p-result/report.json` records staged residual
+`[0,0,0,1]` for the preserved source
+`build/experimentLedger/sources/ovl_11_func_80103B24/7a9873b76fb146b3.c`.
+The instruction listing, not that compressed key, is the remaining obligation:
+the positive sum overwrites a2, its store uses a3, and the negative arm uses
+a2 instead of a3. The entry, guard-delay copy and delta load now match;
+these four differing words are still NOT an exact reconstruction. Moving
+the result through another scalar and swapping its two copy-loop roles
+produces identical code. A three-index copy adds preheader scheduling
+residuals; reusing the pointer as the tail base worsens CFG/population.
+The pointer/value lifetime experiments and their baseline flags/dumps are
+under `build/tuFinal/dialog-*`, with sources in the experiment ledger.
+None changes the live source, flag or supported fifteen-member boundary.
+
 Further baseline controls leave the live fifteen-entry family unchanged.
 At 4148, moving the +18 seed before the text choice still folds the later
 signed-column truncations. A u16 record read back as s16 blocks GCSE
@@ -11134,6 +11149,25 @@ idiom cluster (same-TU evidence). Members:
 
 ## pad initialization and state — 0x800139FC–0x80014554 (confidence: high)
 
+Fresh WHOLE-seventeen compiler-setting control:
+`build/tuFinal/pad-whole/{source.c,matrix.json}` merges the current pad module
+and 14494 without altering either live source. Baseline is exact for 16/17;
+only 14494 differs. Uniform `-fno-cse-skip-blocks` is **17/17 exact**, with
+zero compiler diagnostics and no undetermined relocated-byte verdicts.
+This closes the previously unmeasured whole-TU compatibility question, not
+the historical command-line provenance question. The baseline-only source
+experiments under `build/tuFinal/pad-*` remain nonexact and are not promoted.
+
+The operator subsequently approved the uniform setting for the complete pad
+unit. `configs/tu_flag_reviews.json` now binds precisely these 17 original
+identities and the unchanged option to `src/modules/pad.c`; fold, audit,
+source-policy and exception-growth gates share its validation. The checked
+fold remeasured baseline (16/17), then proved all 17 under the retained
+setting and passed the linked EXE check. The setting remains a provisional
+historical hypothesis, not proof of the original command line. No assembly
+or register-pin permissions were widened; the old campaign receipt remains
+in use. See `plans/flag-review-report.md#complete-pad-tu-review`.
+
 Pad setup, per-port state polling, decoded controller input, analog-stick
 normalization, and pad-helper sequence.
 Fingerprints: func_80014064 initializes D_8005E9C8 through PadInitDirect;
@@ -11171,8 +11205,13 @@ change again after CSE. The complete candidate/dumps and relocated diff are
 in `build/tuFlagReview/exe/pad_reverse_outer`; the live source and its
 existing setting are unchanged.
 
-**Module: `src/modules/pad.c` holds exe:0x800139FC–0x80014494** (16
-functions, 2026-10-24), merged from the three earlier slices
+**Module: `src/modules/pad.c` holds exe:[0x800139FC, 0x80014554)** (17
+functions), extended through `WritePadActuatorRequests` (formerly
+func_80014494). Its only caller is `UpdatePadInputRecord`, so it remains an
+internal support interface with unchanged external linkage, not a new public
+header entry. It formats the low request bytes for the selected mode and,
+when the software gate is zero, clears both eight-byte actuator tables.
+The earlier 16-function module was merged from the three slices
 `pad_input_setup`, `pad_actuator_gate` and `pad_input_update` plus the eight
 remaining per-function members. Membership evidence: the members share
 `gPadActuatorsEnabled` (8005E3EC), `gPadExtendedModeIds` (8005E3E8) and
@@ -11184,11 +11223,13 @@ game_loop's `main`, which declares them. 800139FC joins because it is the pad
 startup (`InitPads`: StartPadCommunication, then ChangeClearPAD(0)) and the
 preceding full-screen primitive group ends at 800139F8.
 
-Boundaries: the start rests on that group's end. The end at 80014494 is a
-**mechanical limit, not evidence**: 80014494 carries the per-function
-`-fno-cse-skip-blocks` override, and a module compiles under one command line.
-80014494 shares the gate word and mode IDs through $gp. Folding it needs the
-module-wide flag decision in plans/flag-review-report.md. A fresh complete
+Boundaries: the start rests on that group's end. The end is now 80014554,
+whose CD filename-bootstrap responsibility and ownership place it in
+`cd_loader`, not pad. The former split at 80014494 was a **mechanical limit,
+not evidence**, and is retired by the approved whole-TU setting; 80014494
+shares the gate word and mode IDs through $gp.
+
+Earlier baseline-only experiment (before the approved integration): a complete
 17-member baseline experiment (existing pad module plus 80014494, unchanged
 C, only that function's override temporarily removed) passed the dry fold
 and compiled, but failed the linked EXE check: original SHA-256

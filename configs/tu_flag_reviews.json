@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "reviews": [
+    {
+      "sourcePath": "src/modules/pad.c",
+      "container": "exe",
+      "members": [
+        "exe:0x800139FC",
+        "exe:0x80013A24",
+        "exe:0x80013AA4",
+        "exe:0x80013AC8",
+        "exe:0x80013AEC",
+        "exe:0x80013AF8",
+        "exe:0x80013B04",
+        "exe:0x80013CD0",
+        "exe:0x80013F90",
+        "exe:0x80013FC0",
+        "exe:0x80014064",
+        "exe:0x800140C8",
+        "exe:0x8001413C",
+        "exe:0x80014250",
+        "exe:0x800142D8",
+        "exe:0x80014388",
+        "exe:0x80014494"
+      ],
+      "owner": "exe:0x80014494",
+      "flags": "-fno-cse-skip-blocks",
+      "evidence": "plans/flag-review-report.md#complete-pad-tu-review"
+    }
+  ]
+}

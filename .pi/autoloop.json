@@ -54,7 +54,7 @@
    "computestickmagnitude": [
     "embedded-asm"
    ],
-   "func_80014494": [
+   "writepadactuatorrequests": [
     "flag-override"
    ],
    "initgraphicsheap": [

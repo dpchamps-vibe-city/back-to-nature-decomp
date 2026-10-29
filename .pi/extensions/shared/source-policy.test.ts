@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 import { DEFAULT_CONFIG, loadConfig } from "./config.ts";
-import { checkSourcePolicy, isPendingStub } from "./source-policy.ts";
+import { checkSourcePolicy, isPendingStub, moduleMembers } from "./source-policy.ts";
+import { ROOT } from "../../../tools/lib/psxExeInfo.js";
+import { originalIdentity } from "../../../tools/lib/tuFlagReviews.js";
 
 function fixture(source: string) {
   const root = mkdtempSync(join(tmpdir(), "autodecomp-policy-"));
@@ -371,6 +373,37 @@ test("module-scope constructs cannot borrow a member's exception", async () => {
   assert.ok(findings.some((f) => f.kind === "include-asm" && /live member second/.test(f.message)), "a live member's stub inside a module");
   const dead = MEMBERS.map((member) => member.name === "second" ? { ...member, dead: true } : member);
   assert.ok(!moduleConstructFindings(source, config, dead).some((f) => f.kind === "include-asm"), "a dead member's stub is backlog, as in its own file");
+});
+
+test("reviewed module flags need the original owner's grant and do not authorize constructs", t => {
+  const root = mkdtempSync(join(tmpdir(), "autodecomp-reviewed-flags-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  mkdirSync(join(root, "src/modules"), { recursive: true });
+  mkdirSync(join(root, "configs"));
+  const file = "src/modules/pad.c", members = moduleMembers(ROOT, file);
+  assert.ok(members.length > 1);
+  const owner = members.at(-1)!;
+  const source = members.map(m => `void ${m.name}(void) {}`).join("\n");
+  const flags = "CC1FLAGS_modules__pad := -fno-cse-skip-blocks\n";
+  writeFileSync(join(root, file), source);
+  writeFileSync(join(root, "configs/flag_overrides.mk"), flags);
+  const config = structuredClone(DEFAULT_CONFIG);
+  config.sourcePolicy.allowlist = { [owner.name.toLowerCase()]: ["flag-override"] };
+  const check = () => checkSourcePolicy({ projectRoot: root, config, changedFiles: [file],
+    patch: `+++ b/configs/flag_overrides.mk\n@@ -0,0 +1 @@\n+${flags}` });
+  assert.equal(check().pass, false, "a member's grant alone is insufficient");
+  writeFileSync(join(root, "configs/tu_flag_reviews.json"), JSON.stringify({ schemaVersion: 1, reviews: [{
+    sourcePath: file, container: "exe", members: members.map(m => originalIdentity("exe", Number(m.vram))),
+    owner: originalIdentity("exe", Number(owner.vram)), flags: "-fno-cse-skip-blocks", evidence: "plans/flag-review-report.md#test",
+  }] }));
+  assert.equal(check().pass, true, JSON.stringify(check().hardFailures));
+  config.sourcePolicy.allowlist = {};
+  assert.equal(check().pass, false, "the review cannot create a function exception");
+  config.sourcePolicy.allowlist = { [owner.name.toLowerCase()]: ["flag-override"] };
+  writeFileSync(join(root, file), source.replace("{}", '{ __asm__("nop"); }'));
+  assert.ok(check().hardFailures.some(f => f.kind === "embedded-asm"));
+  writeFileSync(join(root, file), source + "\nvoid helper(void) {}\n");
+  assert.ok(check().hardFailures.some(f => f.kind === "flag-override"), "extra definitions invalidate scope");
 });
 
 test("a module source is scanned once with member scopes, and a module flag override is never allowlisted", () => {

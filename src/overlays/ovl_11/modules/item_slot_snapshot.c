@@ -10,8 +10,17 @@
 #include "ovl11_primary_object_requests.h"
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_slot_sprite_cache.h"
-
-void ovl_11_func_8010941C(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode1_record.h"
 
 s32 Ovl11SnapshotItemSlots(s16 restore, s16 preferDirectRestore) {
     s16 *slot;
@@ -47,7 +56,7 @@ s32 Ovl11SnapshotItemSlots(s16 restore, s16 preferDirectRestore) {
                 case 0x106:
                 case 0x107:
                     ((struct Ovl11ItemSlotSnapshotWork *)D_8006C838)->effectFlags &= 0xFFFDFFFF;
-                    ovl_11_func_8010941C(0);
+                    Ovl11SetStageMode1PositionPreset(0);
                     break;
                 case 0x65:
                     ((struct Ovl11ItemSlotSnapshotWork *)D_8006C838)->effectHalfwords[0xE] |= 1;

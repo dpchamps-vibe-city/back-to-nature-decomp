@@ -12,8 +12,17 @@
 #include "ovl11_pool_record_transition.h"
 #include "ovl11_record_row_values.h"
 #include "ovl11_dispatch_record_flags.h"
-
-void ovl_11_func_8010941C(s32 arg0);
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
+#include "psyq/libgpu.h"
+#include "psyq/libcd.h"
+#include "psyq/libetc.h"
+#include "psyq/memory.h"
+#include "psyq/abs.h"
+#include "psyq/libgs.h"
+#include "psyq/libsnd.h"
+#include "psyq/libapi.h"
+#include "ovl11_stage_mode1_record.h"
 
 void Ovl11SetupRecordRowsAndGates(s16 row) {
     s16 state;
@@ -27,7 +36,7 @@ void Ovl11SetupRecordRowsAndGates(s16 row) {
         }
         state = ((Ovl11RecordRowGateWork *)&D_8006C838)->mode1Selector;
         if ((state == 0xD) || ((u32)(state - 0x38) < 0xBU)) {
-            ovl_11_func_8010941C(0);
+            Ovl11SetStageMode1PositionPreset(0);
         }
     }
 }

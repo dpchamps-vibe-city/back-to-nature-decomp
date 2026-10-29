@@ -21,6 +21,7 @@
 #include "ovl11_object_record_state.h"
 #include "ovl11_item_slot_commands.h"
 #include "ovl11_clock_advance_command.h"
+#include "ovl11_condition_date_records.h"
 
 s32 Ovl30EditMainData(s32 cursor) {
     s32 result;
@@ -49,9 +50,6 @@ s32 Ovl30EditPlayerData(s32 cursor) {
     }
     return result;
 }
-
-void ovl_11_func_800EF488(s16);
-void ovl_11_func_800EF6E4(s16 mode, s16 rivalIndex);
 
 #define ACTION ((Ovl30ActionState *)D_8006C838)
 #define EVENT(index) ((Ovl30EventRecordView *)((u8 *)D_8006C838 + (index) * 0x1D4))
@@ -194,28 +192,28 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 20:
-            ovl_11_func_800EF6E4(1, 0);
+            Ovl11AssignConditionDateSlot(1, 0);
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 21:
-            ovl_11_func_800EF6E4(1, 1);
+            Ovl11AssignConditionDateSlot(1, 1);
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 22:
-            ovl_11_func_800EF6E4(1, 2);
+            Ovl11AssignConditionDateSlot(1, 2);
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 23:
-            ovl_11_func_800EF6E4(1, 3);
+            Ovl11AssignConditionDateSlot(1, 3);
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 24:
-            ovl_11_func_800EF6E4(1, 4);
+            Ovl11AssignConditionDateSlot(1, 4);
             gOvl30RecordMenuSelectedId = -1;
             break;
         /* These diagnostic actions do not validate gameplay preconditions. */
         case 25:
-            ovl_11_func_800EF488(-1);
+            Ovl11SnapshotConditionDateSlot(-1);
             selected = ACTION->selected - 3;
             switch (selected) {
             case 0: id = 0xA4; break;
@@ -234,7 +232,7 @@ s32 Ovl30DispatchDebugActions(s32 cursor) {
             gOvl30RecordMenuSelectedId = -1;
             break;
         case 26:
-            ovl_11_func_800EF6E4(0, (s16)gOvl30DebugRivalIndex);
+            Ovl11AssignConditionDateSlot(0, (s16)gOvl30DebugRivalIndex);
             switch (gOvl30DebugRivalIndex) {
             case 0: first = 3; second = 19; break;
             case 1: first = 7; second = 11; break;

@@ -4,6 +4,27 @@
 Ovl15WriteSaveChecksums = 0x80135AE0;
 Ovl15VerifySaveChecksums = 0x80135B68;
 
+// Two-bank slot-selection lifecycle (original addresses retained).
+Ovl15DrawSlotBanks = 0x801335F8; // type:func
+Ovl15UpdateSlotSelectionMenu = 0x80133808; // type:func
+Ovl15StepSlotSelectionInput = 0x80133B28; // type:func
+Ovl15MarkSlotRecord = 0x80133F4C; // type:func
+Ovl15UnmarkSlotRecord = 0x80134000; // type:func
+Ovl15IsSlotRecordMarked = 0x801340B8; // type:func
+Ovl15DrawSlotRecordRow = 0x80134134; // type:func
+Ovl15DrawSlotRecordDetails = 0x801342A0; // type:func
+Ovl15ReadSignedSlotValue = 0x80134444; // type:func
+Ovl15DrawSlotMeterIcons = 0x80134450; // type:func
+Ovl15FindSlotRecordIndexOrCount = 0x801344E8; // type:func
+Ovl15InitializeSlotSelection = 0x8013468C; // type:func
+Ovl15ResetSlotSelection = 0x80134724; // type:func
+gOvl15SlotCategory = 0x8013759E; // type:data size:0x2
+gOvl15SlotFirstVisible = 0x801375A0; // type:data size:0x2
+gOvl15SlotCursor = 0x801375A2; // type:data size:0x2
+gOvl15SlotMarkCount = 0x801375A4; // type:data size:0x2
+gOvl15SlotRecordScratch = 0x80140FE0; // type:data size:0x1568
+gOvl15SlotDetailText = 0x80137690; // type:data size:0x1E
+
 // Overlay-15 placement twins; X precedes Z here, unlike overlay 11.
 Ovl15PlaceRowXSlot = 0x80132A8C;
 Ovl15PlaceRowZSlot = 0x80132B44;
