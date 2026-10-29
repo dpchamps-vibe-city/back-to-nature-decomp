@@ -299,7 +299,7 @@ void Ovl19InitAuxRecords(void) {
     s32 val;
 
     i = 0;
-    src = (Ovl19Rec8 *)D_800BCF0C;
+    src = (Ovl19Rec8 *)gOvl19AuxRecordTemplates;
     do {
         dst = gOvl19SceneWork + i * 0x20;
         dst[0x50] = i;

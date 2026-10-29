@@ -119,3 +119,5 @@ gOvl19ValueRandomLimits = 0x800BCFE4; // type:data size:0xC
 gOvl19SelectionValueIndices = 0x800BCF24; // type:data size:0x4
 // Two 8-byte actor-pair templates copied into scene work by Ovl19InitActorPair.
 gOvl19ActorPairTemplates = 0x800BCEFC; // type:data size:0x10
+// Three 8-byte auxiliary-record templates copied into scene work by Ovl19InitAuxRecords.
+gOvl19AuxRecordTemplates = 0x800BCF0C; // type:data size:0x18

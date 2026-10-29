@@ -81,6 +81,7 @@ gOvl19ModeHandlers = 0x800BCEA8; // size:0x20
 gOvl19StageHandlers = 0x800BCEC8; // size:0x1c
 gOvl19LoadStep = 0x800BCEE4; // size:0x1
 gOvl19ActorPairTemplates = 0x800BCEFC; // size:0x10
+gOvl19AuxRecordTemplates = 0x800BCF0C; // size:0x18
 gOvl19SelectionValueIndices = 0x800BCF24; // size:0x4
 gOvl19DirectionWeights = 0x800BCF58; // size:0x24
 gOvl19FixedSpritePositions = 0x800BCF7C; // size:0x2
