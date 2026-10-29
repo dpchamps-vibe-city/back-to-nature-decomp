@@ -6438,7 +6438,8 @@ extern s16 gOvl19StepStartTicks;
 extern s16 gOvl19DoubleThresholdTicks;
 /* ovl_19 800BA834 loads this signed halfword for the case-10 thresholds. */
 extern s16 gOvl19State10ThresholdTicks;
-extern u16 D_800BCEF0[];
+/* 800B847C: Ovl19InitAuxRecords selects these four auxiliary-value seeds by (entry[4] * 2) + variant parity. */
+extern u16 gOvl19AuxValueSeeds[];
 /* 800B847C: Ovl19InitAuxRecords copies three 8-byte templates from this flat s16 source. */
 extern s16 gOvl19AuxRecordTemplates[];
 /* ovl_19 800B8830 indexes this overlay-local table with a signed halfword load. */

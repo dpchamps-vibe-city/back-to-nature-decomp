@@ -310,7 +310,7 @@ void Ovl19InitAuxRecords(void) {
         i++;
     } while (i < 3);
     d = gOvl19SceneWork;
-    e = D_800BCEF0;
+    e = gOvl19AuxValueSeeds;
     idx = d[4] * 2;
     base = (char *)D_8006C838;
     val = (s16)*(u16 *)(base + 0xE61C);
