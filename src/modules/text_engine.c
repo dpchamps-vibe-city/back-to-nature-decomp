@@ -1722,27 +1722,27 @@ s32 ResolveTextSource(s32 arg0) {
     }
     case 27:
         InsertRecordListText(0);
-        result = (s32)D_8005F0F8;
+        result = (s32)gTextRecordListBuffer;
         break;
     case 28:
         InsertRecordListText(1);
-        result = (s32)D_8005F0F8;
+        result = (s32)gTextRecordListBuffer;
         break;
     case 29:
         InsertRecordListText(2);
-        result = (s32)D_8005F0F8;
+        result = (s32)gTextRecordListBuffer;
         break;
     case 30:
         InsertRecordListText(3);
-        result = (s32)D_8005F0F8;
+        result = (s32)gTextRecordListBuffer;
         break;
     case 31:
         InsertRecordListText(4);
-        result = (s32)D_8005F0F8;
+        result = (s32)gTextRecordListBuffer;
         break;
     case 32:
         InsertRecordListText(5);
-        result = (s32)D_8005F0F8;
+        result = (s32)gTextRecordListBuffer;
         break;
     case 34: {
         unsigned char *f;
@@ -1785,7 +1785,7 @@ void InsertRecordListText(s32 arg0) {
     s32 sentinel;
 
     /* Clear sentinel. */
-    D_8005F0F8[0] = 0xFFFF;
+    gTextRecordListBuffer[0] = 0xFFFF;
 
     offset = gTextScriptIndex * 2;
     base = D_80049078;
@@ -1811,10 +1811,10 @@ void InsertRecordListText(s32 arg0) {
     memmove((unsigned char *)p_table + byte_size, (unsigned char *)p_table + 2, gap_count * 2);
 
     /* Copy sentinel into the gap */
-    memcpy((unsigned char *)p_table, (unsigned char *)&D_8005F0F8[0], byte_size);
+    memcpy((unsigned char *)p_table, (unsigned char *)&gTextRecordListBuffer[0], byte_size);
 
     /* Restore sentinel */
-    D_8005F0F8[0] = 0xFFFF;
+    gTextRecordListBuffer[0] = 0xFFFF;
 }
 
 u16 *AppendRecordNameText(u16 *arg0, s32 arg1, s32 arg2);
@@ -1824,7 +1824,7 @@ s32 BuildUnflaggedRecordListText(s32 arg0) {
     s32 var_s0;
     s32 i;
 
-    var_a0 = D_8005F0F8;
+    var_a0 = gTextRecordListBuffer;
     var_s0 = (s32)&gTaggedRecordBase;
     for (i = 0; i < 20; i++) {
         if (!(*(s32 *)((char *)var_s0 + 0x34) & 0x10000)) {
@@ -1832,7 +1832,7 @@ s32 BuildUnflaggedRecordListText(s32 arg0) {
         }
         var_s0 += 0xB8;
     }
-    return var_a0 - D_8005F0F8;
+    return var_a0 - gTextRecordListBuffer;
 }
 
 s32 BuildFlaggedRecordListText(s32 arg0) {
@@ -1840,7 +1840,7 @@ s32 BuildFlaggedRecordListText(s32 arg0) {
     s32 var_s0;
     s32 i;
 
-    var_a0 = D_8005F0F8;
+    var_a0 = gTextRecordListBuffer;
     var_s0 = (s32)&gTaggedRecordBase;
     for (i = 0; i < 20; i++) {
         if (*(s32 *)((char *)var_s0 + 0x34) & 0x10000) {
@@ -1848,7 +1848,7 @@ s32 BuildFlaggedRecordListText(s32 arg0) {
         }
         var_s0 += 0xB8;
     }
-    return var_a0 - D_8005F0F8;
+    return var_a0 - gTextRecordListBuffer;
 }
 
 s32 BuildSmallRecordListText(s32 arg0) {
@@ -1856,13 +1856,13 @@ s32 BuildSmallRecordListText(s32 arg0) {
     s32 var_s1;
     s32 i;
 
-    var_a0 = D_8005F0F8;
+    var_a0 = gTextRecordListBuffer;
     var_s1 = (s32)&gSmallTaggedRecordBase;
     for (i = 0; i < 10; i++) {
         var_a0 = AppendRecordNameText(var_a0, var_s1, arg0);
         var_s1 += 0xB4;
     }
-    return var_a0 - D_8005F0F8;
+    return var_a0 - gTextRecordListBuffer;
 }
 
 u16 *AppendRecordNameText(u16 *arg0, s32 arg1, s32 arg2) {

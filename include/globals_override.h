@@ -3343,15 +3343,10 @@ extern SpuCommonAttrO _D_8006C368[1] __asm__("D_8006C368");
  * type inferred from the symbol boundary. */
 extern u8 D_8005EE28[0x200];
 
-/* D_8005F0F8 — u16 sentinel value (func_8001A574 stores/loads via sh/lhu).
- * Declared as an array so the declared size is > -G8: the original TU's
- * declaration was >8 bytes, because every target access in the file family
- * (func_8001A574, func_8001A668) uses the cc1 split form
- * `lui reg,%hi` / `op %lo(reg)` (real register), not the <=-G8 assembler
- * macro (`lui $at` / `op`). A 2-byte declaration makes cc1 emit the raw
- * macro, which maspsx expands with $at — a different address form. See
- * notes/adr-0001-symbol-addressing-at-the-assembler-boundary.md §2.4. */
-extern u16 D_8005F0F8[6];
+/* 8005F0F8: Build*RecordListText appends eligible record names and suffixes here;
+ * InsertRecordListText copies their output into the script and resets the FFFF sentinel.
+ * Preserve the existing six-halfword split-address base view; it is not a capacity bound. */
+extern u16 gTextRecordListBuffer[6];
 
 /* D_80049078 — array of 3 function pointers (func_8001A574 dispatch table).
  * Each callee takes one s32 argument and returns s32. Absolute-addressed (12 bytes, > -G8). */

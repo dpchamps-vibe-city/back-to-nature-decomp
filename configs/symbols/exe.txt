@@ -881,6 +881,9 @@ gTextWeekdayNames = 0x800490BC; // size:0x2A
 gTextNumberDrawBuffer = 0x8005F0A8; // size:0x14
 // SetTextSourcePointer registers slots 0..10; renderers/scanners expand their stored text addresses.
 gTextSourceAddresses = 0x8005F0C8; // size:0x2C
+// Build*RecordListText appends names here; InsertRecordListText copies the result into the script.
+// Retain the existing six-halfword base view, not a new claim about total buffer capacity.
+gTextRecordListBuffer = 0x8005F0F8; // size:0xC
 
 // Text engine state: widths follow the matching definitions and original loads.
 gTextLetterSpacing = 0x8005E2B8; // size:0x2
