@@ -881,6 +881,8 @@ gCardReadAbortConfirmTextAnchor = 0x80051E02; // size:0x36
 gCardTransferAbortConfirmTextAnchor = 0x80051E88; // size:0x3E
 // Ovl15CardWriteConfirmFormat step 1 draws this bank-adjusted prompt; U16 codes decode as Want to format.
 gCardFormatConfirmTextAnchor = 0x80051FA8; // size:0x20
+// Ovl15CardWriteConfirmOverwrite and Ovl15CardTransferShowSummary draw this bank-adjusted prompt; U16 codes decode as OK to overwrite / this diary.
+gCardOverwriteConfirmTextAnchor = 0x80051FEA; // size:0x38
 // Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
 gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
 // The wide Ovl11DrawChoicePromptVariant selects the secondary-bank Buy/Don't-buy text.

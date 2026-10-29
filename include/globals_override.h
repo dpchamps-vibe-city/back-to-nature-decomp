@@ -6169,8 +6169,8 @@ extern u8 D_80053566[];
 /* ovl_15_func_8012F7D4 adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_8005316C[];
 
-/* ovl_15_func_8012F3FC adds D_80054BBC[0] bytes to this text-updater address. */
-extern u8 D_80051FEA[];
+/* 8012F3FC/801326E8: card write and transfer summaries draw bank-adjusted OK to overwrite / this diary. */
+extern u8 gCardOverwriteConfirmTextAnchor[];
 /* ovl_15_func_8012F158 adds D_80054BBC[0] to this text-updater address. */
 extern u8 D_80052FC4[];
 /* ovl_15:801315B0 adds the text-bank byte offset before drawing this prompt. */

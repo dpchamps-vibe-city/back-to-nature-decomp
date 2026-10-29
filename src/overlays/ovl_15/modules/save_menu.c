@@ -650,7 +650,7 @@ void Ovl15CardWriteConfirmOverwrite(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80051FEA);
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardOverwriteConfirmTextAnchor);
     for (var_s0 = 0; var_s0 < 3; var_s0++) {
         Ovl15DrawSaveSlotSummary((s16)var_s0, 1);
     }
@@ -2179,7 +2179,7 @@ void Ovl15CardTransferShowSummary(void) {
     var_s0 = 0;
     temp_a1 = gActiveRenderContext->field_D8;
     DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
-                 (s32)&D_80051FEA[gTextBankOffsets[0]]);
+                 (s32)&gCardOverwriteConfirmTextAnchor[gTextBankOffsets[0]]);
     do {
         Ovl15DrawSaveSlotSummary(var_s0, 0);
         var_s0 += 1;
