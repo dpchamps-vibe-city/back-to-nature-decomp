@@ -958,7 +958,7 @@ extern char gOvl31NewFarm0FileName[18];
 /* ovl_31 rodata: old FARM1 filename; ovl_11 has a different object at this address. */
 extern char Ovl31_D_800B7F54[18] __asm__("D_800B7F54");
 /* ovl_31 rodata: NUL-terminated new FARM1 memory-card filename. */
-extern char D_800B7F68[18];
+extern char gOvl31NewFarm1FileName[18];
 /* ovl_31 rodata: NUL-terminated old FARM2 memory-card filename. */
 extern char D_800B7F7C[18];
 /* ovl_31 rodata: NUL-terminated new FARM2 memory-card filename. */
