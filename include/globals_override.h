@@ -6194,8 +6194,8 @@ extern u8 gCardTooManyHensTextAnchor[];
 extern u8 gCardPartnerTooManyHensTextAnchor[];
 /* 80132520: Ovl15CardTransferPromptState24 draws bank-adjusted That puts too many cows/sheep into play. */
 extern u8 gCardTooManyLivestockTextAnchor[];
-/* ovl_15:801325AC adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_8005230A[];
+/* 801325AC: Ovl15CardTransferPromptState25 draws bank-adjusted That gives partner too many cows/sheep. */
+extern u8 gCardPartnerTooManyLivestockTextAnchor[];
 /* 8012F990/801328C4: card write and transfer prompts draw bank-adjusted Save process failed. */
 extern u8 gCardSaveFailedTextAnchor[];
 /* 80132934: Ovl15CardTransferConfirmExit draws bank-adjusted Aborting exchange / Is that OK. */

@@ -2139,7 +2139,7 @@ void Ovl15CardTransferPromptState25(void) {
 
     p = &gOvl15MenuState;
     DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14,
-                  gTextBankOffsets[0] + (s32)D_8005230A);
+                  gTextBankOffsets[0] + (s32)gCardPartnerTooManyLivestockTextAnchor);
     *p = Ovl15WaitForMenuButton(0x19, 0x12);
     if (gOvl15MenuStateTimer >= 0x5B) {
         *p = 0x12;
