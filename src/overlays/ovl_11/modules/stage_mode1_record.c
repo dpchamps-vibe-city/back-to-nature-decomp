@@ -361,8 +361,8 @@ s32 Ovl11RefreshStageMode1Sprite(s32 *arg0) {
     }
     Ovl11LoadCopiedSpriteData(var_a1);
     temp_s1 = arg0 + 0x1E;
-    InitSpriteSourceData((SpriteSourceData *) temp_s1, (SpriteDataHeader *) &D_8007F7F8);
-    SetSpriteSourceRecordAddress((SomeStruct *) temp_s1, (s32) ((void *) ((u8 *) &D_8007F7F8 + var_s3)));
+    InitSpriteSourceData((SpriteSourceData *) temp_s1, (SpriteDataHeader *) &gCopiedSpriteDataBuffer);
+    SetSpriteSourceRecordAddress((SomeStruct *) temp_s1, (s32) ((void *) ((u8 *) &gCopiedSpriteDataBuffer + var_s3)));
     (*(s16 *) ((u8 *) arg0 + 0xE0)) = 0;
     (*(s16 *) ((u8 *) arg0 + 0xE2)) = 0x1ED;
     (*(s16 *) ((u8 *) arg0 + 0xE4)) = 0x3C0;

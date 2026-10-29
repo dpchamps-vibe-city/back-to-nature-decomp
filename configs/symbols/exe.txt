@@ -993,6 +993,8 @@ gCalendarYearLabelTextAnchor = 0x80051B9A; // size:0xA
 
 // Large/small indexed sprite loads target this main-RAM bank; ovl_15 also points its card-icon buffer here.
 gLoadedSpriteBankBuffer = 0x8007BFF8; // size:0x3800
+// Ovl11LoadCopiedSpriteData copies one selected bounds pair (up to 0x10000 bytes) here for stage records.
+gCopiedSpriteDataBuffer = 0x8007F7F8; // size:0x10000
 // Ovl11DrawStatusRecordPageTitle and the save-slot record list draw this bank-adjusted title; U16 codes decode List.
 gRecordListTitleTextAnchor = 0x80053604; // size:0xA
 // Ovl15UpdateSlotSelectionMenu, Ovl11DrawStatusSevenRecordRow and the record-family list copy/draw this bank-adjusted label; U16 codes decode Farm.

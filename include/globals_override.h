@@ -6083,9 +6083,9 @@ extern s32 gOvl11CopiedSpriteBoundaries[];
  * here. */
 extern s32 gOvl11SceneSpriteBoundaries[];
 
-/* D_8007F7F8 - main-RAM destination buffer written by ovl_11_func_800BD1BC's
- * memcpy. Address comes from undefined_syms_auto.txt. */
-extern s32 D_8007F7F8;
+/* 800BD1BC: Ovl11LoadCopiedSpriteData copies a selected bounds pair (up to 0x10000 bytes)
+ * into this main-RAM buffer for stage records. */
+extern s32 gCopiedSpriteDataBuffer;
 
 /* D_8007AFF8 - main-RAM base 8 bytes past D_8007AFF0, handed to
  * func_80015704 as a SpriteDataHeader by ovl_11_func_8010B67C, which then

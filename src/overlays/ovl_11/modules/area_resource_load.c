@@ -71,7 +71,7 @@ void Ovl11LoadCopiedSpriteData(s32 index) {
 
     bounds = &gOvl11CopiedSpriteBoundaries[index];
     CdReadDiscSectorsBlocking(0, bounds[0], bounds[1] - bounds[0], 0, gGraphicsHeapBase + 0x4290);
-    memcpy(&D_8007F7F8, (void *)(gGraphicsHeapBase + 0x4290), bounds[1] - bounds[0]);
+    memcpy(&gCopiedSpriteDataBuffer, (void *)(gGraphicsHeapBase + 0x4290), bounds[1] - bounds[0]);
 }
 
 void Ovl11LoadSceneSpriteData(s32 index) {
