@@ -379,7 +379,7 @@ s32 Ovl11ShowMenuChoice(void) {
     RequestMessageWindow(3, 0x1B7);
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x10, 0x10, 0xAC, 0x58);
     SetTextSpacing(0, 2);
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053A22 + gTextBankOffsets[0]), 0x12, 0x12);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32)(gBedtimeChoicesTextAnchor + gTextBankOffsets[0]), 0x12, 0x12);
     SetTextSpacing(0, 0);
     ready = IsMessageWindowStatusFinal();
     if (ready) {

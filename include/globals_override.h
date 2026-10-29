@@ -4653,8 +4653,8 @@ struct Ovl11NumberTextHeader {
 
 /* 800FFA28 declares this s16 selection; 800FFB08 reads it as unsigned. */
 extern s16 gOvl11MenuChoiceRow;
-/* 800FFB08 adds D_80054BBC[0] bytes to this menu text base. */
-extern u8 D_80053A22[];
+/* 800FFB08: Ovl11ShowMenuChoice draws bank-adjusted sleep/diary/exchange menu choices. */
+extern u8 gBedtimeChoicesTextAnchor[];
 
 /* 800FD5E8: Ovl11DrawPairedValuePanel draws bank-adjusted Earnings/expenses; +0x28 is This month/accounts. */
 extern u8 gStatusEarningsTextAnchor[];
