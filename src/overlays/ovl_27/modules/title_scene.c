@@ -708,7 +708,7 @@ void Ovl27DrawTitleRecordSummary(void) {
     temp_s2 = gActiveRenderContext->field_D8 + 0x80;
     SetTextSpacing(0, 1);
     DrawMenuPanel((u32 *) (gActiveRenderContext->field_D8 + 0x84), 1, 0x48, 0x38, 0xB0, 0x5A);
-    DrawTextLine(temp_s2, (s32) ((u8 *) D_80051AF6 + *gTextBankOffsets), 0x4C, 0x3C);
+    DrawTextLine(temp_s2, (s32) ((u8 *) gTitleRecordSummaryTextAnchor + *gTextBankOffsets), 0x4C, 0x3C);
     SetTextSpacing(0, 0);
     base = (u8 *) D_8006C838;
     DrawUiSprite2BFrame(temp_s2, 0xAC, 0x48, *(s16 *) (base + 0x5246));

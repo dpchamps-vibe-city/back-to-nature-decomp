@@ -990,6 +990,8 @@ gStatusAmountShippedTextAnchor = 0x800535E6; // size:0x1E
 gItemTransferSourceLabelsTextAnchor = 0x80051B7C; // size:0x1E
 // Ovl11DrawCalendarHeading draws this bank-adjusted suffix after the year number; U16 codes decode Year.
 gCalendarYearLabelTextAnchor = 0x80051B9A; // size:0xA
+// Ovl27DrawTitleRecordSummary draws this bank-adjusted form; U16 codes decode Your name / Birthday / Farm name / Dog name / Is this OK.
+gTitleRecordSummaryTextAnchor = 0x80051AF6; // size:0x86
 
 // Large/small indexed sprite loads target this main-RAM bank; ovl_15 also points its card-icon buffer here.
 gLoadedSpriteBankBuffer = 0x8007BFF8; // size:0x3800

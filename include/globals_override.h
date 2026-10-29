@@ -4229,8 +4229,8 @@ extern u16 gOvl27SpriteFrameIds3[];
 extern u8 gOvl27InitialWorkRecords[];
 /* ovl_27:9124 constructs a terminated halfword string at this buffer base. */
 extern s16 gOvl27TitleSummaryText;
-/* ovl_27:9124 indexes this engine text bank by gTextBankOffsets. */
-extern u8 D_80051AF6[];
+/* 800B9124: Ovl27DrawTitleRecordSummary draws bank-adjusted Your name / Birthday / Farm name / Dog name / Is this OK. */
+extern u8 gTitleRecordSummaryTextAnchor[];
 
 /* View of D_8006C838 for ovl_27_func_800BA914: pointers at +0x20 (0x28-byte
  * records with an s8 at +3) and +0x2C (0x10-byte records with a u8 at +2).
