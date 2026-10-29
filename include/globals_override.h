@@ -2860,7 +2860,8 @@ extern s32 gOvl23RecordRunStages[];
 extern u8 gOvl23RecordRunSetupStage;
 /* 800B8290: Ovl23InitDecisionRecords copies six initial halfwords into decision record +0x244. */
 extern u16 gOvl23DecisionRecordInitialValues[];
-extern u16 D_800BBA88[];
+/* 800B8290: Ovl23InitDecisionRecords picks one of four halfwords with Rand(4) for record +0x20E. */
+extern u16 gOvl23DecisionRecordRandomValues[];
 /* ovl_23:97E0 writes six choices; 8644 uses the same +0x16 halfword array. */
 extern u16 D_800BF892[];
 /* ovl_23:8B94 drives this decision record and reads its +6 control halfword. */

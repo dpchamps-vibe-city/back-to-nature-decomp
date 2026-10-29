@@ -234,7 +234,7 @@ void Ovl23InitDecisionRecords(void) {
         *(u16 *)(p + 0x20C) = 0;
         *(u32 *)(p + 0x210) = 0x17000;
         *(u16 *)(p + 0x244) = temp;
-        *(u16 *)(p + 0x20E) = D_800BBA88[Rand(4)];
+        *(u16 *)(p + 0x20E) = gOvl23DecisionRecordRandomValues[Rand(4)];
     }
 }
 
