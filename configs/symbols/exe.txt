@@ -963,6 +963,8 @@ gCardNoLoadableDiaryTextAnchor = 0x800532FE; // size:0x52
 gCardNoDiaryHereTextAnchor = 0x800523AC; // size:0x30
 // Card write/read/transfer disconnect prompts draw this bank-adjusted status; U16 codes decode MEMORY CARD has been disconnected from MEMORY CARD slot <n>.
 gCardDisconnectedTextAnchor = 0x80052F4E; // size:0x76
+// Ovl15CardTransferPromptState17 draws this bank-adjusted transfer rejection; U16 codes decode Cannot exchange with diary from same farm.
+gCardSameFarmExchangeTextAnchor = 0x8005204A; // size:0x56
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

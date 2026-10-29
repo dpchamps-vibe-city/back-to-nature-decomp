@@ -1943,7 +1943,7 @@ s32 Ovl15CardTransferPromptState17(void) {
     s32 val;
 
     p = &gOvl15MenuState;
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_8005204A);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardSameFarmExchangeTextAnchor);
     ret = Ovl15WaitForMenuButton(0x11, 9);
     *p = ret;
     if (gOvl15MenuStateTimer >= 0x5B) {

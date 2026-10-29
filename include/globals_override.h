@@ -6184,8 +6184,8 @@ extern u8 gCardDiaryDamagedTextAnchor[];
 extern u8 gCardLoadFailedTextAnchor[];
 /* 80131E68: Ovl15CardTransferPromptState30 and the write/read disconnect prompts draw bank-adjusted MEMORY CARD has been disconnected. */
 extern u8 gCardDisconnectedTextAnchor[];
-/* ovl_15:80131F5C adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_8005204A[];
+/* 80131F5C: Ovl15CardTransferPromptState17 draws bank-adjusted Cannot exchange with diary from same farm. */
+extern u8 gCardSameFarmExchangeTextAnchor[];
 /* ovl_15:8013237C adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_80052150[];
 /* ovl_15:80132408 adds the text-bank byte offset before drawing this prompt. */
