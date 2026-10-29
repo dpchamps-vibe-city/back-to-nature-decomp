@@ -749,7 +749,7 @@ void Ovl15CardWriteConfirmFormat(void) {
         break;
     case 1:
         temp_a1_2 = gActiveRenderContext->field_D8;
-        DrawMenuPanelWithText((void *)(temp_a1_2 + 0x18), temp_a1_2 + 0x14, gTextBankOffsets[0] + (s32)D_80051FA8);
+        DrawMenuPanelWithText((void *)(temp_a1_2 + 0x18), temp_a1_2 + 0x14, gTextBankOffsets[0] + (s32)gCardFormatConfirmTextAnchor);
         temp_v0 = Ovl15UpdateConfirmationMenu();
         if (temp_v0 != 0) {
             if (temp_v0 <= 0 ? temp_v0 == -1 : temp_v0 == temp_s0) {

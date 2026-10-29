@@ -7613,8 +7613,8 @@ typedef struct {
     u8 field_4AC0[22];
 } Ovl11Deb00State;
 
-/* 8012F6C0 adds the text relocation base to these two format-confirmation prompts. */
-extern u8 D_80051FA8[];
+/* 8012F6C0: Ovl15CardWriteConfirmFormat step 1 draws bank-adjusted Want to format. */
+extern u8 gCardFormatConfirmTextAnchor[];
 extern u8 D_80053114[];
 /* 8012F86C, 8012FA00 and 8012FA70 respectively relocate these write-menu prompts. */
 extern u8 D_800531B8[];
