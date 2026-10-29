@@ -22,6 +22,8 @@ gOvl11QuantityEditorBalance = 0x8012CF20; // type:data size:0x4
 gOvl11QuantityEditorSelectedRow = 0x8012742C; // type:data size:0x4
 // Service states: 0 inactive, 1 selection, 2 editing, 3 commit, 4 cancel, 5 message wait.
 gOvl11QuantityEditorState = 0x80127428; // type:data size:0x4
+// Begin/commit copy six row quantities; input edits them and drawing/comparison read them.
+gOvl11QuantityEditorQuantities = 0x8012CF10; // type:data size:0xC
 
 // Unreferenced leaves. Names describe only the shipped body, not a guessed role.
 Ovl11UnusedReturnMinusOne = 0x800BDCE0; // type:func

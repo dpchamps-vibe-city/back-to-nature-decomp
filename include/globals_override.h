@@ -5539,10 +5539,10 @@ typedef struct {
     s16 rows[1][6][7];
 } Ovl11QuantityWorkView;
 
-/* ovl_11 farm-state globals. The six halfwords at D_8012CF10 are signed in
- * the reset and comparison functions; ovl_11_func_80103B24 reads their raw
- * bits as unsigned halfwords. All three globals are addressed absolutely. */
-extern s16 D_8012CF10[7];
+/* ovl_11:8012CF10: six pending row quantities copied by Begin/CommitQuantityEditor.
+ * Reset/comparison use signed halfwords; commit copies their raw bits as unsigned.
+ * Retain the existing seven-halfword base view and absolute addressing. */
+extern s16 gOvl11QuantityEditorQuantities[7];
 /* ovl_11:8012CF20: pending money balance, edited at 50 per item and committed to work+5224. */
 extern s32 gOvl11QuantityEditorBalance;
 /* ovl_11:80127428: inactive/select/edit/commit/cancel/message-wait states 0..5. */
@@ -5551,7 +5551,7 @@ extern s32 gOvl11QuantityEditorState;
 extern s32 gOvl11QuantityEditorSelectedRow;
 
 /* D_8012CF1C / D_8012CF24 - ovl_11 farm-state outputs selected alongside the
- * D_8012CF10 row. ovl_11_func_80103D44 copies the chosen D_8012CF10 halfword
+ * quantity row. ovl_11_func_80103D44 copies the selected editor quantity
  * into D_8012CF1C (sh) and gOvl11QuantityEditorBalance into D_8012CF24 (sw);
  * ovl_11_func_801037EC zeroes both. Absolute-addressed (outside $gp). */
 extern s16 D_8012CF1C;

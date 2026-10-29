@@ -2121,6 +2121,7 @@ gOvl11StatusLevelSpriteSource = 0x8012CEB8; // size:0x30
 gOvl11OptionsSettings = 0x8012CEE8; // size:0xc
 gOvl11MenuChoiceResult = 0x8012CEF8; // size:0x4
 gOvl11SelectionWorkIds = 0x8012CF00; // size:0x10
+gOvl11QuantityEditorQuantities = 0x8012CF10; // size:0xc
 gOvl11QuantityEditorBalance = 0x8012CF20; // size:0x4
 gOvl11SpriteRotations = 0x8012CF48; // size:0xf0
 gOvl11ActionGuardSelector = 0x8012D038; // size:0x4

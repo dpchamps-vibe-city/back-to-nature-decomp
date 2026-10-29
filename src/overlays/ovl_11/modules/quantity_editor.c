@@ -56,7 +56,7 @@ void Ovl11ResetQuantityEditor(void) {
     gOvl11QuantityEditorState = 0;
     gOvl11QuantityEditorSelectedRow = 0;
     for (i = 0; i < 6; i++) {
-        D_8012CF10[i] = 0;
+        gOvl11QuantityEditorQuantities[i] = 0;
     }
     D_8012CF24 = 0;
     D_8012CF1C = 0;
@@ -78,7 +78,7 @@ void Ovl11BeginQuantityEditor(void) {
     gOvl11QuantityEditorBalance = v->field_5224;
     cnt = 0;
     do {
-        D_8012CF10[cnt] = (u16)v->rows[sel][cnt][0];
+        gOvl11QuantityEditorQuantities[cnt] = (u16)v->rows[sel][cnt][0];
         cnt += 1;
     } while (cnt < 6);
 }
@@ -121,7 +121,7 @@ void Ovl11ServiceQuantityEditor(void) {
         result = Ovl11HandleQuantityEditInput();
         if (result == -1) {
             gOvl11QuantityEditorState = 1;
-            D_8012CF10[gOvl11QuantityEditorSelectedRow] = D_8012CF1C;
+            gOvl11QuantityEditorQuantities[gOvl11QuantityEditorSelectedRow] = D_8012CF1C;
             gOvl11QuantityEditorBalance = D_8012CF24;
         } else if (result == -2) {
             CloseMessageWindow();
@@ -190,7 +190,7 @@ void Ovl11CommitQuantityEditor(void) {
     w = (Ovl11QuantityWorkView *)&D_8006C838;
     w->field_5224 = gOvl11QuantityEditorBalance;
     for (i = 0; i < 6; i++) {
-        w->rows[sel][i][0] = (u16)D_8012CF10[i];
+        w->rows[sel][i][0] = (u16)gOvl11QuantityEditorQuantities[i];
     }
 }
 
@@ -207,7 +207,7 @@ s32 Ovl11HandleQuantityEditInput(void) {
         return 0;
     }
     var_s0 = 0;
-    temp_s1 = &D_8012CF10[gOvl11QuantityEditorSelectedRow];
+    temp_s1 = &gOvl11QuantityEditorQuantities[gOvl11QuantityEditorSelectedRow];
     temp_a2 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_a2 & 0x1000) {
         var_s0 = 0xA;
@@ -279,7 +279,7 @@ s32 Ovl11HandleQuantitySelectionInput(void) {
         if (!(temp_a0_2 & 0x20)) {
             if (temp_a0_2 & 0x40) {
                 if (gOvl11QuantityEditorSelectedRow != 6) {
-                    D_8012CF1C = D_8012CF10[gOvl11QuantityEditorSelectedRow];
+                    D_8012CF1C = gOvl11QuantityEditorQuantities[gOvl11QuantityEditorSelectedRow];
                     D_8012CF24 = gOvl11QuantityEditorBalance;
                     PlaySoundEffect(0);
                     return 2;
@@ -395,7 +395,7 @@ void Ovl11DrawQuantityEditorRow(s32 rowIndex) {
     }
     labelId = upper->entries[bank][rowIndex][0];
     storedValue = upper->entries[bank][rowIndex][5];
-    editedValue = D_8012CF10[rowIndex];
+    editedValue = gOvl11QuantityEditorQuantities[rowIndex];
     y = ((rowIndex + 1) * 14) + 50;
     if (mode == three && rowIndex == 2) {
         labelId = -1;
@@ -442,7 +442,7 @@ s32 Ovl11AreEditedQuantitiesUnchanged(void) {
     res = 1;
     cnt = 0;
     do {
-        if (D_8012CF10[cnt] != v->rows[sel][cnt][0]) {
+        if (gOvl11QuantityEditorQuantities[cnt] != v->rows[sel][cnt][0]) {
             res = 0;
         }
         cnt += 1;
