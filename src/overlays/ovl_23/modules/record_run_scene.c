@@ -325,10 +325,10 @@ void Ovl23UpdateRecordStage3(void) {
 
 void Ovl23UpdateRecordStage4(void) {
     Ovl23UpdateRecordRunFrame();
-    SetTextSourcePointer(0, (s32)D_800BB860 + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[0]]);
-    SetTextSourcePointer(1, (s32)D_800BB860 + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[1]]);
-    SetTextSourcePointer(2, (s32)D_800BB860 + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[3]]);
-    SetTextSourcePointer(3, (s32)D_800BB860 + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[5]]);
+    SetTextSourcePointer(0, (s32)gOvl23RecordMessageText + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[0]]);
+    SetTextSourcePointer(1, (s32)gOvl23RecordMessageText + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[1]]);
+    SetTextSourcePointer(2, (s32)gOvl23RecordMessageText + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[3]]);
+    SetTextSourcePointer(3, (s32)gOvl23RecordMessageText + gOvl23RecordMessageTextOffsets[Ovl23_D_800BF87C_header.unk16[5]]);
     RequestMessageWindow(4, 0x2D);
     if (GetMessageWindowStatus() == 2) {
         CloseMessageWindow();

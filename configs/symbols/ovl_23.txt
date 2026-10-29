@@ -53,6 +53,7 @@ Ovl23LoadActorSpriteBank = 0x800BB534; // type:func
 Ovl23QueueSoundBankLoads = 0x800BB758; // type:func
 Ovl23RaiseRecordByteRangeValue = 0x800BB7A0; // type:func
 Ovl23RaiseRecordHalfwordRangeValue = 0x800BB800; // type:func
+gOvl23RecordMessageText = 0x800BB860; // size:0x184
 gOvl23RecordRunSubphases = 0x800BB9E4; // size:0x14
 gOvl23RecordRunStages = 0x800BB9F8; // size:0x1c
 gOvl23RecordMessageTextOffsets = 0x800BBA14; // size:0x28

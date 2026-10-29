@@ -2871,7 +2871,8 @@ extern s16 D_800BFB0E;
 
 /* 800B8644: Ovl23UpdateRecordStage4 indexes ten word offsets into the message text bytes at D_800BB860. */
 extern s32 gOvl23RecordMessageTextOffsets[10];
-extern u8 D_800BB860[];
+/* 800B8644: Ovl23UpdateRecordStage4 sets four text sources into this message text via the offsets. */
+extern u8 gOvl23RecordMessageText[];
 
 /* 800B8354: Ovl23InitActorRecords copies six u16 pairs into actor record +0x70/+0x72 fields. */
 extern u16 gOvl23ActorScreenOffsetPairs[12];
