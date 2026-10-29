@@ -5011,8 +5011,8 @@ extern u8 gOvl17RecordRollThresholds[];
 /* ovl_17_func_800B8470 increments this byte and compares its signed value to 30. */
 extern s8 gOvl17BackdropScrollTick;
 
-/* 800B80B0 loads this signed halfword and uses -1 as its inactive value. */
-extern s16 D_800BDB10;
+/* 800B80B0: Ovl17FinishRecordSceneExit stops this sound-effect voice when it is not -1. */
+extern s16 gOvl17SoundEffectVoice;
 /* 800B80B0 reads mode at +0xE614 and updates words at +0xC/+0x448C. */
 typedef struct {
     u8 pad_0[0xC];

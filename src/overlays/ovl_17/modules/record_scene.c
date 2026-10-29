@@ -143,8 +143,8 @@ void Ovl17FinishRecordSceneExit(void) {
         var_s0++;
     }
     if (var_s0 == 2) {
-        if (D_800BDB10 != -1) {
-            StopSoundEffectVoice((s32) D_800BDB10);
+        if (gOvl17SoundEffectVoice != -1) {
+            StopSoundEffectVoice((s32) gOvl17SoundEffectVoice);
         }
         StopSoundSequence(0);
         RewindSoundLoadSlots(2, 0);

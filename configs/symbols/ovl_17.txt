@@ -87,4 +87,5 @@ gOvl17AnimatedRecordBase = 0x800BD870; // size:0xa0
 gOvl17DisplaySpriteSource = 0x800BDA74; // size:0x30
 gOvl17SharedBankSpriteSource = 0x800BDAA4; // size:0x30
 gOvl17ThresholdIndicatorSprite = 0x800BDAD4; // size:0x30
+gOvl17SoundEffectVoice = 0x800BDB10; // size:0x2
 gOvl17SceneSpriteSource = 0x800BDDF8; // size:0x30

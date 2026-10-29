@@ -113,3 +113,5 @@ gOvl17RecordPanelLabelText = 0x800BB482; // type:data size:0x2
 gOvl17RecordColumnLabelText = 0x800BB49A; // type:data size:0x2
 gOvl17RecordRowLabelText = 0x800BB6EC; // type:data size:0xC
 gOvl17NumberTextBuffer = 0x800BD738; // type:data size:0x14
+// Ovl17FinishRecordSceneExit stops this sound-effect voice when it is not -1.
+gOvl17SoundEffectVoice = 0x800BDB10; // type:data size:0x2
