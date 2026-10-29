@@ -960,7 +960,7 @@ extern char Ovl31_D_800B7F54[18] __asm__("D_800B7F54");
 /* ovl_31 rodata: NUL-terminated new FARM1 memory-card filename. */
 extern char gOvl31NewFarm1FileName[18];
 /* ovl_31 rodata: NUL-terminated old FARM2 memory-card filename. */
-extern char D_800B7F7C[18];
+extern char gOvl31OldFarm2FileName[18];
 /* ovl_31 rodata: NUL-terminated new FARM2 memory-card filename. */
 extern char D_800B7F90[18];
 /* ovl_31 rodata: NUL-terminated old FARMP memory-card filename. */

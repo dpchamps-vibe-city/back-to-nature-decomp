@@ -22,3 +22,5 @@ gOvl31OldFarm0FileName = 0x800B7F2C; // type:data size:0x12
 gOvl31NewFarm0FileName = 0x800B7F40; // type:data size:0x12
 // New FARM1 memory-card filename used by the legacy rename path.
 gOvl31NewFarm1FileName = 0x800B7F68; // type:data size:0x12
+// Old FARM2 memory-card filename used by the legacy rename path.
+gOvl31OldFarm2FileName = 0x800B7F7C; // type:data size:0x12
