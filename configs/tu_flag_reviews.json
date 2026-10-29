@@ -26,6 +26,30 @@
       "owner": "exe:0x80014494",
       "flags": "-fno-cse-skip-blocks",
       "evidence": "plans/flag-review-report.md#complete-pad-tu-review"
+    },
+    {
+      "sourcePath": "src/overlays/ovl_11/modules/quantity_editor.c",
+      "container": "ovl_11",
+      "members": [
+        "ovl_11:0x80103770",
+        "ovl_11:0x801037DC",
+        "ovl_11:0x801037EC",
+        "ovl_11:0x80103830",
+        "ovl_11:0x801038E4",
+        "ovl_11:0x80103964",
+        "ovl_11:0x80103B24",
+        "ovl_11:0x80103C00",
+        "ovl_11:0x80103D44",
+        "ovl_11:0x80103EB8",
+        "ovl_11:0x80103F8C",
+        "ovl_11:0x801040A8",
+        "ovl_11:0x80104148",
+        "ovl_11:0x80104394",
+        "ovl_11:0x80104418"
+      ],
+      "owner": "ovl_11:0x80103B24",
+      "flags": "-fno-cse-skip-blocks",
+      "evidence": "plans/quantity-editor-tu-review.md#complete-quantity-editor-tu-review"
     }
   ]
 }

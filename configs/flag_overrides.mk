@@ -128,11 +128,12 @@ CC1FLAGS_modules__pad := -fno-cse-skip-blocks
 # read-modify-write arms on the same work-area field, including a jump after
 # the positive store and a delayed a2=a3 pointer copy. Baseline CSE folds
 # these arms into one store (49 instructions); -fno-cse-skip-blocks retains
-# them and produces all 55 original words from clean C. The flagProbe matrix
-# for the matched source has a single dominant column (55/55 versus baseline
-# 10/55); matched ovl_11_func_80104394 and ovl_11_func_801037EC remain exact
-# under this flag, so there is no contrary witness in the suspected TU group.
-CC1FLAGS_ovl_11_func_80103B24 := -fno-cse-skip-blocks
+# them and produces all 55 original words from clean C. The complete fifteen-
+# member quantity-editor source is 14/15 exact at baseline and 15/15 with
+# this setting after retaining the renderer's upper work-area base. Scope and
+# original exception identity: configs/tu_flag_reviews.json; evidence:
+# plans/quantity-editor-tu-review.md#complete-quantity-editor-tu-review.
+CC1FLAGS_overlays__ovl_11__modules__quantity_editor := -fno-cse-skip-blocks
 
 # ovl_11_func_80104EC8: repeated full D_8006C838 address materializations
 # after actor/date guard diamonds (e.g. 0x80105260 and 0x80105674).

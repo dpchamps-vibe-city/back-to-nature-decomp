@@ -5,6 +5,7 @@
  * Membership and evidence-limited boundaries: notes/file-groupings.md. */
 
 #include "common.h"
+#include "ovl11_quantity_editor.h"
 #include "game_types.h"
 #include "ovl11_calendar_panel.h"
 #include "ovl11_item_transfer_menu.h"
@@ -20,7 +21,6 @@
 #include "psyq/libgte.h"
 #include "ui_sprites.h"
 
-void ovl_11_func_801038E4(void);
 
 void Ovl11UpdateMenuFrame(void) {
     StepUiSpriteFourFramePhase(0);
@@ -32,7 +32,7 @@ void Ovl11UpdateMenuFrame(void) {
     Ovl11ServiceSelectionMode();
     Ovl11ServiceMenuChoice();
     Ovl11UpdateStatusPages();
-    ovl_11_func_801038E4();
+    Ovl11UpdateQuantityEditor();
     Ovl11UpdateSelectionPanel();
     Ovl11UpdateCounterChoice();
 }

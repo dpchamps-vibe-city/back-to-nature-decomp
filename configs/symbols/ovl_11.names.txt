@@ -1,5 +1,22 @@
 // Semantic labels within ovl_11 only; applied after independent boundary recovery.
 
+// Complete six-row quantity editor; helpers retain their original linkage.
+Ovl11IsSelectedQuantitySumZero = 0x80103770; // type:func
+Ovl11IsQuantityEditorInactive = 0x801037DC; // type:func
+Ovl11ResetQuantityEditor = 0x801037EC; // type:func
+Ovl11BeginQuantityEditor = 0x80103830; // type:func
+Ovl11UpdateQuantityEditor = 0x801038E4; // type:func
+Ovl11ServiceQuantityEditor = 0x80103964; // type:func
+Ovl11CommitQuantityEditor = 0x80103B24; // type:func
+Ovl11HandleQuantityEditInput = 0x80103C00; // type:func
+Ovl11HandleQuantitySelectionInput = 0x80103D44; // type:func
+Ovl11DrawQuantityEditorBalance = 0x80103EB8; // type:func
+Ovl11DrawQuantityEditorRows = 0x80103F8C; // type:func
+Ovl11DrawQuantityEditorCursor = 0x801040A8; // type:func
+Ovl11DrawQuantityEditorRow = 0x80104148; // type:func
+Ovl11AreEditedQuantitiesUnchanged = 0x80104394; // type:func
+Ovl11AdjustEditedQuantity = 0x80104418; // type:func
+
 // Unreferenced leaves. Names describe only the shipped body, not a guessed role.
 Ovl11UnusedReturnMinusOne = 0x800BDCE0; // type:func
 Ovl11UnusedReturnZeroA = 0x800BF4AC; // type:func

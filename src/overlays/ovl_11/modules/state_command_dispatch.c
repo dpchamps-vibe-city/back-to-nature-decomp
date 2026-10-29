@@ -13,6 +13,7 @@
 
 #include "common.h"
 #include "ovl11_state_command_dispatch.h"
+#include "ovl11_quantity_editor.h"
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -40,9 +41,6 @@
 #include "selected_threshold_interaction.h"
 #include "ovl11_condition_date_records.h"
 
-void ovl_11_func_80103830 (void);
-s32 ovl_11_func_801037DC (void);
-s32 ovl_11_func_80103770 (void);
 void ClearActiveOrderingTables (void);
 
 s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
@@ -289,10 +287,10 @@ block_118:
             goto block_204;
         case 2:
             if (arg2 != 0) {
-                ovl_11_func_80103830();
+                Ovl11BeginQuantityEditor();
                 return 1;
             }
-            return ovl_11_func_801037DC();
+            return Ovl11IsQuantityEditorInactive();
         case 3:
             if (arg2 != 0) {
                 Ovl11BeginInteraction(0x1A);
@@ -300,7 +298,7 @@ block_118:
             }
             return Ovl11IsThresholdInteractionInactive();
         case 4:
-            return ovl_11_func_80103770();
+            return Ovl11IsSelectedQuantitySumZero();
         case 5:
             switch (arg2) {
             case 0:

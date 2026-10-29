@@ -4356,7 +4356,63 @@ not infer this overlay's data owner. No generated file was edited by hand.
 
 ---
 
-## `ovl_11` D_80127428 shared-state cluster — 0x801037DC–0x801040A8 (confidence: medium)
+## `ovl_11` quantity editor — 0x80103770–0x801044E4 exclusive (confidence: high protocol cohesion; medium original file boundaries)
+
+**Reconstructed the complete fifteen-member group as
+`src/overlays/ovl_11/modules/quantity_editor.c`.** The older accounting and
+renderer blockers below are superseded by the integrated whole-unit source,
+not erased from the experimental history. No per-function slice remains.
+
+The missing source operation was in the row renderer: retain the work-area
++0x8000 base across bank selection and read the existing 14-byte card records
+through it. `Ovl11CardUpperView` describes selector@6514 and records@6516
+relative to that real base. It adds neither storage nor accesses. The shared
+snapshot/commit view and all global declarations live in the override header;
+redundant C-local global declarations and duplicate view types were removed.
+
+The final, named complete-source production controls are in
+`build/quantity-editor-review/final-matrix.json`: baseline is 14/15 exact,
+with only `Ovl11CommitQuantityEditor` (80103B24) differing; the existing
+`-fno-cse-skip-blocks` setting is 15/15 exact, with empty diagnostics in both
+columns. The former contrary renderer now matches under this setting. This
+is an evidence-reviewed whole-TU migration, not a new option or a claim to
+know the original build command; neutral neighbors are not affirmative flag
+fingerprints. Exact membership, unchanged option and original owner identity
+are bound in `configs/tu_flag_reviews.json`; the durable review is
+`plans/quantity-editor-tu-review.md`. The checked fold independently repeated
+the baseline control and proved all fifteen members and the linked overlay.
+
+The four outward services are declared in `include/ovl11_quantity_editor.h`:
+sum-zero test, inactive test, begin/snapshot and per-frame update. The state
+command dispatcher uses the first three; the menu-frame coordinator uses the
+fourth. The remaining helpers form the dialog's selection/edit/message/render
+call graph; their original linkage is retained. Named original entries:
+
+- 80103770 `Ovl11IsSelectedQuantitySumZero`
+- 801037DC `Ovl11IsQuantityEditorInactive`
+- 801037EC `Ovl11ResetQuantityEditor`
+- 80103830 `Ovl11BeginQuantityEditor`
+- 801038E4 `Ovl11UpdateQuantityEditor`
+- 80103964 `Ovl11ServiceQuantityEditor`
+- 80103B24 `Ovl11CommitQuantityEditor`
+- 80103C00 `Ovl11HandleQuantityEditInput`
+- 80103D44 `Ovl11HandleQuantitySelectionInput`
+- 80103EB8 `Ovl11DrawQuantityEditorBalance`
+- 80103F8C `Ovl11DrawQuantityEditorRows`
+- 801040A8 `Ovl11DrawQuantityEditorCursor`
+- 80104148 `Ovl11DrawQuantityEditorRow`
+- 80104394 `Ovl11AreEditedQuantitiesUnchanged`
+- 80104418 `Ovl11AdjustEditedQuantity`
+
+Membership rests on shared private state D_80127428/2C, the six edited
+halfwords, accumulator and text scratch, inverse snapshot/commit operations,
+internal helper calls and uninterrupted link order. The preceding
+`selection_menu_state` is a separate 49-entry installed-mode lifecycle; the
+following `area_scene_load` is an area/resource initialization lifecycle.
+Those responsibilities and their separate call protocols bound this
+reconstruction. The common large work area and address adjacency alone do
+not prove original source-file cuts; that historical boundary remains less
+certain than the dialog's internal cohesion.
 
 Follow-up baseline accounting experiments (not integrated):
 `build/tuFinal/dialog-p-result/report.json` records staged residual

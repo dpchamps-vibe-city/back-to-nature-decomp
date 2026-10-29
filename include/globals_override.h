@@ -5538,6 +5538,19 @@ typedef struct {
 /* 801164F8 alone indexes five ratio rows by four level columns; message IDs. */
 extern u16 gOvl11OfferConditionMessages[5][4];
 
+/* The quantity editor snapshots/commits six final-halfword fields at work-area
+ * +0xE522, with selector@E514, available value@5224 and balance@49C8. */
+typedef struct {
+    char pad_000[0x49C8];
+    s32 field_49C8;
+    char pad_49CC[0x5224 - 0x49CC];
+    s32 field_5224;
+    char pad_5228[0xE514 - 0x5228];
+    s16 unkE514;
+    s16 pad_516[6];
+    s16 rows[1][6][7];
+} Ovl11QuantityWorkView;
+
 /* ovl_11 farm-state globals. The six halfwords at D_8012CF10 are signed in
  * the reset and comparison functions; ovl_11_func_80103B24 reads their raw
  * bits as unsigned halfwords. All three globals are addressed absolutely. */
@@ -5579,6 +5592,13 @@ typedef struct {
     s16 selector;
     s16 cards[3][6][7];
 } Ovl11CardView;
+/* 80104148 shares a cached work-area +0x8000 base across bank selection:
+ * selector@+0x6514 and six 14-byte records per bank at +0x6516. */
+typedef struct {
+    u8 pad_0[0x6514];
+    s16 selector;
+    s16 cards[3][6][7];
+} Ovl11CardUpperView;
 
 /* The sprite-rotation unit resets and walks ten 0x18-byte state records. */
 struct Ovl11RotationState;
