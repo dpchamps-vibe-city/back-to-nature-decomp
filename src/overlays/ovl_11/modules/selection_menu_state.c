@@ -475,8 +475,8 @@ void Ovl11DrawSelectionRecordSlots(u8 arg0, u8 arg1) {
     var_s5 = 0x14;
     var_s7 = 1;
     DrawMenuPanel(temp_s0, 1, 0x16, 0x5A, 0x10E, 0x4A);
-    DrawTextLine(temp_s3, (s32) ((void *) ((u8 *) &D_8005396A + *gTextBankOffsets)), 0x21, 0x20);
-    DrawTextLine(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_8005396A + 0x12)) + *gTextBankOffsets)), 0x21, 0x6A);
+    DrawTextLine(temp_s3, (s32) ((void *) ((u8 *) &gSelectionUtensilsHeadingsTextAnchor + *gTextBankOffsets)), 0x21, 0x20);
+    DrawTextLine(temp_s3, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &gSelectionUtensilsHeadingsTextAnchor + 0x12)) + *gTextBankOffsets)), 0x21, 0x6A);
     var_s2 = gOvl11SelectionFlagSlotIds;
     for (; var_s6 < 7; var_s6++) {
         if (*(u16 *)(temp_fp + 4) & var_s7) {
@@ -600,8 +600,8 @@ void Ovl11ServiceSelectionFlagSlots(void) {
     text = ui + 0x70;
     DrawMenuPanel(panels, 1, 0x16, 0x10, 0x10E, 0x4A);
     DrawMenuPanel(panels, 1, 0x16, 0x5A, 0x10E, 0x4A);
-    DrawTextLine(text, (s32)(D_8005396A + 0x28 + gTextBankOffsets[0]), 0x21, 0x20);
-    DrawTextLine(text, (s32)(D_8005396A + gTextBankOffsets[0]), 0x21, 0x6A);
+    DrawTextLine(text, (s32)(gSelectionUtensilsHeadingsTextAnchor + 0x28 + gTextBankOffsets[0]), 0x21, 0x20);
+    DrawTextLine(text, (s32)(gSelectionUtensilsHeadingsTextAnchor + gTextBankOffsets[0]), 0x21, 0x6A);
     Ovl11DrawSelectionFlagSlots();
     Ovl11DrawSelectionWorkItems();
     if (D_801273E4_state == 4) {
