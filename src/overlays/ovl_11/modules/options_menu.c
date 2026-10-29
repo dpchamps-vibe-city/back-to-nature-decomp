@@ -102,7 +102,7 @@ void Ovl11UpdateOptionsMenu(void) {
         gOvl11OptionsPageHandlers[(state >> 4) - 1]();
     } else {
         DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x64), 1, 0x64, 0x4A, 0x82, 0x22);
-        DrawTextLine(gActiveRenderContext->field_D8 + 0x60, (s32)(D_80053AE8 + gTextBankOffsets[0]), 0x70, 0x4E);
+        DrawTextLine(gActiveRenderContext->field_D8 + 0x60, (s32)(gOptionsConfigurationPromptTextAnchor + gTextBankOffsets[0]), 0x70, 0x4E);
         SetMessagePortraitEnabled(0);
         SetTextInputEnabled(0);
         RequestMessageWindow(3, 0x3B0);
