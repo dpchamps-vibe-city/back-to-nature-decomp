@@ -141,7 +141,7 @@ void Ovl11UpdateProgressTimers(void) {
             }
             SetGameFlag((u16) selectedFlag, 1U);
             if (((Ovl11ProgressState *)D_8006C838)->mode == 2) {
-                Ovl11ReadDefaultPosition(&D_80075A1C);
+                Ovl11ReadDefaultPosition(&gOvl11DefaultPositionWork);
             }
         }
     }

@@ -1490,8 +1490,9 @@ typedef struct {
 extern s16 gProgressPendingTimer;
 extern s16 gProgressRequest;
 
-/* 80111F88 passes this address to the matched s32-pointer callee 800CD0C0. */
-extern s32 D_80075A1C;
+/* 80111F88 passes this address to Ovl11ReadDefaultPosition (800CD0C0), which
+ * writes the X, 0, Z words of a default work position. */
+extern s32 gOvl11DefaultPositionWork;
 
 /* 80119470 reads signed words at +44F8 and +51C0 through the shared base. */
 struct Ovl11CallbackGateState {
