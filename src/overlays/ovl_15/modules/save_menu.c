@@ -453,7 +453,7 @@ void Ovl15StepCardWriteMenu(void) {
 
 void Ovl15CardWriteEnter(void) {
     DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14,
-                  gTextBankOffsets[0] + (s32)D_80052FC4);
+                  gTextBankOffsets[0] + (s32)gCardSearchingTextAnchor);
     Ovl15ResetSaveMenuState();
     gOvl15MenuState = 1;
 }
@@ -466,7 +466,7 @@ void Ovl15CardWritePollCards(void) {
 
     text = gActiveRenderContext->field_D8;
     DrawMenuPanelWithText((u32 *)(text + 0x18), text + 0x14,
-                 (s32) &D_80052FC4[gTextBankOffsets[0]]);
+                 (s32) &gCardSearchingTextAnchor[gTextBankOffsets[0]]);
     if (gOvl15MenuStateTimer >= 2) {
         for (i = 0; i < 2; i++) {
             states = &gOvl15CardStates[i];
@@ -520,7 +520,7 @@ void Ovl15CardWriteCheckSelectedCard(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &gCardSearchingTextAnchor[*gTextBankOffsets]);
     if (gOvl15MenuStateTimer >= 2) {
         switch (Ovl15ProbeCard(gOvl15SelectedCard)) {
         case 4:
@@ -580,7 +580,7 @@ void Ovl15CardWriteScanSlots(void) {
     s32 fileStatus;
 
     text = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) D_80052FC4);
+    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) gCardSearchingTextAnchor);
     cardStates = gOvl15CardStates;
     slotState = gOvl15SaveSlotStatus;
     for (slot = 0; slot < 3; slot++, slotState++) {
@@ -673,7 +673,7 @@ void Ovl15CardWriteCheckSlotCapacity(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14,
-                 (s32) &D_80052FC4[gTextBankOffsets[0]]);
+                 (s32) &gCardSearchingTextAnchor[gTextBankOffsets[0]]);
     if (gOvl15MenuStateTimer >= 2) {
         status = Ovl15ProbeCard(gOvl15SelectedCard);
         if (status == 1) {
@@ -1095,7 +1095,7 @@ void Ovl15CardReadEnter(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14,
-                  gTextBankOffsets[0] + (s32)D_80052FC4);
+                  gTextBankOffsets[0] + (s32)gCardSearchingTextAnchor);
     Ovl15ResetSaveMenuState();
     gOvl15MenuState = 1;
 }
@@ -1107,7 +1107,7 @@ void Ovl15CardReadPollCards(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &gCardSearchingTextAnchor[*gTextBankOffsets]);
     if (gOvl15MenuStateTimer >= 2) {
         for (var_s1 = 0; var_s1 < 2; var_s1++) {
             var_s0 = &gOvl15CardStates[var_s1];
@@ -1161,7 +1161,7 @@ void Ovl15CardReadCheckSelectedCard(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32) &gCardSearchingTextAnchor[*gTextBankOffsets]);
     if (gOvl15MenuStateTimer >= 2) {
         temp_v0 = Ovl15ProbeCard(gOvl15SelectedCard) - 4;
         switch (temp_v0) {
@@ -1225,7 +1225,7 @@ void Ovl15CardReadScanSlots(void) {
     s32 fileStatus;
 
     text = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) D_80052FC4);
+    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) gCardSearchingTextAnchor);
     cardStates = gOvl15CardStates;
     for (slot = 0; slot < 3; slot++) {
         gOvl15SaveSlotStatus[slot] = 2;
@@ -1626,7 +1626,7 @@ void Ovl15CardTransferEnter(void) {
 
     temp_a1 = gActiveRenderContext->field_D8;
     DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14,
-                  gTextBankOffsets[0] + (s32)D_80052FC4);
+                  gTextBankOffsets[0] + (s32)gCardSearchingTextAnchor);
     Ovl15ResetSaveMenuState();
     gOvl15MenuState = 1;
     Ovl15InitializeSlotSelection();
@@ -1639,7 +1639,7 @@ void Ovl15CardTransferPollCards(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_80052FC4[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &gCardSearchingTextAnchor[*gTextBankOffsets]);
     if (gOvl15MenuStateTimer >= 2) {
         for (var_s1 = 0; var_s1 < 2; var_s1++) {
             var_s0 = &gOvl15CardStates[var_s1];
@@ -1692,7 +1692,7 @@ void Ovl15CardTransferCheckSelectedCard(void) {
     s32 text;
 
     text = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, (s32) &D_80052FC4[gTextBankOffsets[0]]);
+    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, (s32) &gCardSearchingTextAnchor[gTextBankOffsets[0]]);
     if (gOvl15MenuStateTimer >= 2) {
         switch (Ovl15ProbeCard(gOvl15SelectedCard)) {
         case 4:
@@ -1749,7 +1749,7 @@ void Ovl15CardTransferScanSlots(void) {
 
     slot = 0;
     text = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) D_80052FC4);
+    DrawMenuPanelWithText((u32 *) (text + 0x18), text + 0x14, gTextBankOffsets[0] + (s32) gCardSearchingTextAnchor);
     cardStates = gOvl15CardStates;
     for (; slot < 3; slot++) {
         gOvl15SaveSlotStatus[slot] = 2;

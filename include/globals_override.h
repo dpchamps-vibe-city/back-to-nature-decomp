@@ -6166,8 +6166,8 @@ extern u8 gCardFormattingProgressTextAnchor[];
 
 /* 8012F3FC/801326E8: card write and transfer summaries draw bank-adjusted OK to overwrite / this diary. */
 extern u8 gCardOverwriteConfirmTextAnchor[];
-/* ovl_15_func_8012F158 adds D_80054BBC[0] to this text-updater address. */
-extern u8 D_80052FC4[];
+/* 8012F158 and the shared card scan prologue draw bank-adjusted Searching the MEMORY CARD. */
+extern u8 gCardSearchingTextAnchor[];
 /* ovl_15:801315B0 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_80052FFA[];
 /* ovl_15:80131778 adds the text-bank byte offset before drawing this prompt. */
