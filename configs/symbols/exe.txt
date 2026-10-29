@@ -939,6 +939,8 @@ gCardSelectSlotPromptTextAnchor = 0x80053530; // size:0x36
 gCardSelectDiaryLoadTextAnchor = 0x80053596; // size:0x30
 // Ovl15CardWriteChooseSaveSlot draws this bank-adjusted prompt; U16 codes decode Select a diary to save.
 gCardSelectDiarySaveTextAnchor = 0x80053566; // size:0x30
+// Ovl15CardWriteFormatSelectedCard draws this bank-adjusted progress message; U16 codes decode Formatting the MEMORY CARD in slot <n>.
+gCardFormattingProgressTextAnchor = 0x8005316C; // size:0x4C
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

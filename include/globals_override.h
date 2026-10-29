@@ -6161,8 +6161,8 @@ extern s16 gOvl15FormatPromptStep;
 extern u8 gCardSelectDiaryLoadTextAnchor[];
 /* 8012F300: Ovl15CardWriteChooseSaveSlot draws bank-adjusted Select a diary to save. */
 extern u8 gCardSelectDiarySaveTextAnchor[];
-/* ovl_15_func_8012F7D4 adds D_80054BBC[0] bytes to this text-updater address. */
-extern u8 D_8005316C[];
+/* 8012F7D4: Ovl15CardWriteFormatSelectedCard draws bank-adjusted Formatting the MEMORY CARD in slot <n>. */
+extern u8 gCardFormattingProgressTextAnchor[];
 
 /* 8012F3FC/801326E8: card write and transfer summaries draw bank-adjusted OK to overwrite / this diary. */
 extern u8 gCardOverwriteConfirmTextAnchor[];

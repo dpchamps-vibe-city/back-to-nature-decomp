@@ -767,7 +767,7 @@ void Ovl15CardWriteFormatSelectedCard(void) {
     s32 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32)(D_8005316C + gTextBankOffsets[0]));
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32)(gCardFormattingProgressTextAnchor + gTextBankOffsets[0]));
     if (gOvl15MenuStateTimer >= 2) {
         temp_v0 = Ovl15FormatCard(gOvl15SelectedCard);
         if (temp_v0 == 0) {
