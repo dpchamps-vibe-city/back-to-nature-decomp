@@ -4716,8 +4716,8 @@ extern u8 D_80053D6A[];
 
 /* 800FD3CC: Ovl11DrawStatusSevenRecordRow copies bank-adjusted Days left after a count. */
 extern u16 gStatusDaysLeftTextAnchor[];
-/* ovl_11_func_800FD3CC adds D_80054BBC[0] and passes this text to func_80017B3C. */
-extern u16 D_8005362C[];
+/* 800FD3CC: Ovl11DrawStatusSevenRecordRow draws bank-adjusted Free when the count is unavailable. */
+extern u16 gStatusFreeTextAnchor[];
 
 /* ovl_11_func_800FC358 reads each display counter with lh. */
 extern s16 gOvl11StatusScore;

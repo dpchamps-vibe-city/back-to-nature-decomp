@@ -741,7 +741,7 @@ void Ovl11DrawStatusSevenRecordRow(s16 arg0, s16 arg1) {
         var_a1 = &gOvl11NumberTextScratch;
     } else {
         var_a3 = arg1 + 4;
-        var_a1 = (s16 *) ((u8 *) &D_8005362C + *gTextBankOffsets);
+        var_a1 = (s16 *) ((u8 *) &gStatusFreeTextAnchor + *gTextBankOffsets);
     }
     DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32) var_a1, 0xC6, (s16) var_a3);
 }
