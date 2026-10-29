@@ -736,11 +736,11 @@ void Ovl11ServiceSelectionAggregateFlags(void) {
         }
     }
     text = (s32 *)(gActiveRenderContext->field_D8 + 0x58);
-    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + gTextBankOffsets[0]), 0xB1, 0x5A, ((D_801273EE_flags >> 7) ^ 1) & 1);
-    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0xC + gTextBankOffsets[0]), 0xB1, 0x68, ((D_801273EE_flags >> 8) ^ 1) & 1);
-    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0x16 + gTextBankOffsets[0]), 0xB1, 0x76, ((D_801273EE_flags >> 9) ^ 1) & 1);
-    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0x26 + gTextBankOffsets[0]), 0xB1, 0x84, ((D_801273EE_flags >> 10) ^ 1) & 1);
-    DrawTextLineSemiTransparent(text, (u16 *)(D_8005399A + 0x38 + gTextBankOffsets[0]), 0xB1, 0x92, ((D_801273EE_flags >> 11) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(gSelectionIngredientChoicesTextAnchor + gTextBankOffsets[0]), 0xB1, 0x5A, ((D_801273EE_flags >> 7) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(gSelectionIngredientChoicesTextAnchor + 0xC + gTextBankOffsets[0]), 0xB1, 0x68, ((D_801273EE_flags >> 8) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(gSelectionIngredientChoicesTextAnchor + 0x16 + gTextBankOffsets[0]), 0xB1, 0x76, ((D_801273EE_flags >> 9) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(gSelectionIngredientChoicesTextAnchor + 0x26 + gTextBankOffsets[0]), 0xB1, 0x84, ((D_801273EE_flags >> 10) ^ 1) & 1);
+    DrawTextLineSemiTransparent(text, (u16 *)(gSelectionIngredientChoicesTextAnchor + 0x38 + gTextBankOffsets[0]), 0xB1, 0x92, ((D_801273EE_flags >> 11) ^ 1) & 1);
 }
 
 void Ovl11DrawSelectionFlagSlots(void) {

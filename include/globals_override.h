@@ -7347,8 +7347,8 @@ extern s16 D_801273F0;
 extern s8 D_801273E9_selection __asm__("D_801273E9");
 /* 801014F8 stores the state byte to 3 on cancellation. */
 extern u8 D_801273E4_state __asm__("gOvl11SelectionModePhase");
-/* 801014F8 adds the text-bank byte offset to this base and +0xC/0x16/0x26/0x38. */
-extern u8 D_8005399A[];
+/* 801014F8: Ovl11ServiceSelectionAggregateFlags draws bank-adjusted ingredient choices at base/0xC/0x16/0x26/0x38. */
+extern u8 gSelectionIngredientChoicesTextAnchor[];
 /* 80101B9C adds D_80054BBC[0] to this text base and its +0x16/+0x28/+0x36 labels. */
 extern u8 D_800539E8[];
 

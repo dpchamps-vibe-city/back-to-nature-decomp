@@ -925,6 +925,8 @@ gStatusRebuildingTextAnchor = 0x8005378C; // size:0x16
 gStatusMaximumTextAnchor = 0x800537A2; // size:0x10
 // Selection-menu headings drawn bank-adjusted at this base, +0x12 and +0x28; U16 codes decode Utensils, Ingredient and Use.
 gSelectionUtensilsHeadingsTextAnchor = 0x8005396A; // size:0x30
+// Ovl11ServiceSelectionAggregateFlags draws these bank-adjusted ingredient labels at base/0xC/0x16/0x26/0x38.
+gSelectionIngredientChoicesTextAnchor = 0x8005399A; // size:0x4E
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.
