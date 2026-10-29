@@ -4714,8 +4714,8 @@ extern void (*gOvl11OptionsClockSetters[2])(void);
 extern u8 D_80053CB8[];
 extern u8 D_80053D6A[];
 
-/* ovl_11_func_800FD3CC adds D_80054BBC[0] and copies lhu units to 0xFFFF. */
-extern u16 D_80053618[];
+/* 800FD3CC: Ovl11DrawStatusSevenRecordRow copies bank-adjusted Days left after a count. */
+extern u16 gStatusDaysLeftTextAnchor[];
 /* ovl_11_func_800FD3CC adds D_80054BBC[0] and passes this text to func_80017B3C. */
 extern u16 D_8005362C[];
 

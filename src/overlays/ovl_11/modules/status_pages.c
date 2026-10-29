@@ -728,7 +728,7 @@ void Ovl11DrawStatusSevenRecordRow(s16 arg0, s16 arg1) {
         }
     }
     if (var_a2 >= 0) {
-        var_s1 = (u16 *) ((u8 *) &D_80053618 + *gTextBankOffsets);
+        var_s1 = (u16 *) ((u8 *) &gStatusDaysLeftTextAnchor + *gTextBankOffsets);
         DrawSpriteFrameRects(temp_s4, (s32) gOvl11StatusIndicatorSpriteSource, var_a2 & 0xFF, 0, 0x96, (s16) (s32) arg1);
         var_a1 = WriteDecimalText((s32) *(u16 *) (temp_s2 + 0xB4), &gOvl11NumberTextScratch, 2);
         *var_a1 = 0xFFD;
