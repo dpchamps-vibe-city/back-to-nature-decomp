@@ -955,6 +955,8 @@ gCardSearchingTextAnchor = 0x80052FC4; // size:0x36
 gCardNoMemoryCardTextAnchor = 0x80052FFA; // size:0x70
 // Ovl15CardTransferPromptState05 and the write/read slot checks draw this bank-adjusted status; U16 codes decode There is no MEMORY CARD in MEMORY CARD slot <n>.
 gCardSlotEmptyTextAnchor = 0x8005306A; // size:0x5E
+// Ovl15CardTransferPromptState06 and the write/read damage checks draw this bank-adjusted status; U16 codes decode The MEMORY CARD in slot <n> is damaged.
+gCardDamagedTextAnchor = 0x800530C8; // size:0x4C
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

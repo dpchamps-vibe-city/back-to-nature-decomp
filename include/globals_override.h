@@ -6172,8 +6172,8 @@ extern u8 gCardSearchingTextAnchor[];
 extern u8 gCardNoMemoryCardTextAnchor[];
 /* 80131778: Ovl15CardTransferPromptState05 and the write/read slot checks draw bank-adjusted There is no MEMORY CARD in MEMORY CARD slot <n>. */
 extern u8 gCardSlotEmptyTextAnchor[];
-/* ovl_15:801317E8 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_800530C8[];
+/* 801317E8: Ovl15CardTransferPromptState06 and the write/read damage checks draw bank-adjusted The MEMORY CARD in slot <n> is damaged. */
+extern u8 gCardDamagedTextAnchor[];
 /* ovl_15:80131A34 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_800532FE[];
 /* ovl_15:80131B5C adds the text-bank byte offset before drawing this prompt. */
