@@ -7616,8 +7616,8 @@ extern u8 gCardNotFormattedTextAnchor[];
 extern u8 gCardFormattingFailedTextAnchor[];
 /* 8012FA00: Ovl15CardWritePromptState17 draws bank-adjusted Cannot save / Not enough free space. */
 extern u8 gCardNotEnoughSpaceTextAnchor[];
-/* 8012FA70 relocates the remaining write-menu prompt. */
-extern u8 D_80053294[];
+/* 8012FA70: Ovl15CardWritePromptState18 draws bank-adjusted Cannot save / No free space. */
+extern u8 gCardNoFreeSpaceTextAnchor[];
 /* 80130048: Ovl15CardWriteConfirmExit draws bank-adjusted Aborting save / Is that OK. */
 extern u8 gCardSaveAbortConfirmTextAnchor[];
 /* 8013010C: Ovl15CardWriteFinish draws bank-adjusted Data has been saved. */

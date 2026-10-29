@@ -947,6 +947,8 @@ gCardNotFormattedTextAnchor = 0x80053114; // size:0x58
 gCardFormattingFailedTextAnchor = 0x800531B8; // size:0x62
 // Ovl15CardWritePromptState17 draws this bank-adjusted status; U16 codes decode Cannot save / Not enough free space on MEMORY CARD in slot <n>.
 gCardNotEnoughSpaceTextAnchor = 0x8005321A; // size:0x7A
+// Ovl15CardWritePromptState18 draws this bank-adjusted status; U16 codes decode Cannot save / No free space on MEMORY CARD in slot <n>.
+gCardNoFreeSpaceTextAnchor = 0x80053294; // size:0x6A
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

@@ -845,7 +845,7 @@ s32 Ovl15CardWritePromptState18(void) {
     s32 ret;
 
     p = &gOvl15MenuState;
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_80053294);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardNoFreeSpaceTextAnchor);
     ret = Ovl15WaitForMenuButton(0x12, 0);
     *p = ret;
     if (gOvl15MenuStateTimer >= 0x5B) {
