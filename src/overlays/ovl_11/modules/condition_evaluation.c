@@ -472,7 +472,7 @@ s32 Ovl11ConditionFlagPairMatches(s32 arg0) {
 }
 
 s32 Ovl11ConditionObjectStateMatches(s32 arg0) {
-    return D_80071A22 == (arg0 & 0xFF);
+    return gOvl11ConditionObjectState == (arg0 & 0xFF);
 }
 
 s32 Ovl11ConditionObjectStateMatches(s32 arg0);

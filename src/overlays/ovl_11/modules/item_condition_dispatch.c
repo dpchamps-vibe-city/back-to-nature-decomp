@@ -1084,7 +1084,7 @@ date_ready:
 
         return var_v0;
     case 0x74:
-        temp_v1_5 = D_80071A22 - 3;
+        temp_v1_5 = gOvl11ConditionObjectState - 3;
         switch (temp_v1_5) {
         case 0: var_a0_5 = 0x21; break;
         case 4: var_a0_5 = 0x22; break;

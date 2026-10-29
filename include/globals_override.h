@@ -7946,7 +7946,8 @@ typedef struct {
 extern u16 D_80051F26[];
 /* Signed declarations are witnessed by matched 800B85F4 (ovl_19) and 800F19C8 (ovl_11). */
 extern s16 gCalendarYear;
-extern s16 D_80071A22;
+/* 800F19C8 compares this condition object-state halfword; 800E7660 writes -1 on a match. */
+extern s16 gOvl11ConditionObjectState;
 /* 80104EC8, 800CD0C0 and 800EC490 read this unsigned state halfword. */
 /* Default area selection's primary variant50 at work +44CE; default-position
  * selection also uses it to index pairs. EC490 exports the raw u16. */
