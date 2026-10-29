@@ -4682,8 +4682,8 @@ struct Ovl11PairedValues {
 extern u8 gStatusHelpTextAnchor[];
 /* 80100B50 adds D_80054BBC[0] bytes to this text base and its +0x12 successor for func_80017B3C. */
 extern u8 D_8005396A[];
-/* 800FEFEC adds D_80054BBC[0] bytes to this text base before func_80017B3C. */
-extern u8 D_80053B22[];
+/* 800FEFEC: Ovl11UpdateOptionsListPage draws bank-adjusted How to operate / control rows. */
+extern u8 gOptionsControlsPageTextAnchor[];
 /* 800FED0C: Ovl11UpdateOptionsMenu draws bank-adjusted How to operate / Configuration. */
 extern u8 gOptionsConfigurationPromptTextAnchor[];
 /* ovl_11:8012CEE8 — twelve packed settings bytes saved on menu open

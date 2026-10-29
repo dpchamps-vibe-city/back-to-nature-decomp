@@ -141,7 +141,7 @@ void Ovl11UpdateOptionsListPage(void) {
 
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x14, 0x37, 0x118, 0x69);
     SetTextSpacing(0, 2);
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32)((void *)((u8 *)&D_80053B22 + *gTextBankOffsets)), 0x20, 0x3B);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32)((void *)((u8 *)&gOptionsControlsPageTextAnchor + *gTextBankOffsets)), 0x20, 0x3B);
     SetTextSpacing(0, 0);
     if (gOvl11OptionsMenuState == 0x10 && IsMessageWindowStatusFinal() == 1) {
         if (*(s32 *)((u8 *)gPad0Input + 0) & 0xA000) {
