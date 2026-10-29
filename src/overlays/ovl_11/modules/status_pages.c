@@ -1102,7 +1102,7 @@ void Ovl11DrawStatusLevelPercent(s32 input_level, u32 input_value, s32 input_x, 
     arg3 = input_y;
     temp_t0 = arg1 & 0xFFFF;
     if (arg0 < 0) {
-        var_a1 = (s16 *) ((u8 *) D_8005378C + *gTextBankOffsets);
+        var_a1 = (s16 *) ((u8 *) gStatusRebuildingTextAnchor + *gTextBankOffsets);
     } else {
         var_a3 = 1;
         if (arg0 == 5) {

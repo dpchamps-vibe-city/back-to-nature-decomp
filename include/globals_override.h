@@ -4125,11 +4125,9 @@ extern u8 D_800535E6[];
  * lui/%lo pair, the >8-byte incomplete-array form). */
 extern u8 D_800535D0[];
 
-/* D_8005378C / D_800537A2 - two data table bases in the PS-X EXE, each
- * indexed by D_80054BBC[0] and passed to func_80017B3C by
- * ovl_11_func_800FE3A0 when arg0 < 0 / arg0 == 5 respectively. Only
- * address-taken; absolute-addressed (split lui/%lo pair). */
-extern u8 D_8005378C[];
+/* 8005378C: Ovl11DrawStatusLevelPercent draws bank-adjusted Rebuilding for a negative level;
+ * D_800537A2 is the Maximum label for level 5. */
+extern u8 gStatusRebuildingTextAnchor[];
 extern u8 D_800537A2[];
 
 /* 80051D18: Ovl15UpdateTwoChoiceMenu draws bank-adjusted MEMORY CARD slot 1 / slot 2 labels. */
