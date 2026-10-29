@@ -55,6 +55,7 @@ Ovl23RaiseRecordByteRangeValue = 0x800BB7A0; // type:func
 Ovl23RaiseRecordHalfwordRangeValue = 0x800BB800; // type:func
 gOvl23RecordRunSubphases = 0x800BB9E4; // size:0x14
 gOvl23RecordRunStages = 0x800BB9F8; // size:0x1c
+gOvl23RecordMessageTextOffsets = 0x800BBA14; // size:0x28
 gOvl23RecordRunSetupStage = 0x800BBA3C; // size:0x1
 gOvl23RecordAnchorY = 0x800BBA40; // size:0xc
 gOvl23RecordYBounds = 0x800BBA4C; // size:0x18

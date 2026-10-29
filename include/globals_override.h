@@ -2868,8 +2868,8 @@ struct Ovl23Func800BB0C8Arg;
 extern struct Ovl23Func800BB0C8Arg D_800BFB08;
 extern s16 D_800BFB0E;
 
-/* 800B8644 indexes ten word offsets into the byte data at D_800BB860. */
-extern s32 D_800BBA14[10];
+/* 800B8644: Ovl23UpdateRecordStage4 indexes ten word offsets into the message text bytes at D_800BB860. */
+extern s32 gOvl23RecordMessageTextOffsets[10];
 extern u8 D_800BB860[];
 
 /* 800B8354 reads six u16 pairs at +0/+2 with four-byte stride. */

@@ -29,6 +29,8 @@ Ovl23ReturnDecisionRecordToAnchor = 0x800B9A00; // type:func
 gOvl23RecordRunSubphases = 0x800BB9E4; // type:data size:0x14
 gOvl23RecordRunStages = 0x800BB9F8; // type:data size:0x1C
 gOvl23RecordRunSetupStage = 0x800BBA3C; // type:data size:0x1
+// Stage 4 selects four of these ten word offsets by header halfwords; they index the message text bytes at D_800BB860.
+gOvl23RecordMessageTextOffsets = 0x800BBA14; // type:data size:0x28
 
 // Adjacent work-record halfwords, with distinct caps and increment sizes.
 Ovl23RaiseRecordByteRangeValue = 0x800BB7A0; // type:func
