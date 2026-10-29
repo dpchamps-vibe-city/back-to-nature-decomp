@@ -975,6 +975,8 @@ gCardPartnerTooManyHensTextAnchor = 0x800521F6; // size:0x8A
 gCardTooManyLivestockTextAnchor = 0x80052280; // size:0x8A
 // Ovl15CardTransferPromptState25 draws this bank-adjusted transfer rejection; U16 codes decode That gives partner too many cows/sheep. Reduce the number of cows/sheep in play.
 gCardPartnerTooManyLivestockTextAnchor = 0x8005230A; // size:0xA2
+// The card-transfer completion prompt draws this bank-adjusted status; U16 codes decode Exchange has ended.
+gCardExchangeEndedTextAnchor = 0x80052022; // size:0x28
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

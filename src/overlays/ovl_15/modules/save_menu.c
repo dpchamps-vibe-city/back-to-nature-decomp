@@ -2270,7 +2270,7 @@ void Ovl15CardTransferFinish(void) {
 
     p = &gOvl15MenuState;
     DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14,
-                  gTextBankOffsets[0] + (s32)D_80052022);
+                  gTextBankOffsets[0] + (s32)gCardExchangeEndedTextAnchor);
     *p = Ovl15WaitForMenuButton(0x21, 0);
     if (gOvl15MenuStateTimer >= 0x5B) {
         *p = 0;

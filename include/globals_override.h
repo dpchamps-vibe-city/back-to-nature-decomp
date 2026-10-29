@@ -6202,8 +6202,8 @@ extern u8 gCardSaveFailedTextAnchor[];
 extern u8 gCardTransferAbortConfirmTextAnchor[];
 /* 80130F2C: Ovl15CardReadConfirmExit draws bank-adjusted Aborting load / Is that OK. */
 extern u8 gCardReadAbortConfirmTextAnchor[];
-/* ovl_15:801329F8 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_80052022[];
+/* 801329F8: Ovl15CardTransferFinish draws bank-adjusted Exchange has ended. */
+extern u8 gCardExchangeEndedTextAnchor[];
 /* 8012E15C clears these halfword controls before each menu session. */
 extern s16 D_80137590;
 /* Card operations 36558/36660/367F8 count retries; signed limits use casts. */
