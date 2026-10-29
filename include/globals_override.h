@@ -2641,8 +2641,8 @@ extern s32 gTextRendering;
 extern s32 gTextScrolledFull;
 /* MapChoiceIndexToStatus indexes four word-sized status entries. */
 extern s32 D_80049058[4];
-/* WriteSeasonNameText copies six halfwords per season (four caller indices). */
-extern u16 D_8004908C[];
+/* 8004908C: WriteSeasonNameText copies six glyphs per row: Spring, Summer, Fall, Winter. */
+extern u16 gTextSeasonNames[];
 /* WriteWeekdayNameText copies three halfwords per weekday. */
 extern u16 D_800490BC[];
 

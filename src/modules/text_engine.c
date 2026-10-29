@@ -1983,7 +1983,7 @@ u16 *WriteSeasonNameText(s32 arg0, u16 *arg1) {
     u16 *var_v1;
     u16 temp_v0;
 
-    var_v1 = (u16 *)((u8 *)&D_8004908C + arg0 * 0xC);
+    var_v1 = (u16 *)((u8 *)&gTextSeasonNames + arg0 * 0xC);
     var_a0 = 5;
     do {
         temp_v0 = *var_v1;

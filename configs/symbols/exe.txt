@@ -861,6 +861,9 @@ gSecondaryValueLabelTextAnchor = 0x8005180C; // size:0x4
 gQuantityPromptDefaultTextAnchor = 0x8005181A; // size:0x2
 gTextBankOffsets = 0x80054BBC; // size:0x4
 
+// WriteSeasonNameText copies six glyph codes per row; DrawIndexedSelectionLabels uses all four seasons.
+gTextSeasonNames = 0x8004908C; // size:0x30
+
 // Text engine state: widths follow the matching definitions and original loads.
 gTextLetterSpacing = 0x8005E2B8; // size:0x2
 gTextLineSpacing = 0x8005E2BA; // size:0x2
