@@ -7253,8 +7253,8 @@ typedef struct {
 } Ovl15SavedRecordList;
 /* 80133808 adds the language offset and reads four halfwords from this text. */
 extern u8 D_800535C6[];
-/* Address-only text anchor in 80133808; s32 view also witnessed by 800FD194. */
-extern s32 D_80053604;
+/* 80133808/800FD194: Ovl15UpdateSlotSelectionMenu and Ovl11DrawStatusRecordPageTitle draw record-list title text; U16 codes decode List. */
+extern s32 gRecordListTitleTextAnchor;
 /* 80133808 indexes one unsigned byte with D_8013759E. */
 extern u8 D_80137658[];
 /* 80133808 and 80134134 pass this overlay buffer to func_80015EE8. */

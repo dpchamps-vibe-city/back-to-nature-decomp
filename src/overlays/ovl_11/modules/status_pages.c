@@ -659,7 +659,7 @@ void Ovl11DrawAndScrollStatusRows(s16 count, void (*drawRow)(s16, s16)) {
 
 void Ovl11DrawStatusRecordPageTitle(s32 arg0) {
     DrawSpriteFrameRects(gActiveRenderContext->field_D8 + 0x68, (s32) &gOvl11StatusRecordSpriteSource, gOvl11StatusRecordPageIcons[arg0], 0, 0xBA, 0x14);
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, *gTextBankOffsets + (s32) &D_80053604, 0xD2, 0x1A);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, *gTextBankOffsets + (s32) &gRecordListTitleTextAnchor, 0xD2, 0x1A);
 }
 
 void Ovl11DrawStatusRecordDetails(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {

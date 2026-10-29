@@ -330,7 +330,7 @@ s32 Ovl15UpdateSlotSelectionMenu(s16 arg0) {
     temp_s4 = temp_t0 + 0x14;
     DrawMenuPanel((u32 *) (temp_t0 + 0x28), 1, 0x18, 0x20, 0x110, 0x74);
     DrawMenuPanel((u32 *) (gActiveRenderContext->field_D8 + 0x24), 1, 0x50, 0x10, 0xA0, 0x20);
-    DrawTextLine(temp_s4, (s32) ((void *) ((u8 *) &D_80053604 + *gTextBankOffsets)), 0xD0, 0x1A);
+    DrawTextLine(temp_s4, (s32) ((void *) ((u8 *) &gRecordListTitleTextAnchor + *gTextBankOffsets)), 0xD0, 0x1A);
     DrawSpriteFrameRects(temp_s2, (s32)&gOvl15MenuSpriteSources[1], D_80137658[gOvl15SlotCategory], 0, 0xB8, 0x12);
     StepUiSpriteFourFramePhase(0);
     DrawAnimatedUiSprite0D(temp_s2, 0x20, 0x18);
