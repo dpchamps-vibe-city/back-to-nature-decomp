@@ -256,9 +256,9 @@ void Ovl15DrawSlotBanks(void) {
     x = 0x28;
     y = 0x22;
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0x24, 0x10, 0x70, 0x8D);
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &D_80051CAE + *gTextBankOffsets)), 0x3C, 0x14);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) &gLivestockTransferDirectionTextAnchor + *gTextBankOffsets)), 0x3C, 0x14);
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x28), 1, 0xAC, 0x10, 0x70, 0x8D);
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &D_80051CAE + 0xE)) + *gTextBankOffsets)), 0xC4, 0x14);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32) ((void *) ((u8 *) ((void *) ((u8 *) &gLivestockTransferDirectionTextAnchor + 0xE)) + *gTextBankOffsets)), 0xC4, 0x14);
     slotTable = &Ovl15Slots[0][0];
     bank = 0;
     do {
