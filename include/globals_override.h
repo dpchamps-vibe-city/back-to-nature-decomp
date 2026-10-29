@@ -2052,12 +2052,12 @@ struct Ovl11FlagDateView {
 
 /* ovl_11_func_800C0FC0 reads s16 at +0/+2, with a 0x1D4-byte indexed stride. */
 extern s16 D_80076244[];
-/* ovl_11_func_800C0FC0 reads this absolute-addressed signed-halfword pair. */
+/* 800C0FC0 reads and Ovl11RefreshCalendarDayFlags compares this saved month/day pair. */
 struct Ovl11FlagDatePair {
     s16 field_0;
     s16 field_2;
 };
-extern struct Ovl11FlagDatePair D_8007A414;
+extern struct Ovl11FlagDatePair gOvl11LastCalendarDate;
 
 /* View of D_8006C838 for bit-flag access: a flat array of u32 flag words
  * starts at offset 0x38 (used by func_8001AF44 and its set/clear siblings).

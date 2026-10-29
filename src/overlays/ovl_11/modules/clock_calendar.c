@@ -389,7 +389,7 @@ void Ovl11RefreshCalendarDayFlags(s16 weekday) {
         }
         if (GetGameFlag(0x4F) != 1) {
             SetGameFlag(0x9A, 0);
-            lastDate = &D_8007A414;
+            lastDate = &gOvl11LastCalendarDate;
             if (CALENDAR_STATE->field_44BA == lastDate->field_0 && CALENDAR_STATE->field_44BC == lastDate->field_2) {
                 SetGameFlag(0x9A, 1);
             }

@@ -980,6 +980,9 @@ gCardExchangeEndedTextAnchor = 0x80052022; // size:0x28
 
 // Ovl19DrawValueTable reads this word as the first value-table label pointer.
 gOvl19ValueTableFirstLabel = 0x8007AE58; // size:0x4
+
+// Ovl11RefreshCalendarDayFlags compares the current month/day against this saved date pair for flag 0x9A.
+gOvl11LastCalendarDate = 0x8007A414; // size:0x4
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.
