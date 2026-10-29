@@ -5570,8 +5570,8 @@ extern Ovl11GlyphTextBuffer D_8012CF30_glyph __asm__("gOvl11QuantityEditorTextBu
 
 /* 80051BF4: Ovl11DrawQuantityEditorRow draws bank-adjusted Odds and Tickets (+0xA) labels. */
 extern u8 gRaceBettingColumnLabelsTextAnchor[];
-/* 80103F8C adds D_80054BBC[0] bytes to this text base and its +0x18 successor. */
-extern u8 D_80051C0E[];
+/* 80051C0E: DrawQuantityEditorRows displays Race [text slot 0] bets and OK (+0x18), bank-adjusted. */
+extern u8 gRaceBettingHeaderTextAnchor[];
 extern u8 D_800556A8[];
 /* 80104148 loads a signed halfword at index*4 from this text-offset table. */
 extern s16 D_80127430[][2];

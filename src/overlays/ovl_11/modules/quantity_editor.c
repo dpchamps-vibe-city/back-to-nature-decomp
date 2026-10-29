@@ -332,8 +332,8 @@ void Ovl11DrawQuantityEditorRows(void) {
     }
     *(u16 *)WriteDecimalText(var_a1 + 1, gOvl11QuantityEditorTextBuffer, 1) = 0xFFFF;
     SetTextSourcePointer(0, (s32) gOvl11QuantityEditorTextBuffer);
-    DrawTextLine(temp_s3, (s32)(D_80051C0E + gTextBankOffsets[0]), 0x22, 0x32);
-    DrawTextLine(temp_s3, (s32)(D_80051C0E + 0x18 + gTextBankOffsets[0]), 0xDF, 0x94);
+    DrawTextLine(temp_s3, (s32)(gRaceBettingHeaderTextAnchor + gTextBankOffsets[0]), 0x22, 0x32);
+    DrawTextLine(temp_s3, (s32)(gRaceBettingHeaderTextAnchor + 0x18 + gTextBankOffsets[0]), 0xDF, 0x94);
     var_s2 = 0;
     do {
         Ovl11DrawQuantityEditorRow((s16) var_s2);

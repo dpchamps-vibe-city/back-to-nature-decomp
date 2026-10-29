@@ -865,6 +865,8 @@ gQuantityPromptDefaultTextAnchor = 0x8005181A; // size:0x2
 gQuantityEditorMoneyTextAnchor = 0x800517C6; // size:0x2
 // Ovl11DrawQuantityEditorRow draws Odds and Tickets from this bank-adjusted base and base+0xA.
 gRaceBettingColumnLabelsTextAnchor = 0x80051BF4; // size:0x1A
+// Ovl11DrawQuantityEditorRows binds race number in text slot 0, then draws Race [slot 0] bets and OK (+0x18).
+gRaceBettingHeaderTextAnchor = 0x80051C0E; // size:0x1E
 // Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
 gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
 // The wide Ovl11DrawChoicePromptVariant selects the secondary-bank Buy/Don't-buy text.
