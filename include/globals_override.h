@@ -2664,9 +2664,9 @@ extern u16 *gTextScriptCursor;
  * Array of 9 bytes ensures >8 byte declaration for absolute addressing */
 extern u8 D_8005E025[9];
 
-/* D_8005F0C8 - s32 array indexed by (value & 0xFFF), accessed with lui+addiu+lw
- * Array size ensures >8 byte declaration for absolute addressing */
-extern s32 D_8005F0C8[4096];
+/* 8005F0C8: SetTextSourcePointer stores addresses in slots 0..10; text rendering
+ * and scanning expand them via token & 0xFFF. Retain the existing masked-index view. */
+extern s32 gTextSourceAddresses[4096];
 
 /* D_80055994, D_800559BC - arrays of s32 pointers (byte table bases),
  * D_800559C4 - array of s32 function pointers.

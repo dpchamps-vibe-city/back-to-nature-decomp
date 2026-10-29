@@ -879,6 +879,8 @@ gTextSeasonNames = 0x8004908C; // size:0x30
 gTextWeekdayNames = 0x800490BC; // size:0x2A
 // DrawNumberText formats up to nine glyphs here, appends FFFF, then calls DrawTextLine.
 gTextNumberDrawBuffer = 0x8005F0A8; // size:0x14
+// SetTextSourcePointer registers slots 0..10; renderers/scanners expand their stored text addresses.
+gTextSourceAddresses = 0x8005F0C8; // size:0x2C
 
 // Text engine state: widths follow the matching definitions and original loads.
 gTextLetterSpacing = 0x8005E2B8; // size:0x2

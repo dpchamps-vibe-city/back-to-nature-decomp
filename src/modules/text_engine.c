@@ -44,7 +44,7 @@ void SetTextSourcePointer(s32 arg0, s32 arg1) {
         var_a0 = 0xA;
     }
     idx = var_a0 & 0xFFFF;
-    D_8005F0C8[idx] = arg1;
+    gTextSourceAddresses[idx] = arg1;
 }
 
 u16 gTextLetterSpacing;
@@ -845,7 +845,7 @@ inner:
         if (work1 & 0x4000) {
             work4 = ResolveTextSource(*arg2);
             if (work4 == 0) {
-                work4 = D_8005F0C8[*arg2 & 0xFFF];
+                work4 = gTextSourceAddresses[*arg2 & 0xFFF];
                 if (work4 == 0) {
                     goto advance;
                 }
@@ -1118,7 +1118,7 @@ s32 CountTextMarkers(u16 *arg0, u16 arg1, s16 arg2, u16 *arg3) {
                 sum = (sum + 1) & 0xFFFF;
             } else if (masked != 0xFFFE && (temp & 0x4000) &&
                        ((r = ResolveTextSource(*(volatile u16 *)cur)) != 0 ||
-                        (r = D_8005F0C8[*cur & 0xFFF]) != 0)) {
+                        (r = gTextSourceAddresses[*cur & 0xFFF]) != 0)) {
                 if (arg2 != 0) {
                     sum = (sum + CountTextMarkers((u16 *)r, arg1, (s16)(arg2 - count), &sp10)) & 0xFFFF;
                     count += sp10;
@@ -1196,7 +1196,7 @@ s32 MeasureTextSpanLength(u16 *arg0, u16 arg1, s16 arg2) {
         if (masked != 0xFFFE && (temp & 0x4000)) {
             nin = ResolveTextSource(*(volatile u16 *)ptr);
             if (nin == 0) {
-                value = D_8005F0C8[*ptr & 0xFFF];
+                value = gTextSourceAddresses[*ptr & 0xFFF];
                 if (value == 0) {
                     goto skip_rec;
                 }
@@ -1297,7 +1297,7 @@ s32 MeasureTextWidth(u16 *arg0, s32 arg1, s16 arg2) {
         do {
             temp_a0 = *var_s0;
             if ((temp_a0 & 0xF000) == 0x4000) {
-                temp_a0_2 = D_8005F0C8[temp_a0 & 0xFFF];
+                temp_a0_2 = gTextSourceAddresses[temp_a0 & 0xFFF];
                 if (temp_a0_2 != 0) {
                     var_s1 += MeasureTextWidth((u16 *)temp_a0_2, arg1, arg2);
                 }
