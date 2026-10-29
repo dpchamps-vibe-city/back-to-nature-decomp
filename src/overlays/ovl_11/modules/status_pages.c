@@ -833,7 +833,7 @@ void Ovl11DrawPairedValueRow(s16 row, s16 y) {
     test = ((struct Ovl11PairedValues *) D_8006C838)->pairs[row][0];
     if (test == 0 &&
         ((struct Ovl11PairedValues *) D_8006C838)->pairs[row][1] == 0) {
-        label = D_80053770 + gTextBankOffsets[0];
+        label = gStatusNothingTextAnchor + gTextBankOffsets[0];
     } else {
         label = (u8 *) D_8005175C + (gTextBankOffsets[0] + gOvl11PairedValueLabelOffsets[secondBand][firstBand]);
     }

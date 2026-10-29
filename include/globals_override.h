@@ -4659,8 +4659,8 @@ extern u8 gBedtimeChoicesTextAnchor[];
 /* 800FD5E8: Ovl11DrawPairedValuePanel draws bank-adjusted Earnings/expenses; +0x28 is This month/accounts. */
 extern u8 gStatusEarningsTextAnchor[];
 
-/* 800FD7B4 adds D_80054BBC[0] bytes to this empty-pair label base. */
-extern u8 D_80053770[];
+/* 800FD7B4: Ovl11DrawPairedValueRow draws bank-adjusted Nothing for an empty pair. */
+extern u8 gStatusNothingTextAnchor[];
 /* 800FDD74 adds D_80054BBC[0] bytes to this text base for func_80017B3C. */
 extern u8 D_80053780[];
 /* 800FDD74 walks five unsigned halfwords at D_8006C838+0x5208. */
