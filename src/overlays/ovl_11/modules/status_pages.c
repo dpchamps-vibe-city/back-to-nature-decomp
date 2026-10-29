@@ -1106,7 +1106,7 @@ void Ovl11DrawStatusLevelPercent(s32 input_level, u32 input_value, s32 input_x, 
     } else {
         var_a3 = 1;
         if (arg0 == 5) {
-            var_a1 = (s16 *) ((u8 *) D_800537A2 + *gTextBankOffsets);
+            var_a1 = (s16 *) ((u8 *) gStatusMaximumTextAnchor + *gTextBankOffsets);
         } else {
             for (; var_a3 < 5 && temp_t0 >= gOvl11StatusLevelThresholds[var_a3]; var_a3++) {
             }

@@ -4126,9 +4126,9 @@ extern u8 D_800535E6[];
 extern u8 D_800535D0[];
 
 /* 8005378C: Ovl11DrawStatusLevelPercent draws bank-adjusted Rebuilding for a negative level;
- * D_800537A2 is the Maximum label for level 5. */
+ * the Maximum label for level 5 follows the anchor. */
 extern u8 gStatusRebuildingTextAnchor[];
-extern u8 D_800537A2[];
+extern u8 gStatusMaximumTextAnchor[];
 
 /* 80051D18: Ovl15UpdateTwoChoiceMenu draws bank-adjusted MEMORY CARD slot 1 / slot 2 labels. */
 extern u8 gMemoryCardSlotLabelsTextAnchor[];
