@@ -861,6 +861,8 @@ gSecondaryValueLabelTextAnchor = 0x8005180C; // size:0x4
 gQuantityPromptDefaultTextAnchor = 0x8005181A; // size:0x2
 // Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
 gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
+// The wide Ovl11DrawChoicePromptVariant selects the secondary-bank Buy/Don't-buy text.
+gBuyDeclineChoiceTextAnchor = 0x800517EE; // size:0x2
 gTextBankOffsets = 0x80054BBC; // size:0x4
 
 // DrawGlyphSprite selects one of six CLUT Y rows and pairs it with VRAM X=0x380.

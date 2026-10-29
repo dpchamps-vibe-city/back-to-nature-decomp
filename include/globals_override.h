@@ -3482,7 +3482,7 @@ extern s32 D_80051768;
  * these compact Yes/No and wide Buy/Don't-buy text anchors, respectively.
  * Keep the existing incomplete arrays and split-address linkage views. */
 extern u8 gYesNoChoiceTextAnchor[];
-extern u8 D_800517EE[];
+extern u8 gBuyDeclineChoiceTextAnchor[];
 
 /* D_800517C6 - u8 table base in the PS-X EXE indexed by D_80054BBC[1]
  * (and +0x42) in ovl_11_func_80103EB8. Never defined in the overlays, so

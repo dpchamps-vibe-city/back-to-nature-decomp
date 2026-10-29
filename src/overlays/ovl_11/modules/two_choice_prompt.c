@@ -28,7 +28,7 @@ void Ovl11DrawChoicePromptVariant(s32 wide, s32 ot, s16 x, s16 y, s16 selection)
 
     if (wide != 0) {
         textTiles = 9;
-        text = *D_80054BC0 + (s32) D_800517EE;
+        text = *D_80054BC0 + (s32) gBuyDeclineChoiceTextAnchor;
     } else {
         textTiles = 4;
         text = *D_80054BC0 + (s32) gYesNoChoiceTextAnchor;
