@@ -2872,8 +2872,8 @@ extern s16 D_800BFB0E;
 extern s32 gOvl23RecordMessageTextOffsets[10];
 extern u8 D_800BB860[];
 
-/* 800B8354 reads six u16 pairs at +0/+2 with four-byte stride. */
-extern u16 D_800BBA64[12];
+/* 800B8354: Ovl23InitActorRecords copies six u16 pairs into actor record +0x70/+0x72 fields. */
+extern u16 gOvl23ActorScreenOffsetPairs[12];
 /* 800B8354 indexes this u16 table by signed record +0x32 divided by 50. */
 extern u16 D_800BBA90[];
 

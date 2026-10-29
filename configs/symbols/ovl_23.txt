@@ -59,6 +59,7 @@ gOvl23RecordMessageTextOffsets = 0x800BBA14; // size:0x28
 gOvl23RecordRunSetupStage = 0x800BBA3C; // size:0x1
 gOvl23RecordAnchorY = 0x800BBA40; // size:0xc
 gOvl23RecordYBounds = 0x800BBA4C; // size:0x18
+gOvl23ActorScreenOffsetPairs = 0x800BBA64; // size:0x18
 gOvl23RecordRandomWeights = 0x800BBA9C; // size:0x18
 gOvl23RecordRandomTrialThresholds = 0x800BBAB4; // size:0x28
 gOvl23ActorSpriteHeaderOffsets = 0x800BBADC; // size:0x10

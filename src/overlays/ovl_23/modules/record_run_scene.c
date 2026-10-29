@@ -263,8 +263,8 @@ void Ovl23InitActorRecords(void) {
         pr->unk2C = 0;
         ((Ovl23D87CView50 *)base)->unk0[i].unk38 = 0xFFFE5000;
         ((Ovl23D87CView50 *)base)->unk0[i].unk3C = ((s16 *)&gOvl23RecordAnchorY)[i] << 12;
-        ((struct Ovl23ScreenInitTail *)pr)->unk70 = D_800BBA64[pairIndex];
-        ((struct Ovl23ScreenInitTail *)pr)->unk72 = D_800BBA64[pairIndex + 1];
+        ((struct Ovl23ScreenInitTail *)pr)->unk70 = gOvl23ActorScreenOffsetPairs[pairIndex];
+        ((struct Ovl23ScreenInitTail *)pr)->unk72 = gOvl23ActorScreenOffsetPairs[pairIndex + 1];
         if (i == 4) {
             rec4 = base + 0x140;
             *(u16 *)(rec4 + 0x30) = 0xFF;
