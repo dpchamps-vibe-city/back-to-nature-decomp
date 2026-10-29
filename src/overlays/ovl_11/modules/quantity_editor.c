@@ -59,7 +59,7 @@ void Ovl11ResetQuantityEditor(void) {
         gOvl11QuantityEditorQuantities[i] = 0;
     }
     D_8012CF24 = 0;
-    D_8012CF1C = 0;
+    gOvl11QuantityEditorEditStartQuantity = 0;
 }
 
 void Ovl11BeginQuantityEditor(void) {
@@ -121,7 +121,7 @@ void Ovl11ServiceQuantityEditor(void) {
         result = Ovl11HandleQuantityEditInput();
         if (result == -1) {
             gOvl11QuantityEditorState = 1;
-            gOvl11QuantityEditorQuantities[gOvl11QuantityEditorSelectedRow] = D_8012CF1C;
+            gOvl11QuantityEditorQuantities[gOvl11QuantityEditorSelectedRow] = gOvl11QuantityEditorEditStartQuantity;
             gOvl11QuantityEditorBalance = D_8012CF24;
         } else if (result == -2) {
             CloseMessageWindow();
@@ -279,7 +279,7 @@ s32 Ovl11HandleQuantitySelectionInput(void) {
         if (!(temp_a0_2 & 0x20)) {
             if (temp_a0_2 & 0x40) {
                 if (gOvl11QuantityEditorSelectedRow != 6) {
-                    D_8012CF1C = gOvl11QuantityEditorQuantities[gOvl11QuantityEditorSelectedRow];
+                    gOvl11QuantityEditorEditStartQuantity = gOvl11QuantityEditorQuantities[gOvl11QuantityEditorSelectedRow];
                     D_8012CF24 = gOvl11QuantityEditorBalance;
                     PlaySoundEffect(0);
                     return 2;

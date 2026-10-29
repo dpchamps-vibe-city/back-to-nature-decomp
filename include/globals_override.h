@@ -5550,11 +5550,10 @@ extern s32 gOvl11QuantityEditorState;
 /* ovl_11:8012742C: selection wraps over six editable quantity rows and the finish row. */
 extern s32 gOvl11QuantityEditorSelectedRow;
 
-/* D_8012CF1C / D_8012CF24 - ovl_11 farm-state outputs selected alongside the
- * quantity row. ovl_11_func_80103D44 copies the selected editor quantity
- * into D_8012CF1C (sh) and gOvl11QuantityEditorBalance into D_8012CF24 (sw);
- * ovl_11_func_801037EC zeroes both. Absolute-addressed (outside $gp). */
-extern s16 D_8012CF1C;
+/* ovl_11:8012CF1C / 8012CF24: selection input snapshots the row quantity and balance;
+ * ServiceQuantityEditor restores them on row-edit cancellation. Reset clears both.
+ * Preserve the existing signed-halfword/word views and absolute addressing. */
+extern s16 gOvl11QuantityEditorEditStartQuantity;
 extern s32 D_8012CF24;
 
 /* D_8012CF30 - 12-halfword (0x18 byte) ovl_11 scratch buffer filled by

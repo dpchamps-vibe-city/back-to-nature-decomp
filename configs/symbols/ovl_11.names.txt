@@ -24,6 +24,8 @@ gOvl11QuantityEditorSelectedRow = 0x8012742C; // type:data size:0x4
 gOvl11QuantityEditorState = 0x80127428; // type:data size:0x4
 // Begin/commit copy six row quantities; input edits them and drawing/comparison read them.
 gOvl11QuantityEditorQuantities = 0x8012CF10; // type:data size:0xC
+// Selection input snapshots the selected quantity; cancelling the current row edit restores it.
+gOvl11QuantityEditorEditStartQuantity = 0x8012CF1C; // type:data size:0x2
 
 // Unreferenced leaves. Names describe only the shipped body, not a guessed role.
 Ovl11UnusedReturnMinusOne = 0x800BDCE0; // type:func
