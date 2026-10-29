@@ -7610,7 +7610,8 @@ typedef struct {
 
 /* 8012F6C0: Ovl15CardWriteConfirmFormat step 1 draws bank-adjusted Want to format. */
 extern u8 gCardFormatConfirmTextAnchor[];
-extern u8 D_80053114[];
+/* 8012F6C0: Ovl15CardWriteConfirmFormat step 0 draws bank-adjusted The MEMORY CARD in slot <n> is not formatted. */
+extern u8 gCardNotFormattedTextAnchor[];
 /* 8012F86C, 8012FA00 and 8012FA70 respectively relocate these write-menu prompts. */
 extern u8 D_800531B8[];
 extern u8 D_8005321A[];

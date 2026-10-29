@@ -741,7 +741,7 @@ void Ovl15CardWriteConfirmFormat(void) {
     switch (temp_s0) {
     case 0:
         temp_a1 = gActiveRenderContext->field_D8;
-        DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053114);
+        DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardNotFormattedTextAnchor);
         if (*(s32 *)((u8 *)gPad0Input + 8) & 0x40) {
             PlaySoundEffect(0);
             gOvl15FormatPromptStep = 1;
