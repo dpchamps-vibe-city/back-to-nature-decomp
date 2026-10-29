@@ -620,7 +620,7 @@ void Ovl15CardWriteChooseSaveSlot(void) {
     s32 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32) D_80053566);
+    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32) gCardSelectDiarySaveTextAnchor);
     temp_v0 = Ovl15UpdateSaveSlotMenu(1);
     if (temp_v0 < 3) {
         if (temp_v0 < 0) {

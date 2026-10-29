@@ -6159,8 +6159,8 @@ extern s16 gOvl15FormatPromptStep;
 
 /* 80130B04: card read diary-selection steps draw bank-adjusted Select a diary to load. */
 extern u8 gCardSelectDiaryLoadTextAnchor[];
-/* ovl_15_func_8012F300 adds D_80054BBC[0] bytes to this text-updater address. */
-extern u8 D_80053566[];
+/* 8012F300: Ovl15CardWriteChooseSaveSlot draws bank-adjusted Select a diary to save. */
+extern u8 gCardSelectDiarySaveTextAnchor[];
 /* ovl_15_func_8012F7D4 adds D_80054BBC[0] bytes to this text-updater address. */
 extern u8 D_8005316C[];
 
