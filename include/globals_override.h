@@ -4710,8 +4710,8 @@ extern s16 gOvl11OptionsSettingRow;
 extern s16 gOvl11OptionsSettings_options[6] __asm__("gOvl11OptionsSettings");
 extern void (*gOvl11OptionsSoundSetters[2])(void);
 extern void (*gOvl11OptionsClockSetters[2])(void);
-/* 800FF324 adds D_80054BBC[0] bytes to these text bases and label offsets. */
-extern u8 D_80053CB8[];
+/* 800FF324: Ovl11UpdateOptionsSettingsPage draws bank-adjusted system settings rows. */
+extern u8 gOptionsSettingsPageTextAnchor[];
 extern u8 D_80053D6A[];
 
 /* 800FD3CC: Ovl11DrawStatusSevenRecordRow copies bank-adjusted Days left after a count. */

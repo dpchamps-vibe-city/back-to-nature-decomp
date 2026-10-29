@@ -901,6 +901,8 @@ gStatusFreeTextAnchor = 0x8005362C; // size:0xA
 gStatusEarningsTextAnchor = 0x80053636; // size:0x28
 // Ovl11UpdateOptionsMenu draws this bank-adjusted root prompt; U16 codes decode as How to operate / Configuration.
 gOptionsConfigurationPromptTextAnchor = 0x80053AE8; // size:0x3A
+// Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
+gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 
 // Ovl11ReadDefaultPosition writes this three-word position (X,0,Z) for the progress path.
 gOvl11DefaultPositionWork = 0x80075A1C; // size:0xC

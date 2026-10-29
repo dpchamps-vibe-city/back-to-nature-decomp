@@ -209,7 +209,7 @@ void Ovl11UpdateOptionsSettingsPage(void) {
 
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x58), 1, 0x3A, 0x1E, 0xCA, 0x84);
     SetTextSpacing(0, 2);
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32)(D_80053CB8 + gTextBankOffsets[0]), 0x3E, 0x22);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32)(gOptionsSettingsPageTextAnchor + gTextBankOffsets[0]), 0x3E, 0x22);
     SetTextSpacing(0, 0);
     if (gOvl11OptionsMenuState == 0x20 && IsMessageWindowStatusFinal() == 1) {
         if (((u32 *)gPad0Input)[0] & 0x5000) {
