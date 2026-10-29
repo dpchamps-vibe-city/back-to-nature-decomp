@@ -5543,13 +5543,14 @@ typedef struct {
  * the reset and comparison functions; ovl_11_func_80103B24 reads their raw
  * bits as unsigned halfwords. All three globals are addressed absolutely. */
 extern s16 D_8012CF10[7];
-extern s32 D_8012CF20;
+/* ovl_11:8012CF20: pending money balance, edited at 50 per item and committed to work+5224. */
+extern s32 gOvl11QuantityEditorBalance;
 extern s32 D_80127428;
 extern s32 D_8012742C;
 
 /* D_8012CF1C / D_8012CF24 - ovl_11 farm-state outputs selected alongside the
  * D_8012CF10 row. ovl_11_func_80103D44 copies the chosen D_8012CF10 halfword
- * into D_8012CF1C (sh) and D_8012CF20 into D_8012CF24 (sw);
+ * into D_8012CF1C (sh) and gOvl11QuantityEditorBalance into D_8012CF24 (sw);
  * ovl_11_func_801037EC zeroes both. Absolute-addressed (outside $gp). */
 extern s16 D_8012CF1C;
 extern s32 D_8012CF24;

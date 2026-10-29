@@ -75,7 +75,7 @@ void Ovl11BeginQuantityEditor(void) {
     Ovl11ResetQuantityEditor();
     D_80127428 = 1;
     PlaySoundEffect(3);
-    D_8012CF20 = v->field_5224;
+    gOvl11QuantityEditorBalance = v->field_5224;
     cnt = 0;
     do {
         D_8012CF10[cnt] = (u16)v->rows[sel][cnt][0];
@@ -122,7 +122,7 @@ void Ovl11ServiceQuantityEditor(void) {
         if (result == -1) {
             D_80127428 = 1;
             D_8012CF10[D_8012742C] = D_8012CF1C;
-            D_8012CF20 = D_8012CF24;
+            gOvl11QuantityEditorBalance = D_8012CF24;
         } else if (result == -2) {
             CloseMessageWindow();
             D_80127428 = 4;
@@ -181,14 +181,14 @@ void Ovl11CommitQuantityEditor(void) {
     }
     p = v;
     v = saved;
-    delta = v->field_5224 - D_8012CF20;
+    delta = v->field_5224 - gOvl11QuantityEditorBalance;
     if (delta > 0) {
         p->field_49C8 += delta;
     } else if (delta < 0) {
         p->field_49C8 += delta;
     }
     w = (Ovl11QuantityWorkView *)&D_8006C838;
-    w->field_5224 = D_8012CF20;
+    w->field_5224 = gOvl11QuantityEditorBalance;
     for (i = 0; i < 6; i++) {
         w->rows[sel][i][0] = (u16)D_8012CF10[i];
     }
@@ -280,7 +280,7 @@ s32 Ovl11HandleQuantitySelectionInput(void) {
             if (temp_a0_2 & 0x40) {
                 if (D_8012742C != 6) {
                     D_8012CF1C = D_8012CF10[D_8012742C];
-                    D_8012CF24 = D_8012CF20;
+                    D_8012CF24 = gOvl11QuantityEditorBalance;
                     PlaySoundEffect(0);
                     return 2;
                 }
@@ -310,7 +310,7 @@ void Ovl11DrawQuantityEditorBalance(void) {
     temp_s3_2 = temp_s3 + 0x58;
     DrawMenuPanel((u32 *)(temp_s3 + 0x5C), 0, 0xE3, 0x10, 0x47, 0x1E);
     DrawTextLine(temp_s3_2, (s32)((u8 *)gQuantityEditorMoneyTextAnchor + gTextBankOffsets[1]), 0xE5, 0x12);
-    CopyTextString(WriteDecimalText(D_8012CF20, D_8012CF30, 7),
+    CopyTextString(WriteDecimalText(gOvl11QuantityEditorBalance, D_8012CF30, 7),
                   (u16 *)((u8 *)gQuantityEditorMoneyTextAnchor + 0x42 + gTextBankOffsets[1]));
     DrawTextLine(temp_s3_2, (s32)D_8012CF30, 0xE5, 0x20);
 }
@@ -456,7 +456,7 @@ void Ovl11AdjustEditedQuantity(s16 arg0, s16 *arg1) {
     s32 value;
 
     old = *arg1;
-    limit = old + D_8012CF20 / 50;
+    limit = old + gOvl11QuantityEditorBalance / 50;
     if (limit >= 100) {
         limit = 99;
     }
@@ -480,6 +480,6 @@ void Ovl11AdjustEditedQuantity(s16 arg0, s16 *arg1) {
         *arg1 = value;
     }
 
-    D_8012CF20 += old * 50;
-    D_8012CF20 -= *arg1 * 50;
+    gOvl11QuantityEditorBalance += old * 50;
+    gOvl11QuantityEditorBalance -= *arg1 * 50;
 }
