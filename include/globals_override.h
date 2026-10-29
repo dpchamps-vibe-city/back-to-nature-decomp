@@ -6600,9 +6600,9 @@ extern s16 gOvl11CounterChoiceRandomWords[] __asm__("gOvl11CounterChoiceRandomTe
  * over six stride-2 entries (-1 sentinel). Absolute-addressed. */
 extern s16 gCounterChoiceCategoryCounts[6];
 
-/* D_80070D02 - ovl_11 s16 selector compared against the min/max bounds by
- * ovl_11_func_80120358 (lh load). Absolute-addressed. */
-extern s16 D_80070D02;
+/* 80120358 and object-event timing read this resident +0x44CA clock value as minutes
+ * (held-action ranges, 18:00 gate). Absolute-addressed. */
+extern s16 gOvl11ClockMinutes;
 
 /* Slot-sprite cache: two nine-s16 ID rows precede two nine-entry descriptor
  * rows, stride 0x1E. D6628 resets exactly 0x24 ID + 0x21C descriptor bytes.

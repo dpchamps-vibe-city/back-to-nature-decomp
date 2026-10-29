@@ -142,7 +142,7 @@ s16 Ovl11SelectHeldActionDelay(Ovl11SelectArg *state) {
     u32 i;
 
     entry = gOvl11HeldActionRangeValues;
-    rangeValue = D_80070D02;
+    rangeValue = gOvl11ClockMinutes;
     for (i = 0; i < 4; i++, entry++) {
         if (rangeValue < entry->min) {
             continue;

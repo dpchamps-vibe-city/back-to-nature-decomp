@@ -1193,7 +1193,7 @@ void Ovl11TriggerTimedObjectEvents(void) {
 
     if (!((u16)((struct Ovl11SpriteWork *)&D_8007AFF0)->header[4] & 0x1000) && (temp_a1 = ((struct Ovl11SpriteWork *)&D_8007AFF0)->header[1], (D_80125F24[temp_a1] != 0x1000))) {
         if (temp_a1 == 1) {
-            if ((D_80070D02 == 0x438) && (GetGameFlag(0x40U) == 0)) {
+            if ((gOvl11ClockMinutes == 0x438) && (GetGameFlag(0x40U) == 0)) {
                 Ovl11LoadRenderContextSpriteBank();
                 SetGameFlag(0x40U, 1U);
             }
