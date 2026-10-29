@@ -7612,8 +7612,9 @@ typedef struct {
 extern u8 gCardFormatConfirmTextAnchor[];
 /* 8012F6C0: Ovl15CardWriteConfirmFormat step 0 draws bank-adjusted The MEMORY CARD in slot <n> is not formatted. */
 extern u8 gCardNotFormattedTextAnchor[];
-/* 8012F86C, 8012FA00 and 8012FA70 respectively relocate these write-menu prompts. */
-extern u8 D_800531B8[];
+/* 8012F86C: Ovl15CardWritePromptState14 draws bank-adjusted Formatting failed for the MEMORY CARD in slot <n>. */
+/* 8012FA00 and 8012FA70 respectively relocate the remaining write-menu prompts. */
+extern u8 gCardFormattingFailedTextAnchor[];
 extern u8 D_8005321A[];
 extern u8 D_80053294[];
 /* 80130048: Ovl15CardWriteConfirmExit draws bank-adjusted Aborting save / Is that OK. */

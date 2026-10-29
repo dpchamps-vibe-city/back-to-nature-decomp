@@ -943,6 +943,8 @@ gCardSelectDiarySaveTextAnchor = 0x80053566; // size:0x30
 gCardFormattingProgressTextAnchor = 0x8005316C; // size:0x4C
 // Ovl15CardWriteConfirmFormat step 0 draws this bank-adjusted prompt; U16 codes decode The MEMORY CARD in slot <n> is not formatted.
 gCardNotFormattedTextAnchor = 0x80053114; // size:0x58
+// Ovl15CardWritePromptState14 draws this bank-adjusted status; U16 codes decode Formatting failed for the MEMORY CARD in slot <n>.
+gCardFormattingFailedTextAnchor = 0x800531B8; // size:0x62
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.
