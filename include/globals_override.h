@@ -7621,8 +7621,8 @@ extern u8 D_80053114[];
 extern u8 D_800531B8[];
 extern u8 D_8005321A[];
 extern u8 D_80053294[];
-/* 80130048 and 8013010C relocate the write-menu exit and completion prompts. */
-extern u8 D_80051DCC[];
+/* 80130048: Ovl15CardWriteConfirmExit draws bank-adjusted Aborting save / Is that OK. */
+extern u8 gCardSaveAbortConfirmTextAnchor[];
 extern u8 D_800534DC[];
 /* 8012FAE0 selects nine word offsets in three 12-byte rows. */
 extern u32 gOvl15CardIconFrameOffsets[3][3];
