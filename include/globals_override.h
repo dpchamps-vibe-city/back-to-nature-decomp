@@ -6444,7 +6444,8 @@ extern u16 gOvl19AuxValueSeeds[];
 extern s16 gOvl19AuxRecordTemplates[];
 /* ovl_19 800B8830 indexes this overlay-local table with a signed halfword load. */
 extern s16 Ovl19_D_800BCFF0[] __asm__("D_800BCFF0");
-extern u16 D_800BCF28[];
+/* 800BA33C: six groups of four halfword movement weights indexed by category*2 + nonzero-flag. */
+extern u16 gOvl19MovementWeights[];
 /* ovl_19 800B9AB0 indexes byte weights by flag * 16 + direction * 4 + choice. */
 extern u8 gOvl19DirectionWeights[];
 /* 800B868C: Ovl19InitActorPair reads this four-halfword actor-value seed table with an (entry[4] + 1) index. */

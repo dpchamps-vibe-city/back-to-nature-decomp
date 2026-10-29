@@ -125,3 +125,5 @@ gOvl19AuxRecordTemplates = 0x800BCF0C; // type:data size:0x18
 gOvl19ActorValueSeeds = 0x800BCEE8; // type:data size:0x8
 // Four auxiliary-value seeds selected by (entry[4] * 2) + variant parity in Ovl19InitAuxRecords.
 gOvl19AuxValueSeeds = 0x800BCEF0; // type:data size:0x8
+// Six groups of four halfword movement weights indexed by category*2 + nonzero-flag in ovl_19_func_800BA33C.
+gOvl19MovementWeights = 0x800BCF28; // type:data size:0x30

@@ -85,6 +85,7 @@ gOvl19AuxValueSeeds = 0x800BCEF0; // size:0x8
 gOvl19ActorPairTemplates = 0x800BCEFC; // size:0x10
 gOvl19AuxRecordTemplates = 0x800BCF0C; // size:0x18
 gOvl19SelectionValueIndices = 0x800BCF24; // size:0x4
+gOvl19MovementWeights = 0x800BCF28; // size:0x30
 gOvl19DirectionWeights = 0x800BCF58; // size:0x24
 gOvl19FixedSpritePositions = 0x800BCF7C; // size:0x2
 gOvl19ValueRandomLimits = 0x800BCFE4; // size:0xc

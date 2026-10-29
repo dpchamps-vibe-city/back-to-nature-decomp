@@ -1233,7 +1233,7 @@ s32 ovl_19_func_800BA33C(u8 *arg0) {
     sum = 0;
     limit = (s16)Rand(0x64);
     for (i = 0; i < 4; i++) {
-        val = *(u16 *)((u8 *)D_800BCF28 + (cat << 4) + (flag << 3) + i * 2);
+        val = *(u16 *)((u8 *)gOvl19MovementWeights + (cat << 4) + (flag << 3) + i * 2);
         sum = (s16)(sum + val);
         if (limit < sum) {
             switch (i) {
