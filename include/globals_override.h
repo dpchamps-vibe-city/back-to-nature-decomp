@@ -6405,8 +6405,8 @@ extern s16 gOvl19SceneMode;
 extern s16 gOvl19SoundVoice;
 /* ovl_19:7ED8 indexes five handler words; preserve its existing scalar view. */
 extern s32 gOvl19PhaseHandlerWords;
-/* ovl_19:85F4 indexes this halfword limit table by year/category. */
-extern u16 D_800BCFE4[];
+/* 800B85F4: nine halfword limits indexed by year-category*3 + category for Rand(). */
+extern u16 gOvl19ValueRandomLimits[];
 /* 800B85F4: category (0..2) used with the year to select a random-value limit from the halfword table. */
 extern s16 gOvl19ValueCategory;
 /* ovl_19:8F38 increments this word, sounds every 30 ticks and clears on exit. */

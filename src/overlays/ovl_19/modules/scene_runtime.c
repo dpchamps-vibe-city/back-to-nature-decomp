@@ -330,7 +330,7 @@ s32 Ovl19ChooseInitialActorValue(void) {
     if (s1 >= 3) {
         s0 = 2;
     }
-    v = (s16)Rand(D_800BCFE4[s0 * 3 + s1]);
+    v = (s16)Rand(gOvl19ValueRandomLimits[s0 * 3 + s1]);
     if (s0 != 0 && s1 == 2) {
         v = (s16)(v + 0xAB);
     }

@@ -82,6 +82,7 @@ gOvl19StageHandlers = 0x800BCEC8; // size:0x1c
 gOvl19LoadStep = 0x800BCEE4; // size:0x1
 gOvl19DirectionWeights = 0x800BCF58; // size:0x24
 gOvl19FixedSpritePositions = 0x800BCF7C; // size:0x2
+gOvl19ValueRandomLimits = 0x800BCFE4; // size:0xc
 gOvl19ValueLabelOffsets = 0x800BCFF8; // size:0x50
 gOvl19ProjectedSpriteScreen = 0x800BD048; // size:0x8
 gOvl19ProjectedStateScreen = 0x800BD050; // size:0x8
