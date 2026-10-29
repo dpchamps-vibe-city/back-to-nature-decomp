@@ -6367,8 +6367,8 @@ extern s16 D_800BFC90;
  * groups of four halfwords, indexed by (category << 3) + (flag << 2) in
  * halfwords (category = ovl_19_func_800BA33C's threshold class, flag = whether
  * arg->+0xC is non-zero). */
-/* exe:8007AE58 - Ovl19DrawValueTable reads its first label address here. */
-extern s32 D_8007AE58;
+/* 8007AE58: Ovl19DrawValueTable reads this word as the first value-table label pointer. */
+extern s32 gOvl19ValueTableFirstLabel;
 /* ovl_19:800BCD68 - 0x12C-byte halfword-label pool, indexed by byte offsets. */
 extern u16 gOvl19ValueLabelText[0x96];
 /* ovl_25 has a different object at 800BCD68: 800BAFCC reads sprite-header

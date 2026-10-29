@@ -1708,7 +1708,7 @@ void Ovl19DrawValueTable(void) {
     row = 0;
     savedTextSetting = GetTextPalette();
     SetTextPalette(1);
-    firstLabel = &D_8007AE58;
+    firstLabel = &gOvl19ValueTableFirstLabel;
     labelText = (u8 *)gOvl19ValueLabelText;
     do {
         nextColumn = column + 1;
