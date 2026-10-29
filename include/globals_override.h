@@ -178,8 +178,8 @@ typedef struct { char pad[0x25388]; E9Ptr *f25388; } E9Other;
 extern u16 D_800712BE;
 /* 800E9D28 stores the halfword 100 at this absolute address. */
 extern s16 D_80071A16;
-/* 800E9D28 loads this selected-record index with signed lh. */
-extern s16 D_80071CCA;
+/* 800E9D28 loads this signed selected-record index; condition dispatch compares it and command dispatch rewrites it. */
+extern s16 gOvl11SelectedRecordIndex;
 
 /* 800CC7CC copies four position words to the spawn at owner +18. */
 typedef struct {

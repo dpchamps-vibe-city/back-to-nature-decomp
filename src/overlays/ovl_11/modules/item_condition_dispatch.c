@@ -530,7 +530,7 @@ block_172:
         }
         return 0;
     case 0x24:
-        if (D_80071CCA == 7) {
+        if (gOvl11SelectedRecordIndex == 7) {
             if (GetGameFlag(0x1B) == 0) {
                 return 0;
             }
@@ -594,31 +594,31 @@ block_339:
         }
         return 0;
     case 0x32:
-        if (D_80071CCA == 0x14) {
+        if (gOvl11SelectedRecordIndex == 0x14) {
             var_v0_3 = Ovl11ClassifyConditionDateSlot(-1) ^ 1;
             return var_v0_3 == 0;
         }
         return 0;
     case 0x33:
-        if (D_80071CCA == 7) {
+        if (gOvl11SelectedRecordIndex == 7) {
             var_v0_3 = Ovl11ClassifyConditionDateSlot(-1) ^ 1;
             return var_v0_3 == 0;
         }
         return 0;
     case 0x34:
-        if (D_80071CCA == 3) {
+        if (gOvl11SelectedRecordIndex == 3) {
             var_v0_3 = Ovl11ClassifyConditionDateSlot(-1) ^ 1;
             return var_v0_3 == 0;
         }
         return 0;
     case 0x35:
-        if (D_80071CCA == 9) {
+        if (gOvl11SelectedRecordIndex == 9) {
             var_v0_3 = Ovl11ClassifyConditionDateSlot(-1) ^ 1;
             return var_v0_3 == 0;
         }
         return 0;
     case 0x36:
-        if (D_80071CCA == 0xE) {
+        if (gOvl11SelectedRecordIndex == 0xE) {
             var_v0_3 = Ovl11ClassifyConditionDateSlot(-1) ^ 1;
             return var_v0_3 == 0;
         }
@@ -644,7 +644,7 @@ block_339:
 
         return var_v0;
     case 0x3F:
-        if (D_80071CCA == 3) {
+        if (gOvl11SelectedRecordIndex == 3) {
             if (GetGameFlag(0x4E) == 1) {
                 return 0;
             }

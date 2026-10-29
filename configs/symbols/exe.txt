@@ -998,6 +998,8 @@ gCopiedSpriteDataBuffer = 0x8007F7F8; // size:0x10000
 
 // Shared ovl_11 resident +0x4450 state word: date/clock gates, interaction and record-pool bits.
 gOvl11StateFlags = 0x80070C88; // size:0x4
+// 800E9D28 loads this signed selected-record index; condition dispatch compares it and command dispatch rewrites it (-1 sentinel).
+gOvl11SelectedRecordIndex = 0x80071CCA; // size:0x2
 // Ovl11DrawStatusRecordPageTitle and the save-slot record list draw this bank-adjusted title; U16 codes decode List.
 gRecordListTitleTextAnchor = 0x80053604; // size:0xA
 // Ovl15UpdateSlotSelectionMenu, Ovl11DrawStatusSevenRecordRow and the record-family list copy/draw this bank-adjusted label; U16 codes decode Farm.

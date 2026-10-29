@@ -103,8 +103,8 @@ s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
             goto block_204;
         case 4:
             if (arg2 != -1) {
-                if (D_80071CCA == -1) {
-                    *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = (s32) D_80071CCA;
+                if (gOvl11SelectedRecordIndex == -1) {
+                    *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = (s32) gOvl11SelectedRecordIndex;
                 } else if (GetGameFlag(0x1BU) == 1) {
                     *((s32 *) ((u8 *) gOvl11ValueSlots + (arg2 * 4))) = 0;
                 } else {
@@ -112,7 +112,7 @@ s32 Ovl11DispatchStateCommand(s16 command, s16 arg1, s32 arg2, s32 arg3) {
                 }
             }
             if (arg3 != -1) {
-                *((s32 *) ((u8 *) gOvl11ValueSlots + (arg3 * 4))) = (s32) D_80071CCA;
+                *((s32 *) ((u8 *) gOvl11ValueSlots + (arg3 * 4))) = (s32) gOvl11SelectedRecordIndex;
             }
             goto block_204;
         }
