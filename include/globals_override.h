@@ -2924,8 +2924,8 @@ struct Ovl23ActorDecision {
     s16 paletteX;
     s16 paletteY;
 };
-/* 800B9310 passes six 0x50-byte records at this base to 800BA73C. */
-extern struct Ovl23ActorDecision D_800BF8A0[6];
+/* 800B9310: Ovl23UpdateRecordRunFrame passes six 0x50-byte actor decision records to 800BA73C. */
+extern struct Ovl23ActorDecision gOvl23ActorDecisionRecords[6];
 
 struct Ovl23ActorDecisionView {
     u8 pad0[0x14];

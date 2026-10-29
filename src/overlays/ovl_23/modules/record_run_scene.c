@@ -757,7 +757,7 @@ void Ovl23UpdateRecordRunFrame(void) {
 
     Ovl23DrawScrollingRecordBackdrop();
     i = 0;
-    base = (Ovl23ActorRecord *)D_800BF8A0;
+    base = (Ovl23ActorRecord *)gOvl23ActorDecisionRecords;
     record = (Ovl23DecisionRecord *)(base + 6);
     actor = base;
     do {
