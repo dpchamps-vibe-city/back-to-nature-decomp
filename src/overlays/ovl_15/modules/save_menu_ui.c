@@ -24,7 +24,7 @@ s8 Ovl15UpdateTwoChoiceMenu(void) {
     s32 buttons;
 
     DrawMenuPanel((u32 *)(gActiveRenderContext->field_D8 + 0x18), 1, 0x4E, 0x48, 0xA3, 0x22);
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((u8 *)D_80051D18 + gTextBankOffsets[0]), 0x5F, 0x4C);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((u8 *)gMemoryCardSlotLabelsTextAnchor + gTextBankOffsets[0]), 0x5F, 0x4C);
     navigation = *(s32 *)((u8 *)gPad0Input + 0);
     if (navigation & 0x4000) {
         PlaySoundEffect(5);

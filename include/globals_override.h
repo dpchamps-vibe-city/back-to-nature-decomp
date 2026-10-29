@@ -4131,11 +4131,8 @@ extern u8 D_800535D0[];
 extern u8 D_8005378C[];
 extern u8 D_800537A2[];
 
-/* D_80051D18 - base of a data table in the PS-X EXE, indexed by
- * D_80054BBC[0] and passed as the second argument to func_80017B3C by
- * ovl_15_func_80136990. Only address-taken; absolute-addressed (split
- * lui/%lo pair, the >8-byte incomplete-array form). */
-extern u8 D_80051D18[];
+/* 80051D18: Ovl15UpdateTwoChoiceMenu draws bank-adjusted MEMORY CARD slot 1 / slot 2 labels. */
+extern u8 gMemoryCardSlotLabelsTextAnchor[];
 
 /* D_80051D80 - base of a data table in the PS-X EXE, indexed by
  * D_80054BBC[0] and passed as the second argument to func_80017B3C by
