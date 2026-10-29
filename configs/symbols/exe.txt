@@ -969,6 +969,8 @@ gCardSameFarmExchangeTextAnchor = 0x8005204A; // size:0x56
 gCardNoAnimalSelectedTextAnchor = 0x80052150; // size:0x28
 // Ovl15CardTransferPromptState22 draws this bank-adjusted transfer rejection; U16 codes decode That puts too many hens into play. Have partner reduce number.
 gCardTooManyHensTextAnchor = 0x80052178; // size:0x7E
+// Ovl15CardTransferPromptState23 draws this bank-adjusted transfer rejection; U16 codes decode That gives partner too many hens. Reduce the number of hens in play.
+gCardPartnerTooManyHensTextAnchor = 0x800521F6; // size:0x8A
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

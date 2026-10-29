@@ -6190,8 +6190,8 @@ extern u8 gCardSameFarmExchangeTextAnchor[];
 extern u8 gCardNoAnimalSelectedTextAnchor[];
 /* 80132408: Ovl15CardTransferPromptState22 draws bank-adjusted That puts too many hens into play. */
 extern u8 gCardTooManyHensTextAnchor[];
-/* ovl_15:80132494 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_800521F6[];
+/* 80132494: Ovl15CardTransferPromptState23 draws bank-adjusted That gives partner too many hens. */
+extern u8 gCardPartnerTooManyHensTextAnchor[];
 /* ovl_15:80132520 adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_80052280[];
 /* ovl_15:801325AC adds the text-bank byte offset before drawing this prompt. */
