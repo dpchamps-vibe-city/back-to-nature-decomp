@@ -4712,7 +4712,8 @@ extern void (*gOvl11OptionsSoundSetters[2])(void);
 extern void (*gOvl11OptionsClockSetters[2])(void);
 /* 800FF324: Ovl11UpdateOptionsSettingsPage draws bank-adjusted system settings rows. */
 extern u8 gOptionsSettingsPageTextAnchor[];
-extern u8 D_80053D6A[];
+/* Same routine draws the Type 1/2/3, On/Off and Stereo/Mono value labels at fixed offsets. */
+extern u8 gOptionsSettingsValuesTextAnchor[];
 
 /* 800FD3CC: Ovl11DrawStatusSevenRecordRow copies bank-adjusted Days left after a count. */
 extern u16 gStatusDaysLeftTextAnchor[];

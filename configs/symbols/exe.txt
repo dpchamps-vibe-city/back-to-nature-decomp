@@ -903,6 +903,8 @@ gStatusEarningsTextAnchor = 0x80053636; // size:0x28
 gOptionsConfigurationPromptTextAnchor = 0x80053AE8; // size:0x3A
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
+// Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.
+gOptionsSettingsValuesTextAnchor = 0x80053D6A; // size:0x6C
 
 // Ovl11ReadDefaultPosition writes this three-word position (X,0,Z) for the progress path.
 gOvl11DefaultPositionWork = 0x80075A1C; // size:0xC

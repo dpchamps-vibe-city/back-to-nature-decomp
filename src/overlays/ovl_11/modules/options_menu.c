@@ -272,15 +272,15 @@ void Ovl11UpdateOptionsSettingsPage(void) {
     }
     DrawUiSprite0BFrame1(gActiveRenderContext->field_D8 + 0x50, (s16)(gOvl11OptionsSettingChoice * 65 + 0x42), (s16)((gOvl11OptionsSettingRow + 1) * 28 + 0x28));
     textOt = (s32 *)(gActiveRenderContext->field_D8 + 0x54);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + gTextBankOffsets[0]), 0x46, 0x3E, gOvl11OptionsSettings_options[0] != 0);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0xE + gTextBankOffsets[0]), 0x87, 0x3E, gOvl11OptionsSettings_options[0] != 1);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0x1C + gTextBankOffsets[0]), 0xC8, 0x3E, gOvl11OptionsSettings_options[0] != 2);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0x38 + gTextBankOffsets[0]), 0x46, 0x5A, gOvl11OptionsSettings_options[1] != 1);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0x3E + gTextBankOffsets[0]), 0x87, 0x5A, gOvl11OptionsSettings_options[1] != 0);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0x46 + gTextBankOffsets[0]), 0x46, 0x76, gOvl11OptionsSettings_options[2] != 1);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0x54 + gTextBankOffsets[0]), 0x87, 0x76, gOvl11OptionsSettings_options[2] != 0);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0x5E + gTextBankOffsets[0]), 0x46, 0x92, gOvl11OptionsSettings_options[3] != 1);
-    DrawTextLineSemiTransparent(textOt, (u16 *)(D_80053D6A + 0x66 + gTextBankOffsets[0]), 0x87, 0x92, gOvl11OptionsSettings_options[3] != 0);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + gTextBankOffsets[0]), 0x46, 0x3E, gOvl11OptionsSettings_options[0] != 0);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0xE + gTextBankOffsets[0]), 0x87, 0x3E, gOvl11OptionsSettings_options[0] != 1);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0x1C + gTextBankOffsets[0]), 0xC8, 0x3E, gOvl11OptionsSettings_options[0] != 2);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0x38 + gTextBankOffsets[0]), 0x46, 0x5A, gOvl11OptionsSettings_options[1] != 1);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0x3E + gTextBankOffsets[0]), 0x87, 0x5A, gOvl11OptionsSettings_options[1] != 0);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0x46 + gTextBankOffsets[0]), 0x46, 0x76, gOvl11OptionsSettings_options[2] != 1);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0x54 + gTextBankOffsets[0]), 0x87, 0x76, gOvl11OptionsSettings_options[2] != 0);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0x5E + gTextBankOffsets[0]), 0x46, 0x92, gOvl11OptionsSettings_options[3] != 1);
+    DrawTextLineSemiTransparent(textOt, (u16 *)(gOptionsSettingsValuesTextAnchor + 0x66 + gTextBankOffsets[0]), 0x87, 0x92, gOvl11OptionsSettings_options[3] != 0);
     Ovl11ShowOptionsRowDescription(gOvl11OptionsSettingChoice, gOvl11OptionsSettingRow);
 }
 
