@@ -644,8 +644,8 @@ void ovl_19_func_800B9124(void) {
     s32 n;
     s32 state;
 
-    n = D_800BD078 + 1;
-    D_800BD078 = n;
+    n = gOvl19SceneTickCounter + 1;
+    gOvl19SceneTickCounter = n;
     if (n % 30 == 0) {
         gOvl19SceneWork[0x101] = PlaySoundEffect(0x3A);
     }
@@ -664,7 +664,7 @@ void ovl_19_func_800B9124(void) {
             gOvl19SceneWork[0x101] = PlaySoundEffect(0x3B);
             gOvl19SceneWork[0x101] = PlaySoundEffect(0x44);
             CloseMessageWindow();
-            D_800BD078 = 0;
+            gOvl19SceneTickCounter = 0;
             gOvl19SceneWork[7] = 0;
             gOvl19SceneWork[3] = state;
         }

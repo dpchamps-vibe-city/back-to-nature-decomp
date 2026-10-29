@@ -6387,8 +6387,8 @@ typedef struct {
     s16 values[0x52];
     s16 handle;
 } Ovl19SelectionState;
-/* ovl_19 800B9124 increments/resets this signed word and tests its remainder modulo 30. */
-extern s32 D_800BD078;
+/* 800B9124: ovl_19 scene tick; every 30 increments it plays sound effect 0x3A, and a state completion resets it. */
+extern s32 gOvl19SceneTickCounter;
 /* ovl_19 800B95D4 anchors its two 0x48-byte signed-halfword records here. */
 extern s16 gOvl19ActorPairState[];
 /* ovl_19 800BA770 walks three 0x40-byte halfword records through 800BAB4C. */

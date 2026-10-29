@@ -87,6 +87,7 @@ gOvl19ProjectedSpriteScreen = 0x800BD048; // size:0x8
 gOvl19ProjectedStateScreen = 0x800BD050; // size:0x8
 gOvl19UiSpriteOffsets = 0x800BD058; // size:0x18
 gOvl19MessageSoundTicks = 0x800BD074; // size:0x4
+gOvl19SceneTickCounter = 0x800BD078; // size:0x4
 gOvl19ActorSpriteFlagOperation = 0x800BD07C; // size:0x4
 gOvl19ProjectedSpriteVector = 0x800BD080; // size:0x8
 gOvl19ProjectedStateVector = 0x800BD088; // size:0x8

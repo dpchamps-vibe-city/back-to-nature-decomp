@@ -107,3 +107,5 @@ gOvl19SceneMode = 0x800BF4C4; // type:data size:0x2
 gOvl19SoundVoice = 0x800BF6C2; // type:data size:0x2
 gOvl19ValueLabelOffsets = 0x800BCFF8; // type:data size:0x50
 gOvl19MessageSoundTicks = 0x800BD074; // type:data size:0x4
+// ovl_19 scene tick; every 30 increments the update routine plays sound effect 0x3A, and a state completion resets it.
+gOvl19SceneTickCounter = 0x800BD078; // type:data size:0x4
