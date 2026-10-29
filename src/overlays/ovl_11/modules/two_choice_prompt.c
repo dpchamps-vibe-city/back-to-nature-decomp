@@ -31,7 +31,7 @@ void Ovl11DrawChoicePromptVariant(s32 wide, s32 ot, s16 x, s16 y, s16 selection)
         text = *D_80054BC0 + (s32) D_800517EE;
     } else {
         textTiles = 4;
-        text = *D_80054BC0 + (s32) D_800517E0;
+        text = *D_80054BC0 + (s32) gYesNoChoiceTextAnchor;
     }
     cursorYOffset = selection * 0xE + 4;
     DrawChoiceCursor(ot, (s16) (x + 4), (s16) (y + cursorYOffset));

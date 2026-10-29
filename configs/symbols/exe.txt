@@ -859,6 +859,8 @@ gPrimaryValueLabelTextAnchor = 0x80051808; // size:0x4
 gSecondaryValueLabelTextAnchor = 0x8005180C; // size:0x4
 // Address anchor for the default secondary quantity-prompt text (u16 codes).
 gQuantityPromptDefaultTextAnchor = 0x8005181A; // size:0x2
+// Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
+gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
 gTextBankOffsets = 0x80054BBC; // size:0x4
 
 // DrawGlyphSprite selects one of six CLUT Y rows and pairs it with VRAM X=0x380.

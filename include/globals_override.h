@@ -3478,12 +3478,10 @@ extern s32 gPrimaryValueLabelTextAnchor;
 extern s32 gSecondaryValueLabelTextAnchor;
 extern s32 D_80051768;
 
-/* D_800517E0 / D_800517EE - two table bases 0x0E bytes apart in the
- * D_80051xxx region. ovl_11_func_8011D150 selects one per sprite variant
- * and adds D_80054BC0[0] to its address, materializing each with the SPLIT
- * two-insn `lui %hi / addiu %lo` form (declared as incomplete arrays so
- * their size exceeds -G8). Never defined in the overlays. */
-extern u8 D_800517E0[];
+/* 800517E0 / 800517EE: Ovl11DrawChoicePromptVariant adds D_80054BC0[0] to
+ * these compact Yes/No and wide Buy/Don't-buy text anchors, respectively.
+ * Keep the existing incomplete arrays and split-address linkage views. */
+extern u8 gYesNoChoiceTextAnchor[];
 extern u8 D_800517EE[];
 
 /* D_800517C6 - u8 table base in the PS-X EXE indexed by D_80054BBC[1]
