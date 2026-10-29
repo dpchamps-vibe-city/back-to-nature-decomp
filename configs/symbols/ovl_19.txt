@@ -86,6 +86,7 @@ gOvl19ValueLabelOffsets = 0x800BCFF8; // size:0x50
 gOvl19ProjectedSpriteScreen = 0x800BD048; // size:0x8
 gOvl19ProjectedStateScreen = 0x800BD050; // size:0x8
 gOvl19UiSpriteOffsets = 0x800BD058; // size:0x18
+gOvl19SelectedActorIndex = 0x800BD070; // size:0x2
 gOvl19MessageSoundTicks = 0x800BD074; // size:0x4
 gOvl19SceneTickCounter = 0x800BD078; // size:0x4
 gOvl19ActorSpriteFlagOperation = 0x800BD07C; // size:0x4

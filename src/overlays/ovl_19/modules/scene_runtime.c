@@ -462,8 +462,8 @@ void ovl_19_func_800B89C8(void) {
         }
         selection = ovl_19_func_800BA25C();
         if (selection != -1) {
-            if (D_800BD070 == -1) {
-                D_800BD070 = selection;
+            if (gOvl19SelectedActorIndex == -1) {
+                gOvl19SelectedActorIndex = selection;
                 RequestMessageWindow(4, 0x15);
                 gOvl19SceneWork[0x102] = PlaySoundEffect(0x43);
                 Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x50 + selection * 0x20], 3, 0);
@@ -477,13 +477,13 @@ void ovl_19_func_800B89C8(void) {
             if (GetMessageWindowStatus() == 2) {
                 StopSoundEffectVoice(gOvl19SceneWork[0x102]);
                 gOvl19SceneWork[2] = 6;
-                gOvl19SceneWork[6] = D_800BD070;
+                gOvl19SceneWork[6] = gOvl19SelectedActorIndex;
                 gOvl19SceneWork[0x102] = PlaySoundEffect(0x43);
             } else {
                 Ovl19UpdateActorBehaviors();
             }
         } else {
-            D_800BD070 = -1;
+            gOvl19SelectedActorIndex = -1;
             if (gOvl19SceneWork[0x51] == 1) {
                 if (((s32 *)gPad0Input)[2] & 0x40) {
                     Ovl19SetActorState((Ovl19Func800BAC40Arg *)&gOvl19SceneWork[0x50], 2, 30);
