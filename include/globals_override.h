@@ -962,7 +962,7 @@ extern char gOvl31NewFarm1FileName[18];
 /* ovl_31 rodata: NUL-terminated old FARM2 memory-card filename. */
 extern char gOvl31OldFarm2FileName[18];
 /* ovl_31 rodata: NUL-terminated new FARM2 memory-card filename. */
-extern char D_800B7F90[18];
+extern char gOvl31NewFarm2FileName[18];
 /* ovl_31 rodata: NUL-terminated old FARMP memory-card filename. */
 extern char D_800B7FA4[18];
 /* ovl_31 rodata: NUL-terminated new FARMP memory-card filename. */
