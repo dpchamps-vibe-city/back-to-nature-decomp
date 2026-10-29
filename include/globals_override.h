@@ -6146,11 +6146,9 @@ extern s16 gOvl15SlotCategory;
  * Do not remove MEMORY CARD. Never defined in the overlay. */
 extern u8 gCardLoadProgressTextAnchor[];
 
-/* D_80053530 - ovl_15 updater-array base in the PS-X EXE used by the shared
- * text-draw prologue (ovl_15_func_8012EEEC/8013063C/80131618 add
- * D_80054BBC[0] to its address with the split lui/addiu form). Never defined
- * in the overlay, so an incomplete array extern keeps the base name. */
-extern u8 D_80053530[];
+/* 80053530: card write/read/transfer slot-choice steps draw bank-adjusted
+ * Select a MEMORY CARD slot. Never defined in the overlay. */
+extern u8 gCardSelectSlotPromptTextAnchor[];
 
 /* 80130FF0: Ovl15CardReadRestoreImage draws bank-adjusted Data has been loaded. */
 extern u8 gCardLoadCompleteTextAnchor[];

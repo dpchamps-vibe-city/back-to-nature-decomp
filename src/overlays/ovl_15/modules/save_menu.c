@@ -501,7 +501,7 @@ void Ovl15CardWriteChooseCard(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053530);
+    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardSelectSlotPromptTextAnchor);
     temp_v0 = Ovl15UpdateTwoChoiceMenu();
     if (temp_v0 < 2) {
         if (temp_v0 < 0) {
@@ -1141,7 +1141,7 @@ void Ovl15CardReadChooseCard(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053530);
+    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardSelectSlotPromptTextAnchor);
     temp_v0 = Ovl15UpdateTwoChoiceMenu();
     if (temp_v0 < 2) {
         if (temp_v0 < 0) {
@@ -1673,7 +1673,7 @@ void Ovl15CardTransferChooseCard(void) {
     s8 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)D_80053530);
+    DrawMenuPanelWithText((void *)(temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32)gCardSelectSlotPromptTextAnchor);
     temp_v0 = Ovl15UpdateTwoChoiceMenu();
     if (temp_v0 < 2) {
         if (temp_v0 < 0) {
