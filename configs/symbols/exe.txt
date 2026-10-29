@@ -849,6 +849,8 @@ gTextEntryRowBounds = 0x800559BC; // size:0x8
 gTextEntryColumnHandlers = 0x800559C4; // size:0x8
 gTextEntryCodeHandlers = 0x800559CC; // size:0x8
 gTextEntryCodeTableSet1 = 0x800559D4; // size:0x38
+// DrawTextEntryGrid selects the symbol grid for nonzero character sets; labels include alphabet/Space/OK.
+gTextEntrySymbolGridTextAnchor = 0x80053888; // size:0x4
 gTextEntryPreviewBuffer = 0x800A0708; // size:0x20
 // Established PSY-Q libgs identities; the editor reads their low halfwords.
 HWD0 = 0x800A3FB0; // size:0x4

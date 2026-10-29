@@ -4299,9 +4299,9 @@ extern u16 *gTextEntryBuffer;
 /* Two code-mapping callbacks at 559CC; 245C8 indexes the 28-halfword table. */
 extern s32 gTextEntryCodeHandlers[];
 extern u16 gTextEntryCodeTableSet1[28];
-/* 80023D08 adds the text-bank byte offset to this second grid-label anchor;
- * only its address is used, retaining the prior word-shaped label view. */
-extern s32 D_80053888;
+/* 80053888: DrawTextEntryGrid selects these symbol-grid labels for a nonzero
+ * character set. Only its bank-adjusted address is used; retain the word-shaped anchor. */
+extern s32 gTextEntrySymbolGridTextAnchor;
 
 /* ovl_28: 800B9626 is 0=idle, 1=decrease, 2=increase; 800BAB0C is 0..255. */
 extern s16 gOvl28SpriteColorRampMode;

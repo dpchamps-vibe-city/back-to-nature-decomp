@@ -426,7 +426,7 @@ void DrawTextEntryGrid(void) {
     if (gTextEntryCharacterSet == 0) {
         sum = *gTextBankOffsets + (s32)&D_800537B2;
     } else {
-        sum = *gTextBankOffsets + (s32)&D_80053888;
+        sum = *gTextBankOffsets + (s32)&gTextEntrySymbolGridTextAnchor;
     }
     SetTextSpacing(1, 2);
     DrawTextLine(gActiveRenderContext->field_D8 + 0x64, sum, 0x2F, 0x42);
