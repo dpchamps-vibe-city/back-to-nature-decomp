@@ -2156,7 +2156,7 @@ void Ovl15CardTransferConfirmSlots(void) {
     Ovl15DrawSlotBanks();
     temp_a1 = gActiveRenderContext->field_D8;
     DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
-                 (s32)(D_80051EC6 + gTextBankOffsets[0]));
+                 (s32)(gCardTransferLivestockConfirmTextAnchor + gTextBankOffsets[0]));
     temp_v0 = Ovl15UpdateConfirmationMenu();
     switch (temp_v0) {
     case 1:

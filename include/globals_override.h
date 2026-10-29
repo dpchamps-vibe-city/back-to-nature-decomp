@@ -7155,8 +7155,8 @@ extern struct Ovl11SceneCoordinates gOvl11CoordinateClampBounds;
 
 /* ovl_15_func_801335F8: byte-addressed text at base and base+0xE. */
 extern u8 D_80051CAE[];
-/* ovl_15_func_80132638 adds the byte text-bank offset before func_8001AC10. */
-extern u8 D_80051EC6[];
+/* 80132638: Ovl15CardTransferConfirmSlots draws bank-adjusted Trading livestock / Is that OK. */
+extern u8 gCardTransferLivestockConfirmTextAnchor[];
 /* ovl_15_func_801320A8 adds the text-bank byte offset before func_8001AC10. */
 extern u8 D_800520A0[];
 /* ovl_15_func_801359FC stores the alternate record-pool byte pointer. */

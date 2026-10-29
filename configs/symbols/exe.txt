@@ -881,6 +881,8 @@ gCardSaveAbortConfirmTextAnchor = 0x80051DCC; // size:0x36
 gCardReadAbortConfirmTextAnchor = 0x80051E02; // size:0x36
 // Ovl15CardTransferConfirmExit draws this bank-adjusted prompt; U16 codes decode as Aborting exchange / Is that OK.
 gCardTransferAbortConfirmTextAnchor = 0x80051E88; // size:0x3E
+// Ovl15CardTransferConfirmSlots draws this bank-adjusted prompt; U16 codes decode as Trading livestock / Is that OK.
+gCardTransferLivestockConfirmTextAnchor = 0x80051EC6; // size:0x3E
 // Ovl15CardWriteConfirmFormat step 1 draws this bank-adjusted prompt; U16 codes decode as Want to format.
 gCardFormatConfirmTextAnchor = 0x80051FA8; // size:0x20
 // Ovl15CardWriteConfirmOverwrite and Ovl15CardTransferShowSummary draw this bank-adjusted prompt; U16 codes decode as OK to overwrite / this diary.
