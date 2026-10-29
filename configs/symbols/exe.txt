@@ -897,6 +897,8 @@ gStatusHelpTextAnchor = 0x8005360E; // size:0xA
 gStatusDaysLeftTextAnchor = 0x80053618; // size:0x14
 // Ovl11DrawStatusSevenRecordRow selects this bank-adjusted alternate when the count is unavailable; U16 codes decode as Free.
 gStatusFreeTextAnchor = 0x8005362C; // size:0xA
+// Ovl11DrawPairedValuePanel draws this bank-adjusted header; U16 codes decode as Earnings <num> / expenses.
+gStatusEarningsTextAnchor = 0x80053636; // size:0x28
 
 // Ovl11ReadDefaultPosition writes this three-word position (X,0,Z) for the progress path.
 gOvl11DefaultPositionWork = 0x80075A1C; // size:0xC

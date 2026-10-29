@@ -767,8 +767,8 @@ void Ovl11DrawPairedValuePanel(void) {
 
     textOt = gActiveRenderContext->field_D8 + 0x54;
     ((struct Ovl11NumberTextHeader *) &gOvl11NumberTextScratch)->marker = 0xFFD;
-    DrawTextLine(textOt, (s32) (D_80053636 + gTextBankOffsets[0]), 0xB2, 0x14);
-    DrawTextLine(textOt, (s32) (D_80053636 + 0x28 + gTextBankOffsets[0]), 0x20, 0x40);
+    DrawTextLine(textOt, (s32) (gStatusEarningsTextAnchor + gTextBankOffsets[0]), 0xB2, 0x14);
+    DrawTextLine(textOt, (s32) (gStatusEarningsTextAnchor + 0x28 + gTextBankOffsets[0]), 0x20, 0x40);
     value = ((struct Ovl11PairedValues *) D_8006C838)->pairs[0][0];
     if (value >= -9999999) {
         clampedValue = value;

@@ -4656,8 +4656,8 @@ extern s16 gOvl11MenuChoiceRow;
 /* 800FFB08 adds D_80054BBC[0] bytes to this menu text base. */
 extern u8 D_80053A22[];
 
-/* 800FD5E8 adds D_80054BBC[0] bytes to this text base and its +0x28 successor. */
-extern u8 D_80053636[];
+/* 800FD5E8: Ovl11DrawPairedValuePanel draws bank-adjusted Earnings/expenses; +0x28 is This month/accounts. */
+extern u8 gStatusEarningsTextAnchor[];
 
 /* 800FD7B4 adds D_80054BBC[0] bytes to this empty-pair label base. */
 extern u8 D_80053770[];
