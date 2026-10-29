@@ -4661,8 +4661,8 @@ extern u8 gStatusEarningsTextAnchor[];
 
 /* 800FD7B4: Ovl11DrawPairedValueRow draws bank-adjusted Nothing for an empty pair. */
 extern u8 gStatusNothingTextAnchor[];
-/* 800FDD74 adds D_80054BBC[0] bytes to this text base for func_80017B3C. */
-extern u8 D_80053780[];
+/* 800FDD74: Ovl11DrawStatusLevelPage draws bank-adjusted Level as the page header. */
+extern u8 gStatusLevelTextAnchor[];
 /* 800FDD74 walks five unsigned halfwords at D_8006C838+0x5208. */
 struct Ovl11FDD74State {
     u8 pad_0[0x5208];

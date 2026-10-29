@@ -910,7 +910,7 @@ void Ovl11DrawStatusLevelPage(void) {
     s32 value;
 
     DrawTextLine(gActiveRenderContext->field_D8 + 0x54,
-                 (s32)(D_80053780 + gTextBankOffsets[0]), 0xBA, 0x1A);
+                 (s32)(gStatusLevelTextAnchor + gTextBankOffsets[0]), 0xBA, 0x1A);
     for (i = 0; i < 5; i++) {
         Ovl11DrawStatusLevelIcon(i, 0x28, (s16)(0x30 + i * 0x22));
         Ovl11DrawStatusThresholdIcons(((struct Ovl11FDD74State *)D_8006C838)->entries[i], 0x48, (s16)(0x44 + i * 0x22));
