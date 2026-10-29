@@ -2009,7 +2009,7 @@ void Ovl15CardTransferValidateCapacity(void) {
     s32 slot;
 
     text = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(text + 0x18), text + 0x14, (s32) ((void *) ((u8 *) &D_800520A0 + *gTextBankOffsets)));
+    DrawMenuPanelWithText((u32 *)(text + 0x18), text + 0x14, (s32) ((void *) ((u8 *) &gLivestockTransferInstructionsTextAnchor + *gTextBankOffsets)));
     for (side = 0; side < 2; side++) {
         selectedCount[side] = selectedKind0[side] = selectedKind12[side] = 0;
         for (slot = 0; slot < 5; slot++) {

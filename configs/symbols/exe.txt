@@ -889,6 +889,8 @@ gCardTransferLivestockConfirmTextAnchor = 0x80051EC6; // size:0x3E
 gCardFormatConfirmTextAnchor = 0x80051FA8; // size:0x20
 // Ovl15CardWriteConfirmOverwrite and Ovl15CardTransferShowSummary draw this bank-adjusted prompt; U16 codes decode as OK to overwrite / this diary.
 gCardOverwriteConfirmTextAnchor = 0x80051FEA; // size:0x38
+// Ovl15CardTransferValidateCapacity and the slot-selection prompt draw these bank-adjusted instructions.
+gLivestockTransferInstructionsTextAnchor = 0x800520A0; // size:0xB0
 
 // Ovl11ReadDefaultPosition writes this three-word position (X,0,Z) for the progress path.
 gOvl11DefaultPositionWork = 0x80075A1C; // size:0xC

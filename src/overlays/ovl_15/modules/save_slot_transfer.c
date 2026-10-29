@@ -408,7 +408,7 @@ s32 Ovl15StepSlotSelectionInput(s16 arg0) {
     }
     temp_a1 = gActiveRenderContext->field_D8;
     temp_s7 = temp_a1 + 0x14;
-    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_s7, (s32) &D_800520A0[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_s7, (s32) &gLivestockTransferInstructionsTextAnchor[*gTextBankOffsets]);
     temp_s4 = Ovl15FindSlotRecordIndexOrCount(var_s3, -1);
     temp_v1 = *(s32 *) ((u8 *) gPad0Input + 0);
     if (temp_v1 & 0x1000) {

@@ -7157,8 +7157,8 @@ extern struct Ovl11SceneCoordinates gOvl11CoordinateClampBounds;
 extern u8 gLivestockTransferDirectionTextAnchor[];
 /* 80132638: Ovl15CardTransferConfirmSlots draws bank-adjusted Trading livestock / Is that OK. */
 extern u8 gCardTransferLivestockConfirmTextAnchor[];
-/* ovl_15_func_801320A8 adds the text-bank byte offset before func_8001AC10. */
-extern u8 D_800520A0[];
+/* 801320A8: Ovl15CardTransferValidateCapacity draws bank-adjusted livestock-transfer instructions. */
+extern u8 gLivestockTransferInstructionsTextAnchor[];
 /* ovl_15_func_801359FC stores the alternate record-pool byte pointer. */
 extern u8 *gOvl15SaveWorkBase;
 /* 80135380 restores these word-aligned save blocks (0x4C/0x24/0x34/0x18 bytes). */
