@@ -6446,7 +6446,8 @@ extern u16 D_800BCF28[];
 /* ovl_19 800B9AB0 indexes byte weights by flag * 16 + direction * 4 + choice. */
 extern u8 gOvl19DirectionWeights[];
 extern u16 D_800BCEE8[];
-extern s16 D_800BCEFC[];
+/* 800B868C: Ovl19InitActorPair copies two 8-byte templates from this flat s16 source. */
+extern s16 gOvl19ActorPairTemplates[];
 
 /* EXE 8006E910: 206 sixteen-byte object-program records, loaded by 800E499C.
  * The interpreter branches on handler result == 1; FF advances sequentially.

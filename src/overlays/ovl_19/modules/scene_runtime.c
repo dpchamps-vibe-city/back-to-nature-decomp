@@ -268,7 +268,7 @@ void Ovl19InitActorPair(void) {
 
     i = 0;
     two = 2;
-    src = (Ovl19Rec8 *)D_800BCEFC;
+    src = (Ovl19Rec8 *)gOvl19ActorPairTemplates;
     do {
         dst = gOvl19SceneWork + i * 0x24;
         dst[8] = i;
