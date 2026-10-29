@@ -3844,8 +3844,8 @@ extern u16 (*D_8006C860)[4];
  * ovl_11_func_800E351C/800E36CC (sprite-map offsets). Absolute-addressed. */
 extern s32 gOvl11SpriteBlockOffsets[51];
 
-/* 800EC064 scans ten flag words at stride 0xB4, starting at this address. */
-extern s32 D_80074320;
+/* 800EC064 and state command cases 3/8 scan ten flag words at 0xB4 stride starting at this +0x34 field of the first record. */
+extern s32 gOvl11SmallRecordFlags;
 
 /* D_800759E4 - shared field/stage-config struct (absolute-addressed from the
  * ovl_11 overlays, owned by the main EXE's data). Accessed at 0x00 (u16,

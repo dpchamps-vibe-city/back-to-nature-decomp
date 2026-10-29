@@ -339,8 +339,8 @@ block_118:
             return 0;
         case 8:
             for (var_s3 = 0; var_s3 < 10; var_s3++) {
-                if (((E9Flags *) &D_80074320)[var_s3].flags & 0x20000) {
-                    ((E9Flags *) &D_80074320)[var_s3].flags |= 0x40;
+                if (((E9Flags *) &gOvl11SmallRecordFlags)[var_s3].flags & 0x20000) {
+                    ((E9Flags *) &gOvl11SmallRecordFlags)[var_s3].flags |= 0x40;
                     return 1;
                 }
             }

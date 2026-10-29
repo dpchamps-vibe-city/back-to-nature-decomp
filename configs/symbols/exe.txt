@@ -1006,6 +1006,8 @@ gOvl11ConditionObjectState = 0x80071A22; // size:0x2
 gOvl11ClockMinutes = 0x80070D02; // size:0x2
 // State command case 5 masks this halfword against an argument to return a held-input test.
 gOvl11InputMask = 0x800712BE; // size:0x2
+// Flags field (+0x34) of the first small 0xB4-stride record; ten entries are scanned by command cases 3/8.
+gOvl11SmallRecordFlags = 0x80074320; // size:0x4
 // Ovl11DrawStatusRecordPageTitle and the save-slot record list draw this bank-adjusted title; U16 codes decode List.
 gRecordListTitleTextAnchor = 0x80053604; // size:0xA
 // Ovl15UpdateSlotSelectionMenu, Ovl11DrawStatusSevenRecordRow and the record-family list copy/draw this bank-adjusted label; U16 codes decode Farm.

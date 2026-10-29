@@ -64,7 +64,7 @@ s32 Ovl11ApplyObjectGroupCommand(s16 group, s16 recordIndex, s32 operation,
     case 3:
         if (operation == 0) {
             i = 0;
-            smallPoolFlags = &D_80074320;
+            smallPoolFlags = &gOvl11SmallRecordFlags;
             for (; i < 10; i++) {
                 if (smallPoolFlags[i * 0x2D] & 0x400) {
                     smallPoolBase = (char *)(smallPoolFlags - 0xD);
