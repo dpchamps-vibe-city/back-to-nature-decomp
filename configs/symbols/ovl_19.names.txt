@@ -121,3 +121,5 @@ gOvl19SelectionValueIndices = 0x800BCF24; // type:data size:0x4
 gOvl19ActorPairTemplates = 0x800BCEFC; // type:data size:0x10
 // Three 8-byte auxiliary-record templates copied into scene work by Ovl19InitAuxRecords.
 gOvl19AuxRecordTemplates = 0x800BCF0C; // type:data size:0x18
+// Four actor-value seeds read with an (entry[4] + 1) index by Ovl19InitActorPair.
+gOvl19ActorValueSeeds = 0x800BCEE8; // type:data size:0x8

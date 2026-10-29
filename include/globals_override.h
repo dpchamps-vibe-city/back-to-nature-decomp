@@ -6446,7 +6446,8 @@ extern s16 Ovl19_D_800BCFF0[] __asm__("D_800BCFF0");
 extern u16 D_800BCF28[];
 /* ovl_19 800B9AB0 indexes byte weights by flag * 16 + direction * 4 + choice. */
 extern u8 gOvl19DirectionWeights[];
-extern u16 D_800BCEE8[];
+/* 800B868C: Ovl19InitActorPair reads this four-halfword actor-value seed table with an (entry[4] + 1) index. */
+extern u16 gOvl19ActorValueSeeds[];
 /* 800B868C: Ovl19InitActorPair copies two 8-byte templates from this flat s16 source. */
 extern s16 gOvl19ActorPairTemplates[];
 

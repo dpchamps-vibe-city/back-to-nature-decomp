@@ -285,7 +285,7 @@ void Ovl19InitActorPair(void) {
     base = (char *)D_8006C838;
     d[0xC] = *(u16 *)(base + 0xE61C);
     d[0x30] = Ovl19ChooseInitialActorValue();
-    d[0x31] = D_800BCEE8[d[4] + 1];
+    d[0x31] = gOvl19ActorValueSeeds[d[4] + 1];
 }
 
 void Ovl19InitAuxRecords(void) {
