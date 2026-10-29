@@ -7656,8 +7656,8 @@ extern char gOvl15CardTitlePart[];
 extern u8 gOvl15CardTitleGlyphScratch[];
 /* 801349C8 clamps the season to 0..3 before indexing these four strings. */
 extern char *gOvl15CardTitleSeasonNames[];
-/* 8012FAE0 adds the shared text-bank offset before func_8001AC10. */
-extern u8 D_8005346A[];
+/* 8012F8DC/8012FAE0/8012FF28/8013280C: card save steps draw bank-adjusted Saving to memory card slot / Do not remove MEMORY CARD. */
+extern u8 gCardSavingInProgressTextAnchor[];
 
 /* ovl_11_func_8011D35C reads/writes this selection state with lh/sh. */
 extern s16 gOvl11WideChoiceSelection;

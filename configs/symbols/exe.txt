@@ -913,6 +913,8 @@ gCardSaveCompleteTextAnchor = 0x800534DC; // size:0x2A
 gCardLoadFailedTextAnchor = 0x800533F6; // size:0x28
 // Card read/transfer prompt state 14 draws this bank-adjusted status; U16 codes decode The diary is damaged. Loading failed.
 gCardDiaryDamagedTextAnchor = 0x8005341E; // size:0x4C
+// Card create/prepare/write/transfer save steps draw this bank-adjusted progress message; U16 codes decode Saving to memory card slot <n>. Do not remove MEMORY CARD.
+gCardSavingInProgressTextAnchor = 0x8005346A; // size:0x72
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

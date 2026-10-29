@@ -797,7 +797,7 @@ s32 Ovl15CardWritePromptState14(void) {
 void Ovl15CardWriteCreateSaveFile(void) {
     s32 var_v0;
 
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_8005346A);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardSavingInProgressTextAnchor);
     if (gOvl15MenuStateTimer >= 2) {
         var_v0 = Ovl15CreateSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot);
         if (var_v0 == 0) {
@@ -862,7 +862,7 @@ void Ovl15CardWritePrepareSaveImage(void) {
     temp_a1 = gActiveRenderContext->field_D8;
     icons = gOvl15CardIconFrameOffsets[gOvl15SelectedSlot];
     DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14,
-                 (s32)(D_8005346A + gTextBankOffsets[0]));
+                 (s32)(gCardSavingInProgressTextAnchor + gTextBankOffsets[0]));
     Ovl15BuildSaveSlotHeader(gOvl15SelectedSlot);
     Ovl15SerializeSaveImage();
     Ovl15InsertSaveChecksumSlots();
@@ -888,7 +888,7 @@ void Ovl15CardWriteWriteSaveFile(void) {
     u32 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32) D_8005346A);
+    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, gTextBankOffsets[0] + (s32) gCardSavingInProgressTextAnchor);
     temp_v0 = Ovl15WriteSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
     switch (temp_v0) {
     case 1:
@@ -2207,7 +2207,7 @@ void Ovl15CardTransferWriteSaveFile(void) {
     u32 temp_v0;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &D_8005346A[*gTextBankOffsets]);
+    DrawMenuPanelWithText((u32 *) (temp_a1 + 0x18), temp_a1 + 0x14, (s32) &gCardSavingInProgressTextAnchor[*gTextBankOffsets]);
     temp_v0 = Ovl15WriteSaveFile(gOvl15SelectedCard, gOvl15SelectedSlot, (u32 *) gOvl15TransferBuffer);
     switch (temp_v0) {
     case 1:
