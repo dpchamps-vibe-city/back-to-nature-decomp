@@ -328,6 +328,10 @@ check-names:
 check-interfaces:
 	@npx tsx tools/diagnostics/interfaceAudit.ts --check
 
+# Read-only source completion gate; handwritten runtime startup is exempt.
+check-asm:
+	@npx tsx tools/diagnostics/checkAsm.ts
+
 # Everything: the PS-X EXE plus every overlay container.
 check-all: SKIP_RODATA_CHECK = 1
 check-all: check-interfaces check-names check $(addprefix check-,$(OVERLAYS))
@@ -420,4 +424,4 @@ open('configs/splat/exe.yaml','w').writelines(lines[:idx+1])"
 	rm -rf $(BUILD_DIR)
 	@echo "Configs wiped. Run 'make split && make && make check' to rebuild from scratch."
 
-.PHONY: all disassemble split split-sdk-libs check check-exe check-all check-names check-interfaces split-all setup progress complete tu-progress tu-complete tu-verify clean wipe FORCE_BUILD_INPUTS
+.PHONY: all disassemble split split-sdk-libs check check-exe check-all check-names check-interfaces check-asm split-all setup progress complete tu-progress tu-complete tu-verify clean wipe FORCE_BUILD_INPUTS

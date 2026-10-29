@@ -207,6 +207,7 @@ ignores that path.
 | Command | Result |
 |---|---|
 | `make` or `make check` | Builds the binary and checks the byte match. This is the default |
+| `make check-asm` | Read-only check that no `INCLUDE_ASM` invocations remain in C sources/headers under `src/` and `include/`, except `src/__start.c`; lists violations and fails if any remain |
 | `make split` | Runs the full splat pipeline. See "The `make split` pipeline" |
 | `make split-sdk-libs` | Regenerates collision-safe SDK members/map under `build/sdk/`; cold recovery requires `PSYQ2ELF` |
 | `make progress` | Shows a summary of the decompilation progress |
