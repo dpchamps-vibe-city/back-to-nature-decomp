@@ -6203,8 +6203,8 @@ extern u8 D_800521F6[];
 extern u8 D_80052280[];
 /* ovl_15:801325AC adds the text-bank byte offset before drawing this prompt. */
 extern u8 D_8005230A[];
-/* ovl_15:801328C4 adds the text-bank byte offset before drawing this prompt. */
-extern u8 D_80053506[];
+/* 8012F990/801328C4: card write and transfer prompts draw bank-adjusted Save process failed. */
+extern u8 gCardSaveFailedTextAnchor[];
 /* 80132934: Ovl15CardTransferConfirmExit draws bank-adjusted Aborting exchange / Is that OK. */
 extern u8 gCardTransferAbortConfirmTextAnchor[];
 /* 80130F2C: Ovl15CardReadConfirmExit draws bank-adjusted Aborting load / Is that OK. */
