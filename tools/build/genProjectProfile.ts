@@ -12,8 +12,8 @@
  *   - Game serial (e.g. SLUS-01115)    → EXE filename pattern
  *   - SDK version                      → auto-detected via matchSignatures.ts (~6s)
  *   - Byte-identity claim              → VERIFIED at generation time by hashing
- *                                        build/<basename>.bin against the payload
- *                                        (same slice the Makefile check target uses)
+ *                                        input and build payloads/full EXEs against the
+ *                                        committed configs/checksums.json
  *
  * The only fact that cannot be derived lives in configs/project-info.json:
  *   { "game": "Harvest Moon: Back to Nature",
@@ -26,10 +26,10 @@
 
 import { readFileSync, existsSync } from "node:fs";
 import { join, basename } from "node:path";
-import { createHash } from "node:crypto";
 import { execSync } from "node:child_process";
 import { loadPsxExeInfo, ROOT } from "../lib/psxExeInfo.ts";
 import { digest, snapshot, readCache, writeCache, writeIfChanged } from "../lib/contentCache.js";
+import { CHECKSUM_MANIFEST, loadChecksumManifest, verifyChecksum } from "../lib/binaryChecksums.js";
 
 const INFO_PATH = join(ROOT, "configs/project-info.json");
 const OUT_PATH = join(ROOT, "configs/project-profile.md");
@@ -39,10 +39,6 @@ const MAKEFILE_PATH = join(ROOT, "Makefile");
 
 function hex32(n: number): string {
   return `0x${n.toString(16).toUpperCase().padStart(8, "0")}`;
-}
-
-function sha256(buf: Buffer): string {
-  return createHash("sha256").update(buf).digest("hex");
 }
 
 /** slus_011.15 → SLUS-01115 (also handles sles/sces/slps etc.) */
@@ -97,9 +93,8 @@ function parseMakefile(): MakefileFacts {
   return { gccVersion, cc1Flags, gThreshold, aspsxVersion, builtBin };
 }
 
-/** Hash the built binary against the original payload — the byte-identity
- *  claim is only emitted when it is actually true at generation time.
- *  Mirrors the Makefile check target: both sides skip the EXE header. */
+/** Both payloads and complete EXE files must match the committed references,
+ * using the same range and hash verifier as make check. */
 function verifyByteIdentity(
   binaryPath: string,
   payloadOffset: number,
@@ -109,12 +104,17 @@ function verifyByteIdentity(
   if (!builtBin || !existsSync(builtBin)) {
     return { verified: false, detail: "built binary not found — run `make` first" };
   }
-  const orig = readFileSync(binaryPath).subarray(payloadOffset, payloadOffset + payloadSize);
-  const built = readFileSync(builtBin).subarray(payloadOffset, payloadOffset + payloadSize);
-  if (sha256(orig) === sha256(built)) {
-    return { verified: true, detail: "SHA-256 match confirmed at generation time" };
+  try {
+    const expected = loadChecksumManifest().containers.exe;
+    if (!expected || expected.scope !== "payload" || expected.offset !== payloadOffset || expected.size !== payloadSize) {
+      throw new Error(`EXE payload range disagrees with ${CHECKSUM_MANIFEST}`);
+    }
+    verifyChecksum(readFileSync(binaryPath), expected, "EXE input");
+    verifyChecksum(readFileSync(builtBin), expected, "EXE build");
+    return { verified: true, detail: `committed SHA-256 in \`${CHECKSUM_MANIFEST}\` confirmed at generation time` };
+  } catch (error) {
+    return { verified: false, detail: (error as Error).message };
   }
-  return { verified: false, detail: "built binary DOES NOT match the original payload" };
 }
 
 /** Auto-detect the PSY-Q SDK version via signature matching.
@@ -256,7 +256,7 @@ ${headersSection(info.headers)}
 - Structural classification: \`npx tsx tools/agent/explainDiff.ts <func>\`
 - GCC pass/allocation trace: \`npx tsx tools/agent/compilerTrace.ts <func>\`
 - Exact per-function oracle: \`npx tsx tools/agent/diffFunc.ts <func>\` (\`VERDICT: MATCH\` = the function's bytes are right; \`UNDETERMINED\` is a third outcome, not a pass)
-- Full binary oracle: \`make check\` (SHA-256 against the original payload)
+- Full binary oracle: \`make check\` (EXE payload and full file against \`configs/checksums.json\`); \`make check-all\` also verifies every overlay
 `;
 
   if (!write) {

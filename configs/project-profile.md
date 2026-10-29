@@ -17,7 +17,7 @@ configuration, then regenerate this file.
 
 ## Toolchain
 
-- **Compiler:** GCC 2.95.2-psx (`cc1`) — verified byte-identical output against the original binary (evidence: `notes/toolchain-version-detection.md`); SHA-256 match confirmed at generation time
+- **Compiler:** GCC 2.95.2-psx (`cc1`) — verified byte-identical output against the original binary (evidence: `notes/toolchain-version-detection.md`); committed SHA-256 in `configs/checksums.json` confirmed at generation time
 - **Flags:** `-O2 -G8 -mips1 -mcpu=r3000 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet`
 - **Small-data threshold:** `-G8` — a global can be reached GP-relatively (single `lw/sw %gp_rel(sym)($gp)`) only if it is declared **8 bytes or smaller**, *and* the file **defines** it (a tentative definition, so cc1 emits `.comm`). A file that only declares it `extern` gets absolute addressing (`lui` + `lw/sw %lo(sym)`) whatever the size. Never enlarge a declaration to force absolute addressing; derive ownership from the target with `tools/build/deriveTuOwnedGlobals.ts`
 - **Assembler semantics:** ASPSX 2.80 via maspsx (`tools/vendor/maspsx`) — emulates macro expansion and relocation behavior; unlike cc1, byte identity with real ASPSX is not established for every input
@@ -46,4 +46,4 @@ required — see the small-data threshold above.
 - Structural classification: `npx tsx tools/agent/explainDiff.ts <func>`
 - GCC pass/allocation trace: `npx tsx tools/agent/compilerTrace.ts <func>`
 - Exact per-function oracle: `npx tsx tools/agent/diffFunc.ts <func>` (`VERDICT: MATCH` = the function's bytes are right; `UNDETERMINED` is a third outcome, not a pass)
-- Full binary oracle: `make check` (SHA-256 against the original payload)
+- Full binary oracle: `make check` (EXE payload and full file against `configs/checksums.json`); `make check-all` also verifies every overlay

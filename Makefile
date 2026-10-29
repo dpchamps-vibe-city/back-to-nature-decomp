@@ -63,10 +63,6 @@ LD_SCRIPT   := $(BUILD_DIR)/$(BASENAME).ld
 BUILT_BIN   := $(BUILD_DIR)/$(BASENAME).bin
 BUILT_ELF   := $(BUILD_DIR)/$(BASENAME).elf
 
-# Payload parameters — read from binary header at build time
-PAYLOAD_OFF := $(shell python3 -c "print(0x800)")
-PAYLOAD_SZ  := $(shell python3 -c "import struct; f=open('$(TARGET)','rb'); f.seek(0x1c); print(struct.unpack('<I',f.read(4))[0])")
-
 # Disassembly output (lives in build/)
 FUNCTIONS_CSV := $(BUILD_DIR)/functions.csv
 
@@ -220,8 +216,9 @@ $(BUILT_ELF): $(ALL_OBJS) $(LD_SCRIPT) $(BUILD_DIR)/named_overlay_imports.ld $(B
 $(BUILT_BIN): $(BUILT_ELF)
 	$(OBJCOPY) -O binary $< $@
 
-# Verify match against original payload. The rodata-attribution check runs
-# unconditionally here so a splat.yaml edit on an already-built tree is
+# Verify input and build against configs/checksums.json, not just each other.
+# The EXE check covers both its pinned payload range and its complete file.
+# The rodata-attribution check runs unconditionally so a splat.yaml edit is
 # caught even when no relink is needed (the link rule self-heals the rest).
 # `check-exe` names the PS-X EXE container explicitly; `check` stays its alias so
 # every existing invocation and note keeps working.
@@ -229,18 +226,7 @@ check-exe: check
 
 check: $(BUILT_BIN)
 	@if [ "$(SKIP_RODATA_CHECK)" != 1 ]; then npx tsx tools/build/deriveRodataSplits.ts; fi
-	@dd if=$(TARGET) bs=64K skip=$(PAYLOAD_OFF) count=$(PAYLOAD_SZ) iflag=skip_bytes,count_bytes 2>/dev/null | \
-		sha256sum | awk '{print $$1}' > $(BUILD_DIR)/original.sha256
-	@dd if=$(BUILT_BIN) bs=64K skip=$(PAYLOAD_OFF) count=$(PAYLOAD_SZ) iflag=skip_bytes,count_bytes 2>/dev/null | \
-		sha256sum | awk '{print $$1}' > $(BUILD_DIR)/built.sha256
-	@if diff -q $(BUILD_DIR)/original.sha256 $(BUILD_DIR)/built.sha256 > /dev/null 2>&1; then \
-		echo "OK: $(BUILT_BIN) matches original payload"; \
-	else \
-		echo "MISMATCH: $(BUILT_BIN) does not match original payload"; \
-		echo "  original: $$(cat $(BUILD_DIR)/original.sha256)"; \
-		echo "  built:    $$(cat $(BUILD_DIR)/built.sha256)"; \
-		exit 1; \
-	fi
+	@npx tsx tools/build/verifyChecksums.ts --container exe
 	@npx tsx tools/build/genProjectProfile.ts --write > /dev/null && echo "Refreshed configs/project-profile.md (byte-identity verified)"
 
 # ---------------------------------------------------------------------------
@@ -306,20 +292,10 @@ $(BUILD_DIR)/$(1)/$(1).elf: $$($(1)_OBJS) $(BUILD_DIR)/$(1)/$(1).ld $(ENGINE_SYM
 $(BUILD_DIR)/$(1)/$(1).bin: $(BUILD_DIR)/$(1)/$(1).elf
 	$$(OBJCOPY) -O binary $$< $$@
 
-# An overlay's check compares against its extracted member bytes, which is why
-# the archive extraction has to be reproducible.
+# Check the complete extracted member and build against the committed SHA-256.
 check-$(1): $(BUILD_DIR)/$(1)/$(1).bin
 	@if [ "$$(SKIP_RODATA_CHECK)" != 1 ]; then npx tsx tools/build/deriveRodataSplits.ts --container $(1); fi
-	@sha256sum < extracted/overlays/$(1).bin | awk '{print $$$$1}' > $(BUILD_DIR)/$(1)/original.sha256
-	@sha256sum < $(BUILD_DIR)/$(1)/$(1).bin  | awk '{print $$$$1}' > $(BUILD_DIR)/$(1)/built.sha256
-	@if diff -q $(BUILD_DIR)/$(1)/original.sha256 $(BUILD_DIR)/$(1)/built.sha256 > /dev/null 2>&1; then \
-		echo "OK: $(1) matches its extracted member"; \
-	else \
-		echo "MISMATCH: $(1) does not match its extracted member"; \
-		echo "  original: $$$$(cat $(BUILD_DIR)/$(1)/original.sha256)"; \
-		echo "  built:    $$$$(cat $(BUILD_DIR)/$(1)/built.sha256)"; \
-		exit 1; \
-	fi
+	@npx tsx tools/build/verifyChecksums.ts --container $(1)
 
 $(1): $(BUILD_DIR)/$(1)/$(1).bin
 

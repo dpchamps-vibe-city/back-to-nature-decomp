@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "containers": {
+    "exe": {
+      "scope": "payload",
+      "offset": 2048,
+      "size": 321536,
+      "sha256": "5da1274789412648af164576a681662fbd4a838fde3301fc7176dedf98c21262",
+      "fullFile": {
+        "size": 323584,
+        "sha256": "34e3b35dcd3fb1cd9a7d4813b8a9ef987915826e3d436f1908ecbe2d4fdf1444"
+      }
+    },
+    "ovl_08": {
+      "scope": "file",
+      "offset": 0,
+      "size": 2048,
+      "sha256": "918ace094e631452b03fcec1af22227a2c1ae801c92d07e88439e895ceeca363"
+    },
+    "ovl_10": {
+      "scope": "file",
+      "offset": 0,
+      "size": 16384,
+      "sha256": "fd6846d5255da2bd210d2687c82358356d95742c8060e78cea3a382ee912e4df"
+    },
+    "ovl_11": {
+      "scope": "file",
+      "offset": 0,
+      "size": 483328,
+      "sha256": "165c3cca1f3bd7ec8a37ef6ac0fa75eff2e79479816738379380f776da703742"
+    },
+    "ovl_15": {
+      "scope": "file",
+      "offset": 0,
+      "size": 98304,
+      "sha256": "c0bcec6ec5f70d1758f5a049c69b26f6703041808073646821b471420bcf5368"
+    },
+    "ovl_17": {
+      "scope": "file",
+      "offset": 0,
+      "size": 26624,
+      "sha256": "c5cad849690b1b74edbb6a28530a1eef84092f7234987f97a75f6c7a7233bcb0"
+    },
+    "ovl_19": {
+      "scope": "file",
+      "offset": 0,
+      "size": 32768,
+      "sha256": "bd4145a8a17418287ac9377dda625cf73291d8f7966767c2e11ad466872845d5"
+    },
+    "ovl_21": {
+      "scope": "file",
+      "offset": 0,
+      "size": 36864,
+      "sha256": "29c2975ae9250c47f68f017e186852eed7faf2786b50a4147bbeba229841e82c"
+    },
+    "ovl_23": {
+      "scope": "file",
+      "offset": 0,
+      "size": 34816,
+      "sha256": "39098e4f952c4443794fa1bcea4b33fdb240947c2ad033bfd208798c401b9883"
+    },
+    "ovl_25": {
+      "scope": "file",
+      "offset": 0,
+      "size": 34816,
+      "sha256": "eba69247e5402f00cc0531f022338e6857fe94c25b3d8e08921e3bd3a3ec93cc"
+    },
+    "ovl_27": {
+      "scope": "file",
+      "offset": 0,
+      "size": 57344,
+      "sha256": "ea6a7aef3d522bc1c905417cbf641d0a3bfd79b5aa68a95edd06f4d880f84b9e"
+    },
+    "ovl_28": {
+      "scope": "file",
+      "offset": 0,
+      "size": 12288,
+      "sha256": "f2d391a23eea6bcb679661c8bf1490cc5c6676e464264f524ea82f7b617eda48"
+    },
+    "ovl_30": {
+      "scope": "file",
+      "offset": 0,
+      "size": 28672,
+      "sha256": "d03a4f7d6a2bb2f1556f0be8fc675c63ffe61f3c254c789041ec0eba9057abe8"
+    },
+    "ovl_31": {
+      "scope": "file",
+      "offset": 0,
+      "size": 4096,
+      "sha256": "f9cb5488db0ab1d2a4cb86b2a1d480356aa9249b46ce5d7d13b4f762e13ba88a"
+    }
+  }
+}

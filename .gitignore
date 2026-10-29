@@ -13,6 +13,7 @@ src/**/*.s
 !tools/build/
 tools/build/*
 !tools/build/genProjectProfile.ts
+!tools/build/verifyChecksums.ts
 !tools/build/splitSdkLibs.ts
 !tools/build/auditSdkCollisions.ts
 !tools/build/buildInputs.ts

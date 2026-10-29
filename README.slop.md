@@ -220,6 +220,25 @@ ignores that path.
 | `make clean` | Removes the build artifacts |
 | `make wipe` | Removes the generated configuration files. Use this to bootstrap again |
 
+### Committed binary checksums
+
+`configs/checksums.json` is the checked-in SHA-256 reference for every binary
+that `make check-all` verifies. `make check` checks both the EXE payload and
+complete EXE file (including the header); each `make check-ovl_XX` checks the
+complete overlay member. Both the extracted input and rebuilt output must
+independently match the committed hashes.
+The EXE entry pins its payload offset and size plus a required `fullFile`
+SHA-256 and exact file size. Header-only changes and trailing bytes fail even
+when the payload matches. Overlay entries likewise require an exact file size.
+Splat configurations separately pin the original input images with SHA-1.
+
+The shared verifier is `npx tsx tools/build/verifyChecksums.ts --all` (or
+`--container <id>`). It fails on missing/extra container entries, invalid
+references, missing/truncated files and mismatches. Verification is read-only:
+no build or check regenerates reference hashes. Changing an expected hash
+requires a deliberate manifest edit backed by independently verified original
+input bytes, never accepting the current build as its own reference.
+
 ## Directory structure
 
 ```
@@ -241,7 +260,7 @@ configs/
   splat.yaml            Splat configuration (bootstrap.ts generates part of it)
   symbol_addrs.txt      Hand-written function and data symbols
   flag_overrides.mk     Per-file cc1 flags
-  checksum.sha256       The SHA-256 of the original payload
+  checksums.json        Committed SHA-256 references for EXE payload/full file and overlays
   project-info.json     Facts that a human supplies (game title, evidence note)
   project-profile.md    Generated target and toolchain facts (genProjectProfile.ts).
                         The skills read this file. Do not edit it by hand

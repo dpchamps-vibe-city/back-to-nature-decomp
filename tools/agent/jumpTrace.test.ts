@@ -1,12 +1,21 @@
 import { strict as assert } from "node:assert";
-import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
 import { classifyJumpPair, jumpTraceFromDumps, renderJumpTrace } from "./jumpTrace.js";
 
-const fixtures = join(import.meta.dirname, "../../test-fixtures/branch-orientation");
+const fixtures = join(import.meta.dirname, "test-fixtures/branch-orientation");
 const fn = "ovl_11_func_8011E090";
 const dump = (name: string, stage: string) => readFileSync(join(fixtures, `${name}.${stage}`), "utf8");
+
+test("preserved regression fixtures match their complete SHA-256 manifest", () => {
+  const manifest = JSON.parse(readFileSync(join(fixtures, "sha256.json"), "utf8")) as Record<string, string>;
+  assert.deepEqual(Object.keys(manifest).sort(), readdirSync(fixtures).filter(name => name !== "sha256.json").sort());
+  for (const [name, expected] of Object.entries(manifest)) {
+    assert.equal(createHash("sha256").update(readFileSync(join(fixtures, name))).digest("hex"), expected, name);
+  }
+});
 
 test("preserved nested tail: the flag SET moves before UID 241 and reverses its test", () => {
   const changes = classifyJumpPair(dump("t1", "rtl"), dump("t1", "jump"), fn);

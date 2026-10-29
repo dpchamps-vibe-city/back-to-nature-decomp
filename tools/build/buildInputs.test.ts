@@ -1,28 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { createHash } from "node:crypto";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, symlinkSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ROOT } from "../lib/psxExeInfo.js";
-
-test("buffered Make payload hashing preserves exact byte ranges, including partial blocks", (t) => {
-  const root = mkdtempSync(join(tmpdir(), "payload-hash-")); t.after(() => rmSync(root, { recursive: true, force: true }));
-  const makefile = readFileSync(join(ROOT, "Makefile"), "utf8");
-  const commands = [...makefile.matchAll(/^\t@dd if=\$\((?:TARGET|BUILT_BIN)\) (.+) 2>\/dev\/null \|/gm)].map((m) => m[1]!);
-  assert.equal(commands.length, 2); assert.equal(commands[0], commands[1]);
-  assert.match(commands[0]!, /bs=64K/); assert.match(commands[0]!, /iflag=skip_bytes,count_bytes/);
-  const bytes = Buffer.alloc(140_000); for (let i = 0; i < bytes.length; i++) bytes[i] = (i * 37 + 19) & 255;
-  const input = join(root, "input.bin"); writeFileSync(input, bytes);
-  for (const [offset, size] of [[0, 0], [1, 1], [2048, 65535], [2048, 65536], [2049, 65537], [139999, 123], [140001, 4]]) {
-    const flags = commands[0]!.replace("$(PAYLOAD_OFF)", String(offset)).replace("$(PAYLOAD_SZ)", String(size));
-    const hash = (args: string) => execFileSync("sh", ["-c", `dd if=${input} ${args} 2>/dev/null | sha256sum`], { encoding: "utf8" }).split(/\s/)[0];
-    const expected = createHash("sha256").update(bytes.subarray(offset, offset! + size!)).digest("hex");
-    assert.equal(hash(flags), expected);
-    assert.equal(hash(flags), hash(`bs=1 skip=${offset} count=${size}`));
-  }
-});
 
 test("production Make C rule tracks actual headers, flags, tools and new search members", (t) => {
   const root = mkdtempSync(join(tmpdir(), "make-dependencies-")); t.after(() => rmSync(root, { recursive: true, force: true }));

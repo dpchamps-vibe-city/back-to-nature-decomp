@@ -10,7 +10,7 @@ import { sha256 } from "../provenance.js";
 import type { CostEstimate, SemanticGraph, ResidualGrammar } from "./types.js";
 import type { LedgerEntry } from "../experimentLedger.js";
 
-const fixture = join(import.meta.dirname, "../../../test-fixtures/branch-orientation");
+const fixture = join(import.meta.dirname, "../test-fixtures/branch-orientation");
 const json = (path: string) => JSON.parse(readFileSync(join(fixture, path), "utf8"));
 const graph = json("historical-semantic-graph.json") as SemanticGraph;
 const grammar = json("historical-grammar.json") as ResidualGrammar;
