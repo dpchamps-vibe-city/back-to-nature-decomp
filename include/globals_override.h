@@ -7595,10 +7595,10 @@ struct Ovl11TimerState {
 
 /* ovl_15_func_80136C70 indexes three 4-byte terminated text labels. */
 extern u32 gOvl15SaveSlotLabels[3];
-/* Ovl15DrawSaveSlotSummary draws the bank-adjusted Diary <name> line from the first;
- * the second supplies the complete-date line at +0x1C. */
+/* Ovl15DrawSaveSlotSummary draws bank-adjusted Diary <name> and <month> of <season> <day> Year
+ * text bases; the date anchor's +0x1C string is the alternate farm line. */
 extern u8 gSaveSlotDiaryTextAnchor[];
-extern u8 D_80051D9E[];
+extern u8 gSaveSlotDateTextAnchor[];
 /* ovl_15_func_80136C70 clears 0x28 bytes and formats halfword text here. */
 extern s16 gOvl15MenuTextScratch[20];
 

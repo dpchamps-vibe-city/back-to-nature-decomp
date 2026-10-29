@@ -151,11 +151,11 @@ void Ovl15DrawSaveSlotSummary(s16 slot, s16 displayMode) {
         SetTextSourcePointer(4, (s32)dayText);
         header->name_8.units[8] = 0xFFFF;
         SetTextSourcePointer(5, (s32)gOvl15SaveSlotHeaders[slot].name_8.units);
-        DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&D_80051D9E + *gTextBankOffsets)), 0x41, (s32)y);
+        DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)&gSaveSlotDateTextAnchor + *gTextBankOffsets)), 0x41, (s32)y);
         y += 0xE;
         SetTextSourcePointer(6, (s32)gOvl15SaveSlotHeaders[slot].name_1A.units);
         header->name_1A.units[8] = 0xFFFF;
-        DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)((void *)((u8 *)&D_80051D9E + 0x1C)) + *gTextBankOffsets)), 0x41, (s32)y);
+        DrawTextLine(gActiveRenderContext->field_D8 + 0x14, (s32)((void *)((u8 *)((void *)((u8 *)&gSaveSlotDateTextAnchor + 0x1C)) + *gTextBankOffsets)), 0x41, (s32)y);
         return;
     }
 }

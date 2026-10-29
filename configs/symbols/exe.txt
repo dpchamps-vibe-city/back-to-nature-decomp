@@ -873,6 +873,8 @@ gMemoryCardSlotLabelsTextAnchor = 0x80051D18; // size:0x4C
 gSaveMenuConfirmationYesNoTextAnchor = 0x80051D80; // size:0xE
 // Ovl15DrawSaveSlotSummary draws this bank-adjusted Diary line; U16 codes decode as Diary <name>.
 gSaveSlotDiaryTextAnchor = 0x80051D8E; // size:0x10
+// Ovl15DrawSaveSlotSummary draws this bank-adjusted date line; U16 codes decode as <month> of <season> <day> Year.
+gSaveSlotDateTextAnchor = 0x80051D9E; // size:0x1C
 // Ovl11DrawChoicePromptVariant adds the secondary-bank offset for its compact Yes/No prompt.
 gYesNoChoiceTextAnchor = 0x800517E0; // size:0x2
 // The wide Ovl11DrawChoicePromptVariant selects the secondary-bank Buy/Don't-buy text.
