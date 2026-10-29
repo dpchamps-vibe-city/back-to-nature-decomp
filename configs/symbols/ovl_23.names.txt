@@ -39,6 +39,8 @@ gOvl23ActorScreenOffsetPairs = 0x800BBA64; // type:data size:0x18
 gOvl23DecisionRecordInitialValues = 0x800BBA7C; // type:data size:0xC
 // Ovl23InitDecisionRecords picks one of these four halfwords with Rand(4) for decision record +0x20E.
 gOvl23DecisionRecordRandomValues = 0x800BBA88; // type:data size:0x8
+// Ovl23InitRecordChoices fills six unique 0..9 values here; stage 4 reads the same halfword array.
+gOvl23RecordChoiceValues = 0x800BF892; // type:data size:0xC
 // Ovl23InitActorRecords selects a per-actor interaction distance from this table by record+0x32 / 50.
 gOvl23ActorDistanceThresholds = 0x800BBA90; // type:data size:0xC
 

@@ -70,6 +70,7 @@ gOvl23ActorSpriteHeaderOffsets = 0x800BBADC; // size:0x10
 gOvl23ActorSpriteBank = 0x800BBAEC; // size:0x29a8
 gOvl23SharedSpriteBank = 0x800BE49C; // size:0x13dc
 gOvl23RecordRunWork = 0x800BF87C; // size:0x4
+gOvl23RecordChoiceValues = 0x800BF892; // size:0xc
 gOvl23ActorSpriteSourceBase = 0x800BFA90; // size:0x30
 gOvl23SceneSpriteSource = 0x800BFC30; // size:0x30
 gOvl23SharedBankSpriteSource = 0x800BFC60; // size:0x30

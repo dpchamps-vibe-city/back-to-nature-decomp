@@ -930,11 +930,11 @@ void Ovl23InitRecordChoices(void) {
     s32 a1;
 
     for (i = 0; i < 6; i++) {
-        D_800BF892[i] = 0xFF;
+        gOvl23RecordChoiceValues[i] = 0xFF;
         a0 = Rand(10);
         a1 = 0;
         while (a1 <= i) {
-            if (D_800BF892[a1] == a0) {
+            if (gOvl23RecordChoiceValues[a1] == a0) {
                 a0++;
                 if (a0 >= 10) {
                     a0 = 0;
@@ -943,7 +943,7 @@ void Ovl23InitRecordChoices(void) {
             }
             a1++;
         }
-        D_800BF892[i] = a0;
+        gOvl23RecordChoiceValues[i] = a0;
     }
 }
 
