@@ -539,7 +539,7 @@ block_172:
     case 0x25:
         var_s0 = 0;
         for (var_s4 = 0; var_s4 < 5; var_s4++) {
-            temp_v0_2 = D_801274D0[var_s4];
+            temp_v0_2 = gOvl11ConditionItemIds[var_s4];
             secondGridKey.unk0 = temp_v0_2;
             secondGridKey.unk4 = Ovl11ReadRecordTypeProperty02((s16) temp_v0_2);
             var_s0 = var_s0 + Ovl11FindRandomGridCell(&secondGridCoordinates[2], &secondGridCoordinates[3], 1, &secondGridKey, 0xA);

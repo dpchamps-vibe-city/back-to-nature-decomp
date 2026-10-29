@@ -2168,6 +2168,8 @@ gOvl11OfferConditionMessages = 0x80128214; // type:data size:0x28
 gOvl11QuantityPurchaseNameRecord = 0x8012D6E8; // type:data size:0x4
 // Trade interaction edits this name record's nine halfwords before copying them into the purchased item.
 gOvl11TradeItemNameRecord = 0x8012D638; // type:data size:0x4
+// Condition case 0x25 walks these five item IDs and accumulates their grid-cell matches.
+gOvl11ConditionItemIds = 0x801274D0; // type:data size:0xA
 gOvl11QuantityPurchaseNameText = 0x8012D6EC; // type:data size:0x12
 Ovl11CompactTripleRecords = 0x800CADBC;
 Ovl11ExchangeTripleRecordEndpoint = 0x800CAE64;

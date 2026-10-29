@@ -7955,8 +7955,8 @@ typedef struct {
     char pad3;
 } Ovl11HourCounterDelta;
 extern Ovl11HourCounterDelta gOvl11HourCounterDeltas[4];
-/* 80104EC8 walks five item IDs with lhu and a two-byte stride. */
-extern u16 D_801274D0[5];
+/* 80104EC8: condition case 0x25 walks these five item IDs and accumulates their grid-cell matches. */
+extern u16 gOvl11ConditionItemIds[5];
 
 /* 80104EC8: ten 0xB4-byte slots, id +0, name +4, value +0x16, tile +0x1E, flags +0x34. */
 typedef struct {
