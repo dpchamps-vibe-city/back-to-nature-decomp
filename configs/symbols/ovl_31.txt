@@ -5,6 +5,7 @@ Ovl31ReadMemoryCardDirectory = 0x800B83B8; // type:func
 Ovl31ProbeMemoryCard = 0x800B8490; // type:func
 Ovl31RenameLegacySaveFiles = 0x800B8600; // type:func
 gOvl31OldFarm0FileName = 0x800B7F2C; // size:0x12
+gOvl31NewFarm0FileName = 0x800B7F40; // size:0x12
 gOvl31MemoryCardMenuRows = 0x800B87F0; // size:0x78
 gOvl31DirectoryFileCount = 0x800B8868; // size:0x4
 gOvl31MemoryCardResult = 0x800B886C; // size:0x4
