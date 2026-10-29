@@ -221,7 +221,7 @@ void Ovl23ResetRecordRunState(void) {
 void Ovl23InitDecisionRecords(void) {
     s32 i = 0;
     s32 one = 1;
-    u16 *src = D_800BBA7C;
+    u16 *src = gOvl23DecisionRecordInitialValues;
     u8 *p = Ovl23_D_800BF87C_draw;
     u16 temp;
 

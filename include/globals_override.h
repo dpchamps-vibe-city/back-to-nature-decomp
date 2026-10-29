@@ -2858,8 +2858,8 @@ extern s32 gOvl23RecordRunSubphases;
 extern s32 gOvl23RecordRunStages[];
 /* ovl_23:7F00 advances this unsigned setup byte through bank-load stages 0..5. */
 extern u8 gOvl23RecordRunSetupStage;
-/* ovl_23:8290 reads six initial values and a four-choice halfword table. */
-extern u16 D_800BBA7C[];
+/* 800B8290: Ovl23InitDecisionRecords copies six initial halfwords into decision record +0x244. */
+extern u16 gOvl23DecisionRecordInitialValues[];
 extern u16 D_800BBA88[];
 /* ovl_23:97E0 writes six choices; 8644 uses the same +0x16 halfword array. */
 extern u16 D_800BF892[];
