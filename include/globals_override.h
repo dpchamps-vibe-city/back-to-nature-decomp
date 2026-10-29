@@ -4114,10 +4114,8 @@ extern u8 D_80051BE6[];
 /* ovl_11_func_8011775C reads D_80070CF8 with lhu; retain a distinct typed view. */
 extern u16 D_80070CF8_halfword __asm__("gClockHour");
 
-/* D_800535E6 - base of a data table in the PS-X EXE, indexed by
- * D_80054BBC[0] and passed to func_80017B3C by ovl_11_func_800FC998.
- * Only address-taken; absolute-addressed (split lui/%lo pair). */
-extern u8 D_800535E6[];
+/* 800535E6: Ovl11DrawStatusValueGrid draws bank-adjusted Amount shipped. */
+extern u8 gStatusAmountShippedTextAnchor[];
 
 /* D_800535D0 - base of a data table in the PS-X EXE, indexed by
  * D_80054BBC[0] and passed as the source to func_8001ABF0 by

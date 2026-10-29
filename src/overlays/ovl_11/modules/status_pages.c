@@ -444,7 +444,7 @@ void Ovl11DrawStatusValueGrid(void) {
     s16 temp_s0;
     s32 var_s3;
 
-    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32) ((u8 *) D_800535E6 + gTextBankOffsets[0]), 0xBA, 0x14);
+    DrawTextLine(gActiveRenderContext->field_D8 + 0x54, (s32) ((u8 *) gStatusAmountShippedTextAnchor + gTextBankOffsets[0]), 0xBA, 0x14);
     var_s3 = 0;
     do {
         temp_s2 = (Ovl11D80127274Entry *) ((u8 *) gOvl11StatusValueGrid + (var_s3 * 6));
