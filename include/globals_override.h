@@ -6152,8 +6152,8 @@ extern u8 gCardLoadProgressTextAnchor[];
  * in the overlay, so an incomplete array extern keeps the base name. */
 extern u8 D_80053530[];
 
-/* ovl_15_func_80130FF0 adds D_80054BBC[0] bytes to this text-updater base. */
-extern u8 D_800533C8[];
+/* 80130FF0: Ovl15CardReadRestoreImage draws bank-adjusted Data has been loaded. */
+extern u8 gCardLoadCompleteTextAnchor[];
 /* ovl_15_func_80130FF0 reads this state with lh and compares it against 0x5B. */
 extern s16 gOvl15MenuStateTimer;
 /* ovl_15_func_8012F4F4 clears this state with sh; 8012F6C0 reads it with lh. */

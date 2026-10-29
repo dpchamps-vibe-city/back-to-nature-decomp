@@ -931,6 +931,8 @@ gSelectionIngredientChoicesTextAnchor = 0x8005399A; // size:0x4E
 gSelectionIngredientStorageTextAnchor = 0x800539E8; // size:0x3A
 // Card read/load steps draw this bank-adjusted progress message; U16 codes decode Loading from memory card slot <n>. Do not remove MEMORY CARD.
 gCardLoadProgressTextAnchor = 0x80053350; // size:0x78
+// Ovl15CardReadFinish draws this bank-adjusted status; U16 codes decode Data has been loaded.
+gCardLoadCompleteTextAnchor = 0x800533C8; // size:0x2E
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

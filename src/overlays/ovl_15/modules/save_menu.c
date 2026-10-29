@@ -1430,7 +1430,7 @@ void Ovl15CardReadRestoreImage(void) {
     s32 temp_a1;
 
     temp_a1 = gActiveRenderContext->field_D8;
-    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32)(D_800533C8 + gTextBankOffsets[0]));
+    DrawMenuPanelWithText((u32 *)(temp_a1 + 0x18), temp_a1 + 0x14, (s32)(gCardLoadCompleteTextAnchor + gTextBankOffsets[0]));
     gOvl15MenuState = Ovl15WaitForMenuButton(0x13, 0);
     if (gOvl15MenuStateTimer >= 0x5B) {
         gOvl15MenuState = 0;
