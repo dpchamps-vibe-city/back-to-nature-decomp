@@ -907,6 +907,8 @@ gOptionsControlsPageTextAnchor = 0x80053B22; // size:0x196
 gBedtimeChoicesTextAnchor = 0x80053A22; // size:0xC6
 // Ovl15CardWritePromptState16 and Ovl15CardTransferPromptState28 draw this bank-adjusted status; U16 codes decode Save process failed.
 gCardSaveFailedTextAnchor = 0x80053506; // size:0x2A
+// Ovl15CardWriteFinish draws this bank-adjusted status; U16 codes decode Data has been saved.
+gCardSaveCompleteTextAnchor = 0x800534DC; // size:0x2A
 // Ovl11UpdateOptionsSettingsPage draws this bank-adjusted settings list; U16 codes decode the system settings rows.
 gOptionsSettingsPageTextAnchor = 0x80053CB8; // size:0xB2
 // Ovl11UpdateOptionsSettingsPage draws these bank-adjusted value labels at fixed offsets; U16 codes decode Type 1/2/3, On/Off and Stereo/Mono.

@@ -949,7 +949,7 @@ void Ovl15CardWriteFinish(void) {
     s8 *p;
 
     p = &gOvl15MenuState;
-    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)D_800534DC);
+    DrawMenuPanelWithText((void *)(gActiveRenderContext->field_D8 + 0x18), gActiveRenderContext->field_D8 + 0x14, gTextBankOffsets[0] + (s32)gCardSaveCompleteTextAnchor);
     *p = Ovl15WaitForMenuButton(0x18, 0);
     if (gOvl15MenuStateTimer >= 0x5B) {
         *p = 0;

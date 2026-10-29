@@ -7624,7 +7624,8 @@ extern u8 D_8005321A[];
 extern u8 D_80053294[];
 /* 80130048: Ovl15CardWriteConfirmExit draws bank-adjusted Aborting save / Is that OK. */
 extern u8 gCardSaveAbortConfirmTextAnchor[];
-extern u8 D_800534DC[];
+/* 8013010C: Ovl15CardWriteFinish draws bank-adjusted Data has been saved. */
+extern u8 gCardSaveCompleteTextAnchor[];
 /* 8012FAE0 selects nine word offsets in three 12-byte rows. */
 extern u32 gOvl15CardIconFrameOffsets[3][3];
 /* 8012E15C publishes this pointer; 80137300 loads archive 0x10 here and
