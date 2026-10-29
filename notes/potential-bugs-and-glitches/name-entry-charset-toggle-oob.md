@@ -402,3 +402,381 @@ only inputs that require execution to resolve.
 
 Parent research: `notes/research/speedrun-calendar-glitch-audit.md`
 (sections 1, 6, 7, 8, 9 and the updated priorities).
+
+## 9. Runtime verification (psxw headless, this session)
+
+Verified end-to-end in the headless runner (`/home/dave/Documents/code/psx-wasm`,
+`psxw run btn --replay oob_test5.rpl`), new-game player naming, controller only:
+
+- Replay pad mapping (calibrated against in-guest pad-state traces at
+  0x8005E870/74/78): `game_held = ~bswap16(replay_word)`. Pure-button replay
+  words: CROSS 0xBFFF, START 0xFFF7, DOWN 0xFFBF, RIGHT 0xFFDF, CIRCLE 0xDFFF,
+  L1+L2 0xFAFF. Cursor movement runs on the auto-repeat stream
+  (`ProcessTextEntryInput`'s default case reads `repeatButtons`, not held):
+  a new press emits exactly one move; pad polls every 2 vblanks; 2-tick
+  holds move exactly one cell.
+- Executed sequence (player name screen): DOWN x2, RIGHT x8 (cursor 0x24),
+  L1+L2 same-frame (charset 0->1, cursor untouched), CROSS.
+- Result (RAM dumps): cursor 0x24 / set 1 confirmed; appended halfword =
+  `gTextEntryCodeTableSet1[2*10+8] = gTextEntryCodeTableSet1[28]` =
+  **0x7350** (bit 0x4000 set, reference id 0x350); player name at 0x80071A00
+  = [0x7350, 0xFFFF, ...] after confirm+execute. Naming flow then continued
+  normally (farm 0x80070D18, dog 0x800759E8).
+- This confirms the bug is player-triggerable with ordinary controller input
+  on the very first screen of a new game.
+
+Still open (next steps):
+1. Continue the run to the first dialogue that renders the player name;
+   0x7350 resolves id 0x350 via `D_8005F0C8[0x350]` = the .bss word at
+   0x8005FE08 (aux-sprite work area): nonzero => OOB pointer walk + unbounded
+   glyph-packet writes; zero => silent skip.
+2. Enumerate `_spu_tsa` (OOB index 48, live SPU transfer address) at the
+   in-game naming screens (horse/dog rename, animal purchase) after per-area
+   sound-bank loads; a harvested value with bit 0x4000 and id 0x00A
+   (0x400A/500A/600A/700A) is a self-reference => unbounded recursion in
+   `func_80018B98` => stack overflow whose smash path crosses the scene-id
+   block (0x8005E39C). A 0x400C/0x400A player/dog mutual pair works too.
+
+## 10. Resolver internals, unbounded fallback table, and the save-data route (this session)
+
+`ResolveTextSource` (src/modules/text_engine.c) resolves `code & 0xFFF`:
+ids 10-14 -> name buffers (10 = player 0x80071A00, 12 = dog, 13 = farm),
+16-21 -> padded numbers, 22/23 -> `&D_800749F8 + (s16)state * 0xB8`,
+default -> 0. When the resolver returns 0, the renderer falls back to
+`gTextSourceAddresses[code & 0xFFF]` (text_engine.c scan/count/measure loops).
+
+- `gTextSourceAddresses` = 0x8005F0C8, **size 0x2C (11 u32, ids 0..10)**.
+  Writes are clamped (`SetTextSourcePointer` caps the index at 0xA) but the
+  READ index is the full 12-bit text code: an asymmetric-bounds bug.
+  Id 0x350 reads the u32 at 0x8005F0C8+0xD40 = 0x8005FE08 — a fixed .bss
+  word, observed 0 at runtime, so the OOB-harvested 0x7350 name char is
+  silently skipped (no crash, no walk) at retail timing.
+- The measure/count/render loops RECURSE into the resolved pointer with no
+  depth limit and no cycle check. A name character of 0x400A (id 10 = the
+  player name buffer itself) is a self-reference: infinite recursion, and
+  the PSX stack grows down through the 2 MiB main RAM, smashing .bss
+  including gCurrentSceneId (0x8005E39C). Static proof complete.
+- Name entry cannot produce 0x400A: the charset tables output 0x0000-0x008B
+  plus the fixed OOB window (0x80055A0C..0x80055A5C = math_errno, _spu_RXX,
+  _spu_tsa, SPU modes/transfer flag). The window was dumped at the name
+  screen and in-game: static, 0x7350 the only reference value
+  (_spu_tsa frozen in the emulator). In-game text entry exists (ovl_11:
+  record trade, status text, quantity purchase), so the OOB harvest is
+  also reachable mid-game; on real hardware _spu_tsa is a live SPU address
+  whose low half cycles through 0x4000-0x7FFF as samples stream.
+- SAVE DATA is the clean injection path: ovl_15 save image = 0x8000 bytes =
+  256 x 0x80 records. Records 5..255 store the XOR of their first 127 bytes
+  in byte 0x7F; record 4 (metadata) stores the XOR of all record checksums
+  at +0x38 and its own at +0x7F. The player name is at payload offset 0x3060
+  (record 5 base) = **card file offset 0x3341** (section 12 has the
+  compaction mapping; the earlier 0x32E0 figure was wrong), copied raw on load
+  (Ovl15RestoreSaveImage) with no per-character validation. Checksums are
+  trivial XOR. Card filenames: BASLUS-01115-FARM0/1/2 (ovl_15 .data).
+  => A crafted card save with name[0] = 0x400A loads cleanly and, on the
+  first render of the player name (save-menu preview or any name dialogue),
+  recurses to a stack overflow. Runtime proof in progress (crafted MCR +
+  psx-wasm card0.mcr + save-screen replay).
+
+## 11. Save-data injection route (id-0x00A self-reference) — status
+
+To runtime-demonstrate the unbounded-recursion chain (section 10), the player
+name must contain 0x400A (id 10 = the name buffer itself). In-game harvesting
+only yields 0x7350 (section 10), so the name must come from a crafted save.
+
+Format facts established this session (runner-authoritative):
+- Memory card: `psx-wasm/crates/psx-devices/src/memcard.rs`. 128 KiB, 16
+  blocks of 64 frames of 128 B. Directory: frame 0 "MC"; frames 1..15 hold one
+  entry per data block (entry for block b is in frame b): [0] state
+  (FREE 0xA0 / FIRST 0x51 / MIDDLE 0x52 / LAST 0x53), [4..8) size (FIRST),
+  [8..10) next = next_block-1 (0xFFFF end), [0x0A..0x1F) name (FIRST); each
+  frame sealed with XOR(0..0x7E) at 0x7F. Data block b occupies frames
+  16b..16b+15. A 32 KiB save = blocks 1..4.
+- Save image (0x8000, 256 records of 0x80): the slot SUMMARY is record 4 at
+  file offset 0x200 (`Ovl15ReadSaveSummary` does
+  `MemCardReadFile(channel, name, buf, 0x200, 0x80)` = offset,size).
+  Summary field_34 (file 0x234) must be 0x14 — the load gate in
+  `Ovl15CardReadVerifyChecksums` (save_menu.c); record 4 carries its own XOR
+  at 0x27F and the XOR-of-all-records at 0x238. Records 5..255 are payload
+  with per-record XOR at +0x7F. **CORRECTED (2026-10-29): the player name
+  block is at save-image offset 0x3341, NOT 0x32E0** — see section 12 for the
+  compaction mapping that explains the delta.
+- **RESTORE RUNS ON THE SAVE SCREEN (resolved).** The earlier "no load
+  starts / slot summary stays zeroed" stall was the 0x32E0 vs 0x3341 offset
+  error, not a card handshake problem. The real flow (save_menu.c CardRead
+  states 0-19): state 13 `Ovl15VerifySaveChecksums` -> state 19 (0x13)
+  `Ovl15CardReadRestoreImage` -> "load complete" panel -> after a button OR a
+  91-frame timer: `RemoveSaveChecksumSlots` + `Ovl15RestoreSaveImage` + exit.
+  With 0x400A at 0x3341 (+ record-102 XOR, record-4 data-XOR @0x238, record-4
+  XOR @0x27F, all re-verified against `Ovl15VerifySaveChecksums`), the runner
+  confirms the card, the restore runs (~V2840), and **0x80071A00 = 0x400A is
+  in RAM from V2880** — the self-reference is live.
+- **Post-restore deadlock.** A minimal crafted card (zeros except the name
+  fields) restores an all-zero world: `gScenePhase` and friends come back
+  zero, the game enters scene 14 and ignores START/CROSS for 2100+ frames,
+  renders nothing, and traps nothing. A *valid* world image (a real save with
+  only the name grafted) is needed for the restored game to run and render the
+  name in play.
+- **CORRECTED (2026-10-29): the save-screen slot summary is NOT a recursion
+  vector.** `Ovl15DrawSaveSlotSummary` (save_menu_ui.c) uses *per-draw* text
+  source pointers 1..6 (not the global gTextSourceAddresses), and for a valid
+  slot (status 0) it **sanitizes the loaded header names in place**: each of
+  the 8 halfwords of name_8/name_1A with value >= 0xE01 (and != 0xFFD) is
+  replaced by 0xFFFF before the name is walked. A 0x4000|id reference is
+  >= 0xE01, so a crafted header name cannot carry a reference — the label
+  walk is bounded. The earlier "re-open the save screen to crash" plan is
+  invalid. The only recursion trigger is the in-game name dialogue (text
+  0x80051B0E, the sole 0x400A in text), which walks the player name via the
+  global gTextSourceAddresses[10]; reaching it needs in-game navigation.
+- A runtime-mod route was ruled out for this purpose: the psxw mod API
+  (psxmod.h) is log-only; it cannot write the name into RAM, and data
+  patches apply at load, before the title entry overwrites the name.
+
+Remaining steps (revised): (a) get a *valid* save image — the game reaches
+  in-game scene 2 with an empty name (working replay, vblank 4239), so find
+  the in-game save trigger (ovl_11 in-game menu -> ovl_15 diary save), play
+  to it, save, and capture the card; (b) graft 0x400A at file 0x3341 (+ its
+  checksums) so the restored world runs; (c) from the restored world, navigate
+  to the day-1 name dialogue (text 0x80051B0E) to fire the recursion, and
+  capture the stack smash (expected to cross `gCurrentSceneId` 0x8005E39C via
+  RAM dumps / no-trap). Alternatively (d) demonstrate the L1 0x7350 render:
+  from a controller-only OOB name, navigate to the same dialogue and observe
+  the unbounded walk of the word at 0x8005FE08 (id 0x350).
+
+## 12. Compaction mapping, naming-flow stages, and replay construction (2026-10-29)
+
+**Why 0x3341, not 0x32E0.** `RemoveSaveChecksumSlots` compacts the payload
+*in the transfer buffer* (drops each record's XOR byte 0x7F, so records
+5..255 fall to a 0x7F stride) **before** `Ovl15RestoreSaveImage` reads game
+state from the compacted payload base (buffer+0x280). For a payload
+(game-data) offset T the restore reads at U = T + T//0x7F, i.e. card file
+offset 0x280 + U. Player name T = 0x3060 -> U = 0x3060 + 0x61 = 0x30C1 ->
+**file 0x3341** (record 102, byte 0x41). The old 0x32E0 = 0x280 + 0x3060
+ignored the compaction shift, so the restore read a zero and the name never
+changed. Crafting rule: place the value at 0x280 + T + T//0x7F and re-verify
+the record's XOR (byte 0x7F) plus record 4's two XORs against
+`Ovl15VerifySaveChecksums`.
+
+**New-game naming flow** (`src/overlays/ovl_27/modules/title_scene.c`,
+`gOvl27TitleMenuStage` 0x800C4A24): the title menu reaches stage 13 (prompt
+0x397) -> 14 `BeginRequiredTextEntry(&gPrimaryObjectBase)` (player name,
+cancel disabled) -> 15 `UpdateTextEntry` -> 16 prompt 0x3A5 -> 17
+`BeginIndexedSelection` (NOT text entry — a cursor+confirm selection) -> 19
+prompt 0x3A4 -> 20 `BeginTextEntryAlternateLayout(&D_80070D18)` (farm,
+cancelable) -> 22 prompt 0x3A3 -> 23 `BeginTextEntry(&D_800759E8)` (dog,
+cancelable) -> 25 record summary -> 26 choice 1 proceeds to the game. A
+replay must handle the indexed-selection and the summary-confirm stages, not
+just the three text entries.
+
+**Text-entry state machine** (`text_entry.c`): state 1 = typing, state 2 =
+confirm prompt (START with a non-empty name), state 3 = canceled, state 4 =
+confirmed. `ProcessTextEntryInput` is gated by `IsMessageWindowStatusFinal()`
+(status 2 **or** 5) — the prompt must finish animating before any input
+registers; the player-name prompt settles to status 5 ~46 vblanks after the
+naming screen opens.
+
+**Replay-construction gotchas (psxw).**
+- Replay entry index = the guest clock u32 at 0x8006C840, NOT the vblank
+  number. For BTN the clock runs ~0.46 x vblank and starts ~100 vblanks in,
+  so a press at clock C lands at vblank ~C/0.46. The player-name typing
+  window is narrow (~150 vblanks); a long input sequence spans many clock
+  units and mostly fires after the window advances. Build sequences in clock
+  units and keep them tight.
+- Replay word = bswap16(~game_held) (game space per section 2: CROSS=0x0040
+  append, CIRCLE=0x0020 backspace, START=0x0800 confirm, L1+L2=0x0005 flip,
+  DOWN=0x4000, RIGHT=0x2000, LEFT=0x8000, UP=0x1000). Verified replay words:
+  CROSS=0xBFFF, CIRCLE=0xDFFF, START=0xFFF7, DOWN=0xFFBF, RIGHT=0xFFDF,
+  LEFT=0xFF7F, UP=0xFFEF, L1=0xFBFF, L2=0xFEFF, L1+L2=0xFAFF. (Section 9's
+  labels were correct. A prior "correction" here that swapped DOWN/CROSS and
+  RIGHT/CIRCLE was wrong — it pressed append/backspace instead of moving the
+  cursor, which is why rebuilt replays left gTextEntryCursor at 0.)
+- The pad-0 input-substitution path (`D_8006C838+0xC & 0x10000`) is inactive
+  during naming (0x8006C844 traced 0), so it is not an input blocker.
+- A working title->naming prefix: `out/oracle/replays/
+  btn-title-to-gameplay.rpl`. Its inputs decode (verified mapping) as: clock
+  400–1143 title menu (START/CROSS), naming screen opens clock 1122 / vblank
+  2425, player-name prompt final ~clock 1145 / vblank 2471, player name
+  confirmed clock 1200 (START), then indexed-selection/farm/dog/summary
+  input to clock ~2008, in-game D-pad clock 2150–2509 (scene 2 at vblank
+  4239).
+
+**Working OOB replay (reproduced this session, `oob_full.rpl`).** The whole
+reason rebuilt replays failed: the title prefix must run to **clock 1150**
+(the title menu needs input to clock 1143); truncating it at 1030 leaves the
+game in the title menu so the OOB D-pad hits the title (no-op). Recipe:
+prefix = working[0:1150], then into the player-name window — DOWN x2
+(0xFFBF) @1160,1168; RIGHT x8 (0xFFDF) @1176+8i; L1+L2 (0xFAFF) @1240;
+CROSS (0xBFFF) @1248; START (0xFFF7) @1256; CROSS @1264. Result:
+`0x80071A00` = **0x7350** from vblank 2677, stable to 4000, no trap. Timing:
+**vblank = 2*clock + 181** (measured: clock 400→vblank 981, 550→1281).
+Calibration (traced pad0 heldButtons 0x8005E874 during title menu): replay
+0xFFBF→game 0x4000, 0xFFDF→0x2000, 0xBFFF→0x0040, 0xFAFF→0x0005. Reachable
+set-1 OOB references (dumped): idx28=0x7350 (id 0x350→word @0x8005FE08),
+idx48=0x657a (id 0x57a→word @0x800606B0, DOWN x4/RIGHT x8); idx29-47 are
+glyphs/zeros, idx49+ zero. No 0x400A (self-ref) in the reachable window —
+that still needs the save route.
+
+**OOB name carries through to in-game (`oob_align.rpl`).** Compressing the
+OOB sequence to confirm the player name inside the working replay's own
+window (so later stages stay on their natural timeline) works: prefix =
+working[0:1122]; OOB DOWN x2 @1150,1157; RIGHT x8 @1164+7i; L1+L2 @1220;
+CROSS @1227; START @1234 (confirm 34 clocks after working's 1200); then
+working[1240:2510] shifted +34. Result: name 0x80071A00 = 0x7350 from
+vblank 2635, stable; scene id 0x8005E39C goes 0→13 (title, vblank 99)→
+**2 (in-game, vblank 4307)**; title stage machine runs 15→26 cleanly; no
+trap to vblank 7000. So the controller-only OOB is stable and the game keeps
+running in-world with the reference-control-code name. The observable effect
+still requires the name to be *rendered* via the reference walk (record
+summary stage 25 ~vblank 4109 did not trap; the in-game name dialogue is the
+text-bank 0x80051B0E caller).
+
+## 13. Set arithmetic/table split, full reachable window, and a second OOB (write)
+
+**Set 0 is arithmetic, set 1 is a table — different index math.**
+`GetTextEntryCode(cursor, set)` splits `quot=cursor/14`, `rem=cursor%14` and
+calls the per-set handler with `(rem, quot, cursor)`:
+- `GetTextEntryCodeSet0(col, row)` (src/modules/text_entry.c:732) returns an
+  ARITHMETIC code, no memory read: col<5 → `row*5+col`; col<0xA →
+  `0x20+row*5+(col-5)`; else → `0x40+row*3+(col-10)`. So set 0 produces small
+  codes and can never itself yield a 0x4000 reference.
+- `GetTextEntryCodeSet1(col, row)` (line 757) reads
+  `gTextEntryCodeTableSet1[row*10 + col]` — a **10-wide** table, base
+  0x800559D4. The set-1 index for a cursor that was positioned in set 0 is
+  `(cursor/14)*10 + (cursor%14)`. Because set 0's grid is much taller than set
+  1's 2 rows, a cursor valid in set 0 maps far past set 1's end: that is the
+  OOB read. The reachable set-1 index for a set-0 cursor at (row0,col0) is
+  `row0*10 + ((row0*14+col0)%14)`.
+
+**Full reachable window (dumped at the naming screen, ram_002600).** 64
+halfwords from 0x800559D4: idx0-27 are in-table glyph codes (0x62-0x8E, no
+0x4000 bit); **idx28 = 0x7350 (ref id 0x350 → word @0x8005FE08) is the ONLY
+stable reference value in the whole window**; idx29-35 = 0x000B/zeros;
+idx36-48 = volatile .bss (CLUT/sprite words 0x1C00/0x1F80/0x10C0…, and idx48
+was 0xA5AC in this run vs 0x657a in the earlier one — the window content is
+**state-dependent, not stable**); idx49-63 = a small lookup table (0x0000-0x0008
+pairs). Conclusion: the controller-only harvest reliably yields **0x7350
+only**; the self-reference 0x400A (id 0x00A = player name) is **not
+reachable** through this window in any observed state. The deterministic
+self-recursion crash therefore still requires the save-data route (section
+11), not the controller.
+
+**Second OOB — a WRITE, in the confirm path.** In `ProcessTextEntryInput`
+(src/modules/text_entry.c:440) the CROSS/OK-cell confirm branch fires when the
+pad word is 0x40 (CROSS) *and* the cursor is at 0x53 (the grid OK cell) with a
+non-empty name: it runs `gTextEntryBuffer[gTextEntryLength + 1] = 0xFFFF` with
+**no length cap**, then sets state 2. The append path is capped at
+`gTextEntryLength < 8`, so the name field holds 8 halfwords (0x10 bytes) at
+the start of `gPrimaryObjectBase` (0x80071A00; the START path, 0x800, sets
+state 2 with no terminator write). With a FULL 8-character name the confirm
+writes index 9 → **0x80071A12**, one halfword past the name field (a default
+terminator slot sits at index 8 / +0x10). Dumped, 0x80071A12 currently holds
+0x0064 ("d"), i.e. the word 0x00640064; the OOB write overwrites its low
+halfword with 0xFFFF. The value is fixed (0xFFFF) and only 2 bytes, so impact
+is limited to corrupting the field immediately after the player name — but it
+is a controller-reachable out-of-bounds write (also present for the dog name
+buffer 0x800759E8 and farm name buffer 0x80070D18, each writing past its own
+name field). Distinct from the section-1 OOB *read*+walk: this one writes.
+Reachability requires: enter 8 characters, move the cursor to grid cell 0x53
+(row 5, col 13 of the active set), press CROSS.
+
+**Precise OOB mechanism — writer clamps, readers do not (text_engine.c).**
+`gTextSourceAddresses` (0x8005F0C8) is an **11-word** table because the ONLY
+writer, `SetTextSourcePointer` (line 37), clamps: `idx = arg0 & 0xFFFF; if
+(idx >= 0xB) idx = 0xA; gTextSourceAddresses[idx] = arg1;` — writes are
+bounded to 0..0xA. But the four READERS index it with a raw 12-bit mask and
+NO clamp:
+- line 848  `work4      = gTextSourceAddresses[*arg2 & 0xFFF];`
+- line 1121 `r          = gTextSourceAddresses[*cur  & 0xFFF]`
+- line 1199 `value      = gTextSourceAddresses[*ptr  & 0xFFF]`
+- line 1300 `temp_a0_2  = gTextSourceAddresses[temp_a0 & 0xFFF]`
+
+**Where the name is actually rendered through this path.** Only the in-game
+name dialogue (text bank 0x80051B0E) renders the player name via these
+gTextSourceAddresses readers. The title record summary
+(`Ovl27DrawTitleRecordSummary`, title_scene.c:704) does NOT draw the name — it
+draws a text-bank label, a portrait sprite (base+0x5246) and a decimal
+(base+0x5248) — so it is not a name-render point. The on-screen entry preview
+(`DrawTextEntryPreview`, text_entry.c:397) builds a separate
+`gTextEntryPreviewBuffer` via `BuildTextEntryPreview` (INCLUDE_ASM) and draws
+that as glyphs; it does not route the stored reference codes through the
+gTextSourceAddresses walk. So both the OOB read (finding 1) and the
+self-recursion (finding 2) only EXECUTE when the in-game dialogue renders the
+name; the controller harvest puts the trigger value in the name, but the effect
+still needs the in-game render (navigation blocker). The OOB WRITE (finding 3)
+executes during the naming flow itself (no in-game nav needed).
+
+So any reference halfword whose low 12 bits (id) are 0xB..0xFFF reads past the
+table: id 0x350 (from the harvested 0x7350) reads
+0x8005F0C8 + 0x350*4 = **0x8005FE08** (volatile .bss, ~0 at the naming screen,
+so the reference is skipped/benign). This is the controller-triggerable OOB
+READ. Separately, id 0xA (0x400A) is IN bounds: `gTextSourceAddresses[0xA]` is
+the player-name pointer (0x80071A00, set via SetTextSourcePointer(10,…)), so
+0x400A in a rendered name is a **self-reference** — the reader resolves it back
+to the name buffer and re-loads it, with no depth/cycle guard → unbounded
+recursion (the deterministic crash; needs the save route since the controller
+harvest only yields id 0x350). `ResolveTextSource` (line 1605) is a DIFFERENT,
+separate id-switch (case 10 → player name … default → 0) used for other source
+types; the name-render path is the gTextSourceAddresses readers above.
+
+## 14. OOB-write target is a live player-object field (gPrimaryObjectBase+0x12)
+Symbol map (ovl_19/27/17 disassembler_symbol_addrs.txt:1724-1726):
+  gPrimaryObjectBase  = 0x80071A00   (player object; name = first 8 hw, +0x00..+0x0F)
+  gMenuGridLayoutIndex= 0x80071A1E   (0x1E bytes on -> gPrimaryObjectBase is 30 bytes)
+So gPrimaryObjectBase spans 0x80071A00..0x80071A1D. The name entry uses
+`(u16 *)&gPrimaryObjectBase` as its buffer (title_scene.c:392). ClearTextEntryBuffer
+writes indices 0..8 (+0x00..+0x11). The confirm OOB write is index 9 = +0x12, which is
+INSIDE gPrimaryObjectBase (a live field between the name and the next global), not mere
+.bss padding. Writing 0xFFFF there clobbers a player-object field at offset 0x12 on
+name confirm. (Field identity: tentative defs mark +0x12-class fields "zeroed on init,
+purpose unknown"; not a pointer per current views.)
+Impact: deterministic 2-byte corruption of a live player-object field, fully
+controller-triggerable (8 chars + OK-cell + CROSS). Benign for the observed field but a
+real state-corruption bug, and it sits next to gMenuGridLayoutIndex (see the interaction
+menu grid-nav OOB note).
+
+## 15. OOB-read window contents = math + SPU globals (state-dependent wild pointer)
+gTextEntryCodeTableSet1 @0x800559D4 is 28 halfwords (idx 0..27, ends 0x80055A0B).
+The reachable OOB window (set-1 idx 28..48) reads past it into:
+  0x80055A14 math_errno
+  0x80055A18 math_err_point   (a POINTER)
+  0x80055A1C _spu_RXX         (SPU/sound register globals: _spu_tsa/_transMode/_addrMode...)
+So the charset-toggle OOB read is not just "reads .bss" — it reads live library/sound
+state. A pointer's low halfword (e.g. math_err_point = 0x8005xxxx -> 0x5xxx) HAS bit
+0x4000 set, so if such a global is non-zero at render time, the harvested value is a
+string-REFERENCE code, and the reader does gTextSourceAddresses[id & 0xFFF] (unclamped,
+idx 0xB..0xFFF = OOB) and follows the resulting pointer. The observed 0x7350 (id 0x350)
+target was 0 (benign); but the mechanism can follow a non-zero/wild pointer in other
+states. This upgrades the OOB read from "benign for one value" to "state-dependent
+out-of-bounds read + wild pointer follow."
+
+## 16. Self-recursion CONFIRMED unbounded (arg2==0 at every call site)
+MeasureTextSpanLength(u16 *arg0, u16 arg1, s16 arg2) [text_engine.c:1175] recurses on
+each 0x4000 reference:  index += MeasureTextSpanLength(nin, arg1, arg2 ? arg2-index : 0).
+ALL top-level callers pass arg2 == 0:
+  :581  MeasureTextSpanLength(gTextScriptCursor, 0xFFC,  0)
+  :605  MeasureTextSpanLength(cur,               0xFFFE, 0)
+  :620  MeasureTextSpanLength(gTextScriptCursor, ...)   [arg2 0]
+  :1071 MeasureTextSpanLength(base,               *cur,  0)
+  :1152 MeasureTextSpanLength(arg0,               0xFFFE, 0)
+  :1588 MeasureTextSpanLength(gTextScriptCursor,  0xFFFF, 0)
+and the recursive call keeps arg2==0 (arg2 ? ... : 0). So the limit never engages.
+Chain for a name buffer starting with 0x400A (id 0xA == player name):
+  render name dialogue -> MeasureTextSpanLength(dlg, 0xFFFF, 0)
+    -> sees 0x400A, ResolveTextSource(0x400A & 0xFFF=10) = 0x80071A00 (name buffer)
+    -> recurse MeasureTextSpanLength(0x80071A00, ..., 0)
+    -> reads 0x400A again -> recurses ... -> INFINITE (no depth/arg2 limit)
+=> unbounded recursion, PSX downward stack smash (sp grows toward .bss), eventual
+   illegal-instruction / bus-error trap. Deterministic given (a) name buffer = 0x400A
+   [crafted save at file 0x3341] and (b) the in-game name dialogue rendering it.
+
+## 17. Name dialogue 0x80051B0E confirmed to render the player name (dump-verified)
+RAM dump (oob_align, vblank 5327):
+  0x80051B0E +0x00 = 0x400A  (player-name self/reference code, FIRST token)
+  +0x02 = 0xFFFE (line break), then glyphs 0x0001 0x0028 0x0031 ...
+So 0x80051B0E is a dialogue whose first token is the player-name reference -> when
+rendered it runs MeasureTextSpanLength over it, hits 0x400A, ResolveTextSource ->
+player name buffer, and recurses into the name. This is the render point for A1 (OOB
+read, name=0x7350) and A3 (self-recursion, name=0x400A).
+The in-game text window that DID open (work buffer 0x8006E110) is a DIFFERENT message
+(glyphs 0x0F87 0x0FF7 0x0FF4 ...; no 0x400A), so the name dialogue has not yet been
+triggered in any captured run. Trigger = the specific day-1 NPC/event that plays
+0x80051B0E (in-game navigation, the current blocker).
