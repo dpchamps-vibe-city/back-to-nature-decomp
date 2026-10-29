@@ -869,6 +869,8 @@ gTextSpeedIntervals = 0x80049050; // size:0x6
 gTextChoiceStatusCodes = 0x80049058; // size:0x10
 // EnterChoiceState searches FFA/FF9/FF8 to select the parallel choice-window state.
 gTextChoiceStartTokens = 0x80049068; // size:0x6
+// EnterChoiceState publishes states 7/8/9; UpdateTextWindow handles them as 2/3/4-choice windows.
+gTextChoiceStates = 0x80049070; // size:0x6
 // WriteSeasonNameText copies six glyph codes per row; DrawIndexedSelectionLabels uses all four seasons.
 gTextSeasonNames = 0x8004908C; // size:0x30
 // WriteWeekdayNameText copies three glyph codes per row; original rows run Sun through Sat.

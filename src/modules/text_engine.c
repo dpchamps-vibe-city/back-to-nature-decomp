@@ -1584,7 +1584,7 @@ void EnterChoiceState(void) {
             gTextRendering = 1;
             gTextScrolledFull = 0;
             gTextChoiceIndex = 0;
-            gTextState = D_80049070[i];
+            gTextState = gTextChoiceStates[i];
             gTextScriptIndex = MeasureTextSpanLength(gTextScriptCursor, 0xFFFF, 0);
             return;
         }

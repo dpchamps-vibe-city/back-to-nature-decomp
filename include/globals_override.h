@@ -3533,7 +3533,8 @@ extern struct_80061E28 gSceneDefaultMatrix;
  * in globals.h. */
 /* EnterChoiceState searches the three FFA/FF9/FF8 choice-start tokens. */
 extern u16 gTextChoiceStartTokens[];
-extern u16 D_80049070[];
+/* EnterChoiceState stores 7/8/9 for the matched 2/3/4-choice start token. */
+extern u16 gTextChoiceStates[];
 
 /* D_800558A4 - two u16 attributes per horse ID. InitHorseRaceEntries reads
  * byte offsets 4*id and (4*id)|2; their exact meanings remain unresolved.
