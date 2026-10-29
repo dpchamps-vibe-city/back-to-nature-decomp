@@ -47,13 +47,13 @@ s32 Ovl11IsSelectedQuantitySumZero(void) {
 }
 
 s32 Ovl11IsQuantityEditorInactive(void) {
-    return D_80127428 == 0;
+    return gOvl11QuantityEditorState == 0;
 }
 
 void Ovl11ResetQuantityEditor(void) {
     s32 i;
 
-    D_80127428 = 0;
+    gOvl11QuantityEditorState = 0;
     gOvl11QuantityEditorSelectedRow = 0;
     for (i = 0; i < 6; i++) {
         D_8012CF10[i] = 0;
@@ -73,7 +73,7 @@ void Ovl11BeginQuantityEditor(void) {
         sel = v->unkE514;
     }
     Ovl11ResetQuantityEditor();
-    D_80127428 = 1;
+    gOvl11QuantityEditorState = 1;
     PlaySoundEffect(3);
     gOvl11QuantityEditorBalance = v->field_5224;
     cnt = 0;
@@ -86,7 +86,7 @@ void Ovl11BeginQuantityEditor(void) {
 void Ovl11ServiceQuantityEditor(void);
 
 void Ovl11UpdateQuantityEditor(void) {
-    if (D_80127428 != 0) {
+    if (gOvl11QuantityEditorState != 0) {
         SetTextSpacing(0, 2);
         DrawScreenTileRect((u32 *)(gActiveRenderContext->field_D8 + 0x60), 0, 0, (s16)HWD0, (s16)VWD0, 0, 1);
         Ovl11ServiceQuantityEditor();
@@ -107,48 +107,48 @@ void Ovl11ServiceQuantityEditor(void) {
     Ovl11DrawQuantityEditorBalance();
     Ovl11DrawQuantityEditorRows();
     Ovl11DrawQuantityEditorCursor();
-    if (D_80127428 == 1) {
+    if (gOvl11QuantityEditorState == 1) {
         result = Ovl11HandleQuantitySelectionInput();
         if (result == -1) {
             CloseMessageWindow();
-            D_80127428 = 4;
+            gOvl11QuantityEditorState = 4;
         } else if (result == 1) {
-            D_80127428 = 3;
+            gOvl11QuantityEditorState = 3;
         } else if (result == 2) {
-            D_80127428 = result;
+            gOvl11QuantityEditorState = result;
         }
-    } else if (D_80127428 == 2) {
+    } else if (gOvl11QuantityEditorState == 2) {
         result = Ovl11HandleQuantityEditInput();
         if (result == -1) {
-            D_80127428 = 1;
+            gOvl11QuantityEditorState = 1;
             D_8012CF10[gOvl11QuantityEditorSelectedRow] = D_8012CF1C;
             gOvl11QuantityEditorBalance = D_8012CF24;
         } else if (result == -2) {
             CloseMessageWindow();
-            D_80127428 = 4;
+            gOvl11QuantityEditorState = 4;
         } else if (result == 1) {
-            D_80127428 = result;
+            gOvl11QuantityEditorState = result;
         } else if (result == 2) {
             CloseMessageWindow();
-            D_80127428 = 3;
+            gOvl11QuantityEditorState = 3;
         }
-    } else if (D_80127428 == 3) {
+    } else if (gOvl11QuantityEditorState == 3) {
         CloseMessageWindow();
         RequestMessageWindow(1, 0x448);
         Ovl11CommitQuantityEditor();
-        D_80127428 = 5;
+        gOvl11QuantityEditorState = 5;
         return;
-    } else if (D_80127428 == 4) {
+    } else if (gOvl11QuantityEditorState == 4) {
         CloseMessageWindow();
         RequestMessageWindow(1, 0x447);
         Ovl11CommitQuantityEditor();
-        D_80127428 = 5;
+        gOvl11QuantityEditorState = 5;
         return;
-    } else if (D_80127428 == 5) {
+    } else if (gOvl11QuantityEditorState == 5) {
         if (GetMessageWindowStatus() == 2) {
             Ovl11PostMenuExitFlags();
             PlaySoundEffect(3);
-            D_80127428 = 0;
+            gOvl11QuantityEditorState = 0;
         }
         return;
     }
@@ -176,7 +176,7 @@ void Ovl11CommitQuantityEditor(void) {
     if (e != three) {
         sel = e;
     }
-    if (D_80127428 != three) {
+    if (gOvl11QuantityEditorState != three) {
         return;
     }
     p = v;
@@ -347,12 +347,12 @@ void Ovl11DrawQuantityEditorCursor(void) {
 
     var_a2 = (gOvl11QuantityEditorSelectedRow + 1) * 0xE + 0x32;
     var_a1 = -1;
-    if (D_80127428 == 1) {
+    if (gOvl11QuantityEditorState == 1) {
         var_a1 = 0xD6;
         if (gOvl11QuantityEditorSelectedRow != 6) {
             var_a1 = 0x22;
         }
-    } else if (D_80127428 == 2) {
+    } else if (gOvl11QuantityEditorState == 2) {
         var_a1 = 0xC4;
     }
     if (var_a1 != -1) {

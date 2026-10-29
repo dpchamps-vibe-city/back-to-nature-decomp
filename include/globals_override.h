@@ -5545,7 +5545,8 @@ typedef struct {
 extern s16 D_8012CF10[7];
 /* ovl_11:8012CF20: pending money balance, edited at 50 per item and committed to work+5224. */
 extern s32 gOvl11QuantityEditorBalance;
-extern s32 D_80127428;
+/* ovl_11:80127428: inactive/select/edit/commit/cancel/message-wait states 0..5. */
+extern s32 gOvl11QuantityEditorState;
 /* ovl_11:8012742C: selection wraps over six editable quantity rows and the finish row. */
 extern s32 gOvl11QuantityEditorSelectedRow;
 
