@@ -4748,8 +4748,8 @@ typedef struct {
     u16 values[9];
 } Ovl11NameRecord;
 extern Ovl11NameRecord gOvl11QuantityPurchaseNameRecord;
-/* 80114604 copies nine halfwords from D638+4 and passes D63C to 800231AC. */
-extern Ovl11NameRecord D_8012D638;
+/* 80114604 edits this name record's nine halfwords and copies them into the purchased item; D63C is its values base. */
+extern Ovl11NameRecord gOvl11TradeItemNameRecord;
 extern u16 D_8012D63C[];
 /* 80114604 reads the u16 amount at resident-state +4502. */
 typedef struct {

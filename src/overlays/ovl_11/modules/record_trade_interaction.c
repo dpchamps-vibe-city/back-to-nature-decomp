@@ -212,7 +212,7 @@ s32 Ovl11UpdateRecordTradeInteraction(void) {
         case 1:
             nameDestination = Ovl11AllocateItemRecord(Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord), -1) + 2;
             for (character = 0; character < 9; character++) {
-                nameDestination[character] = D_8012D638.values[character];
+                nameDestination[character] = gOvl11TradeItemNameRecord.values[character];
             }
             Ovl11AdjustSpendableBalance(-Ovl11GetItemPrice((u16)Ovl11GetSelectionEntryId(*(StructD548 *)gOvl11PrimarySelectionRecord)), 1);
             RequestMessageWindow(2, 0x74);

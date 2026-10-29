@@ -2162,6 +2162,7 @@ gOvl11QuantityPromptCount = 0x8012D540; // size:0x2
 gOvl11PrimarySelectionRecord = 0x8012D548; // size:0x60
 gOvl11SecondarySelectionRecord = 0x8012D5A8; // size:0x60
 gOvl11TextFormatScratch = 0x8012D608; // size:0x30
+gOvl11TradeItemNameRecord = 0x8012D638; // size:0x4
 gOvl11QuantityPurchaseNameRecord = 0x8012D6E8; // size:0x4
 gOvl11QuantityPurchaseNameText = 0x8012D6EC; // size:0x12
 gOvl11CellStatusPhase = 0x8012D794; // size:0x4
