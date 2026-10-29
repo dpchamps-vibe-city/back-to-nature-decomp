@@ -10,6 +10,7 @@ gOvl31NewFarm1FileName = 0x800B7F68; // size:0x12
 gOvl31OldFarm2FileName = 0x800B7F7C; // size:0x12
 gOvl31NewFarm2FileName = 0x800B7F90; // size:0x12
 gOvl31OldFarmPFileName = 0x800B7FA4; // size:0x12
+gOvl31NewFarmPFileName = 0x800B7FB8; // size:0x12
 gOvl31MemoryCardMenuRows = 0x800B87F0; // size:0x78
 gOvl31DirectoryFileCount = 0x800B8868; // size:0x4
 gOvl31MemoryCardResult = 0x800B886C; // size:0x4
