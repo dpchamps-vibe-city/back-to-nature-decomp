@@ -3,6 +3,8 @@
 #define GAME_TYPES_H
 
 #include "common.h"
+#include "psyq/stddef.h"
+#include "psyq/libgte.h"
 
 /* ovl_25 800BB628/800BB788: 0x16-byte sprite descriptor; destination
  * coordinates at +4/+6, counters at +8/+A/+C, source rectangle at +E. */
@@ -2032,6 +2034,33 @@ typedef struct {
     /* 0x02 */ char pad_02[0x2E];
     /* 0x30 */ s16 unk30;
 } Ovl11D4030Arg;
+
+/* exe:8001DCB0/8001DE4C: packed UV words at +0/+4/+8/+C, color at
+ * +10 and four 8-byte model vertices at +14/+1C/+24/+2C. */
+typedef struct {
+    /* 0x00 */ u32 uv0;
+    /* 0x04 */ u32 uv1;
+    /* 0x08 */ u32 uv2;
+    /* 0x0C */ u32 uv3;
+    /* 0x10 */ u32 color;
+    /* 0x14 */ SVECTOR v0;
+    /* 0x1C */ SVECTOR v1;
+    /* 0x24 */ SVECTOR v2;
+    /* 0x2C */ SVECTOR v3;
+} ProjectedQuadInput;
+
+/* exe:8001DBF0: four packed UV slots, with CLUT at +2 and texture page
+ * at +6. The halfwords at +A and +E are not changed by the initializer. */
+typedef struct {
+    u8 u0, v0;
+    u16 clut;
+    u8 u1, v1;
+    u16 tpage;
+    u8 u2, v2;
+    u16 pad_A;
+    u8 u3, v3;
+    u16 pad_E;
+} TextureRegion;
 
 /* Projected-primitive source, exe:8001BFA8/8001C0D4. The initializer stores
  * the batch and, for at least two entries, the following culling-point block.

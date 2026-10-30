@@ -9,9 +9,9 @@
  * Interfaces: sprite_source.h (state), sprite_render.h (packet builders),
  * sprite_upload.h (VRAM transfer). Source table/image storage must outlive
  * use. This is a non-reentrant service: upload scratch, render context and
- * update/entry latches are shared. Original order, external linkages and the
- * three existing dead assembly placeholders are retained. Membership and
- * conservative outer boundaries are recorded in notes/file-groupings.md.
+ * update/entry latches are shared. Original order and external linkages are
+ * retained. Membership and conservative outer boundaries are recorded in
+ * notes/file-groupings.md.
  */
 
 #include "common.h"
@@ -21,7 +21,6 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
-#include "include_asm.h"
 #include "packet_work.h"
 #include "sprite_render.h"
 #include "sprite_source.h"
@@ -335,7 +334,7 @@ u16 GetSpriteFrameEntryIndex1(SpriteSourceData *arg0, u32 arg1, u32 arg2) {
 
 int bcmp(const void *, const void *, int);
 
-s32 FindSpriteTextureRecord(s32 arg0, s32 arg1, u16 arg2) {
+u16 FindSpriteTextureRecord(s32 arg0, s32 arg1, u16 arg2) {
     s32 s1 = arg1 + 4;
     s32 s2 = 0;
     s32 mask = 0xFFFFFF;
@@ -361,7 +360,7 @@ s32 FindSpriteTextureRecord(s32 arg0, s32 arg1, u16 arg2) {
         } while (DebugBreakAndReturnTrue() != 0);
     }
 
-    return s2 & 0xFFFF;
+    return s2;
 }
 
 void UpdateSpriteAnimation(SpriteSourceData *src);
@@ -383,7 +382,16 @@ void DrawSpriteAnimationRectsAndUpdate(s32 otAddress, SpriteSourceData *source, 
     UpdateSpriteAnimation(source);
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sprite_animation", func_80015CA0);
+POLY_FT4 *func_80015E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9, s16 arg10, s16 arg11);
+
+POLY_FT4 *func_80015CA0(s32 arg0, s32 arg1, SpriteSourceData *source, s16 x, s16 y) {
+    POLY_FT4 *packets;
+
+    packets = func_80015E78(arg0, arg1, (s32) source, (u8) (s32) source->field_4,
+                  (u8) (s32) source->field_5, x, y, source->field_8, 0, 0U, -1, -1);
+    UpdateSpriteAnimation(source);
+    return packets;
+}
 
 void BuildSpriteRectPacketsFromAddresses(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, u8 arg5, s16 arg6, s16 arg7);
 
@@ -396,7 +404,12 @@ void BuildSpriteAnimationRectsAndUpdate(s32 otAddress, s32 spriteCursorAddress,
     UpdateSpriteAnimation(source);
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sprite_animation", func_80015D6C);
+void func_80015D6C(s32 otAddress, SpriteSourceData *source, s16 x, s16 y,
+                   s32 control6, s32 control7, u16 control8) {
+    DrawSpriteFrameQuads(otAddress, (s32) source, (s32) source->field_4,
+                  (s32) source->field_5, x, y, control6, control7, control8);
+    UpdateSpriteAnimation(source);
+}
 
 s32 func_80015DD4(s32 *arg0, SpriteSourceData *arg1, s32 arg2, s32 arg3,
                   s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
@@ -412,8 +425,8 @@ void BuildSpriteRectPacketsFromAddresses(s32 otAddress, s32 spriteCursorAddress,
                             sourceAddress, animation, frame, x, y);
 }
 
-void func_80015E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9, s16 arg10, s16 arg11) {
-    BuildSpriteQuadPackets(arg0, arg1, arg2, arg3 & 0xFF, arg4, arg5, arg6, arg7, arg7, arg8, arg9, arg10, arg11, -1, -1);
+POLY_FT4 *func_80015E78(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u16 arg9, s16 arg10, s16 arg11) {
+    return BuildSpriteQuadPackets(arg0, arg1, arg2, arg3 & 0xFF, arg4, arg5, arg6, arg7, arg7, arg8, arg9, arg10, arg11, -1, -1);
 }
 
 void DrawSpriteFrameRects(s32 otAddress, s32 sourceAddress, s32 animation,
@@ -888,7 +901,7 @@ POLY_FT4 *BuildSpriteQuadPackets(u_long *arg0, POLY_FT4 *arg1, SpriteQuadSourceV
     return p;
 }
 
-s32 FindSpriteTextureRecord(s32 arg0, s32 arg1, u16 arg2);                    /* extern */
+u16 FindSpriteTextureRecord(s32 arg0, s32 arg1, u16 arg2);                    /* extern */
 s32 UploadSpriteImageEntry(u8 *arg0, u8 *arg1, u16 arg2, s16 arg3, s16 arg4);
 
 s32 UploadSpriteEntryAndGetPacketBytes(s32 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
@@ -1086,7 +1099,19 @@ void UploadSpriteImagesKeepingWideType2Positions(u8 *arg0, s16 arg1, s16 arg2, s
     DecodeAndUploadSpriteImages(arg0, arg1, arg2, arg3, (s16) (s32) arg4, 2);
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sprite_animation", func_80017284);
+/* Upload one sprite frame: resolve the frame-entry index of the requested
+ * animation/frame pair, find the matching texture record, and let the tile
+ * loader decode that record into the D_8005EA28 image buffer.
+ */
+void func_80017284(SpriteSourceData *source, u8 *image, s32 animation, s32 frame,
+                   s16 x, s16 y) {
+    u16 entry;
+    u16 record;
+
+    entry = GetSpriteFrameEntryIndex1(source, animation & 0xFF, frame & 0xFF);
+    record = FindSpriteTextureRecord((s32)source, (s32)image, entry);
+    UploadSpriteImageEntry(image, (u8 *)&D_8005EA28, record, x, y);
+}
 
 void DecodeAndUploadSpriteImages(u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
     RECT rect;

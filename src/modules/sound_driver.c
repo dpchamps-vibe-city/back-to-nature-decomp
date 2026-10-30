@@ -174,9 +174,36 @@ s32 SetSoundSequenceSlotVolume(s32 slot, s32 trackOffset, s32 unused2, s32 volum
     return 0;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sound_driver", func_800202F8);
+/* An active sequence stops when its requested volume is nonpositive. */
+s32 func_800202F8(s32 slot, s32 trackOffset, s32 volume) {
+    s32 *states;
+    s32 *state;
+    s32 stateIndex;
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sound_driver", func_8002039C);
+    states = &gSoundSequenceStates[0][0];
+    stateIndex = trackOffset + slot;
+    state = &states[stateIndex];
+    if (*state != -1) {
+        if (volume > 0) {
+            SsSeqSetVol((s16)(&gSoundSequenceIds)[slot], (s16)volume, (s16)volume);
+            return 1;
+        } else {
+            SsSeqStop((s16)(&gSoundSequenceIds)[slot]);
+            *state = -1;
+            return 0;
+        }
+    }
+    return 0;
+}
+
+/* The upper volume bound is exclusive; there is no lower-bound check. */
+s32 func_8002039C(s32 slot, s32 trackOffset, s32 volume) {
+    if (gSoundSequenceStates[trackOffset + slot][0] != -1 && volume < 126) {
+        SsSeqSetVol((s16)(&gSoundSequenceIds)[slot], (s16)volume, (s16)volume);
+        return 1;
+    }
+    return 0;
+}
 
 /* Stub function - returns 0 */
 s32 func_8002040C(void) {
@@ -200,9 +227,37 @@ s32 StopSoundSequenceSlot(s32 slot, s32 trackOffset) {
     return 0;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sound_driver", func_8002047C);
+/* Pause only a playing sequence: state 0 becomes paused state 1. */
+s32 func_8002047C(s32 slot, s32 trackOffset) {
+    s32 *states;
+    s32 *state;
+    s32 stateIndex;
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sound_driver", func_800204E0);
+    states = &gSoundSequenceStates[0][0];
+    stateIndex = trackOffset + slot;
+    state = &states[stateIndex];
+    if (*state == 0) {
+        SsSeqPause((s16)(&gSoundSequenceIds)[slot]);
+        *state = 1;
+    }
+    return 0;
+}
+
+/* Resume only a paused sequence: state 1 becomes playing state 0. */
+s32 func_800204E0(s32 slot, s32 trackOffset) {
+    s32 *states;
+    s32 *state;
+    s32 stateIndex;
+
+    states = &gSoundSequenceStates[0][0];
+    stateIndex = trackOffset + slot;
+    state = &states[stateIndex];
+    if (*state == 1) {
+        SsSeqReplay((s16)(&gSoundSequenceIds)[slot]);
+        *state = 0;
+    }
+    return 0;
+}
 
 s32 SetSoundReservedVoiceCount(s32 count) {
     s32 result;

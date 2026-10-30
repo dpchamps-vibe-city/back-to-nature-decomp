@@ -183,9 +183,33 @@ void SetTextSlot(s32 arg0) {
     gTextLoadedSlot = arg0;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_engine", DrawCenteredTextBlock);
+/* Each row of the block is centred inside width; the row engine starts at the
+ * given y and advances by one line spacing plus 16. The original reads the letter
+ * spacing as a signed halfword even though the shared global is u16. */
+void DrawCenteredTextBlock(s32 arg0, u16 *text, s32 arg2, s32 arg3, s16 width) {
+    s16 x;
+    s16 y;
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_engine", DrawRightAlignedTextBlock);
+    x = arg2;
+    y = arg3;
+    SetPacketWorkCursor(DrawTextRowsCentered(arg0, ReservePacketWorkBytes(0), text,
+        x, y, width, 0x1000,
+        (s16)(gTextLineSpacing + 0x10), (s32)(s16)gTextLetterSpacing));
+}
+
+/* Right-aligned counterpart of DrawCenteredTextBlock: the row engine starts at the
+ * given y and advances by one line spacing plus 16. Like the centred wrapper it
+ * reads the letter spacing as a signed halfword even though the shared global is u16. */
+void DrawRightAlignedTextBlock(s32 otAddress, u16 *text, s32 inputX, s32 inputY, s16 width) {
+    s16 x;
+    s16 y;
+
+    x = inputX;
+    y = inputY;
+    SetPacketWorkCursor(DrawTextRowsRightAligned(otAddress, ReservePacketWorkBytes(0), text,
+        x, y, width, 0x1000,
+        (s16)(gTextLineSpacing + 0x10), (s32)(s16)gTextLetterSpacing));
+}
 
 u8 *DrawTextStream(s32 *arg0, u8 *arg1, u16 *, s16, s16, s32, s32, s32, s32, s32); /* extern */
 
@@ -222,7 +246,22 @@ u16 *AppendU16String(u16 *destination, u16 *source) {
     return destination;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_engine", CopyU16String);
+/* Copy the terminator as well; unlike AppendU16String, return no pointer. */
+void CopyU16String(u16 *destination, u16 *source) {
+    u16 terminator;
+    u16 value;
+
+    *destination = *source;
+    value = *source;
+    if (value != 0xFFFF) {
+        terminator = 0xFFFF;
+        source++;
+        do {
+            value = *source;
+            *++destination = value;
+        } while (*source++ != terminator);
+    }
+}
 
 /* The second pointer advances after the terminator test. This also lets the
  * compiler rotate the loop tail into the original entry-jump layout. */

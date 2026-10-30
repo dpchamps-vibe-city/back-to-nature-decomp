@@ -39,7 +39,6 @@
 #include "wide_screen_fade.h"
 #include "update_timing.h"
 #include "pad_input_update.h"
-#include "include_asm.h"
 #include "scene_selection.h"
 #include "asset_scratch.h"
 #include "graphics_heap.h"
@@ -483,12 +482,36 @@ void RunSceneUpdateLoop(void) {
     }
 }
 
-/* Not decompiled yet. No code calls PresentFrame directly, so the call graph
- * classes it dead, but RunSceneUpdateLoop stores its address in D_8005E388
- * every frame, so it is probably reached through that pointer. It submits the
- * frame: with D_8005E278 == 1 it puts the active context's DISPENV/DRAWENV and
- * draws its four ordering tables, then always draws the frame ordering table. */
-INCLUDE_ASM("build/asm/nonmatchings/modules/game_loop", PresentFrame);
+/* Stored in D_8005E388 by RunSceneUpdateLoop. Full-context mode installs
+ * both environments and submits its ordered layers; both modes submit the
+ * frame ordering table. Contexts are reloaded after SDK calls. */
+void PresentFrame(void) {
+    if (D_8005E278 == 1) {
+        PutDispEnv((DISPENV *)((u8 *)gActiveRenderContext + 0x5C));
+        PutDrawEnv((DRAWENV *)gActiveRenderContext);
+    } else {
+        DrawOTag((u_long *)gFrameOrderingTable + 1);
+        return;
+    }
+    if (gActiveRenderContext->field_E4 != 0) {
+        DrawOTag((u_long *)gActiveRenderContext->field_E4 +
+                 gActiveRenderContext->field_F8 - 1);
+    }
+    if (gActiveRenderContext->field_E0 != 0) {
+        DrawOTag((u_long *)gActiveRenderContext->field_E0 +
+                 gActiveRenderContext->field_F4 - 1);
+    }
+    DrawOTag((u_long *)gActiveRenderContext->field_120 + 0x7FF);
+    if (gActiveRenderContext->field_DC != 0) {
+        DrawOTag((u_long *)gActiveRenderContext->field_DC +
+                 gActiveRenderContext->field_F0 - 1);
+    }
+    if (gActiveRenderContext->field_D8 != 0) {
+        DrawOTag((u_long *)gActiveRenderContext->field_D8 +
+                 gActiveRenderContext->field_EC - 1);
+    }
+    DrawOTag((u_long *)gFrameOrderingTable + 1);
+}
 
 void SceneEntryHook(s32 arg0) {
 }
@@ -583,11 +606,17 @@ void SetPacketWorkCursor(s32 cursor) {
     GsSetWorkBase((PACKET *)cursor);
 }
 
-/* Dead code, not decompiled: nothing in the shipped game calls it or takes
- * its address. It returns GetAssetScratchEnd() - (D_8007AFF4 + 0x83000): the
- * scratch capacity above a fixed 0x83000-byte reservation, where
- * GetAssetScratchCapacity subtracts 0x49000 plus the loaded byte count. */
-INCLUDE_ASM("build/asm/nonmatchings/modules/game_loop", GetFixedScratchCapacity);
+/* Unreferenced fixed-reservation variant of GetAssetScratchCapacity.
+ * Preserve the staged differences around the executable's base address. */
+s32 GetFixedScratchCapacity(void) {
+    s32 reservationAdjustment;
+    s32 remainingBytes;
+
+    reservationAdjustment = -0x83000;
+    remainingBytes = gGraphicsHeapBase - D_8001009C;
+    remainingBytes = remainingBytes + reservationAdjustment;
+    return remainingBytes - (D_8007AFF4 - D_8001009C);
+}
 
 /*
  * Asset-loading scratch bounds. Start calls Capacity, all three read the end

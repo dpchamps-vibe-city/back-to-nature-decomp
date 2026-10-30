@@ -94,7 +94,30 @@ s32 CdLoadArchiveRangeBlocking(s32 firstEntry, s32 endEntry,
     return 0;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/cd_loader", func_80014748);
+/* Return an archive entry's byte length rounded up to a four-byte boundary. */
+s32 func_80014748(s32 entry) {
+    u32 startByte;
+    u32 endByte;
+    u32 currentByteOffset;
+    u32 nextByteOffset;
+    u32 *offsets;
+
+    ResetCallback();
+    DrawSync(0);
+    offsets = (u32 *)&gCdArchiveEntries[0];
+    /* Each index record occupies 40 bytes; its byte offset is at +0x24. */
+    currentByteOffset = entry << 2;
+    currentByteOffset += entry;
+    currentByteOffset <<= 3;
+    entry++;
+    nextByteOffset = entry << 2;
+    nextByteOffset += entry;
+    nextByteOffset <<= 3;
+    offsets += 9;
+    endByte = *(u32 *)((u8 *)offsets + nextByteOffset);
+    startByte = *(u32 *)((u8 *)offsets + currentByteOffset);
+    return (endByte - startByte + 3) / 4 * 4;
+}
 
 s32 CdInitArchiveIndex(void) {
     CdlFILE archive;

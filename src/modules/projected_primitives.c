@@ -747,7 +747,17 @@ s32 SetProjectedRotationScale(s32 numerator, s32 denominator) {
     return 1;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/projected_primitives", func_8001D678);
+/* Per-column setter variant of SetProjectedRotationScale: takes the three
+ * numerator/denominator pairs separately and then enables scaling. */
+void func_8001D678(s32 xNumerator, s32 xDenominator, s32 yNumerator, s32 yDenominator, s32 zNumerator, s32 zDenominator) {
+    gProjectedRotationScale.xNumerator = xNumerator;
+    gProjectedRotationScale.xDenominator = xDenominator;
+    gProjectedRotationScale.yNumerator = yNumerator;
+    gProjectedRotationScale.yDenominator = yDenominator;
+    gProjectedRotationScale.zNumerator = zNumerator;
+    gProjectedRotationScale.zDenominator = zDenominator;
+    gProjectedRotationScaleEnabled = 1;
+}
 
 void DisableProjectedRotationScale(void) {
     gProjectedRotationScaleEnabled = 0;

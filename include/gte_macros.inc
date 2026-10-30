@@ -376,10 +376,11 @@
 # .endm
 
 /*  sqr0    -       0x4AA00428  square of ir    1,31, 0 */
-# .macro sqr0
-#     # .word 0x4AA00428
-#     sqr         0
-# .endm
+/*  SDK gte_sqr0 name for the primitive sqr 0. */
+.macro sqr0
+    # .word 0x4AA00428
+    sqr         0
+.endm
 
 /*  op12    -       0x4B78000C  outer product   1,19,12 */
 .macro op12

@@ -507,10 +507,15 @@ extern u8 gSceneBackBlue;
 extern u8 gSceneFarRed;
 extern u8 gSceneFarGreen;
 extern u8 gSceneFarBlue;
-/* 1B530 clears 32 bytes; 1B5DC passes these addresses to GTE matrix macros.
- * Keep the existing scalar address views; no storage/layout change is implied. */
-extern s32 gSceneLightMatrix;
-extern s32 gSceneColorMatrix;
+/* 8001BD64/8001BE18 write RGB columns and direction rows at six-byte strides;
+ * 1B530 clears 32 bytes and 1B5DC loads both GTE matrices. This storage view
+ * mirrors psyq/libgte.h MATRIX, whose typedef is not yet in scope here. */
+typedef struct {
+    short m[3][3];
+    long t[3];
+} GteSceneMatrixStorage;
+extern GteSceneMatrixStorage gSceneLightMatrix;
+extern GteSceneMatrixStorage gSceneColorMatrix;
 
 /* ovl_30 8012F084 reads a signed word through D_8007AFF0 + 0x2547C. */
 struct Ovl30SettingsView {
@@ -2582,6 +2587,8 @@ extern s32 gSurfaceActiveRejectMask;
 extern s32 gSurfaceProximityExtent;
 /* EAE4 publishes the accepted polygon address; EF98 returns its raw word. */
 extern s32 gSurfaceHitPolygonAddress;
+/* QuerySurfaceCells clears/fills eight s32 slots; func_8001E6FC rescans all eight. */
+extern s32 D_80061ED8[8];
 
 /* D_8005E540, D_8005E54C, D_8005E550, D_8005E554, D_8005E560 - GP-relative s32 scalars
  * Accessed by func_8001FF98 with sw %gp_rel; D_8005E54C by func_800214FC */
@@ -2639,6 +2646,19 @@ extern s16 gTextLineScroll;
 extern s32 gTextPageTimer;
 extern s32 gTextRendering;
 extern s32 gTextScrolledFull;
+/* D_8005F028 - the formatted-text staging buffer: DrawFormattedText converts each
+ * glyph into it, writes the 0xFFFF terminator at the count and at index 63, and
+ * hands it to DrawTextStream as that engine's u16 script pointer. Every access is
+ * a halfword at even offsets 0..0x7E, so the symbol is indexed as halfwords. */
+extern u16 D_8005F028[64];
+
+/* D_8005E2C0/D_8005E2C4/D_8005E2C8 - the three NUL-terminated format literals
+ * ("%d", "%x", "%i") DrawFormattedText passes to sprintf. They fill the whole
+ * 12-byte gap between gTextInputEnabled and gAuxSpriteDisplayEnabled. */
+extern char D_8005E2C0[];
+extern char D_8005E2C4[];
+extern char D_8005E2C8[];
+
 /* 80049058: MapChoiceIndexToStatus returns window status codes 10..13 for choices 1..4. */
 extern s32 gTextChoiceStatusCodes[4];
 /* 8004908C: WriteSeasonNameText copies six glyphs per row: Spring, Summer, Fall, Winter. */
@@ -2649,15 +2669,29 @@ extern u16 gTextWeekdayNames[];
 /* D_8005E444 - unsigned halfword (lhu) — func_80019030 owns it */
 extern u16 gTextScriptIndex;
 
-/* Camera-offset bytes: InitCameraOffsetState stores 2/1/0; setters mark dirty. */
-extern s8 gCameraOffsetState;
+/* Camera-offset bytes: InitCameraOffsetState stores 2/1/0; setters mark dirty.
+ * func_8001F100 compares the state byte against 2 with an unsigned load (lbu). */
+extern u8 gCameraOffsetState;
 extern s8 gCameraOffsetInitialized;
 extern s8 gCameraOffsetDirty;
+/* D_8005E2F0 - the camera-offset mode word owned by func_8001F1C0: it loads the
+ * stored word, marks gCameraOffsetDirty when the argument differs, then stores
+ * the argument. It precedes the change-state word in the small-data block. */
+extern s32 D_8005E2F0;
 /* SetCameraOffsetParameters resets change state and stores radius/height/yaw. */
 extern s32 gCameraOffsetChangeState;
 extern s32 gCameraOffsetRadius;
 extern s32 gCameraOffsetHeight;
 extern s32 gCameraOffsetYaw;
+
+/* D_8005E304 - gCameraOffsetYaw's following word; func_8001F100 suppresses its
+ * update while it reads 1, so it is a lock/hold flag for the offset target. */
+extern s32 D_8005E304;
+
+/* D_8004928C - the camera-offset target triple func_8001F100 compares word by
+ * word against a candidate and then copies in with CopyVec3. 12 bytes, so the
+ * target addresses this 12-byte object absolutely (lui+addiu). */
+extern s32 D_8004928C[3];
 
 /* D_8005E4A8 - pointer to u16 array (lw, used as base) — func_80019030 owns it */
 extern u16 *gTextScriptCursor;
@@ -2745,7 +2779,8 @@ typedef struct {
     /* 0xF8 */  s32     field_F8;
     /* 0xFC */  char    pad_FC[0x14];
     /* 0x110 */ s32     field_110;
-    /* 0x114 */ char    pad_114[0x4];
+    /* exe:8001DE08 reads it as the OT depth scale: index = z >> (14 - this). */
+    /* 0x114 */ s32     field_114;
     /* 0x118 */ s32     field_118;
     /* 0x11C */ char    pad_11C[0x4];
     /* 0x120 */ s32     field_120;
@@ -3240,9 +3275,11 @@ typedef struct {
 } Ovl11SceneModeRenderContextView;
 /* exe:8001DCB0 caches the computed ordering-table depth; 8001DFC8 reads it. */
 extern s32 gProjectedQuadOtDepth;
-/* exe:8001DCB0/8001DE4C preserve their render context across the quad gate. */
-extern env_struct_0x134 *gProjectedQuadDepthContext;
-extern env_struct_0x134 *gProjectedQuadFixedDepthContext;
+/* exe:8001DCB0/8001DE4C preserve their render context across the quad gate.
+ * Both store &gRenderContexts[0] and later read the context fields, so this is
+ * the same 0x134-byte render context that gActiveRenderContext points at. */
+extern struct_8005E3C0 *gProjectedQuadDepthContext;
+extern struct_8005E3C0 *gProjectedQuadFixedDepthContext;
 
 /* 8005E644: interior DISPENV view with the render contexts' 0x134 stride.
  * Not owned by screen_fade (absolute lui/addiu base in target). */
@@ -3250,6 +3287,8 @@ extern env_struct_0x134 gRenderDisplayEnvView[];
 /* 80011C24/8001B118 select context 0/1 and store its index at 8005E3A4.
  * Owned by boot/render code, read absolutely by screen_fade. */
 extern s32 gActiveRenderContextIndex;
+/* exe:80011DB0 reads this word to select full-context versus frame-OT submission. */
+extern s32 D_8005E278;
 
 /* 8005E8E0 / 8005E910: packet arrays for UpdateAndDrawScreenFade,
  * indexed by gActiveRenderContextIndex.
@@ -4265,6 +4304,12 @@ struct ProjectedRotationScaleRatios {
     /* 0x14 */ s32 zDenominator;
 };
 extern struct ProjectedRotationScaleRatios gProjectedRotationScale;
+
+/* exe:800491F0..80049218. func_8001D86C scans twenty u16 codes and
+ * returns the corresponding word from the parallel result table below. */
+extern u16 D_800491F0[20];
+/* exe:80049218..80049268. Twenty s32 results indexed by D_800491F0. */
+extern s32 D_80049218[20];
 
 /* Indexed-selection record's existing partial view. Category is the u16
  * at +2; callers also use a signed +2 view and an index at +4. */

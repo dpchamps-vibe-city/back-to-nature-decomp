@@ -3,7 +3,7 @@
  * projection defaults, matrix snapshot/composition, fog and lighting settings.
  * The GP-relative RGB/fog settings join the apply routine to the tail setters;
  * the camera/matrix data and internal calls join the remaining members.
- * Six pre-existing dead helper stubs remain in their original positions.
+ * Unused helper APIs are retained in their original positions.
  * See notes/file-groupings.md for the membership and boundary evidence.
  */
 #include "common.h"
@@ -141,7 +141,11 @@ void SetCameraEyeAndRoll(s32 x, s32 y, s32 z, s32 rollAngle) {
     gCameraViewParameters.matrixOverrideAddress = 0;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/gte_scene_state", GetCameraEyePosition);
+void GetCameraEyePosition(s32 *x, s32 *y, s32 *z) {
+    *x = gCameraViewParameters.eyeX;
+    *y = gCameraViewParameters.eyeY;
+    *z = gCameraViewParameters.eyeZ;
+}
 
 void SetCameraTarget(s32 x, s32 y, s32 z) {
     gCameraViewParameters.targetX = x;
@@ -150,11 +154,28 @@ void SetCameraTarget(s32 x, s32 y, s32 z) {
     gCameraViewParameters.matrixOverrideAddress = 0;
 }
 
-/* Dead matrix-copy APIs establish the override-address meaning of the final
- * camera word; they are retained, not replaced with new implementations. */
-INCLUDE_ASM("build/asm/nonmatchings/modules/gte_scene_state", SetCameraViewMatrix);
-INCLUDE_ASM("build/asm/nonmatchings/modules/gte_scene_state", GetCameraViewMatrix);
-INCLUDE_ASM("build/asm/nonmatchings/modules/gte_scene_state", func_8001BB28);
+/* These unused matrix-copy APIs establish the override-address meaning of
+ * the final camera word. */
+void SetCameraViewMatrix(MATRIX *matrix) {
+    *(MATRIX *)gCameraViewMatrix = *matrix;
+    gCameraMatrixOverrideAddress = (s32)matrix;
+}
+void GetCameraViewMatrix(MATRIX *matrix) {
+    *matrix = *(MATRIX *)gCameraViewMatrix;
+}
+/* Exe:0x8001BB28. Derive a 3x3 rotation matrix from the first three halfwords of
+ * the camera view matrix: rows (a,b,c), (0,ONE,0) and (c,b,-a). */
+void func_8001BB28(MATRIX *matrix) {
+    matrix->m[0][0] = gCameraViewMatrix[0];
+    matrix->m[0][1] = gCameraViewMatrix[1];
+    matrix->m[0][2] = gCameraViewMatrix[2];
+    matrix->m[2][0] = gCameraViewMatrix[2];
+    matrix->m[2][1] = gCameraViewMatrix[1];
+    matrix->m[2][2] = -gCameraViewMatrix[0];
+    matrix->m[1][0] = 0;
+    matrix->m[1][1] = ONE;
+    matrix->m[1][2] = 0;
+}
 
 void CaptureGteTransform(void) {
     gte_ReadRotMatrix(&gCapturedGteTransform);
@@ -179,8 +200,45 @@ void ComposeCapturedGteTransform(MATRIX *local) {
     gte_SetTransMatrix(&gCapturedGteTransform);
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/gte_scene_state", SetDirectionalLightVector);
-INCLUDE_ASM("build/asm/nonmatchings/modules/gte_scene_state", func_8001BE18);
+/* Each light contributes one direction row and one RGB color column. */
+void SetDirectionalLightVector(s32 index, SVECTOR *direction, u8 red, u8 green,
+                               u8 blue) {
+    SVECTOR normal;
+    s32 columnByteOffset;
+
+    VectorNormalSS(direction, &normal);
+    columnByteOffset = index * sizeof(s16);
+    *(s16 *)((u8 *)&gSceneColorMatrix + columnByteOffset) = red << 4;
+    gSceneColorMatrix.m[1][index] = green << 4;
+    gSceneLightMatrix.m[index][0] = normal.vx;
+    gSceneLightMatrix.m[index][1] = normal.vy;
+    gSceneLightMatrix.m[index][2] = normal.vz;
+    gSceneColorMatrix.m[2][index] = blue << 4;
+}
+/* Angle-based light setup: rotate a negative identity about X and Y,
+ * then use its final row. The stored Z angle is not applied. */
+void func_8001BE18(s32 index, s16 xAngle, s16 yAngle, s16 zAngle,
+                   u8 red, u8 green, u8 blue) {
+    SVECTOR angles;
+    MATRIX matrix = GsIDMATRIX;
+    s32 columnByteOffset;
+
+    angles.vx = xAngle;
+    angles.vy = yAngle;
+    angles.vz = zAngle;
+    matrix.m[0][0] = -matrix.m[0][0];
+    matrix.m[1][1] = -matrix.m[1][1];
+    matrix.m[2][2] = -matrix.m[2][2];
+    RotMatrixX(angles.vx, &matrix);
+    RotMatrixY(yAngle, &matrix);
+    columnByteOffset = index * sizeof(s16);
+    *(s16 *)((u8 *)&gSceneColorMatrix + columnByteOffset) = red << 4;
+    gSceneColorMatrix.m[1][index] = green << 4;
+    gSceneColorMatrix.m[2][index] = blue << 4;
+    gSceneLightMatrix.m[index][0] = matrix.m[2][0];
+    gSceneLightMatrix.m[index][1] = matrix.m[2][1];
+    gSceneLightMatrix.m[index][2] = matrix.m[2][2];
+}
 
 void SetSceneBackColor(s32 red, s32 green, s32 blue) {
     gSceneBackRed = red;

@@ -2048,6 +2048,23 @@ typedef struct {
 } ProjectedPrimitiveSource;
 
 typedef struct {
+ short vx, vy;
+ short vz, pad;
+} SVECTOR;
+
+typedef struct {
+               u32 uv0;
+               u32 uv1;
+               u32 uv2;
+               u32 uv3;
+               u32 color;
+               SVECTOR v0;
+               SVECTOR v1;
+               SVECTOR v2;
+               SVECTOR v3;
+} ProjectedQuadInput;
+
+typedef struct {
     char pad_0[0x38];
     u16 unk38;
     char pad_3A[0x2];
@@ -2219,11 +2236,6 @@ typedef struct {
 } SPRT;
 
 typedef struct {
- short vx, vy;
- short vz, pad;
-} SVECTOR;
-
-typedef struct {
                s32 field_0x0;
                s32 field_0x4;
                s32 field_0x8;
@@ -2370,6 +2382,17 @@ typedef struct {
  u_char r0, g0, b0, code;
  short x0, y0;
 } TILE_1;
+
+typedef struct {
+    u8 u0, v0;
+    u16 clut;
+    u8 u1, v1;
+    u16 tpage;
+    u8 u2, v2;
+    u16 pad_A;
+    u8 u3, v3;
+    u16 pad_E;
+} TextureRegion;
 
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 

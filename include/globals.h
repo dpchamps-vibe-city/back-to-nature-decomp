@@ -5,14 +5,13 @@
 /* Requires common.h typedefs (s8, s16, s32, u8, u16, u32) */
 #include "globals_override.h"
 
-/* 96 symbol(s) supplied by overrides or translation-unit-specific declarations */
+/* 98 symbol(s) supplied by overrides or translation-unit-specific declarations */
 
 /* GP-relative symbols (within $gp ± 0x7FF0) */
 extern s16 D_8005E566;
 extern s16 D_8005E56A;
 extern s16 D_8005E56E;
 extern s32 D_8005EA28;
-extern s32 D_8005F028;
 
 /* Absolute-addressed symbols (outside $gp range) */
 /* Declared as >8-byte arrays with __asm__ to force lui+lo addressing with -G8 */
@@ -35,8 +34,6 @@ extern s32 _D_80053946[3] __asm__("D_80053946");
 #define D_80053946 (*((s32*)_D_80053946))
 extern s32 _gCameraMatrixOverrideAddress[3] __asm__("gCameraMatrixOverrideAddress");
 #define gCameraMatrixOverrideAddress (*((s32*)_gCameraMatrixOverrideAddress))
-extern s32 _D_80061ED8[3] __asm__("D_80061ED8");
-#define D_80061ED8 (*((s32*)_D_80061ED8))
 extern s32 _gMasterVolumeRampStateView[3] __asm__("gMasterVolumeRampStateView");
 #define gMasterVolumeRampStateView (*((s32*)_gMasterVolumeRampStateView))
 extern s32 _gSoundTransferCompleteView[3] __asm__("gSoundTransferCompleteView");

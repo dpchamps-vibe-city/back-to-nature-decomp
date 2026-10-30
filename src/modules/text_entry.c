@@ -9,8 +9,7 @@
  *
  * Public lifecycle and buffer constraints: text_entry.h. Evidence for the
  * complete run and evidence-limited boundaries: notes/file-groupings.md.
- * The six existing dead helper stubs remain in original order; moving them
- * into this module is not a claim that their C has been reconstructed.
+ * Remaining dead helper stubs stay in original order.
  */
 
 #include "common.h"
@@ -26,6 +25,7 @@
 #include "beveled_panel.h"
 #include "ui_sprites.h"
 #include "psyq/libapi.h"
+#include "psyq/libetc.h"
 #include "psyq/libgpu.h"
 #include "text_engine.h"
 
@@ -227,18 +227,17 @@ void DrawIndexedSelectionLabels(void) {
     } while (var_s1 < 0x1E);
 }
 
-s32 CommitIndexedSelectionCategory(void);
+void CommitIndexedSelectionCategory(void);
 void CommitIndexedSelectionIndex(void);
 void CancelIndexedSelection(void);
 s32 ReturnToIndexedSelectionCategory(void);
 s16 MoveIndexedSelectionCategoryCursor(s32 a0);
 s16 MoveIndexedSelectionItemCursor(s32 a0);
 
-/* Confirmation, cancellation and movement callbacks depend on the current
- * selection level. Only movement's result is consumed; the other callbacks'
- * historical mixed return declarations are retained, not reinterpreted. */
+/* Callbacks depend on the selection level. Only movement's result is used;
+ * both confirmation callbacks return no value. */
 void ProcessIndexedSelectionInput(void) {
-    s32 (*var_a3)(void);
+    void (*var_a3)(void);
     s32 (*var_a2)(void);
     s16 (*var_a1)(s32);
     SomeStruct *gfx;
@@ -277,7 +276,11 @@ void ProcessIndexedSelectionInput(void) {
     }
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_entry", CommitIndexedSelectionCategory);
+void CommitIndexedSelectionCategory(void) {
+    gIndexedSelectionRecord->category = (u16)gIndexedSelectionCursor;
+    gIndexedSelectionCursor = 0;
+    gIndexedSelectionState = 2;
+}
 
 void CommitIndexedSelectionIndex(void) {
     ((Recon_func_80023710_Pointee0View *)gIndexedSelectionRecord)->unk4 = (u16)gIndexedSelectionCursor;
@@ -298,9 +301,65 @@ s32 ReturnToIndexedSelectionCategory(void) {
     return (s32)gIndexedSelectionRecord;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_entry", MoveIndexedSelectionCategoryCursor);
+s16 MoveIndexedSelectionCategoryCursor(s32 current) {
+    s16 cursor;
+    s32 buttons;
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_entry", MoveIndexedSelectionItemCursor);
+    cursor = (s16)current;
+    buttons = gPad0Input->repeatButtons;
+    if (buttons == PADLright) {
+        cursor++;
+        if (cursor >= 4) {
+            cursor = 0;
+        }
+    } else if (buttons == PADLleft) {
+        cursor--;
+        if (cursor < 0) {
+            cursor = 3;
+        }
+    }
+    return cursor;
+}
+
+/* Thirty entries occupy seven columns, with only two in the last row. */
+s16 MoveIndexedSelectionItemCursor(s32 current) {
+    s16 cursor;
+
+    cursor = (s16)current;
+    switch (gPad0Input->repeatButtons & 0xF000U) {
+    case PADLup:
+        cursor -= 7;
+        if (cursor < 0) {
+            cursor += 28;
+            if (cursor < 23) {
+                cursor += 7;
+            }
+        }
+        break;
+    case PADLdown:
+        cursor += 7;
+        if (cursor >= 30) {
+            cursor -= 28;
+            if (cursor >= 7) {
+                cursor -= 7;
+            }
+        }
+        break;
+    case PADLleft:
+        cursor--;
+        if (cursor < 0) {
+            cursor += 30;
+        }
+        break;
+    case PADLright:
+        cursor++;
+        if (cursor >= 30) {
+            cursor -= 30;
+        }
+        break;
+    }
+    return cursor;
+}
 
 void DrawEntryConfirmationPrompt(s32 arg0, s32 arg1);
 
@@ -415,7 +474,37 @@ void DrawTextEntryPreview(s32 arg0) {
     DrawTextLine(gActiveRenderContext->field_D8 + 0x64, (s32)&gTextEntryPreviewBuffer[0], 0xAD, 0x23);
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_entry", BuildTextEntryPreviewAlternate);
+/* Copy up to eight entered characters and a blinking insertion marker,
+ * then append the alternate label at slot nine. The second input is ignored. */
+void BuildTextEntryPreviewAlternate(u16 *destination, u32 count) {
+    u16 *preview;
+    u16 *text;
+    u16 *labelText;
+    u16 code;
+    s32 labelIndex;
+    s32 entryIndex;
+
+    preview = destination;
+    text = gTextEntryBuffer;
+    count = 0;
+    entryIndex = 0;
+    do {
+        code = text[entryIndex];
+        count++;
+        if (code == 0xFFFF) {
+            count = (u32)((Ovl11UpdateState *)D_8006C838)->tick % 15 != 0 ? 0xFFD : 0x75;
+            preview[entryIndex] = count;
+            break;
+        }
+        *destination++ = code;
+        entryIndex++;
+    } while ((s32)count < 8);
+    labelText = (u16 *)(*gTextBankOffsets + (s32)&D_8005393A);
+    preview += 9;
+    for (labelIndex = 0; labelText[labelIndex] != 0xFFFF; labelIndex++) {
+        preview[labelIndex] = labelText[labelIndex];
+    }
+}
 
 INCLUDE_ASM("build/asm/nonmatchings/modules/text_entry", BuildTextEntryPreview);
 
@@ -668,7 +757,13 @@ _800243C8:
     return 0;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_entry", AdjustTextEntryRow);
+/* The middle rows skip to the opposite edge in the narrow final column. */
+s32 AdjustTextEntryRow(s32 column, s32 row, s32 increment) {
+    if (column == 13 && (u32)(row - 2) < 3U) {
+        return increment ? 5 : 1;
+    }
+    return row;
+}
 
 s32 AdjustTextEntryColumnSet1(s32 arg0, s32 arg1, s32 arg2) {
     if (arg1 < 2) {

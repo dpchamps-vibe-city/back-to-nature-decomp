@@ -9567,6 +9567,9 @@ relocations:
   F084's vector-minus-origin readback. F1E0 is EFA4's cylindrical conversion
   helper. These private data and call relationships, not adjacency alone,
   join both otherwise GP-free members.
+- F100 adds two more unit-private objects: the 4928C target triple it compares
+  against and copies into, and the E304 lock word right after the yaw. Neither
+  is referenced outside this module.
 - EFA4 calls the setter and conversion in this same run; boot calls EFA4.
   No conflicting absolute access to a member-owned small global was introduced.
 
@@ -9575,7 +9578,10 @@ Original identities and interfaces:
   backup, state=2 and initialized=1.
 - 8001F038 `SetCameraOffsetParameters`: store radius/height/yaw, mark dirty and
   clear the change-state word only when at least one parameter differs.
-- 8001F084 unused readback (stub); 8001F100 unused guarded target setter (stub).
+- 8001F084 unused readback: optional radius/height words plus atan2(z, x) of
+  vector-minus-origin; F100 unused guarded target update: word-wise compare
+  against the E4928C triple, held off by the E304 lock word, then copy and
+  dirty/change-state marking.
 - 8001F190 `CopyCameraOffsetOrigin`: three-word copy, retained s32-address ABI.
 - 8001F1B4 `ClearCameraOffsetState`: clear only the state byte.
 - 8001F1C0 unused mode setter (stub).
@@ -10299,16 +10305,17 @@ an independent TU boundary. Original-name details below remain provenance.
 GTE rotation-matrix scaling built on the absolute .data global D_800491C8
 (six s32 words: the x/y/z scale numerator/denominator triples). New evidence
 from the func_8001D6B8 verification (2026): func_8001D6B8 is the only reader
-of D_800491C8 and func_8001D648 the only writer, and the two are link-adjacent
-with no unrelated code between (D648 ends 0x8001D678, func_8001D678 at
-0x8001D678, ClearVal8005E2D4 at 0x8001D6AC, D6B8 begins 0x8001D6B8). Both
-reach D_800491C8 absolutely (`lui`/`addiu %hi/%lo`), so it yields no
+of D_800491C8, func_8001D648 and func_8001D678 the two writers, and reader
+and writers are link-adjacent with no unrelated code between (D648 ends
+0x8001D678, func_8001D678 at 0x8001D678, ClearVal8005E2D4 at 0x8001D6AC,
+D6B8 begins 0x8001D6B8). Every access reaches D_800491C8 absolutely (`lui`/`addiu %hi/%lo`), so it yields no
 gp-relative TU fingerprint; grouping rests on the exclusively shared global
 plus adjacency. TU membership unproven.
 
 Fingerprints:
-- D_800491C8 is touched only by these two functions: D648 writes the three
-  pairs, D6B8 reads them to scale the GTE rotation matrix columns;
+- D_800491C8 is touched only by this trio: D648 writes the three pairs,
+  D678 writes all six words from six separate arguments, D6B8 reads them to
+  scale the GTE rotation matrix columns; D678 also sets D_8005E2D4=1;
 - the same D648 sets the gp-relative flag D_8005E2D4, which
   ClearVal8005E2D4 clears and which func_8001BFEC tests before calling
   func_8001D6B8 — the enable/disable/apply triple of one subsystem;
@@ -10317,7 +10324,9 @@ Fingerprints:
 Members (address order):
 - func_8001D648 (m) — enable: loads the three axis scale pairs into
   D_800491C8 and sets D_8005E2D4=1
-- func_8001D678 (s) — unclassified, address-adjacent
+- func_8001D678 (m) — per-column enable variant: stores six s32 arguments
+  into the three D_800491C8 pairs and sets D_8005E2D4=1; no observed caller,
+  so its role is read from its body, not its use
 - ClearVal8005E2D4 (m) — disable: clears D_8005E2D4 (standalone src TU)
 - func_8001D6B8 (m) — apply: scales each GTE rotation-matrix column by the
   D_800491C8 numerator/denominator when the numerator has bits above bit 0
@@ -10410,11 +10419,15 @@ order joins both emitters and the hook, not adjacency or SDK calls alone.
 
 The acceptance hook always returns zero; both emitters branch to rejection
 on zero. Their earlier projection/scratch-packet effects still occur, but
-neither links a packet or updates the depth cache in this build. The two
-existing dead INCLUDE_ASM bodies travel inside the unit unchanged; this fold
-is not a claim to have reconstructed their C. The two compiled members remain
-clean C. No new stub, assembly or policy exception was added. Only the getter
-needs a tentative depth definition; the dead assembly has explicit GP relocs.
+neither links a packet or updates the depth cache in this build. Both emitters
+are now reconstructed C as well: DCB0/DE4C measure byte-exact (103 and 95
+words) from the module source, so all four entries are ordinary C and the unit
+holds no INCLUDE_ASM. The hook takes the four packed screen words it is called
+with; DCB0 derives the OT index from the projected z as `z >> (14 -
+context->field_114)`, while DE4C links at the caller-supplied index. All four
+GP-relative words the unit owns (the depth cache and both context caches) are
+tentative definitions in the source. No new stub, assembly or policy exception
+was added.
 
 Left DBF0 supplies texture-page/CLUT construction without this hook, depth or
 context-cache state. Right point_projection begins DFD4 and neither uses
@@ -10424,8 +10437,9 @@ No external C caller of these four entries was found, so no artificial public
 header or emitter prototype was introduced. All linkages remain external.
 The depth and both context caches have behavior-based names at their original
 EXE identities; no private/static linkage was inferred from their sole users.
-Baseline fold proved EXE bytes and both compiled members; campaign verification
-also proved every overlay, data placement, policy and exception non-growth.
+Baseline fold proved EXE bytes and both then-compiled members; with both
+emitters reconstructed, `make check-all` and source policy re-proved the EXE
+payload, all 13 overlays, data placement and policy for all four C entries.
 
 ## unknown group A — 0x8001DFD4–0x8001E26C (confidence: low)
 
@@ -10948,9 +10962,12 @@ grid-cursor.c (starts 0x80023DBC).
 Fingerprints:
 - func_80023A9C (m) fills the absolute u16 table D_800A0708 with a
   period-idiom naive indexed loop (0xFFD x16, entry 15 = 0xFFFF), then
-  hands it to the immediately-adjacent stubs func_80023B5C /
-  func_80023C2C (consecutive link order, both walk D_800A0708 by 2-byte
-  units);
+  hands it to the immediately-adjacent preview helpers func_80023B5C /
+  func_80023C2C (consecutive link order, both fill the passed u16 buffer);
+- BuildTextEntryPreviewAlternate (80023B5C) reads `gTextEntryBuffer`
+  (8005E360) GP-relatively, sharing ownership with the text-entry install/clear
+  helpers. This corroborates its existing `src/modules/text_entry.c` placement,
+  without extending either module boundary.
 - func_80023A9C drives the same D_8005E3C0->field_D8 text-draw calls as
 grid-cursor's confirmed func_80023D08 (func_80022580 on +0x68,
 func_80017B3C on +0x64);
@@ -10968,6 +10985,7 @@ Members:
   func_80023A9C, then func_80024030 or func_80024448/func_80023D08/
   func_80023DBC; defines gp-rel D_8005E35C/D_8005E344/D_8005E356
 - func_80023A9C (m) — fills the D_800A0708 label slate via the text-draw helpers
+- BuildTextEntryPreviewAlternate (m; 80023B5C) — entered-name preview with a blinking cursor and trailing alternate label.
 - func_80023A74 (m) — fills the D_8005E360 u16 buffer with 0xFFFF from +0x10
   backward (8 entries); consumes the pointer func_800231AC installs (sole
   caller + shared gp-rel D_8005E360, see text-input install/fill group)
@@ -12591,14 +12609,17 @@ Members (address order):
 
 ## CD loading — 0x80014554–0x80014E90 (confidence: high)
 
-**Reconstructed module: `src/modules/cd_loader.c`**, ten compiled members and
-one existing dead stub, in original order. The whole 14554..14CBC run is folded,
-not just the former five-function candidate. Original-byte GP ownership
+**Reconstructed module: `src/modules/cd_loader.c`**, eleven compiled members
+in original order. The whole 14554..14CBC run is folded, not just the former
+five-function candidate. Original-byte GP ownership
 (`deriveTuOwnedGlobals.ts`) joins 145F0/147BC/14854/14988/14BCC/14CBC through
 8005E428/E430 and the four-byte SDK location at E3F0. 14B44 and the E40C getter
 join through the E2B0/E3F8/E3FC/E400/E40C range-request state; 14CB0 joins
 14CBC through E2B4. 14554 is the filename loader used solely by 147BC to read
-A_FILE.HDT. The intervening dead 14748 variant is carried, not a boundary.
+A_FILE.HDT. The unused 14748 length query also reads `gCdArchiveEntries`;
+its other compiled users are this run's index initializer and archive readers,
+with no C users outside the module. This new table-use evidence supports its
+existing CD-family placement, without strengthening either boundary claim.
 The 33 offsets copied into the 0x28-byte table and the adjacent HDT/BIN path
 literals corroborate the archive responsibility. All C accesses to this
 small-data cluster are inside the run.
@@ -12648,8 +12669,7 @@ Members (address order):
   sole caller is func_800147BC
 - func_800145F0 (s) — CD loader with state: touches D_8005E430, D_8005E404,
   D_8005E428, D_8005E3F0 GP-relatively; called by func_80011370
-- func_80014748 (s)(?) — dead; ResetCallback + DrawSync only; possible
-  stub or unused variant; membership unverified
+- func_80014748 (m) — unused archive-entry byte-length query, rounded up to four bytes.
 - func_800147BC (m) — CD file search wrapper: CdSearchFile + CdPosToInt,
   writes D_8005E428 and D_8005E430; calls func_80014554; called by func_80011370
 - func_80014854 (m) — CD loader: TOUNES/owns the gp-rel cluster D_8005E2B0,
@@ -14182,8 +14202,8 @@ convergence pass. Shared data layouts and all external linkages are preserved.
 
 Three thin, skeletal-twin wrappers over the 1324-byte worker `func_80017300`,
 followed by a fourth function that also reaches into the same wider data-loading
-family. Confidence low: three of the four are still stubs, so same-TU
-membership is unproven.
+family. Confidence low: same-TU membership is unproven even though every
+member is now matched C.
 
 Fingerprints:
 - internal call graph: `func_800171CC`, `func_80017200`, `func_80017240` all
@@ -14200,10 +14220,14 @@ Members (address order):
 - func_8001719C (m) — small value helper (no callees, many external callers);
   not clearly part of this cluster
 - func_800171CC (m) — wrapper: func_80017300(tag=1, zeros, 0)
-- func_80017200 (m) — wrapper: func_80017300(tag=0, four s16 args pass-through) (matched 2026-08-21)
-- func_80017240 (s) — wrapper: func_80017300(tag=2, four s16 args pass-through, same frame shape as func_80017200)
-- func_80017284 (s) — distinct shape: func_80015AAC → func_80015B24 →
-  func_8001782C with D_8005EA28 global; sibling, not a twin
+- UploadSpriteImagesAtOffsets (m) (was func_80017200) — wrapper:
+  func_80017300(tag=0, four s16 args pass-through) (matched 2026-08-21)
+- UploadSpriteImagesKeepingWideType2Positions (m) (was func_80017240) —
+  wrapper: func_80017300(tag=2, four s16 args pass-through, same frame shape
+  as the tag-0 wrapper)
+- func_80017284 (m) — distinct shape: func_80015AAC → func_80015B24 →
+  func_8001782C with D_8005EA28 as the tile-loader destination buffer;
+  sibling, not a twin
 - func_80017300 (m) — worker: RLE loader for 0xD-tagged compressed sprite/palette
   streams (writes via DrawSync/rect machinery)
 

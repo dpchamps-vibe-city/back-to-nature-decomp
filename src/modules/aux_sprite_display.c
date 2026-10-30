@@ -28,7 +28,13 @@ void ResetAuxSpriteDisplay(void) {
     InitAuxSpriteDisplaySource(0, 0, 0, 0, 0, 0);
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/aux_sprite_display", InitAuxSpriteDisplaySource16);
+/* exe:0x8001B028. Signed-halfword entry point: every argument is narrowed to
+ * s16 by the caller-facing interface and widened again for the six-s32 body. */
+void InitAuxSpriteDisplaySource16(s16 unused0, s16 unused1, s16 unused2,
+                                 s16 unused3, s16 unused4, s16 unused5) {
+    InitAuxSpriteDisplaySource(unused0, unused1, unused2, unused3, unused4,
+                              unused5);
+}
 
 /* The original signed-halfword wrapper and reset wrapper both pass six
  * values. All are unused: retain their material call arguments and ABI rather

@@ -12,7 +12,6 @@
 #include "game_types.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
-#include "include_asm.h"
 #include "surface_collision.h"
 
 s32 gSurfaceHeightTolerance;
@@ -106,7 +105,7 @@ s32 QuerySurfaceCells(DriverArg_1E4C0 *arg0, BoundsStruct_8001E878 *arg1) {
     gSurfaceHitPolygonAddress = 0;
     gSurfaceTriangleHit = 0;
     for (k = 0; k < 8; k++) {
-        (&D_80061ED8)[k] = -1;
+        D_80061ED8[k] = -1;
     }
     do {
         found = -1;
@@ -166,7 +165,7 @@ s32 QuerySurfaceCells(DriverArg_1E4C0 *arg0, BoundsStruct_8001E878 *arg1) {
                 vec[1] = zp2[-1];
                 vec[2] = zp2[0];
                 if (IsSurfacePointNear3D(base, vec) != 0) {
-                    (&D_80061ED8)[nslots] = i2;
+                    D_80061ED8[nslots] = i2;
                     nslots++;
                     if (nslots >= 8) {
                         break;
@@ -179,16 +178,39 @@ s32 QuerySurfaceCells(DriverArg_1E4C0 *arg0, BoundsStruct_8001E878 *arg1) {
     }
 
     for (j = 0; j < 8; j++) {
-        if (found == (&D_80061ED8)[j]) {
-            (&D_80061ED8)[j] = (&D_80061ED8)[0];
-            (&D_80061ED8)[0] = found;
+        if (found == D_80061ED8[j]) {
+            D_80061ED8[j] = D_80061ED8[0];
+            D_80061ED8[0] = found;
             break;
         }
     }
     return 1;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/surface_collision", func_8001E6FC);
+/* Retry the eight cell indices QuerySurfaceCells retained in D_80061ED8 (-1
+ * marks an empty slot): reset the hit address, install the shared query
+ * pointer, then scan each listed cell's polygon run in slot order. A negative
+ * index is skipped; the first cell whose scan finds a polygon returns 1. All
+ * eight slots exhausted returns 0 and leaves no hit behind. */
+s32 func_8001E6FC(Grid_1E4C0 **gridAddress, BoundsStruct_8001E878 *query) {
+    Grid_1E4C0 *grid;
+    s32 i;
+    s32 index;
+
+    grid = *gridAddress;
+    gSurfaceHitPolygonAddress = 0;
+    gSurfaceQueryPoint = query;
+    for (i = 0; i < 8; i++) {
+        index = D_80061ED8[i];
+        if (index >= 0) {
+            if (ScanSurfacePolygons((s32)((u8 *)grid + 0xC),
+                                    (EAE4Query *)((u8 *)grid + (index * 0x1C + 0xC))) == 0) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 /* Proximity test on a 2D pair: returns 1 when both component deltas fall
  * strictly inside +/-bound, where bound = (D_8005E520 >> 1) + 600. Any
