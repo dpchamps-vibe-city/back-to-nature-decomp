@@ -12524,7 +12524,10 @@ sequence-state and handle tables reset by FF98 and opened/closed by 20818/
 private chunk-state object and offset table. The interleaved 212A8/21484/
 217B0/21820 voice family uses the 24-entry group/age tables reset by FF98;
 FF70 clears its key-on timestamps. This initialization/use chain supports
-including it rather than cutting on its distinct role. The single jump table
+including it rather than cutting on its distinct role. The reconstructed
+20570/2066C variants share `gSoundEffectToneParameters` (800495CC) with
+`PlaySoundEffectInVoiceRange` (212A8), corroborating their existing placement
+in this voice family without extending either unit boundary. The single jump table
 at rodata 0xA24 belongs to 20E58 and pools without a layout change. Six dead
 sequence/voice variants are carried inside the run. State-free libsnd
 parameter wrappers and the empty output-mode hook remain in original member
@@ -12592,6 +12595,8 @@ Members (address order):
 - func_800200E4 (m, 2026-08) — sound request: if D_8005E558 nonzero calls
   func_80020A94 (stop), stores the two request args plus 0x1010 into
   D_8005E548/D_8005E54C/D_8005E544, bumps D_8005E558, resets via func_8001FF98
+- func_80020570 (m) — replaces the remembered voice with a table-selected tone and saves its key-off parameters.
+- func_8002066C (m) — starts a table-selected tone on a specified voice and records its five request parameters.
 - func_80020818 (m) — sound init: opens sequences, calls SsStart, sets
   D_8005E53C, configures stereo/mono from D_8005E55C
 - func_80020790 / func_800207E4 (m)(s) — libsnd volume wrappers: call

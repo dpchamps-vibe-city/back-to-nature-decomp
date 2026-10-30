@@ -3225,7 +3225,20 @@ extern s32 gSoundArchiveOffsets[3];
 /* D_800495CC - per-sound-id s16 parameter table, 78 entries of 7 s16 fields
  * (0x800495CC..0x80049A0E, ending where D_80049A10 begins). Absolute-addressed
  * (lui+addiu) by func_800212A8 and neighbours; read as signed halfwords. */
-extern s16 gSoundEffectToneParameters[78 * 7];
+extern s16 gSoundEffectToneParameters[78][7];
+
+/* func_8002066C indexes by voice * 20 and stores five words at offsets 0..16. */
+extern s32 D_8006C188[][5];
+
+/* func_80020570 remembers the current/previous voice parameters via GP lh/lhu/sh. */
+extern s16 D_8005E320;
+extern s16 D_8005E564;
+extern s16 D_8005E566;
+extern s16 D_8005E568;
+extern s16 D_8005E56A;
+extern s16 D_8005E56C;
+extern s16 D_8005E56E;
+extern s16 D_8005E570;
 
 /* D_80049A70 - array of 4 s32 pointers to CD filename strings (func_800218C4).
  * Values point to "\\STR\\01.XA;1" through "\\STR\\04.XA;1" in rodata.

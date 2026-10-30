@@ -19,7 +19,6 @@
 #include "psyq/libetc.h"
 #include "psyq/libsnd.h"
 #include "psyq/libcd.h"
-#include "include_asm.h"
 #include "cd_loader.h"
 #include "game_types.h"
 #include "random.h"
@@ -269,9 +268,50 @@ s32 SetSoundReservedVoiceCount(s32 count) {
     return 0;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sound_driver", func_80020570);
+/* This unit owns the GP-relative current/previous voice parameters. */
+s16 D_8005E320;
+s16 D_8005E564;
+s16 D_8005E566;
+s16 D_8005E568;
+s16 D_8005E56A;
+s16 D_8005E56C;
+s16 D_8005E56E;
+s16 D_8005E570;
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/sound_driver", func_8002066C);
+/* Replace the remembered voice with this tone, then save its key-off inputs. */
+s16 func_80020570(s32 vabId, s32 soundId, s32 left, s32 right) {
+    s32 voice;
+
+    D_8005E566 = gSoundEffectToneParameters[soundId][2];
+    D_8005E56A = gSoundEffectToneParameters[soundId][3];
+    D_8005E56E = gSoundEffectToneParameters[soundId][4];
+    D_8005E570 = gSoundEffectToneParameters[soundId][5];
+    SsUtKeyOff(D_8005E320, vabId, D_8005E564, D_8005E568, D_8005E56C);
+    voice = SsUtKeyOn(vabId, D_8005E566, D_8005E56A, D_8005E56E,
+                      D_8005E570, (s16)left, (s16)right);
+    D_8005E320 = voice;
+    D_8005E564 = D_8005E566;
+    D_8005E568 = D_8005E56A;
+    D_8005E56C = D_8005E56E;
+    return voice;
+}
+
+/* Start a tone on one voice and remember its five full-width parameters. */
+s32 func_8002066C(s32 vabId, s32 soundId, s32 left, s32 right,
+                  s32 extra, s32 voice) {
+    SsUtKeyOnV((s16)voice, (s16)vabId,
+               gSoundEffectToneParameters[soundId][2],
+               gSoundEffectToneParameters[soundId][3],
+               gSoundEffectToneParameters[soundId][4],
+               gSoundEffectToneParameters[soundId][5],
+               (s16)left, (s16)right);
+    D_8006C188[voice][0] = vabId;
+    D_8006C188[voice][1] = soundId;
+    D_8006C188[voice][2] = left;
+    D_8006C188[voice][3] = right;
+    D_8006C188[voice][4] = extra;
+    return 0;
+}
 
 s32 KeyOffSoundSequenceVoices(s32 sequence, s32 track, s32 voiceMask) {
     SsVoKeyOff(track + (sequence << 8), voiceMask);
@@ -640,7 +680,7 @@ s32 PlaySoundEffectInVoiceRange(s32 soundId, s32 lo, s32 hi) {
     if (voice < 0) {
         voice = FindOldestSoundVoiceByGroup(lo, hi);
     }
-    base = gSoundEffectToneParameters + soundId * 7;
+    base = gSoundEffectToneParameters[soundId];
     group = base[1];
     (&gSoundVoiceGroups)[voice] = group;
     frame = VSync(-1);

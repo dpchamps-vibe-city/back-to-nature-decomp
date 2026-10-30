@@ -40,6 +40,14 @@ void DrawChoiceCursor(s32 otAddress, s16 x, s16 y);
 void DrawMenuPanelWithText(u32 *panelOt, s32 textOtAddress, s32 textAddress);
 void SetTextBlockOrigin(s32 x, s32 y);
 
+/* ASCII formatting at the current block position, followed by 8x12 row fills.
+ * Supports %d, %x, %i and %s. Callers must keep the expansion below 64 codes
+ * and literal-format newlines within five rows; substitutions are not bounded.
+ * Width >320 or height >120 returns after clearing spacing and palette. */
+void DrawFormattedText(u8 *text, ...);
+/* Maps one ASCII byte to a glyph; newline -> 0xFFFE, unsupported -> 0xFFD. */
+s32 ConvertAsciiToTextCode(s32 character);
+
 /* Formatting writes codes to caller storage and returns the next halfword.
  * Decimal output is NOT terminated: callers append 0xFFFF themselves. digits
  * must be 1..10 (larger requests clamp to 10); 0xFFD marks leading blanks.

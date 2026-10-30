@@ -15,10 +15,13 @@
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "psyq/stdio.h"
+#include "psyq/stdarg.h"
+#include "screen_primitives.h"
+#include "aux_sprite_display.h"
 #include "packet_work.h"
 #include "u16_string.h"
 #include "text_engine.h"
-#include "include_asm.h"
 #include "sound_commands.h"
 #include "vblank_timer.h"
 #include "sprite_upload.h"
@@ -183,6 +186,13 @@ void SetTextSlot(s32 arg0) {
     gTextLoadedSlot = arg0;
 }
 
+/* Row engines are defined below; keep their halfword argument contracts in
+ * scope for the public wrappers rather than relying on C89 implicit int. */
+s32 DrawTextRowsCentered(s32 otAddress, s32 packets, u16 *text, s16 x, s16 y,
+                        s16 width, s32 scale, s16 rowStep, s16 letterSpacing);
+s32 DrawTextRowsRightAligned(s32 otAddress, s32 packets, u16 *text, s16 x, s16 y,
+                            s16 width, s32 scale, s16 rowStep, s16 letterSpacing);
+
 /* Each row of the block is centred inside width; the row engine starts at the
  * given y and advances by one line spacing plus 16. The original reads the letter
  * spacing as a signed halfword even though the shared global is u16. */
@@ -322,7 +332,138 @@ done:
     return result;
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_engine", DrawFormattedText);
+/* Expand ASCII formatting into the shared halfword script, draw it, then fill
+ * each row's 8x12 character cells. Only newlines in the format advance row;
+ * a substituted string contributes every character to the current row. */
+void DrawFormattedText(u8 *text, ...) {
+    typedef u8 *TextFormatString;
+    char number[16];
+    u16 rowCells[5];
+    va_list args;
+    Ovl11FarInitView *runtime;
+    u8 *source;
+    u8 *string;
+    s16 row;
+    s16 cellCount;
+    s32 cellX;
+    s16 letterSpacing;
+    s16 lineSpacing;
+    s32 count; /* Glyph count, saved palette, then row index. */
+    s32 *ot;
+
+    if ((D_8006C844 & 0x800000) != 0) {
+        return;
+    }
+    runtime = (Ovl11FarInitView *)&D_8007AFF0;
+    if (runtime->field_2548C != 0) {
+        return;
+    }
+    if (runtime->field_254A0 != 0) {
+        return;
+    }
+    if (IsAuxSpriteDisplayEnabled() == 1) {
+        return;
+    }
+
+    for (count = 0; count < 5; count++) {
+        rowCells[count] = 0;
+    }
+    row = 0;
+    source = text;
+    va_start(args, text);
+    count = 0;
+    if (*source == 0) {
+        D_8005F028[0] = 0xFFFF;
+    } else {
+        /* The first character is already checked; enter past the advance.
+         * Keep the outer scan indexed and the substitution scan separate. */
+        goto parse_character;
+        for (;;) {
+            source++;
+            if (count >= 0x40) {
+                break;
+            }
+            if (*source == 0) {
+                D_8005F028[count] = 0xFFFF;
+                break;
+            }
+        parse_character:
+            if (*source != '%') {
+                D_8005F028[count] = ConvertAsciiToTextCode(*source);
+                count++;
+                if (*source == '\n') {
+                    row = (s16)(row + 1);
+                } else {
+                    rowCells[row]++;
+                }
+            } else {
+                source++;
+                string = (u8 *)number;
+                switch (*source) {
+                case 'd':
+                    sprintf(number, D_8005E2C0, va_arg(args, s32));
+                    break;
+                case 'x':
+                    sprintf(number, D_8005E2C4, va_arg(args, s32));
+                    break;
+                case 'i':
+                    sprintf(number, D_8005E2C8, va_arg(args, s32));
+                    break;
+                case 's':
+                    string = va_arg(args, TextFormatString);
+                    break;
+                default:
+                    continue;
+                }
+                /* The original does not check the staging-buffer limit here. */
+                while (*string != 0) {
+                    D_8005F028[count] = ConvertAsciiToTextCode(*string);
+                    count++;
+                    rowCells[row]++;
+                    string++;
+                }
+            }
+        }
+    }
+    va_end(args);
+
+    letterSpacing = (s16)gTextLetterSpacing;
+    lineSpacing = (s16)gTextLineSpacing;
+    D_8005F028[63] = 0xFFFF;
+    gTextLetterSpacing = 0;
+    gTextLineSpacing = 0;
+    count = GetTextPalette();
+    SetTextPalette(0);
+    /* These early returns deliberately leave palette and spacing cleared. */
+    if (gTextBlockWidth >= 0x141) {
+        return;
+    }
+    if (gTextBlockHeight >= 0x79) {
+        return;
+    }
+    ot = (s32 *)gActiveRenderContext->field_120;
+    gActiveRenderContext->field_118 = (s32)DrawTextStream(ot,
+        (u8 *)gActiveRenderContext->field_118, D_8005F028,
+        (s16)(gTextBlockOriginX + (u16)gTextBlockWidth),
+        (s16)(gTextBlockOriginY + (u16)gTextBlockHeight), 0x1000, 0, 0, 0, 1);
+    SetTextPalette(count);
+    for (count = 0; count <= row; count++) {
+        cellCount = (s16)rowCells[count];
+        if (cellCount != 0) {
+            cellX = gTextBlockOriginX;
+            if (count == 0) {
+                cellX = cellX + (u16)gTextBlockWidth;
+            }
+            DrawScreenTileRect((u32 *)ot, (s16)cellX,
+                (s16)(gTextBlockOriginY + (u16)gTextBlockHeight + count * 12),
+                (s16)(cellCount << 3), 12, 0xFFFFFF, 0);
+        }
+    }
+    gTextLetterSpacing = letterSpacing;
+    gTextLineSpacing = lineSpacing;
+    gTextBlockWidth = gTextPenX - gTextBlockOriginX;
+    gTextBlockHeight = gTextPenY - gTextBlockOriginY;
+}
 
 /* Tentative definitions: the target reaches all four symbols via $gp, so this
  * translation unit must define them (common symbols) rather than declare them

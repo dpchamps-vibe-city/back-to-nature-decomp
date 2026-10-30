@@ -2394,6 +2394,13 @@ typedef struct {
     u16 pad_E;
 } TextureRegion;
 
+typedef struct {
+    u32 id;
+    u32 flags;
+    s32 objectCount;
+    u8 objects[1];
+} TmdModelData;
+
 typedef struct { u16 unk0; } UnkStruct800DF4F0;
 
 typedef struct { u16 unk0; } UnkStruct800E109C;

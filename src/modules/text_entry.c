@@ -9,7 +9,6 @@
  *
  * Public lifecycle and buffer constraints: text_entry.h. Evidence for the
  * complete run and evidence-limited boundaries: notes/file-groupings.md.
- * Remaining dead helper stubs stay in original order.
  */
 
 #include "common.h"
@@ -18,7 +17,6 @@
 #include "game_types.h"
 #include "sound_commands.h"
 #include "message_window.h"
-#include "include_asm.h"
 #include "text_entry.h"
 #include "psyq/stddef.h"
 #include "psyq/libgte.h"
@@ -506,7 +504,50 @@ void BuildTextEntryPreviewAlternate(u16 *destination, u32 count) {
     }
 }
 
-INCLUDE_ASM("build/asm/nonmatchings/modules/text_entry", BuildTextEntryPreview);
+/* Prepend the standard label, leave one blank cell, then copy up to eight
+ * entered characters. At the terminator, draw the blinking insertion marker.
+ * The second input belongs to the shared preview callback interface. */
+void BuildTextEntryPreview(u16 *destination, u32 unused) {
+    u16 *preview;
+    u16 *labelText;
+    u16 *entryText;
+    u16 code;
+    s32 count;
+    s32 copied;
+    s32 entryIndex;
+
+    preview = destination;
+    labelText = (u16 *)(*gTextBankOffsets + (s32)&D_8005392E);
+    count = 0;
+    if (labelText[count] == 0xFFFF) {
+        goto label_done;
+    }
+    for (;;) {
+        *preview++ = labelText[count++];
+        if (labelText[count] != 0xFFFF) {
+            continue;
+        }
+label_done:
+        preview++;
+        break;
+    }
+    destination = preview;
+    copied = 0;
+    entryIndex = 0;
+    entryText = gTextEntryBuffer;
+    do {
+        code = entryText[entryIndex];
+        copied++;
+        if (code == 0xFFFF) {
+            count = (u32)((Ovl11UpdateState *)D_8006C838)->tick % 15 != 0 ? 0xFFD : 0x75;
+            preview[entryIndex] = count;
+            return;
+        }
+        *destination = code;
+        entryIndex++;
+        destination = &preview[entryIndex];
+    } while ((s32)copied < 8);
+}
 
 void DrawTextEntryGrid(void) {
     s32 sum;

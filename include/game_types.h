@@ -2062,6 +2062,16 @@ typedef struct {
     u16 pad_E;
 } TextureRegion;
 
+/* exe:8001D8B8 walks a TMD header: object count at +8, followed at +C
+ * by 0x1C-byte SDK TMD_STRUCT records. Unmapped offsets use +C as their base.
+ * The byte tail is variable length; the SDK supplies the object/packet views. */
+typedef struct {
+    u32 id;
+    u32 flags;
+    s32 objectCount;
+    u8 objects[1];
+} TmdModelData;
+
 /* Projected-primitive source, exe:8001BFA8/8001C0D4. The initializer stores
  * the batch and, for at least two entries, the following culling-point block.
  * That block has a four-byte prefix followed by 8-byte SVECTOR records. */

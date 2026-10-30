@@ -5,12 +5,9 @@
 /* Requires common.h typedefs (s8, s16, s32, u8, u16, u32) */
 #include "globals_override.h"
 
-/* 98 symbol(s) supplied by overrides or translation-unit-specific declarations */
+/* 102 symbol(s) supplied by overrides or translation-unit-specific declarations */
 
 /* GP-relative symbols (within $gp ± 0x7FF0) */
-extern s16 D_8005E566;
-extern s16 D_8005E56A;
-extern s16 D_8005E56E;
 extern s32 D_8005EA28;
 
 /* Absolute-addressed symbols (outside $gp range) */
@@ -38,8 +35,6 @@ extern s32 _gMasterVolumeRampStateView[3] __asm__("gMasterVolumeRampStateView");
 #define gMasterVolumeRampStateView (*((s32*)_gMasterVolumeRampStateView))
 extern s32 _gSoundTransferCompleteView[3] __asm__("gSoundTransferCompleteView");
 #define gSoundTransferCompleteView (*((s32*)_gSoundTransferCompleteView))
-extern s32 _D_8006C188[3] __asm__("D_8006C188");
-#define D_8006C188 (*((s32*)_D_8006C188))
 extern s32 _D_8006C398[3] __asm__("D_8006C398");
 #define D_8006C398 (*((s32*)_D_8006C398))
 extern s32 _D_8006C844[3] __asm__("D_8006C844");
